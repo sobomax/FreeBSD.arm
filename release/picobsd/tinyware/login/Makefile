@@ -1,0 +1,27 @@
+# From:	@(#)Makefile	8.1 (Berkeley) 7/19/93
+# $FreeBSD: head/release/picobsd/tinyware/login/Makefile 265420 2014-05-06 04:22:01Z imp $
+
+.include <src.opts.mk>
+
+.PATH: ${.CURDIR}/../../../../usr.bin/login
+
+PROG=	login
+SRCS=	pico-login.c login_fbtab.c
+MAN=	login.1
+
+CFLAGS+=-DLOGALL
+
+DPADD=	${LIBUTIL} ${LIBCRYPT}
+LDADD=	-lutil -lcrypt
+
+.if ${MK_PAM_SUPPORT} != "no"
+CFLAGS+= -DUSE_PAM
+DPADD+=	${LIBPAM}
+LDADD+=	${MINUSLPAM}
+.endif
+
+BINOWN=	root
+BINMODE=4555
+PRECIOUSPROG=
+
+.include <bsd.prog.mk>

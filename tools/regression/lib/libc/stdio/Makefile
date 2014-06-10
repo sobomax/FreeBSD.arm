@@ -1,0 +1,24 @@
+# $FreeBSD: head/tools/regression/lib/libc/stdio/Makefile 264737 2014-04-21 17:40:23Z jilles $
+
+TESTS=	test-fdopen \
+	test-fmemopen \
+	test-fopen \
+	test-freopen \
+	test-getdelim \
+	test-mkostemp \
+	test-open_memstream \
+	test-open_wmemstream \
+	test-perror \
+	test-print-positional \
+	test-printbasic \
+	test-printfloat \
+	test-scanfloat 
+CFLAGS+= -lm
+
+.PHONY: tests
+tests: ${TESTS}
+	for p in ${TESTS}; do ${.OBJDIR}/$$p; done
+
+.PHONY: clean
+clean:
+	-rm -f ${TESTS}

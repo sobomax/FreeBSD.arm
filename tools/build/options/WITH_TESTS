@@ -1,0 +1,8 @@
+.\" $FreeBSD: head/tools/build/options/WITH_TESTS 267033 2014-06-03 22:34:27Z jmmv $
+Set to install the
+.Fx
+Test Suite in
+.Pa /usr/tests/ .
+See
+.Xr tests 7
+for more details.

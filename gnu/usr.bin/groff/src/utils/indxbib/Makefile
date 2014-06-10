@@ -1,0 +1,15 @@
+# $FreeBSD: head/gnu/usr.bin/groff/src/utils/indxbib/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+
+PROG_CXX=	indxbib
+SRCS=		indxbib.cpp signal.c
+DPADD=		${LIBBIB} ${LIBGROFF} ${LIBM}
+LDADD=		${LIBBIB} ${LIBGROFF} -lm
+CLEANFILES=	${MAN}
+
+NO_PIE=	yes
+
+beforeinstall:
+	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} \
+	    ${DIST_DIR}/eign ${DESTDIR}${SHAREDIR}/dict/
+
+.include <bsd.prog.mk>

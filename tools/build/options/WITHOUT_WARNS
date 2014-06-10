@@ -1,0 +1,5 @@
+.\" $FreeBSD: head/tools/build/options/WITHOUT_WARNS 265830 2014-05-10 16:37:53Z imp $
+Set this to not add warning flags to the compiler invocations.
+Useful as a temporary workaround when code enters the tree
+which triggers warnings in environments that differ from the
+original develoepr.

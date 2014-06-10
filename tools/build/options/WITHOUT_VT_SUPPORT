@@ -1,0 +1,4 @@
+.\" $FreeBSD: head/tools/build/options/WITHOUT_VT_SUPPORT 267124 2014-06-05 18:53:56Z emaste $
+Set to not build
+.Xr vt 4
+support files (fonts).

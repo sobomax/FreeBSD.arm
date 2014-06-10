@@ -1,0 +1,32 @@
+# $FreeBSD: head/secure/usr.bin/ssh-add/Makefile 265420 2014-05-06 04:22:01Z imp $
+
+.include <src.opts.mk>
+
+PROG=	ssh-add
+SRCS+=	ssh-add.c
+CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
+
+.if !defined(NO_SHARED)
+# required when linking with a dynamic libssh
+SRCS+=	roaming_dummy.c
+.endif
+
+DPADD=	${LIBSSH}
+LDADD=	-lssh
+USEPRIVATELIB= ssh
+
+.if ${MK_LDNS} != "no"
+CFLAGS+=	-DHAVE_LDNS=1
+#DPADD+=	${LIBLDNS}
+#LDADD+=	-lldns
+#USEPRIVATELIB+= ldns
+.endif
+
+DPADD+= ${LIBCRYPT} ${LIBCRYPTO} ${LIBZ}
+LDADD+= -lcrypt -lcrypto -lz
+
+.include <bsd.prog.mk>
+
+.PATH:	${SSHDIR}
+
+${OBJS} ${POBJS} ${SOBJS}: ssh_namespace.h

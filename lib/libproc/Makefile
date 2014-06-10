@@ -1,0 +1,30 @@
+# $FreeBSD: head/lib/libproc/Makefile 265420 2014-05-06 04:22:01Z imp $
+
+.include <src.opts.mk>
+
+LIB=	proc
+
+SRCS=	proc_bkpt.c		\
+	proc_create.c		\
+	proc_regs.c		\
+	proc_sym.c		\
+	proc_rtld.c		\
+	proc_util.c
+
+INCS=	libproc.h
+
+CFLAGS+=	-I${.CURDIR}
+
+.if ${MK_LIBCPLUSPLUS} != "no"
+LDADD+=		-lcxxrt
+DPADD+=		${LIBCXXRT}
+.else
+LDADD+=		-lsupc++
+DPADD+=		${LIBSTDCPLUSPLUS}
+.endif
+
+SHLIB_MAJOR=	2
+
+MAN=
+
+.include <bsd.lib.mk>

@@ -1,0 +1,23 @@
+#	@(#)Makefile	8.1 (Berkeley) 7/19/93
+# $FreeBSD: head/usr.bin/su/Makefile 265420 2014-05-06 04:22:01Z imp $
+
+.include <src.opts.mk>
+
+PROG=	su
+
+WARNS?=	5
+
+DPADD=	${LIBUTIL} ${LIBPAM}
+LDADD=	-lutil ${MINUSLPAM}
+
+.if ${MK_AUDIT} != "no"
+CFLAGS+= -DUSE_BSM_AUDIT
+DPADD+=  ${LIBBSM}
+LDADD+=  -lbsm
+.endif
+
+BINOWN=	root
+BINMODE=4555
+PRECIOUSPROG=
+
+.include <bsd.prog.mk>
