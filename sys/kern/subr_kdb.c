@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_kdb.c 257214 2013-10-27 16:20:52Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_kdb.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_kdb.h"
 #include "opt_stack.h"
@@ -108,14 +108,12 @@ SYSCTL_PROC(_debug_kdb, OID_AUTO, trap_code,
     kdb_sysctl_trap_code, "I", "set to cause a page fault via code access");
 
 SYSCTL_INT(_debug_kdb, OID_AUTO, break_to_debugger,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_TUN | CTLFLAG_SECURE,
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_SECURE,
     &kdb_break_to_debugger, 0, "Enable break to debugger");
-TUNABLE_INT("debug.kdb.break_to_debugger", &kdb_break_to_debugger);
 
 SYSCTL_INT(_debug_kdb, OID_AUTO, alt_break_to_debugger,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_TUN | CTLFLAG_SECURE,
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_SECURE,
     &kdb_alt_break_to_debugger, 0, "Enable alternative break to debugger");
-TUNABLE_INT("debug.kdb.alt_break_to_debugger", &kdb_alt_break_to_debugger);
 
 /*
  * Flag to indicate to debuggers why the debugger was entered.

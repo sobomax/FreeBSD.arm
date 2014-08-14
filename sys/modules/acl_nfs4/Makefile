@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/acl_nfs4/Makefile 232937 2012-03-13 20:28:42Z adrian $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/sys/modules/acl_nfs4/Makefile 269538 2014-08-04 22:34:12Z imp $
 
 .PATH:  ${.CURDIR}/../../kern
 KMOD=	acl_nfs4

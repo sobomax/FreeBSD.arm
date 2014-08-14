@@ -30,8 +30,8 @@
  * SUCH DAMAGE.
  *
  *	@(#)term.h	8.1 (Berkeley) 6/4/93
- *	$NetBSD: term.h,v 1.18 2006/11/24 00:01:17 christos Exp $
- * $FreeBSD: head/lib/libedit/term.h 237448 2012-06-22 18:01:22Z pfg $
+ *	$NetBSD: term.h,v 1.20 2009/03/31 17:38:27 christos Exp $
+ * $FreeBSD: head/lib/libedit/term.h 268502 2014-07-10 17:52:17Z pfg $
  */
 
 /*

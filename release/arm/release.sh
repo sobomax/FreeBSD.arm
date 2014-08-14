@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/release/arm/release.sh 264794 2014-04-23 02:01:22Z gjb $
+# $FreeBSD: head/release/arm/release.sh 269816 2014-08-11 16:31:28Z gjb $
 #
 
 # This script is intended to be called by release/release.sh to build ARM
@@ -95,7 +95,15 @@ main() {
 	# Build the 'xdev' target for crochet.
 	eval chroot ${CHROOTDIR} make -C /usr/src \
 		${XDEV_FLAGS} XDEV=${XDEV} XDEV_ARCH=${XDEV_ARCH} \
+		TARGET=${XDEV} TARGET_ARCH=${XDEV_ARCH} \
 		${WORLD_FLAGS} xdev
+
+	# Install the cross-build symlinks to /usr/bin to make crochet
+	# happy.
+	eval chroot ${CHROOTDIR} make -C /usr/src \
+		${XDEV_FLAGS} XDEV=${XDEV} XDEV_ARCH=${XDEV_ARCH} \
+		TARGET=${XDEV} TARGET_ARCH=${XDEV_ARCH} \
+		${WORLD_FLAGS} xdev-links || true
 
 	# Run the ldconfig(8) startup script so /var/run/ld-elf*.so.hints
 	# is created.
@@ -110,6 +118,9 @@ main() {
 		eval chroot ${CHROOTDIR} make -C /usr/ports/${_PORT} \
 			BATCH=1 FORCE_PKG_REGISTER=1 install clean distclean
 	done
+
+	eval chroot ${CHROOTDIR} make -C /usr/src/gnu/usr.bin/cc \
+		WITH_GCC=1 ${WORLD_FLAGS} -j1 obj depend all install
 
 	mkdir -p ${CHROOTDIR}/tmp/crochet/work
 	before_build

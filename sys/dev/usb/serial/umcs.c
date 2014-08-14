@@ -38,7 +38,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 260559 2014-01-12 11:44:28Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 269470 2014-08-03 10:47:45Z joerg $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -1083,7 +1083,10 @@ umcs7840_calc_baudrate(uint32_t rate, uint16_t *divisor, uint8_t *clk)
 
 	for (i = 0; i < umcs7840_baudrate_divisors_len - 1 &&
 	    !(rate > umcs7840_baudrate_divisors[i] && rate <= umcs7840_baudrate_divisors[i + 1]); ++i);
-	*divisor = umcs7840_baudrate_divisors[i + 1] / rate;
+	if (rate == 0)
+		*divisor = 1;	/* XXX */
+	else
+		*divisor = umcs7840_baudrate_divisors[i + 1] / rate;
 	/* 0x00 .. 0x70 */
 	*clk = i << MCS7840_DEV_SPx_CLOCK_SHIFT;
 	return (0);

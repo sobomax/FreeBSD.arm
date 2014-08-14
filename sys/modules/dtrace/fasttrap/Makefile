@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/dtrace/fasttrap/Makefile 262818 2014-03-06 01:59:13Z marcel $
+# $FreeBSD: head/sys/modules/dtrace/fasttrap/Makefile 269130 2014-07-26 17:24:58Z marcel $
 
 SYSDIR?=	${.CURDIR}/../../..
 
@@ -20,9 +20,13 @@ CFLAGS+=	-I${SYSDIR}/cddl/contrib/opensolaris/uts/powerpc
 .PATH:		${SYSDIR}/cddl/contrib/opensolaris/uts/powerpc/dtrace
 .endif
 
+.PATH:		${SYSDIR}/cddl/contrib/opensolaris/common/unicode
+SRCS+=		u8_textprep.c
+
 CFLAGS+=	-DSMP
 
 .include <bsd.kmod.mk>
 
 CFLAGS+=	-include ${SYSDIR}/cddl/compat/opensolaris/sys/debug_compat.h
+CWARNFLAGS+=	-Wno-cast-qual
 CWARNFLAGS+=	-Wno-unused

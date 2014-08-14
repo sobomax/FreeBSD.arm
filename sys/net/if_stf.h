@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/net/if_stf.h 139823 2005-01-07 01:45:51Z imp $	*/
+/*	$FreeBSD: head/sys/net/if_stf.h 269699 2014-08-08 01:57:15Z kevlo $	*/
 /*	$KAME: if_stf.h,v 1.5 2001/10/12 10:09:17 keiichi Exp $	*/
 
 /*-
@@ -33,6 +33,6 @@
 #ifndef _NET_IF_STF_H_
 #define _NET_IF_STF_H_
 
-void in_stf_input(struct mbuf *, int);
+int in_stf_input(struct mbuf **, int *, int);
 
 #endif /* _NET_IF_STF_H_ */

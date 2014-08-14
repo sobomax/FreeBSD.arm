@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_ec.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_ec.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -181,16 +181,13 @@ ACPI_SERIAL_DECL(ec, "ACPI embedded controller");
 static SYSCTL_NODE(_debug_acpi, OID_AUTO, ec, CTLFLAG_RD, NULL, "EC debugging");
 
 static int	ec_burst_mode;
-TUNABLE_INT("debug.acpi.ec.burst", &ec_burst_mode);
-SYSCTL_INT(_debug_acpi_ec, OID_AUTO, burst, CTLFLAG_RW, &ec_burst_mode, 0,
+SYSCTL_INT(_debug_acpi_ec, OID_AUTO, burst, CTLFLAG_RWTUN, &ec_burst_mode, 0,
     "Enable use of burst mode (faster for nearly all systems)");
 static int	ec_polled_mode;
-TUNABLE_INT("debug.acpi.ec.polled", &ec_polled_mode);
-SYSCTL_INT(_debug_acpi_ec, OID_AUTO, polled, CTLFLAG_RW, &ec_polled_mode, 0,
+SYSCTL_INT(_debug_acpi_ec, OID_AUTO, polled, CTLFLAG_RWTUN, &ec_polled_mode, 0,
     "Force use of polled mode (only if interrupt mode doesn't work)");
 static int	ec_timeout = EC_TIMEOUT;
-TUNABLE_INT("debug.acpi.ec.timeout", &ec_timeout);
-SYSCTL_INT(_debug_acpi_ec, OID_AUTO, timeout, CTLFLAG_RW, &ec_timeout,
+SYSCTL_INT(_debug_acpi_ec, OID_AUTO, timeout, CTLFLAG_RWTUN, &ec_timeout,
     EC_TIMEOUT, "Total time spent waiting for a response (poll+sleep)");
 
 static ACPI_STATUS

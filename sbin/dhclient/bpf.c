@@ -41,9 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/dhclient/bpf.c 263234 2014-03-16 11:04:44Z rwatson $");
-
-#include <sys/capsicum.h>
+__FBSDID("$FreeBSD: head/sbin/dhclient/bpf.c 267914 2014-06-26 13:57:44Z pjd $");
 
 #include "dhcpd.h"
 #include "privsep.h"

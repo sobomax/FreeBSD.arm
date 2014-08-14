@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/fdt.cc 263199 2014-03-15 00:58:08Z imp $
+ * $FreeBSD: head/usr.bin/dtc/fdt.cc 267317 2014-06-10 06:04:25Z rpaulo $
  */
 
 #define __STDC_LIMIT_MACROS 1
@@ -42,6 +42,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "dtb.hh"
 
 namespace dtc
@@ -1076,6 +1078,13 @@ device_tree::buffer_for_file(const char *path)
 	if (source == -1)
 	{
 		fprintf(stderr, "Unable to open file %s\n", path);
+		return 0;
+	}
+	struct stat st;
+	if (fstat(source, &st) == 0 && S_ISDIR(st.st_mode))
+	{
+		fprintf(stderr, "File %s is a directory\n", path);
+		close(source);
 		return 0;
 	}
 	input_buffer *b = new mmap_input_buffer(source);

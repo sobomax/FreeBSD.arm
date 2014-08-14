@@ -28,7 +28,7 @@
  * Platform (FreeBSD) dependent common attachment code for Qlogic adapters.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isp/isp_freebsd.c 259860 2013-12-25 04:51:56Z mjacob $");
+__FBSDID("$FreeBSD: head/sys/dev/isp/isp_freebsd.c 268395 2014-07-08 13:01:36Z mav $");
 #include <dev/isp/isp_freebsd.h>
 #include <sys/unistd.h>
 #include <sys/kthread.h>
@@ -5107,7 +5107,7 @@ isp_action(struct cam_sim *sim, union ccb *ccb)
 			break;
 #endif
 		case XPT_SCSI_IO:
-			error = isp_control(isp, ISPCTL_ABORT_CMD, ccb);
+			error = isp_control(isp, ISPCTL_ABORT_CMD, accb);
 			if (error) {
 				ccb->ccb_h.status = CAM_UA_ABORT;
 			} else {

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/cpuset.h 255059 2013-08-30 07:43:34Z kib $
+ * $FreeBSD: head/sys/sys/cpuset.h 267716 2014-06-22 11:32:23Z melifaro $
  */
 
 #ifndef _SYS_CPUSET_H_
@@ -118,6 +118,7 @@ struct cpuset *cpuset_thread0(void);
 struct cpuset *cpuset_ref(struct cpuset *);
 void	cpuset_rel(struct cpuset *);
 int	cpuset_setthread(lwpid_t id, cpuset_t *);
+int	cpuset_setithread(lwpid_t id, u_char cpu);
 int	cpuset_create_root(struct prison *, struct cpuset **);
 int	cpuset_setproc_update_set(struct proc *, struct cpuset *);
 char	*cpusetobj_strprint(char *, const cpuset_t *);

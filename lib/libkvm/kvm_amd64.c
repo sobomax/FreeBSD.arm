@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_amd64.c 217744 2011-01-23 11:08:28Z uqs $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_amd64.c 268351 2014-07-07 00:27:09Z marcel $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -81,7 +81,7 @@ struct vmstate {
 /*
  * Map the ELF headers into the process' address space. We do this in two
  * steps: first the ELF header itself and using that information the whole
- * set of headers. (Taken from kvm_ia64.c)
+ * set of headers.
  */
 static int
 _kvm_maphdrs(kvm_t *kd, size_t sz)
@@ -105,7 +105,6 @@ _kvm_maphdrs(kvm_t *kd, size_t sz)
 
 /*
  * Translate a physical memory address to a file-offset in the crash-dump.
- * (Taken from kvm_ia64.c)
  */
 static size_t
 _kvm_pa2off(kvm_t *kd, uint64_t pa, off_t *ofs)

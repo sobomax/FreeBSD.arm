@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/inout.h 266573 2014-05-23 05:15:17Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/inout.h 269094 2014-07-25 20:18:35Z neel $
  */
 
 #ifndef _INOUT_H_
@@ -34,13 +34,9 @@
 struct vmctx;
 struct vm_exit;
 
-/* Handler return values. */
-#define	INOUT_ERROR	-1
-#define	INOUT_OK	0
-#define	INOUT_RESTART	1
-#define	INOUT_RESET	2
-#define	INOUT_POWEROFF	3
-
+/*
+ * inout emulation handlers return 0 on success and -1 on failure.
+ */
 typedef int (*inout_func_t)(struct vmctx *ctx, int vcpu, int in, int port,
 			    int bytes, uint32_t *eax, void *arg);
 

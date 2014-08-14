@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_lookup.c 263233 2014-03-16 10:55:57Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_lookup.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -96,9 +96,8 @@ nameiinit(void *dummy __unused)
 SYSINIT(vfs, SI_SUB_VFS, SI_ORDER_SECOND, nameiinit, NULL);
 
 static int lookup_shared = 1;
-SYSCTL_INT(_vfs, OID_AUTO, lookup_shared, CTLFLAG_RW, &lookup_shared, 0,
+SYSCTL_INT(_vfs, OID_AUTO, lookup_shared, CTLFLAG_RWTUN, &lookup_shared, 0,
     "Enables/Disables shared locks for path name translation");
-TUNABLE_INT("vfs.lookup_shared", &lookup_shared);
 
 /*
  * Convert a pathname into a pointer to a locked vnode.

@@ -30,7 +30,7 @@
 #ifndef lint
 __RCSID("$NetBSD: dir.c,v 1.20 2006/06/05 16:51:18 christos Exp $");
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/fsck_msdosfs/dir.c 241806 2012-10-21 12:01:11Z uqs $";
+  "$FreeBSD: head/sbin/fsck_msdosfs/dir.c 268632 2014-07-14 20:58:02Z pfg $";
 #endif /* not lint */
 
 #include <stdio.h>
@@ -206,7 +206,7 @@ static char longName[DOSLONGNAMELEN] = "";
 static u_char *buffer = NULL;
 static u_char *delbuf = NULL;
 
-struct dosDirEntry *rootDir;
+static struct dosDirEntry *rootDir;
 static struct dosDirEntry *lostDir;
 
 /*
@@ -419,13 +419,14 @@ checksize(struct bootblock *boot, struct fatEntry *fat, u_char *p,
 		      fullpath(dir));
 		if (ask(1, "Drop superfluous clusters")) {
 			cl_t cl;
-			u_int32_t sz = 0;
+			u_int32_t sz, len;
 
-			for (cl = dir->head; (sz += boot->ClusterSize) <
-			    dir->size;)
+			for (cl = dir->head, len = sz = 0;
+			    (sz += boot->ClusterSize) < dir->size; len++)
 				cl = fat[cl].next;
 			clearchain(boot, fat, fat[cl].next);
 			fat[cl].next = CLUST_EOF;
+			fat[dir->head].length = len;
 			return FSFATMOD;
 		} else
 			return FSERROR;

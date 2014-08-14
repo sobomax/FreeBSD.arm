@@ -1,8 +1,7 @@
-# $FreeBSD: head/share/mk/bsd.endian.mk 263660 2014-03-23 12:49:25Z andrew $
+# $FreeBSD: head/share/mk/bsd.endian.mk 268351 2014-07-07 00:27:09Z marcel $
 
 .if ${MACHINE_ARCH} == "amd64" || \
     ${MACHINE_ARCH} == "i386" || \
-    ${MACHINE_ARCH} == "ia64" || \
     ${MACHINE_ARCH} == "arm"  || \
     ${MACHINE_ARCH} == "armv6"  || \
     ${MACHINE_ARCH} == "armv6hf"  || \

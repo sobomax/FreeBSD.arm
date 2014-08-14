@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.post.mk 254340 2013-08-14 22:19:29Z sjg $
+# $FreeBSD: head/sys/conf/kern.post.mk 269895 2014-08-12 23:48:37Z imp $
 
 # Part of a unified Makefile for building kernels.  This part includes all
 # the definitions that need to be after all the % directives except %RULES
@@ -126,7 +126,8 @@ ${FULLKERNEL}: ${SYSTEM_DEP} vers.o ${MFS_IMAGE}
 	@echo linking ${.TARGET}
 	${SYSTEM_LD}
 .if ${MK_CTF} != "no"
-	${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${SYSTEM_OBJS} vers.o
+	@echo ${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ...
+	@${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${SYSTEM_OBJS} vers.o
 .endif
 .if !defined(DEBUG)
 	${OBJCOPY} --strip-debug ${.TARGET}

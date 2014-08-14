@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_mp.c 262695 2014-03-02 19:46:03Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_mp.c 268401 2014-07-08 14:35:09Z ian $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -162,7 +162,7 @@ platform_mp_start_ap(void)
 		    ( 1 << (SRC_CONTROL_C1RST_SHIFT - 1 + i)));
 
 	}
-	bus_space_write_4(fdtbus_bs_tag, src, 0, val);
+	bus_space_write_4(fdtbus_bs_tag, src, SRC_CONTROL_REG, val);
 
 	armv7_sev();
 

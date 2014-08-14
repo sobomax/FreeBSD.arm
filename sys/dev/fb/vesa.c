@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fb/vesa.c 255004 2013-08-28 20:10:56Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/fb/vesa.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_vga.h"
 #include "opt_vesa.h"
@@ -101,7 +101,6 @@ static video_adapter_t *vesa_adp;
 
 static SYSCTL_NODE(_debug, OID_AUTO, vesa, CTLFLAG_RD, NULL, "VESA debugging");
 static int vesa_shadow_rom;
-TUNABLE_INT("debug.vesa.shadow_rom", &vesa_shadow_rom);
 SYSCTL_INT(_debug_vesa, OID_AUTO, shadow_rom, CTLFLAG_RDTUN, &vesa_shadow_rom,
     0, "Enable video BIOS shadow");
 

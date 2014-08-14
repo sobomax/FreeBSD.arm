@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/idt/if_kr.c 257420 2013-10-31 05:00:50Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/idt/if_kr.c 267363 2014-06-11 14:53:58Z jhb $");
 
 /*
  * RC32434 Ethernet interface driver
@@ -1149,31 +1149,29 @@ kr_dma_free(struct kr_softc *sc)
 
 	/* Tx ring. */
 	if (sc->kr_cdata.kr_tx_ring_tag) {
-		if (sc->kr_cdata.kr_tx_ring_map)
+		if (sc->kr_rdata.kr_tx_ring_paddr)
 			bus_dmamap_unload(sc->kr_cdata.kr_tx_ring_tag,
 			    sc->kr_cdata.kr_tx_ring_map);
-		if (sc->kr_cdata.kr_tx_ring_map &&
-		    sc->kr_rdata.kr_tx_ring)
+		if (sc->kr_rdata.kr_tx_ring)
 			bus_dmamem_free(sc->kr_cdata.kr_tx_ring_tag,
 			    sc->kr_rdata.kr_tx_ring,
 			    sc->kr_cdata.kr_tx_ring_map);
 		sc->kr_rdata.kr_tx_ring = NULL;
-		sc->kr_cdata.kr_tx_ring_map = NULL;
+		sc->kr_rdata.kr_tx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->kr_cdata.kr_tx_ring_tag);
 		sc->kr_cdata.kr_tx_ring_tag = NULL;
 	}
 	/* Rx ring. */
 	if (sc->kr_cdata.kr_rx_ring_tag) {
-		if (sc->kr_cdata.kr_rx_ring_map)
+		if (sc->kr_rdata.kr_rx_ring_paddr)
 			bus_dmamap_unload(sc->kr_cdata.kr_rx_ring_tag,
 			    sc->kr_cdata.kr_rx_ring_map);
-		if (sc->kr_cdata.kr_rx_ring_map &&
-		    sc->kr_rdata.kr_rx_ring)
+		if (sc->kr_rdata.kr_rx_ring)
 			bus_dmamem_free(sc->kr_cdata.kr_rx_ring_tag,
 			    sc->kr_rdata.kr_rx_ring,
 			    sc->kr_cdata.kr_rx_ring_map);
 		sc->kr_rdata.kr_rx_ring = NULL;
-		sc->kr_cdata.kr_rx_ring_map = NULL;
+		sc->kr_rdata.kr_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->kr_cdata.kr_rx_ring_tag);
 		sc->kr_cdata.kr_rx_ring_tag = NULL;
 	}

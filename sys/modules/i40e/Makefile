@@ -1,6 +1,4 @@
-#$FreeBSD: head/sys/modules/i40e/Makefile 266423 2014-05-19 01:21:02Z jfv $
-
-.include <src.opts.mk>
+#$FreeBSD: head/sys/modules/i40e/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .PATH:  ${.CURDIR}/../../dev/i40e
 
@@ -11,25 +9,11 @@ SRCS    += if_i40e.c i40e_txrx.c i40e_osdep.c
 # Shared source
 SRCS    += i40e_common.c i40e_nvm.c i40e_adminq.c i40e_lan_hmc.c i40e_hmc.c
 
-CFLAGS	+= -DSMP -DFORTVILLE_HW
+CFLAGS	+= -DSMP
 
 # Add Flow Director support
 # CFLAGS += -DI40E_FDIR
-# A0 hardware support
-# CFLAGS += -DFORTVILLE_A0_SUPPORT
 # Debug messages / sysctls
 # CFLAGS += -DI40E_DEBUG
-
-.if !defined(KERNBUILDDIR)
-.if ${MK_INET_SUPPORT} != "no"
-opt_inet.h:
-	@echo "#define INET 1" > ${.TARGET}
-.endif
-
-.if ${MK_INET6_SUPPORT} != "no"
-opt_inet6.h:
-	@echo "#define INET6 1" > ${.TARGET}
-.endif
-.endif
 
 .include <bsd.kmod.mk>

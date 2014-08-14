@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.h 262489 2014-02-25 18:44:33Z jhb $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.h 269699 2014-08-08 01:57:15Z kevlo $	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-
@@ -354,11 +354,11 @@ extern const char *ipsec_logsastr __P((struct secasvar *));
 extern void ipsec_dumpmbuf __P((struct mbuf *));
 
 struct m_tag;
-extern void ah4_input(struct mbuf *m, int off);
+extern int ah4_input(struct mbuf **mp, int *offp, int proto);
 extern void ah4_ctlinput(int cmd, struct sockaddr *sa, void *);
-extern void esp4_input(struct mbuf *m, int off);
+extern int esp4_input(struct mbuf **mp, int *offp, int proto);
 extern void esp4_ctlinput(int cmd, struct sockaddr *sa, void *);
-extern void ipcomp4_input(struct mbuf *m, int off);
+extern int ipcomp4_input(struct mbuf **mp, int *offp, int proto);
 extern int ipsec4_common_input(struct mbuf *m, ...);
 extern int ipsec4_common_input_cb(struct mbuf *m, struct secasvar *sav,
 			int skip, int protoff, struct m_tag *mt);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/wpa_supplicant/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/wpa/wpa_supplicant/Makefile 267715 2014-06-22 10:00:33Z jmg $
 
 .include <src.opts.mk>
 
@@ -49,8 +49,8 @@ CFLAGS+=-DCONFIG_BACKEND_FILE \
 	-DCONFIG_GAS \
 	-DPKCS12_FUNCS
 #CFLAGS+= -g
-DPADD+=	${LIBPCAP}
-LDADD+=	-lpcap
+DPADD+=	${LIBPCAP} ${LIBUTIL}
+LDADD+=	-lpcap -lutil
 
 # User customizations to the wpa_supplicant build environment
 CFLAGS+=${WPA_SUPPLICANT_CFLAGS}

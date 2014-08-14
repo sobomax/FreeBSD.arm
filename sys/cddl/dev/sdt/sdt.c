@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/sdt/sdt.c 258622 2013-11-26 08:46:27Z avg $
+ * $FreeBSD: head/sys/cddl/dev/sdt/sdt.c 267706 2014-06-21 19:29:40Z markj $
  *
  */
 
@@ -257,27 +257,28 @@ sdt_kld_load(void *arg __unused, struct linker_file *lf)
 	struct sdt_probe **probe, **p_begin, **p_end;
 	struct sdt_argtype **argtype, **a_begin, **a_end;
 
-	if (linker_file_lookup_set(lf, "sdt_providers_set", &begin, &end, NULL))
-		return;
-	for (prov = begin; prov < end; prov++)
-		sdt_create_provider(*prov);
+	if (linker_file_lookup_set(lf, "sdt_providers_set", &begin, &end,
+	    NULL) == 0) {
+		for (prov = begin; prov < end; prov++)
+			sdt_create_provider(*prov);
+	}
 
 	if (linker_file_lookup_set(lf, "sdt_probes_set", &p_begin, &p_end,
-	    NULL))
-		return;
-	for (probe = p_begin; probe < p_end; probe++) {
-		(*probe)->sdtp_lf = lf;
-		sdt_create_probe(*probe);
-		TAILQ_INIT(&(*probe)->argtype_list);
+	    NULL) == 0) {
+		for (probe = p_begin; probe < p_end; probe++) {
+			(*probe)->sdtp_lf = lf;
+			sdt_create_probe(*probe);
+			TAILQ_INIT(&(*probe)->argtype_list);
+		}
 	}
 
 	if (linker_file_lookup_set(lf, "sdt_argtypes_set", &a_begin, &a_end,
-	    NULL))
-		return;
-	for (argtype = a_begin; argtype < a_end; argtype++) {
-		(*argtype)->probe->n_args++;
-		TAILQ_INSERT_TAIL(&(*argtype)->probe->argtype_list, *argtype,
-		    argtype_entry);
+	    NULL) == 0) {
+		for (argtype = a_begin; argtype < a_end; argtype++) {
+			(*argtype)->probe->n_args++;
+			TAILQ_INSERT_TAIL(&(*argtype)->probe->argtype_list,
+			    *argtype, argtype_entry);
+		}
 	}
 }
 

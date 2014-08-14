@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sym/sym_hipd.c 259880 2013-12-25 17:28:18Z dim $");
+__FBSDID("$FreeBSD: head/sys/dev/sym/sym_hipd.c 268351 2014-07-07 00:27:09Z marcel $");
 
 #define SYM_DRIVER_NAME	"sym-1.6.5-20000902"
 
@@ -132,8 +132,6 @@ typedef	u_int32_t u32;
 #define MEMORY_BARRIER()	do { ; } while(0)
 #elif	defined	__powerpc__
 #define MEMORY_BARRIER()	__asm__ volatile("eieio; sync" : : : "memory")
-#elif	defined	__ia64__
-#define MEMORY_BARRIER()	__asm__ volatile("mf.a; mf" : : : "memory")
 #elif	defined	__sparc64__
 #define MEMORY_BARRIER()	__asm__ volatile("membar #Sync" : : : "memory")
 #elif	defined	__arm__
@@ -617,11 +615,8 @@ out_err:
 		bus_dmamap_unload(mp->dmat, vbp->dmamap);
 	if (vaddr)
 		bus_dmamem_free(mp->dmat, vaddr, vbp->dmamap);
-	if (vbp) {
-		if (vbp->dmamap)
-			bus_dmamap_destroy(mp->dmat, vbp->dmamap);
+	if (vbp)
 		__sym_mfree(&mp0, vbp, sizeof(*vbp), "VTOB");
-	}
 	return 0;
 }
 
@@ -639,7 +634,6 @@ static void ___dma_freep(m_pool_s *mp, m_addr_t m)
 		*vbpp = (*vbpp)->next;
 		bus_dmamap_unload(mp->dmat, vbp->dmamap);
 		bus_dmamem_free(mp->dmat, (void *) vbp->vaddr, vbp->dmamap);
-		bus_dmamap_destroy(mp->dmat, vbp->dmamap);
 		__sym_mfree(&mp0, vbp, sizeof(*vbp), "VTOB");
 		--mp->nump;
 	}

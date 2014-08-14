@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hpt27xx/hpt27xx_osm_bsd.c 267290 2014-06-09 18:15:05Z jhb $
+ * $FreeBSD: head/sys/dev/hpt27xx/hpt27xx_osm_bsd.c 269611 2014-08-05 23:32:53Z jhb $
  */
 
 #include <dev/hpt27xx/hpt27xx_config.h>
@@ -80,9 +80,7 @@ static int hpt_attach(device_t dev)
 	him = hpt_match(dev);
 	hba->ext_type = EXT_TYPE_HBA;
 	hba->ldm_adapter.him = him;
-#if __FreeBSD_version >=440000
 	pci_enable_busmaster(dev);
-#endif
 
 	pci_id.vid = pci_get_vendor(dev);
 	pci_id.did = pci_get_device(dev);
@@ -483,6 +481,16 @@ static void os_cmddone(PCOMMAND pCmd)
 
 static int os_buildsgl(PCOMMAND pCmd, PSG pSg, int logical)
 {
+	POS_CMDEXT ext = (POS_CMDEXT)pCmd->priv;
+	union ccb *ccb = ext->ccb;
+
+	if (logical) {
+		os_set_sgptr(pSg, (HPT_U8 *)ccb->csio.data_ptr);
+		pSg->size = ccb->csio.dxfer_len;
+		pSg->eot = 1;
+		return TRUE;
+	}
+
 	/* since we have provided physical sg, nobody will ask us to build physical sg */
 	HPT_ASSERT(0);
 	return FALSE;
@@ -555,7 +563,7 @@ static void hpt_scsi_io(PVBUS_EXT vbus_ext, union ccb *ccb)
 	vd = ldm_find_target(vbus, ccb->ccb_h.target_id);
 
 	if (!vd) {
-		ccb->ccb_h.status = CAM_TID_INVALID;
+		ccb->ccb_h.status = CAM_SEL_TIMEOUT;
 		xpt_done(ccb);
 		return;
 	}
@@ -778,12 +786,10 @@ static void hpt_action(struct cam_sim *sim, union ccb *ccb)
 		strncpy(cpi->sim_vid, "FreeBSD", SIM_IDLEN);
 		strncpy(cpi->hba_vid, "HPT   ", HBA_IDLEN);
 		strncpy(cpi->dev_name, cam_sim_name(sim), DEV_IDLEN);
-#if (__FreeBSD_version >= 800000)
 		cpi->transport = XPORT_SPI;
 		cpi->transport_version = 2;
 		cpi->protocol = PROTO_SCSI;
 		cpi->protocol_version = SCSI_REV_2;
-#endif
 		cpi->ccb_h.status = CAM_REQ_CMP;
 		break;
 	}
@@ -959,19 +965,7 @@ static struct cdevsw hpt_cdevsw = {
 	.d_close =	hpt_close,
 	.d_ioctl =	hpt_ioctl,
 	.d_name =	driver_name,
-#if __FreeBSD_version>=503000
 	.d_version =	D_VERSION,
-#endif
-#if (__FreeBSD_version>=503000 && __FreeBSD_version<600034)
-	.d_flags =	D_NEEDGIANT,
-#endif
-#if __FreeBSD_version<600034
-#if __FreeBSD_version>501000
-	.d_maj = 	MAJOR_AUTO,
-#else 
-	.d_maj = HPT_DEV_MAJOR,
-#endif
-#endif
 };
 
 static struct intr_config_hook hpt_ich;
@@ -1008,9 +1002,7 @@ static void hpt_final_init(void *dummy)
 	/* initializing hardware */
 	ldm_for_each_vbus(vbus, vbus_ext) {
 		/* make timer available here */
-#if (__FreeBSD_version >= 500000)
 		mtx_init(&vbus_ext->lock, "hptsleeplock", NULL, MTX_DEF);
-#endif
 		callout_init_mtx(&vbus_ext->timer, &vbus_ext->lock, 0);
 		if (hpt_init_vbus(vbus_ext)) {
 			os_printk("fail to initialize hardware");
@@ -1033,10 +1025,8 @@ static void hpt_final_init(void *dummy)
 				os_max_sg_descriptors,	/* nsegments */
 				0x10000,	/* maxsegsize */
 				BUS_DMA_WAITOK,		/* flags */
-#if __FreeBSD_version>502000
 				busdma_lock_mutex,	/* lockfunc */
 				&vbus_ext->lock,		/* lockfuncarg */
-#endif
 				&vbus_ext->io_dmat	/* tag */))
 		{
 			return ;
@@ -1064,13 +1054,8 @@ static void hpt_final_init(void *dummy)
 			return ;
 		}
 
-#if __FreeBSD_version > 700025
 		vbus_ext->sim = cam_sim_alloc(hpt_action, hpt_poll, driver_name,
 				vbus_ext, unit_number, &vbus_ext->lock, os_max_queue_comm, /*tagged*/8,  devq);
-#else 
-		vbus_ext->sim = cam_sim_alloc(hpt_action, hpt_poll, driver_name,
-				vbus_ext, unit_number, os_max_queue_comm, /*tagged*/8,  devq);
-#endif
 		unit_number++;
 		if (!vbus_ext->sim) {
 			os_printk("cam_sim_alloc failed");
@@ -1079,11 +1064,7 @@ static void hpt_final_init(void *dummy)
 		}
 
 		hpt_lock_vbus(vbus_ext);
-#if __FreeBSD_version > 700044
 		if (xpt_bus_register(vbus_ext->sim, NULL, 0) != CAM_SUCCESS) {
-#else 
-		if (xpt_bus_register(vbus_ext->sim, 0) != CAM_SUCCESS) {
-#endif
 			hpt_unlock_vbus(vbus_ext);
 			os_printk("xpt_bus_register failed");
 			cam_sim_free(vbus_ext->sim, /*free devq*/ TRUE);
@@ -1121,11 +1102,7 @@ static void hpt_final_init(void *dummy)
 			}
 			
 			if (bus_setup_intr(hba->pcidev, hba->irq_res, INTR_TYPE_CAM | INTR_MPSAFE,
-#if __FreeBSD_version > 700025
 				NULL, hpt_pci_intr, vbus_ext, &hba->irq_handle)) 
-#else 
-				hpt_pci_intr, vbus_ext, &hba->irq_handle)) 
-#endif
 			{
 				os_printk("can't set up interrupt");
 				return ;
@@ -1150,7 +1127,7 @@ static void hpt_final_init(void *dummy)
 	    S_IRUSR | S_IWUSR, "%s", driver_name);
 }
 
-#if defined(KLD_MODULE) && (__FreeBSD_version >= 503000)
+#if defined(KLD_MODULE)
 
 typedef struct driverlink *driverlink_t;
 struct driverlink {
@@ -1242,29 +1219,17 @@ __DRIVER_MODULE(TARGETNAME, pci, hpt_pci_driver, hpt_devclass, 0, 0);
 __MODULE_VERSION(TARGETNAME, 1);
 __MODULE_DEPEND(TARGETNAME, cam, 1, 1, 1);
 
-#if __FreeBSD_version>503000
-typedef struct cdev * ioctl_dev_t;
-#else 
-typedef dev_t ioctl_dev_t;
-#endif
-
-#if __FreeBSD_version >= 500000
-typedef	struct thread *	ioctl_thread_t;
-#else 
-typedef struct proc *	ioctl_thread_t;
-#endif
-
-static int hpt_open(ioctl_dev_t dev, int flags, int devtype, ioctl_thread_t td)
+static int hpt_open(struct cdev *dev, int flags, int devtype, struct thread *td)
 {
 	return 0;
 }
 
-static int hpt_close(ioctl_dev_t dev, int flags, int devtype, ioctl_thread_t td)
+static int hpt_close(struct cdev *dev, int flags, int devtype, struct thread *td)
 {
 	return 0;
 }
 
-static int hpt_ioctl(ioctl_dev_t dev, u_long cmd, caddr_t data, int fflag, ioctl_thread_t td)
+static int hpt_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag, struct thread *td)
 {
 	PHPT_IOCTL_PARAM piop=(PHPT_IOCTL_PARAM)data;
 	IOCTL_ARG ioctl_args;
@@ -1348,19 +1313,16 @@ static int	hpt_rescan_bus(void)
 	ldm_for_each_vbus(vbus, vbus_ext) {
 		if ((ccb = xpt_alloc_ccb()) == NULL)
 		{
-			mtx_unlock(&Giant);
 			return(ENOMEM);
 		}
 		if (xpt_create_path(&ccb->ccb_h.path, NULL, cam_sim_path(vbus_ext->sim),
 			CAM_TARGET_WILDCARD, CAM_LUN_WILDCARD) != CAM_REQ_CMP)	
 		{
 			xpt_free_ccb(ccb);
-			mtx_unlock(&Giant);
 			return(EIO);
 		}
 		xpt_rescan(ccb);
 	}
-	mtx_unlock(&Giant);
 	return(0);
 }
 

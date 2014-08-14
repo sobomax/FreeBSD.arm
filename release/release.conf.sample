@@ -1,7 +1,12 @@
 #!/bin/sh
 #
-# $FreeBSD: head/release/release.conf.sample 264343 2014-04-11 13:48:45Z gjb $
+# $FreeBSD: head/release/release.conf.sample 269640 2014-08-06 19:06:38Z gjb $
 #
+
+## Redefine environment variables here to override prototypes
+## defined in release.sh.
+#load_chroot_env() { }
+#load_target_env() { }
 
 ## Set the directory within which the release will be built.
 CHROOTDIR="/scratch"

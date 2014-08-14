@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)exec.c	8.4 (Berkeley) 6/8/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/exec.c 266932 2014-05-31 22:25:45Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/exec.c 268920 2014-07-20 12:06:52Z jilles $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -365,7 +365,7 @@ find_command(const char *name, struct cmdentry *entry, int act,
 	for (;(fullname = padvance(&path, name)) != NULL; stunalloc(fullname)) {
 		idx++;
 		if (pathopt) {
-			if (prefix("func", pathopt)) {
+			if (strncmp(pathopt, "func", 4) == 0) {
 				/* handled below */
 			} else {
 				continue; /* ignore unimplemented options */

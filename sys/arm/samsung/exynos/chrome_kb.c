@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_kb.c 266872 2014-05-30 06:45:50Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_kb.c 269702 2014-08-08 06:29:30Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_kb.c 266872 2014-05-30 06
 #include <sys/mutex.h>
 #include <sys/gpio.h>
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
@@ -57,7 +56,6 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_kb.c 266872 2014-05-30 06
 #include <sys/kbio.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 #include <machine/cpu.h>
 #include <machine/intr.h>
 
@@ -741,18 +739,18 @@ parse_dts(struct ckb_softc *sc)
 
 	if ((len = OF_getproplen(node, "google,key-rows")) <= 0)
 		return (ENXIO);
-	OF_getprop(node, "google,key-rows", &dts_value, len);
-	sc->rows = fdt32_to_cpu(dts_value);
+	OF_getencprop(node, "google,key-rows", &dts_value, len);
+	sc->rows = dts_value;
 
 	if ((len = OF_getproplen(node, "google,key-columns")) <= 0)
 		return (ENXIO);
-	OF_getprop(node, "google,key-columns", &dts_value, len);
-	sc->cols = fdt32_to_cpu(dts_value);
+	OF_getencprop(node, "google,key-columns", &dts_value, len);
+	sc->cols = dts_value;
 
 	if ((len = OF_getproplen(node, "freebsd,intr-gpio")) <= 0)
 		return (ENXIO);
-	OF_getprop(node, "freebsd,intr-gpio", &dts_value, len);
-	sc->gpio = fdt32_to_cpu(dts_value);
+	OF_getencprop(node, "freebsd,intr-gpio", &dts_value, len);
+	sc->gpio = dts_value;
 
 	if (OF_hasprop(node, "freebsd,keymap")) {
 		keymap_prop = "freebsd,keymap";

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 266907 2014-05-30 22:34:06Z bz $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 269526 2014-08-04 19:42:48Z hiren $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -275,6 +275,11 @@ tcp_twstart(struct tcpcb *tp)
 
 	tw = uma_zalloc(V_tcptw_zone, M_NOWAIT);
 	if (tw == NULL) {
+		/*
+		 * Reached limit on total number of TIMEWAIT connections
+		 * allowed. Remove a connection from TIMEWAIT queue in LRU
+		 * fashion to make room for this connection.
+		 */
 		tw = tcp_tw_2msl_reuse();
 		if (tw == NULL) {
 			tp = tcp_close(tp);

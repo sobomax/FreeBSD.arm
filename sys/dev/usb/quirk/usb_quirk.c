@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 264653 2014-04-18 16:19:33Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 269576 2014-08-05 09:35:25Z n_hibma $ */
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -562,6 +562,7 @@ static const char *usb_quirk_str[USB_QUIRK_MAX] = {
 	[UQ_MSC_EJECT_WAIT]		= "UQ_MSC_EJECT_WAIT",
 	[UQ_MSC_EJECT_SAEL_M460]	= "UQ_MSC_EJECT_SAEL_M460",
 	[UQ_MSC_EJECT_HUAWEISCSI]	= "UQ_MSC_EJECT_HUAWEISCSI",
+	[UQ_MSC_EJECT_HUAWEISCSI2]	= "UQ_MSC_EJECT_HUAWEISCSI2",
 	[UQ_MSC_EJECT_TCT]		= "UQ_MSC_EJECT_TCT",
 	[UQ_BAD_MIDI]			= "UQ_BAD_MIDI",
 	[UQ_AU_VENDOR_CLASS]		= "UQ_AU_VENDOR_CLASS",

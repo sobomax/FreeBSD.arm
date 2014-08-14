@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/usr.bin/Makefile 267486 2014-06-14 20:36:32Z gavin $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,6 @@ SUBDIR= ${_binutils} \
 	${_groff} \
 	${_rcs} \
 	sdiff \
-	send-pr \
 	${_tests} \
 	${_texinfo}
 

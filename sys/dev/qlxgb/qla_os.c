@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgb/qla_os.c 263102 2014-03-13 03:42:24Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgb/qla_os.c 267375 2014-06-11 20:44:02Z jhb $");
 
 #include "qla_os.h"
 #include "qla_reg.h"
@@ -602,6 +602,7 @@ qla_alloc_dmabuf_exit:
 void
 qla_free_dmabuf(qla_host_t *ha, qla_dma_t *dma_buf)
 {
+        bus_dmamap_unload(dma_buf->dma_tag, dma_buf->dma_map);
         bus_dmamem_free(dma_buf->dma_tag, dma_buf->dma_b, dma_buf->dma_map);
         bus_dma_tag_destroy(dma_buf->dma_tag);
 }

@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pit.c 261683 2014-02-09 20:57:26Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pit.c 269959 2014-08-14 04:21:25Z imp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -214,9 +214,9 @@ static driver_t at91_pit_driver = {
 static devclass_t at91_pit_devclass;
 
 #ifdef FDT
-DRIVER_MODULE(at91_pit, simplebus, at91_pit_driver, at91_pit_devclass, NULL,
-    NULL);
+EARLY_DRIVER_MODULE(at91_pit, simplebus, at91_pit_driver, at91_pit_devclass,
+    NULL, NULL, BUS_PASS_TIMER);
 #else
-DRIVER_MODULE(at91_pit, atmelarm, at91_pit_driver, at91_pit_devclass, NULL,
-    NULL);
+EARLY_DRIVER_MODULE(at91_pit, atmelarm, at91_pit_driver, at91_pit_devclass,
+    NULL, NULL, BUS_PASS_TIMER);
 #endif

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_da.c 267118 2014-06-05 17:13:42Z imp $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_da.c 269974 2014-08-14 13:57:17Z smh $");
 
 #include <sys/param.h>
 
@@ -967,10 +967,10 @@ static struct da_quirk_entry da_quirk_table[] =
 	},
 	{
 		/*
-		 * Corsair Force GT SSDs
+		 * Corsair Force GT & GS SSDs
 		 * 4k optimised & trim only works in 4k requests + 4k aligned
 		 */
-		{ T_DIRECT, SIP_MEDIA_FIXED, "ATA", "Corsair Force GT*", "*" },
+		{ T_DIRECT, SIP_MEDIA_FIXED, "ATA", "Corsair Force G*", "*" },
 		/*quirks*/DA_Q_4K
 	},
 	{
@@ -1111,6 +1111,14 @@ static struct da_quirk_entry da_quirk_table[] =
 	},
 	{
 		/*
+		 * Samsung 840 SSDs
+		 * 4k optimised & trim only works in 4k requests + 4k aligned
+		 */
+		{ T_DIRECT, SIP_MEDIA_FIXED, "ATA", "Samsung SSD 840*", "*" },
+		/*quirks*/DA_Q_4K
+	},
+	{
+		/*
 		 * SuperTalent TeraDrive CT SSDs
 		 * 4k optimised & trim only works in 4k requests + 4k aligned
 		 */
@@ -1188,18 +1196,14 @@ static int da_send_ordered = DA_DEFAULT_SEND_ORDERED;
 
 static SYSCTL_NODE(_kern_cam, OID_AUTO, da, CTLFLAG_RD, 0,
             "CAM Direct Access Disk driver");
-SYSCTL_INT(_kern_cam_da, OID_AUTO, poll_period, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_da, OID_AUTO, poll_period, CTLFLAG_RWTUN,
            &da_poll_period, 0, "Media polling period in seconds");
-TUNABLE_INT("kern.cam.da.poll_period", &da_poll_period);
-SYSCTL_INT(_kern_cam_da, OID_AUTO, retry_count, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_da, OID_AUTO, retry_count, CTLFLAG_RWTUN,
            &da_retry_count, 0, "Normal I/O retry count");
-TUNABLE_INT("kern.cam.da.retry_count", &da_retry_count);
-SYSCTL_INT(_kern_cam_da, OID_AUTO, default_timeout, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_da, OID_AUTO, default_timeout, CTLFLAG_RWTUN,
            &da_default_timeout, 0, "Normal I/O timeout (in seconds)");
-TUNABLE_INT("kern.cam.da.default_timeout", &da_default_timeout);
-SYSCTL_INT(_kern_cam_da, OID_AUTO, send_ordered, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_da, OID_AUTO, send_ordered, CTLFLAG_RWTUN,
            &da_send_ordered, 0, "Send Ordered Tags");
-TUNABLE_INT("kern.cam.da.send_ordered", &da_send_ordered);
 
 /*
  * DA_ORDEREDTAG_INTERVAL determines how often, relative

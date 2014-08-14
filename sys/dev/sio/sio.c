@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sio/sio.c 237693 2012-06-28 07:28:39Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/sio/sio.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_compat.h"
 #include "opt_gdb.h"
@@ -372,7 +372,7 @@ sysctl_machdep_comdefaultrate(SYSCTL_HANDLER_ARGS)
 	return error;
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, conspeed, CTLTYPE_INT | CTLFLAG_RW,
+SYSCTL_PROC(_machdep, OID_AUTO, conspeed, CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_NOFETCH,
 	    0, 0, sysctl_machdep_comdefaultrate, "I", "");
 TUNABLE_INT("machdep.conspeed", __DEVOLATILE(int *, &comdefaultrate));
 

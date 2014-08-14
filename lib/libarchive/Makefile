@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libarchive/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libarchive/Makefile 268351 2014-07-07 00:27:09Z marcel $
 .include <src.opts.mk>
 
 LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
@@ -41,7 +41,7 @@ SHARED_CFLAGS+=	-DHAVE_ICONV=1 -DHAVE_ICONV_H=1 -DICONV_CONST=const
 .endif
 
 .if ${MACHINE_ARCH:Marm*} != "" || ${MACHINE_ARCH:Mmips*} != "" || \
-	${MACHINE_ARCH:Msparc64*} != "" || ${MACHINE_ARCH:Mia64*} != ""
+	${MACHINE_ARCH:Msparc64*} != ""
 NO_WCAST_ALIGN=	yes
 .if ${MACHINE_ARCH:M*64*} == ""
 CFLAGS+=	-DPPMD_32BIT

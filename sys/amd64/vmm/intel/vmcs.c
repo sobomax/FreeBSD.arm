@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.c 266550 2014-05-22 17:22:37Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.c 268777 2014-07-16 21:26:26Z neel $
  */
 
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vmcs.c 266550 2014-05-22 17:22:37Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vmcs.c 268777 2014-07-16 21:26:26Z neel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -103,6 +103,14 @@ vmcs_field_encoding(int ident)
 		return (VMCS_GUEST_LDTR_SELECTOR);
 	case VM_REG_GUEST_EFER:
 		return (VMCS_GUEST_IA32_EFER);
+	case VM_REG_GUEST_PDPTE0:
+		return (VMCS_GUEST_PDPTE0);
+	case VM_REG_GUEST_PDPTE1:
+		return (VMCS_GUEST_PDPTE1);
+	case VM_REG_GUEST_PDPTE2:
+		return (VMCS_GUEST_PDPTE2);
+	case VM_REG_GUEST_PDPTE3:
+		return (VMCS_GUEST_PDPTE3);
 	default:
 		return (-1);
 	}

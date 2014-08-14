@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkimg/mkimg.h 266176 2014-05-15 19:19:57Z marcel $
+ * $FreeBSD: head/usr.bin/mkimg/mkimg.h 268236 2014-07-03 20:31:43Z marcel $
  */
 
 #ifndef _MKIMG_MKIMG_H_
@@ -50,6 +50,7 @@ struct part {
 extern STAILQ_HEAD(partlisthead, part) partlist;
 extern u_int nparts;
 
+extern u_int unit_testing;
 extern u_int verbose;
 
 extern u_int ncyls;
@@ -70,5 +71,8 @@ round_block(lba_t n)
 #else
 ssize_t sparse_write(int, const void *, size_t);
 #endif
+
+struct uuid;
+void mkimg_uuid(struct uuid *);
 
 #endif /* _MKIMG_MKIMG_H_ */

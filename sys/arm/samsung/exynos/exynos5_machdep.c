@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_machdep.c 266301 2014-05-17 11:27:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_machdep.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
 
 #define	_ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -42,8 +42,6 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_machdep.c 266301 2014-05
 #include <machine/devmap.h>
 #include <machine/machdep.h>
 #include <machine/platform.h> 
-
-#include <dev/fdt/fdt_common.h>
 
 vm_offset_t
 platform_lastaddr(void)
@@ -73,6 +71,9 @@ platform_late_init(void)
 int
 platform_devmap_init(void)
 {
+
+	/* CHIP ID */
+	arm_devmap_add_entry(0x10000000, 0x100000);
 
 	/* UART */
 	arm_devmap_add_entry(0x12C00000, 0x100000);

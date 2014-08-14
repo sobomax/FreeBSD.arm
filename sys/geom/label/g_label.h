@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/label/g_label.h 249508 2013-04-15 16:09:24Z ivoras $
+ * $FreeBSD: head/sys/geom/label/g_label.h 267992 2014-06-28 03:56:17Z hselasky $
  */
 
 #ifndef	_G_LABEL_H_
@@ -65,9 +65,7 @@ SYSCTL_DECL(_kern_geom_label);
 	SYSCTL_NODE(_kern_geom_label, OID_AUTO, kind, CTLFLAG_RD,	\
 	    NULL, "");							\
 	SYSCTL_INT(_kern_geom_label_##kind, OID_AUTO, enable, 		\
-	    CTLFLAG_RW, &label.ld_enabled, 1, descr);			\
-	TUNABLE_INT("kern.geom.label." __XSTRING(kind) ".enable",	\
-	    &label.ld_enabled)
+	    CTLFLAG_RWTUN, &label.ld_enabled, 1, descr)
 
 typedef void g_label_taste_t (struct g_consumer *cp, char *label, size_t size);
 

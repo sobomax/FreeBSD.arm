@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/usb/Makefile 266832 2014-05-29 10:46:09Z hselasky $
+# $FreeBSD: head/sys/modules/usb/Makefile 269812 2014-08-11 14:50:49Z imp $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -25,7 +25,8 @@
 # SUCH DAMAGE.
 #
 
-.include <src.opts.mk>
+SYSDIR?=${.CURDIR}/../..
+.include "${SYSDIR}/conf/kern.opts.mk"
 
 #
 # Check for common USB debug flags to pass when building the USB

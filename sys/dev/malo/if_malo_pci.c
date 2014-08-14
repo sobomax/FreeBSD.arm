@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/dev/malo/if_malo_pci.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/malo/if_malo_pci.c 267992 2014-06-28 03:56:17Z hselasky $");
 #endif
 
 /*
@@ -86,9 +86,8 @@ static SYSCTL_NODE(_hw_malo, OID_AUTO, pci, CTLFLAG_RD, 0,
     "Marvell 88W8335 driver PCI parameters");
 
 static int msi_disable = 0;				/* MSI disabled  */
-SYSCTL_INT(_hw_malo_pci, OID_AUTO, msi_disable, CTLFLAG_RW, &msi_disable,
+SYSCTL_INT(_hw_malo_pci, OID_AUTO, msi_disable, CTLFLAG_RWTUN, &msi_disable,
 	    0, "MSI disabled");
-TUNABLE_INT("hw.malo.pci.msi_disable", &msi_disable);
 
 /*
  * Devices supported by this driver.

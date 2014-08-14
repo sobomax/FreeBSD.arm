@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/zdb/Makefile 254949 2013-08-27 04:01:31Z will $
+# $FreeBSD: head/cddl/usr.sbin/zdb/Makefile 268075 2014-07-01 06:43:15Z delphij $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/zdb
 
@@ -15,6 +15,7 @@ CFLAGS+= -I${.CURDIR}/../../../cddl/compat/opensolaris/lib/libumem
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libnvpair
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libuutil/common
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzfs/common
+CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzfs_core/common
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzpool/common
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common/fs/zfs
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common

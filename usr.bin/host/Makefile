@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/host/Makefile 255949 2013-09-30 17:23:45Z des $
+# $FreeBSD: head/usr.bin/host/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 LDNSDIR=	${.CURDIR}/../../contrib/ldns
 LDNSHOSTDIR=	${.CURDIR}/../../contrib/ldns-host
@@ -15,7 +15,7 @@ host.1: ldns-host.1
 
 CFLAGS+=	-I${LDNSDIR}
 DPADD+=		${LIBLDNS} ${LIBCRYPTO}
-LDADD+=		-lldns -lcrypto
+LDADD+=		${LDLDNS} -lcrypto
 USEPRIVATELIB=	ldns
 
 .include <bsd.prog.mk>

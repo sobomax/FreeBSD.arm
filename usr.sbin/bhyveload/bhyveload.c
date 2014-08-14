@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267216 2014-06-07 21:36:52Z neel $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267959 2014-06-27 15:20:34Z jhb $
  */
 
 /*-
@@ -51,11 +51,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267216 2014-06-07 21:36:52Z neel $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267959 2014-06-27 15:20:34Z jhb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267216 2014-06-07 21:36:52Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267959 2014-06-27 15:20:34Z jhb $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -505,8 +505,8 @@ static void
 cb_getmem(void *arg, uint64_t *ret_lowmem, uint64_t *ret_highmem)
 {
 
-	vm_get_memory_seg(ctx, 0, ret_lowmem, NULL);
-	vm_get_memory_seg(ctx, 4 * GB, ret_highmem, NULL);
+	*ret_lowmem = vm_get_lowmem_size(ctx);
+	*ret_highmem = vm_get_highmem_size(ctx);
 }
 
 struct env {
@@ -629,8 +629,8 @@ usage(void)
 {
 
 	fprintf(stderr,
-	    "usage: %s [-m mem-size] [-d <disk-path>] [-h <host-path>]\n"
-	    "       %*s [-e <name=value>] [-c <console-device>] <vmname>\n",
+	    "usage: %s [-c <console-device>] [-d <disk-path>] [-e <name=value>]\n"
+	    "       %*s [-h <host-path>] [-m mem-size] <vmname>\n",
 	    progname,
 	    (int)strlen(progname), "");
 	exit(1);

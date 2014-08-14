@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/init.h 263014 2014-03-11 10:27:57Z royger $
+ * $FreeBSD: head/sys/x86/include/init.h 269515 2014-08-04 09:05:28Z royger $
  */
 
 #ifndef __X86_INIT_H__
@@ -44,5 +44,14 @@ struct init_ops {
 };
 
 extern struct init_ops init_ops;
+
+/* Knob to disable acpi_cpu devices */
+extern bool acpi_cpu_disabled;
+
+/* Knob to disable acpi_hpet device */
+extern bool acpi_hpet_disabled;
+
+/* Knob to disable acpi_timer device */
+extern bool acpi_timer_disabled;
 
 #endif /* __X86_INIT_H__ */

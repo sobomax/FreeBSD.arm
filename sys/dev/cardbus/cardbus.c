@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cardbus/cardbus.c 261790 2014-02-12 04:30:37Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/cardbus/cardbus.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,16 +57,12 @@ __FBSDID("$FreeBSD: head/sys/dev/cardbus/cardbus.c 261790 2014-02-12 04:30:37Z j
 static SYSCTL_NODE(_hw, OID_AUTO, cardbus, CTLFLAG_RD, 0, "CardBus parameters");
 
 int    cardbus_debug = 0;
-TUNABLE_INT("hw.cardbus.debug", &cardbus_debug);
-SYSCTL_INT(_hw_cardbus, OID_AUTO, debug, CTLFLAG_RW,
-    &cardbus_debug, 0,
-  "CardBus debug");
+SYSCTL_INT(_hw_cardbus, OID_AUTO, debug, CTLFLAG_RWTUN,
+    &cardbus_debug, 0, "CardBus debug");
 
 int    cardbus_cis_debug = 0;
-TUNABLE_INT("hw.cardbus.cis_debug", &cardbus_cis_debug);
-SYSCTL_INT(_hw_cardbus, OID_AUTO, cis_debug, CTLFLAG_RW,
-    &cardbus_cis_debug, 0,
-  "CardBus CIS debug");
+SYSCTL_INT(_hw_cardbus, OID_AUTO, cis_debug, CTLFLAG_RWTUN,
+    &cardbus_cis_debug, 0, "CardBus CIS debug");
 
 #define	DPRINTF(a) if (cardbus_debug) printf a
 #define	DEVPRINTF(x) if (cardbus_debug) device_printf x

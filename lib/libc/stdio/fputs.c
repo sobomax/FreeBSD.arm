@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)fputs.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/fputs.c 249810 2013-04-23 14:36:44Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/fputs.c 268985 2014-07-22 16:39:11Z pfg $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -55,7 +55,7 @@ fputs(const char * __restrict s, FILE * __restrict fp)
 	struct __siov iov;
 
 	iov.iov_base = (void *)s;
-	iov.iov_len = uio.uio_resid = strlen(s);
+	uio.uio_resid = iov.iov_len = strlen(s);
 	uio.uio_iov = &iov;
 	uio.uio_iovcnt = 1;
 	FLOCKFILE(fp);

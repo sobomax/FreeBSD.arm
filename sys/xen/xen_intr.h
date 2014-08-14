@@ -28,7 +28,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/xen/xen_intr.h 255331 2013-09-06 22:17:02Z gibbs $
+ * $FreeBSD: head/sys/xen/xen_intr.h 269507 2014-08-04 08:42:29Z royger $
  */
 #ifndef _XEN_INTR_H_
 #define _XEN_INTR_H_
@@ -157,6 +157,18 @@ int xen_intr_bind_virq(device_t dev, u_int virq, u_int cpu,
 int xen_intr_alloc_and_bind_ipi(device_t dev, u_int cpu,
 	driver_filter_t filter, enum intr_type irqflags,
 	xen_intr_handle_t *handlep);
+
+/**
+ * Register a physical interrupt vector and setup the interrupt source.
+ *
+ * \param vector        The global vector to use.
+ * \param trig          Default trigger method.
+ * \param pol           Default polarity of the interrupt.
+ *
+ * \returns  0 on success, otherwise an errno.
+ */
+int xen_register_pirq(int vector, enum intr_trigger trig,
+	enum intr_polarity pol);
 
 /**
  * Unbind an interrupt handler from its interrupt source.

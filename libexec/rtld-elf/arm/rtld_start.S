@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/rtld_start.S 239031 2012-08-04 05:30:20Z andrew $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/rtld_start.S 268310 2014-07-06 10:24:06Z andrew $");
 
 	.text
 	.align	0
@@ -77,7 +77,7 @@ __FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/rtld_start.S 239031 2012-08-04 05:
  *	lr = &GOT[2]
  */
 _rtld_bind_start:
-	stmdb	sp!,{r0-r4,sl,fp}
+	stmdb	sp!,{r0-r5,sl,fp}
 
 	sub	r1, ip, lr		/* r1 = 4 * (n + 1) */
 	sub	r1, r1, #4		/* r1 = 4 * n */
@@ -86,11 +86,14 @@ _rtld_bind_start:
 	ldr	r0, [lr, #-4]		/* get obj ptr from GOT[1] */
 	mov	r4, ip			/* save GOT location */
 
+	mov	r5, sp			/* Save the stack pointer */
+	bic	sp, sp, #7		/* Align the stack pointer */
 	bl	_rtld_bind		/* Call the binder */
+	mov	sp, r5			/* Restore the old stack pointer */
 
 	str	r0, [r4]		/* save address in GOT */
 	mov	ip, r0			/* save new address */
 
-	ldmia	sp!,{r0-r4,sl,fp,lr}	/* restore the stack */
+	ldmia	sp!,{r0-r5,sl,fp,lr}	/* restore the stack */
 	mov	pc, ip			/* jump to the new address */
 

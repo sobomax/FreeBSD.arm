@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vt/colors/vt_termcolors.h 256530 2013-10-15 12:54:47Z ray $
+ * $FreeBSD: head/sys/dev/vt/colors/vt_termcolors.h 269783 2014-08-10 17:04:10Z dumbbell $
  */
 
 enum vt_color_format {
@@ -45,6 +45,6 @@ enum vt_color_format {
 };
 
 /* Helper to fill color map used by driver */
-int vt_generate_vga_palette(uint32_t *palette, int format, uint32_t rmax,
+int vt_generate_cons_palette(uint32_t *palette, int format, uint32_t rmax,
     int roffset, uint32_t gmax, int goffset, uint32_t bmax, int boffset);
 

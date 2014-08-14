@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91.c 262925 2014-03-08 06:06:50Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91.c 269960 2014-08-14 04:21:31Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -255,7 +255,7 @@ at91_cpu_add_builtin_children(device_t dev, const struct cpu_devs *walker)
 {
 	int i;
 
-	for (i = 1; walker->name; i++, walker++) {
+	for (i = 0; walker->name; i++, walker++) {
 		at91_add_child(dev, i, walker->name, walker->unit,
 		    walker->mem_base, walker->mem_len, walker->irq0,
 		    walker->irq1, walker->irq2);

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/x86bios/x86bios.c 227309 2011-11-07 15:43:11Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/x86bios/x86bios.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_x86bios.h"
 
@@ -70,12 +70,10 @@ static struct mtx x86bios_lock;
 static SYSCTL_NODE(_debug, OID_AUTO, x86bios, CTLFLAG_RD, NULL,
     "x86bios debugging");
 static int x86bios_trace_call;
-TUNABLE_INT("debug.x86bios.call", &x86bios_trace_call);
-SYSCTL_INT(_debug_x86bios, OID_AUTO, call, CTLFLAG_RW, &x86bios_trace_call, 0,
+SYSCTL_INT(_debug_x86bios, OID_AUTO, call, CTLFLAG_RWTUN, &x86bios_trace_call, 0,
     "Trace far function calls");
 static int x86bios_trace_int;
-TUNABLE_INT("debug.x86bios.int", &x86bios_trace_int);
-SYSCTL_INT(_debug_x86bios, OID_AUTO, int, CTLFLAG_RW, &x86bios_trace_int, 0,
+SYSCTL_INT(_debug_x86bios, OID_AUTO, int, CTLFLAG_RWTUN, &x86bios_trace_int, 0,
     "Trace software interrupt handlers");
 
 #ifdef X86BIOS_NATIVE_VM86

@@ -23,13 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/virtio/virtio.h 266951 2014-06-01 18:16:01Z bryanv $
+ * $FreeBSD: head/sys/dev/virtio/virtio.h 267522 2014-06-16 04:25:04Z bryanv $
  */
 
 #ifndef _VIRTIO_H_
 #define _VIRTIO_H_
 
 #include <dev/virtio/virtio_ids.h>
+#include <dev/virtio/virtio_config.h>
 
 struct vq_alloc_info;
 

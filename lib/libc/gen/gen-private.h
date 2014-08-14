@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/gen-private.h 235647 2012-05-19 12:44:27Z gleb $
+ * $FreeBSD: head/lib/libc/gen/gen-private.h 268531 2014-07-11 16:16:26Z jhb $
  */
 
 #ifndef _GEN_PRIVATE_H_
@@ -48,7 +48,6 @@ struct _dirdesc {
 	char	*dd_buf;	/* data buffer */
 	int	dd_len;		/* size of data buffer */
 	long	dd_seek;	/* magic cookie returned by getdirentries */
-	long	dd_rewind;	/* magic cookie for rewinding */
 	int	dd_flags;	/* flags for readdir */
 	struct pthread_mutex	*dd_lock;	/* lock */
 	struct _telldir *dd_td;	/* telldir position recording */

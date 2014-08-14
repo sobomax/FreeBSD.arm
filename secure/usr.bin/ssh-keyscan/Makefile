@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.bin/ssh-keyscan/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/secure/usr.bin/ssh-keyscan/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -7,7 +7,7 @@ SRCS=	ssh-keyscan.c roaming_dummy.c
 CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
 
 DPADD=	${LIBSSH}
-LDADD=	-lssh
+LDADD=	${LDSSH}
 USEPRIVATELIB= ssh
 
 .if ${MK_LDNS} != "no"

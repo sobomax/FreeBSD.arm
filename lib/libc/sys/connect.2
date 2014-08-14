@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)connect.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: head/lib/libc/sys/connect.2 212269 2010-09-06 21:39:54Z gjb $
+.\" $FreeBSD: head/lib/libc/sys/connect.2 267909 2014-06-26 10:21:00Z pluknet $
 .\"
-.Dd September 5, 2010
+.Dd June 26, 2014
 .Dt CONNECT 2
 .Os
 .Sh NAME
@@ -80,6 +80,10 @@ The
 .Fa s
 argument
 is not a valid descriptor.
+.It Bq Er EINVAL
+The
+.Fa namelen
+argument is not a valid length for the address family.
 .It Bq Er ENOTSOCK
 The
 .Fa s

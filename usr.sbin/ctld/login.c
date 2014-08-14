@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/login.c 264532 2014-04-16 11:03:21Z trasz $
+ * $FreeBSD: head/usr.sbin/ctld/login.c 269183 2014-07-28 12:47:09Z mav $
  */
 
 #include <assert.h>
@@ -850,6 +850,9 @@ login(struct connection *conn)
 		log_errx(1, "received Login PDU with non-zero TSIH");
 	}
 
+	memcpy(conn->conn_initiator_isid, bhslr->bhslr_isid,
+	    sizeof(conn->conn_initiator_isid));
+
 	/*
 	 * XXX: Implement the C flag some day.
 	 */
@@ -951,7 +954,7 @@ login(struct connection *conn)
 	}
 
 	if (auth_portal_defined(ag)) {
-		if (auth_portal_find(ag, conn->conn_initiator_addr) == NULL) {
+		if (auth_portal_find(ag, &conn->conn_initiator_sa) == NULL) {
 			login_send_error(request, 0x02, 0x02);
 			log_errx(1, "initiator does not match allowed "
 			    "initiator portals");

@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/cc/cc_vegas/Makefile 218152 2011-02-01 06:17:00Z lstewart $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/sys/modules/cc/cc_vegas/Makefile 269538 2014-08-04 22:34:12Z imp $
 
 .PATH: ${.CURDIR}/../../../netinet/cc
 KMOD=	cc_vegas

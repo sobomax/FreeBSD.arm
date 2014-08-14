@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/libgcov/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/lib/libgcov/Makefile 267845 2014-06-24 22:15:27Z imp $
 
 MK_PROFILE=	no
 MK_SSP=		no
@@ -46,7 +46,7 @@ COMMONHDRS=	tm.h tconfig.h gcov-iov.h options.h
 CLEANFILES+=	${COMMONHDRS} cs-tm.h cs-tconfig.h options.h optionlist
 
 ${COMMONHDRS}: ${.CURDIR}/../../usr.bin/cc/cc_tools/Makefile
-	${MAKE} -f ${.ALLSRC} MFILE=${.ALLSRC} GCCDIR=${GCCDIR} ${.TARGET}
+	(cd ${.CURDIR}; ${MAKE} -f ${.ALLSRC} MFILE=${.ALLSRC} GCCDIR=${GCCDIR} ${.TARGET})
 
 ${OBJS} beforedepend: ${COMMONHDRS}
 

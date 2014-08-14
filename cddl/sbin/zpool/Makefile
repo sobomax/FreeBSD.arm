@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/sbin/zpool/Makefile 248571 2013-03-21 08:38:03Z mm $
+# $FreeBSD: head/cddl/sbin/zpool/Makefile 268075 2014-07-01 06:43:15Z delphij $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/zpool
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/stat/common
@@ -18,6 +18,7 @@ CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/head
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libuutil/common
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libumem/common
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzfs/common
+CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzfs_core/common
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libnvpair
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/zfs
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common

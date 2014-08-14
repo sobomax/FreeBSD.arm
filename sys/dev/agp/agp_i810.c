@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/agp/agp_i810.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/agp/agp_i810.c 267548 2014-06-16 18:15:27Z attilio $");
 
 #if 0
 #define	KTR_AGP_I810	KTR_DEV
@@ -2009,7 +2009,7 @@ agp_i810_free_memory(device_t dev, struct agp_memory *mem)
 			VM_OBJECT_WLOCK(mem->am_obj);
 			m = vm_page_lookup(mem->am_obj, 0);
 			vm_page_lock(m);
-			vm_page_unwire(m, 0);
+			vm_page_unwire(m, PQ_INACTIVE);
 			vm_page_unlock(m);
 			VM_OBJECT_WUNLOCK(mem->am_obj);
 		} else {

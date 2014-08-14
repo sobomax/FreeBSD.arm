@@ -37,7 +37,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/buffer.c 243450 2012-11-23 13:43:51Z mav $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/buffer.c 267762 2014-06-23 03:45:39Z kan $");
 
 struct snd_dbuf *
 sndbuf_create(device_t dev, char *drv, char *desc, struct pcm_channel *channel)
@@ -139,7 +139,7 @@ sndbuf_free(struct snd_dbuf *b)
 
 	if (b->buf) {
 		if (b->flags & SNDBUF_F_MANAGED) {
-			if (b->dmamap)
+			if (b->buf_addr)
 				bus_dmamap_unload(b->dmatag, b->dmamap);
 			if (b->dmatag)
 				bus_dmamem_free(b->dmatag, b->buf, b->dmamap);

@@ -51,7 +51,7 @@
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include <machine/asmacros.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 263034 2014-03-11 16:53:03Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 269390 2014-08-01 18:24:44Z ian $");
 
 	.text	
 	.align	0
@@ -280,12 +280,12 @@ ASENTRY_NP(swi_entry)
 	 * that a newly created thread appears to return from a SWI just like
 	 * the parent thread that created it.
 	 */
-ASENTRY_NP(swi_exit)
+ASEENTRY_NP(swi_exit)
 	DO_AST				/* Handle pending signals. */
 	PULLFRAME			/* Deallocate trapframe. */
 	movs	pc, lr			/* Return to userland. */
 	STOP_UNWINDING			/* Don't unwind into user mode. */
-END(swi_exit)
+EEND(swi_exit)
 END(swi_entry)
 
 /*

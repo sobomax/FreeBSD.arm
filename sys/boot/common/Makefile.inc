@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/common/Makefile.inc 262452 2014-02-24 18:44:03Z rwatson $
+# $FreeBSD: head/sys/boot/common/Makefile.inc 269621 2014-08-06 00:36:04Z marcel $
 
 SRCS+=	boot.c commands.c console.c devopen.c interp.c 
 SRCS+=	interp_backslash.c interp_parse.c ls.c misc.c 
@@ -6,8 +6,6 @@ SRCS+=	module.c panic.c
 
 .if ${MACHINE} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 SRCS+=	load_elf32.c load_elf32_obj.c reloc_elf32.c
-SRCS+=	load_elf64.c load_elf64_obj.c reloc_elf64.c
-.elif ${MACHINE_CPUARCH} == "ia64"
 SRCS+=	load_elf64.c load_elf64_obj.c reloc_elf64.c
 .elif ${MACHINE} == "pc98"
 SRCS+=	load_elf32.c load_elf32_obj.c reloc_elf32.c
@@ -72,6 +70,11 @@ MAN+=	../forth/version.4th.8
 
 .if defined(BOOT_PROMPT_123)
 CFLAGS+=	-DBOOT_PROMPT_123
+.endif
+
+.if defined(LOADER_INSTALL_SUPPORT)
+SRCS+=	install.c
+CFLAGS+=-I${.CURDIR}/../../../../lib/libstand
 .endif
 
 MAN+=	loader.8

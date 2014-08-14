@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/cam_periph.c 262741 2014-03-04 15:07:00Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/cam_periph.c 267638 2014-06-19 09:08:20Z marius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -597,7 +597,7 @@ cam_periph_invalidate(struct cam_periph *periph)
 		return;
 
 	CAM_DEBUG(periph->path, CAM_DEBUG_INFO, ("Periph invalidated\n"));
-	if (periph->flags & CAM_PERIPH_ANNOUNCED)
+	if ((periph->flags & CAM_PERIPH_ANNOUNCED) && !rebooting)
 		xpt_denounce_periph(periph);
 	periph->flags |= CAM_PERIPH_INVALID;
 	periph->flags &= ~CAM_PERIPH_NEW_DEV_FOUND;
@@ -663,9 +663,9 @@ camperiphfree(struct cam_periph *periph)
 	xpt_remove_periph(periph);
 
 	xpt_unlock_buses();
-	if (periph->flags & CAM_PERIPH_ANNOUNCED) {
+	if ((periph->flags & CAM_PERIPH_ANNOUNCED) && !rebooting)
 		xpt_print(periph->path, "Periph destroyed\n");
-	} else
+	else
 		CAM_DEBUG(periph->path, CAM_DEBUG_INFO, ("Periph destroyed\n"));
 
 	if (periph->flags & CAM_PERIPH_NEW_DEV_FOUND) {

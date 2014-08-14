@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_timer.c 266422 2014-05-18 22:39:01Z adrian $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_timer.c 268027 2014-06-30 04:26:29Z adrian $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -127,7 +127,11 @@ SYSCTL_INT(_net_inet_tcp, OID_AUTO, rexmit_drop_options, CTLFLAG_RW,
     &tcp_rexmit_drop_options, 0,
     "Drop TCP options from 3rd and later retransmitted SYN");
 
+#ifdef	RSS
+static int	per_cpu_timers = 1;
+#else
 static int	per_cpu_timers = 0;
+#endif
 SYSCTL_INT(_net_inet_tcp, OID_AUTO, per_cpu_timers, CTLFLAG_RW,
     &per_cpu_timers , 0, "run tcp timers on all cpus");
 

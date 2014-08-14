@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/i386/include/vmparam.h 257854 2013-11-08 16:25:00Z alc $
+ * $FreeBSD: head/sys/i386/include/vmparam.h 269577 2014-08-05 09:44:10Z glebius $
  */
 
 
@@ -197,5 +197,10 @@
 #ifndef VM_MAX_AUTOTUNE_MAXUSERS
 #define VM_MAX_AUTOTUNE_MAXUSERS 384
 #endif
+
+#define	SFBUF
+#define	SFBUF_MAP
+#define	SFBUF_CPUSET
+#define	SFBUF_PROCESS_PAGE
 
 #endif /* _MACHINE_VMPARAM_H_ */

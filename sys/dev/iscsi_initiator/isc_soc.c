@@ -28,7 +28,7 @@
  | $Id: isc_soc.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_soc.c 254842 2013-08-25 10:57:09Z andre $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_soc.c 268530 2014-07-11 14:34:29Z glebius $");
 
 #include "opt_iscsi_initiator.h"
 
@@ -68,7 +68,7 @@ static int ou_refcnt = 0;
 /*
  | function for freeing external storage for mbuf
  */
-static int
+static void
 ext_free(struct mbuf *m, void *a, void *b)
 {
      pduq_t *pq = b;
@@ -78,7 +78,6 @@ ext_free(struct mbuf *m, void *a, void *b)
 	  free(pq->buf, M_ISCSIBUF);
 	  pq->buf = NULL;
      }
-     return (EXT_FREE_OK);
 }
 
 int
@@ -134,7 +133,7 @@ isc_sendPDU(isc_session_t *sp, pduq_t *pq)
 	       int l;
 
 	       MGET(md, M_WAITOK, MT_DATA);
-	       md->m_ext.ref_cnt = &ou_refcnt;
+	       md->m_ext.ext_cnt = &ou_refcnt;
 	       l = min(MCLBYTES, len);
 	       debug(4, "setting ext_free(arg=%p len/l=%d/%d)", pq->buf, len, l);
 	       MEXTADD(md, pp->ds_addr + off, l, ext_free, 

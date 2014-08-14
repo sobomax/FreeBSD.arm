@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_var.h 266974 2014-06-02 17:54:39Z marcel $
+ * $FreeBSD: head/sys/net/if_var.h 269243 2014-07-29 15:01:29Z glebius $
  */
 
 #ifndef	_NET_IF_VAR_H_
@@ -366,9 +366,6 @@ struct ifaddr {
 		(int, struct rtentry *, struct rt_addrinfo *);
 	u_short	ifa_flags;		/* mostly rt_flags for cloning */
 	u_int	ifa_refcnt;		/* references to this structure */
-	int	ifa_metric;		/* cost of going out this interface */
-	int (*ifa_claim_addr)		/* check if an addr goes to this if */
-		(struct ifaddr *, struct sockaddr *);
 
 	counter_u64_t	ifa_ipackets;
 	counter_u64_t	ifa_opackets;	 

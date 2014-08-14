@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.bin/vi/Makefile 266157 2014-05-15 16:44:25Z brooks $
+# $FreeBSD: head/usr.bin/vi/Makefile 268804 2014-07-17 18:24:34Z brooks $
 #
 
 .include <src.opts.mk>
@@ -36,14 +36,9 @@ CFLAGS+=-I${.CURDIR} -I${SRCDIR} -I${SRCDIR}/regex
 DPADD=		${LIBUTIL}
 LDADD=		-lutil
 
-.if defined(RESCUE) || defined(RELEASE_CRUNCH)
-DPADD+=		${LIBNCURSES}
-LDADD+=		-lncurses
-.else
 CFLAGS+=	-DUSE_WIDECHAR
 DPADD+=		${LIBNCURSESW}
 LDADD+=		-lncursesw
-.endif
 
 .if ${MK_ICONV} == "yes" && !defined(RESCUE) && !defined(RELEASE_CRUNCH)
 CFLAGS+=	-DUSE_ICONV

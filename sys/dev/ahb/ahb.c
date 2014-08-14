@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ahb/ahb.c 246713 2013-02-12 16:57:20Z kib $
+ * $FreeBSD: head/sys/dev/ahb/ahb.c 267365 2014-06-11 17:03:14Z jhb $
  */
 
 #include <sys/param.h>
@@ -421,7 +421,6 @@ ahbfree(struct ahb_softc *ahb)
 	case 3:
 		bus_dmamem_free(ahb->ecb_dmat, ahb->ecb_array,
 				ahb->ecb_dmamap);
-		bus_dmamap_destroy(ahb->ecb_dmat, ahb->ecb_dmamap);
 	case 2:
 		bus_dma_tag_destroy(ahb->ecb_dmat);
 	case 1:

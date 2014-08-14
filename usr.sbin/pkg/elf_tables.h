@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/pkg/elf_tables.h 255468 2013-09-11 06:42:55Z bapt $
+ * $FreeBSD: head/usr.sbin/pkg/elf_tables.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 #ifndef ELF_TABLES_H_
@@ -42,7 +42,6 @@ static struct _elf_corres mach_corres[] = {
 	{ EM_PPC, "powerpc" },
 	{ EM_PPC64, "powerpc" },
 	{ EM_SPARCV9, "sparc64" },
-	{ EM_IA_64, "ia64" },
 	{ -1, NULL },
 };
 

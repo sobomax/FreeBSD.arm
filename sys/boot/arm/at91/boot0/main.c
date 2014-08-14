@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/arm/at91/boot0/main.c 157926 2006-04-21 07:45:57Z imp $
+ * $FreeBSD: head/sys/boot/arm/at91/boot0/main.c 269111 2014-07-26 03:33:19Z ian $
  */
 
 #include "at91rm9200.h"
@@ -29,6 +29,8 @@
 #include "at91rm9200_lowlevel.h"
 
 typedef void fn_t(void);
+
+int main(void);
 
 int
 main(void)

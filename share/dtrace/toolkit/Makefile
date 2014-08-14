@@ -1,14 +1,14 @@
-#$FreeBSD: head/share/dtrace/toolkit/Makefile 235613 2012-05-18 16:40:15Z gnn $
+#$FreeBSD: head/share/dtrace/toolkit/Makefile 269764 2014-08-09 20:25:17Z jmg $
 #
 # Install scripts from the DTraceToolkit
 #
 DTRACETOOLKIT= ../../../cddl/contrib/dtracetoolkit
 
 SCRIPTS=	${DTRACETOOLKIT}/execsnoop \
-		${DTRACETOOLKIT}/hotuser   \
 		${DTRACETOOLKIT}/hotkernel \
+		${DTRACETOOLKIT}/hotuser   \
 		${DTRACETOOLKIT}/opensnoop \
-		${DTRACETOOLKIT}/procsystime \
+		${DTRACETOOLKIT}/procsystime
 
 SCRIPTSDIR= ${SHAREDIR}/dtrace/toolkit
 

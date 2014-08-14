@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/ath/athaggrstats/Makefile 262827 2014-03-06 07:45:53Z adrian $
+# $FreeBSD: head/tools/tools/ath/athaggrstats/Makefile 269951 2014-08-13 19:43:22Z adrian $
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 
@@ -12,8 +12,8 @@ CLEANFILES+=	opt_ah.h
 
 CFLAGS+=-DATH_SUPPORT_ANI
 CFLAGS+=-DATH_SUPPORT_TDMA
-USEPRIVATELIB=
-LDADD=-lbsdstat
+USEPRIVATELIB=bsdstat
+LDADD=	${LDBSDSTAT}
 
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h

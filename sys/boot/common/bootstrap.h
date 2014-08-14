@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/common/bootstrap.h 262345 2014-02-22 22:03:26Z ian $
+ * $FreeBSD: head/sys/boot/common/bootstrap.h 269618 2014-08-06 00:06:25Z marcel $
  */
 
 #ifndef _BOOTSTRAP_H_
@@ -59,7 +59,7 @@ extern char	command_errbuf[];	/* XXX blah, length */
 #define CMD_ERROR	1
 
 /* interp.c */
-void	interact(void);
+void	interact(const char *rc);
 int	include(const char *filename);
 
 /* interp_backslash.c */
@@ -69,7 +69,7 @@ char	*backslash(char *str);
 int	parse(int *argc, char ***argv, char *str);
 
 /* interp_forth.c */
-void	bf_init(void);
+void	bf_init(const char *rc);
 int	bf_run(char *line);
 
 /* boot.c */
@@ -229,6 +229,7 @@ extern struct preloaded_file	*preloaded_files;
 
 int			mod_load(char *name, struct mod_depend *verinfo, int argc, char *argv[]);
 int			mod_loadkld(const char *name, int argc, char *argv[]);
+void			unload(void);
 
 struct preloaded_file *file_alloc(void);
 struct preloaded_file *file_findfile(char *name, char *type);

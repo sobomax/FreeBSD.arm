@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/ppc/Makefile 211690 2010-08-23 06:13:29Z imp $
+# $FreeBSD: head/sys/modules/ppc/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
 .PATH:	${.CURDIR}/../../dev/ppc
 KMOD=	ppc
@@ -15,10 +15,6 @@ SRCS+=	ppc_acpi.c ppc_isa.c
 SRCS+=	ppc_acpi.c
 .endif
 SRCS+=	ppc_isa.c
-.endif
-
-.if ${MACHINE_CPUARCH} == "ia64"
-SRCS+=	ppc_acpi.c
 .endif
 
 .include <bsd.kmod.mk>

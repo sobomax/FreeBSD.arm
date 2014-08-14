@@ -1,5 +1,8 @@
-# $FreeBSD: head/sys/modules/bxe/Makefile 265411 2014-05-06 02:32:27Z davidcs $
-BXE	= ${.CURDIR}/../../dev/bxe
+# $FreeBSD: head/sys/modules/bxe/Makefile 269130 2014-07-26 17:24:58Z marcel $
+
+SYSDIR	?= ${.CURDIR}/../..
+
+BXE	= ${SYSDIR}/dev/bxe
 .PATH:	${BXE}
 
 KMOD	= if_bxe

@@ -1,5 +1,5 @@
-# $FreeBSD: head/gnu/lib/libreadline/Makefile 56804 2000-01-29 12:01:52Z obrien $
+# $FreeBSD: head/gnu/lib/libreadline/Makefile 268461 2014-07-09 15:52:30Z bapt $
 
-SUBDIR = history readline
+SUBDIR = readline
 
 .include <bsd.subdir.mk>

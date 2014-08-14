@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_x86.c 265016 2014-04-27 15:58:07Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_x86.c 268540 2014-07-11 23:41:56Z nwhitehorn $
  */
 
 #include <sys/types.h>
@@ -69,7 +69,7 @@ bootpart_size(const char *scheme) {
 		return (0);
 
 	if (strcmp(platform, "BIOS") == 0)
-		return (64*1024);
+		return (512*1024);
 	else 
 		return (800*1024);
 

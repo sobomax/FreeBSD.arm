@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/i686_mem.c 217506 2011-01-17 17:30:35Z jkim $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/i686_mem.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -65,7 +65,6 @@ static char *mem_owner_bios = "BIOS";
 	(((curr) & ~MDF_ATTRMASK) | ((new) & MDF_ATTRMASK))
 
 static int mtrrs_disabled;
-TUNABLE_INT("machdep.disable_mtrrs", &mtrrs_disabled);
 SYSCTL_INT(_machdep, OID_AUTO, disable_mtrrs, CTLFLAG_RDTUN,
     &mtrrs_disabled, 0, "Disable i686 MTRRs.");
 

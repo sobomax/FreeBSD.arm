@@ -1,5 +1,5 @@
 #	@(#)bsd.README	8.2 (Berkeley) 4/2/94
-# $FreeBSD: head/share/mk/bsd.README 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/share/mk/bsd.README 269099 2014-07-25 21:10:30Z imp $
 
 This is the README file for the "include" files for the FreeBSD
 source tree.  The files are installed in /usr/share/mk, and are by
@@ -231,7 +231,9 @@ LDADD		Additional loader objects.  Usually used for libraries.
 
 			LDADD=-lutil -lcompat
 
-LDFLAGS		Additional loader flags.
+LDFLAGS		Additional loader flags. Passed to the loader via CC,
+		since that's used to link programs as well, so loader
+		specific flags need to be prefixed with -Wl, to work.
 
 LINKS		The list of binary links; should be full pathnames, the
 		linked-to file coming first, followed by the linked

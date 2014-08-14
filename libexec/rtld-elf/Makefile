@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/rtld-elf/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/libexec/rtld-elf/Makefile 267679 2014-06-20 17:14:59Z jonathan $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -79,6 +79,10 @@ beforeinstall:
 .PATH: ${.CURDIR}/${RTLD_ARCH}
 
 NO_PIE=	yes
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.symver.mk>
 .include <bsd.prog.mk>

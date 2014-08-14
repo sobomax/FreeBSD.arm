@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/hwpmc/Makefile 261420 2014-02-03 01:16:32Z jhibbits $
+# $FreeBSD: head/sys/modules/hwpmc/Makefile 268351 2014-07-07 00:27:09Z marcel $
 #
 
 .PATH: ${.CURDIR}/../../dev/hwpmc
@@ -22,10 +22,6 @@ SRCS+=	hwpmc_arm.c
 SRCS+=	hwpmc_amd.c hwpmc_core.c hwpmc_intel.c hwpmc_piv.c hwpmc_ppro.c
 SRCS+=	hwpmc_pentium.c hwpmc_tsc.c hwpmc_x86.c hwpmc_uncore.c
 SRCS+=	device_if.h bus_if.h
-.endif
-
-.if ${MACHINE_CPUARCH} == "ia64"
-SRCS+=	hwpmc_ia64.c
 .endif
 
 .if ${MACHINE_CPUARCH} == "powerpc"

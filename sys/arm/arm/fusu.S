@@ -36,7 +36,7 @@
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include "assym.s"
-__FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 263057 2014-03-11 22:47:04Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 269390 2014-08-01 18:24:44Z ian $");
 
 #ifdef _ARM_ARCH_6
 #define GET_PCB(tmp) \
@@ -54,8 +54,8 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 263057 2014-03-11 22:47:04Z ian $");
  * Fetch an int from the user's address space.
  */
 
-ENTRY_NP(casuword32)
 ENTRY(casuword)
+EENTRY_NP(casuword32)
 	GET_PCB(r3)
 	ldr	r3, [r3]
 
@@ -91,7 +91,7 @@ ENTRY(casuword)
 	mov	r1, #0x00000000
 	str	r1, [r3, #PCB_ONFAULT]
 	RET
-END(casuword32)
+EEND(casuword32)
 END(casuword)
 
 /*
@@ -110,8 +110,8 @@ END(casuword)
  * Fetch an int from the user's address space.
  */
 
-ENTRY_NP(fuword32)
 ENTRY(fuword)
+EENTRY_NP(fuword32)
 	GET_PCB(r2)
 	ldr	r2, [r2]
 
@@ -277,8 +277,8 @@ fusupcbfaulttext:
  * Store an int in the user's address space.
  */
 
-ENTRY_NP(suword32)
 ENTRY(suword)
+EENTRY_NP(suword32)
 	GET_PCB(r2)
 	ldr	r2, [r2]
 
@@ -390,4 +390,3 @@ ENTRY(subyte)
 	str	r0, [r2, #PCB_ONFAULT]
 	RET
 END(subyte)
-

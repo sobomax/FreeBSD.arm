@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)segments.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD: head/sys/x86/include/segments.h 255040 2013-08-29 19:52:18Z gibbs $
+ * $FreeBSD: head/sys/x86/include/segments.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 #ifndef _X86_SEGMENTS_H_
@@ -219,7 +219,7 @@ union descriptor {
 #define	IDT_DTRACE_RET	0x92	/* DTrace pid provider Interrupt Vector */
 #define	IDT_EVTCHN	0x93	/* Xen HVM Event Channel Interrupt Vector */
 
-#if defined(__i386__) || defined(__ia64__)
+#if defined(__i386__)
 /*
  * Entries in the Global Descriptor Table (GDT)
  * Note that each 4 entries share a single 32 byte L1 cache line.
@@ -264,7 +264,7 @@ union descriptor {
 #define	LBSDICALLS_SEL	16	/* BSDI system call gate */
 #define	NLDT		(LBSDICALLS_SEL + 1)
 
-#else /* !__i386__ && !__ia64__ */
+#else /* !__i386__ */
 /*
  * Entries in the Global Descriptor Table (GDT)
  */
@@ -282,6 +282,6 @@ union descriptor {
 #define	GUSERLDT_SEL	11	/* LDT */
 /* slot 12 is second half of GUSERLDT_SEL */
 #define	NGDT 		13
-#endif /* __i386__ || __ia64__ */
+#endif /* __i386__ */
 
 #endif /* !_X86_SEGMENTS_H_ */

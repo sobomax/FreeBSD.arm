@@ -25,10 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/raw.c 266176 2014-05-15 19:19:57Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/raw.c 268236 2014-07-03 20:31:43Z marcel $");
 
 #include <sys/types.h>
-#include <sys/apm.h>
 #include <sys/endian.h>
 #include <sys/errno.h>
 #include <stdlib.h>

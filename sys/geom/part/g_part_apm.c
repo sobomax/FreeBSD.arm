@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_apm.c 266880 2014-05-30 10:35:51Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_apm.c 268256 2014-07-04 15:55:32Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/apm.h>
@@ -147,11 +147,6 @@ apm_parse_type(const char *type, char *buf, size_t bufsz)
 	alias = g_part_alias_name(G_PART_ALIAS_APPLE_UFS);
 	if (!strcasecmp(type, alias)) {
 		strcpy(buf, APM_ENT_TYPE_APPLE_UFS);
-		return (0);
-	}
-	alias = g_part_alias_name(G_PART_ALIAS_FREEBSD_BOOT);
-	if (!strcasecmp(type, alias)) {
-		strcpy(buf, APM_ENT_TYPE_APPLE_BOOT);
 		return (0);
 	}
 	alias = g_part_alias_name(G_PART_ALIAS_FREEBSD);

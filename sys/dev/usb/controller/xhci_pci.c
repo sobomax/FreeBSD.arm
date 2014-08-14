@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/xhci_pci.c 265015 2014-04-27 15:41:44Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/xhci_pci.c 268735 2014-07-16 06:14:41Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -150,6 +150,8 @@ static int
 xhci_pci_port_route(device_t self, uint32_t set, uint32_t clear)
 {
 	uint32_t temp;
+	uint32_t usb3_mask;
+	uint32_t usb2_mask;
 
 	temp = pci_read_config(self, PCI_XHCI_INTEL_USB3_PSSEN, 4) |
 	    pci_read_config(self, PCI_XHCI_INTEL_XUSB2PR, 4);
@@ -157,8 +159,12 @@ xhci_pci_port_route(device_t self, uint32_t set, uint32_t clear)
 	temp |= set;
 	temp &= ~clear;
 
-	pci_write_config(self, PCI_XHCI_INTEL_USB3_PSSEN, temp, 4);
-	pci_write_config(self, PCI_XHCI_INTEL_XUSB2PR, temp, 4);
+	/* Don't set bits which the hardware doesn't support */
+	usb3_mask = pci_read_config(self, PCI_XHCI_INTEL_USB3PRM, 4);
+	usb2_mask = pci_read_config(self, PCI_XHCI_INTEL_USB2PRM, 4);
+
+	pci_write_config(self, PCI_XHCI_INTEL_USB3_PSSEN, temp & usb3_mask, 4);
+	pci_write_config(self, PCI_XHCI_INTEL_XUSB2PR, temp & usb2_mask, 4);
 
 	device_printf(self, "Port routing mask set to 0x%08x\n", temp);
 

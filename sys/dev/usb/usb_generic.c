@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_generic.c 267240 2014-06-08 20:10:29Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_generic.c 267992 2014-06-28 03:56:17Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -131,9 +131,8 @@ struct usb_fifo_methods usb_ugen_methods = {
 static int ugen_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, ugen, CTLFLAG_RW, 0, "USB generic");
-SYSCTL_INT(_hw_usb_ugen, OID_AUTO, debug, CTLFLAG_RW | CTLFLAG_TUN, &ugen_debug,
+SYSCTL_INT(_hw_usb_ugen, OID_AUTO, debug, CTLFLAG_RWTUN, &ugen_debug,
     0, "Debug level");
-TUNABLE_INT("hw.usb.ugen.debug", &ugen_debug);
 #endif
 
 

@@ -20,7 +20,7 @@
  *          Wolfram Schneider <wosch@FreeBSD.org>
  *          Thomas Moestl <tmoestl@gmx.net>
  *
- * $FreeBSD: head/usr.bin/top/machine.c 266906 2014-05-30 21:18:53Z jhb $
+ * $FreeBSD: head/usr.bin/top/machine.c 267685 2014-06-20 19:54:23Z jhb $
  */
 
 #include <sys/param.h>
@@ -850,6 +850,8 @@ get_process_info(struct system_info *si, struct process_select *sel,
 			continue;
 
 		PCTCPU(pp) = proc_calc_pctcpu(pp);
+		if (sel->thread && PCTCPU(pp) > 1.0)
+			PCTCPU(pp) = 1.0;
 		if (displaymode == DISP_CPU && !show_idle &&
 		    (!proc_used_cpu(pp) ||
 		     pp->ki_stat == SSTOP || pp->ki_stat == SIDL))

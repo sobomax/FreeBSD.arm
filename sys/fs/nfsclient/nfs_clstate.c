@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clstate.c 259801 2013-12-24 00:48:39Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clstate.c 268115 2014-07-01 20:47:16Z rmacklem $");
 
 /*
  * These functions implement the client side state handling for NFSv4.
@@ -281,6 +281,23 @@ nfscl_open(vnode_t vp, u_int8_t *nfhp, int fhlen, u_int32_t amode, int usedeleg,
 	    newonep);
 
 	/*
+	 * Now, check the mode on the open and return the appropriate
+	 * value.
+	 */
+	if (retp != NULL) {
+		if (nfhp != NULL && dp != NULL && nop == NULL)
+			/* new local open on delegation */
+			*retp = NFSCLOPEN_SETCRED;
+		else
+			*retp = NFSCLOPEN_OK;
+	}
+	if (op != NULL && (amode & ~(op->nfso_mode))) {
+		op->nfso_mode |= amode;
+		if (retp != NULL && dp == NULL)
+			*retp = NFSCLOPEN_DOOPEN;
+	}
+
+	/*
 	 * Serialize modifications to the open owner for multiple threads
 	 * within the same process using a read/write sleep lock.
 	 */
@@ -295,23 +312,6 @@ nfscl_open(vnode_t vp, u_int8_t *nfhp, int fhlen, u_int32_t amode, int usedeleg,
 		*owpp = owp;
 	if (opp != NULL)
 		*opp = op;
-	if (retp != NULL) {
-		if (nfhp != NULL && dp != NULL && nop == NULL)
-			/* new local open on delegation */
-			*retp = NFSCLOPEN_SETCRED;
-		else
-			*retp = NFSCLOPEN_OK;
-	}
-
-	/*
-	 * Now, check the mode on the open and return the appropriate
-	 * value.
-	 */
-	if (op != NULL && (amode & ~(op->nfso_mode))) {
-		op->nfso_mode |= amode;
-		if (retp != NULL && dp == NULL)
-			*retp = NFSCLOPEN_DOOPEN;
-	}
 	return (0);
 }
 
@@ -3548,7 +3548,7 @@ out:
 		if (clp != NULL) {
 			nfsv4_seqsess_cacherep(slotid,
 			    NFSMNT_MDSSESSION(clp->nfsc_nmp)->nfsess_cbslots,
-			    rep);
+			    NFSERR_OK, &rep);
 			NFSUNLOCKCLSTATE();
 		} else {
 			NFSUNLOCKCLSTATE();

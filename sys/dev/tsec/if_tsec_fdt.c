@@ -30,7 +30,7 @@
  * FDT 'simple-bus' attachment for Freescale TSEC controller.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec_fdt.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec_fdt.c 269132 2014-07-26 17:57:13Z marcel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -101,8 +101,6 @@ static driver_t tsec_fdt_driver = {
 };
 
 DRIVER_MODULE(tsec, simplebus, tsec_fdt_driver, tsec_devclass, 0, 0);
-MODULE_DEPEND(tsec, simplebus, 1, 1, 1);
-MODULE_DEPEND(tsec, ether, 1, 1, 1);
 
 static int
 tsec_fdt_probe(device_t dev)

@@ -26,7 +26,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/pl190.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/pl190.c 269605 2014-08-05 18:51:51Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -152,7 +152,8 @@ static driver_t pl190_intc_driver = {
 
 static devclass_t pl190_intc_devclass;
 
-DRIVER_MODULE(intc, simplebus, pl190_intc_driver, pl190_intc_devclass, 0, 0);
+EARLY_DRIVER_MODULE(intc, simplebus, pl190_intc_driver, pl190_intc_devclass, 
+    0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_MIDDLE);
 
 int
 arm_get_next_irq(int last_irq)

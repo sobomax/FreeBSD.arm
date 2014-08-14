@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/usr.bin/cc/Makefile 268508 2014-07-10 21:11:48Z imp $
 
 .include <src.opts.mk>
 
@@ -12,12 +12,7 @@ SUBDIR+= cpp
 .endif
 
 .if ${MK_CXX} != "no"
-.if ${MK_GNUCXX} != "no"
-SUBDIR+= cc1plus c++ 
-.endif
-# This should be moved into the above block once c++filt from elftoolchain or
-# similar is provided.
-SUBDIR+= c++filt
+SUBDIR+= cc1plus c++ c++filt
 .endif
 
 .if ${MK_GCOV} != "no"

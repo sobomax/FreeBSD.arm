@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/common/main.c 263267 2014-03-17 16:10:42Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/common/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 #include <stand.h>
 
@@ -492,7 +492,7 @@ main(void)
 	archsw.arch_readin = uboot_readin;
 	archsw.arch_autoload = uboot_autoload;
 
-	interact();				/* doesn't return */
+	interact(NULL);				/* doesn't return */
 
 	return (0);
 }

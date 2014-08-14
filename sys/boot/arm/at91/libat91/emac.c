@@ -19,7 +19,7 @@
  * only.
  * END_BLOCK
  * 
- * $FreeBSD: head/sys/boot/arm/at91/libat91/emac.c 172991 2007-10-25 22:50:25Z cognet $
+ * $FreeBSD: head/sys/boot/arm/at91/libat91/emac.c 269110 2014-07-26 03:19:13Z ian $
  ******************************************************************************/
 
 #include "at91rm9200.h"
@@ -96,7 +96,8 @@ GetServerAddress(void)
 	memcpy(p_ARP->target_ip, serverIPAddr, 4);
 
 	// wait until transmit is available
-	while (!(*AT91C_EMAC_TSR & AT91C_EMAC_BNQ)) ;
+	while (!(*AT91C_EMAC_TSR & AT91C_EMAC_BNQ)) 
+		continue;
 
   	*AT91C_EMAC_TSR |= AT91C_EMAC_COMP;
 	*AT91C_EMAC_TAR = (unsigned)transmitBuffer;
@@ -157,7 +158,8 @@ Send_TFTP_Packet(char *tftpData, unsigned tftpLength)
 
 	udpHdr->udp_cksum = SWAP16(t_checksum);
 
-	while (!(*AT91C_EMAC_TSR & AT91C_EMAC_BNQ)) ;
+	while (!(*AT91C_EMAC_TSR & AT91C_EMAC_BNQ))
+		continue;
 
   	*AT91C_EMAC_TSR |= AT91C_EMAC_COMP;
 	*AT91C_EMAC_TAR = (unsigned)tftpSendPacket;

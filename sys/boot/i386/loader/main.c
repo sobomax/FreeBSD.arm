@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 241293 2012-10-06 19:47:24Z avg $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -192,7 +192,12 @@ main(void)
     
     bios_getsmap();
 
-    interact();			/* doesn't return */
+#ifdef LOADER_TFTP_SUPPORT
+    if (kargs->bootflags & KARGS_FLAGS_PXE)
+	interact(pxe_default_rc());
+    else
+#endif
+    interact(NULL);
 
     /* if we ever get here, it is an error */
     return (1);

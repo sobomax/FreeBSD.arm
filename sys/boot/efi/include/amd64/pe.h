@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/amd64/pe.h 263115 2014-03-13 18:17:18Z emaste $ */
+/* $FreeBSD: head/sys/boot/efi/include/amd64/pe.h 268351 2014-07-07 00:27:09Z marcel $ */
 /* 
     PE32+ header file
  */
@@ -498,7 +498,6 @@ typedef struct _IMAGE_BASE_RELOCATION {
 #define IMAGE_REL_BASED_HIGHLOW               3
 #define IMAGE_REL_BASED_HIGHADJ               4
 #define IMAGE_REL_BASED_MIPS_JMPADDR          5
-#define IMAGE_REL_BASED_IA64_IMM64            9
 #define IMAGE_REL_BASED_DIR64                 10
 
 //

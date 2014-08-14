@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *      $FreeBSD: head/sys/sys/sbuf.h 249377 2013-04-11 19:49:18Z trociny $
+ *      $FreeBSD: head/sys/sys/sbuf.h 269179 2014-07-28 07:20:22Z gahr $
  */
 
 #ifndef _SYS_SBUF_H_

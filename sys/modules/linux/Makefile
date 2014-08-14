@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/linux/Makefile 258541 2013-11-25 07:38:45Z attilio $
+# $FreeBSD: head/sys/modules/linux/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32
@@ -56,8 +56,6 @@ linux${SFX}_genassym.o: linux${SFX}_genassym.c linux.h @ machine x86
 	${CC} -c ${CFLAGS:N-fno-common} ${.IMPSRC}
 
 .if !defined(KERNBUILDDIR)
-opt_inet6.h:
-	echo "#define INET6 1" > ${.TARGET}
 .if defined(KTR)
 CFLAGS+=	-DKTR
 .endif

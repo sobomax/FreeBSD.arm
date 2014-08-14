@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/kadmin/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kadmin/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG=	kadmin
 MAN=	kadmin.8
@@ -29,11 +29,11 @@ CFLAGS+=-I${KRB5DIR}/lib/asn1 -I${KRB5DIR}/lib/krb5 -I${KRB5DIR}/lib/roken \
 DPADD=	${LIBKADM5CLNT} ${LIBKADM5SRV} ${LIBHDB} ${LIBKRB5} ${LIBHX509} \
 	${LIBSL} ${LIBROKEN} ${LIBVERS} ${LIBASN1} \
 	${LIBCRYPTO} ${LIBCRYPT} ${LIBCOM_ERR} \
-	${LIBEDIT} ${LIBNCURSES} ${LDAPDPADD}
+	${LIBEDIT} ${LIBNCURSESW} ${LDAPDPADD}
 LDADD=	-lkadm5clnt -lkadm5srv -lhdb -lkrb5 -lhx509 \
 	${LIBSL} -lroken ${LIBVERS} -lasn1 \
 	-lcrypto -lcrypt -lcom_err \
-	-ledit -lncurses ${LDAPLDADD}
+	-ledit -lncursesw ${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
 
 NO_PIE=	yes

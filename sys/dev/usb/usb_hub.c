@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_hub.c 267240 2014-06-08 20:10:29Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_hub.c 267992 2014-06-28 03:56:17Z hselasky $ */
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -86,9 +86,8 @@ enum {
 static int uhub_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, uhub, CTLFLAG_RW, 0, "USB HUB");
-SYSCTL_INT(_hw_usb_uhub, OID_AUTO, debug, CTLFLAG_RW | CTLFLAG_TUN, &uhub_debug, 0,
+SYSCTL_INT(_hw_usb_uhub, OID_AUTO, debug, CTLFLAG_RWTUN, &uhub_debug, 0,
     "Debug level");
-TUNABLE_INT("hw.usb.uhub.debug", &uhub_debug);
 #endif
 
 #if USB_HAVE_POWERD

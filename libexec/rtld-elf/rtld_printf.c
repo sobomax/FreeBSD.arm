@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/rtld_printf.c 232729 2012-03-09 16:21:40Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/rtld_printf.c 267678 2014-06-20 17:08:32Z jonathan $
  */
 
 #include <sys/param.h>
@@ -426,6 +426,18 @@ number:
 		}
 	}
 #undef PCHAR
+}
+
+int
+rtld_snprintf(char *buf, size_t bufsize, const char *fmt, ...)
+{
+	va_list ap;
+	int retval;
+
+	va_start(ap, fmt);
+	retval = rtld_vsnprintf(buf, bufsize, fmt, ap);
+	va_end(ap);
+	return (retval);
 }
 
 int

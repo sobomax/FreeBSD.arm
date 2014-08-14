@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/bus.h 266568 2014-05-23 00:20:53Z imp $
+ * $FreeBSD: head/sys/sys/bus.h 269596 2014-08-05 17:22:48Z ian $
  */
 
 #ifndef _SYS_BUS_H_
@@ -567,6 +567,12 @@ void	bus_data_generation_update(void);
 #define	BUS_PASS_TIMER		50	/* Timers and clocks. */
 #define	BUS_PASS_SCHEDULER	60	/* Start scheduler. */
 #define	BUS_PASS_DEFAULT	__INT_MAX /* Everything else. */
+
+#define	BUS_PASS_ORDER_FIRST	0
+#define	BUS_PASS_ORDER_EARLY	2
+#define	BUS_PASS_ORDER_MIDDLE	5
+#define	BUS_PASS_ORDER_LATE	7
+#define	BUS_PASS_ORDER_LAST	9
 
 extern int bus_current_pass;
 

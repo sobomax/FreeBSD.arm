@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drm_drv.c 215367 2010-11-16 03:43:06Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drm_drv.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /** @file drm_drv.c
  * The catch-all file for DRM device support, including module setup/teardown,
@@ -132,7 +132,6 @@ static struct cdevsw drm_cdevsw = {
 };
 
 static int drm_msi = 1;	/* Enable by default. */
-TUNABLE_INT("hw.drm.msi", &drm_msi);
 SYSCTL_NODE(_hw, OID_AUTO, drm, CTLFLAG_RW, NULL, "DRM device");
 SYSCTL_INT(_hw_drm, OID_AUTO, msi, CTLFLAG_RDTUN, &drm_msi, 1,
     "Enable MSI interrupts for drm devices");

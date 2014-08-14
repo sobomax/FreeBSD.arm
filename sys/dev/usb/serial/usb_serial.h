@@ -1,5 +1,5 @@
 /*	$NetBSD: ucomvar.h,v 1.9 2001/01/23 21:56:17 augustss Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/serial/usb_serial.h 263289 2014-03-18 01:40:25Z emaste $	*/
+/*	$FreeBSD: head/sys/dev/usb/serial/usb_serial.h 268080 2014-07-01 07:30:29Z hselasky $	*/
 
 /*-
  * Copyright (c) 2001-2002, Shunsuke Akiyama <akiyama@jp.FreeBSD.org>.
@@ -195,7 +195,7 @@ struct ucom_softc {
 #define	UCOM_MTX_LOCK(sc) mtx_lock((sc)->sc_mtx)
 #define	UCOM_MTX_UNLOCK(sc) mtx_unlock((sc)->sc_mtx)
 #define	UCOM_UNLOAD_DRAIN(x) \
-SYSUNINIT(var, SI_SUB_KLD - 3, SI_ORDER_ANY, ucom_drain_all, 0)
+SYSUNINIT(var, SI_SUB_KLD - 2, SI_ORDER_ANY, ucom_drain_all, 0)
 
 #define	ucom_cfg_do_request(udev,com,req,ptr,flags,timo) \
     usbd_do_request_proc(udev,&(com)->sc_super->sc_tq,req,ptr,flags,NULL,timo)

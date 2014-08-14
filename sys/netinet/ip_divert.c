@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_divert.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_divert.c 269699 2014-08-08 01:57:15Z kevlo $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -173,12 +173,14 @@ div_destroy(void)
  * IPPROTO_DIVERT is not in the real IP protocol number space; this
  * function should never be called.  Just in case, drop any packets.
  */
-static void
-div_input(struct mbuf *m, int off)
+static int
+div_input(struct mbuf **mp, int *offp, int proto)
 {
+	struct mbuf *m = *mp;
 
 	KMOD_IPSTAT_INC(ips_noproto);
 	m_freem(m);
+	return (IPPROTO_DONE);
 }
 
 /*

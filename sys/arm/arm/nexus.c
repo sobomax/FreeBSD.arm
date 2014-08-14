@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/nexus.c 261513 2014-02-05 14:44:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/nexus.c 269959 2014-08-14 04:21:25Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -125,7 +125,12 @@ static driver_t nexus_driver = {
 	nexus_methods,
 	1			/* no softc */
 };
+#ifdef ARM_DEVICE_MULTIPASS
+EARLY_DRIVER_MODULE(nexus, root, nexus_driver, nexus_devclass, 0, 0, 
+    BUS_PASS_BUS + BUS_PASS_ORDER_EARLY);
+#else
 DRIVER_MODULE(nexus, root, nexus_driver, nexus_devclass, 0, 0);
+#endif
 
 static int
 nexus_probe(device_t dev)
@@ -357,4 +362,3 @@ nexus_ofw_map_intr(device_t dev, device_t child, phandle_t iparent, int icells,
 	return (interrupt);
 }
 #endif
- 

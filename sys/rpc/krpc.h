@@ -25,7 +25,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/rpc/krpc.h 258578 2013-11-25 19:04:36Z hrs $
+ * $FreeBSD: head/sys/rpc/krpc.h 268115 2014-07-01 20:47:16Z rmacklem $
  */
 
 #ifndef _RPC_KRPC_H_
@@ -36,6 +36,10 @@
  * Definitions now shared between client and server RPC for backchannels.
  */
 #define MCALL_MSG_SIZE 24
+
+void clnt_bck_svccall(void *, struct mbuf *, uint32_t);
+enum clnt_stat clnt_bck_call(CLIENT *, struct rpc_callextra *, rpcproc_t,
+    struct mbuf *, struct mbuf **, struct timeval, SVCXPRT *);
 
 /*
  * A pending RPC request which awaits a reply. Requests which have

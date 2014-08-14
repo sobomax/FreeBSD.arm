@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_vnops.c 265275 2014-05-03 16:11:55Z kib $ */
+/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_vnops.c 267564 2014-06-17 07:11:00Z kib $ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-
@@ -501,12 +501,9 @@ msdosfs_setattr(ap)
 	if (vap->va_atime.tv_sec != VNOVAL || vap->va_mtime.tv_sec != VNOVAL) {
 		if (vp->v_mount->mnt_flag & MNT_RDONLY)
 			return (EROFS);
-		if (vap->va_vaflags & VA_UTIMES_NULL) {
-			error = VOP_ACCESS(vp, VADMIN, cred, td); 
-			if (error)
-				error = VOP_ACCESS(vp, VWRITE, cred, td);
-		} else
-			error = VOP_ACCESS(vp, VADMIN, cred, td);
+		error = vn_utimes_perm(vp, vap, cred, td);
+		if (error != 0)
+			return (error);
 		if ((pmp->pm_flags & MSDOSFSMNT_NOWIN95) == 0 &&
 		    vap->va_atime.tv_sec != VNOVAL) {
 			dep->de_flag &= ~DE_ACCESS;

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_sockbuf.c 262867 2014-03-06 20:24:15Z asomers $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_sockbuf.c 268430 2014-07-08 21:54:23Z delphij $");
 
 #include "opt_param.h"
 
@@ -1071,6 +1071,11 @@ sbcreatecontrol(caddr_t p, int size, int type, int level)
 	m->m_len = 0;
 	KASSERT(CMSG_SPACE((u_int)size) <= M_TRAILINGSPACE(m),
 	    ("sbcreatecontrol: short mbuf"));
+	/*
+	 * Don't leave the padding between the msg header and the
+	 * cmsg data and the padding after the cmsg data un-initialized.
+	 */
+	bzero(cp, CMSG_SPACE((u_int)size));
 	if (p != NULL)
 		(void)memcpy(CMSG_DATA(cp), p, size);
 	m->m_len = CMSG_SPACE(size);

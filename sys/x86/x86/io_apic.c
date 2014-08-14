@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/io_apic.c 261520 2014-02-05 18:13:27Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/io_apic.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_isa.h"
 
@@ -134,7 +134,6 @@ static SYSCTL_NODE(_hw, OID_AUTO, apic, CTLFLAG_RD, 0, "APIC options");
 static int enable_extint;
 SYSCTL_INT(_hw_apic, OID_AUTO, enable_extint, CTLFLAG_RDTUN, &enable_extint, 0,
     "Enable the ExtINT pin in the first I/O APIC");
-TUNABLE_INT("hw.apic.enable_extint", &enable_extint);
 
 static __inline void
 _ioapic_eoi_source(struct intsrc *isrc)

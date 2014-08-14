@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: vmparam.h,v 1.11 2000/02/11 19:25:16 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/vmparam.h 257854 2013-11-08 16:25:00Z alc $
+ * $FreeBSD: head/sys/powerpc/include/vmparam.h 269577 2014-08-05 09:44:10Z glebius $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -197,4 +197,18 @@ struct pmap_physseg {
 
 #define	ZERO_REGION_SIZE	(64 * 1024)	/* 64KB */
 
+/*
+ * On 32-bit OEA, the only purpose for which sf_buf is used is to implement
+ * an opaque pointer required by the machine-independent parts of the kernel.
+ * That pointer references the vm_page that is "mapped" by the sf_buf.  The
+ * actual mapping is provided by the direct virtual-to-physical mapping.
+ *
+ * On OEA64 and Book-E, we need to do something a little more complicated. Use
+ * the runtime-detected hw_direct_map to pick between the two cases. Our
+ * friends in vm_machdep.c will do the same to ensure nothing gets confused.
+ */
+#define	SFBUF
+#define	SFBUF_NOMD
+#define	SFBUF_OPTIONAL_DIRECT_MAP	hw_direct_map
+ 
 #endif /* _MACHINE_VMPARAM_H_ */

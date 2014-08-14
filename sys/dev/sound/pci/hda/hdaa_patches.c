@@ -42,7 +42,7 @@
 #include <dev/sound/pci/hda/hdaa.h>
 #include <dev/sound/pci/hda/hda_reg.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdaa_patches.c 264831 2014-04-23 19:25:59Z marius $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdaa_patches.c 269158 2014-07-27 20:14:22Z adrian $");
 
 static const struct {
 	uint32_t model;
@@ -346,11 +346,22 @@ hdac_pin_patch(struct hdaa_widget *w)
 			patch = "as=1 seq=15";
 			break;
 		}
+	} else if (id == HDA_CODEC_CX20561 &&
+	    subid == LENOVO_T400_SUBVENDOR) {
+		switch (nid) {
+		case 22:
+			patch = "as=1 seq=15";
+			break;
+		case 26:
+			patch = "as=1 seq=0";
+			break;
+		}
 	} else if (id == HDA_CODEC_CX20590 &&
 	    (subid == LENOVO_X1_SUBVENDOR ||
 	    subid == LENOVO_X220_SUBVENDOR ||
 	    subid == LENOVO_T420_SUBVENDOR ||
-	    subid == LENOVO_T520_SUBVENDOR)) {
+	    subid == LENOVO_T520_SUBVENDOR ||
+	    subid == LENOVO_G580_SUBVENDOR)) {
 		switch (nid) {
 		case 25:
 			patch = "as=1 seq=15";

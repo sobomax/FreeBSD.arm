@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 267220 2014-06-08 09:08:51Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 269699 2014-08-08 01:57:15Z kevlo $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -75,8 +75,6 @@ __FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 267220 2014-06-08 09:08:51Z 
 #include <netipsec/ipsec6.h>
 #include <netipsec/key.h>
 #endif /* IPSEC */
-
-#include <netinet6/ip6protosw.h>
 
 /*
  * Forward a packet.  If some error occurs return the sender

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/hostapd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/wpa/hostapd/Makefile 267715 2014-06-22 10:00:33Z jmg $
 
 .include <src.opts.mk>
 .include "${.CURDIR}/../Makefile.inc"
@@ -46,8 +46,8 @@ CFLAGS+=-DCONFIG_DRIVER_BSD \
 CFLAGS+= -DCONFIG_IPV6
 .endif
 #CFLAGS+= -g
-DPADD+=	${LIBPCAP}
-LDADD+=	-lpcap
+DPADD+=	${LIBPCAP} ${LIBUTIL}
+LDADD+=	-lpcap -lutil
 
 # User customizations for wpa_supplicant/hostapd build environment
 CFLAGS+=${HOSTAPD_CFLAGS}

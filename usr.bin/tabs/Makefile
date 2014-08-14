@@ -1,7 +1,7 @@
-# $FreeBSD: head/usr.bin/tabs/Makefile 97033 2002-05-21 02:33:25Z tjr $
+# $FreeBSD: head/usr.bin/tabs/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG=	tabs
-DPADD=	${LIBTERMCAP}
-LDADD=	-ltermcap
+DPADD=	${LIBTERMCAPW}
+LDADD=	-ltermcapw
 
 .include <bsd.prog.mk>

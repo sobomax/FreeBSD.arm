@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/arm/at91/boot0spi/main.c 238188 2012-07-07 04:55:42Z imp $
+ * $FreeBSD: head/sys/boot/arm/at91/boot0spi/main.c 269111 2014-07-26 03:33:19Z ian $
  */
 
 #include "at91rm9200.h"
@@ -31,7 +31,9 @@
 
 #define OFFSET 0
 
-void
+int main(void);
+
+int
 main(void)
 {
 	int len, i, j, off, sec;
@@ -59,4 +61,5 @@ main(void)
 	    continue;
 	printf("Done\n");
 	reset();
+	return (1);
 }

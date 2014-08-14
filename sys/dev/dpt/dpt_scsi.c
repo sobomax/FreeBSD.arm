@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/dpt/dpt_scsi.c 249348 2013-04-10 23:20:09Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/dev/dpt/dpt_scsi.c 267340 2014-06-10 20:25:45Z jhb $");
 
 /*
  * dpt_scsi.c: SCSI dependant code for the DPT driver
@@ -1149,7 +1149,6 @@ dpt_free(struct dpt_softc *dpt)
 	case 4:
 		bus_dmamem_free(dpt->dccb_dmat, dpt->dpt_dccbs,
 				dpt->dccb_dmamap);
-		bus_dmamap_destroy(dpt->dccb_dmat, dpt->dccb_dmamap);
 	case 3:
 		bus_dma_tag_destroy(dpt->dccb_dmat);
 	case 2:

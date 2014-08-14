@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/i40e/i40e_adminq.h 266423 2014-05-19 01:21:02Z jfv $*/
+/*$FreeBSD: head/sys/dev/i40e/i40e_adminq.h 269198 2014-07-28 21:57:09Z jfv $*/
 
 #ifndef _I40E_ADMINQ_H_
 #define _I40E_ADMINQ_H_
@@ -64,6 +64,8 @@ struct i40e_adminq_ring {
 	u32 head;
 	u32 tail;
 	u32 len;
+	u32 bah;
+	u32 bal;
 };
 
 /* ASQ transaction details */
@@ -90,6 +92,7 @@ struct i40e_arq_event_info {
 struct i40e_adminq_info {
 	struct i40e_adminq_ring arq;    /* receive queue */
 	struct i40e_adminq_ring asq;    /* send queue */
+	u32 asq_cmd_timeout;            /* send queue cmd write back timeout*/
 	u16 num_arq_entries;            /* receive queue depth */
 	u16 num_asq_entries;            /* send queue depth */
 	u16 arq_buf_size;               /* receive queue buffer size */
@@ -110,8 +113,8 @@ struct i40e_adminq_info {
 };
 
 /* general information */
-#define I40E_AQ_LARGE_BUF	512
-#define I40E_ASQ_CMD_TIMEOUT	100000  /* usecs */
+#define I40E_AQ_LARGE_BUF		512
+#define I40E_ASQ_CMD_TIMEOUT		100000 /* usecs */
 
 void i40e_fill_default_direct_cmd_desc(struct i40e_aq_desc *desc,
 				       u16 opcode);

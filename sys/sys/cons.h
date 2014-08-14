@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cons.h	7.2 (Berkeley) 5/9/91
- * $FreeBSD: head/sys/sys/cons.h 228638 2011-12-17 15:39:14Z avg $
+ * $FreeBSD: head/sys/sys/cons.h 268158 2014-07-02 13:24:21Z emaste $
  */
 
 #ifndef _MACHINE_CONS_H_
@@ -132,6 +132,12 @@ void	cnputs(char *);
 int	cnunavailable(void);
 void	constty_set(struct tty *tp);
 void	constty_clear(void);
+
+/* sc(4) / vt(4) coexistence shim */
+#define	VTY_SC 0x01
+#define	VTY_VT 0x02
+int	vty_enabled(unsigned int);
+void	vty_set_preferred(unsigned int);
 
 #endif /* _KERNEL */
 

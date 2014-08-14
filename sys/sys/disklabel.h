@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)disklabel.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: head/sys/sys/disklabel.h 236023 2012-05-25 20:33:34Z marcel $
+ * $FreeBSD: head/sys/sys/disklabel.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 #ifndef _SYS_DISKLABEL_H_
@@ -52,7 +52,7 @@
 
 /* XXX these should be defined per controller (or drive) elsewhere, not here! */
 #if defined(__i386__) || defined(__amd64__) || defined(__arm__) || \
-    defined(__ia64__) || defined(__powerpc__) || defined(__mips__)
+    defined(__powerpc__) || defined(__mips__)
 #define LABELSECTOR	1			/* sector containing label */
 #define LABELOFFSET	0			/* offset of label in sector */
 #endif
@@ -229,6 +229,8 @@ static const char *dktypenames[] = {
 #define	FS_NTFS		18		/* Windows/NT file system */
 #define	FS_CCD		20		/* concatenated disk component */
 #define	FS_JFS2		21		/* IBM JFS2 */
+#define	FS_HAMMER	22		/* DragonFlyBSD Hammer FS */
+#define	FS_HAMMER2	23		/* DragonFlyBSD Hammer2 FS */
 #define	FS_UDF		24		/* UDF */
 #define	FS_EFS		26		/* SGI's Extent File system */
 #define	FS_ZFS		27		/* Sun's ZFS */
@@ -258,8 +260,8 @@ static const char *fstypenames[] = {
 	"?",
 	"ccd",
 	"jfs",
-	"?",
-	"?",
+	"HAMMER",
+	"HAMMER2",
 	"UDF",
 	"?",
 	"EFS",

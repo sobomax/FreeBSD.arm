@@ -46,7 +46,7 @@
 #include "aic79xx_inline.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aic7xxx/aic79xx_pci.c 219902 2011-03-23 13:10:15Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/aic7xxx/aic79xx_pci.c 269710 2014-08-08 11:47:04Z imp $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 #include <dev/aic7xxx/aic79xx_inline.h>
 #endif
@@ -320,14 +320,12 @@ ahd_find_pci_device(aic_dev_softc_t pci)
 int
 ahd_pci_config(struct ahd_softc *ahd, struct ahd_pci_identity *entry)
 {
-	struct scb_data *shared_scb_data;
 	u_int		 command;
 	uint32_t	 devconfig;
 	uint16_t	 device; 
 	uint16_t	 subvendor; 
 	int		 error;
 
-	shared_scb_data = NULL;
 	ahd->description = entry->name;
 	/*
 	 * Record if this is a HostRAID board.

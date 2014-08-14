@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)jobs.c	8.5 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/jobs.c 263453 2014-03-20 22:38:13Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/jobs.c 268920 2014-07-20 12:06:52Z jilles $");
 
 #include <sys/ioctl.h>
 #include <sys/param.h>
@@ -562,6 +562,7 @@ getjob_nonotfound(const char *name)
 {
 	int jobno;
 	struct job *found, *jp;
+	size_t namelen;
 	pid_t pid;
 	int i;
 
@@ -603,10 +604,12 @@ currentjob:	if ((jp = getcurjob(NULL)) == NULL)
 			if (found != NULL)
 				return (found);
 		} else {
+			namelen = strlen(name);
 			found = NULL;
 			for (jp = jobtab, i = njobs ; --i >= 0 ; jp++) {
 				if (jp->used && jp->nprocs > 0
-				 && prefix(name + 1, jp->ps[0].cmd)) {
+				 && strncmp(jp->ps[0].cmd, name + 1,
+				 namelen - 1) == 0) {
 					if (found)
 						error("%s: ambiguous", name);
 					found = jp;

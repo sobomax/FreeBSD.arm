@@ -1,9 +1,11 @@
-# $FreeBSD: head/bin/sh/tests/execution/Makefile 259210 2013-12-11 04:09:17Z jmmv $
+# $FreeBSD: head/bin/sh/tests/execution/Makefile 269902 2014-08-13 04:14:50Z ngie $
 
-.include <bsd.own.mk>
+TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
-FILESDIR=	${TESTSBASE}/bin/sh/execution
-KYUAFILE=	no
+.PATH: ${.CURDIR:H}
+ATF_TESTS_SH=	functional_test
+
+FILESDIR=	${TESTSDIR}
 
 FILES=		bg1.0
 FILES+=		bg2.0

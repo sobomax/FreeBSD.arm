@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_mroute.c 261710 2014-02-10 14:47:51Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_mroute.c 269699 2014-08-08 01:57:15Z kevlo $");
 
 #include "opt_inet6.h"
 
@@ -121,7 +121,6 @@ __FBSDID("$FreeBSD: head/sys/netinet6/ip6_mroute.c 261710 2014-02-10 14:47:51Z b
 #include <netinet6/scope6_var.h>
 #include <netinet6/nd6.h>
 #include <netinet6/ip6_mroute.h>
-#include <netinet6/ip6protosw.h>
 #include <netinet6/pim6.h>
 #include <netinet6/pim6_var.h>
 
@@ -141,13 +140,13 @@ extern int in6_mcast_loop;
 extern struct domain inet6domain;
 
 static const struct encaptab *pim6_encap_cookie;
-static const struct ip6protosw in6_pim_protosw = {
+static const struct protosw in6_pim_protosw = {
 	.pr_type =		SOCK_RAW,
 	.pr_domain =		&inet6domain,
 	.pr_protocol =		IPPROTO_PIM,
 	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
 	.pr_input =		pim6_input,
-	.pr_output =		rip6_output,
+	.pr_output =		(pr_output_t *)rip6_output,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_usrreqs =		&rip6_usrreqs
 };

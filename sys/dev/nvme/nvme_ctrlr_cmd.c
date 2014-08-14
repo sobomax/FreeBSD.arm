@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ctrlr_cmd.c 253112 2013-07-09 21:22:17Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ctrlr_cmd.c 267342 2014-06-10 21:40:43Z jimharris $");
 
 #include "nvme_private.h"
 
@@ -205,7 +205,7 @@ nvme_ctrlr_cmd_set_num_queues(struct nvme_controller *ctrlr,
 {
 	uint32_t cdw11;
 
-	cdw11 = ((num_queues - 1) << 16) || (num_queues - 1);
+	cdw11 = ((num_queues - 1) << 16) | (num_queues - 1);
 	nvme_ctrlr_cmd_set_feature(ctrlr, NVME_FEAT_NUMBER_OF_QUEUES, cdw11,
 	    NULL, 0, cb_fn, cb_arg);
 }

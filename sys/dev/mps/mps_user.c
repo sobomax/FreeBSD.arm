@@ -56,11 +56,11 @@
  *
  * LSI MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps_user.c 253550 2013-07-22 18:41:53Z ken $
+ * $FreeBSD: head/sys/dev/mps/mps_user.c 268071 2014-07-01 04:33:36Z scottl $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_user.c 253550 2013-07-22 18:41:53Z ken $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_user.c 268071 2014-07-01 04:33:36Z scottl $");
 
 #include "opt_compat.h"
 
@@ -101,7 +101,6 @@ __FBSDID("$FreeBSD: head/sys/dev/mps/mps_user.c 253550 2013-07-22 18:41:53Z ken 
 #include <dev/mps/mps_ioctl.h>
 #include <dev/mps/mpsvar.h>
 #include <dev/mps/mps_table.h>
-#include <dev/mps/mps_sas.h>
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
 

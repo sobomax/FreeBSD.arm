@@ -1,9 +1,11 @@
-# $FreeBSD: head/bin/sh/tests/errors/Makefile 259210 2013-12-11 04:09:17Z jmmv $
+# $FreeBSD: head/bin/sh/tests/errors/Makefile 269902 2014-08-13 04:14:50Z ngie $
 
-.include <bsd.own.mk>
+TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
-FILESDIR=	${TESTSBASE}/bin/sh/errors
-KYUAFILE=	no
+.PATH: ${.CURDIR:H}
+ATF_TESTS_SH=	functional_test
+
+FILESDIR=	${TESTSDIR}
 
 FILES=		assignment-error1.0
 FILES+=		assignment-error2.0

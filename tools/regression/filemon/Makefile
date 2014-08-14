@@ -1,6 +1,6 @@
-# $FreeBSD: head/tools/regression/filemon/Makefile 264924 2014-04-25 19:25:00Z imp $
+# $FreeBSD: head/tools/regression/filemon/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
-.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "ia64"
+.if ${MACHINE_ARCH} == "amd64"
 BI_BITS=
 .endif
 

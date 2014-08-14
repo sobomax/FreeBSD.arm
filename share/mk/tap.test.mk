@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/tap.test.mk 263161 2014-03-14 08:56:19Z jmmv $
+# $FreeBSD: head/share/mk/tap.test.mk 268445 2014-07-09 00:55:50Z jmmv $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -66,7 +66,7 @@ TAP_TESTS_PERL_SRC_${_T}?= ${_T}.pl
 ${_T}: ${TAP_TESTS_PERL_SRC_${_T}}
 	{ \
 	    echo '#! ${TAP_PERL_INTERPRETER}'; \
-	    cat ${.ALLSRC} | sed ${TAP_TESTS_PERL_SED_${_T}}; \
+	    cat ${.ALLSRC:N*Makefile*} | sed ${TAP_TESTS_PERL_SED_${_T}}; \
 	} >${.TARGET}.tmp
 	chmod +x ${.TARGET}.tmp
 	mv ${.TARGET}.tmp ${.TARGET}

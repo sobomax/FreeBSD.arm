@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/dump_machdep.c 257928 2013-11-10 22:42:56Z andreast $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/dump_machdep.c 269105 2014-07-25 23:52:53Z gavin $");
 
 #include "opt_watchdog.h"
 
@@ -205,7 +205,7 @@ foreach_chunk(callback_t cb, void *arg)
 	return (seqnr);
 }
 
-void
+int
 dumpsys(struct dumperinfo *di)
 {
 	Elf_Ehdr ehdr;
@@ -299,7 +299,7 @@ dumpsys(struct dumperinfo *di)
 	/* Signal completion, signoff and exit stage left. */
 	dump_write(di, NULL, 0, 0, 0);
 	printf("\nDump complete\n");
-	return;
+	return (0);
 
  fail:
 	if (error < 0)
@@ -311,4 +311,5 @@ dumpsys(struct dumperinfo *di)
 		printf("\nDump failed. Partition too small.\n");
 	else
 		printf("\n** DUMP FAILED (ERROR %d) **\n", error);
+	return (error);
 }

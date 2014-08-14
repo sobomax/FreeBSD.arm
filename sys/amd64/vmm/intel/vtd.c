@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vtd.c 264009 2014-04-01 15:54:03Z rstone $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vtd.c 269962 2014-08-14 05:00:45Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vtd.c 264009 2014-04-01 15:54:03Z rstone $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vtd.c 269962 2014-08-14 05:00:45Z neel $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -447,6 +447,11 @@ vtd_update_mapping(void *arg, vm_paddr_t gpa, vm_paddr_t hpa, uint64_t len,
 	dom = arg;
 	ptpindex = 0;
 	ptpshift = 0;
+
+	KASSERT(gpa + len > gpa, ("%s: invalid gpa range %#lx/%#lx", __func__,
+	    gpa, len));
+	KASSERT(gpa + len <= dom->maxaddr, ("%s: gpa range %#lx/%#lx beyond "
+	    "domain maxaddr %#lx", __func__, gpa, len, dom->maxaddr));
 
 	if (gpa & PAGE_MASK)
 		panic("vtd_create_mapping: unaligned gpa 0x%0lx", gpa);

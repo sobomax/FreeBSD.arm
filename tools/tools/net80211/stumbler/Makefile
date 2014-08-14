@@ -1,9 +1,9 @@
-# $FreeBSD: head/tools/tools/net80211/stumbler/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/net80211/stumbler/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG=	stumbler
 BINDIR=	/usr/local/bin
-DPADD=	${LIBPCAP} ${LIBNCURSES}
-LDADD=	-lpcap -lncurses
+DPADD=	${LIBPCAP} ${LIBNCURSESW}
+LDADD=	-lpcap -lncursesw
 CFLAGS=-g
 MAN=
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/zinject/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/cddl/usr.bin/zinject/Makefile 268075 2014-07-01 06:43:15Z delphij $
 
 .PATH: ${.CURDIR}/../../contrib/opensolaris/cmd/zinject
 
@@ -11,6 +11,7 @@ CFLAGS+= -I${.CURDIR}/../../../sys/cddl/compat/opensolaris
 CFLAGS+= -I${.CURDIR}/../../compat/opensolaris/include
 CFLAGS+= -I${.CURDIR}/../../compat/opensolaris/lib/libumem
 CFLAGS+= -I${.CURDIR}/../../contrib/opensolaris/lib/libzfs/common
+CFLAGS+= -I${.CURDIR}/../../contrib/opensolaris/lib/libzfs_core/common
 CFLAGS+= -I${.CURDIR}/../../contrib/opensolaris/lib/libzpool/common
 CFLAGS+= -I${.CURDIR}/../../contrib/opensolaris/lib/libnvpair
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common/fs/zfs

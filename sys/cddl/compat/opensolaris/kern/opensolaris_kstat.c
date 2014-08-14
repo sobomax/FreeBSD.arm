@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_kstat.c 244155 2012-12-12 16:14:14Z smh $");
+__FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_kstat.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -36,7 +36,7 @@ __FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_kstat.c 24
 
 static MALLOC_DEFINE(M_KSTAT, "kstat_data", "Kernel statistics");
 
-SYSCTL_NODE(, OID_AUTO, kstat, CTLFLAG_RW, 0, "Kernel statistics");
+SYSCTL_ROOT_NODE(OID_AUTO, kstat, CTLFLAG_RW, 0, "Kernel statistics");
 
 kstat_t *
 kstat_create(char *module, int instance, char *name, char *class, uchar_t type,

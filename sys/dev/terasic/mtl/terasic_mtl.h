@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/terasic/mtl/terasic_mtl.h 245380 2013-01-13 16:57:11Z rwatson $
+ * $FreeBSD: head/sys/dev/terasic/mtl/terasic_mtl.h 269241 2014-07-29 14:41:28Z emaste $
  */
 
 #ifndef _DEV_TERASIC_MTL_H_
@@ -62,7 +62,7 @@ struct terasic_mtl_softc {
 	int		 mtl_reg_rid;
 
 	/*
-	 * Graphics frame buffer device -- mappable form userspace.
+	 * Graphics frame buffer device -- mappable from userspace.
 	 */
 	struct cdev	*mtl_pixel_cdev;
 	struct resource	*mtl_pixel_res;

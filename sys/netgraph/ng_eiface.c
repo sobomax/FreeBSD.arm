@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netgraph/ng_eiface.c 257241 2013-10-28 07:29:16Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_eiface.c 268081 2014-07-01 07:54:12Z zec $
  */
 
 #include <sys/param.h>
@@ -235,6 +235,9 @@ ng_eiface_start2(node_p node, hook_p hook, void *arg1, int arg2)
 		/* If there's nothing to send, break. */
 		if (m == NULL)
 			break;
+
+		/* Peel the mbuf off any stale tags */
+		m_tag_delete_chain(m, NULL);
 
 		/*
 		 * Berkeley packet filter.

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)specialreg.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD: head/sys/x86/include/specialreg.h 266551 2014-05-22 18:13:17Z jhb $
+ * $FreeBSD: head/sys/x86/include/specialreg.h 269281 2014-07-30 00:00:12Z jhb $
  */
 
 #ifndef _MACHINE_SPECIALREG_H_
@@ -434,6 +434,25 @@
 #define	MSR_MC4_STATUS		0x411
 #define	MSR_MC4_ADDR		0x412
 #define	MSR_MC4_MISC		0x413
+
+/*
+ * VMX MSRs
+ */
+#define	MSR_VMX_BASIC		0x480
+#define	MSR_VMX_PINBASED_CTLS	0x481
+#define	MSR_VMX_PROCBASED_CTLS	0x482
+#define	MSR_VMX_EXIT_CTLS	0x483
+#define	MSR_VMX_ENTRY_CTLS	0x484
+#define	MSR_VMX_CR0_FIXED0	0x486
+#define	MSR_VMX_CR0_FIXED1	0x487
+#define	MSR_VMX_CR4_FIXED0	0x488
+#define	MSR_VMX_CR4_FIXED1	0x489
+#define	MSR_VMX_PROCBASED_CTLS2	0x48b
+#define	MSR_VMX_EPT_VPID_CAP	0x48c
+#define	MSR_VMX_TRUE_PINBASED_CTLS	0x48d
+#define	MSR_VMX_TRUE_PROCBASED_CTLS	0x48e
+#define	MSR_VMX_TRUE_EXIT_CTLS	0x48f
+#define	MSR_VMX_TRUE_ENTRY_CTLS	0x490
 
 /*
  * X2APIC MSRs

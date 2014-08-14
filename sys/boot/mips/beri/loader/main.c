@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/mips/beri/loader/main.c 266893 2014-05-30 16:47:54Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/boot/mips/beri/loader/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -151,7 +151,7 @@ main(int argc, char *argv[], char *envv[], struct bootinfo *bootinfop)
 	printf("bootpath=\"%s\"\n", bootpath);
 #endif
 
-	interact();
+	interact(NULL);
 	return (0);
 }
 

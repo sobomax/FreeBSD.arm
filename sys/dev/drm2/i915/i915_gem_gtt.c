@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem_gtt.c 235783 2012-05-22 11:07:44Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem_gtt.c 267548 2014-06-16 18:15:27Z attilio $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>
@@ -206,7 +206,7 @@ i915_gem_cleanup_aliasing_ppgtt(struct drm_device *dev)
 	for (i = 0; i < ppgtt->num_pd_entries; i++) {
 		m = ppgtt->pt_pages[i];
 		if (m != NULL) {
-			vm_page_unwire(m, 0);
+			vm_page_unwire(m, PQ_INACTIVE);
 			vm_page_free(m);
 		}
 	}

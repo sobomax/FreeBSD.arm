@@ -1,5 +1,5 @@
 This fortune brought to you by:
-$FreeBSD: head/games/fortune/datfiles/freebsd-tips 256019 2013-10-03 11:51:15Z glebius $
+$FreeBSD: head/games/fortune/datfiles/freebsd-tips 269089 2014-07-25 14:47:44Z allanjude $
 %
 Any user that is a member of the wheel group can use "su -" to simulate
 a root login. You can add a user to the wheel group by editing /etc/group.
@@ -231,10 +231,10 @@ is running FreeBSD at the time) to quickly find files based on name only.
 To erase a line you've written at the command prompt, use "Ctrl-U".
 		-- Dru <genesis@istar.ca>
 %
-To find out the hostname associated with an IP address, use
+To find the hostname associated with an IP address, use
 
-	dig -x IP_address
-		-- Dru <genesis@istar.ca>
+	drill -x IP_address
+		-- Allan Jude <allanjude@freebsd.org>
 %
 To obtain a neat PostScript rendering of a manual page, use ``-t'' switch
 of the man(1) utility: ``man -t <topic>''.  For example:

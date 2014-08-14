@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/linux_lvm/g_linux_lvm.c 219029 2011-02-25 10:24:35Z netchild $");
+__FBSDID("$FreeBSD: head/sys/geom/linux_lvm/g_linux_lvm.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/ctype.h>
 #include <sys/param.h>
@@ -79,8 +79,7 @@ SYSCTL_DECL(_kern_geom);
 SYSCTL_NODE(_kern_geom, OID_AUTO, linux_lvm, CTLFLAG_RW, 0,
     "GEOM_LINUX_LVM stuff");
 static u_int g_llvm_debug = 0;
-TUNABLE_INT("kern.geom.linux_lvm.debug", &g_llvm_debug);
-SYSCTL_UINT(_kern_geom_linux_lvm, OID_AUTO, debug, CTLFLAG_RW, &g_llvm_debug, 0,
+SYSCTL_UINT(_kern_geom_linux_lvm, OID_AUTO, debug, CTLFLAG_RWTUN, &g_llvm_debug, 0,
     "Debug level");
 
 LIST_HEAD(, g_llvm_vg) vg_list;

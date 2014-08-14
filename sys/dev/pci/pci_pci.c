@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_pci.c 264011 2014-04-01 16:02:02Z rstone $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_pci.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * PCI:PCI bridge support.
@@ -117,7 +117,6 @@ DRIVER_MODULE(pcib, pci, pcib_driver, pcib_devclass, NULL, NULL);
 SYSCTL_DECL(_hw_pci);
 
 static int pci_clear_pcib;
-TUNABLE_INT("hw.pci.clear_pcib", &pci_clear_pcib);
 SYSCTL_INT(_hw_pci, OID_AUTO, clear_pcib, CTLFLAG_RDTUN, &pci_clear_pcib, 0,
     "Clear firmware-assigned resources for PCI-PCI bridge I/O windows.");
 

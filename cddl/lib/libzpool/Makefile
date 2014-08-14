@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libzpool/Makefile 264928 2014-04-25 19:25:26Z imp $
+# $FreeBSD: head/cddl/lib/libzpool/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
 .include "${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common/Makefile.files"
 
@@ -14,7 +14,7 @@
 .if exists(${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/atomic/${MACHINE_ARCH}/opensolaris_atomic.S)
 .PATH: ${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/atomic/${MACHINE_ARCH}
 ATOMIC_SRCS=	opensolaris_atomic.S
-.if ${MACHINE_ARCH} != "ia64" && ${MACHINE_ARCH} != "sparc64"
+.if ${MACHINE_ARCH} != "sparc64"
 ACFLAGS+=	-Wa,--noexecstack
 .endif
 .else

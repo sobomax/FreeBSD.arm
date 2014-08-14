@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/wlan/Makefile 263140 2014-03-14 02:58:48Z glebius $
+# $FreeBSD: head/sys/modules/wlan/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .PATH: ${.CURDIR}/../../net80211
 
@@ -15,18 +15,6 @@ SRCS=	ieee80211.c ieee80211_action.c ieee80211_ageq.c \
 	ieee80211_tdma.c ieee80211_superg.c
 SRCS+=	bus_if.h device_if.h opt_ddb.h opt_inet.h opt_inet6.h \
 	opt_tdma.h opt_wlan.h
-
-.if !defined(KERNBUILDDIR)
-opt_wlan.h:
-	echo "#define IEEE80211_DEBUG 1" > ${.TARGET}
-	echo "#define IEEE80211_AMPDU_AGE 1" >> ${.TARGET}
-	echo "#define IEEE80211_SUPPORT_MESH 1" >> ${.TARGET}
-opt_inet.h:
-	echo "#define INET 1" > ${.TARGET}
-# override to get ddb support?
-opt_ddb.h:
-	:> ${.TARGET}
-.endif
 
 .include <bsd.kmod.mk>
 

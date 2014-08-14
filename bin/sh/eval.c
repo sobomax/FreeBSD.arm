@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)eval.c	8.9 (Berkeley) 6/8/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/eval.c 259047 2013-12-06 22:24:37Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/eval.c 268927 2014-07-20 20:29:09Z jilles $");
 
 #include <paths.h>
 #include <signal.h>
@@ -1250,8 +1250,16 @@ bltincmd(int argc, char **argv)
 int
 breakcmd(int argc, char **argv)
 {
-	int n = argc > 1 ? number(argv[1]) : 1;
+	long n;
+	char *end;
 
+	if (argc > 1) {
+		/* Allow arbitrarily large numbers. */
+		n = strtol(argv[1], &end, 10);
+		if (!is_digit(argv[1][0]) || *end != '\0')
+			error("Illegal number: %s", argv[1]);
+	} else
+		n = 1;
 	if (n > loopnest)
 		n = loopnest;
 	if (n > 0) {

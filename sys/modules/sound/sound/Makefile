@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/sound/sound/Makefile 265780 2014-05-09 14:35:07Z hselasky $
+# $FreeBSD: head/sys/modules/sound/sound/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
 .PATH: ${.CURDIR}/../../../dev/sound
 .PATH: ${.CURDIR}/../../../dev/sound/pcm
@@ -45,7 +45,7 @@ CLEANFILES+=	feeder_eq_gen.h feeder_rate_gen.h snd_fxdiv_gen.h
 EXPORT_SYMS=	YES	# XXX evaluate
 
 .if ${MACHINE_CPUARCH} != "i386" && ${MACHINE_CPUARCH} != "amd64" && \
-    ${MACHINE_CPUARCH} != "ia64" && ${MACHINE_CPUARCH} != "pc98"
+    ${MACHINE_CPUARCH} != "pc98"
 # Create an empty opt_isa.h in order to keep kmod.mk from linking in an
 # existing one from KERNBUILDDIR which possibly has DEV_ISA defined so
 # sound.ko is always built without isadma support.

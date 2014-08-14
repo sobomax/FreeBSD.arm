@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vr/if_vr.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vr/if_vr.c 267363 2014-06-11 14:53:58Z jhb $");
 
 /*
  * VIA Rhine fast ethernet PCI NIC driver
@@ -1060,31 +1060,29 @@ vr_dma_free(struct vr_softc *sc)
 
 	/* Tx ring. */
 	if (sc->vr_cdata.vr_tx_ring_tag) {
-		if (sc->vr_cdata.vr_tx_ring_map)
+		if (sc->vr_rdata.vr_tx_ring_paddr)
 			bus_dmamap_unload(sc->vr_cdata.vr_tx_ring_tag,
 			    sc->vr_cdata.vr_tx_ring_map);
-		if (sc->vr_cdata.vr_tx_ring_map &&
-		    sc->vr_rdata.vr_tx_ring)
+		if (sc->vr_rdata.vr_tx_ring)
 			bus_dmamem_free(sc->vr_cdata.vr_tx_ring_tag,
 			    sc->vr_rdata.vr_tx_ring,
 			    sc->vr_cdata.vr_tx_ring_map);
 		sc->vr_rdata.vr_tx_ring = NULL;
-		sc->vr_cdata.vr_tx_ring_map = NULL;
+		sc->vr_rdata.vr_tx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->vr_cdata.vr_tx_ring_tag);
 		sc->vr_cdata.vr_tx_ring_tag = NULL;
 	}
 	/* Rx ring. */
 	if (sc->vr_cdata.vr_rx_ring_tag) {
-		if (sc->vr_cdata.vr_rx_ring_map)
+		if (sc->vr_rdata.vr_rx_ring_paddr)
 			bus_dmamap_unload(sc->vr_cdata.vr_rx_ring_tag,
 			    sc->vr_cdata.vr_rx_ring_map);
-		if (sc->vr_cdata.vr_rx_ring_map &&
-		    sc->vr_rdata.vr_rx_ring)
+		if (sc->vr_rdata.vr_rx_ring)
 			bus_dmamem_free(sc->vr_cdata.vr_rx_ring_tag,
 			    sc->vr_rdata.vr_rx_ring,
 			    sc->vr_cdata.vr_rx_ring_map);
 		sc->vr_rdata.vr_rx_ring = NULL;
-		sc->vr_cdata.vr_rx_ring_map = NULL;
+		sc->vr_rdata.vr_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->vr_cdata.vr_rx_ring_tag);
 		sc->vr_cdata.vr_rx_ring_tag = NULL;
 	}

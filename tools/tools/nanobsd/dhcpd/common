@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/nanobsd/dhcpd/common 264861 2014-04-24 02:02:46Z imp $
+# $FreeBSD: head/tools/tools/nanobsd/dhcpd/common 269984 2014-08-14 16:17:30Z imp $
 
 #-
 # Copyright (c) 2014 Warner Losh. All Rights Reserved.
@@ -259,11 +259,6 @@ die()
 {
 	echo "$*"
 	exit 1
-}
-
-create_amd64_diskimage()
-{
-	create_i386_diskimage "$*"
 }
 
 # Automatically include the packaging port here so it is always first so it

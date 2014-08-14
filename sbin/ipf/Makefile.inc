@@ -1,4 +1,6 @@
-#	$FreeBSD: head/sbin/ipf/Makefile.inc 228612 2011-12-17 00:54:09Z dim $
+#	$FreeBSD: head/sbin/ipf/Makefile.inc 269585 2014-08-05 13:01:21Z cy $
+
+.include <src.opts.mk>
 
 WARNS?=		2
 NO_WFORMAT=
@@ -9,6 +11,12 @@ CFLAGS+=	-I${.CURDIR}/../../../contrib/ipfilter/tools
 CFLAGS+=	-I${.CURDIR}/../../../sys
 CFLAGS+=	-I${.CURDIR}/../../../sys/contrib/ipfilter
 CFLAGS+=	-DSTATETOP -D__UIO_EXPOSE
+
+.if ${MK_INET6_SUPPORT} != "no"
+CFLAGS+=	-DUSE_INET6
+.else
+CFLAGS+=	-DNOINET6
+.endif
 
 LIBIPF=		${.OBJDIR}/../libipf/libipf.a
 DPADD+=		${LIBIPF} ${LIBKVM}

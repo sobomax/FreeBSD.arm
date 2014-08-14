@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/efiapi.h 163898 2006-11-02 02:42:48Z marcel $ */
+/* $FreeBSD: head/sys/boot/efi/include/efiapi.h 268351 2014-07-07 00:27:09Z marcel $ */
 #ifndef _EFI_API_H
 #define _EFI_API_H
 
@@ -312,10 +312,6 @@ EFI_STATUS
 
 #if !defined(EFI_IMAGE_MACHINE_IA32)
 #define EFI_IMAGE_MACHINE_IA32      0x014c
-#endif
-
-#if !defined(EFI_IMAGE_MACHINE_IA64)
-#define EFI_IMAGE_MACHINE_IA64      0x0200
 #endif
 
 #if !defined(EFI_IMAGE_MACHINE_EBC)

@@ -1,6 +1,5 @@
-# $FreeBSD: head/sys/modules/dtrace/Makefile 257037 2013-10-24 02:39:07Z markj $
+# $FreeBSD: head/sys/modules/dtrace/Makefile 269538 2014-08-04 22:34:12Z imp $
 
-.include <bsd.own.mk>
 .include "Makefile.inc"
 
 SUBDIR=		dtmalloc	\

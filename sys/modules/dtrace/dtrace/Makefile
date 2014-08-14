@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/dtrace/dtrace/Makefile 262818 2014-03-06 01:59:13Z marcel $
+# $FreeBSD: head/sys/modules/dtrace/dtrace/Makefile 269325 2014-07-31 08:07:23Z rpaulo $
 
 SYSDIR?=	${.CURDIR}/../../..
 
@@ -42,6 +42,7 @@ CFLAGS+=	-I${SYSDIR}/cddl/compat/opensolaris \
 		-I${SYSDIR}/cddl/dev/dtrace \
 		-I${SYSDIR}/cddl/dev/dtrace/${ARCHDIR} \
 		-I${SYSDIR}/cddl/contrib/opensolaris/uts/common \
+		-I${SYSDIR}/cddl/contrib/opensolaris/common/util \
 		-I${SYSDIR} -DDIS_MEM
 
 CFLAGS+=	-DSMP

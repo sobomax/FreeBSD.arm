@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_cpu_powerpc.c 258806 2013-12-01 19:05:32Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_cpu_powerpc.c 269131 2014-07-26 17:49:40Z marcel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -113,10 +113,6 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 	phandle_t input, opts, chosen;
 	int error;
 
-	class = &uart_z8530_class;
-	if (class == NULL)
-		return (ENXIO);
-
 	opts = OF_finddevice("/options");
 	chosen = OF_finddevice("/chosen");
 	switch (devtype) {
@@ -179,6 +175,9 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 		di->bas.regshft = 0;
 		di->bas.chan = 0;
 	} else
+		return (ENXIO);
+
+	if (class == NULL)
 		return (ENXIO);
 
 	error = OF_decode_addr(input, 0, &di->bas.bst, &di->bas.bsh);

@@ -1,4 +1,6 @@
-# $FreeBSD: head/lib/libnv/Makefile 258065 2013-11-12 19:39:14Z pjd $
+# $FreeBSD: head/lib/libnv/Makefile 269603 2014-08-05 18:41:27Z ngie $
+
+.include <src.opts.mk>
 
 LIB=	nv
 SHLIBDIR?= /lib
@@ -157,5 +159,9 @@ MLINKS+=nv.3 nvlist_existsv.3 \
 	nv.3 nvlist_freev_binary.3
 
 WARNS?=	6
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>

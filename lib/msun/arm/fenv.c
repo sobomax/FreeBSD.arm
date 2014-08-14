@@ -24,13 +24,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/msun/arm/fenv.c 263231 2014-03-16 09:40:05Z andrew $
+ * $FreeBSD: head/lib/msun/arm/fenv.c 269956 2014-08-14 04:20:13Z imp $
  */
 
 #define	__fenv_static
 #include "fenv.h"
 
-#if defined(__FreeBSD_ARCH_armv6__) || (defined(__ARM_ARCH) && __ARM_ARCH >= 6)
+#include <machine/acle-compat.h>
+
+#if __ARM_ARCH >= 6
 #define FENV_ARMv6
 #endif
 

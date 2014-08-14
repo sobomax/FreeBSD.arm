@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)conf.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/conf.h 254760 2013-08-24 04:52:22Z ken $
+ * $FreeBSD: head/sys/sys/conf.h 269105 2014-07-25 23:52:53Z gavin $
  */
 
 #ifndef _SYS_CONF_H_
@@ -336,7 +336,7 @@ struct dumperinfo {
 
 int set_dumper(struct dumperinfo *, const char *_devname);
 int dump_write(struct dumperinfo *, void *, vm_offset_t, off_t, size_t);
-void dumpsys(struct dumperinfo *);
+int dumpsys(struct dumperinfo *);
 int doadump(boolean_t);
 extern int dumping;		/* system is dumping */
 

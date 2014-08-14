@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/ndp/ndp.c 265778 2014-05-09 14:24:02Z melifaro $	*/
+/*	$FreeBSD: head/usr.sbin/ndp/ndp.c 268827 2014-07-18 06:48:02Z peter $	*/
 /*	$KAME: ndp.c,v 1.104 2003/06/27 07:48:39 itojun Exp $	*/
 
 /*
@@ -188,9 +188,9 @@ main(int argc, char **argv)
 			mode = ch;
 			arg = NULL;
 			break;
-		case 'd':
 		case 'f':
 			exit(file(optarg) ? 1 : 0);
+		case 'd':
 		case 'i':
 			if (mode) {
 				usage();

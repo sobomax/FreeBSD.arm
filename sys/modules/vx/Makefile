@@ -1,8 +1,9 @@
-# $FreeBSD: head/sys/modules/vx/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/modules/vx/Makefile 269812 2014-08-11 14:50:49Z imp $
 
-.include <src.opts.mk>
+SYSDIR?=${.CURDIR}/../..
+.include "${SYSDIR}/conf/kern.opts.mk"
 
-.PATH: ${.CURDIR}/../../dev/vx
+.PATH: ${SYSDIR}/dev/vx
 
 KMOD=	if_vx
 SRCS=	if_vx.c if_vx_pci.c

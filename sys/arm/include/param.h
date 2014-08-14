@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm/include/param.h 263637 2014-03-22 15:59:18Z andrew $
+ * $FreeBSD: head/sys/arm/include/param.h 269956 2014-08-14 04:20:13Z imp $
  */
 
 #ifndef _ARM_INCLUDE_PARAM_H_
@@ -46,13 +46,14 @@
  */
 
 #include <machine/_align.h>
+#include <machine/acle-compat.h>
 
 #define STACKALIGNBYTES	(8 - 1)
 #define STACKALIGN(p)	((u_int)(p) & ~STACKALIGNBYTES)
 
 #define __PCI_REROUTE_INTERRUPT
 
-#if defined(__FreeBSD_ARCH_armv6__) || (defined(__ARM_ARCH) && __ARM_ARCH >= 6)
+#if __ARM_ARCH >= 6
 #define	_V6_SUFFIX "v6"
 #else
 #define	_V6_SUFFIX ""
@@ -64,7 +65,7 @@
 #define	_HF_SUFFIX ""
 #endif
 
-#ifdef __ARMEB__
+#ifdef __ARM_BIG_ENDIAN
 #define	_EB_SUFFIX "eb"
 #else
 #define	_EB_SUFFIX ""

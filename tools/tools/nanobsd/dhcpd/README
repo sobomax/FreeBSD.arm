@@ -1,4 +1,4 @@
-$FreeBSD: head/tools/tools/nanobsd/dhcpd/README 264656 2014-04-18 17:03:09Z imp $
+$FreeBSD: head/tools/tools/nanobsd/dhcpd/README 269355 2014-07-31 22:32:39Z imp $
 
 Example for creating many different builds (including different
 arch) from a common set of files, as well as building natively
@@ -9,6 +9,6 @@ and DHCPd.
 
 This is a work in progress. Generally, to build this you should
      cd tools/tools/nanobsd/dhcpd
-     sudo sh ../nandobsd.sh -C os-base
+     sudo sh ../nanobsd.sh -C os-base
 but do be careful if things are interrupted. There may still be
 bugs lurking that cause your entire FreeBSD tree to disappear.

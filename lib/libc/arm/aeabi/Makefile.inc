@@ -1,9 +1,10 @@
-# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 263660 2014-03-23 12:49:25Z andrew $
+# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 268893 2014-07-19 22:13:27Z ian $
 
 .PATH: ${LIBC_SRCTOP}/arm/aeabi
 
 SRCS+=	aeabi_atexit.c		\
-	aeabi_unwind_cpp.c
+	aeabi_unwind_cpp.c	\
+	aeabi_unwind_exidx.c
 .if ${MACHINE_ARCH} != "armv6hf"
 SRCS+=	aeabi_double.c		\
 	aeabi_float.c

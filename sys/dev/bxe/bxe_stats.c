@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.c 266979 2014-06-02 18:54:45Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.c 268856 2014-07-18 21:28:59Z delphij $");
 
 #include "bxe.h"
 #include "bxe_stats.h"
@@ -1302,7 +1302,10 @@ bxe_stats_update(struct bxe_softc *sc)
 
         if (bxe_storm_stats_update(sc)) {
             if (sc->stats_pending++ == 3) {
-                bxe_panic(sc, ("storm stats not updated for 3 times\n"));
+		if (if_getdrvflags(sc->ifp) & IFF_DRV_RUNNING) {
+			atomic_store_rel_long(&sc->chip_tq_flags, CHIP_TQ_REINIT);
+			taskqueue_enqueue(sc->chip_tq, &sc->chip_tq_task);
+		}
             }
             return;
         }

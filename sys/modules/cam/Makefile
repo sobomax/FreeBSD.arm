@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/cam/Makefile 255174 2013-09-03 12:08:08Z uqs $
+# $FreeBSD: head/sys/modules/cam/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 S=	${.CURDIR}/../..
 
@@ -42,10 +42,5 @@ SRCS+=	ata_machdep.c
 SRCS+=	ata_pmp.c
 
 EXPORT_SYMS=	YES	# XXX evaluate
-
-.if !defined(KERNBUILDDIR)
-opt_scsi.h:
-	echo "#define SCSI_DELAY 15000" > ${.TARGET}
-.endif
 
 .include <bsd.kmod.mk>

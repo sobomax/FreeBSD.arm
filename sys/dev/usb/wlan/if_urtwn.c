@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_urtwn.c 266721 2014-05-27 01:47:23Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_urtwn.c 268487 2014-07-10 09:42:34Z kevlo $");
 
 /*
  * Driver for Realtek RTL8188CE-VAU/RTL8188CUS/RTL8188EU/RTL8188RU/RTL8192CU.
@@ -2281,9 +2281,6 @@ urtwn_fw_reset(struct urtwn_softc *sc)
 	}
 	/* Force 8051 reset. */
 	urtwn_write_2(sc, R92C_SYS_FUNC_EN, reg & ~R92C_SYS_FUNC_EN_CPUEN);
-	urtwn_write_2(sc, R92C_SYS_FUNC_EN,
-	    urtwn_read_2(sc, R92C_SYS_FUNC_EN) |
-	    R92C_SYS_FUNC_EN_CPUEN);
 }
 
 static void
@@ -2383,6 +2380,11 @@ urtwn_load_firmware(struct urtwn_softc *sc)
 		urtwn_write_1(sc, R92C_MCUFWDL, 0);
 	}
 
+	if (!(sc->chip & URTWN_CHIP_88E)) {
+		urtwn_write_2(sc, R92C_SYS_FUNC_EN,
+		    urtwn_read_2(sc, R92C_SYS_FUNC_EN) |
+		    R92C_SYS_FUNC_EN_CPUEN);
+	}
 	urtwn_write_1(sc, R92C_MCUFWDL,
 	    urtwn_read_1(sc, R92C_MCUFWDL) | R92C_MCUFWDL_EN);
 	urtwn_write_1(sc, R92C_MCUFWDL + 2,

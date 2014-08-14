@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-promise.c 253644 2013-07-25 09:12:46Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-promise.c 269713 2014-08-08 11:47:18Z imp $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -957,9 +957,9 @@ ata_promise_mio_softreset(device_t dev, int port)
 
     /* wait for BUSY to go inactive */
     for (timeout = 0; timeout < 100; timeout++) {
-	u_int8_t err, stat;
+	u_int8_t /* err, */ stat;
 
-	err = ATA_IDX_INB(ch, ATA_ERROR);
+	/* err = */ ATA_IDX_INB(ch, ATA_ERROR);
 	stat = ATA_IDX_INB(ch, ATA_STATUS);
 
 	//if (stat == err && timeout > (stat & ATA_S_BUSY ? 100 : 10))

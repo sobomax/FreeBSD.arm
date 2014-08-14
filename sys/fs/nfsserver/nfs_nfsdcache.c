@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdcache.c 260648 2014-01-14 20:18:38Z mav $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdcache.c 268115 2014-07-01 20:47:16Z rmacklem $");
 
 /*
  * Here is the basic algorithm:
@@ -977,6 +977,9 @@ nfsrvd_refcache(struct nfsrvcache *rp)
 {
 	struct mtx *mutex;
 
+	if (rp == NULL)
+		/* For NFSv4.1, there is no cache entry. */
+		return;
 	mutex = nfsrc_cachemutex(rp);
 	mtx_lock(mutex);
 	if (rp->rc_refcnt < 0)

@@ -1,9 +1,9 @@
-# $FreeBSD: head/bin/date/tests/Makefile 263161 2014-03-14 08:56:19Z jmmv $
+# $FreeBSD: head/bin/date/tests/Makefile 269903 2014-08-13 04:43:29Z ngie $
 
 .include <bsd.own.mk>
 
 TESTSDIR=	${TESTSBASE}/bin/date
 
-TAP_TESTS_SH=	legacy_test
+ATF_TESTS_SH=	format_string_test
 
 .include <bsd.test.mk>

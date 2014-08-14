@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: head/lib/libc/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libc/Makefile 269865 2014-08-12 12:25:56Z ume $
 
 SHLIBDIR?= /lib
 
@@ -75,12 +75,12 @@ NOASM=
 .include "${LIBC_SRCTOP}/inet/Makefile.inc"
 .include "${LIBC_SRCTOP}/isc/Makefile.inc"
 .include "${LIBC_SRCTOP}/locale/Makefile.inc"
+.include "${LIBC_SRCTOP}/md/Makefile.inc"
 .include "${LIBC_SRCTOP}/nameser/Makefile.inc"
 .include "${LIBC_SRCTOP}/net/Makefile.inc"
 .include "${LIBC_SRCTOP}/nls/Makefile.inc"
 .include "${LIBC_SRCTOP}/posix1e/Makefile.inc"
 .if ${LIBC_ARCH} != "amd64" && \
-    ${LIBC_ARCH} != "ia64" && \
     ${LIBC_ARCH} != "powerpc64" && \
     ${LIBC_ARCH} != "sparc64" && \
     ${MACHINE_ARCH:Mmipsn32*} == "" && \

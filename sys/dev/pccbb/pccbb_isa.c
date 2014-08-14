@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb_isa.c 261790 2014-02-12 04:30:37Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb_isa.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,8 +74,7 @@ __FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb_isa.c 261790 2014-02-12 04:30:37Z j
 static SYSCTL_NODE(_hw, OID_AUTO, pcic, CTLFLAG_RD, 0, "PCIC parameters");
 
 static int isa_intr_mask = EXCA_INT_MASK_ALLOWED;
-TUNABLE_INT("hw.cbb.intr_mask", &isa_intr_mask);
-SYSCTL_INT(_hw_pcic, OID_AUTO, intr_mask, CTLFLAG_RD, &isa_intr_mask, 0,
+SYSCTL_INT(_hw_pcic, OID_AUTO, intr_mask, CTLFLAG_RDTUN, &isa_intr_mask, 0,
     "Mask of allowable interrupts for this laptop.  The default is generally\n\
 correct, but some laptops do not route all the IRQ pins to the bridge to\n\
 save wires.  Sometimes you need a more restrictive mask because some of the\n\
@@ -89,7 +88,6 @@ allocated.");
  *     2: 6729's method
  */
 int pcic_pd6722_vsense = 1;
-TUNABLE_INT("hw.pcic.pd6722_vsense", &pcic_pd6722_vsense);
 SYSCTL_INT(_hw_pcic, OID_AUTO, pd6722_vsense, CTLFLAG_RDTUN,
     &pcic_pd6722_vsense, 1,
     "Select CL-PD6722's VSENSE method.  VSENSE is used to determine the\n\

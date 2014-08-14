@@ -19,7 +19,7 @@
 #define VERSION "20071127"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/wpi/if_wpi.c 260444 2014-01-08 08:06:56Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/wpi/if_wpi.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * Driver for Intel PRO/Wireless 3945ABG 802.11 network adapters.
@@ -130,9 +130,8 @@ enum {
 	WPI_DEBUG_ANY		= 0xffffffff
 };
 
-static int wpi_debug = 0;
-SYSCTL_INT(_debug, OID_AUTO, wpi, CTLFLAG_RW, &wpi_debug, 0, "wpi debug level");
-TUNABLE_INT("debug.wpi", &wpi_debug);
+static int wpi_debug;
+SYSCTL_INT(_debug, OID_AUTO, wpi, CTLFLAG_RWTUN, &wpi_debug, 0, "wpi debug level");
 
 #else
 #define DPRINTF(x)
@@ -901,13 +900,13 @@ static void
 wpi_dma_contig_free(struct wpi_dma_info *dma)
 {
 	if (dma->tag) {
-		if (dma->map != NULL) {
+		if (dma->vaddr_start != NULL) {
 			if (dma->paddr_start != 0) {
 				bus_dmamap_sync(dma->tag, dma->map,
 				    BUS_DMASYNC_POSTREAD | BUS_DMASYNC_POSTWRITE);
 				bus_dmamap_unload(dma->tag, dma->map);
 			}
-			bus_dmamem_free(dma->tag, &dma->vaddr_start, dma->map);
+			bus_dmamem_free(dma->tag, dma->vaddr_start, dma->map);
 		}
 		bus_dma_tag_destroy(dma->tag);
 	}

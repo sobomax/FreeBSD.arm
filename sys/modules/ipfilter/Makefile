@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/ipfilter/Makefile 265420 2014-05-06 04:22:01Z imp $ 
-
-.include <src.opts.mk>
+# $FreeBSD: head/sys/modules/ipfilter/Makefile 269540 2014-08-04 22:37:02Z imp $ 
 
 .PATH: ${.CURDIR}/../../contrib/ipfilter/netinet
 
@@ -11,15 +9,6 @@ SRCS=	mlfk_ipl.c ip_nat.c ip_frag.c ip_state.c ip_proxy.c ip_auth.c \
 	ip_nat6.c ip_rules.c ip_scan.c ip_dstlist.c radix_ipf.c
 SRCS+=	opt_bpf.h opt_inet6.h
 
-.if !defined(KERNBUILDDIR)
-opt_bpf.h:
-	echo "#define DEV_BPF 1" > ${.TARGET}
-
-.if ${MK_INET6_SUPPORT} != "no"
-opt_inet6.h:
-	echo "#define INET6 1" > ${.TARGET}
-.endif
-.endif
 CFLAGS+=  -I${.CURDIR}/../../contrib/ipfilter
 CFLAGS+= -DIPFILTER=1 -DIPFILTER_LKM -DIPFILTER_LOG -DIPFILTER_LOOKUP
 #

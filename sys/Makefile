@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/Makefile 266845 2014-05-29 16:03:08Z jhb $
+# $FreeBSD: head/sys/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
 # Directories to include in cscope name file and TAGS.
 CSCOPEDIRS=	boot bsm cam cddl compat conf contrib crypto ddb dev fs gdb \
@@ -8,7 +8,7 @@ CSCOPEDIRS=	boot bsm cam cddl compat conf contrib crypto ddb dev fs gdb \
 		pci rpc security sys ufs vm xdr xen ${CSCOPE_ARCHDIR}
 .if !defined(CSCOPE_ARCHDIR)
 .if defined(ALL_ARCH)
-CSCOPE_ARCHDIR = amd64 arm i386 ia64 mips pc98 powerpc sparc64 x86
+CSCOPE_ARCHDIR = amd64 arm i386 mips pc98 powerpc sparc64 x86
 .else
 CSCOPE_ARCHDIR = ${MACHINE} 
 .if ${MACHINE} != ${MACHINE_CPUARCH}

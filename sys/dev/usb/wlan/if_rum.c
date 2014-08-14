@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 260444 2014-01-08 08:06:56Z kevlo $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 269127 2014-07-26 16:06:01Z hselasky $	*/
 
 /*-
  * Copyright (c) 2005-2007 Damien Bergamini <damien.bergamini@free.fr>
@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 260444 2014-01-08 08:06:56Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 269127 2014-07-26 16:06:01Z hselasky $");
 
 /*-
  * Ralink Technology RT2501USB/RT2601USB chipset driver
@@ -1035,6 +1035,8 @@ rum_setup_tx_desc(struct rum_softc *sc, struct rum_tx_desc *desc,
 		desc->plcp_length_hi = plcp_length >> 6;
 		desc->plcp_length_lo = plcp_length & 0x3f;
 	} else {
+		if (rate == 0)
+			rate = 2;	/* avoid division by zero */
 		plcp_length = (16 * len + rate - 1) / rate;
 		if (rate == 22) {
 			remainder = (16 * len) % 22;

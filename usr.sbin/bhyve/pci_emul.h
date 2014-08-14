@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_emul.h 266125 2014-05-15 14:16:55Z jhb $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_emul.h 269700 2014-08-08 03:49:01Z neel $
  */
 
 #ifndef _PCI_EMUL_H_
@@ -235,6 +235,7 @@ uint64_t pci_emul_msix_tread(struct pci_devinst *pi, uint64_t offset, int size);
 int	pci_count_lintr(int bus);
 void	pci_walk_lintr(int bus, pci_lintr_cb cb, void *arg);
 void	pci_write_dsdt(void);
+uint64_t pci_ecfg_base(void);
 int	pci_bus_configured(int bus);
 
 static __inline void 

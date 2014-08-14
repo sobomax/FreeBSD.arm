@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ah.c 265032 2014-04-27 23:36:44Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ah.c 269760 2014-08-09 18:15:28Z adrian $
  */
 #include "opt_ah.h"
 
@@ -850,10 +850,11 @@ ath_hal_getregdump(struct ath_hal *ah, const HAL_REGRANGE *regs,
 	int i;
 
 	for (i = 0; space >= 2*sizeof(uint32_t); i++) {
-		u_int r = regs[i].start;
-		u_int e = regs[i].end;
-		*dp++ = (r<<16) | e;
-		space -= sizeof(uint32_t);
+		uint32_t r = regs[i].start;
+		uint32_t e = regs[i].end;
+		*dp++ = r;
+		*dp++ = e;
+		space -= 2*sizeof(uint32_t);
 		do {
 			*dp++ = OS_REG_READ(ah, r);
 			r += sizeof(uint32_t);

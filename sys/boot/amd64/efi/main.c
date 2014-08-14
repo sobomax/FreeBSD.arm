@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/amd64/efi/main.c 264115 2014-04-04 13:35:36Z emaste $");
+__FBSDID("$FreeBSD: head/sys/boot/amd64/efi/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 #include <stand.h>
 #include <string.h>
@@ -124,7 +124,7 @@ main(int argc, CHAR16 *argv[])
 	archsw.arch_copyout = x86_efi_copyout;
 	archsw.arch_readin = x86_efi_readin;
 
-	interact();			/* doesn't return */
+	interact(NULL);			/* doesn't return */
 
 	return (EFI_SUCCESS);		/* keep compiler happy */
 }

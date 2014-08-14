@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/gdb/gdb/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/gdb/gdb/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 PROG=	gdb${GDB_SUFFIX}
 SRCS=	gdb.c
@@ -11,8 +11,8 @@ GDBLIBS= ${OBJ_GDB}/libgdb/libgdb.a
 # global symbols visible.
 LDFLAGS+= -Wl,-E
 
-DPADD=	${GDBLIBS} ${BULIBS} ${LIBM} ${LIBREADLINE} ${LIBTERMCAP} ${LIBGNUREGEX}
-LDADD=	${GDBLIBS} ${BULIBS} -lm -lreadline -ltermcap -lgnuregex
+DPADD=	${GDBLIBS} ${BULIBS} ${LIBM} ${LIBREADLINE} ${LIBTERMCAPW} ${LIBGNUREGEX}
+LDADD=	${GDBLIBS} ${BULIBS} -lm ${LDREADLINE} -ltermcapw -lgnuregex
 
 NO_PIE=	yes
 

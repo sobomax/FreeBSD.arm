@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/exynos5420-arndale-octa.dts 266943 2014-06-01 08:15:34Z br $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/exynos5420-arndale-octa.dts 269369 2014-08-01 06:20:25Z br $
  */
 
 /dts-v1/;
@@ -35,12 +35,20 @@
 
 	memory {
 		device_type = "memory";
-		reg = < 0x20000000 0x40000000 >;  /* 1G */
+		reg = < 0x20000000 0x7f200000 >;  /* 2G */
 	};
 
 	SOC: Exynos5@0 {
 		serial3: serial@12C30000 {
 			status = "okay";
+		};
+
+		usb@12110000 {
+			status = "okay";
+		};
+
+		sdhci@12220000 {
+			status = "disabled";
 		};
 	};
 

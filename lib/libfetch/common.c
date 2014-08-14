@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/common.c 266291 2014-05-17 03:39:56Z des $");
+__FBSDID("$FreeBSD: head/lib/libfetch/common.c 268671 2014-07-15 15:29:43Z bapt $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -1110,6 +1110,9 @@ fetch_writev(conn_t *conn, struct iovec *iov, int iovcnt)
 			errno = 0;
 			pfd.revents = 0;
 			if (poll(&pfd, 1, deltams) < 0) {
+				/* POSIX compliance */
+				if (errno == EAGAIN)
+					continue;
 				if (errno == EINTR && fetchRestartCalls)
 					continue;
 				return (-1);

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/acpica/acpi_wakecode.S 237037 2012-06-13 22:53:56Z jkim $
+ * $FreeBSD: head/sys/amd64/acpica/acpi_wakecode.S 269017 2014-07-23 15:53:29Z royger $
  */
 
 #include <machine/asmacros.h>
@@ -148,9 +148,9 @@ wakeup_32:
 	mov	$bootdata32 - bootgdt, %eax
 	mov	%ax, %ds
 
-	/* Turn on the PAE and PSE bits for when paging is enabled */
+	/* Turn on the PAE bit for when paging is enabled */
 	mov	%cr4, %eax
-	orl	$(CR4_PAE | CR4_PSE), %eax
+	orl	$CR4_PAE, %eax
 	mov	%eax, %cr4
 
 	/*

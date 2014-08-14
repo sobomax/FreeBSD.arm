@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/boot/ficl/loader.c 254155 2013-08-09 19:10:56Z marcel $
+ *	$FreeBSD: head/sys/boot/ficl/loader.c 268351 2014-07-07 00:27:09Z marcel $
  */
 
 /*******************************************************************
@@ -800,15 +800,9 @@ void ficlCompilePlatform(FICL_SYSTEM *pSys)
     ficlSetEnv(pSys, "arch-pc98",         FICL_TRUE);
 #elif defined(__i386__)
     ficlSetEnv(pSys, "arch-i386",         FICL_TRUE);
-    ficlSetEnv(pSys, "arch-ia64",         FICL_FALSE);
-    ficlSetEnv(pSys, "arch-powerpc",      FICL_FALSE);
-#elif defined(__ia64__)
-    ficlSetEnv(pSys, "arch-i386",         FICL_FALSE);
-    ficlSetEnv(pSys, "arch-ia64",         FICL_TRUE);
     ficlSetEnv(pSys, "arch-powerpc",      FICL_FALSE);
 #elif defined(__powerpc__)
     ficlSetEnv(pSys, "arch-i386",         FICL_FALSE);
-    ficlSetEnv(pSys, "arch-ia64",         FICL_FALSE);
     ficlSetEnv(pSys, "arch-powerpc",      FICL_TRUE);
 #endif
 

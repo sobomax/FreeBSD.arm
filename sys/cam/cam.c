@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/cam.c 248922 2013-03-29 22:58:15Z smh $");
+__FBSDID("$FreeBSD: head/sys/cam/cam.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -116,7 +116,6 @@ SYSCTL_NODE(_kern, OID_AUTO, cam, CTLFLAG_RD, 0, "CAM Subsystem");
 #endif
 
 int cam_sort_io_queues = CAM_DEFAULT_SORT_IO_QUEUES;
-TUNABLE_INT("kern.cam.sort_io_queues", &cam_sort_io_queues);
 SYSCTL_INT(_kern_cam, OID_AUTO, sort_io_queues, CTLFLAG_RWTUN,
     &cam_sort_io_queues, 0, "Sort IO queues to try and optimise disk access patterns");
 #endif

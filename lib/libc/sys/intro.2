@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)intro.2	8.5 (Berkeley) 2/27/95
-.\" $FreeBSD: head/lib/libc/sys/intro.2 250250 2013-05-04 19:07:22Z pluknet $
+.\" $FreeBSD: head/lib/libc/sys/intro.2 267803 2014-06-23 18:40:21Z joel $
 .\"
 .Dd May 4, 2013
 .Dt INTRO 2
@@ -133,7 +133,6 @@ executable file.
 A file descriptor argument was out of range, referred to no open file,
 or a read (write) request was made to a file that was only open for
 writing (reading).
-.Pp
 .It Er 10 ECHILD Em "\&No child processes" .
 A
 .Xr wait 2
@@ -302,7 +301,6 @@ addresses with
 Internet protocols.
 .It Er 48 EADDRINUSE Em "Address already in use" .
 Only one usage of each address is normally permitted.
-.Pp
 .It Er 49 EADDRNOTAVAIL Em "Can't assign requested address" .
 Normally results from an attempt to create a socket with an
 address not on this machine.

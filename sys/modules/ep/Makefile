@@ -1,8 +1,9 @@
-# $FreeBSD: head/sys/modules/ep/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/modules/ep/Makefile 269812 2014-08-11 14:50:49Z imp $
 
-.include <src.opts.mk>
+SYSDIR?=${.CURDIR}/../..
+.include "${SYSDIR}/conf/kern.opts.mk"
 
-.PATH: ${.CURDIR}/../../dev/ep
+.PATH: ${SYSDIR}/dev/ep
 
 KMOD=	if_ep
 SRCS=	if_ep.c

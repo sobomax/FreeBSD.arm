@@ -33,11 +33,15 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: head/release/release.sh 264343 2014-04-11 13:48:45Z gjb $
+# $FreeBSD: head/release/release.sh 269639 2014-08-06 19:04:05Z gjb $
 #
 
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"
 export PATH
+
+# Prototypes that can be redefined per-chroot or per-target.
+load_chroot_env() { }
+load_target_env() { }
 
 # The directory within which the release will be built.
 CHROOTDIR="/scratch"
@@ -124,10 +128,6 @@ DOCBRANCH="${SVNROOT}${DOCBRANCH}"
 PORTBRANCH="${SVNROOT}${PORTBRANCH}"
 
 if [ -n "${EMBEDDEDBUILD}" ]; then
-	if [ -z "${XDEV}" ] || [ -z "${XDEV_ARCH}" ]; then
-		echo "ERROR: XDEV and XDEV_ARCH must be set in ${RELEASECONF}."
-		exit 1
-	fi
 	WITH_DVD=
 	WITH_COMPRESSED_IMAGES=
 	NODOC=yes
@@ -161,6 +161,7 @@ if [ -n "${TARGET}" ] && [ -n "${TARGET_ARCH}" ]; then
 else
 	ARCH_FLAGS=
 fi
+load_chroot_env
 CHROOT_MAKEENV="${CHROOT_MAKEENV} MAKEOBJDIRPREFIX=${CHROOTDIR}/tmp/obj"
 CHROOT_WMAKEFLAGS="${MAKE_FLAGS} ${WORLD_FLAGS} ${CONF_FILES}"
 CHROOT_IMAKEFLAGS="${CONF_FILES}"
@@ -229,6 +230,7 @@ if [ -n "${EMBEDDEDBUILD}" ]; then
 	# release/, copy it to the /tmp/external directory within the chroot.
 	# This allows building embedded releases without relying on updated
 	# scripts and/or configurations to exist in the branch being built.
+	load_target_env
 	if [ -e ${RELENGDIR}/tools/${XDEV}/crochet-${KERNEL}.conf ] && \
 		[ -e ${RELENGDIR}/${XDEV}/release.sh ]; then
 			mkdir -p ${CHROOTDIR}/tmp/external/${XDEV}/
@@ -261,6 +263,7 @@ if [ -d ${CHROOTDIR}/usr/ports ]; then
 	fi
 fi
 
+load_target_env
 eval chroot ${CHROOTDIR} make -C /usr/src ${RELEASE_WMAKEFLAGS} buildworld
 eval chroot ${CHROOTDIR} make -C /usr/src ${RELEASE_KMAKEFLAGS} buildkernel
 eval chroot ${CHROOTDIR} make -C /usr/src/release ${RELEASE_RMAKEFLAGS} \

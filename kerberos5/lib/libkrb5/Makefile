@@ -1,9 +1,9 @@
-# $FreeBSD: head/kerberos5/lib/libkrb5/Makefile 255455 2013-09-10 18:40:43Z des $
+# $FreeBSD: head/kerberos5/lib/libkrb5/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 LIB=	krb5
 LDFLAGS=	-Wl,--no-undefined
 VERSION_MAP= ${KRB5DIR}/lib/krb5/version-script.map
-LDADD=	-lasn1 -lcom_err -lcrypt -lcrypto -lhx509 -lroken -lwind -lheimbase -lheimipcc
+LDADD=	-lasn1 -lcom_err -lcrypt -lcrypto -lhx509 -lroken -lwind -lheimbase ${LDHEIMIPCC}
 DPADD=	${LIBASN1} ${LIBCOM_ERR} ${LIBCRYPT} ${LIBCRYPTO} ${LIBHX509} ${LIBROKEN} ${LIBWIND} ${LIBHEIMBASE} ${LIBHEIMIPCC}
 USEPRIVATELIB= heimipcc
 

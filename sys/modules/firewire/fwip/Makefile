@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/firewire/fwip/Makefile 220371 2011-04-05 19:41:18Z uqs $
+# $FreeBSD: head/sys/modules/firewire/fwip/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 # Makefile for the fwip(4) module (IP over IEEE1394)
 
@@ -10,11 +10,6 @@ SRCS    = bus_if.h device_if.h \
           if_fwip.c if_fwipvar.h \
           firewire.h firewirereg.h \
           if_fwsubr.c
-
-.if !defined(KERNBUILDDIR)
-opt_inet.h:
-	echo "#define INET      1" > ${.TARGET}
-.endif
 
 #CFLAGS += -DDEVICE_POLLING
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iic.h 210998 2010-08-07 08:31:32Z joel $
+ * $FreeBSD: head/sys/dev/iicbus/iic.h 268564 2014-07-12 06:23:42Z rpaulo $
  *
  */
 #ifndef __IIC_H

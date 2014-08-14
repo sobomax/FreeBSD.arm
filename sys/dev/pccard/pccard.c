@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pccard/pccard.c 237692 2012-06-28 07:26:44Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/pccard/pccard.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -62,14 +62,12 @@ __FBSDID("$FreeBSD: head/sys/dev/pccard/pccard.c 237692 2012-06-28 07:26:44Z imp
 static SYSCTL_NODE(_hw, OID_AUTO, pccard, CTLFLAG_RD, 0, "PCCARD parameters");
 
 int	pccard_debug = 0;
-TUNABLE_INT("hw.pccard.debug", &pccard_debug);
-SYSCTL_INT(_hw_pccard, OID_AUTO, debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_pccard, OID_AUTO, debug, CTLFLAG_RWTUN,
     &pccard_debug, 0,
   "pccard debug");
 
 int	pccard_cis_debug = 0;
-TUNABLE_INT("hw.pccard.cis_debug", &pccard_cis_debug);
-SYSCTL_INT(_hw_pccard, OID_AUTO, cis_debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_pccard, OID_AUTO, cis_debug, CTLFLAG_RWTUN,
     &pccard_cis_debug, 0, "pccard CIS debug");
 
 #ifdef PCCARDDEBUG

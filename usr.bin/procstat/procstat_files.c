@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/procstat/procstat_files.c 263234 2014-03-16 11:04:44Z rwatson $
+ * $FreeBSD: head/usr.bin/procstat/procstat_files.c 268879 2014-07-19 15:09:53Z rwatson $
  */
 
 #include <sys/param.h>
@@ -114,7 +114,7 @@ addr_to_string(struct sockaddr_storage *ss, char *buffer, int buflen)
 			snprintf(buffer, buflen, "%s.%d", buffer2,
 			    ntohs(sin6->sin6_port));
 		else
-			strlcpy(buffer, "-", sizeof(buffer));
+			strlcpy(buffer, "-", buflen);
 		break;
 
 	default:
@@ -317,12 +317,12 @@ procstat_files(struct procstat *procstat, struct kinfo_proc *kipp)
 
 	if (!hflag) {
 		if (Cflag)
-			printf("%5s %-16s %4s %1s %-9s %-*s "
+			printf("%5s %-16s %5s %1s %-8s %-*s "
 			    "%-3s %-12s\n", "PID", "COMM", "FD", "T",
 			    "FLAGS", capwidth, "CAPABILITIES", "PRO",
 			    "NAME");
 		else
-			printf("%5s %-16s %4s %1s %1s %-9s "
+			printf("%5s %-16s %5s %1s %1s %-8s "
 			    "%3s %7s %-3s %-12s\n", "PID", "COMM", "FD", "T",
 			    "V", "FLAGS", "REF", "OFFSET", "PRO", "NAME");
 	}
@@ -450,6 +450,7 @@ procstat_files(struct procstat *procstat, struct kinfo_proc *kipp)
 		printf("%s", fst->fs_fflags & PS_FST_FFLAG_NONBLOCK ? "n" : "-");
 		printf("%s", fst->fs_fflags & PS_FST_FFLAG_DIRECT ? "d" : "-");
 		printf("%s", fst->fs_fflags & PS_FST_FFLAG_HASLOCK ? "l" : "-");
+		printf(" ");
 		if (!Cflag) {
 			if (fst->fs_ref_count > -1)
 				printf("%3d ", fst->fs_ref_count);

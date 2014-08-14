@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/siftr/Makefile 209662 2010-07-03 13:32:39Z lstewart $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/sys/modules/siftr/Makefile 269538 2014-08-04 22:34:12Z imp $
 
 .PATH:  ${.CURDIR}/../../netinet
 KMOD=	siftr

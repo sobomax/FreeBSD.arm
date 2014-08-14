@@ -57,7 +57,7 @@
  * SUCH DAMAGE.
 */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_qmgr.c 236987 2012-06-13 04:38:09Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_qmgr.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * Intel XScale Queue Manager support.
@@ -159,10 +159,9 @@ struct ixpqmgr_softc {
 	uint32_t		aqmFreeSramAddress;	/* SRAM free space */
 };
 
-static int qmgr_debug = 0;
-SYSCTL_INT(_debug, OID_AUTO, qmgr, CTLFLAG_RW, &qmgr_debug,
+static int qmgr_debug;
+SYSCTL_INT(_debug, OID_AUTO, qmgr, CTLFLAG_RWTUN, &qmgr_debug,
 	   0, "IXP4XX Q-Manager debug msgs");
-TUNABLE_INT("debug.qmgr", &qmgr_debug);
 #define	DPRINTF(dev, fmt, ...) do {					\
 	if (qmgr_debug) printf(fmt, __VA_ARGS__);			\
 } while (0)

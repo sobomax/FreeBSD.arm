@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/advansys/adwcam.c 263954 2014-03-30 23:43:36Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/advansys/adwcam.c 267340 2014-06-10 20:25:45Z jhb $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -777,7 +777,6 @@ adw_free(struct adw_softc *adw)
 	case 7:
 		bus_dmamem_free(adw->acb_dmat, adw->acbs,
 				adw->acb_dmamap);
-		bus_dmamap_destroy(adw->acb_dmat, adw->acb_dmamap);
 	case 6:
 		bus_dma_tag_destroy(adw->acb_dmat);
 	case 5:
@@ -785,7 +784,6 @@ adw_free(struct adw_softc *adw)
 	case 4:
 		bus_dmamem_free(adw->carrier_dmat, adw->carriers,
 				adw->carrier_dmamap);
-		bus_dmamap_destroy(adw->carrier_dmat, adw->carrier_dmamap);
 	case 3:
 		bus_dma_tag_destroy(adw->carrier_dmat);
 	case 2:

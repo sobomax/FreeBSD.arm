@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 264879 2014-04-24 12:52:31Z smh $");
+__FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 269699 2014-08-08 01:57:15Z kevlo $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -124,7 +124,7 @@ int (*mrt_ioctl)(u_long, caddr_t, int);
 int (*legal_vif_num)(int);
 u_long (*ip_mcast_src)(int);
 
-void (*rsvp_input_p)(struct mbuf *m, int off);
+int (*rsvp_input_p)(struct mbuf **, int *, int);
 int (*ip_rsvp_vif)(struct socket *, struct sockopt *);
 void (*ip_rsvp_force_done)(struct socket *);
 #endif /* INET */
@@ -270,15 +270,17 @@ rip_append(struct inpcb *last, struct ip *ip, struct mbuf *n,
  * Setup generic address and protocol structures for raw_input routine, then
  * pass them along with mbuf chain.
  */
-void
-rip_input(struct mbuf *m, int off)
+int
+rip_input(struct mbuf **mp, int *offp, int proto)
 {
 	struct ifnet *ifp;
+	struct mbuf *m = *mp;
 	struct ip *ip = mtod(m, struct ip *);
-	int proto = ip->ip_p;
 	struct inpcb *inp, *last;
 	struct sockaddr_in ripsrc;
 	int hash;
+
+	*mp = NULL;
 
 	bzero(&ripsrc, sizeof(ripsrc));
 	ripsrc.sin_len = sizeof(ripsrc);
@@ -416,6 +418,7 @@ rip_input(struct mbuf *m, int off)
 		IPSTAT_INC(ips_noproto);
 		IPSTAT_DEC(ips_delivered);
 	}
+	return (IPPROTO_DONE);
 }
 
 /*

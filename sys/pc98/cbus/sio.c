@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/pc98/cbus/sio.c 228631 2011-12-17 15:08:43Z avg $
+ * $FreeBSD: head/sys/pc98/cbus/sio.c 267992 2014-06-28 03:56:17Z hselasky $
  *	from: @(#)com.c	7.5 (Berkeley) 5/16/91
  *	from: i386/isa sio.c,v 1.234
  */
@@ -704,7 +704,7 @@ sysctl_machdep_comdefaultrate(SYSCTL_HANDLER_ARGS)
 	return error;
 }
 
-SYSCTL_PROC(_machdep, OID_AUTO, conspeed, CTLTYPE_INT | CTLFLAG_RW,
+SYSCTL_PROC(_machdep, OID_AUTO, conspeed, CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_NOFETCH,
 	    0, 0, sysctl_machdep_comdefaultrate, "I", "");
 TUNABLE_INT("machdep.conspeed", __DEVOLATILE(int *, &comdefaultrate));
 

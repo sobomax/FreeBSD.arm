@@ -30,12 +30,11 @@
  * SUCH DAMAGE.
  *
  *	@(#)mystring.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/mystring.h 258776 2013-11-30 21:27:11Z jilles $
+ * $FreeBSD: head/bin/sh/mystring.h 268920 2014-07-20 12:06:52Z jilles $
  */
 
 #include <string.h>
 
-int prefix(const char *, const char *);
 int number(const char *);
 int is_number(const char *);
 

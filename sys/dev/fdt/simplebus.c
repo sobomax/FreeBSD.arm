@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdt/simplebus.c 261791 2014-02-12 04:56:34Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/fdt/simplebus.c 269597 2014-08-05 17:32:47Z ian $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -121,8 +121,10 @@ static driver_t simplebus_driver = {
 	sizeof(struct simplebus_softc)
 };
 static devclass_t simplebus_devclass;
-DRIVER_MODULE(simplebus, ofwbus, simplebus_driver, simplebus_devclass, 0, 0);
-DRIVER_MODULE(simplebus, simplebus, simplebus_driver, simplebus_devclass, 0, 0);
+EARLY_DRIVER_MODULE(simplebus, ofwbus, simplebus_driver, simplebus_devclass,
+    0, 0, BUS_PASS_BUS);
+EARLY_DRIVER_MODULE(simplebus, simplebus, simplebus_driver, simplebus_devclass,
+    0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);
 
 static int
 simplebus_probe(device_t dev)

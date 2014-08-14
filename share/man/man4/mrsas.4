@@ -32,7 +32,7 @@
 .\" are those of the authors and should not be interpreted as representing
 .\" official policies, either expressed or implied, of the FreeBSD Project.
 .\"
-.\" $FreeBSD: head/share/man/man4/mrsas.4 267182 2014-06-06 19:00:43Z joel $
+.\" $FreeBSD: head/share/man/man4/mrsas.4 267938 2014-06-26 21:46:14Z bapt $
 .\"
 .Dd May 8, 2014
 .Dt MRSAS 4
@@ -207,7 +207,7 @@ variable, where X is the adapter number, either in
 or via
 .Xr sysctl 8 .
 The following bits have the described effects:
-.Bl -tag -offset indent
+.Bl -tag -width indent -offset indent
 .It 0x01
 Enable informational prints.
 .It 0x02
@@ -377,7 +377,7 @@ This is the 12Gb/s MegaRAID HBA card which has device id 0x005F.
 The
 .Nm
 driver and this manual page were written by
-.An Kashyap Desai Aq Kashyap.Desai@lsi.com .
+.An Kashyap Desai Aq Mt Kashyap.Desai@lsi.com .
 .Sh TODO
 The driver does not support big-endian architectures at this time.
 .Pp

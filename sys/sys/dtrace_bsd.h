@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/dtrace_bsd.h 266826 2014-05-29 01:41:19Z markj $
+ * $FreeBSD: head/sys/sys/dtrace_bsd.h 268600 2014-07-14 04:38:17Z markj $
  *
  * This file contains BSD shims for Sun's DTrace code.
  */
@@ -48,15 +48,14 @@ extern cyclic_clock_func_t	cyclic_clock_func;
 
 void clocksource_cyc_set(const struct bintime *t);
 
+int dtrace_trap(struct trapframe *);
+
 /*
  * The dtrace module handles traps that occur during a DTrace probe.
  * This type definition is used in the trap handler to provide a
- * hook for the dtrace module to register it's handler with.
+ * hook for the dtrace module to register its handler with.
  */
-typedef int (*dtrace_trap_func_t)(struct trapframe *, u_int);
-
-int	dtrace_trap(struct trapframe *, u_int);
-
+typedef int (*dtrace_trap_func_t)(struct trapframe *);
 extern dtrace_trap_func_t	dtrace_trap_func;
 
 /*

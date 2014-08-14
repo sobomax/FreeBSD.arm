@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/clang/include/llvm/Config/config.h 265925 2014-05-12 18:45:56Z dim $ */
+/* $FreeBSD: head/lib/clang/include/llvm/Config/config.h 269954 2014-08-13 21:38:29Z dim $ */
 /* include/llvm/Config/config.h.  Generated from config.h.in by configure.  */
 /* include/llvm/Config/config.h.in.  Generated from autoconf/configure.ac by autoheader.  */
 
@@ -9,7 +9,7 @@
 #include <osreldate.h>
 
 /* Bug report URL. */
-#define BUG_REPORT_URL "http://llvm.org/bugs/"
+#define BUG_REPORT_URL "https://bugs.freebsd.org/submit/"
 
 /* Define if we have libxml2 */
 /* #undef CLANG_HAVE_LIBXML */

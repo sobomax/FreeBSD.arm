@@ -30,7 +30,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/gadget/g_audio.c 253618 2013-07-24 18:32:15Z obrien $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/gadget/g_audio.c 269664 2014-08-07 12:47:25Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -580,9 +580,20 @@ g_audio_handle_request(device_t dev,
 		    (req->bRequest == 0x84 /* get residue */ )) {
 
 			if (offset == 0) {
-				USETW(sc->sc_volume_limit, 0);
+				USETW(sc->sc_volume_limit, 1);
 				*plen = 2;
 				*pptr = &sc->sc_volume_limit;
+			} else {
+				*plen = 0;
+			}
+			return (0);
+		} else if ((req->bmRequestType == UT_READ_CLASS_INTERFACE) &&
+		    (req->bRequest == 0x81 /* get value */ )) {
+
+			if (offset == 0) {
+				USETW(sc->sc_volume_setting, 0x2000);
+				*plen = sizeof(sc->sc_volume_setting);
+				*pptr = &sc->sc_volume_setting;
 			} else {
 				*plen = 0;
 			}

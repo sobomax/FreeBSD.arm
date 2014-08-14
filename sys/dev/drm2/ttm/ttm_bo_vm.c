@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_bo_vm.c 259612 2013-12-19 12:00:48Z avg $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_bo_vm.c 269634 2014-08-06 17:45:59Z royger $");
 
 #include "opt_vm.h"
 
@@ -216,8 +216,12 @@ reserve:
 	}
 
 	if (bo->mem.bus.is_iomem) {
-		m = vm_phys_fictitious_to_vm_page(bo->mem.bus.base +
-		    bo->mem.bus.offset + offset);
+		m = PHYS_TO_VM_PAGE(bo->mem.bus.base + bo->mem.bus.offset +
+		    offset);
+		KASSERT((m->flags & PG_FICTITIOUS) != 0,
+		    ("physical address %#jx not fictitious",
+		    (uintmax_t)(bo->mem.bus.base + bo->mem.bus.offset
+		    + offset)));
 		pmap_page_set_memattr(m, ttm_io_prot(bo->mem.placement));
 	} else {
 		ttm = bo->ttm;

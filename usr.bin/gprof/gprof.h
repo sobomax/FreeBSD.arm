@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)gprof.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: head/usr.bin/gprof/gprof.h 246783 2013-02-14 08:16:03Z charnier $
+ * $FreeBSD: head/usr.bin/gprof/gprof.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 #include <sys/types.h>
@@ -45,9 +45,6 @@
 #endif
 #if __i386__
 #   include "i386.h"
-#endif
-#if __ia64__
-#   include "ia64.h"
 #endif
 #if __mips__
 #   include "mips.h"

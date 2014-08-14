@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 266945 2014-06-01 08:45:27Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,13 +47,11 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 266945 2014-06-01 
 
 #include "iicbus_if.h"
 
-#include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 #include <machine/cpu.h>
 #include <machine/intr.h>
 

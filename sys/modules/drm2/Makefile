@@ -1,7 +1,7 @@
-# $FreeBSD: head/sys/modules/drm2/Makefile 265433 2014-05-06 11:12:56Z se $
+# $FreeBSD: head/sys/modules/drm2/Makefile 269812 2014-08-11 14:50:49Z imp $
 
-.include <src.opts.mk>
-.include <bsd.own.mk>
+SYSDIR?=${.CURDIR}/../..
+.include "${SYSDIR}/conf/kern.opts.mk"
 
 .if ${MACHINE_CPUARCH} == "amd64"
 _radeonkms=	radeonkms

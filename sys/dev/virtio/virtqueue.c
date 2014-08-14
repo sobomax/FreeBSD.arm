@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/virtqueue.c 266951 2014-06-01 18:16:01Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/virtqueue.c 268480 2014-07-10 05:26:01Z bryanv $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: head/sys/dev/virtio/virtqueue.c 266951 2014-06-01 18:16:01Z 
 #include <sys/rman.h>
 
 #include <dev/virtio/virtio.h>
-#include <dev/virtio/virtio_config.h>
 #include <dev/virtio/virtqueue.h>
 #include <dev/virtio/virtio_ring.h>
 
@@ -373,6 +372,13 @@ virtqueue_size(struct virtqueue *vq)
 {
 
 	return (vq->vq_nentries);
+}
+
+int
+virtqueue_nfree(struct virtqueue *vq)
+{
+
+	return (vq->vq_free_cnt);
 }
 
 int

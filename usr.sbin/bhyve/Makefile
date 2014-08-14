@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/bhyve/Makefile 266125 2014-05-15 14:16:55Z jhb $
+# $FreeBSD: head/usr.sbin/bhyve/Makefile 268777 2014-07-16 21:26:26Z neel $
 #
 
 PROG=	bhyve
@@ -35,6 +35,7 @@ SRCS=	\
 	post.c			\
 	rtc.c			\
 	smbiostbl.c		\
+	task_switch.c		\
 	uart_emul.c		\
 	virtio.c		\
 	xmsr.c			\

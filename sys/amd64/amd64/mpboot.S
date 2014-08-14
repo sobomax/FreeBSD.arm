@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/mpboot.S 262750 2014-03-04 20:16:00Z jkim $
+ * $FreeBSD: head/sys/amd64/amd64/mpboot.S 269017 2014-07-23 15:53:29Z royger $
  */
 
 #include <machine/asmacros.h>		/* miscellaneous asm macros */
@@ -90,9 +90,9 @@ protmode:
 	mov	$bootdata-gdt, %eax
 	mov	%ax, %ds
 
-	/* Turn on the PAE, PSE and PGE bits for when paging is enabled */
+	/* Turn on the PAE bit for when paging is enabled */
 	mov	%cr4, %eax
-	orl	$(CR4_PAE | CR4_PSE), %eax
+	orl	$CR4_PAE, %eax
 	mov	%eax, %cr4
 
 	/*

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/freebsd32/freebsd32_util.h 225617 2011-09-16 13:58:51Z kmacy $
+ * $FreeBSD: head/sys/compat/freebsd32/freebsd32_util.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_UTIL_H_
@@ -47,7 +47,7 @@ struct freebsd32_ps_strings {
 	int	ps_nenvstr;	/* the number of environment strings */
 };
 
-#if defined(__amd64__) || defined(__ia64__)
+#if defined(__amd64__)
 #include <compat/ia32/ia32_util.h>
 #endif
 

@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/em/Makefile 265420 2014-05-06 04:22:01Z imp $
-
-.include <src.opts.mk>
+# $FreeBSD: head/sys/modules/em/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .PATH:  ${.CURDIR}/../../dev/e1000
 KMOD    = if_em
@@ -20,17 +18,5 @@ CFLAGS += -I${.CURDIR}/../../dev/e1000
 
 # DEVICE_POLLING for a non-interrupt-driven method
 #CFLAGS  += -DDEVICE_POLLING
-
-.if !defined(KERNBUILDDIR)
-.if ${MK_INET_SUPPORT} != "no"
-opt_inet.h:
-	@echo "#define INET 1" > ${.TARGET}
-.endif
-
-.if ${MK_INET6_SUPPORT} != "no"
-opt_inet6.h:
-	@echo "#define INET6 1" > ${.TARGET}
-.endif
-.endif
 
 .include <bsd.kmod.mk>

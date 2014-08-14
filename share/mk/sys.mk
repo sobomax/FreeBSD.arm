@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: head/share/mk/sys.mk 266350 2014-05-17 20:31:40Z imp $
+# $FreeBSD: head/share/mk/sys.mk 269114 2014-07-26 04:38:09Z sjg $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -117,7 +117,8 @@ LEX		?=	lex
 LFLAGS		?=
 
 LD		?=	ld
-LDFLAGS		?=
+LDFLAGS		?=				# LDFLAGS is for CC, 
+_LDFLAGS	=	${LDFLAGS:S/-Wl,//g}	# strip -Wl, for LD
 
 LINT		?=	lint
 LINTFLAGS	?=	-cghapbx

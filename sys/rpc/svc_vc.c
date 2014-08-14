@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 260258 2014-01-04 15:51:31Z mav $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 268115 2014-07-01 20:47:16Z rmacklem $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -654,6 +654,7 @@ svc_vc_recv(SVCXPRT *xprt, struct rpc_msg *msg,
 	struct socket* so = xprt->xp_socket;
 	XDR xdrs;
 	int error, rcvflag;
+	uint32_t xid_plus_direction[2];
 
 	/*
 	 * Serialise access to the socket and our own record parsing
@@ -671,6 +672,32 @@ svc_vc_recv(SVCXPRT *xprt, struct rpc_msg *msg,
 
 		/* Process and return complete request in cd->mreq. */
 		if (cd->mreq != NULL && cd->resid == 0 && cd->eor) {
+
+			/*
+			 * Now, check for a backchannel reply.
+			 * The XID is in the first uint32_t of the reply
+			 * and the message direction is the second one.
+			 */
+			if ((cd->mreq->m_len >= sizeof(xid_plus_direction) ||
+			    m_length(cd->mreq, NULL) >=
+			    sizeof(xid_plus_direction)) &&
+			    xprt->xp_p2 != NULL) {
+				m_copydata(cd->mreq, 0,
+				    sizeof(xid_plus_direction),
+				    (char *)xid_plus_direction);
+				xid_plus_direction[0] =
+				    ntohl(xid_plus_direction[0]);
+				xid_plus_direction[1] =
+				    ntohl(xid_plus_direction[1]);
+				/* Check message direction. */
+				if (xid_plus_direction[1] == REPLY) {
+					clnt_bck_svccall(xprt->xp_p2,
+					    cd->mreq,
+					    xid_plus_direction[0]);
+					cd->mreq = NULL;
+					continue;
+				}
+			}
 
 			xdrmbuf_create(&xdrs, cd->mreq, XDR_DECODE);
 			cd->mreq = NULL;
@@ -848,7 +875,6 @@ svc_vc_reply(SVCXPRT *xprt, struct rpc_msg *msg,
 	}
 
 	XDR_DESTROY(&xdrs);
-	xprt->xp_p2 = NULL;
 
 	return (stat);
 }

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 262763 2014-03-05 01:17:47Z glebius $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 267634 2014-06-19 05:45:17Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -787,7 +787,7 @@ ipf_fastroute(m0, mpp, fin, fdp)
 		dst->sin_addr = fdp->fd_ip;
 
 	dst->sin_len = sizeof(*dst);
-	in_rtalloc(ro, 0);
+	in_rtalloc(ro, M_GETFIB(m0));
 
 	if ((ifp == NULL) && (ro->ro_rt != NULL))
 		ifp = ro->ro_rt->rt_ifp;

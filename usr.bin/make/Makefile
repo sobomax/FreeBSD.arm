@@ -1,6 +1,6 @@
 #	@(#)Makefile	5.2 (Berkeley) 12/28/90
 #	$Id: Makefile,v 1.6 1994/06/30 05:33:39 cgd Exp $
-# $FreeBSD: head/usr.bin/make/Makefile 266074 2014-05-14 18:43:13Z jmmv $
+# $FreeBSD: head/usr.bin/make/Makefile 269037 2014-07-23 23:01:54Z dteske $
 
 .include <src.opts.mk>
 
@@ -113,6 +113,7 @@ CFLAGS+=	-DDEFSHELLNAME=\"${MAKE_SHELL}\"
 
 # if we are here we don't want this called 'make'
 PROG=	fmake
+CLEANFILES+=	fmake.1
 fmake.1: make.1
 	cp ${.ALLSRC} ${.TARGET}
 

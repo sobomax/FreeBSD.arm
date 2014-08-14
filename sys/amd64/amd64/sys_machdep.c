@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/sys_machdep.c 266905 2014-05-30 20:58:32Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/sys_machdep.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_capsicum.h"
 
@@ -73,7 +73,6 @@ static void
 max_ldt_segment_init(void *arg __unused)
 {
 
-	TUNABLE_INT_FETCH("machdep.max_ldt_segment", &max_ldt_segment);
 	if (max_ldt_segment <= 0)
 		max_ldt_segment = 1;
 	if (max_ldt_segment > MAX_LD)

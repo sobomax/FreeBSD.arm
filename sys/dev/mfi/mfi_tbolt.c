@@ -31,7 +31,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mfi/mfi_tbolt.c 261535 2014-02-06 02:54:04Z markj $");
+__FBSDID("$FreeBSD: head/sys/dev/mfi/mfi_tbolt.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_mfi.h"
 
@@ -86,7 +86,6 @@ static void mfi_queue_map_sync(struct mfi_softc *sc);
 extern int	mfi_polled_cmd_timeout;
 static int	mfi_fw_reset_test = 0;
 #ifdef MFI_DEBUG
-TUNABLE_INT("hw.mfi.fw_reset_test", &mfi_fw_reset_test);
 SYSCTL_INT(_hw_mfi, OID_AUTO, fw_reset_test, CTLFLAG_RWTUN, &mfi_fw_reset_test,
            0, "Force a firmware reset condition");
 #endif

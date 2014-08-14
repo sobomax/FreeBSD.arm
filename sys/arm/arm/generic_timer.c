@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/generic_timer.c 264065 2014-04-03 05:48:56Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/generic_timer.c 269605 2014-08-05 18:51:51Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -343,7 +343,8 @@ static driver_t arm_tmr_driver = {
 
 static devclass_t arm_tmr_devclass;
 
-DRIVER_MODULE(timer, simplebus, arm_tmr_driver, arm_tmr_devclass, 0, 0);
+EARLY_DRIVER_MODULE(timer, simplebus, arm_tmr_driver, arm_tmr_devclass, 0, 0,
+    BUS_PASS_TIMER + BUS_PASS_ORDER_MIDDLE);
 
 void
 DELAY(int usec)

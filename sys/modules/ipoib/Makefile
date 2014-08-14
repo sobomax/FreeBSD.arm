@@ -1,8 +1,6 @@
-# $FreeBSD: head/sys/modules/ipoib/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/modules/ipoib/Makefile 269540 2014-08-04 22:37:02Z imp $
 .PATH:  ${.CURDIR}/../../ofed/drivers/infiniband/ulp/ipoib
 .PATH:  ${.CURDIR}/../../ofed/include/linux
-
-.include <src.opts.mk>
 
 KMOD    = ipoib
 SRCS    = device_if.h bus_if.h opt_ofed.h vnode_if.h opt_inet.h opt_inet6.h
@@ -13,18 +11,6 @@ CFLAGS+= -I${.CURDIR}/../../ofed/drivers/infiniband/ulp/ipoib
 CFLAGS+= -I${.CURDIR}/../ibcore
 CFLAGS+= -I${.CURDIR}/../../ofed/include/
 CFLAGS+= -DINET6 -DINET -DOFED
-
-.if !defined(KERNBUILDDIR)
-.if ${MK_INET_SUPPORT} != "no"
-opt_inet.h:
-	@echo "#define INET 1" > ${.TARGET}
-.endif
-
-.if ${MK_INET6_SUPPORT} != "no"
-opt_inet6.h:
-	@echo "#define INET6 1" > ${.TARGET}
-.endif
-.endif
 
 .include <bsd.kmod.mk>
 

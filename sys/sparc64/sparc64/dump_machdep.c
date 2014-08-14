@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/dump_machdep.c 224682 2011-08-06 17:45:52Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/dump_machdep.c 269105 2014-07-25 23:52:53Z gavin $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -142,7 +142,7 @@ blk_dump(struct dumperinfo *di, vm_paddr_t pa, vm_size_t size)
 	return (error);
 }
 
-void
+int
 dumpsys(struct dumperinfo *di)
 {
 	struct sparc64_dump_hdr hdr;
@@ -218,9 +218,10 @@ dumpsys(struct dumperinfo *di)
 	/* Signal completion, signoff and exit stage left. */
 	dump_write(di, NULL, 0, 0, 0);
 	printf("\nDump complete\n");
-	return;
+	return (0);
 
  fail:
 	/* XXX It should look more like VMS :-) */
 	printf("** DUMP FAILED (ERROR %d) **\n", error);
+	return (error);
 }

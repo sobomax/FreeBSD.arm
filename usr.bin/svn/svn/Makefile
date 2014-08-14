@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/svn/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
-
-MAN=
+# $FreeBSD: head/usr.bin/svn/svn/Makefile 268135 2014-07-02 05:09:41Z eadler $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -63,5 +61,9 @@ freebsd-organization.h:
 	@echo '#define ORGANIZATION_NAME ${ORGANIZATION}' \
 	    > freebsd-organization.h
 .endif
+
+svnlite.1: svn.1
+	# Avoid the website
+	sed -E 's,(^| |B|`)svn,\1svnlite,g' ${SVNDIR}/svn/svn.1 > ${.OBJDIR}/svnlite.1
 
 .include <bsd.prog.mk>

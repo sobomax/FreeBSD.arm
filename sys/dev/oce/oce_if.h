@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_if.h 258941 2013-12-04 20:24:18Z delphij $ */
+/* $FreeBSD: head/sys/dev/oce/oce_if.h 267839 2014-06-24 20:11:22Z delphij $ */
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -761,14 +761,9 @@ struct oce_rq {
 };
 
 struct link_status {
-	uint8_t physical_port;
-	uint8_t mac_duplex;
-	uint8_t mac_speed;
-	uint8_t mac_fault;
-	uint8_t mgmt_mac_duplex;
-	uint8_t mgmt_mac_speed;
+	uint8_t phys_port_speed;
+	uint8_t logical_link_status;
 	uint16_t qos_link_speed;
-	uint32_t logical_link_status;
 };
 
 

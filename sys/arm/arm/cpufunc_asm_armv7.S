@@ -31,7 +31,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv7.S 265784 2014-05-09 19:14:34Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv7.S 269390 2014-08-01 18:24:44Z ian $");
 
 	.cpu cortex-a8
 
@@ -358,7 +358,7 @@ ENTRY(armv7_idcache_inv_all)
 	mcr     p15, 0, r0, c7, c5, 0   @ invalidate instruction+branch cache
 	isb                             @ instruction sync barrier
 	bx      lr                      @ return
-END(armv7_l1cache_inv_all)
+END(armv7_idcache_inv_all)
 
 ENTRY_NP(armv7_sleep)
 	dsb

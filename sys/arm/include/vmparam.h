@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/vmparam.h 264203 2014-04-06 21:40:39Z ian $
+ * $FreeBSD: head/sys/arm/include/vmparam.h 269577 2014-08-05 09:44:10Z glebius $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -169,5 +169,8 @@ extern vm_offset_t vm_max_kernel_address;
 #ifndef VM_MAX_AUTOTUNE_MAXUSERS
 #define	VM_MAX_AUTOTUNE_MAXUSERS	384
 #endif
+
+#define	SFBUF
+#define	SFBUF_MAP
 
 #endif	/* _MACHINE_VMPARAM_H_ */

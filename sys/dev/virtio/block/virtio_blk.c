@@ -27,7 +27,7 @@
 /* Driver for VirtIO block devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/block/virtio_blk.c 260582 2014-01-13 04:43:01Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/block/virtio_blk.c 267313 2014-06-10 03:29:15Z bryanv $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -577,7 +577,7 @@ vtblk_strategy(struct bio *bp)
 	if (sc->vtblk_flags & VTBLK_FLAG_DETACH)
 		vtblk_finish_bio(bp, ENXIO);
 	else {
-		bioq_disksort(&sc->vtblk_bioq, bp);
+		bioq_insert_tail(&sc->vtblk_bioq, bp);
 
 		if ((sc->vtblk_flags & VTBLK_FLAG_SUSPEND) == 0)
 			vtblk_startio(sc);

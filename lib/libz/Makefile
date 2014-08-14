@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libz/Makefile 262816 2014-03-06 00:25:21Z delphij $
+# $FreeBSD: head/lib/libz/Makefile 267378 2014-06-11 20:48:40Z delphij $
 #
 
 LIB=		z
@@ -55,6 +55,8 @@ CFLAGS+=	-DSYMBOL_VERSIONING
 
 INCS=		zconf.h zlib.h
 
+.PATH:		${.CURDIR}/test
+
 minigzip:	all minigzip.o
 	$(CC) -o minigzip minigzip.o -L. -lz
 
@@ -65,6 +67,10 @@ test: example minigzip
 	(export LD_LIBRARY_PATH=. ; ./example )
 	(export LD_LIBRARY_PATH=. ; \
 		echo hello world | ./minigzip | ./minigzip -d )
+
+beforeinstall:
+	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
+		${.CURDIR}/zlib.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
 
 .include <bsd.lib.mk>
 

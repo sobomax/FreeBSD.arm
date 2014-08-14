@@ -36,7 +36,7 @@ static char *sccsid2 = "@(#)xdr_float.c 1.12 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)xdr_float.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_float.c 259118 2013-12-09 05:01:38Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_float.c 268351 2014-07-07 00:27:09Z marcel $");
 
 /*
  * xdr_float.c, Generic XDR routines implementation.
@@ -63,7 +63,7 @@ __FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_float.c 259118 2013-12-09 05:01:38Z hr
 
 #if defined(__m68k__) || defined(__sparc__) || defined(__i386__) || \
     defined(__mips__) || defined(__ns32k__) || defined(__alpha__) || \
-    defined(__arm__) || defined(__ppc__) || defined(__ia64__) || \
+    defined(__arm__) || defined(__ppc__) || \
     defined(__arm26__) || defined(__sparc64__) || defined(__amd64__)
 #include <machine/endian.h>
 #define IEEEFP

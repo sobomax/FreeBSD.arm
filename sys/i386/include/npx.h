@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)npx.h	5.3 (Berkeley) 1/18/91
- * $FreeBSD: head/sys/i386/include/npx.h 238678 2012-07-21 21:52:48Z kib $
+ * $FreeBSD: head/sys/i386/include/npx.h 267767 2014-06-23 07:37:54Z kib $
  */
 
 /*
@@ -71,6 +71,7 @@ int	is_fpu_kern_thread(u_int flags);
  */
 #define	FPU_KERN_NORMAL	0x0000
 #define	FPU_KERN_NOWAIT	0x0001
+#define	FPU_KERN_KTHR	0x0002
 
 #endif
 

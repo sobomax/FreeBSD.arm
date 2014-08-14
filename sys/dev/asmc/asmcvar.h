@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/asmc/asmcvar.h 197190 2009-09-14 11:46:43Z rpaulo $
+ * $FreeBSD: head/sys/dev/asmc/asmcvar.h 268303 2014-07-05 21:34:37Z gavin $
  *
  */
 
@@ -179,6 +179,25 @@ struct asmc_softc {
 #define ASMC_MM_TEMPNAMES	{ "northbridge1", "northbridge2" }
 #define ASMC_MM_TEMPDESCS	{ "Northbridge Point 1", \
 				  "Northbridge Point 2" }
+
+#define ASMC_MM31_TEMPS		{ "TC0D", "TC0H", \
+				  "TC0P", "TH0P", \
+				  "TN0D", "TN0P", \
+				  "TW0P", NULL }
+
+#define ASMC_MM31_TEMPNAMES	{ "cpu0_die", "cpu0_heatsink", \
+				  "cpu0_proximity", "hdd_bay", \
+				  "northbridge_die", \
+				  "northbridge_proximity", \
+				  "wireless_module", }
+
+#define ASMC_MM31_TEMPDESCS	{ "CPU0 Die Core Temperature", \
+				  "CPU0 Heatsink Temperature", \
+				  "CPU0 Proximity Temperature", \
+				  "HDD Bay Temperature", \
+				  "Northbridge Die Core Temperature", \
+				  "Northbridge Proximity Temperature", \
+				  "Wireless Module Temperature", }
 
 #define ASMC_MP_TEMPS		{ "TA0P", "TCAG", "TCAH", "TCBG", "TCBH", \
 				  "TC0C", "TC0D", "TC0P", "TC1C", "TC1D", \

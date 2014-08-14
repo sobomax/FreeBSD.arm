@@ -53,7 +53,7 @@ static char sccsid[] = "@(#)disklabel.c	8.2 (Berkeley) 1/7/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/bsdlabel/bsdlabel.c 234122 2012-04-11 06:35:13Z ae $");
+__FBSDID("$FreeBSD: head/sbin/bsdlabel/bsdlabel.c 268351 2014-07-07 00:27:09Z marcel $");
 
 #include <sys/param.h>
 #include <stdint.h>
@@ -165,7 +165,6 @@ main(int argc, char *argv[])
 			case 'm':
 				if (!strcmp(optarg, "i386") ||
 				    !strcmp(optarg, "amd64") ||
-				    !strcmp(optarg, "ia64") ||
 				    !strcmp(optarg, "pc98")) {
 					labelsoffset = 1;
 					labeloffset = 0;

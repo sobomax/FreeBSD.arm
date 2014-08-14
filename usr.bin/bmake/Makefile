@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: head/usr.bin/bmake/Makefile 266566 2014-05-23 00:20:44Z imp $
+# $FreeBSD: head/usr.bin/bmake/Makefile 268437 2014-07-08 22:27:50Z sjg $
 
 .sinclude "Makefile.inc"
 
@@ -14,10 +14,10 @@ CFLAGS+= -I${.CURDIR}
 CLEANDIRS+= FreeBSD
 CLEANFILES+= bootstrap
 
-#	$Id: Makefile,v 1.23 2014/01/02 22:20:52 sjg Exp $
+#	$Id: Makefile,v 1.27 2014/06/20 14:51:54 sjg Exp $
 
 # Base version on src date
-MAKE_VERSION= 20140101
+MAKE_VERSION= 20140620
 
 PROG?=	${.CURDIR:T}
 
@@ -105,6 +105,7 @@ COPTS.meta.c += -DHAVE_FILEMON_H -I${FILEMON_H:H}
 .if make(obj) || make(clean)
 SUBDIR+= unit-tests
 .endif
+
 
 MAN= ${PROG}.1
 MAN1= ${MAN}

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/tty.c 263233 2014-03-16 10:55:57Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/tty.c 269126 2014-07-26 15:46:41Z marcel $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -1370,13 +1370,13 @@ tty_wait(struct tty *tp, struct cv *cv)
 
 	error = cv_wait_sig(cv, tp->t_mtx);
 
-	/* Restart the system call when we may have been revoked. */
-	if (tp->t_revokecnt != revokecnt)
-		return (ERESTART);
-
 	/* Bail out when the device slipped away. */
 	if (tty_gone(tp))
 		return (ENXIO);
+
+	/* Restart the system call when we may have been revoked. */
+	if (tp->t_revokecnt != revokecnt)
+		return (ERESTART);
 
 	return (error);
 }

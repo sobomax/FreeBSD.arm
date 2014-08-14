@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_ldm.c 255237 2013-09-05 09:44:09Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_ldm.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -55,18 +55,16 @@ static SYSCTL_NODE(_kern_geom_part, OID_AUTO, ldm, CTLFLAG_RW, 0,
     "GEOM_PART_LDM Logical Disk Manager");
 
 static u_int ldm_debug = 0;
-TUNABLE_INT("kern.geom.part.ldm.debug", &ldm_debug);
 SYSCTL_UINT(_kern_geom_part_ldm, OID_AUTO, debug,
-    CTLFLAG_RW | CTLFLAG_TUN, &ldm_debug, 0, "Debug level");
+    CTLFLAG_RWTUN, &ldm_debug, 0, "Debug level");
 
 /*
  * This allows access to mirrored LDM volumes. Since we do not
  * doing mirroring here, it is not enabled by default.
  */
 static u_int show_mirrors = 0;
-TUNABLE_INT("kern.geom.part.ldm.show_mirrors", &show_mirrors);
 SYSCTL_UINT(_kern_geom_part_ldm, OID_AUTO, show_mirrors,
-    CTLFLAG_RW | CTLFLAG_TUN, &show_mirrors, 0, "Show mirrored volumes");
+    CTLFLAG_RWTUN, &show_mirrors, 0, "Show mirrored volumes");
 
 #define	LDM_DEBUG(lvl, fmt, ...)	do {				\
 	if (ldm_debug >= (lvl)) {					\

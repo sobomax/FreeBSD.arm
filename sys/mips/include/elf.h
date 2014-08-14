@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/include/elf.h 253103 2013-07-09 19:01:38Z imp $
+ * $FreeBSD: head/sys/mips/include/elf.h 269137 2014-07-26 18:52:23Z marcel $
  */
 
 /*-
@@ -76,6 +76,8 @@
 
 #define ELF_ARCH	EM_MIPS
 #define ELF_ARCH32	EM_MIPS
+
+#define	ELF_MACHINE_OK(x)	((x) == ELF_ARCH)
 
 /* Define "machine" characteristics */
 #if __ELF_WORD_SIZE == 32

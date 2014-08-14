@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iic.c 266923 2014-05-31 14:38:05Z loos $
+ * $FreeBSD: head/sys/dev/iicbus/iic.c 268564 2014-07-12 06:23:42Z rpaulo $
  *
  */
 #include <sys/param.h>

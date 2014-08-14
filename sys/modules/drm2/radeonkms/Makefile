@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/drm2/radeonkms/Makefile 265262 2014-05-03 11:23:10Z dumbbell $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/sys/modules/drm2/radeonkms/Makefile 269538 2014-08-04 22:34:12Z imp $
 
 .PATH:	${.CURDIR}/../../../dev/drm2/radeon
 

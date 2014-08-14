@@ -55,7 +55,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * from $NetBSD: cpu_subr.c,v 1.1 2003/02/03 17:10:09 matt Exp $
- * $FreeBSD: head/sys/powerpc/powerpc/cpu.c 258757 2013-11-29 21:59:03Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/powerpc/cpu.c 268320 2014-07-06 16:19:55Z nwhitehorn $
  */
 
 #include <sys/param.h>
@@ -144,6 +144,9 @@ static const struct cputab models[] = {
 	   PPC_FEATURE_64 | PPC_FEATURE_HAS_ALTIVEC | PPC_FEATURE_HAS_FPU,
 	   NULL },
         { "IBM POWER7+",	IBMPOWER7PLUS,	REVFMT_MAJMIN,
+	   PPC_FEATURE_64 | PPC_FEATURE_HAS_ALTIVEC | PPC_FEATURE_HAS_FPU,
+	   NULL },
+        { "IBM POWER8E",	IBMPOWER8E,	REVFMT_MAJMIN,
 	   PPC_FEATURE_64 | PPC_FEATURE_HAS_ALTIVEC | PPC_FEATURE_HAS_FPU,
 	   NULL },
         { "IBM POWER8",		IBMPOWER8,	REVFMT_MAJMIN,

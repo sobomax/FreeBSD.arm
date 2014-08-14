@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)look.1	8.1 (Berkeley) 6/14/93
-.\" $FreeBSD: head/usr.bin/look/look.1 265865 2014-05-11 02:00:48Z eadler $
+.\" $FreeBSD: head/usr.bin/look/look.1 268242 2014-07-04 04:47:29Z eadler $
 .\"
 .Dd July 17, 2004
 .Dt LOOK 1
@@ -63,12 +63,12 @@ alphabetic characters is ignored.
 .Pp
 The following options are available:
 .Bl -tag -width indent
-.It Fl d
+.It Fl d , -alphanum
 Dictionary character set and order, i.e., only alphanumeric characters
 are compared.
-.It Fl f
+.It Fl f , -ignore-case
 Ignore the case of alphabetic characters.
-.It Fl t
+.It Fl t , -terminate Ar termchar
 Specify a string termination character, i.e., only the characters
 in
 .Ar string
@@ -106,7 +106,9 @@ implementation.
 .Pp
 The
 .Fl a
-flag is ignored for compability.
+and
+.Fl -alternative
+flags are ignored for compability.
 .Sh SEE ALSO
 .Xr grep 1 ,
 .Xr sort 1

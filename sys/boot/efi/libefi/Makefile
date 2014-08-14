@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/efi/libefi/Makefile 264092 2014-04-03 23:10:23Z emaste $
+# $FreeBSD: head/sys/boot/efi/libefi/Makefile 268974 2014-07-22 04:37:47Z sbruno $
 
 LIB=	efi
 INTERNALLIB=
@@ -15,5 +15,9 @@ CFLAGS+= -I${.CURDIR}/../../../../lib/libstand
 
 # Pick up the bootstrap header for some interface items
 CFLAGS+= -I${.CURDIR}/../../common
+
+ 
+# Suppress warning from clang for FreeBSD %b and %D formats
+CFLAGS+= -fformat-extensions
 
 .include <bsd.lib.mk>

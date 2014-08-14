@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_ktrace.c 267162 2014-06-06 14:49:00Z jilles $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_ktrace.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_ktrace.h"
 
@@ -133,8 +133,7 @@ static u_int ktr_requestpool = KTRACE_REQUEST_POOL;
 TUNABLE_INT("kern.ktrace.request_pool", &ktr_requestpool);
 
 static u_int ktr_geniosize = PAGE_SIZE;
-TUNABLE_INT("kern.ktrace.genio_size", &ktr_geniosize);
-SYSCTL_UINT(_kern_ktrace, OID_AUTO, genio_size, CTLFLAG_RW, &ktr_geniosize,
+SYSCTL_UINT(_kern_ktrace, OID_AUTO, genio_size, CTLFLAG_RWTUN, &ktr_geniosize,
     0, "Maximum size of genio event payload");
 
 static int print_message = 1;

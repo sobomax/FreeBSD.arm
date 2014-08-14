@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 265943 2014-05-13 05:19:29Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 267363 2014-06-11 14:53:58Z jhb $");
 
 /*
  * RealTek 8139C+/8169/8169S/8110S/8168/8111/8101E PCI NIC driver
@@ -1818,10 +1818,10 @@ re_detach(device_t dev)
 	/* Unload and free the RX DMA ring memory and map */
 
 	if (sc->rl_ldata.rl_rx_list_tag) {
-		if (sc->rl_ldata.rl_rx_list_map)
+		if (sc->rl_ldata.rl_rx_list_addr)
 			bus_dmamap_unload(sc->rl_ldata.rl_rx_list_tag,
 			    sc->rl_ldata.rl_rx_list_map);
-		if (sc->rl_ldata.rl_rx_list_map && sc->rl_ldata.rl_rx_list)
+		if (sc->rl_ldata.rl_rx_list)
 			bus_dmamem_free(sc->rl_ldata.rl_rx_list_tag,
 			    sc->rl_ldata.rl_rx_list,
 			    sc->rl_ldata.rl_rx_list_map);
@@ -1831,10 +1831,10 @@ re_detach(device_t dev)
 	/* Unload and free the TX DMA ring memory and map */
 
 	if (sc->rl_ldata.rl_tx_list_tag) {
-		if (sc->rl_ldata.rl_tx_list_map)
+		if (sc->rl_ldata.rl_tx_list_addr)
 			bus_dmamap_unload(sc->rl_ldata.rl_tx_list_tag,
 			    sc->rl_ldata.rl_tx_list_map);
-		if (sc->rl_ldata.rl_tx_list_map && sc->rl_ldata.rl_tx_list)
+		if (sc->rl_ldata.rl_tx_list)
 			bus_dmamem_free(sc->rl_ldata.rl_tx_list_tag,
 			    sc->rl_ldata.rl_tx_list,
 			    sc->rl_ldata.rl_tx_list_map);
@@ -1876,10 +1876,10 @@ re_detach(device_t dev)
 	/* Unload and free the stats buffer and map */
 
 	if (sc->rl_ldata.rl_stag) {
-		if (sc->rl_ldata.rl_smap)
+		if (sc->rl_ldata.rl_stats_addr)
 			bus_dmamap_unload(sc->rl_ldata.rl_stag,
 			    sc->rl_ldata.rl_smap);
-		if (sc->rl_ldata.rl_smap && sc->rl_ldata.rl_stats)
+		if (sc->rl_ldata.rl_stats)
 			bus_dmamem_free(sc->rl_ldata.rl_stag,
 			    sc->rl_ldata.rl_stats, sc->rl_ldata.rl_smap);
 		bus_dma_tag_destroy(sc->rl_ldata.rl_stag);

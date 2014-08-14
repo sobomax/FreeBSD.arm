@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/si/si.c 247089 2013-02-21 07:19:50Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/si/si.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #ifndef lint
 static const char si_copyright1[] =  "@(#) Copyright (C) Specialix International, 1990,1992,1998",
@@ -119,8 +119,7 @@ static int si_Nports;
 static int si_Nmodules;
 static int si_debug;
 
-SYSCTL_INT(_machdep, OID_AUTO, si_debug, CTLFLAG_RW, &si_debug, 0, "");
-TUNABLE_INT("machdep.si_debug", &si_debug);
+SYSCTL_INT(_machdep, OID_AUTO, si_debug, CTLFLAG_RWTUN, &si_debug, 0, "");
 
 static int si_numunits;
 

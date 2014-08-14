@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/i386/libi386/amd64_tramp.S 129240 2004-05-14 20:29:30Z ru $
+ * $FreeBSD: head/sys/boot/i386/libi386/amd64_tramp.S 269017 2014-07-23 15:53:29Z royger $
  */
 
 /*
@@ -84,7 +84,7 @@ amd64_tramp:
 
 	/* Turn on PAE */
 	movl	%cr4, %eax
-	orl	$(CR4_PAE | CR4_PSE), %eax
+	orl	$CR4_PAE, %eax
 	movl	%eax, %cr4
 
 	/* Set %cr3 for PT4 */

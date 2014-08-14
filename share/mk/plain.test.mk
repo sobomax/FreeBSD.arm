@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/plain.test.mk 263161 2014-03-14 08:56:19Z jmmv $
+# $FreeBSD: head/share/mk/plain.test.mk 268445 2014-07-09 00:55:50Z jmmv $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -57,7 +57,8 @@ CLEANFILES+= ${_T} ${_T}.tmp
 PLAIN_TESTS_SH_SED_${_T}?= # empty
 PLAIN_TESTS_SH_SRC_${_T}?= ${_T}.sh
 ${_T}: ${PLAIN_TESTS_SH_SRC_${_T}}
-	cat ${.ALLSRC} | sed ${PLAIN_TESTS_SH_SED_${_T}} >${.TARGET}.tmp
+	cat ${.ALLSRC:N*Makefile*} \
+	    | sed ${PLAIN_TESTS_SH_SED_${_T}} >${.TARGET}.tmp
 	chmod +x ${.TARGET}.tmp
 	mv ${.TARGET}.tmp ${.TARGET}
 .endfor

@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 
-/*$FreeBSD: head/sys/dev/ixgb/if_ixgb.c 254263 2013-08-12 23:30:01Z scottl $*/
+/*$FreeBSD: head/sys/dev/ixgb/if_ixgb.c 267385 2014-06-12 11:15:19Z jhb $*/
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -1459,7 +1459,6 @@ fail_2:
 fail_1:
 	bus_dma_tag_destroy(dma->dma_tag);
 fail_0:
-	dma->dma_map = NULL;
 	dma->dma_tag = NULL;
 	return (r);
 }

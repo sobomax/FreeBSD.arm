@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/virtio.c 261268 2014-01-29 14:56:48Z jhb $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/virtio.c 268202 2014-07-03 00:23:14Z grehan $");
 
 #include <sys/param.h>
 #include <sys/uio.h>
@@ -437,7 +437,7 @@ vq_endchains(struct vqueue_info *vq, int used_all_avail)
 	if (used_all_avail &&
 	    (vs->vs_negotiated_caps & VIRTIO_F_NOTIFY_ON_EMPTY))
 		intr = 1;
-	else if (vs->vs_flags & VIRTIO_EVENT_IDX) {
+	else if (vs->vs_negotiated_caps & VIRTIO_RING_F_EVENT_IDX) {
 		event_idx = VQ_USED_EVENT_IDX(vq);
 		/*
 		 * This calculation is per docs and the kernel

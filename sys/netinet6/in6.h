@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: head/sys/netinet6/in6.h 263091 2014-03-12 14:29:08Z glebius $
+ * $FreeBSD: head/sys/netinet6/in6.h 268560 2014-07-12 05:44:16Z adrian $
  */
 
 #ifndef __KAME_NETINET_IN_H_INCLUDED_
@@ -480,6 +480,12 @@ struct route_in6 {
 				    */
 
 #define	IPV6_BINDANY		64 /* bool: allow bind to any address */
+
+#define	IPV6_BINDMULTI		65 /* bool; allow multibind to same addr/port */
+#define	IPV6_RSS_LISTEN_BUCKET	66 /* int; set RSS listen bucket */
+#define	IPV6_FLOWID		67 /* int; flowid of given socket */
+#define	IPV6_FLOWTYPE		68 /* int; flowtype of given socket */
+#define	IPV6_RSSBUCKETID	69 /* int; RSS bucket ID of given socket */
 
 /*
  * The following option is private; do not use it from user applications.

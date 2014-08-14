@@ -16,8 +16,10 @@
  */
 
 #ifndef lint
-static const char rcsid[] = "$Id: ns_netint.c,v 1.2.18.1 2005/04/27 05:01:08 sra Exp $";
+static const char rcsid[] = "$Id: ns_netint.c,v 1.3 2005/04/27 04:56:40 sra Exp $";
 #endif
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libc/nameser/ns_netint.c 269867 2014-08-12 12:36:06Z ume $");
 
 /* Import. */
 

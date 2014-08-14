@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_stat.c 267216 2014-06-07 21:36:52Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_stat.c 267884 2014-06-25 22:13:35Z grehan $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_stat.c 267216 2014-06-07 21:36:52Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_stat.c 267884 2014-06-25 22:13:35Z grehan $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -83,12 +83,21 @@ vmm_stat_register(void *arg)
 int
 vmm_stat_copy(struct vm *vm, int vcpu, int *num_stats, uint64_t *buf)
 {
-	int i;
+	struct vmm_stat_type *vst;
 	uint64_t *stats;
+	int i;
 
 	if (vcpu < 0 || vcpu >= VM_MAXCPU)
 		return (EINVAL);
-		
+
+	/* Let stats functions update their counters */
+	for (i = 0; i < vst_num_types; i++) {
+		vst = vsttab[i];
+		if (vst->func != NULL)
+			(*vst->func)(vm, vcpu, vst);
+	}
+
+	/* Copy over the stats */
 	stats = vcpu_stats(vm, vcpu);
 	for (i = 0; i < vst_num_elems; i++)
 		buf[i] = stats[i];

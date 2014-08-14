@@ -1,9 +1,9 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/share/packages/Makefile 250323 2013-05-07 05:40:20Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/share/packages/Makefile 268999 2014-07-22 23:10:12Z dteske $
 
 NO_OBJ=
 
 FILESDIR=	${SHAREDIR}/bsdconfig/packages
-FILES=		categories.subr index.subr packages.subr
+FILES=		categories.subr index.subr musthavepkg.subr packages.subr
 
 beforeinstall:
 	mkdir -p ${DESTDIR}${FILESDIR}

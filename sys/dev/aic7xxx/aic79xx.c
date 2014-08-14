@@ -46,7 +46,7 @@
 #include "aicasm/aicasm_insformat.h"
 #else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aic7xxx/aic79xx.c 263954 2014-03-30 23:43:36Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/aic7xxx/aic79xx.c 267365 2014-06-11 17:03:14Z jhb $");
 #include <dev/aic7xxx/aic79xx_osm.h>
 #include <dev/aic7xxx/aic79xx_inline.h>
 #include <dev/aic7xxx/aicasm/aicasm_insformat.h>
@@ -5413,8 +5413,6 @@ ahd_free(struct ahd_softc *ahd)
 	case 3:
 		aic_dmamem_free(ahd, ahd->shared_data_dmat, ahd->qoutfifo,
 				ahd->shared_data_map.dmamap);
-		aic_dmamap_destroy(ahd, ahd->shared_data_dmat,
-				   ahd->shared_data_map.dmamap);
 		/* FALLTHROUGH */
 	case 2:
 		aic_dma_tag_destroy(ahd, ahd->shared_data_dmat);

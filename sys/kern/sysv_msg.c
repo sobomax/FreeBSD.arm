@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sysv_msg.c 225617 2011-09-16 13:58:51Z kmacy $");
+__FBSDID("$FreeBSD: head/sys/kern/sysv_msg.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_compat.h"
 #include "opt_sysvipc.h"
@@ -196,13 +196,7 @@ msginit()
 {
 	int i, error;
 
-	TUNABLE_INT_FETCH("kern.ipc.msgseg", &msginfo.msgseg);
-	TUNABLE_INT_FETCH("kern.ipc.msgssz", &msginfo.msgssz);
 	msginfo.msgmax = msginfo.msgseg * msginfo.msgssz;
-	TUNABLE_INT_FETCH("kern.ipc.msgmni", &msginfo.msgmni);
-	TUNABLE_INT_FETCH("kern.ipc.msgmnb", &msginfo.msgmnb);
-	TUNABLE_INT_FETCH("kern.ipc.msgtql", &msginfo.msgtql);
-
 	msgpool = malloc(msginfo.msgmax, M_MSG, M_WAITOK);
 	msgmaps = malloc(sizeof(struct msgmap) * msginfo.msgseg, M_MSG, M_WAITOK);
 	msghdrs = malloc(sizeof(struct msg) * msginfo.msgtql, M_MSG, M_WAITOK);

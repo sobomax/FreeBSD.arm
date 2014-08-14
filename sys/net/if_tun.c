@@ -13,7 +13,7 @@
  * UCL. This driver is based much more on read/write/poll mode of
  * operation though.
  *
- * $FreeBSD: head/sys/net/if_tun.c 263152 2014-03-14 06:29:43Z glebius $
+ * $FreeBSD: head/sys/net/if_tun.c 267992 2014-06-28 03:56:17Z hselasky $
  */
 
 #include "opt_inet.h"
@@ -116,10 +116,8 @@ SYSCTL_INT(_debug, OID_AUTO, if_tun_debug, CTLFLAG_RW, &tundebug, 0, "");
 SYSCTL_DECL(_net_link);
 static SYSCTL_NODE(_net_link, OID_AUTO, tun, CTLFLAG_RW, 0,
     "IP tunnel software network interface.");
-SYSCTL_INT(_net_link_tun, OID_AUTO, devfs_cloning, CTLFLAG_RW, &tundclone, 0,
+SYSCTL_INT(_net_link_tun, OID_AUTO, devfs_cloning, CTLFLAG_RWTUN, &tundclone, 0,
     "Enable legacy devfs interface creation.");
-
-TUNABLE_INT("net.link.tun.devfs_cloning", &tundclone);
 
 static void	tunclone(void *arg, struct ucred *cred, char *name,
 		    int namelen, struct cdev **dev);

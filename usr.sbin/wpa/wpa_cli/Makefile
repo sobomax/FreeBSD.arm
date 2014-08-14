@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/wpa_cli/Makefile 252726 2013-07-04 21:12:58Z rpaulo $
+# $FreeBSD: head/usr.sbin/wpa/wpa_cli/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -15,7 +15,7 @@ CFLAGS+= -DCONFIG_CTRL_IFACE_UNIX
 CFLAGS+= -D_DIRENT_HAVE_D_TYPE
 
 CFLAGS+= -DCONFIG_READLINE -I${DESTDIR}/${INCLUDEDIR}/edit
-LDADD+= -ledit -ltermcap
-DPADD+= ${LIBEDIT} ${LIBTERMCAP}
+LDADD+= -ledit -ltermcapw -lutil
+DPADD+= ${LIBEDIT} ${LIBTERMCAPW} ${LIBUTIL}
 
 .include <bsd.prog.mk>

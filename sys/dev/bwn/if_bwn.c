@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bwn/if_bwn.c 260444 2014-01-08 08:06:56Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/bwn/if_bwn.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * The Broadcom Wireless LAN controller driver.
@@ -83,9 +83,8 @@ static SYSCTL_NODE(_hw, OID_AUTO, bwn, CTLFLAG_RD, 0,
 
 #ifdef BWN_DEBUG
 static	int bwn_debug = 0;
-SYSCTL_INT(_hw_bwn, OID_AUTO, debug, CTLFLAG_RW, &bwn_debug, 0,
+SYSCTL_INT(_hw_bwn, OID_AUTO, debug, CTLFLAG_RWTUN, &bwn_debug, 0,
     "Broadcom debugging printfs");
-TUNABLE_INT("hw.bwn.debug", &bwn_debug);
 enum {
 	BWN_DEBUG_XMIT		= 0x00000001,	/* basic xmit operation */
 	BWN_DEBUG_RECV		= 0x00000002,	/* basic recv operation */

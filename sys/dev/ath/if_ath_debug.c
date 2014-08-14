@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_debug.c 242599 2012-11-05 07:08:45Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_debug.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_inet.h"
 #include "opt_ath.h"
@@ -92,9 +92,8 @@ __FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_debug.c 242599 2012-11-05 07:08:45Z 
 uint64_t ath_debug = 0;
 
 SYSCTL_DECL(_hw_ath);
-SYSCTL_QUAD(_hw_ath, OID_AUTO, debug, CTLFLAG_RW, &ath_debug,
+SYSCTL_QUAD(_hw_ath, OID_AUTO, debug, CTLFLAG_RWTUN, &ath_debug,
 	    0, "control debugging printfs");
-TUNABLE_QUAD("hw.ath.debug", &ath_debug);
 
 void
 ath_printrxbuf(struct ath_softc *sc, const struct ath_buf *bf,

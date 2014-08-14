@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/i40e/i40e_osdep.c 266423 2014-05-19 01:21:02Z jfv $*/
+/*$FreeBSD: head/sys/dev/i40e/i40e_osdep.c 269198 2014-07-28 21:57:09Z jfv $*/
 
 #include <machine/stdarg.h>
 
@@ -89,7 +89,7 @@ i40e_allocate_dma(struct i40e_hw *hw, struct i40e_dma_mem *dma,
 		goto fail_0;
 	}
 	err = bus_dmamem_alloc(dma->tag, (void **)&dma->va,
-			     BUS_DMA_NOWAIT | M_ZERO, &dma->map);
+			     BUS_DMA_NOWAIT | BUS_DMA_ZERO, &dma->map);
 	if (err != 0) {
 		device_printf(dev,
 		    "i40e_allocate_dma: bus_dmamem_alloc failed, "

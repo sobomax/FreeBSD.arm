@@ -30,13 +30,13 @@
 # SUCH DAMAGE.
 #
 #	@(#)termcap.src	8.2 (Berkeley) 11/17/93
-# $FreeBSD: head/share/termcap/termcap.src 262220 2014-02-19 13:06:50Z bdrewery $
+# $FreeBSD: head/share/termcap/termcap.src 267482 2014-06-14 18:43:48Z gavin $
 
 #	Termcap source file
 #	John Kunze, Berkeley
 #	Craig Leres, Berkeley
 #
-# Please submit changes with send-pr(1).
+# Please submit changes via https://bugs.freebsd.org/submit/
 #
 # << EOH - after reordering, above header lines survive and this line dies >>
 #

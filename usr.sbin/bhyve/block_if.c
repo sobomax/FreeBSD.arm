@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/block_if.c 264770 2014-04-22 18:55:21Z delphij $
+ * $FreeBSD: head/usr.sbin/bhyve/block_if.c 268638 2014-07-15 00:25:54Z grehan $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 264770 2014-04-22 18:55:21Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 268638 2014-07-15 00:25:54Z grehan $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -387,6 +387,55 @@ blockif_close(struct blockif_ctxt *bc)
 	free(bc);
 
 	return (0);
+}
+
+/*
+ * Return virtual C/H/S values for a given block. Use the algorithm
+ * outlined in the VHD specification to calculate values.
+ */
+void
+blockif_chs(struct blockif_ctxt *bc, uint16_t *c, uint8_t *h, uint8_t *s)
+{
+	off_t sectors;		/* total sectors of the block dev */
+	off_t hcyl;		/* cylinders times heads */
+	uint16_t secpt;		/* sectors per track */
+	uint8_t heads;
+
+	assert(bc->bc_magic == BLOCKIF_SIG);
+
+	sectors = bc->bc_size / bc->bc_sectsz;
+
+	/* Clamp the size to the largest possible with CHS */
+	if (sectors > 65535UL*16*255)
+		sectors = 65535UL*16*255;
+
+	if (sectors >= 65536UL*16*63) {
+		secpt = 255;
+		heads = 16;
+		hcyl = sectors / secpt;
+	} else {
+		secpt = 17;
+		hcyl = sectors / secpt;
+		heads = (hcyl + 1023) / 1024;
+
+		if (heads < 4)
+			heads = 4;
+
+		if (hcyl >= (heads * 1024) || heads > 16) {
+			secpt = 31;
+			heads = 16;
+			hcyl = sectors / secpt;
+		}
+		if (hcyl >= (heads * 1024)) {
+			secpt = 63;
+			heads = 16;
+			hcyl = sectors / secpt;
+		}
+	}
+
+	*c = hcyl / heads;
+	*h = heads;
+	*s = secpt;
 }
 
 /*

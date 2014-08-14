@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athregs/dumpregs.c 217680 2011-01-21 02:53:32Z adrian $
+ * $FreeBSD: head/tools/tools/ath/athregs/dumpregs.c 269761 2014-08-09 18:17:16Z adrian $
  */
 #include "diag.h"
 
@@ -182,8 +182,9 @@ main(int argc, char *argv[])
 	dp = (u_int32_t *)atd.ad_out_data;
 	ep = (u_int32_t *)(atd.ad_out_data + atd.ad_out_size);
 	while (dp < ep) {
-		u_int r = dp[0] >> 16;		/* start of range */
-		u_int e = dp[0] & 0xffff;	/* end of range */
+		u_int r = dp[0];	/* start of range */
+		u_int e = dp[1];	/* end of range */
+		dp++;
 		dp++;
 		/* convert offsets to indices */
 		r >>= 2; e >>= 2;
@@ -611,7 +612,7 @@ ath_hal_setupdiagregs(const HAL_REGRANGE regs[], u_int nr)
 
 	space = 0;
 	for (i = 0; i < nr; i++) {
-		u_int n = 2 * sizeof(u_int32_t);	/* reg range + first */
+		u_int n = sizeof(HAL_REGRANGE) + sizeof(u_int32_t);	/* reg range + first */
 		if (regs[i].end) {
 			if (regs[i].end < regs[i].start) {
 				fprintf(stderr, "%s: bad register range, "

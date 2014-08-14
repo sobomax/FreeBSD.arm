@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 266858 2014-05-29 21:00:06Z cognet $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -55,9 +55,8 @@ __FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 266858 2014-05-29 21:00:
 #define	DEFAULT_RCLK	1843200
 
 static int broken_txfifo = 0;
-SYSCTL_INT(_hw, OID_AUTO, broken_txfifo, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_hw, OID_AUTO, broken_txfifo, CTLFLAG_RWTUN,
 	&broken_txfifo, 0, "UART FIFO has QEMU emulation bug");
-TUNABLE_INT("hw.broken_txfifo", &broken_txfifo);
 
 /*
  * Clear pending interrupts. THRE is cleared by reading IIR. Data

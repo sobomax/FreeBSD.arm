@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sk/if_sk.c 266270 2014-05-16 21:19:17Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/dev/sk/if_sk.c 267363 2014-06-11 14:53:58Z jhb $");
 
 /*
  * SysKonnect SK-NET gigabit ethernet driver for FreeBSD. Supports
@@ -2223,31 +2223,29 @@ sk_dma_free(sc_if)
 
 	/* Tx ring */
 	if (sc_if->sk_cdata.sk_tx_ring_tag) {
-		if (sc_if->sk_cdata.sk_tx_ring_map)
+		if (sc_if->sk_rdata.sk_tx_ring_paddr)
 			bus_dmamap_unload(sc_if->sk_cdata.sk_tx_ring_tag,
 			    sc_if->sk_cdata.sk_tx_ring_map);
-		if (sc_if->sk_cdata.sk_tx_ring_map &&
-		    sc_if->sk_rdata.sk_tx_ring)
+		if (sc_if->sk_rdata.sk_tx_ring)
 			bus_dmamem_free(sc_if->sk_cdata.sk_tx_ring_tag,
 			    sc_if->sk_rdata.sk_tx_ring,
 			    sc_if->sk_cdata.sk_tx_ring_map);
 		sc_if->sk_rdata.sk_tx_ring = NULL;
-		sc_if->sk_cdata.sk_tx_ring_map = NULL;
+		sc_if->sk_rdata.sk_tx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc_if->sk_cdata.sk_tx_ring_tag);
 		sc_if->sk_cdata.sk_tx_ring_tag = NULL;
 	}
 	/* Rx ring */
 	if (sc_if->sk_cdata.sk_rx_ring_tag) {
-		if (sc_if->sk_cdata.sk_rx_ring_map)
+		if (sc_if->sk_rdata.sk_rx_ring_paddr)
 			bus_dmamap_unload(sc_if->sk_cdata.sk_rx_ring_tag,
 			    sc_if->sk_cdata.sk_rx_ring_map);
-		if (sc_if->sk_cdata.sk_rx_ring_map &&
-		    sc_if->sk_rdata.sk_rx_ring)
+		if (sc_if->sk_rdata.sk_rx_ring)
 			bus_dmamem_free(sc_if->sk_cdata.sk_rx_ring_tag,
 			    sc_if->sk_rdata.sk_rx_ring,
 			    sc_if->sk_cdata.sk_rx_ring_map);
 		sc_if->sk_rdata.sk_rx_ring = NULL;
-		sc_if->sk_cdata.sk_rx_ring_map = NULL;
+		sc_if->sk_rdata.sk_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc_if->sk_cdata.sk_rx_ring_tag);
 		sc_if->sk_cdata.sk_rx_ring_tag = NULL;
 	}
@@ -2298,16 +2296,15 @@ sk_dma_jumbo_free(sc_if)
 
 	/* jumbo Rx ring */
 	if (sc_if->sk_cdata.sk_jumbo_rx_ring_tag) {
-		if (sc_if->sk_cdata.sk_jumbo_rx_ring_map)
+		if (sc_if->sk_rdata.sk_jumbo_rx_ring_paddr)
 			bus_dmamap_unload(sc_if->sk_cdata.sk_jumbo_rx_ring_tag,
 			    sc_if->sk_cdata.sk_jumbo_rx_ring_map);
-		if (sc_if->sk_cdata.sk_jumbo_rx_ring_map &&
-		    sc_if->sk_rdata.sk_jumbo_rx_ring)
+		if (sc_if->sk_rdata.sk_jumbo_rx_ring)
 			bus_dmamem_free(sc_if->sk_cdata.sk_jumbo_rx_ring_tag,
 			    sc_if->sk_rdata.sk_jumbo_rx_ring,
 			    sc_if->sk_cdata.sk_jumbo_rx_ring_map);
 		sc_if->sk_rdata.sk_jumbo_rx_ring = NULL;
-		sc_if->sk_cdata.sk_jumbo_rx_ring_map = NULL;
+		sc_if->sk_rdata.sk_jumbo_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc_if->sk_cdata.sk_jumbo_rx_ring_tag);
 		sc_if->sk_cdata.sk_jumbo_rx_ring_tag = NULL;
 	}

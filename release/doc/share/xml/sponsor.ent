@@ -1,6 +1,6 @@
 <!-- -*- sgml -*-
 
-     $FreeBSD: head/release/doc/share/xml/sponsor.ent 265607 2014-05-07 20:31:44Z gjb $
+     $FreeBSD: head/release/doc/share/xml/sponsor.ent 268409 2014-07-08 14:59:03Z gjb $
 
      Sponsors of various works.
 
@@ -10,13 +10,18 @@
 
 <!ENTITY afrl		"AFRL">
 
+<!ENTITY chelsio	"Chelsio Communications">
+
+<!ENTITY citrix		"Citrix Systems">
+<!ENTITY citrix.rd	"Citrix Systems R&amp;D">
+
 <!ENTITY darpa		"DARPA">
 <!ENTITY darpa_afrl	"DARPA, AFRL">
 
 <!ENTITY ff		"The&nbsp;&os;&nbsp;Foundation">
 <!ENTITY ff.url		"https://www.FreeBSDFoundation.org/">
 
-<!ENTITY google		"Google, Inc.">
+<!ENTITY google		"Google">
 
 <!ENTITY lsi		"LSI">
 

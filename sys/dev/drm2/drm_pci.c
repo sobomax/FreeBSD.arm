@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_pci.c 258930 2013-12-04 19:04:56Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_pci.c 267446 2014-06-13 18:20:44Z jhb $");
 
 /**
  * \file drm_pci.h
@@ -116,6 +116,7 @@ drm_pci_free(struct drm_device *dev, drm_dma_handle_t *dmah)
 	if (dmah == NULL)
 		return;
 
+	bus_dmamap_unload(dmah->tag, dmah->map);
 	bus_dmamem_free(dmah->tag, dmah->vaddr, dmah->map);
 	bus_dma_tag_destroy(dmah->tag);
 

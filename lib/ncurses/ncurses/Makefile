@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/ncurses/ncurses/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/ncurses/ncurses/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
 SHLIBDIR?=	/lib
 
@@ -55,7 +55,7 @@ HAVE_TERMIOS_H=		1
 HAVE_TERMIO_H=		0
 HAVE_VSSCANF=		1
 HEADER_STDBOOL=		1
-# XXX amd64, ia64 1L and int
+# XXX amd64 1L and int
 ONEUL=			1UL
 TYPEOF_CHTYPE=		long
 TYPEOF_MMASK_T=		long

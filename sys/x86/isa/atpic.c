@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 263379 2014-03-19 21:03:04Z imp $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 269675 2014-08-07 17:00:50Z royger $");
 
 #include "opt_auto_eoi.h"
 #include "opt_isa.h"
@@ -524,7 +524,7 @@ atpic_init(void *dummy __unused)
 		intr_register_source(&ai->at_intsrc);
 	}
 }
-SYSINIT(atpic_init, SI_SUB_INTR, SI_ORDER_SECOND + 1, atpic_init, NULL);
+SYSINIT(atpic_init, SI_SUB_INTR, SI_ORDER_FOURTH, atpic_init, NULL);
 
 void
 atpic_handle_intr(u_int vector, struct trapframe *frame)

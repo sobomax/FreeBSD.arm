@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_run.c 181175 2008-08-02 12:49:43Z cognet $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_run.c 269982 2014-08-14 16:01:51Z imp $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -188,14 +188,14 @@ db_restart_at_pc(watchpt)
 	if ((db_run_mode == STEP_COUNT) ||
 	    (db_run_mode == STEP_RETURN) ||
 	    (db_run_mode == STEP_CALLT)) {
-	    db_expr_t		ins;
-
 	    /*
 	     * We are about to execute this instruction,
 	     * so count it now.
 	     */
-
-	    ins = db_get_value(pc, sizeof(int), FALSE);
+#ifdef	SOFTWARE_SSTEP
+	    db_expr_t		ins =
+#endif
+	    db_get_value(pc, sizeof(int), FALSE);
 	    db_inst_count++;
 	    db_load_count += inst_load(ins);
 	    db_store_count += inst_store(ins);

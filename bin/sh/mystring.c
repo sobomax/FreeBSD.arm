@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)mystring.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/mystring.c 258776 2013-11-30 21:27:11Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/mystring.c 268920 2014-07-20 12:06:52Z jilles $");
 
 /*
  * String functions.
@@ -58,21 +58,6 @@ char nullstr[1];		/* zero length string */
 /*
  * equal - #defined in mystring.h
  */
-
-
-/*
- * prefix -- see if pfx is a prefix of string.
- */
-
-int
-prefix(const char *pfx, const char *string)
-{
-	while (*pfx) {
-		if (*pfx++ != *string++)
-			return 0;
-	}
-	return 1;
-}
 
 
 /*

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/platform.c 266301 2014-05-17 11:27:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/platform.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * Dispatch platform calls to the appropriate platform implementation
@@ -65,8 +65,8 @@ static platform_t	plat_obj;
 static struct kobj_ops	plat_kernel_kops;
 static struct platform_kobj	plat_kernel_obj;
 
-static char plat_name[64] = "";
-SYSCTL_STRING(_hw, OID_AUTO, platform, CTLFLAG_RDTUN, plat_name, 0,
+static char plat_name[64];
+SYSCTL_STRING(_hw, OID_AUTO, platform, CTLFLAG_RDTUN | CTLFLAG_NOFETCH, plat_name, 0,
     "Platform currently in use");
 
 /*

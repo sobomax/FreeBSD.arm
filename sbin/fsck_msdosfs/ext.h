@@ -22,11 +22,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *	$NetBSD: ext.h,v 1.6 2000/04/25 23:02:51 jdolecek Exp $
- * $FreeBSD: head/sbin/fsck_msdosfs/ext.h 241807 2012-10-21 12:01:19Z uqs $
+ * $FreeBSD: head/sbin/fsck_msdosfs/ext.h 268635 2014-07-14 21:32:40Z pfg $
  */
 
 #ifndef EXT_H
-#define EXT_H
+#define	EXT_H
 
 #include <sys/types.h>
 
@@ -42,8 +42,6 @@ extern int alwaysyes;	/* assume "yes" for all questions */
 extern int preen;	/* we are preening */
 extern int rdonly;	/* device is opened read only (supersedes above) */
 extern int skipclean;	/* skip clean file systems if preening */
-
-extern struct dosDirEntry *rootDir;
 
 /*
  * function declarations
@@ -71,8 +69,8 @@ int checkfilesys(const char *);
 #define	FSFATMOD	4		/* The FAT was modified */
 #define	FSERROR		8		/* Some unrecovered error remains */
 #define	FSFATAL		16		/* Some unrecoverable error occurred */
-#define FSDIRTY		32		/* File system is dirty */
-#define FSFIXFAT	64		/* Fix file system FAT */
+#define	FSDIRTY		32		/* File system is dirty */
+#define	FSFIXFAT	64		/* Fix file system FAT */
 
 /*
  * read a boot block in a machine independent fashion and translate

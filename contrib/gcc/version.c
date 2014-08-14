@@ -1,4 +1,4 @@
-/* $FreeBSD: head/contrib/gcc/version.c 259531 2013-12-18 00:10:30Z pfg $ */
+/* $FreeBSD: head/contrib/gcc/version.c 267483 2014-06-14 18:45:40Z gavin $ */
 #include "version.h"
 
 /* This is the trailing component of the string reported as the
@@ -18,7 +18,7 @@
    forward us bugs reported to you, if you determine that they are
    not bugs in your modifications.)  */
 
-const char bug_report_url[] = "<URL:http://www.freebsd.org/send-pr.html>";
+const char bug_report_url[] = "<URL:http://www.freebsd.org/support.html>";
 
 /* The complete version string, assembled from several pieces.
    BASEVER, DATESTAMP, and DEVPHASE are defined by the Makefile.  */

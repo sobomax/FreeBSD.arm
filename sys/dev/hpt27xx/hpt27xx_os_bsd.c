@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hpt27xx/hpt27xx_os_bsd.c 267290 2014-06-09 18:15:05Z jhb $
+ * $FreeBSD: head/sys/dev/hpt27xx/hpt27xx_os_bsd.c 269611 2014-08-05 23:32:53Z jhb $
  */
 
 #include <dev/hpt27xx/hpt27xx_config.h>
@@ -78,55 +78,7 @@ void os_pci_writel (void *osext, HPT_U8 offset, HPT_U32 value)
     pci_write_config(((PHBA)osext)->pcidev, offset, value, 4);
 }
 
-#if __FreeBSD_version < 500043
 /* PCI space access */
-HPT_U8 pcicfg_read_byte (HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg)
-{
-	HPT_U8 v;
-	pcicfgregs pciref;
-
-	pciref.bus  = bus;
-	pciref.slot = dev;
-	pciref.func = func;
-
-	v = pci_cfgread(&pciref, reg, 1);
-	return v;
-}
-HPT_U32 pcicfg_read_dword(HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg)
-{
-	HPT_U32 v;
-	pcicfgregs pciref;
-
-	pciref.bus  = bus;
-	pciref.slot = dev;
-	pciref.func = func;
-
-	v = pci_cfgread(&pciref, reg, 4);
-	return v;
-}
-void pcicfg_write_byte (HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg, HPT_U8 v)
-{
-	pcicfgregs pciref;
-
-	pciref.hose = -1;
-	pciref.bus  = bus;
-	pciref.slot = dev;
-	pciref.func = func;
-
-	pci_cfgwrite(&pciref, reg, v, 1);
-}
-void pcicfg_write_dword(HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg, HPT_U32 v)
-{
-	pcicfgregs pciref;
-
-	pciref.hose = -1;
-	pciref.bus  = bus;
-	pciref.slot = dev;
-	pciref.func = func;
-
-	pci_cfgwrite(&pciref, reg, v, 4);
-}/* PCI space access */
-#else 
 HPT_U8 pcicfg_read_byte (HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg)
 {
 	return (HPT_U8)pci_cfgregread(bus, dev, func, reg, 1);
@@ -143,7 +95,6 @@ void pcicfg_write_dword(HPT_U8 bus, HPT_U8 dev, HPT_U8 func, HPT_U8 reg, HPT_U32
 {
 	pci_cfgregwrite(bus, dev, func, reg, v, 4);
 }/* PCI space access */
-#endif
 
 void *os_map_pci_bar(
     void *osext, 
@@ -324,21 +275,7 @@ int os_revalidate_device(void *osext, int id)
 
 int os_query_remove_device(void *osext, int id)
 {
-	PVBUS_EXT				vbus_ext = (PVBUS_EXT)osext;
-	struct cam_periph		*periph = NULL;
-    struct cam_path			*path;
-    int						status,retval = 0;
-
-    status = xpt_create_path(&path, NULL, vbus_ext->sim->path_id, id, 0);
-    if (status == CAM_REQ_CMP) {
-		if((periph = cam_periph_find(path, "da")) != NULL){
-			if(periph->refcount >= 1)	
-				retval = -1;
-		}
-		xpt_free_path(path);
-    }
-
-    return retval;
+	return 0;
 }
 
 HPT_U8 os_get_vbus_seq(void *osext)

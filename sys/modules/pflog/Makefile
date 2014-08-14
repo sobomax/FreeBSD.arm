@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/pflog/Makefile 265420 2014-05-06 04:22:01Z imp $
-
-.include <src.opts.mk>
+# $FreeBSD: head/sys/modules/pflog/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .PATH: ${.CURDIR}/../../netpfil/pf
 
@@ -12,19 +10,6 @@ SRCS+=	bus_if.h device_if.h
 .if defined(KERNBUILDDIR)
 MKDEP+=		-include ${KERNBUILDDIR}/opt_global.h
 .else
-.if ${MK_INET_SUPPORT} != "no"
-opt_inet.h:
-	echo "#define INET 1" > ${.TARGET}
-.endif
-
-.if ${MK_INET6_SUPPORT} != "no"
-opt_inet6.h:
-	echo "#define INET6 1" > ${.TARGET}
-.endif
-
-opt_bpf.h:
-	echo "#define DEV_BPF 1" > ${.TARGET}
-
 .if defined(VIMAGE)
 opt_global.h:
 	echo "#define VIMAGE 1" >> ${.TARGET}

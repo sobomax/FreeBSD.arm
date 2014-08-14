@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsrvcache.h 260229 2014-01-03 15:09:59Z mav $
+ * $FreeBSD: head/sys/fs/nfs/nfsrvcache.h 269347 2014-07-31 19:24:44Z kib $
  */
 
 #ifndef _NFS_NFSRVCACHE_H_
@@ -116,7 +116,6 @@ LIST_HEAD(nfsrvhashhead, nfsrvcache);
 /* The fine-grained locked cache hash table for TCP. */
 struct nfsrchash_bucket {
 	struct mtx		mtx;
-	char			lock_name[16];
 	struct nfsrvhashhead	tbl;
 };
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/ohci.c 259218 2013-12-11 13:20:32Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/ohci.c 267992 2014-06-28 03:56:17Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
@@ -84,9 +84,8 @@
 static int ohcidebug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, ohci, CTLFLAG_RW, 0, "USB ohci");
-SYSCTL_INT(_hw_usb_ohci, OID_AUTO, debug, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_hw_usb_ohci, OID_AUTO, debug, CTLFLAG_RWTUN,
     &ohcidebug, 0, "ohci debug level");
-TUNABLE_INT("hw.usb.ohci.debug", &ohcidebug);
 
 static void ohci_dumpregs(ohci_softc_t *);
 static void ohci_dump_tds(ohci_td_t *);

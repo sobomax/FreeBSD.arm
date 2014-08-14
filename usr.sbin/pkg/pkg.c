@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pkg/pkg.c 264789 2014-04-22 22:02:06Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/pkg/pkg.c 268728 2014-07-16 00:12:57Z gavin $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -126,7 +126,8 @@ extract_pkg_static(int fd, char *p, int sz)
 	if (r == ARCHIVE_OK)
 		ret = 0;
 	else
-		warnx("fail to extract pkg-static");
+		warnx("failed to extract pkg-static: %s",
+		    archive_error_string(a));
 
 cleanup:
 	archive_read_free(a);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/texinfo/info/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/texinfo/info/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG=	info
 MAN=	info.1 info.5 texinfo.5
@@ -10,8 +10,8 @@ SRCS=	dir.c display.c doc.c dribble.c echo-area.c filesys.c \
 
 CFLAGS+= -DINFODIR=\"${INFODIR}:/usr/local/info:.\"
 
-DPADD=	${LIBTERMCAP} ${LIBTXI}
-LDADD=	-ltermcap ${LIBTXI}
+DPADD=	${LIBTERMCAPW} ${LIBTXI}
+LDADD=	-ltermcapw ${LIBTXI}
 
 NO_PIE=	yes
 

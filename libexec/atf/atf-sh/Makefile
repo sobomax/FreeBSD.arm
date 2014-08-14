@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/libexec/atf/atf-sh/Makefile 266650 2014-05-25 12:01:13Z jmmv $
+# $FreeBSD: head/libexec/atf/atf-sh/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -39,7 +39,7 @@ CFLAGS+=	-DHAVE_CONFIG_H
 CFLAGS+=	-I${ATF}
 
 DPADD+=		${LIBATF_C} ${LIBATF_CXX}
-LDADD+=		-latf-c++ -latf-c
+LDADD+=		${LDATF_C} ${LDATF_CXX}
 USEPRIVATELIB=	atf-c++ atf-c
 
 FILESGROUPS=	SUBR

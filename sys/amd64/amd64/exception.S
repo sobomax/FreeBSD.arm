@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/exception.S 266846 2014-05-29 16:18:31Z kib $
+ * $FreeBSD: head/sys/amd64/amd64/exception.S 268869 2014-07-19 02:27:31Z markj $
  */
 
 #include "opt_atpic.h"
@@ -228,7 +228,7 @@ alltraps_pushregs_no_rdi:
 	.type	calltrap,@function
 calltrap:
 	movq	%rsp,%rdi
-	call	trap
+	call	trap_check
 	MEXITCOUNT
 	jmp	doreti			/* Handle any pending ASTs */
 

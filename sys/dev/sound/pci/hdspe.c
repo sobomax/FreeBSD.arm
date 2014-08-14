@@ -38,7 +38,7 @@
 
 #include <mixer_if.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hdspe.c 254263 2013-08-12 23:30:01Z scottl $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hdspe.c 267581 2014-06-17 16:07:57Z jhb $");
 
 static struct hdspe_channel chan_map_aio[] = {
 	{  0,  1,   "line", 1, 1 },
@@ -344,7 +344,6 @@ hdspe_dmafree(struct sc_info *sc)
 	bus_dmamap_unload(sc->dmat, sc->pmap);
 	bus_dmamem_free(sc->dmat, sc->rbuf, sc->rmap);
 	bus_dmamem_free(sc->dmat, sc->pbuf, sc->pmap);
-	sc->rmap = sc->pmap = NULL;
 	sc->rbuf = sc->pbuf = NULL;
 }
 

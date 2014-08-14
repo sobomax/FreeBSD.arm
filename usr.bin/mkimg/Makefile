@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/mkimg/Makefile 266176 2014-05-15 19:19:57Z marcel $
+# $FreeBSD: head/usr.bin/mkimg/Makefile 268236 2014-07-03 20:31:43Z marcel $
 
 PROG=	mkimg
 SRCS=	format.c image.c mkimg.c scheme.c
@@ -9,6 +9,7 @@ CFLAGS+=-DSPARSE_WRITE
 # List of formats to support
 SRCS+= \
 	raw.c \
+	vhd.c \
 	vmdk.c
 
 # List of schemes to support

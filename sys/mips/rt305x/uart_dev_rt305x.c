@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rt305x/uart_dev_rt305x.c 260889 2014-01-19 19:36:11Z imp $");
+__FBSDID("$FreeBSD: head/sys/mips/rt305x/uart_dev_rt305x.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_ddb.h"
 
@@ -73,12 +73,8 @@ static struct uart_ops uart_rt305x_uart_ops = {
 };
 
 static int	uart_output = 1;
-TUNABLE_INT("kern.uart_output", &uart_output);
-SYSCTL_INT(_kern, OID_AUTO, uart_output, CTLFLAG_RW,
+SYSCTL_INT(_kern, OID_AUTO, uart_output, CTLFLAG_RWTUN,
     &uart_output, 0, "UART output enabled.");
-
-
-
 
 static int
 rt305x_uart_probe(struct uart_bas *bas)

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/virtio/virtio_config.h 266951 2014-06-01 18:16:01Z bryanv $
+ * $FreeBSD: head/sys/dev/virtio/virtio_config.h 267522 2014-06-16 04:25:04Z bryanv $
  */
 
 #ifndef _VIRTIO_CONFIG_H_
@@ -43,6 +43,12 @@
  * completely used, even if we've suppressed them.
  */
 #define VIRTIO_F_NOTIFY_ON_EMPTY (1 << 24)
+
+/* Support for indirect buffer descriptors. */
+#define VIRTIO_RING_F_INDIRECT_DESC	(1 << 28)
+
+/* Support to suppress interrupt until specific index is reached. */
+#define VIRTIO_RING_F_EVENT_IDX		(1 << 29)
 
 /*
  * The guest should never negotiate this feature; it

@@ -98,7 +98,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/esp/ncr53c9x.c 239089 2012-08-06 08:58:54Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/esp/ncr53c9x.c 269690 2014-08-07 21:56:32Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1082,8 +1082,7 @@ ncr53c9x_action(struct cam_sim *sim, union ccb *ccb)
 
 	case XPT_RESET_DEV:
 	case XPT_SCSI_IO:
-		if (ccb->ccb_h.target_id < 0 ||
-		    ccb->ccb_h.target_id >= sc->sc_ntarg) {
+		if (ccb->ccb_h.target_id >= sc->sc_ntarg) {
 			ccb->ccb_h.status = CAM_PATH_INVALID;
 			goto done;
 		}

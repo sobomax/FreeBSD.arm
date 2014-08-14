@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_pci.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_pci.c 268351 2014-07-07 00:27:09Z marcel $");
 
 /*
  * PCI/Cardbus front-end for the Atheros Wireless LAN controller driver.
@@ -173,8 +173,7 @@ ath_pci_attach(device_t dev)
 		device_printf(dev, "cannot map register space\n");
 		goto bad;
 	}
-	/* XXX uintptr_t is a bandaid for ia64; to be fixed */
-	sc->sc_st = (HAL_BUS_TAG)(uintptr_t) rman_get_bustag(psc->sc_sr);
+	sc->sc_st = (HAL_BUS_TAG) rman_get_bustag(psc->sc_sr);
 	sc->sc_sh = (HAL_BUS_HANDLE) rman_get_bushandle(psc->sc_sr);
 	/*
 	 * Mark device invalid so any interrupts (shared or otherwise)

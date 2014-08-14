@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.h 266550 2014-05-22 17:22:37Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.h 268777 2014-07-16 21:26:26Z neel $
  */
 
 #ifndef _VMCS_H_
@@ -346,6 +346,9 @@ vmcs_write(uint32_t encoding, uint64_t val)
 #define	VMCS_INTR_T_HWINTR	(0 << 8)
 #define	VMCS_INTR_T_NMI		(2 << 8)
 #define	VMCS_INTR_T_HWEXCEPTION	(3 << 8)
+#define	VMCS_INTR_T_SWINTR	(4 << 8)
+#define	VMCS_INTR_T_PRIV_SWEXCEPTION (5 << 8)
+#define	VMCS_INTR_T_SWEXCEPTION	(6 << 8)
 #define	VMCS_INTR_DEL_ERRCODE	(1 << 11)
 
 /*

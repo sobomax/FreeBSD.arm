@@ -1,6 +1,6 @@
 /*	$OpenBSD: if_zydreg.h,v 1.19 2006/11/30 19:28:07 damien Exp $	*/
 /*	$NetBSD: if_zydreg.h,v 1.2 2007/06/16 11:18:45 kiyohara Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_zydreg.h 258780 2013-11-30 22:17:27Z eadler $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_zydreg.h 269127 2014-07-26 16:06:01Z hselasky $	*/
 
 /*-
  * Copyright (c) 2006 by Damien Bergamini <damien.bergamini@free.fr>
@@ -970,7 +970,7 @@
 
 #define	ZYD_TX_RATEDIV							\
 {									\
-	0x1, 0x2, 0xb, 0xb, 0x0, 0x0, 0x0, 0x0, 0x30, 0x18, 0xc, 0x6,	\
+	0x1, 0x2, 0xb, 0xb, 0x1, 0x1, 0x1, 0x1, 0x30, 0x18, 0xc, 0x6,	\
 	0x36, 0x24, 0x12, 0x9						\
 }
 

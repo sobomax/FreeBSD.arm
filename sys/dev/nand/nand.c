@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nand.c 258202 2013-11-15 23:48:51Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nand.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -65,17 +65,8 @@ __FBSDID("$FreeBSD: head/sys/dev/nand/nand.c 258202 2013-11-15 23:48:51Z ian $")
 #define	SOFTECC_BYTES		3
 
 int nand_debug_flag = 0;
-SYSCTL_INT(_debug, OID_AUTO, nand_debug, CTLFLAG_RW, &nand_debug_flag, 0,
+SYSCTL_INT(_debug, OID_AUTO, nand_debug, CTLFLAG_RWTUN, &nand_debug_flag, 0,
     "NAND subsystem debug flag");
-
-static void
-nand_tunable_init(void *arg)
-{
-
-	TUNABLE_INT_FETCH("debug.nand", &nand_debug_flag);
-}
-
-SYSINIT(nand_tunables, SI_SUB_VFS, SI_ORDER_ANY, nand_tunable_init, NULL);
 
 MALLOC_DEFINE(M_NAND, "NAND", "NAND dynamic data");
 

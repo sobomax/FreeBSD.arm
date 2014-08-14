@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/zedboard.dts 265208 2014-05-02 01:28:19Z ian $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/zedboard.dts 268633 2014-07-14 20:58:57Z ian $
  */
 
 /dts-v1/;
@@ -63,6 +63,7 @@
 		slcr: slcr@7000 {
 			compatible = "xlnx,zy7_slcr";
 			reg = <0x0 0x1000>;
+			clock-frequency = <33333333>; // 33Mhz PS_CLK
 		};
 
 		// Interrupt controller
@@ -175,6 +176,7 @@
 		 	reg = <0xb000 0x1000>;
 			interrupts = <54 55>;
 			interrupt-parent = <&GIC>;
+			ref-clock-num = <0>;
 		};
 
 		// SDIO

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/citrus_iconv.c 263986 2014-04-01 10:36:11Z tijl $ */
+/* $FreeBSD: head/lib/libc/iconv/citrus_iconv.c 267437 2014-06-13 08:28:51Z tijl $ */
 /*	$NetBSD: citrus_iconv.c,v 1.10 2011/11/19 18:34:21 tnozaki Exp $	*/
 
 /*-
@@ -344,9 +344,8 @@ const char
 {
 	char *buf;
 
-	if ((buf = malloc((size_t)PATH_MAX)) == NULL)
+	if ((buf = calloc((size_t)PATH_MAX, sizeof(*buf))) == NULL)
 		return (NULL);
-	memset((void *)buf, 0, (size_t)PATH_MAX);
 	_citrus_esdb_alias(name, buf, (size_t)PATH_MAX);
 	return (buf);
 }

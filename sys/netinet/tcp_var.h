@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: head/sys/netinet/tcp_var.h 266618 2014-05-24 14:01:18Z bz $
+ * $FreeBSD: head/sys/netinet/tcp_var.h 269699 2014-08-08 01:57:15Z kevlo $
  */
 
 #ifndef _NETINET_TCP_VAR_H_
@@ -654,7 +654,7 @@ char	*tcp_log_vain(struct in_conninfo *, struct tcphdr *, void *,
 	    const void *);
 int	 tcp_reass(struct tcpcb *, struct tcphdr *, int *, struct mbuf *);
 void	 tcp_reass_flush(struct tcpcb *);
-void	 tcp_input(struct mbuf *, int);
+int	 tcp_input(struct mbuf **, int *, int);
 u_long	 tcp_maxmtu(struct in_conninfo *, struct tcp_ifcap *);
 u_long	 tcp_maxmtu6(struct in_conninfo *, struct tcp_ifcap *);
 void	 tcp_mss_update(struct tcpcb *, int, int, struct hc_metrics_lite *,

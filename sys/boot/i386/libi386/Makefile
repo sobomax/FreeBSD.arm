@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/libi386/Makefile 256940 2013-10-22 21:32:28Z jkim $
+# $FreeBSD: head/sys/boot/i386/libi386/Makefile 268974 2014-07-22 04:37:47Z sbruno $
 #
 LIB=			i386
 INTERNALLIB=
@@ -54,6 +54,9 @@ CFLAGS+=	-I${.CURDIR}/../../common -I${.CURDIR}/../common \
 		-I${.CURDIR}/../../.. -I.
 # the location of libstand
 CFLAGS+=	-I${.CURDIR}/../../../../lib/libstand/
+
+# Suppress warning from clang for FreeBSD %b and %D formats
+CFLAGS+= -fformat-extensions
 
 .if ${MACHINE_CPUARCH} == "amd64"
 CLEANFILES+=	machine

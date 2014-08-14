@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/ofw/common/main.c 229403 2012-01-03 18:51:58Z ed $");
+__FBSDID("$FreeBSD: head/sys/boot/ofw/common/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 #include <stand.h>
 #include "openfirm.h"
@@ -162,7 +162,7 @@ main(int (*openfirm)(void *))
 	archsw.arch_readin = ofw_readin;
 	archsw.arch_autoload = ofw_autoload;
 
-	interact();				/* doesn't return */
+	interact(NULL);				/* doesn't return */
 
 	OF_exit();
 

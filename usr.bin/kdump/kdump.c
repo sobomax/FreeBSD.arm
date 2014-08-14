@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)kdump.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/kdump/kdump.c 263879 2014-03-28 16:11:20Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/kdump/kdump.c 269408 2014-08-01 23:28:21Z rpaulo $");
 
 #define _KERNEL
 extern int errno;
@@ -1088,6 +1088,14 @@ ktrsyscall(struct ktr_syscall *ktr, u_int flags)
 				shmctlname(*ip);
 				ip++;
 				narg--;
+				break;
+			case SYS_shm_open:
+				print_number(ip, narg, c);
+				putchar(',');
+				flagsname(ip[0]);
+				printf(",0%o", ip[1]);
+				ip += 3;
+				narg -= 3;
 				break;
 			case SYS_minherit:
 				print_number(ip, narg, c);

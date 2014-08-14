@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/apm.c 266513 2014-05-21 17:38:56Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/apm.c 268524 2014-07-11 01:49:25Z marcel $");
 
 #include <sys/types.h>
 #include <sys/apm.h>
@@ -39,6 +39,9 @@ __FBSDID("$FreeBSD: head/usr.bin/mkimg/apm.c 266513 2014-05-21 17:38:56Z marcel 
 #include "mkimg.h"
 #include "scheme.h"
 
+#ifndef APM_ENT_TYPE_APPLE_BOOT
+#define	APM_ENT_TYPE_APPLE_BOOT		"Apple_Bootstrap"
+#endif
 #ifndef APM_ENT_TYPE_FREEBSD_NANDFS
 #define	APM_ENT_TYPE_FREEBSD_NANDFS	"FreeBSD-nandfs"
 #endif

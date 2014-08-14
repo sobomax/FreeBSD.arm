@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE. 
  *
- * $FreeBSD: head/cddl/lib/libdtrace/libproc_compat.h 265309 2014-05-04 03:37:39Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/libproc_compat.h 267940 2014-06-26 22:38:06Z rpaulo $
  */
 
 /*
@@ -45,8 +45,10 @@
 #define	Pgrab_error strerror
 #define	Plmid_to_map(p, l, o) proc_obj2map((p), (o))
 #define	Plookup_by_addr proc_addr2sym
+#define	Pname_to_ctf(p, obj) NULL
 #define	Pname_to_map proc_name2map
 #define	Pobject_iter proc_iter_objs
+#define	Pobject_iter_resolved(p, f, arg) 1
 #define	Pobjname proc_objname
 #define	Pread proc_read
 #define	Prd_agent proc_rdagent

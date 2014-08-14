@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.3 (Berkeley) 2/4/95
-# $FreeBSD: head/lib/libc/stdlib/Makefile.inc 264042 2014-04-02 16:07:48Z theraven $
+# $FreeBSD: head/lib/libc/stdlib/Makefile.inc 268943 2014-07-21 15:22:48Z pfg $
 
 # machine-independent stdlib sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/stdlib ${LIBC_SRCTOP}/stdlib
@@ -35,6 +35,7 @@ MLINKS+=exit.3 _Exit.3
 MLINKS+=getenv.3 putenv.3 getenv.3 setenv.3 getenv.3 unsetenv.3
 MLINKS+=getopt_long.3 getopt_long_only.3
 MLINKS+=hcreate.3 hdestroy.3 hcreate.3 hsearch.3
+MLINKS+=hcreate.3 hcreate_r.3 hcreate.3 hdestroy_r.3 hcreate.3 hsearch_r.3
 MLINKS+=insque.3 remque.3
 MLINKS+=lsearch.3 lfind.3
 MLINKS+=ptsname.3 grantpt.3 ptsname.3 unlockpt.3

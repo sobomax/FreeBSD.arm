@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.sys.mk 265834 2014-05-10 16:38:27Z imp $
+# $FreeBSD: head/share/mk/bsd.sys.mk 268351 2014-07-07 00:27:09Z marcel $
 #
 # This file contains common settings used for building FreeBSD
 # sources.
@@ -126,12 +126,12 @@ CFLAGS.clang+=	 -fno-dwarf2-cfi-asm
 # but not yet.
 CXXFLAGS.clang+=	 -Wno-c++11-extensions
 
-.if ${MK_SSP} != "no" && ${MACHINE_CPUARCH} != "ia64" && \
+.if ${MK_SSP} != "no" && \
     ${MACHINE_CPUARCH} != "arm" && ${MACHINE_CPUARCH} != "mips"
 # Don't use -Wstack-protector as it breaks world with -Werror.
 SSP_CFLAGS?=	-fstack-protector
 CFLAGS+=	${SSP_CFLAGS}
-.endif # SSP && !IA64 && !ARM && !MIPS
+.endif # SSP && !ARM && !MIPS
 
 # Allow user-specified additional warning flags, plus compiler specific flag overrides.
 # Unless we've overriden this...

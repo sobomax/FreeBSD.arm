@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/kbdcontrol/kbdcontrol.c 266839 2014-05-29 14:39:25Z ray $");
+__FBSDID("$FreeBSD: head/usr.sbin/kbdcontrol/kbdcontrol.c 269120 2014-07-26 13:14:28Z se $");
 
 #include <ctype.h>
 #include <err.h>
@@ -146,11 +146,12 @@ static void	usage(void) __dead2;
 static int
 is_vt4(void)
 {
+	char vty_name[4] = "";
+	size_t len = sizeof(vty_name);
 
-	if (sysctlbyname("kern.vt.deadtimer", NULL, NULL, NULL, 0) == 0)
-		return (1);
-
-	return (0);
+	if (sysctlbyname("kern.vty", vty_name, &len, NULL, 0) != 0)
+		return (0);
+	return (strcmp(vty_name, "vt") == 0);
 }
 
 static char *
@@ -799,7 +800,7 @@ load_keymap(char *opt, int dumponly)
 	char	*name, *cp;
 	char	blank[] = "", keymap_path[] = KEYMAP_PATH;
 	char	vt_keymap_path[] = VT_KEYMAP_PATH, dotkbd[] = ".kbd";
-	char	*prefix[]  = {blank, blank, keymap_path, NULL};
+	char	*prefix[]  = {blank, blank, blank, keymap_path, NULL};
 	char	*postfix[] = {blank, dotkbd, NULL};
 
 	if (is_vt4())

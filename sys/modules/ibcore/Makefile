@@ -1,8 +1,6 @@
-# $FreeBSD: head/sys/modules/ibcore/Makefile 260104 2013-12-30 20:58:06Z dim $
+# $FreeBSD: head/sys/modules/ibcore/Makefile 269538 2014-08-04 22:34:12Z imp $
 .PATH:  ${.CURDIR}/../../ofed/drivers/infiniband/core
 .PATH:  ${.CURDIR}/../../ofed/include/linux
-
-.include <bsd.own.mk>
 
 KMOD    = ibcore
 SRCS    = addr.c cm_msgs.h iwcm.c mad_rmpp.h sa_query.c ucma.c uverbs_cmd.c

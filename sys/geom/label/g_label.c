@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/label/g_label.c 264185 2014-04-06 02:44:37Z marcel $");
+__FBSDID("$FreeBSD: head/sys/geom/label/g_label.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_geom.h"
 
@@ -50,8 +50,7 @@ FEATURE(geom_label, "GEOM labeling support");
 SYSCTL_DECL(_kern_geom);
 SYSCTL_NODE(_kern_geom, OID_AUTO, label, CTLFLAG_RW, 0, "GEOM_LABEL stuff");
 u_int g_label_debug = 0;
-TUNABLE_INT("kern.geom.label.debug", &g_label_debug);
-SYSCTL_UINT(_kern_geom_label, OID_AUTO, debug, CTLFLAG_RW, &g_label_debug, 0,
+SYSCTL_UINT(_kern_geom_label, OID_AUTO, debug, CTLFLAG_RWTUN, &g_label_debug, 0,
     "Debug level");
 
 static int g_label_destroy_geom(struct gctl_req *req, struct g_class *mp,

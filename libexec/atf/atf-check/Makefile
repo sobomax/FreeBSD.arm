@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/libexec/atf/atf-check/Makefile 267181 2014-06-06 18:58:06Z jmmv $
+# $FreeBSD: head/libexec/atf/atf-check/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -37,10 +37,8 @@ MAN=		atf-check.1
 
 CFLAGS+=	-I${ATF}
 
-LDFLAGS+=	-L${.OBJDIR}/../../../lib/atf/libatf-c++
-LDFLAGS+=	-L${.OBJDIR}/../../../lib/atf/libatf-c
 DPADD+=		${LIBATF_CXX} ${LIBATF_C}
-LDADD+=		-latf-c++ -latf-c
+LDADD+=		${LDATF_CXX} ${LDATF_C}
 USEPRIVATELIB=	atf-c++ atf-c
 
 .if ${MK_TESTS} != "no"

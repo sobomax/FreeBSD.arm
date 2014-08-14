@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)igmp_var.h	8.1 (Berkeley) 7/19/93
- * $FreeBSD: head/sys/netinet/igmp_var.h 262489 2014-02-25 18:44:33Z jhb $
+ * $FreeBSD: head/sys/netinet/igmp_var.h 269699 2014-08-08 01:57:15Z kevlo $
  */
 
 #ifndef _NETINET_IGMP_VAR_H_
@@ -205,7 +205,7 @@ struct igmp_ifinfo *
 	igmp_domifattach(struct ifnet *);
 void	igmp_domifdetach(struct ifnet *);
 void	igmp_ifdetach(struct ifnet *);
-void	igmp_input(struct mbuf *, int);
+int	igmp_input(struct mbuf **, int *, int);
 void	igmp_slowtimo(void);
 
 SYSCTL_DECL(_net_inet_igmp);

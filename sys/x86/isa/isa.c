@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/isa.c 221526 2011-05-06 13:48:53Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/isa.c 267535 2014-06-16 08:49:16Z royger $");
 
 /*-
  * Modifications for Intel architecture by Garrett A. Wollman.
@@ -241,3 +241,8 @@ isa_release_resource(device_t bus, device_t child, int type, int rid,
  * On this platform, isa can also attach to the legacy bus.
  */
 DRIVER_MODULE(isa, legacy, isa_driver, isa_devclass, 0, 0);
+
+/*
+ * Attach the ISA bus to the xenpv bus in order to get syscons.
+ */
+DRIVER_MODULE(isa, xenpv, isa_driver, isa_devclass, 0, 0);

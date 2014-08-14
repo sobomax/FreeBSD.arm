@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_fork.c 259535 2013-12-18 01:41:52Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_fork.c 268001 2014-06-28 05:41:53Z mjg $");
 
 #include "opt_ktrace.h"
 #include "opt_kstack_pages.h"
@@ -341,8 +341,8 @@ fork_norfproc(struct thread *td, int flags)
 	/*
 	 * Unshare file descriptors (from parent).
 	 */
-	if (flags & RFFDG) 
-		fdunshare(p1, td);
+	if (flags & RFFDG)
+		fdunshare(td);
 
 fail:
 	if (((p1->p_flag & (P_HADTHREADS|P_SYSTEM)) == P_HADTHREADS) &&

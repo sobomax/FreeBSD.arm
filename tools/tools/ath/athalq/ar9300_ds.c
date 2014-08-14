@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/tools/ath/athalq/ar9300_ds.c 250266 2013-05-05 09:38:25Z adrian $");
+__FBSDID("$FreeBSD: head/tools/tools/ath/athalq/ar9300_ds.c 269772 2014-08-10 03:09:35Z adrian $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +29,7 @@ __FBSDID("$FreeBSD: head/tools/tools/ath/athalq/ar9300_ds.c 250266 2013-05-05 09
 #include <sys/endian.h>
 
 #include <dev/ath/if_ath_alq.h>
-#include <dev/ath/ath_hal/ar9300/ar9300desc.h>
+#include <ar9300/ar9300desc.h>
 
 #include "ar9300_ds.h"
 

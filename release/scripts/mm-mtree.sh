@@ -5,13 +5,13 @@
 # This script is intended to be used as part of the release building
 # process to generate the /var/db/mergemaster.mtree file relevant to
 # the source tree used to create the release so that users can make
-# use of mergemaster's -U option to update their files after csup'ing
+# use of mergemaster's -U option to update their files after updating
 # to -stable.
 
 # Copyright 2009 Douglas Barton
 # dougb@FreeBSD.org
 
-# $FreeBSD: head/release/scripts/mm-mtree.sh 254951 2013-08-27 04:42:42Z will $
+# $FreeBSD: head/release/scripts/mm-mtree.sh 267864 2014-06-25 12:17:00Z gavin $
 
 PATH=/bin:/usr/bin:/usr/sbin
 

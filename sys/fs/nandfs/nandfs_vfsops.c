@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vfsops.c 264658 2014-04-18 17:03:43Z imp $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vfsops.c 269422 2014-08-02 05:05:16Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -912,7 +912,7 @@ nandfs_mount_device(struct vnode *devvp, struct mount *mp,
 			/*
 			 * We conclude that this is not NAND storage
 			 */
-			nandfsdev->nd_erasesize = NANDFS_DEF_ERASESIZE;
+			erasesize = NANDFS_DEF_ERASESIZE;
 		} else {
 			DROP_GIANT();
 			g_topology_lock();
@@ -924,7 +924,6 @@ nandfs_mount_device(struct vnode *devvp, struct mount *mp,
 			return (error);
 		}
 	}
-
 	nandfsdev->nd_erasesize = erasesize;
 
 	DPRINTF(VOLUMES, ("%s: erasesize %x\n", __func__,

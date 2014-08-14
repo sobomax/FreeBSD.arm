@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sis/if_sis.c 266270 2014-05-16 21:19:17Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/dev/sis/if_sis.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * SiS 900/SiS 7016 fast ethernet PCI NIC driver. Datasheets are
@@ -1329,9 +1329,9 @@ sis_dma_free(struct sis_softc *sc)
 		bus_dma_tag_destroy(sc->sis_tx_tag);
 
 	/* Destroy RX ring. */
-	if (sc->sis_rx_list_map)
+	if (sc->sis_rx_paddr)
 		bus_dmamap_unload(sc->sis_rx_list_tag, sc->sis_rx_list_map);
-	if (sc->sis_rx_list_map && sc->sis_rx_list)
+	if (sc->sis_rx_list)
 		bus_dmamem_free(sc->sis_rx_list_tag, sc->sis_rx_list,
 		    sc->sis_rx_list_map);
 
@@ -1339,10 +1339,10 @@ sis_dma_free(struct sis_softc *sc)
 		bus_dma_tag_destroy(sc->sis_rx_list_tag);
 
 	/* Destroy TX ring. */
-	if (sc->sis_tx_list_map)
+	if (sc->sis_tx_paddr)
 		bus_dmamap_unload(sc->sis_tx_list_tag, sc->sis_tx_list_map);
 
-	if (sc->sis_tx_list_map && sc->sis_tx_list)
+	if (sc->sis_tx_list)
 		bus_dmamem_free(sc->sis_tx_list_tag, sc->sis_tx_list,
 		    sc->sis_tx_list_map);
 
@@ -2361,7 +2361,6 @@ sis_add_sysctls(struct sis_softc *sc)
 {
 	struct sysctl_ctx_list *ctx;
 	struct sysctl_oid_list *children;
-	char tn[32];
 	int unit;
 
 	ctx = device_get_sysctl_ctx(sc->sis_dev);
@@ -2376,10 +2375,8 @@ sis_add_sysctls(struct sis_softc *sc)
 	 * because it will consume extra CPU cycles for short frames.
 	 */
 	sc->sis_manual_pad = 0;
-	snprintf(tn, sizeof(tn), "dev.sis.%d.manual_pad", unit);
-	TUNABLE_INT_FETCH(tn, &sc->sis_manual_pad);
 	SYSCTL_ADD_INT(ctx, children, OID_AUTO, "manual_pad",
-	    CTLFLAG_RW, &sc->sis_manual_pad, 0, "Manually pad short frames");
+	    CTLFLAG_RWTUN, &sc->sis_manual_pad, 0, "Manually pad short frames");
 }
 
 static device_method_t sis_methods[] = {

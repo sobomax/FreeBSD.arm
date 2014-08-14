@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netinet/in_gif.h 139823 2005-01-07 01:45:51Z imp $	*/
+/*	$FreeBSD: head/sys/netinet/in_gif.h 269699 2014-08-08 01:57:15Z kevlo $	*/
 /*	$KAME: in_gif.h,v 1.5 2000/04/14 08:36:02 itojun Exp $	*/
 
 /*-
@@ -36,7 +36,7 @@
 #define GIF_TTL		30
 
 struct gif_softc;
-void in_gif_input(struct mbuf *, int);
+int in_gif_input(struct mbuf **, int *, int);
 int in_gif_output(struct ifnet *, int, struct mbuf *);
 int gif_encapcheck4(const struct mbuf *, int, int, void *);
 int in_gif_attach(struct gif_softc *);

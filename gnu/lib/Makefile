@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/lib/Makefile 268508 2014-07-10 21:11:48Z imp $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,7 @@ SUBDIR+= tests
 
 # libsupc++ uses libstdc++ headers, although 'make includes' should
 # have taken care of that already.
-.if ${MK_GNUCXX} != "no" && ${MK_CXX} != "no"
+.if ${MK_GNUCXX} != "no"
 SUBDIR+= libstdc++ libsupc++
 .endif
 

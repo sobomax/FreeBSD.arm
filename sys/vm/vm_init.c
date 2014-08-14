@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_init.c 255426 2013-09-09 18:11:59Z jhb $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_init.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -91,8 +91,7 @@ __FBSDID("$FreeBSD: head/sys/vm/vm_init.c 255426 2013-09-09 18:11:59Z jhb $");
 long physmem;
 
 static int exec_map_entries = 16;
-TUNABLE_INT("vm.exec_map_entries", &exec_map_entries);
-SYSCTL_INT(_vm, OID_AUTO, exec_map_entries, CTLFLAG_RD, &exec_map_entries, 0,
+SYSCTL_INT(_vm, OID_AUTO, exec_map_entries, CTLFLAG_RDTUN, &exec_map_entries, 0,
     "Maximum number of simultaneous execs");
 
 /*

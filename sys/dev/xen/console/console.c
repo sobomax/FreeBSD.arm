@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/console/console.c 263268 2014-03-17 16:45:28Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/console/console.c 267528 2014-06-16 08:44:33Z royger $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -509,4 +509,4 @@ xcons_force_flush(void)
 	}
 }
 
-DRIVER_MODULE(xc, nexus, xc_driver, xc_devclass, 0, 0);
+DRIVER_MODULE(xc, xenpv, xc_driver, xc_devclass, 0, 0);

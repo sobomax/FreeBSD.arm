@@ -16,10 +16,10 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: nsap_addr.c,v 1.3.18.2 2005/07/28 07:38:08 marka Exp $";
+static const char rcsid[] = "$Id: nsap_addr.c,v 1.5 2005/07/28 06:51:48 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/inet/nsap_addr.c 170244 2007-06-03 17:20:27Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/inet/nsap_addr.c 269867 2014-08-12 12:36:06Z ume $");
 
 #include "port_before.h"
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx6_ccmreg.h 262581 2014-02-27 22:55:33Z ian $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx6_ccmreg.h 269698 2014-08-08 01:23:43Z ian $
  */
 
 #ifndef	IMX6_CCMREG_H
@@ -36,6 +36,7 @@
 #define	  CCM_CLPCR_LPM_STOP		  0x02
 #define	CCM_CGPR			0x064
 #define	  CCM_CGPR_INT_MEM_CLK_LPM	  (1 << 17)
+#define	CCM_CCGR0			0x068
 #define	CCM_CCGR1			0x06C
 #define	CCM_CCGR2			0x070
 #define	CCM_CCGR3			0x074

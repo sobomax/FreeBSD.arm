@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key_debug.c 195699 2009-07-14 22:48:30Z rwatson $	*/
+/*	$FreeBSD: head/sys/netipsec/key_debug.c 268530 2014-07-11 14:34:29Z glebius $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-
@@ -663,9 +663,9 @@ kdebug_mbufhdr(m)
 
 	if (m->m_flags & M_EXT) {
 		printf("  m_ext{ ext_buf:%p ext_free:%p "
-		       "ext_size:%u ref_cnt:%p }\n",
+		       "ext_size:%u ext_cnt:%p }\n",
 			m->m_ext.ext_buf, m->m_ext.ext_free,
-			m->m_ext.ext_size, m->m_ext.ref_cnt);
+			m->m_ext.ext_size, m->m_ext.ext_cnt);
 	}
 
 	return;

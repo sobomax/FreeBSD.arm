@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/buslogic/bt.c 256893 2013-10-22 13:52:20Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/buslogic/bt.c 267340 2014-06-10 20:25:45Z jhb $");
 
  /*
   * Special thanks to Leonard N. Zubkoff for writing such a complete and
@@ -246,7 +246,6 @@ bt_free_softc(device_t dev)
 	case 6:
 		bus_dmamem_free(bt->ccb_dmat, bt->bt_ccb_array,
 				bt->ccb_dmamap);
-		bus_dmamap_destroy(bt->ccb_dmat, bt->ccb_dmamap);
 		/* FALLTHROUGH */
 	case 5:
 		bus_dma_tag_destroy(bt->ccb_dmat);
@@ -257,7 +256,6 @@ bt_free_softc(device_t dev)
 	case 3:
 		bus_dmamem_free(bt->mailbox_dmat, bt->in_boxes,
 				bt->mailbox_dmamap);
-		bus_dmamap_destroy(bt->mailbox_dmat, bt->mailbox_dmamap);
 		/* FALLTHROUGH */
 	case 2:
 		bus_dma_tag_destroy(bt->buffer_dmat);

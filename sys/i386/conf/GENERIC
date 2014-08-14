@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/i386/conf/GENERIC 267146 2014-06-06 04:08:55Z imp $
+# $FreeBSD: head/sys/i386/conf/GENERIC 268045 2014-06-30 16:18:38Z emaste $
 
 cpu		I486_CPU
 cpu		I586_CPU
@@ -186,6 +186,10 @@ device		splash			# Splash screen and screen saver support
 # syscons is the default console driver, resembling an SCO console
 device		sc
 options 	SC_PIXEL_MODE		# add support for the raster text mode
+
+# vt is the new video console driver
+device		vt
+device		vt_vga
 
 device		agp			# support several AGP chipsets
 

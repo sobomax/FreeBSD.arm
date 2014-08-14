@@ -94,7 +94,7 @@
  * OWNER OR CONTRIBUTOR IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpt/mpt_cam.c 260058 2013-12-29 20:41:32Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/mpt/mpt_cam.c 267690 2014-06-20 21:18:35Z hiren $");
 
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_cam.h>
@@ -2449,8 +2449,11 @@ mpt_cam_event(struct mpt_softc *mpt, request_t *req,
 
 		pqf = (PTR_EVENT_DATA_QUEUE_FULL)msg->Data;
 		pqf->CurrentDepth = le16toh(pqf->CurrentDepth);
-		mpt_prt(mpt, "QUEUE FULL EVENT: Bus 0x%02x Target 0x%02x Depth "
-		    "%d\n", pqf->Bus, pqf->TargetID, pqf->CurrentDepth);
+		if (bootverbose) {
+		    mpt_prt(mpt, "QUEUE FULL EVENT: Bus 0x%02x Target 0x%02x "
+			"Depth %d\n",
+			pqf->Bus, pqf->TargetID, pqf->CurrentDepth);
+		}
 		if (mpt->phydisk_sim && mpt_is_raid_member(mpt,
 		    pqf->TargetID) != 0) {
 			sim = mpt->phydisk_sim;

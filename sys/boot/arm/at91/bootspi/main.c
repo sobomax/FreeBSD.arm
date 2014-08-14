@@ -31,7 +31,7 @@
  * owners.  This software is not copyrighted and is intended for reference
  * only.
  *
- * $FreeBSD: head/sys/boot/arm/at91/bootspi/main.c 163597 2006-10-21 22:44:26Z imp $
+ * $FreeBSD: head/sys/boot/arm/at91/bootspi/main.c 269111 2014-07-26 03:33:19Z ian $
  */
 
 #include "env_vars.h"
@@ -42,6 +42,8 @@
 #include "lib.h"
 #include "spi_flash.h"
 #include "ee.h"
+
+int main(void);
 
 int
 main(void)

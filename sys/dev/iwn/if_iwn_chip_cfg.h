@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/iwn/if_iwn_chip_cfg.h 265803 2014-05-10 05:56:10Z adrian $
+ * $FreeBSD: head/sys/dev/iwn/if_iwn_chip_cfg.h 267466 2014-06-14 06:54:03Z adrian $
  */
 
 #ifndef	__IF_IWN_CHIP_CFG_H__
@@ -116,7 +116,7 @@ struct iwn_base_params {
 static const struct iwn_base_params iwn5000_base_params = {
 	.pll_cfg_val = IWN_ANA_PLL_INIT,	/* pll_cfg_val; */
 	.max_ll_items = IWN_OTP_MAX_LL_ITEMS_6x00,	/* max_ll_items */
-	.shadow_ram_support = true,	/* shadow_ram_support */
+	.shadow_ram_support = false,	/* shadow_ram_support */
 	.shadow_reg_enable = false,	/* shadow_reg_enable */
 	.bt_session_2 = false,	/* bt_session_2 */
 	.bt_sco_disable = true,	/* bt_sco_disable */

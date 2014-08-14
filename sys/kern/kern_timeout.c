@@ -35,12 +35,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_timeout.c 267092 2014-06-05 03:46:46Z davide $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_timeout.c 268026 2014-06-30 04:25:51Z adrian $");
 
 #include "opt_callout_profiling.h"
 #if defined(__arm__)
 #include "opt_timer.h"
 #endif
+#include "opt_rss.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -101,15 +102,20 @@ SYSCTL_INT(_debug, OID_AUTO, to_avg_mpcalls_dir, CTLFLAG_RD, &avg_mpcalls_dir,
 #endif
 
 static int ncallout;
-SYSCTL_INT(_kern, OID_AUTO, ncallout, CTLFLAG_RDTUN, &ncallout, 0,
+SYSCTL_INT(_kern, OID_AUTO, ncallout, CTLFLAG_RDTUN | CTLFLAG_NOFETCH, &ncallout, 0,
     "Number of entries in callwheel and size of timeout() preallocation");
 
+#ifdef	RSS
+static int pin_default_swi = 1;
+static int pin_pcpu_swi = 1;
+#else
 static int pin_default_swi = 0;
 static int pin_pcpu_swi = 0;
+#endif
 
-SYSCTL_INT(_kern, OID_AUTO, pin_default_swi, CTLFLAG_RDTUN, &pin_default_swi,
+SYSCTL_INT(_kern, OID_AUTO, pin_default_swi, CTLFLAG_RDTUN | CTLFLAG_NOFETCH, &pin_default_swi,
     0, "Pin the default (non-per-cpu) swi (shared with PCPU 0 swi)");
-SYSCTL_INT(_kern, OID_AUTO, pin_pcpu_swi, CTLFLAG_RDTUN, &pin_pcpu_swi,
+SYSCTL_INT(_kern, OID_AUTO, pin_pcpu_swi, CTLFLAG_RDTUN | CTLFLAG_NOFETCH, &pin_pcpu_swi,
     0, "Pin the per-CPU swis (except PCPU 0, which is also default");
 
 /*

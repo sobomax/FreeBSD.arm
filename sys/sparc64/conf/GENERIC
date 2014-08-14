@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/sparc64/conf/GENERIC 267146 2014-06-06 04:08:55Z imp $
+# $FreeBSD: head/sys/sparc64/conf/GENERIC 269415 2014-08-02 03:48:16Z nwhitehorn $
 
 cpu		SUN4U
 ident		GENERIC
@@ -139,6 +139,9 @@ device		creator		# Creator, Creator3D and Elite3D framebuffers
 device		machfb		# ATI Mach64 framebuffers
 device		splash		# Splash screen and screen saver support
 options 	KBD_INSTALL_CDEV # install a CDEV entry in /dev
+
+# vt is the new video console driver
+device		vt
 
 # Builtin hardware
 device		auxio		# auxiliary I/O device

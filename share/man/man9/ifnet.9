@@ -26,9 +26,9 @@
 .\" OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/ifnet.9 257699 2013-11-05 12:52:56Z glebius $
+.\" $FreeBSD: head/share/man/man9/ifnet.9 269243 2014-07-29 15:01:29Z glebius $
 .\"
-.Dd November 5, 2013
+.Dd July 29, 2014
 .Dt IFNET 9
 .Os
 .Sh NAME
@@ -1084,10 +1084,6 @@ address in the route table.
 .It Va ifa_refcnt
 .Pq Vt short
 The reference count.
-.It Va ifa_metric
-.Pq Vt int
-A metric associated with this interface address, for the use of some
-external routing protocol.
 .El
 .Pp
 References to
@@ -1370,7 +1366,6 @@ function is called to perform the operation; qq.v.
 .It Dv SIOCDIFADDR
 The socket's protocol control routine is called to implement the
 requested action.
-.Pp
 .El
 .El
 .Pp

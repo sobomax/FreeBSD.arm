@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: head/sys/sparc64/include/vmparam.h 257854 2013-11-08 16:25:00Z alc $
+ * $FreeBSD: head/sys/sparc64/include/vmparam.h 269782 2014-08-10 16:59:39Z kib $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -238,5 +238,8 @@ extern vm_offset_t vm_max_kernel_address;
  * caching disabled.
  */
 #define	ZERO_REGION_SIZE	PAGE_SIZE
+
+#define	SFBUF
+#define	SFBUF_MAP
 
 #endif /* !_MACHINE_VMPARAM_H_ */

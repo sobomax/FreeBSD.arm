@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_reg.h 265411 2014-05-06 02:32:27Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_reg.h 268854 2014-07-18 20:04:11Z davidcs $");
 
 #ifndef ECORE_REG_H
 #define ECORE_REG_H
@@ -1039,6 +1039,8 @@ __FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_reg.h 265411 2014-05-06 02:32:27Z dav
 	0x942cUL
 #define PGLUE_B_REG_INTERNAL_PFID_ENABLE_TARGET_READ \
 	0x9430UL
+#define PGLUE_B_REG_LATCHED_ERRORS_CLR \
+	0x943CUL
 #define PGLUE_B_REG_PGLUE_B_INT_STS \
 	0x9298UL
 #define PGLUE_B_REG_PGLUE_B_INT_STS_CLR \

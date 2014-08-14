@@ -19,7 +19,7 @@
  * only.
  * END_BLOCK
  *
- * $FreeBSD: head/sys/boot/arm/at91/bootiic/main.c 161202 2006-08-10 19:55:52Z imp $
+ * $FreeBSD: head/sys/boot/arm/at91/bootiic/main.c 269111 2014-07-26 03:33:19Z ian $
  ******************************************************************************/
 
 #include "env_vars.h"
@@ -27,6 +27,8 @@
 #include "loader_prompt.h"
 #include "emac.h"
 #include "lib.h"
+
+int main(void);
 
 /*
  * .KB_C_FN_DEFINITION_START

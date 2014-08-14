@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_dp_iic_helper.c 254819 2013-08-24 23:54:06Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_dp_iic_helper.c 268564 2014-07-12 06:23:42Z rpaulo $");
 
 #include <sys/types.h>
 #include <sys/kobj.h>

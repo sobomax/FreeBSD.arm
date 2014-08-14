@@ -29,7 +29,7 @@
  *
  *	from: @(#)svc.h 1.35 88/12/17 SMI
  *	from: @(#)svc.h      1.27    94/04/25 SMI
- * $FreeBSD: head/sys/rpc/svc.h 267228 2014-06-08 11:19:32Z mav $
+ * $FreeBSD: head/sys/rpc/svc.h 268115 2014-07-01 20:47:16Z rmacklem $
  */
 
 /*
@@ -145,6 +145,7 @@ struct __rpc_svcthread;
  * Server side transport handle. In the kernel, transports have a
  * reference count which tracks the number of currently assigned
  * worker threads plus one for the service pool's reference.
+ * For NFSv4.1 sessions, a reference is also held for a backchannel.
  */
 typedef struct __rpc_svcxprt {
 #ifdef _KERNEL
@@ -773,6 +774,13 @@ extern SVCXPRT *svc_vc_create(SVCPOOL *, struct socket *,
          */
 
 extern SVCXPRT *svc_vc_create_backchannel(SVCPOOL *);
+
+extern void *clnt_bck_create(struct socket *, const rpcprog_t, const rpcvers_t);
+	/*
+	 * struct socket *;			-- server transport socket
+	 * const rpcprog_t prog;		-- RPC program number
+	 * const rpcvers_t vers;		-- RPC program version
+	 */
 
 /*
  * Generic TLI create routine

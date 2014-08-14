@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libpam/modules/pam_opie/pam_opie.c 162320 2006-09-15 13:42:38Z des $");
+__FBSDID("$FreeBSD: head/lib/libpam/modules/pam_opie/pam_opie.c 269875 2014-08-12 13:28:46Z ache $");
 
 #include <sys/types.h>
 #include <opie.h>
@@ -62,7 +62,7 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags __unused,
 	struct passwd *pwd;
 	int retval, i;
 	const char *(promptstr[]) = { "%s\nPassword: ", "%s\nPassword [echo on]: "};
-	char challenge[OPIE_CHALLENGE_MAX];
+	char challenge[OPIE_CHALLENGE_MAX + 1];
 	char principal[OPIE_PRINCIPAL_MAX];
 	const char *user;
 	char *response;

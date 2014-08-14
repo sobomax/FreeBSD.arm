@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/powerpc/ps3/main.c 224857 2011-08-14 00:20:37Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/boot/powerpc/ps3/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -145,7 +145,7 @@ main(void)
 	setenv("LINES", "24", 1);
 	setenv("hw.platform", "ps3", 1);
 
-	interact();			/* doesn't return */
+	interact(NULL);			/* doesn't return */
 
 	return (0);
 }

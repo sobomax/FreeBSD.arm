@@ -44,7 +44,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/feeder_eq.c 209193 2010-06-15 07:06:54Z avg $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/feeder_eq.c 267992 2014-06-28 03:56:17Z hselasky $");
 #endif
 
 #include "feeder_eq_gen.h"
@@ -97,8 +97,7 @@ static char feeder_eq_presets[] = FEEDER_EQ_PRESETS;
 SYSCTL_STRING(_hw_snd, OID_AUTO, feeder_eq_presets, CTLFLAG_RD,
     &feeder_eq_presets, 0, "compile-time eq presets");
 
-TUNABLE_INT("hw.snd.feeder_eq_exact_rate", &feeder_eq_exact_rate);
-SYSCTL_INT(_hw_snd, OID_AUTO, feeder_eq_exact_rate, CTLFLAG_RW,
+SYSCTL_INT(_hw_snd, OID_AUTO, feeder_eq_exact_rate, CTLFLAG_RWTUN,
     &feeder_eq_exact_rate, 0, "force exact rate validation");
 #endif
 

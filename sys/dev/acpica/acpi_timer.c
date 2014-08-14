@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_timer.c 255726 2013-09-20 05:06:03Z gibbs $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_timer.c 269515 2014-08-04 09:05:28Z royger $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -64,6 +64,9 @@ static bus_space_tag_t		acpi_timer_bst;
 static eventhandler_tag		acpi_timer_eh;
 
 static u_int	acpi_timer_frequency = 14318182 / 4;
+
+/* Knob to disable acpi_timer device */
+bool acpi_timer_disabled = false;
 
 static void	acpi_timer_identify(driver_t *driver, device_t parent);
 static int	acpi_timer_probe(device_t dev);
@@ -125,7 +128,7 @@ acpi_timer_identify(driver_t *driver, device_t parent)
     ACPI_FUNCTION_TRACE((char *)(uintptr_t)__func__);
 
     if (acpi_disabled("timer") || (acpi_quirks & ACPI_Q_TIMER) ||
-	acpi_timer_dev)
+	acpi_timer_dev || acpi_timer_disabled)
 	return_VOID;
 
     if ((dev = BUS_ADD_CHILD(parent, 2, "acpi_timer", 0)) == NULL) {

@@ -18,15 +18,14 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_sysctl.c 262665 2014-03-01 19:06:43Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_sysctl.c 267992 2014-06-28 03:56:17Z hselasky $
  *
  */
 
 SYSCTL_NODE(_debug, OID_AUTO, dtrace, CTLFLAG_RD, 0, "DTrace debug parameters");
 
 int	dtrace_debug = 0;
-TUNABLE_INT("debug.dtrace.debug", &dtrace_debug);
-SYSCTL_INT(_debug_dtrace, OID_AUTO, debug, CTLFLAG_RW, &dtrace_debug, 0, "");
+SYSCTL_INT(_debug_dtrace, OID_AUTO, debug, CTLFLAG_RWTUN, &dtrace_debug, 0, "");
 
 /* Report registered DTrace providers. */
 static int

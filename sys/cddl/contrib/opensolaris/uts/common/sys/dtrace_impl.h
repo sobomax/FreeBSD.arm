@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/contrib/opensolaris/uts/common/sys/dtrace_impl.h 260131 2013-12-31 15:37:51Z markj $
+ * $FreeBSD: head/sys/cddl/contrib/opensolaris/uts/common/sys/dtrace_impl.h 267929 2014-06-26 19:38:16Z rpaulo $
  */
 
 /*
@@ -934,6 +934,7 @@ typedef struct dtrace_mstate {
 	uintptr_t dtms_strtok;			/* saved strtok() pointer */
 	uint32_t dtms_access;			/* memory access rights */
 	dtrace_difo_t *dtms_difo;		/* current dif object */
+	file_t *dtms_getf;			/* cached rval of getf() */
 } dtrace_mstate_t;
 
 #define	DTRACE_COND_OWNER	0x1
@@ -1166,6 +1167,7 @@ struct dtrace_state {
 	dtrace_optval_t dts_options[DTRACEOPT_MAX]; /* options */
 	dtrace_cred_t dts_cred;			/* credentials */
 	size_t dts_nretained;			/* number of retained enabs */
+	int dts_getf;				/* number of getf() calls */
 };
 
 struct dtrace_provider {
@@ -1268,7 +1270,11 @@ typedef struct dtrace_toxrange {
 	uintptr_t	dtt_limit;		/* limit of toxic range */
 } dtrace_toxrange_t;
 
+#if defined(sun)
 extern uint64_t dtrace_getarg(int, int);
+#else
+extern uint64_t __noinline dtrace_getarg(int, int);
+#endif
 extern greg_t dtrace_getfp(void);
 extern int dtrace_getipl(void);
 extern uintptr_t dtrace_caller(int);

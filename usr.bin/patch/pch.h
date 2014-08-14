@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: pch.h,v 1.9 2003/10/31 20:20:45 millert Exp $
- * $FreeBSD: head/usr.bin/patch/pch.h 264744 2014-04-21 22:52:18Z pfg $
+ * $FreeBSD: head/usr.bin/patch/pch.h 267490 2014-06-15 03:54:23Z pfg $
  */
 
 #define	OLD_FILE	0
@@ -44,7 +44,7 @@ bool		there_is_another_patch(void);
 bool		another_hunk(void);
 bool		pch_swap(void);
 char		*pfetch(LINENUM);
-short		pch_line_len(LINENUM);
+unsigned short	pch_line_len(LINENUM);
 LINENUM		pch_first(void);
 LINENUM		pch_ptrn_lines(void);
 LINENUM		pch_newfirst(void);

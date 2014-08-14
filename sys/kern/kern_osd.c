@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_osd.c 193030 2009-05-29 10:52:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_osd.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -47,8 +47,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_osd.c 193030 2009-05-29 10:52:37Z rwatson
 static MALLOC_DEFINE(M_OSD, "osd", "Object Specific Data");
 
 static int osd_debug = 0;
-TUNABLE_INT("debug.osd", &osd_debug);
-SYSCTL_INT(_debug, OID_AUTO, osd, CTLFLAG_RW, &osd_debug, 0, "OSD debug level");
+SYSCTL_INT(_debug, OID_AUTO, osd, CTLFLAG_RWTUN, &osd_debug, 0, "OSD debug level");
 
 #define	OSD_DEBUG(...)	do {						\
 	if (osd_debug) {						\

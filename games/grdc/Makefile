@@ -1,8 +1,8 @@
-# $FreeBSD: head/games/grdc/Makefile 203923 2010-02-15 14:32:00Z uqs $
+# $FreeBSD: head/games/grdc/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG=	grdc
 MAN=	grdc.6
-DPADD=	${LIBNCURSES}
-LDADD=	-lncurses
+DPADD=	${LIBNCURSESW}
+LDADD=	-lncursesw
 
 .include <bsd.prog.mk>

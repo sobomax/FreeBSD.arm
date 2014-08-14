@@ -1,9 +1,11 @@
-# $FreeBSD: head/bin/sh/tests/expansion/Makefile 259210 2013-12-11 04:09:17Z jmmv $
+# $FreeBSD: head/bin/sh/tests/expansion/Makefile 269902 2014-08-13 04:14:50Z ngie $
 
-.include <bsd.own.mk>
+TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
-FILESDIR=	${TESTSBASE}/bin/sh/expansion
-KYUAFILE=	no
+.PATH: ${.CURDIR:H}
+ATF_TESTS_SH=	functional_test
+
+FILESDIR=	${TESTSDIR}
 
 FILES=		arith1.0
 FILES+=		arith2.0

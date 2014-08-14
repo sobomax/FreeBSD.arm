@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci.c 264097 2014-04-04 01:10:02Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -67,8 +67,7 @@ struct sdhci_softc {
 static SYSCTL_NODE(_hw, OID_AUTO, sdhci, CTLFLAG_RD, 0, "sdhci driver");
 
 int	sdhci_debug = 0;
-TUNABLE_INT("hw.sdhci.debug", &sdhci_debug);
-SYSCTL_INT(_hw_sdhci, OID_AUTO, debug, CTLFLAG_RW, &sdhci_debug, 0, "Debug level");
+SYSCTL_INT(_hw_sdhci, OID_AUTO, debug, CTLFLAG_RWTUN, &sdhci_debug, 0, "Debug level");
 
 #define RD1(slot, off)	SDHCI_READ_1((slot)->bus, (slot), (off))
 #define RD2(slot, off)	SDHCI_READ_2((slot)->bus, (slot), (off))

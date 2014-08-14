@@ -1,5 +1,5 @@
 #	from: @(#)bsd.subdir.mk	5.9 (Berkeley) 2/1/91
-# $FreeBSD: head/share/mk/bsd.subdir.mk 266473 2014-05-20 18:25:46Z sjg $
+# $FreeBSD: head/share/mk/bsd.subdir.mk 267511 2014-06-15 13:45:37Z ian $
 #
 # The include file <bsd.subdir.mk> contains the default targets
 # for building subdirectories.
@@ -80,7 +80,12 @@ __subdir_targets=
 __subdir_targets+= .WAIT
 .else
 __subdir_targets+= ${__target}_subdir_${__dir}
-${__target}_subdir_${__dir}: .MAKE
+__deps=
+.for __dep in ${SUBDIR_DEPEND_${__dir}}
+__deps+= ${__target}_subdir_${__dep}
+.endfor
+${__target}_subdir_${__dir}: .MAKE ${__deps}
+.if !defined(NO_SUBDIR)
 	@${_+_}set -e; \
 		if test -d ${.CURDIR}/${__dir}.${MACHINE_ARCH}; then \
 			${ECHODIR} "===> ${DIRPRFX}${__dir}.${MACHINE_ARCH} (${__target:realinstall=install})"; \
@@ -93,6 +98,7 @@ ${__target}_subdir_${__dir}: .MAKE
 		fi; \
 		${MAKE} ${__target:realinstall=install} \
 		    DIRPRFX=${DIRPRFX}$$edir/
+.endif
 .endif
 .endfor
 ${__target}: ${__subdir_targets}

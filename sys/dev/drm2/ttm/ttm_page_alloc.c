@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_page_alloc.c 254879 2013-08-25 15:33:17Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_page_alloc.c 267548 2014-06-16 18:15:27Z attilio $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>
@@ -139,7 +139,7 @@ ttm_vm_page_free(vm_page_t m)
 	KASSERT((m->oflags & VPO_UNMANAGED) == 0, ("ttm got unmanaged %p", m));
 	m->flags &= ~PG_FICTITIOUS;
 	m->oflags |= VPO_UNMANAGED;
-	vm_page_unwire(m, 0);
+	vm_page_unwire(m, PQ_INACTIVE);
 	vm_page_free(m);
 }
 

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)protosw.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/protosw.h 247667 2013-03-02 21:11:30Z pjd $
+ * $FreeBSD: head/sys/sys/protosw.h 269699 2014-08-08 01:57:15Z kevlo $
  */
 
 #ifndef _SYS_PROTOSW_H_
@@ -64,8 +64,7 @@ struct sockopt;
  * similar to the vnode VOP interface.
  */
 /* USE THESE FOR YOUR PROTOTYPES ! */
-typedef void	pr_input_t (struct mbuf *, int);
-typedef int	pr_input6_t (struct mbuf **, int*, int);  /* XXX FIX THIS */
+typedef int	pr_input_t (struct mbuf **, int*, int);
 typedef int	pr_output_t (struct mbuf *, struct socket *);
 typedef void	pr_ctlinput_t (int, struct sockaddr *, void *);
 typedef int	pr_ctloutput_t (struct socket *, struct sockopt *);

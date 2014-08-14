@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_mbpool.c 254842 2013-08-25 10:57:09Z andre $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_mbpool.c 268529 2014-07-11 13:58:48Z glebius $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -283,12 +283,11 @@ mbp_free(struct mbpool *p, void *ptr)
 /*
  * Mbuf system external mbuf free routine
  */
-int
+void
 mbp_ext_free(struct mbuf *m, void *buf, void *arg)
 {
-	mbp_free(arg, buf);
 
-	return (EXT_FREE_OK);
+	mbp_free(arg, buf);
 }
 
 /*

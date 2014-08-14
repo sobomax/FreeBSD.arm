@@ -25,7 +25,7 @@
  *
  * From: NetBSD: nilfs.h,v 1.1 2009/07/18 16:31:42 reinoud
  *
- * $FreeBSD: head/sys/fs/nandfs/nandfs.h 264658 2014-04-18 17:03:43Z imp $
+ * $FreeBSD: head/sys/fs/nandfs/nandfs.h 268374 2014-07-07 23:21:07Z imp $
  */
 
 #ifndef _FS_NANDFS_NANDFS_H_
@@ -303,8 +303,8 @@ struct nandfs_node {
 #define	PRINT_NODE_FLAGS \
 	"\10\1IN_ACCESS\2IN_CHANGE\3IN_UPDATE\4IN_MODIFIED\5IN_RENAME"
 
-#define	NANDFS_GATHER(x) ((x)->b_flags |= B_00800000)
-#define	NANDFS_UNGATHER(x) ((x)->b_flags &= ~B_00800000)
-#define	NANDFS_ISGATHERED(x) ((x)->b_flags & B_00800000)
+#define	NANDFS_GATHER(x) ((x)->b_flags |= B_FS_FLAG1)
+#define	NANDFS_UNGATHER(x) ((x)->b_flags &= ~B_FS_FLAG1)
+#define	NANDFS_ISGATHERED(x) ((x)->b_flags & B_FS_FLAG1)
 
 #endif /* !_FS_NANDFS_NANDFS_H_ */

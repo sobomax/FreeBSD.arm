@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_clcd.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_clcd.c 267340 2014-06-10 20:25:45Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -363,8 +363,6 @@ versatile_clcdc_attach(device_t dev)
 fail:
 	if (sc->fb_base)
 		bus_dmamem_free(sc->dma_tag, sc->fb_base, sc->dma_map);
-	if (sc->dma_map)
-		bus_dmamap_destroy(sc->dma_tag, sc->dma_map);
 	if (sc->dma_tag)
 		bus_dma_tag_destroy(sc->dma_tag);
 	return (err);

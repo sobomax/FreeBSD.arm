@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)malloc.h	8.5 (Berkeley) 5/3/95
- * $FreeBSD: head/sys/sys/malloc.h 252330 2013-06-28 03:51:20Z jeff $
+ * $FreeBSD: head/sys/sys/malloc.h 267992 2014-06-28 03:56:17Z hselasky $
  */
 
 #ifndef _SYS_MALLOC_H_
@@ -134,7 +134,7 @@ struct malloc_type_header {
 	struct malloc_type type[1] = {					\
 		{ NULL, M_MAGIC, shortdesc, NULL }			\
 	};								\
-	SYSINIT(type##_init, SI_SUB_KMEM, SI_ORDER_SECOND, malloc_init,	\
+	SYSINIT(type##_init, SI_SUB_KMEM, SI_ORDER_THIRD, malloc_init,	\
 	    type);							\
 	SYSUNINIT(type##_uninit, SI_SUB_KMEM, SI_ORDER_ANY,		\
 	    malloc_uninit, type)

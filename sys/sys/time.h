@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
- * $FreeBSD: head/sys/sys/time.h 264388 2014-04-12 23:29:29Z davide $
+ * $FreeBSD: head/sys/sys/time.h 267896 2014-06-26 05:23:48Z davide $
  */
 
 #ifndef _SYS_TIME_H_
@@ -129,7 +129,7 @@ bintime_shift(struct bintime *_bt, int _exp)
 #define	SBT_1MS	(SBT_1S / 1000)
 #define	SBT_1US	(SBT_1S / 1000000)
 #define	SBT_1NS	(SBT_1S / 1000000000)
-#define	SBT_MAX	INT64_MAX
+#define	SBT_MAX	0x7fffffffffffffffLL
 
 static __inline int
 sbintime_getsec(sbintime_t _sbt)

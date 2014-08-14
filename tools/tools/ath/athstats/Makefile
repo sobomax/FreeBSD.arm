@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/ath/athstats/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/ath/athstats/Makefile 269951 2014-08-13 19:43:22Z adrian $
 
 MAN=
 
@@ -23,8 +23,9 @@ CFLAGS+=-DATH_SUPPORT_TDMA
 
 CFLAGS.clang+= -fbracket-depth=512
 
-USEPRIVATELIB=
-LDADD=	-lbsdstat
+USEPRIVATELIB=	bsdstat
+
+LDADD=	${LDBSDSTAT}
 
 opt_ah.h:
 	echo "#define AH_DEBUG 1" > opt_ah.h

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/sys/contrib/dev/acpica/acpica_prep.sh 254745 2013-08-23 23:25:58Z jkim $
+# $FreeBSD: head/sys/contrib/dev/acpica/acpica_prep.sh 268351 2014-07-07 00:27:09Z marcel $
 #
 # Unpack an ACPI CA drop and restructure it to fit the FreeBSD layout
 #
@@ -85,6 +85,6 @@ rm -rf ${wrk}
 # assist the developer in generating a diff
 echo "Directories you may want to 'svn diff':"
 echo "    sys/contrib/dev/acpica sys/dev/acpica \\"
-echo "    sys/amd64/acpica sys/i386/acpica sys/ia64/acpica sys/x86/acpica \\"
-echo "    sys/amd64/include sys/i386/include sys/ia64/include \\"
+echo "    sys/amd64/acpica sys/i386/acpica sys/x86/acpica \\"
+echo "    sys/amd64/include sys/i386/include include \\"
 echo "    sys/boot sys/conf sys/modules/acpi usr.sbin/acpi"

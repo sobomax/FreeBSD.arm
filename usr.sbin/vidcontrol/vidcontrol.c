@@ -33,7 +33,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/vidcontrol/vidcontrol.c 266836 2014-05-29 13:09:48Z ray $";
+  "$FreeBSD: head/usr.sbin/vidcontrol/vidcontrol.c 268175 2014-07-02 20:40:59Z emaste $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -216,11 +216,12 @@ usage(void)
 static int
 is_vt4(void)
 {
+	char vty_name[4] = "";
+	size_t len = sizeof(vty_name);
 
-	if (sysctlbyname("kern.vt.deadtimer", NULL, NULL, NULL, 0) == 0)
-		return (1);
-
-	return (0);
+	if (sysctlbyname("kern.vty", vty_name, &len, NULL, 0) != 0)
+		return (0);
+	return (strcmp(vty_name, "vt") == 0);
 }
 
 /*

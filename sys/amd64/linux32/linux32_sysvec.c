@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_sysvec.c 266925 2014-05-31 15:01:51Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_sysvec.c 267563 2014-06-17 05:29:18Z dchagin $");
 #include "opt_compat.h"
 
 #ifndef COMPAT_FREEBSD32
@@ -1083,7 +1083,7 @@ static Elf32_Brandinfo linux_brand = {
 	.sysvec		= &elf_linux_sysvec,
 	.interp_newpath	= NULL,
 	.brand_note	= &linux32_brandnote,
-	.flags		= BI_CAN_EXEC_DYN | BI_BRAND_NOTE | BI_CAN_EXEC_INTERP
+	.flags		= BI_CAN_EXEC_DYN | BI_BRAND_NOTE
 };
 
 static Elf32_Brandinfo linux_glibc2brand = {
@@ -1095,7 +1095,7 @@ static Elf32_Brandinfo linux_glibc2brand = {
 	.sysvec		= &elf_linux_sysvec,
 	.interp_newpath	= NULL,
 	.brand_note	= &linux32_brandnote,
-	.flags		= BI_CAN_EXEC_DYN | BI_BRAND_NOTE | BI_CAN_EXEC_INTERP
+	.flags		= BI_CAN_EXEC_DYN | BI_BRAND_NOTE
 };
 
 Elf32_Brandinfo *linux_brandlist[] = {

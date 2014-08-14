@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/cc/cc_hd/Makefile 218153 2011-02-01 06:42:46Z lstewart $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/sys/modules/cc/cc_hd/Makefile 269538 2014-08-04 22:34:12Z imp $
 
 .PATH: ${.CURDIR}/../../../netinet/cc
 KMOD=	cc_hd

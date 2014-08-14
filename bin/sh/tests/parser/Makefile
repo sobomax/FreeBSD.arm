@@ -1,9 +1,11 @@
-# $FreeBSD: head/bin/sh/tests/parser/Makefile 261192 2014-01-26 21:19:33Z jilles $
+# $FreeBSD: head/bin/sh/tests/parser/Makefile 269902 2014-08-13 04:14:50Z ngie $
 
-.include <bsd.own.mk>
+TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
-FILESDIR=	${TESTSBASE}/bin/sh/parser
-KYUAFILE=	no
+.PATH: ${.CURDIR:H}
+ATF_TESTS_SH=	functional_test
+
+FILESDIR=	${TESTSDIR}
 
 FILES=		alias1.0
 FILES+=		alias2.0

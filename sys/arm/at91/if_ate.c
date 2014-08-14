@@ -33,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/if_ate.c 261689 2014-02-09 21:02:46Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/if_ate.c 267589 2014-06-17 18:10:06Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -671,7 +671,6 @@ ate_deactivate(struct ate_softc *sc)
 			bus_dmamem_free(sc->rx_tag, sc->rx_buf[i],
 			    sc->rx_map[i]);
 			sc->rx_buf[i] = NULL;
-			sc->rx_map[i] = NULL;
 		}
 		bus_dma_tag_destroy(sc->rx_tag);
 	}

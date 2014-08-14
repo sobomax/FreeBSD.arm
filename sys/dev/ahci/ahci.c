@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ahci/ahci.c 264610 2014-04-17 14:16:02Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ahci/ahci.c 267589 2014-06-17 18:10:06Z jhb $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -1394,14 +1394,12 @@ ahci_dmafini(device_t dev)
 		bus_dmamap_unload(ch->dma.rfis_tag, ch->dma.rfis_map);
 		bus_dmamem_free(ch->dma.rfis_tag, ch->dma.rfis, ch->dma.rfis_map);
 		ch->dma.rfis_bus = 0;
-		ch->dma.rfis_map = NULL;
 		ch->dma.rfis = NULL;
 	}
 	if (ch->dma.work_bus) {
 		bus_dmamap_unload(ch->dma.work_tag, ch->dma.work_map);
 		bus_dmamem_free(ch->dma.work_tag, ch->dma.work, ch->dma.work_map);
 		ch->dma.work_bus = 0;
-		ch->dma.work_map = NULL;
 		ch->dma.work = NULL;
 	}
 	if (ch->dma.work_tag) {

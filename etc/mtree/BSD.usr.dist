@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.usr.dist 267124 2014-06-05 18:53:56Z emaste $
+# $FreeBSD: head/etc/mtree/BSD.usr.dist 267867 2014-06-25 12:32:41Z gavin $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -300,8 +300,6 @@
             bsdconfig
             ..
             csh
-            ..
-            cvsup
             ..
             diskless
             ..

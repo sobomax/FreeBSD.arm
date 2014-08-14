@@ -24,9 +24,10 @@
 
 #include <machine/armreg.h>
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_smc.S 239283 2012-08-15 07:00:34Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_smc.S 269395 2014-08-01 20:32:29Z ian $");
 
-.arch armv7a
+	.arch armv7a
+	.arch_extension sec
 
 /* Issue a smc #0 call */
 /* r0 and r1 contains the eventual arguments, r2 contains the function ID */

@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 256377 2013-10-12 12:57:57Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 267340 2014-06-10 20:25:45Z jhb $");
 
 /*
  * Driver for various Hifn encryption processors.
@@ -463,7 +463,6 @@ hifn_attach(device_t dev)
 			     BUS_DMA_NOWAIT)) {
 		device_printf(dev, "cannot load dma map\n");
 		bus_dmamem_free(sc->sc_dmat, kva, sc->sc_dmamap);
-		bus_dmamap_destroy(sc->sc_dmat, sc->sc_dmamap);
 		bus_dma_tag_destroy(sc->sc_dmat);
 		goto fail_io1;
 	}
@@ -603,7 +602,6 @@ fail_intr2:
 fail_mem:
 	bus_dmamap_unload(sc->sc_dmat, sc->sc_dmamap);
 	bus_dmamem_free(sc->sc_dmat, sc->sc_dma, sc->sc_dmamap);
-	bus_dmamap_destroy(sc->sc_dmat, sc->sc_dmamap);
 	bus_dma_tag_destroy(sc->sc_dmat);
 
 	/* Turn off DMA polling */
@@ -653,7 +651,6 @@ hifn_detach(device_t dev)
 
 	bus_dmamap_unload(sc->sc_dmat, sc->sc_dmamap);
 	bus_dmamem_free(sc->sc_dmat, sc->sc_dma, sc->sc_dmamap);
-	bus_dmamap_destroy(sc->sc_dmat, sc->sc_dmamap);
 	bus_dma_tag_destroy(sc->sc_dmat);
 
 	bus_release_resource(dev, SYS_RES_MEMORY, HIFN_BAR1, sc->sc_bar1res);

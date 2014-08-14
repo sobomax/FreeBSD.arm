@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/ixv.c 254804 2013-08-24 19:51:18Z andre $*/
+/*$FreeBSD: head/sys/dev/ixgbe/ixv.c 267385 2014-06-12 11:15:19Z jhb $*/
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1955,7 +1955,6 @@ fail_2:
 fail_1:
 	bus_dma_tag_destroy(dma->dma_tag);
 fail_0:
-	dma->dma_map = NULL;
 	dma->dma_tag = NULL;
 	return (r);
 }

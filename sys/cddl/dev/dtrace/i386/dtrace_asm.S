@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_asm.S 227430 2011-11-10 22:03:35Z rstone $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_asm.S 267761 2014-06-23 02:00:14Z markj $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -49,14 +49,8 @@
 	 * dtrace_invop wants us to do.
 	 */
 	call	dtrace_invop
-
-	/*
-	 * We pushed 3 times for the arguments to dtrace_invop,
-	 * so we need to increment the stack pointer to get rid of
-	 * those values.
-	 */
-	addl	$12, %esp
 	ALTENTRY(dtrace_invop_callsite)
+	addl	$12, %esp
 	cmpl	$DTRACE_INVOP_PUSHL_EBP, %eax
 	je	invop_push
 	cmpl	$DTRACE_INVOP_POPL_EBP, %eax

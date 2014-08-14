@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_dev.c 267240 2014-06-08 20:10:29Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_dev.c 267992 2014-06-28 03:56:17Z hselasky $ */
 /*-
  * Copyright (c) 2006-2008 Hans Petter Selasky. All rights reserved.
  *
@@ -86,9 +86,8 @@
 static int usb_fifo_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, dev, CTLFLAG_RW, 0, "USB device");
-SYSCTL_INT(_hw_usb_dev, OID_AUTO, debug, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_hw_usb_dev, OID_AUTO, debug, CTLFLAG_RWTUN,
     &usb_fifo_debug, 0, "Debug Level");
-TUNABLE_INT("hw.usb.dev.debug", &usb_fifo_debug);
 #endif
 
 #if ((__FreeBSD_version >= 700001) || (__FreeBSD_version == 0) || \

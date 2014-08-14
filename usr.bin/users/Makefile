@@ -1,6 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/users/Makefile 202200 2010-01-13 18:09:54Z ed $
+# $FreeBSD: head/usr.bin/users/Makefile 268619 2014-07-14 12:24:38Z gahr $
 
-PROG=	users
+WARNS=		3
+PROG_CXX=	users
+CXXFLAGS+=	-fno-rtti
 
 .include <bsd.prog.mk>

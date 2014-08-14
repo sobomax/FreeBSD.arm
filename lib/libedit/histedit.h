@@ -30,8 +30,8 @@
  * SUCH DAMAGE.
  *
  *	@(#)histedit.h	8.2 (Berkeley) 1/3/94
- *	$NetBSD: histedit.h,v 1.32 2007/06/10 20:20:28 christos Exp $
- * $FreeBSD: head/lib/libedit/histedit.h 265863 2014-05-11 01:44:11Z eadler $
+ *	$NetBSD: histedit.h,v 1.41 2009/09/07 21:24:33 christos Exp $
+ * $FreeBSD: head/lib/libedit/histedit.h 268502 2014-07-10 17:52:17Z pfg $
  */
 
 /*

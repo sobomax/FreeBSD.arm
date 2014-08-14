@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sysent.h 237476 2012-06-23 10:14:51Z kib $
+ * $FreeBSD: head/sys/sys/sysent.h 268351 2014-07-07 00:27:09Z marcel $
  */
 
 #ifndef _SYS_SYSENT_H_
@@ -155,7 +155,7 @@ extern struct sysentvec null_sysvec;
 extern struct sysent sysent[];
 extern const char *syscallnames[];
 
-#if defined(__amd64__) || defined(__ia64__)
+#if defined(__amd64__)
 extern int i386_read_exec;
 #endif
 

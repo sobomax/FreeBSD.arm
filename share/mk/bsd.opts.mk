@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.opts.mk 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.opts.mk 268496 2014-07-10 15:05:41Z bapt $
 #
 # Option file for src builds.
 #
@@ -51,7 +51,6 @@ __<bsd.opts.mk>__:
 __DEFAULT_YES_OPTIONS = \
     ASSERT_DEBUG \
     DOCCOMPRESS \
-    INFO \
     INSTALLLIB \
     KERBEROS \
     MAN \
@@ -69,6 +68,7 @@ __DEFAULT_NO_OPTIONS = \
     CTF \
     DEBUG_FILES \
     INSTALL_AS_USER \
+    INFO \
     PIE
 
 .include <bsd.mkopt.mk>

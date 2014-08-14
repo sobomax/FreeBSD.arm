@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sched_ule.c 267227 2014-06-08 10:56:25Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/sched_ule.c 268211 2014-07-03 11:06:27Z kib $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_sched.h"
@@ -622,12 +622,14 @@ struct cpu_search {
 	for ((cpu) = 0; (cpu) <= mp_maxid; (cpu)++)		\
 		if (CPU_ISSET(cpu, &mask))
 
-static __inline int cpu_search(const struct cpu_group *cg, struct cpu_search *low,
-    struct cpu_search *high, const int match);
-int cpu_search_lowest(const struct cpu_group *cg, struct cpu_search *low);
-int cpu_search_highest(const struct cpu_group *cg, struct cpu_search *high);
-int cpu_search_both(const struct cpu_group *cg, struct cpu_search *low,
+static __always_inline int cpu_search(const struct cpu_group *cg,
+    struct cpu_search *low, struct cpu_search *high, const int match);
+int __noinline cpu_search_lowest(const struct cpu_group *cg,
+    struct cpu_search *low);
+int __noinline cpu_search_highest(const struct cpu_group *cg,
     struct cpu_search *high);
+int __noinline cpu_search_both(const struct cpu_group *cg,
+    struct cpu_search *low, struct cpu_search *high);
 
 /*
  * Search the tree of cpu_groups for the lowest or highest loaded cpu
@@ -640,7 +642,7 @@ int cpu_search_both(const struct cpu_group *cg, struct cpu_search *low,
  * match argument.  It is reduced to the minimum set for each case.  It is
  * also recursive to the depth of the tree.
  */
-static __inline int
+static __always_inline int
 cpu_search(const struct cpu_group *cg, struct cpu_search *low,
     struct cpu_search *high, const int match)
 {

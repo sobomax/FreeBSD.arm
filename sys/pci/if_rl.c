@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/pci/if_rl.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/pci/if_rl.c 267363 2014-06-11 14:53:58Z jhb $");
 
 /*
  * RealTek 8129/8139 PCI NIC driver
@@ -1018,17 +1018,16 @@ rl_dma_free(struct rl_softc *sc)
 
 	/* Rx memory block. */
 	if (sc->rl_cdata.rl_rx_tag != NULL) {
-		if (sc->rl_cdata.rl_rx_dmamap != NULL)
+		if (sc->rl_cdata.rl_rx_buf_paddr != 0)
 			bus_dmamap_unload(sc->rl_cdata.rl_rx_tag,
 			    sc->rl_cdata.rl_rx_dmamap);
-		if (sc->rl_cdata.rl_rx_dmamap != NULL &&
-		    sc->rl_cdata.rl_rx_buf_ptr != NULL)
+		if (sc->rl_cdata.rl_rx_buf_ptr != NULL)
 			bus_dmamem_free(sc->rl_cdata.rl_rx_tag,
 			    sc->rl_cdata.rl_rx_buf_ptr,
 			    sc->rl_cdata.rl_rx_dmamap);
 		sc->rl_cdata.rl_rx_buf_ptr = NULL;
 		sc->rl_cdata.rl_rx_buf = NULL;
-		sc->rl_cdata.rl_rx_dmamap = NULL;
+		sc->rl_cdata.rl_rx_buf_paddr = 0;
 		bus_dma_tag_destroy(sc->rl_cdata.rl_rx_tag);
 		sc->rl_cdata.rl_tx_tag = NULL;
 	}

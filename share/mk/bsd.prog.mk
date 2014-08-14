@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.prog.mk 269899 2014-08-13 01:27:51Z rpaulo $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -159,7 +159,8 @@ MAN1=	${MAN}
 .endif
 .endif # defined(PROG)
 
-all: objwarn ${PROG} ${SCRIPTS}
+all: beforebuild .WAIT ${PROG} ${SCRIPTS}
+beforebuild: objwarn
 .if ${MK_MAN} != "no"
 all: _manpages
 .endif

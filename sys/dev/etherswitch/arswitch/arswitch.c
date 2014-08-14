@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch.c 262681 2014-03-02 05:48:56Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch.c 269147 2014-07-26 21:33:17Z adrian $
  */
 
 #include <sys/param.h>
@@ -135,6 +135,7 @@ arswitch_probe(device_t dev)
 		sc->sc_switchtype = AR8X16_SWITCH_AR8316;
 		break;
 	case 0x1202:
+	case 0x1204:
 		chipname = "AR8327";
 		sc->sc_switchtype = AR8X16_SWITCH_AR8327;
 		sc->mii_lo_first = 1;

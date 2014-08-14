@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/resolv/Symbol.map 169092 2007-04-29 14:05:22Z deischen $
+ * $FreeBSD: head/lib/libc/resolv/Symbol.map 269867 2014-08-12 12:36:06Z ume $
  */
 
 FBSD_1.0 {
@@ -104,4 +104,9 @@ FBSD_1.0 {
 	_res_close;
 	res_send;
 	__res_update;
+};
+
+FBSD_1.4 {
+	__res_rndinit;
+	__res_nrandomid;
 };

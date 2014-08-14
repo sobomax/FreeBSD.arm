@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3_syscons.c 265871 2014-05-11 05:49:35Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3_syscons.c 269791 2014-08-10 22:24:14Z dumbbell $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -77,7 +77,8 @@ static struct vt_driver vt_ps3fb_driver = {
 	.vd_init = ps3fb_init,
 	.vd_blank = vt_fb_blank,
 	.vd_bitbltchr = vt_fb_bitbltchr,
-	.vd_maskbitbltchr = vt_fb_maskbitbltchr,
+	.vd_fb_ioctl = vt_fb_ioctl,
+	.vd_fb_mmap = vt_fb_mmap,
 	/* Better than VGA, but still generic driver. */
 	.vd_priority = VD_PRIORITY_GENERIC + 1,
 };
@@ -177,8 +178,8 @@ ps3fb_init(struct vt_device *vd)
 	sc->fb_info.fb_vbase = 0x10000000;
 
 	/* 32-bit VGA palette */
-	vt_generate_vga_palette(sc->fb_info.fb_cmap, COLOR_FORMAT_RGB,
-	    255, 16, 255, 8, 255, 0);
+	vt_generate_cons_palette(sc->fb_info.fb_cmap, COLOR_FORMAT_RGB,
+	    255, 0, 255, 8, 255, 16);
 
 	/* Set correct graphics context */
 	lv1_gpu_context_attribute(sc->sc_fbcontext,
@@ -186,11 +187,8 @@ ps3fb_init(struct vt_device *vd)
 	lv1_gpu_context_attribute(sc->sc_fbcontext,
 	    L1GPU_CONTEXT_ATTRIBUTE_DISPLAY_FLIP, 1, 0, 0, 0);
 
-	fb_probe(&sc->fb_info);
 	vt_fb_init(vd);
-
-	/* Clear the screen. */
-	vt_fb_blank(vd, TC_BLACK);
+	sc->fb_info.fb_flags &= ~FB_FLAG_NOMMAP; /* Set wrongly by vt_fb_init */
 
 	return (CN_INTERNAL);
 }

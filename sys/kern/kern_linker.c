@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_linker.c 264173 2014-04-05 20:44:52Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_linker.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_ddb.h"
 #include "opt_kld.h"
@@ -66,9 +66,8 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_linker.c 264173 2014-04-05 20:44:52Z kib 
 
 #ifdef KLD_DEBUG
 int kld_debug = 0;
-SYSCTL_INT(_debug, OID_AUTO, kld_debug, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_debug, OID_AUTO, kld_debug, CTLFLAG_RWTUN,
     &kld_debug, 0, "Set various levels of KLD debug");
-TUNABLE_INT("debug.kld_debug", &kld_debug);
 #endif
 
 /*
@@ -1643,7 +1642,7 @@ SYSINIT(preload, SI_SUB_KLD, SI_ORDER_MIDDLE, linker_preload, 0);
 static char linker_hintfile[] = "linker.hints";
 static char linker_path[MAXPATHLEN] = "/boot/kernel;/boot/modules";
 
-SYSCTL_STRING(_kern, OID_AUTO, module_path, CTLFLAG_RW, linker_path,
+SYSCTL_STRING(_kern, OID_AUTO, module_path, CTLFLAG_RWTUN, linker_path,
     sizeof(linker_path), "module load search path");
 
 TUNABLE_STR("module_path", linker_path, sizeof(linker_path));

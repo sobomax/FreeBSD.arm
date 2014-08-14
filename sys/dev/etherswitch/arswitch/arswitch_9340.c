@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_9340.c 256576 2013-10-16 03:15:52Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_9340.c 268564 2014-07-12 06:23:42Z rpaulo $
  */
 
 #include <sys/param.h>

@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_sysctl.c 255012 2013-08-28 23:43:28Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_sysctl.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /** @file drm_sysctl.c
  * Implementation of various sysctls for controlling DRM behavior and reporting
@@ -68,7 +68,7 @@ int drm_sysctl_init(struct drm_device *dev)
 	dev->sysctl = info;
 
 	/* Add the sysctl node for DRI if it doesn't already exist */
-	drioid = SYSCTL_ADD_NODE(&info->ctx, &sysctl__hw_children, OID_AUTO,
+	drioid = SYSCTL_ADD_NODE(&info->ctx, SYSCTL_CHILDREN(&sysctl___hw), OID_AUTO,
 	    "dri", CTLFLAG_RW, NULL, "DRI Graphics");
 	if (!drioid)
 		return 1;

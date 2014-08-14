@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/examples/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/share/examples/Makefile 267867 2014-06-25 12:32:41Z gavin $
 #
 # Doing a make install builds /usr/share/examples
 
@@ -10,7 +10,6 @@ LDIRS=	BSD_daemon \
 	bhyve \
 	bootforth \
 	csh \
-	cvsup \
 	diskless \
 	drivers \
 	etc \
@@ -52,10 +51,6 @@ XFILES=	BSD_daemon/FreeBSD.pfa \
 	bootforth/menuconf.4th \
 	bootforth/screen.4th \
 	csh/dot.cshrc \
-	cvsup/README \
-	cvsup/cvs-supfile \
-	cvsup/stable-supfile \
-	cvsup/standard-supfile \
 	diskless/ME \
 	diskless/README.BOOTP \
 	diskless/README.TEMPLATING \

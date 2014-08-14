@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/rtl8366/rtl8366rbvar.h 235288 2012-05-11 20:53:20Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/rtl8366/rtl8366rbvar.h 268094 2014-07-01 14:49:46Z loos $
  */
 
 #ifndef _DEV_ETHERSWITCH_RTL8366RBVAR_H_
@@ -70,7 +70,7 @@
 #define RTL8366RB_PLSR_SPEED_10		0x00
 #define RTL8366RB_PLSR_SPEED_100	0x01
 #define RTL8366RB_PLSR_SPEED_1000	0x02
-#define RTL8366RB_PLSR_FULLDUPLEX	0x08
+#define RTL8366RB_PLSR_FULLDUPLEX	0x04
 #define RTL8366RB_PLSR_LINK		0x10
 #define RTL8366RB_PLSR_TXPAUSE		0x20
 #define RTL8366RB_PLSR_RXPAUSE		0x40
@@ -168,9 +168,10 @@
 	(RTL8366RB_PACR | (1 << (((phy) & 0x1f) + 9)) | (((page) & 0xf) << 5) | ((reg) & 0x1f))
 
 /* general characteristics of the chip */
-#define RTL8366RB_NUM_PORTS			6
-#define RTL8366RB_NUM_PHYS			(RTL8366RB_NUM_PORTS-1)
-#define RTL8366RB_NUM_VLANS			16
-#define RTL8366RB_NUM_PHY_REG			32
+#define	RTL8366RB_CPU_PORT			5
+#define	RTL8366RB_NUM_PORTS			6
+#define	RTL8366RB_NUM_PHYS			(RTL8366RB_NUM_PORTS-1)
+#define	RTL8366RB_NUM_VLANS			16
+#define	RTL8366RB_NUM_PHY_REG			32
 
 #endif

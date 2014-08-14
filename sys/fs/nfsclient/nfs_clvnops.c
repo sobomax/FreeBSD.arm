@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvnops.c 264842 2014-04-23 22:13:10Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvnops.c 268764 2014-07-16 14:04:46Z kib $");
 
 /*
  * vnode op calls for Sun NFS version 2, 3 and 4
@@ -1975,10 +1975,6 @@ nfs_link(struct vop_link_args *ap)
 	struct nfsnode *np, *tdnp;
 	struct nfsvattr nfsva, dnfsva;
 	int error = 0, attrflag, dattrflag;
-
-	if (vp->v_mount != tdvp->v_mount) {
-		return (EXDEV);
-	}
 
 	/*
 	 * Push all writes to the server, so that the attribute cache

@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/telnetd/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/libexec/telnetd/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 # Do not define -DKLUDGELINEMODE, as it does not interact well with many
 # telnet implementations.
@@ -30,8 +30,8 @@ CFLAGS+=	-I${TELNETDIR}
 
 LIBTELNET=	${.OBJDIR}/../../lib/libtelnet/libtelnet.a
 
-DPADD=		${LIBUTIL} ${LIBTERMCAP} ${LIBTELNET}
-LDADD=		-lutil -ltermcap ${LIBTELNET}
+DPADD=		${LIBUTIL} ${LIBTERMCAPW} ${LIBTELNET}
+LDADD=		-lutil -ltermcapw ${LIBTELNET}
 
 .if ${MK_OPENSSL} != "no"
 SRCS+=		authenc.c

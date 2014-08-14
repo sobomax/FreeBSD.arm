@@ -28,7 +28,7 @@
 /* Driver for DM&P Electronics, Inc, Vortex86 RDC R6040 FastEthernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vte/if_vte.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vte/if_vte.c 267363 2014-06-11 14:53:58Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -892,31 +892,29 @@ vte_dma_free(struct vte_softc *sc)
 	}
 	/* TX descriptor ring. */
 	if (sc->vte_cdata.vte_tx_ring_tag != NULL) {
-		if (sc->vte_cdata.vte_tx_ring_map != NULL)
+		if (sc->vte_cdata.vte_tx_ring_paddr != 0)
 			bus_dmamap_unload(sc->vte_cdata.vte_tx_ring_tag,
 			    sc->vte_cdata.vte_tx_ring_map);
-		if (sc->vte_cdata.vte_tx_ring_map != NULL &&
-		    sc->vte_cdata.vte_tx_ring != NULL)
+		if (sc->vte_cdata.vte_tx_ring != NULL)
 			bus_dmamem_free(sc->vte_cdata.vte_tx_ring_tag,
 			    sc->vte_cdata.vte_tx_ring,
 			    sc->vte_cdata.vte_tx_ring_map);
 		sc->vte_cdata.vte_tx_ring = NULL;
-		sc->vte_cdata.vte_tx_ring_map = NULL;
+		sc->vte_cdata.vte_tx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->vte_cdata.vte_tx_ring_tag);
 		sc->vte_cdata.vte_tx_ring_tag = NULL;
 	}
 	/* RX ring. */
 	if (sc->vte_cdata.vte_rx_ring_tag != NULL) {
-		if (sc->vte_cdata.vte_rx_ring_map != NULL)
+		if (sc->vte_cdata.vte_rx_ring_paddr != 0)
 			bus_dmamap_unload(sc->vte_cdata.vte_rx_ring_tag,
 			    sc->vte_cdata.vte_rx_ring_map);
-		if (sc->vte_cdata.vte_rx_ring_map != NULL &&
-		    sc->vte_cdata.vte_rx_ring != NULL)
+		if (sc->vte_cdata.vte_rx_ring != NULL)
 			bus_dmamem_free(sc->vte_cdata.vte_rx_ring_tag,
 			    sc->vte_cdata.vte_rx_ring,
 			    sc->vte_cdata.vte_rx_ring_map);
 		sc->vte_cdata.vte_rx_ring = NULL;
-		sc->vte_cdata.vte_rx_ring_map = NULL;
+		sc->vte_cdata.vte_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->vte_cdata.vte_rx_ring_tag);
 		sc->vte_cdata.vte_rx_ring_tag = NULL;
 	}

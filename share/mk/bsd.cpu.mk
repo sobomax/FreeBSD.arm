@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.cpu.mk 263435 2014-03-20 19:17:46Z jkim $
+# $FreeBSD: head/share/mk/bsd.cpu.mk 268402 2014-07-08 14:37:01Z ian $
 
 # Set default CPU compile flags and baseline CPUTYPE for each arch.  The
 # compile flags must support the minimum CPU type for each architecture but
@@ -10,8 +10,6 @@ _CPUCFLAGS =
 MACHINE_CPU = i486
 . elif ${MACHINE_CPUARCH} == "amd64"
 MACHINE_CPU = amd64 sse2 sse mmx
-. elif ${MACHINE_CPUARCH} == "ia64"
-MACHINE_CPU = itanium
 . elif ${MACHINE_CPUARCH} == "powerpc"
 MACHINE_CPU = aim
 . elif ${MACHINE_CPUARCH} == "sparc64"
@@ -234,10 +232,6 @@ MACHINE_CPU = ssse3 sse3
 MACHINE_CPU = sse3
 .  endif
 MACHINE_CPU += amd64 sse2 sse mmx
-. elif ${MACHINE_CPUARCH} == "ia64"
-.  if ${CPUTYPE} == "itanium"
-MACHINE_CPU = itanium
-.  endif
 . elif ${MACHINE_ARCH} == "powerpc"
 .  if ${CPUTYPE} == "e500"
 MACHINE_CPU = booke
@@ -266,3 +260,4 @@ CFLAGS += ${_CPUCFLAGS}
 # Add in any architecture-specific CFLAGS.  
 # These come from make.conf or the command line or the environment.
 CFLAGS += ${CFLAGS.${MACHINE_ARCH}}
+CXXFLAGS += ${CXXFLAGS.${MACHINE_ARCH}}

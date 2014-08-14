@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/csu/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/lib/csu/Makefile 268351 2014-07-07 00:27:09Z marcel $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -28,13 +28,6 @@ MKDEP=		-DCRT_BEGIN
 CFLAGS+=	-DTARGET_ARM_EABI
 .endif
 
-.if ${MACHINE_CPUARCH} == "ia64"
-BEGINSRC=	crtbegin.asm
-ENDSRC=		crtend.asm
-CFLAGS+=	-x assembler-with-cpp	# Ugly hack
-CFLAGS+=	-include osreldate.h
-.undef SRCS				# hack for 'make depend'
-.endif
 .if ${MACHINE_CPUARCH} == "powerpc"
 TGTOBJS=	crtsavres.o
 SRCS+=		crtsavres.asm
@@ -73,7 +66,7 @@ crtendS.o:	${ENDSRC}
 
 CLEANFILES+=	tm.h tconfig.h options.h optionlist cs-tconfig.h cs-tm.h
 tm.h tconfig.h options.h: ${CCDIR}/cc_tools/Makefile
-	${MAKE} -f ${.ALLSRC} MFILE=${.ALLSRC} GCCDIR=${GCCDIR} ${.TARGET}
+	(cd ${.CURDIR}; ${MAKE} -f ${.ALLSRC} MFILE=${.ALLSRC} GCCDIR=${GCCDIR} ${.TARGET})
 
 realinstall:
 .for file in ${OBJS} ${SOBJS} ${TGTOBJS}

@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_ioctl.c 262665 2014-03-01 19:06:43Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_ioctl.c 267851 2014-06-25 03:54:02Z davide $
  *
  */
 
@@ -78,12 +78,9 @@ static int
 dtrace_ioctl(struct cdev *dev, u_long cmd, caddr_t addr,
     int flags __unused, struct thread *td)
 {
-#if __FreeBSD_version < 800039
-	dtrace_state_t *state = dev->si_drv1;
-#else
 	dtrace_state_t *state;
 	devfs_get_cdevpriv((void **) &state);
-#endif
+
 	int error = 0;
 	if (state == NULL)
 		return (EINVAL);

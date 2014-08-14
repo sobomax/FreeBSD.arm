@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mman.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/mman.h 255426 2013-09-09 18:11:59Z jhb $
+ * $FreeBSD: head/sys/sys/mman.h 267630 2014-06-19 05:00:39Z kib $
  */
 
 #ifndef _SYS_MMAN_H_
@@ -89,6 +89,7 @@
 /*
  * Extended flags
  */
+#define	MAP_EXCL	 0x00004000 /* for MAP_FIXED, fail if address is used */
 #define	MAP_NOCORE	 0x00020000 /* dont include these pages in a coredump */
 #define	MAP_PREFAULT_READ 0x00040000 /* prefault mapping for reading */
 #ifdef __LP64__

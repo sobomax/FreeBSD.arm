@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/vt_consolectl.c 265719 2014-05-08 22:52:05Z ray $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/vt_consolectl.c 267965 2014-06-27 17:50:33Z emaste $");
 
 #include <sys/param.h>
 #include <sys/consio.h>
@@ -73,6 +73,8 @@ static void
 consolectl_drvinit(void *unused)
 {
 
+	if (!vty_enabled(VTY_VT))
+		return;
 	make_dev(&consolectl_cdevsw, 0, UID_ROOT, GID_WHEEL, 0600,
 	    "consolectl");
 }

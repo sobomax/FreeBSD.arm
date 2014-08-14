@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iscsi/iscsi.h 264109 2014-04-04 08:43:23Z trasz $
+ * $FreeBSD: head/sys/dev/iscsi/iscsi.h 268326 2014-07-06 17:37:49Z mav $
  */
 
 #ifndef ISCSI_H
@@ -64,6 +64,7 @@ struct iscsi_session {
 	size_t				is_max_burst_length;
 	size_t				is_first_burst_length;
 	uint8_t				is_isid[6];
+	uint16_t			is_tsih;
 	bool				is_immediate_data;
 	size_t				is_max_data_segment_length;
 	char				is_target_alias[ISCSI_ALIAS_LEN];

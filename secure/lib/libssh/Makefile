@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/lib/libssh/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/secure/lib/libssh/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -35,7 +35,7 @@ LDNSDIR=	${.CURDIR}/../../../contrib/ldns
 CFLAGS+=	-DHAVE_LDNS=1 -I${LDNSDIR}
 SRCS+=	getrrsetbyname-ldns.c
 DPADD+=	${LIBLDNS}
-LDADD+=	-lldns
+LDADD+=	${LDLDNS}
 USEPRIVATELIB+= ldns
 .endif
 

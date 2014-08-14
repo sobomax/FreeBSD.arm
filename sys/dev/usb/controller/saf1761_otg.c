@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/saf1761_otg.c 267121 2014-06-05 18:19:48Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/saf1761_otg.c 269563 2014-08-05 06:31:09Z hselasky $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.
@@ -1927,7 +1927,7 @@ saf1761_otg_start_standard_chain(struct usb_xfer *xfer)
 	/* poll one time */
 	saf1761_otg_xfer_do_fifo(sc, xfer);
 
-	if (xfer->td_transfer_cache != NULL) {
+	if (saf1761_otg_xfer_do_complete(sc, xfer) == 0) {
 		/*
 		 * Only enable the endpoint interrupt when we are
 		 * actually waiting for data, hence we are dealing
@@ -1943,9 +1943,6 @@ saf1761_otg_start_standard_chain(struct usb_xfer *xfer)
 			usbd_transfer_timeout_ms(xfer,
 			    &saf1761_otg_timeout, xfer->timeout);
 		}
-	} else {
-		/* catch completion, if any */
-		saf1761_otg_interrupt_complete_locked(sc);
 	}
 	USB_BUS_SPIN_UNLOCK(&sc->sc_bus);
 }

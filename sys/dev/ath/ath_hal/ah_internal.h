@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ah_internal.h 265032 2014-04-27 23:36:44Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ah_internal.h 269760 2014-08-09 18:15:28Z adrian $
  */
 #ifndef _ATH_AH_INTERAL_H_
 #define _ATH_AH_INTERAL_H_
@@ -50,8 +50,8 @@
 #endif
 
 typedef struct {
-	uint16_t	start;		/* first register */
-	uint16_t	end;		/* ending register or zero */
+	uint32_t	start;		/* first register */
+	uint32_t	end;		/* ending register or zero */
 } HAL_REGRANGE;
 
 typedef struct {

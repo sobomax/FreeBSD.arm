@@ -48,7 +48,7 @@
 
 #include <dev/sound/pci/via8233.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/via8233.c 193640 2009-06-07 19:12:08Z ariff $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/via8233.c 267581 2014-06-17 16:07:57Z jhb $");
 
 #define VIA8233_PCI_ID 0x30591106
 
@@ -1381,7 +1381,7 @@ bad:
 		bus_release_resource(dev, SYS_RES_IRQ, via->irqid, via->irq);
 	if (via->parent_dmat)
 		bus_dma_tag_destroy(via->parent_dmat);
-	if (via->sgd_dmamap)
+	if (via->sgd_addr)
 		bus_dmamap_unload(via->sgd_dmat, via->sgd_dmamap);
 	if (via->sgd_table)
 		bus_dmamem_free(via->sgd_dmat, via->sgd_table, via->sgd_dmamap);

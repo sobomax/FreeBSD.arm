@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_kern.c 256880 2013-10-22 08:22:19Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_kern.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -212,8 +212,7 @@ SYSCTL_PROC(_kern_geom, OID_AUTO, conftxt, CTLTYPE_STRING|CTLFLAG_RD,
 	0, 0, sysctl_kern_geom_conftxt, "",
 	"Dump the GEOM config in txt");
 
-TUNABLE_INT("kern.geom.debugflags", &g_debugflags);
-SYSCTL_INT(_kern_geom, OID_AUTO, debugflags, CTLFLAG_RW,
+SYSCTL_INT(_kern_geom, OID_AUTO, debugflags, CTLFLAG_RWTUN,
 	&g_debugflags, 0, "Set various trace levels for GEOM debugging");
 
 SYSCTL_INT(_kern_geom, OID_AUTO, notaste, CTLFLAG_RW,

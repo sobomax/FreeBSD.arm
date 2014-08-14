@@ -49,7 +49,7 @@
 #include "opt_timer.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/machdep.c 266301 2014-05-17 11:27:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/machdep.c 269646 2014-08-06 21:27:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -1278,7 +1278,6 @@ initarm(struct arm_boot_params *abp)
 
 	init_proc0(kernelstack.pv_va);
 
-	arm_intrnames_init();
 	arm_vector_init(ARM_VECTORS_HIGH, ARM_VEC_ALL);
 	pmap_bootstrap(freemempos, &kernel_l1pt);
 	msgbufp = (void *)msgbufpv.pv_va;

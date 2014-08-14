@@ -4,7 +4,7 @@
 # Author: Jordan K Hubbard
 # Date:   22 June 2001
 #
-# $FreeBSD: head/release/amd64/mkisoimages.sh 246283 2013-02-03 10:26:24Z hrs $
+# $FreeBSD: head/release/amd64/mkisoimages.sh 268162 2014-07-02 15:23:13Z nwhitehorn $
 #
 # This script is used by release/Makefile to build the (optional) ISO images
 # for a FreeBSD release.  It is considered architecture dependent since each
@@ -26,6 +26,20 @@
 if [ "x$1" = "x-b" ]; then
 	# This is highly x86-centric and will be used directly below.
 	bootable="-o bootimage=i386;$4/boot/cdboot -o no-emul-boot"
+
+	# Make EFI system partition (should be done with makefs in the future)
+	dd if=/dev/zero of=efiboot.img bs=4k count=100
+	device=`mdconfig -a -t vnode -f efiboot.img`
+	newfs_msdos -F 12 -m 0xf8 /dev/$device
+	mkdir efi
+	mount -t msdosfs /dev/$device efi
+	mkdir -p efi/efi/boot
+	cp ${4}/boot/loader.efi efi/efi/boot/bootx64.efi
+	umount efi
+	rmdir efi
+	mdconfig -d -u $device
+	bootable="-o bootimage=i386;efiboot.img -o no-emul-boot $bootable"
+	
 	shift
 else
 	bootable=""
@@ -43,3 +57,4 @@ publisher="The FreeBSD Project.  http://www.FreeBSD.org/"
 echo "/dev/iso9660/$LABEL / cd9660 ro 0 0" > $1/etc/fstab
 makefs -t cd9660 $bootable -o rockridge -o label=$LABEL -o publisher="$publisher" $NAME $*
 rm $1/etc/fstab
+rm -f efiboot.img

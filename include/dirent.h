@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dirent.h	8.2 (Berkeley) 7/28/94
- * $FreeBSD: head/include/dirent.h 265878 2014-05-11 13:48:21Z jilles $
+ * $FreeBSD: head/include/dirent.h 268531 2014-07-11 16:16:26Z jhb $
  */
 
 #ifndef _DIRENT_H_
@@ -63,6 +63,7 @@ typedef struct _dirdesc DIR;
 #define DTF_NODUP	0x0002	/* don't return duplicate names */
 #define DTF_REWIND	0x0004	/* rewind after reading union stack */
 #define __DTF_READALL	0x0008	/* everything has been read */
+#define	__DTF_SKIPREAD	0x0010  /* assume internal buffer is populated */
 
 #else /* !__BSD_VISIBLE */
 

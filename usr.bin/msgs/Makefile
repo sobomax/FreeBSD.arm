@@ -1,8 +1,8 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/msgs/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/msgs/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG=	msgs
-DPADD=	${LIBTERMCAP}
-LDADD=	-ltermcap
+DPADD=	${LIBTERMCAPW}
+LDADD=	-ltermcapw
 
 .include <bsd.prog.mk>

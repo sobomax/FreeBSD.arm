@@ -42,7 +42,7 @@
 
 #include "feeder_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/sound.c 262066 2014-02-17 15:33:21Z eadler $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/sound.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 devclass_t pcm_devclass;
 
@@ -52,8 +52,7 @@ int snd_unit = -1;
 TUNABLE_INT("hw.snd.default_unit", &snd_unit);
 
 static int snd_unit_auto = -1;
-TUNABLE_INT("hw.snd.default_auto", &snd_unit_auto);
-SYSCTL_INT(_hw_snd, OID_AUTO, default_auto, CTLFLAG_RW,
+SYSCTL_INT(_hw_snd, OID_AUTO, default_auto, CTLFLAG_RWTUN,
     &snd_unit_auto, 0, "assign default unit to a newly attached device");
 
 int snd_maxautovchans = 16;

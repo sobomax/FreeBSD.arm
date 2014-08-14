@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/interp.c 242084 2012-10-25 15:45:32Z mav $");
+__FBSDID("$FreeBSD: head/sys/boot/common/interp.c 269153 2014-07-27 16:12:51Z marcel $");
 
 /*
  * Simple commandline interpreter, toplevel and misc.
@@ -90,7 +90,7 @@ perform(int argc, char *argv[])
  * Interactive mode
  */
 void
-interact(void)
+interact(const char *rc)
 {
     static char	input[256];			/* big enough? */
 #ifndef BOOT_FORTH
@@ -99,15 +99,18 @@ interact(void)
 #endif
 
 #ifdef BOOT_FORTH
-    bf_init();
+    bf_init((rc) ? "" : NULL);
 #endif
 
-    /*
-     * Read our default configuration
-     */
-    if (include("/boot/loader.rc") != CMD_OK)
-	include("/boot/boot.conf");
+    if (rc == NULL) {
+	/* Read our default configuration. */
+	if (include("/boot/loader.rc") != CMD_OK)
+	    include("/boot/boot.conf");
+    } else if (*rc != '\0')
+	include(rc);
+
     printf("\n");
+
     /*
      * Before interacting, we might want to autoboot.
      */

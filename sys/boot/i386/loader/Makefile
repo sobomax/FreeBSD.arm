@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/loader/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/i386/loader/Makefile 269030 2014-07-23 22:12:05Z sbruno $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -134,6 +134,6 @@ LDADD=	${LIBFICL} ${LIBFIREWIRE} ${LIBZFSBOOT} ${LIBI386} ${LIBSTAND}
 beforedepend ${OBJS}: machine
 CLEANFILES+=	machine
 CFLAGS+=	-DLOADER_PREFER_AMD64
-machine:
+machine: .NOPATH
 	ln -sf ${.CURDIR}/../../../i386/include machine
 .endif

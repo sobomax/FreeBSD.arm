@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet6/ip6_var.h 266800 2014-05-28 12:45:27Z vanhu $
+ * $FreeBSD: head/sys/netinet6/ip6_var.h 269699 2014-08-08 01:57:15Z kevlo $
  */
 
 #ifndef _NETINET6_IP6_VAR_H_
@@ -438,7 +438,7 @@ void	rip6_init(void);
 int	rip6_input(struct mbuf **, int *, int);
 void	rip6_ctlinput(int, struct sockaddr *, void *);
 int	rip6_ctloutput(struct socket *, struct sockopt *);
-int	rip6_output(struct mbuf *, ...);
+int	rip6_output(struct mbuf *, struct socket *, ...);
 int	rip6_usrreq(struct socket *,
 	    int, struct mbuf *, struct mbuf *, struct mbuf *, struct thread *);
 

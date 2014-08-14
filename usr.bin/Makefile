@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 267181 2014-06-06 18:58:06Z jmmv $
+# $FreeBSD: head/usr.bin/Makefile 268745 2014-07-16 09:55:36Z bapt $
 
 .include <src.opts.mk>
 
@@ -143,6 +143,7 @@ SUBDIR=	alias \
 	rwall \
 	script \
 	sed \
+	send-pr \
 	seq \
 	shar \
 	showmount \
@@ -162,6 +163,7 @@ SUBDIR=	alias \
 	${_tests} \
 	tftp \
 	time \
+	timeout \
 	tip \
 	top \
 	touch \
@@ -265,10 +267,6 @@ SUBDIR+=	drill
 SUBDIR+=	host
 .endif
 
-.if ${MK_LIBTHR} != "no"
-SUBDIR+=	csup
-.endif
-
 .if ${MK_LOCATE} != "no"
 SUBDIR+=	locate
 .endif
@@ -360,6 +358,10 @@ SUBDIR+=	yacc
 
 .if ${MK_VI} != "no"
 SUBDIR+=	vi
+.endif
+
+.if ${MK_VT} != "no"
+SUBDIR+=	vtfontcvt
 .endif
 
 .if ${MK_USB} != "no"

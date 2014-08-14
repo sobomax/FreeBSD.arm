@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)freopen.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/freopen.c 264737 2014-04-21 17:40:23Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/freopen.c 269116 2014-07-26 08:41:03Z ache $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -97,7 +97,7 @@ freopen(const char * __restrict file, const char * __restrict mode,
 		    (dflags & (O_ACCMODE | O_EXEC)) != (oflags & O_ACCMODE)) {
 			fclose(fp);
 			FUNLOCKFILE(fp);
-			errno = EINVAL;
+			errno = EBADF;
 			return (NULL);
 		}
 		if (fp->_flags & __SWR)
@@ -151,6 +151,14 @@ freopen(const char * __restrict file, const char * __restrict mode,
 
 	/* Get a new descriptor to refer to the new file. */
 	f = _open(file, oflags, DEFFILEMODE);
+	/* If out of fd's close the old one and try again. */
+	if (f < 0 && isopen && wantfd > STDERR_FILENO &&
+	    (errno == ENFILE || errno == EMFILE)) {
+		(void) (*fp->_close)(fp->_cookie);
+		isopen = 0;
+		wantfd = -1;
+		f = _open(file, oflags, DEFFILEMODE);
+	}
 	sverrno = errno;
 
 finish:

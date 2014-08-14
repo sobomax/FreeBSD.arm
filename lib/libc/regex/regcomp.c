@@ -42,7 +42,7 @@
 static char sccsid[] = "@(#)regcomp.c	8.5 (Berkeley) 3/20/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/regex/regcomp.c 265375 2014-05-05 18:04:57Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/regex/regcomp.c 268066 2014-06-30 20:54:25Z pfg $");
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -412,7 +412,17 @@ p_ere_exp(struct parse *p)
 	case '\\':
 		(void)REQUIRE(MORE(), REG_EESCAPE);
 		wc = WGETNEXT();
-		ordinary(p, wc);
+		switch (wc) {
+		case '<':
+			EMIT(OBOW, 0);
+			break;
+		case '>':
+			EMIT(OEOW, 0);
+			break;
+		default:
+			ordinary(p, wc);
+			break;
+		}
 		break;
 	case '{':		/* okay as ordinary except if digit follows */
 		(void)REQUIRE(!MORE() || !isdigit((uch)PEEK()), REG_BADRPT);
@@ -568,6 +578,12 @@ p_simp_re(struct parse *p,
 		break;
 	case '[':
 		p_bracket(p);
+		break;
+	case BACKSL|'<':
+		EMIT(OBOW, 0);
+		break;
+	case BACKSL|'>':
+		EMIT(OEOW, 0);
 		break;
 	case BACKSL|'{':
 		SETERROR(REG_BADRPT);

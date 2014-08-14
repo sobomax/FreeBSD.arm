@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_sbuf.c 255805 2013-09-22 23:47:56Z des $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_sbuf.c 269179 2014-07-28 07:20:22Z gahr $");
 
 #include <sys/param.h>
 

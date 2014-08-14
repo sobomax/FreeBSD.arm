@@ -1,25 +1,25 @@
 #
-# $FreeBSD: head/sys/modules/cxgbe/t4_firmware/Makefile 256459 2013-10-14 21:25:07Z np $
+# $FreeBSD: head/sys/modules/cxgbe/t4_firmware/Makefile 269364 2014-08-01 01:30:16Z np $
 #
 
-T4FW = ${.CURDIR}/../../../dev/cxgbe/firmware
+T4FW=	${.CURDIR}/../../../dev/cxgbe/firmware
 .PATH: ${T4FW}
 
-KMOD = t4fw_cfg
-FIRMWS = ${KMOD}.txt:${KMOD}:1.0.0.0
+KMOD=	t4fw_cfg
+FIRMWS=	${KMOD}.txt:${KMOD}:1.0.0.0
 
 # You can have additional configuration files in the ${T4FW} directory.
 # t4fw_cfg_<name>.txt
 CFG_FILES != cd ${T4FW} && echo ${KMOD}_*.txt
 .for F in ${CFG_FILES}
 .if exists(${F})
-FIRMWS += ${F}:${F:C/.txt//}:1.0.0.0
+FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T4FW_VER = 1.9.12.0
-FIRMWS += t4fw.fw:t4fw:${T4FW_VER}
-CLEANFILES += t4fw.fw
+T4FW_VER=	1.11.27.0
+FIRMWS+=	t4fw.fw:t4fw:${T4FW_VER}
+CLEANFILES+=	t4fw.fw
 
 t4fw.fw: t4fw-${T4FW_VER}.bin.uu
 	uudecode -o ${.TARGET} ${.ALLSRC}

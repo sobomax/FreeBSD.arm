@@ -37,7 +37,7 @@
  *	from: Utah Hdr: vmparam.h 1.16 91/01/18
  *	@(#)vmparam.h	8.2 (Berkeley) 4/22/94
  *	JNPR: vmparam.h,v 1.3.2.1 2007/09/10 06:01:28 girish
- * $FreeBSD: head/sys/mips/include/vmparam.h 257854 2013-11-08 16:25:00Z alc $
+ * $FreeBSD: head/sys/mips/include/vmparam.h 269577 2014-08-05 09:44:10Z glebius $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -186,5 +186,9 @@
 #define	VM_NFREEORDER		9
 
 #define	ZERO_REGION_SIZE	(64 * 1024)	/* 64KB */
+
+#ifndef __mips_n64
+#define	SFBUF
+#endif
 
 #endif /* !_MACHINE_VMPARAM_H_ */

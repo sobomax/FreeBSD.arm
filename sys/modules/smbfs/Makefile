@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/smbfs/Makefile 263140 2014-03-14 02:58:48Z glebius $
+# $FreeBSD: head/sys/modules/smbfs/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .PATH:	${.CURDIR}/../../crypto/des \
 	${.CURDIR}/../../crypto/des/arch/${MACHINE_CPUARCH} \
@@ -26,20 +26,10 @@ SRCS+=	des_enc.S
 SRCS+=	des_enc.c
 .endif
 
-# Build with INET support (1|0)
-SMB_INET?=	1
-
 CFLAGS+= ${KDEBUG}
 
 .if defined(VNPRINT)
 CFLAGS+= -DVNPRINT
-.endif
-
-.if !defined(KERNBUILDDIR)
-.if ${SMB_INET} > 0
-opt_inet.h:
-	echo "#define INET 1" > ${.TARGET}
-.endif
 .endif
 
 .include <bsd.kmod.mk>

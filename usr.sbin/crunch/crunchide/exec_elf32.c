@@ -34,7 +34,7 @@
 __RCSID("$NetBSD: exec_elf32.c,v 1.6 1999/09/20 04:12:16 christos Exp $");
 #endif
 #endif
-__FBSDID("$FreeBSD: head/usr.sbin/crunch/crunchide/exec_elf32.c 246298 2013-02-03 21:16:33Z pfg $");
+__FBSDID("$FreeBSD: head/usr.sbin/crunch/crunchide/exec_elf32.c 268351 2014-07-07 00:27:09Z marcel $");
  
 #ifndef ELFSIZE
 #define ELFSIZE         32
@@ -186,10 +186,6 @@ ELFNAMEEND(check)(int fd, const char *fn)
 #endif
 	case EM_MIPS: break;
 	case /* EM_MIPS_RS3_LE */ EM_MIPS_RS4_BE: break;
-#ifndef EM_IA_64
-#define	EM_IA_64	50
-#endif
-	case EM_IA_64: break;
 #ifndef EM_PPC
 #define	EM_PPC		20
 #endif

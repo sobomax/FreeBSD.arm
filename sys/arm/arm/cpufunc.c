@@ -42,7 +42,7 @@
  * Created      : 30/01/97
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc.c 266672 2014-05-25 18:47:24Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc.c 267597 2014-06-17 21:48:04Z tuexen $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1410,12 +1410,27 @@ cpu_scc_setup_ccnt(void)
  * you want!
  */
 #ifdef _PMC_USER_READ_WRITE_
+#if defined(CPU_ARM1136) || defined(CPU_ARM1176)
+	/* Use the Secure User and Non-secure Access Validation Control Register
+	 * to allow userland access
+	 */
+	__asm volatile ("mcr	p15, 0, %0, c15, c9, 0\n\t"
+			:
+			: "r"(0x00000001));
+#else
 	/* Set PMUSERENR[0] to allow userland access */
 	__asm volatile ("mcr	p15, 0, %0, c9, c14, 0\n\t"
 			:
 			: "r"(0x00000001));
 #endif
-        /* Set up the PMCCNTR register as a cyclecounter:
+#endif
+#if defined(CPU_ARM1136) || defined(CPU_ARM1176)
+	/* Set PMCR[2,0] to enable counters and reset CCNT */
+	__asm volatile ("mcr	p15, 0, %0, c15, c12, 0\n\t"
+			:
+			: "r"(0x00000005));
+#else
+	/* Set up the PMCCNTR register as a cyclecounter:
 	 * Set PMINTENCLR to 0xFFFFFFFF to block interrupts
 	 * Set PMCR[2,0] to enable counters and reset CCNT
 	 * Set PMCNTENSET to 0x80000000 to enable CCNT */
@@ -1426,6 +1441,7 @@ cpu_scc_setup_ccnt(void)
 			: "r"(0xFFFFFFFF),
 			  "r"(0x00000005),
 			  "r"(0x80000000));
+#endif
 }
 #endif
 

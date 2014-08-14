@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/patm/Makefile 182668 2008-09-01 23:59:00Z imp $
+# $FreeBSD: head/sys/modules/patm/Makefile 269540 2014-08-04 22:37:02Z imp $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 #
@@ -11,13 +11,5 @@ SRCS=	if_patm.c if_patm_attach.c if_patm_ioctl.c if_patm_intr.c \
 
 CFLAGS+= -DENABLE_BPF
 # CFLAGS+= -DPATM_DEBUG=0x0 -DINVARIANT_SUPPORT -DINVARIANTS -DDIAGNOSTIC
-
-.if !defined(KERNBUILDDIR)
-opt_inet.h:
-	echo "#define INET 1" > ${.TARGET}
-
-opt_natm.h:
-	echo "#define NATM 1" > ${.TARGET}
-.endif
 
 .include <bsd.kmod.mk>

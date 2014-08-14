@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netipsec/ipsec_output.c 266822 2014-05-28 23:01:20Z bz $
+ * $FreeBSD: head/sys/netipsec/ipsec_output.c 268083 2014-07-01 08:02:25Z zec $
  */
 
 /*
@@ -498,9 +498,11 @@ ipsec4_process_packet(
 				goto bad;
 			}
 			ip = mtod(m, struct ip *);
-			ip->ip_len = htons(m->m_pkthdr.len);
-			ip->ip_sum = 0;
-			ip->ip_sum = in_cksum(m, ip->ip_hl << 2);
+			if (ip->ip_v == IPVERSION) {
+				ip->ip_len = htons(m->m_pkthdr.len);
+				ip->ip_sum = 0;
+				ip->ip_sum = in_cksum(m, ip->ip_hl << 2);
+			}
 
 			/* Encapsulate the packet */
 			error = ipip_output(m, isr, &mp, 0, 0);

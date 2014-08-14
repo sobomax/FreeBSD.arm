@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_reg.c 262200 2014-02-19 04:23:01Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_reg.c 268564 2014-07-12 06:23:42Z rpaulo $
  */
 
 #include <sys/param.h>

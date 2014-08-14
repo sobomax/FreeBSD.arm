@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_cddl.h 264434 2014-04-14 00:22:42Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_cddl.h 267929 2014-06-26 19:38:16Z rpaulo $
  *
  */
 
@@ -136,6 +136,7 @@ typedef struct kdtrace_thread {
 #define	t_procp		td_proc
 #define	t_tid		td_tid
 #define	t_did		td_tid
+#define	t_cred		td_ucred
 
 
 int priv_policy(const cred_t *, int, boolean_t, int, const char *);

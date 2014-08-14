@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/iscsid/iscsid.h 264549 2014-04-16 18:23:36Z trasz $
+ * $FreeBSD: head/usr.sbin/iscsid/iscsid.h 268326 2014-07-06 17:37:49Z mav $
  */
 
 #ifndef ISCSID_H
@@ -51,6 +51,7 @@ struct connection {
 	struct iscsi_session_conf	conn_conf;
 	char			conn_target_alias[ISCSI_ADDR_LEN];
 	uint8_t			conn_isid[6];
+	uint16_t		conn_tsih;
 	uint32_t		conn_statsn;
 	int			conn_header_digest;
 	int			conn_data_digest;

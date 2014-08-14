@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/cxgb/cxgb/Makefile 265420 2014-05-06 04:22:01Z imp $
-
-.include <src.opts.mk>
+# $FreeBSD: head/sys/modules/cxgb/cxgb/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 CXGB = ${.CURDIR}/../../../dev/cxgb
 .PATH: ${CXGB} ${CXGB}/common ${CXGB}/sys
@@ -14,18 +12,5 @@ SRCS+=	opt_inet.h opt_inet6.h opt_sched.h
 SRCS+=	uipc_mvec.c
 
 CFLAGS+= -g -DDEFAULT_JUMBO -I${CXGB}
-
-.if !defined(KERNBUILDDIR)
-.if ${MK_INET_SUPPORT} != "no"
-opt_inet.h:
-	@echo "#define INET 1" > ${.TARGET}
-	@echo "#define TCP_OFFLOAD 1" >> ${.TARGET}
-.endif
-
-.if ${MK_INET6_SUPPORT} != "no"
-opt_inet6.h:
-	@echo "#define INET6 1" > ${.TARGET}
-.endif
-.endif
 
 .include <bsd.kmod.mk>

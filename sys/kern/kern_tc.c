@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_tc.c 247777 2013-03-04 11:09:56Z davide $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_tc.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_compat.h"
 #include "opt_ntp.h"
@@ -128,10 +128,9 @@ struct bintime tc_tick_bt;
 sbintime_t tc_tick_sbt;
 int tc_precexp;
 int tc_timepercentage = TC_DEFAULTPERC;
-TUNABLE_INT("kern.timecounter.alloweddeviation", &tc_timepercentage);
 static int sysctl_kern_timecounter_adjprecision(SYSCTL_HANDLER_ARGS);
 SYSCTL_PROC(_kern_timecounter, OID_AUTO, alloweddeviation,
-    CTLTYPE_INT | CTLFLAG_RW | CTLFLAG_MPSAFE, 0, 0,
+    CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE, 0, 0,
     sysctl_kern_timecounter_adjprecision, "I",
     "Allowed time interval deviation in percents");
 
@@ -1794,7 +1793,10 @@ sysctl_kern_timecounter_adjprecision(SYSCTL_HANDLER_ARGS)
 	if (error != 0 || req->newptr == NULL)
 		return (error);
 	tc_timepercentage = val;
+	if (cold)
+		goto done;
 	tc_adjprecision();
+done:
 	return (0);
 }
 

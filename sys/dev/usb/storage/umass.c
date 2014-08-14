@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 257381 2013-10-30 14:04:47Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*-
  * Copyright (c) 1999 MAEKAWA Masahide <bishop@rr.iij4u.or.jp>,
@@ -27,7 +27,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 257381 2013-10-30 14:04:47Z
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/usb/storage/umass.c 257381 2013-10-30 14:04:47Z nwhitehorn $
+ *	$FreeBSD: head/sys/dev/usb/storage/umass.c 267992 2014-06-28 03:56:17Z hselasky $
  *	$NetBSD: umass.c,v 1.28 2000/04/02 23:46:53 augustss Exp $
  */
 
@@ -167,12 +167,10 @@ static int umass_debug;
 static int umass_throttle;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, umass, CTLFLAG_RW, 0, "USB umass");
-SYSCTL_INT(_hw_usb_umass, OID_AUTO, debug, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_hw_usb_umass, OID_AUTO, debug, CTLFLAG_RWTUN,
     &umass_debug, 0, "umass debug level");
-TUNABLE_INT("hw.usb.umass.debug", &umass_debug);
-SYSCTL_INT(_hw_usb_umass, OID_AUTO, throttle, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_hw_usb_umass, OID_AUTO, throttle, CTLFLAG_RWTUN,
     &umass_throttle, 0, "Forced delay between commands in milliseconds");
-TUNABLE_INT("hw.usb.umass.throttle", &umass_throttle);
 #else
 #define	DIF(...) do { } while (0)
 #define	DPRINTF(...) do { } while (0)

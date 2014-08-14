@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_msctest.h 266873 2014-05-30 07:30:24Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_msctest.h 269576 2014-08-05 09:35:25Z n_hibma $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -33,6 +33,7 @@ enum {
 	MSC_EJECT_ZTESTOR,
 	MSC_EJECT_CMOTECH,
 	MSC_EJECT_HUAWEI,
+	MSC_EJECT_HUAWEI2,
 	MSC_EJECT_TCT,
 };
 

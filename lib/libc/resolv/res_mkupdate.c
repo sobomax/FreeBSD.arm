@@ -22,10 +22,10 @@
  */
 
 #if !defined(lint) && !defined(SABER)
-static const char rcsid[] = "$Id: res_mkupdate.c,v 1.4.18.4 2005/10/14 05:44:12 marka Exp $";
+static const char rcsid[] = "$Id: res_mkupdate.c,v 1.10 2008/12/11 09:59:00 marka Exp $";
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 170244 2007-06-03 17:20:27Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 269867 2014-08-12 12:36:06Z ume $");
 
 #include "port_before.h"
 
@@ -116,7 +116,8 @@ res_nmkupdate(res_state statp, ns_updrec *rrecp_in, u_char *buf, int buflen) {
 		return (-1);
 	memset(buf, 0, HFIXEDSZ);
 	hp = (HEADER *) buf;
-	hp->id = htons(++statp->id);
+	statp->id = res_nrandomid(statp);
+	hp->id = htons(statp->id);
 	hp->opcode = ns_o_update;
 	hp->rcode = NOERROR;
 	cp = buf + HFIXEDSZ;

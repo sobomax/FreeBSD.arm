@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/isci/isci.h 241403 2012-10-10 18:01:56Z jimharris $
+ * $FreeBSD: head/sys/dev/isci/isci.h 268025 2014-06-30 01:01:54Z scottl $
  */
 
 #ifndef _ISCI_H
@@ -164,6 +164,7 @@ struct ISCI_CONTROLLER
 	uint32_t		initial_discovery_mask;
 	BOOL			is_frozen;
 	BOOL			release_queued_ccbs;
+	BOOL			fail_on_task_timeout;
 	uint8_t			*remote_device_memory;
 	struct ISCI_MEMORY	cached_controller_memory;
 	struct ISCI_MEMORY	uncached_controller_memory;

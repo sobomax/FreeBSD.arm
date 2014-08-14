@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/etherswitchcfg/etherswitchcfg.c 255730 2013-09-20 15:57:50Z hiren $
+ * $FreeBSD: head/sbin/etherswitchcfg/etherswitchcfg.c 268301 2014-07-05 20:16:02Z loos $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/etherswitchcfg/etherswitchcfg.c 255730 2013-09-20 15:57:50Z hiren $");
+__FBSDID("$FreeBSD: head/sbin/etherswitchcfg/etherswitchcfg.c 268301 2014-07-05 20:16:02Z loos $");
 
 #include <ctype.h>
 #include <err.h>
@@ -235,6 +235,8 @@ set_port_media(struct cfg *cfg, char *argv[])
 	p.es_ifmr.ifm_count = IFMEDIAREQ_NULISTENTRIES;
 	if (ioctl(cfg->fd, IOETHERSWITCHGETPORT, &p) != 0)
 		err(EX_OSERR, "ioctl(IOETHERSWITCHGETPORT)");
+	if (p.es_ifmr.ifm_count == 0)
+		return;
 	subtype = get_media_subtype(IFM_TYPE(ifm_ulist[0]), argv[1]);
 	p.es_ifr.ifr_media = (p.es_ifmr.ifm_current & IFM_IMASK) |
 	        IFM_TYPE(ifm_ulist[0]) | subtype;

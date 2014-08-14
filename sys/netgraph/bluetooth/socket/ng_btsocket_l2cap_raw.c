@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap_raw.c,v 1.12 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_l2cap_raw.c 227309 2011-11-07 15:43:11Z ed $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_l2cap_raw.c 267336 2014-06-10 18:21:37Z trociny $
  */
 
 #include <sys/param.h>
@@ -50,6 +50,9 @@
 #include <sys/socketvar.h>
 #include <sys/sysctl.h>
 #include <sys/taskqueue.h>
+
+#include <net/vnet.h>
+
 #include <netgraph/ng_message.h>
 #include <netgraph/netgraph.h>
 #include <netgraph/bluetooth/include/ng_bluetooth.h>
@@ -512,6 +515,10 @@ void
 ng_btsocket_l2cap_raw_init(void)
 {
 	int	error = 0;
+
+	/* Skip initialization of globals for non-default instances. */
+	if (!IS_DEFAULT_VNET(curvnet))
+		return;
 
 	ng_btsocket_l2cap_raw_node = NULL;
 	ng_btsocket_l2cap_raw_debug_level = NG_BTSOCKET_WARN_LEVEL;

@@ -39,7 +39,7 @@
 #include <machine/armreg.h>
 #include <machine/pte.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/locore.S 266849 2014-05-29 16:54:15Z cognet $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/locore.S 269390 2014-08-01 18:24:44Z ian $");
 
 /* What size should this really be ? It is only used by initarm() */
 #define INIT_ARM_STACK_SIZE	(2048 * 4)
@@ -75,7 +75,8 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/locore.S 266849 2014-05-29 16:54:15Z cognet
  * For both types of boot we gather up the args, put them in a struct arm_boot_params
  * structure and pass that to initarm.
  */
-ENTRY_NP(btext)
+	.globl	btext
+btext:
 ASENTRY_NP(_start)
 	STOP_UNWINDING		/* Can't unwind into the bootloader! */
 
@@ -285,7 +286,6 @@ virt_done:
 	adr	r0, .Lmainreturned
 	b	_C_LABEL(panic)
 	/* NOTREACHED */
-END(btext)
 END(_start)
 
 /*
@@ -548,7 +548,7 @@ ENTRY_NP(sigcode)
 
 	/* Branch back to retry SYS_sigreturn */
 	b	. - 16
-
+END(sigcode)
 	.word	SYS_sigreturn
 	.word	SYS_exit
 
@@ -560,5 +560,5 @@ ENTRY_NP(sigcode)
 	.global szsigcode
 szsigcode:
 	.long esigcode-sigcode
-END(sigcode)
+
 /* End of locore.S */

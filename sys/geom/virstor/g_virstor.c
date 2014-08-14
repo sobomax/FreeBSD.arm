@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/virstor/g_virstor.c 239021 2012-08-03 20:24:16Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/geom/virstor/g_virstor.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,20 +84,16 @@ static SYSCTL_NODE(_kern_geom, OID_AUTO, virstor, CTLFLAG_RW, 0,
     "GEOM_GVIRSTOR information");
 
 static u_int g_virstor_debug = 2; /* XXX: lower to 2 when released to public */
-TUNABLE_INT("kern.geom.virstor.debug", &g_virstor_debug);
-SYSCTL_UINT(_kern_geom_virstor, OID_AUTO, debug, CTLFLAG_RW, &g_virstor_debug,
+SYSCTL_UINT(_kern_geom_virstor, OID_AUTO, debug, CTLFLAG_RWTUN, &g_virstor_debug,
     0, "Debug level (2=production, 5=normal, 15=excessive)");
 
 static u_int g_virstor_chunk_watermark = 100;
-TUNABLE_INT("kern.geom.virstor.chunk_watermark", &g_virstor_chunk_watermark);
-SYSCTL_UINT(_kern_geom_virstor, OID_AUTO, chunk_watermark, CTLFLAG_RW,
+SYSCTL_UINT(_kern_geom_virstor, OID_AUTO, chunk_watermark, CTLFLAG_RWTUN,
     &g_virstor_chunk_watermark, 0,
     "Minimum number of free chunks before issuing administrative warning");
 
 static u_int g_virstor_component_watermark = 1;
-TUNABLE_INT("kern.geom.virstor.component_watermark",
-    &g_virstor_component_watermark);
-SYSCTL_UINT(_kern_geom_virstor, OID_AUTO, component_watermark, CTLFLAG_RW,
+SYSCTL_UINT(_kern_geom_virstor, OID_AUTO, component_watermark, CTLFLAG_RWTUN,
     &g_virstor_component_watermark, 0,
     "Minimum number of free components before issuing administrative warning");
 

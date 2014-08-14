@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_radix.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_radix.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_ddb.h"
 
@@ -302,7 +302,7 @@ vm_radix_reserve_kva(void *arg __unused)
 	    sizeof(struct vm_radix_node))))
 		panic("%s: unable to reserve KVA", __func__);
 }
-SYSINIT(vm_radix_reserve_kva, SI_SUB_KMEM, SI_ORDER_SECOND,
+SYSINIT(vm_radix_reserve_kva, SI_SUB_KMEM, SI_ORDER_THIRD,
     vm_radix_reserve_kva, NULL);
 #endif
 

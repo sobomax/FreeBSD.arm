@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/pim_var.h 262489 2014-02-25 18:44:33Z jhb $
+ * $FreeBSD: head/sys/netinet/pim_var.h 269699 2014-08-08 01:57:15Z kevlo $
  */
 
 #ifndef _NETINET_PIM_VAR_H_
@@ -72,7 +72,7 @@ struct pimstat {
 
 #ifdef _KERNEL
 
-void pim_input(struct mbuf *, int);
+int pim_input(struct mbuf **, int *, int);
 SYSCTL_DECL(_net_inet_pim);
 #endif
 

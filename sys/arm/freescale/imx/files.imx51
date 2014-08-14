@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/freescale/imx/files.imx51 262979 2014-03-10 18:10:09Z ian $
+# $FreeBSD: head/sys/arm/freescale/imx/files.imx51 268973 2014-07-22 03:59:14Z br $
 arm/arm/bus_space_asm_generic.S		standard
 arm/arm/bus_space_generic.c		standard
 arm/arm/cpufunc_asm_armv5.S		standard
@@ -22,7 +22,7 @@ arm/freescale/imx/tzic.c		standard
 arm/freescale/imx/imx51_iomux.c		optional iomux
 
 # GPIO
-arm/freescale/imx/imx51_gpio.c		optional gpio
+arm/freescale/imx/imx_gpio.c		optional gpio
 
 # Generic Periodic Timer
 arm/freescale/imx/imx_gpt.c		standard
@@ -44,7 +44,7 @@ dev/usb/controller/ehci_imx.c		optional ehci
 arm/freescale/imx/imx_wdog.c		optional imxwdt
 
 # i2c
-arm/freescale/imx/i2c.c			optional fsliic
+arm/freescale/imx/imx_i2c.c		optional fsliic
 
 # IPU - Image Processing Unit (frame buffer also)
 arm/freescale/imx/imx51_ipuv3.c		optional sc

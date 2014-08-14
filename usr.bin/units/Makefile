@@ -1,10 +1,16 @@
-# $FreeBSD: head/usr.bin/units/Makefile 264458 2014-04-14 14:04:59Z eadler $
+# $FreeBSD: head/usr.bin/units/Makefile 268804 2014-07-17 18:24:34Z brooks $
+
+.include <src.opts.mk>
 
 PROG=	units
 FILES=	units.lib
 FILESDIR=	${SHAREDIR}/misc
 
-LDADD+=-ledit -ltermcap
-DPADD+=${LIBEDIT} ${LIBTERMCAP}
+LDADD+=-ledit -ltermcapw
+DPADD+=${LIBEDIT} ${LIBTERMCAPW}
+
+.if ${MK_TESTS} != "no"
+SUBDIR+= tests
+.endif
 
 .include <bsd.prog.mk>

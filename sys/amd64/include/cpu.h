@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cpu.h	5.4 (Berkeley) 5/9/91
- * $FreeBSD: head/sys/amd64/include/cpu.h 259782 2013-12-23 19:48:22Z jhb $
+ * $FreeBSD: head/sys/amd64/include/cpu.h 267526 2014-06-16 08:43:03Z royger $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -63,7 +63,6 @@
 struct cpu_ops {
 	void (*cpu_init)(void);
 	void (*cpu_resume)(void);
-	void (*ipi_vectored)(u_int, int);
 };
 
 extern struct	cpu_ops cpu_ops;

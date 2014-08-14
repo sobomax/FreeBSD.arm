@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/dtc.cc 254522 2013-08-19 12:37:13Z theraven $
+ * $FreeBSD: head/usr.bin/dtc/dtc.cc 267316 2014-06-10 05:58:46Z rpaulo $
  */
 
 #include <sys/resource.h>
@@ -100,7 +100,7 @@ main(int argc, char **argv)
 	clock_t c0 = clock();
 	class device_tree tree;
 	fdt::checking::check_manager checks;
-	const char *options = "hqI:O:o:V:d:R:S:p:b:fisvH:W:E:DP:";
+	const char *options = "hqI:O:o:V:d:R:S:p:b:fi:svH:W:E:DP:";
 
 	// Don't forget to update the man page if any more options are added.
 	while ((ch = getopt(argc, argv, options)) != -1)

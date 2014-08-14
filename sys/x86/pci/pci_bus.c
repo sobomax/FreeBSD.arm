@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/pci/pci_bus.c 261790 2014-02-12 04:30:37Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/pci/pci_bus.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_cpu.h"
 
@@ -575,7 +575,6 @@ legacy_pcib_write_ivar(device_t dev, device_t child, int which,
 SYSCTL_DECL(_hw_pci);
 
 static unsigned long host_mem_start = 0x80000000;
-TUNABLE_ULONG("hw.pci.host_mem_start", &host_mem_start);
 SYSCTL_ULONG(_hw_pci, OID_AUTO, host_mem_start, CTLFLAG_RDTUN, &host_mem_start,
     0, "Limit the host bridge memory to being above this address.");
 

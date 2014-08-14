@@ -1,16 +1,8 @@
-# $FreeBSD: head/sys/modules/if_tun/Makefile 263152 2014-03-14 06:29:43Z glebius $
+# $FreeBSD: head/sys/modules/if_tun/Makefile 269540 2014-08-04 22:37:02Z imp $
 
 .PATH: ${.CURDIR}/../../net
 
 KMOD=	if_tun
 SRCS=	if_tun.c opt_inet.h opt_inet6.h
-
-.if !defined(KERNBUILDDIR)
-opt_inet.h:
-	echo "#define INET 1" > ${.TARGET}
-
-opt_inet6.h:
-	echo "#define INET6 1" > ${.TARGET}
-.endif
 
 .include <bsd.kmod.mk>

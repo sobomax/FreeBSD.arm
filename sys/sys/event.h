@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/event.h 264231 2014-04-07 18:10:49Z ed $
+ * $FreeBSD: head/sys/sys/event.h 269059 2014-07-24 14:11:33Z bapt $
  */
 
 #ifndef _SYS_EVENT_H_
@@ -132,6 +132,12 @@ struct kevent {
 #define	NOTE_TRACK	0x00000001		/* follow across forks */
 #define	NOTE_TRACKERR	0x00000002		/* could not track child */
 #define	NOTE_CHILD	0x00000004		/* am a child process */
+
+/* additional flags for EVFILT_TIMER */
+#define NOTE_SECONDS		0x00000001	/* data is seconds */
+#define NOTE_MSECONDS		0x00000002	/* data is milliseconds */
+#define NOTE_USECONDS		0x00000004	/* data is microseconds */
+#define NOTE_NSECONDS		0x00000008	/* data is nanoseconds */
 
 struct knote;
 SLIST_HEAD(klist, knote);

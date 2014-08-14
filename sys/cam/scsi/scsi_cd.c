@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_cd.c 264311 2014-04-10 05:04:23Z smh $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_cd.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_cd.h"
 
@@ -277,15 +277,12 @@ static int cd_retry_count = CD_DEFAULT_RETRY;
 static int cd_timeout = CD_DEFAULT_TIMEOUT;
 
 static SYSCTL_NODE(_kern_cam, OID_AUTO, cd, CTLFLAG_RD, 0, "CAM CDROM driver");
-SYSCTL_INT(_kern_cam_cd, OID_AUTO, poll_period, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_cd, OID_AUTO, poll_period, CTLFLAG_RWTUN,
            &cd_poll_period, 0, "Media polling period in seconds");
-TUNABLE_INT("kern.cam.cd.poll_period", &cd_poll_period);
-SYSCTL_INT(_kern_cam_cd, OID_AUTO, retry_count, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_cd, OID_AUTO, retry_count, CTLFLAG_RWTUN,
            &cd_retry_count, 0, "Normal I/O retry count");
-TUNABLE_INT("kern.cam.cd.retry_count", &cd_retry_count);
-SYSCTL_INT(_kern_cam_cd, OID_AUTO, timeout, CTLFLAG_RW,
+SYSCTL_INT(_kern_cam_cd, OID_AUTO, timeout, CTLFLAG_RWTUN,
 	   &cd_timeout, 0, "Timeout, in us, for read operations");
-TUNABLE_INT("kern.cam.cd.timeout", &cd_timeout);
 
 static MALLOC_DEFINE(M_SCSICD, "scsi_cd", "scsi_cd buffers");
 

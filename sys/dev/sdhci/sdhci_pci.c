@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci_pci.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci_pci.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -124,8 +124,7 @@ struct sdhci_pci_softc {
 static SYSCTL_NODE(_hw, OID_AUTO, sdhci_pci, CTLFLAG_RD, 0, "sdhci PCI driver");
 
 int	sdhci_pci_debug;
-TUNABLE_INT("hw.sdhci_pci.debug", &sdhci_pci_debug);
-SYSCTL_INT(_hw_sdhci_pci, OID_AUTO, debug, CTLFLAG_RW, &sdhci_pci_debug, 0, "Debug level");
+SYSCTL_INT(_hw_sdhci_pci, OID_AUTO, debug, CTLFLAG_RWTUN, &sdhci_pci_debug, 0, "Debug level");
 
 static uint8_t
 sdhci_pci_read_1(device_t dev, struct sdhci_slot *slot, bus_size_t off)

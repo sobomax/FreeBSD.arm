@@ -39,7 +39,7 @@
  *	JNPR: trap.c,v 1.13.2.2 2007/08/29 10:03:49 girish
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/trap.c 266827 2014-05-29 01:42:22Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/trap.c 268600 2014-07-14 04:38:17Z markj $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -605,7 +605,7 @@ trap(struct trapframe *trapframe)
 	/*
 	 * A trap can occur while DTrace executes a probe. Before
 	 * executing the probe, DTrace blocks re-scheduling and sets
-	 * a flag in it's per-cpu flags to indicate that it doesn't
+	 * a flag in its per-cpu flags to indicate that it doesn't
 	 * want to fault. On returning from the probe, the no-fault
 	 * flag is cleared and finally re-scheduling is enabled.
 	 *
@@ -618,7 +618,7 @@ trap(struct trapframe *trapframe)
 	 * XXXDTRACE: add pid probe handler here (if ever)
 	 */
 	if (!usermode) {
-		if (dtrace_trap_func != NULL && (*dtrace_trap_func)(trapframe, type))
+		if (dtrace_trap_func != NULL && (*dtrace_trap_func)(trapframe))
 			return (trapframe->pc);
 	}
 #endif

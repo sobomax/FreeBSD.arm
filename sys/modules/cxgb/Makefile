@@ -1,6 +1,7 @@
-# $FreeBSD: head/sys/modules/cxgb/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/modules/cxgb/Makefile 269812 2014-08-11 14:50:49Z imp $
 
-.include <src.opts.mk>
+SYSDIR?=${.CURDIR}/../..
+.include "${SYSDIR}/conf/kern.opts.mk"
 
 SUBDIR= cxgb
 SUBDIR+= cxgb_t3fw

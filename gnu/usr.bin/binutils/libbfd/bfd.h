@@ -1,4 +1,4 @@
-/* $FreeBSD: head/gnu/usr.bin/binutils/libbfd/bfd.h 218822 2011-02-18 20:54:12Z dim $ */
+/* $FreeBSD: head/gnu/usr.bin/binutils/libbfd/bfd.h 268351 2014-07-07 00:27:09Z marcel $ */
 
 /* DO NOT EDIT!  -*- buffer-read-only: t -*-  This file is automatically 
    generated from "bfd-in.h", "init.c", "opncls.c", "libbfd.c", 
@@ -85,7 +85,7 @@ extern "C" {
 #define BFD_HOST_64BIT_LONG 0
 #define BFD_HOST_64_BIT long long
 #define BFD_HOST_U_64_BIT unsigned long long
-#elif defined(__alpha__) || defined(__sparc64__) || defined(__amd64__) || defined(__ia64__)
+#elif defined(__alpha__) || defined(__sparc64__) || defined(__amd64__)
 #define BFD_HOST_64BIT_LONG 1
 #define BFD_HOST_64_BIT long
 #define BFD_HOST_U_64_BIT unsigned long

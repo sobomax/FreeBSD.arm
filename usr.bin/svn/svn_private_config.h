@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/svn/svn_private_config.h 266731 2014-05-27 04:59:53Z peter $ */
+/* $FreeBSD: head/usr.bin/svn/svn_private_config.h 269833 2014-08-11 19:41:01Z peter $ */
 
 /* subversion/svn_private_config.h.tmp.  Generated from svn_private_config.h.in by configure.  */
 /* subversion/svn_private_config.h.in.  Generated from configure.ac by autoheader.  */
@@ -105,7 +105,7 @@
 #define PACKAGE_NAME "subversion"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "subversion 1.8.9"
+#define PACKAGE_STRING "subversion 1.8.10"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "subversion"
@@ -114,7 +114,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.8.9"
+#define PACKAGE_VERSION "1.8.10"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

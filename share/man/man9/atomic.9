@@ -21,7 +21,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/atomic.9 254658 2013-08-22 16:00:09Z joel $
+.\" $FreeBSD: head/share/man/man9/atomic.9 268351 2014-07-07 00:27:09Z marcel $
 .\"
 .Dd August 20, 2013
 .Dt ATOMIC 9
@@ -169,10 +169,6 @@ On the
 .Tn i386
 architecture, the cache coherency model requires that the hardware perform
 this task, thus the atomic operations are atomic across multiple processors.
-On the
-.Tn ia64
-architecture, coherency is only guaranteed for pages that are configured to
-using a caching policy of either uncached or write back.
 .Ss Semantics
 This section describes the semantics of each operation using a C like notation.
 .Bl -hang

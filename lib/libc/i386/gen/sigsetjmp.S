@@ -37,7 +37,7 @@
 	.asciz "$Id: sigsetjmp.S,v 1.1 1993/12/05 13:01:05 ats Exp $"
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/i386/gen/sigsetjmp.S 258451 2013-11-21 22:31:18Z andreast $");
+__FBSDID("$FreeBSD: head/lib/libc/i386/gen/sigsetjmp.S 267307 2014-06-09 21:35:36Z jilles $");
 
 #include "SYS.h"
 
@@ -115,7 +115,6 @@ ENTRY(__siglongjmp)
 	movl	12(%edx),%ebp
 	movl	16(%edx),%esi
 	movl	20(%edx),%edi
-	fninit
 	fldcw	24(%edx)
 	testl	%eax,%eax
 	jnz	1f

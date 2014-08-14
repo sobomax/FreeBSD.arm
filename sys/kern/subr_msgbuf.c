@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/subr_msgbuf.c 233135 2012-03-19 00:36:32Z eadler $
+ * $FreeBSD: head/sys/kern/subr_msgbuf.c 267992 2014-06-28 03:56:17Z hselasky $
  */
 
 /*
@@ -53,9 +53,8 @@ static u_int msgbuf_cksum(struct msgbuf *mbp);
  * or other actions occured.
  */
 static int msgbuf_show_timestamp = 0;
-SYSCTL_INT(_kern, OID_AUTO, msgbuf_show_timestamp, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_kern, OID_AUTO, msgbuf_show_timestamp, CTLFLAG_RWTUN,
     &msgbuf_show_timestamp, 0, "Show timestamp in msgbuf");
-TUNABLE_INT("kern.msgbuf_show_timestamp", &msgbuf_show_timestamp);
 
 /*
  * Initialize a message buffer of the specified size at the specified

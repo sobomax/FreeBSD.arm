@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/pc98/pc98/machdep.c 264687 2014-04-20 05:40:13Z nyan $");
+__FBSDID("$FreeBSD: head/sys/pc98/pc98/machdep.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -1113,8 +1113,7 @@ cpu_halt(void)
 }
 
 static int	idle_mwait = 1;		/* Use MONITOR/MWAIT for short idle. */
-TUNABLE_INT("machdep.idle_mwait", &idle_mwait);
-SYSCTL_INT(_machdep, OID_AUTO, idle_mwait, CTLFLAG_RW, &idle_mwait,
+SYSCTL_INT(_machdep, OID_AUTO, idle_mwait, CTLFLAG_RWTUN, &idle_mwait,
     0, "Use MONITOR/MWAIT for short idle");
 
 #define	STATE_RUNNING	0x0

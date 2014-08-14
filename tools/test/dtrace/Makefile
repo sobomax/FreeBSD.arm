@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/test/dtrace/Makefile 266454 2014-05-19 20:11:55Z markj $
+# $FreeBSD: head/tools/test/dtrace/Makefile 268538 2014-07-11 22:22:08Z pfg $
 
 TESTSRCDIR=	${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/dtrace/test
 CFLAGS+=	-w
@@ -337,7 +337,7 @@ listprgs	:
 
 .for _f in ${ALL_TESTCFILES}
 ${_f:T:S/c$/exe/} : ${_f}
-	gcc -o ${.TARGET} ${_f} -lrt
+	${CC} -o ${.TARGET} ${_f} -lrt
 .endfor
 
 .for _f in ${ALL_TESTEXEFILES}

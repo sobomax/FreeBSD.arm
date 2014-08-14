@@ -26,7 +26,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/include/pmap.h 259007 2013-12-05 21:34:33Z andreast $
+ * $FreeBSD: head/sys/powerpc/include/pmap.h 269368 2014-08-01 04:53:35Z alc $
  */
 /*-
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
@@ -112,7 +112,6 @@ RB_PROTOTYPE(pvo_tree, pvo_entry, pvo_plink, pvo_vaddr_compare);
 #define	PVO_PTEGIDX_VALID	0x008UL		/* slot is valid */
 #define	PVO_WIRED		0x010UL		/* PVO entry is wired */
 #define	PVO_MANAGED		0x020UL		/* PVO entry is managed */
-#define	PVO_EXECUTABLE		0x040UL		/* PVO entry is executable */
 #define	PVO_BOOTSTRAP		0x080UL		/* PVO entry allocated during
 						   bootstrap */
 #define PVO_LARGE		0x200UL		/* large page */

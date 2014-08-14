@@ -1,8 +1,8 @@
-# $FreeBSD: head/usr.sbin/cdcontrol/Makefile 201724 2010-01-07 09:40:34Z dwmalone $
+# $FreeBSD: head/usr.sbin/cdcontrol/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 PROG= cdcontrol
 
-DPADD=	${LIBEDIT} ${LIBTERMCAP}
-LDADD=	-ledit -ltermcap
+DPADD=	${LIBEDIT} ${LIBTERMCAPW}
+LDADD=	-ledit -ltermcapw
 
 .include <bsd.prog.mk>

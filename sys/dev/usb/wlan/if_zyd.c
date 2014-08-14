@@ -1,6 +1,6 @@
 /*	$OpenBSD: if_zyd.c,v 1.52 2007/02/11 00:08:04 jsg Exp $	*/
 /*	$NetBSD: if_zyd.c,v 1.7 2007/06/21 04:04:29 kiyohara Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 260444 2014-01-08 08:06:56Z kevlo $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 269127 2014-07-26 16:06:01Z hselasky $	*/
 
 /*-
  * Copyright (c) 2006 by Damien Bergamini <damien.bergamini@free.fr>
@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 260444 2014-01-08 08:06:56Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 269127 2014-07-26 16:06:01Z hselasky $");
 
 /*
  * ZyDAS ZD1211/ZD1211B USB WLAN driver.
@@ -2480,7 +2480,7 @@ zyd_tx_start(struct zyd_softc *sc, struct mbuf *m0, struct ieee80211_node *ni)
 	const struct ieee80211_txparam *tp;
 	struct ieee80211_key *k;
 	int rate, totlen;
-	static uint8_t ratediv[] = ZYD_TX_RATEDIV;
+	static const uint8_t ratediv[] = ZYD_TX_RATEDIV;
 	uint8_t phy;
 	uint16_t pktlen;
 	uint32_t bits;

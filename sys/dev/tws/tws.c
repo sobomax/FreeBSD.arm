@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tws/tws.c 255871 2013-09-25 17:16:21Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/tws/tws.c 268109 2014-07-01 18:24:54Z jhb $");
 
 #include <dev/tws/tws.h>
 #include <dev/tws/tws_services.h>
@@ -310,6 +310,12 @@ tws_attach(device_t dev)
 attach_fail_4:
     tws_teardown_intr(sc);
     destroy_dev(sc->tws_cdev);
+    if (sc->dma_mem_phys)
+	    bus_dmamap_unload(sc->cmd_tag, sc->cmd_map);
+    if (sc->dma_mem)
+	    bus_dmamem_free(sc->cmd_tag, sc->dma_mem, sc->cmd_map);
+    if (sc->cmd_tag)
+	    bus_dma_tag_destroy(sc->cmd_tag);
 attach_fail_3:
     for(i=0;i<sc->irqs;i++) {
         if ( sc->irq_res[i] ){
@@ -382,6 +388,13 @@ tws_detach(device_t dev)
     }
 
     tws_cam_detach(sc);
+
+    if (sc->dma_mem_phys)
+	    bus_dmamap_unload(sc->cmd_tag, sc->cmd_map);
+    if (sc->dma_mem)
+	    bus_dmamem_free(sc->cmd_tag, sc->dma_mem, sc->cmd_map);
+    if (sc->cmd_tag)
+	    bus_dma_tag_destroy(sc->cmd_tag);
 
     /* Release memory resource */
     if ( sc->mfa_res ){

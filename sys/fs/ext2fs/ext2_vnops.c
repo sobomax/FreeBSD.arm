@@ -39,7 +39,7 @@
  *
  *	@(#)ufs_vnops.c	8.7 (Berkeley) 2/3/94
  *	@(#)ufs_vnops.c 8.27 (Berkeley) 5/27/95
- * $FreeBSD: head/sys/fs/ext2fs/ext2_vnops.c 262623 2014-02-28 21:25:32Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_vnops.c 268764 2014-07-16 14:04:46Z kib $
  */
 
 #include "opt_suiddir.h"
@@ -666,10 +666,6 @@ ext2_link(struct vop_link_args *ap)
 	if ((cnp->cn_flags & HASBUF) == 0)
 		panic("ext2_link: no name");
 #endif
-	if (tdvp->v_mount != vp->v_mount) {
-		error = EXDEV;
-		goto out;
-	}
 	ip = VTOI(vp);
 	if ((nlink_t)ip->i_nlink >= EXT2_LINK_MAX) {
 		error = EMLINK;

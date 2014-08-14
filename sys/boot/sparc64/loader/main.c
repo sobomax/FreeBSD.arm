@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/sparc64/loader/main.c 251589 2013-06-09 23:50:30Z marius $");
+__FBSDID("$FreeBSD: head/sys/boot/sparc64/loader/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 /*
  * FreeBSD/sparc64 kernel loader - machine dependent part
@@ -897,7 +897,7 @@ main(int (*openfirm)(void *))
 	printf("bootpath=\"%s\"\n", bootpath);
 
 	/* Give control to the machine independent loader code. */
-	interact();
+	interact(NULL);
 	return (1);
 }
 

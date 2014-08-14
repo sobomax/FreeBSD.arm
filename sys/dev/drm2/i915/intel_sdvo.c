@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_sdvo.c 254797 2013-08-24 16:50:47Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_sdvo.c 268564 2014-07-12 06:23:42Z rpaulo $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>

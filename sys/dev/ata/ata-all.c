@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/ata-all.c 264389 2014-04-12 23:40:54Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/ata-all.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,9 +80,8 @@ int ata_dma_check_80pin = 1;
 
 /* sysctl vars */
 static SYSCTL_NODE(_hw, OID_AUTO, ata, CTLFLAG_RD, 0, "ATA driver parameters");
-TUNABLE_INT("hw.ata.ata_dma_check_80pin", &ata_dma_check_80pin);
 SYSCTL_INT(_hw_ata, OID_AUTO, ata_dma_check_80pin,
-	   CTLFLAG_RW, &ata_dma_check_80pin, 1,
+	   CTLFLAG_RWTUN, &ata_dma_check_80pin, 0,
 	   "Check for 80pin cable before setting ATA DMA mode");
 FEATURE(ata_cam, "ATA devices are accessed through the cam(4) driver");
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/gdb/Makefile.inc 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/gnu/usr.bin/gdb/Makefile.inc 269648 2014-08-06 22:17:26Z bapt $
 
 VERSION= "6.1.1 [FreeBSD]"
 VENDOR= marcel
@@ -15,6 +15,7 @@ CNTRB_RL= ${CNTRB_ROOT}/libreadline
 OBJ_ROOT= ${.OBJDIR}/../..
 OBJ_BU= ${OBJ_ROOT}/binutils
 OBJ_GDB= ${OBJ_ROOT}/gdb
+OBJ_RL= ${OBJ_ROOT}/../lib/libreadline/readline
 
 # These assignments duplicate much of the functionality of
 # MACHINE_CPUARCH, but there's no easy way to export make functions...
@@ -46,6 +47,7 @@ CFLAGS+= -I${CNTRB_GDB}/gdb/config
 CFLAGS+= -I${CNTRB_BU}/include
 CFLAGS+= -I${CNTRB_GDB}/include
 CFLAGS+= -I${CNTRB_BU}/bfd
+CFLAGS+= -I${OBJ_RL}/..
 
 GENSRCS+= nm.h tm.h
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
-# $FreeBSD: head/bin/ls/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/bin/ls/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 .include <src.opts.mk>
 
@@ -11,8 +11,8 @@ LDADD=	-lutil
 .if !defined(RELEASE_CRUNCH) && \
 	${MK_LS_COLORS} != no
 CFLAGS+= -DCOLORLS
-DPADD+=	${LIBTERMCAP}
-LDADD+=	-ltermcap
+DPADD+=	${LIBTERMCAPW}
+LDADD+=	-ltermcapw
 .endif
 
 .include <bsd.prog.mk>

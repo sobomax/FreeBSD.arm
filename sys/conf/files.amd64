@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: head/sys/conf/files.amd64 266531 2014-05-22 05:04:40Z jhibbits $
+# $FreeBSD: head/sys/conf/files.amd64 267530 2014-06-16 08:45:51Z royger $
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and
@@ -557,3 +557,6 @@ x86/xen/hvm.c			optional	xenhvm
 x86/xen/xen_intr.c		optional	xen | xenhvm
 x86/xen/pv.c			optional	xenhvm
 x86/xen/pvcpu_enum.c		optional	xenhvm
+x86/xen/xen_apic.c		optional	xenhvm
+x86/xen/xenpv.c			optional	xenhvm
+x86/xen/xen_nexus.c		optional	xenhvm

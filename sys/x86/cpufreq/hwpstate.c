@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/cpufreq/hwpstate.c 257769 2013-11-06 23:29:25Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/x86/cpufreq/hwpstate.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -118,9 +118,8 @@ static int	hwpstate_get_info_from_msr(device_t dev);
 static int	hwpstate_goto_pstate(device_t dev, int pstate_id);
 
 static int	hwpstate_verbose = 0;
-SYSCTL_INT(_debug, OID_AUTO, hwpstate_verbose, CTLFLAG_RW | CTLFLAG_TUN,
+SYSCTL_INT(_debug, OID_AUTO, hwpstate_verbose, CTLFLAG_RWTUN,
        &hwpstate_verbose, 0, "Debug hwpstate");
-TUNABLE_INT("debug.hwpstate_verbose", &hwpstate_verbose);
 
 static device_method_t hwpstate_methods[] = {
 	/* Device interface */

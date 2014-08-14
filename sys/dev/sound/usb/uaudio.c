@@ -1,5 +1,5 @@
 /*	$NetBSD: uaudio.c,v 1.91 2004/11/05 17:46:14 kent Exp $	*/
-/*	$FreeBSD: head/sys/dev/sound/usb/uaudio.c 266011 2014-05-14 11:25:59Z hselasky $ */
+/*	$FreeBSD: head/sys/dev/sound/usb/uaudio.c 267992 2014-06-28 03:56:17Z hselasky $ */
 
 /*-
  * Copyright (c) 1999 The NetBSD Foundation, Inc.
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sound/usb/uaudio.c 266011 2014-05-14 11:25:59Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/sound/usb/uaudio.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * USB audio specs: http://www.usb.org/developers/devclass_docs/audio10.pdf
@@ -103,17 +103,11 @@ static SYSCTL_NODE(_hw_usb, OID_AUTO, uaudio, CTLFLAG_RW, 0, "USB uaudio");
 
 SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, debug, CTLFLAG_RW,
     &uaudio_debug, 0, "uaudio debug level");
-
-TUNABLE_INT("hw.usb.uaudio.default_rate", &uaudio_default_rate);
-SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, default_rate, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, default_rate, CTLFLAG_RWTUN,
     &uaudio_default_rate, 0, "uaudio default sample rate");
-
-TUNABLE_INT("hw.usb.uaudio.default_bits", &uaudio_default_bits);
-SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, default_bits, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, default_bits, CTLFLAG_RWTUN,
     &uaudio_default_bits, 0, "uaudio default sample bits");
-
-TUNABLE_INT("hw.usb.uaudio.default_channels", &uaudio_default_channels);
-SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, default_channels, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_uaudio, OID_AUTO, default_channels, CTLFLAG_RWTUN,
     &uaudio_default_channels, 0, "uaudio default sample channels");
 #endif
 

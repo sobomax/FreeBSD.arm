@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/alq/Makefile 205959 2010-03-31 03:58:57Z lstewart $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/sys/modules/alq/Makefile 269538 2014-08-04 22:34:12Z imp $
 
 .PATH:  ${.CURDIR}/../../kern
 KMOD=	alq

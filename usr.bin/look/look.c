@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)look.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/look/look.c 265865 2014-05-11 02:00:48Z eadler $");
+__FBSDID("$FreeBSD: head/usr.bin/look/look.c 268242 2014-07-04 04:47:29Z eadler $");
 
 /*
  * look -- find lines in a sorted list.
@@ -59,6 +59,7 @@ __FBSDID("$FreeBSD: head/usr.bin/look/look.c 265865 2014-05-11 02:00:48Z eadler 
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <getopt.h>
 #include <limits.h>
 #include <locale.h>
 #include <stdint.h>
@@ -88,6 +89,14 @@ static void	 print_from(wchar_t *, unsigned char *, unsigned char *);
 
 static void usage(void);
 
+static struct option longopts[] = {
+	{ "alternative",no_argument,	NULL, 'a' },
+	{ "alphanum",	no_argument,	NULL, 'd' },
+	{ "ignore-case",no_argument,	NULL, 'i' },
+	{ "terminate",	required_argument, NULL, 't'},
+	{ NULL,		0,		NULL, 0 },
+};
+
 int
 main(int argc, char *argv[])
 {
@@ -102,7 +111,7 @@ main(int argc, char *argv[])
 
 	file = _path_words;
 	termchar = L'\0';
-	while ((ch = getopt(argc, argv, "adft:")) != -1)
+	while ((ch = getopt_long(argc, argv, "+adft:", longopts, NULL)) != -1)
 		switch(ch) {
 		case 'a':
 			/* COMPATIBILITY */

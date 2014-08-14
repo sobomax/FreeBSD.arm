@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 261117 2014-01-24 09:13:30Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 /*
  * The FreeBSD IP packet firewall, main file
@@ -181,7 +181,6 @@ SYSCTL_VNET_PROC(_net_inet_ip_fw, OID_AUTO, tables_max,
 SYSCTL_INT(_net_inet_ip_fw, OID_AUTO, default_to_accept, CTLFLAG_RDTUN,
     &default_to_accept, 0,
     "Make the default rule accept all packets.");
-TUNABLE_INT("net.inet.ip.fw.default_to_accept", &default_to_accept);
 TUNABLE_INT("net.inet.ip.fw.tables_max", (int *)&default_fw_tables);
 SYSCTL_VNET_INT(_net_inet_ip_fw, OID_AUTO, static_count,
     CTLFLAG_RD, &VNET_NAME(layer3_chain.n_rules), 0,

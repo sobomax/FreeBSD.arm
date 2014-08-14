@@ -30,11 +30,11 @@
  */
 
 /*
- * This driver is based on the I2C driver for IMX (imx/i2c.c).
+ * This driver is based on the I2C driver for i.MX
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_i2c.c 262568 2014-02-27 18:13:07Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_i2c.c 268973 2014-07-22 03:59:14Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

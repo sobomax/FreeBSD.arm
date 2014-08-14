@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/unbound/daemon/Makefile 255597 2013-09-15 14:51:23Z des $
+# $FreeBSD: head/usr.sbin/unbound/daemon/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../../contrib/ldns
@@ -10,7 +10,7 @@ PROG=	unbound
 SRCS=	acl_list.c cachedump.c daemon.c remote.c stats.c unbound.c worker.c
 CFLAGS=	-I${UNBOUNDDIR} -I${LDNSDIR}
 DPADD=	${LIBUNBOUND} ${LIBLDNS} ${LIBUTIL} ${LIBSSL} ${LIBCRYPTO} ${LIBPTHREAD}
-LDADD=	-lunbound -lldns -lutil -lssl -lcrypto -lpthread
+LDADD=	${LDUNBOUND} ${LDLDNS} -lutil -lssl -lcrypto -lpthread
 USEPRIVATELIB=	ldns
 MAN=	unbound.8 unbound.conf.5
 

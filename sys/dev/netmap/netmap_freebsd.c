@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/dev/netmap/netmap_freebsd.c 267180 2014-06-06 18:36:02Z luigi $ */
+/* $FreeBSD: head/sys/dev/netmap/netmap_freebsd.c 268530 2014-07-11 14:34:29Z glebius $ */
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -221,9 +221,9 @@ generic_xmit_frame(struct ifnet *ifp, struct mbuf *m,
 	 * (and eventually, just reference the netmap buffer)
 	 */
 
-	if (*m->m_ext.ref_cnt != 1) {
+	if (*m->m_ext.ext_cnt != 1) {
 		D("invalid refcnt %d for %p",
-			*m->m_ext.ref_cnt, m);
+			*m->m_ext.ext_cnt, m);
 		panic("in generic_xmit_frame");
 	}
 	// XXX the ext_size check is unnecessary if we link the netmap buf
@@ -238,7 +238,7 @@ generic_xmit_frame(struct ifnet *ifp, struct mbuf *m,
 	}
 	m->m_len = m->m_pkthdr.len = len;
 	// inc refcount. All ours, we could skip the atomic
-	atomic_fetchadd_int(m->m_ext.ref_cnt, 1);
+	atomic_fetchadd_int(m->m_ext.ext_cnt, 1);
 	m->m_flags |= M_FLOWID;
 	m->m_pkthdr.flowid = ring_nr;
 	m->m_pkthdr.rcvif = ifp; /* used for tx notification */

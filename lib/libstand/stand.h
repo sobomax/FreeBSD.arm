@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libstand/stand.h 266878 2014-05-30 09:43:32Z hselasky $
+ * $FreeBSD: head/lib/libstand/stand.h 269361 2014-07-31 23:25:13Z marcel $
  * From	$NetBSD: stand.h,v 1.22 1997/06/26 19:17:40 drochner Exp $	
  */
 
@@ -124,6 +124,7 @@ extern struct fs_ops bzipfs_fsops;
 extern struct fs_ops dosfs_fsops;
 extern struct fs_ops ext2fs_fsops;
 extern struct fs_ops splitfs_fsops;
+extern struct fs_ops pkgfs_fsops;
 
 /* where values for lseek(2) */
 #define	SEEK_SET	0	/* set file offset to offset */
@@ -364,6 +365,7 @@ extern int		devopen(struct open_file *, const char *, const char **);
 extern int		devclose(struct open_file *f);
 extern void		panic(const char *, ...) __dead2 __printflike(1, 2);
 extern struct fs_ops	*file_system[];
+extern struct fs_ops	*exclusive_file_system;
 extern struct devsw	*devsw[];
 
 /*

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/timer/timer.c 263008 2014-03-11 10:20:42Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/timer/timer.c 267528 2014-06-16 08:44:33Z royger $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -645,5 +645,5 @@ static driver_t xentimer_driver = {
 	sizeof(struct xentimer_softc),
 };
 
-DRIVER_MODULE(xentimer, nexus, xentimer_driver, xentimer_devclass, 0, 0);
-MODULE_DEPEND(xentimer, nexus, 1, 1, 1);
+DRIVER_MODULE(xentimer, xenpv, xentimer_driver, xentimer_devclass, 0, 0);
+MODULE_DEPEND(xentimer, xenpv, 1, 1, 1);

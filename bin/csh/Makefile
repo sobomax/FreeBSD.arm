@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/csh/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/bin/csh/Makefile 268804 2014-07-17 18:24:34Z brooks $
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
 #
 # C Shell with process control; VM/UNIX VAX Makefile
@@ -40,8 +40,8 @@ MLINKS= csh.1 tcsh.1
 # utilities of the same name are handled with the associated manpage,
 # builtin.1 in share/man/man1/.
 
-DPADD=	${LIBTERMCAP} ${LIBCRYPT}
-LDADD=	-ltermcap -lcrypt
+DPADD=	${LIBTERMCAPW} ${LIBCRYPT}
+LDADD=	-ltermcapw -lcrypt
 
 LINKS=	${BINDIR}/csh ${BINDIR}/tcsh
 

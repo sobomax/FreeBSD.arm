@@ -28,10 +28,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_drv.c 264008 2014-04-01 15:48:46Z rstone $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_drv.c 268351 2014-07-07 00:27:09Z marcel $");
 
 #include "opt_acpi.h"
-#if defined(__amd64__) /* || defined(__ia64__) */
+#if defined(__amd64__)
 #define	DEV_APIC
 #else
 #include "opt_apic.h"

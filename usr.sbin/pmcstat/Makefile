@@ -1,12 +1,12 @@
 #
-# $FreeBSD: head/usr.sbin/pmcstat/Makefile 262424 2014-02-24 02:43:58Z adrian $
+# $FreeBSD: head/usr.sbin/pmcstat/Makefile 268804 2014-07-17 18:24:34Z brooks $
 #
 
 PROG=	pmcstat
 MAN=	pmcstat.8
 
-DPADD=	${LIBELF} ${LIBKVM} ${LIBPMC} ${LIBM} ${LIBNCURSES}
-LDADD=	-lelf -lkvm -lpmc -lm -lncurses
+DPADD=	${LIBELF} ${LIBKVM} ${LIBPMC} ${LIBM} ${LIBNCURSESW}
+LDADD=	-lelf -lkvm -lpmc -lm -lncursesw
 
 SRCS=	pmcstat.c pmcstat.h pmcstat_log.c \
 pmcpl_callgraph.c pmcpl_gprof.c pmcpl_annotate.c \

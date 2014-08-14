@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/if_macb.c 243882 2012-12-05 08:04:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/if_macb.c 267363 2014-06-11 14:53:58Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -258,14 +258,14 @@ macb_free_desc_dma_tx(struct macb_softc *sc)
 
 	/* TX descriptor ring. */
 	if (sc->dmatag_data_tx != NULL) {
-		if (sc->dmamap_ring_tx != NULL)
+		if (sc->ring_paddr_tx != 0)
 			bus_dmamap_unload(sc->dmatag_data_tx,
 			    sc->dmamap_ring_tx);
-		if (sc->dmamap_ring_tx != NULL && sc->desc_tx != NULL)
+		if (sc->desc_tx != NULL)
 			bus_dmamem_free(sc->dmatag_data_tx, sc->desc_tx,
 			    sc->dmamap_ring_tx);
-		sc->dmamap_ring_tx = NULL;
-		sc->dmamap_ring_tx = NULL;
+		sc->ring_paddr_tx = 0;
+		sc->desc_tx = NULL;
 		bus_dma_tag_destroy(sc->dmatag_data_tx);
 		sc->dmatag_data_tx = NULL;
 	}
@@ -389,15 +389,14 @@ macb_free_desc_dma_rx(struct macb_softc *sc)
 	}
 	/* RX descriptor ring. */
 	if (sc->dmatag_data_rx != NULL) {
-		if (sc->dmamap_ring_rx != NULL)
+		if (sc->ring_paddr_rx != 0)
 			bus_dmamap_unload(sc->dmatag_data_rx,
 			    sc->dmamap_ring_rx);
-		if (sc->dmamap_ring_rx != NULL &&
-		    sc->desc_rx != NULL)
+		if (sc->desc_rx != NULL)
 			bus_dmamem_free(sc->dmatag_data_rx, sc->desc_rx,
 			    sc->dmamap_ring_rx);
+		sc->ring_paddr_rx = 0;
 		sc->desc_rx = NULL;
-		sc->dmamap_ring_rx = NULL;
 		bus_dma_tag_destroy(sc->dmatag_data_rx);
 		sc->dmatag_data_rx = NULL;
 	}

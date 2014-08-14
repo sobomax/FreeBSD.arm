@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/stge/if_stge.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/stge/if_stge.c 267363 2014-06-11 14:53:58Z jhb $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -902,31 +902,29 @@ stge_dma_free(struct stge_softc *sc)
 
 	/* Tx ring */
 	if (sc->sc_cdata.stge_tx_ring_tag) {
-		if (sc->sc_cdata.stge_tx_ring_map)
+		if (sc->sc_rdata.stge_tx_ring_paddr)
 			bus_dmamap_unload(sc->sc_cdata.stge_tx_ring_tag,
 			    sc->sc_cdata.stge_tx_ring_map);
-		if (sc->sc_cdata.stge_tx_ring_map &&
-		    sc->sc_rdata.stge_tx_ring)
+		if (sc->sc_rdata.stge_tx_ring)
 			bus_dmamem_free(sc->sc_cdata.stge_tx_ring_tag,
 			    sc->sc_rdata.stge_tx_ring,
 			    sc->sc_cdata.stge_tx_ring_map);
 		sc->sc_rdata.stge_tx_ring = NULL;
-		sc->sc_cdata.stge_tx_ring_map = 0;
+		sc->sc_rdata.stge_tx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->sc_cdata.stge_tx_ring_tag);
 		sc->sc_cdata.stge_tx_ring_tag = NULL;
 	}
 	/* Rx ring */
 	if (sc->sc_cdata.stge_rx_ring_tag) {
-		if (sc->sc_cdata.stge_rx_ring_map)
+		if (sc->sc_rdata.stge_rx_ring_paddr)
 			bus_dmamap_unload(sc->sc_cdata.stge_rx_ring_tag,
 			    sc->sc_cdata.stge_rx_ring_map);
-		if (sc->sc_cdata.stge_rx_ring_map &&
-		    sc->sc_rdata.stge_rx_ring)
+		if (sc->sc_rdata.stge_rx_ring)
 			bus_dmamem_free(sc->sc_cdata.stge_rx_ring_tag,
 			    sc->sc_rdata.stge_rx_ring,
 			    sc->sc_cdata.stge_rx_ring_map);
 		sc->sc_rdata.stge_rx_ring = NULL;
-		sc->sc_cdata.stge_rx_ring_map = 0;
+		sc->sc_rdata.stge_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->sc_cdata.stge_rx_ring_tag);
 		sc->sc_cdata.stge_rx_ring_tag = NULL;
 	}

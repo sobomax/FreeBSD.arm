@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.bin/ssh/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/secure/usr.bin/ssh/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -16,13 +16,13 @@ SRCS=	ssh.c readconf.c clientloop.c sshtty.c \
 SRCS+=	gss-genr.c
 
 DPADD=	${LIBSSH} ${LIBUTIL}
-LDADD=	-lssh -lutil
+LDADD=	${LDSSH} -lutil
 USEPRIVATELIB= ssh
 
 .if ${MK_LDNS} != "no"
 CFLAGS+=	-DHAVE_LDNS=1
 DPADD+=	${LIBLDNS}
-LDADD+=	-lldns
+LDADD+=	${LIBLDNSADD}
 USEPRIVATELIB+= ldns
 .endif
 

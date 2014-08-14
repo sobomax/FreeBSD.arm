@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libcuse/cuse_lib.c 266581 2014-05-23 08:46:28Z hselasky $ */
+/* $FreeBSD: head/lib/libcuse/cuse_lib.c 267543 2014-06-16 14:02:14Z hselasky $ */
 /*-
  * Copyright (c) 2010-2012 Hans Petter Selasky. All rights reserved.
  *
@@ -425,7 +425,7 @@ cuse_dev_destroy(struct cuse_dev *cdev)
 	TAILQ_REMOVE(&h_cuse, cdev, entry);
 	cuse_unlock();
 
-	error = ioctl(f_cuse, CUSE_IOCTL_DESTROY_DEV, cdev);
+	error = ioctl(f_cuse, CUSE_IOCTL_DESTROY_DEV, &cdev);
 	if (error)
 		return;
 

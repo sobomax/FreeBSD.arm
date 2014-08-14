@@ -1,5 +1,5 @@
 /*	$NetBSD: ip_gre.h,v 1.5 2002/06/09 16:33:40 itojun Exp $ */
-/*	 $FreeBSD: head/sys/netinet/ip_gre.h 204522 2010-03-01 17:05:46Z joel $ */
+/*	 $FreeBSD: head/sys/netinet/ip_gre.h 269699 2014-08-08 01:57:15Z kevlo $ */
 
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
@@ -31,6 +31,6 @@
  */
 
 #ifdef _KERNEL
-void gre_input(struct mbuf *, int);
-void gre_mobile_input(struct mbuf *, int);
+int gre_input(struct mbuf **, int *, int);
+int gre_mobile_input(struct mbuf **, int *, int);
 #endif /* _KERNEL */

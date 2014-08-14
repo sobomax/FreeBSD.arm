@@ -1,11 +1,13 @@
-# $FreeBSD: head/lib/libucl/Makefile 263648 2014-03-22 17:28:14Z bapt $
+# $FreeBSD: head/lib/libucl/Makefile 268831 2014-07-18 06:58:01Z bapt $
 
 LIBUCL=	${.CURDIR}/../../contrib/libucl
 
 LIB=		ucl
 PRIVATELIB=	true
 SHLIB_MAJOR=	1
-SRCS=		ucl_emitter.c \
+SRCS=		ucl_emitter_streamline.c \
+		ucl_emitter_utils.c \
+		ucl_emitter.c \
 		ucl_hash.c \
 		ucl_parser.c  \
 		ucl_schema.c \

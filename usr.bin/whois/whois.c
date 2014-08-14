@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)whois.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/whois/whois.c 260259 2014-01-04 15:51:52Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.bin/whois/whois.c 267871 2014-06-25 15:39:08Z ume $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -179,10 +179,12 @@ main(int argc, char *argv[])
 	 * back to NICHOST.
 	 */
 	if (host == NULL && country == NULL) {
-		use_qnichost = 1;
-		host = NICHOST;
-		if (!(flags & WHOIS_QUICK))
-			flags |= WHOIS_RECURSE;
+		if ((host = getenv("RA_SERVER")) == NULL) {
+			use_qnichost = 1;
+			host = NICHOST;
+			if (!(flags & WHOIS_QUICK))
+				flags |= WHOIS_RECURSE;
+		}
 	}
 	while (argc-- > 0) {
 		if (country != NULL) {

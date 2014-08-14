@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform_ipip.c 266800 2014-05-28 12:45:27Z vanhu $	*/
+/*	$FreeBSD: head/sys/netipsec/xform_ipip.c 269699 2014-08-08 01:57:15Z kevlo $	*/
 /*	$OpenBSD: ip_ipip.c,v 1.25 2002/06/10 18:04:55 itojun Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -133,8 +133,8 @@ ip4_input6(struct mbuf **m, int *offp, int proto)
 /*
  * Really only a wrapper for ipip_input(), for use with IPv4.
  */
-void
-ip4_input(struct mbuf *m, int off)
+int
+ip4_input(struct mbuf **mp, int *offp, int proto)
 {
 #if 0
 	/* If we do not accept IP-in-IP explicitly, drop.  */
@@ -145,7 +145,8 @@ ip4_input(struct mbuf *m, int off)
 		return;
 	}
 #endif
-	_ipip_input(m, off, NULL);
+	_ipip_input(*mp, *offp, NULL);
+	return (IPPROTO_DONE);
 }
 #endif /* INET */
 
@@ -619,7 +620,7 @@ static struct protosw ipe4_protosw = {
 };
 #endif /* INET */
 #if defined(INET6) && defined(INET)
-static struct ip6protosw ipe6_protosw = {
+static struct protosw ipe6_protosw = {
 	.pr_type =	SOCK_RAW,
 	.pr_domain =	&inetdomain,
 	.pr_protocol =	IPPROTO_IPV6,

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_proto.c 264212 2014-04-07 01:53:03Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_proto.c 269142 2014-07-26 19:27:34Z marcel $");
 
 #include "opt_mrouting.h"
 #include "opt_ipsec.h"
@@ -394,3 +394,5 @@ SYSCTL_NODE(_net_inet, IPPROTO_IPCOMP,	ipcomp,	CTLFLAG_RW, 0,	"IPCOMP");
 SYSCTL_NODE(_net_inet, IPPROTO_IPIP,	ipip,	CTLFLAG_RW, 0,	"IPIP");
 #endif /* IPSEC */
 SYSCTL_NODE(_net_inet, IPPROTO_RAW,	raw,	CTLFLAG_RW, 0,	"RAW");
+SYSCTL_NODE(_net_inet, OID_AUTO,	accf,	CTLFLAG_RW, 0,
+    "Accept filters");

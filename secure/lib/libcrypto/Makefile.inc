@@ -1,10 +1,10 @@
-# $FreeBSD: head/secure/lib/libcrypto/Makefile.inc 267256 2014-06-09 05:50:57Z jkim $
+# $FreeBSD: head/secure/lib/libcrypto/Makefile.inc 269682 2014-08-07 18:56:10Z jkim $
 
 .include <bsd.own.mk>
 
 # OpenSSL version used for manual page generation
-OPENSSL_VER=	1.0.1h
-OPENSSL_DATE=	2014-06-05
+OPENSSL_VER=	1.0.1i
+OPENSSL_DATE=	2014-08-06
 
 LCRYPTO_SRC=	${.CURDIR}/../../../crypto/openssl
 LCRYPTO_DOC=	${.CURDIR}/../../../crypto/openssl/doc

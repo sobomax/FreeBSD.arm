@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libproc/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libproc/Makefile 268463 2014-07-09 17:31:57Z dim $
 
 .include <src.opts.mk>
 
@@ -15,7 +15,9 @@ INCS=	libproc.h
 
 CFLAGS+=	-I${.CURDIR}
 
-.if ${MK_LIBCPLUSPLUS} != "no"
+.if ${MK_CXX} == "no"
+CFLAGS+=	-DNO_CXA_DEMANGLE
+.elif ${MK_LIBCPLUSPLUS} != "no"
 LDADD+=		-lcxxrt
 DPADD+=		${LIBCXXRT}
 .else

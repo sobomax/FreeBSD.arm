@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/file/Makefile 234449 2012-04-19 03:20:13Z obrien $
+# $FreeBSD: head/usr.bin/file/Makefile 267897 2014-06-26 06:03:39Z delphij $
 # Makefile for file(1) cmd.
 # Copyright (c) David E. O'Brien, 2000-2004, 2009
 # Copyright (c) Ian F. Darwin 86/09/01 - see LEGAL.NOTICE.
@@ -21,7 +21,8 @@
 # 4. This notice may not be removed or altered.
 
 SRCDIR=	${.CURDIR}/../../contrib/file
-.PATH: ${SRCDIR}
+.PATH: ${SRCDIR}/src
+.PATH: ${SRCDIR}/doc
 
 PROG=	file
 

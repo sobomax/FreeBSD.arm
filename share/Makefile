@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/share/Makefile 267124 2014-06-05 18:53:56Z emaste $
+# $FreeBSD: head/share/Makefile 268022 2014-06-30 00:20:12Z emaste $
 
 .include <src.opts.mk>
 
@@ -86,7 +86,7 @@ _syscons=	syscons
 _tests=		tests
 .endif
 
-.if ${MK_VT_SUPPORT} != "no"
+.if ${MK_VT} != "no"
 _vt=		vt
 .endif
 

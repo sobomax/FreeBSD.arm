@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/amd64/boot1.efi/Makefile 264975 2014-04-26 16:34:22Z nwhitehorn $
+# $FreeBSD: head/sys/boot/amd64/boot1.efi/Makefile 268975 2014-07-22 04:38:28Z sbruno $
 
 MAN=
 
@@ -77,7 +77,7 @@ CLEANFILES= boot1.efifat
 
 beforedepend ${OBJS}: machine x86
 
-CLEANFILES+=   machine x86
+CLEANFILES+=   machine x86 boot1.efi
 
 machine:
 	ln -sf ${.CURDIR}/../../../amd64/include machine

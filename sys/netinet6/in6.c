@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 260882 2014-01-19 16:07:27Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 269243 2014-07-29 15:01:29Z glebius $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -1248,9 +1248,6 @@ in6_update_ifa_internal(struct ifnet *ifp, struct in6_aliasreq *ifra,
 		ia->ia6_lifetime.ia6t_pltime = 0;
 		ia->ia6_lifetime.ia6t_preferred = time_uptime;
 	}
-
-	/* Update metric */
-	ia->ia_ifa.ifa_metric = ifp->if_metric;
 
 	/*
 	 * configure address flags.

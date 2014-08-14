@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/procstat/procstat_vm.c 261780 2014-02-11 21:57:37Z jhb $
+ * $FreeBSD: head/usr.bin/procstat/procstat_vm.c 268925 2014-07-20 20:11:34Z rwatson $
  */
 
 #include <sys/param.h>
@@ -50,9 +50,9 @@ procstat_vm(struct procstat *procstat, struct kinfo_proc *kipp)
 
 	ptrwidth = 2*sizeof(void *) + 2;
 	if (!hflag)
-		printf("%5s %*s %*s %3s %4s %4s %3s %3s %4s %-2s %-s\n",
+		printf("%5s %*s %*s %3s %4s %4s %3s %3s %-4s %-2s %-s\n",
 		    "PID", ptrwidth, "START", ptrwidth, "END", "PRT", "RES",
-		    "PRES", "REF", "SHD", "FL", "TP", "PATH");
+		    "PRES", "REF", "SHD", "FLAG", "TP", "PATH");
 
 	freep = procstat_getvmmap(procstat, kipp, &cnt);
 	if (freep == NULL)

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_output.c 262763 2014-03-05 01:17:47Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_output.c 268241 2014-07-03 23:12:43Z hiren $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1160,7 +1160,7 @@ send:
 	 * the template, but need a way to checksum without them.
 	 */
 	/*
-	 * m->m_pkthdr.len should have been set before cksum calcuration,
+	 * m->m_pkthdr.len should have been set before checksum calculation,
 	 * because in6_cksum() need it.
 	 */
 #ifdef INET6

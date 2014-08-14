@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211.c 264843 2014-04-23 22:43:39Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211.c 269778 2014-08-10 08:35:42Z adrian $");
 
 /*
  * IEEE 802.11 generic handler
@@ -570,15 +570,9 @@ ieee80211_vap_attach(struct ieee80211vap *vap,
 		ifp->if_baudrate = IF_Mbps(maxrate);
 
 	ether_ifattach(ifp, vap->iv_myaddr);
-	if (vap->iv_opmode == IEEE80211_M_MONITOR) {
-		/* NB: disallow transmit */
-		ifp->if_transmit = null_transmit;
-		ifp->if_output = null_output;
-	} else {
-		/* hook output method setup by ether_ifattach */
-		vap->iv_output = ifp->if_output;
-		ifp->if_output = ieee80211_output;
-	}
+	/* hook output method setup by ether_ifattach */
+	vap->iv_output = ifp->if_output;
+	ifp->if_output = ieee80211_output;
 	/* NB: if_mtu set by ether_ifattach to ETHERMTU */
 
 	IEEE80211_LOCK(ic);

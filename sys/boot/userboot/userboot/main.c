@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/main.c 262331 2014-02-22 07:18:06Z grehan $");
+__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/main.c 269153 2014-07-27 16:12:51Z marcel $");
 
 #include <stand.h>
 #include <string.h>
@@ -141,7 +141,7 @@ loader_main(struct loader_callbacks *cb, void *arg, int version, int ndisks)
 	if (setjmp(jb))
 		return;
 
-	interact();			/* doesn't return */
+	interact(NULL);			/* doesn't return */
 
 	exit(0);
 }

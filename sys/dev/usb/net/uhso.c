@@ -24,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/uhso.c 260903 2014-01-20 07:09:19Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/uhso.c 268078 2014-07-01 07:13:41Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -559,8 +559,6 @@ uhso_attach(device_t self)
 	mtx_init(&sc->sc_mtx, "uhso", NULL, MTX_DEF);
 	ucom_ref(&sc->sc_super_ucom);
 
-	sc->sc_ucom = NULL;
-	sc->sc_ttys = 0;
 	sc->sc_radio = 1;
 
 	id = usbd_get_interface_descriptor(uaa->iface);
@@ -680,9 +678,6 @@ uhso_detach(device_t self)
 				    UHSO_CTRL_MAX);
 			}
 		}
-
-		free(sc->sc_tty, M_USBDEV);
-		free(sc->sc_ucom, M_USBDEV);
 	}
 
 	if (sc->sc_ifp != NULL) {
@@ -710,6 +705,8 @@ static void
 uhso_free_softc(struct uhso_softc *sc)
 {
 	if (ucom_unref(&sc->sc_super_ucom)) {
+		free(sc->sc_tty, M_USBDEV);
+		free(sc->sc_ucom, M_USBDEV);
 		mtx_destroy(&sc->sc_mtx);
 		device_free_softc(sc);
 	}

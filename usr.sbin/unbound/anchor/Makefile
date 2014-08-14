@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/unbound/anchor/Makefile 255597 2013-09-15 14:51:23Z des $
+# $FreeBSD: head/usr.sbin/unbound/anchor/Makefile 269648 2014-08-06 22:17:26Z bapt $
 
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../../contrib/ldns
@@ -11,7 +11,7 @@ PROG=	unbound-anchor
 SRCS=	unbound-anchor.c
 CFLAGS=	-I${UNBOUNDDIR} -I${LDNSDIR} -I${EXPATDIR}/lib
 DPADD=	${LIBUNBOUND} ${LIBLDNS} ${LIBUTIL} ${LIBBSDXML} ${LIBSSL} ${LIBCRYPTO} ${LIBPTHREAD}
-LDADD=	-lunbound -lldns -lutil -lbsdxml -lssl -lcrypto -lpthread
+LDADD=	${LDUNBOUND} ${LDLDNS} -lutil -lbsdxml -lssl -lcrypto -lpthread
 USEPRIVATELIB=	ldns
 MAN=	unbound-anchor.8
 

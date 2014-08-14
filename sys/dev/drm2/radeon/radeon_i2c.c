@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_i2c.c 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_i2c.c 268564 2014-07-12 06:23:42Z rpaulo $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_edid.h>

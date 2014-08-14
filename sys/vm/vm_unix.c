@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_unix.c 245296 2013-01-11 09:58:35Z zont $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_unix.c 268351 2014-07-07 00:27:09Z marcel $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -162,7 +162,7 @@ sys_obreak(td, uap)
 #endif
 		prot = VM_PROT_RW;
 #ifdef COMPAT_FREEBSD32
-#if defined(__amd64__) || defined(__ia64__)
+#if defined(__amd64__)
 		if (i386_read_exec && SV_PROC_FLAG(td->td_proc, SV_ILP32))
 			prot |= VM_PROT_EXECUTE;
 #endif

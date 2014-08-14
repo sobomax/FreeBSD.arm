@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_subr.c 264658 2014-04-18 17:03:43Z imp $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_subr.c 269420 2014-08-02 05:05:05Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -639,16 +639,14 @@ nandfs_get_node_raw(struct nandfs_device *nandfsdev, struct nandfsmount *nmp,
 	if (nmp) {
 		mp = nmp->nm_vfs_mountp;
 		error = getnewvnode("nandfs", mp, &nandfs_vnodeops, &nvp);
-		if (error) {
+		if (error)
 			return (error);
-		}
 	} else {
 		mp = NULL;
 		error = getnewvnode("snandfs", mp, &nandfs_system_vnodeops,
 		    &nvp);
-		if (error) {
+		if (error)
 			return (error);
-		}
 	}
 
 	if (mp)

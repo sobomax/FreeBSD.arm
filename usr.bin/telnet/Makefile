@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/telnet/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.bin/telnet/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 .include <src.opts.mk>
 
@@ -23,8 +23,8 @@ WARNS?=		2
 
 LIBTELNET=	${.OBJDIR}/../../lib/libtelnet/libtelnet.a
 
-DPADD=		${LIBTERMCAP} ${LIBTELNET}
-LDADD=		-ltermcap ${LIBTELNET}
+DPADD=		${LIBTERMCAPW} ${LIBTELNET}
+LDADD=		-ltermcapw ${LIBTELNET}
 
 .if !defined(RELEASE_CRUNCH)
 CFLAGS+=	-DIPSEC

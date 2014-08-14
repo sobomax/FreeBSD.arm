@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/acpica/acpi_machdep.c 246855 2013-02-15 22:43:08Z jkim $");
+__FBSDID("$FreeBSD: head/sys/amd64/acpica/acpi_machdep.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -45,9 +45,8 @@ __FBSDID("$FreeBSD: head/sys/amd64/acpica/acpi_machdep.c 246855 2013-02-15 22:43
 #include <machine/nexusvar.h>
 
 int acpi_resume_beep;
-TUNABLE_INT("debug.acpi.resume_beep", &acpi_resume_beep);
-SYSCTL_INT(_debug_acpi, OID_AUTO, resume_beep, CTLFLAG_RW, &acpi_resume_beep,
-    0, "Beep the PC speaker when resuming");
+SYSCTL_INT(_debug_acpi, OID_AUTO, resume_beep, CTLFLAG_RWTUN,
+    &acpi_resume_beep, 0, "Beep the PC speaker when resuming");
 
 int acpi_reset_video;
 TUNABLE_INT("hw.acpi.reset_video", &acpi_reset_video);

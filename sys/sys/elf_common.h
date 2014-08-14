@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/elf_common.h 261246 2014-01-28 21:38:54Z kaiw $
+ * $FreeBSD: head/sys/sys/elf_common.h 269337 2014-07-31 15:25:12Z emaste $
  */
 
 #ifndef _SYS_ELF_COMMON_H_
@@ -237,6 +237,7 @@ typedef struct {
 #define	EM_ARCA		109	/* Arca RISC Microprocessor. */
 #define	EM_UNICORE	110	/* Microprocessor series from PKU-Unity Ltd.
 				   and MPRC of Peking University */
+#define	EM_AARCH64	183	/* AArch64 (64-bit ARM) */
 
 /* Non-standard or deprecated. */
 #define	EM_486		6	/* Intel i486. */

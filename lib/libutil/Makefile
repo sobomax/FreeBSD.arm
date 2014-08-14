@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-#	$FreeBSD: head/lib/libutil/Makefile 265420 2014-05-06 04:22:01Z imp $
+#	$FreeBSD: head/lib/libutil/Makefile 269904 2014-08-13 04:56:27Z ngie $
 
 SHLIBDIR?= /lib
 
@@ -80,5 +80,9 @@ MLINKS+=pw_util.3 pw_copy.3 \
 	pw_util.3 pw_scan.3 \
 	pw_util.3 pw_tempname.3 \
 	pw_util.3 pw_tmp.3
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>

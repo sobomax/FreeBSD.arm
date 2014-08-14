@@ -50,7 +50,7 @@
 
 #include <machine/armreg.h>
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/setstack.s 261393 2014-02-02 00:48:15Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/setstack.s 269390 2014-08-01 18:24:44Z ian $");
 
 /* To set the stack pointer for a particular mode we must switch
  * to that mode update the banked r13 and then switch back.
@@ -71,7 +71,7 @@ ENTRY(set_stackptr)
         msr	cpsr_fsxc, r3		/* Restore the old mode */
 
 	mov	pc, lr			/* Exit */
-
+END(set_stackptr)
 /* To get the stack pointer for a particular mode we must switch
  * to that mode copy the banked r13 and then switch back.
  * This routine provides an easy way of doing this for any mode
@@ -90,5 +90,5 @@ ENTRY(get_stackptr)
         msr	cpsr_fsxc, r3		/* Restore the old mode */
 
 	mov	pc, lr			/* Exit */
-
+END(get_stackptr)
 /* End of setstack.S */

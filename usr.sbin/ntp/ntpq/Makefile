@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/ntpq/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/ntp/ntpq/Makefile 268804 2014-07-17 18:24:34Z brooks $
 
 MAN=
 
@@ -17,8 +17,8 @@ CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include -I${.CURDIR}/../ \
 DPADD=	${LIBNTP} ${LIBM} ${LIBMD} ${LIBOPTS}
 LDADD=	${LIBNTP} -lm -lmd ${LIBOPTS}
 
-DPADD+=		${LIBEDIT} ${LIBTERMCAP}
-LDADD+=		-ledit -ltermcap
+DPADD+=		${LIBEDIT} ${LIBTERMCAPW}
+LDADD+=		-ledit -ltermcapw
 CFLAGS+=	-DHAVE_LIBEDIT -DHAVE_READLINE_READLINE_H \
 		-I${DESTDIR}/${INCLUDEDIR}/edit
 

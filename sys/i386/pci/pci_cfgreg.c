@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/pci/pci_cfgreg.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/i386/pci/pci_cfgreg.c 267992 2014-06-28 03:56:17Z hselasky $");
 
 #include "opt_xbox.h"
 
@@ -86,7 +86,6 @@ static int cfgmech;
 static int devmax;
 static struct mtx pcicfg_mtx;
 static int mcfg_enable = 1;
-TUNABLE_INT("hw.pci.mcfg", &mcfg_enable);
 SYSCTL_INT(_hw_pci, OID_AUTO, mcfg, CTLFLAG_RDTUN, &mcfg_enable, 0,
     "Enable support for PCI-e memory mapped config access");
 

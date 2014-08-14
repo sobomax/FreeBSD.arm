@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nge/if_nge.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/nge/if_nge.c 267363 2014-06-11 14:53:58Z jhb $");
 
 /*
  * National Semiconductor DP83820/DP83821 gigabit ethernet driver
@@ -1225,31 +1225,29 @@ nge_dma_free(struct nge_softc *sc)
 
 	/* Tx ring. */
 	if (sc->nge_cdata.nge_tx_ring_tag) {
-		if (sc->nge_cdata.nge_tx_ring_map)
+		if (sc->nge_rdata.nge_tx_ring_paddr)
 			bus_dmamap_unload(sc->nge_cdata.nge_tx_ring_tag,
 			    sc->nge_cdata.nge_tx_ring_map);
-		if (sc->nge_cdata.nge_tx_ring_map &&
-		    sc->nge_rdata.nge_tx_ring)
+		if (sc->nge_rdata.nge_tx_ring)
 			bus_dmamem_free(sc->nge_cdata.nge_tx_ring_tag,
 			    sc->nge_rdata.nge_tx_ring,
 			    sc->nge_cdata.nge_tx_ring_map);
 		sc->nge_rdata.nge_tx_ring = NULL;
-		sc->nge_cdata.nge_tx_ring_map = NULL;
+		sc->nge_rdata.nge_tx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->nge_cdata.nge_tx_ring_tag);
 		sc->nge_cdata.nge_tx_ring_tag = NULL;
 	}
 	/* Rx ring. */
 	if (sc->nge_cdata.nge_rx_ring_tag) {
-		if (sc->nge_cdata.nge_rx_ring_map)
+		if (sc->nge_rdata.nge_rx_ring_paddr)
 			bus_dmamap_unload(sc->nge_cdata.nge_rx_ring_tag,
 			    sc->nge_cdata.nge_rx_ring_map);
-		if (sc->nge_cdata.nge_rx_ring_map &&
-		    sc->nge_rdata.nge_rx_ring)
+		if (sc->nge_rdata.nge_rx_ring)
 			bus_dmamem_free(sc->nge_cdata.nge_rx_ring_tag,
 			    sc->nge_rdata.nge_rx_ring,
 			    sc->nge_cdata.nge_rx_ring_map);
 		sc->nge_rdata.nge_rx_ring = NULL;
-		sc->nge_cdata.nge_rx_ring_map = NULL;
+		sc->nge_rdata.nge_rx_ring_paddr = 0;
 		bus_dma_tag_destroy(sc->nge_cdata.nge_rx_ring_tag);
 		sc->nge_cdata.nge_rx_ring_tag = NULL;
 	}
