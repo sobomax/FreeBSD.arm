@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-jmicron.c 249213 2013-04-06 19:12:49Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-jmicron.c 273328 2014-10-20 13:18:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -71,6 +71,7 @@ ata_jmicron_probe(device_t dev)
      { ATA_JMB365, 0, 1, 2, ATA_UDMA6, "JMB365" },
      { ATA_JMB366, 0, 2, 2, ATA_UDMA6, "JMB366" },
      { ATA_JMB368, 0, 0, 1, ATA_UDMA6, "JMB368" },
+     { ATA_JMB368_2, 0, 0, 1, ATA_UDMA6, "JMB368" },
      { 0, 0, 0, 0, 0, 0}};
     char buffer[64];
 

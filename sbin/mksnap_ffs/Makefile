@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/mksnap_ffs/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/mksnap_ffs/Makefile 270289 2014-08-21 19:04:15Z neel $
 
 .PATH:	${.CURDIR}/../mount
 
@@ -10,9 +10,9 @@ WARNS?=	2
 CFLAGS+=-I${.CURDIR}/../mount
 
 .if defined(NOSUID)
-BINMODE=550
+BINMODE=554
 .else
-BINMODE=4550
+BINMODE=4554
 BINOWN=	root
 .endif
 BINGRP=	operator

@@ -17,7 +17,7 @@
  * Cronyx Id: ng_sppp.c,v 1.1.2.10 2004/03/01 15:17:21 rik Exp $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netgraph/ng_sppp.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netgraph/ng_sppp.c 271851 2014-09-19 05:03:11Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -364,7 +364,7 @@ ng_sppp_rcvdata (hook_p hook, item_p item)
 	}
 
 	/* Update interface stats */
-	SP2IFP(pp)->if_ipackets++;
+	if_inc_counter(SP2IFP(pp), IFCOUNTER_IPACKETS, 1);
 
 	/* Note receiving interface */
 	m->m_pkthdr.rcvif = SP2IFP(pp);

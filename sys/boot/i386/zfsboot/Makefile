@@ -1,8 +1,9 @@
-# $FreeBSD: head/sys/boot/i386/zfsboot/Makefile 261567 2014-02-06 21:54:21Z emaste $
+# $FreeBSD: head/sys/boot/i386/zfsboot/Makefile 271609 2014-09-15 06:21:28Z avg $
 
 .PATH:		${.CURDIR}/../boot2 ${.CURDIR}/../common ${.CURDIR}/../../common
 
 FILES=		zfsboot
+MAN=		zfsboot.8
 
 NM?=		nm
 

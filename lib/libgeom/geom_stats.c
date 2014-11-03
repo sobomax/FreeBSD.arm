@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libgeom/geom_stats.c 112372 2003-03-18 09:53:46Z phk $
+ * $FreeBSD: head/lib/libgeom/geom_stats.c 271721 2014-09-17 19:37:58Z jhb $
  */
 
 #include <paths.h>
@@ -68,7 +68,7 @@ geom_stats_resync(void)
 		return;
 	for (;;) {
 		p = mmap(statp, (npages + 1) * pagesize, 
-		    PROT_READ, 0, statsfd, 0);
+		    PROT_READ, MAP_SHARED, statsfd, 0);
 		if (p == MAP_FAILED)
 			break;
 		else
@@ -90,7 +90,7 @@ geom_stats_open(void)
 		return (errno);
 	pagesize = getpagesize();
 	spp = pagesize / sizeof(struct devstat);
-	p = mmap(NULL, pagesize, PROT_READ, 0, statsfd, 0);
+	p = mmap(NULL, pagesize, PROT_READ, MAP_SHARED, statsfd, 0);
 	if (p == MAP_FAILED) {
 		error = errno;
 		close(statsfd);

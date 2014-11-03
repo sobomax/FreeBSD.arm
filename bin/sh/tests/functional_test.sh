@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/bin/sh/tests/functional_test.sh 269902 2014-08-13 04:14:50Z ngie $
+# $FreeBSD: head/bin/sh/tests/functional_test.sh 270101 2014-08-17 14:26:12Z jilles $
 
 SRCDIR=$(atf_get_srcdir)
 
@@ -39,13 +39,7 @@ check()
 	local out_file="${SRCDIR}/${tc}.stdout"
 	[ -f "${out_file}" ] && out_flag="-o file:${out_file}"
 
-	# We need to copy the testcase scenario file because some of the
-	# testcases hardcode relative paths in the stderr/stdout.
-	#
-	# TODO: we might be able to generate this path at build time
-	cp ${SRCDIR}/${tc} .
-
-	atf_check -s exit:${tc##*.} ${err_flag} ${out_flag} ${SH} "./${tc}"
+	atf_check -s exit:${tc##*.} ${err_flag} ${out_flag} ${SH} "${SRCDIR}/${tc}"
 }
 
 add_testcase()

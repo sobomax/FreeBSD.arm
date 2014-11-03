@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/atf/libatf-c/tests/Makefile 266650 2014-05-25 12:01:13Z jmmv $
+# $FreeBSD: head/lib/atf/libatf-c/tests/Makefile 273929 2014-11-01 11:17:54Z jmmv $
 
 .include <bsd.init.mk>
 
@@ -9,6 +9,7 @@ ATF=		${.CURDIR:H:H:H:H}/contrib/atf
 .PATH:		${ATF}/atf-c
 .PATH:		${ATF}/atf-c/detail
 
+CFLAGS+=	-DATF_INCLUDEDIR='"${INCLUDEDIR}"'
 CFLAGS+=	-I${ATF}
 
 # macros_test.c contains a double 'const const' which will be gone with
@@ -23,7 +24,6 @@ FILES+=		unused_test.c
 .for _T in	atf_c_test \
 		build_test \
 		check_test \
-		config_test \
 		error_test \
 		macros_test \
 		tc_test \

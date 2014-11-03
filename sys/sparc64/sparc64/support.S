@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/support.S 239941 2012-08-31 11:15:01Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/support.S 272895 2014-10-10 14:18:33Z bapt $");
 
 #include <sys/errno.h>
 
@@ -517,7 +517,7 @@ fs_nofault_end:
 ENTRY(fs_fault)
 	retl
 	 mov	-1, %o0
-END(fsfault)
+END(fs_fault)
 
 	.globl	fas_nofault_begin
 fas_nofault_begin:

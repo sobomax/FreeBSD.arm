@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/siis/siis.c 256843 2013-10-21 12:00:26Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/siis/siis.c 271461 2014-09-12 12:04:51Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -465,6 +465,7 @@ siis_ch_attach(device_t dev)
 	ch->dev = dev;
 	ch->unit = (intptr_t)device_get_ivars(dev);
 	ch->quirks = ctlr->quirks;
+	ch->pm_level = 0;
 	resource_int_value(device_get_name(dev),
 	    device_get_unit(dev), "pm_level", &ch->pm_level);
 	resource_int_value(device_get_name(dev),

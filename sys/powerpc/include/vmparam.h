@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: vmparam.h,v 1.11 2000/02/11 19:25:16 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/vmparam.h 269577 2014-08-05 09:44:10Z glebius $
+ * $FreeBSD: head/sys/powerpc/include/vmparam.h 270201 2014-08-20 08:02:38Z kib $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -210,5 +210,6 @@ struct pmap_physseg {
 #define	SFBUF
 #define	SFBUF_NOMD
 #define	SFBUF_OPTIONAL_DIRECT_MAP	hw_direct_map
+#define	SFBUF_PHYS_DMAP(x)		(x)
  
 #endif /* _MACHINE_VMPARAM_H_ */

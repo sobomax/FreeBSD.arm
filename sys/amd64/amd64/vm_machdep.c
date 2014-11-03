@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/vm_machdep.c 264984 2014-04-26 20:27:54Z scottl $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/vm_machdep.c 273995 2014-11-02 22:58:30Z jhb $");
 
 #include "opt_isa.h"
 #include "opt_cpu.h"
@@ -127,7 +127,7 @@ get_pcb_td(struct thread *td)
 void *
 alloc_fpusave(int flags)
 {
-	struct pcb *res;
+	void *res;
 	struct savefpu_ymm *sf;
 
 	res = malloc(cpu_max_ext_state_size, M_DEVBUF, flags);

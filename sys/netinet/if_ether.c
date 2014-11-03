@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/if_ether.c 263779 2014-03-26 22:46:03Z asomers $");
+__FBSDID("$FreeBSD: head/sys/netinet/if_ether.c 270869 2014-08-31 06:30:50Z glebius $");
 
 #include "opt_inet.h"
 
@@ -258,8 +258,8 @@ arprequest(struct ifnet *ifp, const struct in_addr *sip,
 
 	if ((m = m_gethdr(M_NOWAIT, MT_DATA)) == NULL)
 		return;
-	m->m_len = sizeof(*ah) + 2*sizeof(struct in_addr) +
-		2*ifp->if_data.ifi_addrlen;
+	m->m_len = sizeof(*ah) + 2 * sizeof(struct in_addr) +
+		2 * ifp->if_addrlen;
 	m->m_pkthdr.len = m->m_len;
 	MH_ALIGN(m, m->m_len);
 	ah = mtod(m, struct arphdr *);

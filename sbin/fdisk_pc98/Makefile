@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/fdisk_pc98/Makefile 148062 2005-07-15 15:31:19Z nyan $
+# $FreeBSD: head/sbin/fdisk_pc98/Makefile 272243 2014-09-28 08:23:26Z nyan $
 
 PROG=	fdisk
 SRCS=	fdisk.c geom_pc98_enc.c
@@ -7,7 +7,7 @@ MAN=	fdisk.8
 
 .PATH:	${.CURDIR}/../../sys/geom
 
-DPADD	+=	${LIBGEOM}
-LDADD	+=	-lgeom
+DPADD+=	${LIBGEOM} ${LIBBSDXML} ${LIBSBUF}
+LDADD+=	-lgeom -lbsdxml -lsbuf
 
 .include <bsd.prog.mk>

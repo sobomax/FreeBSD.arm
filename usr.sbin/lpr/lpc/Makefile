@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/lpr/lpc/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.sbin/lpr/lpc/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .PATH: ${.CURDIR}/../common_source
 
@@ -15,7 +15,5 @@ WARNS?=	0
 
 DPADD=	${LIBLPR} ${LIBEDIT} ${LIBTERMCAPW}
 LDADD=	${LIBLPR} -ledit -ltermcapw
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

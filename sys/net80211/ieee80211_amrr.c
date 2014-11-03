@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_amrr.c 257881 2013-11-09 07:30:13Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_amrr.c 270206 2014-08-20 09:10:03Z adrian $");
 
 /*-
  * Naive implementation of the Adaptive Multi Rate Retry algorithm:
@@ -195,12 +195,13 @@ amrr_node_init(struct ieee80211_node *ni)
 		rate &= IEEE80211_RATE_VAL;
 
 	/* pick initial rate from the rateset - HT or otherwise */
+	/* Pick something low that's likely to succeed */
 	for (amn->amn_rix = rs->rs_nrates - 1; amn->amn_rix > 0;
 	    amn->amn_rix--) {
 		/* legacy - anything < 36mbit, stop searching */
-		/* 11n - stop at MCS4 / MCS12 / MCS28 */
+		/* 11n - stop at MCS4 */
 		if (amrr_node_is_11n(ni)) {
-			if ((rs->rs_rates[amn->amn_rix] & 0x7) < 4)
+			if ((rs->rs_rates[amn->amn_rix] & 0x1f) < 4)
 				break;
 		} else if ((rs->rs_rates[amn->amn_rix] & IEEE80211_RATE_VAL) <= 72)
 			break;

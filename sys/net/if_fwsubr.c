@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/if_fwsubr.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/net/if_fwsubr.c 271867 2014-09-19 10:39:58Z glebius $
  */
 
 #include "opt_inet.h"
@@ -537,7 +537,7 @@ firewire_input(struct ifnet *ifp, struct mbuf *m, uint16_t src)
 
 	if (m->m_pkthdr.rcvif == NULL) {
 		if_printf(ifp, "discard frame w/o interface pointer\n");
-		ifp->if_ierrors++;
+		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 		m_freem(m);
 		return;
 	}
@@ -582,7 +582,7 @@ firewire_input(struct ifnet *ifp, struct mbuf *m, uint16_t src)
 		return;
 	}
 
-	ifp->if_ibytes += m->m_pkthdr.len;
+	if_inc_counter(ifp, IFCOUNTER_IBYTES, m->m_pkthdr.len);
 
 	/* Discard packet if interface is not up */
 	if ((ifp->if_flags & IFF_UP) == 0) {
@@ -591,7 +591,7 @@ firewire_input(struct ifnet *ifp, struct mbuf *m, uint16_t src)
 	}
 
 	if (m->m_flags & (M_BCAST|M_MCAST))
-		ifp->if_imcasts++;
+		if_inc_counter(ifp, IFCOUNTER_IMCASTS, 1);
 
 	switch (type) {
 #ifdef INET

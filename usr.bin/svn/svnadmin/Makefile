@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/svnadmin/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.bin/svn/svnadmin/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 MAN=
 
@@ -33,7 +33,5 @@ LDADD=	-L${LIBSVN_REPOSDIR} -lsvn_repos \
 DPADD=	${LIBSVN_REPOS} ${LIBSVN_FS} ${LIBSVN_FS_FS} ${LIBSVN_FS_UTIL} \
 	${LIBSVN_DELTA} ${LIBSVN_SUBR} ${LIBAPR_UTIL} \
 	${LIBBSDXML} ${LIBAPR} ${LIBSQLITE} ${LIBZ} ${LIBCRYPT}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

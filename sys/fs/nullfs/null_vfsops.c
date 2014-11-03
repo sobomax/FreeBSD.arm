@@ -32,7 +32,7 @@
  *	@(#)null_vfsops.c	8.2 (Berkeley) 1/21/94
  *
  * @(#)lofs_vfsops.c	1.2 (Berkeley) 6/18/92
- * $FreeBSD: head/sys/fs/nullfs/null_vfsops.c 250852 2013-05-21 11:31:56Z kib $
+ * $FreeBSD: head/sys/fs/nullfs/null_vfsops.c 273336 2014-10-20 18:00:50Z mjg $
  */
 
 /*
@@ -198,6 +198,8 @@ nullfs_mount(struct mount *mp)
 		    MNTK_EXTENDED_SHARED);
 	}
 	mp->mnt_kern_flag |= MNTK_LOOKUP_EXCL_DOTDOT;
+	mp->mnt_kern_flag |= lowerrootvp->v_mount->mnt_kern_flag &
+	    MNTK_SUSPENDABLE;
 	MNT_IUNLOCK(mp);
 	mp->mnt_data = xmp;
 	vfs_getnewfsid(mp);

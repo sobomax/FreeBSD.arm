@@ -43,7 +43,7 @@
 #include <machine/asm.h>
 #include <machine/setjmp.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/gen/_setjmp.S 251514 2013-06-07 22:01:06Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/gen/_setjmp.S 270882 2014-08-31 17:21:51Z ian $");
 
 /*
  * C library -- _setjmp, _longjmp
@@ -89,6 +89,7 @@ ENTRY(_setjmp)
 
         mov	r0, #0x00000000
 	RET
+END(_setjmp)
 
 .L_setjmp_magic:
 	.word	_JB_MAGIC__SETJMP
@@ -140,3 +141,4 @@ botch:
 #else
 	b	.
 #endif
+END(_longjmp)

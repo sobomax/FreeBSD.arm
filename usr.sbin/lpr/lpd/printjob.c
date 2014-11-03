@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)printjob.c	8.7 (Berkeley) 5/10/95";
 #endif
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: head/usr.sbin/lpr/lpd/printjob.c 241852 2012-10-22 03:31:22Z eadler $");
+__FBSDID("$FreeBSD: head/usr.sbin/lpr/lpd/printjob.c 271789 2014-09-18 17:01:45Z pfg $");
 
 /*
  * printjob -- print jobs in the queue.
@@ -176,7 +176,7 @@ printjob(struct printer *pp)
 	}
 	if(setgid(getegid()) != 0) err(1, "setgid() failed");
 	printpid = getpid();			/* for use with lprm */
-	setpgrp(0, printpid);
+	setpgid((pid_t)0, printpid);
 
 	/*
 	 * At initial lpd startup, printjob may be called with various

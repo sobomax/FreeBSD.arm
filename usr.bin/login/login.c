@@ -45,7 +45,7 @@ static char sccsid[] = "@(#)login.c	8.4 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/login/login.c 264677 2014-04-19 13:47:32Z jilles $");
+__FBSDID("$FreeBSD: head/usr.bin/login/login.c 270111 2014-08-17 19:06:26Z neel $");
 
 /*
  * login [ name ]
@@ -198,7 +198,7 @@ main(int argc, char *argv[])
 	(void)alarm(timeout);
 	(void)setpriority(PRIO_PROCESS, 0, 0);
 
-	openlog("login", LOG_ODELAY, LOG_AUTH);
+	openlog("login", 0, LOG_AUTH);
 
 	uid = getuid();
 	euid = geteuid();

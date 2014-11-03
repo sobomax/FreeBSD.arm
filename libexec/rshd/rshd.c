@@ -47,7 +47,7 @@ static const char sccsid[] = "@(#)rshd.c	8.2 (Berkeley) 4/6/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rshd/rshd.c 262136 2014-02-17 22:27:32Z brueffer $");
+__FBSDID("$FreeBSD: head/libexec/rshd/rshd.c 270111 2014-08-17 19:06:26Z neel $");
 
 /*
  * remote shell server:
@@ -127,7 +127,7 @@ main(int argc, char *argv[])
 	int ch, on = 1;
 	struct sockaddr_storage from;
 
-	openlog("rshd", LOG_PID | LOG_ODELAY, LOG_DAEMON);
+	openlog("rshd", LOG_PID, LOG_DAEMON);
 
 	opterr = 0;
 	while ((ch = getopt(argc, argv, OPTIONS)) != -1)

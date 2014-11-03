@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/lmonetary.c 227753 2011-11-20 14:45:42Z theraven $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/lmonetary.c 271110 2014-09-04 17:36:21Z pfg $");
 
 #include <limits.h>
 #include <stddef.h>
@@ -192,7 +192,7 @@ printf(	"int_curr_symbol = %s\n"
 	"n_cs_precedes = %d\n"
 	"n_sep_by_space = %d\n"
 	"p_sign_posn = %d\n"
-	"n_sign_posn = %d\n",
+	"n_sign_posn = %d\n"
 	"int_p_cs_precedes = %d\n"
 	"int_p_sep_by_space = %d\n"
 	"int_n_cs_precedes = %d\n"

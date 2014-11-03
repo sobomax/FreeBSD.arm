@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/hash.h 256377 2013-10-12 12:57:57Z markm $
+ * $FreeBSD: head/sys/dev/random/hash.h 273872 2014-10-30 21:21:53Z markm $
  */
 
 #ifndef SYS_DEV_RANDOM_HASH_H_INCLUDED
@@ -45,6 +45,6 @@ void randomdev_hash_init(struct randomdev_hash *);
 void randomdev_hash_iterate(struct randomdev_hash *, void *, size_t);
 void randomdev_hash_finish(struct randomdev_hash *, void *);
 void randomdev_encrypt_init(struct randomdev_key *, void *);
-void randomdev_encrypt(struct randomdev_key *context, void *, void *, unsigned);
+void randomdev_encrypt(struct randomdev_key *context, void *, void *, u_int);
 
 #endif

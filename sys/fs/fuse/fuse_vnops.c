@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/fuse/fuse_vnops.c 254138 2013-08-09 11:11:11Z attilio $");
+__FBSDID("$FreeBSD: head/sys/fs/fuse/fuse_vnops.c 271387 2014-09-10 12:36:41Z glebius $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -1721,7 +1721,6 @@ fuse_vnop_write(struct vop_write_args *ap)
         vm_page_t *a_m;
         int a_count;
         int a_reqpage;
-        vm_ooffset_t a_offset;
     };
 */
 static int

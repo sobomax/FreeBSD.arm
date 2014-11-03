@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/etc/mail/Makefile 130157 2004-06-06 17:28:31Z gshapiro $
+# $FreeBSD: head/etc/mail/Makefile 271771 2014-09-18 14:41:57Z will $
 #
 # This Makefile provides an easy way to generate the configuration
 # file and database maps for the sendmail(8) daemon.
@@ -69,7 +69,7 @@ SENDMAIL_MC!=           hostname
 SENDMAIL_MC:=           ${SENDMAIL_MC}.mc
 
 ${SENDMAIL_MC}:
-	cp freebsd.mc ${SENDMAIL_MC}
+	cp -f freebsd.mc ${SENDMAIL_MC}
 .endif
 
 .ifndef SENDMAIL_SUBMIT_MC
@@ -77,7 +77,7 @@ SENDMAIL_SUBMIT_MC!=	hostname
 SENDMAIL_SUBMIT_MC:=	${SENDMAIL_SUBMIT_MC}.submit.mc
 
 ${SENDMAIL_SUBMIT_MC}:
-	cp freebsd.submit.mc ${SENDMAIL_SUBMIT_MC}
+	cp -f freebsd.submit.mc ${SENDMAIL_SUBMIT_MC}
 .endif
 
 INSTALL_CF=		${SENDMAIL_MC:R}.cf

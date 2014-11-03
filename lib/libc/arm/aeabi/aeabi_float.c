@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_float.c 263242 2014-03-16 14:19:46Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_float.c 273088 2014-10-14 14:27:51Z andrew $");
 
 #include "softfloat-for-gcc.h"
 #include "milieu.h"
@@ -74,3 +74,28 @@ float32 AEABI_FUNC2(fdiv, float32, float32_div)
 float32 AEABI_FUNC2(fmul, float32, float32_mul)
 float32 AEABI_FUNC2(fsub, float32, float32_sub)
 
+int
+__aeabi_cfcmpeq_helper(float32 a, float32 b)
+{
+	int quiet = 0;
+
+	/* Check if a is a NaN */
+	if ((a << 1) > 0xff000000u) {
+		/* If it's a signalling NaN we will always signal */
+		if ((a & 0x00400000u) == 0)
+			return (0);
+
+		quiet = 1;
+	}
+
+	/* Check if b is a NaN */
+	if ((b << 1) > 0xff000000u) {
+		/* If it's a signalling NaN we will always signal */
+		if ((b & 0x00400000u) == 0)
+			return (0);
+
+		quiet = 1;
+	}
+
+	return (quiet);
+}

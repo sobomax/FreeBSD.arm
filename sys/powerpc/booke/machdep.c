@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/booke/machdep.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/powerpc/booke/machdep.c 272098 2014-09-25 08:28:10Z royger $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -142,7 +142,7 @@ __FBSDID("$FreeBSD: head/sys/powerpc/booke/machdep.c 263620 2014-03-22 10:26:09Z
 #include <dev/ofw/openfirm.h>
 
 #ifdef DDB
-extern vm_offset_t ksym_start, ksym_end;
+#include <ddb/ddb.h>
 #endif
 
 #ifdef  DEBUG
@@ -300,6 +300,10 @@ booke_init(uint32_t arg1, uint32_t arg2)
 	struct pcpu *pc;
 	void *kmdp, *mdp;
 	vm_offset_t dtbp, end;
+#ifdef DDB
+	vm_offset_t ksym_start;
+	vm_offset_t ksym_end;
+#endif
 
 	kmdp = NULL;
 
@@ -360,6 +364,7 @@ booke_init(uint32_t arg1, uint32_t arg2)
 #ifdef DDB
 			ksym_start = MD_FETCH(kmdp, MODINFOMD_SSYM, uintptr_t);
 			ksym_end = MD_FETCH(kmdp, MODINFOMD_ESYM, uintptr_t);
+			db_fetch_ksymtab(ksym_start, ksym_end);
 #endif
 		}
 	} else {

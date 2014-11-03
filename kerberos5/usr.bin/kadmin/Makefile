@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/kadmin/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/kerberos5/usr.bin/kadmin/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kadmin
 MAN=	kadmin.8
@@ -35,8 +35,6 @@ LDADD=	-lkadm5clnt -lkadm5srv -lhdb -lkrb5 -lhx509 \
 	-lcrypto -lcrypt -lcom_err \
 	-ledit -lncursesw ${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

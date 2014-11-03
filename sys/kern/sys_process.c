@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_process.c 269656 2014-08-07 05:47:53Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_process.c 273452 2014-10-22 04:16:09Z mjg $");
 
 #include "opt_compat.h"
 
@@ -1240,7 +1240,7 @@ protect_setchild(struct thread *td, struct proc *p, int flags)
 {
 
 	PROC_LOCK_ASSERT(p, MA_OWNED);
-	if (p->p_flag & P_SYSTEM || p_cansee(td, p) != 0)
+	if (p->p_flag & P_SYSTEM || p_cansched(td, p) != 0)
 		return (0);
 	if (flags & PPROT_SET) {
 		p->p_flag |= P_PROTECTED;
@@ -1373,10 +1373,7 @@ kern_procctl(struct thread *td, idtype_t idtype, id_t id, int com, void *data)
 			error = ESRCH;
 			break;
 		}
-		if (p->p_state == PRS_NEW)
-			error = ESRCH;
-		else
-			error = p_cansee(td, p);
+		error = p_cansee(td, p);
 		if (error == 0)
 			error = kern_procctl_single(td, p, com, data);
 		PROC_UNLOCK(p);

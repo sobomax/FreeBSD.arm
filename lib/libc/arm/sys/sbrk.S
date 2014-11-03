@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/sbrk.S 171061 2007-06-27 02:45:37Z kan $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/sbrk.S 270882 2014-08-31 17:21:51Z ian $");
 #include "SYS.h"
 
 	.globl	_C_LABEL(_end)
@@ -86,3 +86,4 @@ ENTRY(_sbrk)
 #endif
 .Lcurbrk:
 	.word	PIC_SYM(CURBRK, GOT)
+END(_sbrk)

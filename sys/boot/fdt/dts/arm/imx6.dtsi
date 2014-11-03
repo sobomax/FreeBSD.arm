@@ -29,7 +29,7 @@
  * flavors of this SoC that eventually we will need a finer-grained breakdown
  * of some of this stuff.  For now this file works for all of them.  I think.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/imx6.dtsi 268977 2014-07-22 04:39:32Z br $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/imx6.dtsi 271124 2014-09-04 19:52:17Z ian $
  */
 
 / {
@@ -134,7 +134,6 @@
 				reg = <0x020e0000 0x4000>;
 				interrupt-parent = <&gic>;
 				interrupts = <32>;
-				status = "disabled";
 			};
 
 			gpio1: gpio@0209c000 {

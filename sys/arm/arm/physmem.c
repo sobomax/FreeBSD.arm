@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/physmem.c 261677 2014-02-09 20:20:49Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/physmem.c 272333 2014-09-30 21:28:05Z ian $");
 
 #include "opt_ddb.h"
 
@@ -168,6 +168,12 @@ regions_to_avail(vm_paddr_t *avail, uint32_t exflags)
 		end   = hwp->size + start;
 		realmem += arm32_btop(end - start);
 		for (exi = 0, exp = exregions; exi < excnt; ++exi, ++exp) {
+			/*
+			 * If the excluded region does not match given flags,
+			 * continue checking with the next excluded region.
+			 */
+			if ((exp->flags & exflags) == 0)
+				continue;
 			xstart = exp->addr;
 			xend   = exp->size + xstart;
 			/*

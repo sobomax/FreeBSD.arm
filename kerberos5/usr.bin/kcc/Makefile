@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/kcc/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kcc/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kcc
 MAN=	klist.1 kswitch.1
@@ -18,8 +18,6 @@ SRCS=	kcc.c \
 	klist.c \
 	kswitch.c \
 	copy_cred_cache.c
-
-NO_PIE=	yes
 
 kcc-commands.h: kcc-commands.in
 	${SLC} ${.ALLSRC:M*.in}

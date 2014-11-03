@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)protosw.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/protosw.h 269699 2014-08-08 01:57:15Z kevlo $
+ * $FreeBSD: head/sys/sys/protosw.h 270008 2014-08-15 02:43:02Z kevlo $
  */
 
 #ifndef _SYS_PROTOSW_H_
@@ -65,7 +65,7 @@ struct sockopt;
  */
 /* USE THESE FOR YOUR PROTOTYPES ! */
 typedef int	pr_input_t (struct mbuf **, int*, int);
-typedef int	pr_output_t (struct mbuf *, struct socket *);
+typedef int	pr_output_t (struct mbuf *, struct socket *, ...);
 typedef void	pr_ctlinput_t (int, struct sockaddr *, void *);
 typedef int	pr_ctloutput_t (struct socket *, struct sockopt *);
 typedef	void	pr_init_t (void);

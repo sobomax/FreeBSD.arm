@@ -1,6 +1,7 @@
-/* $FreeBSD: head/sys/conf/ldscript.powerpc 217656 2011-01-20 19:24:50Z imp $ */
+/* $FreeBSD: head/sys/conf/ldscript.powerpc 272888 2014-10-10 06:24:09Z bapt $ */
 
-OUTPUT_FORMAT("elf32-powerpc", "elf32-powerpc", "elf32-powerpc")
+OUTPUT_FORMAT("elf32-powerpc-freebsd", "elf32-powerpc-freebsd",
+	      "elf32-powerpc-freebsd")
 OUTPUT_ARCH(powerpc)
 ENTRY(__start)
 SEARCH_DIR(/usr/lib);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/gdb/gdbtui/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/gnu/usr.bin/gdb/gdbtui/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	gdbtui${GDB_SUFFIX}
 SRCS=	tui-main.c
@@ -14,7 +14,5 @@ LDFLAGS+= -Wl,-E
 
 DPADD=	${GDBLIBS} ${BULIBS} ${LIBM} ${LIBREADLINE} ${LIBTERMCAPW} ${LIBGNUREGEX}
 LDADD=	${GDBLIBS} ${BULIBS} -lm ${LDREADLINE} -ltermcapw -lgnuregex
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_mib.c 258541 2013-11-25 07:38:45Z attilio $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_mib.c 271982 2014-09-22 17:26:07Z sbruno $");
 
 #include "opt_compat.h"
 
@@ -129,9 +129,9 @@ struct linux_prison {
 
 static struct linux_prison lprison0 = {
 	.pr_osname =		"Linux",
-	.pr_osrelease =		"2.6.16",
+	.pr_osrelease =		"2.6.18",
 	.pr_oss_version =	0x030600,
-	.pr_osrel =		2006016
+	.pr_osrel =		2006018
 };
 
 static unsigned linux_osd_jail_slot;

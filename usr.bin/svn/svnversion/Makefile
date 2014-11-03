@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/svnversion/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.bin/svn/svnversion/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 MAN=
 
@@ -31,7 +31,5 @@ LDADD=	-L${LIBSVN_WCDIR} -lsvn_wc \
 DPADD=	${LIBSVN_WC} ${LIBSVN_DELTA} ${LIBSVN_DIFF} ${LIBSVN_SUBR} \
 	${LIBSERF} ${LIBAPR_UTIL} ${LIBBSDXML} ${LIBAPR} ${LIBSQLITE} \
 	${LIBZ} ${LIBCRYPT}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

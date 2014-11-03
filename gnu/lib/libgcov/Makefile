@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/libgcov/Makefile 267845 2014-06-24 22:15:27Z imp $
+# $FreeBSD: head/gnu/lib/libgcov/Makefile 272350 2014-10-01 08:26:51Z andrew $
 
 MK_PROFILE=	no
 MK_SSP=		no
@@ -17,7 +17,7 @@ CFLAGS+=	-D_PTHREADS -DGTHREAD_USE_WEAK
 CFLAGS+=	-I${.CURDIR}/../../usr.bin/cc/cc_tools \
 		-I${GCCLIB}/include -I${GCCDIR}/config -I${GCCDIR} -I.
 
-.if ${TARGET_CPUARCH} == "arm" && ${MK_ARM_EABI} != "no"
+.if ${TARGET_CPUARCH} == "arm"
 CFLAGS+=	-DTARGET_ARM_EABI
 .endif
 

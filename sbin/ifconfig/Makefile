@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/ifconfig/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/ifconfig/Makefile 273331 2014-10-20 14:42:42Z bryanv $
 
 .include <src.opts.mk>
 
@@ -30,8 +30,13 @@ SRCS+=	ifmac.c			# MAC support
 SRCS+=	ifmedia.c		# SIOC[GS]IFMEDIA support
 SRCS+=	iffib.c			# non-default FIB support
 SRCS+=	ifvlan.c		# SIOC[GS]ETVLAN support
+SRCS+=	ifvxlan.c		# VXLAN support
 SRCS+=	ifgre.c			# GRE keys etc
 SRCS+=	ifgif.c			# GIF reversed header workaround
+
+SRCS+=	sfp.c			# SFP/SFP+ information
+DPADD+=	${LIBM}
+LDADD+=	-lm
 
 SRCS+=	ifieee80211.c regdomain.c # SIOC[GS]IEEE80211 support
 DPADD+=	${LIBBSDXML} ${LIBSBUF}

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: head/libexec/mail.local/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/libexec/mail.local/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/mail.local
@@ -8,8 +8,6 @@ PROG=	mail.local
 SRCS=	mail.local.c
 MAN=	mail.local.8
 CFLAGS+=-I${SENDMAIL_DIR}/include -I.
-
-NO_PIE=	yes
 
 WARNS?=	2
 WFORMAT=0

@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 269899 2014-08-13 01:27:51Z rpaulo $
+# $FreeBSD: head/share/mk/bsd.prog.mk 270976 2014-09-02 19:05:34Z emaste $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -9,18 +9,6 @@
 # XXX The use of COPTS in modern makefiles is discouraged.
 .if defined(COPTS)
 CFLAGS+=${COPTS}
-.endif
-
-.if ${MK_PIE} != "no" && (!defined(NO_PIE) || ${NO_PIE} == "no")
-.if !defined(RESCUE) && !defined(NO_SHARED)
-CFLAGS+= -fPIE -pie
-LDFLAGS+= -pie
-.elif defined(NO_SHARED)
-.if ${NO_SHARED} == "no" || ${NO_SHARED} == "NO"
-CFLAGS+= -fPIE -pie
-LDFLAGS+= -pie
-.endif
-.endif
 .endif
 
 .if ${MK_ASSERT_DEBUG} == "no"
@@ -41,9 +29,7 @@ CTFFLAGS+= -g
 PROG=	${PROG_CXX}
 .endif
 
-.if defined(PROG) && target(${PROG})
-MK_DEBUG_FILES=	no
-.elif !empty(LDFLAGS:M-Wl,*--oformat,*) || !empty(LDFLAGS:M-static)
+.if !empty(LDFLAGS:M-Wl,*--oformat,*) || !empty(LDFLAGS:M-static)
 MK_DEBUG_FILES=	no
 .endif
 

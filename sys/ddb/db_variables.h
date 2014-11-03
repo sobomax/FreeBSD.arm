@@ -23,11 +23,11 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/ddb/db_variables.h 263973 2014-03-31 16:37:41Z pfg $
+ * $FreeBSD: head/sys/ddb/db_variables.h 272958 2014-10-11 20:25:19Z pfg $
  */
 
 /*
- * 	Author: David B. Golub, Carnegie Mellon University
+ *	Author: David B. Golub, Carnegie Mellon University
  *	Date:	7/90
  */
 

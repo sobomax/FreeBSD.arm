@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/xhci_pci.c 268735 2014-07-16 06:14:41Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/xhci_pci.c 273376 2014-10-21 07:24:58Z kevlo $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -102,6 +102,8 @@ xhci_pci_match(device_t self)
 	case 0x10421b21:
 		return ("ASMedia ASM1042 USB 3.0 controller");
 
+	case 0x0f358086:
+		return ("Intel Intel BayTrail USB 3.0 controller");
 	case 0x9c318086:
 	case 0x1e318086:
 		return ("Intel Panther Point USB 3.0 controller");
@@ -244,6 +246,7 @@ xhci_pci_attach(device_t self)
 
 	/* On Intel chipsets reroute ports from EHCI to XHCI controller. */
 	switch (pci_get_devid(self)) {
+	case 0x0f358086:	/* BayTrail */
 	case 0x9c318086:	/* Panther Point */
 	case 0x1e318086:	/* Panther Point */
 	case 0x8c318086:	/* Lynx Point */

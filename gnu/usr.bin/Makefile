@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/Makefile 267486 2014-06-14 20:36:32Z gavin $
+# $FreeBSD: head/gnu/usr.bin/Makefile 272849 2014-10-09 23:05:31Z emaste $
 
 .include <src.opts.mk>
 
@@ -18,7 +18,9 @@ SUBDIR= ${_binutils} \
 	${_texinfo}
 
 .if ${MK_CXX} != "no"
+.if ${MK_GCC} != "no"
 _gperf=		gperf
+.endif
 .if ${MK_GROFF} != "no"
 _groff=		groff
 .endif

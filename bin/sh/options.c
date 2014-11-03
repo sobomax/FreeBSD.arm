@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)options.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/options.c 265849 2014-05-10 19:18:49Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/options.c 273700 2014-10-26 17:50:33Z jilles $");
 
 #include <signal.h>
 #include <unistd.h>
@@ -325,6 +325,7 @@ setparam(char **argv)
 	shellparam.malloc = 1;
 	shellparam.nparam = nparam;
 	shellparam.p = newparam;
+	shellparam.optp = NULL;
 	shellparam.reset = 1;
 	shellparam.optnext = NULL;
 }
@@ -343,6 +344,11 @@ freeparam(struct shparam *param)
 		for (ap = param->p ; *ap ; ap++)
 			ckfree(*ap);
 		ckfree(param->p);
+	}
+	if (param->optp) {
+		for (ap = param->optp ; *ap ; ap++)
+			ckfree(*ap);
+		ckfree(param->optp);
 	}
 }
 
@@ -417,20 +423,33 @@ getoptsreset(const char *value)
 int
 getoptscmd(int argc, char **argv)
 {
-	char **optbase = NULL;
+	char **optbase = NULL, **ap;
+	int i;
 
 	if (argc < 3)
 		error("usage: getopts optstring var [arg]");
-	else if (argc == 3)
-		optbase = shellparam.p;
-	else
-		optbase = &argv[3];
 
 	if (shellparam.reset == 1) {
+		INTOFF;
+		if (shellparam.optp) {
+			for (ap = shellparam.optp ; *ap ; ap++)
+				ckfree(*ap);
+			ckfree(shellparam.optp);
+			shellparam.optp = NULL;
+		}
+		if (argc > 3) {
+			shellparam.optp = ckmalloc((argc - 2) * sizeof *ap);
+			memset(shellparam.optp, '\0', (argc - 2) * sizeof *ap);
+			for (i = 0; i < argc - 3; i++)
+				shellparam.optp[i] = savestr(argv[i + 3]);
+		}
+		INTON;
+		optbase = argc == 3 ? shellparam.p : shellparam.optp;
 		shellparam.optnext = optbase;
 		shellparam.optptr = NULL;
 		shellparam.reset = 0;
-	}
+	} else
+		optbase = shellparam.optp ? shellparam.optp : shellparam.p;
 
 	return getopts(argv[1], argv[2], optbase, &shellparam.optnext,
 		       &shellparam.optptr);

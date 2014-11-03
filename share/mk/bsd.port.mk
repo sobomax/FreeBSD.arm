@@ -1,6 +1,18 @@
-# $FreeBSD: head/share/mk/bsd.port.mk 226162 2011-10-08 18:25:01Z crees $
+# $FreeBSD: head/share/mk/bsd.port.mk 272383 2014-10-01 20:52:08Z will $
 
-PORTSDIR?=	/usr/ports
+.if !defined(PORTSDIR)
+# Autodetect if the command is being run in a ports tree that's not rooted
+# in the default /usr/ports.  The ../../.. case is in case ports ever grows
+# a third level.
+.for RELPATH in . .. ../.. ../../..
+.if !defined(_PORTSDIR) && exists(${.CURDIR}/${RELPATH}/Mk/bsd.port.mk)
+_PORTSDIR=	${.CURDIR}/${RELPATH}
+.endif
+.endfor
+_PORTSDIR?=	/usr/ports
+PORTSDIR!=	realpath ${_PORTSDIR}
+.endif
+
 BSDPORTMK?=	${PORTSDIR}/Mk/bsd.port.mk
 
 # Needed to keep bsd.own.mk from reading in /etc/src.conf

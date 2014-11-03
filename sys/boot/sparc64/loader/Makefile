@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/sparc64/loader/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/sparc64/loader/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -6,8 +6,6 @@ MK_SSP=		no
 PROG?=		loader
 NEWVERSWHAT?=	"bootstrap loader" sparc64
 INSTALLFLAGS=	-b
-
-NO_PIE=	yes
 
 # Architecture-specific loader code
 SRCS=		locore.S main.c metadata.c vers.c

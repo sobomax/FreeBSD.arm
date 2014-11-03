@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_carp.c 269699 2014-08-08 01:57:15Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_carp.c 270008 2014-08-15 02:43:02Z kevlo $");
 
 #include "opt_bpf.h"
 #include "opt_inet.h"
@@ -2054,7 +2054,7 @@ static struct protosw in_carp_protosw = {
 	.pr_protocol =		IPPROTO_CARP,
 	.pr_flags =		PR_ATOMIC|PR_ADDR,
 	.pr_input =		carp_input,
-	.pr_output =		(pr_output_t *)rip_output,
+	.pr_output =		rip_output,
 	.pr_ctloutput =		rip_ctloutput,
 	.pr_usrreqs =		&rip_usrreqs
 };
@@ -2068,7 +2068,7 @@ static struct protosw in6_carp_protosw = {
 	.pr_protocol =		IPPROTO_CARP,
 	.pr_flags =		PR_ATOMIC|PR_ADDR,
 	.pr_input =		carp6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_usrreqs =		&rip6_usrreqs
 };

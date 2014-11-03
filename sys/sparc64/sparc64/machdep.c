@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -113,10 +113,6 @@ __FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 263620 2014-03-22 10:26:0
 #include <machine/ver.h>
 
 typedef int ofw_vec_t(void *);
-
-#ifdef DDB
-extern vm_offset_t ksym_start, ksym_end;
-#endif
 
 int dtlb_slots;
 int itlb_slots;
@@ -515,7 +511,7 @@ sparc64_init(caddr_t mdp, u_long o1, u_long o2, u_long o3, ofw_vec_t *vec)
 	 * Initialize tunables.
 	 */
 	init_param2(physmem);
-	env = getenv("kernelname");
+	env = kern_getenv("kernelname");
 	if (env != NULL) {
 		strlcpy(kernelname, env, sizeof(kernelname));
 		freeenv(env);

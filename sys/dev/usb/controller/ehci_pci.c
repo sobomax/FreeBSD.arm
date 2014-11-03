@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_pci.c 258162 2013-11-15 10:28:59Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_pci.c 273376 2014-10-21 07:24:58Z kevlo $");
 
 /*
  * USB Enhanced Host Controller Driver, a.k.a. USB 2.0 controller.
@@ -120,6 +120,12 @@ ehci_pci_match(device_t self)
 	case 0x43961002:
 		return ("AMD SB7x0/SB8x0/SB9x0 USB 2.0 controller");
 
+	case 0x0f348086:
+		return ("Intel BayTrail USB 2.0 controller");
+	case 0x1d268086:
+		return ("Intel Patsburg USB 2.0 controller");
+	case 0x1d2d8086:
+		return ("Intel Patsburg USB 2.0 controller");
 	case 0x1e268086:
 		return ("Intel Panther Point USB 2.0 controller");
 	case 0x1e2d8086:

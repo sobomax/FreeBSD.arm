@@ -27,13 +27,14 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/net/route.h 265279 2014-05-03 16:28:54Z melifaro $
+ * $FreeBSD: head/sys/net/route.h 271923 2014-09-21 07:16:51Z hrs $
  */
 
 #ifndef _NET_ROUTE_H_
 #define _NET_ROUTE_H_
 
 #include <sys/counter.h>
+#include <net/vnet.h>
 
 /*
  * Kernel resident routing tables.
@@ -84,8 +85,11 @@ struct rt_metrics {
 
 #define	RT_DEFAULT_FIB	0	/* Explicitly mark fib=0 restricted cases */
 #define	RT_ALL_FIBS	-1	/* Announce event for every fib */
+#ifdef _KERNEL
 extern u_int rt_numfibs;	/* number of usable routing tables */
-extern u_int rt_add_addr_allfibs;	/* Announce interfaces to all fibs */
+VNET_DECLARE(u_int, rt_add_addr_allfibs); /* Announce interfaces to all fibs */
+#define	V_rt_add_addr_allfibs	VNET(rt_add_addr_allfibs)
+#endif
 
 /*
  * We distinguish between routes to hosts and routes to networks,

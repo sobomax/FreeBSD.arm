@@ -57,7 +57,7 @@
  *	from: @(#)isa.c	7.2 (Berkeley) 5/13/91
  *	form: src/sys/i386/isa/intr_machdep.c,v 1.57 2001/07/20
  *
- * $FreeBSD: head/sys/powerpc/powerpc/intr_machdep.c 265900 2014-05-12 02:56:27Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/powerpc/intr_machdep.c 271712 2014-09-17 17:33:22Z adrian $
  */
 
 #include "opt_isa.h"
@@ -293,7 +293,7 @@ powerpc_intr_post_ithread(void *arg)
 }
 
 static int
-powerpc_assign_intr_cpu(void *arg, u_char cpu)
+powerpc_assign_intr_cpu(void *arg, int cpu)
 {
 #ifdef SMP
 	struct powerpc_intr *i = arg;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/compile_et/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.bin/compile_et/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .PATH: ${.CURDIR}/../../contrib/com_err
 
@@ -11,7 +11,5 @@ DPADD=	${LIBROKEN} ${LIBVERS}
 CFLAGS+=-I. -I${.CURDIR}/../../contrib/com_err
 
 WARNS?=	0
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

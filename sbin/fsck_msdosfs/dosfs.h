@@ -24,13 +24,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *	$NetBSD: dosfs.h,v 1.4 1997/01/03 14:32:48 ws Exp $
- * $FreeBSD: head/sbin/fsck_msdosfs/dosfs.h 203874 2010-02-14 12:31:28Z kib $
+ * $FreeBSD: head/sbin/fsck_msdosfs/dosfs.h 273865 2014-10-30 15:52:01Z ambrisko $
  */
 
 #ifndef DOSFS_H
 #define DOSFS_H
 
-#define DOSBOOTBLOCKSIZE 512
+/* support 4Kn disk reads */
+#define DOSBOOTBLOCKSIZE_REAL 512
+#define DOSBOOTBLOCKSIZE 4096
 
 typedef	u_int32_t	cl_t;	/* type holding a cluster number */
 

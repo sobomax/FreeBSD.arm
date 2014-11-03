@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/puc/pucdata.c 264514 2014-04-15 19:58:05Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/puc/pucdata.c 273551 2014-10-23 18:03:27Z rpaulo $");
 
 /*
  * PCI "universal" communications card driver configuration data (used to
@@ -838,6 +838,13 @@ const struct puc_cfg puc_pci_devices[] = {
 	 * StarTech.com PEX4S952 (4 port) and PEX8S952 (8 port)
 	 * <URL:http://www.startech.com>
 	 */
+
+	{   0x1415, 0xc11b, 0xffff, 0,
+            "Oxford Semiconductor OXPCIe952 1S1P",
+            DEFAULT_RCLK * 0x22,
+            PUC_PORT_NONSTANDARD, 0x10, 0, -1,
+	    .config_function = puc_config_oxford_pcie
+	},
 
 	{   0x1415, 0xc138, 0xffff, 0,
 	    "Oxford Semiconductor OXPCIe952 UARTs",

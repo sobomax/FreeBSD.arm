@@ -1,5 +1,5 @@
 /*	$NetBSD: if_gre.h,v 1.13 2003/11/10 08:51:52 wiz Exp $ */
-/*	 $FreeBSD: head/sys/net/if_gre.h 223223 2011-06-18 09:34:03Z bz $ */
+/*	 $FreeBSD: head/sys/net/if_gre.h 271918 2014-09-21 03:56:06Z hrs $ */
 
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
@@ -176,8 +176,16 @@ struct mobip_h {
 
 #ifdef _KERNEL
 LIST_HEAD(gre_softc_head, gre_softc);
-extern struct mtx gre_mtx;
-extern struct gre_softc_head gre_softc_list;
+VNET_DECLARE(struct gre_softc_head, gre_softc_list);
+#define	V_gre_softc_list	VNET(gre_softc_list)
+
+VNET_DECLARE(struct mtx, gre_mtx);
+#define	V_gre_mtx	VNET(gre_mtx)
+#define	GRE_LIST_LOCK_INIT(x)		mtx_init(&V_gre_mtx, "gre_mtx", NULL, \
+					    MTX_DEF)
+#define	GRE_LIST_LOCK_DESTROY(x)	mtx_destroy(&V_gre_mtx)
+#define	GRE_LIST_LOCK(x)		mtx_lock(&V_gre_mtx)
+#define	GRE_LIST_UNLOCK(x)		mtx_unlock(&V_gre_mtx)
 
 u_int16_t	gre_in_cksum(u_int16_t *, u_int);
 #endif /* _KERNEL */

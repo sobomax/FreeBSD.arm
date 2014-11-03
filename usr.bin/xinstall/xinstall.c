@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)xinstall.c	8.1 (Berkeley) 7/21/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/xinstall/xinstall.c 262934 2014-03-08 23:05:28Z jilles $");
+__FBSDID("$FreeBSD: head/usr.bin/xinstall/xinstall.c 272026 2014-09-23 11:41:09Z mjg $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -1263,13 +1263,18 @@ install_dir(char *path)
 		if (!*p || (p != path && *p  == '/')) {
 			ch = *p;
 			*p = '\0';
-			if (stat(path, &sb)) {
-				if (errno != ENOENT || mkdir(path, 0755) < 0) {
+again:
+			if (stat(path, &sb) < 0) {
+				if (errno != ENOENT)
+					err(EX_OSERR, "stat %s", path);
+				if (mkdir(path, 0755) < 0) {
+					if (errno == EEXIST)
+						goto again;
 					err(EX_OSERR, "mkdir %s", path);
-					/* NOTREACHED */
-				} else if (verbose)
+				}
+				if (verbose)
 					(void)printf("install: mkdir %s\n",
-						     path);
+					    path);
 			} else if (!S_ISDIR(sb.st_mode))
 				errx(EX_OSERR, "%s exists but is not a directory", path);
 			if (!(*p = ch))

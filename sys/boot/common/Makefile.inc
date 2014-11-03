@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/common/Makefile.inc 269621 2014-08-06 00:36:04Z marcel $
+# $FreeBSD: head/sys/boot/common/Makefile.inc 271609 2014-09-15 06:21:28Z avg $
 
 SRCS+=	boot.c commands.c console.c devopen.c interp.c 
 SRCS+=	interp_backslash.c interp_parse.c ls.c misc.c 
@@ -78,3 +78,6 @@ CFLAGS+=-I${.CURDIR}/../../../../lib/libstand
 .endif
 
 MAN+=	loader.8
+.if ${MK_ZFS} != "no"
+MAN+=	zfsloader.8
+.endif

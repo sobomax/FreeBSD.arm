@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_terminal.c 267978 2014-06-27 19:57:57Z marius $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_terminal.c 273932 2014-11-01 17:05:15Z dumbbell $");
 
 #include <sys/param.h>
 #include <sys/cons.h>
@@ -187,6 +187,13 @@ terminal_maketty(struct terminal *tm, const char *fmt, ...)
 	tty_makedev(tp, NULL, "%s", name);
 	tm->tm_tty = tp;
 	terminal_sync_ttysize(tm);
+}
+
+void
+terminal_set_cursor(struct terminal *tm, const term_pos_t *pos)
+{
+
+	teken_set_cursor(&tm->tm_emulator, pos);
 }
 
 void
@@ -476,13 +483,17 @@ termcn_cnregister(struct terminal *tm)
 static void
 termcn_cngrab(struct consdev *cp)
 {
+	struct terminal *tm = cp->cn_arg;
 
+	tm->tm_class->tc_cngrab(tm);
 }
 
 static void
 termcn_cnungrab(struct consdev *cp)
 {
+	struct terminal *tm = cp->cn_arg;
 
+	tm->tm_class->tc_cnungrab(tm);
 }
 
 static void

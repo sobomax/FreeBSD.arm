@@ -1,13 +1,11 @@
 #	@(#)Makefile	8.8 (Berkeley) 3/28/97
-# $FreeBSD: head/usr.sbin/sendmail/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/sendmail/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .include <src.opts.mk>
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 SMDIR=	${SENDMAIL_DIR}/src
 .PATH: ${SMDIR}
-
-NO_PIE=	yes
 
 BINDIR=	/usr/libexec/sendmail
 

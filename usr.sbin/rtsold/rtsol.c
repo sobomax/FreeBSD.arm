@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtsold/rtsol.c 254462 2013-08-17 19:23:35Z hrs $
+ * $FreeBSD: head/usr.sbin/rtsold/rtsol.c 272961 2014-10-11 20:46:06Z hrs $
  */
 
 #include <sys/param.h>
@@ -933,7 +933,8 @@ dname_labeldec(char *dst, size_t dlen, const char *src)
 	dst_origin = dst;
 	memset(dst, '\0', dlen);
 	while (src && (len = (uint8_t)(*src++) & 0x3f) &&
-	    (src + len) <= src_last) {
+	    (src + len) <= src_last &&
+	    (dst - dst_origin < (ssize_t)dlen)) {
 		if (dst != dst_origin)
 			*dst++ = '.';
 		warnmsg(LOG_DEBUG, __func__, "labellen = %zd", len);

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_rnd.c 264770 2014-04-22 18:55:21Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_rnd.c 271299 2014-09-09 04:11:54Z grehan $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -80,6 +80,7 @@ static struct virtio_consts vtrnd_vi_consts = {
 	pci_vtrnd_notify,	/* device-wide qnotify */
 	NULL,			/* read virtio config */
 	NULL,			/* write virtio config */
+	NULL,			/* apply negotiated features */
 	0,			/* our capabilities */
 };
 

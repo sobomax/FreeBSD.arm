@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/vt_sysmouse.c 267965 2014-06-27 17:50:33Z emaste $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/vt_sysmouse.c 270269 2014-08-21 13:04:34Z dumbbell $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -347,9 +347,6 @@ sysmouse_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag,
 			return (EINVAL);
 
 		sysmouse_level = level;
-#ifndef SC_NO_CUTPASTE
-		vt_mouse_state((level == 0)?VT_MOUSE_SHOW:VT_MOUSE_HIDE);
-#endif
 		return (0);
 	}
 	case MOUSE_SETMODE: {
@@ -362,10 +359,6 @@ sysmouse_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag,
 		case 0:
 		case 1:
 			sysmouse_level = mode->level;
-#ifndef SC_NO_CUTPASTE
-			vt_mouse_state((mode->level == 0)?VT_MOUSE_SHOW:
-			    VT_MOUSE_HIDE);
-#endif
 			break;
 		default:
 			return (EINVAL);

@@ -25,9 +25,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/sbin/camcontrol/camcontrol.8 268240 2014-07-03 23:09:44Z ken $
+.\" $FreeBSD: head/sbin/camcontrol/camcontrol.8 270872 2014-08-31 10:28:31Z gavin $
 .\"
-.Dd November 20, 2013
+.Dd August 31, 2014
 .Dt CAMCONTROL 8
 .Os
 .Sh NAME
@@ -1884,12 +1884,12 @@ camcontrol security ada0
 .Pp
 Report security support and settings for ada0
 .Bd -literal -offset indent
-camcontrol security ada0 -u user -s MyPass
+camcontrol security ada0 -U user -s MyPass
 .Ed
 .Pp
 Enable security on device ada0 with the password MyPass
 .Bd -literal -offset indent
-camcontrol security ada0 -u user -e MyPass
+camcontrol security ada0 -U user -e MyPass
 .Ed
 .Pp
 Secure erase ada0 which has had security enabled with user password MyPass

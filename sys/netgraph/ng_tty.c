@@ -39,7 +39,7 @@
  *
  * Updated by Andrew Thompson <thompsa@FreeBSD.org> for MPSAFE TTY.
  *
- * $FreeBSD: head/sys/netgraph/ng_tty.c 243882 2012-12-05 08:04:20Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_tty.c 271856 2014-09-19 09:01:19Z glebius $
  * $Whistle: ng_tty.c,v 1.21 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -327,7 +327,6 @@ ngt_rcvdata(hook_p hook, item_p item)
 
 	IF_LOCK(&sc->outq);
 	if (_IF_QFULL(&sc->outq)) {
-		_IF_DROP(&sc->outq);
 		IF_UNLOCK(&sc->outq);
 		NG_FREE_M(m);
 		return (ENOBUFS);

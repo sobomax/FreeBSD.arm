@@ -1,11 +1,9 @@
-# $FreeBSD: head/sys/boot/i386/btx/btxldr/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/i386/btx/btxldr/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	btxldr
 INTERNALPROG=
 MAN=
 SRCS=	btxldr.S
-
-NO_PIE=	yes
 
 CFLAGS+=-DLOADER_ADDRESS=${LOADER_ADDRESS}
 CFLAGS+=-I${.CURDIR}/../../common

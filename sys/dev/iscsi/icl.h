@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iscsi/icl.h 264530 2014-04-16 11:00:10Z trasz $
+ * $FreeBSD: head/sys/dev/iscsi/icl.h 272812 2014-10-09 09:12:08Z mav $
  */
 
 #ifndef ICL_H
@@ -107,7 +107,6 @@ struct icl_conn {
 struct icl_conn		*icl_conn_new(const char *name, struct mtx *lock);
 void			icl_conn_free(struct icl_conn *ic);
 int			icl_conn_handoff(struct icl_conn *ic, int fd);
-void			icl_conn_shutdown(struct icl_conn *ic);
 void			icl_conn_close(struct icl_conn *ic);
 bool			icl_conn_connected(struct icl_conn *ic);
 

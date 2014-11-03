@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/pmap.c 269728 2014-08-08 17:12:03Z kib $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/pmap.c 270038 2014-08-16 08:31:25Z kib $");
 
 /*
  * Manages physical address maps.
@@ -1211,11 +1211,9 @@ pmap_pinit(pmap_t pm)
 	 */
 	if (pm->pm_tsb == NULL) {
 		pm->pm_tsb = (struct tte *)kva_alloc(TSB_BSIZE);
-		if (pm->pm_tsb == NULL) {
-			PMAP_LOCK_DESTROY(pm);
+		if (pm->pm_tsb == NULL)
 			return (0);
 		}
-	}
 
 	/*
 	 * Allocate an object for it.

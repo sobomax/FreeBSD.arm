@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_freebsd.h 266884 2014-05-30 13:45:20Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_freebsd.h 272733 2014-10-08 07:00:50Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -50,6 +50,7 @@
 #define	USB_HAVE_FIXED_IFACE 0
 #define	USB_HAVE_FIXED_CONFIG 0
 #define	USB_HAVE_FIXED_PORT 0
+#define	USB_HAVE_DISABLE_ENUM 1
 
 /* define zero ticks callout value */
 #define	USB_CALLOUT_ZERO_TICKS 1

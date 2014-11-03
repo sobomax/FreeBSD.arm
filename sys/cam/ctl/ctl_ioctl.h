@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ioctl.h#4 $
- * $FreeBSD: head/sys/cam/ctl/ctl_ioctl.h 268808 2014-07-17 21:16:52Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_ioctl.h 272911 2014-10-10 19:41:09Z mav $
  */
 /*
  * CAM Target Layer ioctl interface.
@@ -363,7 +363,8 @@ struct ctl_port_list {
 typedef enum {
 	CTL_LUN_NOSTATUS,
 	CTL_LUN_OK,
-	CTL_LUN_ERROR
+	CTL_LUN_ERROR,
+	CTL_LUN_WARNING
 } ctl_lun_status;
 
 #define	CTL_ERROR_STR_LEN	160

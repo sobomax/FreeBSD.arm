@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/tcp_timer.h 264321 2014-04-10 18:15:35Z jhb $
+ * $FreeBSD: head/sys/netinet/tcp_timer.h 273850 2014-10-30 08:53:56Z jch $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -178,8 +178,7 @@ extern int tcp_fast_finwait2_recycle;
 void	tcp_timer_init(void);
 void	tcp_timer_2msl(void *xtp);
 struct tcptw *
-	tcp_tw_2msl_reuse(void);	/* XXX temporary? */
-void	tcp_tw_2msl_scan(void);
+	tcp_tw_2msl_scan(int reuse);	/* XXX temporary? */
 void	tcp_timer_keep(void *xtp);
 void	tcp_timer_persist(void *xtp);
 void	tcp_timer_rexmt(void *xtp);

@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_ioport.h 266573 2014-05-23 05:15:17Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_ioport.h 273706 2014-10-26 19:03:06Z neel $
  */
 
 #ifndef	_VMM_IOPORT_H_
 #define	_VMM_IOPORT_H_
 
-typedef int (*ioport_handler_func_t)(void *vm, int vcpuid,
+typedef int (*ioport_handler_func_t)(struct vm *vm, int vcpuid,
     bool in, int port, int bytes, uint32_t *val);
 
 int vm_handle_inout(struct vm *vm, int vcpuid, struct vm_exit *vme, bool *retu);

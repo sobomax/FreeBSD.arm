@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)udp_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/udp_var.h 269699 2014-08-08 01:57:15Z kevlo $
+ * $FreeBSD: head/sys/netinet/udp_var.h 272886 2014-10-10 06:08:59Z bryanv $
  */
 
 #ifndef _NETINET_UDP_VAR_H_
@@ -55,7 +55,8 @@ struct udpiphdr {
 struct inpcb;
 struct mbuf;
 
-typedef void(*udp_tun_func_t)(struct mbuf *, int off, struct inpcb *);
+typedef void(*udp_tun_func_t)(struct mbuf *, int off, struct inpcb *,
+			      const struct sockaddr *, void *);
 
 /*
  * UDP control block; one per udp.
@@ -65,6 +66,7 @@ struct udpcb {
 	u_int		u_flags;	/* Generic UDP flags. */
 	uint16_t	u_rxcslen;	/* Coverage for incoming datagrams. */
 	uint16_t	u_txcslen;	/* Coverage for outgoing datagrams. */
+	void 		*u_tun_ctx;	/* Tunneling callback context. */
 };
 
 #define	intoudpcb(ip)	((struct udpcb *)(ip)->inp_ppcb)
@@ -176,7 +178,8 @@ void		udplite_input(struct mbuf *, int);
 struct inpcb	*udp_notify(struct inpcb *inp, int errno);
 int		udp_shutdown(struct socket *so);
 
-int		udp_set_kernel_tunneling(struct socket *so, udp_tun_func_t f);
+int		udp_set_kernel_tunneling(struct socket *so, udp_tun_func_t f,
+					 void *ctx);
 
 #endif /* _KERNEL */
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon.h 259016 2013-12-05 22:38:53Z ray $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon.h 273862 2014-10-30 14:26:36Z tijl $");
 
 #ifndef __RADEON_H__
 #define __RADEON_H__
@@ -65,7 +65,7 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon.h 259016 2013-12-05 22:38:53
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon.h 259016 2013-12-05 22:38:53Z ray $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon.h 273862 2014-10-30 14:26:36Z tijl $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1618,6 +1618,7 @@ struct radeon_device {
 	bool				need_dma32;
 	bool				accel_working;
 	bool				fictitious_range_registered;
+	bool				fictitious_agp_range_registered;
 	struct radeon_surface_reg surface_regs[RADEON_GEM_MAX_SURFACES];
 	const struct firmware *me_fw;	/* all family ME firmware */
 	const struct firmware *pfp_fw;	/* r6/700 PFP firmware */

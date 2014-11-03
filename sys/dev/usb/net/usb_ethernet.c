@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 262142 2014-02-18 01:20:26Z rodrigc $ */
+/* $FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 271832 2014-09-18 21:09:22Z glebius $ */
 /*-
  * Copyright (c) 2009 Andrew Thompson (thompsa@FreeBSD.org)
  *
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 262142 2014-02-18 01:20:26Z rodrigc $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 271832 2014-09-18 21:09:22Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -580,7 +580,7 @@ uether_rxmbuf(struct usb_ether *ue, struct mbuf *m,
 	UE_LOCK_ASSERT(ue, MA_OWNED);
 
 	/* finalize mbuf */
-	ifp->if_ipackets++;
+	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 	m->m_pkthdr.rcvif = ifp;
 	m->m_pkthdr.len = m->m_len = len;
 
@@ -603,14 +603,14 @@ uether_rxbuf(struct usb_ether *ue, struct usb_page_cache *pc,
 
 	m = uether_newbuf();
 	if (m == NULL) {
-		ifp->if_iqdrops++;
+		if_inc_counter(ifp, IFCOUNTER_IQDROPS, 1);
 		return (ENOMEM);
 	}
 
 	usbd_copy_out(pc, offset, mtod(m, uint8_t *), len);
 
 	/* finalize mbuf */
-	ifp->if_ipackets++;
+	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 	m->m_pkthdr.rcvif = ifp;
 	m->m_pkthdr.len = m->m_len = len;
 

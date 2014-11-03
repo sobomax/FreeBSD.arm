@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sysent.h 268351 2014-07-07 00:27:09Z marcel $
+ * $FreeBSD: head/sys/sys/sysent.h 273953 2014-11-01 22:36:40Z mjg $
  */
 
 #ifndef _SYS_SYSENT_H_
@@ -75,6 +75,12 @@ struct sysent {			/* system call table */
 #define	SY_THR_DRAINING	0x2
 #define	SY_THR_ABSENT	0x4
 #define	SY_THR_INCR	0x8
+
+#ifdef KLD_MODULE
+#define	SY_THR_STATIC_KLD	0
+#else
+#define	SY_THR_STATIC_KLD	SY_THR_STATIC
+#endif
 
 struct image_params;
 struct __sigset;
@@ -169,6 +175,7 @@ struct syscall_module_data {
 	int	*offset;		/* offset into sysent */
 	struct sysent *new_sysent;	/* new sysent */
 	struct sysent old_sysent;	/* old sysent */
+	int	flags;			/* flags for syscall_register */
 };
 
 #define	MAKE_SYSENT(syscallname)				\
@@ -242,10 +249,10 @@ struct syscall_helper_data {
 }
 
 int	syscall_register(int *offset, struct sysent *new_sysent,
-	    struct sysent *old_sysent);
+	    struct sysent *old_sysent, int flags);
 int	syscall_deregister(int *offset, struct sysent *old_sysent);
 int	syscall_module_handler(struct module *mod, int what, void *arg);
-int	syscall_helper_register(struct syscall_helper_data *sd);
+int	syscall_helper_register(struct syscall_helper_data *sd, int flags);
 int	syscall_helper_unregister(struct syscall_helper_data *sd);
 
 struct proc;

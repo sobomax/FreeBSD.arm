@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/timer.c 263711 2014-03-25 08:31:47Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/timer.c 272397 2014-10-02 06:00:55Z ganbold $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,7 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/timer.c 263711 2014-03-25 08:31:47Z g
 #define TIMER_ENABLE		(1<<0)
 #define TIMER_AUTORELOAD	(1<<1)
 #define TIMER_OSC24M		(1<<2) /* oscillator = 24mhz */
-#define TIMER_PRESCALAR		(4<<4) /* prescalar = 16 */
+#define TIMER_PRESCALAR		(0<<4) /* prescalar = 1 */
 
 #define SYS_TIMER_CLKSRC	24000000 /* clock source */
 

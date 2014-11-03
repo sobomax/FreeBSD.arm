@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_mcast.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_mcast.c 273857 2014-10-30 11:34:07Z ae $");
 
 #include "opt_inet6.h"
 
@@ -1073,6 +1073,8 @@ in6m_purge(struct in6_multi *inm)
 		free(ims, M_IP6MSOURCE);
 		inm->in6m_nsrc--;
 	}
+	/* Free state-change requests that might be queued. */
+	_IF_DRAIN(&inm->in6m_scq);
 }
 
 /*

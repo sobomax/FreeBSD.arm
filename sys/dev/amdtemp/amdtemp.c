@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/amdtemp/amdtemp.c 263169 2014-03-14 12:15:28Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/dev/amdtemp/amdtemp.c 273034 2014-10-13 13:13:42Z brueffer $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -80,6 +80,7 @@ struct amdtemp_softc {
 #define	DEVICEID_AMD_MISC14	0x1703
 #define	DEVICEID_AMD_MISC15	0x1603
 #define	DEVICEID_AMD_MISC16	0x1533
+#define	DEVICEID_AMD_MISC17	0x141d
 
 static struct amdtemp_product {
 	uint16_t	amdtemp_vendorid;
@@ -92,6 +93,7 @@ static struct amdtemp_product {
 	{ VENDORID_AMD,	DEVICEID_AMD_MISC14 },
 	{ VENDORID_AMD,	DEVICEID_AMD_MISC15 },
 	{ VENDORID_AMD,	DEVICEID_AMD_MISC16 },
+	{ VENDORID_AMD,	DEVICEID_AMD_MISC17 },
 	{ 0, 0 }
 };
 

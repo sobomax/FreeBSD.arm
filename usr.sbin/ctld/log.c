@@ -26,8 +26,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/log.c 255570 2013-09-14 15:29:06Z trasz $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/log.c 270279 2014-08-21 15:32:38Z trasz $");
 
 #include <errno.h>
 #include <stdarg.h>

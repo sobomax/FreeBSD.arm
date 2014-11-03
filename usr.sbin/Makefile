@@ -1,10 +1,11 @@
 #	From: @(#)Makefile	5.20 (Berkeley) 6/12/93
-# $FreeBSD: head/usr.sbin/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/Makefile 271401 2014-09-10 19:00:17Z asomers $
 
 .include <src.opts.mk>
 
 SUBDIR=	adduser \
 	arp \
+	autofs \
 	binmiscctl \
 	bootparamd \
 	bsdconfig \
@@ -25,7 +26,6 @@ SUBDIR=	adduser \
 	digictl \
 	diskinfo \
 	dumpcis \
-	etcupdate \
 	extattr \
 	extattrctl \
 	fifolog \
@@ -275,6 +275,10 @@ SUBDIR+=	repquota
 
 .if ${MK_RCMDS} != "no"
 SUBDIR+=	rwhod
+.endif
+
+.if ${MK_RCS} != "no"
+SUBDIR+=	etcupdate
 .endif
 
 .if ${MK_SENDMAIL} != "no"

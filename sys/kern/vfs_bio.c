@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_bio.c 269533 2014-08-04 22:03:58Z mckusick $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_bio.c 273638 2014-10-25 15:16:19Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -667,6 +667,10 @@ bd_speedup(void)
 	mtx_unlock(&bdlock);
 }
 
+#ifndef NSWBUF_MIN
+#define	NSWBUF_MIN	16
+#endif
+
 #ifdef __i386__
 #define	TRANSIENT_DENOM	5
 #else
@@ -778,11 +782,10 @@ kern_vfs_bio_buffer_alloc(caddr_t v, long physmem_est)
 	 * swbufs are used as temporary holders for I/O, such as paging I/O.
 	 * We have no less then 16 and no more then 256.
 	 */
-	nswbuf = max(min(nbuf/4, 256), 16);
-#ifdef NSWBUF_MIN
+	nswbuf = min(nbuf / 4, 256);
+	TUNABLE_INT_FETCH("kern.nswbuf", &nswbuf);
 	if (nswbuf < NSWBUF_MIN)
 		nswbuf = NSWBUF_MIN;
-#endif
 
 	/*
 	 * Reserve space for the buffer cache buffers
@@ -2971,6 +2974,7 @@ bp_unmapped_get_kva(struct buf *bp, daddr_t blkno, int size, int gbflags)
 	 * if the buffer was mapped.
 	 */
 	bsize = vn_isdisk(bp->b_vp, NULL) ? DEV_BSIZE : bp->b_bufobj->bo_bsize;
+	KASSERT(bsize != 0, ("bsize == 0, check bo->bo_bsize"));
 	offset = blkno * bsize;
 	maxsize = size + (offset & PAGE_MASK);
 	maxsize = imax(maxsize, bsize);
@@ -3220,6 +3224,7 @@ loop:
 			return NULL;
 
 		bsize = vn_isdisk(vp, NULL) ? DEV_BSIZE : bo->bo_bsize;
+		KASSERT(bsize != 0, ("bsize == 0, check bo->bo_bsize"));
 		offset = blkno * bsize;
 		vmio = vp->v_object != NULL;
 		if (vmio) {

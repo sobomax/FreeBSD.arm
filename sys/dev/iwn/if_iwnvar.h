@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/iwn/if_iwnvar.h 266546 2014-05-22 15:29:25Z trasz $	*/
+/*	$FreeBSD: head/sys/dev/iwn/if_iwnvar.h 270738 2014-08-28 03:18:27Z adrian $	*/
 /*	$OpenBSD: if_iwnvar.h,v 1.18 2010/04/30 16:06:46 damien Exp $	*/
 
 /*-
@@ -414,6 +414,9 @@ struct iwn_softc {
 
 	/* For specific params */
 	const struct iwn_base_params *base_params;
+
+#define	IWN_UCODE_API(ver)	(((ver) & 0x0000FF00) >> 8)
+	uint32_t		ucode_rev;
 };
 
 #define IWN_LOCK_INIT(_sc) \

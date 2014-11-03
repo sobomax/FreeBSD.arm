@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/msun/src/s_tanh.c 260067 2013-12-30 01:06:21Z kargl $");
+__FBSDID("$FreeBSD: head/lib/msun/src/s_tanh.c 270847 2014-08-30 17:31:53Z kargl $");
 
 /* Tanh(x)
  * Return the Hyperbolic Tangent of x
@@ -42,7 +42,8 @@ __FBSDID("$FreeBSD: head/lib/msun/src/s_tanh.c 260067 2013-12-30 01:06:21Z kargl
 #include "math.h"
 #include "math_private.h"
 
-static const double one = 1.0, two = 2.0, tiny = 1.0e-300, huge = 1.0e300;
+static const volatile double tiny = 1.0e-300;
+static const double one = 1.0, two = 2.0, huge = 1.0e300;
 
 double
 tanh(double x)

@@ -26,8 +26,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/pdu.c 264524 2014-04-16 10:06:37Z trasz $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/pdu.c 270279 2014-08-21 15:32:38Z trasz $");
 
 #include <sys/types.h>
 #include <sys/uio.h>

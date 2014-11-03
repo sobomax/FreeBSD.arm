@@ -27,9 +27,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/gif.4 224587 2011-08-02 01:48:45Z gjb $
+.\" $FreeBSD: head/share/man/man4/gif.4 273087 2014-10-14 13:31:47Z ae $
 .\"
-.Dd August 1, 2011
+.Dd October 14, 2014
 .Dt GIF 4
 .Os
 .Sh NAME
@@ -160,16 +160,6 @@ routed network.
 It can be turned off by
 .Dv IFF_LINK2
 bit.
-.Ss Route caching
-Processing each packet requires two route lookups: first on the
-packet itself, and second on the tunnel destination.
-This second route can be cached, increasing tunnel performance.
-However, in a dynamically routed network, the tunnel will stick
-to the cached route, ignoring routing table updates.
-Route caching can be enabled with the
-.Dv IFF_LINK0
-flag.
-.\"
 .Ss Miscellaneous
 By default,
 .Nm

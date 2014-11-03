@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/bitset.h 255059 2013-08-30 07:43:34Z kib $
+ * $FreeBSD: head/sys/sys/bitset.h 273338 2014-10-20 18:09:33Z neel $
  */
 
 #ifndef _SYS_BITSET_H_
@@ -133,6 +133,10 @@
 
 #define	BIT_SET_ATOMIC(_s, n, p)					\
 	atomic_set_long(&(p)->__bits[__bitset_word(_s, n)],		\
+	    __bitset_mask((_s), n))
+
+#define	BIT_SET_ATOMIC_ACQ(_s, n, p)					\
+	atomic_set_acq_long(&(p)->__bits[__bitset_word(_s, n)],		\
 	    __bitset_mask((_s), n))
 
 /* Convenience functions catering special cases. */

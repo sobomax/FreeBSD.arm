@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sdhci/sdhci.h 261945 2014-02-15 20:45:53Z ian $
+ * $FreeBSD: head/sys/dev/sdhci/sdhci.h 270885 2014-08-31 17:56:54Z marius $
  */
 
 #ifndef	__SDHCI_H__
@@ -222,6 +222,8 @@
 #define	SDHCI_SPEC_100		0
 #define	SDHCI_SPEC_200		1
 #define	SDHCI_SPEC_300		2
+
+SYSCTL_DECL(_hw_sdhci);
 
 struct sdhci_slot {
 	u_int		quirks;		/* Chip specific quirks */

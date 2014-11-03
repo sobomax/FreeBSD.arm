@@ -27,12 +27,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/mips/beri/boot2/Makefile 269114 2014-07-26 04:38:09Z sjg $
+# $FreeBSD: head/sys/boot/mips/beri/boot2/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 BINDIR?=	/boot
 INSTALLFLAGS=	-b
-
-NO_PIE=	yes
 
 LOADERS=	flashboot jtagboot
 FILES=		${LOADERS} ${LOADERS:S/$/.md5/}

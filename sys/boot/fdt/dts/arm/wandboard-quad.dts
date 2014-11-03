@@ -25,7 +25,7 @@
  *
  * Wandboard Quad.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/wandboard-quad.dts 268836 2014-07-18 08:08:45Z br $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/wandboard-quad.dts 271124 2014-09-04 19:52:17Z ian $
  */
 
 /dts-v1/;
@@ -44,7 +44,6 @@
 
 	SOC: soc@00000000 {
 		aips@02000000 { /* AIPS1 */
-			iomux@020e0000		{ status = "disabled"; };
 			gpio@0209c000		{ status = "okay"; };
 			gpio@020a0000		{ status = "okay"; };
 			gpio@020a4000		{ status = "okay"; };

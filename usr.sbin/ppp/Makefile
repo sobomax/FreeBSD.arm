@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ppp/Makefile 267147 2014-06-06 04:09:07Z imp $
+# $FreeBSD: head/usr.sbin/ppp/Makefile 270289 2014-08-21 19:04:15Z neel $
 
 .include <src.opts.mk>
 
@@ -33,9 +33,9 @@ PPP_NO_PAM=
 .endif
 
 .if defined(PPP_NO_SUID)
-BINMODE=550
+BINMODE=554
 .else
-BINMODE=4550
+BINMODE=4554
 BINOWN=	root
 .endif
 BINGRP=	network

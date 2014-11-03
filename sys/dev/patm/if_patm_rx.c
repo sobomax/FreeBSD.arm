@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_rx.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_rx.c 271849 2014-09-19 03:51:26Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -254,7 +254,7 @@ patm_rx(struct patm_softc *sc, struct idt_rsqe *rsqe)
 
 	} else if (vcc->vcc.aal == ATMIO_AAL_5) {
 		if (stat & IDT_RSQE_CRC) {
-			sc->ifp->if_ierrors++;
+			if_inc_counter(sc->ifp, IFCOUNTER_IERRORS, 1);
 			if (vcc->chain != NULL) {
 				m_freem(vcc->chain);
 				vcc->chain = vcc->last = NULL;
@@ -312,9 +312,9 @@ patm_rx(struct patm_softc *sc, struct idt_rsqe *rsqe)
 	}
 #endif
 
-	sc->ifp->if_ipackets++;
+	if_inc_counter(sc->ifp, IFCOUNTER_IPACKETS, 1);
 	/* this is in if_atmsubr.c */
-	/* sc->ifp->if_ibytes += m->m_pkthdr.len; */
+	/* if_inc_counter(sc->ifp, IFCOUNTER_IBYTES, m->m_pkthdr.len); */
 
 	vcc->ibytes += m->m_pkthdr.len;
 	vcc->ipackets++;
@@ -511,9 +511,9 @@ patm_rx_raw(struct patm_softc *sc, u_char *cell)
 		break;
 	}
 
-	sc->ifp->if_ipackets++;
+	if_inc_counter(sc->ifp, IFCOUNTER_IPACKETS, 1);
 	/* this is in if_atmsubr.c */
-	/* sc->ifp->if_ibytes += m->m_pkthdr.len; */
+	/* if_inc_counter(sc->ifp, IFCOUNTER_IBYTES, m->m_pkthdr.len); */
 
 	vcc->ibytes += m->m_pkthdr.len;
 	vcc->ipackets++;

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/xen/xen_machdep.c 264178 2014-04-05 22:43:18Z imp $");
+__FBSDID("$FreeBSD: head/sys/i386/xen/xen_machdep.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -165,7 +165,7 @@ xen_boothowto(char *envp)
 
 	/* get equivalents from the environment */
 	for (i = 0; howto_names[i].ev != NULL; i++)
-		if (getenv(howto_names[i].ev) != NULL)
+		if (kern_getenv(howto_names[i].ev) != NULL)
 			howto |= howto_names[i].mask;
 	return howto;
 }

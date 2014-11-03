@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/cam_ccb.h 259397 2013-12-14 22:07:40Z nwhitehorn $
+ * $FreeBSD: head/sys/cam/cam_ccb.h 271588 2014-09-14 11:59:49Z mav $
  */
 
 #ifndef _CAM_CAM_CCB_H
@@ -347,8 +347,8 @@ struct ccb_getdevstats {
 	struct	ccb_hdr	ccb_h;
 	int	dev_openings;	/* Space left for more work on device*/	
 	int	dev_active;	/* Transactions running on the device */
-	int	devq_openings;	/* Space left for more queued work */
-	int	devq_queued;	/* Transactions queued to be sent */
+	int	allocated;	/* CCBs allocated for the device */
+	int	queued;		/* CCBs queued to be sent to the device */
 	int	held;		/*
 				 * CCBs held by peripheral drivers
 				 * for this device

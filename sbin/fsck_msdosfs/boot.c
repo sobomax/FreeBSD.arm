@@ -28,7 +28,7 @@
 #ifndef lint
 __RCSID("$NetBSD: boot.c,v 1.11 2006/06/05 16:51:18 christos Exp ");
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/fsck_msdosfs/boot.c 241807 2012-10-21 12:01:19Z uqs $";
+  "$FreeBSD: head/sbin/fsck_msdosfs/boot.c 273865 2014-10-30 15:52:01Z ambrisko $";
 #endif /* not lint */
 
 #include <stdlib.h>
@@ -181,7 +181,7 @@ readboot(int dosfs, struct bootblock *boot)
 	    boot->bpbResSectors + boot->bpbFATs * boot->FATsecs -
 	    CLUST_FIRST * boot->bpbSecPerClust;
 
-	if (boot->bpbBytesPerSec % DOSBOOTBLOCKSIZE != 0) {
+	if (boot->bpbBytesPerSec % DOSBOOTBLOCKSIZE_REAL != 0) {
 		pfatal("Invalid sector size: %u", boot->bpbBytesPerSec);
 		return FSFATAL;
 	}

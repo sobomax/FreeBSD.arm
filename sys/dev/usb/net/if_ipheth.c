@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_ipheth.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_ipheth.c 271832 2014-09-18 21:09:22Z glebius $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -400,7 +400,7 @@ ipheth_bulk_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		DPRINTFN(11, "transfer complete: %u bytes in %u frames\n",
 		    actlen, aframes);
 
-		ifp->if_opackets++;
+		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 
 		/* free all previous TX buffers */
 		ipheth_free_queue(sc->sc_tx_buf, IPHETH_TX_FRAMES_MAX);
@@ -455,7 +455,7 @@ tr_setup:
 		ipheth_free_queue(sc->sc_tx_buf, IPHETH_TX_FRAMES_MAX);
 
 		/* count output errors */
-		ifp->if_oerrors++;
+		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 
 		if (error != USB_ERR_CANCELLED) {
 			/* try to clear stall first */

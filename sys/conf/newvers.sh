@@ -28,7 +28,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: head/sys/conf/newvers.sh 261432 2014-02-03 08:15:09Z rpaulo $
+# $FreeBSD: head/sys/conf/newvers.sh 272816 2014-10-09 12:35:17Z bapt $
 
 TYPE="FreeBSD"
 REVISION="11.0"
@@ -89,7 +89,7 @@ fi
 touch version
 v=`cat version` u=${USER:-root} d=`pwd` h=${HOSTNAME:-`hostname`} t=`date`
 i=`${MAKE:-make} -V KERN_IDENT`
-compiler_v=$($(${MAKE:-make} -V CC) -v 2>&1 | grep 'version')
+compiler_v=$($(${MAKE:-make} -V CC) -v 2>&1 | grep -w 'version')
 
 for dir in /usr/bin /usr/local/bin; do
 	if [ ! -z "${svnversion}" ] ; then

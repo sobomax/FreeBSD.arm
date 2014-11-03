@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_table.c 265236 2014-05-02 20:25:09Z ken $");
+__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_table.c 272756 2014-10-08 16:22:26Z mav $");
 
 /* Debugging tables for MPT2 */
 
@@ -118,6 +118,7 @@ struct mpr_table_lookup mpr_linkrate_names[] = {
 	{"1.5Gbps",			0x08},
 	{"3.0Gbps",			0x09},
 	{"6.0Gbps",			0x0a},
+	{"12.0Gbps",			0x0b},
 	{NULL, 0},
 	{"LinkRate Unknown",		0x00}
 };

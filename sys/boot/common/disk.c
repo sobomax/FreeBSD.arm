@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/disk.c 241876 2012-10-22 11:01:43Z ae $");
+__FBSDID("$FreeBSD: head/sys/boot/common/disk.c 272557 2014-10-05 06:04:47Z ae $");
 
 #include <sys/disk.h>
 #include <sys/queue.h>
@@ -90,7 +90,7 @@ disk_lookup(struct disk_devdesc *dev)
 		    entry->d_partition == dev->d_partition) {
 			dev->d_offset = entry->d_offset;
 			DEBUG("%s offset %lld", disk_fmtdev(dev),
-			    dev->d_offset);
+			    (long long)dev->d_offset);
 #ifdef DISK_DEBUG
 			entry->count++;
 #endif
@@ -367,7 +367,7 @@ out:
 		dev->d_slice = slice;
 		dev->d_partition = partition;
 		DEBUG("%s offset %lld => %p", disk_fmtdev(dev),
-		    dev->d_offset, od);
+		    (long long)dev->d_offset, od);
 	}
 	return (rc);
 }

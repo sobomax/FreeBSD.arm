@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/arm/at91/at91sam9g20reg.h 262925 2014-03-08 06:06:50Z imp $ */
+/* $FreeBSD: head/sys/arm/at91/at91sam9g20reg.h 272163 2014-09-26 09:07:02Z kevlo $ */
 
 #ifndef AT91SAM9G20REG_H_
 #define AT91SAM9G20REG_H_
@@ -165,7 +165,7 @@
  * 8: USART 2
  * 9: MMC Interface
  * 10: USB device port
- * 11: Two-wirte interface
+ * 11: Two-wire interface
  * 12: SPI 0
  * 13: SPI 1
  * 14: SSC

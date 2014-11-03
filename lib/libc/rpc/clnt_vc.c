@@ -34,7 +34,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_vc.c 265238 2014-05-02 20:41:09Z brueffer $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_vc.c 273612 2014-10-24 23:24:47Z brooks $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -141,7 +141,6 @@ static cond_t   *vc_cv;
 
 static const char clnt_vc_errstr[] = "%s : %s";
 static const char clnt_vc_str[] = "clnt_vc_create";
-static const char clnt_read_vc_str[] = "read_vc";
 static const char __no_mem_str[] = "out of memory";
 
 /*

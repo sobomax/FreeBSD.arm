@@ -38,7 +38,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)timedc.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/timed/timedc/timedc.c 246209 2013-02-01 14:26:54Z charnier $";
+  "$FreeBSD: head/usr.sbin/timed/timedc/timedc.c 270111 2014-08-17 19:06:26Z neel $";
 #endif /* not lint */
 
 #include "timedc.h"
@@ -66,7 +66,7 @@ main(int argc, char *argv[])
 {
 	register struct cmd *c;
 
-	openlog("timedc", LOG_ODELAY, LOG_AUTH);
+	openlog("timedc", 0, LOG_AUTH);
 
 	/*
 	 * security dictates!

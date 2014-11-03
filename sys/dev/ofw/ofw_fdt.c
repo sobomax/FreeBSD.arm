@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_fdt.c 259199 2013-12-10 21:01:28Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_fdt.c 270945 2014-09-01 18:51:01Z ian $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -208,7 +208,7 @@ ofw_fdt_instance_to_package(ofw_t ofw, ihandle_t instance)
 {
 
 	/* Where real OF uses ihandles in the tree, FDT uses xref phandles */
-	return (OF_xref_phandle(instance));
+	return (OF_node_from_xref(instance));
 }
 
 /* Get the length of a property of a package. */

@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/intr_machdep.c 241780 2012-10-20 12:07:48Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/intr_machdep.c 271712 2014-09-17 17:33:22Z adrian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -116,7 +116,7 @@ static void intr_assign_next_cpu(struct intr_vector *iv);
 static void intr_shuffle_irqs(void *arg __unused);
 #endif
 
-static int intr_assign_cpu(void *arg, u_char cpu);
+static int intr_assign_cpu(void *arg, int cpu);
 static void intr_execute_handlers(void *);
 static void intr_stray_level(struct trapframe *);
 static void intr_stray_vector(void *);
@@ -256,7 +256,7 @@ intr_init2()
 }
 
 static int
-intr_assign_cpu(void *arg, u_char cpu)
+intr_assign_cpu(void *arg, int cpu)
 {
 #ifdef SMP
 	struct pcpu *pc;

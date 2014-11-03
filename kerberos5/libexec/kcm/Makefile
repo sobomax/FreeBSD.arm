@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kcm/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/kerberos5/libexec/kcm/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kcm
 MAN=	kcm.8
@@ -25,8 +25,6 @@ LDADD=	-lhdb -lkrb5 -lroken -lasn1 -lheimntlm ${LDHEIMIPCS} \
 	-lcrypto -lcrypt ${LIBVERS} ${LDAPLDADD}
 USEPRIVATELIB= heimipcs
 LDFLAGS=${LDAPLDFLAGS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

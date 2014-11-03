@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_cpl_io.c 269076 2014-07-24 18:39:08Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_cpl_io.c 273797 2014-10-28 18:10:57Z np $");
 
 #include "opt_inet.h"
 
@@ -739,7 +739,7 @@ t4_push_frames(struct adapter *sc, struct toepcb *toep, int drop)
 		    toep->tx_nocompl >= toep->tx_total / 4)
 			compl = 1;
 
-		if (compl) {
+		if (compl || toep->ulp_mode == ULP_MODE_RDMA) {
 			txwr->op_to_immdlen |= htobe32(F_FW_WR_COMPL);
 			toep->tx_nocompl = 0;
 			toep->plen_nocompl = 0;

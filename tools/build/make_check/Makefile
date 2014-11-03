@@ -1,6 +1,9 @@
-# $FreeBSD: head/tools/build/make_check/Makefile 245171 2013-01-08 18:37:12Z obrien $
+# $FreeBSD: head/tools/build/make_check/Makefile 270190 2014-08-20 00:33:37Z ian $
 
 .MAKE.MODE=	normal
+
+# Failure is handled by the invoker, don't kill other legs of a parallel build.
+MAKE_JOB_ERROR_TOKEN=no
 
 # Test for broken LHS expansion.
 # This *must* cause make(1) to detect a recursive variable, and fail as such.

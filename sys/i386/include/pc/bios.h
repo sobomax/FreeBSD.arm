@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/pc/bios.h 241027 2012-09-28 11:59:32Z jhb $
+ * $FreeBSD: head/sys/i386/include/pc/bios.h 270828 2014-08-29 21:25:47Z jhb $
  */
 
 #ifndef _MACHINE_PC_BIOS_H_
@@ -219,6 +219,14 @@ struct bios_smap {
     u_int64_t	base;
     u_int64_t	length;
     u_int32_t	type;
+} __packed;
+
+/* Structure extended to include extended attribute field in ACPI 3.0. */
+struct bios_smap_xattr {
+    u_int64_t	base;
+    u_int64_t	length;
+    u_int32_t	type;
+    u_int32_t	xattr;
 } __packed;
 
 /*

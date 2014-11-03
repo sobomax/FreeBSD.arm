@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: head/usr.sbin/amd/hlfsd/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/amd/hlfsd/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .PATH: ${.CURDIR}/../../../contrib/amd/hlfsd
 
@@ -15,7 +15,5 @@ CFLAGS+= -I${.CURDIR}/../../../contrib/amd/hlfsd
 
 DPADD=	${LIBAMU}
 LDADD=	${LIBAMU}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

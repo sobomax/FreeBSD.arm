@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ah_internal.h 269760 2014-08-09 18:15:28Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ah_internal.h 272292 2014-09-30 03:19:29Z adrian $
  */
 #ifndef _ATH_AH_INTERAL_H_
 #define _ATH_AH_INTERAL_H_
@@ -91,6 +91,7 @@ struct ath_hal_chip {
 	const char	*(*probe)(uint16_t vendorid, uint16_t devid);
 	struct ath_hal	*(*attach)(uint16_t devid, HAL_SOFTC,
 			    HAL_BUS_TAG, HAL_BUS_HANDLE, uint16_t *eepromdata,
+			    HAL_OPS_CONFIG *ah,
 			    HAL_STATUS *error);
 };
 #ifndef AH_CHIP

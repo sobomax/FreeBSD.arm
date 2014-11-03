@@ -48,7 +48,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 262950 2014-03-09 15:36:56Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -69,6 +69,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 262950 2014-03-09 15:36:56Z ian
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 
+#include <machine/armreg.h>
 #include <machine/asm.h>
 #include <machine/cpu.h>
 #include <machine/frame.h>
@@ -180,8 +181,10 @@ undefinedinstruction(struct trapframe *frame)
 	ksiginfo_t ksi;
 
 	/* Enable interrupts if they were enabled before the exception. */
-	if (!(frame->tf_spsr & I32_bit))
-		enable_interrupts(I32_bit|F32_bit);
+	if (__predict_true(frame->tf_spsr & PSR_I) == 0)
+		enable_interrupts(PSR_I);
+	if (__predict_true(frame->tf_spsr & PSR_F) == 0)
+		enable_interrupts(PSR_F);
 
 	PCPU_INC(cnt.v_trap);
 

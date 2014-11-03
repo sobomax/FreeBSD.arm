@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_connectors.c 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_connectors.c 273962 2014-11-02 09:52:22Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_edid.h>
@@ -748,7 +748,7 @@ radeon_vga_detect(struct drm_connector *connector, bool force)
 		radeon_connector->edid = drm_get_edid(&radeon_connector->base, radeon_connector->ddc_bus->adapter);
 
 		if (!radeon_connector->edid) {
-			DRM_ERROR("%s: probed a monitor but no|invalid EDID\n",
+			DRM_DEBUG_KMS("%s: probed a monitor but no|invalid EDID\n",
 					drm_get_connector_name(connector));
 			ret = connector_status_connected;
 		} else {

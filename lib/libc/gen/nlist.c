@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)nlist.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 241046 2012-09-29 11:54:34Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 271723 2014-09-17 20:26:27Z bdrewery $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -268,7 +268,7 @@ __elf_fdnlist(fd, list)
 	}
 
 	/* mmap section header table */
-	base = mmap(NULL, (size_t)shdr_size, PROT_READ, 0, fd,
+	base = mmap(NULL, (size_t)shdr_size, PROT_READ, MAP_PRIVATE, fd,
 	    (off_t)ehdr.e_shoff);
 	if (base == MAP_FAILED)
 		return (-1);
@@ -301,7 +301,7 @@ __elf_fdnlist(fd, list)
 	 * making the memory allocation permanent as with malloc/free
 	 * (i.e., munmap will return it to the system).
 	 */
-	base = mmap(NULL, (size_t)symstrsize, PROT_READ, 0, fd,
+	base = mmap(NULL, (size_t)symstrsize, PROT_READ, MAP_PRIVATE, fd,
 	    (off_t)symstroff);
 	if (base == MAP_FAILED)
 		goto done;

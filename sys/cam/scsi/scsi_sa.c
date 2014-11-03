@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_sa.c 269353 2014-07-31 22:09:50Z joerg $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_sa.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -1487,13 +1487,13 @@ sasysctlinit(void *context, int pending)
 		goto bailout;
 
 	SYSCTL_ADD_INT(&softc->sysctl_ctx, SYSCTL_CHILDREN(softc->sysctl_tree),
-	    OID_AUTO, "allow_io_split", CTLTYPE_INT | CTLFLAG_RDTUN | CTLFLAG_NOFETCH, 
+	    OID_AUTO, "allow_io_split", CTLFLAG_RDTUN | CTLFLAG_NOFETCH, 
 	    &softc->allow_io_split, 0, "Allow Splitting I/O");
 	SYSCTL_ADD_INT(&softc->sysctl_ctx, SYSCTL_CHILDREN(softc->sysctl_tree),
-	    OID_AUTO, "maxio", CTLTYPE_INT | CTLFLAG_RD, 
+	    OID_AUTO, "maxio", CTLFLAG_RD, 
 	    &softc->maxio, 0, "Maximum I/O size");
 	SYSCTL_ADD_INT(&softc->sysctl_ctx, SYSCTL_CHILDREN(softc->sysctl_tree),
-	    OID_AUTO, "cpi_maxio", CTLTYPE_INT | CTLFLAG_RD, 
+	    OID_AUTO, "cpi_maxio", CTLFLAG_RD, 
 	    &softc->cpi_maxio, 0, "Maximum Controller I/O size");
 
 bailout:

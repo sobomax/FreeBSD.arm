@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.compiler.mk 266587 2014-05-23 14:34:22Z imp $
+# $FreeBSD: head/share/mk/bsd.compiler.mk 273405 2014-10-21 19:58:23Z bapt $
 
 # Setup variables for the compiler
 #
@@ -42,7 +42,8 @@ COMPILER_VERSION!=echo ${_v:M[1-9].[0-9]*} | awk -F. '{print $$1 * 10000 + $$2 *
 .endif
 .undef _v
 
-.if ${COMPILER_TYPE} == "clang"
+.if ${COMPILER_TYPE} == "clang" || \
+	(${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 40800)
 COMPILER_FEATURES=	c++11
 .else
 COMPILER_FEATURES=

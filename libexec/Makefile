@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/libexec/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/libexec/Makefile 273155 2014-10-16 00:33:06Z imp $
 
 .include <src.opts.mk>
 
@@ -89,5 +89,7 @@ _telnetd=	telnetd
 _atf=		atf
 _tests=		tests
 .endif
+
+.include <bsd.arch.inc.mk>
 
 .include <bsd.subdir.mk>

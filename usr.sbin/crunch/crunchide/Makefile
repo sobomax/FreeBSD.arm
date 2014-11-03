@@ -1,9 +1,7 @@
-# $FreeBSD: head/usr.sbin/crunch/crunchide/Makefile 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/usr.sbin/crunch/crunchide/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=   crunchide
 SRCS=	crunchide.c
-
-NO_PIE=	yes
 
 TARGET_ARCH?=	${MACHINE_ARCH}
 

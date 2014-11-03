@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/linux/linux.h 246085 2013-01-29 18:41:30Z jhb $
+ * $FreeBSD: head/sys/i386/linux/linux.h 271743 2014-09-18 08:36:45Z bz $
  */
 
 #ifndef _I386_LINUX_H_
@@ -53,6 +53,11 @@ MALLOC_DECLARE(M_LINUX);
 
 #define	PTRIN(v)	(void *)(v)
 #define	PTROUT(v)	(l_uintptr_t)(v)
+
+#define	CP(src,dst,fld) do { (dst).fld = (src).fld; } while (0)
+#define	CP2(src,dst,sfld,dfld) do { (dst).dfld = (src).sfld; } while (0)
+#define	PTRIN_CP(src,dst,fld) \
+	do { (dst).fld = PTRIN((src).fld); } while (0)
 
 /*
  * Provide a separate set of types for the Linux types.

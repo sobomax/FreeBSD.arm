@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vatpit.h 264648 2014-04-18 15:22:56Z tychon $
+ * $FreeBSD: head/sys/amd64/vmm/io/vatpit.h 273706 2014-10-26 19:03:06Z neel $
  */
 
 #ifndef _VATPIT_H_
@@ -37,9 +37,9 @@
 struct vatpit *vatpit_init(struct vm *vm);
 void vatpit_cleanup(struct vatpit *vatpit);
 
-int vatpit_handler(void *vm, int vcpuid, bool in, int port, int bytes,
+int vatpit_handler(struct vm *vm, int vcpuid, bool in, int port, int bytes,
     uint32_t *eax);
-int vatpit_nmisc_handler(void *vm, int vcpuid, bool in, int port, int bytes,
-    uint32_t *eax);
+int vatpit_nmisc_handler(struct vm *vm, int vcpuid, bool in, int port,
+    int bytes, uint32_t *eax);
 
 #endif	/* _VATPIT_H_ */

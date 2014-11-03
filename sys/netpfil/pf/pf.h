@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: head/sys/netpfil/pf/pf.h 269998 2014-08-14 18:57:46Z glebius $
+ *	$FreeBSD: head/sys/netpfil/pf/pf.h 270022 2014-08-15 14:02:24Z glebius $
  */
 
 #ifndef	_NET_PF_H_
@@ -124,7 +124,8 @@ enum	{ PF_ADDR_ADDRMASK, PF_ADDR_NOROUTE, PF_ADDR_DYNIFTL,
 #define PFRES_MAXSTATES	12		/* State limit */
 #define PFRES_SRCLIMIT	13		/* Source node/conn limit */
 #define PFRES_SYNPROXY	14		/* SYN proxy */
-#define PFRES_MAX	15		/* total+1 */
+#define PFRES_MAPFAILED	15		/* pf_map_addr() failed */
+#define PFRES_MAX	16		/* total+1 */
 
 #define PFRES_NAMES { \
 	"match", \
@@ -142,6 +143,7 @@ enum	{ PF_ADDR_ADDRMASK, PF_ADDR_NOROUTE, PF_ADDR_DYNIFTL,
 	"state-limit", \
 	"src-limit", \
 	"synproxy", \
+	"map-failed", \
 	NULL \
 }
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/gpio/gpioiic.c 266922 2014-05-31 14:27:50Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/gpio/gpioiic.c 273917 2014-10-31 19:15:14Z loos $");
 
 #include "opt_platform.h"
 
@@ -154,18 +154,18 @@ static int
 gpioiic_callback(device_t dev, int index, caddr_t data)
 {
 	struct gpioiic_softc	*sc = device_get_softc(dev);
-	int			error = 0;
+	int error, how;
 
+	how = GPIOBUS_DONTWAIT;
+	if (data != NULL && (int)*data == IIC_WAIT)
+		how = GPIOBUS_WAIT;
+	error = 0;
 	switch (index) {
 	case IIC_REQUEST_BUS:
-		GPIOBUS_LOCK_BUS(sc->sc_busdev);
-		GPIOBUS_ACQUIRE_BUS(sc->sc_busdev, sc->sc_dev);
-		GPIOBUS_UNLOCK_BUS(sc->sc_busdev);
+		error = GPIOBUS_ACQUIRE_BUS(sc->sc_busdev, sc->sc_dev, how);
 		break;
 	case IIC_RELEASE_BUS:
-		GPIOBUS_LOCK_BUS(sc->sc_busdev);
 		GPIOBUS_RELEASE_BUS(sc->sc_busdev, sc->sc_dev);
-		GPIOBUS_UNLOCK_BUS(sc->sc_busdev);
 		break;
 	default:
 		error = EINVAL;

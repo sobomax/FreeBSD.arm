@@ -1,6 +1,6 @@
-# $FreeBSD: head/sys/modules/i2c/controllers/amdsmb/Makefile 153618 2005-12-21 15:49:51Z ru $
+# $FreeBSD: head/sys/modules/i2c/controllers/amdsmb/Makefile 272016 2014-09-23 05:54:18Z rpaulo $
 
-.PATH: ${.CURDIR}/../../../../pci
+.PATH: ${.CURDIR}/../../../../dev/amdsmb
 
 KMOD=	amdsmb
 SRCS=	amdsmb.c

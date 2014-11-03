@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/netinet/ip_var.h 269699 2014-08-08 01:57:15Z kevlo $
+ * $FreeBSD: head/sys/netinet/ip_var.h 271291 2014-09-09 00:19:02Z adrian $
  */
 
 #ifndef _NETINET_IP_VAR_H_
@@ -161,6 +161,7 @@ void	kmod_ipstat_dec(int statnum);
 #define	IP_SENDTOIF		0x8		/* send on specific ifnet */
 #define IP_ROUTETOIF		SO_DONTROUTE	/* 0x10 bypass routing tables */
 #define IP_ALLOWBROADCAST	SO_BROADCAST	/* 0x20 can send broadcast packets */
+#define	IP_NODEFAULTFLOWID	0x40		/* Don't set the flowid from inp */
 
 #ifdef __NO_STRICT_ALIGNMENT
 #define IP_HDR_ALIGNED_P(ip)	1
@@ -235,7 +236,7 @@ void	rip_init(void);
 void	rip_destroy(void);
 #endif
 int	rip_input(struct mbuf **, int *, int);
-int	rip_output(struct mbuf *, struct socket *, u_long);
+int	rip_output(struct mbuf *, struct socket *, ...);
 int	ipip_input(struct mbuf **, int *, int);
 int	rsvp_input(struct mbuf **, int *, int);
 int	ip_rsvp_init(struct socket *);

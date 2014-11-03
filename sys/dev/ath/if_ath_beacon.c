@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_beacon.c 265115 2014-04-30 02:19:41Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_beacon.c 270430 2014-08-23 18:55:51Z adrian $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -748,6 +748,11 @@ ath_beacon_generate(struct ath_softc *sc, struct ieee80211vap *vap)
 			 * stop? What if it fails?
 			 *
 			 * More thought is required here.
+			 */
+			/*
+			 * XXX can we even stop TX DMA here? Check what the
+			 * reference driver does for cabq for beacons, given
+			 * that stopping TX requires RX is paused.
 			 */
 			ath_tx_draintxq(sc, cabq);
 		}

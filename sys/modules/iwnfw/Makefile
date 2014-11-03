@@ -1,6 +1,7 @@
-# $FreeBSD: head/sys/modules/iwnfw/Makefile 260552 2014-01-11 18:56:48Z gavin $
+# $FreeBSD: head/sys/modules/iwnfw/Makefile 270734 2014-08-28 00:05:02Z adrian $
 
-SUBDIR=	iwn105		\
+SUBDIR=	iwn100		\
+	iwn105		\
 	iwn135		\
 	iwn1000		\
 	iwn2000		\

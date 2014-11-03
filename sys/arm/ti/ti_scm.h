@@ -29,7 +29,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_scm.h 239281 2012-08-15 06:31:32Z gonzo $
+ * $FreeBSD: head/sys/arm/ti/ti_scm.h 273262 2014-10-18 17:51:34Z andrew $
  */
 
 
@@ -76,8 +76,6 @@ int ti_scm_padconf_get(const char *padname, const char **muxmode,
     unsigned int *state);
 int ti_scm_padconf_set_gpiomode(uint32_t gpio, unsigned int state);
 int ti_scm_padconf_get_gpiomode(uint32_t gpio, unsigned int *state);
-int ti_scm_padconf_set_gpioflags(uint32_t gpio, uint32_t flags);
-void ti_scm_padconf_get_gpioflags(uint32_t gpio, uint32_t *flags);
 int ti_scm_reg_read_4(uint32_t reg, uint32_t *val);
 int ti_scm_reg_write_4(uint32_t reg, uint32_t val);
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/csu/Makefile 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/gnu/lib/csu/Makefile 272350 2014-10-01 08:26:51Z andrew $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -24,7 +24,7 @@ CFLAGS+=	-I${GCCLIB}/include -I${GCCDIR}/config -I${GCCDIR} -I. \
 CRTS_CFLAGS=	-DCRTSTUFFS_O -DSHARED ${PICFLAG}
 MKDEP=		-DCRT_BEGIN
 
-.if ${TARGET_CPUARCH} == "arm" && ${MK_ARM_EABI} != "no"
+.if ${TARGET_CPUARCH} == "arm"
 CFLAGS+=	-DTARGET_ARM_EABI
 .endif
 

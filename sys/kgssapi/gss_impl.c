@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 253049 2013-07-09 01:05:28Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 273707 2014-10-26 19:42:44Z mjg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -70,7 +70,7 @@ kgss_init(void *dummy)
 
 	LIST_INIT(&kgss_mechs);
 	error = syscall_register(&gssd_syscall_offset, &gssd_syscall_sysent,
-	    &gssd_syscall_prev_sysent);
+	    &gssd_syscall_prev_sysent, SY_THR_STATIC_KLD);
 	if (error)
 		printf("Can't register GSSD syscall\n");
 	else

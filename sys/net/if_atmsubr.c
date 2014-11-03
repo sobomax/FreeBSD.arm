@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_atmsubr.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net/if_atmsubr.c 271867 2014-09-19 10:39:58Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -252,7 +252,7 @@ atm_input(struct ifnet *ifp, struct atm_pseudohdr *ah, struct mbuf *m,
 #ifdef MAC
 	mac_ifnet_create_mbuf(ifp, m);
 #endif
-	ifp->if_ibytes += m->m_pkthdr.len;
+	if_inc_counter(ifp, IFCOUNTER_IBYTES, m->m_pkthdr.len);
 
 	if (ng_atm_input_p != NULL) {
 		(*ng_atm_input_p)(ifp, &m, ah, rxhand);

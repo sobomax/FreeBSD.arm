@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/linux_sysvec.c 267563 2014-06-17 05:29:18Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/linux_sysvec.c 273991 2014-11-02 21:40:32Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -400,7 +400,6 @@ linux_copyout_strings(struct image_params *imgp)
 
 
 
-extern int _ucodesel, _udatasel;
 extern unsigned long linux_sznonrtsigcode;
 
 static void

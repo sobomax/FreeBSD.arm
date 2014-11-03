@@ -1,4 +1,6 @@
-.\" $FreeBSD: head/tools/build/options/WITHOUT_RCS 256198 2013-10-09 17:07:20Z gjb $
+.\" $FreeBSD: head/tools/build/options/WITHOUT_RCS 271401 2014-09-10 19:00:17Z asomers $
 Set to not build
 .Xr rcs 1
-and related utilities.
+,
+.Xr etcupdate 8
+, and related utilities.

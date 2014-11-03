@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/lib/libc/quad/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/quad/Makefile.inc 272350 2014-10-01 08:26:51Z andrew $
 
 # Quad support, if needed
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/quad ${LIBC_SRCTOP}/quad
@@ -8,7 +8,7 @@
 
 SRCS+=	cmpdi2.c divdi3.c moddi3.c qdivrem.c ucmpdi2.c udivdi3.c umoddi3.c
 
-.elif ${LIBC_ARCH} == "arm" && ${MK_ARM_EABI} != "no"
+.elif ${LIBC_ARCH} == "arm"
 
 SRCS+=	adddi3.c anddi3.c floatunsdidf.c iordi3.c lshldi3.c notdi2.c \
 	qdivrem.c subdi3.c xordi3.c

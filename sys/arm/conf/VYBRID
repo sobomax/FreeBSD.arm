@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/VYBRID 269234 2014-07-29 12:44:19Z br $
+# $FreeBSD: head/sys/arm/conf/VYBRID 270912 2014-09-01 03:49:21Z imp $
 
 ident		VYBRID
 include		"../freescale/vybrid/std.vybrid"
@@ -112,7 +112,7 @@ device		ehci
 #device		ohci
 
 device		umass
-device		scbus			# SCSI bus (required for SCSI)
+device		scbus			# SCSI bus (required for ATA/SCSI)
 device		da			# Direct Access (disks)
 device		pass
 

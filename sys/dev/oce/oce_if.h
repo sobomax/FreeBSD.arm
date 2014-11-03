@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_if.h 267839 2014-06-24 20:11:22Z delphij $ */
+/* $FreeBSD: head/sys/dev/oce/oce_if.h 271946 2014-09-22 08:27:27Z hselasky $ */
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -152,7 +152,6 @@ extern int mp_ncpus;			/* system's total active cpu cores */
 #define OCE_MAX_TX_ELEMENTS		29
 #define OCE_MAX_TX_DESC			1024
 #define OCE_MAX_TX_SIZE			65535
-#define OCE_MAX_TSO_SIZE		(65535 - ETHER_HDR_LEN)
 #define OCE_MAX_RX_SIZE			4096
 #define OCE_MAX_RQ_POSTS		255
 #define OCE_DEFAULT_PROMISCUOUS		0

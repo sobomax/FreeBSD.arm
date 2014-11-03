@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/mtree/Makefile 261298 2014-01-30 21:32:25Z brooks $
+# $FreeBSD: head/usr.sbin/mtree/Makefile 271771 2014-09-18 14:41:57Z will $
 
 .include <bsd.own.mk>
 
@@ -17,6 +17,6 @@ LDADD=	-lmd
 CLEANFILES+=	fmtree.8
 
 fmtree.8: mtree.8
-	cp ${.ALLSRC} ${.TARGET}
+	cp -f ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

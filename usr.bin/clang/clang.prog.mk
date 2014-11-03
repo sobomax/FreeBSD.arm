@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/clang.prog.mk 268804 2014-07-17 18:24:34Z brooks $
-
-NO_PIE=	yes
+# $FreeBSD: head/usr.bin/clang/clang.prog.mk 270168 2014-08-19 15:04:32Z bdrewery $
 
 LLVM_SRCS= ${.CURDIR}/../../../contrib/llvm
 

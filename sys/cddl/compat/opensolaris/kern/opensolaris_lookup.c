@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_lookup.c 242569 2012-11-04 14:16:18Z avg $");
+__FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_lookup.c 273641 2014-10-25 17:42:44Z jpaetzel $");
  
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -91,11 +91,11 @@ traverse(vnode_t **cvpp, int lktype)
 		error = vfs_busy(vfsp, 0);
 		/*
 		 * tvp is NULL for *cvpp vnode, which we can't unlock.
+		 * At least some callers expect the reference to be
+		 * maintained to the original *cvpp
 		 */
 		if (tvp != NULL)
 			vput(cvp);
-		else
-			vrele(cvp);
 		if (error)
 			return (error);
 

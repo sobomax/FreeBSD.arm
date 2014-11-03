@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 266935 2014-06-01 02:47:09Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 272710 2014-10-07 17:08:53Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 266935 2014-06-01 02:47:09Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 272710 2014-10-07 17:08:53Z neel $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -94,6 +94,8 @@ struct vtblk_config {
 struct virtio_blk_hdr {
 #define	VBH_OP_READ		0
 #define	VBH_OP_WRITE		1
+#define	VBH_OP_FLUSH		4
+#define	VBH_OP_FLUSH_OUT	5
 #define	VBH_OP_IDENT		8		
 #define	VBH_FLAG_BARRIER	0x80000000	/* OR'ed into vbh_type */
 	uint32_t       	vbh_type;
@@ -133,6 +135,7 @@ static struct virtio_consts vtblk_vi_consts = {
 	pci_vtblk_notify,	/* device-wide qnotify */
 	pci_vtblk_cfgread,	/* read PCI config */
 	pci_vtblk_cfgwrite,	/* write PCI config */
+	NULL,			/* apply negotiated features */
 	VTBLK_S_HOSTCAPS,	/* our capabilities */
 };
 
@@ -215,6 +218,10 @@ pci_vtblk_proc(struct pci_vtblk_softc *sc, struct vqueue_info *vq)
 		strlcpy(iov[1].iov_base, sc->vbsc_ident,
 		    MIN(iov[1].iov_len, sizeof(sc->vbsc_ident)));
 		err = 0;
+		break;
+	case VBH_OP_FLUSH:
+	case VBH_OP_FLUSH_OUT:
+		err = fsync(sc->vbsc_fd);
 		break;
 	default:
 		err = -ENOSYS;

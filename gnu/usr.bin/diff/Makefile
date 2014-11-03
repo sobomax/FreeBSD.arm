@@ -1,4 +1,6 @@
-# $FreeBSD: head/gnu/usr.bin/diff/Makefile 251468 2013-06-06 11:59:38Z jkim $
+# $FreeBSD: head/gnu/usr.bin/diff/Makefile 272787 2014-10-09 02:07:34Z ngie $
+
+.include <src.opts.mk>
 
 DIFFSRC=${.CURDIR}/../../../contrib/diff/src
 .PATH: ${DIFFSRC} \
@@ -26,5 +28,9 @@ SUBDIR+=doc
 
 DPADD=	${LIBGNUREGEX}
 LDADD=	-lgnuregex
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ata/ata_da.c 269974 2014-08-14 13:57:17Z smh $");
+__FBSDID("$FreeBSD: head/sys/cam/ata/ata_da.c 273704 2014-10-26 18:41:01Z smh $");
 
 #include "opt_ada.h"
 
@@ -447,6 +447,30 @@ static struct ada_quirk_entry ada_quirk_table[] =
 		 * 4k optimised
 		 */
 		{ T_DIRECT, SIP_MEDIA_FIXED, "*", "Samsung SSD 840*", "*" },
+		/*quirks*/ADA_Q_4K
+	},
+	{
+		/*
+		 * Samsung 843T Series SSDs
+		 * 4k optimised
+		 */
+		{ T_DIRECT, SIP_MEDIA_FIXED, "*", "SAMSUNG MZ7WD*", "*" },
+		/*quirks*/ADA_Q_4K
+	},
+ 	{
+ 		/*
+		 * Samsung 850 SSDs
+		 * 4k optimised
+		 */
+		{ T_DIRECT, SIP_MEDIA_FIXED, "*", "Samsung SSD 850*", "*" },
+		/*quirks*/ADA_Q_4K
+	},
+	{
+		/*
+		 * Samsung PM853T Series SSDs
+		 * 4k optimised
+		 */
+		{ T_DIRECT, SIP_MEDIA_FIXED, "*", "SAMSUNG MZ7GE*", "*" },
 		/*quirks*/ADA_Q_4K
 	},
 	{
@@ -1308,7 +1332,7 @@ adaregister(struct cam_periph *periph, void *arg)
 			    softc->disk->d_name, softc->disk->d_unit);
 			snprintf(buf1, sizeof(buf1),
 			    "ad%d", legacy_id);
-			setenv(announce_buf, buf1);
+			kern_setenv(announce_buf, buf1);
 		}
 	} else
 		legacy_id = -1;
@@ -1459,8 +1483,14 @@ ada_dsmtrim(struct ada_softc *softc, struct bio *bp, struct ccb_ataio *ataio)
 static void
 ada_cfaerase(struct ada_softc *softc, struct bio *bp, struct ccb_ataio *ataio)
 {
+	struct trim_request *req = &softc->trim_req;
 	uint64_t lba = bp->bio_pblkno;
 	uint16_t count = bp->bio_bcount / softc->params.secsize;
+
+	bzero(req, sizeof(*req));
+	TAILQ_INIT(&req->bps);
+	bioq_remove(&softc->trim_queue, bp);
+	TAILQ_INSERT_TAIL(&req->bps, bp, bio_queue);
 
 	cam_fill_ataio(ataio,
 	    ada_retry_count,

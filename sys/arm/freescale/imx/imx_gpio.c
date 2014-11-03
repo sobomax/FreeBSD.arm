@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_gpio.c 268835 2014-07-18 07:52:35Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_gpio.c 273799 2014-10-28 18:33:59Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -435,8 +435,8 @@ imx51_gpio_attach(device_t dev)
  		    "imx_gpio%d.%d", device_get_unit(dev), i);
 	}
 
-	device_add_child(dev, "gpioc", device_get_unit(dev));
-	device_add_child(dev, "gpiobus", device_get_unit(dev));
+	device_add_child(dev, "gpioc", -1);
+	device_add_child(dev, "gpiobus", -1);
 
 	return (bus_generic_attach(dev));
 }

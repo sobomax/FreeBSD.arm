@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.opts.mk 268496 2014-07-10 15:05:41Z bapt $
+# $FreeBSD: head/share/mk/bsd.opts.mk 270168 2014-08-19 15:04:32Z bdrewery $
 #
 # Option file for src builds.
 #
@@ -68,8 +68,7 @@ __DEFAULT_NO_OPTIONS = \
     CTF \
     DEBUG_FILES \
     INSTALL_AS_USER \
-    INFO \
-    PIE
+    INFO
 
 .include <bsd.mkopt.mk>
 

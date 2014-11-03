@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_hints.c 261901 2014-02-14 20:54:03Z pluknet $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_hints.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -109,7 +109,7 @@ sysctl_hintmode(SYSCTL_HANDLER_ARGS)
 		line = malloc(i+1, M_TEMP, M_WAITOK);
 		strcpy(line, cp);
 		line[eqidx] = '\0';
-		setenv(line, line + eqidx + 1);
+		kern_setenv(line, line + eqidx + 1);
 		free(line, M_TEMP);
 		cp += i + 1;
 	}

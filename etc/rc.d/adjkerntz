@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/adjkerntz 239570 2012-08-22 18:49:02Z obrien $
+# $FreeBSD: head/etc/rc.d/adjkerntz 273957 2014-11-02 01:47:27Z des $
 #
 
 # PROVIDE: adjkerntz
-# REQUIRE: FILESYSTEMS postrandom
+# REQUIRE: FILESYSTEMS
 # BEFORE: netif
 # KEYWORD: nojail
 

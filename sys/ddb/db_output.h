@@ -23,14 +23,14 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/ddb/db_output.h 163134 2006-10-08 18:15:08Z bde $
+ * $FreeBSD: head/sys/ddb/db_output.h 272958 2014-10-11 20:25:19Z pfg $
  */
 
 #ifndef _DDB_DB_OUTPUT_H_
 #define	_DDB_DB_OUTPUT_H_
 
 /*
- * 	Author: David B. Golub, Carnegie Mellon University
+ *	Author: David B. Golub, Carnegie Mellon University
  *	Date:	8/90
  */
 

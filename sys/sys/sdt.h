@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sdt.h 268542 2014-07-12 00:57:00Z rpaulo $
+ * $FreeBSD: head/sys/sys/sdt.h 270990 2014-09-02 23:43:06Z markj $
  *
  * Statically Defined Tracing (SDT) definitions.
  *
@@ -32,6 +32,8 @@
 #define	_SYS_SDT_H
 
 #ifndef _KERNEL
+
+#define	_DTRACE_VERSION	1
 
 #define	DTRACE_PROBE(prov, name) {				\
 	extern void __dtrace_##prov##___##name(void);		\

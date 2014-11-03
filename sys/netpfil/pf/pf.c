@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf.c 269998 2014-08-14 18:57:46Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -266,8 +266,6 @@ static u_int16_t	 pf_get_mss(struct mbuf *, int, u_int16_t,
 			    sa_family_t);
 static u_int16_t	 pf_calc_mss(struct pf_addr *, sa_family_t,
 				int, u_int16_t);
-static void		 pf_set_rt_ifp(struct pf_state *,
-			    struct pf_addr *);
 static int		 pf_check_proto_cksum(struct mbuf *, int, int,
 			    u_int8_t, sa_family_t);
 static void		 pf_print_state_parts(struct pf_state *,
@@ -361,9 +359,9 @@ u_long	pf_srchashmask;
 static u_long	pf_hashsize;
 static u_long	pf_srchashsize;
 
-SYSCTL_UINT(_net_pf, OID_AUTO, states_hashsize, CTLFLAG_RDTUN,
+SYSCTL_ULONG(_net_pf, OID_AUTO, states_hashsize, CTLFLAG_RDTUN,
     &pf_hashsize, 0, "Size of pf(4) states hashtable");
-SYSCTL_UINT(_net_pf, OID_AUTO, source_nodes_hashsize, CTLFLAG_RDTUN,
+SYSCTL_ULONG(_net_pf, OID_AUTO, source_nodes_hashsize, CTLFLAG_RDTUN,
     &pf_srchashsize, 0, "Size of pf(4) source nodes hashtable");
 
 VNET_DEFINE(void *, pf_swi_cookie);
@@ -376,7 +374,7 @@ pf_hashkey(struct pf_state_key *sk)
 {
 	uint32_t h;
 
-	h = jenkins_hash32((uint32_t *)sk,
+	h = murmur3_32_hash32((uint32_t *)sk,
 	    sizeof(struct pf_state_key_cmp)/sizeof(uint32_t),
 	    V_pf_hashseed);
 
@@ -390,11 +388,11 @@ pf_hashsrc(struct pf_addr *addr, sa_family_t af)
 
 	switch (af) {
 	case AF_INET:
-		h = jenkins_hash32((uint32_t *)&addr->v4,
+		h = murmur3_32_hash32((uint32_t *)&addr->v4,
 		    sizeof(addr->v4)/sizeof(uint32_t), V_pf_hashseed);
 		break;
 	case AF_INET6:
-		h = jenkins_hash32((uint32_t *)&addr->v6,
+		h = murmur3_32_hash32((uint32_t *)&addr->v6,
 		    sizeof(addr->v6)/sizeof(uint32_t), V_pf_hashseed);
 		break;
 	default:
@@ -2957,31 +2955,6 @@ pf_calc_mss(struct pf_addr *addr, sa_family_t af, int rtableid, u_int16_t offer)
 	return (mss);
 }
 
-static void
-pf_set_rt_ifp(struct pf_state *s, struct pf_addr *saddr)
-{
-	struct pf_rule *r = s->rule.ptr;
-	struct pf_src_node *sn = NULL;
-
-	s->rt_kif = NULL;
-	if (!r->rt || r->rt == PF_FASTROUTE)
-		return;
-	switch (s->key[PF_SK_WIRE]->af) {
-#ifdef INET
-	case AF_INET:
-		pf_map_addr(AF_INET, r, saddr, &s->rt_addr, NULL, &sn);
-		s->rt_kif = r->rpool.cur->kif;
-		break;
-#endif /* INET */
-#ifdef INET6
-	case AF_INET6:
-		pf_map_addr(AF_INET6, r, saddr, &s->rt_addr, NULL, &sn);
-		s->rt_kif = r->rpool.cur->kif;
-		break;
-#endif /* INET6 */
-	}
-}
-
 static u_int32_t
 pf_tcp_iss(struct pf_pdesc *pd)
 {
@@ -3544,6 +3517,17 @@ pf_create_state(struct pf_rule *r, struct pf_rule *nr, struct pf_rule *a,
 		s->timeout = PFTM_OTHER_FIRST_PACKET;
 	}
 
+	if (r->rt && r->rt != PF_FASTROUTE) {
+		if (pf_map_addr(pd->af, r, pd->src, &s->rt_addr, NULL, &sn)) {
+			REASON_SET(&reason, PFRES_MAPFAILED);
+			pf_src_tree_remove_state(s);
+			STATE_DEC_COUNTERS(s);
+			uma_zfree(V_pf_state_z, s);
+			goto csfailed;
+		}
+		s->rt_kif = r->rpool.cur->kif;
+	}
+
 	s->creation = time_uptime;
 	s->expire = time_uptime;
 
@@ -3609,7 +3593,6 @@ pf_create_state(struct pf_rule *r, struct pf_rule *nr, struct pf_rule *a,
 	} else
 		*sm = s;
 
-	pf_set_rt_ifp(s, pd->src);	/* needs s->state_key set */
 	if (tag > 0)
 		s->tag = tag;
 	if (pd->proto == IPPROTO_TCP && (th->th_flags & (TH_SYN|TH_ACK)) ==
@@ -5349,8 +5332,7 @@ pf_route(struct mbuf **m, struct pf_rule *r, int dir, struct ifnet *oifp,
 	 * care of the fragmentation for us, we can just send directly.
 	 */
 	if (ip_len <= ifp->if_mtu ||
-	    (m0->m_pkthdr.csum_flags & ifp->if_hwassist & CSUM_TSO) != 0 ||
-	    ((ip_off & IP_DF) == 0 && (ifp->if_hwassist & CSUM_FRAGMENT))) {
+	    (m0->m_pkthdr.csum_flags & ifp->if_hwassist & CSUM_TSO) != 0) {
 		ip->ip_sum = 0;
 		if (m0->m_pkthdr.csum_flags & CSUM_IP & ~ifp->if_hwassist) {
 			ip->ip_sum = in_cksum(m0, ip->ip_hl << 2);
@@ -6017,6 +5999,10 @@ done:
 		*m0 = NULL;
 		action = PF_PASS;
 		break;
+	case PF_DROP:
+		m_freem(*m0);
+		*m0 = NULL;
+		break;
 	default:
 		/* pf_route() returns unlocked. */
 		if (r->rt) {
@@ -6064,6 +6050,9 @@ pf_test6(int dir, struct ifnet *ifp, struct mbuf **m0, struct inpcb *inp)
 		return (PF_DROP);
 	}
 	if (kif->pfik_flags & PFI_IFLAG_SKIP)
+		return (PF_PASS);
+
+	if (m->m_flags & M_SKIP_FIREWALL)
 		return (PF_PASS);
 
 	PF_RULES_RLOCK();
@@ -6389,6 +6378,10 @@ done:
 	case PF_DEFER:
 		*m0 = NULL;
 		action = PF_PASS;
+		break;
+	case PF_DROP:
+		m_freem(*m0);
+		*m0 = NULL;
 		break;
 	default:
 		/* pf_route6() returns unlocked. */

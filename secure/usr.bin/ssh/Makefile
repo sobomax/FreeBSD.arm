@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.bin/ssh/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/secure/usr.bin/ssh/Makefile 270178 2014-08-19 18:27:43Z ngie $
 
 .include <src.opts.mk>
 
@@ -22,7 +22,7 @@ USEPRIVATELIB= ssh
 .if ${MK_LDNS} != "no"
 CFLAGS+=	-DHAVE_LDNS=1
 DPADD+=	${LIBLDNS}
-LDADD+=	${LIBLDNSADD}
+LDADD+=	${LDLDNS}
 USEPRIVATELIB+= ldns
 .endif
 

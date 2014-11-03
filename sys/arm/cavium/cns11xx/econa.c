@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa.c 257342 2013-10-29 14:32:33Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa.c 257342 2013-10-29 14:32:
 #include <vm/vm_extern.h>
 
 #define	_ARM32_BUS_DMA_PRIVATE
+#include <machine/armreg.h>
 #include <machine/bus.h>
 #include <machine/intr.h>
 #include <machine/resource.h>
@@ -508,7 +509,7 @@ econa_attach(device_t dev)
 
 	bus_generic_probe(dev);
 	bus_generic_attach(dev);
-	enable_interrupts(I32_bit | F32_bit);
+	enable_interrupts(PSR_I | PSR_F);
 
 	return (0);
 }

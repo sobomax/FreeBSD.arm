@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.mk 269981 2014-08-14 16:01:46Z imp $
+# $FreeBSD: head/sys/conf/kern.mk 272881 2014-10-10 00:35:13Z imp $
 
 #
 # Warning flags for compiling the kernel and components of the kernel:
@@ -33,7 +33,13 @@ CWARNEXTRA?=	-Wno-error-tautological-compare -Wno-error-empty-body \
 .endif
 
 .if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 40300
-CWARNEXTRA?=	-Wno-inline
+# Catch-all for all the things that are in our tree, but for which we're
+# not yet ready for this compiler. Note: we likely only really "support"
+# building with gcc 4.8 and newer. Nothing older has been tested.
+CWARNEXTRA?=	-Wno-error=inline -Wno-error=enum-compare -Wno-error=unused-but-set-variable \
+		-Wno-error=aggressive-loop-optimizations -Wno-error=maybe-uninitialized \
+		-Wno-error=array-bounds -Wno-error=address \
+		-Wno-error=cast-qual -Wno-error=sequence-point -Wno-error=attributes
 .endif
 
 # External compilers may not support our format extensions.  Allow them

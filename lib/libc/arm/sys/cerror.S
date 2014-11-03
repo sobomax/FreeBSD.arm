@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/cerror.S 164109 2006-11-09 01:28:16Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/cerror.S 270882 2014-08-31 17:21:51Z ian $");
 #include "SYS.h"
 
 .globl  _C_LABEL(__error)
@@ -46,3 +46,4 @@ ASENTRY(CERROR)
 	mvn	r0, #0x00000000
 	mvn	r1, #0x00000000
 	ldmfd	sp!, {r4, pc}
+END(CERROR)

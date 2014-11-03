@@ -1,10 +1,8 @@
-# $FreeBSD: head/usr.sbin/ntp/ntpd/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/ntp/ntpd/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 MAN=
 
 .include <src.opts.mk>
-
-NO_PIE=	yes
 
 .PATH: ${.CURDIR}/../../../contrib/ntp/ntpd
 

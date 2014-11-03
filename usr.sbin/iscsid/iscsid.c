@@ -26,8 +26,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/iscsid/iscsid.c 268326 2014-07-06 17:37:49Z mav $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/iscsid.c 270279 2014-08-21 15:32:38Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>

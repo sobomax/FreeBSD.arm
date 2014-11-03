@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_timer.c 186352 2008-12-20 03:26:09Z sam $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_timer.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -46,6 +46,7 @@ __FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_timer.c 186352 2008-12-20 
 #include <sys/rman.h>
 #include <sys/timetc.h>
 
+#include <machine/armreg.h>
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
@@ -175,7 +176,7 @@ cpu_initclocks(void)
 
 	/* Report the clock frequency. */
 
-	oldirqstate = disable_interrupts(I32_bit);
+	oldirqstate = disable_interrupts(PSR_I);
 
 	irq = bus_alloc_resource(dev, SYS_RES_IRQ, &rid, IXP425_INT_TMR0,
 	    IXP425_INT_TMR0, 1, RF_ACTIVE);

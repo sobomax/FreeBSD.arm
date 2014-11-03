@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/mlx4ib/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/mlx4ib/Makefile 270710 2014-08-27 13:21:53Z hselasky $
 .PATH:  ${.CURDIR}/../../ofed/drivers/infiniband/hw/mlx4
 .PATH:  ${.CURDIR}/../../ofed/include/linux
 
@@ -14,6 +14,7 @@ CFLAGS+= -I${.CURDIR}/../../ofed/drivers/infiniband/hw/mlx4
 CFLAGS+= -I${.CURDIR}/../../ofed/include/
 CFLAGS+= -DCONFIG_INFINIBAND_USER_MEM
 CFLAGS+= -DINET6 -DINET -DOFED
+CFLAGS+= -fms-extensions
 
 .include <bsd.kmod.mk>
 

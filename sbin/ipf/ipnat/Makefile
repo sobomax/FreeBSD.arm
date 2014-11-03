@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/ipnat/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipnat/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=		ipnat
 SRCS=		${GENHDRS} ipnat.c ipnat_y.c ipnat_l.c
@@ -10,8 +10,6 @@ GENHDRS=	ipnat_l.h ipnat_y.h
 DPSRCS+=	${GENHDRS}
 
 CLEANFILES+=	${GENHDRS} ipnat_y.c ipnat_l.c
-
-NO_PIE=	yes
 
 ipnat_y.c: ipnat_y.y
 	${YACC} -d ${.ALLSRC}

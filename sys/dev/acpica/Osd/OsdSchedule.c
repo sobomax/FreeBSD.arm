@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdSchedule.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdSchedule.c 272360 2014-10-01 14:35:52Z will $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -58,6 +58,13 @@ ACPI_MODULE_NAME("SCHEDULE")
 static int acpi_max_tasks = ACPI_MAX_TASKS;
 SYSCTL_INT(_debug_acpi, OID_AUTO, max_tasks, CTLFLAG_RDTUN, &acpi_max_tasks,
     0, "Maximum acpi tasks");
+
+/*
+ * Track and report the system's demand for task slots.
+ */
+static int acpi_tasks_hiwater;
+SYSCTL_INT(_debug_acpi, OID_AUTO, tasks_hiwater, CTLFLAG_RD,
+    &acpi_tasks_hiwater, 1, "Peak demand for ACPI event task slots.");
 
 /*
  * Allow the user to tune the number of task threads we start.  It seems
@@ -151,6 +158,10 @@ acpi_task_enqueue(int priority, ACPI_OSD_EXEC_CALLBACK Function, void *Context)
 	    acpi_task_count++;
 	    break;
 	}
+
+    if (i > acpi_tasks_hiwater)
+	atomic_cmpset_int(&acpi_tasks_hiwater, acpi_tasks_hiwater, i);
+
     if (at == NULL) {
 	printf("AcpiOsExecute: failed to enqueue task, consider increasing "
 	    "the debug.acpi.max_tasks tunable\n");

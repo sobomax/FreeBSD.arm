@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/pc98/loader/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/pc98/loader/Makefile 272256 2014-09-28 13:34:43Z nyan $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -7,8 +7,6 @@ LOADER?=	loader
 PROG=		${LOADER}.sym
 INTERNALPROG=
 NEWVERSWHAT=	"bootstrap loader" pc98
-
-NO_PIE=	yes
 
 # architecture-specific loader code
 SRCS=		main.c conf.c vers.c
@@ -57,6 +55,8 @@ LDFLAGS=	-static -Ttext 0x0
 # pc98 standalone support library
 LIBPC98=	${.OBJDIR}/../libpc98/libpc98.a
 CFLAGS+=	-I${.CURDIR}/..
+
+LIBSTAND=	${.OBJDIR}/../../libstand32/libstand.a
 
 # BTX components
 CFLAGS+=	-I${.CURDIR}/../btx/lib

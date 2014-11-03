@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/netisr.h 263152 2014-03-14 06:29:43Z glebius $
+ * $FreeBSD: head/sys/net/netisr.h 271300 2014-09-09 04:18:20Z adrian $
  */
 
 #ifndef _NET_NETISR_H_
@@ -57,6 +57,8 @@
 #define	NETISR_IPV6	6
 #define	NETISR_NATM	7
 #define	NETISR_EPAIR	8		/* if_epair(4) */
+#define	NETISR_IP_DIRECT	9	/* direct-dispatch IPv4 */
+#define	NETISR_IPV6_DIRECT	10	/* direct-dispatch IPv6 */
 
 /*
  * Protocol ordering and affinity policy constants.  See the detailed

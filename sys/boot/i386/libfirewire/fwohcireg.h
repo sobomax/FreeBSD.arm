@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/i386/libfirewire/fwohcireg.h 258780 2013-11-30 22:17:27Z eadler $
+ * $FreeBSD: head/sys/boot/i386/libfirewire/fwohcireg.h 272214 2014-09-27 16:50:21Z kan $
  *
  */
 #define		PCI_CBMEM		PCIR_BAR(0)
@@ -235,7 +235,7 @@ struct ohci_registers {
 	fwohcireg_t	config_rom;	/* config ROM map 0x34 */
 	fwohcireg_t	post_wr_lo;	/* post write addr lo 0x38 */
 	fwohcireg_t	post_wr_hi;	/* post write addr hi 0x3c */
-	fwohcireg_t	vender;		/* vender ID 0x40 */
+	fwohcireg_t	vendor;		/* vendor ID 0x40 */
 	fwohcireg_t	dummy1[3];	/* dummy 0x44-0x4c */
 	fwohcireg_t	hcc_cntl_set;	/* HCC control set 0x50 */
 	fwohcireg_t	hcc_cntl_clr;	/* HCC control clr 0x54 */

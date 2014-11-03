@@ -1,0 +1,5 @@
+# $FreeBSD: head/etc/auto_master 270406 2014-08-23 12:00:45Z trasz $
+#
+# Automounter master map, see auto_master(5) for details.
+#
+/net		-hosts		-nobrowse,nosuid

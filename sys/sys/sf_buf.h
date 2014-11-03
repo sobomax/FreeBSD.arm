@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sf_buf.h 269807 2014-08-11 12:59:55Z glebius $
+ * $FreeBSD: head/sys/sys/sf_buf.h 270201 2014-08-20 08:02:38Z kib $
  */
 
 #ifndef _SYS_SF_BUF_H_
@@ -113,7 +113,7 @@ sf_buf_kva(struct sf_buf *sf)
 {
 #ifdef SFBUF_OPTIONAL_DIRECT_MAP
 	if (SFBUF_OPTIONAL_DIRECT_MAP)
-		return (VM_PAGE_TO_PHYS((vm_page_t)sf));
+		return (SFBUF_PHYS_DMAP(VM_PAGE_TO_PHYS((vm_page_t)sf)));
 #endif
 
         return (sf->kva);

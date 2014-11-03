@@ -26,11 +26,11 @@
  *
  * LSI MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps.c 269316 2014-07-30 18:21:06Z smh $
+ * $FreeBSD: head/sys/dev/mps/mps.c 273377 2014-10-21 07:31:21Z hselasky $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 269316 2014-07-30 18:21:06Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 /* Communications core for LSI MPT2 */
 
@@ -1424,7 +1424,7 @@ mps_setup_sysctl(struct mps_softc *sc)
 	    "Disable the use of MSI interrupts");
 
 	SYSCTL_ADD_STRING(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),
-	    OID_AUTO, "firmware_version", CTLFLAG_RW, &sc->fw_version,
+	    OID_AUTO, "firmware_version", CTLFLAG_RW, sc->fw_version,
 	    strlen(sc->fw_version), "firmware version");
 
 	SYSCTL_ADD_STRING(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),

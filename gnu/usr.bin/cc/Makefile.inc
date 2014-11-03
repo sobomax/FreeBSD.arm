@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/Makefile.inc 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/usr.bin/cc/Makefile.inc 272350 2014-10-01 08:26:51Z andrew $
 
 .include <src.opts.mk>
 .include "../Makefile.inc"
@@ -27,7 +27,7 @@ CSTD?=	gnu89
 CFLAGS+=	-DCROSS_DIRECTORY_STRUCTURE
 .endif
 
-.if ${TARGET_CPUARCH} == "arm" && ${MK_ARM_EABI} != "no"
+.if ${TARGET_CPUARCH} == "arm"
 CFLAGS+=	-DTARGET_ARM_EABI
 .endif
 

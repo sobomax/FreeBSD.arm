@@ -23,17 +23,17 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/atf/libatf-c++/Makefile 267172 2014-06-06 17:05:43Z jmmv $
+# $FreeBSD: head/lib/atf/libatf-c++/Makefile 273929 2014-11-01 11:17:54Z jmmv $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
 
 LIB=		atf-c++
 PRIVATELIB=	true
-SHLIB_MAJOR=	1
+SHLIB_MAJOR=	2
 
 # libatf-c++ depends on the C version of the ATF library to build.
-DPADD=		${LIBATFC}
+DPADD=		${LIBATF_C}
 LDADD=		-latf-c
 
 LDFLAGS+=	-L${.OBJDIR}/../libatf-c
@@ -52,7 +52,6 @@ CFLAGS+=	-DHAVE_CONFIG_H
 SRCS=		application.cpp \
 		build.cpp \
 		check.cpp \
-		config.cpp \
 		env.cpp \
 		exceptions.cpp \
 		fs.cpp \
@@ -63,7 +62,6 @@ SRCS=		application.cpp \
 
 INCS=		build.hpp \
 		check.hpp \
-		config.hpp \
 		macros.hpp \
 		tests.hpp \
 		utils.hpp
@@ -72,7 +70,8 @@ INCSDIR=	${INCLUDEDIR}/atf-c++
 INCS+=		atf-c++.hpp
 INCSDIR_atf-c++.hpp= ${INCLUDEDIR}
 
-MAN=		atf-c++-api.3
+MAN=		atf-c++.3
+MLINKS+=	atf-c++.3 atf-c-api++.3  # Backwards compatibility.
 
 .if ${MK_TESTS} != "no"
 SUBDIR=		tests

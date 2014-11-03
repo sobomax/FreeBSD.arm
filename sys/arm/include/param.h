@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm/include/param.h 269956 2014-08-14 04:20:13Z imp $
+ * $FreeBSD: head/sys/arm/include/param.h 273783 2014-10-28 15:22:13Z kib $
  */
 
 #ifndef _ARM_INCLUDE_PARAM_H_
@@ -148,5 +148,9 @@
 #define	arm32_ptob(x)		((unsigned)(x) << PAGE_SHIFT)
 
 #define	pgtok(x)		((x) * (PAGE_SIZE / 1024))
+
+#ifdef _KERNEL
+#define	NO_FUEWORD	1
+#endif
 
 #endif /* !_ARM_INCLUDE_PARAM_H_ */

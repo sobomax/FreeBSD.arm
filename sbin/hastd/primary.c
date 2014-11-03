@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/hastd/primary.c 259195 2013-12-10 20:06:41Z trociny $");
+__FBSDID("$FreeBSD: head/sbin/hastd/primary.c 270944 2014-09-01 18:37:17Z ed $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -330,9 +330,8 @@ primary_exitx(int exitcode, const char *fmt, ...)
 	exit(exitcode);
 }
 
-/* Expects res->hr_amp locked, returns unlocked. */
 static int
-hast_activemap_flush(struct hast_resource *res)
+hast_activemap_flush(struct hast_resource *res) __unlocks(res->hr_amp_lock)
 {
 	const unsigned char *buf;
 	size_t size;

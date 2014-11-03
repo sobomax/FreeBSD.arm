@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/kbdcontrol/kbdcontrol.c 269120 2014-07-26 13:14:28Z se $");
+__FBSDID("$FreeBSD: head/usr.sbin/kbdcontrol/kbdcontrol.c 270652 2014-08-26 09:37:43Z se $");
 
 #include <ctype.h>
 #include <err.h>
@@ -800,7 +800,7 @@ load_keymap(char *opt, int dumponly)
 	char	*name, *cp;
 	char	blank[] = "", keymap_path[] = KEYMAP_PATH;
 	char	vt_keymap_path[] = VT_KEYMAP_PATH, dotkbd[] = ".kbd";
-	char	*prefix[]  = {blank, blank, blank, keymap_path, NULL};
+	char	*prefix[]  = {blank, blank, keymap_path, NULL};
 	char	*postfix[] = {blank, dotkbd, NULL};
 
 	if (is_vt4())

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/include/strings.h 266865 2014-05-30 01:09:07Z pfg $
+ * $FreeBSD: head/include/strings.h 272673 2014-10-07 04:54:11Z delphij $
  */
 
 #ifndef _STRINGS_H_
@@ -42,6 +42,9 @@ __BEGIN_DECLS
 int	 bcmp(const void *, const void *, size_t) __pure;	/* LEGACY */
 void	 bcopy(const void *, void *, size_t);			/* LEGACY */
 void	 bzero(void *, size_t);					/* LEGACY */
+#endif
+#if __BSD_VISIBLE
+void	 explicit_bzero(void *, size_t);
 #endif
 #if __XSI_VISIBLE
 int	 ffs(int) __pure2;

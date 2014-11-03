@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/xscale/i80321/i80321_intr.h 236987 2012-06-13 04:38:09Z imp $
+ * $FreeBSD: head/sys/arm/xscale/i80321/i80321_intr.h 271398 2014-09-10 15:25:15Z andrew $
  *
  */
 
@@ -106,7 +106,7 @@ i80321_splx(int new)
 
 	hwpend = (i80321_ipending & ICU_INT_HWMASK) & ~new;
 	if (hwpend != 0) {
-		oldirqstate = disable_interrupts(I32_bit);
+		oldirqstate = disable_interrupts(PSR_I);
 		intr_enabled |= hwpend;
 		i80321_set_intrmask();
 		restore_interrupts(oldirqstate);

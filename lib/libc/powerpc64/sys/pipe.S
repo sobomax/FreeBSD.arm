@@ -26,7 +26,7 @@
 /*      $NetBSD: pipe.S,v 1.6 2000/09/28 08:38:54 kleink Exp $  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc64/sys/pipe.S 218824 2011-02-18 21:44:53Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc64/sys/pipe.S 272362 2014-10-01 15:00:21Z bapt $");
 
 #include "SYS.h"
 
@@ -49,5 +49,6 @@ ENTRY(pipe)
 	ld	%r0,16(%r1)
 	mtlr	%r0
 	blr
+END(pipe)
 
 	.section .note.GNU-stack,"",%progbits

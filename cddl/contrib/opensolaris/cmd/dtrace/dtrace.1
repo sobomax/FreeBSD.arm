@@ -19,7 +19,7 @@
 .\" CDDL HEADER END
 .\" Copyright (c) 2006, Sun Microsystems, Inc. All Rights Reserved.
 .\"
-.\" $FreeBSD: head/cddl/contrib/opensolaris/cmd/dtrace/dtrace.1 256251 2013-10-10 03:50:23Z markj $
+.\" $FreeBSD: head/cddl/contrib/opensolaris/cmd/dtrace/dtrace.1 272157 2014-09-26 07:01:27Z markj $
 .\"
 .Dd October 5, 2013
 .Dt DTRACE 1
@@ -277,6 +277,19 @@ Generate a header file containing macros that correspond to probes in the
 specified provider definitions.
 This option should be used to generate a header file that is included by other
 source files for later use with the
+.Fl G
+option.
+If the
+.Fl o
+option is present, the header file is saved using the pathname specified as the
+argument for that option.
+If the
+.Fl o
+option is not present and the DTrace program is contained within a file whose
+name is
+.Ar filename.d ,
+then the header file is saved using the name
+.Ar filename.h .
 .It Fl H
 Print the pathnames of included files when invoking
 .Xr cpp 1
@@ -289,20 +302,6 @@ option to each
 .Xr cpp 1
 invocation, causing it to display the list of pathnames, one for each line, to
 standard error.
-.Fl G
-option.
-If the
-.Fl o
-option
-is present, the header file is saved using the pathname specified as the
-argument for that option.
-If the
-.Fl o
-option is not present and the DTrace program is contained with a file whose
-name is
-.Ar filename.d ,
-then the header file is saved using the name
-.Ar filename.h .
 .It Fl i Ar probe-id Op Oo Ar predicate Oc Ar action
 Specify probe identifier
 .Ar ( probe-id )

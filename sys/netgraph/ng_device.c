@@ -27,7 +27,7 @@
  * This node presents a /dev/ngd%d device that interfaces to an other
  * netgraph node.
  *
- * $FreeBSD: head/sys/netgraph/ng_device.c 243882 2012-12-05 08:04:20Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_device.c 271856 2014-09-19 09:01:19Z glebius $
  *
  */
 
@@ -270,7 +270,6 @@ ng_device_rcvdata(hook_p hook, item_p item)
 
 	IF_LOCK(&priv->readq);
 	if (_IF_QFULL(&priv->readq)) {
-		_IF_DROP(&priv->readq);
 		IF_UNLOCK(&priv->readq);
 		NG_FREE_M(m);
 		return (ENOBUFS);

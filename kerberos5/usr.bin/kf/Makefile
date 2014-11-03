@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/kf/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kf/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kf
 MAN=	kf.1
@@ -8,8 +8,6 @@ DPADD=	${LIBKRB5} ${LIBROKEN} ${LIBASN1} ${LIBCRYPTO} \
 	${LIBCRYPT} ${LIBVERS}
 LDADD=	-lkrb5 -lroken -lasn1 -lcrypto -lcrypt \
 	${LIBVERS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

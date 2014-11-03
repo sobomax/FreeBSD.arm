@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_umtx.h 263318 2014-03-18 21:32:03Z attilio $
+ * $FreeBSD: head/sys/sys/_umtx.h 273604 2014-10-24 20:02:44Z jhb $
  *
  */
 
@@ -58,6 +58,11 @@ struct urwlock {
 struct _usem {
 	volatile __uint32_t	_has_waiters;
 	volatile __uint32_t	_count;
+	__uint32_t		_flags;
+};
+
+struct _usem2 {
+	volatile __uint32_t	_count;		/* Waiters flag in high bit. */
 	__uint32_t		_flags;
 };
 

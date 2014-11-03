@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)kvm_proc.c	8.3 (Berkeley) 9/23/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 241303 2012-10-06 20:16:04Z avg $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 273266 2014-10-18 19:36:11Z adrian $");
 
 /*
  * Proc traversal interface for kvm.  ps and w are (probably) the exclusive
@@ -431,6 +431,24 @@ nopgrp:
 				strlcpy(kp->ki_tdname, mtd.td_name, sizeof(kp->ki_tdname));
 			kp->ki_pctcpu = 0;
 			kp->ki_rqindex = 0;
+
+			/*
+			 * Note: legacy fields; wraps at NO_CPU_OLD or the
+			 * old max CPU value as appropriate
+			 */
+			if (mtd.td_lastcpu == NOCPU)
+				kp->ki_lastcpu_old = NOCPU_OLD;
+			else if (mtd.td_lastcpu > MAXCPU_OLD)
+				kp->ki_lastcpu_old = MAXCPU_OLD;
+			else
+				kp->ki_lastcpu_old = mtd.td_lastcpu;
+
+			if (mtd.td_oncpu == NOCPU)
+				kp->ki_oncpu_old = NOCPU_OLD;
+			else if (mtd.td_oncpu > MAXCPU_OLD)
+				kp->ki_oncpu_old = MAXCPU_OLD;
+			else
+				kp->ki_oncpu_old = mtd.td_oncpu;
 		} else {
 			kp->ki_stat = SZOMB;
 		}

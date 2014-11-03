@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/libc/nss/test-gethostby.c 251867 2013-06-17 20:27:20Z eadler $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/libc/nss/test-gethostby.c 273702 2014-10-26 17:56:58Z stefanf $");
 
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -109,7 +109,7 @@ __gethostbyname2(const char *name, int af)
 	else {
 		error = 0;
 		he = getipnodebyname(name, af, ipnode_flags, &error);
-		if (he == NULL);
+		if (he == NULL)
 			errno = error;
 	}
 	

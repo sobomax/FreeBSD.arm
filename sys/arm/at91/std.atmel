@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/at91/std.atmel 269959 2014-08-14 04:21:25Z imp $
+# $FreeBSD: head/sys/arm/at91/std.atmel 273703 2014-10-26 18:30:35Z ian $
 
 include 	"../at91/std.at91sam9"
 
@@ -12,4 +12,3 @@ device		at91sam9x5
 # bring in the sam specific timers and such
 device		at91sam9
 
-options		ARM_DEVICE_MULTIPASS

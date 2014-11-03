@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/pl310.c 269598 2014-08-05 17:39:58Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/pl310.c 273590 2014-10-24 15:44:29Z ian $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -83,6 +83,12 @@ static uint32_t g_way_size;
 static uint32_t g_ways_assoc;
 
 static struct pl310_softc *pl310_softc;
+
+static struct ofw_compat_data compat_data[] = {
+	{"arm,pl310",		true}, /* Non-standard, FreeBSD. */
+	{"arm,pl310-cache",	true},
+	{NULL,			false}
+};
 
 void
 pl310_print_config(struct pl310_softc *sc)
@@ -422,8 +428,7 @@ pl310_probe(device_t dev)
 	
 	if (!ofw_bus_status_okay(dev))
 		return (ENXIO);
-
-	if (!ofw_bus_is_compatible(dev, "arm,pl310"))
+	if (!ofw_bus_search_compatible(dev, compat_data)->ocd_data)
 		return (ENXIO);
 	device_set_desc(dev, "PL310 L2 cache controller");
 	return (0);

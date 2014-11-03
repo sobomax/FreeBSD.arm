@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sockio.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD: head/sys/sys/sockio.h 263203 2014-03-15 06:49:32Z glebius $
+ * $FreeBSD: head/sys/sys/sockio.h 270822 2014-08-29 18:02:58Z melifaro $
  */
 
 #ifndef _SYS_SOCKIO_H_
@@ -96,6 +96,7 @@
 
 #define	SIOCGIFSTATUS	_IOWR('i', 59, struct ifstat)	/* get IF status */
 #define	SIOCSIFLLADDR	 _IOW('i', 60, struct ifreq)	/* set linklevel addr */
+#define	SIOCGI2C	_IOWR('i', 61, struct ifstat)	/* get I2C data  */
 
 #define	SIOCSIFPHYADDR	 _IOW('i', 70, struct ifaliasreq) /* set gif addres */
 #define	SIOCGIFPSRCADDR	_IOWR('i', 71, struct ifreq)	/* get gif psrc addr */

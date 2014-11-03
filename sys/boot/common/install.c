@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/install.c 269621 2014-08-06 00:36:04Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/common/install.c 273940 2014-11-01 18:51:48Z marcel $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -286,7 +286,7 @@ install(char *pkgname)
 	}
 
 	s = (inst_rootfs == NULL) ? "/install.iso" : inst_rootfs;
-	if (file_loadraw("mfs_root", s) == NULL) {
+	if (file_loadraw(s, "mfs_root") == NULL) {
 		error = errno;
 		command_errmsg = "cannot load root file system";
 		goto fail;

@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/ipftest/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipftest/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=		ipftest
 SRCS=		${GENHDRS} ipftest.c fil.c ip_frag.c ip_state.c ip_nat.c \
@@ -31,8 +31,6 @@ CLEANFILES+=	ipnat_y.c ipnat_l.c
 CLEANFILES+=	ipnat.tab.c ipnat.tab.h
 CLEANFILES+=	ippool_y.c ippool_l.c
 CLEANFILES+=	ippool.tab.c ippool.tab.h
-
-NO_PIE=	yes
 
 ipnat_y.c: ipnat_y.y
 	${YACC} -b ipnat -d ${.ALLSRC}

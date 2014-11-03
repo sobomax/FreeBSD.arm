@@ -55,7 +55,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * from $NetBSD: cpu_subr.c,v 1.1 2003/02/03 17:10:09 matt Exp $
- * $FreeBSD: head/sys/powerpc/powerpc/cpu.c 268320 2014-07-06 16:19:55Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/powerpc/cpu.c 273377 2014-10-21 07:31:21Z hselasky $
  */
 
 #include <sys/param.h>
@@ -191,7 +191,7 @@ static char model[64];
 SYSCTL_STRING(_hw, HW_MODEL, model, CTLFLAG_RD, model, 0, "");
 
 int cpu_features = PPC_FEATURE_32 | PPC_FEATURE_HAS_MMU;
-SYSCTL_OPAQUE(_hw, OID_AUTO, cpu_features, CTLTYPE_INT | CTLFLAG_RD,
+SYSCTL_OPAQUE(_hw, OID_AUTO, cpu_features, CTLFLAG_RD,
     &cpu_features, sizeof(cpu_features), "IX", "PowerPC CPU features");
 
 /* Provide some user-friendly aliases for bits in cpu_features */

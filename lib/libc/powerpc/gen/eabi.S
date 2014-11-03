@@ -25,9 +25,10 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc/gen/eabi.S 235929 2012-05-24 20:12:46Z marcel $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc/gen/eabi.S 272362 2014-10-01 15:00:21Z bapt $");
 
 ENTRY(__eabi)
 	blr
+END(__eabi)
 
 	.section .note.GNU-stack,"",%progbits

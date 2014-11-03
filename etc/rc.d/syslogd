@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/syslogd 257694 2013-11-05 09:30:06Z glebius $
+# $FreeBSD: head/etc/rc.d/syslogd 273999 2014-11-03 00:37:39Z hrs $
 #
 
 # netif is required for lo0 because syslogd tries to open a local socket
@@ -28,7 +28,7 @@ syslogd_precmd()
 
 	#	Transitional symlink for old binaries
 	#
-	if [ ! -L /dev/log ]; then
+	if [ ! -L /dev/log ] && ! check_jail jailed; then
 		ln -sf /var/run/log /dev/log
 	fi
 	rm -f /var/run/log

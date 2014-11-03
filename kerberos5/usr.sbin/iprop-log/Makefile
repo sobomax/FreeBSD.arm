@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.sbin/iprop-log/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.sbin/iprop-log/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	iprop-log
 MAN=	iprop-log.8
@@ -12,8 +12,6 @@ DPADD=	${LIBKADM5SRV} ${LIBHDB} ${LIBKRB5} ${LIBASN1} ${LIBCRYPTO} \
 	${LIBCRYPT} ${LIBSL} ${LIBROKEN} ${LIBVERS} ${LIBEDIT}
 LDADD=	-lkadm5srv -lhdb -lkrb5 -lasn1 -lcrypto -lcrypt ${LIBSL} -lroken \
 	${LIBVERS} -ledit
-
-NO_PIE=	yes
 
 iprop-commands.h: iprop-commands.in
 	${SLC} ${.ALLSRC:M*.in}

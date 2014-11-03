@@ -1,12 +1,10 @@
-# $FreeBSD: head/usr.bin/svn/svn/Makefile 268135 2014-07-02 05:09:41Z eadler $
+# $FreeBSD: head/usr.bin/svn/svn/Makefile 270672 2014-08-26 20:40:12Z gjb $
 
 .include "${.CURDIR}/../Makefile.inc"
 
 .PATH:	${SVNDIR}/svn
 
 PROG=	svn${SVNLITE}
-
-NO_PIE=	yes
 
 SRCS=	add-cmd.c blame-cmd.c cat-cmd.c changelist-cmd.c checkout-cmd.c \
 	cl-conflicts.c cleanup-cmd.c commit-cmd.c conflict-callbacks.c \
@@ -53,6 +51,7 @@ DPADD=	${LIBSVN_CLIENT} ${LIBSVN_WC} ${LIBSVN_RA} ${LIBSVN_RA_LOCAL} \
 	${LIBBSDXML} ${LIBAPR} ${LIBSQLITE} ${LIBZ} ${LIBCRYPT} ${LIBMAGIC} \
 	${LIBCRYPTO} ${LIBSSL} ${LIBPTHREAD}
 
+CLEANFILES+=	svnlite.1
 .if(defined(ORGANIZATION) && !empty(ORGANIZATION))
 DPSRCS+=	freebsd-organization.h
 CLEANFILES+=	freebsd-organization.h

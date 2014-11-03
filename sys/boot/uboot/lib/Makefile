@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/uboot/lib/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/boot/uboot/lib/Makefile 273927 2014-11-01 10:50:18Z andrew $
 
 .include <src.opts.mk>
 
@@ -27,7 +27,7 @@ LOADER_FDT_SUPPORT=	no
 .endif
 
 .if ${LOADER_FDT_SUPPORT} == "yes"
-CFLAGS+= -DLOADER_FDT_SUPPORT
+CFLAGS+= -DLOADER_FDT_SUPPORT -I${.CURDIR}/../../fdt
 .endif
 
 # Pick up FDT includes

@@ -31,7 +31,7 @@
  *
  * so there!
  *
- * $FreeBSD: head/sbin/ifconfig/ifconfig.h 228571 2011-12-16 12:16:56Z glebius $
+ * $FreeBSD: head/sbin/ifconfig/ifconfig.h 271603 2014-09-14 22:10:35Z bryanv $
  */
 
 #define	__constructor	__attribute__((constructor))
@@ -74,6 +74,7 @@ void	callback_register(callback_func *, void *);
 #define	DEF_CMD_ARG2(name, func)	{ name, NEXTARG2, { .c_func2 = func }, 0, NULL }
 #define	DEF_CLONE_CMD(name, param, func) { name, param, { .c_func = func }, 1, NULL }
 #define	DEF_CLONE_CMD_ARG(name, func)	{ name, NEXTARG, { .c_func = func }, 1, NULL }
+#define	DEF_CLONE_CMD_ARG2(name, func)	{ name, NEXTARG2, { .c_func2 = func }, 1, NULL }
 
 struct ifaddrs;
 struct addrinfo;
@@ -142,6 +143,8 @@ void	ifmaybeload(const char *name);
 
 typedef void clone_callback_func(int, struct ifreq *);
 void	clone_setdefcallback(const char *, clone_callback_func *);
+
+void	sfp_status(int s, struct ifreq *ifr, int verbose);
 
 /*
  * XXX expose this so modules that neeed to know of any pending

@@ -28,7 +28,7 @@
  * Freescale integrated Three-Speed Ethernet Controller (TSEC) driver.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec.c 257993 2013-11-11 15:43:21Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec.c 271849 2014-09-19 03:51:26Z glebius $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -687,7 +687,7 @@ tsec_watchdog(struct tsec_softc *sc)
 		return;
 
 	ifp = sc->tsec_ifp;
-	ifp->if_oerrors++;
+	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	if_printf(ifp, "watchdog timeout\n");
 
 	tsec_stop(sc);
@@ -1349,7 +1349,7 @@ tsec_receive_intr_locked(struct tsec_softc *sc, int count)
 
 		if (tsec_new_rxbuf(sc->tsec_rx_mtag, rx_data[i].map,
 		    &rx_data[i].mbuf, &rx_data[i].paddr)) {
-			ifp->if_ierrors++;
+			if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 			/*
 			 * We ran out of mbufs; didn't consume current
 			 * descriptor and have to return it to the queue.
@@ -1430,7 +1430,7 @@ tsec_transmit_intr_locked(struct tsec_softc *sc)
 	ifp = sc->tsec_ifp;
 
 	/* Update collision statistics */
-	ifp->if_collisions += TSEC_READ(sc, TSEC_REG_MON_TNCL);
+	if_inc_counter(ifp, IFCOUNTER_COLLISIONS, TSEC_READ(sc, TSEC_REG_MON_TNCL));
 
 	/* Reset collision counters in hardware */
 	TSEC_WRITE(sc, TSEC_REG_MON_TSCL, 0);
@@ -1465,7 +1465,7 @@ tsec_transmit_intr_locked(struct tsec_softc *sc)
 		TSEC_FREE_TX_MAP(sc, mapp);
 		m_freem(m0);
 
-		ifp->if_opackets++;
+		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 		send = 1;
 	}
 	bus_dmamap_sync(sc->tsec_tx_dtag, sc->tsec_tx_dmap,
@@ -1522,18 +1522,18 @@ tsec_error_intr_locked(struct tsec_softc *sc, int count)
 
 	/* Check transmitter errors */
 	if (eflags & TSEC_IEVENT_TXE) {
-		ifp->if_oerrors++;
+		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 
 		if (eflags & TSEC_IEVENT_LC)
-			ifp->if_collisions++;
+			if_inc_counter(ifp, IFCOUNTER_COLLISIONS, 1);
 
 		TSEC_WRITE(sc, TSEC_REG_TSTAT, TSEC_TSTAT_THLT);
 	}
 
 	/* Check receiver errors */
 	if (eflags & TSEC_IEVENT_BSY) {
-		ifp->if_ierrors++;
-		ifp->if_iqdrops++;
+		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
+		if_inc_counter(ifp, IFCOUNTER_IQDROPS, 1);
 
 		/* Get data from RX buffers */
 		tsec_receive_intr_locked(sc, count);
@@ -1550,10 +1550,10 @@ tsec_error_intr_locked(struct tsec_softc *sc, int count)
 	}
 
 	if (eflags & TSEC_IEVENT_BABT)
-		ifp->if_oerrors++;
+		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 
 	if (eflags & TSEC_IEVENT_BABR)
-		ifp->if_ierrors++;
+		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 }
 
 void

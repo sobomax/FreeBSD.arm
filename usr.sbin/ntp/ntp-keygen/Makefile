@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/ntp-keygen/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/ntp/ntp-keygen/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 MAN=
 
@@ -20,7 +20,5 @@ LDADD=	${LIBNTP} ${LIBOPTS}
 DPADD+=	${LIBMD} ${LIBCRYPTO}
 LDADD+=	-lmd -lcrypto
 .endif
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

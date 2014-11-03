@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/groff/src/roff/troff/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/groff/src/roff/troff/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG_CXX=	troff
 SRCS=		dictionary.cpp div.cpp env.cpp input.cpp \
@@ -6,8 +6,6 @@ SRCS=		dictionary.cpp div.cpp env.cpp input.cpp \
 DPADD=		${LIBGROFF} ${LIBM}
 LDADD=		${LIBGROFF} -lm
 CLEANFILES=	majorminor.cpp ${MAN}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

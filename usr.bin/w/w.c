@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/w/w.c 253750 2013-07-28 18:44:17Z avg $");
+__FBSDID("$FreeBSD: head/usr.bin/w/w.c 272728 2014-10-08 05:04:31Z eadler $");
 
 #ifndef lint
 static const char copyright[] =
@@ -68,6 +68,7 @@ static const char sccsid[] = "@(#)w.c	8.4 (Berkeley) 4/16/94";
 #include <fcntl.h>
 #include <kvm.h>
 #include <langinfo.h>
+#include <libgen.h>
 #include <libutil.h>
 #include <limits.h>
 #include <locale.h>
@@ -121,7 +122,6 @@ static struct entry {
 static void		 pr_header(time_t *, int);
 static struct stat	*ttystat(char *);
 static void		 usage(int);
-static int		 this_is_uptime(const char *s);
 
 char *fmt_argv(char **, char *, char *, size_t);	/* ../../bin/ps/fmt.c */
 
@@ -144,7 +144,7 @@ main(int argc, char *argv[])
 	use_comma = (*nl_langinfo(RADIXCHAR) != ',');
 
 	/* Are we w(1) or uptime(1)? */
-	if (this_is_uptime(argv[0]) == 0) {
+	if (strcmp(basename(argv[0]), "uptime") == 0) {
 		wcmd = 0;
 		p = "";
 	} else {
@@ -511,18 +511,4 @@ usage(int wcmd)
 	else
 		(void)fprintf(stderr, "usage: uptime\n");
 	exit(1);
-}
-
-static int 
-this_is_uptime(const char *s)
-{
-	const char *u;
-
-	if ((u = strrchr(s, '/')) != NULL)
-		++u;
-	else
-		u = s;
-	if (strcmp(u, "uptime") == 0)
-		return (0);
-	return (-1);
 }

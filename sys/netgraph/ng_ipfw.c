@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netgraph/ng_ipfw.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_ipfw.c 272840 2014-10-09 19:32:35Z melifaro $
  */
 
 #include "opt_inet.h"
@@ -90,7 +90,7 @@ static struct ng_type ng_ipfw_typestruct = {
 	.disconnect =	ng_ipfw_disconnect,
 };
 NETGRAPH_INIT(ipfw, &ng_ipfw_typestruct);
-MODULE_DEPEND(ng_ipfw, ipfw, 2, 2, 2);
+MODULE_DEPEND(ng_ipfw, ipfw, 3, 3, 3);
 
 /* Information we store for each hook */
 struct ng_ipfw_hook_priv {

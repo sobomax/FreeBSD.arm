@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/exynos5420-peach-pit.dts 269369 2014-08-01 06:20:25Z br $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/exynos5420-peach-pit.dts 272712 2014-10-07 17:39:30Z br $
  */
 
 /dts-v1/;
@@ -67,6 +67,21 @@
 
 		usbdrd_phy1: phy@12500000 {
 			vbus-supply = < 218 >;
+		};
+
+		mmc2: dwmmc@12220000 {
+			status = "okay";
+			num-slots = <1>;
+			supports-highspeed;
+			samsung,dw-mshc-ciu-div = <3>;
+			samsung,dw-mshc-sdr-timing = <2 3>;
+			samsung,dw-mshc-ddr-timing = <1 2>;
+			bus-frequency = <50000000>;
+
+			slot@0 {
+				reg = <0>;
+				bus-width = <4>;
+			};
 		};
 	};
 };

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_tpc.c 269587 2014-08-05 15:01:30Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_tpc.c 272355 2014-10-01 11:30:20Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -228,7 +228,7 @@ ctl_tpc_lun_shutdown(struct ctl_lun *lun)
 	}
 
 	/* Free ROD tokens for this LUN. */
-	mtx_lock(&control_softc->ctl_lock);
+	mtx_assert(&control_softc->ctl_lock, MA_OWNED);
 	TAILQ_FOREACH_SAFE(token, &control_softc->tpc_tokens, links, ttoken) {
 		if (token->lun != lun->lun || token->active)
 			continue;
@@ -236,7 +236,6 @@ ctl_tpc_lun_shutdown(struct ctl_lun *lun)
 		free(token->params, M_CTL);
 		free(token, M_CTL);
 	}
-	mtx_unlock(&control_softc->ctl_lock);
 }
 
 int
@@ -1812,6 +1811,8 @@ tpc_create_token(struct ctl_lun *lun, struct ctl_port *port, off_t len,
 {
 	static int id = 0;
 	struct scsi_vpd_id_descriptor *idd = NULL;
+	struct scsi_ec_cscd_id *cscd;
+	struct scsi_read_capacity_data_long *dtsd;
 	int targid_len;
 
 	scsi_ulto4b(ROD_TYPE_AUR, token->type);
@@ -1825,10 +1826,24 @@ tpc_create_token(struct ctl_lun *lun, struct ctl_port *port, off_t len,
 		idd = scsi_get_devid_desc((struct scsi_vpd_id_descriptor *)
 		    lun->lun_devid->data, lun->lun_devid->len,
 		    scsi_devid_is_lun_eui64);
-	if (idd != NULL)
-		memcpy(&token->body[8], idd, 4 + idd->length);
-	scsi_u64to8b(0, &token->body[40]);
+	if (idd != NULL) {
+		cscd = (struct scsi_ec_cscd_id *)&token->body[8];
+		cscd->type_code = EC_CSCD_ID;
+		cscd->luidt_pdt = T_DIRECT;
+		memcpy(&cscd->codeset, idd, 4 + idd->length);
+		scsi_ulto3b(lun->be_lun->blocksize, cscd->dtsp.block_length);
+	}
+	scsi_u64to8b(0, &token->body[40]); /* XXX: Should be 128bit value. */
 	scsi_u64to8b(len, &token->body[48]);
+
+	/* ROD token device type specific data (RC16 without first field) */
+	dtsd = (struct scsi_read_capacity_data_long *)&token->body[88 - 8];
+	scsi_ulto4b(lun->be_lun->blocksize, dtsd->length);
+	dtsd->prot_lbppbe = lun->be_lun->pblockexp & SRC16_LBPPBE;
+	scsi_ulto2b(lun->be_lun->pblockoff & SRC16_LALBA_A, dtsd->lalba_lbp);
+	if (lun->be_lun->flags & CTL_LUN_FLAG_UNMAP)
+		dtsd->lalba_lbp[0] |= SRC16_LBPME | SRC16_LBPRZ;
+
 	if (port->target_devid) {
 		targid_len = port->target_devid->len;
 		memcpy(&token->body[120], port->target_devid->data, targid_len);
@@ -1934,6 +1949,8 @@ ctl_populate_token(struct ctl_scsiio *ctsio)
 	token->range = &data->desc[0];
 	token->nrange = scsi_2btoul(data->range_descriptor_length) /
 	    sizeof(struct scsi_range_desc);
+	list->cursectors = tpc_ranges_length(token->range, token->nrange);
+	list->curbytes = (off_t)list->cursectors * lun->be_lun->blocksize;
 	tpc_create_token(lun, port, list->curbytes,
 	    (struct scsi_token *)token->token);
 	token->active = 0;
@@ -1950,8 +1967,6 @@ ctl_populate_token(struct ctl_scsiio *ctsio)
 	}
 	memcpy(list->res_token, token->token, sizeof(list->res_token));
 	list->res_token_valid = 1;
-	list->cursectors = tpc_ranges_length(token->range, token->nrange);
-	list->curbytes = (off_t)list->cursectors * lun->be_lun->blocksize;
 	list->curseg = 0;
 	list->completed = 1;
 	list->last_active = time_uptime;

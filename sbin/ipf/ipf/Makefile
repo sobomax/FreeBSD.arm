@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ipf/ipf/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sbin/ipf/ipf/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=		ipf
 SRCS=		${GENHDRS} ipf.c ipfcomp.c ipf_y.c ipf_l.c bpf_filter.c
@@ -38,7 +38,5 @@ SRCS+=	${LIBIPF_SRCS}
 DPADD+=	${LIBPCAP}
 LDADD+=	-lpcap
 .endif
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

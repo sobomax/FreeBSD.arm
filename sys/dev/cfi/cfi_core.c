@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cfi/cfi_core.c 256753 2013-10-18 20:52:42Z brooks $");
+__FBSDID("$FreeBSD: head/sys/dev/cfi/cfi_core.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include "opt_cfi.h"
 
@@ -410,7 +410,7 @@ cfi_attach(device_t dev)
 		    device_get_nameunit(dev)) < (sizeof(name) - 1) &&
 		    snprintf(value, sizeof(value), "0x%016jx", ppr) <
 		    (sizeof(value) - 1))
-			(void) setenv(name, value);
+			(void) kern_setenv(name, value);
 	}
 #endif
 

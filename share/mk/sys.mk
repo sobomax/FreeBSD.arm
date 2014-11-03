@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: head/share/mk/sys.mk 269114 2014-07-26 04:38:09Z sjg $
+# $FreeBSD: head/share/mk/sys.mk 272887 2014-10-10 06:09:47Z bapt $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -145,6 +145,10 @@ RFLAGS		?=
 .endif
 
 SHELL		?=	sh
+
+.if !defined(%POSIX)
+SIZE		?=	size
+.endif
 
 YACC		?=	yacc
 .if defined(%POSIX)

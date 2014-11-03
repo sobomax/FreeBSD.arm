@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/pci/pci_if.m 265107 2014-04-29 20:49:47Z rstone $
+# $FreeBSD: head/sys/dev/pci/pci_if.m 270332 2014-08-22 15:05:51Z royger $
 #
 
 #include <sys/bus.h>
@@ -138,6 +138,26 @@ METHOD int alloc_msix {
 	int		*count;
 };
 
+METHOD void enable_msi {
+	device_t	dev;
+	device_t	child;
+	uint64_t	address;
+	uint16_t	data;
+};
+
+METHOD void enable_msix {
+	device_t	dev;
+	device_t	child;
+	u_int		index;
+	uint64_t	address;
+	uint32_t	data;
+};
+
+METHOD void disable_msi {
+	device_t	dev;
+	device_t	child;
+};
+
 METHOD int remap_msix {
 	device_t	dev;
 	device_t	child;
@@ -165,3 +185,7 @@ METHOD uint16_t get_rid {
 	device_t	child;
 };
 
+METHOD void child_added {
+	device_t	dev;
+	device_t	child;
+};

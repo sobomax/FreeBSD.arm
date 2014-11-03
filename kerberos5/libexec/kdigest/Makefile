@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kdigest/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kdigest/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kdigest
 MAN=	kdigest.8
@@ -12,8 +12,6 @@ LDADD=	-lkrb5 -lheimntlm -lroken -lasn1 -lcrypto -lcrypt ${LIBSL} \
 SRCS=	kdigest.c \
 	kdigest-commands.c \
 	kdigest-commands.h
-
-NO_PIE=	yes
 
 kdigest-commands.h: kdigest-commands.in
 	${SLC} ${.ALLSRC:M*.in}

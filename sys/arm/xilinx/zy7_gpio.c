@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/xilinx/zy7_gpio.c 261410 2014-02-02 19:17:28Z ian $
+ * $FreeBSD: head/sys/arm/xilinx/zy7_gpio.c 273799 2014-10-28 18:33:59Z loos $
  */
 
 /*
@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_gpio.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_gpio.c 273799 2014-10-28 18:33:59Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -329,8 +329,8 @@ zy7_gpio_attach(device_t dev)
 	/* Completely reset. */
 	zy7_gpio_hw_reset(sc);
 
-	device_add_child(dev, "gpioc", device_get_unit(dev));
-	device_add_child(dev, "gpiobus", device_get_unit(dev));
+	device_add_child(dev, "gpioc", -1);
+	device_add_child(dev, "gpiobus", -1);
 
 	return (bus_generic_attach(dev));
 }

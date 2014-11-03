@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/bootparttest/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/bootparttest/Makefile 272557 2014-10-05 06:04:47Z ae $
 
 .PATH:		${.CURDIR}/../../../sys/boot/common
 
@@ -7,13 +7,14 @@ BINDIR?=	/usr/bin
 PROG=		bootparttest
 MAN=
 
-SRCS=		bootparttest.c crc32.c malloc.c part.c
+SRCS=		bootparttest.c crc32.c stub.c part.c disk.c
 
-CFLAGS=		-I${.CURDIR}/../../../sys/boot/common -I. \
-		-DLOADER_GPT_SUPPORT -DLOADER_MBR_SUPPORT -DPART_DEBUG
+CFLAGS=		-I${.CURDIR}/../../../sys/boot/common \
+		-DLOADER_GPT_SUPPORT -DLOADER_MBR_SUPPORT -DPART_DEBUG \
+		-DDISK_DEBUG
 
-DPADD+=		${LIBGEOM} ${LIBUTIL}
-LDADD+=		${LIBGEOM} ${LIBUTIL}
-LDFLAGS+=	-lgeom -lutil
+DPADD+=		${LIBGEOM}
+LDADD+=		${LIBGEOM}
+LDFLAGS+=	-lgeom
 
 .include <bsd.prog.mk>

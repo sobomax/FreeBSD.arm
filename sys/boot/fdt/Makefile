@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/fdt/Makefile 262404 2014-02-23 22:12:25Z rwatson $
+# $FreeBSD: head/sys/boot/fdt/Makefile 273934 2014-11-01 17:12:44Z andrew $
 
 .PATH:		${.CURDIR}/../../contrib/libfdt/
 
@@ -11,8 +11,7 @@ SRCS+=		fdt.c fdt_ro.c fdt_wip.c fdt_sw.c fdt_rw.c fdt_strerror.c
 # Loader's fdt commands extension sources.
 SRCS+=		fdt_loader_cmd.c
 
-CFLAGS+=	-I${.CURDIR}/../../contrib/libfdt/ -I${.CURDIR}/../common/ \
-		-I${.CURDIR}/../uboot/lib
+CFLAGS+=	-I${.CURDIR}/../../contrib/libfdt/ -I${.CURDIR}/../common/
 
 CFLAGS+=	-ffreestanding
 

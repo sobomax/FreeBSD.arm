@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 268745 2014-07-16 09:55:36Z bapt $
+# $FreeBSD: head/usr.bin/Makefile 273568 2014-10-23 23:16:21Z marcel $
 
 .include <src.opts.mk>
 
@@ -196,6 +196,7 @@ SUBDIR=	alias \
 	xargs \
 	xinstall \
 	${_xlint} \
+	xo \
 	${_xstr} \
 	xz \
 	xzdec \

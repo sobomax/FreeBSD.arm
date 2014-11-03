@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)npx.h	5.3 (Berkeley) 1/18/91
- * $FreeBSD: head/sys/x86/include/fpu.h 233044 2012-03-16 20:24:30Z tijl $
+ * $FreeBSD: head/sys/x86/include/fpu.h 271206 2014-09-06 19:39:12Z kib $
  */
 
 /*
@@ -150,9 +150,11 @@ struct savefpu {
 
 struct xstate_hdr {
 	uint64_t	xstate_bv;
-	uint8_t		xstate_rsrv0[16];
+	uint64_t	xstate_xcomp_bv;
+	uint8_t		xstate_rsrv0[8];
 	uint8_t		xstate_rsrv[40];
 };
+#define	XSTATE_XCOMP_BV_COMPACT	(1ULL << 63)
 
 struct savexmm_xstate {
 	struct xstate_hdr	sx_hd;

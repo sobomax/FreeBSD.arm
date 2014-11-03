@@ -35,7 +35,7 @@ __KERNEL_RCSID(0, "$NetBSD$");
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isp/isp_library.c 261515 2014-02-05 16:22:02Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/isp/isp_library.c 272937 2014-10-11 08:50:19Z mav $");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__
@@ -2472,7 +2472,8 @@ isp_add_wwn_entry(ispsoftc_t *isp, int chan, uint64_t ini, uint16_t nphdl, uint3
 
 	lp = NULL;
 	if (fcp->isp_tgt_map[nphdl]) {
-		lp = &fcp->portdb[fcp->isp_tgt_map[nphdl] - 1];
+		i = fcp->isp_tgt_map[nphdl] - 1;
+		lp = &fcp->portdb[i];
 	} else {
 		/*
 		 * Make sure the addition of a new target mode entry doesn't duplicate entries
@@ -2540,6 +2541,10 @@ isp_add_wwn_entry(ispsoftc_t *isp, int chan, uint64_t ini, uint16_t nphdl, uint3
 			isp_prt(isp, ISP_LOGWARN, "Chan %d IID 0x%016llx N-Port Handle 0x%04x Port ID 0x%06x reentered", chan,
 			    (unsigned long long) lp->port_wwn, lp->handle, lp->portid);
 		}
+		if (fcp->isp_tgt_map[nphdl] == 0) {
+			fcp->isp_tgt_map[nphdl] = i + 1;
+			goto notify;
+		}
 		return;
 	}
 
@@ -2573,6 +2578,7 @@ isp_add_wwn_entry(ispsoftc_t *isp, int chan, uint64_t ini, uint16_t nphdl, uint3
 	isp_prt(isp, ISP_LOGTINFO, "Chan %d IID 0x%016llx N-Port Handle 0x%04x Port ID 0x%06x vtgt %d %s added", chan,
 	    (unsigned long long) ini, nphdl, s_id, fcp->isp_tgt_map[nphdl] - 1, buf);
 
+notify:
 	ISP_MEMZERO(&nt, sizeof (nt));
 	nt.nt_hba = isp;
 	nt.nt_wwn = ini;

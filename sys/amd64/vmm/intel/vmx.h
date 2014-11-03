@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmx.h 266390 2014-05-18 03:50:17Z grehan $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmx.h 271888 2014-09-20 02:35:21Z neel $
  */
 
 #ifndef _VMX_H_
@@ -32,8 +32,6 @@
 #include "vmcs.h"
 
 struct pmap;
-
-#define	GUEST_MSR_MAX_ENTRIES	64		/* arbitrary */
 
 struct vmxctx {
 	register_t	guest_rdi;		/* Guest state */
@@ -97,13 +95,23 @@ struct pir_desc {
 } __aligned(64);
 CTASSERT(sizeof(struct pir_desc) == 64);
 
+/* Index into the 'guest_msrs[]' array */
+enum {
+	IDX_MSR_LSTAR,
+	IDX_MSR_CSTAR,
+	IDX_MSR_STAR,
+	IDX_MSR_SF_MASK,
+	IDX_MSR_KGSBASE,
+	GUEST_MSR_NUM		/* must be the last enumeration */
+};
+
 /* virtual machine softc */
 struct vmx {
 	struct vmcs	vmcs[VM_MAXCPU];	/* one vmcs per virtual cpu */
 	struct apic_page apic_page[VM_MAXCPU];	/* one apic page per vcpu */
 	char		msr_bitmap[PAGE_SIZE];
 	struct pir_desc	pir_desc[VM_MAXCPU];
-	struct msr_entry guest_msrs[VM_MAXCPU][GUEST_MSR_MAX_ENTRIES];
+	uint64_t	guest_msrs[VM_MAXCPU][GUEST_MSR_NUM];
 	struct vmxctx	ctx[VM_MAXCPU];
 	struct vmxcap	cap[VM_MAXCPU];
 	struct vmxstate	state[VM_MAXCPU];
@@ -113,7 +121,6 @@ struct vmx {
 };
 CTASSERT((offsetof(struct vmx, vmcs) & PAGE_MASK) == 0);
 CTASSERT((offsetof(struct vmx, msr_bitmap) & PAGE_MASK) == 0);
-CTASSERT((offsetof(struct vmx, guest_msrs) & 15) == 0);
 CTASSERT((offsetof(struct vmx, pir_desc[0]) & 63) == 0);
 
 #define	VMX_GUEST_VMEXIT	0

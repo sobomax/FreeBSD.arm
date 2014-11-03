@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/kern_racct.c 258622 2013-11-26 08:46:27Z avg $
+ * $FreeBSD: head/sys/kern/kern_racct.c 272582 2014-10-06 02:31:33Z mjg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_racct.c 258622 2013-11-26 08:46:27Z avg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_racct.c 272582 2014-10-06 02:31:33Z mjg $");
 
 #include "opt_sched.h"
 
@@ -1202,89 +1202,5 @@ racct_init(void)
 	prison0.pr_prison_racct = prison_racct_find("0");
 }
 SYSINIT(racct, SI_SUB_RACCT, SI_ORDER_FIRST, racct_init, NULL);
-
-#else /* !RACCT */
-
-int
-racct_add(struct proc *p, int resource, uint64_t amount)
-{
-
-	return (0);
-}
-
-void
-racct_add_cred(struct ucred *cred, int resource, uint64_t amount)
-{
-}
-
-void
-racct_add_force(struct proc *p, int resource, uint64_t amount)
-{
-
-	return;
-}
-
-int
-racct_set(struct proc *p, int resource, uint64_t amount)
-{
-
-	return (0);
-}
-
-void
-racct_set_force(struct proc *p, int resource, uint64_t amount)
-{
-}
-
-void
-racct_sub(struct proc *p, int resource, uint64_t amount)
-{
-}
-
-void
-racct_sub_cred(struct ucred *cred, int resource, uint64_t amount)
-{
-}
-
-uint64_t
-racct_get_limit(struct proc *p, int resource)
-{
-
-	return (UINT64_MAX);
-}
-
-uint64_t
-racct_get_available(struct proc *p, int resource)
-{
-
-	return (UINT64_MAX);
-}
-
-void
-racct_create(struct racct **racctp)
-{
-}
-
-void
-racct_destroy(struct racct **racctp)
-{
-}
-
-int
-racct_proc_fork(struct proc *parent, struct proc *child)
-{
-
-	return (0);
-}
-
-void
-racct_proc_fork_done(struct proc *child)
-{
-}
-
-void
-racct_proc_exit(struct proc *p)
-{
-}
 
 #endif /* !RACCT */

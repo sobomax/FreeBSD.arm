@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/drm2/drm2/Makefile 259179 2013-12-10 15:53:00Z ray $
+# $FreeBSD: head/sys/modules/drm2/drm2/Makefile 273902 2014-10-31 10:45:34Z tijl $
 
 .PATH:	${.CURDIR}/../../../dev/drm2 ${.CURDIR}/../../../dev/drm2/ttm
 KMOD	= drm2
@@ -35,6 +35,7 @@ SRCS	= \
 	drm_stub.c \
 	drm_sysctl.c \
 	drm_vm.c \
+	ttm_agp_backend.c \
 	ttm_lock.c \
 	ttm_object.c \
 	ttm_tt.c \
@@ -46,7 +47,6 @@ SRCS	= \
 	ttm_page_alloc.c \
 	ttm_bo_vm.c \
 	ati_pcigart.c
-#ttm_agp_backend.c
 #ttm_page_alloc_dma.c
 
 .if ${MACHINE_CPUARCH} == "amd64"

@@ -23,9 +23,9 @@
 .\" out of the use of this software, even if advised of the possibility of
 .\" such damage.
 .\"
-.\" $FreeBSD: head/usr.sbin/pmcstat/pmcstat.8 269251 2014-07-29 19:49:27Z joel $
+.\" $FreeBSD: head/usr.sbin/pmcstat/pmcstat.8 273739 2014-10-27 15:50:47Z bapt $
 .\"
-.Dd May 16, 2014
+.Dd Oct 27, 2014
 .Dt PMCSTAT 8
 .Os
 .Sh NAME
@@ -254,6 +254,12 @@ Toggle between process mode PMCs measuring events for the target
 process' current and future children or only measuring events for
 the target process.
 The default is to measure events for the target process alone.
+(it has to be passed in the command line prior to
+.Fl p ,
+.Fl s ,
+.Fl P ,
+or
+.Fl S ) .
 .It Fl f Ar pluginopt
 Pass option string to the active plugin.
 .br

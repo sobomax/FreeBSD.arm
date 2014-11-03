@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/iscsictl/token.l 261714 2014-02-10 15:04:59Z trasz $
+ * $FreeBSD: head/usr.bin/iscsictl/token.l 273822 2014-10-29 12:22:32Z trasz $
  */
 
 #include <stdio.h>
@@ -46,6 +46,7 @@ extern int	yylex(void);
 
 %option noinput
 %option nounput
+%option noyywrap
 
 %%
 HeaderDigest		{ return HEADER_DIGEST; }
@@ -89,6 +90,7 @@ chapDigest		{ return IGNORED; }
 =			{ return EQUALS; }
 ;			{ return SEMICOLON; }
 #.*$			/* ignore comments */;
+\r\n			{ lineno++; }
 \n			{ lineno++; }
 [ \t]+			/* ignore whitespace */;
 .			{ yylval.str = strdup(yytext); return STR; }

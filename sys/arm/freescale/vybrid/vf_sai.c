@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_sai.c 261987 2014-02-16 19:21:44Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_sai.c 270945 2014-09-01 18:51:01Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -430,7 +430,7 @@ find_edma_controller(struct sc_info *sc)
 	OF_getprop(node, "edma-mux-group", &dts_value, len);
 	edma_mux_group = fdt32_to_cpu(dts_value);
 	OF_getprop(node, "edma-controller", &dts_value, len);
-	edma_node = OF_xref_phandle(fdt32_to_cpu(dts_value));
+	edma_node = OF_node_from_xref(fdt32_to_cpu(dts_value));
 
 	if ((len = OF_getproplen(edma_node, "device-id")) <= 0) {
 		return (ENXIO);

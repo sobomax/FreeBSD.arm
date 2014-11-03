@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netipsec/ipsec_output.c 268083 2014-07-01 08:02:25Z zec $
+ * $FreeBSD: head/sys/netipsec/ipsec_output.c 271862 2014-09-19 10:18:14Z glebius $
  */
 
 /*
@@ -441,8 +441,8 @@ ipsec4_process_packet(
 	sav = isr->sav;
 
 #ifdef DEV_ENC
-	encif->if_opackets++;
-	encif->if_obytes += m->m_pkthdr.len;
+	if_inc_counter(encif, IFCOUNTER_OPACKETS, 1);
+	if_inc_counter(encif, IFCOUNTER_OBYTES, m->m_pkthdr.len);
 
 	/* pass the mbuf to enc0 for bpf processing */
 	ipsec_bpf(m, sav, AF_INET, ENC_OUT|ENC_BEFORE);
@@ -641,8 +641,8 @@ ipsec6_process_packet(
 	dst = &sav->sah->saidx.dst;
 
 #ifdef DEV_ENC
-	encif->if_opackets++;
-	encif->if_obytes += m->m_pkthdr.len;
+	if_inc_counter(encif, IFCOUNTER_OPACKETS, 1);
+	if_inc_counter(encif, IFCOUNTER_OBYTES, m->m_pkthdr.len);
 
 	/* pass the mbuf to enc0 for bpf processing */
 	ipsec_bpf(m, isr->sav, AF_INET6, ENC_OUT|ENC_BEFORE);

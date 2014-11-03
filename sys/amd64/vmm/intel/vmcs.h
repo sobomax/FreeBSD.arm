@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.h 268777 2014-07-16 21:26:26Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.h 271888 2014-09-20 02:35:21Z neel $
  */
 
 #ifndef _VMCS_H_
@@ -54,6 +54,10 @@ int	vmcs_getdesc(struct vmcs *vmcs, int running, int ident,
 int	vmcs_setdesc(struct vmcs *vmcs, int running, int ident,
 		     struct seg_desc *desc);
 
+/*
+ * Avoid header pollution caused by inline use of 'vtophys()' in vmx_cpufunc.h
+ */
+#ifdef _VMX_CPUFUNC_H_
 static __inline uint64_t
 vmcs_read(uint32_t encoding)
 {
@@ -73,6 +77,7 @@ vmcs_write(uint32_t encoding, uint64_t val)
 	error = vmwrite(encoding, val);
 	KASSERT(error == 0, ("vmcs_write(%u) error %d", encoding, error));
 }
+#endif	/* _VMX_CPUFUNC_H_ */
 
 #define	vmexit_instruction_length()	vmcs_read(VMCS_EXIT_INSTRUCTION_LENGTH)
 #define	vmcs_guest_rip()		vmcs_read(VMCS_GUEST_RIP)

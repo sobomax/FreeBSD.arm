@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/Makefile.i386 252356 2013-06-28 21:00:08Z davide $
+# $FreeBSD: head/usr.sbin/Makefile.i386 273249 2014-10-18 08:07:17Z nyan $
 
 .if ${MK_APM} != "no"
 SUBDIR+=	apm
@@ -28,6 +28,9 @@ SUBDIR+=	zzz
 SUBDIR+=	acpi
 .endif
 SUBDIR+=	boot0cfg
+.if ${MK_HYPERV} != "no"
+SUBDIR+=	hyperv
+.endif
 .if ${MK_WIRELESS} != "no"
 SUBDIR+=	wlconfig
 .endif

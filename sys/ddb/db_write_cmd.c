@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_write_cmd.c 139747 2005-01-06 01:34:41Z imp $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_write_cmd.c 273006 2014-10-12 18:01:52Z pfg $");
 
 #include <sys/param.h>
 
@@ -43,11 +43,8 @@ __FBSDID("$FreeBSD: head/sys/ddb/db_write_cmd.c 139747 2005-01-06 01:34:41Z imp 
  */
 /*ARGSUSED*/
 void
-db_write_cmd(address, have_addr, count, modif)
-	db_expr_t	address;
-	boolean_t	have_addr;
-	db_expr_t	count;
-	char *		modif;
+db_write_cmd(db_expr_t address, boolean_t have_addr, db_expr_t count,
+    char * modif)
 {
 	register
 	db_addr_t	addr;

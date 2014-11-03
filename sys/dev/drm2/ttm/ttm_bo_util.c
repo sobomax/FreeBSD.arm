@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_bo_util.c 255044 2013-08-29 22:46:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_bo_util.c 273969 2014-11-02 14:08:54Z tijl $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>
@@ -508,8 +508,7 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
 		 * or to make the buffer object look contiguous.
 		 */
 		prot = (mem->placement & TTM_PL_FLAG_CACHED) ?
-			VM_MEMATTR_WRITE_COMBINING :
-			ttm_io_prot(mem->placement);
+			VM_MEMATTR_DEFAULT : ttm_io_prot(mem->placement);
 		map->bo_kmap_type = ttm_bo_map_vmap;
 		map->num_pages = num_pages;
 		map->virtual = (void *)kva_alloc(num_pages * PAGE_SIZE);

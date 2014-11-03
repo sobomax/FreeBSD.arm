@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_agpsupport.c 235783 2012-05-22 11:07:44Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_agpsupport.c 273862 2014-10-30 14:26:36Z tijl $");
 
 /** @file drm_agpsupport.c
  * Support code for tying the kernel AGP support to DRM drivers and
@@ -396,7 +396,7 @@ void *drm_agp_allocate_memory(size_t pages, u32 type)
 	if (!agpdev)
 		return NULL;
 
-	return agp_alloc_memory(agpdev, type, pages << AGP_PAGE_SHIFT);
+	return agp_alloc_memory(agpdev, type, pages << PAGE_SHIFT);
 }
 
 int drm_agp_free_memory(void *handle)

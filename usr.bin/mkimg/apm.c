@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/apm.c 268524 2014-07-11 01:49:25Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/apm.c 271881 2014-09-19 23:16:02Z marcel $");
 
 #include <sys/types.h>
 #include <sys/apm.h>
@@ -57,13 +57,12 @@ static struct mkimg_alias apm_aliases[] = {
     {	ALIAS_NONE, 0 }
 };
 
-static u_int
-apm_metadata(u_int where)
+static lba_t
+apm_metadata(u_int where, lba_t blk)
 {
-	u_int secs;
 
-	secs = (where == SCHEME_META_IMG_START) ? nparts + 2 : 0;
-	return (secs);
+	blk += (where == SCHEME_META_IMG_START) ? nparts + 2 : 0;
+	return (round_block(blk));
 }
 
 static int

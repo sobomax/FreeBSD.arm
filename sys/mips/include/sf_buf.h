@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/include/sf_buf.h 269577 2014-08-05 09:44:10Z glebius $
+ * $FreeBSD: head/sys/mips/include/sf_buf.h 271217 2014-09-07 05:47:48Z glebius $
  */
 
 #ifndef _MACHINE_SF_BUF_H_
@@ -47,5 +47,23 @@ sf_buf_page(struct sf_buf *sf)
 	return ((vm_page_t)sf);
 }
 
-#endif /* __mips_n64 */
+#else	/* !__mips_n64 */
+
+static inline void
+sf_buf_map(struct sf_buf *sf, int flags)
+{
+
+	pmap_qenter(sf->kva, &sf->m, 1);
+}
+
+static inline int
+sf_buf_unmap(struct sf_buf *sf)
+{
+
+	pmap_qremove(sf->kva, 1);
+	return (1);
+}
+
+#endif	/* __mips_n64 */
+
 #endif /* !_MACHINE_SF_BUF_H_ */

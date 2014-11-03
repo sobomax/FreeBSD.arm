@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 177145 2008-03-13 10:54:38Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 273991 2014-11-02 21:40:32Z jhb $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -65,7 +65,6 @@ __FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 177145 2008-03-13 10:54:38
 
 extern int svr4_szsigcode;
 extern char svr4_sigcode[];
-extern int _udatasel, _ucodesel;
 
 static void svr4_getsiginfo(union svr4_siginfo *, int, u_long, caddr_t);
 

@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vlapic.c 267300 2014-06-09 20:51:08Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/io/vlapic.c 273375 2014-10-21 07:10:43Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 267300 2014-06-09 20:51:08Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 273375 2014-10-21 07:10:43Z neel $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -633,6 +633,7 @@ vlapic_fire_timer(struct vlapic *vlapic)
 	// The timer LVT always uses the fixed delivery mode.
 	lvt = vlapic_get_lvt(vlapic, APIC_OFFSET_TIMER_LVT);
 	if (vlapic_fire_lvt(vlapic, lvt | APIC_LVT_DM_FIXED)) {
+		VLAPIC_CTR0(vlapic, "vlapic timer fired");
 		vmm_stat_incr(vlapic->vm, vlapic->vcpuid, VLAPIC_INTR_TIMER, 1);
 	}
 }
@@ -911,8 +912,12 @@ vlapic_set_tpr(struct vlapic *vlapic, uint8_t val)
 {
 	struct LAPIC *lapic = vlapic->apic_page;
 
-	lapic->tpr = val;
-	vlapic_update_ppr(vlapic);
+	if (lapic->tpr != val) {
+		VCPU_CTR2(vlapic->vm, vlapic->vcpuid, "vlapic TPR changed "
+		    "from %#x to %#x", lapic->tpr, val);
+		lapic->tpr = val;
+		vlapic_update_ppr(vlapic);
+	}
 }
 
 static uint8_t

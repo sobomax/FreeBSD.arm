@@ -43,7 +43,7 @@ __SCCSID("@(#)factor.c	8.4 (Berkeley) 5/4/95");
 __RCSID("$NetBSD: factor.c,v 1.19 2009/08/12 05:54:31 dholland Exp $");
 #endif
 #ifdef __FBSDID
-__FBSDID("$FreeBSD: head/games/factor/factor.c 228596 2011-12-16 21:24:11Z dim $");
+__FBSDID("$FreeBSD: head/games/factor/factor.c 272210 2014-09-27 10:57:34Z sbruno $");
 #endif
 #endif /* not lint */
 
@@ -69,6 +69,7 @@ __FBSDID("$FreeBSD: head/games/factor/factor.c 228596 2011-12-16 21:24:11Z dim $
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
+#include <inttypes.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -227,7 +228,7 @@ pr_fact(BIGNUM *val)
 
 		/* Divide factor out until none are left. */
 		do {
-			printf(hflag ? " 0x%lx" : " %lu", *fact);
+			printf(hflag ? " 0x%" PRIx64 "" : " %" PRIu64 "", *fact);
 			BN_div_word(val, (BN_ULONG)*fact);
 		} while (BN_mod_word(val, (BN_ULONG)*fact) == 0);
 

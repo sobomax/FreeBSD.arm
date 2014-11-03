@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/hprop/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/hprop/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	hprop
 MAN=	hprop.8
@@ -15,8 +15,6 @@ DPADD=	${LIBHDB} ${LIBKRB5} ${LIBHX509} ${LIBROKEN} ${LIBVERS} \
 LDADD=	-lhdb -lkrb5 -lhx509 -lroken ${LIBVERS} \
 	-lasn1 -lcrypto -lcrypt -lcom_err ${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

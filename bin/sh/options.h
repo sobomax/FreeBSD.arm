@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)options.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/options.h 223281 2011-06-18 23:43:28Z jilles $
+ * $FreeBSD: head/bin/sh/options.h 273700 2014-10-26 17:50:33Z jilles $
  */
 
 struct shparam {
@@ -38,6 +38,7 @@ struct shparam {
 	unsigned char malloc;	/* if parameter list dynamically allocated */
 	unsigned char reset;	/* if getopts has been reset */
 	char **p;		/* parameter list */
+	char **optp;		/* parameter list for getopts */
 	char **optnext;		/* next parameter to be processed by getopts */
 	char *optptr;		/* used by getopts */
 };

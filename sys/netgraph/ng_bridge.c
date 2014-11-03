@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_bridge.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_bridge.c 273960 2014-11-02 05:51:31Z glebius $
  */
 
 /*
@@ -1046,7 +1046,7 @@ ng_bridge_nodename(node_p node)
 {
 	static char name[NG_NODESIZ];
 
-	if (NG_NODE_NAME(node) != NULL)
+	if (NG_NODE_HAS_NAME(node))
 		snprintf(name, sizeof(name), "%s", NG_NODE_NAME(node));
 	else
 		snprintf(name, sizeof(name), "[%x]", ng_node2ID(node));

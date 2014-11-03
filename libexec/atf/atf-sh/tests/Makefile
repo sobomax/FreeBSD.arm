@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/atf/atf-sh/tests/Makefile 268445 2014-07-09 00:55:50Z jmmv $
+# $FreeBSD: head/libexec/atf/atf-sh/tests/Makefile 273929 2014-11-01 11:17:54Z jmmv $
 
 .include <bsd.init.mk>
 
@@ -16,8 +16,7 @@ ATF_TESTS_SH+=	tp_test
 
 integration_test: Makefile
 ATF_TESTS_SH_SED_integration_test= \
-    -e 's,atf_check,PATH=/usr/libexec:$${PATH} atf_check,g' \
-    -e 's,/usr/bin/env *atf-sh,/usr/libexec/atf-sh,g'
+    -e 's,__ATF_SH__,/usr/libexec/atf-sh,g'
 
 SCRIPTS+=		misc_helpers
 SCRIPTSDIR_misc_helpers=${TESTSDIR}

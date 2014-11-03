@@ -1,5 +1,11 @@
-# $FreeBSD: head/usr.bin/timeout/Makefile 268745 2014-07-16 09:55:36Z bapt $
+# $FreeBSD: head/usr.bin/timeout/Makefile 273771 2014-10-28 10:39:41Z bapt $
+
+.include <src.opts.mk>
 
 PROG=	timeout
+
+.if ${MK_TESTS} != "no"
+SUBDIR+= tests
+.endif
 
 .include <bsd.prog.mk>

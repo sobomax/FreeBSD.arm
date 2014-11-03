@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-csqrt.c 251241 2013-06-02 04:30:03Z das $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-csqrt.c 271296 2014-09-09 02:58:58Z ngie $");
 
 #include <assert.h>
 #include <complex.h>
@@ -62,7 +62,7 @@ _csqrt(long double complex d)
 	return (csqrt((double complex)d));
 }
 
-#pragma	STDC CX_LIMITED_RANGE	off
+#pragma	STDC CX_LIMITED_RANGE	OFF
 
 /*
  * Compare d1 and d2 using special rules: NaN == NaN and +0 != -0.

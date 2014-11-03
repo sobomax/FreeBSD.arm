@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/aim/machdep.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/powerpc/aim/machdep.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -128,10 +128,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/aim/machdep.c 263620 2014-03-22 10:26:09Z b
 #include <ddb/ddb.h>
 
 #include <dev/ofw/openfirm.h>
-
-#ifdef DDB
-extern vm_offset_t ksym_start, ksym_end;
-#endif
 
 int cold = 1;
 #ifdef __powerpc64__
@@ -268,6 +264,10 @@ powerpc_init(vm_offset_t startkernel, vm_offset_t endkernel,
 	#ifndef __powerpc64__
 	int		ppc64;
 	#endif
+#ifdef DDB
+	vm_offset_t ksym_start;
+	vm_offset_t ksym_end;
+#endif
 
 	kmdp = NULL;
 	trap_offset = 0;
@@ -302,6 +302,7 @@ powerpc_init(vm_offset_t startkernel, vm_offset_t endkernel,
 #ifdef DDB
 			ksym_start = MD_FETCH(kmdp, MODINFOMD_SSYM, uintptr_t);
 			ksym_end = MD_FETCH(kmdp, MODINFOMD_ESYM, uintptr_t);
+			db_fetch_ksymtab(ksym_start, ksym_end);
 #endif
 		}
 	}
@@ -565,7 +566,7 @@ powerpc_init(vm_offset_t startkernel, vm_offset_t endkernel,
 	/*
 	 * Grab booted kernel's name
 	 */
-        env = getenv("kernelname");
+        env = kern_getenv("kernelname");
         if (env != NULL) {
 		strlcpy(kernelname, env, sizeof(kernelname));
 		freeenv(env);

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/dump_machdep.c 269105 2014-07-25 23:52:53Z gavin $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/dump_machdep.c 272766 2014-10-08 20:25:21Z markj $");
 
 #include "opt_watchdog.h"
 
@@ -275,10 +275,9 @@ dumpsys(struct dumperinfo *di)
 	size_t hdrsz;
 	int error;
 
-	if (do_minidump) {
-		minidumpsys(di);
-		return (0);
-	}
+	if (do_minidump)
+		return (minidumpsys(di));
+
 	bzero(&ehdr, sizeof(ehdr));
 	ehdr.e_ident[EI_MAG0] = ELFMAG0;
 	ehdr.e_ident[EI_MAG1] = ELFMAG1;

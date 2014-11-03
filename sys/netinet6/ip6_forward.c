@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 269699 2014-08-08 01:57:15Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 272299 2014-09-30 13:15:19Z ae $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -422,8 +422,6 @@ again2:
 		if (mcopy) {
 			u_long mtu;
 #ifdef IPSEC
-			struct secpolicy *sp;
-			int ipsecerror;
 			size_t ipsechdrsiz;
 #endif /* IPSEC */
 
@@ -436,15 +434,10 @@ again2:
 			 * case, as we have the outgoing interface for
 			 * encapsulated packet as "rt->rt_ifp".
 			 */
-			sp = ipsec_getpolicybyaddr(mcopy, IPSEC_DIR_OUTBOUND,
-				IP_FORWARDING, &ipsecerror);
-			if (sp) {
-				ipsechdrsiz = ipsec_hdrsiz(mcopy,
-					IPSEC_DIR_OUTBOUND, NULL);
-				if (ipsechdrsiz < mtu)
-					mtu -= ipsechdrsiz;
-			}
-
+			ipsechdrsiz = ipsec_hdrsiz(mcopy, IPSEC_DIR_OUTBOUND,
+			    NULL);
+			if (ipsechdrsiz < mtu)
+				mtu -= ipsechdrsiz;
 			/*
 			 * if mtu becomes less than minimum MTU,
 			 * tell minimum MTU (and I'll need to fragment it).

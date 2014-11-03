@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/ippool/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ippool/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=		ippool
 SRCS=		${GENHDRS} ippool_y.c ippool_l.c kmem.c ippool.c
@@ -9,8 +9,6 @@ GENHDRS=	ippool_l.h ippool_y.h
 DPSRCS+=	${GENHDRS}
 
 CLEANFILES+=	${GENHDRS} ippool_y.c ippool_l.c
-
-NO_PIE=	yes
 
 ippool_y.c: ippool_y.y
 	${YACC} -d ${.ALLSRC}

@@ -15,11 +15,11 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/LN2410SBC 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/arm/conf/LN2410SBC 272103 2014-09-25 11:38:26Z gavin $
 
 ident		LN2410SBC
 
-include 	"../s3c2xx0/std.ln2410sbc"
+include 	"../samsung/s3c2xx0/std.ln2410sbc"
 #To statically compile in device wiring instead of /boot/device.hints
 #hints		"GENERIC.hints"		# Default places to look for devices.
 makeoptions	MODULES_OVERRIDE=""

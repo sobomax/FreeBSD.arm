@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/gdb/kgdb/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/gnu/usr.bin/gdb/kgdb/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kgdb${GDB_SUFFIX}
 SRCS=	main.c kld.c kthr.c trgt.c trgt_${TARGET_CPUARCH}.c
@@ -16,7 +16,5 @@ LDADD=	${GDBLIBS} ${BULIBS} -lkvm${GDB_SUFFIX} -lm ${LDREADLINE} -ltermcapw \
 .if defined(GDB_CROSS_DEBUGGER)
 CFLAGS+= -Wl,-export-dynamic
 .endif
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

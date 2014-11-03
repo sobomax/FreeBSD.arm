@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/cam_queue.c 256843 2013-10-21 12:00:26Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/cam_queue.c 271588 2014-09-14 11:59:49Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -290,7 +290,6 @@ cam_ccbq_resize(struct cam_ccbq *ccbq, int new_size)
 
 	delta = new_size - (ccbq->dev_active + ccbq->dev_openings);
 	ccbq->total_openings += delta;
-	ccbq->devq_openings += delta;
 	ccbq->dev_openings += delta;
 
 	new_size = imax(64, 1 << fls(new_size + new_size / 2));
@@ -308,7 +307,6 @@ cam_ccbq_init(struct cam_ccbq *ccbq, int openings)
 	    imax(64, 1 << fls(openings + openings / 2))) != 0)
 		return (1);
 	ccbq->total_openings = openings;
-	ccbq->devq_openings = openings;
 	ccbq->dev_openings = openings;
 	return (0);
 }

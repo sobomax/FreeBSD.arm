@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/ispmbox.h 238869 2012-07-28 20:06:29Z mjacob $ */
+/* $FreeBSD: head/sys/dev/isp/ispmbox.h 273051 2014-10-13 16:23:58Z imp $ */
 /*-
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -1442,7 +1442,7 @@ typedef struct {
 	uint16_t	snscb_addr[4];	/* response buffer address */
 	uint16_t	snscb_sblen;	/* subcommand buffer length (words) */
 	uint16_t	snscb_reserved1;
-	uint16_t	snscb_data[1];	/* variable data */
+	uint16_t	snscb_data[];	/* variable data */
 } sns_screq_t;	/* Subcommand Request Structure */
 
 typedef struct {
@@ -1503,7 +1503,7 @@ typedef struct {
 	uint8_t		snscb_port_type;
 	uint8_t		snscb_port_id[3];
 	uint8_t		snscb_portname[8];
-	uint16_t	snscb_data[1];	/* variable data */
+	uint16_t	snscb_data[];	/* variable data */
 } sns_scrsp_t;	/* Subcommand Response Structure */
 
 typedef struct {

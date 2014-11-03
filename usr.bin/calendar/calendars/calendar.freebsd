@@ -1,7 +1,7 @@
 /*
  * FreeBSD
  *
- * $FreeBSD: head/usr.bin/calendar/calendars/calendar.freebsd 269434 2014-08-02 16:45:55Z ngie $
+ * $FreeBSD: head/usr.bin/calendar/calendars/calendar.freebsd 272085 2014-09-24 22:31:40Z jch $
  */
 
 #ifndef _calendar_freebsd_
@@ -52,6 +52,7 @@
 02/03	Jason Helfman <jgh@FreeBSD.org> born in Royal Oak, Michigan, United States, 1972
 02/04	Eitan Adler <eadler@FreeBSD.org> born in West Hempstead, New York, United States, 1991
 02/05	Frank Laszlo <laszlof@FreeBSD.org> born in Howell, Michigan, United States, 1983
+02/06	Julien Charbon <jch@FreeBSD.org> born in Saint Etienne, Loire, France, 1978
 02/10	David Greenman <dg@FreeBSD.org> born in Portland, Oregon, United States, 1968
 02/10	Paul Richards <paul@FreeBSD.org> born in Ammanford, Carmarthenshire, United Kingdom, 1968
 02/10	Simon Barner <barner@FreeBSD.org> born in Rosenheim, Bayern, Germany, 1980

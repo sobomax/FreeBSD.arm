@@ -1,5 +1,5 @@
 # Makefile for libpcap
-# $FreeBSD: head/lib/libpcap/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libpcap/Makefile 272659 2014-10-06 15:48:28Z luigi $
 
 SHLIBDIR?= /lib
 
@@ -7,6 +7,7 @@ SHLIBDIR?= /lib
 
 LIB=	pcap
 SRCS=	grammar.y tokdefs.h version.h pcap-bpf.c \
+	pcap-netmap.c \
 	pcap.c pcap-common.c inet.c fad-getad.c gencode.c optimize.c nametoaddr.c \
 	etherent.c savefile.c bpf_filter.c bpf_image.c bpf_dump.c \
 	scanner.l sf-pcap.c sf-pcap-ng.c version.c

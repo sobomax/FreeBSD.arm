@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_mount.c 269457 2014-08-03 03:27:54Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_mount.c 270096 2014-08-17 09:44:42Z trasz $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -649,6 +649,10 @@ vfs_donmount(struct thread *td, uint64_t fsflags, struct uio *fsoptions)
 			fsflags |= MNT_SYNCHRONOUS;
 		else if (strcmp(opt->name, "union") == 0)
 			fsflags |= MNT_UNION;
+		else if (strcmp(opt->name, "automounted") == 0) {
+			fsflags |= MNT_AUTOMOUNTED;
+			vfs_freeopt(optlist, opt);
+		}
 	}
 
 	/*

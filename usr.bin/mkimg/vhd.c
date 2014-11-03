@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/vhd.c 269021 2014-07-23 18:05:39Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/vhd.c 272382 2014-10-01 20:37:15Z marcel $");
 
 #include <sys/types.h>
 #include <sys/endian.h>
@@ -64,7 +64,7 @@ __FBSDID("$FreeBSD: head/usr.bin/mkimg/vhd.c 269021 2014-07-23 18:05:39Z marcel 
 
 struct vhd_footer {
 	uint64_t	cookie;
-#define	VHD_FOOTER_COOKIE	0x636f6e6563746978
+#define	VHD_FOOTER_COOKIE	0x636f6e6563746978ULL
 	uint32_t	features;
 #define	VHD_FEATURES_TEMPORARY	0x01
 #define	VHD_FEATURES_RESERVED	0x02
@@ -236,7 +236,7 @@ vhd_resize(lba_t imgsz)
 
 struct vhd_dyn_header {
 	uint64_t	cookie;
-#define	VHD_HEADER_COOKIE	0x6378737061727365
+#define	VHD_HEADER_COOKIE	0x6378737061727365ULL
 	uint64_t	data_offset;
 	uint64_t	table_offset;
 	uint32_t	version;

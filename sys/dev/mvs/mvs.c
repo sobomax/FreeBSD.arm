@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs.c 267589 2014-06-17 18:10:06Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs.c 271461 2014-09-12 12:04:51Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -122,6 +122,7 @@ mvs_ch_attach(device_t dev)
 	ch->unit = (intptr_t)device_get_ivars(dev);
 	ch->quirks = ctlr->quirks;
 	mtx_init(&ch->mtx, "MVS channel lock", NULL, MTX_DEF);
+	ch->pm_level = 0;
 	resource_int_value(device_get_name(dev),
 	    device_get_unit(dev), "pm_level", &ch->pm_level);
 	if (ch->pm_level > 3)

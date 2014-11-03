@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/busdma_dmar.c 264008 2014-04-01 15:48:46Z rstone $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/busdma_dmar.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,7 +76,7 @@ dmar_bus_dma_is_dev_disabled(int domain, int bus, int slot, int func)
 
 	snprintf(str, sizeof(str), "hw.busdma.pci%d.%d.%d.%d.bounce",
 	    domain, bus, slot, func);
-	env = getenv(str);
+	env = kern_getenv(str);
 	if (env == NULL)
 		return (false);
 	freeenv(env);

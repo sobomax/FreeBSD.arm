@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sched_4bsd.c 265108 2014-04-29 20:51:57Z marius $");
+__FBSDID("$FreeBSD: head/sys/kern/sched_4bsd.c 270423 2014-08-23 17:31:56Z mav $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_sched.h"
@@ -982,7 +982,8 @@ sched_switch(struct thread *td, struct thread *newtd, int flags)
 		sched_load_rem();
 
 	td->td_lastcpu = td->td_oncpu;
-	preempted = !(td->td_flags & TDF_SLICEEND);
+	preempted = !((td->td_flags & TDF_SLICEEND) ||
+	    (flags & SWT_RELINQUISH));
 	td->td_flags &= ~(TDF_NEEDRESCHED | TDF_SLICEEND);
 	td->td_owepreempt = 0;
 	td->td_oncpu = NOCPU;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/csh/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/bin/csh/Makefile 271771 2014-09-18 14:41:57Z will $
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
 #
 # C Shell with process control; VM/UNIX VAX Makefile
@@ -94,7 +94,7 @@ GENHDRS+= iconv.h
 SRCS+=	iconv_stub.c
 
 iconv.h: ${.CURDIR}/iconv_stub.h
-	cp ${.CURDIR}/iconv_stub.h ${.TARGET}
+	cp -f ${.CURDIR}/iconv_stub.h ${.TARGET}
 .endif
 .endif
 

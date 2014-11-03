@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_sta.c 264906 2014-04-25 01:20:10Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_sta.c 271861 2014-09-19 09:20:55Z glebius $");
 #endif
 
 /*
@@ -938,7 +938,7 @@ sta_input(struct ieee80211_node *ni, struct mbuf *m, int rssi, int nf)
 		break;
 	}
 err:
-	ifp->if_ierrors++;
+	if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 out:
 	if (m != NULL) {
 		if (need_tap && ieee80211_radiotap_active_vap(vap))

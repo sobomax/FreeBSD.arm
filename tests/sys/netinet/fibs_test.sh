@@ -29,7 +29,7 @@
 #
 #  Authors: Alan Somers         (Spectra Logic Corporation)
 #
-# $FreeBSD: head/tests/sys/netinet/fibs_test.sh 266860 2014-05-29 21:03:49Z asomers $
+# $FreeBSD: head/tests/sys/netinet/fibs_test.sh 271675 2014-09-16 15:28:19Z asomers $
 
 # All of the tests in this file requires the test-suite config variable "fibs"
 # to be defined to a space-delimited list of FIBs that may be used for testing.
@@ -366,7 +366,6 @@ udp_dontroute_head()
 
 udp_dontroute_body()
 {
-	atf_expect_fail "kern/187553 Source address selection for UDP packets with SO_DONTROUTE uses the default FIB"
 	# Configure the TAP interface to use an RFC5737 nonrouteable address
 	# and a non-default fib
 	ADDR0="192.0.2.2"

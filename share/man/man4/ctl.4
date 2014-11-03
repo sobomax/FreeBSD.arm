@@ -22,8 +22,8 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ctl.4 267938 2014-06-26 21:46:14Z bapt $
-.Dd April 2, 2013
+.\" $FreeBSD: head/share/man/man4/ctl.4 273690 2014-10-26 13:30:53Z trasz $
+.Dd October 23, 2014
 .Dt CTL 4
 .Os
 .Sh NAME
@@ -57,7 +57,7 @@ Tagged queueing
 .It
 SCSI task attribute support (ordered, head of queue, simple tags)
 .It
-SCSI implicit command ordering support.
+SCSI implicit command ordering support
 .It
 Full task management support (abort, LUN reset, target reset, etc.)
 .It
@@ -66,6 +66,12 @@ Support for multiple ports
 Support for multiple simultaneous initiators
 .It
 Support for multiple simultaneous backing stores
+.It
+Support for VMWare VAAI: COMPARE AND WRITE, XCOPY, WRITE SAME,
+and UNMAP commands
+.It
+Support for Microsoft ODX: POPULATE TOKEN/WRITE USING TOKEN,
+WRITE SAME, and UNMAP commands
 .It
 Persistent reservation support
 .It

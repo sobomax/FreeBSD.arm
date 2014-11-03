@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/uboot/lib/libuboot.h 263052 2014-03-11 22:02:49Z ian $
+ * $FreeBSD: head/sys/boot/uboot/lib/libuboot.h 273927 2014-11-01 10:50:18Z andrew $
  */
 
 struct uboot_devdesc
@@ -71,9 +71,4 @@ extern struct file_format uboot_elf;
 void reboot(void);
 
 int uboot_diskgetunit(int type, int type_unit);
-
-#if defined(LOADER_FDT_SUPPORT)
-extern int fdt_setup_fdtp();
-extern int fdt_copy(vm_offset_t);
-#endif
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libunbound/Makefile 268883 2014-07-19 18:38:48Z des $
+# $FreeBSD: head/lib/libunbound/Makefile 271778 2014-09-18 14:54:20Z will $
 
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../contrib/ldns
@@ -33,7 +33,7 @@ LDADD+=	-lssl -lcrypto -lpthread
 
 # Misnamed file in upstream source
 configlexer.l: configlexer.lex
-	cp -p ${.ALLSRC} ${.TARGET}
+	cp -fp ${.ALLSRC} ${.TARGET}
 CLEANFILES+= configlexer.l
 
 # Symbol prefix for lex and yacc

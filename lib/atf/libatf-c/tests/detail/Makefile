@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/atf/libatf-c/tests/detail/Makefile 263161 2014-03-14 08:56:19Z jmmv $
+# $FreeBSD: head/lib/atf/libatf-c/tests/detail/Makefile 273929 2014-11-01 11:17:54Z jmmv $
 
 .include <bsd.init.mk>
 
@@ -7,6 +7,7 @@ TESTSDIR=	${TESTSBASE}/lib/atf/libatf-c/detail
 ATF=		${.CURDIR:H:H:H:H:H}/contrib/atf
 .PATH:		${ATF}/atf-c/detail
 
+CFLAGS+=	-DATF_INCLUDEDIR='"${INCLUDEDIR}"'
 CFLAGS+=	-I${ATF}
 
 .for _T in	dynstr_test \

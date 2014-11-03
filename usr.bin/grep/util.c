@@ -1,5 +1,5 @@
 /*	$NetBSD: util.c,v 1.9 2011/02/27 17:33:37 joerg Exp $	*/
-/*	$FreeBSD: head/usr.bin/grep/util.c 268798 2014-07-17 14:51:50Z pfg $	*/
+/*	$FreeBSD: head/usr.bin/grep/util.c 270132 2014-08-18 12:29:28Z gabor $	*/
 /*	$OpenBSD: util.c,v 1.39 2010/07/02 22:18:03 tedu Exp $	*/
 
 /*-
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/grep/util.c 268798 2014-07-17 14:51:50Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/grep/util.c 270132 2014-08-18 12:29:28Z gabor $");
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -336,7 +336,7 @@ procline(struct str *l, int nottext)
 		}
 
 		/* One pass if we are not recording matches */
-		if (!wflag && ((color == NULL && !oflag) || qflag || lflag))
+		if (!wflag && ((color == NULL && !oflag) || qflag || lflag || Lflag))
 			break;
 
 		if (st == (size_t)pmatch.rm_so)

@@ -27,9 +27,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)ps.1	8.3 (Berkeley) 4/18/94
-.\" $FreeBSD: head/bin/ps/ps.1 269656 2014-08-07 05:47:53Z kib $
+.\" $FreeBSD: head/bin/ps/ps.1 270745 2014-08-28 08:41:11Z mjg $
 .\"
-.Dd August 7, 2014
+.Dd August 27, 2014
 .Dt PS 1
 .Os
 .Sh NAME
@@ -665,6 +665,8 @@ accumulated CPU time, user + system (alias
 .Cm cputime )
 .It Cm tpgid
 control terminal process group ID
+.It Cm tracer
+tracer process ID
 .\".It Cm trss
 .\"text resident set size (in Kbytes)
 .It Cm tsid

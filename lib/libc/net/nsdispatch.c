@@ -61,7 +61,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/nsdispatch.c 254700 2013-08-23 13:59:47Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/net/nsdispatch.c 273605 2014-10-24 20:29:14Z markj $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -329,7 +329,6 @@ _nsdbtdump(const ns_dbt *dbt)
 static int
 nss_configure(void)
 {
-	static pthread_mutex_t conf_lock = PTHREAD_MUTEX_INITIALIZER;
 	static time_t	 confmod;
 	struct stat	 statbuf;
 	int		 result, isthreaded;
@@ -353,13 +352,14 @@ nss_configure(void)
 	if (statbuf.st_mtime <= confmod)
 		return (0);
 	if (isthreaded) {
-	    result = _pthread_mutex_trylock(&conf_lock);
-	    if (result != 0)
-		    return (0);
 	    (void)_pthread_rwlock_unlock(&nss_lock);
 	    result = _pthread_rwlock_wrlock(&nss_lock);
 	    if (result != 0)
-		    goto fin2;
+		    return (result);
+	    if (stat(path, &statbuf) != 0)
+		    goto fin;
+	    if (statbuf.st_mtime <= confmod)
+		    goto fin;
 	}
 	_nsyyin = fopen(path, "re");
 	if (_nsyyin == NULL)
@@ -390,9 +390,6 @@ fin:
 	    if (result == 0)
 		    result = _pthread_rwlock_rdlock(&nss_lock);
 	}
-fin2:
-	if (isthreaded)
-		(void)_pthread_mutex_unlock(&conf_lock);
 	return (result);
 }
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/minidump_machdep.c 257216 2013-10-27 16:31:12Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/minidump_machdep.c 272766 2014-10-08 20:25:21Z markj $");
 
 #include "opt_pmap.h"
 #include "opt_watchdog.h"
@@ -215,7 +215,7 @@ blk_write(struct dumperinfo *di, char *ptr, vm_paddr_t pa, size_t sz)
 /* A fake page table page, to avoid having to handle both 4K and 2M pages */
 static pd_entry_t fakepd[NPDEPG];
 
-void
+int
 minidumpsys(struct dumperinfo *di)
 {
 	uint32_t pmapsize;
@@ -441,7 +441,7 @@ minidumpsys(struct dumperinfo *di)
 	/* Signal completion, signoff and exit stage left. */
 	dump_write(di, NULL, 0, 0, 0);
 	printf("\nDump complete\n");
-	return;
+	return (0);
 
  fail:
 	if (error < 0)
@@ -462,6 +462,7 @@ minidumpsys(struct dumperinfo *di)
 		printf("Dump failed. Partition too small.\n");
 	else
 		printf("** DUMP FAILED (ERROR %d) **\n", error);
+	return (error);
 }
 
 void

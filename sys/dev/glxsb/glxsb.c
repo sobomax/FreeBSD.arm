@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/glxsb/glxsb.c 256377 2013-10-12 12:57:57Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/glxsb/glxsb.c 273872 2014-10-30 21:21:53Z markm $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -476,7 +476,7 @@ glxsb_rnd(void *v)
 	if (status & SB_RNS_TRNG_VALID) {
 		value = bus_read_4(sc->sc_sr, SB_RANDOM_NUM);
 		/* feed with one uint32 */
-		random_harvest(&value, 4, 32/2, RANDOM_PURE_GLXSB);
+		random_harvest(&value, sizeof(value), 32/2, RANDOM_PURE_GLXSB);
 	}
 
 	callout_reset(&sc->sc_rngco, sc->sc_rnghz, glxsb_rnd, sc);

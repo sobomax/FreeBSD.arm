@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -1312,14 +1312,22 @@ kenv_getuint(struct hatm_softc *sc, const char *var,
 
 	*ptr = def;
 
-	if (SYSCTL_ADD_UINT(&sc->sysctl_ctx, SYSCTL_CHILDREN(sc->sysctl_tree),
-	    OID_AUTO, var, rw ? CTLFLAG_RW : CTLFLAG_RD, ptr, 0, "") == NULL)
-		return (ENOMEM);
+	if (rw != 0) {
+		if (SYSCTL_ADD_UINT(&sc->sysctl_ctx,
+		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, var,
+		    CTLFLAG_RW, ptr, 0, "") == NULL)
+			return (ENOMEM);
+	} else {
+		if (SYSCTL_ADD_UINT(&sc->sysctl_ctx,
+		    SYSCTL_CHILDREN(sc->sysctl_tree), OID_AUTO, var,
+		    CTLFLAG_RD, ptr, 0, "") == NULL)
+			return (ENOMEM);
+	}
 
 	snprintf(full, sizeof(full), "hw.%s.%s",
 	    device_get_nameunit(sc->dev), var);
 
-	if ((val = getenv(full)) == NULL)
+	if ((val = kern_getenv(full)) == NULL)
 		return (0);
 	u = strtoul(val, &end, 0);
 	if (end == val || *end != '\0') {

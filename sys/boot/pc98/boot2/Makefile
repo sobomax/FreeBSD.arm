@@ -1,12 +1,6 @@
-# $FreeBSD: head/sys/boot/pc98/boot2/Makefile 268476 2014-07-10 00:15:50Z imp $
+# $FreeBSD: head/sys/boot/pc98/boot2/Makefile 272250 2014-09-28 12:13:51Z nyan $
 
 .include <bsd.own.mk>
-
-# XXX: clang can compile the boot code just fine, but boot2 gets too big
-#CC:=		gcc
-#COMPILER_TYPE:=	gcc
-
-NO_PIE=	yes
 
 FILES=		boot boot1 boot2
 
@@ -116,4 +110,5 @@ boot2.h: boot1.out
 .include <bsd.prog.mk>
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
-CFLAGS+=		${CLANG_NO_IAS}
+CFLAGS.boot1.S=		${CLANG_NO_IAS}
+CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

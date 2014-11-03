@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/libstand32/Makefile 269361 2014-07-31 23:25:13Z marcel $
+# $FreeBSD: head/sys/boot/libstand32/Makefile 272350 2014-10-01 08:26:51Z andrew $
 # Originally from	$NetBSD: Makefile,v 1.21 1997/10/26 22:08:38 lukem Exp $
 #
 # Notes:
@@ -67,9 +67,6 @@ SRCS+=	bcmp.c bcopy.c bzero.c ffs.c memccpy.c memchr.c memcmp.c memcpy.c \
 .if ${MACHINE_CPUARCH} == "arm"
 .PATH: ${LIBC}/arm/gen
 
-.if ${MK_ARM_EABI} == "no"
-SRCS+= divsi3.S
-.else
 # Compiler support functions
 .PATH: ${.CURDIR}/../../../contrib/compiler-rt/lib/
 # __clzsi2 and ctzsi2 for various builtin functions
@@ -81,7 +78,6 @@ SRCS+=	udivmoddi4.c udivmodsi4.c udivdi3.c udivsi3.c umoddi3.c umodsi3.c
 .PATH: ${.CURDIR}/../../../contrib/compiler-rt/lib/arm/
 SRCS+=	aeabi_idivmod.S aeabi_ldivmod.S aeabi_uidivmod.S aeabi_uldivmod.S
 SRCS+=	aeabi_memcmp.S aeabi_memcpy.S aeabi_memmove.S aeabi_memset.S
-.endif
 
 .endif
 .if ${MACHINE_CPUARCH} == "powerpc"

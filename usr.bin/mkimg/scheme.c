@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/scheme.c 266511 2014-05-21 17:37:22Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/scheme.c 271881 2014-09-19 23:16:02Z marcel $");
 
 #include <sys/types.h>
 #include <sys/linker_set.h>
@@ -171,10 +171,8 @@ scheme_max_secsz(void)
 lba_t
 scheme_metadata(u_int where, lba_t start)
 {
-	lba_t secs;
 
-	secs = scheme->metadata(where);
-	return (round_block(start + secs));
+	return (scheme->metadata(where, start));
 }
 
 int

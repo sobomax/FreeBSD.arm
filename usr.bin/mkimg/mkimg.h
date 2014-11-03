@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkimg/mkimg.h 268236 2014-07-03 20:31:43Z marcel $
+ * $FreeBSD: head/usr.bin/mkimg/mkimg.h 272485 2014-10-03 20:48:11Z marcel $
  */
 
 #ifndef _MKIMG_MKIMG_H_
@@ -66,11 +66,28 @@ round_block(lba_t n)
 	return ((n + b - 1) & ~(b - 1));
 }
 
+static inline lba_t
+round_cylinder(lba_t n)
+{
+	u_int cyl = nsecs * nheads;
+	u_int r = n % cyl;
+	return ((r == 0) ? n : n + cyl - r);
+}
+
+static inline lba_t
+round_track(lba_t n)
+{
+	u_int r = n % nsecs;
+	return ((r == 0) ? n : n + nsecs - r);
+}
+
 #if !defined(SPARSE_WRITE)
 #define	sparse_write	write
 #else
 ssize_t sparse_write(int, const void *, size_t);
 #endif
+
+void mkimg_chs(lba_t, u_int, u_int *, u_int *, u_int *);
 
 struct uuid;
 void mkimg_uuid(struct uuid *);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/rtld-elf/tests/target/Makefile 269506 2014-08-04 05:50:21Z ngie $
+# $FreeBSD: head/libexec/rtld-elf/tests/target/Makefile 270649 2014-08-26 09:01:11Z ngie $
 
 .include <bsd.own.mk>
 
@@ -8,6 +8,7 @@ BINDIR=		${TESTSBASE}/libexec/rtld-elf
 CFLAGS+=	-I${.CURDIR}/../libpythagoras
 
 LDFLAGS+=	-L${.OBJDIR}/../libpythagoras
+DPADD+=		${.OBJDIR}/../libpythagoras/libpythagoras.a
 LDADD=		-lpythagoras
 
 MAN=

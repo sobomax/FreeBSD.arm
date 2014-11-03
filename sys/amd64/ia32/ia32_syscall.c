@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_syscall.c 239251 2012-08-14 12:13:27Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_syscall.c 273784 2014-10-28 15:28:20Z kib $");
 
 /*
  * 386 Trap and System call handling
@@ -110,7 +110,7 @@ ia32_fetch_syscall_args(struct thread *td, struct syscall_args *sa)
 	struct proc *p;
 	struct trapframe *frame;
 	caddr_t params;
-	u_int32_t args[8];
+	u_int32_t args[8], tmp;
 	int error, i;
 
 	p = td->td_proc;
@@ -126,7 +126,10 @@ ia32_fetch_syscall_args(struct thread *td, struct syscall_args *sa)
 		/*
 		 * Code is first argument, followed by actual args.
 		 */
-		sa->code = fuword32(params);
+		error = fueword32(params, &tmp);
+		if (error == -1)
+			return (EFAULT);
+		sa->code = tmp;
 		params += sizeof(int);
 	} else if (sa->code == SYS___syscall) {
 		/*
@@ -135,7 +138,10 @@ ia32_fetch_syscall_args(struct thread *td, struct syscall_args *sa)
 		 * We use a 32-bit fetch in case params is not
 		 * aligned.
 		 */
-		sa->code = fuword32(params);
+		error = fueword32(params, &tmp);
+		if (error == -1)
+			return (EFAULT);
+		sa->code = tmp;
 		params += sizeof(quad_t);
 	}
  	if (p->p_sysent->sv_mask)

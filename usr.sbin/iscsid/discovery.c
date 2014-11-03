@@ -26,8 +26,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/iscsid/discovery.c 261747 2014-02-11 10:45:20Z trasz $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/discovery.c 270279 2014-08-21 15:32:38Z trasz $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

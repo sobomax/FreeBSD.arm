@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/routed/main.c 229778 2012-01-07 16:09:33Z uqs $
+ * $FreeBSD: head/sbin/routed/main.c 271919 2014-09-21 04:00:28Z hrs $
  */
 
 #include "defs.h"
@@ -45,7 +45,7 @@ __COPYRIGHT("@(#) Copyright (c) 1983, 1988, 1993 "
 __RCSID("$NetBSD$");
 #include <util.h>
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: head/sbin/routed/main.c 229778 2012-01-07 16:09:33Z uqs $");
+__RCSID("$FreeBSD: head/sbin/routed/main.c 271919 2014-09-21 04:00:28Z hrs $");
 #else
 __RCSID("$Revision: 2.31 $");
 #ident "$Revision: 2.31 $"
@@ -68,6 +68,7 @@ int	ridhosts;			/* 1=reduce host routes */
 int	mhome;				/* 1=want multi-homed host route */
 int	advertise_mhome;		/* 1=must continue advertising it */
 int	auth_ok = 1;			/* 1=ignore auth if we do not care */
+int	insecure;			/* Reply to special queries or not */
 
 struct timeval epoch;			/* when started */
 struct timeval clk;
@@ -136,8 +137,11 @@ main(int argc,
 	(void)gethostname(myname, sizeof(myname)-1);
 	(void)gethost(myname, &myaddr);
 
-	while ((n = getopt(argc, argv, "sqdghmAtvT:F:P:")) != -1) {
+	while ((n = getopt(argc, argv, "isqdghmAtvT:F:P:")) != -1) {
 		switch (n) {
+		case 'i':
+			insecure++;
+			break;
 		case 's':
 			supplier = 1;
 			supplier_set = 1;

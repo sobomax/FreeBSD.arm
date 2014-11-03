@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/telnetd/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/libexec/telnetd/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 # Do not define -DKLUDGELINEMODE, as it does not interact well with many
 # telnet implementations.
@@ -19,8 +19,6 @@ WFORMAT?=	0
 
 CFLAGS+=	-DLINEMODE -DUSE_TERMIO -DDIAGNOSTICS -DOLD_ENVIRON \
 		-DENV_HACK -DSTREAMSPTY
-
-NO_PIE=	yes
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=	-DINET6

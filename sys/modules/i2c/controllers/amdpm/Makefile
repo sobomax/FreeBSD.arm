@@ -1,6 +1,6 @@
-# $FreeBSD: head/sys/modules/i2c/controllers/amdpm/Makefile 93023 2002-03-23 15:49:15Z nsouch $
+# $FreeBSD: head/sys/modules/i2c/controllers/amdpm/Makefile 272017 2014-09-23 06:31:15Z rpaulo $
 
-.PATH:		${.CURDIR}/../../../../pci
+.PATH:		${.CURDIR}/../../../../dev/amdpm
 KMOD		= amdpm
 SRCS		= device_if.h bus_if.h pci_if.h smbus_if.h \
 		  amdpm.c

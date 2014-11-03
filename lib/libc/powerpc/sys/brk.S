@@ -26,7 +26,7 @@
 /*      $NetBSD: brk.S,v 1.9 2000/06/26 06:25:43 kleink Exp $   */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc/sys/brk.S 217398 2011-01-14 11:33:40Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc/sys/brk.S 272362 2014-10-01 15:00:21Z bapt $");
 
 #include "SYS.h"
 
@@ -71,5 +71,6 @@ ENTRY(brk)
 
 1:
 	b	PIC_PLT(HIDENAME(cerror))
+END(brk)
 
 	.section .note.GNU-stack,"",%progbits

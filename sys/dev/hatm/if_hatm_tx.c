@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm_tx.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm_tx.c 271849 2014-09-19 03:51:26Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -452,7 +452,7 @@ hatm_start(struct ifnet *ifp)
 		if ((tpd = hatm_alloc_tpd(sc, M_NOWAIT)) == NULL) {
 			hatm_free_txmbuf(sc);
 			m_freem(m);
-			sc->ifp->if_oerrors++;
+			if_inc_counter(sc->ifp, IFCOUNTER_OERRORS, 1);
 			continue;
 		}
 		tpd->cid = cid;
@@ -472,7 +472,7 @@ hatm_start(struct ifnet *ifp)
 				tpd->mbuf = NULL;
 				hatm_free_txmbuf(sc);
 				hatm_free_tpd(sc, tpd);
-				sc->ifp->if_oerrors++;
+				if_inc_counter(sc->ifp, IFCOUNTER_OERRORS, 1);
 				continue;
 			}
 			arg.mbuf = m;
@@ -484,17 +484,17 @@ hatm_start(struct ifnet *ifp)
 			if_printf(sc->ifp, "mbuf loaded error=%d\n",
 			    error);
 			hatm_free_tpd(sc, tpd);
-			sc->ifp->if_oerrors++;
+			if_inc_counter(sc->ifp, IFCOUNTER_OERRORS, 1);
 			continue;
 		}
 		if (arg.error) {
 			hatm_free_tpd(sc, tpd);
-			sc->ifp->if_oerrors++;
+			if_inc_counter(sc->ifp, IFCOUNTER_OERRORS, 1);
 			continue;
 		}
 		arg.vcc->opackets++;
 		arg.vcc->obytes += len;
-		sc->ifp->if_opackets++;
+		if_inc_counter(sc->ifp, IFCOUNTER_OPACKETS, 1);
 	}
 	mtx_unlock(&sc->mtx);
 }

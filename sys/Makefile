@@ -1,11 +1,11 @@
-# $FreeBSD: head/sys/Makefile 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/sys/Makefile 272019 2014-09-23 06:32:19Z rpaulo $
 
 # Directories to include in cscope name file and TAGS.
 CSCOPEDIRS=	boot bsm cam cddl compat conf contrib crypto ddb dev fs gdb \
 		geom gnu isa kern libkern modules net net80211 \
 		netgraph netinet netinet6 netipsec netnatm netpfil \
 		netsmb nfs nfsclient nfsserver nlm ofed opencrypto \
-		pci rpc security sys ufs vm xdr xen ${CSCOPE_ARCHDIR}
+		rpc security sys ufs vm xdr xen ${CSCOPE_ARCHDIR}
 .if !defined(CSCOPE_ARCHDIR)
 .if defined(ALL_ARCH)
 CSCOPE_ARCHDIR = amd64 arm i386 mips pc98 powerpc sparc64 x86

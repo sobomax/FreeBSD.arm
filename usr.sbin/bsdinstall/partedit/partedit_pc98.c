@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_pc98.c 264978 2014-04-26 16:55:38Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_pc98.c 271539 2014-09-13 18:24:54Z nwhitehorn $
  */
 
 #include <string.h>
@@ -42,6 +42,15 @@ is_scheme_bootable(const char *part_type) {
 	if (strcmp(part_type, "PC98") == 0)
 		return (1);
 
+	return (0);
+}
+
+int
+is_fs_bootable(const char *part_type, const char *fs)
+{
+	if (strcmp(fs, "freebsd-ufs") == 0)
+		return (1);
+	
 	return (0);
 }
 
@@ -67,7 +76,7 @@ bootcode_path(const char *part_type) {
 }
 	
 const char *
-partcode_path(const char *part_type) {
+partcode_path(const char *part_type, const char *fs_type) {
 	/* No partcode */
 	return (NULL);
 }

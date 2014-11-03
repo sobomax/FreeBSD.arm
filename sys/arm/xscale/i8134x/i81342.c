@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/i8134x/i81342.c 238545 2012-07-17 03:18:12Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/i8134x/i81342.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -34,6 +34,7 @@ __FBSDID("$FreeBSD: head/sys/arm/xscale/i8134x/i81342.c 238545 2012-07-17 03:18:
 #include <sys/module.h>
 
 #define	_ARM32_BUS_DMA_PRIVATE
+#include <machine/armreg.h>
 #include <machine/bus.h>
 #include <machine/intr.h>
 
@@ -248,7 +249,7 @@ void
 cpu_reset(void)
 {
 
-	disable_interrupts(I32_bit);
+	disable_interrupts(PSR_I);
 	/* XXX: Use the watchdog to reset for now */
 	__asm __volatile("mcr p6, 0, %0, c8, c9, 0\n"
 	    		 "mcr p6, 0, %1, c7, c9, 0\n"

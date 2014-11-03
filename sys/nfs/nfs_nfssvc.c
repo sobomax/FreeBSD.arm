@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/nfs/nfs_nfssvc.c 243782 2012-12-02 01:16:04Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/nfs/nfs_nfssvc.c 273707 2014-10-26 19:42:44Z mjg $");
 
 #include "opt_nfs.h"
 
@@ -123,7 +123,7 @@ nfssvc_modevent(module_t mod, int type, void *data)
 	switch (type) {
 	case MOD_LOAD:
 		error = syscall_register(&nfssvc_offset, &nfssvc_sysent,
-		    &nfssvc_prev_sysent);
+		    &nfssvc_prev_sysent, SY_THR_STATIC_KLD);
 		if (error)
 			break;
 		registered = 1;

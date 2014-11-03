@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/netinet/in_var.h 257500 2013-11-01 10:29:10Z glebius $
+ * $FreeBSD: head/sys/netinet/in_var.h 271300 2014-09-09 04:18:20Z adrian $
  */
 
 #ifndef _NETINET_IN_VAR_H_
@@ -411,6 +411,7 @@ void	in_rtqdrain(void);
 int	in_addprefix(struct in_ifaddr *, int);
 int	in_scrubprefix(struct in_ifaddr *, u_int);
 void	ip_input(struct mbuf *);
+void	ip_direct_input(struct mbuf *);
 void	in_ifadown(struct ifaddr *ifa, int);
 struct	mbuf	*ip_fastforward(struct mbuf *);
 void	*in_domifattach(struct ifnet *);

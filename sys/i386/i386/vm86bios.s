@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/vm86bios.s 217587 2011-01-19 17:09:07Z jkim $
+ * $FreeBSD: head/sys/i386/i386/vm86bios.s 273987 2014-11-02 19:54:10Z jhb $
  */
 
 #include "opt_npx.h"
@@ -69,8 +69,6 @@ ENTRY(vm86_bioscall)
 	movl	PCPU(CURTHREAD),%ecx
 	cmpl	%ecx,PCPU(FPCURTHREAD)	/* do we need to save fp? */
 	jne	1f
-	testl	%ecx,%ecx
-	je 	1f			/* no curproc/npxproc */
 	pushl	%edx
 	movl	TD_PCB(%ecx),%ecx
 	pushl	PCB_SAVEFPU(%ecx)

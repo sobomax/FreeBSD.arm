@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsproto.h 268115 2014-07-01 20:47:16Z rmacklem $
+ * $FreeBSD: head/sys/fs/nfs/nfsproto.h 272467 2014-10-03 02:24:41Z araujo $
  */
 
 #ifndef _NFS_NFSPROTO_H_
@@ -996,7 +996,11 @@ struct nfsv3_sattr {
  	NFSATTRBM_TIMEDELTA |						\
  	NFSATTRBM_TIMEMETADATA |					\
  	NFSATTRBM_TIMEMODIFY |						\
- 	NFSATTRBM_MOUNTEDONFILEID)
+ 	NFSATTRBM_MOUNTEDONFILEID |					\
+	NFSATTRBM_QUOTAHARD |                        			\
+    	NFSATTRBM_QUOTASOFT |                        			\
+    	NFSATTRBM_QUOTAUSED)
+
 
 #ifdef QUOTA
 /*

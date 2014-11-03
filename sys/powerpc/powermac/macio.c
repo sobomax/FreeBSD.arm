@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powermac/macio.c 260934 2014-01-20 21:54:05Z andreast $
+ * $FreeBSD: head/sys/powerpc/powermac/macio.c 270945 2014-09-01 18:51:01Z ian $
  */
 
 /*
@@ -217,7 +217,7 @@ macio_add_intr(phandle_t devnode, struct macio_devinfo *dinfo)
 	    <= 0)
 		panic("Interrupt but no interrupt parent!\n");
 
-	if (OF_getprop(OF_xref_phandle(iparent), "#interrupt-cells", &icells,
+	if (OF_getprop(OF_node_from_xref(iparent), "#interrupt-cells", &icells,
 	    sizeof(icells)) <= 0)
 		icells = 1;
 

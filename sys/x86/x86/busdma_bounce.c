@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/busdma_bounce.c 266775 2014-05-27 21:31:11Z scottl $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/busdma_bounce.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -831,13 +831,6 @@ busdma_sysctl_tree_top(struct bounce_zone *bz)
 	return (bz->sysctl_tree_top);
 }
 
-#if defined(__amd64__) || defined(PAE)
-#define	SYSCTL_ADD_BUS_SIZE_T	SYSCTL_ADD_UQUAD
-#else
-#define	SYSCTL_ADD_BUS_SIZE_T(ctx, parent, nbr, name, flag, ptr, desc)	\
-	SYSCTL_ADD_UINT(ctx, parent, nbr, name, flag, ptr, 0, desc)
-#endif
-
 static int
 alloc_bounce_zone(bus_dma_tag_t dmat)
 {
@@ -905,7 +898,7 @@ alloc_bounce_zone(bus_dma_tag_t dmat)
 	SYSCTL_ADD_STRING(busdma_sysctl_tree(bz),
 	    SYSCTL_CHILDREN(busdma_sysctl_tree_top(bz)), OID_AUTO,
 	    "lowaddr", CTLFLAG_RD, bz->lowaddrid, 0, "");
-	SYSCTL_ADD_BUS_SIZE_T(busdma_sysctl_tree(bz),
+	SYSCTL_ADD_UAUTO(busdma_sysctl_tree(bz),
 	    SYSCTL_CHILDREN(busdma_sysctl_tree_top(bz)), OID_AUTO,
 	    "alignment", CTLFLAG_RD, &bz->alignment, "");
 

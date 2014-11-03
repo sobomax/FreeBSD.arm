@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/dev/firewire/sbp.h 258780 2013-11-30 22:17:27Z eadler $
+ * $FreeBSD: head/sys/dev/firewire/sbp.h 272214 2014-09-27 16:50:21Z kan $
  *
  */
 
@@ -76,7 +76,7 @@ struct ind_ptr {
 
 #define SBP_RECV_LEN 32
 
-struct sbp_login_res{
+struct sbp_login_res {
 	uint16_t	len;
 	uint16_t	id;
 	uint16_t	res0;
@@ -86,7 +86,7 @@ struct sbp_login_res{
 	uint16_t	recon_hold;
 };
 
-struct sbp_status{
+struct sbp_status {
 #if BYTE_ORDER == BIG_ENDIAN
 	uint8_t		src:2,
 			resp:2,
@@ -155,7 +155,7 @@ struct sbp_status{
 /* F: Address error */
 
 
-struct sbp_cmd_status{
+struct sbp_cmd_status {
 #define SBP_SFMT_CURR 0
 #define SBP_SFMT_DEFER 1
 #if BYTE_ORDER == BIG_ENDIAN

@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)route.c	8.6 (Berkeley) 4/28/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/route/route.c 265666 2014-05-08 11:56:06Z melifaro $");
+__FBSDID("$FreeBSD: head/sbin/route/route.c 273906 2014-10-31 13:37:47Z melifaro $");
 
 #include <sys/param.h>
 #include <sys/file.h>
@@ -1533,9 +1533,18 @@ rtmsg(int cmd, int flags, int fib)
 	if (debugonly)
 		return (0);
 	if ((rlen = write(s, (char *)&m_rtmsg, l)) < 0) {
-		if (errno == EPERM)
+		switch (errno) {
+		case EPERM:
 			err(1, "writing to routing socket");
-		warn("writing to routing socket");
+		case ESRCH:
+			warnx("route has not been found");
+			break;
+		case EEXIST:
+			/* Handled by newroute() */
+			break;
+		default:
+			warn("writing to routing socket");
+		}
 		return (-1);
 	}
 	if (cmd == RTM_GET) {

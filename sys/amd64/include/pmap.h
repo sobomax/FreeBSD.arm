@@ -39,7 +39,7 @@
  *
  *	from: hp300: @(#)pmap.h	7.2 (Berkeley) 12/16/90
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/amd64/include/pmap.h 263498 2014-03-21 17:17:19Z kib $
+ * $FreeBSD: head/sys/amd64/include/pmap.h 273582 2014-10-24 09:48:58Z royger $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -394,8 +394,11 @@ void	pmap_invalidate_range(pmap_t, vm_offset_t, vm_offset_t);
 void	pmap_invalidate_all(pmap_t);
 void	pmap_invalidate_cache(void);
 void	pmap_invalidate_cache_pages(vm_page_t *pages, int count);
-void	pmap_invalidate_cache_range(vm_offset_t sva, vm_offset_t eva);
+void	pmap_invalidate_cache_range(vm_offset_t sva, vm_offset_t eva,
+	    boolean_t force);
 void	pmap_get_mapping(pmap_t pmap, vm_offset_t va, uint64_t *ptr, int *num);
+boolean_t pmap_map_io_transient(vm_page_t *, vm_offset_t *, int, boolean_t);
+void	pmap_unmap_io_transient(vm_page_t *, vm_offset_t *, int, boolean_t);
 #endif /* _KERNEL */
 
 #endif /* !LOCORE */

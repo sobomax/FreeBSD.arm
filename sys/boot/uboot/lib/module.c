@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/module.c 262664 2014-03-01 19:02:00Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/module.c 273927 2014-11-01 10:50:18Z andrew $");
 
 /*
  * U-Boot-specific module functionality.
@@ -33,6 +33,10 @@ __FBSDID("$FreeBSD: head/sys/boot/uboot/lib/module.c 262664 2014-03-01 19:02:00Z
 
 #include <stand.h>
 #include <string.h>
+
+#if defined(LOADER_FDT_SUPPORT)
+#include <fdt_platform.h>
+#endif
 
 #include "bootstrap.h"
 #include "libuboot.h"

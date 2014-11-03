@@ -26,10 +26,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 272292 2014-09-30 03:19:29Z adrian $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 272292 2014-09-30 03:19:29Z adrian $");
 
 /*
  * This module handles LNA diversity for those chips which implement LNA
@@ -209,6 +209,10 @@ bad:
 	return (error);
 }
 
+/*
+ * XXX need to low_rssi_thresh config from ath9k, to support CUS198
+ * antenna diversity correctly.
+ */
 static HAL_BOOL
 ath_is_alt_ant_ratio_better(int alt_ratio, int maxdelta, int mindelta,
     int main_rssi_avg, int alt_rssi_avg, int pkt_count)

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_cond.c 239206 2012-08-12 00:56:56Z davidxu $
+ * $FreeBSD: head/lib/libthr/thread/thr_cond.c 270972 2014-09-02 18:21:19Z rpaulo $
  */
 
 #include "namespace.h"
@@ -150,7 +150,7 @@ _pthread_cond_destroy(pthread_cond_t *cond)
 }
 
 /*
- * Cancellation behaivor:
+ * Cancellation behavior:
  *   Thread may be canceled at start, if thread is canceled, it means it
  *   did not get a wakeup from pthread_cond_signal(), otherwise, it is
  *   not canceled.

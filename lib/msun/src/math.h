@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: head/lib/msun/src/math.h 269758 2014-08-09 15:53:40Z kargl $
+ * $FreeBSD: head/lib/msun/src/math.h 271651 2014-09-15 23:21:57Z kargl $
  */
 
 #ifndef _MATH_H_
@@ -496,8 +496,12 @@ long double	tanhl(long double);
 long double	tanl(long double);
 long double	tgammal(long double);
 long double	truncl(long double);
-
 #endif /* __ISO_C_VISIBLE >= 1999 */
+
+#if __BSD_VISIBLE
+long double	lgammal_r(long double, int *);
+#endif
+
 __END_DECLS
 
 #endif /* !_MATH_H_ */

@@ -26,12 +26,39 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_double.S 263239 2014-03-16 13:16:30Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_double.S 273088 2014-10-14 14:27:51Z andrew $");
 
 #include "aeabi_vfp.h"
 
 .fpu	vfp
 .syntax	unified
+
+/* void __aeabi_cdcmpeq(double, double) */
+AEABI_ENTRY(cdcmpeq)
+	LOAD_DREG(d0, r0, r1)
+	LOAD_DREG(d1, r2, r3)
+	vcmp.f64	d0, d1
+	vmrs		APSR_nzcv, fpscr
+	RET
+AEABI_END(cdcmpeq)
+
+/* void __aeabi_cdcmple(double, double) */
+AEABI_ENTRY(cdcmple)
+	LOAD_DREG(d0, r0, r1)
+	LOAD_DREG(d1, r2, r3)
+	vcmpe.f64	d0, d1
+	vmrs		APSR_nzcv, fpscr
+	RET
+AEABI_END(cdcmple)
+
+/* void __aeabi_cdrcmple(double, double) */
+AEABI_ENTRY(cdrcmple)
+	LOAD_DREG(d0, r0, r1)
+	LOAD_DREG(d1, r2, r3)
+	vcmpe.f64	d1, d0
+	vmrs		APSR_nzcv, fpscr
+	RET
+AEABI_END(cdrcmple)
 
 /* int __aeabi_dcmpeq(double, double) */
 AEABI_ENTRY(dcmpeq)

@@ -1,6 +1,6 @@
-#	$FreeBSD: head/usr.sbin/nmtree/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/usr.sbin/nmtree/Makefile 272777 2014-10-09 00:32:33Z ngie $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 .PATH: ${.CURDIR}/../../contrib/mtree
 
@@ -8,6 +8,7 @@ PROG=		mtree
 MAN=		mtree.5 mtree.8
 SRCS=		compare.c crc.c create.c excludes.c getid.c misc.c mtree.c \
 		only.c spec.c specspec.c verify.c
+DPADD+=		${LIBMD} ${LIBUTIL}
 LDADD+=		-lmd -lutil
 
 CFLAGS+=	-I${.CURDIR}/../../contrib/mknod
@@ -23,6 +24,8 @@ LDADD+=		${LIBNETBSD}
 LINKS=		${BINDIR}/mtree ${BINDIR}/nmtree
 MLINKS=		mtree.8 nmtree.8
 
-NO_PIE=	yes
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

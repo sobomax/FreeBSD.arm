@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/scripted.c 245796 2013-01-22 17:06:28Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/scripted.c 271539 2014-09-13 18:24:54Z nwhitehorn $
  */
 
 #include <sys/param.h>
@@ -109,7 +109,7 @@ part_config(char *disk, const char *scheme, char *config)
 
 	/* Create partitions */
 	if (config == NULL) {
-		wizard_makeparts(&mesh, disk, 0);
+		wizard_makeparts(&mesh, disk, "ufs", 0);
 		goto finished;
 	}
 

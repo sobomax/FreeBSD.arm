@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-conj.c 251241 2013-06-02 04:30:03Z das $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-conj.c 271296 2014-09-09 02:58:58Z ngie $");
 
 #include <assert.h>
 #include <complex.h>
@@ -39,7 +39,7 @@ __FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-conj.c 251241 2013-06-02
 
 #include "test-utils.h"
 
-#pragma	STDC CX_LIMITED_RANGE	off
+#pragma	STDC CX_LIMITED_RANGE	OFF
 
 /* Make sure gcc doesn't use builtin versions of these or honor __pure2. */
 static float complex (*libconjf)(float complex) = conjf;

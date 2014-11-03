@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.test.mk 267331 2014-06-10 17:04:30Z jmmv $
+# $FreeBSD: head/share/mk/bsd.test.mk 273810 2014-10-29 04:32:46Z ngie $
 #
 # Generic build infrastructure for test programs.
 #
@@ -54,9 +54,11 @@ _TESTS=
 .include <plain.test.mk>
 .include <tap.test.mk>
 
-.if !empty(TESTS_SUBDIRS)
-SUBDIR+= ${TESTS_SUBDIRS}
+.for ts in ${TESTS_SUBDIRS}
+.if empty(SUBDIR:M${ts})
+SUBDIR+= ${ts}
 .endif
+.endfor
 
 # it is rare for test cases to have man pages
 .if !defined(MAN)

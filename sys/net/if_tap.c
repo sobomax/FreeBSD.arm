@@ -31,7 +31,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/net/if_tap.c 267992 2014-06-28 03:56:17Z hselasky $
+ * $FreeBSD: head/sys/net/if_tap.c 271867 2014-09-19 10:39:58Z glebius $
  * $Id: if_tap.c,v 0.21 2000/07/23 21:46:02 max Exp $
  */
 
@@ -682,7 +682,7 @@ tapifstart(struct ifnet *ifp)
 			IF_DEQUEUE(&ifp->if_snd, m);
 			if (m != NULL) {
 				m_freem(m);
-				ifp->if_oerrors++;
+				if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 			} else
 				break;
 		}
@@ -707,7 +707,7 @@ tapifstart(struct ifnet *ifp)
 
 		selwakeuppri(&tp->tap_rsel, PZERO+1);
 		KNOTE_LOCKED(&tp->tap_rsel.si_note, 0);
-		ifp->if_opackets ++; /* obytes are counted in ether_output */
+		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1); /* obytes are counted in ether_output */
 	}
 
 	ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
@@ -947,7 +947,7 @@ tapwrite(struct cdev *dev, struct uio *uio, int flag)
 
 	if ((m = m_uiotombuf(uio, M_NOWAIT, 0, ETHER_ALIGN,
 	    M_PKTHDR)) == NULL) {
-		ifp->if_ierrors ++;
+		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 		return (ENOBUFS);
 	}
 
@@ -974,7 +974,7 @@ tapwrite(struct cdev *dev, struct uio *uio, int flag)
 	CURVNET_SET(ifp->if_vnet);
 	(*ifp->if_input)(ifp, m);
 	CURVNET_RESTORE();
-	ifp->if_ipackets ++; /* ibytes are counted in parent */
+	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1); /* ibytes are counted in parent */
 
 	return (0);
 } /* tapwrite */

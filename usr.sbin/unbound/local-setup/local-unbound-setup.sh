@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/unbound/local-setup/local-unbound-setup.sh 268840 2014-07-18 12:33:22Z des $
+# $FreeBSD: head/usr.sbin/unbound/local-setup/local-unbound-setup.sh 271255 2014-09-08 09:16:07Z des $
 #
 
 #
@@ -178,7 +178,7 @@ gen_forward_conf() {
 	echo "forward-zone:"
 	echo "        name: ."
 	for forwarder ; do
-		if expr "${forwarder}" : "^[0-9:.]\{1,\}$" >/dev/null ; then
+		if expr "${forwarder}" : "^[0-9A-Fa-f:.]\{1,\}$" >/dev/null ; then
 			echo "        forward-addr: ${forwarder}"
 		else
 			echo "        forward-host: ${forwarder}"

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/sys/tools/fdt/make_dtb.sh 267319 2014-06-10 06:24:01Z rpaulo $
+# $FreeBSD: head/sys/tools/fdt/make_dtb.sh 270863 2014-08-30 22:39:15Z ian $
 
 # Script generates dtb file ($3) from dts source ($2) in build tree S ($1)
 S=$1
@@ -10,6 +10,10 @@ dtb_path=$3
 if [ -z "$dts" ]; then
     echo "No DTS specified"
     exit 1
+fi
+
+if [ -z "${MACHINE}" ]; then
+    MACHINE=$(uname -m)
 fi
 
 for d in ${dts}; do

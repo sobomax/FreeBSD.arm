@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.h,v 1.4 2003/03/25 23:53:33 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket_l2cap.h 160549 2006-07-21 17:11:15Z rwatson $
+ * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket_l2cap.h 271908 2014-09-20 16:43:14Z jhb $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_L2CAP_H_
@@ -162,7 +162,7 @@ struct ng_btsocket_l2cap_pcb {
 	u_int16_t			 flush_timo; /* flush timeout */   
 	u_int16_t			 link_timo;  /* link timeout */ 
 
-	struct callout_handle		 timo;       /* timeout */
+	struct callout			 timo;       /* timeout */
 
 	u_int32_t			 token;	     /* message token */
 	ng_btsocket_l2cap_rtentry_p	 rt;         /* routing info */

@@ -28,7 +28,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/nlm/nlm_prot_impl.c 262991 2014-03-11 00:25:55Z delphij $");
+__FBSDID("$FreeBSD: head/sys/nlm/nlm_prot_impl.c 273707 2014-10-26 19:42:44Z mjg $");
 
 #include <sys/param.h>
 #include <sys/fail.h>
@@ -295,7 +295,7 @@ nlm_init(void *dummy)
 	TAILQ_INIT(&nlm_hosts);
 
 	error = syscall_register(&nlm_syscall_offset, &nlm_syscall_sysent,
-	    &nlm_syscall_prev_sysent);
+	    &nlm_syscall_prev_sysent, SY_THR_STATIC_KLD);
 	if (error)
 		NLM_ERR("Can't register NLM syscall\n");
 	else

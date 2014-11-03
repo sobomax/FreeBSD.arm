@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.root.dist 267671 2014-06-20 11:46:42Z gavin $
+# $FreeBSD: head/etc/mtree/BSD.root.dist 271057 2014-09-03 21:59:07Z imp $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -9,6 +9,8 @@
     ..
     boot
         defaults
+        ..
+        dtb
         ..
         firmware
         ..
@@ -23,6 +25,8 @@
     ..
     etc
         X11
+        ..
+        autofs
         ..
         bluetooth
         ..
@@ -59,6 +63,8 @@
         pkg
         ..
         ppp
+        ..
+        rc.conf.d
         ..
         rc.d
         ..

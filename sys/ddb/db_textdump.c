@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_textdump.c 242424 2012-11-01 04:07:08Z alfred $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_textdump.c 272958 2014-10-11 20:25:19Z pfg $");
 
 #include "opt_config.h"
 
@@ -348,8 +348,8 @@ textdump_dump_msgbuf(struct dumperinfo *di)
 	 */
 	total_len = 0;
 	offset = 0;
-        msgbuf_peekbytes(msgbufp, NULL, 0, &seq);
-        while ((len = msgbuf_peekbytes(msgbufp, buf, sizeof(buf), &seq)) > 0) {
+	msgbuf_peekbytes(msgbufp, NULL, 0, &seq);
+	while ((len = msgbuf_peekbytes(msgbufp, buf, sizeof(buf), &seq)) > 0) {
 		for (i = 0; i < len; i++) {
 			if (buf[i] == '\0')
 				continue;
@@ -362,7 +362,7 @@ textdump_dump_msgbuf(struct dumperinfo *di)
 			total_len += offset;
 			offset = 0;
 		}
-        }
+	}
 	total_len += offset;	/* Without the zero-padding. */
 	if (offset != 0) {
 		bzero(textdump_block_buffer + offset,

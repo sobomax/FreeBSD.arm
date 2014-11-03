@@ -1,9 +1,7 @@
-# $FreeBSD: head/usr.sbin/btxld/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/btxld/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	btxld
 MAN=	btxld.8
 SRCS=	btxld.c elfh.c
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

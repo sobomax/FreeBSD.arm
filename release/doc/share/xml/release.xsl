@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $FreeBSD: head/release/doc/share/xml/release.xsl 265590 2014-05-07 19:20:54Z gjb $ -->
+<!-- $FreeBSD: head/release/doc/share/xml/release.xsl 271331 2014-09-09 19:51:57Z gjb $ -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version='1.0'
                 xmlns="http://www.w3.org/TR/xhtml1/transitional"
@@ -12,6 +12,7 @@
 
   <xsl:param name="release.url"/>
   <xsl:param name="release.branch"/>
+  <xsl:param name="release.maillist"/>
 
   <xsl:template name="paragraph">
     <xsl:param name="class" select="''"/>

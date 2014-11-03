@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ser_table.c#1 $
- * $FreeBSD: head/sys/cam/ctl/ctl_ser_table.c 269497 2014-08-04 01:16:20Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_ser_table.c 271507 2014-09-13 10:34:23Z mav $
  */
 
 /*
@@ -54,17 +54,19 @@
 /****************************************************************************/
 
 #define	sK	CTL_SER_SKIP		/* Skip */
-#define	pS	CTL_SER_PASS		/* pS */
+#define	pS	CTL_SER_PASS		/* Pass */
 #define	bK	CTL_SER_BLOCK		/* Blocked */
+#define	bO	CTL_SER_BLOCKOPT	/* Optional block */
 #define	xT	CTL_SER_EXTENT		/* Extent check */
+#define	xO	CTL_SER_EXTENTOPT	/* Optional extent check */
 
 static ctl_serialize_action
 ctl_serialize_table[CTL_SERIDX_COUNT][CTL_SERIDX_COUNT] = {
 /**>IDX_ :: 2nd:TUR RD  WRT UNM MDSN MDSL RQSN INQ RDCP RES LSNS FMT STR*/
 /*TUR     */{   pS, pS, pS, pS, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
-/*READ    */{   pS, pS, xT, bK, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
-/*WRITE   */{   pS, xT, xT, bK, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
-/*UNMAP   */{   pS, bK, bK, pS, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
+/*READ    */{   pS, pS, xT, bO, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
+/*WRITE   */{   pS, xT, xT, bO, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
+/*UNMAP   */{   pS, xO, xO, pS, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
 /*MD_SNS  */{   bK, bK, bK, bK, pS,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
 /*MD_SEL  */{   bK, bK, bK, bK, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},
 /*RQ_SNS  */{   pS, pS, pS, pS, pS,  pS,  bK,  pS, pS,  bK, pS,  bK, bK},

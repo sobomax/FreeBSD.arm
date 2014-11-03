@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -35,8 +35,6 @@ MK_SSP=		no
 PROG?=		loader
 NEWVERSWHAT=	"BERI loader" ${MACHINE_CPUARCH}
 INSTALLFLAGS=	-b
-
-NO_PIE=	yes
 
 # Architecture-specific loader code
 SRCS=		start.S						\

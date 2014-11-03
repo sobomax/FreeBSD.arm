@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/routed/output.c 190718 2009-04-05 17:33:07Z phk $
+ * $FreeBSD: head/sbin/routed/output.c 271919 2014-09-21 04:00:28Z hrs $
  */
 
 #include "defs.h"
@@ -34,7 +34,7 @@
 #ifdef __NetBSD__
 __RCSID("$NetBSD$");
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: head/sbin/routed/output.c 190718 2009-04-05 17:33:07Z phk $");
+__RCSID("$FreeBSD: head/sbin/routed/output.c 271919 2014-09-21 04:00:28Z hrs $");
 #else
 __RCSID("$Revision: 2.27 $");
 #ident "$Revision: 2.27 $"
@@ -672,8 +672,6 @@ supply(struct sockaddr_in *dst,
 {
 	struct rt_entry *rt;
 	int def_metric;
-
-	assert(ifp != NULL);
 
 	ws.state = 0;
 	ws.gen_limit = 1024;

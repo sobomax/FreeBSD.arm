@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_sockbuf.c 268430 2014-07-08 21:54:23Z delphij $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_sockbuf.c 271946 2014-09-22 08:27:27Z hselasky $");
 
 #include "opt_param.h"
 
@@ -1012,6 +1012,37 @@ sbsndptr(struct sockbuf *sb, u_int off, u_int len, u_int *moff)
 	sb->sb_sndptr = m;
 
 	return (ret);
+}
+
+/*
+ * Return the first mbuf and the mbuf data offset for the provided
+ * send offset without changing the "sb_sndptroff" field.
+ */
+struct mbuf *
+sbsndmbuf(struct sockbuf *sb, u_int off, u_int *moff)
+{
+	struct mbuf *m;
+
+	KASSERT(sb->sb_mb != NULL, ("%s: sb_mb is NULL", __func__));
+
+	/*
+	 * If the "off" is below the stored offset, which happens on
+	 * retransmits, just use "sb_mb":
+	 */
+	if (sb->sb_sndptr == NULL || sb->sb_sndptroff > off) {
+		m = sb->sb_mb;
+	} else {
+		m = sb->sb_sndptr;
+		off -= sb->sb_sndptroff;
+	}
+	while (off > 0 && m != NULL) {
+		if (off < m->m_len)
+			break;
+		off -= m->m_len;
+		m = m->m_next;
+	}
+	*moff = off;
+	return (m);
 }
 
 /*

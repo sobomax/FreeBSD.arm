@@ -30,7 +30,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/qp.c 256694 2013-10-17 18:37:25Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/qp.c 273480 2014-10-22 18:55:44Z np $");
 
 #include "opt_inet.h"
 
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/qp.c 256694 2013-10-17 18:37:25Z
 #include <sys/sockio.h>
 #include <sys/taskqueue.h>
 #include <netinet/in.h>
-#include <net/neighbour.h>
 #include <net/route.h>
 
 #include <netinet/in_systm.h>
@@ -1360,9 +1359,9 @@ err:
 	qhp->ep = NULL;
 	set_state(qhp, C4IW_QP_STATE_ERROR);
 	free = 1;
-	wake_up(&qhp->wait);
 	BUG_ON(!ep);
 	flush_qp(qhp);
+	wake_up(&qhp->wait);
 out:
 	mutex_unlock(&qhp->mutex);
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/pc98/libpc98/Makefile 239069 2012-08-05 14:48:55Z nyan $
+# $FreeBSD: head/sys/boot/pc98/libpc98/Makefile 272255 2014-09-28 13:13:18Z nyan $
 #
 LIB=			pc98
 INTERNALLIB=
@@ -43,5 +43,8 @@ CFLAGS+=	-I${.CURDIR}/../../common \
 		-I${.CURDIR}/../../.. -I.
 # the location of libstand
 CFLAGS+=	-I${.CURDIR}/../../../../lib/libstand/
+
+# Suppress warning from clang for FreeBSD %b and %D formats
+CFLAGS+= -fformat-extensions
 
 .include <bsd.lib.mk>

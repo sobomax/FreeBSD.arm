@@ -27,7 +27,7 @@
 
 /*
  * $Id$
- * $FreeBSD: head/sys/geom/sched/g_sched.c 243333 2012-11-20 12:32:18Z jh $
+ * $FreeBSD: head/sys/geom/sched/g_sched.c 273174 2014-10-16 18:04:43Z davide $
  *
  * Main control module for geom-based disk schedulers ('sched').
  *
@@ -1661,7 +1661,7 @@ g_sched_taste(struct g_class *mp, struct g_provider *pp,
 		if (pp->geom->class == mp)
                 	break;
 
-		taste_names = getenv("geom.sched.taste");
+		taste_names = kern_getenv("geom.sched.taste");
 		if (taste_names == NULL)
 			break;
 
@@ -1679,7 +1679,7 @@ g_sched_taste(struct g_class *mp, struct g_provider *pp,
 		    pp->name, s);
 
 		/* look up the provider name in the list */
-		s = getenv("geom.sched.algo");
+		s = kern_getenv("geom.sched.algo");
 		if (s == NULL)
 			s = "rr";
 

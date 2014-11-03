@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_pad.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_pad.c 273799 2014-10-28 18:33:59Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -559,8 +559,8 @@ pad_attach(device_t dev)
 		    "pad%d.%d", device_get_unit(dev), i);
 	}
 
-	device_add_child(dev, "gpioc", device_get_unit(dev));
-	device_add_child(dev, "gpiobus", device_get_unit(dev));
+	device_add_child(dev, "gpioc", -1);
+	device_add_child(dev, "gpiobus", -1);
 
 	return (bus_generic_attach(dev));
 }

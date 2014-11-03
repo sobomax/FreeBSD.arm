@@ -76,7 +76,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/adm5120/if_admsw.c 257420 2013-10-31 05:00:50Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/adm5120/if_admsw.c 271858 2014-09-19 09:19:49Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -925,7 +925,7 @@ admsw_txintr(struct admsw_softc *sc, int prio)
 		gotone = 1;
 		/* printf("clear tx slot %d\n",i); */
 
-		ifp->if_opackets++;
+		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 
 		sc->sc_txfree++;
 	}
@@ -1047,7 +1047,7 @@ admsw_rxintr(struct admsw_softc *sc, int high)
 
 		m = ds->ds_mbuf;
 		if (admsw_add_rxlbuf(sc, i) != 0) {
-			ifp->if_ierrors++;
+			if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 			ADMSW_INIT_RXLDESC(sc, i);
 			bus_dmamap_sync(sc->sc_bufs_dmat, ds->ds_dmamap,
 			    BUS_DMASYNC_PREREAD);
@@ -1066,7 +1066,7 @@ admsw_rxintr(struct admsw_softc *sc, int high)
 
 		/* Pass it on. */
 		(*ifp->if_input)(ifp, m);
-		ifp->if_ipackets++;
+		if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 	}
 
 	/* Update the receive pointer. */

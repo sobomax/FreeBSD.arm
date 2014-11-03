@@ -25,9 +25,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.sbin/watchdogd/watchdogd.8 267668 2014-06-20 09:57:27Z bapt $
+.\" $FreeBSD: head/usr.sbin/watchdogd/watchdogd.8 273247 2014-10-18 07:38:46Z rpaulo $
 .\"
-.Dd July 27, 2013
+.Dd October 18, 2014
 .Dt WATCHDOGD 8
 .Os
 .Sh NAME
@@ -84,7 +84,7 @@ of the check and defaults to one second.
 The
 .Fl t Ar timeout
 specifies the desired timeout period in seconds.
-The default timeout is 16 seconds.
+The default timeout is 128 seconds.
 .Pp
 One possible circumstance which will cause a watchdog timeout is an interrupt
 storm.

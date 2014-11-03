@@ -1,7 +1,13 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/dirname/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.bin/dirname/Makefile 272781 2014-10-09 00:55:04Z ngie $
+
+.include <src.opts.mk>
 
 PROG=	dirname
 MAN=
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

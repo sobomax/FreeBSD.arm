@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/asmacros.h 263056 2014-03-11 22:41:34Z ian $
+ * $FreeBSD: head/sys/arm/include/asmacros.h 273251 2014-10-18 13:38:04Z andrew $
  */
 
 #ifndef	_MACHINE_ASMACROS_H_
@@ -44,6 +44,18 @@
 	ldr	tmp, =_C_LABEL(__pcpu);\
 	ldr	tmp, [tmp, #PC_CURTHREAD]
 #endif
+
+#define	ELFNOTE(section, type, vendor, desctype, descdata...)	  \
+	.pushsection section					; \
+	    .balign 4						; \
+	    .long 2f - 1f		/* namesz */		; \
+	    .long 4f - 3f		/* descsz */		; \
+	    .long type			/* type */		; \
+	    1: .asciz vendor		/* vendor name */	; \
+	    2: .balign 4					; \
+	    3:  desctype descdata	/* node */		; \
+	    4: .balign 4					; \
+	.popsection
 
 #endif /* LOCORE */
 

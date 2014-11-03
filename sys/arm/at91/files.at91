@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/at91/files.at91 269957 2014-08-14 04:21:14Z imp $
+# $FreeBSD: head/sys/arm/at91/files.at91 271548 2014-09-13 19:59:16Z ian $
 arm/arm/cpufunc_asm_arm9.S	standard
 arm/at91/at91_machdep.c		standard
 arm/at91/at91_aic.c		standard
@@ -10,7 +10,7 @@ arm/at91/at91_smc.c		standard
 arm/at91/at91_cfata.c		optional	at91_cfata
 arm/at91/at91_common.c		optional	fdt
 arm/at91/at91_mci.c		optional	at91_mci
-arm/at91/at91_pinctrl.c		optional	fdt
+arm/at91/at91_pinctrl.c		optional	fdt fdt_pinctrl
 arm/at91/at91_pit.c		optional	at91sam9
 arm/at91/at91_reset.S		optional	at91sam9
 arm/at91/at91_rst.c		optional	at91sam9

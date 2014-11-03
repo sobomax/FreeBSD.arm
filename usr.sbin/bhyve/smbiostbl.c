@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/smbiostbl.c 267949 2014-06-27 05:27:37Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/smbiostbl.c 272007 2014-09-23 01:17:22Z grehan $");
 
 #include <sys/param.h>
 
@@ -737,7 +737,7 @@ smbios_ep_initializer(struct smbios_entry_point *smbios_ep, uint32_t staddr)
 	smbios_ep->eplen = 0x1F;
 	assert(sizeof (struct smbios_entry_point) == smbios_ep->eplen);
 	smbios_ep->major = 2;
-	smbios_ep->minor = 4;
+	smbios_ep->minor = 6;
 	smbios_ep->revision = 0;
 	memcpy(smbios_ep->ianchor, SMBIOS_ENTRY_IANCHOR,
 	    SMBIOS_ENTRY_IANCHORLEN);

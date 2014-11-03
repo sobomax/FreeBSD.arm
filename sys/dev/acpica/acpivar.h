@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/acpica/acpivar.h 264878 2014-04-24 12:38:07Z smh $
+ * $FreeBSD: head/sys/dev/acpica/acpivar.h 272799 2014-10-09 05:33:25Z adrian $
  */
 
 #ifndef _ACPIVAR_H_
@@ -488,6 +488,17 @@ ACPI_HANDLE	acpi_GetReference(ACPI_HANDLE scope, ACPI_OBJECT *obj);
 #define	KTR_ACPI		KTR_DEV
 
 SYSCTL_DECL(_debug_acpi);
+
+/*
+ * Map a PXM to a VM domain.
+ *
+ * Returns the VM domain ID if found, or -1 if not found / invalid.
+ */
+#if MAXMEMDOM > 1
+extern	int acpi_map_pxm_to_vm_domainid(int pxm);
+#endif
+
+extern	int acpi_get_domain(device_t dev, device_t child, int *domain);
 
 #endif /* _KERNEL */
 #endif /* !_ACPIVAR_H_ */

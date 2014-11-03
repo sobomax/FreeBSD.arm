@@ -1,4 +1,6 @@
-# $FreeBSD: head/sbin/devd/Makefile 263774 2014-03-26 19:31:33Z dim $
+# $FreeBSD: head/sbin/devd/Makefile 270004 2014-08-14 22:33:56Z asomers $
+
+.include <src.opts.mk>
 
 PROG_CXX=devd
 SRCS=	devd.cc token.l parse.y y.tab.h
@@ -15,5 +17,9 @@ YFLAGS+=-v
 CFLAGS+=-I. -I${.CURDIR}
 
 CLEANFILES= y.output
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=    tests
+.endif
 
 .include <bsd.prog.mk>

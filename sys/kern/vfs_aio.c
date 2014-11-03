@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_aio.c 263233 2014-03-16 10:55:57Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_aio.c 273707 2014-10-26 19:42:44Z mjg $");
 
 #include "opt_compat.h"
 
@@ -511,11 +511,11 @@ aio_onceonly(void)
 	p31b_setcfg(CTL_P1003_1B_AIO_MAX, MAX_AIO_QUEUE);
 	p31b_setcfg(CTL_P1003_1B_AIO_PRIO_DELTA_MAX, 0);
 
-	error = syscall_helper_register(aio_syscalls);
+	error = syscall_helper_register(aio_syscalls, SY_THR_STATIC_KLD);
 	if (error)
 		return (error);
 #ifdef COMPAT_FREEBSD32
-	error = syscall32_helper_register(aio32_syscalls);
+	error = syscall32_helper_register(aio32_syscalls, SY_THR_STATIC_KLD);
 	if (error)
 		return (error);
 #endif

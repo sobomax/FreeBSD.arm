@@ -1,11 +1,9 @@
-# $FreeBSD: head/sys/boot/i386/btx/btx/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/i386/btx/btx/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	btx
 INTERNALPROG=
 MAN=
 SRCS=	btx.S
-
-NO_PIE=	yes
 
 .if defined(BOOT_BTX_NOHANG)
 BOOT_BTX_FLAGS=0x1

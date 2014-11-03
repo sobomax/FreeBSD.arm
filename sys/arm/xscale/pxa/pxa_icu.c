@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_icu.c 193847 2009-06-09 18:18:41Z marcel $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_icu.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -33,6 +33,7 @@ __FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_icu.c 193847 2009-06-09 18:18:41
 #include <sys/malloc.h>
 #include <sys/rman.h>
 #include <sys/timetc.h>
+#include <machine/armreg.h>
 #include <machine/bus.h>
 #include <machine/intr.h>
 
@@ -105,7 +106,7 @@ pxa_icu_attach(device_t dev)
 	pxa_icu_set_iclr(0);
 
 	/* XXX: This should move to configure_final or something. */
-	enable_interrupts(I32_bit|F32_bit);
+	enable_interrupts(PSR_I|PSR_F);
 
 	return (0);
 }

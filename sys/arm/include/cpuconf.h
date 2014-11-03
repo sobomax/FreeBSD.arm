@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/cpuconf.h 262958 2014-03-09 21:12:31Z ian $
+ * $FreeBSD: head/sys/arm/include/cpuconf.h 270878 2014-08-31 15:23:49Z ian $
  *
  */
 
@@ -135,13 +135,13 @@
 #define	ARM_MMU_GENERIC		0
 #endif
 
-#if defined(CPU_ARM1136) || defined(CPU_ARM1176) || defined(CPU_MV_PJ4B)
+#if defined(CPU_ARM1136) || defined(CPU_ARM1176)
 #define ARM_MMU_V6		1
 #else
 #define ARM_MMU_V6		0
 #endif
 
-#if defined(CPU_CORTEXA) || defined(CPU_KRAIT)
+#if defined(CPU_CORTEXA) || defined(CPU_KRAIT) || defined(CPU_MV_PJ4B)
 #define ARM_MMU_V7		1
 #else
 #define ARM_MMU_V7		0

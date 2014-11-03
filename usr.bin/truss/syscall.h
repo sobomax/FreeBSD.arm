@@ -5,6 +5,7 @@
  * Hex -- values that should be printed in hex (addresses)
  * Octal -- Same as above, but octal
  * Int -- normal integer values (file descriptors, for example)
+ * LongHex -- long value that should be printed in hex
  * Name -- pointer to a NULL-terminated string.
  * BinString -- pointer to an array of chars, printed via strvisx().
  * Ptr -- pointer to some unspecified structure.  Just print as hex for now.
@@ -31,16 +32,16 @@
  * IN (meaning that the data is passed *into* the system call).
  */
 /*
- * $FreeBSD: head/usr.bin/truss/syscall.h 264881 2014-04-24 14:12:35Z smh $
+ * $FreeBSD: head/usr.bin/truss/syscall.h 273053 2014-10-13 16:37:06Z jhb $
  */
 
-enum Argtype { None = 1, Hex, Octal, Int, Name, Ptr, Stat, Ioctl, Quad,
+enum Argtype { None = 1, Hex, Octal, Int, LongHex, Name, Ptr, Stat, Ioctl, Quad,
 	Signal, Sockaddr, StringArray, Timespec, Timeval, Itimerval, Pollfd,
 	Fd_set, Sigaction, Fcntl, Mprot, Mmapflags, Whence, Readlinkres,
 	Sigset, Sigprocmask, Kevent, Sockdomain, Socktype, Open,
 	Fcntlflag, Rusage, BinString, Shutdown, Resource, Rlimit, Timeval2,
 	Pathconf, Rforkflags, ExitStatus, Waitoptions, Idtype, Procctl,
-	LinuxSockArgs };
+	LinuxSockArgs, Umtxop };
 
 #define	ARG_MASK	0xff
 #define	OUT	0x100

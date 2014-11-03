@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/tools/asn1_compile/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/tools/asn1_compile/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	asn1_compile
 MAN=
@@ -26,8 +26,6 @@ SRCS=	\
 CFLAGS+=-I${KRB5DIR}/lib/roken -I${KRB5DIR}/lib/asn1 -I.
 
 CLEANFILES= roken.h lex.c parse.c
-
-NO_PIE=	yes
 
 roken.h:
 	 make-roken > ${.TARGET}

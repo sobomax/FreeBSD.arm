@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/powerpc/conf/NOTES 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/powerpc/conf/NOTES 273156 2014-10-16 01:32:22Z jhibbits $
 #
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
@@ -50,7 +50,7 @@ device		pmu		# Apple Power Management Unit
 device		smu		# Apple System Management Unit
 device		snd_ai2s	# Apple I2S Audio
 device		snd_davbus	# Apple Davbus Audio
-device		windtunnel	# Apple G4 MDD fan controller
+device		adm1030		# Apple G4 MDD fan controller
 
 
 #####################################################################

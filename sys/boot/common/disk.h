@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/common/disk.h 241809 2012-10-21 12:14:58Z ae $
+ * $FreeBSD: head/sys/boot/common/disk.h 272749 2014-10-08 12:33:31Z ae $
  */
 
 /*
@@ -43,12 +43,12 @@
  * BSD disklabel partition within an MBR slice:
  *
  * 	d_slice = MBR slice number (typically 1..4)
- * 	d_partition = disklabel partition (typically 0..7)
+ * 	d_partition = disklabel partition (typically 0..19)
  *
  * BSD disklabel partition on the true dedicated disk:
  *
  * 	d_slice = -1
- * 	d_partition = disklabel partition (typically 0..7)
+ * 	d_partition = disklabel partition (typically 0..19)
  *
  * GPT partition:
  *
@@ -71,7 +71,7 @@
  * if there are multiple slices/partitions of a given type, the first one
  * is chosen.
  *
- * The low-level disk device will typically call slice_open() from its open
+ * The low-level disk device will typically call disk_open() from its open
  * method to interpret the disk partition tables according to the rules above.
  * This will initialize d_offset to the block offset of the start of the
  * selected partition - this offset should be added to the offset passed to

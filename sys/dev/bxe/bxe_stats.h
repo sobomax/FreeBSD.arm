@@ -28,7 +28,7 @@
 #define BXE_STATS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.h 265411 2014-05-06 02:32:27Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.h 271782 2014-09-18 15:56:14Z glebius $");
 
 #include <sys/types.h>
 
@@ -675,6 +675,7 @@ void bxe_stats_init(struct bxe_softc *sc);
 void bxe_stats_handle(struct bxe_softc *sc, enum bxe_stats_event event);
 void bxe_save_statistics(struct bxe_softc *sc);
 void bxe_afex_collect_stats(struct bxe_softc *sc, void *void_afex_stats, uint32_t stats_type);
+uint64_t bxe_get_counter(if_t, ift_counter);
 
 #endif /* BXE_STATS_H */
 

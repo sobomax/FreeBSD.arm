@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.sbin/kstash/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.sbin/kstash/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kstash
 MAN=	kstash.8
@@ -9,8 +9,6 @@ DPADD=	${LIBHDB} ${LIBKRB5} ${LIBROKEN} ${LIBVERS} \
 LDADD=	-lhdb -lkrb5 -lroken ${LIBVERS} \
 	-lasn1 -lcrypto -lcrypt ${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

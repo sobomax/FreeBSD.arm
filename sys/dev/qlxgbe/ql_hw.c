@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_hw.c 258155 2013-11-15 01:26:24Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_hw.c 271849 2014-09-19 03:51:26Z glebius $");
 
 #include "ql_os.h"
 #include "ql_hw.h"
@@ -2566,7 +2566,7 @@ qla_hw_tx_done_locked(qla_host_t *ha, uint32_t txr_idx)
 		comp_count++;
 
 		if (txb->m_head) {
-			ha->ifp->if_opackets++;
+			if_inc_counter(ha->ifp, IFCOUNTER_OPACKETS, 1);
 
 			bus_dmamap_sync(ha->tx_tag, txb->map,
 				BUS_DMASYNC_POSTWRITE);

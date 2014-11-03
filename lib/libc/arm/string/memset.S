@@ -67,7 +67,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/memset.S 172616 2007-10-13 12:06:31Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/memset.S 270882 2014-08-31 17:21:51Z ian $");
 
 /*
  * memset: Sets a block of memory to the specified value
@@ -234,3 +234,8 @@ ENTRY(memset)
 	strgeb	r3, [ip], #0x01		/* Set another byte */
 	strgtb	r3, [ip]		/* and a third */
 	RET			/* Exit */
+#ifdef _BZERO
+END(bzero)
+#else
+END(memset)
+#endif

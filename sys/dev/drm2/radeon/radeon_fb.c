@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_fb.c 259016 2013-12-05 22:38:53Z ray $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_fb.c 270750 2014-08-28 12:40:31Z dumbbell $");
 
 #include <machine/_inttypes.h>
 
@@ -291,6 +291,7 @@ static int radeon_fbdev_destroy(struct drm_device *dev, struct radeon_fbdev *rfb
 
 	if (rfbdev->helper.fbdev) {
 		info = rfbdev->helper.fbdev;
+		free(info->fb_priv, DRM_MEM_KMS);
 		free(info, DRM_MEM_KMS);
 	}
 

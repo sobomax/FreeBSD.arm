@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/ipfstat/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipfstat/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 NOGCCERROR=	# defined
 
@@ -7,7 +7,5 @@ SRCS=		ipfstat.c
 MAN=		ipfstat.8
 DPADD+=  	${LIBCURSES}
 LDADD+=  	-lcurses
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

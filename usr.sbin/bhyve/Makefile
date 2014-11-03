@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/bhyve/Makefile 268777 2014-07-16 21:26:26Z neel $
+# $FreeBSD: head/usr.sbin/bhyve/Makefile 273683 2014-10-26 04:44:28Z neel $
 #
 
 PROG=	bhyve
@@ -31,7 +31,6 @@ SRCS=	\
 	pci_virtio_rnd.c	\
 	pci_uart.c		\
 	pm.c			\
-	pmtmr.c			\
 	post.c			\
 	rtc.c			\
 	smbiostbl.c		\

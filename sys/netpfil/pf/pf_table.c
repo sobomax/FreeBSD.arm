@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_table.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_table.c 272361 2014-10-01 14:39:06Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1853,14 +1853,10 @@ pfr_destroy_ktable(struct pfr_ktable *kt, int flushaddr)
 		pfr_clean_node_mask(kt, &addrq);
 		pfr_destroy_kentries(&addrq);
 	}
-	if (kt->pfrkt_ip4 != NULL) {
-		RADIX_NODE_HEAD_DESTROY(kt->pfrkt_ip4);
-		free((caddr_t)kt->pfrkt_ip4, M_RTABLE);
-	}
-	if (kt->pfrkt_ip6 != NULL) {
-		RADIX_NODE_HEAD_DESTROY(kt->pfrkt_ip6);
-		free((caddr_t)kt->pfrkt_ip6, M_RTABLE);
-	}
+	if (kt->pfrkt_ip4 != NULL)
+		rn_detachhead((void **)&kt->pfrkt_ip4);
+	if (kt->pfrkt_ip6 != NULL)
+		rn_detachhead((void **)&kt->pfrkt_ip6);
 	if (kt->pfrkt_shadow != NULL)
 		pfr_destroy_ktable(kt->pfrkt_shadow, flushaddr);
 	if (kt->pfrkt_rs != NULL) {

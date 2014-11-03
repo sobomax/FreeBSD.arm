@@ -1,12 +1,10 @@
-# $FreeBSD: head/gnu/usr.bin/texinfo/infokey/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/texinfo/infokey/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	infokey
 SRCS=	infokey.c key.c
 
 DPADD=	${LIBTXI}
 LDADD=	${LIBTXI}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

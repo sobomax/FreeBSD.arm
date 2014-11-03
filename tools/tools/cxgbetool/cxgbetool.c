@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/tools/cxgbetool/cxgbetool.c 269106 2014-07-26 00:51:45Z np $");
+__FBSDID("$FreeBSD: head/tools/tools/cxgbetool/cxgbetool.c 273360 2014-10-21 01:34:18Z np $");
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -1462,7 +1462,7 @@ loadfw(int argc, const char *argv[])
 	}
 
 	data.len = st.st_size;
-	data.data = mmap(0, data.len, PROT_READ, 0, fd, 0);
+	data.data = mmap(0, data.len, PROT_READ, MAP_PRIVATE, fd, 0);
 	if (data.data == MAP_FAILED) {
 		warn("mmap");
 		close(fd);

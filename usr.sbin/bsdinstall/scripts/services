@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdinstall/scripts/services 260900 2014-01-20 03:39:08Z dteske $
+# $FreeBSD: head/usr.sbin/bsdinstall/scripts/services 272173 2014-09-26 11:38:10Z des $
 
 : ${DIALOG_OK=0}
 
@@ -43,6 +43,7 @@ DAEMONS=$( dialog --backtitle "FreeBSD Installer" \
     --title "System Configuration" --nocancel --separate-output \
     --checklist "Choose the services you would like to be started at boot:" \
     0 0 0 \
+	local_unbound "Local caching validating resolver" ${local_unbound:-off} \
 	sshd	"Secure shell daemon" ${sshd_enable:-off} \
 	moused	"PS/2 mouse pointer on console" ${moused_enable:-off} \
 	ntpd	"Synchronize system and network time" ${ntpd_enable:-off} \

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)npx.h	5.3 (Berkeley) 1/18/91
- * $FreeBSD: head/sys/amd64/include/fpu.h 267767 2014-06-23 07:37:54Z kib $
+ * $FreeBSD: head/sys/amd64/include/fpu.h 271192 2014-09-06 15:23:28Z jhb $
  */
 
 /*
@@ -58,6 +58,7 @@ int	fpuformat(void);
 int	fpugetregs(struct thread *td);
 void	fpuinit(void);
 void	fpurestore(void *addr);
+void	fpuresume(void *addr);
 void	fpusave(void *addr);
 int	fpusetregs(struct thread *td, struct savefpu *addr,
 	    char *xfpustate, size_t xfpustate_size);

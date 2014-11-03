@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/beri/beri_machdep.c 265089 2014-04-29 07:48:07Z bz $");
+__FBSDID("$FreeBSD: head/sys/mips/beri/beri_machdep.c 273234 2014-10-17 17:34:05Z davide $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -164,9 +164,9 @@ _parse_bootargs(char *cmdline)
 		} else {
 			n = strsep(&v, "=");
 			if (v == NULL)
-				setenv(n, "1");
+				kern_setenv(n, "1");
 			else
-				setenv(n, v);
+				kern_setenv(n, v);
 		}
 	}
 }

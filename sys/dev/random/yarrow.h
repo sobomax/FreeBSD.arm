@@ -23,15 +23,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/yarrow.h 256377 2013-10-12 12:57:57Z markm $
+ * $FreeBSD: head/sys/dev/random/yarrow.h 273872 2014-10-30 21:21:53Z markm $
  */
 
 #ifndef SYS_DEV_RANDOM_YARROW_H_INCLUDED
 #define SYS_DEV_RANDOM_YARROW_H_INCLUDED
 
-void random_yarrow_init_alg(struct sysctl_ctx_list *);
+#ifdef _KERNEL
+typedef struct mtx mtx_t;
+#endif
+
+void random_yarrow_init_alg(void);
 void random_yarrow_deinit_alg(void);
-int random_yarrow_read(void *, int);
+void random_yarrow_read(uint8_t *, u_int);
+void random_yarrow_write(uint8_t *, u_int);
 void random_yarrow_reseed(void);
+int random_yarrow_seeded(void);
+void random_yarrow_process_event(struct harvest_event *event);
 
 #endif

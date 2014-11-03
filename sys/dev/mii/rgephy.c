@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/rgephy.c 266974 2014-06-02 17:54:39Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/rgephy.c 271864 2014-09-19 10:32:20Z glebius $");
 
 /*
  * Driver for the RealTek 8169S/8110S/8211B/8211C internal 10/100/1000 PHY.
@@ -59,7 +59,7 @@ __FBSDID("$FreeBSD: head/sys/dev/mii/rgephy.c 266974 2014-06-02 17:54:39Z marcel
 #include "miibus_if.h"
 
 #include <machine/bus.h>
-#include <pci/if_rlreg.h>
+#include <dev/rl/if_rlreg.h>
 
 static int rgephy_probe(device_t);
 static int rgephy_attach(device_t);

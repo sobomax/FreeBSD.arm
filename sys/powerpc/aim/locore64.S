@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/aim/locore64.S 258541 2013-11-25 07:38:45Z attilio $ */
+/* $FreeBSD: head/sys/powerpc/aim/locore64.S 272014 2014-09-23 04:13:21Z nwhitehorn $ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-
@@ -160,6 +160,7 @@ ASENTRY_NOPROF(__start)
 	li	8,1
 	insrdi	9,8,1,0
 	mtmsrd	9
+	isync
 	
 	bl	OF_initial_setup
 	nop

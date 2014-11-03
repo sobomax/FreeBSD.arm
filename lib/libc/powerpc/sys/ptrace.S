@@ -26,7 +26,7 @@
 /*      $NetBSD: ptrace.S,v 1.3 2000/02/23 20:16:57 kleink Exp $        */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc/sys/ptrace.S 217398 2011-01-14 11:33:40Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc/sys/ptrace.S 272362 2014-10-01 15:00:21Z bapt $");
 
 #include "SYS.h"
 
@@ -56,5 +56,6 @@ ENTRY(ptrace)
 	blr
 1:
 	b	PIC_PLT(HIDENAME(cerror))
+END(ptrace)
 
 	.section .note.GNU-stack,"",%progbits

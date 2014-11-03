@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pciconf/pciconf.c 266468 2014-05-20 14:39:22Z mav $";
+  "$FreeBSD: head/usr.sbin/pciconf/pciconf.c 273488 2014-10-22 23:35:56Z markj $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -662,16 +662,16 @@ getdevice(const char *name)
 	 * find the start of the unit.
 	 */
 	if (name[0] == '\0')
-		err(1, "Empty device name");
+		errx(1, "Empty device name");
 	cp = strchr(name, '\0');
 	assert(cp != NULL && cp != name);
 	cp--;
 	while (cp != name && isdigit(cp[-1]))
 		cp--;
-	if (cp == name)
+	if (cp == name || !isdigit(*cp))
 		errx(1, "Invalid device name");
 	if ((size_t)(cp - name) + 1 > sizeof(patterns[0].pd_name))
-		errx(1, "Device name i2s too long");
+		errx(1, "Device name is too long");
 	memcpy(patterns[0].pd_name, name, cp - name);
 	patterns[0].pd_unit = strtol(cp, &cp, 10);
 	assert(*cp == '\0');

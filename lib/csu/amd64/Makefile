@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/csu/amd64/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/lib/csu/amd64/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .PATH: ${.CURDIR}/../common
 
@@ -8,8 +8,6 @@ OBJS+=		Scrt1.o gcrt1.o
 CFLAGS+=	-I${.CURDIR}/../common \
 		-I${.CURDIR}/../../libc/include
 CFLAGS+=	-fno-omit-frame-pointer
-
-NO_PIE=	yes
 
 all: ${OBJS}
 

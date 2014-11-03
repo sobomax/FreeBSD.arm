@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxge/qls_os.c 267375 2014-06-11 20:44:02Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxge/qls_os.c 270856 2014-08-30 19:55:54Z glebius $");
 
 
 #include "qls_os.h"
@@ -770,7 +770,7 @@ qls_init_ifnet(device_t dev, qla_host_t *ha)
 
 	ifp->if_capenable = ifp->if_capabilities;
 
-	ifp->if_data.ifi_hdrlen = sizeof(struct ether_vlan_header);
+	ifp->if_hdrlen = sizeof(struct ether_vlan_header);
 
 	ifmedia_init(&ha->media, IFM_IMASK, qls_media_change, qls_media_status);
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_pci.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_pci.c 273174 2014-10-16 18:04:43Z davide $");
 
 /*
  * PCI:PCI bridge support.
@@ -977,14 +977,14 @@ pcib_attach_common(device_t dev)
 	{
 	    char *cp;
 
-	    if ((cp = getenv("smbios.planar.maker")) == NULL)
+	    if ((cp = kern_getenv("smbios.planar.maker")) == NULL)
 		break;
 	    if (strncmp(cp, "Compal", 6) != 0) {
 		freeenv(cp);
 		break;
 	    }
 	    freeenv(cp);
-	    if ((cp = getenv("smbios.planar.product")) == NULL)
+	    if ((cp = kern_getenv("smbios.planar.product")) == NULL)
 		break;
 	    if (strncmp(cp, "08A0", 4) != 0) {
 		freeenv(cp);

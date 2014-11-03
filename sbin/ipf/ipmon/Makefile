@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/ipmon/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipmon/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=		ipmon
 SRCS=		${GENHDRS} ipmon.c ipmon_y.c ipmon_l.c
@@ -10,8 +10,6 @@ GENHDRS+=	ipmon_l.h ipmon_y.h
 DPSRCS+=	${GENHDRS}
 
 CLEANFILES+=	${GENHDRS} ipmon_y.c ipmon_l.c
-
-NO_PIE=	yes
 
 ipmon_y.c: ipmon_y.y
 	${YACC} -d ${.ALLSRC}

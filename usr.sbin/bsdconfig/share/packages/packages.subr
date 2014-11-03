@@ -24,7 +24,7 @@ if [ ! "$_PACKAGES_PACKAGES_SUBR" ]; then _PACKAGES_PACKAGES_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdconfig/share/packages/packages.subr 268999 2014-07-22 23:10:12Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/share/packages/packages.subr 270283 2014-08-21 17:15:09Z dteske $
 #
 ############################################################ INCLUDES
 
@@ -1029,9 +1029,11 @@ f_package_extract()
 
 	# Request the package be added via pkg-install(8)
 	if f_debugging; then
-		f_eval_catch $funcname pkg 'pkg -d install -y "%s"' "$name"
+		f_eval_catch $funcname pkg \
+			'pkg -d install -${depended:+A}y "%s"' "$name"
 	else
-		f_eval_catch $funcname pkg 'pkg install -y "%s"' "$name"
+		f_eval_catch $funcname pkg \
+			'pkg install -${depended:+A}y "%s"' "$name"
 	fi
 	if [ $? -ne $SUCCESS ]; then
 		$alert "$msg_pkg_install_apparently_did_not_like_the_package" \

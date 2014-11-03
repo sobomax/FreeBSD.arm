@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)locore.s	7.3 (Berkeley) 5/13/91
- * $FreeBSD: head/sys/i386/i386/locore.s 263010 2014-03-11 10:24:13Z royger $
+ * $FreeBSD: head/sys/i386/i386/locore.s 273995 2014-11-02 22:58:30Z jhb $
  *
  *		originally from: locore.s, by William F. Jolitz
  *
@@ -302,17 +302,14 @@ NON_GPROF_ENTRY(btext)
 begin:
 	/* set up bootstrap stack */
 	movl	proc0kstack,%eax	/* location of in-kernel stack */
-			/* bootstrap stack end location */
-	leal	(KSTACK_PAGES*PAGE_SIZE-PCB_SIZE)(%eax),%esp
+
+	/*
+	 * Only use bottom page for init386().  init386() calculates the
+	 * PCB + FPU save area size and returns the true top of stack.
+	 */
+	leal	PAGE_SIZE(%eax),%esp
 
 	xorl	%ebp,%ebp		/* mark end of frames */
-
-#ifdef PAE
-	movl	IdlePDPT,%esi
-#else
-	movl	IdlePTD,%esi
-#endif
-	movl	%esi,(KSTACK_PAGES*PAGE_SIZE-PCB_SIZE+PCB_CR3)(%eax)
 
 	pushl	physfree		/* value of first for init386(first) */
 	call	init386			/* wire 386 chip for unix operation */
@@ -323,6 +320,9 @@ begin:
 	 * inaccessible memory are more fatal than usual this early.
 	 */
 	addl	$4,%esp
+
+	/* Switch to true top of stack. */
+	movl	%eax,%esp
 
 	call	mi_startup		/* autoconfiguration, mountroot etc */
 	/* NOTREACHED */

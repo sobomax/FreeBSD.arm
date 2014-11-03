@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: head/sys/netinet/in.h 268788 2014-07-17 05:45:54Z adrian $
+ * $FreeBSD: head/sys/netinet/in.h 271293 2014-09-09 01:45:39Z adrian $
  */
 
 #ifndef _NETINET_IN_H_
@@ -492,6 +492,8 @@ __END_DECLS
 #define	IP_FLOWID		90   /* get flow id for the given socket/inp */
 #define	IP_FLOWTYPE		91   /* get flow type (M_HASHTYPE) */
 #define	IP_RSSBUCKETID		92   /* get RSS flowid -> bucket mapping */
+#define	IP_RECVFLOWID		93   /* bool; receive IP flowid/flowtype w/ datagram */
+#define	IP_RECVRSSBUCKETID	94   /* bool; receive IP RSS bucket id w/ datagram */
 
 /*
  * Defaults and limits for options

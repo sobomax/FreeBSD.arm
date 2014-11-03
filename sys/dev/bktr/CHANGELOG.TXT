@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/bktr/CHANGELOG.TXT 249585 2013-04-17 11:45:15Z gabor $ */
+/* $FreeBSD: head/sys/dev/bktr/CHANGELOG.TXT 270854 2014-08-30 18:01:45Z gavin $ */
 
 /*
  * This is part of the Driver for Video Capture Cards (Frame grabbers)
@@ -515,5 +515,5 @@
                   support for audio on Hauppauge cards without the audio mux.
                   The MSP is used for audio selection. (the 44xxx models)
 
-[see http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/dev/bktr/
+[see https://svnweb.freebsd.org/base/head/sys/dev/bktr/
 for newer change logs ]

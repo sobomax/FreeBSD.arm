@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/fifolog/fifolog_writer/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/fifolog/fifolog_writer/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	fifolog_writer
 
@@ -8,8 +8,6 @@ MAN=
 
 DPADD=	${LIBFIFOLOG} ${LIBUTIL} ${LIBZ}
 LDADD=	${LIBFIFOLOG} -lutil -lz
-
-NO_PIE=	yes
 
 regress:
 	date | ./${PROG} -z 0 /tmp/fifolog.0

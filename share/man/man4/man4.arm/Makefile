@@ -1,11 +1,13 @@
-# $FreeBSD: head/share/man/man4/man4.arm/Makefile 263693 2014-03-24 20:06:27Z loos $
+# $FreeBSD: head/share/man/man4/man4.arm/Makefile 271907 2014-09-20 15:45:29Z ian $
 
-MAN=	devcfg.4 \
+MAN=	cgem.4 \
+	devcfg.4 \
 	mge.4 \
 	npe.4 \
 	ti_adc.4
 
-MLINKS= mge.4 if_mge.4
+MLINKS= cgem.4 if_cgem.4
+MLINKS+= mge.4 if_mge.4
 MLINKS+=npe.4 if_npe.4
 
 MANSUBDIR=/arm

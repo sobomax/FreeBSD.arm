@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/common/t4_regs.h 248925 2013-03-30 02:26:20Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/common/t4_regs.h 271420 2014-09-11 07:16:15Z rwatson $
  *
  */
 
@@ -1073,9 +1073,9 @@
 #define A_SGE_FL_BUFFER_SIZE0 0x1044
 
 #define S_SIZE    4
-#define M_SIZE    0xfffffffU
+#define CXGBE_M_SIZE    0xfffffffU
 #define V_SIZE(x) ((x) << S_SIZE)
-#define G_SIZE(x) (((x) >> S_SIZE) & M_SIZE)
+#define G_SIZE(x) (((x) >> S_SIZE) & CXGBE_M_SIZE)
 
 #define A_SGE_FL_BUFFER_SIZE1 0x1048
 #define A_SGE_FL_BUFFER_SIZE2 0x104c

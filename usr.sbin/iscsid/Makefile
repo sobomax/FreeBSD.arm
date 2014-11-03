@@ -1,14 +1,14 @@
-# $FreeBSD: head/usr.sbin/iscsid/Makefile 255570 2013-09-14 15:29:06Z trasz $
+# $FreeBSD: head/usr.sbin/iscsid/Makefile 273459 2014-10-22 08:59:23Z trasz $
 
 PROG=		iscsid
-SRCS=		discovery.c iscsid.c keys.c log.c login.c pdu.c
+SRCS=		chap.c discovery.c iscsid.c keys.c log.c login.c pdu.c
 CFLAGS+=	-I${.CURDIR}
 CFLAGS+=	-I${.CURDIR}/../../sys/cam
 CFLAGS+=	-I${.CURDIR}/../../sys/dev/iscsi
 #CFLAGS+=	-DICL_KERNEL_PROXY
 MAN=		iscsid.8
 
-DPADD=		${LIBUTIL}
+DPADD=		${LIBCRYPTO} ${LIBSSL} ${LIBUTIL}
 LDADD=		-lcrypto -lssl -lutil
 
 WARNS=		6

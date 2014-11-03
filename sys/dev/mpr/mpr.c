@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr.c 265484 2014-05-07 05:11:16Z ken $");
+__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 /* Communications core for LSI MPT2 */
 
@@ -1447,7 +1447,7 @@ mpr_setup_sysctl(struct mpr_softc *sc)
 	    "Disable the use of MSI interrupts");
 
 	SYSCTL_ADD_STRING(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),
-	    OID_AUTO, "firmware_version", CTLFLAG_RW, &sc->fw_version,
+	    OID_AUTO, "firmware_version", CTLFLAG_RW, sc->fw_version,
 	    strlen(sc->fw_version), "firmware version");
 
 	SYSCTL_ADD_STRING(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),

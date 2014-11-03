@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: head/lib/libc/Makefile 269865 2014-08-12 12:25:56Z ume $
+# $FreeBSD: head/lib/libc/Makefile 271771 2014-09-18 14:41:57Z will $
 
 SHLIBDIR?= /lib
 
@@ -49,6 +49,7 @@ LDFLAGS+= -nodefaultlibs
 LDADD+= -lcompiler_rt
 
 .if ${MK_SSP} != "no"
+DPADD+= ${LIBSSP_NONSHARED}
 LDADD+= -lssp_nonshared
 .endif
 
@@ -150,11 +151,11 @@ KSRCS=	bcmp.c ffs.c ffsl.c fls.c flsl.c mcount.c strcat.c strchr.c \
 libkern: libkern.gen libkern.${LIBC_ARCH}
 
 libkern.gen: ${KQSRCS} ${KSRCS}
-	cp -p ${LIBC_SRCTOP}/quad/quad.h ${.ALLSRC} ${DESTDIR}/sys/libkern
+	cp -fp ${LIBC_SRCTOP}/quad/quad.h ${.ALLSRC} ${DESTDIR}/sys/libkern
 
 libkern.${LIBC_ARCH}:: ${KMSRCS}
 .if defined(KMSRCS) && !empty(KMSRCS)
-	cp -p ${.ALLSRC} ${DESTDIR}/sys/libkern/${LIBC_ARCH}
+	cp -fp ${.ALLSRC} ${DESTDIR}/sys/libkern/${LIBC_ARCH}
 .endif
 
 .include <bsd.lib.mk>

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_input.c 229272 2012-01-02 12:12:10Z ed $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_input.c 273006 2014-10-12 18:01:52Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -346,7 +346,7 @@ db_readline(lstart, lsize)
 }
 
 void
-db_check_interrupt()
+db_check_interrupt(void)
 {
 	register int	c;
 

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/sparc64/include/param.h 250338 2013-05-07 22:46:24Z attilio $
+ * $FreeBSD: head/sys/sparc64/include/param.h 273783 2014-10-28 15:22:13Z kib $
  */
 
 #ifndef _SPARC64_INCLUDE_PARAM_H_
@@ -145,5 +145,9 @@
 #define sparc64_ptob(x)		((unsigned long)(x) << PAGE_SHIFT)
 
 #define	pgtok(x)		((unsigned long)(x) * (PAGE_SIZE / 1024))
+
+#ifdef _KERNEL
+#define	NO_FUEWORD	1
+#endif
 
 #endif /* !_SPARC64_INCLUDE_PARAM_H_ */

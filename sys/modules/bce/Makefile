@@ -1,13 +1,8 @@
-# $FreeBSD: head/sys/modules/bce/Makefile 265703 2014-05-08 19:40:37Z davidcs $
+# $FreeBSD: head/sys/modules/bce/Makefile 271727 2014-09-17 22:26:01Z davidcs $
 .PATH:	${.CURDIR}/../../dev/bce
 KMOD=	if_bce
 SRCS=	opt_bce.h if_bce.c miibus_if.h miidevs.h device_if.h bus_if.h pci_if.h
 
 #CFLAGS += -DBCE_DEBUG=0
-
-clean:
-	rm -f opt_bdg.h device_if.h bus_if.h pci_if.h export_syms
-	rm -f *.o *.kld *.ko
-	rm -f @ machine x86 miibus_if.h miidevs.h opt_bce.h
 
 .include <bsd.kmod.mk>

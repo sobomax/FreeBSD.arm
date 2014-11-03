@@ -26,7 +26,7 @@
 /*      $NetBSD: pipe.S,v 1.6 2000/09/28 08:38:54 kleink Exp $  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc/sys/pipe.S 217398 2011-01-14 11:33:40Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc/sys/pipe.S 272362 2014-10-01 15:00:21Z bapt $");
 
 #include "SYS.h"
 
@@ -41,5 +41,6 @@ ENTRY(pipe)
 	blr			/* and return 0 */
 1:
 	b	PIC_PLT(HIDENAME(cerror))
+END(pipe)
 
 	.section .note.GNU-stack,"",%progbits

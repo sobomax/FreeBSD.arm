@@ -25,7 +25,7 @@
  *
  */
 /*
- * 	Author: David B. Golub, Carnegie Mellon University
+ *	Author: David B. Golub, Carnegie Mellon University
  *	Date:	7/90
  */
 
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_print.c 145053 2005-04-14 05:25:40Z peter $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_print.c 272958 2014-10-11 20:25:19Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>

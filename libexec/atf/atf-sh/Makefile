@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/libexec/atf/atf-sh/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/libexec/atf/atf-sh/Makefile 273929 2014-11-01 11:17:54Z jmmv $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -33,9 +33,13 @@ ATF=		${.CURDIR:H:H:H}/contrib/atf
 
 PROG_CXX=	atf-sh
 SRCS=		atf-sh.cpp
-MAN=            atf-sh.1 atf-sh-api.3
+MAN=		atf-sh.1 atf-sh.3
+MLINKS+=	atf-sh.3 atf-sh-api.3  # Backwards compatibility.
 
 CFLAGS+=	-DHAVE_CONFIG_H
+CFLAGS+=	-DATF_LIBEXECDIR='"${LIBEXECDIR}"'
+CFLAGS+=	-DATF_PKGDATADIR='"${SHAREDIR}/atf"'
+CFLAGS+=	-DATF_SHELL='"/bin/sh"'
 CFLAGS+=	-I${ATF}
 
 DPADD+=		${LIBATF_C} ${LIBATF_CXX}

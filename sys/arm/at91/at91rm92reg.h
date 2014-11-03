@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/arm/at91/at91rm92reg.h 261322 2014-01-31 15:38:05Z imp $ */
+/* $FreeBSD: head/sys/arm/at91/at91rm92reg.h 272163 2014-09-26 09:07:02Z kevlo $ */
 
 #ifndef AT91RM92REG_H_
 #define AT91RM92REG_H_
@@ -124,7 +124,7 @@
  * 9: USART 3
  * 10: MMC Interface
  * 11: USB device port
- * 12: Two-wirte interface
+ * 12: Two-wire interface
  * 13: SPI
  * 14: SSC
  * 15: SSC
@@ -134,7 +134,7 @@
  * 19: Timer Counter 2
  * 20: Timer Counter 3
  * 21: Timer Counter 4
- * 22: Timer Counter 6
+ * 22: Timer Counter 5
  * 23: USB Host port
  * 24: Ethernet
  * 25: AIC

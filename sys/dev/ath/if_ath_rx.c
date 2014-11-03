@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_rx.c 265527 2014-05-07 07:57:50Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_rx.c 271823 2014-09-18 20:47:39Z glebius $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -704,7 +704,7 @@ ath_rx_pkt(struct ath_softc *sc, struct ath_rx_status *rs, HAL_STATUS status,
 					rs->rs_keyix-32 : rs->rs_keyix);
 			}
 		}
-		ifp->if_ierrors++;
+		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 rx_error:
 		/*
 		 * Cleanup any pending partial frame.
@@ -830,7 +830,7 @@ rx_accept:
 			rs->rs_antenna |= 0x4;
 	}
 
-	ifp->if_ipackets++;
+	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 	sc->sc_stats.ast_ant_rx[rs->rs_antenna]++;
 
 	/*

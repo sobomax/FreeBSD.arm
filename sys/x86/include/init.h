@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/init.h 269515 2014-08-04 09:05:28Z royger $
+ * $FreeBSD: head/sys/x86/include/init.h 272310 2014-09-30 16:46:45Z royger $
  */
 
 #ifndef __X86_INIT_H__
@@ -41,6 +41,7 @@ struct init_ops {
 	void	(*parse_memmap)(caddr_t, vm_paddr_t *, int *);
 	u_int	(*mp_bootaddress)(u_int);
 	int	(*start_all_aps)(void);
+	void	(*msi_init)(void);
 };
 
 extern struct init_ops init_ops;

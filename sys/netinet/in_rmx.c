@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_rmx.c 265288 2014-05-03 20:22:13Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_rmx.c 272361 2014-10-01 14:39:06Z melifaro $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -352,10 +352,12 @@ in_inithead(void **head, int off)
 	if (!rn_inithead(head, 32))
 		return 0;
 
+	rnh = *head;
+	RADIX_NODE_HEAD_LOCK_INIT(rnh);
+
 	if (off == 0)		/* XXX MRT  see above */
 		return 1;	/* only do the rest for a real routing table */
 
-	rnh = *head;
 	rnh->rnh_addaddr = in_addroute;
 	in_setmatchfunc(rnh, V_drop_redirect);
 	rnh->rnh_close = in_clsroute;

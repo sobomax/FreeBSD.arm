@@ -1,4 +1,4 @@
-#	$FreeBSD: head/usr.sbin/makefs/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+#	$FreeBSD: head/usr.sbin/makefs/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	makefs
 
@@ -37,7 +37,5 @@ LDADD+=		${LIBNETBSD}
 
 DPADD+=  ${LIBSBUF} ${LIBUTIL}
 LDADD+=  -lsbuf -lutil
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

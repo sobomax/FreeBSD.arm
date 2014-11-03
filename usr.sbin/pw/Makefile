@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/pw/Makefile 242349 2012-10-30 08:00:53Z bapt $
+# $FreeBSD: head/usr.sbin/pw/Makefile 272445 2014-10-02 19:53:37Z brd $
 
 PROG=	pw
 MAN=	pw.conf.5 pw.8
@@ -10,5 +10,11 @@ WARNS?=	2
 
 DPADD=	${LIBCRYPT} ${LIBUTIL}
 LDADD=	-lcrypt -lutil
+
+.include <src.opts.mk>
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

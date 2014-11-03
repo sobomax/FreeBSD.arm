@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_divert.c 269699 2014-08-08 01:57:15Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_divert.c 272941 2014-10-11 16:08:54Z jhb $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -836,5 +836,5 @@ static moduledata_t ipdivertmod = {
 };
 
 DECLARE_MODULE(ipdivert, ipdivertmod, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_ANY);
-MODULE_DEPEND(ipdivert, ipfw, 2, 2, 2);
+MODULE_DEPEND(ipdivert, ipfw, 3, 3, 3);
 MODULE_VERSION(ipdivert, 1);

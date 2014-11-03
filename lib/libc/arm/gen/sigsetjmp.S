@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/gen/sigsetjmp.S 253518 2013-07-21 12:47:33Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/gen/sigsetjmp.S 270882 2014-08-31 17:21:51Z ian $");
 
 #include <machine/setjmp.h>
 
@@ -51,6 +51,7 @@ ENTRY(sigsetjmp)
 	teq	r1, #0
 	beq	PIC_SYM(_C_LABEL(_setjmp), PLT)
 	b	PIC_SYM(_C_LABEL(setjmp), PLT)
+END(sigsetjmp)
 
 .L_setjmp_magic:
 	.word	_JB_MAGIC__SETJMP
@@ -64,3 +65,4 @@ ENTRY(siglongjmp)
 	teq	r2, r3				/* magic correct? */
 	beq	PIC_SYM(_C_LABEL(_longjmp), PLT)
 	b	PIC_SYM(_C_LABEL(longjmp), PLT)
+END(siglongjmp)

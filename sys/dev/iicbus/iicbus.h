@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iicbus.h 228257 2011-12-04 11:55:33Z adrian $
+ * $FreeBSD: head/sys/dev/iicbus/iicbus.h 273728 2014-10-27 07:51:26Z kib $
  *
  */
 #ifndef __IICBUS_H
@@ -49,16 +49,19 @@ struct iicbus_softc
 struct iicbus_ivar
 {
 	uint32_t	addr;
+	bool		nostop;
 };
 
 enum {
-	IICBUS_IVAR_ADDR		/* Address or base address */
+	IICBUS_IVAR_ADDR,		/* Address or base address */
+	IICBUS_IVAR_NOSTOP,		/* nostop defaults */
 };
 
 #define IICBUS_ACCESSOR(A, B, T)					\
 	__BUS_ACCESSOR(iicbus, A, IICBUS, B, T)
 	
 IICBUS_ACCESSOR(addr,		ADDR,		uint32_t)
+IICBUS_ACCESSOR(nostop,		NOSTOP,		bool)
 
 #define	IICBUS_LOCK(sc)			mtx_lock(&(sc)->lock)
 #define	IICBUS_UNLOCK(sc)      		mtx_unlock(&(sc)->lock)

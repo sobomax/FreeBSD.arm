@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 273264 2014-10-18 19:01:07Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 261410 2014-02
 #include <sys/queue.h>
 #include <sys/resource.h>
 #include <sys/rman.h>
+#include <sys/sysctl.h>
 #include <sys/taskqueue.h>
 #include <sys/time.h>
 #include <sys/timetc.h>
@@ -311,21 +312,15 @@ RD4(struct bcm_sdhci_softc *sc, bus_size_t off)
 static inline void
 WR4(struct bcm_sdhci_softc *sc, bus_size_t off, uint32_t val)
 {
+
 	bus_space_write_4(sc->sc_bst, sc->sc_bsh, off, val);
-
-	if ((off != SDHCI_BUFFER && off != SDHCI_INT_STATUS && off != SDHCI_CLOCK_CONTROL))
-	{
-		int timeout = 100000;
-		while (val != bus_space_read_4(sc->sc_bst, sc->sc_bsh, off) 
-		    && --timeout > 0)
-			continue;
-
-		if (timeout <= 0)
-			printf("sdhci_brcm: writing 0x%X to reg 0x%X "
-				"always gives 0x%X\n",
-				val, (uint32_t)off, 
-				bus_space_read_4(sc->sc_bst, sc->sc_bsh, off));
-	}
+	/*
+	 * The Arasan HC has a bug where it may lose the content of
+	 * consecutive writes to registers that are within two SD-card
+	 * clock cycles of each other (a clock domain crossing problem). 
+	 */
+	if (sc->sc_slot.clock > 0)
+		DELAY(((2 * 1000000) / sc->sc_slot.clock) + 1);
 }
 
 static uint8_t

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/vt_consolectl.c 267965 2014-06-27 17:50:33Z emaste $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/vt_consolectl.c 271463 2014-09-12 14:07:20Z ray $");
 
 #include <sys/param.h>
 #include <sys/consio.h>
@@ -51,7 +51,7 @@ consolectl_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag,
 {
 
 	switch (cmd) {
-	case CONS_GETVERS: 
+	case CONS_GETVERS:
 		*(int*)data = 0x200;
 		return 0;
 	case CONS_MOUSECTL: {

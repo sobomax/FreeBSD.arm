@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/newsyslog/newsyslog.c 261401 2014-02-02 14:11:34Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.sbin/newsyslog/newsyslog.c 272763 2014-10-08 17:44:30Z markj $");
 
 #define	OSF
 
@@ -1968,8 +1968,8 @@ do_sigwork(struct sigwork_entry *swork)
 		 */
 		if (errno != ESRCH)
 			swork->sw_pidok = 0;
-		warn("can't notify %s, pid %d", swork->sw_pidtype,
-		    (int)swork->sw_pid);
+		warn("can't notify %s, pid %d = %s", swork->sw_pidtype,
+		    (int)swork->sw_pid, swork->sw_fname);
 	} else {
 		if (verbose)
 			printf("Notified %s pid %d = %s\n", swork->sw_pidtype,

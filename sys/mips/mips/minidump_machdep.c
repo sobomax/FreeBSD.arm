@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/minidump_machdep.c 216148 2010-12-03 14:20:20Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/minidump_machdep.c 272766 2014-10-08 20:25:21Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -153,7 +153,7 @@ write_buffer(struct dumperinfo *di, char *ptr, size_t sz)
 	return (0);
 }
 
-void
+int
 minidumpsys(struct dumperinfo *di)
 {
 	struct minidumphdr mdhdr;
@@ -325,7 +325,7 @@ minidumpsys(struct dumperinfo *di)
 	/* Signal completion, signoff and exit stage left. */
 	dump_write(di, NULL, 0, 0, 0);
 	printf("\nDump complete\n");
-	return;
+	return (0);
 
 fail:
 	if (error < 0)
@@ -337,4 +337,5 @@ fail:
 		printf("\nDump failed. Partition too small.\n");
 	else
 		printf("\n** DUMP FAILED (ERROR %d) **\n", error);
+	return (error);
 }

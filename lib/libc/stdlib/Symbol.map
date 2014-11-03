@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/stdlib/Symbol.map 268943 2014-07-21 15:22:48Z pfg $
+ * $FreeBSD: head/lib/libc/stdlib/Symbol.map 270952 2014-09-01 22:25:42Z pfg $
  */
 
 FBSD_1.0 {
@@ -106,6 +106,7 @@ FBSD_1.3 {
 
 FBSD_1.4 {
 	atexit_b;
+	bsearch_b;
 	heapsort_b;
 	mergesort_b;
 	qsort_b;

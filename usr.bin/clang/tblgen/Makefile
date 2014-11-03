@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/tblgen/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.bin/clang/tblgen/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -41,7 +41,5 @@ SRCS=	AsmMatcherEmitter.cpp \
 
 LIBDEPS=llvmtablegen \
 	llvmsupport
-
-NO_PIE=	yes
 
 .include "../clang.prog.mk"

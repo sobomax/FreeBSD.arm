@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.h 269699 2014-08-08 01:57:15Z kevlo $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.h 273377 2014-10-21 07:31:21Z hselasky $	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-
@@ -86,7 +86,7 @@ struct secpolicy {
 	u_int state;			/* 0: dead, others: alive */
 #define IPSEC_SPSTATE_DEAD	0
 #define IPSEC_SPSTATE_ALIVE	1
-	u_int16_t policy;		/* policy_type per pfkeyv2.h */
+	u_int policy;			/* policy_type per pfkeyv2.h */
 	u_int16_t scangen;		/* scan generation # */
 	struct ipsecrequest *req;
 				/* pointer to the ipsec request tree, */

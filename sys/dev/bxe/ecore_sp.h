@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_sp.h 268854 2014-07-18 20:04:11Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_sp.h 271728 2014-09-17 22:49:29Z davidcs $");
 
 #ifndef ECORE_SP_H
 #define ECORE_SP_H
@@ -246,14 +246,23 @@ ECORE_CRC32_LE(uint32_t seed, uint8_t *mac, uint32_t len)
 
 #else
 
+extern unsigned long bxe_debug;
+
+#define BXE_DEBUG_ECORE_DBG_BREAK_IF   0x01
+#define BXE_DEBUG_ECORE_BUG            0x02
+#define BXE_DEBUG_ECORE_BUG_ON         0x04
+
 #define ECORE_DBG_BREAK_IF(exp)     \
-    printf("%s (%s,%d)\n", __FUNCTION__, __FILE__, __LINE__);
+    if (bxe_debug & BXE_DEBUG_ECORE_DBG_BREAK_IF) \
+        printf("%s (%s,%d)\n", __FUNCTION__, __FILE__, __LINE__);
 
 #define ECORE_BUG(exp)     \
-    printf("%s (%s,%d)\n", __FUNCTION__, __FILE__, __LINE__);
+    if (bxe_debug & BXE_DEBUG_ECORE_BUG) \
+        printf("%s (%s,%d)\n", __FUNCTION__, __FILE__, __LINE__);
 
 #define ECORE_BUG_ON(exp)     \
-    printf("%s (%s,%d)\n", __FUNCTION__, __FILE__, __LINE__);
+    if (bxe_debug & BXE_DEBUG_ECORE_BUG_ON) \
+        printf("%s (%s,%d)\n", __FUNCTION__, __FILE__, __LINE__);
 
 
 #endif /* #ifdef ECORE_STOP_ON_ERROR */

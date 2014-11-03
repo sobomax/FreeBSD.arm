@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/alc/if_alcvar.h 263957 2014-03-31 01:54:59Z yongari $
+ * $FreeBSD: head/sys/dev/alc/if_alcvar.h 272730 2014-10-08 05:47:01Z yongari $
  */
 
 #ifndef	_IF_ALCVAR_H
@@ -52,6 +52,10 @@
 /* Water mark to kick reclaiming Tx buffers. */
 #define	ALC_TX_DESC_HIWAT	((ALC_TX_RING_CNT * 6) / 10)
 
+/*
+ * AR816x controllers support up to 16 messages but this driver
+ * uses single message.
+ */
 #define	ALC_MSI_MESSAGES	1
 #define	ALC_MSIX_MESSAGES	1
 
@@ -224,12 +228,13 @@ struct alc_softc {
 #define	ALC_FLAG_PM		0x0010
 #define	ALC_FLAG_FASTETHER	0x0020
 #define	ALC_FLAG_JUMBO		0x0040
-#define	ALC_FLAG_ASPM_MON	0x0080
 #define	ALC_FLAG_CMB_BUG	0x0100
 #define	ALC_FLAG_SMB_BUG	0x0200
 #define	ALC_FLAG_L0S		0x0400
 #define	ALC_FLAG_L1S		0x0800
 #define	ALC_FLAG_APS		0x1000
+#define	ALC_FLAG_AR816X_FAMILY	0x2000
+#define	ALC_FLAG_LINK_WAR	0x4000
 #define	ALC_FLAG_LINK		0x8000
 
 	struct callout		alc_tick_ch;

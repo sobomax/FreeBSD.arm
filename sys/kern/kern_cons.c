@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_cons.c 268160 2014-07-02 14:47:48Z emaste $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_cons.c 271963 2014-09-22 14:27:26Z jhb $");
 
 #include "opt_ddb.h"
 #include "opt_syscons.h"
@@ -607,6 +607,7 @@ SYSINIT(cndev, SI_SUB_DRIVERS, SI_ORDER_MIDDLE, cn_drvinit, NULL);
 #ifdef HAS_TIMER_SPKR
 
 static int beeping;
+static struct callout beeping_timer;
 
 static void
 sysbeepstop(void *chan)
@@ -629,11 +630,18 @@ sysbeep(int pitch, int period)
 	timer_spkr_setfreq(pitch);
 	if (!beeping) {
 		beeping = period;
-		timeout(sysbeepstop, (void *)NULL, period);
+		callout_reset(&beeping_timer, period, sysbeepstop, NULL);
 	}
 	return (0);
 }
 
+static void
+sysbeep_init(void *unused)
+{
+
+	callout_init(&beeping_timer, CALLOUT_MPSAFE);
+}
+SYSINIT(sysbeep, SI_SUB_SOFTINTR, SI_ORDER_ANY, sysbeep_init, NULL);
 #else
 
 /*

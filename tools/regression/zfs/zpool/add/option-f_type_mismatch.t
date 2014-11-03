@@ -1,8 +1,10 @@
 #!/bin/sh
-# $FreeBSD: head/tools/regression/zfs/zpool/add/option-f_type_mismatch.t 185029 2008-11-17 20:49:29Z pjd $
+# $FreeBSD: head/tools/regression/zfs/zpool/add/option-f_type_mismatch.t 273632 2014-10-25 06:33:00Z ngie $
 
 dir=`dirname $0`
 . ${dir}/../../misc.sh
+
+[ "${os}" = "FreeBSD" ] && die "panics FreeBSD; see bug # 194587"
 
 echo "1..100"
 

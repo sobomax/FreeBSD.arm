@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/snc/dp83932.c 257391 2013-10-30 16:56:46Z andre $	*/
+/*	$FreeBSD: head/sys/dev/snc/dp83932.c 271821 2014-09-18 20:43:17Z glebius $	*/
 /*	$NecBSD: dp83932.c,v 1.5 1999/07/29 05:08:44 kmatsuda Exp $	*/
 /*	$NetBSD: if_snc.c,v 1.18 1998/04/25 21:27:40 scottr Exp $	*/
 
@@ -369,7 +369,7 @@ outloop:
 	sc->mtd_prev = sc->mtd_free;
 	sc->mtd_free = mtd_next;
 
-	ifp->if_opackets++;		/* # of pkts */
+	if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);		/* # of pkts */
 
 	/* Jump back for possibly more punishment. */
 	goto outloop;
@@ -935,11 +935,12 @@ sonictxint(struct snc_softc *sc)
 
 		txp_status = SRO(sc, txp, TXP_STATUS);
 
-		ifp->if_collisions += (txp_status & TCR_EXC) ? 16 :
-			((txp_status & TCR_NC) >> 12);
+		if_inc_counter(ifp, IFCOUNTER_COLLISIONS,
+		    (txp_status & TCR_EXC) ? 16 :
+		    ((txp_status & TCR_NC) >> 12));
 
 		if ((txp_status & TCR_PTX) == 0) {
-			ifp->if_oerrors++;
+			if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 			device_printf(sc->sc_dev, "Tx packet status=0x%x\n",
 				      txp_status);
 			
@@ -989,11 +990,11 @@ sonicrxint(struct snc_softc *sc)
 			u_int32_t pkt =
 			    sc->rbuf[orra & RBAMASK] + (rxpkt_ptr & PAGE_MASK);
 			if (sonic_read(sc, pkt, len))
-				sc->sc_ifp->if_ipackets++;
+				if_inc_counter(sc->sc_ifp, IFCOUNTER_IPACKETS, 1);
 			else
-				sc->sc_ifp->if_ierrors++;
+				if_inc_counter(sc->sc_ifp, IFCOUNTER_IERRORS, 1);
 		} else
-			sc->sc_ifp->if_ierrors++;
+			if_inc_counter(sc->sc_ifp, IFCOUNTER_IERRORS, 1);
 
 		/*
 		 * give receive buffer area back to chip.

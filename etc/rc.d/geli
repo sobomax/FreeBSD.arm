@@ -24,11 +24,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/geli 239595 2012-08-22 22:17:35Z delphij $
+# $FreeBSD: head/etc/rc.d/geli 273919 2014-10-31 22:20:27Z delphij $
 #
 
 # PROVIDE: disks
-# REQUIRE: initrandom
 # KEYWORD: nojail
 
 . /etc/rc.subr

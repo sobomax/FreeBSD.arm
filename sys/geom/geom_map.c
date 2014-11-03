@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_map.c 237875 2012-07-01 05:22:13Z imp $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_map.c 271442 2014-09-11 22:39:27Z sbruno $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -153,8 +153,8 @@ find_marker(struct g_consumer *cp, const char *line, off_t *offset)
 		return (1);
 
 	if (bootverbose) {
-		printf("MAP: search key \"%s\" from 0x%jx, step 0x%jx\n",
-		    search_key, (intmax_t)search_start, (intmax_t)search_step);
+		printf("MAP: search %s for key \"%s\" from 0x%jx, step 0x%jx\n",
+		    cp->geom->name, search_key, (intmax_t)search_start, (intmax_t)search_step);
 	}
 
 	/* error if search_key is empty */
@@ -321,9 +321,9 @@ g_map_parse_part(struct g_class *mp, struct g_provider *pp,
 	}
 
 	if (bootverbose) {
-		printf("MAP: %jxx%jx, data=%jxx%jx "
+		printf("MAP: %s: %jxx%jx, data=%jxx%jx "
 		    "\"/dev/map/%s\"\n",
-		    (intmax_t)start, (intmax_t)size, (intmax_t)offset,
+		    cp->geom->name, (intmax_t)start, (intmax_t)size, (intmax_t)offset,
 		    (intmax_t)dsize, name);
 	}
 

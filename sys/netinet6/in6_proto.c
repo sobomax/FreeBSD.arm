@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_proto.c 269699 2014-08-08 01:57:15Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_proto.c 270008 2014-08-15 02:43:02Z kevlo $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -233,7 +233,7 @@ struct protosw inet6sw[] = {
 	.pr_protocol =		IPPROTO_RAW,
 	.pr_flags =		PR_ATOMIC|PR_ADDR,
 	.pr_input =		rip6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctlinput =		rip6_ctlinput,
 	.pr_ctloutput =		rip6_ctloutput,
 #ifndef INET	/* Do not call initialization twice. */
@@ -247,7 +247,7 @@ struct protosw inet6sw[] = {
 	.pr_protocol =		IPPROTO_ICMPV6,
 	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
 	.pr_input =		icmp6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctlinput =		rip6_ctlinput,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_fasttimo =		icmp6_fasttimo,
@@ -312,7 +312,7 @@ struct protosw inet6sw[] = {
 	.pr_protocol =		IPPROTO_IPV4,
 	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
 	.pr_input =		encap6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_init =		encap_init,
 	.pr_usrreqs =		&rip6_usrreqs
@@ -324,7 +324,7 @@ struct protosw inet6sw[] = {
 	.pr_protocol =		IPPROTO_IPV6,
 	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
 	.pr_input =		encap6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_init =		encap_init,
 	.pr_usrreqs =		&rip6_usrreqs
@@ -335,7 +335,7 @@ struct protosw inet6sw[] = {
 	.pr_protocol =		IPPROTO_PIM,
 	.pr_flags =		PR_ATOMIC|PR_ADDR|PR_LASTHDR,
 	.pr_input =		encap6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_usrreqs =		&rip6_usrreqs
 },
@@ -354,7 +354,7 @@ IP6PROTOSPACER,
 	.pr_domain =		&inet6domain,
 	.pr_flags =		PR_ATOMIC|PR_ADDR,
 	.pr_input =		rip6_input,
-	.pr_output =		(pr_output_t *)rip6_output,
+	.pr_output =		rip6_output,
 	.pr_ctloutput =		rip6_ctloutput,
 	.pr_usrreqs =		&rip6_usrreqs
 },

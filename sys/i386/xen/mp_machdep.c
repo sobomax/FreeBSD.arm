@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/xen/mp_machdep.c 264984 2014-04-26 20:27:54Z scottl $");
+__FBSDID("$FreeBSD: head/sys/i386/xen/mp_machdep.c 271409 2014-09-10 21:37:47Z jhb $");
 
 #include "opt_apic.h"
 #include "opt_cpu.h"
@@ -598,22 +598,13 @@ init_secondary(void)
 	for (addr = 0; addr < NKPT * NBPDR - 1; addr += PAGE_SIZE)
 		invlpg(addr);
 
+#if 0
+	/* set up SSE/NX */
+	initializecpu();
+#endif
+
 	/* set up FPU state on the AP */
 	npxinit();
-#if 0
-	
-	/* set up SSE registers */
-	enable_sse();
-#endif
-#if 0 && defined(PAE)
-	/* Enable the PTE no-execute bit. */
-	if ((amd_feature & AMDID_NX) != 0) {
-		uint64_t msr;
-
-		msr = rdmsr(MSR_EFER) | EFER_NXE;
-		wrmsr(MSR_EFER, msr);
-	}
-#endif
 #if 0
 	/* A quick check from sanity claus */
 	if (PCPU_GET(apic_id) != lapic_id()) {

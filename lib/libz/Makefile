@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libz/Makefile 267378 2014-06-11 20:48:40Z delphij $
+# $FreeBSD: head/lib/libz/Makefile 273756 2014-10-27 23:43:25Z jmg $
 #
 
 LIB=		z
@@ -68,9 +68,11 @@ test: example minigzip
 	(export LD_LIBRARY_PATH=. ; \
 		echo hello world | ./minigzip | ./minigzip -d )
 
+.ifndef COMPAT_32BIT
 beforeinstall:
 	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
 		${.CURDIR}/zlib.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
+.endif
 
 .include <bsd.lib.mk>
 

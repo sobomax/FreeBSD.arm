@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit.c 245796 2013-01-22 17:06:28Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit.c 271539 2014-09-13 18:24:54Z nwhitehorn $
  */
 
 #include <sys/param.h>
@@ -95,7 +95,12 @@ main(int argc, const char **argv)
 	if (strcmp(basename(argv[0]), "autopart") == 0) { /* Guided */
 		prompt = "Please review the disk setup. When complete, press "
 		    "the Finish button.";
-		part_wizard();
+		/* Experimental ZFS autopartition support */
+		if (argc > 1 && strcmp(argv[1], "zfs") == 0) {
+			part_wizard("zfs");
+		} else {
+			part_wizard("ufs");
+		}
 	} else if (strcmp(basename(argv[0]), "scriptedpart") == 0) {
 		error = scripted_editor(argc, argv);
 		prompt = NULL;
@@ -162,7 +167,7 @@ main(int argc, const char **argv)
 			init_fstab_metadata();
 			break;
 		case 4: /* Auto */
-			part_wizard();
+			part_wizard("ufs");
 			break;
 		}
 

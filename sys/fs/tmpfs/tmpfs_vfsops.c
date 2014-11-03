@@ -41,7 +41,7 @@
  * allocate and release resources.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_vfsops.c 268617 2014-07-14 09:52:33Z kib $");
+__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_vfsops.c 273430 2014-10-21 21:27:13Z mjg $");
 
 #include <sys/param.h>
 #include <sys/limits.h>
@@ -255,6 +255,7 @@ tmpfs_mount(struct mount *mp)
 
 	MNT_ILOCK(mp);
 	mp->mnt_flag |= MNT_LOCAL;
+	mp->mnt_kern_flag |= MNTK_LOOKUP_SHARED | MNTK_SUSPENDABLE;
 	MNT_IUNLOCK(mp);
 
 	mp->mnt_data = tmp;

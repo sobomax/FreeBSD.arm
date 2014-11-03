@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_error.h#1 $
- * $FreeBSD: head/sys/cam/ctl/ctl_error.h 268418 2014-07-08 16:38:05Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_error.h 273809 2014-10-29 03:14:29Z mav $
  */
 /*
  * Function definitions for various error reporting routines used both
@@ -55,7 +55,7 @@ void ctl_sense_to_desc(struct scsi_sense_data_fixed *sense_src,
 void ctl_sense_to_fixed(struct scsi_sense_data_desc *sense_src,
 			struct scsi_sense_data_fixed *sense_dest);
 void ctl_set_ua(struct ctl_scsiio *ctsio, int asc, int ascq);
-ctl_ua_type ctl_build_ua(ctl_ua_type ua_type, struct scsi_sense_data *sense,
+ctl_ua_type ctl_build_ua(ctl_ua_type *ua_type, struct scsi_sense_data *sense,
 			 scsi_sense_data_type sense_format);
 void ctl_set_overlapped_cmd(struct ctl_scsiio *ctsio);
 void ctl_set_overlapped_tag(struct ctl_scsiio *ctsio, uint8_t tag);
@@ -81,6 +81,7 @@ void ctl_set_reservation_conflict(struct ctl_scsiio *ctsio);
 void ctl_set_queue_full(struct ctl_scsiio *ctsio);
 void ctl_set_busy(struct ctl_scsiio *ctsio);
 void ctl_set_task_aborted(struct ctl_scsiio *ctsio);
+void ctl_set_space_alloc_fail(struct ctl_scsiio *ctsio);
 void ctl_set_success(struct ctl_scsiio *ctsio);
 
 #endif	/* _CTL_ERROR_H_ */

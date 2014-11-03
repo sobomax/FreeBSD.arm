@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/octeon_gpio.c 249449 2013-04-13 21:21:13Z dim $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/octeon_gpio.c 273799 2014-10-28 18:33:59Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -441,8 +441,9 @@ octeon_gpio_attach(device_t dev)
 		}
 	}
 
-	device_add_child(dev, "gpioc", device_get_unit(dev));
-	device_add_child(dev, "gpiobus", device_get_unit(dev));
+	device_add_child(dev, "gpioc", -1);
+	device_add_child(dev, "gpiobus", -1);
+
 	return (bus_generic_attach(dev));
 }
 

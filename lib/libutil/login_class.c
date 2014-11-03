@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libutil/login_class.c 256850 2013-10-21 16:46:12Z kib $");
+__FBSDID("$FreeBSD: head/lib/libutil/login_class.c 273837 2014-10-29 20:18:37Z dim $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -424,7 +424,7 @@ setlogincontext(login_cap_t *lc, const struct passwd *pwd,
 int
 setusercontext(login_cap_t *lc, const struct passwd *pwd, uid_t uid, unsigned int flags)
 {
-    quad_t	p;
+    rlim_t	p;
     mode_t	mymask;
     login_cap_t *llc = NULL;
     struct sigaction sa, prevsa;
@@ -449,16 +449,16 @@ setusercontext(login_cap_t *lc, const struct passwd *pwd, uid_t uid, unsigned in
 
 	if (p > PRIO_MAX) {
 	    rtp.type = RTP_PRIO_IDLE;
-	    rtp.prio = p - PRIO_MAX - 1;
-	    p = (rtp.prio > RTP_PRIO_MAX) ? 31 : p;
+	    p -= PRIO_MAX + 1;
+	    rtp.prio = p > RTP_PRIO_MAX ? RTP_PRIO_MAX : p;
 	    if (rtprio(RTP_SET, 0, &rtp))
 		syslog(LOG_WARNING, "rtprio '%s' (%s): %m",
 		    pwd ? pwd->pw_name : "-",
 		    lc ? lc->lc_class : LOGIN_DEFCLASS);
 	} else if (p < PRIO_MIN) {
 	    rtp.type = RTP_PRIO_REALTIME;
-	    rtp.prio = abs(p - PRIO_MIN + RTP_PRIO_MAX);
-	    p = (rtp.prio > RTP_PRIO_MAX) ? 1 : p;
+	    p -= PRIO_MIN - RTP_PRIO_MAX;
+	    rtp.prio = p < RTP_PRIO_MIN ? RTP_PRIO_MIN : p;
 	    if (rtprio(RTP_SET, 0, &rtp))
 		syslog(LOG_WARNING, "rtprio '%s' (%s): %m",
 		    pwd ? pwd->pw_name : "-",

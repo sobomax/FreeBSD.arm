@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)col.c	8.5 (Berkeley) 5/4/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/col/col.c 227157 2011-11-06 08:14:22Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/col/col.c 273242 2014-10-17 21:09:03Z jmg $");
 
 #include <err.h>
 #include <locale.h>
@@ -378,7 +378,7 @@ flush_blanks(void)
 		PUTC('\n');
 	if (half) {
 		PUTC('\033');
-		PUTC('9');
+		PUTC('\011');
 		if (!nb)
 			PUTC('\r');
 	}

@@ -18,11 +18,11 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/BEAGLEBONE 266647 2014-05-25 10:17:26Z andrew $
+# $FreeBSD: head/sys/arm/conf/BEAGLEBONE 273258 2014-10-18 17:00:55Z rpaulo $
 
 ident		BEAGLEBONE
 
-include		"../ti/am335x/std.beaglebone"
+include		"../ti/am335x/std.am335x"
 
 makeoptions	WITHOUT_MODULES="ahc"
 
@@ -108,6 +108,18 @@ device		gpioled
 # ADC support
 device		ti_adc
 
+# Watchdog support
+# If we don't enable the watchdog driver, the system could potentially
+# reboot automatically because the boot loader might have enabled the
+# watchdog.
+device		ti_wdt
+
+# TI Programmable Realtime Unit support
+device		ti_pruss
+
+# Mailbox support
+device		ti_mbox
+
 # USB support
 device		usb
 options 	USB_HOST_ALIGN=64	# Align usb buffers to cache line size.
@@ -116,7 +128,7 @@ options 	USB_DEBUG
 #options 	USB_VERBOSE
 device		musb
 device		umass
-device		scbus			# SCSI bus (required for SCSI)
+device		scbus			# SCSI bus (required for ATA/SCSI)
 device		da			# Direct Access (disks)
 
 # Ethernet

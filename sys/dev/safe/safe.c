@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 267340 2014-06-10 20:25:45Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 273808 2014-10-29 02:23:50Z jmg $");
 
 /*
  * SafeNet SafeXcel-1141 hardware crypto accelerator
@@ -1811,8 +1811,8 @@ safe_dma_malloc(
 			     BUS_DMA_NOWAIT, &dma->dma_map);
 	if (r != 0) {
 		device_printf(sc->sc_dev, "safe_dma_malloc: "
-			"bus_dmammem_alloc failed; size %zu, error %u\n",
-			size, r);
+			"bus_dmammem_alloc failed; size %ju, error %u\n",
+			(uintmax_t)size, r);
 		goto fail_1;
 	}
 

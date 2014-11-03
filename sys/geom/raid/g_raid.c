@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/g_raid.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/g_raid.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1656,7 +1656,7 @@ g_raid_launch_provider(struct g_raid_volume *vol)
                         "kern.devalias.%s", name);
                 snprintf(buf1, sizeof(buf1),
                         "ar%d", vol->v_global_id);
-                setenv(announce_buf, buf1);
+                kern_setenv(announce_buf, buf1);
         }
 
 	pp = g_new_providerf(sc->sc_geom, "%s", name);

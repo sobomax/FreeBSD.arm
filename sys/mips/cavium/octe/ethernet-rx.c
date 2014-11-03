@@ -28,7 +28,7 @@ AND WITH ALL FAULTS AND CAVIUM  NETWORKS MAKES NO PROMISES, REPRESENTATIONS OR W
 *************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/octe/ethernet-rx.c 257324 2013-10-29 11:17:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/octe/ethernet-rx.c 271858 2014-09-19 09:19:49Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -304,7 +304,7 @@ void cvm_oct_tasklet_rx(void *context, int pending)
 					m->m_pkthdr.csum_flags = 0; /* XXX */
 				}
 
-				ifp->if_ipackets++;
+				if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 
 				(*ifp->if_input)(ifp, m);
 			} else {

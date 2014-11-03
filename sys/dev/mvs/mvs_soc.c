@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs_soc.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs_soc.c 271461 2014-09-12 12:04:51Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -114,6 +114,7 @@ mvs_attach(device_t dev)
 		i++;
 	ctlr->channels = mvs_ids[i].ports;
 	ctlr->quirks = mvs_ids[i].quirks;
+	ctlr->ccc = 0;
 	resource_int_value(device_get_name(dev),
 	    device_get_unit(dev), "ccc", &ctlr->ccc);
 	ctlr->cccc = 8;

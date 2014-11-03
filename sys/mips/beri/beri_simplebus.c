@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/beri/beri_simplebus.c 264904 2014-04-24 23:28:09Z brooks $");
+__FBSDID("$FreeBSD: head/sys/mips/beri/beri_simplebus.c 272109 2014-09-25 15:02:33Z ian $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -198,7 +198,7 @@ simplebus_attach(device_t dev)
 			continue;
 		}
 
-		if (fdt_intr_to_rl(dev, dt_child, &di->di_res, di->di_intr_sl)) {
+		if (ofw_bus_intr_to_rl(dev, dt_child, &di->di_res)) {
 			device_printf(dev, "%s: could not process "
 			    "'interrupts' property\n", di->di_ofw.obd_name);
 			resource_list_free(&di->di_res);
@@ -351,7 +351,7 @@ simplebus_get_interrupt_parent(device_t dev)
 
 	if (OF_getencprop(di->di_ofw.obd_node, "interrupt-parent", &iph,
 	    sizeof(iph)) > 0) {
-		ph = OF_xref_phandle(iph);
+		ph = OF_node_from_xref(iph);
 		SLIST_FOREACH(ic, &fdt_ic_list_head, fdt_ics) {
 			if (ic->iph == ph) {
 				ip = ic->dev;

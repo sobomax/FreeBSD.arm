@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_machdep.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_machdep.c 272712 2014-10-07 17:39:30Z br $");
 
 #define	_ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -77,6 +77,9 @@ platform_devmap_init(void)
 
 	/* UART */
 	arm_devmap_add_entry(0x12C00000, 0x100000);
+
+	/* DWMMC */
+	arm_devmap_add_entry(0x12200000, 0x100000);
 
 	return (0);
 }

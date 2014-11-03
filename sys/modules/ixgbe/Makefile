@@ -1,4 +1,4 @@
-#$FreeBSD: head/sys/modules/ixgbe/Makefile 269540 2014-08-04 22:37:02Z imp $
+#$FreeBSD: head/sys/modules/ixgbe/Makefile 271649 2014-09-15 21:09:19Z adrian $
 
 .PATH:  ${.CURDIR}/../../dev/ixgbe
 
@@ -10,6 +10,6 @@ SRCS    += ixgbe.c ixv.c
 SRCS    += ixgbe_common.c ixgbe_api.c ixgbe_phy.c ixgbe_mbx.c ixgbe_vf.c
 SRCS    += ixgbe_dcb.c ixgbe_dcb_82598.c ixgbe_dcb_82599.c
 SRCS    += ixgbe_82599.c ixgbe_82598.c ixgbe_x540.c
-CFLAGS+= -I${.CURDIR}/../../dev/ixgbe -DSMP -DIXGBE_FDIR
+CFLAGS+= -I${.CURDIR}/../../dev/ixgbe -DSMP
 
 .include <bsd.kmod.mk>

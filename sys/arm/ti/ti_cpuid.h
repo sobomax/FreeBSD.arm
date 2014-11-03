@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_cpuid.h 245137 2013-01-07 23:30:53Z gonzo $
+ * $FreeBSD: head/sys/arm/ti/ti_cpuid.h 273041 2014-10-13 15:35:08Z andrew $
  */
 
 #ifndef _TI_CPUID_H_
@@ -67,16 +67,13 @@
 
 #define	AM335X_DEVREV(x)	((x) >> 28)
 
-#define	CHIP_OMAP_3	0
-#define	CHIP_OMAP_4	1
-#define	CHIP_AM335X	2
+#define	CHIP_OMAP_4	0
+#define	CHIP_AM335X	1
 
 static __inline int ti_chip(void)
 {
 #if defined(SOC_OMAP4)
 	return CHIP_OMAP_4;
-#elif defined(SOC_OMAP3)
-	return CHIP_OMAP_3;
 #elif defined(SOC_TI_AM335X)
 	return CHIP_AM335X;
 #else

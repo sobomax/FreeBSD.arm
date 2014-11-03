@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/groff/src/preproc/pic/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/groff/src/preproc/pic/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG_CXX=	pic
 SRCS=		lex.cpp main.cpp object.cpp pic.cpp pic_tab.h \
@@ -7,8 +7,6 @@ CFLAGS+=	-I${DIST_DIR} -I.
 DPADD=		${LIBGROFF} ${LIBM}
 LDADD=		${LIBGROFF} -lm
 CLEANFILES=	${MAN} pic.cpp pic_tab.h y.tab.c y.tab.h
-
-NO_PIE=	yes
 
 pic_tab.h: pic.cpp
 

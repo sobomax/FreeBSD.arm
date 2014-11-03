@@ -38,7 +38,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)ifconfig.c	8.2 (Berkeley) 2/16/94";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifconfig.c 269888 2014-08-12 19:37:49Z gjb $";
+  "$FreeBSD: head/sbin/ifconfig/ifconfig.c 272448 2014-10-02 20:17:16Z hrs $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -1010,6 +1010,9 @@ status(const struct afswtch *afp, const struct sockaddr_dl *sdl,
 	strncpy(ifs.ifs_name, name, sizeof ifs.ifs_name);
 	if (ioctl(s, SIOCGIFSTATUS, &ifs) == 0) 
 		printf("%s", ifs.ascii);
+
+	if (verbose > 0)
+		sfp_status(s, &ifr, verbose);
 
 	close(s);
 	return;

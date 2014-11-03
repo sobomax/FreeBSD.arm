@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: in6_gif.h,v 1.5 2000/04/14 08:36:03 itojun Exp $
- * $FreeBSD: head/sys/netinet6/in6_gif.h 241916 2012-10-22 21:49:56Z delphij $
+ * $FreeBSD: head/sys/netinet6/in6_gif.h 273087 2014-10-14 13:31:47Z ae $
  */
 
 #ifndef _NETINET6_IN6_GIF_H_
@@ -37,9 +37,8 @@
 
 struct gif_softc;
 int in6_gif_input(struct mbuf **, int *, int);
-int in6_gif_output(struct ifnet *, int, struct mbuf *);
-int gif_encapcheck6(const struct mbuf *, int, int, void *);
+int in6_gif_output(struct ifnet *, struct mbuf *, int, uint8_t);
+int in6_gif_encapcheck(const struct mbuf *, int, int, void *);
 int in6_gif_attach(struct gif_softc *);
-int in6_gif_detach(struct gif_softc *);
 
 #endif /* _NETINET6_IN6_GIF_H_ */

@@ -1,2 +1,0 @@
-.\" $FreeBSD: head/tools/build/options/WITH_PIE 267233 2014-06-08 17:29:31Z bdrewery $
-Enable building of Position-Independent Executables (PIEs).

@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/tools/sched/schedgraph.py 187580 2009-01-22 06:21:30Z jeff $
+# $FreeBSD: head/tools/sched/schedgraph.py 272757 2014-10-08 16:22:59Z jhb $
 
 import sys
 import re
@@ -80,8 +80,6 @@ eventcolors = [
 	("runq rem",	"yellow"),
 	("thread exit",	"grey"),
 	("proc exit",	"grey"),
-	("callwheel idle", "grey"),
-	("callout running", "green"),
 	("lock acquire", "blue"),
 	("lock contest", "purple"),
 	("failed lock try", "red"),
@@ -856,7 +854,7 @@ class EventSource:
 		return (Y_EVENTSOURCE)
 
 	def eventat(self, i):
-		if (i >= len(self.events)):
+		if (i >= len(self.events) or i < 0):
 			return (None)
 		event = self.events[i]
 		return (event)
@@ -903,7 +901,6 @@ class KTRFile:
 		self.timestamp_f = None
 		self.timestamp_l = None
 		self.locks = {}
-		self.callwheels = {}
 		self.ticks = {}
 		self.load = {}
 		self.crit = {}

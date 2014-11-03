@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 269153 2014-07-27 16:12:51Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 271406 2014-09-10 21:07:00Z imp $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -182,6 +182,9 @@ main(void)
 
     /* detect SMBIOS for future reference */
     smbios_detect();
+
+    /* detect PCI BIOS for future reference */
+    biospci_detect();
 
     printf("\n");
     printf("%s, Revision %s\n", bootprog_name, bootprog_rev);

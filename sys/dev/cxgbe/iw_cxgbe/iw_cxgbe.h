@@ -28,7 +28,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 256694 2013-10-17 18:37:25Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 273135 2014-10-15 13:40:29Z hselasky $
  */
 #ifndef __IW_CXGB4_H__
 #define __IW_CXGB4_H__
@@ -41,7 +41,6 @@
 #include <linux/sched.h>
 #include <linux/pci.h>
 #include <linux/dma-mapping.h>
-#include <linux/inet.h>
 #include <linux/wait.h>
 #include <linux/kref.h>
 #include <linux/timer.h>

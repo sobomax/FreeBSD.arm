@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if.h 269243 2014-07-29 15:01:29Z glebius $
+ * $FreeBSD: head/sys/net/if.h 270822 2014-08-29 18:02:58Z melifaro $
  */
 
 #ifndef _NET_IF_H_
@@ -509,6 +509,19 @@ struct ifgroupreq {
 #define ifgr_group	ifgr_ifgru.ifgru_group
 #define ifgr_groups	ifgr_ifgru.ifgru_groups
 };
+
+/*
+ * Structure used to request i2c data
+ * from interface transceivers.
+ */
+struct ifi2creq {
+	uint8_t dev_addr;	/* i2c address (0xA0, 0xA2) */
+	uint8_t offset;		/* read offset */
+	uint8_t len;		/* read length */
+	uint8_t spare0;
+	uint32_t spare1;
+	uint8_t data[8];	/* read buffer */
+}; 
 
 #endif /* __BSD_VISIBLE */
 

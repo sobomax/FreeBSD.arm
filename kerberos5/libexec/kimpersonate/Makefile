@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kimpersonate/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kimpersonate/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kimpersonate
 MAN=	kimpersonate.8
@@ -10,8 +10,6 @@ DPADD=	${LIBKAFS5} ${LIBKRB5} ${LIBHEIMNTLM} ${LIBROKEN} ${LIBASN1} ${LIBCRYPTO}
 	${LIBCRYPT} ${LIBVERS}
 LDADD=	-lkafs5 -lkrb5 -lheimntlm -lroken -lasn1 -lcrypto -lcrypt \
 	${LIBVERS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

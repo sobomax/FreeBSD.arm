@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_dump.c 258683 2013-11-27 14:25:06Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_dump.c 273208 2014-10-17 06:58:04Z ae $");
 
 #include <sys/param.h>
 #include <sys/sbuf.h>
@@ -61,8 +61,9 @@ static void
 g_confdot_provider(struct sbuf *sb, struct g_provider *pp)
 {
 
-	sbuf_printf(sb, "z%p [shape=hexagon,label=\"%s\\nr%dw%de%d\\nerr#%d\"];\n",
-	    pp, pp->name, pp->acr, pp->acw, pp->ace, pp->error);
+	sbuf_printf(sb, "z%p [shape=hexagon,label=\"%s\\nr%dw%de%d\\nerr#%d\\n"
+	    "sector=%u\\nstripe=%u\"];\n", pp, pp->name, pp->acr, pp->acw,
+	    pp->ace, pp->error, pp->sectorsize, pp->stripesize);
 }
 
 static void

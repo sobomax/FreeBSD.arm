@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/telnet/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/telnet/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -12,8 +12,6 @@ SRCS=		commands.c main.c network.c ring.c sys_bsd.c \
 
 CFLAGS+=	-DKLUDGELINEMODE -DUSE_TERMIO -DENV_HACK -DOPIE \
 		-I${TELNETDIR} -I${TELNETDIR}/libtelnet/
-
-NO_PIE=	yes
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=	-DINET6

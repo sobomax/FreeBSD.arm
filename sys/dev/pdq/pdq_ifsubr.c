@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pdq/pdq_ifsubr.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/pdq/pdq_ifsubr.c 271822 2014-09-18 20:44:53Z glebius $");
 
 /*
  * DEC PDQ FDDI Controller; code for BSD derived operating systems
@@ -229,7 +229,7 @@ pdq_os_receive_pdu(
     struct ifnet *ifp = PDQ_IFNET(sc);
     struct fddi_header *fh;
 
-    ifp->if_ipackets++;
+    if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 #if defined(PDQ_BUS_DMA)
     {
 	/*
@@ -251,8 +251,8 @@ pdq_os_receive_pdu(
     m->m_pkthdr.len = pktlen;
     fh = mtod(m, struct fddi_header *);
     if (drop || (fh->fddi_fc & (FDDIFC_L|FDDIFC_F)) != FDDIFC_LLC_ASYNC) {
-	ifp->if_iqdrops++;
-	ifp->if_ierrors++;
+	if_inc_counter(ifp, IFCOUNTER_IQDROPS, 1);
+	if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 	PDQ_OS_DATABUF_FREE(pdq, m);
 	return;
     }
@@ -289,7 +289,7 @@ pdq_os_transmit_done(
 	PDQ_BPF_MTAP(sc, m);
 #endif
     PDQ_OS_DATABUF_FREE(pdq, m);
-    PDQ_IFNET(sc)->if_opackets++;
+    if_inc_counter(PDQ_IFNET(sc), IFCOUNTER_OPACKETS, 1);
 }
 
 void

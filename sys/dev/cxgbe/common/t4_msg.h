@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/common/t4_msg.h 252711 2013-07-04 18:41:21Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/common/t4_msg.h 272719 2014-10-07 21:26:22Z np $
  *
  */
 
@@ -273,6 +273,7 @@ union opcode_tid {
 
 /* extract the TID from a CPL command */
 #define GET_TID(cmd) (G_TID(ntohl(OPCODE_TID(cmd))))
+#define GET_OPCODE(cmd) ((cmd)->ot.opcode)
 
 /* partitioning of TID fields that also carry a queue id */
 #define S_TID_TID    0

@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_chd.c 220592 2011-04-13 11:28:46Z pluknet $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_chd.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -484,11 +484,11 @@ SYSCTL_VNET_PROC(_net_inet_tcp_cc_chd, OID_AUTO, queue_threshold,
     "IU", "Queueing congestion threshold in ticks");
 
 SYSCTL_VNET_UINT(_net_inet_tcp_cc_chd, OID_AUTO, queue_min,
-    CTLTYPE_UINT|CTLFLAG_RW, &VNET_NAME(chd_qmin), 5,
+    CTLFLAG_RW, &VNET_NAME(chd_qmin), 5,
     "Minimum queueing delay threshold in ticks");
 
 SYSCTL_VNET_UINT(_net_inet_tcp_cc_chd,  OID_AUTO, use_max,
-    CTLTYPE_UINT|CTLFLAG_RW, &VNET_NAME(chd_use_max), 1,
+    CTLFLAG_RW, &VNET_NAME(chd_use_max), 1,
     "Use the maximum RTT seen within the measurement period (RTT) "
     "as the basic delay measurement for the algorithm.");
 

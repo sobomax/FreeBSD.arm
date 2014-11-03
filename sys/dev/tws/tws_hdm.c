@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/tws/tws_hdm.c 247551 2013-03-01 15:48:31Z kevlo $
+ * $FreeBSD: head/sys/dev/tws/tws_hdm.c 272000 2014-09-22 20:38:01Z jhb $
  */
 
 
@@ -161,7 +161,7 @@ tws_init_connect(struct tws_softc *sc, u_int16_t mcreadits )
     req->error_code = TWS_REQ_RET_INVALID;
     req->cb = NULL;
     req->ccb_ptr = NULL;
-    req->thandle.callout = NULL;
+    callout_stop(&req->timeout);
     req->next = req->prev = NULL;
     req->state = TWS_REQ_STATE_BUSY;
 #endif // 0

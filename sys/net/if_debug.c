@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_debug.c 223735 2011-07-03 12:22:02Z bz $");
+__FBSDID("$FreeBSD: head/sys/net/if_debug.c 271856 2014-09-19 09:01:19Z glebius $");
 
 #include "opt_ddb.h"
 
@@ -79,7 +79,6 @@ if_show_ifnet(struct ifnet *ifp)
 	IF_DB_PRINTF("%p", if_snd.ifq_tail);
 	IF_DB_PRINTF("%d", if_snd.ifq_len);
 	IF_DB_PRINTF("%d", if_snd.ifq_maxlen);
-	IF_DB_PRINTF("%d", if_snd.ifq_drops);
 	IF_DB_PRINTF("%p", if_snd.ifq_drv_head);
 	IF_DB_PRINTF("%p", if_snd.ifq_drv_tail);
 	IF_DB_PRINTF("%d", if_snd.ifq_drv_len);

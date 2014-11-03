@@ -82,7 +82,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 269746 2014-08-09 05:00:34Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include "opt_vm.h"
 
@@ -453,7 +453,7 @@ vm_page_startup(vm_offset_t vaddr)
 	 */
 	vm_cnt.v_page_count = 0;
 	vm_cnt.v_free_count = 0;
-	list = getenv("vm.blacklist");
+	list = kern_getenv("vm.blacklist");
 	for (i = 0; phys_avail[i + 1] != 0; i += 2) {
 		pa = phys_avail[i];
 		last_pa = phys_avail[i + 1];
@@ -2501,7 +2501,7 @@ vm_page_cache(vm_page_t m)
 	    (object->type == OBJT_SWAP &&
 	    !vm_pager_has_page(object, m->pindex, NULL, NULL))) {
 		/*
-		 * Hypothesis: A cache-elgible page belonging to a
+		 * Hypothesis: A cache-eligible page belonging to a
 		 * default object or swap object but without a backing
 		 * store must be zero filled.
 		 */

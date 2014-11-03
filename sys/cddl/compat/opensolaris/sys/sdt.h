@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/sdt.h 258625 2013-11-26 08:49:53Z avg $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/sdt.h 271802 2014-09-18 20:00:36Z smh $
  */
 
 #ifndef _OPENSOLARIS_SYS_SDT_H_
@@ -31,6 +31,15 @@
 
 #include_next <sys/sdt.h>
 
-#define	SET_ERROR(err)	(err)
+#ifdef KDTRACE_HOOKS
+SDT_PROBE_DECLARE(sdt, , , set__error);
+
+#define SET_ERROR(err) \
+	((sdt_sdt___set__error->id ? \
+	(*sdt_probe_func)(sdt_sdt___set__error->id, \
+	    (uintptr_t)err, 0, 0, 0, 0) : 0), err)
+#else
+#define SET_ERROR(err) (err)
+#endif
 
 #endif	/* _OPENSOLARIS_SYS_SDT_H_ */

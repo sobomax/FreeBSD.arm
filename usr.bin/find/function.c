@@ -37,7 +37,7 @@ static const char sccsid[] = "@(#)function.c	8.10 (Berkeley) 5/4/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/find/function.c 264418 2014-04-13 19:48:51Z brueffer $");
+__FBSDID("$FreeBSD: head/usr.bin/find/function.c 272762 2014-10-08 17:40:58Z emaste $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -1506,7 +1506,7 @@ c_size(OPTION *option, char ***argvp)
 			scale = 0x40000000LL;
 			break;
 		case 'T':                       /* terabytes 1<<40 */
-			scale = 0x1000000000LL;
+			scale = 0x10000000000LL;
 			break;
 		case 'P':                       /* petabytes 1<<50 */
 			scale = 0x4000000000000LL;

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/libexec/save-entropy/save-entropy.sh 268979 2014-07-22 06:40:27Z delphij $
+# $FreeBSD: head/libexec/save-entropy/save-entropy.sh 273872 2014-10-30 21:21:53Z markm $
 
 # This script is called by cron to store bits of randomness which are
 # then used to seed /dev/random on boot.
@@ -53,7 +53,7 @@ case ${entropy_dir} in
 	;;
 esac
 
-entropy_save_sz=${entropy_save_sz:-2048}
+entropy_save_sz=${entropy_save_sz:-4096}
 entropy_save_num=${entropy_save_num:-8}
 
 if [ ! -d "${entropy_dir}" ]; then

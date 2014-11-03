@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/fifolog/fifolog_create/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/fifolog/fifolog_create/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	fifolog_create
 
@@ -11,8 +11,6 @@ MAN=	fifolog.1
 MLINKS=	fifolog.1 fifolog_create.1 \
 	fifolog.1 fifolog_reader.1 \
 	fifolog.1 fifolog_writer.1
-
-NO_PIE=	yes
 
 regress:
 	rm -f /tmp/fifolog.?

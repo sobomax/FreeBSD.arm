@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/gpio/gpiobus_if.m 213237 2010-09-28 03:24:53Z gonzo $
+# $FreeBSD: head/sys/dev/gpio/gpiobus_if.m 273917 2014-10-31 19:15:14Z loos $
 #
 
 #include <sys/bus.h>
@@ -32,25 +32,12 @@
 INTERFACE gpiobus;
 
 #
-# Lock the gpio bus
-#
-METHOD void lock_bus {
-	device_t busdev;
-};
-
-#
-# Unlock the gpio bus
-#
-METHOD void unlock_bus {
-	device_t busdev;
-};
-
-#
 # Dedicate the gpio bus control for a child
 #
-METHOD void acquire_bus {
+METHOD int acquire_bus {
 	device_t busdev;
 	device_t dev;
+	int how;
 };
 
 #

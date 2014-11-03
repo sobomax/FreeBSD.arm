@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/Makefile.amd64 252356 2013-06-28 21:00:08Z davide $
+# $FreeBSD: head/usr.sbin/Makefile.amd64 271493 2014-09-13 02:15:31Z delphij $
 
 # kgzip: builds, but missing support files
 # mptable: broken (not 64 bit clean)
@@ -18,6 +18,9 @@ SUBDIR+=	boot0cfg
 SUBDIR+=	btxld
 .endif
 SUBDIR+=	cpucontrol
+.if ${MK_HYPERV} != "no"
+SUBDIR+=	hyperv
+.endif
 SUBDIR+=	kgmon
 SUBDIR+=	lptcontrol
 SUBDIR+=	mount_smbfs

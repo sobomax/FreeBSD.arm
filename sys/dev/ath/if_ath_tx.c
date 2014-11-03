@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tx.c 265115 2014-04-30 02:19:41Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tx.c 271823 2014-09-18 20:47:39Z glebius $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -2424,7 +2424,7 @@ ath_raw_xmit(struct ieee80211_node *ni, struct mbuf *m,
 		}
 	}
 	sc->sc_wd_timer = 5;
-	ifp->if_opackets++;
+	if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 	sc->sc_stats.ast_tx_raw++;
 
 	/*
@@ -2473,7 +2473,7 @@ bad:
 badbad:
 	ATH_KTR(sc, ATH_KTR_TX, 2, "ath_raw_xmit: bad0: m=%p, params=%p",
 	    m, params);
-	ifp->if_oerrors++;
+	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	sc->sc_stats.ast_tx_raw_fail++;
 	ieee80211_free_node(ni);
 

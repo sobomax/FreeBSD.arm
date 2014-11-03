@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/tools/regression/acltools/01.t 219267 2011-03-04 17:10:39Z trasz $
+# $FreeBSD: head/tools/regression/acltools/01.t 271459 2014-09-12 09:50:32Z trasz $
 #
 
 # This is a wrapper script to run tools-nfs4.test on ZFS filesystem.
@@ -51,7 +51,7 @@ TESTDIR=$(dirname $(realpath $0))
 # Set up the test filesystem.
 MD=`mdconfig -at swap -s 64m`
 MNT=`mktemp -dt acltools`
-zpool create -R $MNT acltools /dev/$MD
+zpool create -m $MNT acltools /dev/$MD
 if [ $? -ne 0 ]; then
 	echo "not ok 1 - 'zpool create' failed."
 	exit 1

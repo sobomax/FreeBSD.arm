@@ -1,4 +1,4 @@
-#  $FreeBSD: head/sys/boot/arm/ixp425/boot2/Makefile 265420 2014-05-06 04:22:01Z imp $
+#  $FreeBSD: head/sys/boot/arm/ixp425/boot2/Makefile 272350 2014-10-01 08:26:51Z andrew $
 
 .include <src.opts.mk>
 
@@ -17,9 +17,7 @@ FILES=${P}
 SRCS=arm_init.S boot2.c ${BOOT_FLAVOR:tl}_board.c
 SRCS+=memchr.c memcmp.c memcpy.c memmem.c memset.c printf.c strcmp.c strcpy.c
 SRCS+=strlen.c ashldi3.c divsi3.S muldi3.c
-.if ${MK_ARM_EABI} != "no"
 SRCS+=aeabi_unwind.c
-.endif
 MAN=
 
 KERNPHYSADDR=0x180000

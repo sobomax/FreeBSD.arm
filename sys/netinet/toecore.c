@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/toecore.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/toecore.c 272081 2014-09-24 20:12:40Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -329,7 +329,6 @@ toe_syncache_add(struct in_conninfo *inc, struct tcpopt *to, struct tcphdr *th,
 {
 	struct socket *lso = inp->inp_socket;
 
-	INP_INFO_WLOCK_ASSERT(&V_tcbinfo);
 	INP_WLOCK_ASSERT(inp);
 
 	syncache_add(inc, to, th, inp, &lso, NULL, tod, todctx);

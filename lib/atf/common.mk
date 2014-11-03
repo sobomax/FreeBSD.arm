@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/atf/common.mk 260576 2014-01-12 21:56:26Z jmmv $
+# $FreeBSD: head/lib/atf/common.mk 273929 2014-11-01 11:17:54Z jmmv $
 #
 # Common Makefile code for all components of ATF.
 #
@@ -14,6 +14,6 @@ atf-version: atf-version-real
 	@cmp -s atf-version atf-version-real \
 	    || cp atf-version-real atf-version
 atf-version-real: .PHONY
-	@grep 'define VERSION' ${ATF}/bconfig.h \
+	@grep 'define VERSION' ${ATF}/config.h \
 	    | cut -d '"' -f 2 >atf-version-real
 CLEANFILES+= atf-version atf-version-real

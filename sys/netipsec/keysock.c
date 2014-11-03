@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/keysock.c 257179 2013-10-26 18:18:50Z glebius $	*/
+/*	$FreeBSD: head/sys/netipsec/keysock.c 270008 2014-08-15 02:43:02Z kevlo $	*/
 /*	$KAME: keysock.c,v 1.25 2001/08/13 20:07:41 itojun Exp $	*/
 
 /*-
@@ -88,7 +88,7 @@ VNET_PCPUSTAT_SYSUNINIT(pfkeystat);
  * key_output()
  */
 int
-key_output(struct mbuf *m, struct socket *so)
+key_output(struct mbuf *m, struct socket *so, ...)
 {
 	struct sadb_msg *msg;
 	int len, error = 0;

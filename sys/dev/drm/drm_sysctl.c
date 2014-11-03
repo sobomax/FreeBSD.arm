@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drm_sysctl.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drm_sysctl.c 271013 2014-09-03 09:58:59Z glebius $");
 
 /** @file drm_sysctl.c
  * Implementation of various sysctls for controlling DRM behavior and reporting
@@ -193,7 +193,7 @@ static int drm_vm_info DRM_SYSCTL_HANDLER_ARGS
 	for (i = 0; i < mapcount; i++) {
 		map = &tempmaps[i];
 
-		if (map->type < 0 || map->type > 4)
+		if (map->type > 4)
 			type = "??";
 		else
 			type = types[map->type];

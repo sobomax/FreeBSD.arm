@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/atf/libatf-c++/tests/Makefile 266650 2014-05-25 12:01:13Z jmmv $
+# $FreeBSD: head/lib/atf/libatf-c++/tests/Makefile 273929 2014-11-01 11:17:54Z jmmv $
 
 .include <bsd.init.mk>
 
@@ -9,6 +9,8 @@ ATF=		${.CURDIR:H:H:H:H}/contrib/atf
 .PATH:		${ATF}/atf-c++
 .PATH:		${ATF}/atf-c++/detail
 
+CFLAGS+=	-DATF_C_TESTS_BASE='"${TESTSBASE}/lib/atf/libatf-c"'
+CFLAGS+=	-DATF_INCLUDEDIR='"${INCLUDEDIR}"'
 CFLAGS+=	-I${ATF}
 
 FILESDIR=	${TESTSDIR}
@@ -18,7 +20,6 @@ FILES+=		unused_test.cpp
 .for _T in	atf_c++_test \
 		build_test \
 		check_test \
-		config_test \
 		macros_test \
 		tests_test \
 		utils_test

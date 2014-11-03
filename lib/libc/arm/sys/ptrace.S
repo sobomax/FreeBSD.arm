@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/ptrace.S 164109 2006-11-09 01:28:16Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/ptrace.S 270882 2014-08-31 17:21:51Z ian $");
 #include "SYS.h"
 
 ENTRY(ptrace)
@@ -46,3 +46,4 @@ ENTRY(ptrace)
 	SYSTRAP(ptrace)
 	bcs	PIC_SYM(CERROR, PLT)
 	RET
+END(ptrace)

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_reass.c 265408 2014-05-06 00:00:07Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_reass.c 271123 2014-09-04 19:28:02Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -214,16 +214,30 @@ tcp_reass(struct tcpcb *tp, struct tcphdr *th, int *tlenp, struct mbuf *m)
 		mq = nq;
 	}
 
-	/* Insert the new segment queue entry into place. */
+	/*
+	 * Insert the new segment queue entry into place.  Try to collapse
+	 * mbuf chains if segments are adjacent.
+	 */
 	if (mp) {
-		m->m_nextpkt = mp->m_nextpkt;
-		mp->m_nextpkt = m;
+		if (M_TCPHDR(mp)->th_seq + mp->m_pkthdr.len == th->th_seq)
+			m_catpkt(mp, m);
+		else {
+			m->m_nextpkt = mp->m_nextpkt;
+			mp->m_nextpkt = m;
+			m->m_pkthdr.pkt_tcphdr = th;
+		}
 	} else {
-		m->m_nextpkt = tp->t_segq;
-		tp->t_segq = m ;
+		mq = tp->t_segq;
+		tp->t_segq = m;
+		if (mq && th->th_seq + *tlenp == M_TCPHDR(mq)->th_seq) {
+			m->m_nextpkt = mq->m_nextpkt;
+			mq->m_nextpkt = NULL;
+			m_catpkt(m, mq);
+		} else
+			m->m_nextpkt = mq;
+		m->m_pkthdr.pkt_tcphdr = th;
 	}
-	m->m_pkthdr.pkt_tcphdr = th;
-	tp->t_segqlen += m->m_pkthdr.len;
+	tp->t_segqlen += *tlenp;
 
 present:
 	/*

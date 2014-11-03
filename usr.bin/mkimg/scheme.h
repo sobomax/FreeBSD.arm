@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkimg/scheme.h 266176 2014-05-15 19:19:57Z marcel $
+ * $FreeBSD: head/usr.bin/mkimg/scheme.h 271881 2014-09-19 23:16:02Z marcel $
  */
 
 #ifndef _MKIMG_SCHEME_H_
@@ -62,7 +62,7 @@ struct mkimg_scheme {
 	const char	*name;
 	const char	*description;
 	struct mkimg_alias *aliases;
-	u_int		(*metadata)(u_int);
+	lba_t		(*metadata)(u_int, lba_t);
 #define	SCHEME_META_IMG_START	1
 #define	SCHEME_META_IMG_END	2
 #define	SCHEME_META_PART_BEFORE	3

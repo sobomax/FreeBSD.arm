@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/lib/libasn1/Makefile 264774 2014-04-22 20:37:07Z emaste $
+# $FreeBSD: head/kerberos5/lib/libasn1/Makefile 271775 2014-09-18 14:50:21Z will $
 
 LIB=	asn1
 LDFLAGS=	-Wl,--no-undefined
@@ -112,10 +112,10 @@ ${GEN_KX509}: kx509.asn1
 .SUFFIXES: .h .c .x .hx
 
 .x.c:
-	cp ${.IMPSRC} ${.TARGET}
+	cp -f ${.IMPSRC} ${.TARGET}
 
 .hx.h:
-	cp ${.IMPSRC} ${.TARGET}
+	cp -f ${.IMPSRC} ${.TARGET}
 	
 .include <bsd.lib.mk>
 

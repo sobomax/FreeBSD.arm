@@ -24,12 +24,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmx_support.S 266390 2014-05-18 03:50:17Z grehan $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmx_support.S 273214 2014-10-17 13:20:49Z imp $
  */
 
 #include <machine/asmacros.h>
 
-#include "vmx_assym.s"
+#include "vmx_assym.h"
 
 #ifdef SMP
 #define	LK	lock ;

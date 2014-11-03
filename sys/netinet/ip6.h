@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netinet/ip6.h 249294 2013-04-09 07:11:22Z ae $	*/
+/*	$FreeBSD: head/sys/netinet/ip6.h 272559 2014-10-05 06:28:53Z rwatson $	*/
 /*	$KAME: ip6.h,v 1.18 2001/03/29 05:34:30 itojun Exp $	*/
 
 /*-
@@ -277,12 +277,6 @@ do {									\
 	    (((m) = m_pullup((m), (off) + (hlen))) == NULL)) {		\
 		IP6STAT_INC(ip6s_exthdrtoolong);				\
 		return ret;						\
-	} else if ((m)->m_flags & M_EXT) {				\
-		if ((m)->m_len < (off) + (hlen)) {			\
-			IP6STAT_INC(ip6s_exthdrtoolong);			\
-			m_freem(m);					\
-			return ret;					\
-		}							\
 	} else {							\
 		if ((m)->m_len < (off) + (hlen)) {			\
 			IP6STAT_INC(ip6s_exthdrtoolong);			\

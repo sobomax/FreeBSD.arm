@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/fsl_ocotp.c 261957 2014-02-16 03:30:22Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/fsl_ocotp.c 270955 2014-09-02 02:54:55Z ian $");
 
 /*
  * Access to the Freescale i.MX6 On-Chip One-Time-Programmable Memory
@@ -200,5 +200,6 @@ static driver_t ocotp_driver = {
 
 static devclass_t ocotp_devclass;
 
-DRIVER_MODULE(ocotp, simplebus, ocotp_driver, ocotp_devclass, 0, 0);
+EARLY_DRIVER_MODULE(ocotp, simplebus, ocotp_driver, ocotp_devclass, 0, 0,
+    BUS_PASS_CPU + BUS_PASS_ORDER_FIRST);
 

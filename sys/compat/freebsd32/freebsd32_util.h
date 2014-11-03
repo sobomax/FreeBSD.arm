@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/freebsd32/freebsd32_util.h 268351 2014-07-07 00:27:09Z marcel $
+ * $FreeBSD: head/sys/compat/freebsd32/freebsd32_util.h 273707 2014-10-26 19:42:44Z mjg $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_UTIL_H_
@@ -98,10 +98,10 @@ SYSCALL32_MODULE(syscallname,                           \
 }
 
 int    syscall32_register(int *offset, struct sysent *new_sysent,
-	    struct sysent *old_sysent);
+	    struct sysent *old_sysent, int flags);
 int    syscall32_deregister(int *offset, struct sysent *old_sysent);
 int    syscall32_module_handler(struct module *mod, int what, void *arg);
-int    syscall32_helper_register(struct syscall_helper_data *sd);
+int    syscall32_helper_register(struct syscall_helper_data *sd, int flags);
 int    syscall32_helper_unregister(struct syscall_helper_data *sd);
 
 struct iovec32;

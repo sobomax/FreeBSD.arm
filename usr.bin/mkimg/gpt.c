@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/gpt.c 268236 2014-07-03 20:31:43Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/gpt.c 271881 2014-09-19 23:16:02Z marcel $");
 
 #include <sys/types.h>
 #include <sys/diskmbr.h>
@@ -153,17 +153,15 @@ gpt_tblsz(void)
 	return ((nparts + ents - 1) / ents);
 }
 
-static u_int
-gpt_metadata(u_int where)
+static lba_t
+gpt_metadata(u_int where, lba_t blk)
 {
-	u_int secs;
 
-	if (where != SCHEME_META_IMG_START && where != SCHEME_META_IMG_END)
-		return (0);
-
-	secs = gpt_tblsz();
-	secs += (where == SCHEME_META_IMG_START) ? 2 : 1;
-	return (secs);
+	if (where == SCHEME_META_IMG_START || where == SCHEME_META_IMG_END) {
+		blk += gpt_tblsz();
+		blk += (where == SCHEME_META_IMG_START) ? 2 : 1;
+	}
+	return (round_block(blk));
 }
 
 static int

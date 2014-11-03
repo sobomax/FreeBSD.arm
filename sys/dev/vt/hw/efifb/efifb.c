@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 269783 2014-08-10 17:04:10Z dumbbell $
+ * $FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 271684 2014-09-16 18:02:24Z dumbbell $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 269783 2014-08-10 17:04:10Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 271684 2014-09-16 18:02:24Z dumbbell $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -60,7 +60,10 @@ static struct vt_driver vt_efifb_driver = {
 	.vd_probe = vt_efifb_probe,
 	.vd_init = vt_efifb_init,
 	.vd_blank = vt_fb_blank,
-	.vd_bitbltchr = vt_fb_bitbltchr,
+	.vd_bitblt_text = vt_fb_bitblt_text,
+	.vd_bitblt_bmp = vt_fb_bitblt_bitmap,
+	.vd_drawrect = vt_fb_drawrect,
+	.vd_setpixel = vt_fb_setpixel,
 	.vd_fb_ioctl = vt_fb_ioctl,
 	.vd_fb_mmap = vt_fb_mmap,
 	/* Better than VGA, but still generic driver. */

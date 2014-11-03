@@ -46,7 +46,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_machdep.c 269958 2014-08-14 04:21:20Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_machdep.c 270104 2014-08-17 16:53:14Z imp $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -117,7 +117,7 @@ extern struct bus_space at91_bs_tag;
 
 struct pv_addr kernel_pt_table[NUM_KERNEL_PTS];
 
-uint32_t at91_master_clock;
+extern uint32_t at91_master_clock;
 
 /* Static device mappings. */
 const struct arm_devmap_entry at91_devmap[] = {

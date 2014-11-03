@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ctx.c,v 1.24 2002/04/13 14:35:28 bp Exp $
- * $FreeBSD: head/contrib/smbfs/lib/smb/ctx.c 250236 2013-05-04 14:03:18Z davide $
+ * $FreeBSD: head/contrib/smbfs/lib/smb/ctx.c 271259 2014-09-08 11:01:57Z trasz $
  */
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -189,10 +189,6 @@ smb_ctx_parseunc(struct smb_ctx *ctx, const char *unc, int sharetype,
 	if (!error) {
 		if (ctx->ct_maxlevel < SMBL_VC) {
 			smb_error("no user name required", 0);
-			return EINVAL;
-		}
-		if (*p1 == 0) {
-			smb_error("empty user name", 0);
 			return EINVAL;
 		}
 		error = smb_ctx_setuser(ctx, tmp);
@@ -519,11 +515,6 @@ smb_ctx_resolve(struct smb_ctx *ctx)
 	ctx->ct_flags &= ~SMBCF_RESOLVED;
 	if (ssn->ioc_srvname[0] == 0) {
 		smb_error("no server name specified", 0);
-		return EINVAL;
-	}
-	if (ssn->ioc_user[0] == 0) {
-		smb_error("no user name specified for server %s",
-		    0, ssn->ioc_srvname);
 		return EINVAL;
 	}
 	if (ctx->ct_minlevel >= SMBL_SHARE && sh->ioc_share[0] == 0) {

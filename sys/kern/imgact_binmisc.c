@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/imgact_binmisc.c 264282 2014-04-08 22:12:01Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/kern/imgact_binmisc.c 271141 2014-09-04 21:31:25Z sbruno $");
 
 #include <sys/param.h>
 #include <sys/ctype.h>
@@ -600,12 +600,12 @@ imgact_binmisc_exec(struct image_params *imgp)
 	}
 
 	/* No interpreter nesting allowed. */
-	if (imgp->interpreted) {
+	if (imgp->interpreted & IMGACT_BINMISC) {
 		mtx_unlock(&interp_list_mtx);
 		return (ENOEXEC);
 	}
 
-	imgp->interpreted = 1;
+	imgp->interpreted |= IMGACT_BINMISC;
 
 	if (imgp->args->fname != NULL) {
 		fname = imgp->args->fname;

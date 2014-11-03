@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb.h 261541 2014-02-06 08:47:14Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb.h 273456 2014-10-22 07:50:19Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
@@ -113,7 +113,7 @@ MALLOC_DECLARE(M_USBHC);
 
 /* Allow for marginal and non-conforming devices. */
 #define	USB_PORT_RESET_DELAY		50	/* ms */
-#define	USB_PORT_ROOT_RESET_DELAY	250	/* ms */
+#define	USB_PORT_ROOT_RESET_DELAY	200	/* ms */
 #define	USB_PORT_RESET_RECOVERY		250	/* ms */
 #define	USB_PORT_POWERUP_DELAY		300	/* ms */
 #define	USB_PORT_RESUME_DELAY		(20*2)	/* ms */

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/freebsd32/freebsd32.h 258661 2013-11-26 19:47:09Z kib $
+ * $FreeBSD: head/sys/compat/freebsd32/freebsd32.h 273266 2014-10-18 19:36:11Z adrian $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_H_
@@ -332,8 +332,8 @@ struct kinfo_proc32 {
 	signed char ki_nice;
 	char	ki_lock;
 	char	ki_rqindex;
-	u_char	ki_oncpu;
-	u_char	ki_lastcpu;
+	u_char	ki_oncpu_old;
+	u_char	ki_lastcpu_old;
 	char	ki_tdname[TDNAMLEN+1];
 	char	ki_wmesg[WMESGLEN+1];
 	char	ki_login[LOGNAMELEN+1];
@@ -343,6 +343,9 @@ struct kinfo_proc32 {
 	char	ki_loginclass[LOGINCLASSLEN+1];
 	char	ki_sparestrings[50];
 	int	ki_spareints[KI_NSPARE_INT];
+	int	ki_oncpu;
+	int	ki_lastcpu;
+	int	ki_tracer;
 	int	ki_flag2;
 	int	ki_fibnum;
 	u_int	ki_cr_flags;

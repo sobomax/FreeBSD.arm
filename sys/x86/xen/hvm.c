@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/hvm.c 267527 2014-06-16 08:43:45Z royger $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/hvm.c 273476 2014-10-22 17:07:20Z royger $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -97,8 +97,6 @@ DPCPU_DEFINE(struct vcpu_info, vcpu_local_info);
 DPCPU_DEFINE(struct vcpu_info *, vcpu_info);
 
 /*------------------ Hypervisor Access Shared Memory Regions -----------------*/
-/** Hypercall table accessed via HYPERVISOR_*_op() methods. */
-extern char *hypercall_page;
 shared_info_t *HYPERVISOR_shared_info;
 start_info_t *HYPERVISOR_start_info;
 

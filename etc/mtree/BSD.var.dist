@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.var.dist 266863 2014-05-29 22:34:04Z des $
+# $FreeBSD: head/etc/mtree/BSD.var.dist 271493 2014-09-13 02:15:31Z delphij $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -41,6 +41,8 @@
         entropy         uname=operator gname=operator mode=0700
         ..
         freebsd-update  mode=0700
+        ..
+        hyperv          mode=0700
         ..
         ipf             mode=0700
         ..

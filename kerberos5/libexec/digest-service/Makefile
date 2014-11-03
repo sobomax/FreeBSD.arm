@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/digest-service/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/kerberos5/libexec/digest-service/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	digest-service
 MAN=
@@ -13,8 +13,6 @@ DPADD=	${LIBHDB} ${LIBKDC} ${LIBHEIMIPCS} ${LIBKRB5} ${LIBROKEN} ${LIBASN1} \
 LDADD=	-lhdb -lkdc ${LDHEIMIPCS} -lkrb5 -lroken -lasn1 -lcrypto -lcrypt \
 	${LIBVERS} -lheimntlm
 USEPRIVATELIB= heimipcs
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

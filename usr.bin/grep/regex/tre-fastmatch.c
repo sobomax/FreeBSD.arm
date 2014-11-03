@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/grep/regex/tre-fastmatch.c 264744 2014-04-21 22:52:18Z pfg $ */
+/* $FreeBSD: head/usr.bin/grep/regex/tre-fastmatch.c 272127 2014-09-25 19:22:26Z pfg $ */
 
 /*-
  * Copyright (c) 1999 James Howard and Dag-Erling Coïdan Smørgrav
@@ -727,7 +727,7 @@ badpat:
       for (unsigned int i = 0; i < fg->len; i++)
 	if (fg->pattern[i] == '\\')
 	  escaped = !escaped;
-	else if (fg->pattern[i] == '.' && escaped)
+	else if (fg->pattern[i] == '.' && fg->escmap && escaped)
 	  {
 	    fg->escmap[i] = true;
 	    escaped = false;

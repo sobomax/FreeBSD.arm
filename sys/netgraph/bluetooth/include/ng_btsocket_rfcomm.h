@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.h,v 1.10 2003/03/29 22:27:42 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket_rfcomm.h 197083 2009-09-10 23:30:13Z emax $
+ * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket_rfcomm.h 271908 2014-09-20 16:43:14Z jhb $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_RFCOMM_H_
@@ -296,7 +296,7 @@ struct ng_btsocket_rfcomm_pcb {
 	int16_t					 tx_cred; /* TX credits */
 
 	struct mtx				 pcb_mtx; /* PCB lock */
-	struct callout_handle			 timo;    /* timeout */
+	struct callout				 timo;    /* timeout */
 
 	LIST_ENTRY(ng_btsocket_rfcomm_pcb)	 session_next;/* link to next */
 	LIST_ENTRY(ng_btsocket_rfcomm_pcb)	 next;	  /* link to next */

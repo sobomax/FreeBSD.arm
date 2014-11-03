@@ -1,5 +1,5 @@
 /*	$NetBSD: if_arcsubr.c,v 1.36 2001/06/14 05:44:23 itojun Exp $	*/
-/*	$FreeBSD: head/sys/net/if_arcsubr.c 263140 2014-03-14 02:58:48Z glebius $ */
+/*	$FreeBSD: head/sys/net/if_arcsubr.c 271867 2014-09-19 10:39:58Z glebius $ */
 
 /*-
  * Copyright (c) 1994, 1995 Ignatios Souvatzis
@@ -357,7 +357,7 @@ arc_defrag(struct ifnet *ifp, struct mbuf *m)
 	if (m->m_len < ARC_HDRNEWLEN) {
 		m = m_pullup(m, ARC_HDRNEWLEN);
 		if (m == NULL) {
-			++ifp->if_ierrors;
+			if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 			return NULL;
 		}
 	}
@@ -377,7 +377,7 @@ arc_defrag(struct ifnet *ifp, struct mbuf *m)
 		if (m->m_len < ARC_HDRNEWLEN) {
 			m = m_pullup(m, ARC_HDRNEWLEN);
 			if (m == NULL) {
-				++ifp->if_ierrors;
+				if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 				return NULL;
 			}
 		}
@@ -530,11 +530,11 @@ arc_input(struct ifnet *ifp, struct mbuf *m)
 		return;
 	}
 
-	ifp->if_ibytes += m->m_pkthdr.len;
+	if_inc_counter(ifp, IFCOUNTER_IBYTES, m->m_pkthdr.len);
 
 	if (ah->arc_dhost == arcbroadcastaddr) {
 		m->m_flags |= M_BCAST|M_MCAST;
-		ifp->if_imcasts++;
+		if_inc_counter(ifp, IFCOUNTER_IMCASTS, 1);
 	}
 
 	atype = ah->arc_type;

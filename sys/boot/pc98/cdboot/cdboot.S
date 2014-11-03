@@ -11,9 +11,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. Neither the name of the author nor the names of any co-contributors
-#    may be used to endorse or promote products derived from this software
-#    without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -28,7 +25,7 @@
 # SUCH DAMAGE.
 #
 
-# $FreeBSD: head/sys/boot/pc98/cdboot/cdboot.S 239069 2012-08-05 14:48:55Z nyan $
+# $FreeBSD: head/sys/boot/pc98/cdboot/cdboot.S 272252 2014-09-28 12:25:27Z nyan $
 
 #
 # Basically, we first create a set of boot arguments to pass to the loaded

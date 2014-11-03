@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.sys.mk 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/share/mk/bsd.sys.mk 270951 2014-09-01 20:18:09Z ed $
 #
 # This file contains common settings used for building FreeBSD
 # sources.
@@ -53,6 +53,9 @@ CWARNFLAGS+=	-Wchar-subscripts -Winline -Wnested-externs -Wredundant-decls\
 		-Wold-style-definition
 .if !defined(NO_WMISSING_VARIABLE_DECLARATIONS)
 CWARNFLAGS.clang+=	-Wmissing-variable-declarations
+.endif
+.if !defined(NO_WTHREAD_SAFETY)
+CWARNFLAGS.clang+=	-Wthread-safety
 .endif
 .endif # WARNS >= 6
 .if ${WARNS} >= 2 && ${WARNS} <= 4

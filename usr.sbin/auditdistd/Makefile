@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/auditdistd/Makefile 249657 2013-04-19 19:45:00Z ed $
+# $FreeBSD: head/usr.sbin/auditdistd/Makefile 270951 2014-09-01 20:18:09Z ed $
 #
 
 OPENBSMDIR=${.CURDIR}/../../contrib/openbsm
@@ -29,5 +29,9 @@ LDADD+=	-lcrypto -lssl
 YFLAGS+=-v
 
 CLEANFILES=parse.c parse.h parse.output
+
+# auditdistd cannot use FreeBSD specific lock annotation macros. Disable
+# thread safety analysis completely.
+NO_WTHREAD_SAFETY=
 
 .include <bsd.prog.mk>

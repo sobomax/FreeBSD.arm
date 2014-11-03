@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libnv/nvlist_impl.h 258065 2013-11-12 19:39:14Z pjd $
+ * $FreeBSD: head/lib/libnv/nvlist_impl.h 272843 2014-10-09 20:55:05Z pjd $
  */
 
 #ifndef	_NVLIST_IMPL_H_
@@ -39,5 +39,9 @@
 void *nvlist_xpack(const nvlist_t *nvl, int64_t *fdidxp, size_t *sizep);
 nvlist_t *nvlist_xunpack(const void *buf, size_t size, const int *fds,
     size_t nfds);
+
+nvpair_t *nvlist_get_nvpair_parent(const nvlist_t *nvl);
+const unsigned char *nvlist_unpack_header(nvlist_t *nvl,
+    const unsigned char *ptr, size_t nfds, bool *isbep, size_t *leftp);
 
 #endif	/* !_NVLIST_IMPL_H_ */

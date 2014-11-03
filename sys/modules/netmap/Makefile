@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/netmap/Makefile 261909 2014-02-15 04:53:04Z luigi $
+# $FreeBSD: head/sys/modules/netmap/Makefile 272108 2014-09-25 14:25:38Z luigi $
 #
 # Compile netmap as a module, useful if you want a netmap bridge
 # or loadable drivers.
@@ -16,5 +16,6 @@ SRCS	+= netmap_vale.c
 SRCS	+= netmap_freebsd.c
 SRCS	+= netmap_offloadings.c
 SRCS	+= netmap_pipe.c
+SRCS	+= netmap_monitor.c
 
 .include <bsd.kmod.mk>

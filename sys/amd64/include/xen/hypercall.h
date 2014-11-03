@@ -33,7 +33,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/amd64/include/xen/hypercall.h 263010 2014-03-11 10:24:13Z royger $
+ * $FreeBSD: head/sys/amd64/include/xen/hypercall.h 273476 2014-10-22 17:07:20Z royger $
  */
 
 #ifndef __MACHINE_XEN_HYPERCALL_H__
@@ -44,6 +44,8 @@
 #ifndef __XEN_HYPERVISOR_H__
 # error "please don't include this file directly"
 #endif
+
+extern char *hypercall_page;
 
 #define __STR(x) #x
 #define STR(x) __STR(x)
@@ -133,6 +135,26 @@
 		: "memory" );					\
 	__res;							\
 })
+
+static inline int
+privcmd_hypercall(long op, long a1, long a2, long a3, long a4, long a5)
+{
+	int __res;
+	long __ign1, __ign2, __ign3;
+	register long __arg4 __asm__("r10") = (long)(a4);
+	register long __arg5 __asm__("r8") = (long)(a5);
+	long __call = (long)&hypercall_page + (op * 32);
+
+	__asm__ volatile (
+		"call *%[call]"
+		: "=a" (__res), "=D" (__ign1), "=S" (__ign2),
+		  "=d" (__ign3), "+r" (__arg4), "+r" (__arg5)
+		: "1" ((long)(a1)), "2" ((long)(a2)),
+		  "3" ((long)(a3)), [call] "a" (__call)
+		: "memory" );
+
+	return (__res);
+}
 
 static inline int __must_check
 HYPERVISOR_set_trap_table(

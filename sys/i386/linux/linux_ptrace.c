@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/linux_ptrace.c 246085 2013-01-29 18:41:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/linux_ptrace.c 273995 2014-11-02 22:58:30Z jhb $");
 
 #include "opt_cpu.h"
 
@@ -225,7 +225,7 @@ linux_proc_read_fpxregs(struct thread *td, struct linux_pt_fpxreg *fpxregs)
 	PROC_LOCK_ASSERT(td->td_proc, MA_OWNED);
 	if (cpu_fxsr == 0 || (td->td_proc->p_flag & P_INMEM) == 0)
 		return (EIO);
-	bcopy(&td->td_pcb->pcb_user_save.sv_xmm, fpxregs, sizeof(*fpxregs));
+	bcopy(&get_pcb_user_save_td(td)->sv_xmm, fpxregs, sizeof(*fpxregs));
 	return (0);
 }
 
@@ -236,7 +236,7 @@ linux_proc_write_fpxregs(struct thread *td, struct linux_pt_fpxreg *fpxregs)
 	PROC_LOCK_ASSERT(td->td_proc, MA_OWNED);
 	if (cpu_fxsr == 0 || (td->td_proc->p_flag & P_INMEM) == 0)
 		return (EIO);
-	bcopy(fpxregs, &td->td_pcb->pcb_user_save.sv_xmm, sizeof(*fpxregs));
+	bcopy(fpxregs, &get_pcb_user_save_td(td)->sv_xmm, sizeof(*fpxregs));
 	return (0);
 }
 #endif

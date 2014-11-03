@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/isp_freebsd.h 257932 2013-11-10 23:48:16Z mav $ */
+/* $FreeBSD: head/sys/dev/isp/isp_freebsd.h 271731 2014-09-18 02:01:36Z will $ */
 /*-
  * Qlogic ISP SCSI Host Adapter FreeBSD Wrapper Definitions
  *
@@ -268,6 +268,7 @@ struct isp_fc {
 	unsigned int inject_lost_data_frame;
 #endif
 #endif
+	int			num_threads;
 };
 
 struct isp_spi {
@@ -291,6 +292,7 @@ struct isp_spi {
 	struct proc *		target_proc;
 #endif
 #endif
+	int			num_threads;
 };
 
 struct isposinfo {
@@ -365,6 +367,8 @@ struct isposinfo {
 		struct isp_spi *spi;
 		void *ptr;
 	} pc;
+
+	int			is_exiting;
 };
 #define	ISP_FC_PC(isp, chan)	(&(isp)->isp_osinfo.pc.fc[(chan)])
 #define	ISP_SPI_PC(isp, chan)	(&(isp)->isp_osinfo.pc.spi[(chan)])

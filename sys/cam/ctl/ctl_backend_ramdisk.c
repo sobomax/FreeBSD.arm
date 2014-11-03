@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_backend_ramdisk.c 269058 2014-07-24 14:10:58Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_backend_ramdisk.c 272734 2014-10-08 07:48:36Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -595,6 +595,7 @@ ctl_backend_ramdisk_create(struct ctl_be_ramdisk_softc *softc,
 	be_lun->ctl_be_lun.flags = CTL_LUN_FLAG_PRIMARY;
 	if (unmap)
 		be_lun->ctl_be_lun.flags |= CTL_LUN_FLAG_UNMAP;
+	be_lun->ctl_be_lun.atomicblock = UINT32_MAX;
 	be_lun->ctl_be_lun.be_lun = be_lun;
 
 	if (params->flags & CTL_LUN_FLAG_ID_REQ) {

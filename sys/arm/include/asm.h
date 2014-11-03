@@ -33,7 +33,7 @@
  *
  *	from: @(#)asm.h	5.5 (Berkeley) 5/7/91
  *
- * $FreeBSD: head/sys/arm/include/asm.h 269390 2014-08-01 18:24:44Z ian $
+ * $FreeBSD: head/sys/arm/include/asm.h 271398 2014-09-10 15:25:15Z andrew $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -43,17 +43,11 @@
 #define	_C_LABEL(x)	x
 #define	_ASM_LABEL(x)	x
 
-#define I32_bit (1 << 7)	/* IRQ disable */
-#define F32_bit (1 << 6)        /* FIQ disable */
-
-#define CPU_CONTROL_32BP_ENABLE 0x00000010 /* P: 32-bit exception handlers */
-#define CPU_CONTROL_32BD_ENABLE 0x00000020 /* D: 32-bit addressing */
-
 #ifndef _ALIGN_TEXT
 # define _ALIGN_TEXT .align 0
 #endif
 
-#ifdef __ARM_EABI__
+#if defined(__ARM_EABI__) && !defined(_STANDALONE)
 #define	STOP_UNWINDING	.cantunwind
 #define	_FNSTART	.fnstart
 #define	_FNEND		.fnend

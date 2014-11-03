@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/amd64/efi/conf.c 264095 2014-04-04 00:16:46Z emaste $");
+__FBSDID("$FreeBSD: head/sys/boot/amd64/efi/conf.c 271475 2014-09-12 17:32:28Z ambrisko $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -62,8 +62,12 @@ struct file_format *file_formats[] = {
 };
 
 extern struct console efi_console;
+extern struct console comconsole;
+extern struct console nullconsole;
 
 struct console *consoles[] = {
 	&efi_console,
+	&comconsole,
+	&nullconsole,
 	NULL
 };

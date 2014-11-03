@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_kmem.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/cddl/compat/opensolaris/kern/opensolaris_kmem.c 272483 2014-10-03 20:34:55Z smh $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -131,13 +131,6 @@ kmem_size(void)
 {
 
 	return (kmem_size_val);
-}
-
-uint64_t
-kmem_used(void)
-{
-
-	return (vmem_size(kmem_arena, VMEM_ALLOC));
 }
 
 static int

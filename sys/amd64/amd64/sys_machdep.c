@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/sys_machdep.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/sys_machdep.c 273995 2014-11-02 22:58:30Z jhb $");
 
 #include "opt_capsicum.h"
 
@@ -319,7 +319,7 @@ sysarch(td, uap)
 		fpugetregs(td);
 		error = copyout((char *)(get_pcb_user_save_td(td) + 1),
 		    a64xfpu.addr, a64xfpu.len);
-		return (error);
+		break;
 
 	default:
 		error = EINVAL;

@@ -1,19 +1,17 @@
-# $FreeBSD: head/lib/csu/i386-elf/Makefile 269114 2014-07-26 04:38:09Z sjg $
+# $FreeBSD: head/lib/csu/i386-elf/Makefile 270170 2014-08-19 15:30:56Z bdrewery $
 
 .PATH: ${.CURDIR}/../common
 
 SRCS=		crti.S crtn.S
-FILES=		${SRCS:N*.h:R:S/$/.o/g} gcrt1.o crt1.o Scrt1.o
-FILESOWN=	${LIBOWN}
-FILESGRP=	${LIBGRP}
-FILESMODE=	${LIBMODE}
-FILESDIR=	${LIBDIR}
+OBJS=		${SRCS:N*.h:R:S/$/.o/g}
+OBJS+=		gcrt1.o crt1.o Scrt1.o
 CFLAGS+=	-I${.CURDIR}/../common \
 		-I${.CURDIR}/../../libc/include
-CLEANFILES=	${FILES} crt1_c.o crt1_s.o gcrt1_c.o Scrt1_c.o
-CLEANFILES+=	crt1_c.s gcrt1_c.s Scrt1_c.s
 
-NO_PIE=	yes
+all: ${OBJS}
+
+CLEANFILES=	${OBJS} crt1_c.o crt1_s.o gcrt1_c.o Scrt1_c.o
+CLEANFILES+=	crt1_c.s gcrt1_c.s Scrt1_c.s
 
 # See the comment in lib/csu/common/crtbrand.c for the reason crt1_c.c is not
 # directly compiled to .o files.
@@ -50,4 +48,8 @@ Scrt1.o: Scrt1_c.o crt1_s.o
 	${LD} ${_LDFLAGS} -o Scrt1.o -r crt1_s.o Scrt1_c.o
 	objcopy --localize-symbol _start1 Scrt1.o
 
-.include <bsd.prog.mk>
+realinstall:
+	${INSTALL} -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
+	    ${OBJS} ${DESTDIR}${LIBDIR}
+
+.include <bsd.lib.mk>

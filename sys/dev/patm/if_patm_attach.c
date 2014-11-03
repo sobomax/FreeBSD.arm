@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_attach.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_attach.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -579,7 +579,7 @@ patm_env_getuint(struct patm_softc *sc, u_int *var, const char *name)
 	snprintf(full, sizeof(full), "hw.%s.%s",
 	    device_get_nameunit(sc->dev), name);
 
-	if ((val = getenv(full)) != NULL) {
+	if ((val = kern_getenv(full)) != NULL) {
 		u = strtoul(val, &end, 0);
 		if (end > val && *end == '\0') {
 			if (bootverbose)

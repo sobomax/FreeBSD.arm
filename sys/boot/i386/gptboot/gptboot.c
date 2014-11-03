@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/gptboot/gptboot.c 241301 2012-10-06 20:08:29Z avg $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/gptboot/gptboot.c 272785 2014-10-09 01:54:32Z marcel $");
 
 #include <sys/param.h>
 #include <sys/gpt.h>
@@ -136,6 +136,7 @@ int
 main(void)
 {
 	char cmd[512], cmdtmp[512];
+	ssize_t sz;
 	int autoboot, dskupdated;
 	ufs_ino_t ino;
 
@@ -164,9 +165,10 @@ main(void)
 	for (;;) {
 		*kname = '\0';
 		if ((ino = lookup(PATH_CONFIG)) ||
-		    (ino = lookup(PATH_DOTCONFIG)))
-			fsread(ino, cmd, sizeof(cmd));
-
+		    (ino = lookup(PATH_DOTCONFIG))) {
+			sz = fsread(ino, cmd, sizeof(cmd) - 1);
+			cmd[(sz < 0) ? 0 : sz] = '\0';
+		}
 		if (*cmd != '\0') {
 			memcpy(cmdtmp, cmd, sizeof(cmdtmp));
 			if (parse(cmdtmp, &dskupdated))

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_cam_sim.c 268419 2014-07-08 16:56:21Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_cam_sim.c 272650 2014-10-06 14:52:04Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -609,14 +609,16 @@ cfcs_action(struct cam_sim *sim, union ccb *ccb)
 		bcopy(csio->cdb_io.cdb_bytes, io->scsiio.cdb,
 		      io->scsiio.cdb_len);
 
+		ccb->ccb_h.status |= CAM_SIM_QUEUED;
 		err = ctl_queue(io);
 		if (err != CTL_RETVAL_COMPLETE) {
 			printf("%s: func %d: error %d returned by "
 			       "ctl_queue()!\n", __func__,
 			       ccb->ccb_h.func_code, err);
 			ctl_free_io(io);
-		} else {
-			ccb->ccb_h.status |= CAM_SIM_QUEUED;
+			ccb->ccb_h.status = CAM_REQ_INVALID;
+			xpt_done(ccb);
+			return;
 		}
 		break;
 	}

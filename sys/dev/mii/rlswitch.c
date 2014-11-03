@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/rlswitch.c 257184 2013-10-26 18:40:17Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/rlswitch.c 271864 2014-09-19 10:32:20Z glebius $");
 
 /*
  * driver for RealTek 8305 pseudo PHYs
@@ -55,7 +55,7 @@ __FBSDID("$FreeBSD: head/sys/dev/mii/rlswitch.c 257184 2013-10-26 18:40:17Z gleb
 #include "miidevs.h"
 
 #include <machine/bus.h>
-#include <pci/if_rlreg.h>
+#include <dev/rl/if_rlreg.h>
 
 #include "miibus_if.h"
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.libnames.mk 269951 2014-08-13 19:43:22Z adrian $
+# $FreeBSD: head/share/mk/src.libnames.mk 273065 2014-10-13 22:15:26Z delphij $
 #
 # The include file <src.libnames.mk> define library names suitable
 # for INTERNALLIB and PRIVATELIB definition
@@ -20,6 +20,10 @@ LIBATF_CXX?=	${LIBATF_CXXDIR}/libatf-c++.a
 LIBBSDSTATDIR=	${ROOTOBJDIR}/lib/libbsdstat
 LDBSDSTAT?=	${LIBBSDSTATDIR}/libbsdstat.so
 LIBBSDSTAT?=	${LIBBSDSTATDIR}/libbsdstat.a
+
+LIBEVENTDIR=	${ROOTOBJDIR}/lib/libevent
+LDEVENT?=	${LIBEVENTDIR}/libevent.so
+LIBEVENT?=	${LIBEVENTDIR}/libevent.a
 
 LIBHEIMIPCCDIR=	${ROOTOBJDIR}/kerberos5/lib/libheimipcc
 LDHEIMIPCC?=	${LIBHEIMIPCCDIR}/libheimipcc.so

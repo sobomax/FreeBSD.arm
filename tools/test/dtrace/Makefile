@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/test/dtrace/Makefile 268538 2014-07-11 22:22:08Z pfg $
+# $FreeBSD: head/tools/test/dtrace/Makefile 271938 2014-09-21 21:31:16Z markj $
 
 TESTSRCDIR=	${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/dtrace/test
 CFLAGS+=	-w
@@ -85,7 +85,8 @@ IGNORE=		\
 	${TESTSRCDIR}/tst/common/ip/tst.localtcpstate.ksh		\
 	${TESTSRCDIR}/tst/common/ip/tst.remotetcpstate.ksh		\
 	${TESTSRCDIR}/tst/common/scripting/tst.projid.ksh		\
-	${TESTSRCDIR}/tst/common/scripting/tst.taskid.ksh
+	${TESTSRCDIR}/tst/common/scripting/tst.taskid.ksh		\
+	${TESTSRCDIR}/tst/common/json/tst.usdt.c
 
 
 

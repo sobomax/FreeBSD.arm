@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/consio.h 259680 2013-12-21 13:58:55Z emaste $
+ * $FreeBSD: head/sys/sys/consio.h 273544 2014-10-23 12:38:05Z dumbbell $
  */
 
 #ifndef	_SYS_CONSIO_H_
@@ -239,6 +239,7 @@ typedef struct vfnt	vfnt_t;
 #define GIO_FONT8x16	_IOR('c', 69, fnt16_t)
 #define PIO_VFONT	_IOW('c', 70, vfnt_t)
 #define GIO_VFONT	_IOR('c', 71, vfnt_t)
+#define PIO_VFONT_DEFAULT _IO('c', 72)
 
 /* get video mode information */
 struct colors	{

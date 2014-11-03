@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_ttm.c 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_ttm.c 273862 2014-10-30 14:26:36Z tijl $");
 
 #include <dev/drm2/ttm/ttm_bo_api.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>
@@ -560,12 +560,10 @@ static struct ttm_tt *radeon_ttm_tt_create(struct ttm_bo_device *bdev,
 
 	rdev = radeon_get_rdev(bdev);
 #if __OS_HAS_AGP
-#ifdef DUMBBELL_WIP
 	if (rdev->flags & RADEON_IS_AGP) {
 		return ttm_agp_tt_create(bdev, rdev->ddev->agp->agpdev,
 					 size, page_flags, dummy_read_page);
 	}
-#endif /* DUMBBELL_WIP */
 #endif
 
 	gtt = malloc(sizeof(struct radeon_ttm_tt),
@@ -610,11 +608,9 @@ static int radeon_ttm_tt_populate(struct ttm_tt *ttm)
 
 	rdev = radeon_get_rdev(ttm->bdev);
 #if __OS_HAS_AGP
-#ifdef DUMBBELL_WIP
 	if (rdev->flags & RADEON_IS_AGP) {
 		return ttm_agp_tt_populate(ttm);
 	}
-#endif /* DUMBBELL_WIP */
 #endif
 
 #ifdef CONFIG_SWIOTLB
@@ -660,12 +656,10 @@ static void radeon_ttm_tt_unpopulate(struct ttm_tt *ttm)
 
 	rdev = radeon_get_rdev(ttm->bdev);
 #if __OS_HAS_AGP
-#ifdef DUMBBELL_WIP
 	if (rdev->flags & RADEON_IS_AGP) {
 		ttm_agp_tt_unpopulate(ttm);
 		return;
 	}
-#endif /* DUMBBELL_WIP */
 #endif
 
 #ifdef CONFIG_SWIOTLB

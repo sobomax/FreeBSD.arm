@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_bus_fdt.c 262920 2014-03-08 03:39:09Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_bus_fdt.c 272602 2014-10-06 09:00:53Z ganbold $");
 
 #include "opt_platform.h"
 
@@ -84,6 +84,7 @@ static struct ofw_compat_data compat_data[] = {
 	{"fsl,imx21-uart",	(uintptr_t)&uart_imx_class},
 	{"fsl,mvf600-uart",	(uintptr_t)&uart_vybrid_class},
 	{"lpc,uart",		(uintptr_t)&uart_lpc_class},
+	{"qcom,msm-uartdm",	(uintptr_t)&uart_msm_class},
 	{"ti,ns16550",		(uintptr_t)&uart_ti8250_class},
 	{"ns16550",		(uintptr_t)&uart_ns8250_class},
 	{NULL,			(uintptr_t)NULL},

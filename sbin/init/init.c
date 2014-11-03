@@ -41,7 +41,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)init.c	8.1 (Berkeley) 7/15/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/init/init.c 261635 2014-02-08 13:51:15Z jilles $";
+  "$FreeBSD: head/sbin/init/init.c 270111 2014-08-17 19:06:26Z neel $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -242,7 +242,7 @@ invalid:
 	 * Note that this does NOT open a file...
 	 * Does 'init' deserve its own facility number?
 	 */
-	openlog("init", LOG_CONS|LOG_ODELAY, LOG_AUTH);
+	openlog("init", LOG_CONS, LOG_AUTH);
 
 	/*
 	 * Create an initial session.

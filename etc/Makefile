@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.11 (Berkeley) 5/21/91
-# $FreeBSD: head/etc/Makefile 267486 2014-06-14 20:36:32Z gavin $
+# $FreeBSD: head/etc/Makefile 270096 2014-08-17 09:44:42Z trasz $
 
 .include <src.opts.mk>
 
@@ -11,7 +11,8 @@ SUBDIR=	sendmail
 SUBDIR+=tests
 .endif
 
-BIN1=	crontab \
+BIN1=	auto_master \
+	crontab \
 	devd.conf \
 	devfs.conf \
 	ddb.conf \
@@ -225,6 +226,7 @@ distribution:
 		echo "./etc/spwd.db type=file mode=0600 uname=root gname=wheel"; \
 	) | ${METALOG.add}
 .endif
+	${_+_}cd ${.CURDIR}/autofs; ${MAKE} install
 .if ${MK_BLUETOOTH} != "no"
 	${_+_}cd ${.CURDIR}/bluetooth; ${MAKE} install
 .endif

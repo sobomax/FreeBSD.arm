@@ -1,4 +1,3 @@
-# $FreeBSD: head/gnu/usr.bin/rcs/Makefile.inc 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/rcs/Makefile.inc 270168 2014-08-19 15:04:32Z bdrewery $
 
 LIBRCS=	${.OBJDIR}/../lib/librcs.a
-NO_PIE=	yes

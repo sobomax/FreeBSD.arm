@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/camcontrol/camcontrol.c 268240 2014-07-03 23:09:44Z ken $");
+__FBSDID("$FreeBSD: head/sbin/camcontrol/camcontrol.c 271588 2014-09-14 11:59:49Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -4469,9 +4469,9 @@ tagcontrol(struct cam_device *device, int argc, char **argv,
 		fprintf(stdout, "%s", pathstr);
 		fprintf(stdout, "dev_active    %d\n", ccb->cgds.dev_active);
 		fprintf(stdout, "%s", pathstr);
-		fprintf(stdout, "devq_openings %d\n", ccb->cgds.devq_openings);
+		fprintf(stdout, "allocated     %d\n", ccb->cgds.allocated);
 		fprintf(stdout, "%s", pathstr);
-		fprintf(stdout, "devq_queued   %d\n", ccb->cgds.devq_queued);
+		fprintf(stdout, "queued        %d\n", ccb->cgds.queued);
 		fprintf(stdout, "%s", pathstr);
 		fprintf(stdout, "held          %d\n", ccb->cgds.held);
 		fprintf(stdout, "%s", pathstr);

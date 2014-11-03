@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/contrib/opensolaris/uts/common/dtrace/dtrace.c 269525 2014-08-04 19:02:30Z markj $
+ * $FreeBSD: head/sys/cddl/contrib/opensolaris/uts/common/dtrace/dtrace.c 273174 2014-10-16 18:04:43Z davide $
  */
 
 /*
@@ -13052,7 +13052,7 @@ dtrace_dof_property(const char *name)
 	char *p;
 	char *p_env;
 
-	if ((p_env = getenv(name)) == NULL)
+	if ((p_env = kern_getenv(name)) == NULL)
 		return (NULL);
 
 	len = strlen(p_env) / 2;

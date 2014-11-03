@@ -24,7 +24,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/dev/netmap/netmap_mbq.h 267177 2014-06-06 18:02:32Z luigi $
+ * $FreeBSD: head/sys/dev/netmap/netmap_mbq.h 270063 2014-08-16 15:00:01Z luigi $
  */
 
 
@@ -73,6 +73,7 @@ mbq_unlock(struct mbq *q)
 {
 	mtx_unlock_spin(&q->lock);
 }
+
 
 void mbq_safe_init(struct mbq *q);
 void mbq_safe_destroy(struct mbq *q);

@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)mystring.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/mystring.c 268920 2014-07-20 12:06:52Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/mystring.c 270102 2014-08-17 16:40:29Z jilles $");
 
 /*
  * String functions.
@@ -82,9 +82,17 @@ number(const char *s)
 int
 is_number(const char *p)
 {
-	do {
-		if (! is_digit(*p))
+	const char *q;
+
+	if (*p == '\0')
+		return 0;
+	while (*p == '0')
+		p++;
+	for (q = p; *q != '\0'; q++)
+		if (! is_digit(*q))
 			return 0;
-	} while (*++p != '\0');
+	if (q - p > 10 ||
+	    (q - p == 10 && memcmp(p, "2147483647", 10) > 0))
+		return 0;
 	return 1;
 }

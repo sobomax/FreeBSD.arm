@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kadmind/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kadmind/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	kadmind
 MAN=	kadmind.8
@@ -14,8 +14,6 @@ DPADD=	${LIBKADM5SRV} ${LIBGSSAPI} ${LIBHDB} ${LIBKRB5} ${LIBROKEN} \
 LDADD=	-lkadm5srv -lgssapi -lhdb -lkrb5 -lroken \
 	-lasn1 ${LIBVERS} -lcrypto -lcrypt ${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

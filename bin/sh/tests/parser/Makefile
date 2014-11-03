@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/parser/Makefile 269902 2014-08-13 04:14:50Z ngie $
+# $FreeBSD: head/bin/sh/tests/parser/Makefile 273276 2014-10-19 11:59:15Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -54,6 +54,18 @@ FILES+=		heredoc8.0
 FILES+=		heredoc9.0
 FILES+=		heredoc10.0
 FILES+=		heredoc11.0
+FILES+=		heredoc12.0
+FILES+=		line-cont1.0
+FILES+=		line-cont2.0
+FILES+=		line-cont3.0
+FILES+=		line-cont4.0
+FILES+=		line-cont5.0
+FILES+=		line-cont6.0
+FILES+=		line-cont7.0
+FILES+=		line-cont8.0
+FILES+=		line-cont9.0
+FILES+=		line-cont10.0
+FILES+=		line-cont11.0
 FILES+=		no-space1.0
 FILES+=		no-space2.0
 FILES+=		only-redir1.0

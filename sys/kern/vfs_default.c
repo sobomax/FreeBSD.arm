@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_default.c 251171 2013-05-31 00:43:41Z jeff $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_default.c 271387 2014-09-10 12:36:41Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -721,7 +721,6 @@ vop_stdgetpages(ap)
 		vm_page_t *a_m;
 		int a_count;
 		int a_reqpage;
-		vm_ooffset_t a_offset;
 	} */ *ap;
 {
 
@@ -744,7 +743,6 @@ vop_stdputpages(ap)
 		int a_count;
 		int a_sync;
 		int *a_rtvals;
-		vm_ooffset_t a_offset;
 	} */ *ap;
 {
 

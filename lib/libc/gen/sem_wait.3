@@ -25,7 +25,7 @@
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/lib/libc/gen/sem_wait.3 266837 2014-05-29 13:35:13Z pluknet $
+.\" $FreeBSD: head/lib/libc/gen/sem_wait.3 273601 2014-10-24 19:55:49Z jhb $
 .\"
 .Dd April 16, 2013
 .Dt SEM_WAIT 3
@@ -92,8 +92,7 @@ The semaphore value was zero, and thus could not be decremented.
 .Sh SEE ALSO
 .Xr sem_getvalue 3 ,
 .Xr sem_post 3 ,
-.Xr sem_timedwait 3 ,
-.Xr sem 4
+.Xr sem_timedwait 3
 .Sh STANDARDS
 The
 .Fn sem_wait

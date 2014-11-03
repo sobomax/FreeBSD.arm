@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs_pci.c 249622 2013-04-18 12:43:06Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs_pci.c 271461 2014-09-12 12:04:51Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -111,6 +111,7 @@ mvs_attach(device_t dev)
 		i++;
 	ctlr->channels = mvs_ids[i].ports;
 	ctlr->quirks = mvs_ids[i].quirks;
+	ctlr->ccc = 0;
 	resource_int_value(device_get_name(dev),
 	    device_get_unit(dev), "ccc", &ctlr->ccc);
 	ctlr->cccc = 8;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_jail.c 263152 2014-03-14 06:29:43Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_jail.c 271317 2014-09-09 16:05:33Z trasz $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -1812,9 +1812,11 @@ kern_jail_set(struct thread *td, struct uio *optuio, int flags)
 
 #ifdef RACCT
 	if (!created) {
-		sx_sunlock(&allprison_lock);
+		if (!(flags & JAIL_ATTACH))
+			sx_sunlock(&allprison_lock);
 		prison_racct_modify(pr);
-		sx_slock(&allprison_lock);
+		if (!(flags & JAIL_ATTACH))
+			sx_slock(&allprison_lock);
 	}
 #endif
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_edid.c 268564 2014-07-12 06:23:42Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_edid.c 273962 2014-11-02 09:52:22Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_edid.h>
@@ -171,7 +171,7 @@ drm_edid_block_valid(u8 *raw_edid)
 	for (i = 0; i < EDID_LENGTH; i++)
 		csum += raw_edid[i];
 	if (csum) {
-		DRM_DEBUG("EDID checksum is invalid, remainder is %d\n", csum);
+		DRM_DEBUG_KMS("EDID checksum is invalid, remainder is %d\n", csum);
 
 		/* allow CEA to slide through, switches mangle this */
 		if (raw_edid[0] != 0x02)
@@ -366,7 +366,7 @@ drm_do_get_edid(struct drm_connector *connector, device_t adapter)
 	return block;
 
 carp:
-	DRM_ERROR("%s: EDID block %d invalid.\n",
+	DRM_DEBUG_KMS("%s: EDID block %d invalid.\n",
 	    drm_get_connector_name(connector), j);
 
 out:

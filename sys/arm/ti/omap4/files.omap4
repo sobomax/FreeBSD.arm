@@ -1,4 +1,4 @@
-#$FreeBSD: head/sys/arm/ti/omap4/files.omap4 264102 2014-04-04 03:48:43Z ian $
+#$FreeBSD: head/sys/arm/ti/omap4/files.omap4 273262 2014-10-18 17:51:34Z andrew $
 
 arm/arm/gic.c					standard
 arm/arm/mpcore_timer.c				standard
@@ -6,9 +6,8 @@ arm/ti/ti_smc.S					standard
 
 arm/ti/usb/omap_ehci.c				optional	usb ehci
 arm/ti/ti_sdma.c				optional	ti_sdma
-arm/ti/ti_sdhci.c 				optional	sdhci
-#arm/ti/ti_mmchs.c				optional	mmc
 
+arm/ti/omap4/omap4_gpio.c			optional	gpio
 arm/ti/omap4/omap4_l2cache.c			optional	pl310
 arm/ti/omap4/omap4_prcm_clks.c			standard
 arm/ti/omap4/omap4_scm_padconf.c		standard

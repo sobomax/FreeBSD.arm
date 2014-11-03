@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdTable.c 250838 2013-05-20 23:52:49Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdTable.c 272444 2014-10-02 19:11:18Z jkim $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -91,8 +91,8 @@ AcpiOsTableOverride(ACPI_TABLE_HEADER *ExistingTable,
 	if (hdr == NULL || sz == 0)
 		return (AE_ERROR);
 #ifndef notyet
-	/* Assume SSDT is loaded with DSDT. */
-	AcpiGbl_DisableSsdtTableLoad = TRUE;
+	/* Assume SSDT is installed with DSDT. */
+	AcpiGbl_DisableSsdtTableInstall = TRUE;
 #endif
 	*NewTable = hdr;
 	return (AE_OK);

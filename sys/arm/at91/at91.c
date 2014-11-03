@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91.c 269960 2014-08-14 04:21:31Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: head/sys/arm/at91/at91.c 269960 2014-08-14 04:21:31Z imp $")
 #include <vm/vm_page.h>
 #include <vm/vm_extern.h>
 
+#include <machine/armreg.h>
 #define	_ARM32_BUS_DMA_PRIVATE
 #include <machine/bus.h>
 #include <machine/devmap.h>
@@ -303,7 +304,7 @@ at91_attach(device_t dev)
 
 	bus_generic_probe(dev);
 	bus_generic_attach(dev);
-	enable_interrupts(I32_bit | F32_bit);
+	enable_interrupts(PSR_I | PSR_F);
 	return (0);
 }
 

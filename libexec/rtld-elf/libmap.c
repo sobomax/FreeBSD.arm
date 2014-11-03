@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/libexec/rtld-elf/libmap.c 266411 2014-05-18 17:14:08Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/libmap.c 270256 2014-08-21 02:40:33Z pfg $
  */
 
 #include <sys/types.h>
@@ -216,14 +216,14 @@ lmc_parse(char *lm_p, size_t lm_len)
 	p = NULL;
 	while (cnt < lm_len) {
 		i = 0;
-		while (lm_p[cnt] != '\n' && cnt < lm_len &&
+		while (cnt < lm_len && lm_p[cnt] != '\n' &&
 		    i < sizeof(line) - 1) {
 			line[i] = lm_p[cnt];
 			cnt++;
 			i++;
 		}
 		line[i] = '\0';
-		while (lm_p[cnt] != '\n' && cnt < lm_len)
+		while (cnt < lm_len && lm_p[cnt] != '\n')
 			cnt++;
 		/* skip over nl */
 		cnt++;

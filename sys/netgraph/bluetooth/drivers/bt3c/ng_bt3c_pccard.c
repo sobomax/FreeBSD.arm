@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_bt3c_pccard.c,v 1.5 2003/04/01 18:15:21 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 243882 2012-12-05 08:04:20Z glebius $
+ * $FreeBSD: head/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 271856 2014-09-19 09:01:19Z glebius $
  *
  * XXX XXX XX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
  *
@@ -560,7 +560,6 @@ ng_bt3c_rcvdata(hook_p hook, item_p item)
 		NG_BT3C_ERR(sc->dev,
 "Outgoing queue is full. Dropping mbuf, len=%d\n", m->m_pkthdr.len);
 
-		_IF_DROP(&sc->outq);
 		NG_BT3C_STAT_OERROR(sc->stat);
 
 		NG_FREE_M(m);
@@ -939,7 +938,6 @@ bt3c_receive(bt3c_softc_p sc)
 				NG_BT3C_ERR(sc->dev,
 "Incoming queue is full. Dropping mbuf, len=%d\n", sc->m->m_pkthdr.len);
 
-				_IF_DROP(&sc->inq);
 				NG_BT3C_STAT_IERROR(sc->stat);
 
 				NG_FREE_M(sc->m);

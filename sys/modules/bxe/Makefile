@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/bxe/Makefile 269130 2014-07-26 17:24:58Z marcel $
+# $FreeBSD: head/sys/modules/bxe/Makefile 271726 2014-09-17 22:24:51Z davidcs $
 
 SYSDIR	?= ${.CURDIR}/../..
 
@@ -17,10 +17,5 @@ SRCS	+= bxe.c               \
            57712_init_values.c
 
 CFLAGS += -I${BXE}
-
-clean:
-	rm -f opt_bdg.h device_if.h bus_if.h pci_if.h export_syms
-	rm -f *.o *.kld *.ko
-	rm -f @ machine x86
 
 .include <bsd.kmod.mk>

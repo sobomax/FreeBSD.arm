@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/builtins/Makefile 269902 2014-08-13 04:14:50Z ngie $
+# $FreeBSD: head/bin/sh/tests/builtins/Makefile 272983 2014-10-12 13:12:06Z jilles $
 
 .include <src.opts.mk>
 
@@ -72,6 +72,8 @@ FILES+=		eval3.0
 FILES+=		eval4.0
 FILES+=		eval5.0
 FILES+=		eval6.0
+FILES+=		eval7.0
+FILES+=		eval8.7
 FILES+=		exec1.0
 FILES+=		exec2.0
 FILES+=		exit1.0
@@ -100,6 +102,7 @@ FILES+=		jobid2.0
 FILES+=		kill1.0 kill2.0
 FILES+=		lineno.0 lineno.0.stdout
 FILES+=		lineno2.0
+FILES+=		lineno3.0 lineno3.0.stdout
 FILES+=		local1.0
 FILES+=		local2.0
 FILES+=		local3.0

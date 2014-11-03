@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_sas.c 266615 2014-05-24 13:00:49Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_sas.c 272756 2014-10-08 16:22:26Z mav $");
 
 /* Communications core for LSI MPT2 */
 
@@ -1042,6 +1042,9 @@ mprsas_action(struct cam_sim *sim, union ccb *ccb)
 			break;
 		case 0x0a:
 			sas->bitrate = 600000;
+			break;
+		case 0x0b:
+			sas->bitrate = 1200000;
 			break;
 		default:
 			sas->valid = 0;

@@ -1,6 +1,6 @@
-# $FreeBSD: head/etc/devd/Makefile 261894 2014-02-14 15:31:48Z avg $
+# $FreeBSD: head/etc/devd/Makefile 273155 2014-10-16 00:33:06Z imp $
 
-FILES=	uath.conf usb.conf zfs.conf
+.include <src.opts.mk>
 
 .if ${MACHINE} == "powerpc"
 FILES+=	apple.conf
@@ -8,6 +8,17 @@ FILES+=	apple.conf
 
 .if ${MACHINE} == "amd64" || ${MACHINE} == "i386"
 FILES+=	asus.conf
+.if ${MK_HYPERV} != "no"
+FILES+=	hyperv.conf
+.endif
+.endif
+
+.if ${MK_USB} != "no"
+FILES+=	uath.conf ulpt.conf usb.conf
+.endif
+
+.if ${MK_ZFS} != "no"
+FILES+=	zfs.conf
 .endif
 
 NO_OBJ=

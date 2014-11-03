@@ -26,8 +26,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/iscsictl/iscsictl.c 267615 2014-06-18 17:48:30Z trasz $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/usr.bin/iscsictl/iscsictl.c 273464 2014-10-22 09:17:17Z trasz $");
 
 #include <sys/ioctl.h>
 #include <sys/param.h>
@@ -170,7 +172,7 @@ valid_iscsi_name(const char *name)
 		for (i = strlen("iqn."); name[i] != '\0'; i++) {
 			/*
 			 * XXX: We should verify UTF-8 normalisation, as defined
-			 * 	by 3.2.6.2: iSCSI Name Encoding.
+			 *      by 3.2.6.2: iSCSI Name Encoding.
 			 */
 			if (isalnum(name[i]))
 				continue;

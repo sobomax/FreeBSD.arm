@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/rtc.c 267811 2014-06-24 02:02:51Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/rtc.c 273710 2014-10-26 21:17:44Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/rtc.c 267811 2014-06-24 02:02:51Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/rtc.c 273710 2014-10-26 21:17:44Z neel $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -375,4 +375,8 @@ rtc_dsdt(void)
 }
 LPC_DSDT(rtc_dsdt);
 
+/*
+ * Reserve the extended RTC I/O ports although they are not emulated at this
+ * time.
+ */
 SYSRES_IO(0x72, 6);

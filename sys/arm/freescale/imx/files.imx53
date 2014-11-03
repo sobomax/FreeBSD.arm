@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/freescale/imx/files.imx53 268973 2014-07-22 03:59:14Z br $
+# $FreeBSD: head/sys/arm/freescale/imx/files.imx53 271550 2014-09-13 20:09:34Z ian $
 arm/arm/bus_space_asm_generic.S		standard
 arm/arm/bus_space_generic.c		standard
 arm/arm/cpufunc_asm_armv5.S		standard
@@ -22,7 +22,7 @@ dev/uart/uart_dev_imx.c 		optional uart
 arm/freescale/imx/tzic.c		standard
 
 # IOMUX - external pins multiplexor
-arm/freescale/imx/imx51_iomux.c		optional iomux
+arm/freescale/imx/imx_iomux.c		standard
 
 # GPIO
 arm/freescale/imx/imx_gpio.c		optional gpio

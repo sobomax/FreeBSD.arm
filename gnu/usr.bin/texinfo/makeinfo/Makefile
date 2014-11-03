@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/texinfo/makeinfo/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/texinfo/makeinfo/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	makeinfo
 SRCS=	cmds.c defun.c files.c float.c footnote.c html.c \
@@ -7,8 +7,6 @@ SRCS=	cmds.c defun.c files.c float.c footnote.c html.c \
 
 DPADD=	${LIBTXI}
 LDADD=	${LIBTXI}
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

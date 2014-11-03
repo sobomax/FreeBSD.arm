@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.sbin/ktutil/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.sbin/ktutil/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	ktutil
 MAN=	ktutil.8
@@ -21,8 +21,6 @@ DPADD=	${LIBKADM5CLNT} ${LIBKRB5} ${LIBSL} ${LIBROKEN} ${LIBVERS} \
 	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT} ${LIBEDIT}
 LDADD=	-lkadm5clnt -lkrb5 ${LIBSL} -lroken ${LIBVERS} \
 	-lasn1 -lcrypto -lcrypt -ledit
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_all.c 269709 2014-08-08 11:46:45Z imp $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_all.c 273809 2014-10-29 03:14:29Z mav $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -1733,7 +1733,7 @@ static struct asc_table_entry asc_table[] = {
 	{ SST(0x27, 0x06, SS_RDEF,	/* XXX TBD */
 	    "Conditional write protect") },
 	/* D         B    */
-	{ SST(0x27, 0x07, SS_RDEF,	/* XXX TBD */
+	{ SST(0x27, 0x07, SS_FATAL | ENOSPC,
 	    "Space allocation failed write protect") },
 	/* DTLPWROMAEBKVF */
 	{ SST(0x28, 0x00, SS_FATAL | ENXIO,

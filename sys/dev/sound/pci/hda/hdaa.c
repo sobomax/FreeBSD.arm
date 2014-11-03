@@ -45,7 +45,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdaa.c 264832 2014-04-23 19:32:50Z marius $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdaa.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #define hdaa_lock(devinfo)	snd_mtxlock((devinfo)->lock)
 #define hdaa_unlock(devinfo)	snd_mtxunlock((devinfo)->lock)
@@ -7092,7 +7092,7 @@ hdaa_pcm_attach(device_t dev)
 		    "rec.autosrc", &pdevinfo->autorecsrc);
 		SYSCTL_ADD_INT(&d->rec_sysctl_ctx,
 		    SYSCTL_CHILDREN(d->rec_sysctl_tree), OID_AUTO,
-		    "autosrc", CTLTYPE_INT | CTLFLAG_RW,
+		    "autosrc", CTLFLAG_RW,
 		    &pdevinfo->autorecsrc, 0,
 		    "Automatic recording source selection");
 	}

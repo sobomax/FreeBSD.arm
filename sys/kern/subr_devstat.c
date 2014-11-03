@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_devstat.c 263690 2014-03-24 18:13:41Z emax $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_devstat.c 273377 2014-10-21 07:31:21Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -575,4 +575,4 @@ devstat_free(struct devstat *dsp)
 }
 
 SYSCTL_INT(_debug_sizeof, OID_AUTO, devstat, CTLFLAG_RD,
-    NULL, sizeof(struct devstat), "sizeof(struct devstat)");
+    SYSCTL_NULL_INT_PTR, sizeof(struct devstat), "sizeof(struct devstat)");

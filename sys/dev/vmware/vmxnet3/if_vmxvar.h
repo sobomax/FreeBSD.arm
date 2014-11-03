@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/vmware/vmxnet3/if_vmxvar.h 267662 2014-06-20 02:49:03Z bryanv $
+ * $FreeBSD: head/sys/dev/vmware/vmxnet3/if_vmxvar.h 271946 2014-09-22 08:27:27Z hselasky $
  */
 
 #ifndef _IF_VMXVAR_H
@@ -277,8 +277,6 @@ struct vmxnet3_softc {
  */
 #define VMXNET3_TX_MAXSEGS		32
 #define VMXNET3_TX_MAXSIZE		(VMXNET3_TX_MAXSEGS * MCLBYTES)
-#define VMXNET3_TSO_MAXSIZE \
-    (VMXNET3_TX_MAXSIZE - sizeof(struct ether_vlan_header))
 
 /*
  * Maximum support Tx segments size. The length field in the

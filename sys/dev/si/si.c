@@ -33,12 +33,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/si/si.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/si/si.c 270224 2014-08-20 16:07:17Z jhb $");
 
 #ifndef lint
-static const char si_copyright1[] =  "@(#) Copyright (C) Specialix International, 1990,1992,1998",
-		  si_copyright2[] =  "@(#) Copyright (C) Andy Rutter 1993",
-		  si_copyright3[] =  "@(#) Copyright (C) Peter Wemm 2000";
+__IDSTRING(si_copyright1, "@(#) Copyright (C) Specialix International, 1990,1992,1998");
+__IDSTRING(si_copyright2, "@(#) Copyright (C) Andy Rutter 1993");
+__IDSTRING(si_copyright3, "@(#) Copyright (C) Peter Wemm 2000");
 #endif	/* not lint */
 
 #include "opt_compat.h"

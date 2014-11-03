@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sysv_sem.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/sysv_sem.c 273707 2014-10-26 19:42:44Z mjg $");
 
 #include "opt_compat.h"
 #include "opt_sysvipc.h"
@@ -278,11 +278,11 @@ seminit(void)
 	semexit_tag = EVENTHANDLER_REGISTER(process_exit, semexit_myhook, NULL,
 	    EVENTHANDLER_PRI_ANY);
 
-	error = syscall_helper_register(sem_syscalls);
+	error = syscall_helper_register(sem_syscalls, SY_THR_STATIC_KLD);
 	if (error != 0)
 		return (error);
 #ifdef COMPAT_FREEBSD32
-	error = syscall32_helper_register(sem32_syscalls);
+	error = syscall32_helper_register(sem32_syscalls, SY_THR_STATIC_KLD);
 	if (error != 0)
 		return (error);
 #endif

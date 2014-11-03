@@ -26,12 +26,36 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_float.S 263239 2014-03-16 13:16:30Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_float.S 273088 2014-10-14 14:27:51Z andrew $");
 
 #include "aeabi_vfp.h"
 
 .fpu	vfp
 .syntax	unified
+
+/* void __aeabi_cfcmpeq(float, float) */
+AEABI_ENTRY(cfcmpeq)
+	LOAD_SREGS(s0, s1, r0, r1)
+	vcmp.f32	s0, s1
+	vmrs     	APSR_nzcv, fpscr
+	RET
+AEABI_END(cfcmpeq)
+
+/* void __aeabi_cfcmple(float, float) */
+AEABI_ENTRY(cfcmple)
+	LOAD_SREGS(s0, s1, r0, r1)
+	vcmpe.f32	s0, s1
+	vmrs     	APSR_nzcv, fpscr
+	RET
+AEABI_END(cfcmple)
+
+/* void __aeabi_cfrcmple(float, float) */
+AEABI_ENTRY(cfrcmple)
+	LOAD_SREGS(s0, s1, r0, r1)
+	vcmpe.f32	s1, s0
+	vmrs     	APSR_nzcv, fpscr
+	RET
+AEABI_END(cfrcmple)
 
 /* int __aeabi_fcmpeq(float, float) */
 AEABI_ENTRY(fcmpeq)

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/smbfs/smbfs_io.c 250238 2013-05-04 14:27:28Z davide $
+ * $FreeBSD: head/sys/fs/smbfs/smbfs_io.c 271387 2014-09-10 12:36:41Z glebius $
  *
  */
 #include <sys/param.h>
@@ -419,7 +419,6 @@ smbfs_getpages(ap)
 		vm_page_t *a_m;
 		int a_count;
 		int a_reqpage;
-		vm_ooffset_t a_offset;
 	} */ *ap;
 {
 #ifdef SMBFS_RWGENERIC
@@ -568,7 +567,6 @@ smbfs_putpages(ap)
 		int a_count;
 		int a_sync;
 		int *a_rtvals;
-		vm_ooffset_t a_offset;
 	} */ *ap;
 {
 	int error;

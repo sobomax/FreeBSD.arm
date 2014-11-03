@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdkrpc.c 268115 2014-07-01 20:47:16Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdkrpc.c 273727 2014-10-27 07:47:13Z kib $");
 
 #include "opt_inet6.h"
 #include "opt_kgssapi.h"
@@ -85,16 +85,16 @@ SYSCTL_DECL(_vfs_nfsd);
 SVCPOOL		*nfsrvd_pool;
 
 static int	nfs_privport = 0;
-SYSCTL_INT(_vfs_nfsd, OID_AUTO, nfs_privport, CTLFLAG_RW,
+SYSCTL_INT(_vfs_nfsd, OID_AUTO, nfs_privport, CTLFLAG_RWTUN,
     &nfs_privport, 0,
     "Only allow clients using a privileged port for NFSv2 and 3");
 
 static int	nfs_minvers = NFS_VER2;
-SYSCTL_INT(_vfs_nfsd, OID_AUTO, server_min_nfsvers, CTLFLAG_RW,
+SYSCTL_INT(_vfs_nfsd, OID_AUTO, server_min_nfsvers, CTLFLAG_RWTUN,
     &nfs_minvers, 0, "The lowest version of NFS handled by the server");
 
 static int	nfs_maxvers = NFS_VER4;
-SYSCTL_INT(_vfs_nfsd, OID_AUTO, server_max_nfsvers, CTLFLAG_RW,
+SYSCTL_INT(_vfs_nfsd, OID_AUTO, server_max_nfsvers, CTLFLAG_RWTUN,
     &nfs_maxvers, 0, "The highest version of NFS handled by the server");
 
 static int nfs_proc(struct nfsrv_descript *, u_int32_t, SVCXPRT *xprt,

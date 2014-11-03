@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)lock.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/lock/lock.c 266539 2014-05-22 09:28:36Z ray $");
+__FBSDID("$FreeBSD: head/usr.bin/lock/lock.c 270111 2014-08-17 19:06:26Z neel $");
 
 /*
  * Lock a terminal up until the given key is entered or the given
@@ -97,7 +97,7 @@ main(int argc, char **argv)
 	char *ap, *cryptpw, *mypw, *ttynam, *tzn;
 	char hostname[MAXHOSTNAMELEN], s[BUFSIZ], s1[BUFSIZ];
 
-	openlog("lock", LOG_ODELAY, LOG_AUTH);
+	openlog("lock", 0, LOG_AUTH);
 
 	sectimeout = TIMEOUT;
 	pw = NULL;

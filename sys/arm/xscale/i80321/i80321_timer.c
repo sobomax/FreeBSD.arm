@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/i80321_timer.c 236987 2012-06-13 04:38:09Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/i80321_timer.c 271398 2014-09-10 15:25:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,6 +52,7 @@ __FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/i80321_timer.c 236987 2012-06-13 
 #include <sys/rman.h>
 #include <sys/timetc.h>
 
+#include <machine/armreg.h>
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
@@ -381,7 +382,7 @@ cpu_initclocks(void)
 
 	/* Report the clock frequency. */
 
-	oldirqstate = disable_interrupts(I32_bit);
+	oldirqstate = disable_interrupts(PSR_I);
 
 	irq = bus_alloc_resource(dev, SYS_RES_IRQ, &rid,
 #ifdef CPU_XSCALE_81342

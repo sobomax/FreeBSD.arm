@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/wii/wii_gpio.c 250788 2013-05-18 19:30:42Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/powerpc/wii/wii_gpio.c 273799 2014-10-28 18:33:59Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -182,8 +182,8 @@ wiigpio_attach(device_t dev)
 		    "GPIO_PIN_INPUT" : "GPIO_PIN_OUTPUT");
 #endif
 	}
-	device_add_child(dev, "gpioc", device_get_unit(dev));
-	device_add_child(dev, "gpiobus", device_get_unit(dev));
+	device_add_child(dev, "gpioc", -1);
+	device_add_child(dev, "gpiobus", -1);
 	/*
 	 * We will be responsible for powering off the system.
 	 */

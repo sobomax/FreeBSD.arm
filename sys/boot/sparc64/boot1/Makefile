@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/sparc64/boot1/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/sparc64/boot1/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	boot1.elf
 INTERNALPROG=
@@ -6,8 +6,6 @@ MAN=
 FILES?=	boot1
 SRCS=	_start.s boot1.c
 CLEANFILES=${FILES} boot1.aout
-
-NO_PIE=	yes
 
 BOOTBLOCKBASE= 0x4000
 

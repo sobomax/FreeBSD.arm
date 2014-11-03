@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/QILA9G20 265155 2014-04-30 18:02:10Z imp $
+# $FreeBSD: head/sys/arm/conf/QILA9G20 270912 2014-09-01 03:49:21Z imp $
 
 #NO_UNIVERSE
 
@@ -117,10 +117,10 @@ device		iicbus
 device		icee
 
 # SCSI peripherals
-device		scbus			# SCSI bus (required for SCSI)
+device		scbus			# SCSI bus (required for ATA/SCSI)
 device		da			# Direct Access (disks)
 device		cd			# CD
-device		pass			# Passthrough device (direct SCSI access)
+device		pass			# Passthrough device (direct ATA/SCSI access)
 
 # USB support
 device		ohci			# OHCI localbus->USB interface

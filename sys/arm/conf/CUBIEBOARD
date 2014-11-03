@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CUBIEBOARD 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/arm/conf/CUBIEBOARD 270912 2014-09-01 03:49:21Z imp $
 
 ident		CUBIEBOARD
 
@@ -104,7 +104,7 @@ device		random			# Entropy device
 # GPIO
 device		gpio
 
-device		scbus			# SCSI bus (required for SCSI)
+device		scbus			# SCSI bus (required for ATA/SCSI)
 device		da			# Direct Access (disks)
 device		pass
 

@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/tws/tws.h 262572 2014-02-27 21:41:52Z delphij $
+ * $FreeBSD: head/sys/dev/tws/tws.h 272000 2014-09-22 20:38:01Z jhb $
  */
 
 #include <sys/param.h>        /* defines used in kernel.h */
@@ -268,4 +268,5 @@ struct tws_softc {
     union ccb *scan_ccb;                  /* pointer to a ccb */
     struct tws_request *q_head[TWS_MAX_QS]; /* head pointers to q's */
     struct tws_request *q_tail[TWS_MAX_QS]; /* tail pointers to q's */
+    struct callout stats_timer;
 };

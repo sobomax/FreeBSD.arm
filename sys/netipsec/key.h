@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key.h 220206 2011-03-31 15:23:32Z fabient $	*/
+/*	$FreeBSD: head/sys/netipsec/key.h 273557 2014-10-23 20:43:16Z jhb $	*/
 /*	$KAME: key.h,v 1.21 2001/07/27 03:51:30 itojun Exp $	*/
 
 /*-
@@ -97,7 +97,6 @@ extern struct secpolicy *key_msg2sp __P((struct sadb_x_policy *,
 extern struct mbuf *key_sp2msg __P((struct secpolicy *));
 extern int key_ismyaddr __P((struct sockaddr *));
 extern int key_spdacquire __P((struct secpolicy *));
-extern void key_timehandler __P((void));
 extern u_long key_random __P((void));
 extern void key_randomfill __P((void *, size_t));
 extern void key_freereg __P((struct socket *));

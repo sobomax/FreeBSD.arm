@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_generic.c 264978 2014-04-26 16:55:38Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_generic.c 271539 2014-09-13 18:24:54Z nwhitehorn $
  */
 
 #include <string.h>
@@ -50,6 +50,11 @@ is_scheme_bootable(const char *part_type) {
 	return (1);
 }
 
+int
+is_fs_bootable(const char *part_type, const char *fs) {
+	return (1);
+}
+
 /* No clue => no boot partition, bootcode, or partcode */
 
 size_t
@@ -68,7 +73,7 @@ bootcode_path(const char *part_type) {
 }
 	
 const char *
-partcode_path(const char *part_type) {
+partcode_path(const char *part_type, const char *fs_type) {
 	return (NULL);
 }
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/agp/agp_amd64.c 244926 2013-01-01 18:16:49Z antoine $");
+__FBSDID("$FreeBSD: head/sys/dev/agp/agp_amd64.c 273963 2014-11-02 11:26:37Z tijl $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -240,8 +240,6 @@ agp_amd64_attach(device_t dev)
 		    ~(AGP_AMD64_APCTRL_DISGARTCPU | AGP_AMD64_APCTRL_DISGARTIO),
 		    4);
 	}
-
-	agp_flush_cache();
 
 	return (0);
 }

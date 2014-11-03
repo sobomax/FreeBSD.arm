@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/cron/crontab/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/cron/crontab/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 BINDIR=	/usr/bin
 
@@ -14,7 +14,5 @@ CFLAGS+= -I${.CURDIR}/../cron
 
 DPADD=	${LIBCRON} ${LIBMD} ${LIBUTIL}
 LDADD=	${LIBCRON} -lmd -lutil
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

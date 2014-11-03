@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/tools/slc/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/tools/slc/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	slc
 LIBROKEN_A=     ${.OBJDIR}/../../lib/libroken/libroken.a
@@ -13,8 +13,6 @@ SRCS=	roken.h \
 CFLAGS+=-I${KRB5DIR}/lib/roken -I${KRB5DIR}/lib/sl -I${KRB5DIR}/lib/vers -I.
 
 CLEANFILES= roken.h slc-gram.c slc-lex.c
-
-NO_PIE=	yes
 
 roken.h:
 	${MAKE_ROKEN} > ${.TARGET}

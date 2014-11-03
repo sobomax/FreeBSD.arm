@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_sysctl.c 267992 2014-06-28 03:56:17Z hselasky $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_sysctl.c 273377 2014-10-21 07:31:21Z hselasky $
  *
  */
 
@@ -86,8 +86,8 @@ SYSCTL_NODE(_kern, OID_AUTO, dtrace, CTLFLAG_RD, 0, "DTrace parameters");
 SYSCTL_INT(_kern_dtrace, OID_AUTO, memstr_max, CTLFLAG_RW, &dtrace_memstr_max,
     0, "largest allowed argument to memstr(), 0 indicates no limit");
 
-SYSCTL_LONG(_kern_dtrace, OID_AUTO, dof_maxsize, CTLFLAG_RW,
+SYSCTL_QUAD(_kern_dtrace, OID_AUTO, dof_maxsize, CTLFLAG_RW,
     &dtrace_dof_maxsize, 0, "largest allowed DOF table");
 
-SYSCTL_LONG(_kern_dtrace, OID_AUTO, helper_actions_max, CTLFLAG_RW,
+SYSCTL_QUAD(_kern_dtrace, OID_AUTO, helper_actions_max, CTLFLAG_RW,
     &dtrace_helper_actions_max, 0, "maximum number of allowed helper actions");

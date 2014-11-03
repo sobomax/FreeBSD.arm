@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/acpi.c 269700 2014-08-08 03:49:01Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/acpi.c 272838 2014-10-09 19:02:32Z neel $
  */
 
 /*
@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/acpi.c 269700 2014-08-08 03:49:01Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/acpi.c 272838 2014-10-09 19:02:32Z neel $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -430,7 +430,10 @@ basl_fwrite_fadt(FILE *fp)
 	EFPRINTF(fp, "\n");
 
 	EFPRINTF(fp, "[0001]\t\tValue to cause reset : 06\n");
-	EFPRINTF(fp, "[0003]\t\tReserved : 000000\n");
+	EFPRINTF(fp, "[0002]\t\tARM Flags (decoded below): 0000\n");
+	EFPRINTF(fp, "\t\t\tPSCI Compliant : 0\n");
+	EFPRINTF(fp, "\t\t\tMust use HVC for PSCI : 0\n");
+	EFPRINTF(fp, "[0001]\t\tFADT Minor Revision : 01\n");
 	EFPRINTF(fp, "[0008]\t\tFACS Address : 00000000%08X\n",
 	    basl_acpi_base + FACS_OFFSET);
 	EFPRINTF(fp, "[0008]\t\tDSDT Address : 00000000%08X\n",
@@ -489,7 +492,7 @@ basl_fwrite_fadt(FILE *fp)
 	EFPRINTF(fp,
 	    "[0012]\t\tPM Timer Block : [Generic Address Structure]\n");
 	EFPRINTF(fp, "[0001]\t\tSpace ID : 01 [SystemIO]\n");
-	EFPRINTF(fp, "[0001]\t\tBit Width : 32\n");
+	EFPRINTF(fp, "[0001]\t\tBit Width : 20\n");
 	EFPRINTF(fp, "[0001]\t\tBit Offset : 00\n");
 	EFPRINTF(fp,
 	    "[0001]\t\tEncoded Access Width : 03 [DWord Access:32]\n");
@@ -499,7 +502,7 @@ basl_fwrite_fadt(FILE *fp)
 
 	EFPRINTF(fp, "[0012]\t\tGPE0 Block : [Generic Address Structure]\n");
 	EFPRINTF(fp, "[0001]\t\tSpace ID : 01 [SystemIO]\n");
-	EFPRINTF(fp, "[0001]\t\tBit Width : 80\n");
+	EFPRINTF(fp, "[0001]\t\tBit Width : 00\n");
 	EFPRINTF(fp, "[0001]\t\tBit Offset : 00\n");
 	EFPRINTF(fp, "[0001]\t\tEncoded Access Width : 01 [Byte Access:8]\n");
 	EFPRINTF(fp, "[0008]\t\tAddress : 0000000000000000\n");

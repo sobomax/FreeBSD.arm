@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/common/cxgb_ael1002.c 209841 2010-07-09 00:38:00Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/common/cxgb_ael1002.c 273280 2014-10-19 17:29:44Z np $");
 
 #include <cxgb_include.h>
 
@@ -1345,8 +1345,10 @@ static int ael2005_intr_handler(struct cphy *phy)
 		return ret;
 
 	ret |= cause;
-	if (!ret)
+	if (!ret) {
+		(void) ael2005_reset(phy, 0);
 		ret |= cphy_cause_link_change;
+	}
 	return ret;
 }
 

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: head/sys/arm/include/md_var.h 262958 2014-03-09 21:12:31Z ian $
+ * $FreeBSD: head/sys/arm/include/md_var.h 272766 2014-10-08 20:25:21Z markj $
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -68,6 +68,6 @@ extern int busdma_swi_pending;
 void busdma_swi(void);
 void dump_add_page(vm_paddr_t);
 void dump_drop_page(vm_paddr_t);
-void minidumpsys(struct dumperinfo *);
+int minidumpsys(struct dumperinfo *);
 
 #endif /* !_MACHINE_MD_VAR_H_ */

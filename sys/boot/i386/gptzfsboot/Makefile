@@ -1,10 +1,11 @@
-# $FreeBSD: head/sys/boot/i386/gptzfsboot/Makefile 261567 2014-02-06 21:54:21Z emaste $
+# $FreeBSD: head/sys/boot/i386/gptzfsboot/Makefile 271609 2014-09-15 06:21:28Z avg $
 
 .PATH:		${.CURDIR}/../boot2 ${.CURDIR}/../gptboot \
 		${.CURDIR}/../zfsboot ${.CURDIR}/../common \
 		${.CURDIR}/../../common
 
 FILES=		gptzfsboot
+MAN=		gptzfsboot.8
 
 NM?=		nm
 

@@ -26,7 +26,7 @@
 /*      $NetBSD: setjmp.S,v 1.3 1998/10/03 12:30:38 tsubai Exp $        */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc64/gen/setjmp.S 234115 2012-04-11 00:00:40Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc64/gen/setjmp.S 272362 2014-10-01 15:00:21Z bapt $");
 
 #include <sys/syscall.h>
 	
@@ -92,6 +92,7 @@ ENTRY(setjmp)
 
 	li	%r3,0			/* return (0) */
 	blr
+END(setjmp)
 
 	WEAK_REFERENCE(__longjmp, longjmp)
 ENTRY(__longjmp)
@@ -132,5 +133,6 @@ ENTRY(__longjmp)
 	bnelr
 	li	%r3,1
 	blr
+END(__longjmp)
 
 	.section .note.GNU-stack,"",%progbits

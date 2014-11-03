@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/common/metadata.c 263005 2014-03-11 10:13:06Z royger $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/common/metadata.c 273927 2014-11-01 10:50:18Z andrew $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: head/sys/boot/uboot/common/metadata.c 263005 2014-03-11 10:1
 #include "glue.h"
 
 #if defined(LOADER_FDT_SUPPORT)
-#include "libuboot.h"
+#include <fdt_platform.h>
 #endif
 
 static int

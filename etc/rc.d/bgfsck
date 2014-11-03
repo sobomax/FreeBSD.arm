@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/bgfsck 238628 2012-07-19 22:33:13Z dteske $
+# $FreeBSD: head/etc/rc.d/bgfsck 273013 2014-10-12 22:11:28Z hrs $
 #
 
 # PROVIDE: bgfsck
@@ -9,7 +9,7 @@
 
 . /etc/rc.subr
 
-name="background-fsck"
+name="background_fsck"
 rcvar="background_fsck"
 start_cmd="bgfsck_start"
 stop_cmd=":"

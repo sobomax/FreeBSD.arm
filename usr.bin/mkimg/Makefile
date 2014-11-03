@@ -1,13 +1,20 @@
-# $FreeBSD: head/usr.bin/mkimg/Makefile 268236 2014-07-03 20:31:43Z marcel $
+# $FreeBSD: head/usr.bin/mkimg/Makefile 272485 2014-10-03 20:48:11Z marcel $
+
+.include <src.opts.mk>
 
 PROG=	mkimg
 SRCS=	format.c image.c mkimg.c scheme.c
 MAN=	mkimg.1
 
+MKIMG_VERSION=20141003
+mkimg.o: Makefile
+
+CFLAGS+=-DMKIMG_VERSION=${MKIMG_VERSION}
 CFLAGS+=-DSPARSE_WRITE
 
 # List of formats to support
 SRCS+= \
+	qcow.c \
 	raw.c \
 	vhd.c \
 	vmdk.c
@@ -28,5 +35,9 @@ DPADD=	${LIBUTIL}
 LDADD=	-lutil
 
 WARNS?=	6
+
+.if ${MK_TESTS} != "no"
+SUBDIR+= tests
+.endif
 
 .include <bsd.prog.mk>

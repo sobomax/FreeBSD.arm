@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/boot2/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/sys/boot/i386/boot2/Makefile 272249 2014-09-28 12:12:54Z nyan $
 
 .include <bsd.own.mk>
 
@@ -22,8 +22,6 @@ BOOT2_UFS?=	UFS1_AND_UFS2
 #BOOT2_UFS?=	UFS2_ONLY
 #BOOT2_UFS?=	UFS1_ONLY
 
-NO_PIE=	yes
-
 CFLAGS=	-Os \
 	-fomit-frame-pointer \
 	-mrtd \
@@ -39,7 +37,7 @@ CFLAGS=	-Os \
 	-Wall -Waggregate-return -Wbad-function-cast -Wcast-align \
 	-Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
 	-Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings \
-	-Winline \
+	-Winline
 
 CFLAGS.gcc+=	-fno-guess-branch-probability \
 		-fno-unit-at-a-time \

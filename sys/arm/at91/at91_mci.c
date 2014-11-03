@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_mci.c 261681 2014-02-09 20:55:49Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_mci.c 270154 2014-08-18 21:04:35Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1210,10 +1210,11 @@ at91_mci_intr(void *arg)
 		 */
 		if (cmd->opcode != 8) {
 			device_printf(sc->dev,
-			    "IO error; status MCI_SR = 0x%x cmd opcode = %d%s\n",
-			    sr, cmd->opcode,
+			    "IO error; status MCI_SR = 0x%b cmd opcode = %d%s\n",
+			    sr, MCI_SR_BITSTRING, cmd->opcode,
 			    (cmd->opcode != 12) ? "" :
 			    (sc->flags & CMD_MULTIREAD) ? " after read" : " after write");
+			/* XXX not sure RTOE needs a full reset, just a retry */
 			at91_mci_reset(sc);
 		}
 		at91_mci_next_operation(sc);

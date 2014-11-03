@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_ps.c 228687 2011-12-18 15:36:21Z pluknet $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_ps.c 272958 2014-10-11 20:25:19Z pfg $");
 
 #include <sys/param.h>
 #include <sys/cons.h>
@@ -155,7 +155,7 @@ db_ps(db_expr_t addr, boolean_t hasaddr, db_expr_t count, char *modif)
 				else if (wflag)
 					state[0] = 'W';
 				else
-					state[0] = '?';				
+					state[0] = '?';
 			}
 			break;
 		case PRS_NEW:
@@ -211,7 +211,7 @@ db_ps(db_expr_t addr, boolean_t hasaddr, db_expr_t count, char *modif)
 		p = LIST_NEXT(p, p_list);
 		if (p == NULL && np > 0)
 			p = LIST_FIRST(&zombproc);
-    	}
+	}
 }
 
 static void

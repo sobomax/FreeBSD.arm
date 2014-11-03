@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/groff/src/preproc/eqn/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/groff/src/preproc/eqn/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG_CXX=	eqn
 SRCS=		eqn.cpp eqn_tab.h main.cpp lex.cpp \
@@ -10,8 +10,6 @@ LDADD=		${LIBGROFF}
 SCRIPTS=	neqn
 MAN=		eqn.1 neqn.1
 CLEANFILES=	eqn.cpp eqn_tab.h ${SCRIPTS} ${MAN} y.tab.c y.tab.h
-
-NO_PIE=	yes
 
 eqn_tab.h: eqn.cpp
 

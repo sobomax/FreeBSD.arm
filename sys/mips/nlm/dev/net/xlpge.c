@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/dev/net/xlpge.c 257391 2013-10-30 16:56:46Z andre $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/dev/net/xlpge.c 271858 2014-09-19 09:19:49Z glebius $");
 #include <sys/endian.h>
 #include <sys/systm.h>
 #include <sys/sockio.h>
@@ -897,8 +897,7 @@ fail:
 	if (p2p)
 		uma_zfree(nl_tx_desc_zone, p2p);
 	m_freem(mbuf_chain);
-	/*atomic_incr_long(&ifp->if_iqdrops); */
-	ifp->if_iqdrops++;
+	if_inc_counter(ifp, IFCOUNTER_IQDROPS, 1);
 	return (err);
 }
 
@@ -1433,8 +1432,7 @@ nlm_xlpge_rx(struct nlm_xlpge_softc *sc, int port, vm_paddr_t paddr, int len)
 	} else
 		m->m_pkthdr.len = m->m_len = len;
 
-	/*atomic_incr_long(&ifp->if_ipackets);*/
-	ifp->if_ipackets++;
+	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 #ifdef XLP_DRIVER_LOOPBACK
 	if (port == 16 || port == 17)
 		(*ifp->if_input)(ifp, m);
@@ -1515,8 +1513,7 @@ nlm_xlpge_msgring_handler(int vc, int size, int code, int src_id,
 
 		nlm_xlpge_release_mbuf(phys_addr);
 
-		/*atomic_incr_long(&ifp->if_opackets);*/
-		ifp->if_opackets++;
+		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 
 	} else if (size > 1) { /* Recieve packet */
 		phys_addr = msg->msg[1] & 0xffffffffc0ULL;

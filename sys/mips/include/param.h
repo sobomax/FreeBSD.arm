@@ -36,7 +36,7 @@
  *	from: Utah Hdr: machparam.h 1.11 89/08/14
  *	from: @(#)param.h	8.1 (Berkeley) 6/10/93
  *	JNPR: param.h,v 1.6.2.1 2007/09/10 07:49:36 girish
- * $FreeBSD: head/sys/mips/include/param.h 250338 2013-05-07 22:46:24Z attilio $
+ * $FreeBSD: head/sys/mips/include/param.h 273783 2014-10-28 15:22:13Z kib $
  */
 
 #ifndef _MIPS_INCLUDE_PARAM_H_
@@ -177,5 +177,9 @@
 #define	ptoa(x)			((x) << PAGE_SHIFT)
 
 #define	pgtok(x)		((x) * (PAGE_SIZE / 1024))
+
+#ifdef _KERNEL
+#define	NO_FUEWORD	1
+#endif
 
 #endif /* !_MIPS_INCLUDE_PARAM_H_ */

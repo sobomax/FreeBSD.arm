@@ -26,7 +26,7 @@
 /*      $NetBSD: _setjmp.S,v 1.1 1997/03/29 20:55:53 thorpej Exp $      */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/powerpc/gen/_setjmp.S 234115 2012-04-11 00:00:40Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/lib/libc/powerpc/gen/_setjmp.S 272362 2014-10-01 15:00:21Z bapt $");
 
 /*
  * C library -- _setjmp, _longjmp
@@ -58,6 +58,7 @@ ENTRY(_setjmp)
 	stmw	%r9,20(%r3)
 	li	%r3,0
 	blr
+END(_setjmp)
 
 ENTRY(_longjmp)
 	lmw	%r9,20(%r3)
@@ -68,5 +69,6 @@ ENTRY(_longjmp)
 	bnelr
 	li	%r3,1
 	blr
+END(_longjmp)
 
 	.section .note.GNU-stack,"",%progbits

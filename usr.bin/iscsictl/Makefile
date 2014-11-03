@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/iscsictl/Makefile 255570 2013-09-14 15:29:06Z trasz $
+# $FreeBSD: head/usr.bin/iscsictl/Makefile 273464 2014-10-22 09:17:17Z trasz $
 
 PROG=		iscsictl
 SRCS=		iscsictl.c periphs.c parse.y token.l y.tab.h
@@ -6,8 +6,8 @@ CFLAGS+=	-I${.CURDIR}
 CFLAGS+=	-I${.CURDIR}/../../sys/dev/iscsi
 MAN=		iscsictl.8
 
-DPADD=		${LIBCAM} ${LIBUTIL} 
-LDADD=		-lcam -lfl -lutil
+DPADD=		${LIBCAM} ${LIBUTIL}
+LDADD=		-lcam -lutil
 
 YFLAGS+=	-v
 LFLAGS+=	-i

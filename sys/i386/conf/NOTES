@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/i386/conf/NOTES 269992 2014-08-14 18:29:55Z gavin $
+# $FreeBSD: head/sys/i386/conf/NOTES 270224 2014-08-20 16:07:17Z jhb $
 #
 
 #
@@ -871,7 +871,7 @@ device		spic
 hint.spic.0.at="isa"
 hint.spic.0.port="0x10a0"
 device		asmc
-#device		si
+device		si
 device		tpm
 device		padlock_rng	# VIA Padlock RNG
 device		rdrand_rng	# Intel Bull Mountain RNG

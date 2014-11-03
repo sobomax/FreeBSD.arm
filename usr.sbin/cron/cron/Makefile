@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/cron/cron/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/cron/cron/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	cron
 MAN=	cron.8
@@ -10,7 +10,5 @@ DPADD=	${LIBCRON} ${LIBPAM} ${LIBUTIL}
 LDADD=	${LIBCRON} ${MINUSLPAM} -lutil
 
 WARNS?=	2
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>

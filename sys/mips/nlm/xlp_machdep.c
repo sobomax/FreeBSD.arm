@@ -28,7 +28,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 273174 2014-10-16 18:04:43Z davide $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -282,9 +282,9 @@ xlp_parse_bootargs(char *cmdline)
 		} else {
 			n = strsep(&v, "=");
 			if (v == NULL)
-				setenv(n, "1");
+				kern_setenv(n, "1");
 			else
-				setenv(n, v);
+				kern_setenv(n, v);
 		}
 	}
 }
@@ -349,9 +349,9 @@ xlp_bootargs_init(__register_t arg)
 		v = buf;
 		n = strsep(&v, "=");
 		if (v == NULL)
-			setenv(n, "1");
+			kern_setenv(n, "1");
 		else
-			setenv(n, v);
+			kern_setenv(n, v);
 		p += strlen(p) + 1;
 	}
 
@@ -360,7 +360,7 @@ xlp_bootargs_init(__register_t arg)
 		xlp_hw_thread_mask = mask;
 
 	/* command line argument */
-	v = getenv("bootargs");
+	v = kern_getenv("bootargs");
 	if (v != NULL) {
 		strlcpy(buf, v, sizeof(buf));
 		xlp_parse_bootargs(buf);

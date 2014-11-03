@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_sdhci.c 267171 2014-06-06 16:37:42Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_sdhci.c 270948 2014-09-01 19:20:34Z ian $");
 
 /*
  * SDHCI driver glue for Freescale i.MX SoC family.
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_sdhci.c 267171 2014-06-06 16:
 #include <sys/mutex.h>
 #include <sys/resource.h>
 #include <sys/rman.h>
+#include <sys/sysctl.h>
 #include <sys/taskqueue.h>
 #include <sys/time.h>
 

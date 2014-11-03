@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.opts.mk 269812 2014-08-11 14:50:49Z imp $
+# $FreeBSD: head/sys/conf/kern.opts.mk 272350 2014-10-01 08:26:51Z andrew $
 
 # Options set in the build system that affect the kernel somehow.
 
@@ -23,7 +23,6 @@
 # src tree.
 
 __DEFAULT_YES_OPTIONS = \
-    ARM_EABI \
     BLUETOOTH \
     CDDL \
     CRYPT \

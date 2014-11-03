@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_powerpc.c 268256 2014-07-04 15:55:32Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_powerpc.c 271539 2014-09-13 18:24:54Z nwhitehorn $
  */
 
 #include <sys/types.h>
@@ -67,6 +67,15 @@ is_scheme_bootable(const char *part_type) {
 	return (0);
 }
 
+int
+is_fs_bootable(const char *part_type, const char *fs)
+{
+	if (strcmp(fs, "freebsd-ufs") == 0)
+		return (1);
+	
+	return (0);
+}
+
 size_t
 bootpart_size(const char *part_type) {
 	size_t platlen = sizeof(platform);
@@ -100,7 +109,7 @@ bootcode_path(const char *part_type) {
 }
 	
 const char *
-partcode_path(const char *part_type) {
+partcode_path(const char *part_type, const char *fs_type) {
 	size_t platlen = sizeof(platform);
 	if (strlen(platform) == 0)
 		sysctlbyname("hw.platform", platform, &platlen, NULL, -1);

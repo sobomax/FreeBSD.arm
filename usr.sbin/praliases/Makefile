@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 9/21/96
-# $FreeBSD: head/usr.sbin/praliases/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/usr.sbin/praliases/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 SENDMAIL_DIR=	${.CURDIR}/../../contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/praliases
@@ -33,8 +33,6 @@ CFLAGS+= ${SENDMAIL_CFLAGS}
 LDFLAGS+=${SENDMAIL_LDFLAGS}
 DPADD+=	${SENDMAIL_DPADD}
 LDADD+=	${SENDMAIL_LDADD}
-
-NO_PIE=	yes
 
 sm_os.h:
 	ln -sf ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h sm_os.h

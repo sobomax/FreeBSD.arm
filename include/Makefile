@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 1/4/94
-# $FreeBSD: head/include/Makefile 267441 2014-06-13 10:08:18Z tijl $
+# $FreeBSD: head/include/Makefile 273613 2014-10-24 23:25:11Z rpaulo $
 #
 # Doing a "make install" builds /usr/include.
 
@@ -158,6 +158,8 @@ copies:
 .endfor
 	cd ${.CURDIR}/../sys/dev/acpica; \
 	${INSTALL} -C -o ${BINOWN} -g ${BINGRP} -m 444 acpiio.h \
+	    ${DESTDIR}${INCLUDEDIR}/dev/acpica; \
+	${INSTALL} -C -o ${BINOWN} -g ${BINGRP} -m 444 acpi_hpet.h \
 	    ${DESTDIR}${INCLUDEDIR}/dev/acpica
 	cd ${.CURDIR}/../sys/dev/agp; \
 	${INSTALL} -C -o ${BINOWN} -g ${BINGRP} -m 444 agpreg.h \
@@ -243,7 +245,7 @@ symlinks:
 	done
 .endfor
 	cd ${.CURDIR}/../sys/dev/acpica; \
-	for h in acpiio.h; do \
+	for h in acpiio.h acpi_hpet.h; do \
 		ln -fs ../../../../sys/dev/acpica/$$h \
 		    ${DESTDIR}${INCLUDEDIR}/dev/acpica; \
 	done

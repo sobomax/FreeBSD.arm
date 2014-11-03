@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/atomic.h 269414 2014-08-02 03:44:27Z ian $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/atomic.h 270260 2014-08-21 08:25:46Z delphij $
  */
 
 #ifndef _OPENSOLARIS_SYS_ATOMIC_H_
@@ -115,6 +115,12 @@ static __inline uint64_t
 atomic_inc_64_nv(volatile uint64_t *target)
 {
 	return (atomic_add_64_nv(target, 1));
+}
+
+static __inline uint64_t
+atomic_dec_64_nv(volatile uint64_t *target)
+{
+	return (atomic_add_64_nv(target, -1));
 }
 
 #if !defined(COMPAT_32BIT) && defined(__LP64__)

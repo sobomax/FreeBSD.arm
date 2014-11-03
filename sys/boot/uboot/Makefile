@@ -1,5 +1,11 @@
-# $FreeBSD: head/sys/boot/uboot/Makefile 177152 2008-03-13 17:54:21Z obrien $
+# $FreeBSD: head/sys/boot/uboot/Makefile 273934 2014-11-01 17:12:44Z andrew $
+
+.include <src.opts.mk>
 
 SUBDIR=	lib
+
+.if ${MK_FDT} != "no"
+SUBDIR+=fdt
+.endif
 
 .include <bsd.subdir.mk>

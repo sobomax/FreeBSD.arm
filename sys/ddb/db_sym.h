@@ -23,14 +23,14 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/ddb/db_sym.h 263973 2014-03-31 16:37:41Z pfg $
+ * $FreeBSD: head/sys/ddb/db_sym.h 272958 2014-10-11 20:25:19Z pfg $
  */
 
 #ifndef _DDB_DB_SYM_H_
 #define	_DDB_DB_SYM_H_
 
 /*
- * 	Author: Alessandro Forin, Carnegie Mellon University
+ *	Author: Alessandro Forin, Carnegie Mellon University
  *	Date:	8/90
  */
 

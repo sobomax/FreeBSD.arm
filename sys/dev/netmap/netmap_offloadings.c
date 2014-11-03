@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/dev/netmap/netmap_offloadings.c 261909 2014-02-15 04:53:04Z luigi $ */
+/* $FreeBSD: head/sys/dev/netmap/netmap_offloadings.c 270063 2014-08-16 15:00:01Z luigi $ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
@@ -159,7 +159,7 @@ void bdg_mismatch_datapath(struct netmap_vp_adapter *na,
 	src = ft_p->ft_buf;
 	src_len = ft_p->ft_len;
 	slot = &ring->slot[*j];
-	dst = BDG_NMB(&dst_na->up, slot);
+	dst = NMB(&dst_na->up, slot);
 	dst_len = src_len;
 
 	/* We are processing the first input slot and there is a mismatch
@@ -303,7 +303,7 @@ void bdg_mismatch_datapath(struct netmap_vp_adapter *na,
 				/* Next destination slot. */
 				*j = nm_next(*j, lim);
 				slot = &ring->slot[*j];
-				dst = BDG_NMB(&dst_na->up, slot);
+				dst = NMB(&dst_na->up, slot);
 
 				gso_bytes = 0;
 				gso_idx++;
@@ -365,7 +365,7 @@ void bdg_mismatch_datapath(struct netmap_vp_adapter *na,
 			/* Next destination slot. */
 			*j = nm_next(*j, lim);
 			slot = &ring->slot[*j];
-			dst = BDG_NMB(&dst_na->up, slot);
+			dst = NMB(&dst_na->up, slot);
 
 			/* Next source slot. */
 			ft_p++;

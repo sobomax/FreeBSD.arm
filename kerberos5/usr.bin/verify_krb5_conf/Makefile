@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/verify_krb5_conf/Makefile 267233 2014-06-08 17:29:31Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/verify_krb5_conf/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
 
 PROG=	verify_krb5_conf
 MAN=	verify_krb5_conf.8
@@ -7,8 +7,6 @@ DPADD=	${LIBKAFS5} ${LIBKRB5} ${LIBHX509} ${LIBROKEN} ${LIBVERS} \
 	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT} ${LIBCOM_ERR}
 LDADD=	-lkafs5 -lkrb5 -lhx509 -lroken ${LIBVERS} \
 	-lasn1 -lcrypto -lcrypt -lcom_err
-
-NO_PIE=	yes
 
 .include <bsd.prog.mk>
 

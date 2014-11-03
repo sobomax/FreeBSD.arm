@@ -64,7 +64,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcmp.S 137464 2004-11-09 16:49:14Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcmp.S 270882 2014-08-31 17:21:51Z ian $");
 
 ENTRY(memcmp)
 	mov	ip, r0
@@ -178,3 +178,4 @@ ENTRY(memcmp)
 	sub	r0, r3, r2		/* r0 = b1#5 - b2#5 */
 	RET
 #endif
+END(memcmp)

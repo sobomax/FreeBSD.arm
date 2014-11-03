@@ -44,7 +44,7 @@
  *      from: @(#)pmap.h        7.4 (Berkeley) 5/12/91
  * 	from: FreeBSD: src/sys/i386/include/pmap.h,v 1.70 2000/11/30
  *
- * $FreeBSD: head/sys/arm/include/pmap.h 263679 2014-03-24 08:24:32Z andrew $
+ * $FreeBSD: head/sys/arm/include/pmap.h 271422 2014-09-11 10:53:57Z andrew $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -256,7 +256,7 @@ int	pmap_change_attr(vm_offset_t, vm_size_t, int);
 void	pmap_kenter(vm_offset_t va, vm_paddr_t pa);
 void	pmap_kenter_nocache(vm_offset_t va, vm_paddr_t pa);
 void	pmap_kenter_device(vm_offset_t va, vm_paddr_t pa);
-void	*pmap_kenter_temp(vm_paddr_t pa, int i);
+void	*pmap_kenter_temporary(vm_paddr_t pa, int i);
 void 	pmap_kenter_user(vm_offset_t va, vm_paddr_t pa);
 vm_paddr_t pmap_kextract(vm_offset_t va);
 void	pmap_kremove(vm_offset_t);

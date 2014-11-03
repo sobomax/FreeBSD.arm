@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/max6690.c 259080 2013-12-07 19:55:34Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/max6690.c 273016 2014-10-12 23:48:55Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -340,6 +340,10 @@ max6690_sensor_read(struct max6690_sensor *sens)
 	}
 
 	err = max6690_read(sc->sc_dev, sc->sc_addr, reg_int, &integer);
+
+	if (err < 0)
+		return (-1);
+
 	err = max6690_read(sc->sc_dev, sc->sc_addr, reg_ext, &fraction);
 
 	if (err < 0)

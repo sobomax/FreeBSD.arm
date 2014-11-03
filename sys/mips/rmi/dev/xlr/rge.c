@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/xlr/rge.c 243882 2012-12-05 08:04:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/xlr/rge.c 271858 2014-09-19 09:19:49Z glebius $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -2019,7 +2019,7 @@ rge_rx(struct rge_softc *sc, vm_paddr_t paddr, int len)
 		printf("\n");
 	}
 #endif
-	ifp->if_ipackets++;
+	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 	(*ifp->if_input) (ifp, m);
 }
 
@@ -2116,7 +2116,7 @@ rge_start_locked(struct ifnet *ifp, int threshold)
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			return;
 		} else {
-			ifp->if_opackets++;
+			if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 			xlr_rge_tx_done[vcpu]++;
 		}
 	}

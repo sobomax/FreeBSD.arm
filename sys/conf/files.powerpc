@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: head/sys/conf/files.powerpc 269577 2014-08-05 09:44:10Z glebius $
+# $FreeBSD: head/sys/conf/files.powerpc 273156 2014-10-16 01:32:22Z jhibbits $
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and
@@ -33,6 +33,7 @@ dev/hwpmc/hwpmc_powerpc.c	optional	hwpmc
 dev/hwpmc/hwpmc_mpc7xxx.c	optional	hwpmc
 dev/hwpmc/hwpmc_ppc970.c	optional	hwpmc
 dev/iicbus/ad7417.c		optional	ad7417 powermac
+dev/iicbus/adm1030.c	optional	powermac windtunnel | adm1030 powermac
 dev/iicbus/adt746x.c		optional        adt746x powermac
 dev/iicbus/ds1631.c		optional	ds1631 powermac
 dev/iicbus/ds1775.c		optional	ds1775 powermac
@@ -169,7 +170,6 @@ powerpc/powermac/smusat.c	optional	powermac smu
 powerpc/powermac/uninorth.c	optional	powermac
 powerpc/powermac/uninorthpci.c	optional	powermac pci
 powerpc/powermac/vcoregpio.c	optional	powermac 
-powerpc/powermac/windtunnel.c	optional	powermac windtunnel
 powerpc/powerpc/altivec.c	standard
 powerpc/powerpc/autoconf.c	standard
 powerpc/powerpc/bcopy.c		standard

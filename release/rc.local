@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/release/rc.local 259686 2013-12-21 16:43:40Z dteske $
+# $FreeBSD: head/release/rc.local 271549 2014-09-13 20:09:02Z nwhitehorn $
 
 : ${DIALOG_OK=0}
 : ${DIALOG_CANCEL=1}
@@ -9,6 +9,9 @@
 : ${DIALOG_ESC=255}
 
 MACHINE=`uname -m`
+
+# resolv.conf from DHCP ends up in here, so make sure the directory exists
+mkdir /tmp/bsdinstall_etc
 
 kbdcontrol -d >/dev/null 2>&1
 if [ $? -eq 0 ]; then

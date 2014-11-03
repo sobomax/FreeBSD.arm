@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.debug.dist 251512 2013-06-07 21:40:02Z emaste $
+# $FreeBSD: head/etc/mtree/BSD.debug.dist 273780 2014-10-28 14:48:52Z emaste $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -26,8 +26,16 @@
             lib
                 engines
                 ..
+                i18n
+                ..
+                private
+                ..
             ..
             lib32
+                i18n
+                ..
+                private
+                ..
             ..
             libexec
                 bsdinstall

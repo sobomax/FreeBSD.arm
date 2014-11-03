@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/conf/NOTES 264219 2014-04-07 05:33:30Z rpaulo $
+# $FreeBSD: head/sys/arm/conf/NOTES 272103 2014-09-25 11:38:26Z gavin $
 
 machine	arm
 
@@ -19,7 +19,7 @@ files	"../mv/discovery/files.db78xxx"
 files	"../mv/kirkwood/files.kirkwood"
 files	"../mv/orion/files.db88f5xxx"
 files	"../mv/orion/files.ts7800"
-files	"../s3c2xx0/files.s3c2xx0"
+files	"../samsung/s3c2xx0/files.s3c2xx0"
 files	"../xscale/i80321/files.ep80219"
 files	"../xscale/i80321/files.i80219"
 files	"../xscale/i80321/files.i80321"

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_s3c24x0.c 228483 2011-12-14 00:28:54Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_s3c24x0.c 272103 2014-09-25 11:38:26Z gavin $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -60,7 +60,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_s3c24x0.c 228483 2011-12-14
 
 #include <sys/rman.h>
 
-#include <arm/s3c2xx0/s3c24x0reg.h>
+#include <arm/samsung/s3c2xx0/s3c24x0reg.h>
 
 static device_probe_t ohci_s3c24x0_probe;
 static device_attach_t ohci_s3c24x0_attach;

@@ -29,12 +29,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_fb_helper.c 268981 2014-07-22 08:52:49Z ray $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_fb_helper.c 270706 2014-08-27 10:07:08Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc.h>
 #include <dev/drm2/drm_fb_helper.h>
 #include <dev/drm2/drm_crtc_helper.h>
+
+#include <sys/kdb.h>
 
 struct vt_kms_softc {
 	struct drm_fb_helper *fb_helper;
@@ -64,7 +66,11 @@ vt_kms_postswitch(void *arg)
 	struct vt_kms_softc *sc;
 
 	sc = (struct vt_kms_softc *)arg;
-	taskqueue_enqueue_fast(taskqueue_thread, &sc->fb_mode_task);
+
+	if (!kdb_active && panicstr == NULL)
+		taskqueue_enqueue_fast(taskqueue_thread, &sc->fb_mode_task);
+	else
+		drm_fb_helper_restore_fbdev_mode(sc->fb_helper);
 
 	return (0);
 }

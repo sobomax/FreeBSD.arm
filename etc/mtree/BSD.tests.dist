@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.tests.dist 269906 2014-08-13 05:15:28Z ngie $
+# $FreeBSD: head/etc/mtree/BSD.tests.dist 273771 2014-10-28 10:39:41Z bapt $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -47,6 +47,8 @@
                 set-e
                 ..
             ..
+            sleep
+            ..
             test
             ..
         ..
@@ -68,6 +70,8 @@
             lib
             ..
             usr.bin
+                diff
+                ..
             ..
         ..
         lib
@@ -89,6 +93,8 @@
             ..
             libnv
             ..
+            libproc
+            ..
             libutil
             ..
         ..
@@ -104,6 +110,8 @@
         ..
         sbin
             dhclient
+            ..
+            devd
             ..
             growfs
             ..
@@ -138,6 +146,8 @@
         ..
         usr.bin
             apply
+            ..
+            basename
             ..
             bmake
                 archives
@@ -239,9 +249,19 @@
             ..
             calendar
             ..
+            cmp
+            ..
             comm
             ..
+            cut
+            ..
+            dirname
+            ..
             file2c
+            ..
+            grep
+            ..
+            gzip
             ..
             join
             ..
@@ -251,6 +271,8 @@
             ..
             m4
             ..
+            mkimg
+            ..
             ncal
             ..
             printf
@@ -258,6 +280,8 @@
             sed
                 regress.multitest.out
                 ..
+            ..
+            timeout
             ..
             tr
             ..
@@ -281,8 +305,14 @@
             ..
             newsyslog
             ..
+            nmtree
+            ..
+            pw
+            ..
             sa
             ..
         ..
     ..
 ..
+
+# vim: set expandtab ts=4 sw=4:

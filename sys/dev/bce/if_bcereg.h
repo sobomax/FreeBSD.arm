@@ -22,7 +22,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/bce/if_bcereg.h 265703 2014-05-08 19:40:37Z davidcs $
+ * $FreeBSD: head/sys/dev/bce/if_bcereg.h 272096 2014-09-25 07:22:24Z glebius $
  */
 
 #ifndef	_BCEREG_H_DEFINED
@@ -6692,6 +6692,7 @@ struct bce_softc
 	u32			l2fhdr_error_count;
 	u32			dma_map_addr_tx_failed_count;
 	u32			dma_map_addr_rx_failed_count;
+	u32			watchdog_timeouts;
 
 	/* Host coalescing block command register */
 	u32			hc_command;

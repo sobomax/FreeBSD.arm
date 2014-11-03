@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ucred.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/ucred.h 219304 2011-03-05 12:40:35Z trasz $
+ * $FreeBSD: head/sys/sys/ucred.h 272546 2014-10-05 02:16:53Z mjg $
  */
 
 #ifndef _SYS_UCRED_H_
@@ -108,7 +108,6 @@ void	cred_update_thread(struct thread *td);
 void	crfree(struct ucred *cr);
 struct ucred	*crget(void);
 struct ucred	*crhold(struct ucred *cr);
-int	crshared(struct ucred *cr);
 void	cru2x(struct ucred *cr, struct xucred *xcr);
 void	crsetgroups(struct ucred *cr, int n, gid_t *groups);
 int	groupmember(gid_t gid, struct ucred *cred);
