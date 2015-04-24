@@ -1,10 +1,9 @@
-# $FreeBSD: head/sbin/natd/Makefile 202532 2010-01-17 21:56:27Z ed $
+# $FreeBSD: head/sbin/natd/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG		= natd
 SRCS		= natd.c icmp.c
 WARNS?=	3
-LDADD		= -lalias
-DPADD		= ${LIBALIAS}
+LIBADD		= alias
 MAN		= natd.8
 
 .include <bsd.prog.mk>

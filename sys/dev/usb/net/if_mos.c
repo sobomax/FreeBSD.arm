@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_mos.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_mos.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * Moschip MCS7730/MCS7830/MCS7832 USB to Ethernet controller
@@ -137,7 +137,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/net/if_mos.c 271832 2014-09-18 21:09:22Z gl
 static int mos_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, mos, CTLFLAG_RW, 0, "USB mos");
-SYSCTL_INT(_hw_usb_mos, OID_AUTO, debug, CTLFLAG_RW, &mos_debug, 0,
+SYSCTL_INT(_hw_usb_mos, OID_AUTO, debug, CTLFLAG_RWTUN, &mos_debug, 0,
     "Debug level");
 #endif
 

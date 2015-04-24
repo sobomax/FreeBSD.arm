@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009 Advanced Computing Technologies LLC
+ * Copyright (c) 2009 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/file/closefrom/closefrom.c 194262 2009-06-15 20:38:55Z jhb $");
+__FBSDID("$FreeBSD: head/tools/regression/file/closefrom/closefrom.c 281887 2015-04-23 14:22:20Z jhb $");
 
 /*
  * Regression tests for the closefrom(2) system call.

@@ -38,7 +38,7 @@
  *
  *	from: @(#)vm_machdep.c	7.3 (Berkeley) 5/13/91
  *	Utah $Hdr: vm_machdep.c 1.16.1.1 89/06/23$
- * $FreeBSD: head/sys/powerpc/powerpc/vm_machdep.c 269577 2014-08-05 09:44:10Z glebius $
+ * $FreeBSD: head/sys/powerpc/powerpc/vm_machdep.c 277334 2015-01-18 18:32:43Z nwhitehorn $
  */
 /*-
  * Copyright (c) 1994, 1995, 1996 Carnegie-Mellon University.
@@ -99,11 +99,6 @@
 #include <vm/vm_map.h>
 #include <vm/vm_extern.h>
 
-#ifdef __powerpc64__
-extern uintptr_t tocbase;
-#endif
-
-
 /*
  * Finish a fork operation, with process p2 nearly set up.
  * Copy and update the pcb, set up the stack so that the child
@@ -149,7 +144,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	cf = (struct callframe *)tf - 1;
 	memset(cf, 0, sizeof(struct callframe));
 	#ifdef __powerpc64__
-	cf->cf_toc = tocbase;
+	cf->cf_toc = ((register_t *)fork_return)[1];
 	#endif
 	cf->cf_func = (register_t)fork_return;
 	cf->cf_arg0 = (register_t)td2;

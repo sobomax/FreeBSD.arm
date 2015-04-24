@@ -32,7 +32,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)tcp.4	8.1 (Berkeley) 6/5/93
-.\" $FreeBSD: head/share/man/man4/tcp.4 273081 2014-10-14 12:29:24Z brueffer $
+.\" $FreeBSD: head/share/man/man4/tcp.4 276345 2014-12-28 20:56:03Z sbruno $
 .\"
 .Dd October 13, 2014
 .Dt TCP 4
@@ -521,11 +521,11 @@ This is needed to help with connection establishment
 when a broken firewall is in the network path.
 .It Va pmtud_blackhole_detection
 Turn on automatic path MTU blackhole detection.
-In case of retransmits we will
+In case of retransmits OS will
 lower the MSS to check if it's MTU problem.
 If current MSS is greater than
-configured value to try, it will be set to it, otherwise, MSS will be set to
-default values
+configured value to try, it will be set to configured value, otherwise,
+MSS will be set to default values
 .Po Va net.inet.tcp.mssdflt
 and
 .Va net.inet.tcp.v6mssdflt
@@ -535,11 +535,12 @@ MSS to try for IPv4 if PMTU blackhole detection is turned on.
 .It Va v6pmtud_blackhole_mss
 MSS to try for IPv6 if PMTU blackhole detection is turned on.
 .It Va pmtud_blackhole_activated
-Number of times the code was activated to attempt a MSS downshift.
-.It Va pmtud_blackhole_min_activated
-Number of times the blackhole MSS was used in an attempt to downshift.
+Number of times configured values were used in an attempt to downshift.
+.It Va pmtud_blackhole_activated_min_mss
+Number of times default MSS was used in an attempt to downshift.
 .It Va pmtud_blackhole_failed
-Number of times that we failed to connect after we downshifted the MSS.
+Number of connections for which retransmits continued even after MSS
+downshift.
 .El
 .Sh ERRORS
 A socket operation may fail with one of the following errors returned:

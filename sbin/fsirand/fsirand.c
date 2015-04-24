@@ -32,11 +32,10 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/fsirand/fsirand.c 241013 2012-09-27 23:31:06Z mdf $";
+  "$FreeBSD: head/sbin/fsirand/fsirand.c 276737 2015-01-06 05:28:37Z imp $";
 #endif /* not lint */
 
 #include <sys/param.h>
-#include <sys/disklabel.h>
 #include <sys/resource.h>
 
 #include <ufs/ufs/dinode.h>
@@ -120,20 +119,10 @@ fsirand(char *device)
 	char sbuf[SBLOCKSIZE], sbuftmp[SBLOCKSIZE];
 	int i, devfd, n, cg;
 	u_int32_t bsize = DEV_BSIZE;
-	struct disklabel label;
 
 	if ((devfd = open(device, printonly ? O_RDONLY : O_RDWR)) < 0) {
 		warn("can't open %s", device);
 		return (1);
-	}
-
-	/* Get block size (usually 512) from disklabel if possible */
-	if (!ignorelabel) {
-		if (ioctl(devfd, DIOCGDINFO, &label) < 0)
-			warn("can't read disklabel, using sector size of %d",
-			    bsize);
-		else
-			bsize = label.d_secsize;
 	}
 
 	dp1 = NULL;

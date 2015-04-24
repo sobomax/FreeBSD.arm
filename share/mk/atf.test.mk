@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/atf.test.mk 273478 2014-10-22 18:11:10Z ngie $
+# $FreeBSD: head/share/mk/atf.test.mk 274077 2014-11-04 01:57:31Z ngie $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -113,8 +113,12 @@ ATF_TESTS_SH_SED_${_T}?= # empty
 ATF_TESTS_SH_SRC_${_T}?= ${_T}.sh
 ${_T}: ${ATF_TESTS_SH_SRC_${_T}}
 	echo '#! /usr/libexec/atf-sh' > ${.TARGET}.tmp
+.if empty(ATF_TESTS_SH_SED_${_T})
+	cat ${.ALLSRC:N*Makefile*} >>${.TARGET}.tmp
+.else
 	cat ${.ALLSRC:N*Makefile*} \
 	    | sed ${ATF_TESTS_SH_SED_${_T}} >>${.TARGET}.tmp
+.endif
 	chmod +x ${.TARGET}.tmp
 	mv ${.TARGET}.tmp ${.TARGET}
 .endfor

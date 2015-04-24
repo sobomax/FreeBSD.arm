@@ -42,7 +42,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/isa/sb16.c 193640 2009-06-07 19:12:08Z ariff $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/isa/sb16.c 274035 2014-11-03 11:11:45Z bapt $");
 
 #define SB16_BUFFSIZE	4096
 #define PLAIN_SB16(x) ((((x)->bd_flags) & (BD_F_SB16|BD_F_SB16X)) == BD_F_SB16)
@@ -176,10 +176,8 @@ sb_dspwr(struct sb_info *sb, u_char val)
 			return 1;
 		}
     	}
-#if __FreeBSD_version > 500000
 	if (curthread->td_intr_nesting_level == 0)
 		printf("sb_dspwr(0x%02x) timed out.\n", val);
-#endif
     	return 0;
 }
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/bsnmpd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/bsnmpd/bsnmpd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 
@@ -29,8 +29,7 @@ CFLAGS+= -DSNMPTREE_TYPES
 CFLAGS+= -I${CONTRIB}/lib -I${CONTRIB}/snmpd -I. -DUSE_LIBBEGEMOT
 CFLAGS+= -DUSE_TCPWRAPPERS -DQUADFMT='"llu"' -DQUADXFMT='"llx"'
 CFLAGS+= -DHAVE_STDINT_H -DHAVE_INTTYPES_H -DHAVE_ERR_H -DHAVE_STRLCPY
-DPADD=	${LIBBEGEMOT} ${LIBBSNMP} ${LIBWRAP}
-LDADD=	-lbegemot -lbsnmp -lwrap
+LIBADD=	begemot bsnmp wrap
 
 LDFLAGS= -Wl,-export-dynamic
 

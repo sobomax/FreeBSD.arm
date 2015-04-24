@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/ispvar.h 256705 2013-10-17 20:19:15Z mav $ */
+/* $FreeBSD: head/sys/dev/isp/ispvar.h 276842 2015-01-08 17:51:12Z ken $ */
 /*-
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -421,7 +421,8 @@ typedef struct {
 			target_mode	: 1,
 			portid		: 24;
 	uint32_t
-					: 6,
+					: 5,
+			reported_gone	: 1,
 			announced	: 1,
 			dirty		: 1,	/* commands have been run */
 			new_portid	: 24;

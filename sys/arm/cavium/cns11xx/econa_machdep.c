@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa_machdep.c 265852 2014-05-10 20:03:03Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa_machdep.c 280823 2015-03-29 20:37:28Z andrew $");
 
 #define	_ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -303,7 +303,7 @@ initarm(struct arm_boot_params *abp)
 	 * this problem will not occur after initarm().
 	 */
 	cpu_idcache_wbinv_all();
-	cpu_setup("");
+	cpu_setup();
 
 	undefined_init();
 

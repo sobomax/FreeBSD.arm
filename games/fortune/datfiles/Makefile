@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/19/94
-# $FreeBSD: head/games/fortune/datfiles/Makefile 248200 2013-03-12 12:35:02Z jhb $
+# $FreeBSD: head/games/fortune/datfiles/Makefile 278616 2015-02-12 05:35:00Z cperciva $
 
 DB=	fortunes freebsd-tips murphy startrek zippy
 
@@ -15,7 +15,7 @@ FILESDIR=	${SHAREDIR}/games/fortune
 
 .for f in ${DB}
 $f.dat: $f
-	PATH=$$PATH:/usr/games:${.OBJDIR}/../strfile \
+	PATH=$$PATH:/usr/bin:${.OBJDIR}/../strfile \
 	    strfile -Cs ${.ALLSRC} ${.TARGET}
 .endfor
 

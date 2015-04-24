@@ -1,6 +1,6 @@
 /*	$OpenBSD: if_zyd.c,v 1.52 2007/02/11 00:08:04 jsg Exp $	*/
 /*	$NetBSD: if_zyd.c,v 1.7 2007/06/21 04:04:29 kiyohara Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 271866 2014-09-19 10:35:56Z glebius $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 276701 2015-01-05 15:04:17Z hselasky $	*/
 
 /*-
  * Copyright (c) 2006 by Damien Bergamini <damien.bergamini@free.fr>
@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 271866 2014-09-19 10:35:56Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * ZyDAS ZD1211/ZD1211B USB WLAN driver.
@@ -80,7 +80,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 271866 2014-09-19 10:35:56Z g
 static int zyd_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, zyd, CTLFLAG_RW, 0, "USB zyd");
-SYSCTL_INT(_hw_usb_zyd, OID_AUTO, debug, CTLFLAG_RW, &zyd_debug, 0,
+SYSCTL_INT(_hw_usb_zyd, OID_AUTO, debug, CTLFLAG_RWTUN, &zyd_debug, 0,
     "zyd debug level");
 
 enum {

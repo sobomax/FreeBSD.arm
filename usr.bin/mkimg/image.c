@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/image.c 272384 2014-10-01 21:03:17Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/image.c 274410 2014-11-12 00:10:27Z marcel $");
 
 #include <sys/mman.h>
 #include <sys/queue.h>
@@ -405,16 +405,18 @@ image_copyin_mapped(lba_t blk, int fd, uint64_t *sizep)
 	error = 0;
 	while (!error && cur < end) {
 		hole = lseek(fd, cur, SEEK_HOLE);
+		if (hole == -1)
+			hole = end;
 		data = lseek(fd, cur, SEEK_DATA);
+		if (data == -1)
+			data = end;
 
 		/*
 		 * Treat the entire file as data if sparse files
 		 * are not supported by the underlying file system.
 		 */
-		if (hole == -1 && data == -1) {
+		if (hole == end && data == end)
 			data = cur;
-			hole = end;
-		}
 
 		if (cur == hole && data > hole) {
 			hole = pos;

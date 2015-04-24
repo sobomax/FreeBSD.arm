@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/fbt.c 270508 2014-08-24 17:10:47Z markj $
+ * $FreeBSD: head/sys/cddl/dev/fbt/fbt.c 275576 2014-12-07 11:21:41Z avg $
  *
  */
 
@@ -142,13 +142,6 @@ fbt_provide_module(void *arg, modctl_t *lf)
 	 * where prohibited.
 	 */
 	if (strcmp(modname, "dtrace") == 0)
-		return;
-
-	/*
-	 * The cyclic timer subsystem can be built as a module and DTrace
-	 * depends on that, so it is ineligible too.
-	 */
-	if (strcmp(modname, "cyclic") == 0)
 		return;
 
 	/*

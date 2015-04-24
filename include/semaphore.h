@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/include/semaphore.h 273604 2014-10-24 20:02:44Z jhb $
+ * $FreeBSD: head/include/semaphore.h 277983 2015-01-31 16:39:26Z jilles $
  */
 
 /* semaphore.h: POSIX 1003.1b semaphores */
@@ -35,6 +35,8 @@
 #include <sys/cdefs.h>
 #include <sys/_types.h>
 #include <sys/_umtx.h>
+
+#include <machine/_limits.h>
 
 struct _sem {
 	__uint32_t	_magic;

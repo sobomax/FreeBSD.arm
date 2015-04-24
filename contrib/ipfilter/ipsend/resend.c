@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/ipsend/resend.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/ipsend/resend.c 281143 2015-04-06 09:42:23Z glebius $	*/
 
 /*
  * resend.c (C) 1995-1998 Darren Reed
@@ -22,9 +22,6 @@ static const char rcsid[] = "@(#)$Id$";
 #ifndef	linux
 # include <netinet/ip_var.h>
 # include <netinet/if_ether.h>
-# if __FreeBSD_version >= 300000
-#  include <net/if_var.h>
-# endif
 #endif
 #include <stdio.h>
 #include <netdb.h>

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: FreeBSD: src/libexec/rtld-elf/sparc64/lockdflt.c,v 1.3 2002/10/09
- * $FreeBSD: head/libexec/rtld-elf/rtld_lock.c 266609 2014-05-24 10:23:06Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/rtld_lock.c 280816 2015-03-29 18:53:21Z kib $
  */
 
 /*
@@ -50,6 +50,10 @@
 #include "debug.h"
 #include "rtld.h"
 #include "rtld_machdep.h"
+
+void _rtld_thread_init(struct RtldLockInfo *) __exported;
+void _rtld_atfork_pre(int *) __exported;
+void _rtld_atfork_post(int *) __exported;
 
 #define WAFLAG		0x1	/* A writer holds the lock */
 #define RC_INCR		0x2	/* Adjusts count of readers desiring lock */

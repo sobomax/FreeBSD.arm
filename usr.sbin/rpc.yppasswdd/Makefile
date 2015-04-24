@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/rpc.yppasswdd/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/usr.sbin/rpc.yppasswdd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 RPCDIR=	${DESTDIR}/usr/include/rpcsvc
 
@@ -20,8 +20,7 @@ CFLAGS+= -I${.CURDIR}/../../usr.sbin/vipw \
 	 -I${.CURDIR}/../../usr.sbin/ypserv \
 	 -I${.CURDIR}/../../libexec/ypxfr \
 	 -I${.CURDIR} -I.
-DPADD=	${LIBRPCSVC} ${LIBCRYPT} ${LIBUTIL}
-LDADD=	-lrpcsvc -lcrypt -lutil
+LIBADD=	rpcsvc crypt util
 
 CLEANFILES= ${GENSRCS}
 

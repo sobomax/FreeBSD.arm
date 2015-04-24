@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/xz/Makefile 213700 2010-10-11 21:16:50Z mm $
+# $FreeBSD: head/usr.bin/xz/Makefile 278433 2015-02-09 06:20:34Z rpaulo $
 
 PROG=	xz
 
@@ -22,6 +22,7 @@ SRCS=	args.c \
 	list.c \
 	main.c \
 	message.c \
+	mytime.c \
 	options.c \
 	signals.c \
 	suffix.c \
@@ -42,7 +43,6 @@ CFLAGS+=	-DHAVE_CONFIG_H \
 		-I${LZMALIBDIR} \
 		-I${XZDIR}/common
 
-DPADD=	${LIBLZMA}
-LDADD=	-llzma
+LIBADD=	lzma
 
 .include <bsd.prog.mk>

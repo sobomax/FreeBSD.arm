@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/offload.h 269076 2014-07-24 18:39:08Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/offload.h 278374 2015-02-08 09:28:55Z np $
  *
  */
 
@@ -127,8 +127,10 @@ struct t4_virt_res {                      /* virtualized HW resources */
 
 #ifdef TCP_OFFLOAD
 enum {
-	ULD_TOM = 1,
-	ULD_IWARP = 2,
+	ULD_TOM = 0,
+	ULD_IWARP,
+	ULD_ISCSI,
+	ULD_MAX = ULD_ISCSI
 };
 
 struct adapter;
@@ -147,6 +149,7 @@ struct tom_tunables {
 	int indsz;
 	int ddp_thres;
 	int rx_coalesce;
+	int tx_align;
 };
 
 int t4_register_uld(struct uld_info *);
@@ -154,5 +157,6 @@ int t4_unregister_uld(struct uld_info *);
 int t4_activate_uld(struct adapter *, int);
 int t4_deactivate_uld(struct adapter *, int);
 void t4_iscsi_init(struct ifnet *, unsigned int, const unsigned int *);
+int uld_active(struct adapter *, int);
 #endif
 #endif

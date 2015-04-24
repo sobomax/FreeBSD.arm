@@ -47,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc.c 273773 2014-10-28 12:00:39Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc.c 274225 2014-11-07 09:39:05Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -318,7 +318,8 @@ SYSINIT(cc, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_FIRST, cc_init, NULL);
 SYSCTL_NODE(_net_inet_tcp, OID_AUTO, cc, CTLFLAG_RW, NULL,
     "congestion control related settings");
 
-SYSCTL_VNET_PROC(_net_inet_tcp_cc, OID_AUTO, algorithm, CTLTYPE_STRING|CTLFLAG_RW,
+SYSCTL_PROC(_net_inet_tcp_cc, OID_AUTO, algorithm,
+    CTLFLAG_VNET | CTLTYPE_STRING | CTLFLAG_RW,
     NULL, 0, cc_default_algo, "A", "default congestion control algorithm");
 
 SYSCTL_PROC(_net_inet_tcp_cc, OID_AUTO, available, CTLTYPE_STRING|CTLFLAG_RD,

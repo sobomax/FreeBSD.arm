@@ -25,9 +25,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.sbin/watchdogd/watchdogd.8 273247 2014-10-18 07:38:46Z rpaulo $
+.\" $FreeBSD: head/usr.sbin/watchdogd/watchdogd.8 274583 2014-11-16 09:44:30Z delphij $
 .\"
-.Dd October 18, 2014
+.Dd November 16, 2014
 .Dt WATCHDOGD 8
 .Os
 .Sh NAME
@@ -79,7 +79,7 @@ reboot if there are problems with the script.
 The
 .Fl s Ar sleep
 argument can be used to control the sleep period between each execution
-of the check and defaults to one second.
+of the check and defaults to 10 seconds.
 .Pp
 The
 .Fl t Ar timeout

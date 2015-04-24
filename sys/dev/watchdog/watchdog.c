@@ -28,8 +28,10 @@
  *
  */
 
+#include "opt_ddb.h"
+
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/watchdog/watchdog.c 261495 2014-02-04 20:52:33Z ed $");
+__FBSDID("$FreeBSD: head/sys/dev/watchdog/watchdog.c 279413 2015-02-28 22:37:48Z rstone $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -37,6 +39,7 @@ __FBSDID("$FreeBSD: head/sys/dev/watchdog/watchdog.c 261495 2014-02-04 20:52:33Z
 #include <sys/conf.h>
 #include <sys/uio.h>
 #include <sys/kernel.h>
+#include <sys/kdb.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/sysctl.h>

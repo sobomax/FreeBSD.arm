@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/casper/sysctl/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/libexec/casper/sysctl/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .PATH:	${.CURDIR} ${.CURDIR}/../../../sbin/casper
 
@@ -6,8 +6,7 @@ PROG=	sysctl
 
 SRCS=	sysctl.c
 
-DPADD=	${LIBCAPSICUM} ${LIBCASPER} ${LIBNV} ${LIBPJDLOG} ${LIBUTIL}
-LDADD=	-lcapsicum -lcasper -lnv -lpjdlog -lutil
+LIBADD=	casper nv pjdlog
 
 BINDIR=	/libexec/casper
 

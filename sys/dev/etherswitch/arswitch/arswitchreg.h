@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitchreg.h 262680 2014-03-02 05:47:05Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitchreg.h 279790 2015-03-08 21:59:03Z adrian $
  */
 
 #ifndef __AR8X16_SWITCHREG_H__
@@ -370,6 +370,9 @@
 #define	AR8327_NUM_PHYS			5
 #define	AR8327_PORTS_ALL		0x7f
 
+#define	AR8327_PORT_GMAC0		0
+#define	AR8327_PORT_GMAC6		6
+
 #define	AR8327_REG_MASK			0x000
 
 #define	AR8327_REG_PAD0_MODE		0x004
@@ -442,6 +445,9 @@
 #define		AR8327_SGMII_CTRL_EN_PLL		(1 << 1)
 #define		AR8327_SGMII_CTRL_EN_RX			(1 << 2)
 #define		AR8327_SGMII_CTRL_EN_TX			(1 << 3)
+
+#define	AR8327_REG_EEE_CTRL		0x100
+#define	AR8327_EEE_CTRL_DISABLE_PHY(_i)		BIT(4 + (_i) * 2)
 
 #define	AR8327_REG_PORT_VLAN0(_i)		(0x420 + (_i) * 0x8)
 #define		AR8327_PORT_VLAN0_DEF_SVID		BITS(0, 12)

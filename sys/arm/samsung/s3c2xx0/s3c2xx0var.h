@@ -31,7 +31,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/samsung/s3c2xx0/s3c2xx0var.h 210396 2010-07-22 23:12:19Z andrew $
+ * $FreeBSD: head/sys/arm/samsung/s3c2xx0/s3c2xx0var.h 277476 2015-01-21 04:28:19Z ian $
  */
 
 #ifndef _ARM_S3C2XX0VAR_H_
@@ -74,7 +74,7 @@ struct s3c2xx0_ivar {
 
 typedef void *s3c2xx0_chipset_tag_t;
 
-extern struct bus_space s3c2xx0_bs_tag;
+extern bus_space_tag_t s3c2xx0_bs_tag;
 extern struct s3c2xx0_softc *s3c2xx0_softc;
 extern struct arm32_bus_dma_tag s3c2xx0_bus_dma;
 

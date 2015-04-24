@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_signal.c 258135 2013-11-14 15:37:20Z emaste $");
+__FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_signal.c 278001 2015-01-31 21:43:46Z kib $");
 
 #include "opt_compat.h"
 
@@ -118,7 +118,7 @@ ia32_get_fpcontext(struct thread *td, struct ia32_mcontext *mcp,
 }
 
 static int
-ia32_set_fpcontext(struct thread *td, const struct ia32_mcontext *mcp,
+ia32_set_fpcontext(struct thread *td, struct ia32_mcontext *mcp,
     char *xfpustate, size_t xfpustate_len)
 {
 	int error;
@@ -197,7 +197,7 @@ ia32_get_mcontext(struct thread *td, struct ia32_mcontext *mcp, int flags)
  * touch the cs selector.
  */
 static int
-ia32_set_mcontext(struct thread *td, const struct ia32_mcontext *mcp)
+ia32_set_mcontext(struct thread *td, struct ia32_mcontext *mcp)
 {
 	struct trapframe *tp;
 	char *xfpustate;

@@ -36,7 +36,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)softdep.h	9.7 (McKusick) 6/21/00
- * $FreeBSD: head/sys/ufs/ffs/softdep.h 269533 2014-08-04 22:03:58Z mckusick $
+ * $FreeBSD: head/sys/ufs/ffs/softdep.h 277922 2015-01-30 11:41:46Z kib $
  */
 
 #include <sys/queue.h>
@@ -1063,6 +1063,8 @@ struct mount_softdeps {
  */
 #define FLUSH_EXIT	0x0001	/* time to exit */
 #define FLUSH_CLEANUP	0x0002	/* need to clear out softdep structures */
+#define	FLUSH_STARTING	0x0004	/* flush thread not yet started */
+
 /*
  * Keep the old names from when these were in the ufsmount structure.
  */

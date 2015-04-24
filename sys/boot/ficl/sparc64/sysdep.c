@@ -7,7 +7,7 @@
 **
 *******************************************************************/
 
-/* $FreeBSD: head/sys/boot/ficl/sparc64/sysdep.c 96962 2002-05-19 23:20:56Z jake $ */
+/* $FreeBSD: head/sys/boot/ficl/sparc64/sysdep.c 274528 2014-11-14 21:08:51Z imp $ */
 
 #ifdef TESTMAIN
 #include <stdio.h>
@@ -97,5 +97,3 @@ int ficlLockDictionary(short fLock)
 	return 0;
 }
 #endif /* FICL_MULTITHREAD */
-
-

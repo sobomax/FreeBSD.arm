@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signalvar.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/signalvar.h 268634 2014-07-14 21:12:59Z mjg $
+ * $FreeBSD: head/sys/sys/signalvar.h 277321 2015-01-18 15:03:26Z kib $
  */
 
 #ifndef _SYS_SIGNALVAR_H_
@@ -325,7 +325,7 @@ extern struct mtx	sigio_lock;
 
 int	cursig(struct thread *td);
 int	sigdeferstop(void);
-void	sigallowstop(void);
+int	sigallowstop(void);
 void	execsigs(struct proc *p);
 void	gsignal(int pgid, int sig, ksiginfo_t *ksi);
 void	killproc(struct proc *p, char *why);

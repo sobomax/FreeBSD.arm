@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptnr/os_bsd.h 269613 2014-08-05 23:39:35Z jhb $
+ * $FreeBSD: head/sys/dev/hptnr/os_bsd.h 281387 2015-04-11 00:45:03Z delphij $
  */
 
 #include <dev/hptnr/hptnr_config.h>
@@ -191,7 +191,7 @@ VBUS_EXT, *PVBUS_EXT;
 #define	hpt_assert_vbus_locked(vbus_ext)	mtx_assert(&(vbus_ext)->lock, MA_OWNED)
 
 
-#define HPT_OSM_TIMEOUT (20*hz)  /* timeout value for OS commands */
+#define HPT_OSM_TIMEOUT (120*hz)  /* timeout value for OS commands */
 
 #define HPT_DO_IOCONTROL	_IOW('H', 0, HPT_IOCTL_PARAM)
 

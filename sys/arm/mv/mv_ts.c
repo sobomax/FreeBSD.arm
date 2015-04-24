@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mv_ts.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mv_ts.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,7 +35,6 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/mv_ts.c 261410 2014-02-02 19:17:28Z ian $");
 #include <sys/module.h>
 #include <sys/bus.h>
 #include <sys/sysctl.h>
-#include <machine/fdt.h>
 
 #include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>

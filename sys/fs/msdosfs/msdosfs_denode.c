@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_denode.c 254627 2013-08-21 23:04:48Z ken $ */
+/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_denode.c 276887 2015-01-09 14:50:08Z emaste $ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-
@@ -92,11 +92,8 @@ de_vncmpf(struct vnode *vp, void *arg)
  * depp	     - returns the address of the gotten denode.
  */
 int
-deget(pmp, dirclust, diroffset, depp)
-	struct msdosfsmount *pmp;	/* so we know the maj/min number */
-	u_long dirclust;		/* cluster this dir entry came from */
-	u_long diroffset;		/* index of entry within the cluster */
-	struct denode **depp;		/* returns the addr of the gotten denode */
+deget(struct msdosfsmount *pmp, u_long dirclust, u_long diroffset,
+    struct denode **depp)
 {
 	int error;
 	uint64_t inode;
@@ -284,9 +281,7 @@ deget(pmp, dirclust, diroffset, depp)
 }
 
 int
-deupdat(dep, waitfor)
-	struct denode *dep;
-	int waitfor;
+deupdat(struct denode *dep, int waitfor)
 {
 	struct direntry dir;
 	struct timespec ts;
@@ -334,11 +329,7 @@ deupdat(dep, waitfor)
  * Truncate the file described by dep to the length specified by length.
  */
 int
-detrunc(dep, length, flags, cred)
-	struct denode *dep;
-	u_long length;
-	int flags;
-	struct ucred *cred;
+detrunc(struct denode *dep, u_long length, int flags, struct ucred *cred)
 {
 	int error;
 	int allerror;
@@ -477,10 +468,7 @@ detrunc(dep, length, flags, cred)
  * Extend the file described by dep to length specified by length.
  */
 int
-deextend(dep, length, cred)
-	struct denode *dep;
-	u_long length;
-	struct ucred *cred;
+deextend(struct denode *dep, u_long length, struct ucred *cred)
 {
 	struct msdosfsmount *pmp = dep->de_pmp;
 	u_long count;
@@ -525,8 +513,7 @@ deextend(dep, length, cred)
  * been moved to a new directory.
  */
 void
-reinsert(dep)
-	struct denode *dep;
+reinsert(struct denode *dep)
 {
 	struct vnode *vp;
 
@@ -549,10 +536,7 @@ reinsert(dep)
 }
 
 int
-msdosfs_reclaim(ap)
-	struct vop_reclaim_args /* {
-		struct vnode *a_vp;
-	} */ *ap;
+msdosfs_reclaim(struct vop_reclaim_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct denode *dep = VTODE(vp);
@@ -583,11 +567,7 @@ msdosfs_reclaim(ap)
 }
 
 int
-msdosfs_inactive(ap)
-	struct vop_inactive_args /* {
-		struct vnode *a_vp;
-		struct thread *a_td;
-	} */ *ap;
+msdosfs_inactive(struct vop_inactive_args *ap)
 {
 	struct vnode *vp = ap->a_vp;
 	struct denode *dep = VTODE(vp);

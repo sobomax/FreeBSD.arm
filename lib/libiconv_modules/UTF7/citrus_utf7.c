@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libiconv_modules/UTF7/citrus_utf7.c 260003 2013-12-28 13:49:48Z dim $ */
+/* $FreeBSD: head/lib/libiconv_modules/UTF7/citrus_utf7.c 281550 2015-04-15 09:09:20Z tijl $ */
 /*	$NetBSD: citrus_utf7.c,v 1.5 2006/08/23 12:57:24 tnozaki Exp $	*/
 
 /*-
@@ -151,11 +151,11 @@ static const char spaces[] = " \t\r\n";
 
 static int
 _citrus_UTF7_mbtoutf16(_UTF7EncodingInfo * __restrict ei,
-    uint16_t * __restrict u16, const char ** __restrict s, size_t n,
+    uint16_t * __restrict u16, char ** __restrict s, size_t n,
     _UTF7State * __restrict psenc, size_t * __restrict nresult)
 {
 	_UTF7State sv;
-	const char *s0;
+	char *s0;
 	int done, i, len;
 
 	s0 = *s;
@@ -244,7 +244,7 @@ ilseq:
 
 static int
 _citrus_UTF7_mbrtowc_priv(_UTF7EncodingInfo * __restrict ei,
-    wchar_t * __restrict pwc, const char ** __restrict s, size_t n,
+    wchar_t * __restrict pwc, char ** __restrict s, size_t n,
     _UTF7State * __restrict psenc, size_t * __restrict nresult)
 {
 	uint32_t u32;

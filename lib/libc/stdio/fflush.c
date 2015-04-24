@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)fflush.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/fflush.c 268924 2014-07-20 20:05:39Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/fflush.c 275665 2014-12-10 08:18:22Z delphij $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -124,11 +124,13 @@ __sflush(FILE *fp)
 		t = _swrite(fp, (char *)p, n);
 		if (t <= 0) {
 			/* Reset _p and _w. */
-			if (p > fp->_p)	/* Some was written. */
+			if (p > fp->_p) {
+				/* Some was written. */
 				memmove(fp->_p, p, n);
-			fp->_p += n;
-			if ((fp->_flags & (__SLBF | __SNBF)) == 0)
-				fp->_w -= n;
+				fp->_p += n;
+				if ((fp->_flags & (__SLBF | __SNBF)) == 0)
+					fp->_w -= n;
+			}
 			fp->_flags |= __SERR;
 			return (EOF);
 		}

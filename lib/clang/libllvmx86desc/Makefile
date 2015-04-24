@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmx86desc/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmx86desc/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -13,7 +13,8 @@ SRCS=	X86AsmBackend.cpp \
 	X86MCTargetDesc.cpp \
 	X86MachORelocationInfo.cpp \
 	X86MachObjectWriter.cpp \
-	X86WinCOFFObjectWriter.cpp
+	X86WinCOFFObjectWriter.cpp \
+	X86WinCOFFStreamer.cpp
 CFLAGS+= -I${LLVM_SRCS}/${SRCDIR}/..
 
 TGHDRS=	X86GenInstrInfo \

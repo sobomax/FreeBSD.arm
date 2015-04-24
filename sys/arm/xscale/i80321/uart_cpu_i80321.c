@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/uart_cpu_i80321.c 168281 2007-04-02 22:00:22Z marcel $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/uart_cpu_i80321.c 277477 2015-01-21 05:05:07Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,14 +53,14 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 {
 	di->ops = uart_getops(&uart_ns8250_class);
 	di->bas.chan = 0;
-	di->bas.bst = &obio_bs_tag;
+	di->bas.bst = obio_bs_tag;
 	di->bas.regshft = 0;
 	di->bas.rclk = 0;
 	di->baudrate = 115200;
 	di->databits = 8;
 	di->stopbits = 1;
 	di->parity = UART_PARITY_NONE;
-	uart_bus_space_io = &obio_bs_tag;
+	uart_bus_space_io = obio_bs_tag;
 	uart_bus_space_mem = NULL;
 	di->bas.bsh = 0xfe800000;
 	return (0);

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.h 272947 2014-10-11 17:52:54Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.h 278397 2015-02-08 19:15:14Z trasz $
  */
 
 #ifndef CTL_FRONTEND_ISCSI_H
@@ -38,11 +38,11 @@
 
 struct cfiscsi_target {
 	TAILQ_ENTRY(cfiscsi_target)	ct_next;
-	uint32_t			ct_luns[CTL_MAX_LUNS];
 	struct cfiscsi_softc		*ct_softc;
 	volatile u_int			ct_refcount;
 	char				ct_name[CTL_ISCSI_NAME_LEN];
 	char				ct_alias[CTL_ISCSI_ALIAS_LEN];
+	uint16_t			ct_tag;
 	int				ct_state;
 	int				ct_online;
 	int				ct_target_id;
@@ -58,6 +58,8 @@ struct cfiscsi_data_wait {
 	char				*cdw_sg_addr;
 	size_t				cdw_sg_len;
 	uint32_t			cdw_r2t_end;
+	uint32_t			cdw_datasn;
+	void				*cdw_icl_prv;
 };
 
 #define CFISCSI_SESSION_STATE_INVALID		0
@@ -79,7 +81,6 @@ struct cfiscsi_session {
 	struct cfiscsi_target		*cs_target;
 	struct callout			cs_callout;
 	int				cs_timeout;
-	int				cs_portal_group_tag;
 	struct cv			cs_maintenance_cv;
 	bool				cs_terminating;
 	bool				cs_tasks_aborted;
@@ -115,6 +116,7 @@ struct cfiscsi_softc {
 	unsigned int			last_session_id;
 	TAILQ_HEAD(, cfiscsi_target)	targets;
 	TAILQ_HEAD(, cfiscsi_session)	sessions;
+	struct cv			sessions_cv;
 #ifdef ICL_KERNEL_PROXY
 	struct icl_listen		*listener;
 	struct cv			accept_cv;

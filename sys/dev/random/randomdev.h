@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/randomdev.h 273872 2014-10-30 21:21:53Z markm $
+ * $FreeBSD: head/sys/dev/random/randomdev.h 278907 2015-02-17 17:37:00Z jmg $
  */
 
 #ifndef SYS_DEV_RANDOM_RANDOMDEV_H_INCLUDED
@@ -37,12 +37,12 @@ typedef void random_init_func_t(void);
 typedef void random_deinit_func_t(void);
 
 void randomdev_init_harvester(void (*)(const void *, u_int, u_int, enum random_entropy_source));
-void randomdev_init_reader(u_int (*)(uint8_t *, u_int));
+void randomdev_init_reader(void (*)(uint8_t *, u_int));
 void randomdev_deinit_harvester(void);
 void randomdev_deinit_reader(void);
 
 /* Stub/fake routines for when no entropy processor is loaded */
-extern u_int dummy_random_read_phony(uint8_t *, u_int);
+extern void dummy_random_read_phony(uint8_t *, u_int);
 
 /* kern.random sysctls */
 #ifdef SYSCTL_DECL	/* from sysctl.h */

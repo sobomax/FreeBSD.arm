@@ -16,7 +16,7 @@
 # Kerberos services are for Kerberos v4, and are unofficial.  Sites running
 # v5 should uncomment v5 entries and comment v4 entries.
 #
-# $FreeBSD: head/etc/services 258863 2013-12-03 04:03:19Z eadler $
+# $FreeBSD: head/etc/services 276083 2014-12-22 21:26:49Z marck $
 #	From: @(#)services	5.8 (Berkeley) 5/9/91
 #
 # WELL KNOWN PORT NUMBERS
@@ -2345,6 +2345,8 @@ mdns		5353/tcp   #Multicast DNS
 mdns		5353/udp   #Multicast DNS
 postgresql	5432/tcp   #PostgreSQL Database
 postgresql	5432/udp   #PostgreSQL Database
+vami		5480/tcp   #VMware Appliance Management Interface, HTTPS-like
+vami		5480/udp   #VMware Appliance Management Interface, HTTPS-like
 rplay		5555/udp
 amqp		5672/sctp  #AMQP
 amqp		5672/tcp   #AMQP

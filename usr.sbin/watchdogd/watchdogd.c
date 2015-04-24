@@ -32,7 +32,7 @@
  */
 
 #include <sys/types.h>
-__FBSDID("$FreeBSD: head/usr.sbin/watchdogd/watchdogd.c 254173 2013-08-10 01:48:15Z alfred $");
+__FBSDID("$FreeBSD: head/usr.sbin/watchdogd/watchdogd.c 274583 2014-11-16 09:44:30Z delphij $");
 
 #include <sys/mman.h>
 #include <sys/param.h>
@@ -87,7 +87,7 @@ static int is_dry_run = 0;  /* do not arm the watchdog, only
 static int do_timedog = 0;
 static int do_syslog = 1;
 static int fd = -1;
-static int nap = 1;
+static int nap = 10;
 static int carp_thresh_seconds = -1;
 static char *test_cmd = NULL;
 

@@ -52,7 +52,7 @@
 
 #include <dev/sound/pci/cs461x_dsp.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/csa.c 254263 2013-08-12 23:30:01Z scottl $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/csa.c 274035 2014-11-03 11:11:45Z bapt $");
 
 /* This is the pci device id. */
 #define CS4610_PCI_ID 0x60011013
@@ -86,9 +86,7 @@ static int csa_release_resource(device_t bus, device_t child, int type, int rid,
 				   struct resource *r);
 static int csa_setup_intr(device_t bus, device_t child,
 			  struct resource *irq, int flags,
-#if __FreeBSD_version >= 700031
 			  driver_filter_t *filter,
-#endif
 			  driver_intr_t *intr,  void *arg, void **cookiep);
 static int csa_teardown_intr(device_t bus, device_t child,
 			     struct resource *irq, void *cookie);
@@ -450,21 +448,17 @@ csa_release_resource(device_t bus, device_t child, int type, int rid,
 static int
 csa_setup_intr(device_t bus, device_t child,
 	       struct resource *irq, int flags,
-#if __FreeBSD_version >= 700031
 	       driver_filter_t *filter,
-#endif
 	       driver_intr_t *intr, void *arg, void **cookiep)
 {
 	sc_p scp;
 	csa_res *resp;
 	struct sndcard_func *func;
 
-#if __FreeBSD_version >= 700031
 	if (filter != NULL) {
 		printf("ata-csa.c: we cannot use a filter here\n");
 		return (EINVAL);
 	}
-#endif
 	scp = device_get_softc(bus);
 	resp = &scp->res;
 

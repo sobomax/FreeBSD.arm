@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_bus.h 266394 2014-05-18 09:13:29Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_bus.h 277136 2015-01-13 16:37:43Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -26,6 +26,8 @@
 
 #ifndef _USB_BUS_H_
 #define	_USB_BUS_H_
+
+struct usb_fs_privdata;
 
 /*
  * The following structure defines the USB explore message sent to the USB
@@ -83,6 +85,10 @@ struct usb_bus {
 	struct usb_bus_msg resume_msg[2];
 	struct usb_bus_msg reset_msg[2];
 	struct usb_bus_msg shutdown_msg[2];
+#if USB_HAVE_UGEN
+	struct usb_bus_msg cleanup_msg[2];
+	LIST_HEAD(,usb_fs_privdata) pd_cleanup_list;
+#endif
 	/*
 	 * This mutex protects the USB hardware:
 	 */
@@ -115,6 +121,7 @@ struct usb_bus {
 	uint8_t	devices_max;		/* maximum number of USB devices */
 	uint8_t	do_probe;		/* set if USB should be re-probed */
 	uint8_t no_explore;		/* don't explore USB ports */
+	uint8_t dma_bits;		/* number of DMA address lines */
 };
 
 #endif					/* _USB_BUS_H_ */

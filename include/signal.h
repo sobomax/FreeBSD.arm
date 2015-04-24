@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.3 (Berkeley) 3/30/94
- * $FreeBSD: head/include/signal.h 265878 2014-05-11 13:48:21Z jilles $
+ * $FreeBSD: head/include/signal.h 281130 2015-04-06 01:39:16Z pfg $
  */
 
 #ifndef _SIGNAL_H_
@@ -78,10 +78,10 @@ int	sigdelset(sigset_t *, int);
 int	sigemptyset(sigset_t *);
 int	sigfillset(sigset_t *);
 int	sigismember(const sigset_t *, int);
-int	sigpending(sigset_t *);
+int	sigpending(sigset_t *) __nonnull(1);
 int	sigprocmask(int, const sigset_t * __restrict, sigset_t * __restrict);
-int	sigsuspend(const sigset_t *);
-int	sigwait(const sigset_t * __restrict, int * __restrict);
+int	sigsuspend(const sigset_t *) __nonnull(1);
+int	sigwait(const sigset_t * __restrict, int * __restrict) __nonnull_all;
 #endif
 
 #if __POSIX_VISIBLE >= 199506 || __XSI_VISIBLE >= 600

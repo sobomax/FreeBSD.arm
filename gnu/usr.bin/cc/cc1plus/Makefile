@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/cc1plus/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/usr.bin/cc/cc1plus/Makefile 275804 2014-12-15 14:25:42Z emaste $
 
 MAN=
 .include <src.opts.mk>
@@ -30,7 +30,7 @@ LDADD=	${LIBBACKEND} ${LIBCPP} ${LIBDECNUMBER} ${LIBIBERTY}
 # C++ parser
 cfns.h: cfns.gperf
 	gperf -o -C -E -k '1-6,$$' -j1 -D -N 'libc_name_p' -L ANSI-C \
-	    ${.ALLSRC} > ${.TARGET}
+	    ${.ALLSRC} > ${.TARGET} || (rm -f ${.TARGET}; false)
 CLEANFILES= cfns.h
 
 DOBJS+=	${SRCS:N*.h:R:S/$/.o/g}

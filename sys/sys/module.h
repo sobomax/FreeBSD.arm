@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/module.h 213716 2010-10-12 09:18:17Z kib $
+ * $FreeBSD: head/sys/sys/module.h 281463 2015-04-12 11:23:59Z markm $
  */
 
 #ifndef _SYS_MODULE_H_
@@ -35,6 +35,7 @@
 #define	MDT_DEPEND	1		/* argument is a module name */
 #define	MDT_MODULE	2		/* module declaration */
 #define	MDT_VERSION	3		/* module version(s) */
+#define	MDT_PNP_INFO	4		/* Plug and play hints record */
 
 #define	MDT_STRUCT_VERSION	1	/* version of metadata structure */
 #define	MDT_SETNAME	"modmetadata_set"
@@ -70,7 +71,7 @@ typedef union modspecific {
 } modspecific_t;
 
 /*
- * Module dependency declarartion
+ * Module dependency declaration
  */
 struct mod_depend {
 	int	md_ver_minimum;

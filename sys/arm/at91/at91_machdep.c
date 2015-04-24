@@ -46,7 +46,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_machdep.c 270104 2014-08-17 16:53:14Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_machdep.c 280823 2015-03-29 20:37:28Z andrew $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -116,8 +116,6 @@ __FBSDID("$FreeBSD: head/sys/arm/at91/at91_machdep.c 270104 2014-08-17 16:53:14Z
 extern struct bus_space at91_bs_tag;
 
 struct pv_addr kernel_pt_table[NUM_KERNEL_PTS];
-
-extern uint32_t at91_master_clock;
 
 /* Static device mappings. */
 const struct arm_devmap_entry at91_devmap[] = {
@@ -608,7 +606,7 @@ initarm(struct arm_boot_params *abp)
 	 * of the stack memory.
 	 */
 	cpu_control(CPU_CONTROL_MMU_ENABLE, CPU_CONTROL_MMU_ENABLE);
-	cpu_setup("");
+	cpu_setup();
 
 	set_stackptrs(0);
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_debug.c 255138 2013-09-01 23:34:53Z davide $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_debug.c 275326 2014-11-30 12:52:33Z glebius $");
 
 #include "opt_ddb.h"
 
@@ -255,8 +255,6 @@ db_print_domain(struct domain *d, const char *domain_name, int indent)
 
 	db_print_indent(indent);
 	db_printf("dom_rtattach: %p   ", d->dom_rtattach);
-	db_printf("dom_rtoffset: %d   ", d->dom_rtoffset);
-	db_printf("dom_maxrtkey: %d\n", d->dom_maxrtkey);
 
 	db_print_indent(indent);
 	db_printf("dom_ifattach: %p   ", d->dom_ifattach);
@@ -403,7 +401,8 @@ db_print_sockbuf(struct sockbuf *sb, const char *sockbufname, int indent)
 	db_printf("sb_sndptroff: %u\n", sb->sb_sndptroff);
 
 	db_print_indent(indent);
-	db_printf("sb_cc: %u   ", sb->sb_cc);
+	db_printf("sb_acc: %u   ", sb->sb_acc);
+	db_printf("sb_ccc: %u   ", sb->sb_ccc);
 	db_printf("sb_hiwat: %u   ", sb->sb_hiwat);
 	db_printf("sb_mbcnt: %u   ", sb->sb_mbcnt);
 	db_printf("sb_mbmax: %u\n", sb->sb_mbmax);

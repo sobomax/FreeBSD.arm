@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.kmod.mk 231834 2012-02-16 21:04:47Z imp $
+# $FreeBSD: head/share/mk/bsd.kmod.mk 276494 2015-01-01 04:26:45Z imp $
 
 # Search for kernel source tree in standard places.
 .for _dir in ${.CURDIR}/../.. ${.CURDIR}/../../.. ${.CURDIR}/../../../.. \
@@ -13,5 +13,3 @@ SYSDIR=	${_dir}
 .endif
 
 .include "${SYSDIR}/conf/kmod.mk"
-
-.include <bsd.sys.mk>

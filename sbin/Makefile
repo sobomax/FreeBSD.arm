@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.5 (Berkeley) 3/31/94
-# $FreeBSD: head/sbin/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/Makefile 278070 2015-02-02 10:31:35Z ngie $
 
 .include <src.opts.mk>
 
@@ -8,7 +8,6 @@
 SUBDIR=adjkerntz \
 	badsect \
 	camcontrol \
-	ccdconfig \
 	clri \
 	comcontrol \
 	conscontrol \
@@ -31,11 +30,8 @@ SUBDIR=adjkerntz \
 	ggate \
 	growfs \
 	gvinum \
-	hastctl \
-	hastd \
 	ifconfig \
 	init \
-	iscontrol \
 	kldconfig \
 	kldload \
 	kldstat \
@@ -82,10 +78,24 @@ SUBDIR+=	atm
 SUBDIR+=	casperd
 .endif
 
+.if ${MK_CCD} != "no"
+SUBDIR+=	ccdconfig
+.endif
+
 .if ${MK_CXX} != "no"
 SUBDIR+=	devd
 .endif
 
+.if ${MK_HAST} != "no"
+SUBDIR+=	hastctl
+SUBDIR+=	hastd
+.endif
+
+.if ${MK_INET6} != "no"
+SUBDIR+=	ping6
+SUBDIR+=	rtsol
+.endif
+	
 .if ${MK_IPFILTER} != "no"
 SUBDIR+=	ipf
 .endif
@@ -93,6 +103,10 @@ SUBDIR+=	ipf
 .if ${MK_IPFW} != "no"
 SUBDIR+=	ipfw
 SUBDIR+=	natd
+.endif
+
+.if ${MK_ISCSI} != "no"
+SUBDIR+=	iscontrol
 .endif
 
 .if ${MK_NAND} != "no"
@@ -103,11 +117,6 @@ SUBDIR+=	newfs_nandfs
 .if ${MK_PF} != "no"
 SUBDIR+=	pfctl
 SUBDIR+=	pflogd
-.endif
-
-.if ${MK_INET6} != "no"
-SUBDIR+=	ping6
-SUBDIR+=	rtsol
 .endif
 
 .if ${MK_QUOTAS} != "no"

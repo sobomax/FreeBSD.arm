@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/unix_socket/unix_socket.c 157602 2006-04-09 14:30:11Z rwatson $
+ * $FreeBSD: head/tools/regression/sockets/unix_socket/unix_socket.c 281402 2015-04-11 03:56:23Z ngie $
  */
 
 /*
@@ -40,7 +40,7 @@
 #include <unistd.h>
 
 int
-main(int argc, char *argv[])
+main(void)
 {
 	int sock, socks[2];
 

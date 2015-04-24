@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_net_vsc.h 256362 2013-10-12 00:32:34Z grehan $
+ * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_net_vsc.h 274231 2014-11-07 15:14:10Z glebius $
  */
 
 /*
@@ -965,7 +965,6 @@ typedef struct {
  */
 typedef struct hn_softc {
 	struct ifnet    *hn_ifp;
-	struct arpcom   arpcom;
 	device_t        hn_dev;
 	uint8_t         hn_unit;
 	int             hn_carrier;

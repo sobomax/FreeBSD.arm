@@ -27,11 +27,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/ibcs2/ibcs2_stat.c 229272 2012-01-02 12:12:10Z ed $");
+__FBSDID("$FreeBSD: head/sys/i386/ibcs2/ibcs2_stat.c 274476 2014-11-13 18:01:51Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/namei.h>
+#include <sys/fcntl.h>
 #include <sys/file.h>
 #include <sys/stat.h>
 #include <sys/filedesc.h>
@@ -145,7 +146,7 @@ ibcs2_stat(td, uap)
 
 	CHECKALTEXIST(td, uap->path, &path);
 
-	error = kern_stat(td, path, UIO_SYSSPACE, &st);
+	error = kern_statat(td, 0, AT_FDCWD, path, UIO_SYSSPACE, &st, NULL);
 	free(path, M_TEMP);
 	if (error)
 		return (error);
@@ -166,7 +167,8 @@ ibcs2_lstat(td, uap)
 
 	CHECKALTEXIST(td, uap->path, &path);
 
-	error = kern_lstat(td, path, UIO_SYSSPACE, &st);
+	error = kern_statat(td, AT_SYMLINK_NOFOLLOW, AT_FDCWD, path,
+	    UIO_SYSSPACE, &st, NULL);
 	free(path, M_TEMP);
 	if (error)
 		return (error);

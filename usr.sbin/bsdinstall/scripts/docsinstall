@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdinstall/scripts/docsinstall 264488 2014-04-15 06:56:59Z dteske $
+# $FreeBSD: head/usr.sbin/bsdinstall/scripts/docsinstall 280235 2015-03-18 23:47:30Z allanjude $
 #
 ############################################################ INCLUDES
 
@@ -154,9 +154,12 @@ f_quietly cp -f $BSDINSTALL_TMPETC/resolv.conf $BSDINSTALL_CHROOT/etc/
 #
 # Install each of the selected packages
 #
+docsets=""
 for lang in $selected; do
-	f_package_add $lang-freebsd-doc || return $FAILURE
+	docsets="$docsets $lang-freebsd-doc"
 done
+
+ASSUME_ALWAYS_YES=YES chroot $BSDINSTALL_CHROOT pkg install $docsets || return $FAILURE
 
 ################################################################################
 # END

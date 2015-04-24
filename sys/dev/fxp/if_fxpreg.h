@@ -25,10 +25,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/fxp/if_fxpreg.h 263957 2014-03-31 01:54:59Z yongari $
+ * $FreeBSD: head/sys/dev/fxp/if_fxpreg.h 276169 2014-12-24 03:49:33Z imp $
  */
-
-#define FXP_VENDORID_INTEL	0x8086
 
 #define FXP_PCI_MMBA	0x10
 #define FXP_PCI_IOBA	0x14

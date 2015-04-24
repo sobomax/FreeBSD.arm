@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/msun/src/s_cproj.c 181377 2008-08-07 15:07:48Z das $");
+__FBSDID("$FreeBSD: head/lib/msun/src/s_cproj.c 275819 2014-12-16 09:21:56Z ed $");
 
 #include <complex.h>
 #include <math.h>
@@ -39,7 +39,7 @@ cproj(double complex z)
 	if (!isinf(creal(z)) && !isinf(cimag(z)))
 		return (z);
 	else
-		return (cpack(INFINITY, copysign(0.0, cimag(z))));
+		return (CMPLX(INFINITY, copysign(0.0, cimag(z))));
 }
 
 #if LDBL_MANT_DIG == 53

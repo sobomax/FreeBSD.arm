@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/uncompress/g_uncompress.c 265193 2014-05-01 14:47:27Z loos $");
+__FBSDID("$FreeBSD: head/sys/geom/uncompress/g_uncompress.c 281855 2015-04-22 14:38:58Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -45,10 +45,10 @@ __FBSDID("$FreeBSD: head/sys/geom/uncompress/g_uncompress.c 265193 2014-05-01 14
 #include <sys/mutex.h>
 #include <sys/malloc.h>
 #include <sys/systm.h>
+#include <sys/zlib.h>
 
 #include <geom/geom.h>
 
-#include <net/zlib.h>
 #include <contrib/xz-embedded/linux/include/linux/xz.h>
 
 #ifdef GEOM_UNCOMPRESS_DEBUG
@@ -571,6 +571,7 @@ g_uncompress_taste(struct g_class *mp, struct g_provider *pp, int flags)
 		    (buf+sizeof(struct cloop_header)))[i]);
 	}
 	free(buf, M_GEOM);
+	buf = NULL;
 	DPRINTF(("%s: done reading offsets\n", gp->name));
 	mtx_init(&sc->last_mtx, "geom_uncompress cache", NULL, MTX_DEF);
 	sc->last_blk = -1;

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/iwn/iwnstats/iwn_ioctl.c 262423 2014-02-24 02:38:43Z adrian $
+ * $FreeBSD: head/tools/tools/iwn/iwnstats/iwn_ioctl.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 /*
@@ -38,7 +38,6 @@
 #include <sys/socket.h>
 #include <net/if.h>
 #include <net/if_media.h>
-#include <net/if_var.h>
 
 #include <stdio.h>
 #include <stdlib.h>

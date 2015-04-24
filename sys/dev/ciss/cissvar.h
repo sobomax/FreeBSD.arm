@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/ciss/cissvar.h 246713 2013-02-12 16:57:20Z kib $
+ *	$FreeBSD: head/sys/dev/ciss/cissvar.h 276754 2015-01-06 15:48:20Z jhb $
  */
 
 /*
@@ -75,14 +75,6 @@ typedef STAILQ_HEAD(, ciss_request)	cr_qhead_t;
  * run very often.
  */
 #define CISS_HEARTBEAT_RATE		10
-
-/************************************************************************
- * Compatibility with older versions of FreeBSD
- */
-#if __FreeBSD_version < 440001
-#warning testing old-FreeBSD compat
-typedef struct proc	d_thread_t;
-#endif
 
 /************************************************************************
  * Driver version.  Only really significant to the ACU interface.

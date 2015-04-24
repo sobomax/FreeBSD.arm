@@ -29,13 +29,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/pdu.c 270279 2014-08-21 15:32:38Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/pdu.c 281532 2015-04-14 18:13:55Z delphij $");
 
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <assert.h>
-#include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 

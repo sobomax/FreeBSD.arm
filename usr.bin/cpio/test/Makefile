@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/cpio/test/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.bin/cpio/test/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 LIBARCHIVEDIR=	${.CURDIR}/../../../contrib/libarchive
 
@@ -67,10 +67,9 @@ CLEANFILES+= list.h bsdcpio_test
 MAN=
 
 PROG=bsdcpio_test
-DPADD=${LIBARCHIVE} ${LIBBZ2} ${LIBZ} ${LIBLZMA}
 CFLAGS+=	-DPLATFORM_CONFIG_H=\"${.CURDIR}/../../../lib/libarchive/config_freebsd.h\"
 CFLAGS+=	-I${.CURDIR}/../../../lib/libarchive -I${.OBJDIR}
-LDADD= -larchive -lz -lbz2 -llzma
+LIBADD=	archive
 #CFLAGS+= -static -g -O2 -Wall
 CFLAGS+= -g -O2 -Wall
 CFLAGS+= -I${.OBJDIR}

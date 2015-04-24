@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/vdevice.c 272109 2014-09-25 15:02:33Z ian $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/vdevice.c 276726 2015-01-05 21:39:35Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -131,6 +131,10 @@ vdevice_attach(device_t dev)
 	struct vdevice_devinfo *dinfo;
 
 	root = ofw_bus_get_node(dev);
+
+	/* The XICP (root PIC) will handle all our interrupts */
+	powerpc_register_pic(root_pic, OF_xref_from_node(root),
+	    1 << 24 /* 24-bit XIRR field */, 1 /* Number of IPIs */, FALSE);
 
 	for (child = OF_child(root); child != 0; child = OF_peer(child)) {
 		dinfo = malloc(sizeof(*dinfo), M_DEVBUF, M_WAITOK | M_ZERO);

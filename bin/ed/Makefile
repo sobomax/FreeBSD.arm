@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/ed/Makefile 267147 2014-06-06 04:09:07Z imp $
+# $FreeBSD: head/bin/ed/Makefile 275028 2014-11-25 11:15:40Z bapt $
 
 .include <src.opts.mk>
 
@@ -9,8 +9,7 @@ MLINKS=	ed.1 red.1
 
 .if ${MK_OPENSSL} != "no" && ${MK_ED_CRYPTO} != "no"
 CFLAGS+=-DDES
-DPADD=	${LIBCRYPTO}
-LDADD=	-lcrypto
+LIBADD=	crypto
 .endif
 
 .include <bsd.prog.mk>

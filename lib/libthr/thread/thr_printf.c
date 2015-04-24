@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_printf.c 144518 2005-04-02 01:20:00Z davidxu $
+ * $FreeBSD: head/lib/libthr/thread/thr_printf.c 276630 2015-01-03 18:38:46Z kib $
  */
 
 #include <stdarg.h>
@@ -31,6 +31,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
+#include "libc_private.h"
 #include "thr_private.h"
 
 static void	pchar(int fd, char c);

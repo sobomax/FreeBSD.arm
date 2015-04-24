@@ -1,9 +1,8 @@
-# $FreeBSD: head/usr.sbin/ugidfw/Makefile 113091 2003-04-04 17:49:21Z obrien $
+# $FreeBSD: head/usr.sbin/ugidfw/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	ugidfw
 MAN=	ugidfw.8
 
-DPADD=	${LIBUGIDFW}
-LDADD=	-lugidfw
+LIBADD=	ugidfw
 
 .include <bsd.prog.mk>

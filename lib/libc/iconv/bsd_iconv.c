@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/bsd_iconv.c 267438 2014-06-13 08:36:10Z tijl $ */
+/* $FreeBSD: head/lib/libc/iconv/bsd_iconv.c 281550 2015-04-15 09:09:20Z tijl $ */
 /* $NetBSD: iconv.c,v 1.11 2009/03/03 16:22:33 explorer Exp $ */
 
 /*-
@@ -120,7 +120,7 @@ __bsd_iconv_close(iconv_t handle)
 }
 
 size_t
-__bsd_iconv(iconv_t handle, const char **in, size_t *szin, char **out, size_t *szout)
+__bsd_iconv(iconv_t handle, char **in, size_t *szin, char **out, size_t *szout)
 {
 	size_t ret;
 	int err;
@@ -141,7 +141,7 @@ __bsd_iconv(iconv_t handle, const char **in, size_t *szin, char **out, size_t *s
 }
 
 size_t
-__bsd___iconv(iconv_t handle, const char **in, size_t *szin, char **out,
+__bsd___iconv(iconv_t handle, char **in, size_t *szin, char **out,
     size_t *szout, uint32_t flags, size_t *invalids)
 {
 	size_t ret;

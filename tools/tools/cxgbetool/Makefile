@@ -1,8 +1,8 @@
-# $FreeBSD: head/tools/tools/cxgbetool/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/cxgbetool/Makefile 276598 2015-01-03 00:26:21Z np $
 
 PROG=	cxgbetool
 SRCS=	cxgbetool.c
-MAN=
+MAN=	cxgbetool.8
 CFLAGS+= -I${.CURDIR}/../../../sys/dev/cxgbe -I${.CURDIR}/../../../sys -I.
 BINDIR?= /usr/sbin
 

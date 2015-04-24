@@ -1,9 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libkafs5/Makefile 259769 2013-12-23 14:23:17Z uqs $
+# $FreeBSD: head/kerberos5/lib/libkafs5/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	kafs5
-LDADD=	-lasn1 -lroken -lkrb5
 LDFLAGS=	-Wl,--no-undefined
-DPADD=	${LIBASN1} ${LIBKRB5} ${LIBROKEN}
+LIBADD=	asn1 krb5 roken
 INCS=	kafs.h
 MAN=	kafs5.3
 VERSION_MAP=	${.CURDIR}/version.map

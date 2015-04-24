@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_unload.c 267851 2014-06-25 03:54:02Z davide $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_unload.c 278166 2015-02-03 19:39:53Z pfg $
  *
  */
 
@@ -68,11 +68,6 @@ dtrace_unload()
 	bzero(&dtrace_anon, sizeof (dtrace_anon_t));
 
 	mutex_exit(&cpu_lock);
-
-	if (dtrace_helptrace_enabled) {
-		kmem_free(dtrace_helptrace_buffer, 0);
-		dtrace_helptrace_buffer = NULL;
-	}
 
 	if (dtrace_probes != NULL) {
 		kmem_free(dtrace_probes, 0);

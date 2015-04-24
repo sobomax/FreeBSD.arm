@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libulog/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libulog/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 SHLIBDIR?=/lib
 
@@ -19,8 +19,7 @@ MLINKS+=ulog_login.3 ulog_login_pseudo.3 \
 	utempter_remove_added_record.3 removeFromUtmp.3 \
 	utempter_remove_record.3 removeLineFromUtmp.3
 
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 VERSION_DEF= ${.CURDIR}/../libc/Versions.def
 SYMBOL_MAPS= ${.CURDIR}/Symbol.map

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/fpu.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/fpu.c 274817 2014-11-21 20:53:17Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -126,6 +126,13 @@ CTASSERT(sizeof(struct savefpu_ymm) == 832);
  * must be 64-byte aligned.
  */
 CTASSERT(sizeof(struct pcb) % XSAVE_AREA_ALIGN == 0);
+
+/*
+ * Ensure the copy of XCR0 saved in a core is contained in the padding
+ * area.
+ */
+CTASSERT(X86_XSTATE_XCR0_OFFSET >= offsetof(struct savefpu, sv_pad) &&
+    X86_XSTATE_XCR0_OFFSET + sizeof(uint64_t) <= sizeof(struct savefpu));
 
 static	void	fpu_clean_state(void);
 

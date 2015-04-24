@@ -60,9 +60,9 @@
 
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11x6.S 264160 2014-04-05 18:13:28Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11x6.S 275523 2014-12-05 19:19:17Z andrew $");
 
-	.cpu arm1136js
+	.cpu arm1176jz-s
 
 #if 0
 #define Invalidate_I_cache(Rtmp1, Rtmp2) \

@@ -26,7 +26,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_spi.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_spi.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_spi.c 261410 2014-02-0
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
 #include <machine/resource.h>
-#include <machine/fdt.h>
 #include <machine/intr.h>
 
 #include <dev/fdt/fdt_common.h>

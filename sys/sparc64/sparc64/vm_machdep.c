@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/vm_machdep.c 269782 2014-08-10 16:59:39Z kib $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/vm_machdep.c 280957 2015-04-01 12:42:26Z rstone $");
 
 #include "opt_pmap.h"
 
@@ -396,7 +396,7 @@ swi_vm(void *v)
 }
 
 void *
-uma_small_alloc(uma_zone_t zone, int bytes, u_int8_t *flags, int wait)
+uma_small_alloc(uma_zone_t zone, vm_size_t bytes, u_int8_t *flags, int wait)
 {
 	vm_paddr_t pa;
 	vm_page_t m;
@@ -434,7 +434,7 @@ uma_small_alloc(uma_zone_t zone, int bytes, u_int8_t *flags, int wait)
 }
 
 void
-uma_small_free(void *mem, int size, u_int8_t flags)
+uma_small_free(void *mem, vm_size_t size, u_int8_t flags)
 {
 	vm_page_t m;
 

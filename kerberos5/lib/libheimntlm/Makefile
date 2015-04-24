@@ -1,9 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libheimntlm/Makefile 233294 2012-03-22 08:48:42Z stas $
+# $FreeBSD: head/kerberos5/lib/libheimntlm/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	heimntlm
 LDFLAGS=	-Wl,--no-undefined
-LDADD=	-lcrypto -lcom_err -lkrb5 -lroken
-DPADD=	${LIBCRYPTO} ${LIBCOM_ERR} ${LIBKRB5} ${LIBROKEN}
+LIBADD=	crypto com_err krb5 roken
 SRCS=	ntlm.c ntlm_err.c
 INCS=	heimntlm.h heimntlm-protos.h ntlm_err.h
 CFLAGS+=-I${KRB5DIR}/lib/ntlm -I${KRB5DIR}/lib/roken

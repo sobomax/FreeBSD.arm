@@ -28,7 +28,7 @@
  */
 %{
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/parse.y 240494 2012-09-14 11:51:49Z glebius $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/parse.y 281613 2015-04-16 20:22:40Z glebius $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -44,10 +44,10 @@ __FBSDID("$FreeBSD: head/sbin/pfctl/parse.y 240494 2012-09-14 11:51:49Z glebius 
 #include <netinet/icmp6.h>
 #include <net/pfvar.h>
 #include <arpa/inet.h>
-#include <altq/altq.h>
-#include <altq/altq_cbq.h>
-#include <altq/altq_priq.h>
-#include <altq/altq_hfsc.h>
+#include <net/altq/altq.h>
+#include <net/altq/altq_cbq.h>
+#include <net/altq/altq_priq.h>
+#include <net/altq/altq_hfsc.h>
 
 #include <stdio.h>
 #include <unistd.h>

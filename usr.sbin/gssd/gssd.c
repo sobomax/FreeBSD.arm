@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 253018 2013-07-08 01:29:09Z rmacklem $");
+__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 278690 2015-02-13 18:32:55Z markj $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -193,7 +193,8 @@ main(int argc, char **argv)
 	gssd_load_mech();
 
 	if (!debug_level) {
-		daemon(0, 0);
+		if (daemon(0, 0) != 0)
+			err(1, "Can't daemonize");
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGHUP, SIG_IGN);
@@ -206,7 +207,7 @@ main(int argc, char **argv)
 	strcpy(sun.sun_path, _PATH_GSSDSOCK);
 	sun.sun_len = SUN_LEN(&sun);
 	fd = socket(AF_LOCAL, SOCK_STREAM, 0);
-	if (!fd) {
+	if (fd < 0) {
 		if (debug_level == 0) {
 			syslog(LOG_ERR, "Can't create local gssd socket");
 			exit(1);

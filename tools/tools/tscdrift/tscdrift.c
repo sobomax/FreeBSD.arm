@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Advanced Computing Technologies LLC
+ * Copyright (c) 2014 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -27,7 +27,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/tools/tscdrift/tscdrift.c 271044 2014-09-03 17:26:46Z jhb $");
+__FBSDID("$FreeBSD: head/tools/tools/tscdrift/tscdrift.c 281887 2015-04-23 14:22:20Z jhb $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>

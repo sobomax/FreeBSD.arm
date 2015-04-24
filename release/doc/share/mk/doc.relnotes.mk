@@ -1,4 +1,4 @@
-# $FreeBSD: head/release/doc/share/mk/doc.relnotes.mk 271331 2014-09-09 19:51:57Z gjb $
+# $FreeBSD: head/release/doc/share/mk/doc.relnotes.mk 278101 2015-02-02 16:10:03Z hrs $
 
 DOC_PREFIX?= ${RELN_ROOT}/../../../doc
 
@@ -17,6 +17,7 @@ PROFILING+= --param profile.attribute "'releasetype'" --param profile.value "'re
 XSLTPROCFLAGS+= --param release.url "'${RELEASEURL}'"
 XSLTPROCFLAGS+= --param release.branch "'${RELEASEBRANCH}'"
 XSLTPROCFLAGS+= --param release.maillist "'${RELEASEMAILLIST}'"
+XSLTPROCFLAGS+=	--param toc.section.depth "'3'"
 
 # Find the RELNOTESng document catalogs
 EXTRA_CATALOGS+= file://${RELN_ROOT}/${LANGCODE}/share/xml/catalog.xml \

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/kldxref/kldxref.c 256650 2013-10-16 20:04:06Z jilles $
+ * $FreeBSD: head/usr.sbin/kldxref/kldxref.c 277205 2015-01-15 00:46:30Z imp $
  */
 
 #include <sys/types.h>
@@ -53,7 +53,7 @@
 
 #include "ef.h"
 
-#define	MAXRECSIZE	1024
+#define	MAXRECSIZE	8192
 #define check(val)	if ((error = (val)) != 0) break
 
 static int dflag;	/* do not create a hint file, only write on stdout */
@@ -172,6 +172,10 @@ parse_entry(struct mod_metadata *md, const char *cval,
 			record_string(kldname);
 		}
 		break;
+	case MDT_PNP_INFO:
+		if (dflag) {
+			printf("  pnp info for bus %s\n", cval);
+		}
 	default:
 		warnx("unknown metadata record %d in file %s", md->md_type, kldname);
 	}

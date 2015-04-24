@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/filedesc.h 273842 2014-10-30 05:10:33Z mjg $
+ * $FreeBSD: head/sys/sys/filedesc.h 281436 2015-04-11 15:40:28Z mjg $
  */
 
 #ifndef _SYS_FILEDESC_H_
@@ -152,13 +152,13 @@ int	finstall(struct thread *td, struct file *fp, int *resultfp, int flags,
 int	fdalloc(struct thread *td, int minfd, int *result);
 int	fdallocn(struct thread *td, int minfd, int *fds, int n);
 int	fdcheckstd(struct thread *td);
-void	fdclose(struct filedesc *fdp, struct file *fp, int idx, struct thread *td);
+void	fdclose(struct thread *td, struct file *fp, int idx);
 void	fdcloseexec(struct thread *td);
 void	fdsetugidsafety(struct thread *td);
 struct	filedesc *fdcopy(struct filedesc *fdp);
 void	fdunshare(struct thread *td);
 void	fdescfree(struct thread *td);
-struct	filedesc *fdinit(struct filedesc *fdp);
+struct	filedesc *fdinit(struct filedesc *fdp, bool prepfiles);
 struct	filedesc *fdshare(struct filedesc *fdp);
 struct filedesc_to_leader *
 	filedesc_to_leader_alloc(struct filedesc_to_leader *old,
@@ -169,7 +169,7 @@ void	mountcheckdirs(struct vnode *olddp, struct vnode *newdp);
 
 /* Return a referenced file from an unlocked descriptor. */
 int	fget_unlocked(struct filedesc *fdp, int fd, cap_rights_t *needrightsp,
-	    int needfcntl, struct file **fpp, cap_rights_t *haverightsp);
+	    struct file **fpp, seq_t *seqp);
 
 /* Requires a FILEDESC_{S,X}LOCK held and returns without a ref. */
 static __inline struct file *
@@ -182,6 +182,13 @@ fget_locked(struct filedesc *fdp, int fd)
 		return (NULL);
 
 	return (fdp->fd_ofiles[fd].fde_file);
+}
+
+static __inline bool
+fd_modified(struct filedesc *fdp, int fd, seq_t seq)
+{
+
+	return (!seq_consistent(fd_seq(fdp->fd_files, fd), seq));
 }
 
 #endif /* _KERNEL */

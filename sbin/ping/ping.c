@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ping/ping.c 273295 2014-10-20 00:27:40Z hrs $");
+__FBSDID("$FreeBSD: head/sbin/ping/ping.c 277562 2015-01-23 13:26:35Z ae $");
 
 /*
  *			P I N G . C
@@ -713,7 +713,7 @@ main(int argc, char *const *argv)
 		ip->ip_hl = sizeof(struct ip) >> 2;
 		ip->ip_tos = tos;
 		ip->ip_id = 0;
-		ip->ip_off = df ? IP_DF : 0;
+		ip->ip_off = htons(df ? IP_DF : 0);
 		ip->ip_ttl = ttl;
 		ip->ip_p = IPPROTO_ICMP;
 		ip->ip_src.s_addr = source ? sock_in.sin_addr.s_addr : INADDR_ANY;
@@ -1078,7 +1078,7 @@ pinger(void)
 	if (options & F_HDRINCL) {
 		cc += sizeof(struct ip);
 		ip = (struct ip *)outpackhdr;
-		ip->ip_len = cc;
+		ip->ip_len = htons(cc);
 		ip->ip_sum = in_cksum((u_short *)outpackhdr, cc);
 		packet = outpackhdr;
 	}

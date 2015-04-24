@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Tony Finch <dot@dotat.at>
+ * Copyright (c) 2012 - 2013 Tony Finch <dot@dotat.at>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/unifdef/unifdef.h 248849 2013-03-28 20:33:07Z fanf $
+ * $FreeBSD: head/usr.bin/unifdef/unifdef.h 279297 2015-02-25 21:10:03Z hselasky $
  */
 
 #include <sys/stat.h>
@@ -39,6 +39,8 @@
 /* portabiity stubs */
 
 #define fbinmode(fp) (fp)
+
+#define replace(old,new) rename(old,new)
 
 static FILE *
 mktempmode(char *tmp, int mode)

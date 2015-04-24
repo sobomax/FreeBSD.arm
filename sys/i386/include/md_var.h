@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/md_var.h 273995 2014-11-02 22:58:30Z jhb $
+ * $FreeBSD: head/sys/i386/include/md_var.h 281851 2015-04-22 12:32:14Z kib $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -61,6 +61,7 @@ extern	u_int	cpu_vendor_id;
 extern	u_int	cpu_mon_mwait_flags;
 extern	u_int	cpu_mon_min_size;
 extern	u_int	cpu_mon_max_size;
+extern	u_int	cpu_maxphyaddr;
 extern	u_int	cyrix_did;
 #if defined(I586_CPU) && !defined(NO_F00F_HACK)
 extern	int	has_f00f_bug;
@@ -96,6 +97,7 @@ struct	dumperinfo;
 void	*alloc_fpusave(int flags);
 void	bcopyb(const void *from, void *to, size_t len);
 void	busdma_swi(void);
+void	cpu_probe_amdc1e(void);
 void	cpu_setregs(void);
 void	cpu_switch_load_gs(void) __asm(__STRING(cpu_switch_load_gs));
 void	doreti_iret(void) __asm(__STRING(doreti_iret));

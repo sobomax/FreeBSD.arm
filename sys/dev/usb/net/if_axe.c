@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * ASIX Electronics AX88172/AX88178/AX88778 USB 2.0 ethernet driver.
@@ -135,7 +135,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 271832 2014-09-18 21:09:22Z gl
 static int axe_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, axe, CTLFLAG_RW, 0, "USB axe");
-SYSCTL_INT(_hw_usb_axe, OID_AUTO, debug, CTLFLAG_RW, &axe_debug, 0,
+SYSCTL_INT(_hw_usb_axe, OID_AUTO, debug, CTLFLAG_RWTUN, &axe_debug, 0,
     "Debug level");
 #endif
 

@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.3 2000/06/20 13:56:43 fvdl Exp $
-# $FreeBSD: head/usr.sbin/rpcbind/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/rpcbind/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
@@ -16,7 +16,6 @@ CFLAGS+= -DINET6
 
 WARNS?=	1
 
-DPADD=	${LIBWRAP} ${LIBUTIL}
-LDADD=	-lwrap -lutil
+LIBADD=	wrap
 
 .include <bsd.prog.mk>

@@ -1,5 +1,6 @@
-/* $FreeBSD: head/lib/clang/include/llvm/Config/Targets.def 262613 2014-02-28 18:06:00Z dim $ */
+/* $FreeBSD: head/lib/clang/include/llvm/Config/Targets.def 276783 2015-01-07 19:06:27Z dim $ */
 
+LLVM_TARGET(AArch64)
 LLVM_TARGET(ARM)
 LLVM_TARGET(Mips)
 LLVM_TARGET(PowerPC)

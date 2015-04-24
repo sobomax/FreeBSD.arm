@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_impl.h 228078 2011-11-28 17:19:05Z philip $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_impl.h 279266 2015-02-25 06:19:00Z arybchik $
  */
 
 #ifndef	_SYS_EFX_IMPL_H
@@ -200,8 +200,18 @@ typedef struct efx_nic_ops_s {
 	void	(*eno_unprobe)(efx_nic_t *);
 } efx_nic_ops_t;
 
-#define EFX_TXQ_LIMIT_TARGET 259
-#define EFX_RXQ_LIMIT_TARGET 768
+#ifndef EFX_TXQ_LIMIT_TARGET
+# define EFX_TXQ_LIMIT_TARGET 259
+#endif
+#ifndef EFX_RXQ_LIMIT_TARGET
+# define EFX_RXQ_LIMIT_TARGET 512
+#endif
+#ifndef EFX_TXQ_DC_SIZE
+#define EFX_TXQ_DC_SIZE 1 /* 16 descriptors */
+#endif
+#ifndef EFX_RXQ_DC_SIZE
+#define EFX_RXQ_DC_SIZE 3 /* 64 descriptors */
+#endif
 
 #if EFSYS_OPT_FILTER
 
@@ -398,7 +408,8 @@ struct efx_evq_s {
 
 #define	EFX_EVQ_MAGIC	0x08081997
 
-#define	EFX_EV_TIMER_QUANTUM	5
+#define	EFX_EVQ_FALCON_TIMER_QUANTUM_NS	4968 /* 621 cycles */
+#define	EFX_EVQ_SIENA_TIMER_QUANTUM_NS	6144 /* 768 cycles */
 
 struct efx_rxq_s {
 	uint32_t			er_magic;

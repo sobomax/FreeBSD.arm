@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/less/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/less/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	less
 SRCS=	main.c screen.c brac.c ch.c charset.c cmdbuf.c command.c cvt.c \
@@ -8,8 +8,7 @@ SRCS=	main.c screen.c brac.c ch.c charset.c cmdbuf.c command.c cvt.c \
 	signal.c tags.c ttyin.c version.c
 SCRIPTS=lesspipe.sh zless.sh
 SCRIPTSNAME_lesspipe.sh=lesspipe.sh
-DPADD=	${LIBTERMCAPW}
-LDADD=	-ltermcapw
+LIBADD=	ncursesw
 LINKS=	${BINDIR}/less ${BINDIR}/more \
 	${BINDIR}/zless ${BINDIR}/bzless \
 	${BINDIR}/zless ${BINDIR}/xzless \

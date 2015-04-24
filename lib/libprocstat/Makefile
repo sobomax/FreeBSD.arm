@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libprocstat/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libprocstat/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -19,8 +19,7 @@ INCS=		libprocstat.h
 CFLAGS+=	-I. -I${.CURDIR} -D_KVM_VNODE
 SHLIB_MAJOR=	1
 
-DPADD=		${LIBELF} ${LIBKVM} ${LIBUTIL}
-LDADD=		-lelf -lkvm -lutil
+LIBADD=		elf kvm util
 
 MAN=		libprocstat.3
 

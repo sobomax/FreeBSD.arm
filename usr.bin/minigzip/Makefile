@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/minigzip/Makefile 237410 2012-06-21 21:47:08Z delphij $
+# $FreeBSD: head/usr.bin/minigzip/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 SRCDIR=	${.CURDIR}/../../lib/libz/test
 .PATH:	${SRCDIR}
@@ -7,7 +7,6 @@ PROG=	minigzip
 
 WARNS?=	5
 CFLAGS+=-DUSE_MMAP
-DPADD=	${LIBZ}
-LDADD=	-lz
+LIBADD=	z
 
 .include <bsd.prog.mk>

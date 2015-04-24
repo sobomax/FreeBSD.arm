@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 279936 2015-03-12 20:14:48Z kib $");
 
 #include "opt_cpu.h"
 #include "opt_isa.h"
@@ -201,6 +201,13 @@ CTASSERT(sizeof(struct savefpu_ymm) == 832);
  */
 CTASSERT(sizeof(struct pcb) % XSAVE_AREA_ALIGN == 0);
 
+/*
+ * Ensure the copy of XCR0 saved in a core is contained in the padding
+ * area.
+ */
+CTASSERT(X86_XSTATE_XCR0_OFFSET >= offsetof(struct savexmm, sv_pad) &&
+    X86_XSTATE_XCR0_OFFSET + sizeof(uint64_t) <= sizeof(struct savexmm));
+
 static	void	fpu_clean_state(void);
 #endif
 
@@ -212,17 +219,21 @@ int	hw_float;
 SYSCTL_INT(_hw, HW_FLOATINGPT, floatingpoint, CTLFLAG_RD,
     &hw_float, 0, "Floating point instructions executed in hardware");
 
+#ifdef CPU_ENABLE_SSE
 int use_xsave;
 uint64_t xsave_mask;
+#endif
 static	uma_zone_t fpu_save_area_zone;
 static	union savefpu *npx_initialstate;
 
+#ifdef CPU_ENABLE_SSE
 struct xsave_area_elm_descr {
 	u_int	offset;
 	u_int	size;
 } *xsave_area_desc;
 
 static int use_xsaveopt;
+#endif
 
 static	volatile u_int		npx_traps_while_probing;
 
@@ -338,6 +349,7 @@ cleanup:
 	return (hw_float);
 }
 
+#ifdef CPU_ENABLE_SSE
 /*
  * Enable XSAVE if supported and allowed by user.
  * Calculate the xsave_mask.
@@ -373,13 +385,15 @@ npxinit_bsp1(void)
 	if ((cp[0] & CPUID_EXTSTATE_XSAVEOPT) != 0)
 		use_xsaveopt = 1;
 }
-
+#endif
 /*
+
  * Calculate the fpu save area size.
  */
 static void
 npxinit_bsp2(void)
 {
+#ifdef CPU_ENABLE_SSE
 	u_int cp[4];
 
 	if (use_xsave) {
@@ -392,6 +406,7 @@ npxinit_bsp2(void)
 		do_cpuid(1, cp);
 		cpu_feature2 = cp[2];
 	} else
+#endif
 		cpu_max_ext_state_size = sizeof(union savefpu);
 }
 
@@ -403,19 +418,25 @@ npxinit(bool bsp)
 {
 	static union savefpu dummy;
 	register_t saveintr;
+#ifdef CPU_ENABLE_SSE
 	u_int mxcsr;
+#endif
 	u_short control;
 
 	if (bsp) {
 		if (!npx_probe())
 			return;
+#ifdef CPU_ENABLE_SSE
 		npxinit_bsp1();
+#endif
 	}
 
+#ifdef CPU_ENABLE_SSE
 	if (use_xsave) {
 		load_cr4(rcr4() | CR4_XSAVE);
 		load_xcr(XCR0, xsave_mask);
 	}
+#endif
 
 	/*
 	 * XCR0 shall be set up before CPU can report the save area size.
@@ -459,7 +480,9 @@ static void
 npxinitstate(void *arg __unused)
 {
 	register_t saveintr;
+#ifdef CPU_ENABLE_SSE
 	int cp[4], i, max_ext_n;
+#endif
 
 	if (!hw_float)
 		return;
@@ -495,6 +518,7 @@ npxinitstate(void *arg __unused)
 		bzero(npx_initialstate->sv_87.sv_ac,
 		    sizeof(npx_initialstate->sv_87.sv_ac));
 
+#ifdef CPU_ENABLE_SSE
 	/*
 	 * Create a table describing the layout of the CPU Extended
 	 * Save Area.
@@ -519,6 +543,7 @@ npxinitstate(void *arg __unused)
 			xsave_area_desc[i].size = cp[0];
 		}
 	}
+#endif
 
 	fpu_save_area_zone = uma_zcreate("FPU_save_area",
 	    cpu_max_ext_state_size, NULL, NULL, NULL, NULL,
@@ -897,9 +922,11 @@ npxsave(addr)
 {
 
 	stop_emulating();
+#ifdef CPU_ENABLE_SSE
 	if (use_xsaveopt)
 		xsaveopt((char *)addr, xsave_mask);
 	else
+#endif
 		fpusave(addr);
 	start_emulating();
 	PCPU_SET(fpcurthread, NULL);
@@ -972,9 +999,12 @@ int
 npxgetregs(struct thread *td)
 {
 	struct pcb *pcb;
+#ifdef CPU_ENABLE_SSE
 	uint64_t *xstate_bv, bit;
 	char *sa;
-	int max_ext_n, i, owned;
+	int max_ext_n, i;
+#endif
+	int owned;
 
 	if (!hw_float)
 		return (_MC_FPOWNED_NONE);
@@ -1004,6 +1034,7 @@ npxgetregs(struct thread *td)
 		owned = _MC_FPOWNED_PCB;
 	}
 	critical_exit();
+#ifdef CPU_ENABLE_SSE
 	if (use_xsave) {
 		/*
 		 * Handle partially saved state.
@@ -1026,6 +1057,7 @@ npxgetregs(struct thread *td)
 			*xstate_bv |= bit;
 		}
 	}
+#endif
 	return (owned);
 }
 
@@ -1040,6 +1072,7 @@ npxuserinited(struct thread *td)
 	pcb->pcb_flags |= PCB_NPXUSERINITDONE;
 }
 
+#ifdef CPU_ENABLE_SSE
 int
 npxsetxstate(struct thread *td, char *xfpustate, size_t xfpustate_size)
 {
@@ -1077,13 +1110,16 @@ npxsetxstate(struct thread *td, char *xfpustate, size_t xfpustate_size)
 
 	return (0);
 }
+#endif
 
 int
 npxsetregs(struct thread *td, union savefpu *addr, char *xfpustate,
 	size_t xfpustate_size)
 {
 	struct pcb *pcb;
+#ifdef CPU_ENABLE_SSE
 	int error;
+#endif
 
 	if (!hw_float)
 		return (ENXIO);
@@ -1091,12 +1127,12 @@ npxsetregs(struct thread *td, union savefpu *addr, char *xfpustate,
 	pcb = td->td_pcb;
 	critical_enter();
 	if (td == PCPU_GET(fpcurthread) && PCB_USER_FPU(pcb)) {
+#ifdef CPU_ENABLE_SSE
 		error = npxsetxstate(td, xfpustate, xfpustate_size);
 		if (error != 0) {
 			critical_exit();
 			return (error);
 		}
-#ifdef CPU_ENABLE_SSE
 		if (!cpu_fxsr)
 #endif
 			fnclex();	/* As in npxdrop(). */
@@ -1106,9 +1142,11 @@ npxsetregs(struct thread *td, union savefpu *addr, char *xfpustate,
 		pcb->pcb_flags |= PCB_NPXUSERINITDONE | PCB_NPXINITDONE;
 	} else {
 		critical_exit();
+#ifdef CPU_ENABLE_SSE
 		error = npxsetxstate(td, xfpustate, xfpustate_size);
 		if (error != 0)
 			return (error);
+#endif
 		bcopy(addr, get_pcb_user_save_td(td), sizeof(*addr));
 		npxuserinited(td);
 	}
@@ -1327,9 +1365,7 @@ fpu_kern_leave(struct thread *td, struct fpu_kern_ctx *ctx)
 int
 fpu_kern_thread(u_int flags)
 {
-	struct pcb *pcb;
 
-	pcb = curpcb;
 	KASSERT((curthread->td_pflags & TDP_KTHREAD) != 0,
 	    ("Only kthread may use fpu_kern_thread"));
 	KASSERT(curpcb->pcb_save == get_pcb_user_save_pcb(curpcb),

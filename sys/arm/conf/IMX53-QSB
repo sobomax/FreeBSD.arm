@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/IMX53-QSB 271220 2014-09-07 08:16:27Z andrew $
+# $FreeBSD: head/sys/arm/conf/IMX53-QSB 276004 2014-12-21 11:55:40Z andrew $
 
 #NO_UNIVERSE
 
@@ -34,5 +34,5 @@ options 	HZ=250			# 4ms scheduling quantum
 #options 	ROOTDEVNAME=\"ufs:ada0s2a\"
 
 # Flattened Device Tree
-options         FDT_DTB_STATIC
-makeoptions     FDT_DTS_FILE=imx53-qsb.dts
+options 	FDT_DTB_STATIC
+makeoptions	FDT_DTS_FILE=imx53-qsb.dts

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/cxgbe/if_cxgbe/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/cxgbe/if_cxgbe/Makefile 278913 2015-02-17 19:27:14Z glebius $
 #
 
 CXGBE=	${.CURDIR}/../../../dev/cxgbe
@@ -15,6 +15,7 @@ SRCS+=	pci_if.h
 SRCS+=	t4_hw.c
 SRCS+=	t4_l2t.c
 SRCS+=	t4_main.c
+SRCS+=	t4_mp_ring.c
 SRCS+=	t4_netmap.c
 SRCS+=	t4_sge.c
 SRCS+=	t4_tracer.c

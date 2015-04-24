@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mrsas/mrsas.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/mrsas/mrsas.c 276753 2015-01-06 15:41:23Z jhb $");
 
 #include <dev/mrsas/mrsas.h>
 #include <dev/mrsas/mrsas_ioctl.h>
@@ -204,7 +204,7 @@ MALLOC_DEFINE(M_MRSAS, "mrsasbuf", "Buffers for the MRSAS driver");
  * routine when we create the /dev entry.
  */
 int
-mrsas_open(struct cdev *dev, int oflags, int devtype, d_thread_t *td)
+mrsas_open(struct cdev *dev, int oflags, int devtype, struct thread *td)
 {
 	struct mrsas_softc *sc;
 
@@ -213,7 +213,7 @@ mrsas_open(struct cdev *dev, int oflags, int devtype, d_thread_t *td)
 }
 
 int
-mrsas_close(struct cdev *dev, int fflag, int devtype, d_thread_t *td)
+mrsas_close(struct cdev *dev, int fflag, int devtype, struct thread *td)
 {
 	struct mrsas_softc *sc;
 
@@ -1238,7 +1238,8 @@ mrsas_resume(device_t dev)
  * appropriate function for processing depending on the command received.
  */
 static int
-mrsas_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag, d_thread_t *td)
+mrsas_ioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag,
+    struct thread *td)
 {
 	struct mrsas_softc *sc;
 	int ret = 0, i = 0;

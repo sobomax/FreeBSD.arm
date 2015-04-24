@@ -24,7 +24,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_mp.c 263698 2014-03-25 01:34:39Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_mp.c 281752 2015-04-19 20:20:52Z marius $");
+
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -32,6 +33,9 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_mp.c 263698 2014-03-25 01:34:
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/smp.h>
+
+#include <vm/vm.h>
+#include <vm/pmap.h>
 
 #include <machine/smp.h>
 #include <machine/fdt.h>
@@ -57,7 +61,7 @@ void
 platform_mp_init_secondary(void)
 {
 
-	gic_init_secondary();
+	arm_init_secondary_ic();
 }
 
 void
@@ -68,7 +72,7 @@ platform_mp_setmaxid(void)
 	if (mp_ncpus != 0)
 		return;
 
-	/* Read current CP15 Cache Size ID Register */
+	/* Read the number of cores from the CP15 L2 Control Register. */
 	__asm __volatile("mrc p15, 1, %0, c9, c0, 2" : "=r" (ncpu));
 	ncpu = ((ncpu >> 24) & 0x3) + 1;
 

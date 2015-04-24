@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_freebsd.h 272733 2014-10-08 07:00:50Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_freebsd.h 277044 2015-01-12 06:34:23Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -88,7 +88,7 @@
 #define	USB_EP0_BUFSIZE		1024	/* bytes */
 #define	USB_CS_RESET_LIMIT	20	/* failures = 20 * 50 ms = 1sec */
 
-#define	USB_MAX_AUTO_QUIRK	4	/* maximum number of dynamic quirks */
+#define	USB_MAX_AUTO_QUIRK	8	/* maximum number of dynamic quirks */
 
 typedef uint32_t usb_timeout_t;		/* milliseconds */
 typedef uint32_t usb_frlength_t;	/* bytes */

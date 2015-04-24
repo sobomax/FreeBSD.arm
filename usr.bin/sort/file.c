@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/file.c 251245 2013-06-02 09:43:48Z gabor $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/file.c 281182 2015-04-07 01:17:49Z pfg $");
 
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -185,42 +185,6 @@ file_is_tmp(const char* fn)
 	}
 
 	return (ret);
-}
-
-/*
- * Read zero-terminated line from a file
- */
-char *
-read_file0_line(struct file0_reader *f0r)
-{
-	size_t pos = 0;
-	int c;
-
-	if ((f0r->f == NULL) || feof(f0r->f))
-		return (NULL);
-
-	if (f0r->current_line && f0r->current_sz > 0)
-		f0r->current_line[0] = 0;
-
-	while (!feof(f0r->f)) {
-		c = fgetc(f0r->f);
-		if (feof(f0r->f) || (c == -1))
-			break;
-		if ((pos + 1) >= f0r->current_sz) {
-			size_t newsz = (f0r->current_sz + 2) * 2;
-			f0r->current_line = sort_realloc(f0r->current_line,
-			    newsz);
-			f0r->current_sz = newsz;
-		}
-		f0r->current_line[pos] = (char)c;
-		if (c == 0)
-			break;
-		else
-			f0r->current_line[pos + 1] = 0;
-		++pos;
-	}
-
-	return f0r->current_line;
 }
 
 /*
@@ -1127,7 +1091,7 @@ file_headers_merge(size_t fnum, struct file_header **fh, FILE *f_out)
 	memset(&lp, 0, sizeof(lp));
 
 	/*
-	 * construct the initial sort structure 
+	 * construct the initial sort structure
 	 */
 	for (i = 0; i < fnum; i++)
 		file_header_list_push(fh[i], fh, i);

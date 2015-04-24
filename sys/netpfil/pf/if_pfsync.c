@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/if_pfsync.c 271857 2014-09-19 09:19:29Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/if_pfsync.c 280971 2015-04-01 22:26:39Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -247,7 +247,7 @@ static int	pfsync_init(void);
 static void	pfsync_uninit(void);
 
 SYSCTL_NODE(_net, OID_AUTO, pfsync, CTLFLAG_RW, 0, "PFSYNC");
-SYSCTL_VNET_STRUCT(_net_pfsync, OID_AUTO, stats, CTLFLAG_RW,
+SYSCTL_STRUCT(_net_pfsync, OID_AUTO, stats, CTLFLAG_VNET | CTLFLAG_RW,
     &VNET_NAME(pfsyncstats), pfsyncstats,
     "PFSYNC statistics (struct pfsyncstats, net/if_pfsync.h)");
 SYSCTL_INT(_net_pfsync, OID_AUTO, carp_demotion_factor, CTLFLAG_RW,
@@ -1538,7 +1538,7 @@ pfsync_sendout(int schedswi)
 	offset = sizeof(*ip);
 
 	ip->ip_len = htons(m->m_pkthdr.len);
-	ip->ip_id = htons(ip_randomid());
+	ip_fillid(ip);
 
 	/* build the pfsync header */
 	ph = (struct pfsync_header *)(m->m_data + offset);

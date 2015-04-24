@@ -23,9 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/crypto/aesni/aesencdec.h 257757 2013-11-06 19:14:49Z jmg $
+ * $FreeBSD: head/sys/crypto/aesni/aesencdec.h 281606 2015-04-16 17:42:52Z rodrigc $
  *
  */
+
+#include <crypto/aesni/aesni_os.h>
 
 #include <wmmintrin.h>
 

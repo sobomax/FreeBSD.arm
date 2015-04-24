@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/routed/input.c 271919 2014-09-21 04:00:28Z hrs $
+ * $FreeBSD: head/sbin/routed/input.c 276602 2015-01-03 01:52:06Z des $
  */
 
 #include "defs.h"
@@ -34,7 +34,7 @@
 #ifdef __NetBSD__
 __RCSID("$NetBSD$");
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: head/sbin/routed/input.c 271919 2014-09-21 04:00:28Z hrs $");
+__RCSID("$FreeBSD: head/sbin/routed/input.c 276602 2015-01-03 01:52:06Z des $");
 #else
 __RCSID("$Revision: 2.26 $");
 #ident "$Revision: 2.26 $"
@@ -288,6 +288,10 @@ input(struct sockaddr_in *from,		/* received from this IP address */
 				/* Answer a query from a utility program
 				 * with all we know.
 				 */
+				if (aifp == NULL) {
+					trace_pkt("ignore remote query");
+					return;
+				}
 				if (from->sin_port != htons(RIP_PORT)) {
 					/*
 					 * insecure: query from non-router node

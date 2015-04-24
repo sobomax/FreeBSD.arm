@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2011 Advanced Computing Technologies LLC
+ * Copyright (c) 2011 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_subr.c 261790 2014-02-12 04:30:37Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_subr.c 281887 2015-04-23 14:22:20Z jhb $");
 
 /*
  * Support APIs for Host to PCI bridge drivers and drivers that

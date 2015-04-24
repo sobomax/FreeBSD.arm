@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sockio.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD: head/sys/sys/sockio.h 270822 2014-08-29 18:02:58Z melifaro $
+ * $FreeBSD: head/sys/sys/sockio.h 281236 2015-04-07 21:31:17Z erj $
  */
 
 #ifndef _SYS_SOCKIO_H_
@@ -128,5 +128,6 @@
 #define	SIOCGIFGROUP	_IOWR('i', 136, struct ifgroupreq) /* get ifgroups */
 #define	SIOCDIFGROUP	 _IOW('i', 137, struct ifgroupreq) /* delete ifgroup */
 #define	SIOCGIFGMEMB	_IOWR('i', 138, struct ifgroupreq) /* get members */
+#define	SIOCGIFXMEDIA	_IOWR('i', 139, struct ifmediareq) /* get net xmedia */
 
 #endif /* !_SYS_SOCKIO_H_ */

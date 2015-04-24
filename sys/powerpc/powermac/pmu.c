@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/pmu.c 273113 2014-10-15 02:31:14Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/pmu.c 274733 2014-11-20 03:23:33Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -734,15 +734,15 @@ pmu_intr(void *arg)
 		/* if the lid was just closed, notify devd. */
 		if ((resp[2] & PMU_ENV_LID_CLOSED) && (!sc->lid_closed)) {
 			sc->lid_closed = 1;
-			if (devctl_process_running())
-				devctl_notify("PMU", "lid", "close", NULL);
+			devctl_notify("PMU", "lid", "close", NULL);
 		}
 		else if (!(resp[2] & PMU_ENV_LID_CLOSED) && (sc->lid_closed)) {
 			/* if the lid was just opened, notify devd. */
-			if (devctl_process_running())
-				devctl_notify("PMU", "lid", "open", NULL);
 			sc->lid_closed = 0;
+			devctl_notify("PMU", "lid", "open", NULL);
 		}
+		if (resp[2] & PMU_ENV_POWER)
+			devctl_notify("PMU", "Button", "pressed", NULL);
 	}
 }
 

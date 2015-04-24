@@ -27,7 +27,7 @@
 /* Simple clock driver for Allwinner A10 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_clk.c 271901 2014-09-20 09:18:58Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_clk.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_clk.c 271901 2014-09-20 09:18:58Z
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include "a10_clk.h"
 

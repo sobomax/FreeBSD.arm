@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact_elf.h 270123 2014-08-18 02:44:56Z imp $
+ * $FreeBSD: head/sys/sys/imgact_elf.h 274817 2014-11-21 20:53:17Z jhb $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -90,6 +90,7 @@ int	__elfN(insert_brand_entry)(Elf_Brandinfo *entry);
 int	__elfN(remove_brand_entry)(Elf_Brandinfo *entry);
 int	__elfN(freebsd_fixup)(register_t **, struct image_params *);
 int	__elfN(coredump)(struct thread *, struct vnode *, off_t, int);
+size_t	__elfN(populate_note)(int, void *, void *, size_t, void **);
 
 /* Machine specific function to dump per-thread information. */
 void	__elfN(dump_thread)(struct thread *, void *, size_t *);

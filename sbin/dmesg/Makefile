@@ -1,10 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/dmesg/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/dmesg/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	dmesg
 MAN=	dmesg.8
 
-LDADD=	-lkvm
-DPADD=	${LIBKVM}
+LIBADD=	kvm
 
 .include <bsd.prog.mk>

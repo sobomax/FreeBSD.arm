@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/lpr/lprm/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/lpr/lprm/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .PATH: ${.CURDIR}/../common_source
 
@@ -12,7 +12,6 @@ BINMODE= 6555
 
 CFLAGS+= -I${.CURDIR}/../common_source
 
-DPADD=	${LIBLPR}
-LDADD=	${LIBLPR}
+LIBADD=	lpr
 
 .include <bsd.prog.mk>

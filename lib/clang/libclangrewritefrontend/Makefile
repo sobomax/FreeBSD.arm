@@ -1,17 +1,15 @@
-# $FreeBSD: head/lib/clang/libclangrewritefrontend/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libclangrewritefrontend/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
 LIB=	clangrewritefrontend
 
-SRCDIR=	tools/clang/lib/Rewrite/Frontend
+SRCDIR=	tools/clang/lib/Frontend/Rewrite
 SRCS=	FixItRewriter.cpp \
 	FrontendActions.cpp \
 	HTMLPrint.cpp \
 	InclusionRewriter.cpp \
 	RewriteMacros.cpp \
-	RewriteModernObjC.cpp \
-	RewriteObjC.cpp \
 	RewriteTest.cpp
 
 TGHDRS=	AttrList \

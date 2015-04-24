@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ngctl/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.sbin/ngctl/Makefile 275054 2014-11-25 16:57:27Z bapt $
 # $Whistle: Makefile,v 1.3 1999/01/16 00:10:11 archie Exp $
 
 .include <src.opts.mk>
@@ -17,13 +17,11 @@ NGCTL_NO_LIBEDIT=
 NGCTL_NO_LIBEDIT=
 .endif
 
-DPADD=	${LIBNETGRAPH}
-LDADD=	-lnetgraph
+LIBADD=	netgraph
 
 .if !defined(NGCTL_NO_LIBEDIT)
 CFLAGS+= -DEDITLINE
-DPADD+=	${LIBPTHREAD} ${LIBEDIT} ${LIBTERMCAPW}
-LDADD+=	-lpthread -ledit -ltermcapw
+LIBADD+=	edit pthread
 .endif
 
 .include <bsd.prog.mk>

@@ -52,7 +52,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_hd.c 220560 2011-04-12 08:13:18Z lstewart $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_hd.c 274225 2014-11-07 09:39:05Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -238,17 +238,18 @@ SYSCTL_DECL(_net_inet_tcp_cc_hd);
 SYSCTL_NODE(_net_inet_tcp_cc, OID_AUTO, hd, CTLFLAG_RW, NULL,
     "Hamilton delay-based congestion control related settings");
 
-SYSCTL_VNET_PROC(_net_inet_tcp_cc_hd, OID_AUTO, queue_threshold,
-    CTLTYPE_UINT|CTLFLAG_RW, &VNET_NAME(hd_qthresh), 20, &hd_qthresh_handler,
-    "IU", "queueing congestion threshold (qth) in ticks");
+SYSCTL_PROC(_net_inet_tcp_cc_hd, OID_AUTO, queue_threshold,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW, &VNET_NAME(hd_qthresh), 20,
+    &hd_qthresh_handler, "IU", "queueing congestion threshold (qth) in ticks");
 
-SYSCTL_VNET_PROC(_net_inet_tcp_cc_hd, OID_AUTO, pmax,
-    CTLTYPE_UINT|CTLFLAG_RW, &VNET_NAME(hd_pmax), 5, &hd_pmax_handler,
-    "IU", "per packet maximum backoff probability as a percentage");
+SYSCTL_PROC(_net_inet_tcp_cc_hd, OID_AUTO, pmax,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW, &VNET_NAME(hd_pmax), 5,
+    &hd_pmax_handler, "IU",
+    "per packet maximum backoff probability as a percentage");
 
-SYSCTL_VNET_PROC(_net_inet_tcp_cc_hd, OID_AUTO, queue_min,
-    CTLTYPE_UINT|CTLFLAG_RW, &VNET_NAME(hd_qmin), 5, &hd_qmin_handler,
-    "IU", "minimum queueing delay threshold (qmin) in ticks");
+SYSCTL_PROC(_net_inet_tcp_cc_hd, OID_AUTO, queue_min,
+    CTLFLAG_VNET | CTLTYPE_UINT | CTLFLAG_RW, &VNET_NAME(hd_qmin), 5,
+    &hd_qmin_handler, "IU", "minimum queueing delay threshold (qmin) in ticks");
 
 DECLARE_CC_MODULE(hd, &hd_cc_algo);
 MODULE_DEPEND(hd, ertt, 1, 1, 1);

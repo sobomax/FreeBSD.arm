@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/config.c 269522 2014-08-04 16:32:08Z smh $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/config.c 278323 2015-02-06 17:54:53Z jamie $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -84,6 +84,7 @@ static const struct ipspec intparams[] = {
     [IP_MOUNT] =		{"mount",		PF_INTERNAL | PF_REV},
     [IP_MOUNT_DEVFS] =		{"mount.devfs",		PF_INTERNAL | PF_BOOL},
     [IP_MOUNT_FDESCFS] =	{"mount.fdescfs",	PF_INTERNAL | PF_BOOL},
+    [IP_MOUNT_PROCFS] =		{"mount.procfs",	PF_INTERNAL | PF_BOOL},
     [IP_MOUNT_FSTAB] =		{"mount.fstab",		PF_INTERNAL},
     [IP_STOP_TIMEOUT] =		{"stop.timeout",	PF_INTERNAL | PF_INT},
     [IP_VNET_INTERFACE] =	{"vnet.interface",	PF_INTERNAL},

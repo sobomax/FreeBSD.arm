@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_scan_sta.c 258736 2013-11-29 07:55:44Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_scan_sta.c 275875 2014-12-18 05:17:18Z adrian $");
 
 /*
  * IEEE 802.11 station scanning support.
@@ -600,10 +600,12 @@ makescanlist(struct ieee80211_scan_state *ss, struct ieee80211vap *vap,
 				 * so if the desired mode is 11g, then use
 				 * the 11b channel list but upgrade the mode.
 				 */
-				if (vap->iv_des_mode != IEEE80211_MODE_11G ||
-				    mode != IEEE80211_MODE_11B)
-					continue;
-				mode = IEEE80211_MODE_11G;	/* upgrade */
+				if (vap->iv_des_mode == IEEE80211_MODE_11G) {
+					if (mode == IEEE80211_MODE_11G) /* Skip the G check */
+						continue;
+					else if (mode == IEEE80211_MODE_11B)
+						mode = IEEE80211_MODE_11G;	/* upgrade */
+				}
 			}
 		} else {
 			/*

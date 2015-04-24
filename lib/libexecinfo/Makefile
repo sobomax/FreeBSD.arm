@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libexecinfo/Makefile 255175 2013-09-03 13:31:43Z emaste $
+# $FreeBSD: head/lib/libexecinfo/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 LIBEXECINFO=	${.CURDIR}/../../contrib/libexecinfo
 
@@ -10,8 +10,7 @@ SHLIB_MAJOR=	1
 INCS=		execinfo.h
 SRCS=		backtrace.c symtab.c unwind.c
 
-DPADD=		${LIBELF}
-LDADD=		-lelf
+LIBADD=		elf
 
 MAN=		backtrace.3
 

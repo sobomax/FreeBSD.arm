@@ -23,7 +23,7 @@
 .\" ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.sbin/bsdinstall/bsdinstall.8 273922 2014-10-31 23:52:02Z nwhitehorn $
+.\" $FreeBSD: head/usr.sbin/bsdinstall/bsdinstall.8 276360 2014-12-29 13:50:59Z joel $
 .\"
 .Dd October 31, 2014
 .Dt BSDINSTALL 8
@@ -129,7 +129,7 @@ with separate datasets for
 and
 .Pa /var .
 Optionally can set up
-.Xr geli 8 
+.Xr geli 8
 to encrypt the disk.
 .It Cm partedit
 Provides the installer's interactive manual disk partitioner with an interface
@@ -354,7 +354,7 @@ instead of
 .Cm partedit ,
 the preamble can contain the variable
 .Ev ZFSBOOT_DATASETS
-instead of 
+instead of
 .Ev PARTITIONS .
 .Ss SETUP SCRIPT
 Following the preamble is an optional shell script, beginning with a #!

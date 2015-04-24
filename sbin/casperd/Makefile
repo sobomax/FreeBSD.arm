@@ -1,11 +1,10 @@
-# $FreeBSD: head/sbin/casperd/Makefile 263240 2014-03-16 13:43:06Z jilles $
+# $FreeBSD: head/sbin/casperd/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	casperd
 
 SRCS=	casperd.c zygote.c
 
-DPADD=	${LIBCASPER} ${LIBCAPSICUM} ${LIBNV} ${LIBPJDLOG} ${LIBUTIL}
-LDADD=	-lcasper -lcapsicum -lnv -lpjdlog -lutil
+LIBADD=	casper nv pjdlog util
 
 MAN=	casperd.8
 

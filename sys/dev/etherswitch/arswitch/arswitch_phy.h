@@ -23,12 +23,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_phy.h 235288 2012-05-11 20:53:20Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_phy.h 279767 2015-03-08 03:53:36Z adrian $
  */
 #ifndef	__ARSWITCH_PHY_H__
 #define	__ARSWITCH_PHY_H__
 
-extern	int arswitch_readphy(device_t dev, int phy, int reg);
-extern	int arswitch_writephy(device_t dev, int phy, int reg, int data);
+extern	int arswitch_readphy_external(device_t dev, int phy, int reg);
+extern	int arswitch_writephy_external(device_t dev, int phy, int reg, int data);
+
+extern	int arswitch_readphy_internal(device_t dev, int phy, int reg);
+extern	int arswitch_writephy_internal(device_t dev, int phy, int reg, int data);
 
 #endif	/* __ARSWITCH_PHY_H__ */

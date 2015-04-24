@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_fil.h	1.35 6/5/96
- * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil.h 255755 2013-09-21 04:05:38Z cy $
+ * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil.h 280971 2015-04-01 22:26:39Z glebius $
  * Id: ip_fil.h,v 2.170.2.51 2007/10/10 09:48:03 darrenr Exp $
  */
 
@@ -1718,6 +1718,7 @@ extern	int	ipfioctl __P((ipf_main_softc_t *, int, ioctlcmd_t,
 extern	void	m_freem __P((mb_t *));
 extern	size_t	msgdsize __P((mb_t *));
 extern	int	bcopywrap __P((void *, void *, size_t));
+extern	void	ip_fillid(struct ip *);
 #else /* #ifndef _KERNEL */
 # if defined(__NetBSD__) && defined(PFIL_HOOKS)
 extern	void	ipfilterattach __P((int));
@@ -1932,7 +1933,6 @@ extern	int		ipf_matchtag __P((ipftag_t *, ipftag_t *));
 extern	int		ipf_matchicmpqueryreply __P((int, icmpinfo_t *,
 						     struct icmp *, int));
 extern	u_32_t		ipf_newisn __P((fr_info_t *));
-extern	u_short		ipf_nextipid __P((fr_info_t *));
 extern	u_int		ipf_pcksum __P((fr_info_t *, int, u_int));
 extern	void		ipf_rule_expire __P((ipf_main_softc_t *));
 extern	int		ipf_scanlist __P((fr_info_t *, u_32_t));

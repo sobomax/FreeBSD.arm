@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/skel/dot.profile 264465 2014-04-14 18:07:00Z bdrewery $
+# $FreeBSD: head/share/skel/dot.profile 278616 2015-02-12 05:35:00Z cperciva $
 #
 # .profile - Bourne Shell startup script for login shells
 #
@@ -7,7 +7,7 @@
 
 # These are normally set through /etc/login.conf.  You may override them here
 # if wanted.
-# PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:$HOME/bin; export PATH
+# PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:$HOME/bin; export PATH
 # BLOCKSIZE=K;	export BLOCKSIZE
 
 # Setting TERM is normally done through /etc/ttys.  Do only override
@@ -21,4 +21,4 @@ PAGER=more;  	export PAGER
 # set ENV to a file invoked each time sh is started for interactive use.
 ENV=$HOME/.shrc; export ENV
 
-if [ -x /usr/games/fortune ] ; then /usr/games/fortune freebsd-tips ; fi
+if [ -x /usr/bin/fortune ] ; then /usr/bin/fortune freebsd-tips ; fi

@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/write.c 165906 2007-01-09 01:02:06Z imp $");
+__FBSDID("$FreeBSD: head/lib/libstand/write.c 276079 2014-12-22 20:42:36Z ian $");
 
 #include <sys/param.h>
 #include "stand.h"
@@ -80,7 +80,7 @@ write(fd, dest, bcount)
 		return (-1);
 	}
 	if (f->f_flags & F_RAW) {
-		twiddle();
+		twiddle(4);
 		errno = (f->f_dev->dv_strategy)(f->f_devdata, F_WRITE,
 			btodb(f->f_offset), bcount, dest, &resid);
 		if (errno)

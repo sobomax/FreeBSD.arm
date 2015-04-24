@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/hostapd_cli/Makefile 267715 2014-06-22 10:00:33Z jmg $
+# $FreeBSD: head/usr.sbin/wpa/hostapd_cli/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -10,8 +10,7 @@ SRCS=	common.c edit.c eloop.c hostapd_cli.c os_unix.c wpa_ctrl.c wpa_debug.c
 CFLAGS+= -DCONFIG_CTRL_IFACE
 CFLAGS+= -DCONFIG_CTRL_IFACE_UNIX
 
-DPADD+=	${LIBUTIL}
-LDADD+=	-lutil
+LIBADD+=	util
 
 MAN=	hostapd_cli.8
 

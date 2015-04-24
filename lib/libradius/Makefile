@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libradius/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libradius/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -70,13 +70,11 @@ MLINKS+=libradius.3 rad_acct_open.3 \
 
 WARNS?=		3
 
-.if ${MK_OPENSSL} == "no"
-DPADD=		${LIBMD}
-LDADD=		-lmd
-.else
-DPADD=		${LIBCRYPTO}
-LDADD=		-lcrypto
+.if ${MK_OPENSSL} != "no"
+LIBADD+=	crypto
 CFLAGS+=	-DWITH_SSL
+.else
+LIBADD+=	md
 .endif
 
 .include <bsd.lib.mk>

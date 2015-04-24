@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_osdep.h 272285 2014-09-29 17:51:39Z rstone $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_osdep.h 274205 2014-11-06 23:45:05Z jfv $*/
 
 #ifndef _I40E_OSDEP_H_
 #define _I40E_OSDEP_H_
@@ -147,8 +147,7 @@ void prefetch(void *x)
 #define	prefetch(x)
 #endif
 
-struct i40e_osdep
-{
+struct i40e_osdep {
 	bus_space_tag_t		mem_bus_space_tag;
 	bus_space_handle_t	mem_bus_space_handle;
 	bus_size_t		mem_bus_space_size;

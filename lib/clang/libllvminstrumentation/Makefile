@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvminstrumentation/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvminstrumentation/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,10 +8,11 @@ SRCDIR=	lib/Transforms/Instrumentation
 SRCS=	AddressSanitizer.cpp \
 	BoundsChecking.cpp \
 	DataFlowSanitizer.cpp \
-	DebugIR.cpp \
 	GCOVProfiling.cpp \
 	MemorySanitizer.cpp \
 	Instrumentation.cpp \
+	InstrProfiling.cpp \
+	SanitizerCoverage.cpp \
 	ThreadSanitizer.cpp
 
 TGHDRS=	Intrinsics

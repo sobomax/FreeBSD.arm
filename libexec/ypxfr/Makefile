@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/ypxfr/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/libexec/ypxfr/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG=	ypxfr
 SRCS=	yp_dblookup.c yp_dbwrite.c yp_error.c \
@@ -16,8 +16,7 @@ CFLAGS+= -I.
 WARNS?=	2
 WFORMAT=0
 
-DPADD=	${LIBRPCSVC}
-LDADD=	-lrpcsvc
+LIBADD=	rpcsvc
 
 CLEANFILES= ${GENSRCS}
 

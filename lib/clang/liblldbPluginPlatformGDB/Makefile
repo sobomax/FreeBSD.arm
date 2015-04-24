@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbPluginPlatformGDB/Makefile 255722 2013-09-20 01:52:02Z emaste $
+# $FreeBSD: head/lib/clang/liblldbPluginPlatformGDB/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,7 +7,9 @@ LIB=	lldbPluginPlatformGDB
 SRCDIR=	tools/lldb/source/Plugins/Platform/gdb-server
 SRCS=	PlatformRemoteGDBServer.cpp
 
-TGHDRS=	DiagnosticCommonKinds \
+TGHDRS=	AttrList \
+	Attrs \
+	DiagnosticCommonKinds \
 	DeclNodes \
 	StmtNodes \
 	CommentCommandList

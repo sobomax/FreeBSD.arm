@@ -19,7 +19,7 @@
  * improvements that they make and grant CSL redistribution rights.
  *
  *      Utah $Hdr$
- * $FreeBSD: head/sys/fs/ext2fs/ext2_inode_cnv.c 262623 2014-02-28 21:25:32Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_inode_cnv.c 274437 2014-11-12 16:23:56Z pfg $
  */
 
 /*
@@ -41,6 +41,7 @@
 #define XTIME_TO_NSEC(x)	((x & EXT3_NSEC_MASK) >> 2)
 #define NSEC_TO_XTIME(t)	(le32toh(t << 2) & EXT3_NSEC_MASK)
 
+#ifdef EXT2FS_DEBUG
 void
 ext2_print_inode(struct inode *in)
 {
@@ -75,6 +76,7 @@ ext2_print_inode(struct inode *in)
 	    ep->e_len, ep->e_start_lo, ep->e_start_hi);
 	printf("\n");
 }
+#endif	/* EXT2FS_DEBUG */
 
 /*
  *	raw ext2 inode to inode

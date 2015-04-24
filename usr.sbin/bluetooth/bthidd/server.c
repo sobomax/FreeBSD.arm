@@ -28,11 +28,12 @@
  * SUCH DAMAGE.
  *
  * $Id: server.c,v 1.9 2006/09/07 21:06:53 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/bthidd/server.c 162494 2006-09-21 02:32:28Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/bthidd/server.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/queue.h>
 #include <assert.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <dev/vkbd/vkbd_var.h>
 #include <errno.h>
@@ -90,7 +91,9 @@ server_init(bthid_server_p srv)
 	l2addr.l2cap_family = AF_BLUETOOTH;
 	memcpy(&l2addr.l2cap_bdaddr, &srv->bdaddr, sizeof(l2addr.l2cap_bdaddr));
 	l2addr.l2cap_psm = htole16(0x11);
-
+	l2addr.l2cap_bdaddr_type = BDADDR_BREDR;
+	l2addr.l2cap_cid = 0;
+	
 	if (bind(srv->ctrl, (struct sockaddr *) &l2addr, sizeof(l2addr)) < 0) {
 		syslog(LOG_ERR, "Could not bind control L2CAP socket. " \
 			"%s (%d)", strerror(errno), errno);

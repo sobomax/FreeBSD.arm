@@ -1,10 +1,9 @@
-# $FreeBSD: head/kerberos5/lib/libasn1/Makefile 271775 2014-09-18 14:50:21Z will $
+# $FreeBSD: head/kerberos5/lib/libasn1/Makefile 277273 2015-01-16 21:39:08Z will $
 
 LIB=	asn1
 LDFLAGS=	-Wl,--no-undefined
 INCS=	asn1_err.h asn1-common.h heim_asn1.h der.h der-protos.h der-private.h
-LDADD=	-lcom_err -lroken
-DPADD=	${LIBCOM_ERR} ${LIBROKEN}
+LIBADD=	com_err roken
 VERSION_MAP=	${.CURDIR}/version.map
 
 SRCS=	asn1_err.c \
@@ -112,10 +111,10 @@ ${GEN_KX509}: kx509.asn1
 .SUFFIXES: .h .c .x .hx
 
 .x.c:
-	cp -f ${.IMPSRC} ${.TARGET}
+	${CP} ${.IMPSRC} ${.TARGET}
 
 .hx.h:
-	cp -f ${.IMPSRC} ${.TARGET}
+	${CP} ${.IMPSRC} ${.TARGET}
 	
 .include <bsd.lib.mk>
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_powerpc.c 271602 2014-09-14 22:03:41Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_powerpc.c 281713 2015-04-18 21:39:17Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -174,6 +174,11 @@ pmc_md_initialize()
 	case IBM970FX:
 	case IBM970MP:
 		error = pmc_ppc970_initialize(pmc_mdep);
+		break;
+	case FSL_E500v1:
+	case FSL_E500v2:
+	case FSL_E500mc:
+		error = pmc_e500_initialize(pmc_mdep);
 		break;
 	default:
 		error = -1;

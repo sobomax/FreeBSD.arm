@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/mips/beri/boot2/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/sys/boot/mips/beri/boot2/Makefile 280980 2015-04-02 06:58:17Z dim $
 
 BINDIR?=	/boot
 INSTALLFLAGS=	-b
@@ -74,7 +74,7 @@ flashboot.elf: relocate.o start.o boot2.o altera_jtag_uart.o cfi.o sdcard.o
 	${LD} ${_LDFLAGS} -T ${.CURDIR}/flashboot.ldscript -o ${.TARGET}	\
 	    ${.ALLSRC} ${LIBSTAND}
 flashboot: flashboot.elf
-	objcopy -S -O binary ${.TARGET}.elf ${.TARGET}
+	${OBJCOPY} -S -O binary ${.TARGET}.elf ${.TARGET}
 flashboot.md5: flashboot
 	md5 flashboot > flashboot.md5
 

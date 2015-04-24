@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/efidef.h 163898 2006-11-02 02:42:48Z marcel $ */
+/* $FreeBSD: head/sys/boot/efi/include/efidef.h 279038 2015-02-20 01:40:55Z imp $ */
 #ifndef _EFI_DEF_H
 #define _EFI_DEF_H
 
@@ -30,7 +30,9 @@ Revision History
 
 typedef UINT16          CHAR16;
 typedef UINT8           CHAR8;
+#ifndef ACPI_THREAD_ID		/* ACPI's definitions are fine */
 typedef UINT8           BOOLEAN;
+#endif
 
 #ifndef TRUE
     #define TRUE    ((BOOLEAN) 1)

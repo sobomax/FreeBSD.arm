@@ -4,6 +4,8 @@
 <!ENTITY % release PUBLIC "-//FreeBSD//ENTITIES Release Specification//EN"
         "http://www.FreeBSD.org/release/XML/release.ent">
 %release;
+<!ENTITY security SYSTEM "../../share/xml/security.xml">
+<!ENTITY errata SYSTEM "../../share/xml/errata.xml">
 ]>
 
 <article xmlns="http://docbook.org/ns/docbook"
@@ -14,10 +16,10 @@
 
     <author><orgname>The &os; Project</orgname></author>
 
-    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/errata/article.xml 260691 2014-01-15 17:34:21Z hrs $</pubdate>
+    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/errata/article.xml 278266 2015-02-05 16:00:34Z gjb $</pubdate>
 
     <copyright>
-      <year>2014</year>
+      <year>2015</year>
 
       <holder role="mailto:doc@FreeBSD.org">The &os; Documentation Project</holder>
     </copyright>
@@ -76,7 +78,13 @@
   <sect1 xml:id="security">
     <title>Security Advisories</title>
 
-    <para>No advisory.</para>
+    &security;
+  </sect1>
+
+  <sect1 xml:id="errata">
+    <title>Errata Notices</title>
+
+    &errata;
   </sect1>
 
   <sect1 xml:id="open-issues">

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb.h 270133 2014-08-18 14:23:07Z hselasky $ */
+/* $FreeBSD: head/lib/libusb/libusb.h 277245 2015-01-16 12:11:01Z hselasky $ */
 /*-
  * Copyright (c) 2009 Sylvestre Gallon. All rights reserved.
  *
@@ -128,6 +128,8 @@ enum libusb_standard_request {
 	LIBUSB_REQUEST_GET_INTERFACE = 0x0A,
 	LIBUSB_REQUEST_SET_INTERFACE = 0x0B,
 	LIBUSB_REQUEST_SYNCH_FRAME = 0x0C,
+	LIBUSB_REQUEST_SET_SEL = 0x30,
+	LIBUSB_REQUEST_SET_ISOCH_DELAY = 0x31,
 };
 
 enum libusb_request_type {

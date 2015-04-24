@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/ata-all.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/ata-all.c 280393 2015-03-23 19:47:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -91,7 +91,7 @@ FEATURE(ata_cam, "ATA devices are accessed through the cam(4) driver");
 int
 ata_probe(device_t dev)
 {
-    return (BUS_PROBE_DEFAULT);
+    return (BUS_PROBE_LOW_PRIORITY);
 }
 
 int

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs_pci.c 271461 2014-09-12 12:04:51Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/mvs/mvs_pci.c 280393 2015-03-23 19:47:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -88,7 +88,7 @@ mvs_probe(device_t dev)
 			snprintf(buf, sizeof(buf), "%s SATA controller",
 			    mvs_ids[i].name);
 			device_set_desc_copy(dev, buf);
-			return (BUS_PROBE_VENDOR);
+			return (BUS_PROBE_DEFAULT);
 		}
 	}
 	return (ENXIO);

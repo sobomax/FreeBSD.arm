@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ex/if_ex.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ex/if_ex.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * Intel EtherExpress Pro/10, Pro/10+ Ethernet driver
@@ -745,8 +745,7 @@ ex_rx_intr(struct ex_softc *sc)
 
 				while (pkt_len > 0) {
 					if (pkt_len >= MINCLSIZE) {
-						MCLGET(m, M_NOWAIT);
-						if (m->m_flags & M_EXT) {
+						if (MCLGET(m, M_NOWAIT)) {
 							m->m_len = MCLBYTES;
 						} else {
 							m_freem(ipkt);

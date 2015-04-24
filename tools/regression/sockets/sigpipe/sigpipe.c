@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/sigpipe/sigpipe.c 243312 2012-11-19 22:46:17Z emaste $
+ * $FreeBSD: head/tools/regression/sockets/sigpipe/sigpipe.c 281397 2015-04-11 03:24:49Z ngie $
  */
 
 #include <sys/types.h>
@@ -69,7 +69,7 @@ got_signal(void)
 }
 
 static void
-signal_handler(int signum)
+signal_handler(int signum __unused)
 {
 
 	signaled = 1;

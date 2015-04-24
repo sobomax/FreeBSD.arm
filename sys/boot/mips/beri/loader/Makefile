@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 281010 2015-04-03 02:31:59Z jkim $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -122,11 +122,7 @@ loader.help: help.common help.mips
 	    awk -f ${.CURDIR}/../../../common/merge_help.awk > ${.TARGET}
 
 .PATH: ${.CURDIR}/../../../forth
-FILES=	loader.help loader.4th support.4th loader.conf
-FILES+=	screen.4th frames.4th
-FILES+=	beastie.4th brand.4th check-password.4th color.4th delay.4th
-FILES+=	menu.4th menu-commands.4th menusets.4th shortcuts.4th version.4th
-FILESDIR_loader.conf=	/boot/defaults
+.include	"${.CURDIR}/../../../forth/Makefile.inc"
 
 .if !exists(${DESTDIR}/boot/loader.rc)
 FILES+= loader.rc

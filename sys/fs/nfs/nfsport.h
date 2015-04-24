@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsport.h 268115 2014-07-01 20:47:16Z rmacklem $
+ * $FreeBSD: head/sys/fs/nfs/nfsport.h 276140 2014-12-23 14:24:36Z rmacklem $
  */
 
 #ifndef _NFS_NFSPORT_H_
@@ -929,24 +929,6 @@ void nfsd_mntinit(void);
 #define	ncl_hash(f, l)	(fnv_32_buf((f), (l), FNV1_32_INIT))
 
 int newnfs_iosize(struct nfsmount *);
-
-#ifdef NFS_DEBUG
-
-extern int nfs_debug;
-#define	NFS_DEBUG_ASYNCIO	1 /* asynchronous i/o */
-#define	NFS_DEBUG_WG		2 /* server write gathering */
-#define	NFS_DEBUG_RC		4 /* server request caching */
-
-#define	NFS_DPF(cat, args)					\
-	do {							\
-		if (nfs_debug & NFS_DEBUG_##cat) printf args;	\
-	} while (0)
-
-#else
-
-#define	NFS_DPF(cat, args)
-
-#endif
 
 int newnfs_vncmpf(struct vnode *, void *);
 

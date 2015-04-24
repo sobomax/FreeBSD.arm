@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtsold/probe.c 254470 2013-08-17 22:13:26Z hrs $
+ * $FreeBSD: head/usr.sbin/rtsold/probe.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include <sys/param.h>
@@ -40,7 +40,6 @@
 #include <sys/queue.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/if_dl.h>
 
 #include <netinet/in.h>

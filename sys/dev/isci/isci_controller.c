@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/isci_controller.c 268025 2014-06-30 01:01:54Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/isci_controller.c 276174 2014-12-24 07:04:04Z scottl $");
 
 #include <dev/isci/isci.h>
 
@@ -373,6 +373,8 @@ SCI_STATUS isci_controller_initialize(struct ISCI_CONTROLLER *controller)
 
 	fail_on_timeout = 1;
 	TUNABLE_INT_FETCH("hw.isci.fail_on_task_timeout", &fail_on_timeout);
+	controller->fail_on_task_timeout = fail_on_timeout;
+
 	/* Attach to CAM using xpt_bus_register now, then immediately freeze
 	 *  the simq.  It will get released later when initial domain discovery
 	 *  is complete.

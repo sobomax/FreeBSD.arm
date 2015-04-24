@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 249039 2013-04-03 06:45:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /* Driver for arbitrary double bulk pipe devices.
  * The driver assumes that there will be the same driver on the other side.
@@ -97,7 +97,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 249039 2013-04-03 06:45:21Z hse
 static int udbp_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, udbp, CTLFLAG_RW, 0, "USB udbp");
-SYSCTL_INT(_hw_usb_udbp, OID_AUTO, debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_udbp, OID_AUTO, debug, CTLFLAG_RWTUN,
     &udbp_debug, 0, "udbp debug level");
 #endif
 
@@ -417,9 +417,8 @@ udbp_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 		if (m == NULL) {
 			goto tr_setup;
 		}
-		MCLGET(m, M_NOWAIT);
 
-		if (!(m->m_flags & M_EXT)) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			m_freem(m);
 			goto tr_setup;
 		}

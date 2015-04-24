@@ -1,11 +1,12 @@
 #
-# $FreeBSD: head/sys/modules/cxgbe/Makefile 269812 2014-08-11 14:50:49Z imp $
+# $FreeBSD: head/sys/modules/cxgbe/Makefile 278303 2015-02-06 01:10:04Z np $
 #
 
 SYSDIR?=${.CURDIR}/../..
 .include "${SYSDIR}/conf/kern.opts.mk"
 
 SUBDIR=	if_cxgbe
+SUBDIR+=	if_cxl
 SUBDIR+=	t4_firmware
 SUBDIR+=	t5_firmware
 SUBDIR+=	${_tom}

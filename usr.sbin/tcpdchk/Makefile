@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/tcpdchk/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/tcpdchk/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
@@ -17,7 +17,6 @@ CFLAGS+=-DINET6
 
 WARNS?=	0
 
-DPADD=	${LIBWRAP}
-LDADD=	-lwrap
+LIBADD=	wrap
 
 .include <bsd.prog.mk>

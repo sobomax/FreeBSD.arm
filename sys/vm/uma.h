@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/uma.h 261725 2014-02-10 19:59:46Z glebius $
+ * $FreeBSD: head/sys/vm/uma.h 280957 2015-04-01 12:42:26Z rstone $
  *
  */
 
@@ -382,7 +382,8 @@ uma_zfree(uma_zone_t zone, void *item)
  *	A pointer to the allocated memory or NULL on failure.
  */
 
-typedef void *(*uma_alloc)(uma_zone_t zone, int size, uint8_t *pflag, int wait);
+typedef void *(*uma_alloc)(uma_zone_t zone, vm_size_t size, uint8_t *pflag,
+    int wait);
 
 /*
  * Backend page free routines
@@ -395,7 +396,7 @@ typedef void *(*uma_alloc)(uma_zone_t zone, int size, uint8_t *pflag, int wait);
  * Returns:
  *	None
  */
-typedef void (*uma_free)(void *item, int size, uint8_t pflag);
+typedef void (*uma_free)(void *item, vm_size_t size, uint8_t pflag);
 
 
 

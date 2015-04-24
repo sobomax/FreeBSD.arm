@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ftp-proxy/Makefile 273065 2014-10-13 22:15:26Z delphij $
+# $FreeBSD: head/usr.sbin/ftp-proxy/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .PATH:	${.CURDIR}/../../contrib/pf/ftp-proxy
 
@@ -9,8 +9,7 @@ SRCS=	ftp-proxy.c filter.c
 
 CFLAGS+=-I${.CURDIR}/../../contrib/pf/libevent
 
-LDADD+=	${LIBEVENT}
-DPADD+=	${LIBEVENT}
+LIBADD=	event
 
 WARNS?=	3
 

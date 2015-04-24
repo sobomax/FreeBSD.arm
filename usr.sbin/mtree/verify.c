@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)verify.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/mtree/verify.c 174403 2007-12-07 12:22:38Z des $");
+__FBSDID("$FreeBSD: head/usr.sbin/mtree/verify.c 275650 2014-12-09 19:50:50Z sjg $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -233,7 +233,7 @@ miss(NODE *p, char *tail)
 		miss(p->child, tp + 1);
 		*tp = '\0';
 
-		if (!create)
+		if (!create && !uflag)
 			continue;
 		if (chown(path, p->st_uid, p->st_gid) == -1) {
 			serr = errno;

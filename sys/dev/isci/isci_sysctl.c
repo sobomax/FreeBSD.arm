@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/isci_sysctl.c 268025 2014-06-30 01:01:54Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/isci_sysctl.c 276174 2014-12-24 07:04:04Z scottl $");
 
 #include <dev/isci/isci.h>
 
@@ -226,12 +226,13 @@ static int
 isci_sysctl_fail_on_task_timeout(SYSCTL_HANDLER_ARGS)
 {
 	struct isci_softc	*isci = (struct isci_softc *)arg1;
-	int32_t			fail_on_timeout = 0;
+	int32_t			fail_on_timeout;
 	int			error, i;
 
+	fail_on_timeout = isci->controllers[0].fail_on_task_timeout;
 	error = sysctl_handle_int(oidp, &fail_on_timeout, 0, req);
 
-	if (error || fail_on_timeout == 0)
+	if (error || req->newptr == NULL)
 		return (error);
 
 	for (i = 0; i < isci->controller_count; i++)

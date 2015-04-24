@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/mem.c 226459 2011-10-17 05:42:53Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/mem.c 277643 2015-01-24 12:51:15Z kib $");
 
 /*
  * Memory special file
@@ -84,8 +84,6 @@ memrw(struct cdev *dev, struct uio *uio, int flags)
 
 	cnt = 0;
 	error = 0;
-
-	GIANT_REQUIRED;
 
 	pmap_page_init(&m);
 	while (uio->uio_resid > 0 && !error) {

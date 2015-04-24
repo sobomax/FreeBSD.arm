@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_synch.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_synch.c 281702 2015-04-18 20:36:58Z markj $");
 
 #include "opt_ktrace.h"
 #include "opt_sched.h"
@@ -107,17 +107,6 @@ static void	loadav(void *arg);
 
 SDT_PROVIDER_DECLARE(sched);
 SDT_PROBE_DEFINE(sched, , , preempt);
-
-/*
- * These probes reference Solaris features that are not implemented in FreeBSD.
- * Create the probes anyway for compatibility with existing D scripts; they'll
- * just never fire.
- */
-SDT_PROBE_DEFINE(sched, , , cpucaps__sleep);
-SDT_PROBE_DEFINE(sched, , , cpucaps__wakeup);
-SDT_PROBE_DEFINE(sched, , , schedctl__nopreempt);
-SDT_PROBE_DEFINE(sched, , , schedctl__preempt);
-SDT_PROBE_DEFINE(sched, , , schedctl__yield);
 
 static void
 sleepinit(void *unused)

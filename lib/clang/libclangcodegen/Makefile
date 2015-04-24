@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangcodegen/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclangcodegen/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -26,29 +26,35 @@ SRCS=	BackendUtil.cpp \
 	CGExprComplex.cpp \
 	CGExprConstant.cpp \
 	CGExprScalar.cpp \
+	CGLoopInfo.cpp \
 	CGObjC.cpp \
 	CGObjCGNU.cpp \
 	CGObjCMac.cpp \
 	CGObjCRuntime.cpp \
 	CGOpenCLRuntime.cpp \
-	CGRTTI.cpp \
+	CGOpenMPRuntime.cpp \
 	CGRecordLayoutBuilder.cpp \
 	CGStmt.cpp \
+	CGStmtOpenMP.cpp \
 	CGVTT.cpp \
 	CGVTables.cpp \
 	CodeGenABITypes.cpp \
 	CodeGenAction.cpp \
 	CodeGenFunction.cpp \
 	CodeGenModule.cpp \
+	CodeGenPGO.cpp \
 	CodeGenTBAA.cpp \
 	CodeGenTypes.cpp \
+	CoverageMappingGen.cpp \
 	ItaniumCXXABI.cpp \
 	MicrosoftCXXABI.cpp \
-	MicrosoftVBTables.cpp \
 	ModuleBuilder.cpp \
+	SanitizerMetadata.cpp \
 	TargetInfo.cpp
 
 TGHDRS=	AttrList \
+	AttrParsedAttrList \
+	AttrVisitor \
 	Attrs \
 	CommentCommandList \
 	CommentNodes \

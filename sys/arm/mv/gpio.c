@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/gpio.c 270945 2014-09-01 18:51:01Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/gpio.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/gpio.c 270945 2014-09-01 18:51:01Z ian $");
 #include <sys/queue.h>
 #include <sys/timetc.h>
 #include <machine/bus.h>
-#include <machine/fdt.h>
 #include <machine/intr.h>
 
 #include <dev/fdt/fdt_common.h>

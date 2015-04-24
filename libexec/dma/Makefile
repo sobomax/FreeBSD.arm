@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/dma/Makefile 262297 2014-02-21 14:14:48Z bapt $
+# $FreeBSD: head/libexec/dma/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .PATH:	${.CURDIR}/../../contrib/dma
 
@@ -8,8 +8,7 @@ CFLAGS=	-I${.CURDIR}/../../contrib/dma \
 	-DLIBEXEC_PATH='"/usr/libexec"' -DDMA_VERSION='"v0.9+"' \
 	-DDMA_ROOT_USER='"mailnull"' \
 	-DDMA_GROUP='"mail"'
-DPADD=	${LIBSSL} ${LIBCRYPTO}
-LDADD=	-lssl -lcrypto
+LIBADD=	ssl crypto
 
 PROG=	dma
 SRCS=	aliases_parse.y \

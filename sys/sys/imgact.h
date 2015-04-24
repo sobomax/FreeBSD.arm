@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact.h 271141 2014-09-04 21:31:25Z sbruno $
+ * $FreeBSD: head/sys/sys/imgact.h 281548 2015-04-15 08:13:53Z kib $
  */
 
 #ifndef _SYS_IMGACT_H_
@@ -80,6 +80,7 @@ struct image_params {
 	unsigned long pagesizes;
 	int pagesizeslen;
 	vm_prot_t stack_prot;
+	u_long stack_sz;
 };
 
 #ifdef _KERNEL

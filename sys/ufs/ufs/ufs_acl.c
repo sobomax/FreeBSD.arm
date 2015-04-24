@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_acl.c 241011 2012-09-27 23:30:49Z mdf $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_acl.c 274906 2014-11-23 01:01:14Z glebius $");
 
 #include "opt_ufs.h"
 #include "opt_quota.h"
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_acl.c 241011 2012-09-27 23:30:49Z mdf $
 #include <sys/acl.h>
 #include <sys/event.h>
 #include <sys/extattr.h>
+#include <sys/proc.h>
 
 #include <ufs/ufs/quota.h>
 #include <ufs/ufs/inode.h>

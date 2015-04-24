@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man6/intro.6 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: head/share/man/man6/intro.6 278616 2015-02-12 05:35:00Z cperciva $
 .\"
 .Dd February 16, 1997
 .Dt INTRO 6
@@ -37,7 +37,7 @@
 This section contains information about games.
 The games
 are located in
-.Pa /usr/games
+.Pa /usr/bin
 if installed.
 You can get a short overview about all the games with the
 command:
@@ -45,13 +45,18 @@ command:
 $ apropos '\\(6\\)'
 .Ed
 .Sh FILES
-.Bl -tag -width /usr/games -compact
-.It Pa /usr/games
+.Bl -tag -width /usr/bin -compact
+.It Pa /usr/bin
 location of games
 .El
 .Sh SEE ALSO
 .Xr intro 1
 .Sh HISTORY
+In earlier versions of
+.Fx ,
+games were located in
+.Pa /usr/games .
+.Pp
 The
 .Nm
 section manual page appeared in

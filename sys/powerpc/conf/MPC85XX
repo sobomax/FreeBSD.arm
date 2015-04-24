@@ -1,7 +1,7 @@
 #
 # Custom kernel for Freescale MPC85XX development boards like the CDS etc.
 #
-# $FreeBSD: head/sys/powerpc/conf/MPC85XX 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/powerpc/conf/MPC85XX 277254 2015-01-16 17:41:21Z nwhitehorn $
 #
 
 cpu		BOOKE
@@ -20,7 +20,7 @@ options 	ALT_BREAK_TO_DEBUGGER
 options 	BREAK_TO_DEBUGGER
 options 	BOOTP
 options 	BOOTP_NFSROOT
-options 	BOOTP_NFSV3
+#options 	BOOTP_NFSV3
 options 	BOOTP_WIRED_TO=tsec0
 options 	CD9660
 options 	COMPAT_43

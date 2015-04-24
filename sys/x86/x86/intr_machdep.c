@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/x86/intr_machdep.c 271712 2014-09-17 17:33:22Z adrian $
+ * $FreeBSD: head/sys/x86/x86/intr_machdep.c 280260 2015-03-19 13:57:47Z kib $
  */
 
 /*
@@ -421,6 +421,23 @@ intr_describe(u_int vector, void *ih, const char *descr)
 		return (error);
 	intrcnt_updatename(isrc);
 	return (0);
+}
+
+void
+intr_reprogram(void)
+{
+	struct intsrc *is;
+	int v;
+
+	mtx_lock(&intr_table_lock);
+	for (v = 0; v < NUM_IO_INTS; v++) {
+		is = interrupt_sources[v];
+		if (is == NULL)
+			continue;
+		if (is->is_pic->pic_reprogram_pin != NULL)
+			is->is_pic->pic_reprogram_pin(is);
+	}
+	mtx_unlock(&intr_table_lock);
 }
 
 #ifdef DDB

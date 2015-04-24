@@ -1,9 +1,8 @@
-# $FreeBSD: head/usr.sbin/devinfo/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/devinfo/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	devinfo
 MAN=	devinfo.8
 
-DPADD=	${LIBDEVINFO}
-LDADD=	-ldevinfo
+LIBADD=	devinfo
 
 .include <bsd.prog.mk>

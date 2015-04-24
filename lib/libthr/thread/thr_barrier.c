@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_barrier.c 233022 2012-03-16 04:35:52Z davidxu $
+ * $FreeBSD: head/lib/libthr/thread/thr_barrier.c 278313 2015-02-06 12:18:38Z kib $
  */
 
 #include "namespace.h"
@@ -86,16 +86,13 @@ _pthread_barrier_init(pthread_barrier_t *barrier,
 	if (barrier == NULL || count <= 0)
 		return (EINVAL);
 
-	bar = malloc(sizeof(struct pthread_barrier));
+	bar = calloc(1, sizeof(struct pthread_barrier));
 	if (bar == NULL)
 		return (ENOMEM);
 
 	_thr_umutex_init(&bar->b_lock);
 	_thr_ucond_init(&bar->b_cv);
-	bar->b_cycle	= 0;
-	bar->b_waiters	= 0;
 	bar->b_count	= count;
-	bar->b_refcount = 0;
 	*barrier	= bar;
 
 	return (0);

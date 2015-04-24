@@ -28,11 +28,12 @@
  * SUCH DAMAGE.
  *
  * $Id: rfcomm_sppd.c,v 1.4 2003/09/07 18:15:55 max Exp $
- * $FreeBSD: head/usr.bin/bluetooth/rfcomm_sppd/rfcomm_sppd.c 273548 2014-10-23 15:16:40Z emax $
+ * $FreeBSD: head/usr.bin/bluetooth/rfcomm_sppd/rfcomm_sppd.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <ctype.h>
 #include <err.h>

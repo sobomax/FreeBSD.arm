@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/swtch.s 270850 2014-08-30 17:48:38Z jhb $
+ * $FreeBSD: head/sys/i386/i386/swtch.s 281707 2015-04-18 21:23:16Z kib $
  */
 
 #include "opt_npx.h"
@@ -174,12 +174,6 @@ ENTRY(cpu_switch)
 
 	/* switch address space */
 	movl	PCB_CR3(%edx),%eax
-#ifdef PAE
-	cmpl	%eax,IdlePDPT			/* Kernel address space? */
-#else
-	cmpl	%eax,IdlePTD			/* Kernel address space? */
-#endif
-	je	sw0
 	READ_CR3(%ebx)				/* The same address space? */
 	cmpl	%ebx,%eax
 	je	sw0

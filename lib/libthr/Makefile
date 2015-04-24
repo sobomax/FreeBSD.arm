@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libthr/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libthr/Makefile 281714 2015-04-18 21:50:13Z kib $
 #
 # All library objects contain FreeBSD revision strings by default; they may be
 # excluded as a space-saving measure.  To produce a library that does
@@ -40,13 +40,14 @@ MAN=	libthr.3
 
 # enable extra internal consistancy checks
 CFLAGS+=-D_PTHREADS_INVARIANTS
-#CFLAGS+=-g
 
 PRECIOUSLIB=
 
 .PATH: ${.CURDIR}/arch/${MACHINE_CPUARCH}/${MACHINE_CPUARCH}
 
+.if exists(${.CURDIR}/arch/${MACHINE_CPUARCH}/Makefile.inc)
 .include "${.CURDIR}/arch/${MACHINE_CPUARCH}/Makefile.inc"
+.endif
 .include "${.CURDIR}/sys/Makefile.inc"
 .include "${.CURDIR}/thread/Makefile.inc"
 
@@ -60,8 +61,6 @@ SYMLINKS+=lib${LIB}.so ${LIBDIR}/libpthread.so
 SYMLINKS+=lib${LIB}_p.a ${LIBDIR}/libpthread_p.a
 .endif
 
-.if ${MK_SYSCALL_COMPAT} != "no"
-CFLAGS+=-DSYSCALL_COMPAT
-.endif
+.include <bsd.arch.inc.mk>
 
 .include <bsd.lib.mk>

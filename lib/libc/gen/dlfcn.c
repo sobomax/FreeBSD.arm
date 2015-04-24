@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/dlfcn.c 231868 2012-02-17 10:49:29Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/dlfcn.c 276627 2015-01-03 18:09:53Z kib $");
 
 /*
  * Linkage to services provided by the dynamic linker.
@@ -233,3 +233,10 @@ _rtld_get_stack_prot(void)
 	return (PROT_EXEC | PROT_READ | PROT_WRITE);
 }
 
+#pragma weak _rtld_is_dlopened
+int
+_rtld_is_dlopened(void *arg)
+{
+
+	return (0);
+}

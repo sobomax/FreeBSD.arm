@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ida/ida_pci.c 239740 2012-08-27 17:24:07Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/ida/ida_pci.c 280347 2015-03-22 16:10:28Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -265,8 +265,8 @@ ida_pci_attach(device_t dev)
 		/* highaddr	*/ BUS_SPACE_MAXADDR,
 		/* filter	*/ NULL,
 		/* filterarg	*/ NULL,
-		/* maxsize	*/ MAXBSIZE,
-		/* nsegments	*/ IDA_NSEG,
+		/* maxsize	*/ BUS_SPACE_MAXSIZE_32BIT,
+		/* nsegments	*/ BUS_SPACE_UNRESTRICTED,
 		/* maxsegsize	*/ BUS_SPACE_MAXSIZE_32BIT,
 		/* flags	*/ BUS_DMA_ALLOCNOW,
 		/* lockfunc	*/ NULL,

@@ -29,7 +29,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_scm.h 273262 2014-10-18 17:51:34Z andrew $
+ * $FreeBSD: head/sys/arm/ti/ti_scm.h 279312 2015-02-26 07:47:35Z dim $
  */
 
 
@@ -59,8 +59,8 @@ struct ti_scm_padstate {
 struct ti_scm_device {
 	uint16_t		padconf_muxmode_mask;
 	uint16_t		padconf_sate_mask;
-	struct ti_scm_padstate	*padstate;
-	struct ti_scm_padconf	*padconf;
+	const struct ti_scm_padstate	*padstate;
+	const struct ti_scm_padconf	*padconf;
 };
 
 struct ti_scm_softc {

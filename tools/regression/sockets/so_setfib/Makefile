@@ -1,14 +1,16 @@
-# $FreeBSD: head/tools/regression/sockets/so_setfib/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/so_setfib/Makefile 281407 2015-04-11 06:38:50Z ngie $
+
+.include <src.opts.mk>
 
 PROG=	so_setfib
 MAN=
 WARNS?=	6
 
-.ifdef INET6
-CFLAGS+=	-DINET6
-.endif
-.ifdef INET
+.if ${MK_INET} != "no"
 CFLAGS+=	-DINET
+.endif
+.if ${MK_INET6} != "no"
+CFLAGS+=	-DINET6
 .endif
 
 .include <bsd.prog.mk>

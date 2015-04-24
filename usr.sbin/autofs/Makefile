@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/autofs/Makefile 270096 2014-08-17 09:44:42Z trasz $
+# $FreeBSD: head/usr.sbin/autofs/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	automountd
 SRCS=	automount.c
@@ -16,8 +16,7 @@ CFLAGS+=-I${.CURDIR}/../../sys/fs/autofs
 
 MAN=	automount.8 automountd.8 autounmountd.8 auto_master.5
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 # Needed for getmntopts.c
 MOUNT=  ${.CURDIR}/../../sbin/mount

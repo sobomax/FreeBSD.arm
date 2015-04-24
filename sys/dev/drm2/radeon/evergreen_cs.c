@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/evergreen_cs.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/evergreen_cs.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"
@@ -40,6 +40,10 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/evergreen_cs.c 258780 2013-11-30 22
 #define MAX(a,b)                   (((a)>(b))?(a):(b))
 #define MIN(a,b)                   (((a)<(b))?(a):(b))
 
+#ifdef FREEBSD_WIP /* FreeBSD: to please GCC 4.2. */
+int r600_dma_cs_next_reloc(struct radeon_cs_parser *p,
+			   struct radeon_cs_reloc **cs_reloc);
+#endif
 static int evergreen_cs_packet_next_reloc(struct radeon_cs_parser *p,
 					  struct radeon_cs_reloc **cs_reloc);
 
@@ -1292,9 +1296,9 @@ static int evergreen_cs_check_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
 	int r;
 
 	if (p->rdev->family >= CHIP_CAYMAN)
-		last_reg = DRM_ARRAY_SIZE(cayman_reg_safe_bm);
+		last_reg = ARRAY_SIZE(cayman_reg_safe_bm);
 	else
-		last_reg = DRM_ARRAY_SIZE(evergreen_reg_safe_bm);
+		last_reg = ARRAY_SIZE(evergreen_reg_safe_bm);
 
 	i = (reg >> 7);
 	if (i >= last_reg) {
@@ -1960,9 +1964,9 @@ static bool evergreen_is_safe_reg(struct radeon_cs_parser *p, u32 reg, u32 idx)
 	u32 last_reg, m, i;
 
 	if (p->rdev->family >= CHIP_CAYMAN)
-		last_reg = DRM_ARRAY_SIZE(cayman_reg_safe_bm);
+		last_reg = ARRAY_SIZE(cayman_reg_safe_bm);
 	else
-		last_reg = DRM_ARRAY_SIZE(evergreen_reg_safe_bm);
+		last_reg = ARRAY_SIZE(evergreen_reg_safe_bm);
 
 	i = (reg >> 7);
 	if (i >= last_reg) {
@@ -2759,7 +2763,7 @@ int evergreen_cs_parse(struct radeon_cs_parser *p)
 
 	if (p->track == NULL) {
 		/* initialize tracker, we are in kms */
-		track = malloc(sizeof(*track), DRM_MEM_DRIVER, M_ZERO | M_WAITOK);
+		track = malloc(sizeof(*track), DRM_MEM_DRIVER, M_NOWAIT | M_ZERO);
 		if (track == NULL)
 			return -ENOMEM;
 		evergreen_cs_track_init(track);

@@ -41,10 +41,10 @@
 #include <vm/vm_page.h>
 #include <vm/vm_pager.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/dsp.c 249585 2013-04-17 11:45:15Z gabor $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/dsp.c 280442 2015-03-24 16:31:22Z hselasky $");
 
 static int dsp_mmap_allow_prot_exec = 0;
-SYSCTL_INT(_hw_snd, OID_AUTO, compat_linux_mmap, CTLFLAG_RW,
+SYSCTL_INT(_hw_snd, OID_AUTO, compat_linux_mmap, CTLFLAG_RWTUN,
     &dsp_mmap_allow_prot_exec, 0,
     "linux mmap compatibility (-1=force disable 0=auto 1=force enable)");
 
@@ -2324,9 +2324,7 @@ dsp_stdclone(char *name, char *namep, char *sep, int use_sep, int *u, int *c)
 
 static void
 dsp_clone(void *arg,
-#if __FreeBSD_version >= 600034
     struct ucred *cred,
-#endif
     char *name, int namelen, struct cdev **dev)
 {
 	struct snddev_info *d;

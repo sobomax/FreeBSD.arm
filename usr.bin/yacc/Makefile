@@ -1,5 +1,5 @@
 #	@(#)Makefile	5.3 (Berkeley) 5/12/90
-# $FreeBSD: head/usr.bin/yacc/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/yacc/Makefile 274460 2014-11-13 00:46:53Z jkim $
 
 .include <src.opts.mk>
 
@@ -10,9 +10,10 @@ PROG=	yacc
 SRCS=	closure.c error.c graph.c lalr.c lr0.c main.c mkpar.c mstring.c output.c \
 	reader.c yaccpar.c symtab.c verbose.c warshall.c
 
-CFLAGS+=	-DMIXEDCASE_FILENAMES=1 \
-		-DHAVE_FCNTL_H=1 \
-		-DHAVE_MKSTEMP=1
+CFLAGS+=	-DHAVE_FCNTL_H=1 \
+		-DHAVE_MKSTEMP=1 \
+		-DMAXTABLE=INT_MAX \
+		-DMIXEDCASE_FILENAMES=1
 
 YYPATCH!=	cat ${BYACC_SRC}/VERSION
 CFLAGS+=	-DYYPATCH=${YYPATCH}

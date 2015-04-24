@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/dev/netif/mii_layer/truephy.c,v 1.3 2008/02/10 07:29:27 sephe Exp $
- * $FreeBSD: head/sys/dev/mii/truephy.c 266974 2014-06-02 17:54:39Z marcel $
+ * $FreeBSD: head/sys/dev/mii/truephy.c 276885 2015-01-09 12:26:08Z glebius $
  */
 
 #include <sys/param.h>
@@ -244,9 +244,7 @@ truephy_reset(struct mii_softc *sc)
 	PHY_WRITE(sc, TRUEPHY_CTRL,
 		  TRUEPHY_CTRL_DIAG | TRUEPHY_CTRL_RSV1 | TRUEPHY_CTRL_RSV0);
 
-#define N(arr)	(int)(sizeof(arr) / sizeof(arr[0]))
-
-	for (i = 0; i < N(truephy_dspcode); ++i) {
+	for (i = 0; i < nitems(truephy_dspcode); ++i) {
 		const struct truephy_dsp *dsp = &truephy_dspcode[i];
 
 		PHY_WRITE(sc, TRUEPHY_INDEX, dsp->index);
@@ -255,8 +253,6 @@ truephy_reset(struct mii_softc *sc)
 		PHY_WRITE(sc, TRUEPHY_INDEX, dsp->index);
 		PHY_READ(sc, TRUEPHY_DATA);
 	}
-
-#undef N
 
 	PHY_READ(sc, MII_BMCR);
 	PHY_READ(sc, TRUEPHY_CTRL);

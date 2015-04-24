@@ -1,0 +1,4 @@
+.\" $FreeBSD: head/tools/build/options/WITHOUT_AUTOFS 277728 2015-01-26 07:15:49Z ngie $
+Set to not build
+.Xr autofs 4
+related programs, libraries, and kernel modules.

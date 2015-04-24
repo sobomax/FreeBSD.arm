@@ -1,5 +1,5 @@
 # From:	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: head/release/picobsd/tinyware/login/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/release/picobsd/tinyware/login/Makefile 275104 2014-11-26 08:12:21Z bapt $
 
 .include <src.opts.mk>
 
@@ -11,13 +11,11 @@ MAN=	login.1
 
 CFLAGS+=-DLOGALL
 
-DPADD=	${LIBUTIL} ${LIBCRYPT}
-LDADD=	-lutil -lcrypt
+LIBADD=	util crypt
 
 .if ${MK_PAM_SUPPORT} != "no"
 CFLAGS+= -DUSE_PAM
-DPADD+=	${LIBPAM}
-LDADD+=	${MINUSLPAM}
+LIBADD+=	pam
 .endif
 
 BINOWN=	root

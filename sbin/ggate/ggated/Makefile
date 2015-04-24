@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ggate/ggated/Makefile 147887 2005-07-10 21:10:20Z pjd $
+# $FreeBSD: head/sbin/ggate/ggated/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../shared
 
@@ -6,8 +6,7 @@ PROG=	ggated
 MAN=	ggated.8
 SRCS=	ggated.c ggate.c
 
-DPADD=	${LIBPTHREAD}
-LDADD=	-lpthread
+LIBADD=	pthread
 
 CFLAGS+= -I${.CURDIR}/../shared
 

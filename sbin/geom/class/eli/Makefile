@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/geom/class/eli/Makefile 216493 2010-12-16 17:54:56Z obrien $
+# $FreeBSD: head/sbin/geom/class/eli/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../../misc ${.CURDIR}/../../../../sys/geom/eli ${.CURDIR}/../../../../sys/crypto/sha2
 
@@ -8,8 +8,7 @@ SRCS+=	g_eli_key.c
 SRCS+=	pkcs5v2.c
 SRCS+=	sha2.c
 
-DPADD=	${LIBMD} ${LIBCRYPTO}
-LDADD=	-lmd -lcrypto
+LIBADD=	md crypto
 
 WARNS?=	3
 

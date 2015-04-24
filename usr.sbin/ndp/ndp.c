@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/ndp/ndp.c 268827 2014-07-18 06:48:02Z peter $	*/
+/*	$FreeBSD: head/usr.sbin/ndp/ndp.c 281143 2015-04-06 09:42:23Z glebius $	*/
 /*	$KAME: ndp.c,v 1.104 2003/06/27 07:48:39 itojun Exp $	*/
 
 /*
@@ -83,7 +83,6 @@
 #include <sys/queue.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/if_dl.h>
 #include <net/if_types.h>
 #include <net/route.h>

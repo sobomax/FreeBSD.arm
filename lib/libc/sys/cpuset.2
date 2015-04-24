@@ -23,9 +23,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/lib/libc/sys/cpuset.2 267774 2014-06-23 08:25:03Z bapt $
+.\" $FreeBSD: head/lib/libc/sys/cpuset.2 276849 2015-01-08 18:53:11Z jhb $
 .\"
-.Dd February 14, 2014
+.Dd January 8, 2015
 .Dt CPUSET 2
 .Os
 .Sh NAME
@@ -101,6 +101,7 @@ argument may have the following values:
 .It Dv CPU_WHICH_JAIL Ta "id is jid (jail id)"
 .It Dv CPU_WHICH_CPUSET Ta "id is a cpusetid_t (cpuset id)"
 .It Dv CPU_WHICH_IRQ Ta "id is an irq number"
+.It Dv CPU_WHICH_DOMAIN Ta "id is a NUMA domain"
 .El
 .Pp
 An

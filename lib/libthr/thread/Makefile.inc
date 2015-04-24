@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libthr/thread/Makefile.inc 218414 2011-02-07 21:26:46Z jkim $
+# $FreeBSD: head/lib/libthr/thread/Makefile.inc 277490 2015-01-21 16:41:05Z andrew $
 
 # thr sources
 .PATH: ${.CURDIR}/thread
@@ -14,6 +14,7 @@ SRCS+= \
 	thr_cond.c \
 	thr_condattr.c \
 	thr_create.c \
+	thr_ctrdtr.c \
 	thr_detach.c \
 	thr_equal.c \
 	thr_event.c \

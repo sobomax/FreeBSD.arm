@@ -1,9 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/tunefs/Makefile 207145 2010-04-24 07:59:45Z jeff $
+# $FreeBSD: head/sbin/tunefs/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	tunefs
-DPADD=	${LIBUFS}
-LDADD=	-lufs
+LIBADD=	ufs
 MAN=	tunefs.8
 
 WARNS=	3

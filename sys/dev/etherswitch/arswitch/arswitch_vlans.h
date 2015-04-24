@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_vlans.h 262429 2014-02-24 04:44:28Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_vlans.h 279943 2015-03-13 02:16:39Z adrian $
  */
 #ifndef	__ARSWITCH_VLANS_H__
 #define	__ARSWITCH_VLANS_H__
@@ -34,5 +34,14 @@ int ar8xxx_getvgroup(struct arswitch_softc *, etherswitch_vlangroup_t *);
 int ar8xxx_setvgroup(struct arswitch_softc *, etherswitch_vlangroup_t *);
 int ar8xxx_get_pvid(struct arswitch_softc *, int, int *);
 int ar8xxx_set_pvid(struct arswitch_softc *, int, int);
+
+int ar8xxx_flush_dot1q_vlan(struct arswitch_softc *sc);
+int ar8xxx_purge_dot1q_vlan(struct arswitch_softc *sc, int vid);
+int ar8xxx_get_dot1q_vlan(struct arswitch_softc *sc, uint32_t *ports,
+    uint32_t *untagged_ports, int vid);
+int ar8xxx_set_dot1q_vlan(struct arswitch_softc *sc, uint32_t ports,
+    uint32_t untagged_ports, int vid);
+int ar8xxx_get_port_vlan(struct arswitch_softc *sc, uint32_t *ports, int vid);
+int ar8xxx_set_port_vlan(struct arswitch_softc *sc, uint32_t ports, int vid);
 
 #endif	/* __ARSWITCH_VLANS_H__ */

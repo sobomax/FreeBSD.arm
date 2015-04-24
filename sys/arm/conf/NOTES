@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/conf/NOTES 272103 2014-09-25 11:38:26Z gavin $
+# $FreeBSD: head/sys/arm/conf/NOTES 277227 2015-01-16 01:39:24Z np $
 
 machine	arm
 
@@ -82,6 +82,7 @@ nodevice	snake_saver
 nodevice	star_saver
 nodevice	warp_saver
 
+nodevice	cxgbe
 nodevice	pcii
 nodevice	snd_cmi
 nodevice	tnt4882

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_dev_s3c2410.c 272103 2014-09-25 11:38:26Z gavin $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_dev_s3c2410.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -402,4 +402,5 @@ struct uart_class uart_s3c2410_class = {
 	.uc_ops = &uart_s3c2410_ops,
 	.uc_range = 8,
 	.uc_rclk = 0,
+	.uc_rshift = 0
 };

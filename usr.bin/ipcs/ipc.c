@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ipcs/ipc.c 228992 2011-12-30 11:02:40Z uqs $");
+__FBSDID("$FreeBSD: head/usr.bin/ipcs/ipc.c 281517 2015-04-14 04:52:52Z eadler $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -55,16 +55,15 @@ struct msginfo		msginfo;
 struct msqid_kernel	*msqids;
 struct shminfo		shminfo;
 struct shmid_kernel	*shmsegs;
-void	kget(int idx, void *addr, size_t size);
 
 struct nlist symbols[] = {
-	{"sema"},
-	{"seminfo"},
-	{"msginfo"},
-	{"msqids"},
-	{"shminfo"},
-	{"shmsegs"},
-	{NULL}
+	{ .n_name = "sema" },
+	{ .n_name = "seminfo" },
+	{ .n_name = "msginfo" },
+	{ .n_name = "msqids" },
+	{ .n_name = "shminfo" },
+	{ .n_name = "shmsegs" },
+	{ .n_name = NULL }
 };
 
 #define	SHMINFO_XVEC	X(shmmax, sizeof(u_long))			\
@@ -92,13 +91,13 @@ struct nlist symbols[] = {
 
 #define	X(a, b)	{ "kern.ipc." #a, offsetof(TYPEC, a), (b) },
 #define	TYPEC	struct shminfo
-struct scgs_vector shminfo_scgsv[] = { SHMINFO_XVEC { NULL } };
+static struct scgs_vector shminfo_scgsv[] = { SHMINFO_XVEC { .sysctl=NULL } };
 #undef	TYPEC
 #define	TYPEC	struct seminfo
-struct scgs_vector seminfo_scgsv[] = { SEMINFO_XVEC { NULL } };
+static struct scgs_vector seminfo_scgsv[] = { SEMINFO_XVEC { .sysctl=NULL } };
 #undef	TYPEC
 #define	TYPEC	struct msginfo
-struct scgs_vector msginfo_scgsv[] = { MSGINFO_XVEC { NULL } };
+static struct scgs_vector msginfo_scgsv[] = { MSGINFO_XVEC { .sysctl=NULL } };
 #undef	TYPEC
 #undef	X
 

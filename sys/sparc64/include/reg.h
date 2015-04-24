@@ -31,7 +31,7 @@
  *
  *	from: @(#)reg.h	5.5 (Berkeley) 1/18/91
  *	from: FreeBSD: src/sys/i386/include/reg.h,v 1.23 2000/09/21
- * $FreeBSD: head/sys/sparc64/include/reg.h 127977 2004-04-07 05:00:01Z imp $
+ * $FreeBSD: head/sys/sparc64/include/reg.h 281266 2015-04-08 16:30:45Z jhb $
  */
 
 #ifndef	_MACHINE_REG_H_
@@ -97,6 +97,12 @@ struct fpreg {
 struct dbreg {
 	int dummy;
 };
+
+/*
+ * NB: sparcv8 binaries are not supported even though this header
+ * defines the relevant structures.
+ */
+#define	__HAVE_REG32
 
 #ifdef _KERNEL
 /*

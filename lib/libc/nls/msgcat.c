@@ -32,7 +32,7 @@ up-to-date.  Many thanks.
 ******************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/nls/msgcat.c 244358 2012-12-17 12:57:36Z eadler $");
+__FBSDID("$FreeBSD: head/lib/libc/nls/msgcat.c 278530 2015-02-10 20:45:40Z bdrewery $");
 
 #define _NLS_PRIVATE
 
@@ -83,6 +83,7 @@ __FBSDID("$FreeBSD: head/lib/libc/nls/msgcat.c 244358 2012-12-17 12:57:36Z eadle
 				  	np->name = strdup(n);			\
 					np->path = NULL;			\
 					np->catd = NLERR;			\
+					np->refcount = 0;			\
 					np->lang = (l == NULL) ? NULL :		\
 					    strdup(l);				\
 					np->caterrno = e;			\

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/common/common.h 269644 2014-08-06 19:38:03Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/common/common.h 274724 2014-11-19 20:16:56Z np $
  *
  */
 
@@ -238,6 +238,7 @@ struct vpd_params {
 
 struct pci_params {
 	unsigned int vpd_cap_addr;
+	unsigned int mps;
 	unsigned short speed;
 	unsigned short width;
 };

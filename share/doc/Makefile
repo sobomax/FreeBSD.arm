@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/share/doc/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/share/doc/Makefile 274016 2014-11-03 07:18:42Z ngie $
 
 .include <src.opts.mk>
 
@@ -7,10 +7,12 @@ SUBDIR=	${_IPv6} \
 	${_atf} \
 	legal \
 	${_llvm} \
+	${_pjdfstest} \
 	${_roffdocs}
 
 .if ${MK_TESTS} != "no"
 _atf= atf
+_pjdfstest= pjdfstest
 .endif
 
 .if ${MK_CLANG} != "no"

@@ -43,10 +43,10 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm.S 248361 2013-03-16 02:48:49Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm.S 276596 2015-01-02 23:46:26Z ian $");
 
 	.text
-	.align	0
+	.align	2
 
 ENTRY(cpufunc_nullop)
 	RET
@@ -138,7 +138,7 @@ ENTRY(cpufunc_control)
 	RET
 .Lglou:
 	.asciz "plop %p\n"
-	.align 0
+	.align 2
 END(cpufunc_control)
 
 /*

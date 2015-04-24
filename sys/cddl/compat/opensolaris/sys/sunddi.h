@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/sunddi.h 220447 2011-04-08 11:08:26Z mm $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/sunddi.h 277448 2015-01-20 22:27:45Z will $
  */
 
 #ifndef _OPENSOLARIS_SYS_SUNDDI_H_
@@ -35,7 +35,6 @@
 #include <sys/libkern.h>
 #include <sys/sysevent.h>
 
-#define	strdup(ptr)				strdup((ptr), M_SOLARIS)
 #define	ddi_driver_major(zfs_dip)		(0)
 #define	ddi_copyin(from, to, size, flag)				\
 	(copyin((from), (to), (size)), 0)

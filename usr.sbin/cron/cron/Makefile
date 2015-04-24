@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/cron/cron/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/cron/cron/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	cron
 MAN=	cron.8
@@ -6,8 +6,7 @@ SRCS=	cron.c database.c do_command.c job.c user.c popen.c
 
 CFLAGS+= -DLOGIN_CAP -DPAM
 
-DPADD=	${LIBCRON} ${LIBPAM} ${LIBUTIL}
-LDADD=	${LIBCRON} ${MINUSLPAM} -lutil
+LIBADD=	cron pam util
 
 WARNS?=	2
 

@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)mv.c	8.2 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/mv/mv.c 268129 2014-07-01 22:46:39Z delphij $");
+__FBSDID("$FreeBSD: head/bin/mv/mv.c 280386 2015-03-23 17:35:05Z jilles $");
 
 #include <sys/types.h>
 #include <sys/acl.h>
@@ -273,7 +273,7 @@ do_move(const char *from, const char *to)
 static int
 fastcopy(const char *from, const char *to, struct stat *sbp)
 {
-	struct timeval tval[2];
+	struct timespec ts[2];
 	static u_int blen = MAXPHYS;
 	static char *bp = NULL;
 	mode_t oldmode;
@@ -350,10 +350,9 @@ err:		if (unlink(to))
 	} else
 		warn("%s: cannot stat", to);
 
-	tval[0].tv_sec = sbp->st_atime;
-	tval[1].tv_sec = sbp->st_mtime;
-	tval[0].tv_usec = tval[1].tv_usec = 0;
-	if (utimes(to, tval))
+	ts[0] = sbp->st_atim;
+	ts[1] = sbp->st_mtim;
+	if (futimens(to_fd, ts))
 		warn("%s: set times", to);
 
 	if (close(to_fd)) {

@@ -1,0 +1,6 @@
+# $FreeBSD: head/lib/msun/Makefile.i386 274618 2014-11-17 09:19:09Z ngie $
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
+

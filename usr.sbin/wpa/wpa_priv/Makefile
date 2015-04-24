@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/wpa_priv/Makefile 252726 2013-07-04 21:12:58Z rpaulo $
+# $FreeBSD: head/usr.sbin/wpa/wpa_priv/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -9,8 +9,7 @@ PROG=	wpa_priv
 SRCS=	drivers.c os_unix.c eloop.c common.c wpa_debug.c wpabuf.c wpa_priv.c \
 	driver_common.c l2_packet_freebsd.c
 
-DPADD+=	${LIBPCAP}
-LDADD+=	-lpcap
+LIBADD=	pcap
 
 .include "${.CURDIR}/../Makefile.crypto"
 

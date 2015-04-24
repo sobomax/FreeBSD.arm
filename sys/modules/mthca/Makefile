@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/mthca/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/mthca/Makefile 278913 2015-02-17 19:27:14Z glebius $
 
 .PATH:  ${.CURDIR}/../../ofed/drivers/infiniband/hw/mthca
 
@@ -14,4 +14,4 @@ CFLAGS+= -I${.CURDIR}/../../ofed/include
 
 .include <bsd.kmod.mk>
 
-CFLAGS+= -Wno-cast-qual -Wno-pointer-arith ${GCC_MS_EXTENSIONS}
+CFLAGS+= -Wno-cast-qual -Wno-pointer-arith

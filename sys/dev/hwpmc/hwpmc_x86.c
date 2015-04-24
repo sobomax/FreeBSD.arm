@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_x86.c 261087 2014-01-23 20:10:22Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_x86.c 277177 2015-01-14 12:46:58Z rrs $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -40,7 +40,11 @@ __FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_x86.c 261087 2014-01-23 20:10:22Z j
 #include <machine/cpu.h>
 #include <machine/cputypes.h>
 #include <machine/intr_machdep.h>
+#if (__FreeBSD_version >= 1100000)
 #include <x86/apicvar.h>
+#else
+#include <machine/apicvar.h>
+#endif
 #include <machine/pmc_mdep.h>
 #include <machine/md_var.h>
 

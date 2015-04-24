@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/puc/pucdata.c 273551 2014-10-23 18:03:27Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/puc/pucdata.c 276589 2015-01-02 22:45:55Z loos $");
 
 /*
  * PCI "universal" communications card driver configuration data (used to
@@ -1033,6 +1033,12 @@ const struct puc_cfg puc_pci_devices[] = {
 	    DEFAULT_RCLK * 8,
 	    PUC_PORT_4S1P, -1, -1, -1,
 	    .config_function = puc_config_sunix
+	},
+
+	{   0x5372, 0x6872, 0xffff, 0,
+	    "Feasso PCI FPP-02 2S1P",
+	    DEFAULT_RCLK,
+	    PUC_PORT_2S1P, 0x10, 4, 0,
 	},
 
 	{   0x5372, 0x6873, 0xffff, 0,

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mmc/host/dwmmc.h 272712 2014-10-07 17:39:30Z br $
+ * $FreeBSD: head/sys/dev/mmc/host/dwmmc.h 277413 2015-01-20 09:07:28Z ganbold $
  */
 
 #define	SDMMC_CTRL		0x0	/* Control Register */
@@ -91,6 +91,8 @@
 #define	SDMMC_RINTSTS		0x44	/* Raw Interrupt Status Register */
 #define	SDMMC_STATUS		0x48	/* Status Register */
 #define	 SDMMC_STATUS_DATA_BUSY	(1 << 9) /* card_data[0] */
+#define	 SDMMC_STATUS_FIFO_FULL	(1 << 3) /* FIFO full */
+#define	 SDMMC_STATUS_FIFO_EMPTY (1 << 2) /* FIFO empty */
 #define	SDMMC_FIFOTH		0x4C	/* FIFO Threshold Watermark Register */
 #define	 SDMMC_FIFOTH_MSIZE_S	28	/* Burst size of multiple transaction */
 #define	 SDMMC_FIFOTH_RXWMARK_S	16	/* FIFO threshold watermark level */

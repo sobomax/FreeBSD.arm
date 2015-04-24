@@ -33,7 +33,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/vidcontrol/vidcontrol.c 273544 2014-10-23 12:38:05Z dumbbell $";
+  "$FreeBSD: head/usr.sbin/vidcontrol/vidcontrol.c 281779 2015-04-20 17:43:55Z emaste $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -1085,11 +1085,15 @@ show_mode_info(void)
 	printf("---------------------------------------"
 	       "---------------------------------------\n");
 
+	memset(&_info, 0, sizeof(_info));
 	for (mode = 0; mode <= M_VESA_MODE_MAX; ++mode) {
 		_info.vi_mode = mode;
 		if (ioctl(0, CONS_MODEINFO, &_info))
 			continue;
 		if (_info.vi_mode != mode)
+			continue;
+		if (_info.vi_width == 0 && _info.vi_height == 0 &&
+		    _info.vi_cwidth == 0 && _info.vi_cheight == 0)
 			continue;
 
 		printf("%3d (0x%03x)", mode, mode);
@@ -1343,7 +1347,7 @@ main(int argc, char **argv)
 	if (vt4_mode)
 		opts = "b:Cc:fg:h:Hi:M:m:pPr:S:s:T:t:x";
 	else
-		opts = "b:Cc:df:g:h:Hi:l:LM:m:pPr:S:s:T:t:x";
+		opts = "b:Cc:dfg:h:Hi:l:LM:m:pPr:S:s:T:t:x";
 
 	while ((opt = getopt(argc, argv, opts)) != -1)
 		switch(opt) {

@@ -42,12 +42,12 @@
 #include "assym.s"
 #include <machine/asm.h>
 #include <machine/armreg.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 263057 2014-03-11 22:47:04Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 276596 2015-01-02 23:46:26Z ian $");
 
 #include <sys/errno.h>
 
 	.text
-	.align	0
+	.align	2
 
 #ifdef _ARM_ARCH_6
 #define GET_PCB(tmp) \
@@ -210,5 +210,5 @@ END(copyoutstr)
 
 Lcopystrpcbfaulttext:
 	.asciz	"No valid PCB during copyinoutstr() addr1=%08x addr2=%08x\n"
-	.align	0
+	.align	2
 #endif

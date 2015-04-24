@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * This is a driver for SMC's 9000 series of Ethernet adapters.
@@ -1065,14 +1065,9 @@ read_another:
 	m->m_pkthdr.len = m->m_len = packet_length;
 
 	/*
-	 * Attach an mbuf cluster
+	 * Attach an mbuf cluster.
 	 */
-	MCLGET(m, M_NOWAIT);
-
-	/*
-	 * Insist on getting a cluster
-	 */
-	if ((m->m_flags & M_EXT) == 0) {
+	if (!(MCLGET(m, M_NOWAIT))) {
 		m_freem(m);
 		if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 		printf("sn: snread() kernel memory allocation problem\n");

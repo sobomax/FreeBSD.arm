@@ -58,7 +58,7 @@
 
 #include <dev/sound/pci/maestro_reg.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/maestro.c 267581 2014-06-17 16:07:57Z jhb $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/maestro.c 274035 2014-11-03 11:11:45Z bapt $");
 
 /*
  * PCI IDs of supported chips:
@@ -86,12 +86,6 @@ SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/maestro.c 267581 2014-06-17 1
 
 #define AGG_DEFAULT_BUFSZ	0x4000 /* 0x1000, but gets underflows */
 
-
-/* compatibility */
-#if __FreeBSD_version < 500000
-# define critical_enter()	disable_intr()
-# define critical_exit()	enable_intr()
-#endif
 
 #ifndef PCIR_BAR
 #define PCIR_BAR(x)	(PCIR_MAPS + (x) * 4)
@@ -1815,9 +1809,7 @@ agg_attach(device_t dev)
 			       /*filter*/ NULL, NULL,
 			       /*size  */ ess->bufsz, 1, 0x3ffff,
 			       /*flags */ 0,
-#if __FreeBSD_version >= 501102
 			       /*lock  */ busdma_lock_mutex, &Giant,
-#endif
 			       &ess->buf_dmat) != 0) {
 		device_printf(dev, "unable to create dma tag\n");
 		ret = ENOMEM;
@@ -1831,9 +1823,7 @@ agg_attach(device_t dev)
 			       /*filter*/ NULL, NULL,
 			       /*size  */ 3*ess->bufsz, 1, 0x3ffff,
 			       /*flags */ 0,
-#if __FreeBSD_version >= 501102
 			       /*lock  */ busdma_lock_mutex, &Giant,
-#endif
 			       &ess->stat_dmat) != 0) {
 		device_printf(dev, "unable to create dma tag\n");
 		ret = ENOMEM;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mv_localbus.c 265852 2014-05-10 20:03:03Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mv_localbus.c 281087 2015-04-04 22:05:43Z andrew $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -49,6 +49,7 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/mv_localbus.c 265852 2014-05-10 20:03:03Z ia
 #include "dev/fdt/fdt_common.h"
 #include "ofw_bus_if.h"
 
+#include <arm/mv/mvvar.h>
 #include <arm/mv/mvwin.h>
 
 #ifdef DEBUG

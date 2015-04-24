@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_busdma_bufalloc.c 254025 2013-08-07 06:21:20Z jeff $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_busdma_bufalloc.c 280957 2015-04-01 12:42:26Z rstone $");
 
 /*
  * Buffer allocation support routines for bus_dmamem_alloc implementations.
@@ -147,8 +147,8 @@ busdma_bufalloc_findzone(busdma_bufalloc_t ba, bus_size_t size)
 }
 
 void *
-busdma_bufalloc_alloc_uncacheable(uma_zone_t zone, int size, u_int8_t *pflag,
-    int wait)
+busdma_bufalloc_alloc_uncacheable(uma_zone_t zone, vm_size_t size,
+    uint8_t *pflag, int wait)
 {
 #ifdef VM_MEMATTR_UNCACHEABLE
 
@@ -166,7 +166,7 @@ busdma_bufalloc_alloc_uncacheable(uma_zone_t zone, int size, u_int8_t *pflag,
 }
 
 void 
-busdma_bufalloc_free_uncacheable(void *item, int size, u_int8_t pflag)
+busdma_bufalloc_free_uncacheable(void *item, vm_size_t size, uint8_t pflag)
 {
 
 	kmem_free(kernel_arena, (vm_offset_t)item, size);

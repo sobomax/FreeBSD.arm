@@ -1,18 +1,18 @@
 #
 # hosts.allow access control file for "tcp wrapped" applications.
-# $FreeBSD: head/etc/hosts.allow 262860 2014-03-06 17:33:27Z mav $
+# $FreeBSD: head/etc/hosts.allow 276163 2014-12-24 01:50:44Z smh $
 #
 # NOTE: The hosts.deny file is deprecated.
 #       Place both 'allow' and 'deny' rules in the hosts.allow file.
-#	See hosts_options(5) for the format of this file.
-#	hosts_access(5) no longer fully applies.
-
-#	 _____                                      _          _
-#	| ____| __  __   __ _   _ __ ___    _ __   | |   ___  | |
-#	|  _|   \ \/ /  / _` | | '_ ` _ \  | '_ \  | |  / _ \ | |
-#	| |___   >  <  | (_| | | | | | | | | |_) | | | |  __/ |_|
-#	|_____| /_/\_\  \__,_| |_| |_| |_| | .__/  |_|  \___| (_)
-#					   |_|
+#       See hosts_options(5) for the format of this file.
+#       hosts_access(5) no longer fully applies.
+#
+#   _____                                      _          _
+#  | ____| __  __   __ _   _ __ ___    _ __   | |   ___  | |
+#  |  _|   \ \/ /  / _` | | '_ ` _ \  | '_ \  | |  / _ \ | |
+#  | |___   >  <  | (_| | | | | | | | | |_) | | | |  __/ |_|
+#  |_____| /_/\_\  \__,_| |_| |_| |_| | .__/  |_|  \___| (_)
+#                                     |_|
 # !!! This is an example! You will need to modify it for your specific
 # !!! requirements!
 

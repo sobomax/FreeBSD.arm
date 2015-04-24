@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)var.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/var.h 259874 2013-12-25 16:14:02Z jilles $
+ * $FreeBSD: head/bin/sh/var.h 279569 2015-03-03 21:21:43Z jilles $
  */
 
 /*
@@ -68,7 +68,7 @@ struct localvar {
 };
 
 
-struct localvar *localvars;
+extern struct localvar *localvars;
 extern int forcelocal;
 
 extern struct var vifs;

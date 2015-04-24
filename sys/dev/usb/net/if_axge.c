@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axge.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axge.c 281183 2015-04-07 01:47:36Z kevlo $");
 
 /*
  * ASIX Electronics AX88178A/AX88179 USB 2.0/3.0 gigabit ethernet driver.
@@ -67,6 +67,7 @@ static const STRUCT_USB_HOST_ID axge_devs[] = {
 	AXGE_DEV(ASIX, AX88178A),
 	AXGE_DEV(ASIX, AX88179),
 	AXGE_DEV(DLINK, DUB1312),
+	AXGE_DEV(LENOVO, GIGALAN),
 	AXGE_DEV(SITECOMEU, LN032),
 #undef AXGE_DEV
 };
@@ -134,7 +135,7 @@ static void	axge_csum_cfg(struct usb_ether *);
 static int axge_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, axge, CTLFLAG_RW, 0, "USB axge");
-SYSCTL_INT(_hw_usb_axge, OID_AUTO, debug, CTLFLAG_RW, &axge_debug, 0,
+SYSCTL_INT(_hw_usb_axge, OID_AUTO, debug, CTLFLAG_RWTUN, &axge_debug, 0,
     "Debug level");
 #endif
 

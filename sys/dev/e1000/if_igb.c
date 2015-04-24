@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_igb.c 273377 2014-10-21 07:31:21Z hselasky $*/
+/*$FreeBSD: head/sys/dev/e1000/if_igb.c 281838 2015-04-21 20:24:15Z hiren $*/
 
 
 #include "opt_inet.h"
@@ -73,6 +73,9 @@
 #include <net/if_arp.h>
 #include <net/if_dl.h>
 #include <net/if_media.h>
+#ifdef	RSS
+#include <net/rss_config.h>
+#endif
 
 #include <net/if_types.h>
 #include <net/if_vlan_var.h>
@@ -85,9 +88,6 @@
 #include <netinet/tcp.h>
 #include <netinet/tcp_lro.h>
 #include <netinet/udp.h>
-#ifdef	RSS
-#include <netinet/in_rss.h>
-#endif
 
 #include <machine/in_cksum.h>
 #include <dev/led/led.h>
@@ -984,7 +984,7 @@ igb_mq_start(struct ifnet *ifp, struct mbuf *m)
 	 * If everything is setup correctly, it should be the
 	 * same bucket that the current CPU we're on is.
 	 */
-	if ((m->m_flags & M_FLOWID) != 0) {
+	if (M_HASHTYPE_GET(m) != M_HASHTYPE_NONE) {
 #ifdef	RSS
 		if (rss_hash2bucket(m->m_pkthdr.flowid,
 		    M_HASHTYPE_GET(m), &bucket_id) == 0) {
@@ -2460,6 +2460,9 @@ igb_allocate_msix(struct adapter *adapter)
 	struct igb_queue	*que = adapter->queues;
 	int			error, rid, vector = 0;
 	int			cpu_id = 0;
+#ifdef	RSS
+	cpuset_t cpu_mask;
+#endif
 
 	/* Be sure to start with all interrupts disabled */
 	E1000_WRITE_REG(&adapter->hw, E1000_IMC, ~0);
@@ -2566,8 +2569,9 @@ igb_allocate_msix(struct adapter *adapter)
 			 * round-robin bucket -> queue -> CPU allocation.
 			 */
 #ifdef	RSS
-			taskqueue_start_threads_pinned(&que->tq, 1, PI_NET,
-			    cpu_id,
+			CPU_SETOF(cpu_id, &cpu_mask);
+			taskqueue_start_threads_cpuset(&que->tq, 1, PI_NET,
+			    &cpu_mask,
 			    "%s que (bucket %d)",
 			    device_get_nameunit(adapter->dev),
 			    cpu_id);
@@ -2858,8 +2862,11 @@ igb_setup_msix(struct adapter *adapter)
 		goto msi;
 	}
 
-	/* Figure out a reasonable auto config value */
 	queues = (mp_ncpus > (msgs-1)) ? (msgs-1) : mp_ncpus;
+
+	/* Override via tuneable */
+	if (igb_num_queues != 0)
+		queues = igb_num_queues;
 
 #ifdef	RSS
 	/* If we're doing RSS, clamp at the number of RSS buckets */
@@ -2867,10 +2874,6 @@ igb_setup_msix(struct adapter *adapter)
 		queues = rss_getnumbuckets();
 #endif
 
-
-	/* Manual override */
-	if (igb_num_queues != 0)
-		queues = igb_num_queues;
 
 	/* Sanity check based on HW */
 	switch (adapter->hw.mac.type) {
@@ -2893,12 +2896,10 @@ igb_setup_msix(struct adapter *adapter)
 			maxqueues = 1;
 			break;
 	}
+
+	/* Final clamp on the actual hardware capability */
 	if (queues > maxqueues)
 		queues = maxqueues;
-
-	/* Manual override */
-	if (igb_num_queues != 0)
-		queues = igb_num_queues;
 
 	/*
 	** One vector (RX/TX pair) per queue
@@ -4629,8 +4630,11 @@ igb_initialise_rss_mapping(struct adapter *adapter)
 
 	/* Now fill in hash table */
 
-	/* XXX This means RSS enable + 8 queues for my igb (82580.) */
-	mrqc = E1000_MRQC_ENABLE_RSS_4Q;
+	/*
+	 * MRQC: Multiple Receive Queues Command
+	 * Set queuing to RSS control, number depends on the device.
+	 */
+	mrqc = E1000_MRQC_ENABLE_RSS_8Q;
 
 #ifdef	RSS
 	/* XXX ew typecasting */
@@ -5138,46 +5142,51 @@ igb_rxeof(struct igb_queue *que, int count, int *done)
 				rxr->fmp->m_pkthdr.ether_vtag = vtag;
 				rxr->fmp->m_flags |= M_VLANTAG;
 			}
-#ifdef	RSS
-			/* XXX set flowtype once this works right */
-			rxr->fmp->m_pkthdr.flowid = 
-			    le32toh(cur->wb.lower.hi_dword.rss);
-			rxr->fmp->m_flags |= M_FLOWID;
-			switch (pkt_info & E1000_RXDADV_RSSTYPE_MASK) {
-			case E1000_RXDADV_RSSTYPE_IPV4_TCP:
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_RSS_TCP_IPV4);
-				break;
-			case E1000_RXDADV_RSSTYPE_IPV4:
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_RSS_IPV4);
-				break;
-			case E1000_RXDADV_RSSTYPE_IPV6_TCP:
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_RSS_TCP_IPV6);
-				break;
-			case E1000_RXDADV_RSSTYPE_IPV6_EX:
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_RSS_IPV6_EX);
-				break;
-			case E1000_RXDADV_RSSTYPE_IPV6:
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_RSS_IPV6);
-				break;
-			case E1000_RXDADV_RSSTYPE_IPV6_TCP_EX:
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_RSS_TCP_IPV6_EX);
-				break;
 
-			/* XXX no UDP support in RSS just yet */
-#ifdef notyet
-			case E1000_RXDADV_RSSTYPE_IPV4_UDP:
-			case E1000_RXDADV_RSSTYPE_IPV6_UDP:
-			case E1000_RXDADV_RSSTYPE_IPV6_UDP_EX:
+			/*
+			 * In case of multiqueue, we have RXCSUM.PCSD bit set
+			 * and never cleared. This means we have RSS hash
+			 * available to be used.
+			 */
+			if (adapter->num_queues > 1) {
+				rxr->fmp->m_pkthdr.flowid = 
+				    le32toh(cur->wb.lower.hi_dword.rss);
+				switch (pkt_info & E1000_RXDADV_RSSTYPE_MASK) {
+					case E1000_RXDADV_RSSTYPE_IPV4_TCP:
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_RSS_TCP_IPV4);
+					break;
+					case E1000_RXDADV_RSSTYPE_IPV4:
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_RSS_IPV4);
+					break;
+					case E1000_RXDADV_RSSTYPE_IPV6_TCP:
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_RSS_TCP_IPV6);
+					break;
+					case E1000_RXDADV_RSSTYPE_IPV6_EX:
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_RSS_IPV6_EX);
+					break;
+					case E1000_RXDADV_RSSTYPE_IPV6:
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_RSS_IPV6);
+					break;
+					case E1000_RXDADV_RSSTYPE_IPV6_TCP_EX:
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_RSS_TCP_IPV6_EX);
+					break;
+					default:
+						/* XXX fallthrough */
+						M_HASHTYPE_SET(rxr->fmp,
+						    M_HASHTYPE_OPAQUE);
+				}
+			} else {
+#ifndef IGB_LEGACY_TX
+				rxr->fmp->m_pkthdr.flowid = que->msix;
+				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_OPAQUE);
 #endif
-			
-			default:
-				/* XXX fallthrough */
-				M_HASHTYPE_SET(rxr->fmp, M_HASHTYPE_NONE);
 			}
-#elif !defined(IGB_LEGACY_TX)
-			rxr->fmp->m_pkthdr.flowid = que->msix;
-			rxr->fmp->m_flags |= M_FLOWID;
-#endif
 			sendmp = rxr->fmp;
 			/* Make sure to set M_PKTHDR. */
 			sendmp->m_flags |= M_PKTHDR;

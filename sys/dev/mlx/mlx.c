@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/mlx/mlx.c 267446 2014-06-13 18:20:44Z jhb $
+ *	$FreeBSD: head/sys/dev/mlx/mlx.c 280347 2015-03-22 16:10:28Z mav $
  */
 
 /*
@@ -399,7 +399,8 @@ mlx_attach(struct mlx_softc *sc)
 			       BUS_SPACE_MAXADDR,	/* lowaddr */
 			       BUS_SPACE_MAXADDR, 	/* highaddr */
 			       NULL, NULL, 		/* filter, filterarg */
-			       MAXBSIZE, MLX_NSEG,	/* maxsize, nsegments */
+			       MLX_MAXPHYS,		/* maxsize */
+			       MLX_NSEG,		/* nsegments */
 			       BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			       0,			/* flags */
 			       busdma_lock_mutex,	/* lockfunc */

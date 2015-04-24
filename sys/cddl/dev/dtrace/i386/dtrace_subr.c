@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_subr.c 268600 2014-07-14 04:38:17Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_subr.c 276142 2014-12-23 15:38:19Z markj $
  *
  */
 /*
@@ -473,7 +473,7 @@ dtrace_gethrestime(void)
 
 /* Function to handle DTrace traps during probes. See i386/i386/trap.c */
 int
-dtrace_trap(struct trapframe *frame)
+dtrace_trap(struct trapframe *frame, u_int type)
 {
 	/*
 	 * A trap can occur while DTrace executes a probe. Before
@@ -489,7 +489,7 @@ dtrace_trap(struct trapframe *frame)
 		 * There are only a couple of trap types that are expected.
 		 * All the rest will be handled in the usual way.
 		 */
-		switch (frame->tf_trapno) {
+		switch (type) {
 		/* General protection fault. */
 		case T_PROTFLT:
 			/* Flag an illegal operation. */

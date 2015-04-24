@@ -9,7 +9,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ministat/ministat.c 263077 2014-03-12 08:54:29Z phk $");
+__FBSDID("$FreeBSD: head/usr.bin/ministat/ministat.c 278928 2015-02-17 23:20:19Z pfg $");
 
 #include <stdio.h>
 #include <math.h>
@@ -329,10 +329,8 @@ PlotSet(struct dataset *ds, int val)
 	else
 		bar = 0;
 
-	if (pl->bar == NULL) {
-		pl->bar = malloc(sizeof(char *) * pl->num_datasets);
-		memset(pl->bar, 0, sizeof(char*) * pl->num_datasets);
-	}
+	if (pl->bar == NULL)
+		pl->bar = calloc(sizeof(char *), pl->num_datasets);
 	if (pl->bar[bar] == NULL) {
 		pl->bar[bar] = malloc(pl->width);
 		memset(pl->bar[bar], 0, pl->width);

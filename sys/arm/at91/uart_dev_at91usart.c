@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/uart_dev_at91usart.c 262548 2014-02-27 08:19:19Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/uart_dev_at91usart.c 279724 2015-03-07 15:24:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,6 +40,9 @@ __FBSDID("$FreeBSD: head/sys/arm/at91/uart_dev_at91usart.c 262548 2014-02-27 08:
 
 #include <dev/uart/uart.h>
 #include <dev/uart/uart_cpu.h>
+#ifdef FDT
+#include <dev/uart/uart_cpu_fdt.h>
+#endif
 #include <dev/uart/uart_bus.h>
 #include <arm/at91/at91_usartreg.h>
 #include <arm/at91/at91_pdcreg.h>
@@ -865,3 +868,12 @@ struct uart_class at91_usart_class = {
 	.uc_ops = &at91_usart_ops,
 	.uc_range = 8
 };
+
+#ifdef FDT
+static struct ofw_compat_data compat_data[] = {
+	{"atmel,at91rm9200-usart",(uintptr_t)&at91_usart_class},
+	{"atmel,at91sam9260-usart",(uintptr_t)&at91_usart_class},
+	{NULL,			(uintptr_t)NULL},
+};
+UART_FDT_CLASS_AND_DEVICE(compat_data);
+#endif

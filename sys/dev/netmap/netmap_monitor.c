@@ -24,7 +24,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/dev/netmap/netmap_monitor.c 270063 2014-08-16 15:00:01Z luigi $
+ * $FreeBSD: head/sys/dev/netmap/netmap_monitor.c 274457 2014-11-13 00:14:25Z luigi $
  *
  * Monitors
  *
@@ -179,7 +179,7 @@ netmap_monitor_parent_sync(struct netmap_kring *kring, int flags, u_int* ringptr
 		i = nm_next(i, mlim);
 
 	}
-	wmb();
+	mb();
 	mkring->nr_hwtail = i;
 
 	mtx_unlock(&mkring->q_lock);
@@ -225,7 +225,7 @@ netmap_monitor_rxsync(struct netmap_kring *kring, int flags)
 {
         ND("%s %x", kring->name, flags);
 	kring->nr_hwcur = kring->rcur;
-	rmb();
+	mb();
 	nm_rxsync_finalize(kring);
         return 0;
 }

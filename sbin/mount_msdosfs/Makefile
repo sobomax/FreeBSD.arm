@@ -1,12 +1,11 @@
 #
-# $FreeBSD: head/sbin/mount_msdosfs/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/mount_msdosfs/Makefile 275030 2014-11-25 11:23:12Z bapt $
 #
 
 PROG=	mount_msdosfs
 SRCS=	mount_msdosfs.c getmntopts.c
 MAN=	mount_msdosfs.8
-DPADD=	${LIBKICONV}
-LDADD=	-lkiconv
+LIBADD=	kiconv
 
 MOUNT=	${.CURDIR}/../mount
 CFLAGS+= -I${MOUNT}

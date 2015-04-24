@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_device.h 267240 2014-06-08 20:10:29Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_device.h 277136 2015-01-13 16:37:43Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -293,6 +293,7 @@ struct usb_device *usb_alloc_device(device_t parent_dev, struct usb_bus *bus,
 struct usb_fs_privdata *usb_make_dev(struct usb_device *, const char *,
 		    int, int, int, uid_t, gid_t, int);
 void	usb_destroy_dev(struct usb_fs_privdata *);
+void	usb_destroy_dev_sync(struct usb_fs_privdata *);
 #endif
 usb_error_t	usb_probe_and_attach(struct usb_device *udev,
 		    uint8_t iface_index);

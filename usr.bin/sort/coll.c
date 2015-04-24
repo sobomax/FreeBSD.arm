@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/coll.c 251245 2013-06-02 09:43:48Z gabor $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/coll.c 281132 2015-04-06 02:35:55Z pfg $");
 
 #include <sys/types.h>
 
@@ -78,7 +78,7 @@ keys_array_alloc(void)
 }
 
 /*
- * Calculate whether we need key hint space 
+ * Calculate whether we need key hint space
  */
 static size_t
 key_hint_size(void)
@@ -595,12 +595,12 @@ list_coll(struct sort_list_item **ss1, struct sort_list_item **ss2)
 	return (list_coll_offset(ss1, ss2, 0));
 }
 
-#define LSCDEF(N) 											\
-static int 												\
-list_coll_##N(struct sort_list_item **ss1, struct sort_list_item **ss2)					\
-{													\
-													\
-	return (list_coll_offset(ss1, ss2, N));								\
+#define	LSCDEF(N)							\
+static int 								\
+list_coll_##N(struct sort_list_item **ss1, struct sort_list_item **ss2)	\
+{									\
+									\
+	return (list_coll_offset(ss1, ss2, N));				\
 }
 
 LSCDEF(1)

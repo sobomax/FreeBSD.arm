@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/command.c 249582 2013-04-17 11:40:10Z gabor $
+ * $FreeBSD: head/usr.sbin/ppp/command.c 277857 2015-01-28 21:33:49Z dim $
  */
 
 #include <sys/param.h>
@@ -2051,7 +2051,7 @@ SetVariable(struct cmdargs const *arg)
       res = 1;
     } else {
       arg->bundle->radius.alive.interval = atoi(argp);
-      if (arg->bundle->radius.alive.interval && !arg->bundle->radius.cfg.file) {
+      if (arg->bundle->radius.alive.interval && !*arg->bundle->radius.cfg.file) {
         log_Printf(LogWARN, "rad_alive requires radius to be configured\n");
 	res = 1;
       } else if (arg->bundle->ncp.ipcp.fsm.state == ST_OPENED) {
@@ -2335,7 +2335,7 @@ SetVariable(struct cmdargs const *arg)
 	   res = 1;
     }
 
-    if (arg->bundle->radius.port_id_type && !arg->bundle->radius.cfg.file) {
+    if (arg->bundle->radius.port_id_type && !*arg->bundle->radius.cfg.file) {
 	    log_Printf(LogWARN, "rad_port_id requires radius to be configured\n");
 	    res = 1;
     }

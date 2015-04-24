@@ -37,7 +37,7 @@ static const char sccsid[] = "@(#)sys_term.c	8.4+1 (Berkeley) 5/30/95";
 #endif
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/contrib/telnet/telnetd/sys_term.c 257773 2013-11-07 00:36:39Z sjg $");
+__FBSDID("$FreeBSD: head/contrib/telnet/telnetd/sys_term.c 274364 2014-11-11 04:06:05Z ngie $");
 
 #include <sys/types.h>
 #include <sys/tty.h>
@@ -46,6 +46,8 @@ __FBSDID("$FreeBSD: head/contrib/telnet/telnetd/sys_term.c 257773 2013-11-07 00:
 
 #include "telnetd.h"
 #include "pathnames.h"
+#include "types.h"
+#include "baud.h"
 
 #ifdef	AUTHENTICATION
 #include <libtelnet/auth.h>
@@ -742,56 +744,6 @@ tty_iscrnl(void)
 	return (termbuf.c_iflag & ICRNL);
 #endif
 }
-
-/*
- * Try to guess whether speeds are "encoded" (4.2BSD) or just numeric (4.4BSD).
- */
-#if B4800 != 4800
-#define	DECODE_BAUD
-#endif
-
-#ifdef	DECODE_BAUD
-
-/*
- * A table of available terminal speeds
- */
-struct termspeeds {
-	int	speed;
-	int	value;
-} termspeeds[] = {
-	{ 0,      B0 },      { 50,    B50 },    { 75,     B75 },
-	{ 110,    B110 },    { 134,   B134 },   { 150,    B150 },
-	{ 200,    B200 },    { 300,   B300 },   { 600,    B600 },
-	{ 1200,   B1200 },   { 1800,  B1800 },  { 2400,   B2400 },
-	{ 4800,   B4800 },
-#ifdef	B7200
-	{ 7200,  B7200 },
-#endif
-	{ 9600,   B9600 },
-#ifdef	B14400
-	{ 14400,  B14400 },
-#endif
-#ifdef	B19200
-	{ 19200,  B19200 },
-#endif
-#ifdef	B28800
-	{ 28800,  B28800 },
-#endif
-#ifdef	B38400
-	{ 38400,  B38400 },
-#endif
-#ifdef	B57600
-	{ 57600,  B57600 },
-#endif
-#ifdef	B115200
-	{ 115200, B115200 },
-#endif
-#ifdef	B230400
-	{ 230400, B230400 },
-#endif
-	{ -1,     0 }
-};
-#endif	/* DECODE_BAUD */
 
 void
 tty_tspeed(int val)

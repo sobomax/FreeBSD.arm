@@ -26,10 +26,11 @@
  * SUCH DAMAGE.
  *
  * $Id: node.c,v 1.6 2003/07/22 21:14:02 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/node.c 158834 2006-05-22 17:58:09Z markus $
+ * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/node.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/ioctl.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <netgraph/ng_message.h>

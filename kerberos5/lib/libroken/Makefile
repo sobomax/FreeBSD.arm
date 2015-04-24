@@ -1,8 +1,7 @@
-# $FreeBSD: head/kerberos5/lib/libroken/Makefile 236422 2012-06-01 21:26:28Z obrien $
+# $FreeBSD: head/kerberos5/lib/libroken/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	roken
-LDADD=	-lcrypt
-DPADD=	${LIBCRYPT}
+LIBADD=	crypt
 VERSION_MAP=	${KRB5DIR}/lib/roken/version-script.map
 INCS=	roken.h \
 	roken-common.h \

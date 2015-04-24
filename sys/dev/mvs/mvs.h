@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mvs/mvs.h 258780 2013-11-30 22:17:27Z eadler $
+ * $FreeBSD: head/sys/dev/mvs/mvs.h 279963 2015-03-13 20:08:35Z mav $
  */
 
 #include "mvs_if.h"
@@ -263,7 +263,7 @@
 #define        SATA_SS_SPD_NO_SPEED     0x00000000
 #define        SATA_SS_SPD_GEN1         0x00000010
 #define        SATA_SS_SPD_GEN2         0x00000020
-#define        SATA_SS_SPD_GEN3         0x00000040
+#define        SATA_SS_SPD_GEN3         0x00000030
 
 #define        SATA_SS_IPM_MASK         0x00000f00
 #define        SATA_SS_IPM_NO_DEVICE    0x00000000
@@ -298,7 +298,7 @@
 #define        SATA_SC_SPD_NO_SPEED     0x00000000
 #define        SATA_SC_SPD_SPEED_GEN1   0x00000010
 #define        SATA_SC_SPD_SPEED_GEN2   0x00000020
-#define        SATA_SC_SPD_SPEED_GEN3   0x00000040
+#define        SATA_SC_SPD_SPEED_GEN3   0x00000030
 
 #define        SATA_SC_IPM_MASK         0x00000f00
 #define        SATA_SC_IPM_NONE         0x00000000

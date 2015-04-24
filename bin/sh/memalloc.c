@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)memalloc.c	8.3 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/memalloc.c 258776 2013-11-30 21:27:11Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/memalloc.c 278818 2015-02-15 21:41:29Z jilles $");
 
 #include <sys/param.h>
 #include "shell.h"
@@ -179,6 +179,18 @@ stunalloc(pointer p)
 	stacknxt = p;
 }
 
+
+char *
+stsavestr(const char *s)
+{
+	char *p;
+	size_t len;
+
+	len = strlen(s);
+	p = stalloc(len + 1);
+	memcpy(p, s, len + 1);
+	return p;
+}
 
 
 void

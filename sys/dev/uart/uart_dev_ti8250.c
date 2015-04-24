@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ti8250.c 254598 2013-08-21 14:33:02Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ti8250.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ti8250.c 254598 2013-08-21 14:33:
 
 #include <dev/uart/uart.h>
 #include <dev/uart/uart_cpu.h>
+#include <dev/uart/uart_cpu_fdt.h>
 #include <dev/uart/uart_bus.h>
 #include <dev/uart/uart_dev_ns8250.h>
 
@@ -130,12 +131,17 @@ static kobj_method_t ti8250_methods[] = {
 	KOBJMETHOD_END
 };
 
-struct uart_class uart_ti8250_class = {
+static struct uart_class uart_ti8250_class = {
 	"ti8250",
 	ti8250_methods,
 	sizeof(struct ti8250_softc),
 	.uc_ops = &uart_ns8250_ops,
 	.uc_range = 0x88,
-	.uc_rclk = 48000000
+	.uc_rclk = 48000000,
+	.uc_rshift = 0
 };
-
+static struct ofw_compat_data compat_data[] = {
+	{"ti,ns16550",		(uintptr_t)&uart_ti8250_class},
+	{NULL,			(uintptr_t)NULL},
+};
+UART_FDT_CLASS_AND_DEVICE(compat_data);

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/pci/pcib_if.m 265107 2014-04-29 20:49:47Z rstone $
+# $FreeBSD: head/sys/dev/pci/pcib_if.m 279443 2015-03-01 00:39:40Z rstone $
 #
 
 #include <sys/bus.h>
@@ -38,6 +38,13 @@ CODE {
 	null_route_interrupt(device_t pcib, device_t dev, int pin)
 	{
 		return (PCI_INVALID_IRQ);
+	}
+
+	static int
+	pcib_null_ari_enabled(device_t pcib)
+	{
+
+		return (0);
 	}
 };
 
@@ -181,4 +188,22 @@ METHOD int try_enable_ari {
 	device_t	pcib;
 	device_t	dev;
 };
+
+#
+# Return non-zero if PCI ARI is enabled, or zero otherwise
+#
+METHOD int ari_enabled {
+	device_t	pcib;
+} DEFAULT pcib_null_ari_enabled;
+
+#
+# Decode a PCI Routing Identifier (RID) into PCI bus/slot/function
+#
+METHOD void decode_rid {
+	device_t	pcib;
+	uint16_t	rid;
+	int 		*bus;
+	int 		*slot;
+	int 		*func;
+} DEFAULT pcib_decode_rid;
 

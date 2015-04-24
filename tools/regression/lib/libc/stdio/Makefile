@@ -1,7 +1,6 @@
-# $FreeBSD: head/tools/regression/lib/libc/stdio/Makefile 264737 2014-04-21 17:40:23Z jilles $
+# $FreeBSD: head/tools/regression/lib/libc/stdio/Makefile 274592 2014-11-16 19:57:47Z ngie $
 
 TESTS=	test-fdopen \
-	test-fmemopen \
 	test-fopen \
 	test-freopen \
 	test-getdelim \

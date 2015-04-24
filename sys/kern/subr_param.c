@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_param.c 273800 2014-10-28 19:17:44Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_param.c 280006 2015-03-14 21:40:01Z ian $");
 
 #include "opt_param.h"
 #include "opt_msgbuf.h"
@@ -300,6 +300,5 @@ init_param2(long physpages)
 static int
 sysctl_kern_vm_guest(SYSCTL_HANDLER_ARGS)
 {
-	return (SYSCTL_OUT(req, vm_guest_sysctl_names[vm_guest], 
-	    strlen(vm_guest_sysctl_names[vm_guest])));
+	return (SYSCTL_OUT_STR(req, vm_guest_sysctl_names[vm_guest]));
 }

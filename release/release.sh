@@ -1,6 +1,6 @@
 #!/bin/sh
 #-
-# Copyright (c) 2013, 2014 The FreeBSD Foundation
+# Copyright (c) 2013-2015 The FreeBSD Foundation
 # Copyright (c) 2013 Glen Barber
 # Copyright (c) 2011 Nathan Whitehorn
 # All rights reserved.
@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: head/release/release.sh 272414 2014-10-02 16:13:12Z gjb $
+# $FreeBSD: head/release/release.sh 281802 2015-04-21 00:48:35Z gjb $
 #
 
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"
@@ -42,6 +42,7 @@ export PATH
 # Prototypes that can be redefined per-chroot or per-target.
 load_chroot_env() { }
 load_target_env() { }
+buildenv_setup() { }
 
 # The directory within which the release will be built.
 CHROOTDIR="/scratch"
@@ -93,6 +94,11 @@ WITH_COMPRESSED_IMAGES=
 # the release.
 WITH_VMIMAGES=
 WITH_COMPRESSED_VMIMAGES=
+XZ_THREADS=0
+
+# Set to non-empty value to build virtual machine images for various
+# cloud providers as part of the release.
+WITH_CLOUDWARE=
 
 usage() {
 	echo "Usage: $0 [-c release.conf]"
@@ -174,7 +180,8 @@ CHROOT_DMAKEFLAGS="${CONF_FILES}"
 RELEASE_WMAKEFLAGS="${MAKE_FLAGS} ${WORLD_FLAGS} ${ARCH_FLAGS} ${CONF_FILES}"
 RELEASE_KMAKEFLAGS="${MAKE_FLAGS} ${KERNEL_FLAGS} KERNCONF=\"${KERNEL}\" ${ARCH_FLAGS} ${CONF_FILES}"
 RELEASE_RMAKEFLAGS="${ARCH_FLAGS} KERNCONF=\"${KERNEL}\" ${CONF_FILES} \
-	${DOCPORTS} WITH_DVD=${WITH_DVD} WITH_VMIMAGES=${WITH_VMIMAGES}"
+	${DOCPORTS} WITH_DVD=${WITH_DVD} WITH_VMIMAGES=${WITH_VMIMAGES} \
+	WITH_CLOUDWARE=${WITH_CLOUDWARE} XZ_THREADS=${XZ_THREADS}"
 
 # Force src checkout if configured
 FORCE_SRC_KEY=
@@ -273,6 +280,7 @@ if [ -d ${CHROOTDIR}/usr/ports ]; then
 	fi
 fi
 
+buildenv_setup
 load_target_env
 eval chroot ${CHROOTDIR} make -C /usr/src ${RELEASE_WMAKEFLAGS} buildworld
 eval chroot ${CHROOTDIR} make -C /usr/src ${RELEASE_KMAKEFLAGS} buildkernel

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_stats.c 231378 2012-02-10 12:35:57Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_stats.c 274476 2014-11-13 18:01:51Z kib $");
 
 #include "opt_compat.h"
 
@@ -77,7 +77,7 @@ linux_kern_statat(struct thread *td, int flag, int fd, char *path,
     enum uio_seg pathseg, struct stat *sbp)
 {
 
-	return (kern_statat_vnhook(td, flag, fd, path, pathseg, sbp,
+	return (kern_statat(td, flag, fd, path, pathseg, sbp,
 	    translate_vnhook_major_minor));
 }
 

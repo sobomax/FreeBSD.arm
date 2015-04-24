@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/ep/Makefile 269812 2014-08-11 14:50:49Z imp $
+# $FreeBSD: head/sys/modules/ep/Makefile 278959 2015-02-18 15:25:22Z imp $
 
 SYSDIR?=${.CURDIR}/../..
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -9,10 +9,7 @@ KMOD=	if_ep
 SRCS=	if_ep.c
 SRCS+=	if_ep_pccard.c pccarddevs.h card_if.h
 SRCS+=	if_ep_isa.c isa_if.h
-.if ${MK_EISA} != "no"
-SRCS+=	if_ep_eisa.c eisa_if.h
-.endif
-#SRCS+=	if_ep_mca.c
+SRCS.DEV_EISA=	if_ep_eisa.c eisa_if.h
 SRCS+=	bus_if.h device_if.h
 
 .include <bsd.kmod.mk>

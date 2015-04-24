@@ -26,9 +26,9 @@
  * SUCH DAMAGE.
  *
  * $Id: bgd.c,v 1.4 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/sdpd/bgd.c 124758 2004-01-20 20:48:26Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/sdpd/bgd.c 281210 2015-04-07 16:48:23Z takawata $
  */
-
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <sdp.h>
 #include <string.h>

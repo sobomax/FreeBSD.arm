@@ -22,7 +22,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/bce/if_bcefw.h 265703 2014-05-08 19:40:37Z davidcs $
+ * $FreeBSD: head/sys/dev/bce/if_bcefw.h 276313 2014-12-27 18:24:15Z marius $
  */
 
 /*
@@ -11727,8 +11727,8 @@ const u32	bce_RXP_b09FwText[(0x9090/4) + 1] = {
 0x90cf0009, 0x240d0004, 0x31ee00ff, 0x11cdfd85,
 0x24020001, 0x3c010801, 0xa022950d, 0xa002154,
 0x0, 0x0 };
-u32	bce_RXP_b09FwData[(0x0/4) + 1] = { 0x0 };
-u32	bce_RXP_b09FwRodata[(0x33c/4) + 1] = {
+const u32	bce_RXP_b09FwData[(0x0/4) + 1] = { 0x0 };
+const u32	bce_RXP_b09FwRodata[(0x33c/4) + 1] = {
 0x8003344,
 0x8003344, 0x8003420, 0x80033f4, 0x80033d8,
 0x8003328, 0x8003328, 0x8003328, 0x800334c,

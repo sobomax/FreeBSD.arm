@@ -34,7 +34,7 @@
 #include <dev/sound/version.h>
 #include <sys/sx.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/sndstat.c 248381 2013-03-16 17:57:00Z joel $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/sndstat.c 280442 2015-03-24 16:31:22Z hselasky $");
 
 #define	SS_TYPE_MODULE		0
 #define	SS_TYPE_FIRST		1
@@ -83,7 +83,6 @@ static int sndstat_files = 0;
 static SLIST_HEAD(, sndstat_entry) sndstat_devlist = SLIST_HEAD_INITIALIZER(sndstat_devlist);
 
 int snd_verbose = 0;
-TUNABLE_INT("hw.snd.verbose", &snd_verbose);
 
 #ifdef SND_DEBUG
 static int
@@ -104,7 +103,7 @@ sysctl_hw_snd_sndstat_pid(SYSCTL_HANDLER_ARGS)
 	sx_unlock(&sndstat_lock);
 	return (err);
 }
-SYSCTL_PROC(_hw_snd, OID_AUTO, sndstat_pid, CTLTYPE_INT | CTLFLAG_RW,
+SYSCTL_PROC(_hw_snd, OID_AUTO, sndstat_pid, CTLTYPE_INT | CTLFLAG_RWTUN,
     0, sizeof(int), sysctl_hw_snd_sndstat_pid, "I", "sndstat busy pid");
 #endif
 
@@ -125,7 +124,7 @@ sysctl_hw_sndverbose(SYSCTL_HANDLER_ARGS)
 	}
 	return error;
 }
-SYSCTL_PROC(_hw_snd, OID_AUTO, verbose, CTLTYPE_INT | CTLFLAG_RW,
+SYSCTL_PROC(_hw_snd, OID_AUTO, verbose, CTLTYPE_INT | CTLFLAG_RWTUN,
             0, sizeof(int), sysctl_hw_sndverbose, "I", "verbosity level");
 
 static int

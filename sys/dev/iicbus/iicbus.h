@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iicbus.h 273728 2014-10-27 07:51:26Z kib $
+ * $FreeBSD: head/sys/dev/iicbus/iicbus.h 274641 2014-11-18 01:54:31Z ian $
  *
  */
 #ifndef __IICBUS_H
@@ -44,6 +44,7 @@ struct iicbus_softc
 	u_char strict;		/* deny operations that violate the
 				 * I2C protocol */
 	struct mtx lock;
+	u_int bus_freq;		/* Configured bus Hz. */
 };
 
 struct iicbus_ivar
@@ -67,7 +68,8 @@ IICBUS_ACCESSOR(nostop,		NOSTOP,		bool)
 #define	IICBUS_UNLOCK(sc)      		mtx_unlock(&(sc)->lock)
 #define	IICBUS_ASSERT_LOCKED(sc)       	mtx_assert(&(sc)->lock, MA_OWNED)
 
-extern int iicbus_generic_intr(device_t dev, int event, char *buf);
+int  iicbus_generic_intr(device_t dev, int event, char *buf);
+void iicbus_init_frequency(device_t dev, u_int bus_freq);
 
 extern driver_t iicbus_driver;
 extern devclass_t iicbus_devclass;

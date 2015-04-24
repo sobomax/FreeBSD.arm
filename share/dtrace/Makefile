@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/dtrace/Makefile 269765 2014-08-09 20:40:03Z jmg $
+# $FreeBSD: head/share/dtrace/Makefile 279768 2015-03-08 04:29:41Z gnn $
 #
 # Hand installing our scripts and optionally (based on MK_CDDL) installing
 # the DTraceToolkit.
@@ -15,7 +15,11 @@ _toolkit=	toolkit
 SCRIPTS=	disklatency \
 		disklatencycmd \
 		hotopen \
-		nfsclienttime
+		nfsclienttime \
+		udptrack \
+		tcpstate \
+		tcptrack \
+		tcpconn 
 
 SCRIPTSDIR= ${SHAREDIR}/dtrace
 

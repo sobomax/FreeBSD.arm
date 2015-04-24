@@ -1,11 +1,10 @@
-#	$FreeBSD: head/sbin/ipf/ipfstat/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipfstat/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 NOGCCERROR=	# defined
 
 PROG=		ipfstat
 SRCS=		ipfstat.c
 MAN=		ipfstat.8
-DPADD+=  	${LIBCURSES}
-LDADD+=  	-lcurses
+LIBADD+=	ncursesw
 
 .include <bsd.prog.mk>

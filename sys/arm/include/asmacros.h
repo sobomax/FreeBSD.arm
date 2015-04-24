@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/asmacros.h 273251 2014-10-18 13:38:04Z andrew $
+ * $FreeBSD: head/sys/arm/include/asmacros.h 274668 2014-11-18 17:06:56Z imp $
  */
 
 #ifndef	_MACHINE_ASMACROS_H_
@@ -34,7 +34,6 @@
 #ifdef _KERNEL
 
 #ifdef LOCORE
-#include "opt_global.h"
 
 #ifdef _ARM_ARCH_6
 #define GET_CURTHREAD_PTR(tmp) \

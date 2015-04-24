@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/subr_fattime.c 264694 2014-04-20 13:37:22Z ian $
+ * $FreeBSD: head/sys/kern/subr_fattime.c 275985 2014-12-21 05:07:11Z imp $
  *
  * Convert MS-DOS FAT format timestamps to and from unix timespecs
  *
@@ -45,7 +45,7 @@
  * Later on again, in Windows NT, timestamps were defined relative to GMT.
  *
  * Purists will point out that UTC replaced GMT for such uses around
- * a century ago, already then.  Ironically "NT" was an abbreviation of 
+ * half a century ago, already then.  Ironically "NT" was an abbreviation of 
  * "New Technology".  Anyway...
  *
  * The 'utc' argument determines if the resulting FATTIME timestamp

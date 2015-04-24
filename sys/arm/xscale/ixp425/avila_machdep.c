@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/avila_machdep.c 266850 2014-05-29 16:56:39Z cognet $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/avila_machdep.c 280823 2015-03-29 20:37:28Z andrew $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -376,7 +376,7 @@ initarm(struct arm_boot_params *abp)
 	 * this problem will not occur after initarm().
 	 */
 	cpu_idcache_wbinv_all();
-	cpu_setup("");
+	cpu_setup();
 
 	/* ready to setup the console (XXX move earlier if possible) */
 	cninit();

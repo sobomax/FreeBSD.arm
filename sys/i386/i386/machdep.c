@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 281851 2015-04-22 12:32:14Z kib $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -195,7 +195,7 @@ static void cpu_startup(void *);
 static void fpstate_drop(struct thread *td);
 static void get_fpcontext(struct thread *td, mcontext_t *mcp,
     char *xfpusave, size_t xfpusave_len);
-static int  set_fpcontext(struct thread *td, const mcontext_t *mcp,
+static int  set_fpcontext(struct thread *td, mcontext_t *mcp,
     char *xfpustate, size_t xfpustate_len);
 #ifdef CPU_ENABLE_SSE
 static void set_fpregs_xmm(struct save87 *, struct savexmm *);
@@ -670,10 +670,14 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	regs = td->td_frame;
 	oonstack = sigonstack(regs->tf_esp);
 
+#ifdef CPU_ENABLE_SSE
 	if (cpu_max_ext_state_size > sizeof(union savefpu) && use_xsave) {
 		xfpusave_len = cpu_max_ext_state_size - sizeof(union savefpu);
 		xfpusave = __builtin_alloca(xfpusave_len);
 	} else {
+#else
+	{
+#endif
 		xfpusave_len = 0;
 		xfpusave = NULL;
 	}
@@ -1056,6 +1060,11 @@ sys_sigreturn(td, uap)
 	if (error != 0)
 		return (error);
 	ucp = &uc;
+	if ((ucp->uc_mcontext.mc_flags & ~_MC_FLAG_MASK) != 0) {
+		uprintf("pid %d (%s): sigreturn mc_flags %x\n", p->p_pid,
+		    td->td_name, ucp->uc_mcontext.mc_flags);
+		return (EINVAL);
+	}
 	regs = td->td_frame;
 	eflags = ucp->uc_mcontext.mc_eflags;
 	if (eflags & PSL_VM) {
@@ -1165,436 +1174,6 @@ sys_sigreturn(td, uap)
 	kern_sigprocmask(td, SIG_SETMASK, &ucp->uc_sigmask, NULL, 0);
 	return (EJUSTRETURN);
 }
-
-/*
- * Machine dependent boot() routine
- *
- * I haven't seen anything to put here yet
- * Possibly some stuff might be grafted back here from boot()
- */
-void
-cpu_boot(int howto)
-{
-}
-
-/*
- * Flush the D-cache for non-DMA I/O so that the I-cache can
- * be made coherent later.
- */
-void
-cpu_flush_dcache(void *ptr, size_t len)
-{
-	/* Not applicable */
-}
-
-/* Get current clock frequency for the given cpu id. */
-int
-cpu_est_clockrate(int cpu_id, uint64_t *rate)
-{
-	uint64_t tsc1, tsc2;
-	uint64_t acnt, mcnt, perf;
-	register_t reg;
-
-	if (pcpu_find(cpu_id) == NULL || rate == NULL)
-		return (EINVAL);
-	if ((cpu_feature & CPUID_TSC) == 0)
-		return (EOPNOTSUPP);
-
-	/*
-	 * If TSC is P-state invariant and APERF/MPERF MSRs do not exist,
-	 * DELAY(9) based logic fails.
-	 */
-	if (tsc_is_invariant && !tsc_perf_stat)
-		return (EOPNOTSUPP);
-
-#ifdef SMP
-	if (smp_cpus > 1) {
-		/* Schedule ourselves on the indicated cpu. */
-		thread_lock(curthread);
-		sched_bind(curthread, cpu_id);
-		thread_unlock(curthread);
-	}
-#endif
-
-	/* Calibrate by measuring a short delay. */
-	reg = intr_disable();
-	if (tsc_is_invariant) {
-		wrmsr(MSR_MPERF, 0);
-		wrmsr(MSR_APERF, 0);
-		tsc1 = rdtsc();
-		DELAY(1000);
-		mcnt = rdmsr(MSR_MPERF);
-		acnt = rdmsr(MSR_APERF);
-		tsc2 = rdtsc();
-		intr_restore(reg);
-		perf = 1000 * acnt / mcnt;
-		*rate = (tsc2 - tsc1) * perf;
-	} else {
-		tsc1 = rdtsc();
-		DELAY(1000);
-		tsc2 = rdtsc();
-		intr_restore(reg);
-		*rate = (tsc2 - tsc1) * 1000;
-	}
-
-#ifdef SMP
-	if (smp_cpus > 1) {
-		thread_lock(curthread);
-		sched_unbind(curthread);
-		thread_unlock(curthread);
-	}
-#endif
-
-	return (0);
-}
-
-#ifdef XEN
-
-static void
-idle_block(void)
-{
-
-	HYPERVISOR_sched_op(SCHEDOP_block, 0);
-}
-
-void
-cpu_halt(void)
-{
-	HYPERVISOR_shutdown(SHUTDOWN_poweroff);
-}
-
-int scheduler_running;
-
-static void
-cpu_idle_hlt(sbintime_t sbt)
-{
-
-	scheduler_running = 1;
-	enable_intr();
-	idle_block();
-}
-
-#else
-/*
- * Shutdown the CPU as much as possible
- */
-void
-cpu_halt(void)
-{
-	for (;;)
-		halt();
-}
-
-#endif
-
-void (*cpu_idle_hook)(sbintime_t) = NULL;	/* ACPI idle hook. */
-static int	cpu_ident_amdc1e = 0;	/* AMD C1E supported. */
-static int	idle_mwait = 1;		/* Use MONITOR/MWAIT for short idle. */
-SYSCTL_INT(_machdep, OID_AUTO, idle_mwait, CTLFLAG_RWTUN, &idle_mwait,
-    0, "Use MONITOR/MWAIT for short idle");
-
-#define	STATE_RUNNING	0x0
-#define	STATE_MWAIT	0x1
-#define	STATE_SLEEPING	0x2
-
-#ifndef PC98
-static void
-cpu_idle_acpi(sbintime_t sbt)
-{
-	int *state;
-
-	state = (int *)PCPU_PTR(monitorbuf);
-	*state = STATE_SLEEPING;
-
-	/* See comments in cpu_idle_hlt(). */
-	disable_intr();
-	if (sched_runnable())
-		enable_intr();
-	else if (cpu_idle_hook)
-		cpu_idle_hook(sbt);
-	else
-		__asm __volatile("sti; hlt");
-	*state = STATE_RUNNING;
-}
-#endif /* !PC98 */
-
-#ifndef XEN
-static void
-cpu_idle_hlt(sbintime_t sbt)
-{
-	int *state;
-
-	state = (int *)PCPU_PTR(monitorbuf);
-	*state = STATE_SLEEPING;
-
-	/*
-	 * Since we may be in a critical section from cpu_idle(), if
-	 * an interrupt fires during that critical section we may have
-	 * a pending preemption.  If the CPU halts, then that thread
-	 * may not execute until a later interrupt awakens the CPU.
-	 * To handle this race, check for a runnable thread after
-	 * disabling interrupts and immediately return if one is
-	 * found.  Also, we must absolutely guarentee that hlt is
-	 * the next instruction after sti.  This ensures that any
-	 * interrupt that fires after the call to disable_intr() will
-	 * immediately awaken the CPU from hlt.  Finally, please note
-	 * that on x86 this works fine because of interrupts enabled only
-	 * after the instruction following sti takes place, while IF is set
-	 * to 1 immediately, allowing hlt instruction to acknowledge the
-	 * interrupt.
-	 */
-	disable_intr();
-	if (sched_runnable())
-		enable_intr();
-	else
-		__asm __volatile("sti; hlt");
-	*state = STATE_RUNNING;
-}
-#endif
-
-/*
- * MWAIT cpu power states.  Lower 4 bits are sub-states.
- */
-#define	MWAIT_C0	0xf0
-#define	MWAIT_C1	0x00
-#define	MWAIT_C2	0x10
-#define	MWAIT_C3	0x20
-#define	MWAIT_C4	0x30
-
-static void
-cpu_idle_mwait(sbintime_t sbt)
-{
-	int *state;
-
-	state = (int *)PCPU_PTR(monitorbuf);
-	*state = STATE_MWAIT;
-
-	/* See comments in cpu_idle_hlt(). */
-	disable_intr();
-	if (sched_runnable()) {
-		enable_intr();
-		*state = STATE_RUNNING;
-		return;
-	}
-	cpu_monitor(state, 0, 0);
-	if (*state == STATE_MWAIT)
-		__asm __volatile("sti; mwait" : : "a" (MWAIT_C1), "c" (0));
-	else
-		enable_intr();
-	*state = STATE_RUNNING;
-}
-
-static void
-cpu_idle_spin(sbintime_t sbt)
-{
-	int *state;
-	int i;
-
-	state = (int *)PCPU_PTR(monitorbuf);
-	*state = STATE_RUNNING;
-
-	/*
-	 * The sched_runnable() call is racy but as long as there is
-	 * a loop missing it one time will have just a little impact if any 
-	 * (and it is much better than missing the check at all).
-	 */
-	for (i = 0; i < 1000; i++) {
-		if (sched_runnable())
-			return;
-		cpu_spinwait();
-	}
-}
-
-/*
- * C1E renders the local APIC timer dead, so we disable it by
- * reading the Interrupt Pending Message register and clearing
- * both C1eOnCmpHalt (bit 28) and SmiOnCmpHalt (bit 27).
- * 
- * Reference:
- *   "BIOS and Kernel Developer's Guide for AMD NPT Family 0Fh Processors"
- *   #32559 revision 3.00+
- */
-#define	MSR_AMDK8_IPM		0xc0010055
-#define	AMDK8_SMIONCMPHALT	(1ULL << 27)
-#define	AMDK8_C1EONCMPHALT	(1ULL << 28)
-#define	AMDK8_CMPHALT		(AMDK8_SMIONCMPHALT | AMDK8_C1EONCMPHALT)
-
-static void
-cpu_probe_amdc1e(void)
-{
-
-	/*
-	 * Detect the presence of C1E capability mostly on latest
-	 * dual-cores (or future) k8 family.
-	 */
-	if (cpu_vendor_id == CPU_VENDOR_AMD &&
-	    (cpu_id & 0x00000f00) == 0x00000f00 &&
-	    (cpu_id & 0x0fff0000) >=  0x00040000) {
-		cpu_ident_amdc1e = 1;
-	}
-}
-
-#if defined(PC98) || defined(XEN)
-void (*cpu_idle_fn)(sbintime_t) = cpu_idle_hlt;
-#else
-void (*cpu_idle_fn)(sbintime_t) = cpu_idle_acpi;
-#endif
-
-void
-cpu_idle(int busy)
-{
-#ifndef XEN
-	uint64_t msr;
-#endif
-	sbintime_t sbt = -1;
-
-	CTR2(KTR_SPARE2, "cpu_idle(%d) at %d",
-	    busy, curcpu);
-#if defined(MP_WATCHDOG) && !defined(XEN)
-	ap_watchdog(PCPU_GET(cpuid));
-#endif
-#ifndef XEN
-	/* If we are busy - try to use fast methods. */
-	if (busy) {
-		if ((cpu_feature2 & CPUID2_MON) && idle_mwait) {
-			cpu_idle_mwait(busy);
-			goto out;
-		}
-	}
-#endif
-
-	/* If we have time - switch timers into idle mode. */
-	if (!busy) {
-		critical_enter();
-		sbt = cpu_idleclock();
-	}
-
-#ifndef XEN
-	/* Apply AMD APIC timer C1E workaround. */
-	if (cpu_ident_amdc1e && cpu_disable_deep_sleep) {
-		msr = rdmsr(MSR_AMDK8_IPM);
-		if (msr & AMDK8_CMPHALT)
-			wrmsr(MSR_AMDK8_IPM, msr & ~AMDK8_CMPHALT);
-	}
-#endif
-
-	/* Call main idle method. */
-	cpu_idle_fn(sbt);
-
-	/* Switch timers back into active mode. */
-	if (!busy) {
-		cpu_activeclock();
-		critical_exit();
-	}
-#ifndef XEN
-out:
-#endif
-	CTR2(KTR_SPARE2, "cpu_idle(%d) at %d done",
-	    busy, curcpu);
-}
-
-int
-cpu_idle_wakeup(int cpu)
-{
-	struct pcpu *pcpu;
-	int *state;
-
-	pcpu = pcpu_find(cpu);
-	state = (int *)pcpu->pc_monitorbuf;
-	/*
-	 * This doesn't need to be atomic since missing the race will
-	 * simply result in unnecessary IPIs.
-	 */
-	if (*state == STATE_SLEEPING)
-		return (0);
-	if (*state == STATE_MWAIT)
-		*state = STATE_RUNNING;
-	return (1);
-}
-
-/*
- * Ordered by speed/power consumption.
- */
-struct {
-	void	*id_fn;
-	char	*id_name;
-} idle_tbl[] = {
-	{ cpu_idle_spin, "spin" },
-	{ cpu_idle_mwait, "mwait" },
-	{ cpu_idle_hlt, "hlt" },
-#ifndef PC98
-	{ cpu_idle_acpi, "acpi" },
-#endif
-	{ NULL, NULL }
-};
-
-static int
-idle_sysctl_available(SYSCTL_HANDLER_ARGS)
-{
-	char *avail, *p;
-	int error;
-	int i;
-
-	avail = malloc(256, M_TEMP, M_WAITOK);
-	p = avail;
-	for (i = 0; idle_tbl[i].id_name != NULL; i++) {
-		if (strstr(idle_tbl[i].id_name, "mwait") &&
-		    (cpu_feature2 & CPUID2_MON) == 0)
-			continue;
-#ifndef PC98
-		if (strcmp(idle_tbl[i].id_name, "acpi") == 0 &&
-		    cpu_idle_hook == NULL)
-			continue;
-#endif
-		p += sprintf(p, "%s%s", p != avail ? ", " : "",
-		    idle_tbl[i].id_name);
-	}
-	error = sysctl_handle_string(oidp, avail, 0, req);
-	free(avail, M_TEMP);
-	return (error);
-}
-
-SYSCTL_PROC(_machdep, OID_AUTO, idle_available, CTLTYPE_STRING | CTLFLAG_RD,
-    0, 0, idle_sysctl_available, "A", "list of available idle functions");
-
-static int
-idle_sysctl(SYSCTL_HANDLER_ARGS)
-{
-	char buf[16];
-	int error;
-	char *p;
-	int i;
-
-	p = "unknown";
-	for (i = 0; idle_tbl[i].id_name != NULL; i++) {
-		if (idle_tbl[i].id_fn == cpu_idle_fn) {
-			p = idle_tbl[i].id_name;
-			break;
-		}
-	}
-	strncpy(buf, p, sizeof(buf));
-	error = sysctl_handle_string(oidp, buf, sizeof(buf), req);
-	if (error != 0 || req->newptr == NULL)
-		return (error);
-	for (i = 0; idle_tbl[i].id_name != NULL; i++) {
-		if (strstr(idle_tbl[i].id_name, "mwait") &&
-		    (cpu_feature2 & CPUID2_MON) == 0)
-			continue;
-#ifndef PC98
-		if (strcmp(idle_tbl[i].id_name, "acpi") == 0 &&
-		    cpu_idle_hook == NULL)
-			continue;
-#endif
-		if (strcmp(idle_tbl[i].id_name, buf))
-			continue;
-		cpu_idle_fn = idle_tbl[i].id_fn;
-		return (0);
-	}
-	return (EINVAL);
-}
-
-SYSCTL_PROC(_machdep, OID_AUTO, idle, CTLTYPE_STRING | CTLFLAG_RW, 0, 0,
-    idle_sysctl, "A", "currently selected idle function");
 
 /*
  * Reset registers to default values on exec.
@@ -2908,7 +2487,9 @@ init386(first)
 	unsigned long gdtmachpfn;
 	int error, gsel_tss, metadata_missing, x, pa;
 	struct pcpu *pc;
+#ifdef CPU_ENABLE_SSE
 	struct xstate_hdr *xhdr;
+#endif
 	struct callback_register event = {
 		.type = CALLBACKTYPE_event,
 		.address = {GSEL(GCODE_SEL, SEL_KPL), (unsigned long)Xhypervisor_callback },
@@ -3087,7 +2668,7 @@ init386(first)
 	    dblfault_tss.tss_esp2 = (int)&dblfault_stack[sizeof(dblfault_stack)];
 	dblfault_tss.tss_ss = dblfault_tss.tss_ss0 = dblfault_tss.tss_ss1 =
 	    dblfault_tss.tss_ss2 = GSEL(GDATA_SEL, SEL_KPL);
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	dblfault_tss.tss_cr3 = (int)IdlePDPT;
 #else
 	dblfault_tss.tss_cr3 = (int)IdlePTD;
@@ -3117,11 +2698,13 @@ init386(first)
 	 */
 	thread0.td_pcb = get_pcb_td(&thread0);
 	bzero(get_pcb_user_save_td(&thread0), cpu_max_ext_state_size);
+#ifdef CPU_ENABLE_SSE
 	if (use_xsave) {
 		xhdr = (struct xstate_hdr *)(get_pcb_user_save_td(&thread0) +
 		    1);
 		xhdr->xstate_bv = xsave_mask;
 	}
+#endif
 	PCPU_SET(curpcb, thread0.td_pcb);
 	/* make an initial tss so cpu can get interrupt stack on syscall! */
 	/* Note: -16 is so we can grow the trapframe if we came from vm86 */
@@ -3138,7 +2721,7 @@ init386(first)
 
 	/* setup proc 0's pcb */
 	thread0.td_pcb->pcb_flags = 0;
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	thread0.td_pcb->pcb_cr3 = (int)IdlePDPT;
 #else
 	thread0.td_pcb->pcb_cr3 = (int)IdlePTD;
@@ -3162,7 +2745,9 @@ init386(first)
 	struct gate_descriptor *gdp;
 	int gsel_tss, metadata_missing, x, pa;
 	struct pcpu *pc;
+#ifdef CPU_ENABLE_SSE
 	struct xstate_hdr *xhdr;
+#endif
 
 	thread0.td_kstack = proc0kstack;
 	thread0.td_kstack_pages = KSTACK_PAGES;
@@ -3387,7 +2972,7 @@ init386(first)
 	    dblfault_tss.tss_esp2 = (int)&dblfault_stack[sizeof(dblfault_stack)];
 	dblfault_tss.tss_ss = dblfault_tss.tss_ss0 = dblfault_tss.tss_ss1 =
 	    dblfault_tss.tss_ss2 = GSEL(GDATA_SEL, SEL_KPL);
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	dblfault_tss.tss_cr3 = (int)IdlePDPT;
 #else
 	dblfault_tss.tss_cr3 = (int)IdlePTD;
@@ -3417,11 +3002,13 @@ init386(first)
 	 */
 	thread0.td_pcb = get_pcb_td(&thread0);
 	bzero(get_pcb_user_save_td(&thread0), cpu_max_ext_state_size);
+#ifdef CPU_ENABLE_SSE
 	if (use_xsave) {
 		xhdr = (struct xstate_hdr *)(get_pcb_user_save_td(&thread0) +
 		    1);
 		xhdr->xstate_bv = xsave_mask;
 	}
+#endif
 	PCPU_SET(curpcb, thread0.td_pcb);
 	/* make an initial tss so cpu can get interrupt stack on syscall! */
 	/* Note: -16 is so we can grow the trapframe if we came from vm86 */
@@ -3457,7 +3044,7 @@ init386(first)
 
 	/* setup proc 0's pcb */
 	thread0.td_pcb->pcb_flags = 0;
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	thread0.td_pcb->pcb_cr3 = (int)IdlePDPT;
 #else
 	thread0.td_pcb->pcb_cr3 = (int)IdlePTD;
@@ -3839,14 +3426,15 @@ get_mcontext(struct thread *td, mcontext_t *mcp, int flags)
  * touch the cs selector.
  */
 int
-set_mcontext(struct thread *td, const mcontext_t *mcp)
+set_mcontext(struct thread *td, mcontext_t *mcp)
 {
 	struct trapframe *tp;
 	char *xfpustate;
 	int eflags, ret;
 
 	tp = td->td_frame;
-	if (mcp->mc_len != sizeof(*mcp))
+	if (mcp->mc_len != sizeof(*mcp) ||
+	    (mcp->mc_flags & ~_MC_FLAG_MASK) != 0)
 		return (EINVAL);
 	eflags = (mcp->mc_eflags & PSL_USERCHANGE) |
 	    (tp->tf_eflags & ~PSL_USERCHANGE);
@@ -3886,7 +3474,9 @@ static void
 get_fpcontext(struct thread *td, mcontext_t *mcp, char *xfpusave,
     size_t xfpusave_len)
 {
+#ifdef CPU_ENABLE_SSE
 	size_t max_len, len;
+#endif
 
 #ifndef DEV_NPX
 	mcp->mc_fpformat = _MC_FPFMT_NODEV;
@@ -3897,6 +3487,7 @@ get_fpcontext(struct thread *td, mcontext_t *mcp, char *xfpusave,
 	bcopy(get_pcb_user_save_td(td), &mcp->mc_fpstate[0],
 	    sizeof(mcp->mc_fpstate));
 	mcp->mc_fpformat = npxformat();
+#ifdef CPU_ENABLE_SSE
 	if (!use_xsave || xfpusave_len == 0)
 		return;
 	max_len = cpu_max_ext_state_size - sizeof(union savefpu);
@@ -3909,10 +3500,11 @@ get_fpcontext(struct thread *td, mcontext_t *mcp, char *xfpusave,
 	mcp->mc_xfpustate_len = len;
 	bcopy(get_pcb_user_save_td(td) + 1, xfpusave, len);
 #endif
+#endif
 }
 
 static int
-set_fpcontext(struct thread *td, const mcontext_t *mcp, char *xfpustate,
+set_fpcontext(struct thread *td, mcontext_t *mcp, char *xfpustate,
     size_t xfpustate_len)
 {
 	union savefpu *fpstate;

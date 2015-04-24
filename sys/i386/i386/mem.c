@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/mem.c 238310 2012-07-09 20:42:08Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/mem.c 277643 2015-01-24 12:51:15Z kib $");
 
 /*
  * Memory special file
@@ -85,10 +85,6 @@ memrw(struct cdev *dev, struct uio *uio, int flags)
 	struct iovec *iov;
 	int error = 0;
 	vm_offset_t addr;
-
-	/* XXX UPS Why ? */
-	GIANT_REQUIRED;
-
 
 	if (dev2unit(dev) != CDEV_MINOR_MEM && dev2unit(dev) != CDEV_MINOR_KMEM)
 		return EIO;

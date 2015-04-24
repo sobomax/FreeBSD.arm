@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/mips/atheros/ar724xreg.h 261006 2014-01-22 08:02:07Z adrian $ */
+/* $FreeBSD: head/sys/mips/atheros/ar724xreg.h 280313 2015-03-21 05:59:45Z adrian $ */
 
 #ifndef	__AR72XX_REG_H__
 #define	__AR72XX_REG_H__
@@ -78,7 +78,7 @@
 #define	AR724X_PCI_CTRL_BASE		(AR71XX_APB_BASE + 0x000F0000)
 #define	AR724X_PCI_CTRL_SIZE		0x100
 
-/* PCI config registers */
+/* PCI config registers - AR724X_PCI_CTRL_BASE */
 #define	AR724X_PCI_APP			0x180f0000
 #define	AR724X_PCI_APP_LTSSM_ENABLE	(1 << 0)
 #define	AR724X_PCI_RESET		0x180f0018

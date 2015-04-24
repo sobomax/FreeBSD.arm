@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: common.h,v 1.26 2006/03/11 19:41:30 otto Exp $
- * $FreeBSD: head/usr.bin/patch/common.h 264744 2014-04-21 22:52:18Z pfg $
+ * $FreeBSD: head/usr.bin/patch/common.h 275612 2014-12-08 15:10:48Z pfg $
  */
 
 #include <sys/types.h>
@@ -40,6 +40,7 @@
 #define	INITHUNKMAX 125		/* initial dynamic allocation size */
 #define	INITLINELEN 4096
 #define	BUFFERSIZE 4096
+#define	LINENUM_MAX LONG_MAX
 
 #define	SCCSPREFIX "s."
 #define	GET "get -e %s"

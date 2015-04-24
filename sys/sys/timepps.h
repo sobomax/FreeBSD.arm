@@ -12,7 +12,7 @@
  * Portions of this software were developed by Julien Ridoux at the University
  * of Melbourne under sponsorship from the FreeBSD Foundation.
  *
- * $FreeBSD: head/sys/sys/timepps.h 227789 2011-11-21 13:34:29Z lstewart $
+ * $FreeBSD: head/sys/sys/timepps.h 279728 2015-03-07 18:23:32Z hselasky $
  *
  * The is a FreeBSD version of the RFC 2783 API for Pulse Per Second 
  * timing interfaces.  
@@ -133,12 +133,17 @@ struct pps_kcbind_args {
 
 #ifdef _KERNEL
 
+struct mtx;
+
 struct pps_state {
 	/* Capture information. */
 	struct timehands *capth;
 	struct fftimehands *capffth;
 	unsigned	capgen;
 	unsigned	capcount;
+
+	/* pointer to mutex protecting this state, if any */
+	struct mtx	*mtx;
 
 	/* State information. */
 	pps_params_t	ppsparam;

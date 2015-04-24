@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.bin/ssh-keygen/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/secure/usr.bin/ssh-keygen/Makefile 275083 2014-11-25 22:25:13Z bapt $
 
 .include <src.opts.mk>
 
@@ -11,19 +11,13 @@ CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
 SRCS+=	roaming_dummy.c
 .endif
 
-DPADD=	${LIBSSH}
-LDADD=	${LDSSH}
-USEPRIVATELIB= ssh
+LIBADD=	ssh
 
 .if ${MK_LDNS} != "no"
 CFLAGS+=	-DHAVE_LDNS=1
-DPADD+=	${LIBLDNS}
-LDADD+=	${LDLDNS}
-USEPRIVATELIB+= ldns
 .endif
 
-DPADD+= ${LIBCRYPT} ${LIBCRYPTO} ${LIBZ}
-LDADD+= -lcrypt -lcrypto -lz
+LIBADD+=	crypto
 
 .include <bsd.prog.mk>
 

@@ -1,7 +1,7 @@
-# $FreeBSD: head/tools/regression/sockets/rtsocket/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/rtsocket/Makefile 281392 2015-04-11 02:59:45Z ngie $
 
 PROG=	rtsocket
 MAN=
-WARNS?=	3
+WARNS?=	6
 
 .include <bsd.prog.mk>

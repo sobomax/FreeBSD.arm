@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptnr/hptintf.h 252867 2013-07-06 07:49:41Z delphij $
+ * $FreeBSD: head/sys/dev/hptnr/hptintf.h 281387 2015-04-11 00:45:03Z delphij $
  */
 
 #include <dev/hptnr/hptnr_config.h>
@@ -371,6 +371,7 @@ typedef HPT_U32 DEVICEID;
 
 #define HPT_CAP_DUMP_METADATA   0x1
 #define HPT_CAP_DISK_CHECKING   0x2
+#define HPT_CAP_REPORT_SECTOR_SIZE  0x10
 
 typedef struct _DRIVER_CAPABILITIES {
 	HPT_U32 dwSize;

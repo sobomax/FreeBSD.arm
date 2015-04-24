@@ -30,7 +30,7 @@
 /* #pragma ident	"@(#)rpc_sample.c	1.9	94/04/25 SMI" */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_sample.c 267174 2014-06-06 17:38:37Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_sample.c 281724 2015-04-19 04:53:28Z eadler $");
 
 /*
  * rpc_sample.c, Sample client-server code outputter for the RPC protocol compiler
@@ -115,7 +115,7 @@ write_sample_client(const char *program_name, version_list *vp)
 			for (l = proc->args.decls; l != NULL; l = l->next) {
 				f_print(fout, "\t");
 				ptype(l->decl.prefix, l->decl.type, 1);
-				if (strcmp(l->decl.type,"string") == 1)
+				if (strcmp(l->decl.type,"string") >= 1)
 				    f_print(fout, " ");
 				pvname(proc->proc_name, vp->vers_num);
 				f_print(fout, "_%s;\n", l->decl.name);

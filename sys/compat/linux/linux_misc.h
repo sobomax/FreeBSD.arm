@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/linux_misc.h 246085 2013-01-29 18:41:30Z jhb $
+ * $FreeBSD: head/sys/compat/linux/linux_misc.h 281829 2015-04-21 13:55:24Z trasz $
  */
 
 #ifndef _LINUX_MISC_H_
@@ -54,6 +54,8 @@
 
 #define	LINUX_MREMAP_MAYMOVE	1
 #define	LINUX_MREMAP_FIXED	2
+
+#define	LINUX_PATH_MAX		4096
 
 extern const char *linux_platform;
 

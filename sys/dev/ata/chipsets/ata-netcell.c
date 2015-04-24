@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-netcell.c 249213 2013-04-06 19:12:49Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-netcell.c 280393 2015-03-23 19:47:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -66,7 +66,7 @@ ata_netcell_probe(device_t dev)
     if (pci_get_devid(dev) == ATA_NETCELL_SR) {
 	device_set_desc(dev, "Netcell SyncRAID SR3000/5000 RAID Controller");
 	ctlr->chipinit = ata_netcell_chipinit;
-	return (BUS_PROBE_DEFAULT);
+	return (BUS_PROBE_LOW_PRIORITY);
     }
     return ENXIO;
 }

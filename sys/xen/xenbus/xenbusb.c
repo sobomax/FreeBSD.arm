@@ -52,7 +52,7 @@
  *                        xnb1
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/xen/xenbus/xenbusb.c 250917 2013-05-22 19:22:44Z gibbs $");
+__FBSDID("$FreeBSD: head/sys/xen/xenbus/xenbusb.c 280007 2015-03-14 21:40:24Z ian $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -330,7 +330,7 @@ xenbusb_device_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	default:
 		return (EINVAL);
 	}
-	return (SYSCTL_OUT(req, value, strlen(value)));
+	return (SYSCTL_OUT_STR(req, value));
 }
 
 /**

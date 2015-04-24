@@ -1,12 +1,11 @@
-# $FreeBSD: head/sbin/geom/class/journal/Makefile 216468 2010-12-15 23:24:34Z obrien $
+# $FreeBSD: head/sbin/geom/class/journal/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../../misc
 
 GEOM_CLASS=	journal
 SRCS+=	geom_journal_ufs.c
 
-DPADD=	${LIBMD} ${LIBUFS}
-LDADD=	-lmd -lufs
+LIBADD=	ufs md
 
 CFLAGS+=-I${.CURDIR}/../../../../sys
 

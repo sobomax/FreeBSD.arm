@@ -23,14 +23,28 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/vm.h 244414 2012-12-19 00:24:31Z cognet $
+ * $FreeBSD: head/sys/arm/include/vm.h 280712 2015-03-26 21:13:53Z ian $
  */
 
 #ifndef _MACHINE_VM_H_
 #define	_MACHINE_VM_H_
 
+#ifdef ARM_NEW_PMAP
+#include <machine/pte-v6.h>
+
+#define VM_MEMATTR_WB_WA	((vm_memattr_t)PTE2_ATTR_WB_WA)
+#define VM_MEMATTR_NOCACHE	((vm_memattr_t)PTE2_ATTR_NOCACHE)
+#define VM_MEMATTR_DEVICE	((vm_memattr_t)PTE2_ATTR_DEVICE)
+#define VM_MEMATTR_SO		((vm_memattr_t)PTE2_ATTR_SO)
+
+#define VM_MEMATTR_DEFAULT	VM_MEMATTR_WB_WA
+#define VM_MEMATTR_UNCACHEABLE	VM_MEMATTR_SO /*name is misused by DMA */
+
+
+#else
 /* Memory attribute configuration. */
 #define	VM_MEMATTR_DEFAULT	0
 #define	VM_MEMATTR_UNCACHEABLE	1
+#endif
 
 #endif /* !_MACHINE_VM_H_ */

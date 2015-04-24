@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/pm_machdep.c 264890 2014-04-24 21:17:48Z imp $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/pm_machdep.c 278001 2015-01-31 21:43:46Z kib $");
 
 #include "opt_compat.h"
 
@@ -375,7 +375,7 @@ get_mcontext(struct thread *td, mcontext_t *mcp, int flags)
 }
 
 int
-set_mcontext(struct thread *td, const mcontext_t *mcp)
+set_mcontext(struct thread *td, mcontext_t *mcp)
 {
 	struct trapframe *tp;
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iscsid/keys.c 273464 2014-10-22 09:17:17Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/keys.c 278622 2015-02-12 11:57:31Z trasz $");
 
 #include <assert.h>
 #include <stdint.h>
@@ -160,26 +160,6 @@ keys_find(struct keys *keys, const char *name)
 			return (keys->keys_values[i]);
 	}
 	return (NULL);
-}
-
-int
-keys_find_int(struct keys *keys, const char *name)
-{
-	const char *str;
-	char *endptr;
-	int num;
-
-	str = keys_find(keys, name);
-	if (str == NULL)
-		return (-1);
-
-	num = strtoul(str, &endptr, 10);
-	if (*endptr != '\0') {
-		log_debugx("invalid numeric value \"%s\"", str);
-		return (-1);
-	}
-
-	return (num);
 }
 
 void

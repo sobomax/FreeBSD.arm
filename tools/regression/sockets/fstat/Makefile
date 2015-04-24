@@ -1,9 +1,9 @@
 #
-# $FreeBSD: head/tools/regression/sockets/fstat/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/fstat/Makefile 281359 2015-04-10 09:23:00Z ngie $
 #
 
 PROG=	fstat
 MAN=
-WARNS?=	2
+WARNS?=	6
 
 .include <bsd.prog.mk>

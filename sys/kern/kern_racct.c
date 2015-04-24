@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/kern_racct.c 272582 2014-10-06 02:31:33Z mjg $
+ * $FreeBSD: head/sys/kern/kern_racct.c 275121 2014-11-26 14:10:00Z kib $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_racct.c 272582 2014-10-06 02:31:33Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_racct.c 275121 2014-11-26 14:10:00Z kib $");
 
 #include "opt_sched.h"
 
@@ -1129,11 +1129,11 @@ racctd(void)
 
 			microuptime(&wallclock);
 			timevalsub(&wallclock, &p->p_stats->p_start);
-			PROC_SLOCK(p);
+			PROC_STATLOCK(p);
 			FOREACH_THREAD_IN_PROC(p, td)
 				ruxagg(p, td);
 			runtime = cputick2usec(p->p_rux.rux_runtime);
-			PROC_SUNLOCK(p);
+			PROC_STATUNLOCK(p);
 #ifdef notyet
 			KASSERT(runtime >= p->p_prev_runtime,
 			    ("runtime < p_prev_runtime"));

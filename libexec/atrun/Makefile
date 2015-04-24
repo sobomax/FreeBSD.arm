@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/atrun/Makefile 201380 2010-01-02 09:50:19Z ed $
+# $FreeBSD: head/libexec/atrun/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 MAINSRC=${.CURDIR}/../../usr.bin/at
 
@@ -17,8 +17,7 @@ CFLAGS+=-DLOGIN_CAP -DPAM
 WARNS?=	2
 WFORMAT=0
 
-DPADD=	${LIBPAM} ${LIBUTIL}
-LDADD=	${MINUSLPAM} -lutil
+LIBADD=	pam util
 
 atrun.8: atrun.man
 	@${ECHO} Making ${.TARGET:T} from ${.ALLSRC:T}; \

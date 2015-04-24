@@ -2,7 +2,7 @@
 # PB92 -- Kernel configuration file for FreeBSD/mips for Atheros PB92 reference
 #         board (AR7242)
 #
-# $FreeBSD: head/sys/mips/conf/PB92 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/PB92 276741 2015-01-06 07:43:07Z adrian $
 #
 
 ident		PB92
@@ -125,6 +125,8 @@ device		ar71xx_wdog
 # Serial
 device		uart
 device		uart_ar71xx
+
+device		ar71xx_apb
 
 # Network twiddling
 device		loop

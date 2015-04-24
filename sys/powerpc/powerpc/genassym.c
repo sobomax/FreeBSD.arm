@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)genassym.c	5.11 (Berkeley) 5/10/91
- * $FreeBSD: head/sys/powerpc/powerpc/genassym.c 261309 2014-01-31 03:55:34Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/powerpc/genassym.c 279601 2015-03-04 21:06:57Z nwhitehorn $
  */
 
 #include <sys/param.h>
@@ -171,9 +171,9 @@ ASSYM(FRAME_XER, offsetof(struct trapframe, xer));
 ASSYM(FRAME_SRR0, offsetof(struct trapframe, srr0));
 ASSYM(FRAME_SRR1, offsetof(struct trapframe, srr1));
 ASSYM(FRAME_EXC, offsetof(struct trapframe, exc));
-ASSYM(FRAME_AIM_DAR, offsetof(struct trapframe, cpu.aim.dar));
+ASSYM(FRAME_AIM_DAR, offsetof(struct trapframe, dar));
 ASSYM(FRAME_AIM_DSISR, offsetof(struct trapframe, cpu.aim.dsisr));
-ASSYM(FRAME_BOOKE_DEAR, offsetof(struct trapframe, cpu.booke.dear));
+ASSYM(FRAME_BOOKE_DEAR, offsetof(struct trapframe, dar));
 ASSYM(FRAME_BOOKE_ESR, offsetof(struct trapframe, cpu.booke.esr));
 ASSYM(FRAME_BOOKE_DBCR0, offsetof(struct trapframe, cpu.booke.dbcr0));
 

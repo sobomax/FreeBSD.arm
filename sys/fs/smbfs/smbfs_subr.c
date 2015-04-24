@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/smbfs/smbfs_subr.c 243396 2012-11-22 08:58:29Z davide $
+ * $FreeBSD: head/sys/fs/smbfs/smbfs_subr.c 277953 2015-01-30 22:02:32Z dim $
  */
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -170,8 +170,8 @@ smbfs_fname_tolocal(struct smb_vc *vcp, char *name, int *nmlen, int caseopt)
 		if (error) return error;
 		*/
 
-		error = iconv_conv_case
-			(vcp->vc_tolocal, (const char **)&ibuf, &ilen, &obuf, &olen, copt);
+		error = iconv_conv_case(vcp->vc_tolocal,
+		    __DECONST(const char **, &ibuf), &ilen, &obuf, &olen, copt);
 		if (error && SMB_UNICODE_STRINGS(vcp)) {
 			/*
 			 * If using unicode, leaving a file name as it was when

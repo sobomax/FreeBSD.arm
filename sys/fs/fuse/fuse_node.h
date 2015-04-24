@@ -52,7 +52,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/fuse/fuse_node.h 242727 2012-11-08 00:32:49Z attilio $
+ * $FreeBSD: head/sys/fs/fuse/fuse_node.h 279536 2015-03-02 19:04:27Z trasz $
  */
 
 #ifndef _FUSE_NODE_H_
@@ -67,6 +67,7 @@
 #define FN_FLUSHINPROG       0x00000040
 #define FN_FLUSHWANT         0x00000080
 #define FN_SIZECHANGE        0x00000100
+#define FN_DIRECTIO          0x00000200
 
 struct fuse_vnode_data {
     /** self **/

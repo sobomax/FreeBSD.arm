@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_clean.c 213163 2010-09-25 09:43:24Z davidxu $
+ * $FreeBSD: head/lib/libthr/thread/thr_clean.c 281857 2015-04-22 16:51:21Z pfg $
  */
 
 #include "namespace.h"
@@ -84,7 +84,7 @@ _pthread_cleanup_push(void (*routine) (void *), void *arg)
 	curthread->unwind_disabled = 1;
 #endif
 	if ((newbuf = (struct pthread_cleanup *)
-	    malloc(sizeof(struct _pthread_cleanup_info))) != NULL) {
+	    malloc(sizeof(struct pthread_cleanup))) != NULL) {
 		newbuf->routine = routine;
 		newbuf->routine_arg = arg;
 		newbuf->onheap = 1;

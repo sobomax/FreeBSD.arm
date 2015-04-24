@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/regression/execve/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/execve/Makefile 277273 2015-01-16 21:39:08Z will $
 
 PROG=	doexec
 MAN=
@@ -14,7 +14,7 @@ all:		${PROG} goodaout ${TESTSCRIPTS}
 
 .for x in ${TESTSCRIPTS}
 ${x}: ${TD}/${x}
-	cp ${TD}/${x} .
+	${CP} ${TD}/${x} .
 	chmod +x ${x}
 .endfor
 

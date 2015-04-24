@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/tlphy.c 257184 2013-10-26 18:40:17Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/tlphy.c 277093 2015-01-12 22:27:38Z glebius $");
 
 /*
  * Driver for Texas Instruments's ThunderLAN PHYs
@@ -130,8 +130,7 @@ static int
 tlphy_probe(device_t dev)
 {
 
-	if (strcmp(device_get_name(device_get_parent(device_get_parent(dev))),
-	    "tl") != 0)
+	if (!mii_dev_mac_match(dev, "tl"))
 		return (ENXIO);
 	return (mii_phy_dev_probe(dev, tlphys, BUS_PROBE_DEFAULT));
 }

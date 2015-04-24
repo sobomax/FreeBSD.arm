@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_dump.c 273208 2014-10-17 06:58:04Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_dump.c 280686 2015-03-26 11:19:24Z mav $");
 
 #include <sys/param.h>
 #include <sys/sbuf.h>
@@ -216,7 +216,9 @@ g_conf_provider(struct sbuf *sb, struct g_provider *pp)
 	sbuf_printf(sb, "\t  <sectorsize>%u</sectorsize>\n", pp->sectorsize);
 	sbuf_printf(sb, "\t  <stripesize>%u</stripesize>\n", pp->stripesize);
 	sbuf_printf(sb, "\t  <stripeoffset>%u</stripeoffset>\n", pp->stripeoffset);
-	if (pp->geom->flags & G_GEOM_WITHER)
+	if (pp->flags & G_PF_WITHER)
+		sbuf_printf(sb, "\t  <wither/>\n");
+	else if (pp->geom->flags & G_GEOM_WITHER)
 		;
 	else if (pp->geom->dumpconf != NULL) {
 		sbuf_printf(sb, "\t  <config>\n");

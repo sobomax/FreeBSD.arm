@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_wdog.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_wdog.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_wdog.c 261410 2014-02-02 19:17:28
 #include <machine/bus.h>
 #include <machine/cpufunc.h>
 #include <machine/machdep.h>
-#include <machine/fdt.h>
 
 #include <arm/allwinner/a10_wdog.h>
 

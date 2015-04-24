@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 272444 2014-10-02 19:11:18Z jkim $
+# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 278970 2015-02-18 20:33:00Z jkim $
 
 PROG=	iasl
 
@@ -16,23 +16,24 @@ SRCS+=	aslanalyze.c aslascii.c aslbtypes.c aslcodegen.c	\
 	aslmapenter.c aslmapoutput.c aslmaputils.c		\
 	aslmessages.c aslmethod.c aslnamesp.c asloffset.c	\
 	aslopcodes.c asloperands.c aslopt.c asloptions.c	\
-	aslpredef.c aslprepkg.c aslresource.c aslrestype1.c	\
-	aslrestype1i.c aslrestype2.c aslrestype2d.c		\
-	aslrestype2e.c aslrestype2q.c aslrestype2s.c		\
-	aslrestype2w.c aslstartup.c aslstubs.c asltransform.c	\
-	asltree.c aslutils.c asluuid.c aslwalks.c aslxref.c	\
-	dtcompile.c dtexpress.c dtfield.c dtio.c dtparser.y.h	\
-	dtparserlex.c dtparserparse.c dtsubtable.c dttable.c	\
-	dttemplate.c dtutils.c prexpress.c prmacros.c		\
-	prparser.y.h prparserlex.c prparserparse.c prscan.c	\
-	prutils.c
+	aslpredef.c aslprepkg.c aslprintf.c aslprune.c		\
+	aslresource.c aslrestype1.c aslrestype1i.c		\
+	aslrestype2.c aslrestype2d.c aslrestype2e.c		\
+	aslrestype2q.c aslrestype2s.c aslrestype2w.c		\
+	aslstartup.c aslstubs.c asltransform.c asltree.c	\
+	aslutils.c asluuid.c aslwalks.c aslxref.c dtcompile.c	\
+	dtexpress.c dtfield.c dtio.c dtparser.y.h dtparserlex.c	\
+	dtparserparse.c dtsubtable.c dttable.c dttemplate.c	\
+	dtutils.c prexpress.c prmacros.c prparser.y.h		\
+	prparserlex.c prparserparse.c prscan.c prutils.c
 
 # components/debugger
 SRCS+=	dbfileio.c
 
 # components/disassembler
-SRCS+=	dmbuffer.c dmdeferred.c dmnames.c dmopcode.c dmresrc.c	\
-	dmresrcl.c dmresrcl2.c dmresrcs.c dmutils.c dmwalk.c
+SRCS+=	dmbuffer.c dmcstyle.c dmdeferred.c dmnames.c dmopcode.c	\
+	dmresrc.c dmresrcl.c dmresrcl2.c dmresrcs.c dmutils.c	\
+	dmwalk.c
 
 # components/dispatcher
 SRCS+=	dsargs.c dscontrol.c dsfield.c dsobject.c dsopcode.c	\

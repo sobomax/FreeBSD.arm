@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/contrib/unbound/freebsd-sources.pl 255779 2013-09-21 23:29:02Z des $
+# $FreeBSD: head/contrib/unbound/freebsd-sources.pl 276599 2015-01-03 00:31:52Z des $
 #
 
 use strict;
@@ -51,7 +51,11 @@ sub get_sources($) {
     close(MAKE);
     chomp($objs);
     $objs =~ s/\.l?o\b/.c/g;
-    return (split(/\s+/, $objs));
+    return map {
+	/lexer/ && s/c$/l/;
+	/parser/ && s/c$/y/;
+	$_;
+    } split(/\s+/, $objs);
 }
 
 MAIN:{
@@ -70,4 +74,3 @@ MAIN:{
 }
 
 1;
-

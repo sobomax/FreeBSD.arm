@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 9/21/96
-# $FreeBSD: head/usr.sbin/mailstats/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/mailstats/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 SENDMAIL_DIR= ${.CURDIR}/../../contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/mailstats
@@ -13,14 +13,7 @@ CFLAGS+= -DNOT_SENDMAIL
 
 WARNS?=	2
 
-LIBSMDIR=	${.OBJDIR}/../../lib/libsm
-LIBSM=		${LIBSMDIR}/libsm.a
-
-LIBSMUTILDIR=	${.OBJDIR}/../../lib/libsmutil
-LIBSMUTIL=	${LIBSMUTILDIR}/libsmutil.a
-
-DPADD=	${LIBSMUTIL} ${LIBSM}
-LDADD=	${LIBSMUTIL} ${LIBSM}
+LIBADD=	sm smutil
 
 SRCS+=	sm_os.h
 CLEANFILES+=sm_os.h

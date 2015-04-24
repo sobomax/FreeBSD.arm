@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/kern_loginclass.c 273764 2014-10-28 04:59:33Z mjg $
+ * $FreeBSD: head/sys/kern/kern_loginclass.c 280130 2015-03-16 00:10:03Z mjg $
  */
 
 /*
@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_loginclass.c 273764 2014-10-28 04:59:33Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_loginclass.c 280130 2015-03-16 00:10:03Z mjg $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -221,7 +221,7 @@ sys_setloginclass(struct thread *td, struct setloginclass_args *uap)
 	PROC_LOCK(p);
 	oldcred = crcopysafe(p, newcred);
 	newcred->cr_loginclass = newlc;
-	p->p_ucred = newcred;
+	proc_set_cred(p, newcred);
 	PROC_UNLOCK(p);
 #ifdef RACCT
 	racct_proc_ucred_changed(p, oldcred, newcred);

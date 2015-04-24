@@ -1,10 +1,9 @@
-# $FreeBSD: head/sbin/geom/class/raid/Makefile 219974 2011-03-24 21:31:32Z mav $
+# $FreeBSD: head/sbin/geom/class/raid/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH:	${.CURDIR}/../../misc
 
 GEOM_CLASS=	raid
 
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 .include <bsd.lib.mk>

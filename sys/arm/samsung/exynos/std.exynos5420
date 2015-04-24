@@ -1,9 +1,10 @@
-# $FreeBSD: head/sys/arm/samsung/exynos/std.exynos5420 266943 2014-06-01 08:15:34Z br $
+# $FreeBSD: head/sys/arm/samsung/exynos/std.exynos5420 276520 2015-01-01 23:21:46Z ian $
 
 makeoption	ARM_LITTLE_ENDIAN
 
 cpu		CPU_CORTEXA
 machine		arm armv6
+makeoptions	CONF_CFLAGS="-march=armv7a"
 
 options		PHYSADDR=0x20000000
 

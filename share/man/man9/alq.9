@@ -29,7 +29,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/alq.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/alq.9 275993 2014-12-21 10:57:42Z brueffer $
 .\"
 .Dd April 26, 2010
 .Dt ALQ 9
@@ -417,10 +417,10 @@ and either the queue is full or the system is shutting down.
 NOTE: invalid arguments to non-void functions will result in
 undefined behaviour.
 .Sh SEE ALSO
+.Xr syslog 3 ,
 .Xr kproc 9 ,
 .Xr ktr 9 ,
 .Xr msleep_spin 9 ,
-.Xr syslog 3 ,
 .Xr vnode 9
 .Sh HISTORY
 The

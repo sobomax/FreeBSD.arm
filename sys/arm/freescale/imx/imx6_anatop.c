@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_anatop.c 273283 2014-10-19 18:41:22Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_anatop.c 281085 2015-04-04 21:34:26Z andrew $");
 
 /*
  * Analog PLL and power regulator driver for Freescale i.MX6 family of SoCs.
@@ -67,7 +67,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_anatop.c 273283 2014-10-19 1
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <arm/arm/mpcore_timervar.h>
 #include <arm/freescale/fsl_ocotpreg.h>
@@ -708,6 +707,27 @@ out:
 	}
 
 	return (err);
+}
+
+uint32_t
+pll4_configure_output(uint32_t mfi, uint32_t mfn, uint32_t mfd)
+{
+	int reg;
+
+	/*
+	 * Audio PLL (PLL4).
+	 * PLL output frequency = Fref * (DIV_SELECT + NUM/DENOM)
+	 */
+
+	reg = (IMX6_ANALOG_CCM_PLL_AUDIO_ENABLE);
+	reg &= ~(IMX6_ANALOG_CCM_PLL_AUDIO_DIV_SELECT_MASK << \
+		IMX6_ANALOG_CCM_PLL_AUDIO_DIV_SELECT_SHIFT);
+	reg |= (mfi << IMX6_ANALOG_CCM_PLL_AUDIO_DIV_SELECT_SHIFT);
+	imx6_anatop_write_4(IMX6_ANALOG_CCM_PLL_AUDIO, reg);
+	imx6_anatop_write_4(IMX6_ANALOG_CCM_PLL_AUDIO_NUM, mfn);
+	imx6_anatop_write_4(IMX6_ANALOG_CCM_PLL_AUDIO_DENOM, mfd);
+
+	return (0);
 }
 
 static int

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libpjdlog/Makefile 258791 2013-12-01 09:41:06Z pjd $
+# $FreeBSD: head/lib/libpjdlog/Makefile 275024 2014-11-25 11:07:26Z bapt $
 #
 
 SHLIBDIR?=	/lib
@@ -13,8 +13,7 @@ SHLIB_MAJOR=	0
 
 CFLAGS+=-I${.CURDIR}
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 WARNS?=	6
 

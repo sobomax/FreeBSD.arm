@@ -22,7 +22,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/bce/if_bcereg.h 272096 2014-09-25 07:22:24Z glebius $
+ * $FreeBSD: head/sys/dev/bce/if_bcereg.h 279223 2015-02-24 01:00:46Z yongari $
  */
 
 #ifndef	_BCEREG_H_DEFINED
@@ -419,7 +419,7 @@
 /* Returns FALSE in "defects" per 2^31 - 1 calls, otherwise returns TRUE. */
 #define DB_RANDOMFALSE(defects)        (random() > defects)
 #define DB_OR_RANDOMFALSE(defects)  || (random() > defects)
-#define DB_AND_RANDOMFALSE(defects) && (random() > ddfects)
+#define DB_AND_RANDOMFALSE(defects) && (random() > defects)
 
 /* Returns TRUE in "defects" per 2^31 - 1 calls, otherwise returns FALSE. */
 #define DB_RANDOMTRUE(defects)         (random() < defects)

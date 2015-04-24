@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtsold/if.c 254462 2013-08-17 19:23:35Z hrs $
+ * $FreeBSD: head/usr.sbin/rtsold/if.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include <sys/param.h>
@@ -38,7 +38,6 @@
 #include <sys/queue.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/if_types.h>
 #include <net/route.h>
 #include <net/if_dl.h>

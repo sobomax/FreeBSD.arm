@@ -1,7 +1,7 @@
-# $FreeBSD: head/usr.bin/tabs/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/tabs/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	tabs
-DPADD=	${LIBTERMCAPW}
-LDADD=	-ltermcapw
+
+LIBADD=	ncursesw
 
 .include <bsd.prog.mk>

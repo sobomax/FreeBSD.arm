@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man7/build.7 267866 2014-06-25 12:28:22Z gavin $
+.\" $FreeBSD: head/share/man/man7/build.7 276673 2015-01-05 00:03:42Z ngie $
 .\"
-.Dd June 25, 2014
+.Dd December 31, 2014
 .Dt BUILD 7
 .Os
 .Sh NAME
@@ -445,6 +445,21 @@ process.
 .Bd -literal -offset indent
 make PORTS_MODULES=emulators/kqemu-kmod kernel
 .Ed
+.It Va STRIPBIN
+Command to use at install time when stripping binaries.
+Be sure to add any additional tools required to run
+.Va STRIPBIN
+to the
+.Va LOCAL_ITOOLS
+.Xr make 1
+variable before running the
+.Cm distributeworld
+or
+.Cm installworld
+targets.
+See
+.Xr install 1
+for more details.
 .It Va SUBDIR_OVERRIDE
 Override the default list of sub-directories and only build the
 sub-directory named in this variable.

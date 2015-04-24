@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_sta.c 271861 2014-09-19 09:20:55Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_sta.c 275983 2014-12-21 04:48:54Z adrian $");
 #endif
 
 /*
@@ -1405,6 +1405,7 @@ sta_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0,
 				int ix = aid / NBBY;
 				int min = tim->tim_bitctl &~ 1;
 				int max = tim->tim_len + min - 4;
+				int tim_ucast = 0, tim_mcast = 0;
 
 				/*
 				 * Only do this for unicast traffic in the TIM
@@ -1414,20 +1415,42 @@ sta_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0,
 				 */
 				if (min <= ix && ix <= max &&
 				     isset(tim->tim_bitmap - min, aid)) {
-					ieee80211_sta_tim_notify(vap, 1);
-					ic->ic_lastdata = ticks;
+					tim_ucast = 1;
 				}
 
 				/*
-				 * XXX TODO: do a separate notification
+				 * Do a separate notification
 				 * for the multicast bit being set.
 				 */
-#if 0
 				if (tim->tim_bitctl & 1) {
+					tim_mcast = 1;
+				}
+
+				/*
+				 * If the TIM indicates there's traffic for
+				 * us then get us out of STA mode powersave.
+				 */
+				if (tim_ucast == 1) {
+
+					/*
+					 * Wake us out of SLEEP state if we're
+					 * in it; and if we're doing bgscan
+					 * then wake us out of STA powersave.
+					 */
 					ieee80211_sta_tim_notify(vap, 1);
+
+					/*
+					 * This is preventing us from
+					 * continuing a bgscan; because it
+					 * tricks the contbgscan()
+					 * routine to think there's always
+					 * traffic for us.
+					 *
+					 * I think we need both an RX and
+					 * TX ic_lastdata field.
+					 */
 					ic->ic_lastdata = ticks;
 				}
-#endif
 
 				ni->ni_dtim_count = tim->tim_count;
 				ni->ni_dtim_period = tim->tim_period;

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/if.c 255156 2013-09-02 20:44:19Z hrs $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/if.c 281143 2015-04-06 09:42:23Z glebius $	*/
 /*	$KAME: if.c,v 1.17 2001/01/21 15:27:30 itojun Exp $	*/
 
 /*
@@ -38,7 +38,6 @@
 #include <net/if.h>
 #include <net/if_dl.h>
 #include <net/if_types.h>
-#include <net/if_var.h>
 #include <net/ethernet.h>
 #include <net/route.h>
 #include <netinet/in.h>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r200.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r200.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/radeon/radeon_drm.h>
@@ -548,5 +548,5 @@ int r200_packet0_check(struct radeon_cs_parser *p,
 void r200_set_safe_registers(struct radeon_device *rdev)
 {
 	rdev->config.r100.reg_safe_bm = r200_reg_safe_bm;
-	rdev->config.r100.reg_safe_bm_size = DRM_ARRAY_SIZE(r200_reg_safe_bm);
+	rdev->config.r100.reg_safe_bm_size = ARRAY_SIZE(r200_reg_safe_bm);
 }

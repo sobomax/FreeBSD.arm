@@ -41,7 +41,7 @@
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
 
-__FBSDID("$FreeBSD: head/sys/kern/subr_syscall.c 263233 2014-03-16 10:55:57Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_syscall.c 275616 2014-12-08 16:18:05Z kib $");
 
 #include <sys/capsicum.h>
 #include <sys/ktr.h>
@@ -226,9 +226,20 @@ syscallret(struct thread *td, int error, struct syscall_args *sa __unused)
 		 */
 		td->td_pflags &= ~TDP_RFPPWAIT;
 		p2 = td->td_rfppwait_p;
+again:
 		PROC_LOCK(p2);
-		while (p2->p_flag & P_PPWAIT)
-			cv_wait(&p2->p_pwait, &p2->p_mtx);
+		while (p2->p_flag & P_PPWAIT) {
+			PROC_LOCK(p);
+			if (thread_suspend_check_needed()) {
+				PROC_UNLOCK(p2);
+				thread_suspend_check(0);
+				PROC_UNLOCK(p);
+				goto again;
+			} else {
+				PROC_UNLOCK(p);
+			}
+			cv_timedwait(&p2->p_pwait, &p2->p_mtx, hz);
+		}
 		PROC_UNLOCK(p2);
 	}
 }

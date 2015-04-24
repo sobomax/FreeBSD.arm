@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 254457 2013-08-17 17:02:43Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 279390 2015-02-28 04:19:02Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,6 +38,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 254457 2013-08-17 17:02:43Z bry
 #include <sys/rwlock.h>
 #include <sys/signalvar.h>
 #include <sys/sx.h>
+#include <sys/umtx.h>
 #include <sys/unistd.h>
 #include <sys/wait.h>
 #include <sys/sched.h>
@@ -339,6 +340,7 @@ kthread_exit(void)
 	}
 	LIST_REMOVE(curthread, td_hash);
 	rw_wunlock(&tidhash_lock);
+	umtx_thread_exit(curthread);
 	PROC_SLOCK(p);
 	thread_exit();
 }

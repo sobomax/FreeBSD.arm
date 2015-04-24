@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/casper/dns/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/libexec/casper/dns/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .PATH:	${.CURDIR} ${.CURDIR}/../../../sbin/casper
 
@@ -6,8 +6,7 @@ PROG=	dns
 
 SRCS=	dns.c
 
-DPADD=	${LIBCAPSICUM} ${LIBCASPER} ${LIBNV} ${LIBPJDLOG} ${LIBUTIL}
-LDADD=	-lcapsicum -lcasper -lnv -lpjdlog -lutil
+LIBADD=	casper nv
 
 BINDIR=	/libexec/casper
 

@@ -27,12 +27,13 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: head/sys/arm/include/md_var.h 272766 2014-10-08 20:25:21Z markj $
+ * $FreeBSD: head/sys/arm/include/md_var.h 277533 2015-01-22 17:46:05Z ian $
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
 #define	_MACHINE_MD_VAR_H_
 
+extern long Maxmem;
 extern char sigcode[];
 extern int szsigcode;
 extern uint32_t *vm_page_dump;

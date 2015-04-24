@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 270929 2014-09-01 14:04:51Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 280971 2015-04-01 22:26:39Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -78,7 +78,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 270929 2014-09-01 14:04:51Z glebiu
 #include <security/mac/mac_framework.h>
 
 VNET_DEFINE(int, ip_defttl) = IPDEFTTL;
-SYSCTL_VNET_INT(_net_inet_ip, IPCTL_DEFTTL, ttl, CTLFLAG_RW,
+SYSCTL_INT(_net_inet_ip, IPCTL_DEFTTL, ttl, CTLFLAG_VNET | CTLFLAG_RW,
     &VNET_NAME(ip_defttl), 0,
     "Maximum TTL on IP packets");
 
@@ -505,8 +505,12 @@ rip_output(struct mbuf *m, struct socket *so, ...)
 			m_freem(m);
 			return (EINVAL);
 		}
+		/*
+		 * This doesn't allow application to specify ID of zero,
+		 * but we got this limitation from the beginning of history.
+		 */
 		if (ip->ip_id == 0)
-			ip->ip_id = ip_newid();
+			ip_fillid(ip);
 
 		/*
 		 * XXX prevent ip_output from overwriting header fields.

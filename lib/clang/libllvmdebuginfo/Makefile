@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libllvmdebuginfo/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmdebuginfo/Makefile 280031 2015-03-15 13:31:13Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmdebuginfo
 
@@ -20,5 +20,10 @@ SRCS=	DIContext.cpp \
 	DWARFFormValue.cpp \
 	DWARFTypeUnit.cpp \
 	DWARFUnit.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	DWARFAcceleratorTable.cpp \
+	SyntaxHighlighting.cpp
+.endif
 
 .include "../clang.lib.mk"

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/bios.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/bios.c 281495 2015-04-13 15:22:45Z kib $");
 
 /*
  * Code for dealing with the BIOS in x86 PC systems.
@@ -389,7 +389,7 @@ bios16(struct bios_args *args, char *fmt, ...)
     args->seg.code32.limit = 0xffff;	
 
     ptd = (pd_entry_t *)rcr3();
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
     if (ptd == IdlePDPT)
 #else
     if (ptd == IdlePTD)

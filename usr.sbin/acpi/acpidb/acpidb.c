@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/usr.sbin/acpi/acpidb/acpidb.c 272444 2014-10-02 19:11:18Z jkim $
+ *	$FreeBSD: head/usr.sbin/acpi/acpidb/acpidb.c 278970 2015-02-18 20:33:00Z jkim $
  */
 
 #include <sys/param.h>
@@ -74,6 +74,7 @@ static struct	ACPIRegionContentList RegionContentList;
 static int		 aml_simulation_initialized = 0;
 
 ACPI_PHYSICAL_ADDRESS	 AeLocalGetRootPointer(void);
+void			 AeDoObjectOverrides(void);
 void			 AeTableOverride(ACPI_TABLE_HEADER *, ACPI_TABLE_HEADER **);
 
 static void		 aml_simulation_init(void);
@@ -96,6 +97,11 @@ AcpiOsGetRootPointer(void)
 {
 
 	return (0);
+}
+
+void
+AeDoObjectOverrides(void)
+{
 }
 
 void

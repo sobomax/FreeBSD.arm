@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/newkey/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/newkey/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -8,7 +8,6 @@ SRCS=	newkey.c generic.c update.c
 CFLAGS+= -DYP
 .endif
 MAN=	newkey.8
-DPADD=	${LIBRPCSVC} ${LIBMP} ${LIBCRYPTO}
-LDADD=	-lrpcsvc -lmp -lcrypto
+LIBADD=	rpcsvc mp
 
 .include <bsd.prog.mk>

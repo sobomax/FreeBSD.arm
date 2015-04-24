@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/release/scripts/relnotes-search.sh 265406 2014-05-05 23:36:46Z gjb $
+# $FreeBSD: head/release/scripts/relnotes-search.sh 275613 2014-12-08 15:45:07Z gjb $
 #
 
 set -C
@@ -125,7 +125,7 @@ main() {
 	# All tests passed.  Let's see what can possibly go wrong
 	# from here.  The search string specified should match this
 	# in PCRE speak: ':[\t ]*'
-	${svn} log ${rev} --search 'Relnotes:?[^ ]*' ${1} > ${where}
+	${svn} log ${rev} --search 'Relnotes:*[A-Za-z0-9]*' ${1} > ${where}
 	return $?
 }
 

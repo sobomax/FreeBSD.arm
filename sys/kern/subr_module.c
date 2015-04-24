@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_module.c 218494 2011-02-09 19:08:21Z marcel $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_module.c 276391 2014-12-30 02:39:47Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -253,7 +253,7 @@ preload_fetch_size(caddr_t mod)
 	return (*mdp);
 }
 
-/* Called from locore on i386.  Convert physical pointers to kvm. Sigh. */
+/* Called from locore.  Convert physical pointers to kvm. Sigh. */
 void
 preload_bootstrap_relocate(vm_offset_t offset)
 {

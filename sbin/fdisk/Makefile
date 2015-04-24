@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/fdisk/Makefile 183296 2008-09-23 13:12:51Z ru $
+# $FreeBSD: head/sbin/fdisk/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	fdisk
 SRCS=	fdisk.c geom_mbr_enc.c
@@ -7,8 +7,7 @@ MAN=	fdisk.8
 
 .PATH:	${.CURDIR}/../../sys/geom
 
-DPADD+=	${LIBGEOM} ${LIBBSDXML} ${LIBSBUF}
-LDADD+=	-lgeom -lbsdxml -lsbuf
+LIBADD=	geom
 
 .include <bsd.prog.mk>
 

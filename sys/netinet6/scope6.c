@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/scope6.c 271426 2014-09-11 12:54:17Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/scope6.c 274348 2014-11-10 16:12:51Z ae $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -60,7 +60,7 @@ VNET_DEFINE(int, ip6_use_defzone) = 0;
 #endif
 VNET_DEFINE(int, deembed_scopeid) = 1;
 SYSCTL_DECL(_net_inet6_ip6);
-SYSCTL_VNET_INT(_net_inet6_ip6, OID_AUTO, deembed_scopeid, CTLFLAG_RW,
+SYSCTL_INT(_net_inet6_ip6, OID_AUTO, deembed_scopeid, CTLFLAG_VNET | CTLFLAG_RW,
     &VNET_NAME(deembed_scopeid), 0,
     "Extract embedded zone ID and set it to sin6_scope_id in sockaddr_in6.");
 
@@ -530,6 +530,27 @@ sa6_checkzone(struct sockaddr_in6 *sa6)
 		sa6->sin6_scope_id = V_sid_default.s6id_list[scope];
 	/* Return error if we can't determine zone id */
 	return (sa6->sin6_scope_id ? 0: EADDRNOTAVAIL);
+}
+
+/*
+ * This function is similar to sa6_checkzone, but it uses given ifp
+ * to initialize sin6_scope_id.
+ */
+int
+sa6_checkzone_ifp(struct ifnet *ifp, struct sockaddr_in6 *sa6)
+{
+	int scope;
+
+	scope = in6_addrscope(&sa6->sin6_addr);
+	if (scope == IPV6_ADDR_SCOPE_LINKLOCAL ||
+	    scope == IPV6_ADDR_SCOPE_INTFACELOCAL) {
+		if (sa6->sin6_scope_id == 0) {
+			sa6->sin6_scope_id = in6_getscopezone(ifp, scope);
+			return (0);
+		} else if (sa6->sin6_scope_id != in6_getscopezone(ifp, scope))
+			return (EADDRNOTAVAIL);
+	}
+	return (sa6_checkzone(sa6));
 }
 
 

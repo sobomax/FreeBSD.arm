@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbPluginProcessElfCore/Makefile 258054 2013-11-12 17:25:33Z emaste $
+# $FreeBSD: head/lib/clang/liblldbPluginProcessElfCore/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -11,6 +11,7 @@ SRCDIR=	tools/lldb/source/Plugins/Process/elf-core
 SRCS=	ProcessElfCore.cpp \
 	ThreadElfCore.cpp \
 	RegisterContextPOSIXCore_mips64.cpp \
+	RegisterContextPOSIXCore_powerpc.cpp \
 	RegisterContextPOSIXCore_x86_64.cpp
 
 TGHDRS=	DiagnosticCommonKinds \

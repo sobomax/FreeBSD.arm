@@ -1,11 +1,10 @@
-# $FreeBSD: head/libexec/rpc.rstatd/Makefile 204352 2010-02-26 09:41:16Z ru $
+# $FreeBSD: head/libexec/rpc.rstatd/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG =	rpc.rstatd
 SRCS =	rstatd.c rstat_proc.c
 MAN =	rpc.rstatd.8
 
-DPADD=	${LIBRPCSVC} ${LIBUTIL} ${LIBDEVSTAT} ${LIBKVM}
-LDADD=	-lrpcsvc -lutil -ldevstat -lkvm
+LIBADD=	rpcsvc devstat
 
 WARNS?=	1
 

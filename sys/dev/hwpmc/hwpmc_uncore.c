@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_uncore.c 263112 2014-03-13 16:51:40Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_uncore.c 277177 2015-01-14 12:46:58Z rrs $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -38,7 +38,11 @@ __FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_uncore.c 263112 2014-03-13 16:51:40
 #include <sys/systm.h>
 
 #include <machine/intr_machdep.h>
+#if (__FreeBSD_version >= 1100000)
 #include <x86/apicvar.h>
+#else
+#include <machine/apicvar.h>
+#endif
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
 #include <machine/specialreg.h>

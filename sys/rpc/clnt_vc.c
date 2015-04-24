@@ -34,7 +34,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/clnt_vc.c 265240 2014-05-02 20:45:55Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/rpc/clnt_vc.c 274421 2014-11-12 09:57:15Z glebius $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -860,7 +860,7 @@ clnt_vc_soupcall(struct socket *so, void *arg, int waitflag)
 			 * error condition
 			 */
 			do_read = FALSE;
-			if (so->so_rcv.sb_cc >= sizeof(uint32_t)
+			if (sbavail(&so->so_rcv) >= sizeof(uint32_t)
 			    || (so->so_rcv.sb_state & SBS_CANTRCVMORE)
 			    || so->so_error)
 				do_read = TRUE;
@@ -913,7 +913,7 @@ clnt_vc_soupcall(struct socket *so, void *arg, int waitflag)
 			 * buffered.
 			 */
 			do_read = FALSE;
-			if (so->so_rcv.sb_cc >= ct->ct_record_resid
+			if (sbavail(&so->so_rcv) >= ct->ct_record_resid
 			    || (so->so_rcv.sb_state & SBS_CANTRCVMORE)
 			    || so->so_error)
 				do_read = TRUE;

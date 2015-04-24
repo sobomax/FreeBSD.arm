@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_x86.c 273005 2014-10-12 17:59:31Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit_x86.c 277950 2015-01-30 21:22:18Z nwhitehorn $
  */
 
 #include <sys/types.h>
@@ -51,7 +51,10 @@ x86_bootmethod(void)
 const char *
 default_scheme(void)
 {
-	return ("GPT");
+	if (strcmp(x86_bootmethod(), "UEFI") == 0)
+		return ("GPT");
+	else
+		return ("MBR");
 }
 
 int

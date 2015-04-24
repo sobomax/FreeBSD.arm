@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_proto.h 257065 2013-10-24 17:04:16Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_proto.h 275928 2014-12-19 01:39:58Z adrian $
  */
 #ifndef _NET80211_IEEE80211_PROTO_H_
 #define _NET80211_IEEE80211_PROTO_H_
@@ -149,6 +149,7 @@ struct mbuf *ieee80211_alloc_cts(struct ieee80211com *,
 
 uint8_t *ieee80211_add_rates(uint8_t *, const struct ieee80211_rateset *);
 uint8_t *ieee80211_add_xrates(uint8_t *, const struct ieee80211_rateset *);
+uint8_t *ieee80211_add_ssid(uint8_t *, const uint8_t *, u_int);
 uint8_t *ieee80211_add_wpa(uint8_t *, const struct ieee80211vap *);
 uint8_t *ieee80211_add_rsn(uint8_t *, const struct ieee80211vap *);
 uint8_t *ieee80211_add_qos(uint8_t *, const struct ieee80211_node *);

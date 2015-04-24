@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tws/tws.c 272000 2014-09-22 20:38:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/tws/tws.c 276715 2015-01-05 19:49:20Z jhb $");
 
 #include <dev/tws/tws.h>
 #include <dev/tws/tws_services.h>
@@ -113,7 +113,7 @@ static struct cdevsw tws_cdevsw = {
  */
 
 int
-tws_open(struct cdev *dev, int oflags, int devtype, d_thread_t *td)
+tws_open(struct cdev *dev, int oflags, int devtype, struct thread *td)
 {
     struct tws_softc *sc = dev->si_drv1;
 
@@ -123,7 +123,7 @@ tws_open(struct cdev *dev, int oflags, int devtype, d_thread_t *td)
 }
 
 int
-tws_close(struct cdev *dev, int fflag, int devtype, d_thread_t *td)
+tws_close(struct cdev *dev, int fflag, int devtype, struct thread *td)
 {
     struct tws_softc *sc = dev->si_drv1;
 

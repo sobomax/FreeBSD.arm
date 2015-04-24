@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_clone.h 257271 2013-10-28 20:32:05Z glebius $
+ * $FreeBSD: head/sys/net/if_clone.h 279538 2015-03-02 20:00:03Z hrs $
  */
 
 #ifndef	_NET_IF_CLONE_H_
@@ -65,11 +65,12 @@ EVENTHANDLER_DECLARE(if_clone_event, if_clone_event_handler_t);
 #endif
 
 /* The below interfaces used only by net/if.c. */
-void	if_clone_init(void);
 void	vnet_if_clone_init(void);
 int	if_clone_create(char *, size_t, caddr_t);
 int	if_clone_destroy(const char *);
 int	if_clone_list(struct if_clonereq *);
+struct if_clone *if_clone_findifc(struct ifnet *);
+void	if_clone_addgroup(struct ifnet *, struct if_clone *);
 
 /* The below interface used only by epair(4). */
 int	if_clone_destroyif(struct if_clone *, struct ifnet *);

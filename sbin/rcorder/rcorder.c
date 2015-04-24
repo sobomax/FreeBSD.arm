@@ -36,16 +36,16 @@
  */
 
 #include <sys/types.h>
-__FBSDID("$FreeBSD: head/sbin/rcorder/rcorder.c 241720 2012-10-19 05:43:38Z ed $");
+__FBSDID("$FreeBSD: head/sbin/rcorder/rcorder.c 277674 2015-01-25 03:08:21Z ngie $");
 
 #include <sys/stat.h>
 
 #include <err.h>
 #include <stdio.h>
+#include <libutil.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <util.h>
 
 #include "ealloc.h"
 #include "sprite.h"

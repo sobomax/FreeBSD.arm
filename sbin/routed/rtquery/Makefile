@@ -1,11 +1,10 @@
 # Make `routed` tools for BSD/OS
 # $Revision: 1.6 $
-# $FreeBSD: head/sbin/routed/rtquery/Makefile 228607 2011-12-16 23:43:58Z dim $
+# $FreeBSD: head/sbin/routed/rtquery/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	rtquery
 MAN=	rtquery.8
-LDADD=	-lmd
-DPADD=	${LIBMD}
+LIBADD=	md
 WARNS?=	3
 NO_WARRAY_BOUNDS=
 

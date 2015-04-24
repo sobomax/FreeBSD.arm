@@ -1,7 +1,6 @@
-# $FreeBSD: head/usr.bin/killall/Makefile 194869 2009-06-24 18:18:35Z jamie $
+# $FreeBSD: head/usr.bin/killall/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	killall
-DPADD=	${LIBJAIL}
-LDADD=	-ljail
+LIBADD=	jail
 
 .include <bsd.prog.mk>

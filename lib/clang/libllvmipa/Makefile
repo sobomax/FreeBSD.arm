@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmipa/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/clang/libllvmipa/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <src.opts.mk>
 
@@ -8,7 +8,6 @@ SRCDIR=	lib/Analysis/IPA
 SRCS=	CallGraph.cpp \
 	CallGraphSCCPass.cpp \
 	CallPrinter.cpp \
-	FindUsedTypes.cpp \
 	GlobalsModRef.cpp \
 	InlineCost.cpp
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/autofs/autofs_ioctl.h 273127 2014-10-15 09:28:45Z trasz $
+ * $FreeBSD: head/sys/fs/autofs/autofs_ioctl.h 278521 2015-02-10 16:17:16Z trasz $
  */
 
 #ifndef AUTOFS_IOCTL_H
@@ -71,6 +71,21 @@ struct autofs_daemon_request {
 	char		adr_options[MAXPATHLEN];
 };
 
+/*
+ * Compatibility with 10.1-RELEASE automountd(8).
+ */
+struct autofs_daemon_done_101 {
+	/*
+	 * Identifier, copied from adr_id.
+	 */
+	int		add_id;
+
+	/*
+	 * Error number, possibly returned to userland.
+	 */
+	int		add_error;
+};
+
 struct autofs_daemon_done {
 	/*
 	 * Identifier, copied from adr_id.
@@ -87,9 +102,15 @@ struct autofs_daemon_done {
 	 * Error number, possibly returned to userland.
 	 */
 	int		add_error;
+
+	/*
+	 * Reserved for future use.
+	 */
+	int		add_spare[7];
 };
 
 #define	AUTOFSREQUEST	_IOR('I', 0x01, struct autofs_daemon_request)
-#define	AUTOFSDONE	_IOW('I', 0x02, struct autofs_daemon_done)
+#define	AUTOFSDONE101	_IOW('I', 0x02, struct autofs_daemon_done_101)
+#define	AUTOFSDONE	_IOW('I', 0x03, struct autofs_daemon_done)
 
 #endif /* !AUTOFS_IOCTL_H */

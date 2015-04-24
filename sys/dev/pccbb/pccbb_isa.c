@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb_isa.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb_isa.c 277234 2015-01-16 06:19:39Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -203,13 +203,25 @@ cbb_isa_attach(device_t dev)
 	return (ENOMEM);
 }
 
+static int
+cbb_isa_suspend(device_t dev)
+{
+	return (0);
+}
+
+static int
+cbb_isa_resume(device_t dev)
+{
+	return (0);
+}
+
 static device_method_t cbb_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,			cbb_isa_probe),
 	DEVMETHOD(device_attach,		cbb_isa_attach),
 	DEVMETHOD(device_detach,		cbb_detach),
-	DEVMETHOD(device_suspend,		cbb_suspend),
-	DEVMETHOD(device_resume,		cbb_resume),
+	DEVMETHOD(device_suspend,		cbb_isa_suspend),
+	DEVMETHOD(device_resume,		cbb_isa_resume),
 
 	/* bus methods */
 	DEVMETHOD(bus_read_ivar,		cbb_read_ivar),

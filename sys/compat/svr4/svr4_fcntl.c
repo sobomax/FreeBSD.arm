@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_fcntl.c 263233 2014-03-16 10:55:57Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_fcntl.c 274476 2014-11-13 18:01:51Z kib $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -390,7 +390,8 @@ svr4_sys_open(td, uap)
 	CHECKALTEXIST(td, uap->path, &newpath);
 
 	bsd_flags = svr4_to_bsd_flags(uap->flags);
-	error = kern_open(td, newpath, UIO_SYSSPACE, bsd_flags, uap->mode);
+	error = kern_openat(td, AT_FDCWD, newpath, UIO_SYSSPACE, bsd_flags,
+	    uap->mode);
 	free(newpath, M_TEMP);
 
 	if (error) {
@@ -450,8 +451,8 @@ svr4_sys_creat(td, uap)
 
 	CHECKALTEXIST(td, uap->path, &newpath);
 
-	error = kern_open(td, newpath, UIO_SYSSPACE, O_WRONLY | O_CREAT |
-	    O_TRUNC, uap->mode);
+	error = kern_openat(td, AT_FDCWD, newpath, UIO_SYSSPACE,
+	    O_WRONLY | O_CREAT | O_TRUNC, uap->mode);
 	free(newpath, M_TEMP);
 	return (error);
 }
@@ -494,7 +495,8 @@ svr4_sys_access(td, uap)
 	int error;
 
 	CHECKALTEXIST(td, uap->path, &newpath);
-	error = kern_access(td, newpath, UIO_SYSSPACE, uap->amode);
+	error = kern_accessat(td, AT_FDCWD, newpath, UIO_SYSSPACE,
+	    0, uap->amode);
 	free(newpath, M_TEMP);
 	return (error);
 }

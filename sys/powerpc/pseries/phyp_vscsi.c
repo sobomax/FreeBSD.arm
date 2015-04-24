@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/phyp_vscsi.c 259418 2013-12-15 16:58:23Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/phyp_vscsi.c 279217 2015-02-23 20:38:00Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -931,10 +931,11 @@ vscsi_check_response_queue(struct vscsi_softc *sc)
 
 	mtx_assert(&sc->io_lock, MA_OWNED);
 
-	phyp_hcall(H_VIO_SIGNAL, sc->unit, 0);
-	bus_dmamap_sync(sc->crq_tag, sc->crq_map, BUS_DMASYNC_POSTREAD);
-
 	while (sc->crq_queue[sc->cur_crq].valid != 0) {
+		/* The hypercalls at both ends of this are not optimal */
+		phyp_hcall(H_VIO_SIGNAL, sc->unit, 0);
+		bus_dmamap_sync(sc->crq_tag, sc->crq_map, BUS_DMASYNC_POSTREAD);
+
 		crq = &sc->crq_queue[sc->cur_crq];
 
 		switch (crq->valid) {
@@ -983,9 +984,9 @@ vscsi_check_response_queue(struct vscsi_softc *sc)
 
 		crq->valid = 0;
 		sc->cur_crq = (sc->cur_crq + 1) % sc->n_crqs;
-	};
 
-	bus_dmamap_sync(sc->crq_tag, sc->crq_map, BUS_DMASYNC_PREWRITE);
-	phyp_hcall(H_VIO_SIGNAL, sc->unit, 1);
+		bus_dmamap_sync(sc->crq_tag, sc->crq_map, BUS_DMASYNC_PREWRITE);
+		phyp_hcall(H_VIO_SIGNAL, sc->unit, 1);
+	}
 }
 

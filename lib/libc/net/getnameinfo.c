@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/getnameinfo.c 199221 2009-11-12 11:54:12Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/net/getnameinfo.c 274331 2014-11-09 21:33:01Z melifaro $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -414,7 +414,6 @@ getnameinfo_link(const struct sockaddr *sa, socklen_t salen,
 	/*
 	 * The following have zero-length addresses.
 	 * IFT_ATM	(net/if_atmsubr.c)
-	 * IFT_FAITH	(net/if_faith.c)
 	 * IFT_GIF	(net/if_gif.c)
 	 * IFT_LOOP	(net/if_loop.c)
 	 * IFT_PPP	(net/if_ppp.c, net/if_spppsubr.c)

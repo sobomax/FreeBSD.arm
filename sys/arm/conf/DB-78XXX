@@ -1,14 +1,13 @@
 #
 # Custom kernel for Marvell DB-78xx boards.
 #
-# $FreeBSD: head/sys/arm/conf/DB-78XXX 271050 2014-09-03 19:37:41Z ian $
+# $FreeBSD: head/sys/arm/conf/DB-78XXX 279850 2015-03-10 14:36:51Z ian $
 #
 
 ident		DB-88F78XX
 include		"../mv/discovery/std.db78xxx"
 
 options 	SOC_MV_DISCOVERY
-makeoptions	MODULES_OVERRIDE=""
 
 #makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WERROR="-Werror"
@@ -21,7 +20,7 @@ options 	GEOM_PART_MBR		# MBR partition scheme
 options 	TMPFS			# Efficient memory filesystem
 options 	FFS			# Berkeley Fast Filesystem
 options 	NANDFS			# NAND Filesystem
-options 	NFSCL			# New Network Filesystem Client
+options 	NFSCL			# Network Filesystem Client
 options 	NFSLOCKD		# Network Lock Manager
 options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 options 	BOOTP

@@ -24,7 +24,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_mbox.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_mbox.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,14 +47,12 @@ __FBSDID("$FreeBSD: head/sys/arm/ti/ti_mbox.c 261410 2014-02-02 19:17:28Z ian $"
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <arm/ti/ti_mbox.h>
 #include <arm/ti/ti_prcm.h>
 
 #include "mbox_if.h"
 
-#define DEBUG
 #ifdef DEBUG
 #define	DPRINTF(fmt, ...)	do {	\
 	printf("%s: ", __func__);	\

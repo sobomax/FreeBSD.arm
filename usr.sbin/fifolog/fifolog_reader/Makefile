@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/fifolog/fifolog_reader/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/fifolog/fifolog_reader/Makefile 281384 2015-04-10 21:24:38Z emaste $
 
 PROG=	fifolog_reader
 
@@ -6,8 +6,7 @@ CFLAGS+= -I${.CURDIR}/../lib
 
 MAN=
 
-DPADD=	${LIBFIFOLOG} ${LIBUTIL} ${LIBZ}
-LDADD=	${LIBFIFOLOG} -lutil -lz
+LIBADD=	fifolog
 
 regress:
 	./${PROG} /tmp/fifolog.0

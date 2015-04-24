@@ -36,7 +36,9 @@
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include "assym.s"
-__FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 269390 2014-08-01 18:24:44Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 276596 2015-01-02 23:46:26Z ian $");
+
+	.syntax	unified
 
 #ifdef _ARM_ARCH_6
 #define GET_PCB(tmp) \
@@ -83,7 +85,7 @@ EENTRY_NP(casuword32)
 	ldrt	r5, [r0]
 	cmp	r5, r1
 	movne	r0, r5
-	streqt	r2, [r0]
+	strteq	r2, [r0]
 #endif
 	moveq	r0, r1
 2:
@@ -129,7 +131,7 @@ EENTRY_NP(fuword32)
 	str	r1, [r2, #PCB_ONFAULT]
 	mov	r0, r3
 	RET
-END(fuword32)
+EEND(fuword32)
 END(fuword)
 
 /*
@@ -202,7 +204,7 @@ Lblock_userspace_access:
 	.word	_C_LABEL(block_userspace_access)
 
 	.data
-	.align	0
+	.align	2
 	.global	_C_LABEL(block_userspace_access)
 _C_LABEL(block_userspace_access):
 	.word	0
@@ -269,7 +271,7 @@ _C_LABEL(fusubailout):
 
 fusupcbfaulttext:
 	.asciz	"Yikes - no valid PCB during fusuxxx() addr=%08x\n"
-	.align	0
+	.align	2
 #endif
 
 /*
@@ -295,7 +297,7 @@ EENTRY_NP(suword32)
 	mov	r0, #0x00000000
 	str	r0, [r2, #PCB_ONFAULT]
 	RET
-END(suword32)
+EEND(suword32)
 END(suword)
 
 /*

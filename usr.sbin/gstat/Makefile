@@ -1,8 +1,7 @@
-# $FreeBSD: head/usr.sbin/gstat/Makefile 270650 2014-08-26 09:10:28Z ngie $
+# $FreeBSD: head/usr.sbin/gstat/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	gstat
 MAN=	gstat.8
-DPADD=	${LIBDEVSTAT} ${LIBKVM} ${LIBGEOM} ${LIBBSDXML} ${LIBSBUF} ${LIBEDIT} ${LIBNCURSESW}
-LDADD=	-ldevstat -lkvm -lgeom -lbsdxml -lsbuf -ledit -lncursesw
+LIBADD=	devstat geom edit ncursesw
 
 .include <bsd.prog.mk>

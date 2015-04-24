@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ichwd/ichwd.h 253475 2013-07-19 21:37:40Z jfv $
+ * $FreeBSD: head/sys/dev/ichwd/ichwd.h 275101 2014-11-26 04:23:21Z mav $
  */
 
 #ifndef _ICHWD_H_
@@ -210,6 +210,9 @@ struct ichwd_softc {
 #define DEVICEID_LPT29		0x8c5d
 #define DEVICEID_LPT30		0x8c5e
 #define DEVICEID_LPT31		0x8c5f
+#define DEVICEID_WCPT2		0x8cc2
+#define DEVICEID_WCPT4		0x8cc4
+#define DEVICEID_WCPT6		0x8cc6
 
 /* ICH LPC Interface Bridge Registers (ICH5 and older) */
 #define ICH_GEN_STA		0xd4

@@ -26,10 +26,11 @@
  * SUCH DAMAGE.
  *
  * $Id: irmc.c,v 1.6 2004/01/13 19:31:54 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/sdpd/irmc.c 124758 2004-01-20 20:48:26Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/sdpd/irmc.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/queue.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <sdp.h>
 #include <string.h>

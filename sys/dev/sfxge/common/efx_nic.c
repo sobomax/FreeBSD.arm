@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_nic.c 228078 2011-11-28 17:19:05Z philip $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_nic.c 279141 2015-02-22 07:08:57Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -249,11 +249,15 @@ efx_nic_create(
 #if EFSYS_OPT_SIENA
 	case EFX_FAMILY_SIENA:
 		enp->en_enop = (efx_nic_ops_t *)&__efx_nic_siena_ops;
-		enp->en_features = EFX_FEATURE_IPV6 |
+		enp->en_features =
+		    EFX_FEATURE_IPV6 |
 		    EFX_FEATURE_LFSR_HASH_INSERT |
-		    EFX_FEATURE_LINK_EVENTS | EFX_FEATURE_PERIODIC_MAC_STATS |
-		    EFX_FEATURE_WOL | EFX_FEATURE_MCDI |
-		    EFX_FEATURE_LOOKAHEAD_SPLIT | EFX_FEATURE_MAC_HEADER_FILTERS;
+		    EFX_FEATURE_LINK_EVENTS |
+		    EFX_FEATURE_PERIODIC_MAC_STATS |
+		    EFX_FEATURE_WOL |
+		    EFX_FEATURE_MCDI |
+		    EFX_FEATURE_LOOKAHEAD_SPLIT |
+		    EFX_FEATURE_MAC_HEADER_FILTERS;
 		break;
 #endif	/* EFSYS_OPT_SIENA */
 

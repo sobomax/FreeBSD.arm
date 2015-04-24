@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/rpc.statd/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/usr.sbin/rpc.statd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	rpc.statd
 MAN=	rpc.statd.8
@@ -7,8 +7,7 @@ SRCS=	file.c sm_inter_svc.c sm_inter.h statd.c procs.c
 CFLAGS+= -I.
 WARNS?= 2
 
-DPADD=	${LIBRPCSVC}
-LDADD=	-lrpcsvc
+LIBADD=	rpcsvc
 
 CLEANFILES= sm_inter_svc.c sm_inter.h
 

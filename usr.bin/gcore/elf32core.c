@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/gcore/elf32core.c 269128 2014-07-26 16:45:11Z marcel $ */
+/* $FreeBSD: head/usr.bin/gcore/elf32core.c 281266 2015-04-08 16:30:45Z jhb $ */
 #ifndef __LP64__
 #error "this file must be compiled for LP64."
 #endif
@@ -7,24 +7,6 @@
 #define _MACHINE_ELF_WANT_32BIT
 
 #include <sys/procfs.h>
-
-struct prpsinfo32 {
-	int	pr_version;
-	u_int	pr_psinfosz;
-	char	pr_fname[PRFNAMESZ+1];
-	char	pr_psargs[PRARGSZ+1];
-};
-
-struct prstatus32 {
-	int	pr_version;
-	u_int	pr_statussz;
-	u_int	pr_gregsetsz;
-	u_int	pr_fpregsetsz;
-	int	pr_osreldate;
-	int	pr_cursig;
-	pid_t	pr_pid;
-	struct reg32 pr_reg;
-};
 
 #define	ELFCORE_COMPAT_32	1
 #include "elfcore.c"

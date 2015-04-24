@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/amd/vmcb.h 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/amd/vmcb.h 276402 2014-12-30 07:08:30Z neel $
  */
 
 #ifndef _VMCB_H_
@@ -140,6 +140,8 @@ struct svm_softc;
 #define	VMCB_EXIT_MSR			0x7C
 #define	VMCB_EXIT_SHUTDOWN		0x7F
 #define	VMCB_EXIT_VMSAVE		0x83
+#define	VMCB_EXIT_MONITOR		0x8A
+#define	VMCB_EXIT_MWAIT			0x8B
 #define	VMCB_EXIT_NPF			0x400
 #define	VMCB_EXIT_INVALID		-1
 

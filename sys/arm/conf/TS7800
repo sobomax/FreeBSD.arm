@@ -1,14 +1,13 @@
 #
 # Custom kernel for the TS-7800 board.
 #
-# $FreeBSD: head/sys/arm/conf/TS7800 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/arm/conf/TS7800 279837 2015-03-10 02:33:51Z ian $
 #
 
 ident		TS7800
 include		"../mv/orion/std.ts7800"
 
 options 	SOC_MV_ORION
-makeoptions	MODULES_OVERRIDE=""
 
 #makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WERROR="-Werror"
@@ -18,7 +17,7 @@ options 	INET			# InterNETworking
 options 	INET6			# IPv6 communications protocols
 options 	FFS			# Berkeley Fast Filesystem
 options 	SOFTUPDATES		# Enable FFS soft updates support
-options 	NFSCL			# New Network Filesystem Client
+options 	NFSCL			# Network Filesystem Client
 options 	NFSLOCKD		# Network Lock Manager
 options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 options 	BOOTP

@@ -1,9 +1,8 @@
-# $FreeBSD: head/usr.sbin/bsdinstall/distfetch/Makefile 266157 2014-05-15 16:44:25Z brooks $
+# $FreeBSD: head/usr.sbin/bsdinstall/distfetch/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 BINDIR= /usr/libexec/bsdinstall
 PROG=	distfetch
-DPADD=	${LIBFETCH} ${LIBNCURSESW} ${LIBDIALOG} ${LIBM}
-LDADD=	-lfetch -lncursesw -ldialog -lm
+LIBADD=	fetch ncursesw dialog m
 
 WARNS?=	6
 MAN=

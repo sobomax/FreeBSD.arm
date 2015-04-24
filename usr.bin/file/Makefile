@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/file/Makefile 267897 2014-06-26 06:03:39Z delphij $
+# $FreeBSD: head/usr.bin/file/Makefile 275042 2014-11-25 14:29:10Z bapt $
 # Makefile for file(1) cmd.
 # Copyright (c) David E. O'Brien, 2000-2004, 2009
 # Copyright (c) Ian F. Darwin 86/09/01 - see LEGAL.NOTICE.
@@ -31,8 +31,7 @@ MAGICPATH?=	/usr/share/misc
 CFLAGS+= -DMAGIC='"${MAGICPATH}/magic"' -DHAVE_CONFIG_H
 CFLAGS+= -I${.CURDIR}/../../lib/libmagic
 
-DPADD=	${LIBMAGIC} ${LIBZ}
-LDADD=	-lmagic -lz
+LIBADD=	magic
 
 FILEVER!= awk '$$1 == "\#define" && $$2 == "VERSION" { print $$3; exit }' \
 			${.CURDIR}/../../lib/libmagic/config.h

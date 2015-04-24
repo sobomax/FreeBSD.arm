@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/tar/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/tar/Makefile 275042 2014-11-25 14:29:10Z bapt $
 .include <src.opts.mk>
 
 LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
@@ -19,15 +19,7 @@ SRCS=	bsdtar.c	\
 SRCS+=	err.c		\
 	line_reader.c
 
-DPADD=	${LIBARCHIVE} ${LIBBZ2} ${LIBZ} ${LIBLZMA} ${LIBBSDXML}
-LDADD=	-larchive -lbz2 -lz -llzma -lbsdxml
-.if ${MK_OPENSSL} != "no"
-DPADD+=	${LIBCRYPTO}
-LDADD+= -lcrypto
-.else
-DPADD+= ${LIBMD}
-LDADD+= -lmd
-.endif
+LIBADD=	archive
 
 .if ${MK_ICONV} != "no"
 CFLAGS+=	-DHAVE_ICONV=1 -DHAVE_ICONV_H=1 -DICONV_CONST=const

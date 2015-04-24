@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/nehemiah.c 273872 2014-10-30 21:21:53Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/nehemiah.c 274252 2014-11-07 20:23:43Z kib $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -157,4 +157,4 @@ nehemiah_modevent(module_t mod, int type, void *unused)
 
 DEV_MODULE(nehemiah, nehemiah_modevent, NULL);
 MODULE_VERSION(nehemiah, 1);
-MODULE_DEPEND(nehemiah, random_adaptors, 1, 1, 1);
+MODULE_DEPEND(nehemiah, randomdev, 1, 1, 1);

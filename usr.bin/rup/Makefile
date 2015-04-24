@@ -1,10 +1,9 @@
-# $FreeBSD: head/usr.bin/rup/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/rup/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	rup
 
 WARNS?=	1
 
-DPADD=	${LIBRPCSVC}
-LDADD=	-lrpcsvc
+LIBADD=	rpcsvc
 
 .include <bsd.prog.mk>

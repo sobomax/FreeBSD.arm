@@ -27,7 +27,7 @@
 /* CPU configuration module for Allwinner A20 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_cpu_cfg.c 263711 2014-03-25 08:31:47Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_cpu_cfg.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_cpu_cfg.c 263711 2014-03-25 0
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include "a20_cpu_cfg.h"
 

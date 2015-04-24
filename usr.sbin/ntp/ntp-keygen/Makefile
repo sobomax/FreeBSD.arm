@@ -1,24 +1,29 @@
-# $FreeBSD: head/usr.sbin/ntp/ntp-keygen/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/ntp/ntp-keygen/Makefile 280849 2015-03-30 13:30:15Z cy $
 
 MAN=
 
 .include <src.opts.mk>
 
-.PATH: ${.CURDIR}/../../../contrib/ntp/util \
-       ${.CURDIR}/../../../contrib/ntp/ntpd
+.PATH:	${.CURDIR}/../../../contrib/ntp/util \
+	${.CURDIR}/../../../contrib/ntp/ntpd
 
 PROG=	ntp-keygen
 SRCS=	ntp-keygen.c ntp-keygen-opts.c
 
-CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include -I${.CURDIR}/../ \
-	-I${.CURDIR}/../../../contrib/ntp/libopts
+CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include \
+	-I${.CURDIR}/../../../contrib/ntp/include \
+	-I${.CURDIR}/../../../contrib/ntp/lib/isc/include \
+	-I${.CURDIR}/../../../contrib/ntp/lib/isc/unix/include \
+	-I${.CURDIR}/../../../contrib/ntp/lib/isc/pthreads/include \
+	-I${.CURDIR}/../../../contrib/ntp/lib/isc/${NTP_ATOMIC}/include \
+	-I${.CURDIR}/../../../contrib/ntp/sntp/libopts \
+	-I${.CURDIR}/../../../lib/libc/${MACHINE_ARCH} \
+	-I${.CURDIR}/../
 
-DPADD=	${LIBNTP} ${LIBOPTS}
-LDADD=	${LIBNTP} ${LIBOPTS}
+LIBADD+=	ntp opts pthread
 
 .if ${MK_OPENSSL} != "no"
-DPADD+=	${LIBMD} ${LIBCRYPTO}
-LDADD+=	-lmd -lcrypto
+LIBADD+=	md crypto
 .endif
 
 .include <bsd.prog.mk>

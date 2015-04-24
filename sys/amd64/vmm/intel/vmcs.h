@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.h 271888 2014-09-20 02:35:21Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmcs.h 276098 2014-12-23 02:14:49Z neel $
  */
 
 #ifndef _VMCS_H_
@@ -321,7 +321,7 @@ vmcs_write(uint32_t encoding, uint64_t val)
 #define EXIT_REASON_MTF			37
 #define EXIT_REASON_MONITOR		39
 #define EXIT_REASON_PAUSE		40
-#define EXIT_REASON_MCE			41
+#define EXIT_REASON_MCE_DURING_ENTRY	41
 #define EXIT_REASON_TPR			43
 #define EXIT_REASON_APIC_ACCESS		44
 #define	EXIT_REASON_VIRTUALIZED_EOI	45

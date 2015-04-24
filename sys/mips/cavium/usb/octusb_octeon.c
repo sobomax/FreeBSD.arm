@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/usb/octusb_octeon.c 232812 2012-03-11 06:17:49Z jmallett $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/usb/octusb_octeon.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 /*-
  * Copyright (c) 2007-2008 Hans Petter Selasky. All rights reserved.
@@ -103,6 +103,7 @@ octusb_octeon_attach(device_t dev)
 	sc->sc_dci.sc_bus.parent = dev;
 	sc->sc_dci.sc_bus.devices = sc->sc_dci.sc_devices;
 	sc->sc_dci.sc_bus.devices_max = OCTUSB_MAX_DEVICES;
+	sc->sc_dci.sc_bus.dma_bits = 32;
 
 	/* get all DMA memory */
 	if (usb_bus_mem_alloc_all(&sc->sc_dci.sc_bus,

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ucred.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/ucred.h 272546 2014-10-05 02:16:53Z mjg $
+ * $FreeBSD: head/sys/sys/ucred.h 280331 2015-03-21 20:24:54Z mjg $
  */
 
 #ifndef _SYS_UCRED_H_
@@ -36,6 +36,8 @@
 #include <bsm/audit.h>
 
 struct loginclass;
+
+#define	XU_NGROUPS	16
 
 /*
  * Credentials.
@@ -64,12 +66,11 @@ struct ucred {
 	struct auditinfo_addr	cr_audit;	/* Audit properties. */
 	gid_t	*cr_groups;		/* groups */
 	int	cr_agroups;		/* Available groups */
+	gid_t   cr_smallgroups[XU_NGROUPS];	/* storage for small groups */
 };
 #define	NOCRED	((struct ucred *)0)	/* no credential available */
 #define	FSCRED	((struct ucred *)-1)	/* filesystem credential */
 #endif /* _KERNEL || _WANT_UCRED */
-
-#define	XU_NGROUPS	16
 
 /*
  * Flags for cr_flags.
@@ -105,6 +106,8 @@ void	crcopy(struct ucred *dest, struct ucred *src);
 struct ucred	*crcopysafe(struct proc *p, struct ucred *cr);
 struct ucred	*crdup(struct ucred *cr);
 void	cred_update_thread(struct thread *td);
+void	proc_set_cred_init(struct proc *p, struct ucred *cr);
+struct ucred	*proc_set_cred(struct proc *p, struct ucred *cr);
 void	crfree(struct ucred *cr);
 struct ucred	*crget(void);
 struct ucred	*crhold(struct ucred *cr);

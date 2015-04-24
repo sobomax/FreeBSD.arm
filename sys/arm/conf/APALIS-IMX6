@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/APALIS-IMX6 268838 2014-07-18 08:23:53Z br $
+# $FreeBSD: head/sys/arm/conf/APALIS-IMX6 276004 2014-12-21 11:55:40Z andrew $
 
 #NO_UNIVERSE
 
@@ -26,6 +26,6 @@ makeoptions	MODULES_OVERRIDE=""
 makeoptions	WITHOUT_MODULES="ahc"
 
 # Flattened Device Tree
-options  	FDT
-options  	FDT_DTB_STATIC
-makeoptions  	FDT_DTS_FILE=apalis-imx6.dts
+options 	FDT
+options 	FDT_DTB_STATIC
+makeoptions	FDT_DTS_FILE=apalis-imx6.dts

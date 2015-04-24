@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_vnops.c 270204 2014-08-20 08:15:23Z kib $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_vnops.c 276007 2014-12-21 13:29:33Z kib $");
 
 #include "opt_quota.h"
 #include "opt_suiddir.h"
@@ -205,8 +205,10 @@ ufs_create(ap)
 	error =
 	    ufs_makeinode(MAKEIMODE(ap->a_vap->va_type, ap->a_vap->va_mode),
 	    ap->a_dvp, ap->a_vpp, ap->a_cnp);
-	if (error)
+	if (error != 0)
 		return (error);
+	if ((ap->a_cnp->cn_flags & MAKEENTRY) != 0)
+		cache_enter(ap->a_dvp, *ap->a_vpp, ap->a_cnp);
 	return (0);
 }
 

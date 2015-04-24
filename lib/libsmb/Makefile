@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libsmb/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libsmb/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -7,8 +7,7 @@ CONTRIBDIR=	${.CURDIR}/../../contrib/smbfs
 
 LIB=	smb
 SHLIB_MAJOR=	4
-DPADD=	${LIBKICONV}
-LDADD=	-lkiconv
+LIBADD=	kiconv
 
 SRCS=	rcfile.c ctx.c cfopt.c subr.c nls.c rap.c mbuf.c rq.c file.c \
 	print.c \

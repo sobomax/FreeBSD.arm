@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/auditdistd/Makefile 270951 2014-09-01 20:18:09Z ed $
+# $FreeBSD: head/usr.sbin/auditdistd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 
 OPENBSMDIR=${.CURDIR}/../../contrib/openbsm
@@ -21,10 +21,7 @@ SRCS+=	sandbox.c sender.c subr.c
 SRCS+=	token.l trail.c
 MAN=	auditdistd.8 auditdistd.conf.5
 
-DPADD=	${LIBL} ${LIBPTHREAD} ${LIBUTIL}
-LDADD=	-ll -lpthread -lutil
-DPADD+=	${LIBCRYPTO} ${LIBSSL}
-LDADD+=	-lcrypto -lssl
+LIBADD+=	l pthread util crypto ssl
 
 YFLAGS+=-v
 

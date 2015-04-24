@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/automount 270096 2014-08-17 09:44:42Z trasz $
+# $FreeBSD: head/etc/rc.d/automount 274965 2014-11-24 13:02:39Z trasz $
 #
 
 # PROVIDE: automount
@@ -18,7 +18,7 @@ required_modules="autofs"
 automount_start()
 {
 
-	/usr/sbin/automount
+	/usr/sbin/automount ${automount_flags}
 }
 
 automount_stop()

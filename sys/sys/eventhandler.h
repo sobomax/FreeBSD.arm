@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/eventhandler.h 262618 2014-02-28 19:21:07Z jhb $
+ * $FreeBSD: head/sys/sys/eventhandler.h 277796 2015-01-27 17:33:18Z avg $
  */
 
 #ifndef _SYS_EVENTHANDLER_H_
@@ -182,6 +182,7 @@ EVENTHANDLER_DECLARE(shutdown_final, shutdown_fn);
 typedef void (*power_change_fn)(void *);
 EVENTHANDLER_DECLARE(power_resume, power_change_fn);
 EVENTHANDLER_DECLARE(power_suspend, power_change_fn);
+EVENTHANDLER_DECLARE(power_suspend_early, power_change_fn);
 
 /* Low memory event */
 typedef void (*vm_lowmem_handler_t)(void *, int);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmcore/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmcore/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -9,36 +9,44 @@ SRCS=	AsmWriter.cpp \
 	Attributes.cpp \
 	AutoUpgrade.cpp \
 	BasicBlock.cpp \
+	Comdat.cpp \
 	ConstantFold.cpp \
+	ConstantRange.cpp \
 	Constants.cpp \
 	Core.cpp \
 	DIBuilder.cpp \
 	DataLayout.cpp \
 	DebugInfo.cpp \
 	DebugLoc.cpp \
+	DiagnosticInfo.cpp \
+	DiagnosticPrinter.cpp \
 	Dominators.cpp \
 	Function.cpp \
 	GCOV.cpp \
 	GVMaterializer.cpp \
 	Globals.cpp \
 	IRBuilder.cpp \
+	IRPrintingPasses.cpp \
 	InlineAsm.cpp \
 	Instruction.cpp \
 	Instructions.cpp \
 	IntrinsicInst.cpp \
 	LLVMContext.cpp \
 	LLVMContextImpl.cpp \
-	LeakDetector.cpp \
 	LegacyPassManager.cpp \
+	MDBuilder.cpp \
+	Mangler.cpp \
 	Metadata.cpp \
+	MetadataTracking.cpp \
 	Module.cpp \
 	Pass.cpp \
 	PassManager.cpp \
 	PassRegistry.cpp \
-	PrintModulePass.cpp \
+	Statepoint.cpp \
 	Type.cpp \
 	TypeFinder.cpp \
 	Use.cpp \
+	UseListOrder.cpp \
 	User.cpp \
 	Value.cpp \
 	ValueSymbolTable.cpp \

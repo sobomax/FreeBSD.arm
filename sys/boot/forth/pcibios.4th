@@ -1,4 +1,4 @@
-\ Copyright (c) 2014 M. Warner Losh <imp@freebsd.org>
+\ Copyright (c) 2014 M. Warner Losh <imp@FreeBSD.org>
 \ All rights reserved.
 \
 \ Redistribution and use in source and binary forms, with or without
@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: head/sys/boot/forth/pcibios.4th 271406 2014-09-10 21:07:00Z imp $
+\ $FreeBSD: head/sys/boot/forth/pcibios.4th 280924 2015-03-31 22:32:35Z dteske $
 
 only forth also support-functions also builtins definitions
 

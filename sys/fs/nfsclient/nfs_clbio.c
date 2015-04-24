@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clbio.c 271596 2014-09-14 18:07:55Z alc $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clbio.c 280189 2015-03-17 19:19:19Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -140,7 +140,8 @@ ncl_getpages(struct vop_getpages_args *ap)
 	 * can only occur at the file EOF.
 	 */
 	if (pages[ap->a_reqpage]->valid != 0) {
-		vm_pager_free_nonreq(object, pages, ap->a_reqpage, npages);
+		vm_pager_free_nonreq(object, pages, ap->a_reqpage, npages,
+		    FALSE);
 		return (VM_PAGER_OK);
 	}
 
@@ -172,7 +173,8 @@ ncl_getpages(struct vop_getpages_args *ap)
 
 	if (error && (uio.uio_resid == count)) {
 		ncl_printf("nfs_getpages: error %d\n", error);
-		vm_pager_free_nonreq(object, pages, ap->a_reqpage, npages);
+		vm_pager_free_nonreq(object, pages, ap->a_reqpage, npages,
+		    FALSE);
 		return (VM_PAGER_ERROR);
 	}
 

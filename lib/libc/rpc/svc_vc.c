@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_vc.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_vc.c 278041 2015-02-02 00:21:34Z pfg $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -128,7 +128,7 @@ svc_vc_create(fd, sendsize, recvsize)
 	u_int sendsize;
 	u_int recvsize;
 {
-	SVCXPRT *xprt;
+	SVCXPRT *xprt = NULL;
 	struct cf_rendezvous *r = NULL;
 	struct __rpc_sockinfo si;
 	struct sockaddr_storage sslocal;

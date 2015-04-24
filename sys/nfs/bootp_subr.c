@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/nfs/bootp_subr.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/nfs/bootp_subr.c 276096 2014-12-23 00:47:46Z rmacklem $");
 
 #include "opt_bootp.h"
 #include "opt_nfs.h"
@@ -1735,9 +1735,6 @@ retry:
 				goto out;
 		}
 		rootdevnames[0] = "nfs:";
-#ifdef NFSCLIENT
-		rootdevnames[1] = "oldnfs:";
-#endif
 		nfs_diskless_valid = 3;
 	}
 

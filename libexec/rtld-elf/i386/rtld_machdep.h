@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/i386/rtld_machdep.h 232831 2012-03-11 20:03:09Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/i386/rtld_machdep.h 280816 2015-03-29 18:53:21Z kib $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -74,8 +74,8 @@ typedef struct {
     unsigned long ti_offset;
 } tls_index;
 
-extern void *___tls_get_addr(tls_index *ti) __attribute__((__regparm__(1)));
-extern void *__tls_get_addr(tls_index *ti);
+void *___tls_get_addr(tls_index *ti) __attribute__((__regparm__(1))) __exported;
+void *__tls_get_addr(tls_index *ti) __exported;
 
 #define	RTLD_DEFAULT_STACK_PF_EXEC	PF_X
 #define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC

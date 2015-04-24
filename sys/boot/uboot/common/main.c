@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/common/main.c 271285 2014-09-08 19:19:10Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/common/main.c 276026 2014-12-21 17:10:24Z ian $");
 
 #include <stand.h>
 
@@ -212,10 +212,11 @@ get_load_device(int *type, int *unit, int *slice, int *partition)
 
 	p = get_device_type(devstr, type);
 
-	/*
-	 * Empty device string, or unknown device name, or a bare, known 
-	 * device name. 
-	 */
+	/* Ignore optional spaces after the device name. */
+	while (*p == ' ')
+		p++;
+
+	/* Unknown device name, or a known name without unit number.  */
 	if ((*type == -1) || (*p == '\0')) {
 		return;
 	}

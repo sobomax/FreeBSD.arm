@@ -1,12 +1,9 @@
-# $FreeBSD: head/kerberos5/usr.bin/verify_krb5_conf/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/verify_krb5_conf/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	verify_krb5_conf
 MAN=	verify_krb5_conf.8
 CFLAGS+=-I${KRB5DIR}/lib/asn1 -I${KRB5DIR}/lib/krb5 -I${KRB5DIR}/lib/roken
-DPADD=	${LIBKAFS5} ${LIBKRB5} ${LIBHX509} ${LIBROKEN} ${LIBVERS} \
-	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT} ${LIBCOM_ERR}
-LDADD=	-lkafs5 -lkrb5 -lhx509 -lroken ${LIBVERS} \
-	-lasn1 -lcrypto -lcrypt -lcom_err
+LIBADD=	krb5 roken  vers
 
 .include <bsd.prog.mk>
 

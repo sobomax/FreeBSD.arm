@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 273992 2014-11-02 21:58:31Z hrs $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 281656 2015-04-17 15:26:08Z glebius $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -136,8 +136,6 @@ const struct sockaddr_in6 sa6_any =
 static int in6_notify_ifa(struct ifnet *, struct in6_ifaddr *,
 	struct in6_aliasreq *, int);
 static void in6_unlink_ifa(struct in6_ifaddr *, struct ifnet *);
-
-int	(*faithprefix_p)(struct in6_addr *);
 
 static int in6_validate_ifra(struct ifnet *, struct in6_aliasreq *,
     struct in6_ifaddr *, int);
@@ -1285,49 +1283,16 @@ in6_broadcast_ifa(struct ifnet *ifp, struct in6_aliasreq *ifra,
 	return (error);
 }
 
-/*
- * Leave from multicast groups we have joined for the interface.
- */
-static int
-in6_purgeaddr_mc(struct ifnet *ifp, struct in6_ifaddr *ia, struct ifaddr *ifa0)
-{
-	struct in6_multi_mship *imm;
-
-	while ((imm = LIST_FIRST(&ia->ia6_memberships)) != NULL) {
-		LIST_REMOVE(imm, i6mm_chain);
-		in6_leavegroup(imm);
-	}
-	return (0);
-}
-
 void
 in6_purgeaddr(struct ifaddr *ifa)
 {
 	struct ifnet *ifp = ifa->ifa_ifp;
 	struct in6_ifaddr *ia = (struct in6_ifaddr *) ifa;
+	struct in6_multi_mship *imm;
 	int plen, error;
-	struct ifaddr *ifa0;
 
 	if (ifa->ifa_carp)
 		(*carp_detach_p)(ifa);
-
-	/*
-	 * find another IPv6 address as the gateway for the
-	 * link-local and node-local all-nodes multicast
-	 * address routes
-	 */
-	IF_ADDR_RLOCK(ifp);
-	TAILQ_FOREACH(ifa0, &ifp->if_addrhead, ifa_link) {
-		if ((ifa0->ifa_addr->sa_family != AF_INET6) ||
-		    memcmp(&satosin6(ifa0->ifa_addr)->sin6_addr,
-		    &ia->ia_addr.sin6_addr, sizeof(struct in6_addr)) == 0)
-			continue;
-		else
-			break;
-	}
-	if (ifa0 != NULL)
-		ifa_ref(ifa0);
-	IF_ADDR_RUNLOCK(ifp);
 
 	/*
 	 * Remove the loopback route to the interface address.
@@ -1348,11 +1313,10 @@ in6_purgeaddr(struct ifaddr *ifa)
 	nd6_rem_ifa_lle(ia);
 
 	/* Leave multicast groups. */
-	error = in6_purgeaddr_mc(ifp, ia, ifa0);
-
-	if (ifa0 != NULL)
-		ifa_free(ifa0);
-
+	while ((imm = LIST_FIRST(&ia->ia6_memberships)) != NULL) {
+		LIST_REMOVE(imm, i6mm_chain);
+		in6_leavegroup(imm);
+	}
 	plen = in6_mask2len(&ia->ia_prefixmask.sin6_addr, NULL); /* XXX */
 	if ((ia->ia_flags & IFA_ROUTE) && plen == 128) {
 		error = rtinit(&(ia->ia_ifa), RTM_DELETE, ia->ia_flags |
@@ -1369,6 +1333,7 @@ in6_purgeaddr(struct ifaddr *ifa)
 static void
 in6_unlink_ifa(struct in6_ifaddr *ia, struct ifnet *ifp)
 {
+	char ip6buf[INET6_ADDRSTRLEN];
 
 	IF_ADDR_WLOCK(ifp);
 	TAILQ_REMOVE(&ifp->if_addrhead, &ia->ia_ifa, ifa_link);
@@ -1392,7 +1357,7 @@ in6_unlink_ifa(struct in6_ifaddr *ia, struct ifnet *ifp)
 	if (ia->ia6_ndpr == NULL) {
 		nd6log((LOG_NOTICE,
 		    "in6_unlink_ifa: autoconf'ed address "
-		    "%p has no prefix\n", ia));
+		    "%s has no prefix\n", ip6_sprintf(ip6buf, IA6_IN6(ia))));
 	} else {
 		ia->ia6_ndpr->ndpr_refcnt--;
 		ia->ia6_ndpr = NULL;
@@ -1719,6 +1684,36 @@ in6_localip(struct in6_addr *in6)
 	IN6_IFADDR_RUNLOCK();
 	return (0);
 }
+ 
+/*
+ * Return 1 if an internet address is configured on an interface.
+ */
+int
+in6_ifhasaddr(struct ifnet *ifp, struct in6_addr *addr)
+{
+	struct in6_addr in6;
+	struct ifaddr *ifa;
+	struct in6_ifaddr *ia6;
+
+	in6 = *addr;
+	if (in6_clearscope(&in6))
+		return (0);
+	in6_setscope(&in6, ifp, NULL);
+
+	IF_ADDR_RLOCK(ifp);
+	TAILQ_FOREACH(ifa, &ifp->if_addrhead, ifa_link) {
+		if (ifa->ifa_addr->sa_family != AF_INET6)
+			continue;
+		ia6 = (struct in6_ifaddr *)ifa;
+		if (IN6_ARE_ADDR_EQUAL(&ia6->ia_addr.sin6_addr, &in6)) {
+			IF_ADDR_RUNLOCK(ifp);
+			return (1);
+		}
+	}
+	IF_ADDR_RUNLOCK(ifp);
+
+	return (0);
+}
 
 int
 in6_is_addr_deprecated(struct sockaddr_in6 *sa6)
@@ -1945,37 +1940,24 @@ in6if_do_dad(struct ifnet *ifp)
 	if ((ifp->if_flags & IFF_LOOPBACK) != 0)
 		return (0);
 
-	if (ND_IFINFO(ifp)->flags & ND6_IFF_IFDISABLED)
+	if ((ND_IFINFO(ifp)->flags & ND6_IFF_IFDISABLED) ||
+	    (ND_IFINFO(ifp)->flags & ND6_IFF_NO_DAD))
 		return (0);
 
-	switch (ifp->if_type) {
-#ifdef IFT_DUMMY
-	case IFT_DUMMY:
-#endif
-	case IFT_FAITH:
-		/*
-		 * These interfaces do not have the IFF_LOOPBACK flag,
-		 * but loop packets back.  We do not have to do DAD on such
-		 * interfaces.  We should even omit it, because loop-backed
-		 * NS would confuse the DAD procedure.
-		 */
+	/*
+	 * Our DAD routine requires the interface up and running.
+	 * However, some interfaces can be up before the RUNNING
+	 * status.  Additionaly, users may try to assign addresses
+	 * before the interface becomes up (or running).
+	 * We simply skip DAD in such a case as a work around.
+	 * XXX: we should rather mark "tentative" on such addresses,
+	 * and do DAD after the interface becomes ready.
+	 */
+	if (!((ifp->if_flags & IFF_UP) &&
+	    (ifp->if_drv_flags & IFF_DRV_RUNNING)))
 		return (0);
-	default:
-		/*
-		 * Our DAD routine requires the interface up and running.
-		 * However, some interfaces can be up before the RUNNING
-		 * status.  Additionaly, users may try to assign addresses
-		 * before the interface becomes up (or running).
-		 * We simply skip DAD in such a case as a work around.
-		 * XXX: we should rather mark "tentative" on such addresses,
-		 * and do DAD after the interface becomes ready.
-		 */
-		if (!((ifp->if_flags & IFF_UP) &&
-		    (ifp->if_drv_flags & IFF_DRV_RUNNING)))
-			return (0);
 
-		return (1);
-	}
+	return (1);
 }
 
 /*
@@ -1989,7 +1971,7 @@ in6_setmaxmtu(void)
 	struct ifnet *ifp;
 
 	IFNET_RLOCK_NOSLEEP();
-	TAILQ_FOREACH(ifp, &V_ifnet, if_list) {
+	TAILQ_FOREACH(ifp, &V_ifnet, if_link) {
 		/* this function can be called during ifnet initialization */
 		if (!ifp->if_afdata[AF_INET6])
 			continue;
@@ -2096,8 +2078,7 @@ in6_lltable_new(const struct sockaddr *l3addr, u_int flags)
 	lle->base.lle_refcnt = 1;
 	lle->base.lle_free = in6_lltable_free;
 	LLE_LOCK_INIT(&lle->base);
-	callout_init_rw(&lle->base.ln_timer_ch, &lle->base.lle_lock,
-	    CALLOUT_RETURNUNLOCKED);
+	callout_init(&lle->base.ln_timer_ch, 1);
 
 	return (&lle->base);
 }
@@ -2365,6 +2346,13 @@ in6_domifattach(struct ifnet *ifp)
 	ext->mld_ifinfo = mld_domifattach(ifp);
 
 	return ext;
+}
+
+int
+in6_domifmtu(struct ifnet *ifp)
+{
+
+	return (IN6_LINKMTU(ifp));
 }
 
 void

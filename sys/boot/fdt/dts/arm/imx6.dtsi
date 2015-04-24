@@ -29,7 +29,7 @@
  * flavors of this SoC that eventually we will need a finer-grained breakdown
  * of some of this stuff.  For now this file works for all of them.  I think.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/imx6.dtsi 271124 2014-09-04 19:52:17Z ian $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/imx6.dtsi 277644 2015-01-24 13:07:07Z br $
  */
 
 / {
@@ -126,11 +126,12 @@
 			gpt: timer@02098000 {
 				compatible = "fsl,imx6q-gpt", "fsl,imx51-gpt";
 				reg = <0x02098000 0x4000>;
-				interrupt-parent = <&gic>; interrupts = <87>;
+				interrupt-parent = <&gic>;
+				interrupts = <87>;
 			};
 
 			iomux@020e0000 {
-				compatible = "fsl,imx6q-iomux";
+				compatible = "fsl,imx6q-iomuxc";
 				reg = <0x020e0000 0x4000>;
 				interrupt-parent = <&gic>;
 				interrupts = <32>;
@@ -311,6 +312,9 @@
 				compatible = "fsl,imx6q-ssi";
 				reg = <0x02028000 0x4000>;
 				interrupts = < 78 >;
+				dmas = <&sdma 37 1 0>,
+				       <&sdma 38 1 0>;
+				dma-names = "rx", "tx";
 				status = "disabled";
 			};
 

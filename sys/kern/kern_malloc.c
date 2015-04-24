@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_malloc.c 271944 2014-09-22 05:07:22Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_malloc.c 279993 2015-03-14 17:08:28Z ian $");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"
@@ -918,6 +918,7 @@ sysctl_kern_malloc_stats(SYSCTL_HANDLER_ARGS)
 	if (error != 0)
 		return (error);
 	sbuf_new_for_sysctl(&sbuf, NULL, 128, req);
+	sbuf_clear_flags(&sbuf, SBUF_INCLUDENUL);
 	mtx_lock(&malloc_mtx);
 
 	/*

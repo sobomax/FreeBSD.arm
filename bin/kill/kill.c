@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)kill.c	8.4 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/kill/kill.c 263206 2014-03-15 14:58:48Z jilles $");
+__FBSDID("$FreeBSD: head/bin/kill/kill.c 279503 2015-03-01 21:46:55Z jilles $");
 
 #include <ctype.h>
 #include <err.h>
@@ -56,7 +56,6 @@ __FBSDID("$FreeBSD: head/bin/kill/kill.c 263206 2014-03-15 14:58:48Z jilles $");
 #ifdef SHELL
 #define main killcmd
 #include "bltin/bltin.h"
-#include "error.h"
 #endif
 
 static void nosig(const char *);

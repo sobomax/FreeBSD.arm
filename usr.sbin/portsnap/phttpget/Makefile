@@ -1,7 +1,7 @@
-# $FreeBSD: head/usr.sbin/portsnap/phttpget/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.sbin/portsnap/phttpget/Makefile 276571 2015-01-02 21:02:41Z delphij $
 
 PROG=	phttpget
-MAN=
+MAN=	phttpget.8
 
 BINDIR=	${LIBEXECDIR}
 

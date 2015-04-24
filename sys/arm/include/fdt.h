@@ -26,19 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/fdt.h 260340 2014-01-05 22:36:34Z ian $
+ * $FreeBSD: head/sys/arm/include/fdt.h 281106 2015-04-05 09:50:22Z andrew $
  */
 
 #ifndef _MACHINE_FDT_H_
 #define _MACHINE_FDT_H_
 
-#include <dev/ofw/openfirm.h>
-
-#include <vm/vm.h>
-#include <vm/pmap.h>
-
 #include <machine/bus.h>
-#include <machine/intr.h>
 
 /* Max interrupt number */
 #define FDT_INTR_MAX	NIRQ
@@ -50,9 +44,5 @@
  * Bus space tag. XXX endianess info needs to be derived from the blob.
  */
 extern bus_space_tag_t fdtbus_bs_tag;
-
-struct arm_devmap_entry;
-
-int fdt_localbus_devmap(phandle_t, struct arm_devmap_entry *, int, int *);
 
 #endif /* _MACHINE_FDT_H_ */

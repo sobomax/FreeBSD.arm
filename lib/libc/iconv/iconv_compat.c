@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/iconv/iconv_compat.c 258283 2013-11-17 22:52:17Z peter $
+ * $FreeBSD: head/lib/libc/iconv/iconv_compat.c 281550 2015-04-15 09:09:20Z tijl $
  */
 
 /*
@@ -37,7 +37,7 @@
 #include "iconv-internal.h"
 
 size_t
-__iconv_compat(iconv_t a, const char ** b, size_t * c, char ** d,
+__iconv_compat(iconv_t a, char ** b, size_t * c, char ** d,
      size_t * e, __uint32_t f, size_t *g)
 {
 	return __bsd___iconv(a, b, c, d, e, f, g);
@@ -56,7 +56,7 @@ __iconv_get_list_compat(char ***a, size_t *b, __iconv_bool c)
 }
 
 size_t
-iconv_compat(iconv_t a, const char ** __restrict b,
+iconv_compat(iconv_t a, char ** __restrict b,
       size_t * __restrict c, char ** __restrict d,
       size_t * __restrict e)
 {

@@ -1,7 +1,7 @@
 /*	$NetBSD: smc90cx6.c,v 1.38 2001/07/07 15:57:53 thorpej Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cm/smc90cx6.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cm/smc90cx6.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*-
  * Copyright (c) 1994, 1995, 1998 The NetBSD Foundation, Inc.
@@ -540,10 +540,7 @@ cm_srint_locked(vsc)
 	 */
 	if ((len + 2 + 2) > MHLEN) {
 		/* attach an mbuf cluster */
-		MCLGET(m, M_NOWAIT);
-
-		/* Insist on getting a cluster */
-		if ((m->m_flags & M_EXT) == 0) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 			goto cleanup;
 		}

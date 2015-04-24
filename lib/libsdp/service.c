@@ -26,12 +26,13 @@
  * SUCH DAMAGE.
  *
  * $Id: service.c,v 1.1 2004/01/13 19:32:36 max Exp $
- * $FreeBSD: head/lib/libsdp/service.c 124758 2004-01-20 20:48:26Z emax $
+ * $FreeBSD: head/lib/libsdp/service.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/uio.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <string.h>

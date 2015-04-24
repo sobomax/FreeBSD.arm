@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/gpio/gpiobus_if.m 273917 2014-10-31 19:15:14Z loos $
+# $FreeBSD: head/sys/dev/gpio/gpiobus_if.m 279761 2015-03-08 00:47:50Z loos $
 #
 
 #include <sys/bus.h>
@@ -105,4 +105,22 @@ METHOD int pin_setflags {
 	device_t child;
 	uint32_t pin_num;
 	uint32_t flags;
+};
+
+#
+# Get the pin name
+#
+METHOD int pin_getname {
+	device_t dev;
+	uint32_t pin_num;
+	char *name;
+};
+
+#
+# Set the pin name
+#
+METHOD int pin_setname {
+	device_t dev;
+	uint32_t pin_num;
+	const char *name;
 };

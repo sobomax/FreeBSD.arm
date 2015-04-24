@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_fork.c 266609 2014-05-24 10:23:06Z kib $
+ * $FreeBSD: head/lib/libthr/thread/thr_fork.c 276630 2015-01-03 18:38:46Z kib $
  */
 
 /*
@@ -128,12 +128,10 @@ __pthread_cxa_finalize(struct dl_phdr_info *phdr_info)
 	_thr_sigact_unload(phdr_info);
 }
 
-__weak_reference(_fork, fork);
-
-pid_t _fork(void);
+__weak_reference(__thr_fork, _fork);
 
 pid_t
-_fork(void)
+__thr_fork(void)
 {
 	struct pthread *curthread;
 	struct pthread_atfork *af;

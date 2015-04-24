@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/taskqueue.h 266629 2014-05-24 20:37:15Z adrian $
+ * $FreeBSD: head/sys/sys/taskqueue.h 279300 2015-02-25 21:59:03Z adrian $
  */
 
 #ifndef _SYS_TASKQUEUE_H_
@@ -36,6 +36,7 @@
 #include <sys/queue.h>
 #include <sys/_task.h>
 #include <sys/_callout.h>
+#include <sys/_cpuset.h>
 
 struct taskqueue;
 struct thread;
@@ -71,10 +72,8 @@ struct taskqueue *taskqueue_create(const char *name, int mflags,
 				    void *context);
 int	taskqueue_start_threads(struct taskqueue **tqp, int count, int pri,
 				const char *name, ...) __printflike(4, 5);
-int	taskqueue_start_threads_pinned(struct taskqueue **tqp, int count,
-				    int pri, int cpu_id, const char *name,
-				    ...) __printflike(5, 6);
-
+int	taskqueue_start_threads_cpuset(struct taskqueue **tqp, int count,
+	    int pri, cpuset_t *mask, const char *name, ...) __printflike(5, 6);
 int	taskqueue_enqueue(struct taskqueue *queue, struct task *task);
 int	taskqueue_enqueue_timeout(struct taskqueue *queue,
 	    struct timeout_task *timeout_task, int ticks);

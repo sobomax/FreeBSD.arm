@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/flash/at45d.c 242625 2012-11-05 19:16:27Z dim $");
+__FBSDID("$FreeBSD: head/sys/dev/flash/at45d.c 279557 2015-03-03 02:08:17Z kevlo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -197,8 +197,10 @@ at45d_attach(device_t dev)
 	/* We'll see what kind of flash we have later... */
 	sc->config_intrhook.ich_func = at45d_delayed_attach;
 	sc->config_intrhook.ich_arg = sc;
-	if (config_intrhook_establish(&sc->config_intrhook) != 0)
+	if (config_intrhook_establish(&sc->config_intrhook) != 0) {
 		device_printf(dev, "config_intrhook_establish failed\n");
+		return (ENOMEM);
+	}
 	return (0);
 }
 

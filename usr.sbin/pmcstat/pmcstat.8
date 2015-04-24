@@ -23,9 +23,9 @@
 .\" out of the use of this software, even if advised of the possibility of
 .\" such damage.
 .\"
-.\" $FreeBSD: head/usr.sbin/pmcstat/pmcstat.8 273739 2014-10-27 15:50:47Z bapt $
+.\" $FreeBSD: head/usr.sbin/pmcstat/pmcstat.8 280793 2015-03-28 21:28:22Z vangyzen $
 .\"
-.Dd Oct 27, 2014
+.Dd March 27, 2015
 .Dt PMCSTAT 8
 .Os
 .Sh NAME
@@ -236,7 +236,7 @@ This option requires the
 .Fl R
 option to read in samples that were previously collected and
 saved with the
-.Fl o
+.Fl O
 option.
 .It Fl c Ar cpu-spec
 Set the cpus for subsequent system mode PMCs specified on the
@@ -300,6 +300,12 @@ is a
 .Dq Li -
 this information is sent to the output file specified by the
 .Fl o
+option.
+This option requires the
+.Fl R
+option to read in samples that were previously collected and
+saved with the
+.Fl O
 option.
 .It Fl n Ar rate
 Set the default sampling rate for subsequent sampling mode

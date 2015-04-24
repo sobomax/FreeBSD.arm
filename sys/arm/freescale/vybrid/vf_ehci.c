@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_ehci.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_ehci.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 #include "opt_bus.h"
 
@@ -259,6 +259,7 @@ vybrid_ehci_attach(device_t dev)
 	sc->sc_bus.parent = dev;
 	sc->sc_bus.devices = sc->sc_devices;
 	sc->sc_bus.devices_max = EHCI_MAX_DEVICES;
+	sc->sc_bus.dma_bits = 32;
 
 	if (bus_alloc_resources(dev, vybrid_ehci_spec, esc->res)) {
 		device_printf(dev, "could not allocate resources\n");

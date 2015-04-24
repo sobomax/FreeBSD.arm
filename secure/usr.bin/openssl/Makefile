@@ -1,9 +1,8 @@
-# $FreeBSD: head/secure/usr.bin/openssl/Makefile 238405 2012-07-12 19:30:53Z jkim $
+# $FreeBSD: head/secure/usr.bin/openssl/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG=	openssl
 
-DPADD=	${LIBSSL} ${LIBCRYPTO}
-LDADD=	-lssl -lcrypto
+LIBADD=	ssl crypto
 
 .if exists(Makefile.man)
 .include "Makefile.man"

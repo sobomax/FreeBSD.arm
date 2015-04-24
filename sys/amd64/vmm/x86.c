@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/x86.c 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/x86.c 280134 2015-03-16 11:57:03Z mav $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/x86.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/x86.c 280134 2015-03-16 11:57:03Z mav $");
 
 #include <sys/param.h>
 #include <sys/pcpu.h>
@@ -361,6 +361,12 @@ x86_emulate_cpuid(struct vm *vm, int vcpu_id,
 			break;
 
 		case CPUID_0000_0006:
+			regs[0] = CPUTPM1_ARAT;
+			regs[1] = 0;
+			regs[2] = 0;
+			regs[3] = 0;
+			break;
+
 		case CPUID_0000_000A:
 			/*
 			 * Handle the access, but report 0 for

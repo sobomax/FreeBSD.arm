@@ -24,7 +24,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/elf_machdep.c 237435 2012-06-22 07:16:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/elf_machdep.c 276840 2015-01-08 17:46:42Z imp $");
+
+#include "opt_cpu.h"
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -45,6 +47,11 @@ __FBSDID("$FreeBSD: head/sys/i386/i386/elf_machdep.c 237435 2012-06-22 07:16:29Z
 
 #include <machine/elf.h>
 #include <machine/md_var.h>
+#include <machine/npx.h>
+
+#if !defined(CPU_DISABLE_SSE) && defined(I686_CPU)
+#define CPU_ENABLE_SSE
+#endif
 
 struct sysentvec elf32_freebsd_sysvec = {
 	.sv_size	= SYS_MAXSYSCALL,
@@ -134,11 +141,30 @@ SYSINIT(kelf32, SI_SUB_EXEC, SI_ORDER_ANY,
 
 
 void
-elf32_dump_thread(struct thread *td __unused, void *dst __unused,
-    size_t *off __unused)
+elf32_dump_thread(struct thread *td, void *dst, size_t *off)
 {
-}
+#ifdef CPU_ENABLE_SSE
+	void *buf;
+#endif
+	size_t len;
 
+	len = 0;
+#ifdef CPU_ENABLE_SSE
+	if (use_xsave) {
+		if (dst != NULL) {
+			npxgetregs(td);
+			len += elf32_populate_note(NT_X86_XSTATE,
+			    get_pcb_user_save_td(td), dst,
+			    cpu_max_ext_state_size, &buf);
+			*(uint64_t *)((char *)buf + X86_XSTATE_XCR0_OFFSET) =
+			    xsave_mask;
+		} else
+			len += elf32_populate_note(NT_X86_XSTATE, NULL, NULL,
+			    cpu_max_ext_state_size, NULL);
+	}
+#endif
+	*off = len;
+}
 
 /* Process one elf relocation with addend. */
 static int

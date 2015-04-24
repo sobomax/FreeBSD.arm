@@ -1,10 +1,9 @@
-# $FreeBSD: head/sbin/nandfs/Makefile 235537 2012-05-17 10:11:18Z gber $
+# $FreeBSD: head/sbin/nandfs/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	nandfs
 SRCS=	nandfs.c lssnap.c mksnap.c rmsnap.c
 MAN=	nandfs.8
 
-DPADD=	${LIBNANDFS}
-LDADD=	-lnandfs
+LIBADD=	nandfs
 
 .include <bsd.prog.mk>

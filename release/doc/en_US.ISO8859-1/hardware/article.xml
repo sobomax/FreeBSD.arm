@@ -12,7 +12,7 @@
 
     <author><orgname>The &os; Documentation Project</orgname></author>
 
-    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 273941 2014-11-01 20:07:32Z gavin $</pubdate>
+    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 276573 2015-01-02 21:09:54Z gjb $</pubdate>
 
     <copyright>
       <year>2000</year>
@@ -668,8 +668,6 @@
       &hwlist.amr;
 
       &hwlist.arcmsr;
-
-      &hwlist.asr;
 
       &hwlist.bt;
 

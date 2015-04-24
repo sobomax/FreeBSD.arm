@@ -3,7 +3,7 @@
 #	All rights reserved.
 # Author: Harti Brandt <brandt@fokus.gmd.de>
 #
-# $FreeBSD: head/sbin/atm/atmconfig/Makefile 270027 2014-08-15 21:22:49Z ngie $
+# $FreeBSD: head/sbin/atm/atmconfig/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -17,11 +17,9 @@ CFLAGS+= -I${.OBJDIR}
 .if !defined(RESCUE) && ${MK_BSNMP} != "no"
 CFLAGS+=	-DWITH_BSNMP
 SRCS+=	oid.h atmconfig_device.c
-DPADD+=	${LIBBSNMP}
-LDADD+=	-lbsnmp
+LIBADD+=	bsnmp
 . if ${MK_DYNAMICROOT} == "no" && ${MK_OPENSSL} != "no"
-DPADD+=	${LIBCRYPTO}
-LDADD+= -lcrypto
+LIBADD+=	crypto
 . endif
 .endif
 

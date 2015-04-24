@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tl/if_tl.c 271803 2014-09-18 20:03:45Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/tl/if_tl.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * Texas Instruments ThunderLAN driver for FreeBSD 2.2.6 and 3.x.
@@ -1813,8 +1813,7 @@ tl_encap(sc, c, m_head)
 			return(1);
 		}
 		if (m_head->m_pkthdr.len > MHLEN) {
-			MCLGET(m_new, M_NOWAIT);
-			if (!(m_new->m_flags & M_EXT)) {
+			if (!(MCLGET(m_new, M_NOWAIT))) {
 				m_freem(m_new);
 				if_printf(ifp, "no memory for tx list\n");
 				return(1);

@@ -1,8 +1,8 @@
-# $FreeBSD: head/usr.bin/mkulzma/Makefile 229538 2012-01-04 23:45:10Z ray $
+# $FreeBSD: head/usr.bin/mkulzma/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	mkulzma
 MAN=	mkulzma.8
-DPADD=	${LIBLZMA}
-LDADD=	-llzma
+
+LIBADD=	lzma
 
 .include <bsd.prog.mk>

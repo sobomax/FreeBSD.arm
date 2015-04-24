@@ -1,9 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/tput/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/tput/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	tput
-DPADD=	${LIBTERMCAPW}
-LDADD=	-ltermcapw
+LIBADD=	ncursesw
 SCRIPTS=clear.sh
 MLINKS=	tput.1 clear.1
 

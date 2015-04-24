@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/sys/thr_error.c 160284 2006-07-12 03:44:05Z davidxu $
+ * $FreeBSD: head/lib/libthr/sys/thr_error.c 276630 2015-01-03 18:38:46Z kib $
  */
 
 #include <pthread.h>
@@ -42,8 +42,9 @@
 #undef errno
 extern	int	errno;
 
+__weak_reference(__error_threaded, __error);
 int *
-__error(void)
+__error_threaded(void)
 {
 	struct pthread *curthread;
 

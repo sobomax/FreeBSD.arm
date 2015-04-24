@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/locking.9 252423 2013-06-30 19:33:07Z bjk $
+.\" $FreeBSD: head/share/man/man9/locking.9 275993 2014-12-21 10:57:42Z brueffer $
 .\"
 .Dd June 30, 2013
 .Dt LOCKING 9
@@ -391,17 +391,17 @@ At this time this is a rather easy to remember table.
 .El
 .Sh SEE ALSO
 .Xr witness 4 ,
+.Xr BUS_SETUP_INTR 9 ,
 .Xr condvar 9 ,
 .Xr lock 9 ,
+.Xr LOCK_PROFILING 9 ,
 .Xr mtx_pool 9 ,
 .Xr mutex 9 ,
 .Xr rmlock 9 ,
 .Xr rwlock 9 ,
 .Xr sema 9 ,
 .Xr sleep 9 ,
-.Xr sx 9 ,
-.Xr BUS_SETUP_INTR 9 ,
-.Xr LOCK_PROFILING 9
+.Xr sx 9
 .Sh HISTORY
 These
 functions appeared in

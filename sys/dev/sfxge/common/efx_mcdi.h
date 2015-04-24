@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_mcdi.h 228078 2011-11-28 17:19:05Z philip $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_mcdi.h 279048 2015-02-20 07:57:59Z arybchik $
  */
 
 #ifndef _SYS_EFX_MCDI_H
@@ -231,7 +231,10 @@ efx_mcdi_version(
 			MC_CMD_ ## _field)
 
 #define	MCDI_EV_FIELD(_eqp, _field)					\
-	EFX_QWORD_FIELD(*eqp, MCDI_EVENT_ ## _field)
+	EFX_QWORD_FIELD(*_eqp, MCDI_EVENT_ ## _field)
+
+#define MCDI_CMD_DWORD_FIELD(_edp, _field)				\
+	EFX_DWORD_FIELD(*_edp, MC_CMD_ ## _field)
 
 #ifdef	__cplusplus
 }

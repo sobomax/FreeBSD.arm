@@ -22,12 +22,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/whereis/pathnames.h 228991 2011-12-30 10:59:15Z uqs $
+ * $FreeBSD: head/usr.bin/whereis/pathnames.h 278616 2015-02-12 05:35:00Z cperciva $
  */
 
-/* Where to look for libexec and games */
+/* Where to look for libexec */
 #define PATH_LIBEXEC "/usr/libexec"
-#define PATH_GAMES "/usr/games"
 
 /* Where to look for sources. */
 #define PATH_SOURCES					\

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/startup/Makefile 240684 2012-09-18 22:28:42Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/startup/Makefile 274073 2014-11-04 00:14:38Z dteske $
 
 NO_OBJ=
 
@@ -9,8 +9,5 @@ FILES=		INDEX USAGE
 
 SCRIPTSDIR=	${FILESDIR}
 SCRIPTS=	misc rcadd rcconf rcdelete rcedit rcvar startup
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${FILESDIR}
 
 .include <bsd.prog.mk>

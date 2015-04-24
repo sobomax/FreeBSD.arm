@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/fuse/fuse_vfsops.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/fs/fuse/fuse_vfsops.c 281562 2015-04-15 20:16:31Z rmacklem $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -337,6 +337,7 @@ fuse_vfsop_mount(struct mount *mp)
 	MNT_ILOCK(mp);
 	mp->mnt_data = data;
 	mp->mnt_flag |= MNT_LOCAL;
+	mp->mnt_kern_flag |= MNTK_USES_BCACHE;
 	MNT_IUNLOCK(mp);
 	/* We need this here as this slot is used by getnewvnode() */
 	mp->mnt_stat.f_iosize = PAGE_SIZE;

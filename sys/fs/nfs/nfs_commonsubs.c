@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonsubs.c 272467 2014-10-03 02:24:41Z araujo $");
+__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonsubs.c 275941 2014-12-19 19:09:22Z benno $");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for
@@ -219,7 +219,8 @@ nfsm_mbufuio(struct nfsrv_descript *nd, struct uio *uiop, int siz)
 				}
 				mbufcp = NFSMTOD(mp, caddr_t);
 				len = mbuf_len(mp);
-				KASSERT(len > 0, ("len %d", len));
+				KASSERT(len >= 0,
+				    ("len %d, corrupted mbuf?", len));
 			}
 			xfer = (left > len) ? len : left;
 #ifdef notdef

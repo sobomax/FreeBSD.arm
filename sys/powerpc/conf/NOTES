@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/powerpc/conf/NOTES 273156 2014-10-16 01:32:22Z jhibbits $
+# $FreeBSD: head/sys/powerpc/conf/NOTES 278495 2015-02-10 06:35:16Z rpaulo $
 #
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
@@ -24,7 +24,6 @@ options 	POWERMAC		#NewWorld Apple PowerMacs
 #options	PS3			#Sony Playstation 3
 options 	PSIM			#GDB PSIM ppc simulator
 options 	MAMBO			#IBM Mambo Full System Simulator
-#options 	WII			#Nintendo Wii
 
 options 	SC_OFWFB		# OFW frame buffer
 
@@ -57,6 +56,7 @@ device		adm1030		# Apple G4 MDD fan controller
 # Devices we don't want to deal with
 
 nodevice	bktr
+nodevice	cxgbe		# XXX: builds on powerpc64 only.
 nodevice	fdc
 nodevice	ppc
 nodevice	splash

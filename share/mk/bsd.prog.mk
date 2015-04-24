@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 270976 2014-09-02 19:05:34Z emaste $
+# $FreeBSD: head/share/mk/bsd.prog.mk 278682 2015-02-13 17:33:27Z jhb $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -62,7 +62,7 @@ PROG_FULL=${PROG}.full
     ${BINDIR} == "/bin" ||\
     ${BINDIR} == "/libexec" ||\
     ${BINDIR} == "/sbin" ||\
-    ${BINDIR:C%/usr/(bin|bsdinstall|games|libexec|lpr|sendmail|sm.bin|sbin)(/.*)?%/usr/bin%} == "/usr/bin"\
+    ${BINDIR:C%/usr/(bin|bsdinstall|libexec|lpr|sendmail|sm.bin|sbin)(/.*)?%/usr/bin%} == "/usr/bin"\
      )
 DEBUGFILEDIR=	${DEBUGDIR}${BINDIR}
 .else
@@ -168,15 +168,15 @@ CLEANFILES+= ${OBJS}
 _EXTRADEPEND:
 .if defined(LDFLAGS) && !empty(LDFLAGS:M-nostdlib)
 .if defined(DPADD) && !empty(DPADD)
-	echo ${PROG}: ${DPADD} >> ${DEPENDFILE}
+	echo ${PROG_FULL}: ${DPADD} >> ${DEPENDFILE}
 .endif
 .else
-	echo ${PROG}: ${LIBC} ${DPADD} >> ${DEPENDFILE}
+	echo ${PROG_FULL}: ${LIBC} ${DPADD} >> ${DEPENDFILE}
 .if defined(PROG_CXX)
 .if ${COMPILER_TYPE} == "clang" && empty(CXXFLAGS:M-stdlib=libstdc++)
-	echo ${PROG}: ${LIBCPLUSPLUS} >> ${DEPENDFILE}
+	echo ${PROG_FULL}: ${LIBCPLUSPLUS} >> ${DEPENDFILE}
 .else
-	echo ${PROG}: ${LIBSTDCPLUSPLUS} >> ${DEPENDFILE}
+	echo ${PROG_FULL}: ${LIBSTDCPLUSPLUS} >> ${DEPENDFILE}
 .endif
 .endif
 .endif

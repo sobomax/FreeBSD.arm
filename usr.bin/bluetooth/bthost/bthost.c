@@ -26,9 +26,10 @@
  * SUCH DAMAGE.
  *
  * $Id: bthost.c,v 1.5 2003/05/21 20:30:01 max Exp $
- * $FreeBSD: head/usr.bin/bluetooth/bthost/bthost.c 121054 2003-10-12 22:04:24Z emax $
+ * $FreeBSD: head/usr.bin/bluetooth/bthost/bthost.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <stdio.h>
 #include <stdlib.h>

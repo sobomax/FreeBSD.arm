@@ -55,7 +55,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/uart_dev_oct16550.c 260889 2014-01-19 19:36:11Z imp $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/uart_dev_oct16550.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -424,7 +424,8 @@ struct uart_class uart_oct16550_class = {
 	sizeof(struct oct16550_softc),
 	.uc_ops = &uart_oct16550_ops,
 	.uc_range = 8 << 3,
-	.uc_rclk = 0
+	.uc_rclk = 0,
+	.uc_rshift = 0
 };
 
 #define	SIGCHG(c, i, s, d)				\

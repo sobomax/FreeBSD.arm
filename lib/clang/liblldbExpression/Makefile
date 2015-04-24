@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbExpression/Makefile 255722 2013-09-20 01:52:02Z emaste $
+# $FreeBSD: head/lib/clang/liblldbExpression/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -13,6 +13,7 @@ SRCS=	ASTDumper.cpp \
 	ClangExpressionParser.cpp \
 	ClangExpressionVariable.cpp \
 	ClangFunction.cpp \
+	ClangModulesDeclVendor.cpp \
 	ClangPersistentVariables.cpp \
 	ClangUserExpression.cpp \
 	ClangUtilityFunction.cpp \

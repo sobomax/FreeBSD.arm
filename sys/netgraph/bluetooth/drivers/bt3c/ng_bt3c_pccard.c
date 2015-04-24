@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_bt3c_pccard.c,v 1.5 2003/04/01 18:15:21 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 271856 2014-09-19 09:01:19Z glebius $
+ * $FreeBSD: head/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 276750 2015-01-06 12:59:37Z rwatson $
  *
  * XXX XXX XX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
  *
@@ -814,8 +814,7 @@ bt3c_receive(bt3c_softc_p sc)
 				break; /* XXX lost of sync */
 			}
 
-			MCLGET(sc->m, M_NOWAIT);
-			if (!(sc->m->m_flags & M_EXT)) {
+			if (!(MCLGET(sc->m, M_NOWAIT))) {
 				NG_FREE_M(sc->m);
 
 				NG_BT3C_ERR(sc->dev, "Could not get cluster\n");

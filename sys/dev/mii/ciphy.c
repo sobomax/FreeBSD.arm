@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/ciphy.c 257184 2013-10-26 18:40:17Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/ciphy.c 277093 2015-01-12 22:27:38Z glebius $");
 
 /*
  * Driver for the Cicada/Vitesse CS/VSC8xxx 10/100/1000 copper PHY.
@@ -303,8 +303,7 @@ ciphy_fixup(struct mii_softc *sc)
 	status = PHY_READ(sc, CIPHY_MII_AUXCSR);
 	speed = status & CIPHY_AUXCSR_SPEED;
 
-	if (strcmp(device_get_name(device_get_parent(sc->mii_dev)),
-	    "nfe") == 0) {
+	if (mii_phy_mac_match(sc, "nfe")) {
 		/* need to set for 2.5V RGMII for NVIDIA adapters */
 		val = PHY_READ(sc, CIPHY_MII_ECTL1);
 		val &= ~(CIPHY_ECTL1_IOVOL | CIPHY_ECTL1_INTSEL);

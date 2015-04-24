@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2010 Advanced Computing Technologies LLC
+ * Copyright (c) 2010 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/acpica/srat.c 272800 2014-10-09 05:34:28Z adrian $");
+__FBSDID("$FreeBSD: head/sys/x86/acpica/srat.c 281887 2015-04-23 14:22:20Z jhb $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -342,7 +342,7 @@ srat_walk_table(acpi_subtable_handler *handler, void *arg)
 }
 
 /*
- * Setup per-CPU ACPI IDs.
+ * Setup per-CPU domain IDs.
  */
 static void
 srat_set_cpus(void *dummy)
@@ -363,6 +363,7 @@ srat_set_cpus(void *dummy)
 			panic("SRAT: CPU with APIC ID %u is not known",
 			    pc->pc_apic_id);
 		pc->pc_domain = cpu->domain;
+		CPU_SET(i, &cpuset_domain[cpu->domain]);
 		if (bootverbose)
 			printf("SRAT: CPU %u has memory domain %d\n", i,
 			    cpu->domain);

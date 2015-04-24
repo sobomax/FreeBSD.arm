@@ -26,10 +26,11 @@
  * SUCH DAMAGE.
  *
  * $Id: hcsecd.c,v 1.6 2003/08/18 19:19:55 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/hcsecd/hcsecd.c 188130 2009-02-04 22:04:06Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/hcsecd/hcsecd.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/queue.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <err.h>
 #include <errno.h>

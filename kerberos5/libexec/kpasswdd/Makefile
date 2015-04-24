@@ -1,12 +1,11 @@
-# $FreeBSD: head/kerberos5/libexec/kpasswdd/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kpasswdd/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kpasswdd
 MAN=	kpasswdd.8
 CFLAGS+=-I${KRB5DIR}/lib/roken -I../../lib/libhdb ${LDAPCFLAGS}
-DPADD=	${LIBKADM5SRV} ${LIBHDB} ${LIBKRB5} ${LIBHX509} ${LIBROKEN} ${LIBVERS} \
-	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT} ${LIBCOM_ERR} ${LDAPDPADD}
-LDADD=	-lkadm5srv -lhdb -lkrb5 -lhx509 -lroken ${LIBVERS} \
-	-lasn1 -lcrypto -lcrypt -lcom_err ${LDAPLDADD}
+LIBADD=	kadm5srv hdb krb5 roken vers asn1
+DPADD=	${LDAPDPADD}
+LDADD=	${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
 
 .include <bsd.prog.mk>

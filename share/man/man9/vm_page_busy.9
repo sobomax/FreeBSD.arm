@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 .\" DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/vm_page_busy.9 269824 2014-08-11 18:26:57Z jhb $
+.\" $FreeBSD: head/share/man/man9/vm_page_busy.9 275993 2014-12-21 10:57:42Z brueffer $
 .Dd August 07, 2013
 .Dt VM_PAGE_BUSY 9
 .Os
@@ -205,7 +205,6 @@ function panics if
 .Fa m
 is not exclusive busied.
 .Sh SEE ALSO
-.Xr VOP_GETPAGES 9 ,
 .Xr vm_page_aflag 9 ,
 .Xr vm_page_alloc 9 ,
 .Xr vm_page_deactivate 9 ,
@@ -213,4 +212,5 @@ is not exclusive busied.
 .Xr vm_page_grab 9 ,
 .Xr vm_page_insert 9 ,
 .Xr vm_page_lookup 9 ,
-.Xr vm_page_rename 9
+.Xr vm_page_rename 9 ,
+.Xr VOP_GETPAGES 9

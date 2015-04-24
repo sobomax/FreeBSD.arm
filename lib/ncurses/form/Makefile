@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/ncurses/form/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/lib/ncurses/form/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 .include "${.CURDIR}/../config.mk"
 
@@ -54,8 +54,7 @@ CLEANFILES=	ncurses_def.h
 CFLAGS+=	-I${SRCDIR}
 CFLAGS+=	-I${NCURSES_DIR}/menu
 
-DPADD=	${LIBNCURSES${LIB_SUFFIX:tu}}
-LDADD=	-lncurses${LIB_SUFFIX}
+LIBADD+=	ncurses${LIB_SUFFIX}
 
 .if defined(ENABLE_WIDEC)
 INCS=	form.h

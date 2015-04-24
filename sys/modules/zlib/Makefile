@@ -1,6 +1,6 @@
-# $FreeBSD: head/sys/modules/zlib/Makefile 130799 2004-06-20 17:42:35Z markm $
+# $FreeBSD: head/sys/modules/zlib/Makefile 281862 2015-04-22 18:15:18Z rodrigc $
 
-.PATH: ${.CURDIR}/../../net
+.PATH: ${.CURDIR}/../../libkern
 
 KMOD=	zlib
 SRCS=	zlib.c

@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 273568 2014-10-23 23:16:21Z marcel $
+# $FreeBSD: head/usr.bin/Makefile 281522 2015-04-14 10:15:58Z andrew $
 
 .include <src.opts.mk>
 
@@ -9,7 +9,8 @@
 # Moved to secure: bdes
 #
 
-SUBDIR=	alias \
+SUBDIR=	${_addr2line} \
+	alias \
 	apply \
 	asa \
 	awk \
@@ -35,24 +36,23 @@ SUBDIR=	alias \
 	csplit \
 	ctlstat \
 	cut \
+	demandoc \
 	dirname \
+	dpv \
 	du \
-	ee \
 	elf2aout \
+	${_elfcopy} \
 	elfdump \
 	enigma \
 	env \
 	expand \
 	false \
 	fetch \
-	file \
 	find \
-	finger \
 	fmt \
 	fold \
 	fstat \
 	fsync \
-	ftp \
 	gcore \
 	gencat \
 	getconf \
@@ -66,7 +66,6 @@ SUBDIR=	alias \
 	id \
 	ipcrm \
 	ipcs \
-	iscsictl \
 	join \
 	jot \
 	${_kdump} \
@@ -117,6 +116,7 @@ SUBDIR=	alias \
 	nfsstat \
 	nice \
 	nl \
+	${_nm} \
 	nohup \
 	opieinfo \
 	opiekey \
@@ -133,6 +133,7 @@ SUBDIR=	alias \
 	procstat \
 	protect \
 	rctl \
+	${_readelf} \
 	renice \
 	rev \
 	revoke \
@@ -147,21 +148,22 @@ SUBDIR=	alias \
 	seq \
 	shar \
 	showmount \
+	${_size} \
 	sockstat \
+	soeliminate \
 	sort \
 	split \
 	stat \
 	stdbuf \
+	${_strings} \
 	su \
 	systat \
 	tabs \
 	tail \
-	talk \
 	tar \
 	tcopy \
 	tee \
 	${_tests} \
-	tftp \
 	time \
 	timeout \
 	tip \
@@ -195,12 +197,9 @@ SUBDIR=	alias \
 	write \
 	xargs \
 	xinstall \
-	${_xlint} \
 	xo \
-	${_xstr} \
 	xz \
 	xzdec \
-	${_yacc} \
 	yes \
 	${_ypcat} \
 	${_ypmatch} \
@@ -232,8 +231,33 @@ SUBDIR+=	calendar
 _clang=		clang
 .endif
 
+.if ${MK_EE} != "no"
+SUBDIR+=	ee
+.endif
+
+.if ${MK_ELFTOOLCHAIN_TOOLS} != "no"
+_addr2line=	addr2line
+_elfcopy=	elfcopy
+_nm=		nm
+_readelf=	readelf
+_size=		size
+_strings=	strings
+.endif
+
+.if ${MK_FILE} != "no"
+SUBDIR+=	file
+.endif
+
+.if ${MK_FINGER} != "no"
+SUBDIR+=	finger
+.endif
+
 .if ${MK_FMAKE} != "no"
 SUBDIR+=	make
+.endif
+
+.if ${MK_FTP} != "no"
+SUBDIR+=	ftp
 .endif
 
 .if ${MK_GPL_DTC} != "yes"
@@ -254,9 +278,15 @@ _mkcsmapper=	mkcsmapper
 _mkesdb=	mkesdb
 .endif
 
+.if ${MK_ISCSI} != "no"
+SUBDIR+=	iscsictl
+.endif
+
 .if ${MK_KDUMP} != "no"
 SUBDIR+=        kdump
+.if ${MACHINE_ARCH} != "aarch64" # ARM64TODO truss does not build
 SUBDIR+=        truss
+.endif
 .endif
 
 .if ${MK_KERBEROS_SUPPORT} != "no"
@@ -326,6 +356,10 @@ SUBDIR+=	rwho
 SUBDIR+=	vacation
 .endif
 
+.if ${MK_TALK} != "no"
+SUBDIR+=	talk
+.endif
+
 .if ${MK_TELNET} != "no"
 SUBDIR+=	telnet
 .endif
@@ -340,19 +374,27 @@ SUBDIR+=	colcrt
 SUBDIR+=	ul
 .endif
 
+.if ${MK_TFTP} != "no"
+SUBDIR+=	tftp
+.endif
+
 .if ${MK_TOOLCHAIN} != "no"
 SUBDIR+=	ar
 SUBDIR+=	c89
 SUBDIR+=	c99
 SUBDIR+=	ctags
 SUBDIR+=	file2c
+.if ${MACHINE_ARCH} != "aarch64" # ARM64TODO gprof does not build
 SUBDIR+=	gprof
+.endif
 SUBDIR+=	indent
 SUBDIR+=	lex
 SUBDIR+=	mkstr
 SUBDIR+=	rpcgen
 SUBDIR+=	unifdef
+.if ${MACHINE_ARCH} != "aarch64" # ARM64TODO xlint does not build
 SUBDIR+=	xlint
+.endif
 SUBDIR+=	xstr
 SUBDIR+=	yacc
 .endif

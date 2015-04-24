@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_subr.c 273761 2014-10-28 03:42:09Z araujo $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_subr.c 279724 2015-03-07 15:24:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,7 +53,6 @@ static struct uart_class *uart_classes[] = {
 	&uart_sab82532_class,
 	&uart_z8530_class,
 #if defined(__arm__)
-	&uart_lpc_class,
 	&uart_s3c2410_class,
 #endif
 };

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-extract/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-extract/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -10,18 +10,19 @@ SRCS=	llvm-extract.cpp
 LIBDEPS=llvmirreader \
 	llvmasmparser \
 	llvmbitwriter \
-	llvmbitreader \
 	llvmipo \
-	llvmobjcarcopts \
 	llvmvectorize \
 	llvmscalaropts \
+	llvmprofiledata \
+	llvmobject \
+	llvmmcparser \
+	llvmbitreader \
 	llvminstcombine \
 	llvmtransformutils \
 	llvmipa \
 	llvmanalysis \
 	llvmtarget \
 	llvmmc \
-	llvmobject \
 	llvmcore \
 	llvmsupport
 

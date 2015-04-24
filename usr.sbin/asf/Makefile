@@ -1,10 +1,9 @@
-# $FreeBSD: head/usr.sbin/asf/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/asf/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	asf
 SRCS=	asf.c asf_kld.c asf_kvm.c asf_prog.c
 MAN=	asf.8
 
-DPADD=	${LIBKVM}
-LDADD=	-lkvm
+LIBADD=	kvm
 
 .include <bsd.prog.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmselectiondag/Makefile 246259 2013-02-02 22:28:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmselectiondag/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -26,6 +26,7 @@ SRCS=	DAGCombiner.cpp \
 	SelectionDAGDumper.cpp \
 	SelectionDAGISel.cpp \
 	SelectionDAGPrinter.cpp \
+	StatepointLowering.cpp \
 	TargetLowering.cpp \
 	TargetSelectionDAGInfo.cpp
 

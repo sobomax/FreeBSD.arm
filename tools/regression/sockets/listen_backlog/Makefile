@@ -1,7 +1,7 @@
-# $FreeBSD: head/tools/regression/sockets/listen_backlog/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/listen_backlog/Makefile 281360 2015-04-10 09:26:21Z ngie $
 
 PROG=	listen_backlog
-WARNS?=	3
 MAN=
+WARNS?=	6
 
 .include <bsd.prog.mk>

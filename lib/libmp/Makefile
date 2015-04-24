@@ -1,11 +1,10 @@
-# $FreeBSD: head/lib/libmp/Makefile 269534 2014-08-04 22:10:07Z ngie $
+# $FreeBSD: head/lib/libmp/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 .include <src.opts.mk>
 
 LIB=		mp
 SHLIB_MAJOR=	7
-DPADD=		${LIBCRYPTO}
-LDADD=		-lcrypto
+LIBADD=		crypto
 MAN=		libmp.3
 INCS=		mp.h
 SRCS=		mpasbn.c

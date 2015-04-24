@@ -26,7 +26,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw.c 242349 2012-10-30 08:00:53Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw.c 274453 2014-11-12 22:27:53Z bapt $";
 #endif /* not lint */
 
 #include <err.h>
@@ -98,6 +98,7 @@ main(int argc, char *argv[])
 	int             which = -1;
 	char		*config = NULL;
 	struct userconf *cnf;
+	struct stat	st;
 
 	static const char *opts[W_NUM][M_NUM] =
 	{
@@ -143,6 +144,13 @@ main(int argc, char *argv[])
 			if (argv[1][1] == 'V') {
 				optarg = &argv[1][2];
 				if (*optarg == '\0') {
+					if (stat(argv[2], &st) != 0)
+						errx(EX_OSFILE, \
+						    "no such directory `%s'",
+						    argv[2]);
+					if (!S_ISDIR(st.st_mode))
+						errx(EX_OSFILE, "`%s' not a "
+						    "directory", argv[2]);
 					optarg = argv[2];
 					++argv;
 					--argc;

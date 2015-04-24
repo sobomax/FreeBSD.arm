@@ -82,7 +82,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 280665 2015-03-26 05:20:18Z rpaulo $");
 
 #include "opt_vm.h"
 
@@ -134,8 +134,9 @@ long first_page;
 int vm_page_zero_count;
 
 static int boot_pages = UMA_BOOT_PAGES;
-SYSCTL_INT(_vm, OID_AUTO, boot_pages, CTLFLAG_RDTUN, &boot_pages, 0,
-	"number of pages allocated for bootstrapping the VM system");
+SYSCTL_INT(_vm, OID_AUTO, boot_pages, CTLFLAG_RDTUN | CTLFLAG_NOFETCH,
+    &boot_pages, 0,
+    "number of pages allocated for bootstrapping the VM system");
 
 static int pa_tryrelock_restart;
 SYSCTL_INT(_vm, OID_AUTO, tryrelock_restart, CTLFLAG_RD,
@@ -160,7 +161,7 @@ vm_page_init_fakepg(void *dummy)
 {
 
 	fakepg_zone = uma_zcreate("fakepg", sizeof(struct vm_page), NULL, NULL,
-	    NULL, NULL, UMA_ALIGN_PTR, UMA_ZONE_NOFREE | UMA_ZONE_VM); 
+	    NULL, NULL, UMA_ALIGN_PTR, UMA_ZONE_NOFREE | UMA_ZONE_VM);
 }
 
 /* Make sure that u_long is at least 64 bits when PAGE_SIZE is 32K. */
@@ -290,8 +291,6 @@ vm_page_startup(vm_offset_t vaddr)
 	vm_paddr_t pa;
 	vm_paddr_t last_pa;
 	char *list;
-
-	/* the biggest memory array is the second group of pages */
 	vm_paddr_t end;
 	vm_paddr_t biggestsize;
 	vm_paddr_t low_water, high_water;
@@ -306,9 +305,23 @@ vm_page_startup(vm_offset_t vaddr)
 		phys_avail[i + 1] = trunc_page(phys_avail[i + 1]);
 	}
 
+#ifdef XEN
+	/*
+	 * There is no obvious reason why i386 PV Xen needs vm_page structs
+	 * created for these pseudo-physical addresses.  XXX
+	 */
+	vm_phys_add_seg(0, phys_avail[0]);
+#endif
+
 	low_water = phys_avail[0];
 	high_water = phys_avail[1];
 
+	for (i = 0; i < vm_phys_nsegs; i++) {
+		if (vm_phys_segs[i].start < low_water)
+			low_water = vm_phys_segs[i].start;
+		if (vm_phys_segs[i].end > high_water)
+			high_water = vm_phys_segs[i].end;
+	}
 	for (i = 0; phys_avail[i + 1]; i += 2) {
 		vm_paddr_t size = phys_avail[i + 1] - phys_avail[i];
 
@@ -321,10 +334,6 @@ vm_page_startup(vm_offset_t vaddr)
 		if (phys_avail[i + 1] > high_water)
 			high_water = phys_avail[i + 1];
 	}
-
-#ifdef XEN
-	low_water = 0;
-#endif	
 
 	end = phys_avail[biggestone+1];
 
@@ -340,7 +349,11 @@ vm_page_startup(vm_offset_t vaddr)
 	/*
 	 * Allocate memory for use when boot strapping the kernel memory
 	 * allocator.
+	 *
+	 * CTFLAG_RDTUN doesn't work during the early boot process, so we must
+	 * manually fetch the value.
 	 */
+	TUNABLE_INT_FETCH("vm.boot_pages", &boot_pages);
 	new_end = end - (boot_pages * UMA_SLAB_SIZE);
 	new_end = trunc_page(new_end);
 	mapped = pmap_map(&vaddr, new_end, end,
@@ -393,6 +406,10 @@ vm_page_startup(vm_offset_t vaddr)
 	first_page = low_water / PAGE_SIZE;
 #ifdef VM_PHYSSEG_SPARSE
 	page_range = 0;
+	for (i = 0; i < vm_phys_nsegs; i++) {
+		page_range += atop(vm_phys_segs[i].end -
+		    vm_phys_segs[i].start);
+	}
 	for (i = 0; phys_avail[i + 1] != 0; i += 2)
 		page_range += atop(phys_avail[i + 1] - phys_avail[i]);
 #elif defined(VM_PHYSSEG_DENSE)
@@ -431,8 +448,15 @@ vm_page_startup(vm_offset_t vaddr)
 	 */
 	for (pa = new_end; pa < phys_avail[biggestone + 1]; pa += PAGE_SIZE)
 		dump_add_page(pa);
-#endif	
+#endif
 	phys_avail[biggestone + 1] = new_end;
+
+	/*
+	 * Add physical memory segments corresponding to the available
+	 * physical pages.
+	 */
+	for (i = 0; phys_avail[i + 1] != 0; i += 2)
+		vm_phys_add_seg(phys_avail[i], phys_avail[i + 1]);
 
 	/*
 	 * Clear all of the page structures
@@ -683,7 +707,7 @@ vm_page_unhold(vm_page_t mem)
  *	vm_page_unhold_pages:
  *
  *	Unhold each of the pages that is referenced by the given array.
- */ 
+ */
 void
 vm_page_unhold_pages(vm_page_t *ma, int count)
 {
@@ -1284,7 +1308,7 @@ vm_page_rename(vm_page_t m, vm_object_t new_object, vm_pindex_t new_pindex)
  *	zero is given for "end", then the range's upper bound is
  *	infinity.  If the given object is backed by a vnode and it
  *	transitions from having one or more cached pages to none, the
- *	vnode's hold count is reduced. 
+ *	vnode's hold count is reduced.
  */
 void
 vm_page_cache_free(vm_object_t object, vm_pindex_t start, vm_pindex_t end)
@@ -1436,7 +1460,7 @@ vm_page_is_cached(vm_object_t object, vm_pindex_t pindex)
  *	VM_ALLOC_NOBUSY		do not exclusive busy the page
  *	VM_ALLOC_NODUMP		do not include the page in a kernel core dump
  *	VM_ALLOC_NOOBJ		page is not associated with an object and
- *				should not be exclusive busy 
+ *				should not be exclusive busy
  *	VM_ALLOC_SBUSY		shared busy the allocated page
  *	VM_ALLOC_WIRED		wire the allocated page
  *	VM_ALLOC_ZERO		prefer a zeroed page
@@ -1544,7 +1568,7 @@ vm_page_alloc(vm_object_t object, vm_pindex_t pindex, int req)
 	    ("vm_page_alloc: page %p has unexpected queue %d", m, m->queue));
 	KASSERT(m->wire_count == 0, ("vm_page_alloc: page %p is wired", m));
 	KASSERT(m->hold_count == 0, ("vm_page_alloc: page %p is held", m));
-	KASSERT(!vm_page_sbusied(m), 
+	KASSERT(!vm_page_sbusied(m),
 	    ("vm_page_alloc: page %p is busy", m));
 	KASSERT(m->dirty == 0, ("vm_page_alloc: page %p is dirty", m));
 	KASSERT(pmap_page_get_memattr(m) == VM_MEMATTR_DEFAULT,
@@ -1683,7 +1707,7 @@ vm_page_alloc_contig_vdrop(struct spglist *lst)
  *	optional allocation flags:
  *	VM_ALLOC_NOBUSY		do not exclusive busy the page
  *	VM_ALLOC_NOOBJ		page is not associated with an object and
- *				should not be exclusive busy 
+ *				should not be exclusive busy
  *	VM_ALLOC_SBUSY		shared busy the allocated page
  *	VM_ALLOC_WIRED		wire the allocated page
  *	VM_ALLOC_ZERO		prefer a zeroed page
@@ -2380,7 +2404,7 @@ vm_page_unwire(vm_page_t m, uint8_t queue)
  * This will cause them to be moved to the cache more quickly and
  * if not actively re-referenced, reclaimed more quickly.  If we just
  * stick these pages at the end of the inactive queue, heavy filesystem
- * meta-data accesses can cause an unnecessary paging load on memory bound 
+ * meta-data accesses can cause an unnecessary paging load on memory bound
  * processes.  This optimization causes one-time-use metadata to be
  * reused more quickly.
  *
@@ -2518,7 +2542,7 @@ vm_page_cache(vm_page_t m)
 
 	/*
 	 * Remove the page from the object's collection of resident
-	 * pages. 
+	 * pages.
 	 */
 	vm_radix_remove(&object->rtree, m->pindex);
 	TAILQ_REMOVE(&object->memq, m, listq);
@@ -2591,7 +2615,7 @@ vm_page_cache(vm_page_t m)
  *	it gets reused quickly.  However, this can result in a silly syndrome
  *	due to the page recycling too quickly.  Small objects will not be
  *	fully cached.  On the other hand, if we move the page to the inactive
- *	queue we wind up with a problem whereby very large objects 
+ *	queue we wind up with a problem whereby very large objects
  *	unnecessarily blow away our inactive and cache queues.
  *
  *	The solution is to move the pages based on a fixed weighting.  We
@@ -2692,6 +2716,8 @@ retrylookup:
 		sleep = (allocflags & VM_ALLOC_IGN_SBUSY) != 0 ?
 		    vm_page_xbusied(m) : vm_page_busied(m);
 		if (sleep) {
+			if ((allocflags & VM_ALLOC_NOWAIT) != 0)
+				return (NULL);
 			/*
 			 * Reference the page before unlocking and
 			 * sleeping so that the page daemon is less
@@ -2717,8 +2743,10 @@ retrylookup:
 			return (m);
 		}
 	}
-	m = vm_page_alloc(object, pindex, allocflags & ~VM_ALLOC_IGN_SBUSY);
+	m = vm_page_alloc(object, pindex, allocflags);
 	if (m == NULL) {
+		if ((allocflags & VM_ALLOC_NOWAIT) != 0)
+			return (NULL);
 		VM_OBJECT_WUNLOCK(object);
 		VM_WAIT;
 		VM_OBJECT_WLOCK(object);
@@ -2785,7 +2813,7 @@ vm_page_set_valid_range(vm_page_t m, int base, int size)
 		pmap_zero_page_area(m, frag, base - frag);
 
 	/*
-	 * If the ending offset is not DEV_BSIZE aligned and the 
+	 * If the ending offset is not DEV_BSIZE aligned and the
 	 * valid bit is clear, we have to zero out a portion of
 	 * the last block.
 	 */
@@ -2797,7 +2825,7 @@ vm_page_set_valid_range(vm_page_t m, int base, int size)
 
 	/*
 	 * Assert that no previously invalid block that is now being validated
-	 * is already dirty. 
+	 * is already dirty.
 	 */
 	KASSERT((~m->valid & vm_page_bits(base, size) & m->dirty) == 0,
 	    ("vm_page_set_valid_range: page %p is dirty", m));
@@ -2892,7 +2920,7 @@ vm_page_set_validclean(vm_page_t m, int base, int size)
 		pmap_zero_page_area(m, frag, base - frag);
 
 	/*
-	 * If the ending offset is not DEV_BSIZE aligned and the 
+	 * If the ending offset is not DEV_BSIZE aligned and the
 	 * valid bit is clear, we have to zero out a portion of
 	 * the last block.
 	 */
@@ -2988,12 +3016,12 @@ vm_page_set_invalid(vm_page_t m, int base, int size)
 /*
  * vm_page_zero_invalid()
  *
- *	The kernel assumes that the invalid portions of a page contain 
+ *	The kernel assumes that the invalid portions of a page contain
  *	garbage, but such pages can be mapped into memory by user code.
  *	When this occurs, we must zero out the non-valid portions of the
  *	page so user code sees what it expects.
  *
- *	Pages are most often semi-valid when the end of a file is mapped 
+ *	Pages are most often semi-valid when the end of a file is mapped
  *	into memory and the file's size is not page aligned.
  */
 void
@@ -3010,10 +3038,10 @@ vm_page_zero_invalid(vm_page_t m, boolean_t setvalid)
 	 * vm_page_set_validclean().
 	 */
 	for (b = i = 0; i <= PAGE_SIZE / DEV_BSIZE; ++i) {
-		if (i == (PAGE_SIZE / DEV_BSIZE) || 
+		if (i == (PAGE_SIZE / DEV_BSIZE) ||
 		    (m->valid & ((vm_page_bits_t)1 << i))) {
 			if (i > b) {
-				pmap_zero_page_area(m, 
+				pmap_zero_page_area(m,
 				    b << DEV_BSHIFT, (i - b) << DEV_BSHIFT);
 			}
 			b = i + 1;

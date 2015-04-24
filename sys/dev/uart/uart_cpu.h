@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/uart/uart_cpu.h 260890 2014-01-19 19:39:13Z imp $
+ * $FreeBSD: head/sys/dev/uart/uart_cpu.h 281438 2015-04-11 17:16:23Z andrew $
  */
 
 #ifndef _DEV_UART_CPU_H_
@@ -79,6 +79,7 @@ int uart_getenv(int, struct uart_devinfo *, struct uart_class *);
 const char *uart_getname(struct uart_class *);
 struct uart_ops *uart_getops(struct uart_class *);
 int uart_getrange(struct uart_class *);
+u_int uart_getregshift(struct uart_class *);
 
 void uart_add_sysdev(struct uart_devinfo *);
 

@@ -46,7 +46,7 @@ static char const copyright[] =
 static char const sccsid[] = "@(#)printf.c	8.1 (Berkeley) 7/20/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.bin/printf/printf.c 266853 2014-05-29 19:43:43Z pfg $";
+  "$FreeBSD: head/usr.bin/printf/printf.c 279503 2015-03-01 21:46:55Z jilles $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -66,7 +66,6 @@ static const char rcsid[] =
 #ifdef SHELL
 #define	main printfcmd
 #include "bltin/bltin.h"
-#include "error.h"
 #include "options.h"
 #endif
 

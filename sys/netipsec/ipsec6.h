@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec6.h 266800 2014-05-28 12:45:27Z vanhu $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec6.h 275707 2014-12-11 17:14:49Z ae $	*/
 /*	$KAME: ipsec.h,v 1.44 2001/03/23 08:08:47 itojun Exp $	*/
 
 /*-
@@ -59,23 +59,13 @@ VNET_DECLARE(int, ip6_ipsec_ecn);
 #define	V_ip6_ipsec_ecn		VNET(ip6_ipsec_ecn)
 
 struct inpcb;
-
-extern int ipsec6_in_reject __P((struct mbuf *, struct inpcb *));
-
-struct ip6_hdr;
-extern const char *ipsec6_logpacketstr __P((struct ip6_hdr *, u_int32_t));
+extern int ipsec6_in_reject(struct mbuf *, struct inpcb *);
 
 struct m_tag;
 extern int ipsec6_common_input(struct mbuf **mp, int *offp, int proto);
 extern int ipsec6_common_input_cb(struct mbuf *m, struct secasvar *sav,
-			int skip, int protoff, struct m_tag *mt);
+			int skip, int protoff);
 extern void esp6_ctlinput(int, struct sockaddr *, void *);
-
-struct ipsec_output_state;
-extern int ipsec6_output_trans __P((struct ipsec_output_state *, u_char *,
-	struct mbuf *, struct secpolicy *, int, int *));
-extern int ipsec6_output_tunnel __P((struct ipsec_output_state *,
-	struct secpolicy *, int));
 extern int ipsec6_process_packet(struct mbuf *, struct ipsecrequest *);
 #endif /*_KERNEL*/
 

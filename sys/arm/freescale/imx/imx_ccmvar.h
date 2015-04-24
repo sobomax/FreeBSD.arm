@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx_ccmvar.h 271055 2014-09-03 21:45:39Z ian $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx_ccmvar.h 277644 2015-01-24 13:07:07Z br $
  */
 
 #ifndef	IMX_CCMVAR_H
@@ -51,5 +51,6 @@ uint32_t imx_ccm_ahb_hz(void);
 
 void imx_ccm_usb_enable(device_t _usbdev);
 void imx_ccm_usbphy_enable(device_t _phydev);
+void imx_ccm_ssi_configure(device_t _ssidev);
 
 #endif

@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/disassem.c 269956 2014-08-14 04:20:13Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/disassem.c 279312 2015-02-26 07:47:35Z dim $");
 #include <sys/param.h>
 
 
@@ -289,7 +289,7 @@ static void disassemble_printaddr(u_int address);
 vm_offset_t
 disasm(const disasm_interface_t *di, vm_offset_t loc, int altfmt)
 {
-	struct arm32_insn *i_ptr = (struct arm32_insn *)&arm32_i;
+	const struct arm32_insn *i_ptr = arm32_i;
 
 	u_int insn;
 	int matchp;

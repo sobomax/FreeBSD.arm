@@ -25,7 +25,7 @@
  *
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vfsops.c 1.36
  *
- * $FreeBSD: head/sys/fs/devfs/devfs_devs.c 273377 2014-10-21 07:31:21Z hselasky $
+ * $FreeBSD: head/sys/fs/devfs/devfs_devs.c 280308 2015-03-21 01:14:11Z delphij $
  */
 
 #include <sys/param.h>
@@ -61,7 +61,7 @@ static MALLOC_DEFINE(M_DEVFS2, "DEVFS2", "DEVFS data 2");
 static MALLOC_DEFINE(M_DEVFS3, "DEVFS3", "DEVFS data 3");
 static MALLOC_DEFINE(M_CDEVP, "DEVFS1", "DEVFS cdev_priv storage");
 
-static SYSCTL_NODE(_vfs, OID_AUTO, devfs, CTLFLAG_RW, 0, "DEVFS filesystem");
+SYSCTL_NODE(_vfs, OID_AUTO, devfs, CTLFLAG_RW, 0, "DEVFS filesystem");
 
 static unsigned devfs_generation;
 SYSCTL_UINT(_vfs_devfs, OID_AUTO, generation, CTLFLAG_RD,
@@ -186,6 +186,16 @@ devfs_find(struct devfs_dirent *dd, const char *name, int namelen, int type)
 			continue;
 		if (type != 0 && type != de->de_dirent->d_type)
 			continue;
+
+		/*
+		 * The race with finding non-active name is not
+		 * completely closed by the check, but it is similar
+		 * to the devfs_allocv() in making it unlikely enough.
+		 */
+		if (de->de_dirent->d_type == DT_CHR &&
+		    (de->de_cdp->cdp_flags & CDP_ACTIVE) == 0)
+			continue;
+
 		if (bcmp(name, de->de_dirent->d_name, namelen) != 0)
 			continue;
 		break;

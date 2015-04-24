@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/pflogd/Makefile 244929 2013-01-01 18:28:21Z antoine $
+# $FreeBSD: head/sbin/pflogd/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH:	${.CURDIR}/../../contrib/pf/pflogd
 
@@ -8,8 +8,7 @@ MAN=	pflogd.8
 
 CFLAGS+=-include ${.CURDIR}/../../lib/libpcap/config.h
 
-LDADD=	-lpcap
-DPADD=	${LIBPCAP}
+LIBADD=	pcap
 
 WARNS?=	2
 

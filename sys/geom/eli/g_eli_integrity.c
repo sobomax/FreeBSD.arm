@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/eli/g_eli_integrity.c 271148 2014-09-04 23:53:51Z jmg $");
+__FBSDID("$FreeBSD: head/sys/geom/eli/g_eli_integrity.c 275732 2014-12-12 19:56:36Z jmg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -479,7 +479,7 @@ g_eli_auth_run(struct g_eli_worker *wr, struct bio *bp)
 		crp->crp_opaque = (void *)bp;
 		crp->crp_buf = (void *)data;
 		data += encr_secsize;
-		crp->crp_flags = CRYPTO_F_CBIFSYNC | CRYPTO_F_REL;
+		crp->crp_flags = CRYPTO_F_CBIFSYNC;
 		if (g_eli_batch)
 			crp->crp_flags |= CRYPTO_F_BATCH;
 		if (bp->bio_cmd == BIO_WRITE) {

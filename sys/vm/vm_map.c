@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_map.c 272036 2014-09-23 18:54:23Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_map.c 277649 2015-01-24 16:59:38Z rstone $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -343,6 +343,9 @@ vmspace_dofree(struct vmspace *vm)
 void
 vmspace_free(struct vmspace *vm)
 {
+
+	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL,
+	    "vmspace_free() called with non-sleepable lock held");
 
 	if (vm->vm_refcnt == 0)
 		panic("vmspace_free: attempt to free already freed vmspace");

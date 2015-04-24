@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.opts.mk 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.opts.mk 276556 2015-01-02 18:54:55Z bapt $
 #
 # Option file for src builds.
 #
@@ -11,7 +11,7 @@
 # are exceptions). Recursive makes usually add MK_FOO=no for options that they wish
 # to omit from that make.
 #
-# Makefiles must include bsd.srcpot.mk before they test the value of any MK_FOO
+# Makefiles must include bsd.mkopt.mk before they test the value of any MK_FOO
 # variable.
 #
 # Makefiles may also assume that this file is included by bsd.own.mk should it
@@ -51,6 +51,7 @@ __<bsd.opts.mk>__:
 __DEFAULT_YES_OPTIONS = \
     ASSERT_DEBUG \
     DOCCOMPRESS \
+    INCLUDES \
     INSTALLLIB \
     KERBEROS \
     MAN \
@@ -67,8 +68,7 @@ __DEFAULT_YES_OPTIONS = \
 __DEFAULT_NO_OPTIONS = \
     CTF \
     DEBUG_FILES \
-    INSTALL_AS_USER \
-    INFO
+    INSTALL_AS_USER
 
 .include <bsd.mkopt.mk>
 

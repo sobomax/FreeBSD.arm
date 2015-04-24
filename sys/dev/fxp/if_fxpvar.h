@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/fxp/if_fxpvar.h 266977 2014-06-02 18:45:36Z marcel $
+ * $FreeBSD: head/sys/dev/fxp/if_fxpvar.h 276169 2014-12-24 03:49:33Z imp $
  */
 
 /*
@@ -143,7 +143,8 @@ struct fxp_desc_list {
 };
 
 struct fxp_ident {
-	uint16_t	devid;
+	uint16_t	vendor;
+	uint16_t	device;
 	int16_t		revid;		/* -1 matches anything */
 	uint8_t		ich;
 	const char	*name;

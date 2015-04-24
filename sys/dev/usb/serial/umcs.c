@@ -38,7 +38,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 269470 2014-08-03 10:47:45Z joerg $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -80,7 +80,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 269470 2014-08-03 10:47:45Z j
 static int umcs_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, umcs, CTLFLAG_RW, 0, "USB umcs quadport serial adapter");
-SYSCTL_INT(_hw_usb_umcs, OID_AUTO, debug, CTLFLAG_RW, &umcs_debug, 0, "Debug level");
+SYSCTL_INT(_hw_usb_umcs, OID_AUTO, debug, CTLFLAG_RWTUN, &umcs_debug, 0, "Debug level");
 #endif					/* USB_DEBUG */
 
 

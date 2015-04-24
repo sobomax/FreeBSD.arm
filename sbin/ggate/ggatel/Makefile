@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ggate/ggatel/Makefile 130837 2004-06-21 09:20:06Z pjd $
+# $FreeBSD: head/sbin/ggate/ggatel/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../shared
 
@@ -9,7 +9,6 @@ SRCS=	ggatel.c ggate.c
 CFLAGS+= -DLIBGEOM
 CFLAGS+= -I${.CURDIR}/../shared
 
-DPADD=	${LIBGEOM} ${LIBSBUF} ${LIBBSDXML} ${LIBUTIL}
-LDADD=	-lgeom -lsbuf -lbsdxml -lutil
+LIBADD=	geom util
 
 .include <bsd.prog.mk>

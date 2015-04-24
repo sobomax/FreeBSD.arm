@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mem.c 268880 2014-07-19 15:11:58Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mem.c 277421 2015-01-20 16:21:59Z nwhitehorn $");
 
 /*
  * Memory special file
@@ -99,8 +99,6 @@ memrw(struct cdev *dev, struct uio *uio, int flags)
 
 	cnt = 0;
 	error = 0;
-
-	GIANT_REQUIRED;
 
 	while (uio->uio_resid > 0 && !error) {
 		iov = uio->uio_iov;

@@ -26,7 +26,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/dummy_rng.c 273872 2014-10-30 21:21:53Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/dummy_rng.c 278907 2015-02-17 17:37:00Z jmg $");
 
 #include "opt_random.h"
 
@@ -82,18 +82,12 @@ dummy_random_init(void)
  *
  * Caveat Emptor.
  */
-u_int
+void
 dummy_random_read_phony(uint8_t *buf, u_int count)
 {
 	/* If no entropy device is loaded, don't spam the console with warnings */
-	static int warned = 0;
 	u_long randval;
 	size_t size, i;
-
-	if (!warned) {
-		log(LOG_WARNING, "random device not loaded/active; using insecure pseudo-random number generator\n");
-		warned = 1;
-	}
 
 	/* srandom() is called in kern/init_main.c:proc0_post() */
 
@@ -103,8 +97,6 @@ dummy_random_read_phony(uint8_t *buf, u_int count)
 		size = MIN(count - i, sizeof(randval));
 		memcpy(buf + i, &randval, (size_t)size);
 	}
-
-	return (count);
 }
 
 struct random_adaptor randomdev_dummy = {

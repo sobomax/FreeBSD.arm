@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/metadata.h 250840 2013-05-21 03:05:49Z marcel $
+ * $FreeBSD: head/sys/i386/include/metadata.h 277215 2015-01-15 16:27:20Z royger $
  */
 
 #ifndef _MACHINE_METADATA_H_
@@ -32,5 +32,6 @@
 #define	MODINFOMD_SMAP		0x1001
 #define	MODINFOMD_SMAP_XATTR	0x1002
 #define	MODINFOMD_DTBP		0x1003
+#define	MODINFOMD_MODULEP	0x1006
 
 #endif /* !_MACHINE_METADATA_H_ */

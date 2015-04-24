@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/vm86bios.s 273987 2014-11-02 19:54:10Z jhb $
+ * $FreeBSD: head/sys/i386/i386/vm86bios.s 281495 2015-04-13 15:22:45Z kib $
  */
 
 #include "opt_npx.h"
@@ -120,7 +120,7 @@ ENTRY(vm86_bioscall)
 	movl	SCR_NEWPTD(%edx),%eax	/* mapping for vm86 page table */
 	movl	%eax,0(%ebx)		/* ... install as PTD entry 0 */
 
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	movl	IdlePDPT,%ecx
 #endif
 	movl	%ecx,%cr3		/* new page tables */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/authpf/Makefile 253138 2013-07-10 07:40:30Z des $
+# $FreeBSD: head/usr.sbin/authpf/Makefile 281336 2015-04-09 21:33:57Z bapt $
 
 .PATH:	${.CURDIR}/../../contrib/pf/authpf
 
@@ -13,8 +13,7 @@ SRCS=   authpf.c
 # XXX ALTQ:
 CFLAGS+= -DENABLE_ALTQ
 
-LDADD+= -lm -lmd -lutil
-DPADD+= ${LIBM} ${LIBMD} ${LIBUTIL}
+LIBADD=	m util
 
 WARNS?=	3
 

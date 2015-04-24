@@ -1,9 +1,9 @@
 #
-# $FreeBSD: head/tools/regression/sockets/sigpipe/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/sigpipe/Makefile 281397 2015-04-11 03:24:49Z ngie $
 #
 
 PROG=	sigpipe
 MAN=
-WARNS?=	2
+WARNS?=	6
 
 .include <bsd.prog.mk>

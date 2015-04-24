@@ -1,12 +1,11 @@
-#	$FreeBSD: head/usr.bin/bc/Makefile 270650 2014-08-26 09:10:28Z ngie $
+#	$FreeBSD: head/usr.bin/bc/Makefile 275042 2014-11-25 14:29:10Z bapt $
 #	$OpenBSD: Makefile,v 1.7 2013/09/19 16:12:00 otto Exp $
 
 PROG=		bc
 SRCS=		bc.y scan.l tty.c
 CFLAGS+=	-I. -I${.CURDIR}
 
-DPADD+=		${LIBEDIT} ${LIBNCURSESW}
-LDADD+=		-ledit -lncursesw
+LIBADD=		edit
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 

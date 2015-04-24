@@ -1,3 +1,3 @@
-#$FreeBSD: head/lib/libthr/arch/amd64/Makefile.inc 212516 2010-09-13 01:43:10Z imp $
+#$FreeBSD: head/lib/libthr/arch/amd64/Makefile.inc 277490 2015-01-21 16:41:05Z andrew $
 
-SRCS+=	pthread_md.c _umtx_op_err.S
+SRCS+=	_umtx_op_err.S

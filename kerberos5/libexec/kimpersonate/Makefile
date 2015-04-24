@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kimpersonate/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kimpersonate/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kimpersonate
 MAN=	kimpersonate.8
@@ -6,10 +6,7 @@ CFLAGS+=	-I${KRB5DIR}/lib/hx509 \
 		-I${KRB5DIR}/lib/asn1 \
 		-I${KRB5DIR}/lib/roken \
 		-I${KRB5DIR}/lib/sl -I.
-DPADD=	${LIBKAFS5} ${LIBKRB5} ${LIBHEIMNTLM} ${LIBROKEN} ${LIBASN1} ${LIBCRYPTO} \
-	${LIBCRYPT} ${LIBVERS}
-LDADD=	-lkafs5 -lkrb5 -lheimntlm -lroken -lasn1 -lcrypto -lcrypt \
-	${LIBVERS}
+LIBADD=	krb5 roken asn1 vers
 
 .include <bsd.prog.mk>
 

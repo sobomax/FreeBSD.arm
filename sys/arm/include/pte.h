@@ -31,8 +31,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/pte.h 254918 2013-08-26 17:12:30Z raj $
+ * $FreeBSD: head/sys/arm/include/pte.h 280712 2015-03-26 21:13:53Z ian $
  */
+#ifdef ARM_NEW_PMAP
+#include <machine/pte-v6.h>
+#else /* ARM_NEW_PMAP */
 
 #ifndef _MACHINE_PTE_H_
 #define _MACHINE_PTE_H_
@@ -352,5 +355,6 @@ typedef	uint32_t	pt_entry_t;		/* page table entry */
  * 1 X 1 1 1	Y	  Y		WT	Y		Y
  */
 #endif /* !_MACHINE_PTE_H_ */
+#endif /* !ARM_NEW_PMAP */
 
 /* End of pte.h */

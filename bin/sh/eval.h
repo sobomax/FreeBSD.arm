@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)eval.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/eval.h 255215 2013-09-04 22:10:16Z jilles $
+ * $FreeBSD: head/bin/sh/eval.h 279508 2015-03-01 22:32:23Z jilles $
  */
 
 extern char *commandname;	/* currently executing command */
@@ -53,7 +53,7 @@ void reseteval(void);
 #define EV_TESTED 02		/* exit status is checked; ignore -e flag */
 #define EV_BACKCMD 04		/* command executing within back quotes */
 
-void evalstring(char *, int);
+void evalstring(const char *, int);
 union node;	/* BLETCH for ansi C */
 void evaltree(union node *, int);
 void evalbackcmd(union node *, struct backcmd *);

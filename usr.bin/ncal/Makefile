@@ -1,11 +1,10 @@
-# $FreeBSD: head/usr.bin/ncal/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/ncal/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
 PROG=	ncal
 
-DPADD=	${LIBCALENDAR} ${LIBTERMCAPW}
-LDADD=	-lcalendar -ltermcapw
+LIBADD=	calendar ncursesw
 
 LINKS=	${BINDIR}/ncal ${BINDIR}/cal
 MLINKS=	ncal.1 cal.1

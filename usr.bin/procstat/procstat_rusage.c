@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2012 Advanced Computing Technologies LLC
+ * Copyright (c) 2012 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/procstat/procstat_rusage.c 266322 2014-05-17 16:11:06Z jhb $");
+__FBSDID("$FreeBSD: head/usr.bin/procstat/procstat_rusage.c 281887 2015-04-23 14:22:20Z jhb $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>

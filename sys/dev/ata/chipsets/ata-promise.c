@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-promise.c 269713 2014-08-08 11:47:18Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-promise.c 280393 2015-03-23 19:47:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -209,7 +209,7 @@ ata_promise_probe(device_t dev)
     device_set_desc_copy(dev, buffer);
     ctlr->chip = idx;
     ctlr->chipinit = ata_promise_chipinit;
-    return (BUS_PROBE_DEFAULT);
+    return (BUS_PROBE_LOW_PRIORITY);
 }
 
 static int

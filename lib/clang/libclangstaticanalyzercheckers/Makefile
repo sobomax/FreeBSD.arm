@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -33,7 +33,6 @@ SRCS=	AllocationDiagnostics.cpp \
 	ExprInspectionChecker.cpp \
 	FixedAddressChecker.cpp \
 	GenericTaintChecker.cpp \
-	IdempotentOperationChecker.cpp \
 	IdenticalExprChecker.cpp \
 	IvarInvalidationChecker.cpp \
 	LLVMConventionsChecker.cpp \
@@ -62,6 +61,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	StackAddrEscapeChecker.cpp \
 	StreamChecker.cpp \
 	TaintTesterChecker.cpp \
+	TestAfterDivZeroChecker.cpp \
 	TraversalChecker.cpp \
 	UndefBranchChecker.cpp \
 	UndefCapturedBlockVarChecker.cpp \
@@ -74,6 +74,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	VirtualCallChecker.cpp
 
 TGHDRS=	AttrList \
+	AttrVisitor \
 	Attrs \
 	Checkers \
 	CommentCommandList \

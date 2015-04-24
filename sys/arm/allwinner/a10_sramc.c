@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/a10_sramc.c 263711 2014-03-25 08:31:47Z ganbold $
+ * $FreeBSD: head/sys/arm/allwinner/a10_sramc.c 281085 2015-04-04 21:34:26Z andrew $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_sramc.c 263711 2014-03-25 08:31:47Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_sramc.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_sramc.c 263711 2014-03-25 08:31:4
 #include <machine/cpu.h>
 #include <machine/frame.h>
 #include <machine/intr.h>
-#include <machine/fdt.h>
 
 #include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>

@@ -1,14 +1,11 @@
-# $FreeBSD: head/kerberos5/libexec/kdigest/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kdigest/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kdigest
 MAN=	kdigest.8
 CFLAGS+=	-I${KRB5DIR}/lib/asn1 \
 		-I${KRB5DIR}/lib/roken \
 		-I${KRB5DIR}/lib/sl -I.
-DPADD=	${LIBKRB5} ${LIBHEIMNTLM} ${LIBROKEN} ${LIBASN1} ${LIBCRYPTO} \
-	${LIBCRYPT} ${LIBSL} ${LIBVERS} ${LIBEDIT}
-LDADD=	-lkrb5 -lheimntlm -lroken -lasn1 -lcrypto -lcrypt ${LIBSL} \
-	${LIBVERS} -ledit
+LIBADD=	krb5 heimntlm roken crypto edit sl vers
 SRCS=	kdigest.c \
 	kdigest-commands.c \
 	kdigest-commands.h

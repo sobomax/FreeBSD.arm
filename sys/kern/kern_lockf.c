@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_lockf.c 268384 2014-07-08 08:10:15Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_lockf.c 276904 2015-01-10 06:48:35Z delphij $");
 
 #include "opt_debug_lockf.h"
 
@@ -740,12 +740,13 @@ retry_setlock:
 
 	VI_UNLOCK(vp);
 
-	if (freestate) {
+	if (freestate != NULL) {
 		sx_xlock(&lf_lock_states_lock);
 		LIST_REMOVE(freestate, ls_link);
 		sx_xunlock(&lf_lock_states_lock);
 		sx_destroy(&freestate->ls_lock);
 		free(freestate, M_LOCKF);
+		freestate = NULL;
 	}
 
 	if (error == EDOOFUS) {

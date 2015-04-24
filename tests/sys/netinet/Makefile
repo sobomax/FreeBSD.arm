@@ -1,11 +1,10 @@
-# $FreeBSD: head/tests/sys/netinet/Makefile 265836 2014-05-10 16:38:37Z imp $
+# $FreeBSD: head/tests/sys/netinet/Makefile 274267 2014-11-08 03:20:56Z ngie $
 
 TESTSDIR=	${TESTSBASE}/sys/netinet
 BINDIR=		${TESTSDIR}
 
-ATF_TESTS_SH+=	fibs_test
-PROG=	udp_dontroute
-SRCS=	udp_dontroute.c
+ATF_TESTS_SH=	fibs_test
+PROGS=	udp_dontroute
 MAN=
 WARNS?=	6
 

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bwi/if_bwi.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/bwi/if_bwi.c 280347 2015-03-22 16:10:28Z mav $");
 
 #include "opt_inet.h"
 #include "opt_bwi.h"
@@ -1916,7 +1916,7 @@ bwi_dma_alloc(struct bwi_softc *sc)
 			       lowaddr,			/* lowaddr */
 			       BUS_SPACE_MAXADDR,	/* highaddr */
 			       NULL, NULL,		/* filter, filterarg */
-			       MAXBSIZE,		/* maxsize */
+			       BUS_SPACE_MAXSIZE,	/* maxsize */
 			       BUS_SPACE_UNRESTRICTED,	/* nsegments */
 			       BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			       BUS_DMA_ALLOCNOW,	/* flags */

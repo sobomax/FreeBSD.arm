@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/atkbdc/atkbdcreg.h 216492 2010-12-16 17:14:37Z jhb $
+ * $FreeBSD: head/sys/dev/atkbdc/atkbdcreg.h 278787 2015-02-14 22:12:17Z grembo $
  * from kbdio.h,v 1.8 1998/09/25 11:55:46 yokota Exp
  */
 
@@ -202,6 +202,11 @@ typedef struct atkbdc_softc {
     kqueue kbd;			/* keyboard data queue */
     kqueue aux;			/* auxiliary data queue */
     int retry;
+    int quirks;			/* controller doesn't like deactivate */
+#define KBDC_QUIRK_KEEP_ACTIVATED	(1 << 0)
+#define KBDC_QUIRK_IGNORE_PROBE_RESULT	(1 << 1)
+#define KBDC_QUIRK_RESET_AFTER_PROBE	(1 << 2)
+#define KBDC_QUIRK_SETLEDS_ON_INIT	(1 << 3)
 } atkbdc_softc_t; 
 
 enum kbdc_device_ivar {

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/usermgmt/Makefile 263150 2014-03-14 03:42:05Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/usermgmt/Makefile 274073 2014-11-04 00:14:38Z dteske $
 
 NO_OBJ=
 
@@ -9,8 +9,5 @@ FILES=		INDEX USAGE
 
 SCRIPTSDIR=	${FILESDIR}
 SCRIPTS=	groupadd groupdel groupedit useradd userdel useredit usermgmt
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${FILESDIR}
 
 .include <bsd.prog.mk>

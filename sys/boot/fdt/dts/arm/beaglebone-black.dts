@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/beaglebone-black.dts 267021 2014-06-03 19:24:53Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/beaglebone-black.dts 277208 2015-01-15 01:20:56Z loos $
  */
 
 /dts-v1/;
@@ -144,10 +144,9 @@
 			status = "okay";
 			non-removable;
 		};
-
  
 		i2c@44e0b000 {
-			pmic@24 {
+			pmic@48 {
 				compatible = "ti,am335x-pmic";
 				reg = <0x48>;
 			};

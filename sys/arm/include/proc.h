@@ -32,7 +32,7 @@
  *
  *      from: @(#)proc.h        7.1 (Berkeley) 5/15/91
  *	from: FreeBSD: src/sys/i386/include/proc.h,v 1.11 2001/06/29
- * $FreeBSD: head/sys/arm/include/proc.h 245551 2013-01-17 09:52:35Z andrew $
+ * $FreeBSD: head/sys/arm/include/proc.h 276638 2015-01-03 22:33:18Z ian $
  */
 
 #ifndef	_MACHINE_PROC_H_
@@ -48,6 +48,7 @@ struct md_utrap {
 struct mdthread {
 	int	md_spinlock_count;	/* (k) */
 	register_t md_saved_cspr;	/* (k) */
+	register_t md_spurflt_addr;     /* (k) Spurious page fault address. */
 	int md_ptrace_instr;
 	int md_ptrace_addr;
 	register_t md_tp;

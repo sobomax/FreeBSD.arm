@@ -1,11 +1,11 @@
-# $FreeBSD: head/lib/libc/sparc64/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/sparc64/Makefile.inc 281004 2015-04-02 21:18:11Z emaste $
 #
 # Machine dependent definitions for the ultra sparc architecture.
 #
 
 .include "fpu/Makefile.inc"
 
-SRCS+=	__vdso_gettc.c
+SRCS+=	trivial-vdso_tc.c
 
 # Long double is quad precision
 GDTOASRCS+=strtorQ.c

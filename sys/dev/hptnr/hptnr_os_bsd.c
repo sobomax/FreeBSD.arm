@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptnr/hptnr_os_bsd.c 270384 2014-08-23 01:52:43Z delphij $
+ * $FreeBSD: head/sys/dev/hptnr/hptnr_os_bsd.c 274819 2014-11-21 21:01:24Z smh $
  */
 
 #include <dev/hptnr/hptnr_config.h>
@@ -235,8 +235,8 @@ void  os_request_timer(void * osext, HPT_U32 interval)
 
 	HPT_ASSERT(vbus_ext->ext_type==EXT_TYPE_VBUS);
 
-	callout_reset(&vbus_ext->timer, interval * hz / 1000000,
-	    os_timer_for_ldm, vbus_ext);
+	callout_reset_sbt(&vbus_ext->timer, SBT_1US * interval, 0,
+	    os_timer_for_ldm, vbus_ext, 0);
 }
 
 HPT_TIME os_query_time(void)

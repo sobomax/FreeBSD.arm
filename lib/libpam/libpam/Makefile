@@ -33,7 +33,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libpam/libpam/Makefile 271624 2014-09-15 13:40:09Z des $
+# $FreeBSD: head/lib/libpam/libpam/Makefile 274138 2014-11-05 16:13:42Z des $
 
 OPENPAM=	${.CURDIR}/../../../contrib/openpam
 .PATH: ${OPENPAM}/include ${OPENPAM}/lib/libpam ${OPENPAM}/doc/man
@@ -198,5 +198,9 @@ DPSRCS=		openpam_static.c
 # Headers
 INCS=		${HEADERS} ${ADD_HEADERS}
 INCSDIR=	${INCLUDEDIR}/security
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=        tests
+.endif
 
 .include <bsd.lib.mk>

@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getpwent.c 158115 2006-04-28 12:03:38Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getpwent.c 279712 2015-03-06 22:22:57Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -815,7 +815,7 @@ files_passwd(void *retval, void *mdata, va_list ap)
 	size_t			 bufsize, namesize;
 	uid_t			 uid;
 	uint32_t		 store;
-	int			 rv, stayopen, *errnop;
+	int			 rv, stayopen = 0, *errnop;
 
 	name = NULL;
 	uid = (uid_t)-1;
@@ -921,7 +921,7 @@ files_passwd(void *retval, void *mdata, va_list ap)
 		    errnop);
 	} while (how == nss_lt_all && !(rv & NS_TERMINATE));
 fin:
-	if (!stayopen && st->db != NULL) {
+	if (st->db != NULL && !stayopen) {
 		(void)st->db->close(st->db);
 		st->db = NULL;
 	}
@@ -1392,8 +1392,10 @@ nis_passwd(void *retval, void *mdata, va_list ap)
 				continue;
 			}
 		}
-		if (resultlen >= bufsize)
+		if (resultlen >= bufsize) {
+			free(result);
 			goto erange;
+		}
 		memcpy(buffer, result, resultlen);
 		buffer[resultlen] = '\0';
 		free(result);
@@ -1940,7 +1942,7 @@ docompat:
 			break;
 	}
 fin:
-	if (!stayopen && st->db != NULL) {
+	if (st->db != NULL && !stayopen) {
 		(void)st->db->close(st->db);
 		st->db = NULL;
 	}

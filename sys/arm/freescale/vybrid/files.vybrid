@@ -1,15 +1,11 @@
-# $FreeBSD: head/sys/arm/freescale/vybrid/files.vybrid 267507 2014-06-15 12:08:33Z br $
+# $FreeBSD: head/sys/arm/freescale/vybrid/files.vybrid 280831 2015-03-29 22:43:39Z andrew $
 
 kern/kern_clocksource.c				standard
 
 arm/arm/bus_space_generic.c			standard
 arm/arm/bus_space_asm_generic.S			standard
-arm/arm/cpufunc_asm_armv5.S			standard
-arm/arm/cpufunc_asm_arm10.S			standard
-arm/arm/cpufunc_asm_arm11.S			standard
-arm/arm/cpufunc_asm_armv7.S			standard
 
-arm/arm/bus_space-v6.c				standard
+arm/arm/bus_space_base.c			standard
 arm/arm/gic.c					standard
 arm/arm/mpcore_timer.c				standard
 

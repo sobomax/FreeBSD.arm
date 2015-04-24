@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/ipf.h 256518 2013-10-15 10:19:24Z glebius $	*/
+/*	$FreeBSD: head/contrib/ipfilter/ipf.h 279029 2015-02-19 23:14:35Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -42,9 +42,6 @@ struct file;
 #include <sys/time.h>
 #include <sys/socket.h>
 #include <net/if.h>
-
-#define	_WANT_IFADDR
-#include <net/if_var.h>
 
 #include <netinet/in.h>
 #include <netinet/in_systm.h>

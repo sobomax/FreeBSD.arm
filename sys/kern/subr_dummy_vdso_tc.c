@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_dummy_vdso_tc.c 237433 2012-06-22 07:06:40Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_dummy_vdso_tc.c 277406 2015-01-20 03:54:30Z neel $");
 
 #include "opt_compat.h"
 
@@ -33,7 +33,7 @@ __FBSDID("$FreeBSD: head/sys/kern/subr_dummy_vdso_tc.c 237433 2012-06-22 07:06:4
 #include <sys/vdso.h>
 
 uint32_t
-cpu_fill_vdso_timehands(struct vdso_timehands *vdso_th)
+cpu_fill_vdso_timehands(struct vdso_timehands *vdso_th, struct timecounter *tc)
 {
 
 	return (0);
@@ -41,7 +41,8 @@ cpu_fill_vdso_timehands(struct vdso_timehands *vdso_th)
 
 #ifdef COMPAT_FREEBSD32
 uint32_t
-cpu_fill_vdso_timehands32(struct vdso_timehands32 *vdso_th32)
+cpu_fill_vdso_timehands32(struct vdso_timehands32 *vdso_th32,
+    struct timecounter *tc)
 {
 
 	return (0);

@@ -35,7 +35,7 @@
 #include "feeder_if.h"
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/mixer.c 269228 2014-07-29 08:31:10Z mav $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/mixer.c 280442 2015-03-24 16:31:22Z hselasky $");
 
 static MALLOC_DEFINE(M_MIXER, "mixer", "mixer");
 
@@ -883,10 +883,10 @@ mixer_hwvol_init(device_t dev)
 	m->hwvol_step = 5;
 	SYSCTL_ADD_INT(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
-            OID_AUTO, "hwvol_step", CTLFLAG_RW, &m->hwvol_step, 0, "");
+            OID_AUTO, "hwvol_step", CTLFLAG_RWTUN, &m->hwvol_step, 0, "");
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)),
-            OID_AUTO, "hwvol_mixer", CTLTYPE_STRING | CTLFLAG_RW, m, 0,
+            OID_AUTO, "hwvol_mixer", CTLTYPE_STRING | CTLFLAG_RWTUN, m, 0,
 	    sysctl_hw_snd_hwvol_mixer, "A", "");
 	return 0;
 }
@@ -1328,9 +1328,7 @@ done:
 
 static void
 mixer_clone(void *arg,
-#if __FreeBSD_version >= 600034
     struct ucred *cred,
-#endif
     char *name, int namelen, struct cdev **dev)
 {
 	struct snddev_info *d;

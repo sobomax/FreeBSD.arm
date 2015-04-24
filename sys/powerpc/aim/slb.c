@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/aim/slb.c 243040 2012-11-14 20:01:40Z kib $
+ * $FreeBSD: head/sys/powerpc/aim/slb.c 280957 2015-04-01 12:42:26Z rstone $
  */
 
 #include <sys/param.h>
@@ -473,7 +473,7 @@ slb_insert_user(pmap_t pm, struct slb *slb)
 }
 
 static void *
-slb_uma_real_alloc(uma_zone_t zone, int bytes, u_int8_t *flags, int wait)
+slb_uma_real_alloc(uma_zone_t zone, vm_size_t bytes, u_int8_t *flags, int wait)
 {
 	static vm_offset_t realmax = 0;
 	void *va;

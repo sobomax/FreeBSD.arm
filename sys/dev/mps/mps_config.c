@@ -1,5 +1,6 @@
 /*-
- * Copyright (c) 2011, 2012 LSI Corp.
+ * Copyright (c) 2011-2015 LSI Corp.
+ * Copyright (c) 2013-2015 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * LSI MPT-Fusion Host Adapter FreeBSD
+ * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_config.c 253550 2013-07-22 18:41:53Z ken $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_config.c 279253 2015-02-24 22:07:42Z slm $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>

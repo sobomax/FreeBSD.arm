@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/i386/include/vmparam.h 269577 2014-08-05 09:44:10Z glebius $
+ * $FreeBSD: head/sys/i386/include/vmparam.h 281495 2015-04-13 15:22:45Z kib $
  */
 
 
@@ -64,9 +64,15 @@
 #endif
 
 /*
- * The physical address space is densely populated.
+ * Choose between DENSE and SPARSE based on whether lower execution time or
+ * lower kernel address space consumption is desired.  Under PAE, kernel
+ * address space is often in short supply.
  */
+#ifdef PAE
+#define	VM_PHYSSEG_SPARSE
+#else
 #define	VM_PHYSSEG_DENSE
+#endif
 
 /*
  * The number of PHYSSEG entries must be one greater than the number
@@ -114,11 +120,11 @@
 #endif
 
 /*
- * Level 0 reservations consist of 512 pages under PAE and 1024 pages
- * otherwise.
+ * Level 0 reservations consist of 512 pages when PAE pagetables are
+ * used, and 1024 pages otherwise.
  */
 #ifndef	VM_LEVEL_0_ORDER
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 #define	VM_LEVEL_0_ORDER	9
 #else
 #define	VM_LEVEL_0_ORDER	10

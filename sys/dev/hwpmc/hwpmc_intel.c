@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_intel.c 267062 2014-06-04 16:06:38Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_intel.c 281102 2015-04-05 05:14:20Z rpaulo $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -179,8 +179,18 @@ pmc_intel_initialize(void)
 			cputype = PMC_CPU_INTEL_IVYBRIDGE_XEON;
 			nclasses = 3;
 			break;
+		case 0x3D:
+			cputype = PMC_CPU_INTEL_BROADWELL;
+			nclasses = 3;
+			break;
+		case 0x3F:	/* Per Intel document 325462-045US 09/2014. */
+		case 0x46:	/* Per Intel document 325462-045US 09/2014. */
+			        /* Should 46 be XEON. probably its own? */
+			cputype = PMC_CPU_INTEL_HASWELL_XEON;
+			nclasses = 3;
+			break;
 		case 0x3C:	/* Per Intel document 325462-045US 01/2013. */
-		case 0x45:
+		case 0x45:	/* Per Intel document 325462-045US 09/2014. */
 			cputype = PMC_CPU_INTEL_HASWELL;
 			nclasses = 5;
 			break;
@@ -221,6 +231,7 @@ pmc_intel_initialize(void)
 		 */
 	case PMC_CPU_INTEL_ATOM:
 	case PMC_CPU_INTEL_ATOM_SILVERMONT:
+	case PMC_CPU_INTEL_BROADWELL:
 	case PMC_CPU_INTEL_CORE:
 	case PMC_CPU_INTEL_CORE2:
 	case PMC_CPU_INTEL_CORE2EXTREME:
@@ -233,6 +244,7 @@ pmc_intel_initialize(void)
 	case PMC_CPU_INTEL_SANDYBRIDGE_XEON:
 	case PMC_CPU_INTEL_IVYBRIDGE_XEON:
 	case PMC_CPU_INTEL_HASWELL:
+	case PMC_CPU_INTEL_HASWELL_XEON:
 		error = pmc_core_initialize(pmc_mdep, ncpus, verov);
 		break;
 
@@ -288,6 +300,7 @@ pmc_intel_initialize(void)
 	case PMC_CPU_INTEL_HASWELL:
 	case PMC_CPU_INTEL_SANDYBRIDGE:
 	case PMC_CPU_INTEL_WESTMERE:
+	case PMC_CPU_INTEL_BROADWELL:
 		error = pmc_uncore_initialize(pmc_mdep, ncpus);
 		break;
 	default:
@@ -312,12 +325,14 @@ pmc_intel_finalize(struct pmc_mdep *md)
 #if	defined(__i386__) || defined(__amd64__)
 	case PMC_CPU_INTEL_ATOM:
 	case PMC_CPU_INTEL_ATOM_SILVERMONT:
+	case PMC_CPU_INTEL_BROADWELL:
 	case PMC_CPU_INTEL_CORE:
 	case PMC_CPU_INTEL_CORE2:
 	case PMC_CPU_INTEL_CORE2EXTREME:
 	case PMC_CPU_INTEL_COREI7:
 	case PMC_CPU_INTEL_NEHALEM_EX:
 	case PMC_CPU_INTEL_HASWELL:
+	case PMC_CPU_INTEL_HASWELL_XEON:
 	case PMC_CPU_INTEL_IVYBRIDGE:
 	case PMC_CPU_INTEL_SANDYBRIDGE:
 	case PMC_CPU_INTEL_WESTMERE:
@@ -352,6 +367,7 @@ pmc_intel_finalize(struct pmc_mdep *md)
 	 */
 #if	defined(__i386__) || defined(__amd64__)
 	switch (md->pmd_cputype) {
+	case PMC_CPU_INTEL_BROADWELL:
 	case PMC_CPU_INTEL_COREI7:
 	case PMC_CPU_INTEL_HASWELL:
 	case PMC_CPU_INTEL_SANDYBRIDGE:

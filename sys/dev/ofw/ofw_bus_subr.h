@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 272109 2014-09-25 15:02:33Z ian $
+ * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 277098 2015-01-13 00:00:09Z zbb $
  */
 
 #ifndef	_DEV_OFW_OFW_BUS_SUBR_H_
@@ -73,6 +73,8 @@ int	ofw_bus_search_intrmap(void *, int, void *, int, void *, int, void *,
 	    void *, void *, int, phandle_t *);
 
 /* Routines for parsing device-tree data into resource lists. */
+int ofw_bus_reg_to_rl(device_t, phandle_t, pcell_t, pcell_t,
+    struct resource_list *);
 int ofw_bus_intr_to_rl(device_t, phandle_t, struct resource_list *);
 
 /* Helper to get device status property */

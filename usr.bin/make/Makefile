@@ -1,6 +1,6 @@
 #	@(#)Makefile	5.2 (Berkeley) 12/28/90
 #	$Id: Makefile,v 1.6 1994/06/30 05:33:39 cgd Exp $
-# $FreeBSD: head/usr.bin/make/Makefile 269037 2014-07-23 23:01:54Z dteske $
+# $FreeBSD: head/usr.bin/make/Makefile 277273 2015-01-16 21:39:08Z will $
 
 .include <src.opts.mk>
 
@@ -115,6 +115,6 @@ CFLAGS+=	-DDEFSHELLNAME=\"${MAKE_SHELL}\"
 PROG=	fmake
 CLEANFILES+=	fmake.1
 fmake.1: make.1
-	cp ${.ALLSRC} ${.TARGET}
+	${CP} ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

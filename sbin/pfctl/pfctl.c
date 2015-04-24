@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 262799 2014-03-05 19:26:22Z glebius $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 281613 2015-04-16 20:22:40Z glebius $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -44,7 +44,7 @@ __FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 262799 2014-03-05 19:26:22Z glebius 
 #include <netinet/in.h>
 #include <net/pfvar.h>
 #include <arpa/inet.h>
-#include <altq/altq.h>
+#include <net/altq/altq.h>
 #include <sys/sysctl.h>
 
 #include <err.h>

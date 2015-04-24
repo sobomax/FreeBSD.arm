@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcapsicum/Makefile 258850 2013-12-02 17:07:22Z pjd $
+# $FreeBSD: head/lib/libcapsicum/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 LIB=	capsicum
 
@@ -21,8 +21,7 @@ INCS+=	libcapsicum_random.h
 INCS+=	libcapsicum_service.h
 INCS+=	libcapsicum_sysctl.h
 
-DPADD=	${LIBNV}
-LDADD=	-lnv
+LIBADD=	nv
 
 CFLAGS+=-I${.CURDIR}
 CFLAGS+=-I${.CURDIR}/../libnv

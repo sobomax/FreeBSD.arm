@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/drill/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/usr.bin/drill/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../contrib/ldns
@@ -12,8 +12,6 @@ CFLAGS+= -I${LDNSDIR}
 NO_WERROR= true
 MAN=	drill.1
 
-DPADD+=	${LIBLDNS} ${LIBCRYPTO}
-LDADD+=	${LDLDNS} -lcrypto
-USEPRIVATELIB= ldns
+LIBADD=	ldns crypto
 
 .include <bsd.prog.mk>

@@ -27,13 +27,11 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufsmount.h	8.6 (Berkeley) 3/30/95
- * $FreeBSD: head/sys/ufs/ufs/ufsmount.h 262678 2014-03-02 02:52:34Z pfg $
+ * $FreeBSD: head/sys/ufs/ufs/ufsmount.h 274907 2014-11-23 01:02:19Z glebius $
  */
 
 #ifndef _UFS_UFS_UFSMOUNT_H_
 #define	_UFS_UFS_UFSMOUNT_H_
-
-#include <sys/buf.h>	/* XXX For struct workhead. */
 
 /*
  * Arguments to mount UFS-based filesystems

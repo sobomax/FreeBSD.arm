@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/ext2fs/ext2_extents.c 254260 2013-08-12 21:34:48Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_extents.c 277354 2015-01-19 03:30:45Z pfg $
  */
 
 #include <sys/param.h>
@@ -131,13 +131,11 @@ struct ext4_extent_path *
 ext4_ext_find_extent(struct m_ext2fs *fs, struct inode *ip,
 		     daddr_t lbn, struct ext4_extent_path *path)
 {
-	struct vnode *vp;
 	struct ext4_extent_header *ehp;
 	uint16_t i;
 	int error, size;
 	daddr_t nblk;
 
-	vp = ITOV(ip);
 	ehp = (struct ext4_extent_header *)(char *)ip->i_db;
 
 	if (ehp->eh_magic != EXT4_EXT_MAGIC)

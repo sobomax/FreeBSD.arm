@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_user.c 260926 2014-01-20 20:56:09Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_user.c 279448 2015-03-01 00:40:19Z rstone $");
 
 #include "opt_bus.h"	/* XXX trim includes */
 #include "opt_compat.h"
@@ -492,7 +492,7 @@ pci_list_vpd(device_t dev, struct pci_list_vpd_io *lvio)
 static int
 pci_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag, struct thread *td)
 {
-	device_t pcidev, brdev;
+	device_t pcidev;
 	void *confdata;
 	const char *name;
 	struct devlist *devlist_head;
@@ -922,37 +922,25 @@ getconfexit:
 			    io->pi_sel.pc_bus, io->pi_sel.pc_dev,
 			    io->pi_sel.pc_func);
 			if (pcidev) {
-				brdev = device_get_parent(
-				    device_get_parent(pcidev));
-
 #ifdef PRE7_COMPAT
 				if (cmd == PCIOCWRITE || cmd == PCIOCWRITE_OLD)
 #else
 				if (cmd == PCIOCWRITE)
 #endif
-					PCIB_WRITE_CONFIG(brdev,
-							  io->pi_sel.pc_bus,
-							  io->pi_sel.pc_dev,
-							  io->pi_sel.pc_func,
+					pci_write_config(pcidev,
 							  io->pi_reg,
 							  io->pi_data,
 							  io->pi_width);
 #ifdef PRE7_COMPAT
 				else if (cmd == PCIOCREAD_OLD)
 					io_old->pi_data =
-						PCIB_READ_CONFIG(brdev,
-							  io->pi_sel.pc_bus,
-							  io->pi_sel.pc_dev,
-							  io->pi_sel.pc_func,
+						pci_read_config(pcidev,
 							  io->pi_reg,
 							  io->pi_width);
 #endif
 				else
 					io->pi_data =
-						PCIB_READ_CONFIG(brdev,
-							  io->pi_sel.pc_bus,
-							  io->pi_sel.pc_dev,
-							  io->pi_sel.pc_func,
+						pci_read_config(pcidev,
 							  io->pi_reg,
 							  io->pi_width);
 				error = 0;

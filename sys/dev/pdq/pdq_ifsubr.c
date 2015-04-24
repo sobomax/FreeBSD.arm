@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pdq/pdq_ifsubr.c 271822 2014-09-18 20:44:53Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/pdq/pdq_ifsubr.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * DEC PDQ FDDI Controller; code for BSD derived operating systems
@@ -748,8 +748,7 @@ pdq_os_databuf_alloc(
 	printf("%s: can't alloc small buf\n", sc->sc_dev.dv_xname);
 	return NULL;
     }
-    MCLGET(m, M_NOWAIT);
-    if ((m->m_flags & M_EXT) == 0) {
+    if (!(MCLGET(m, M_NOWAIT))) {
 	printf("%s: can't alloc cluster\n", sc->sc_dev.dv_xname);
         m_free(m);
 	return NULL;

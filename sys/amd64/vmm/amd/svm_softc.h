@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/amd/svm_softc.h 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/amd/svm_softc.h 276763 2015-01-06 19:04:02Z neel $
  */
 
 #ifndef _SVM_SOFTC_H_
@@ -45,6 +45,7 @@ struct svm_vcpu {
 	struct vmcb	vmcb;	 /* hardware saved vcpu context */
 	struct svm_regctx swctx; /* software saved vcpu context */
 	uint64_t	vmcb_pa; /* VMCB physical address */
+	uint64_t	nextrip; /* next instruction to be executed by guest */
         int		lastcpu; /* host cpu that the vcpu last ran on */
 	uint32_t	dirty;	 /* state cache bits that must be cleared */
 	long		eptgen;	 /* pmap->pm_eptgen when the vcpu last ran */

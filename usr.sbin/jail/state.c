@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/state.c 234712 2012-04-26 17:36:05Z jamie $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/state.c 275073 2014-11-25 21:01:08Z jamie $");
 
 #include <sys/uio.h>
 
@@ -60,7 +60,7 @@ dep_setup(int docf)
 	const char *cs;
 	char *pname;
 	size_t plen;
-	int error, deps, ldeps;
+	int deps, ldeps;
 
 	if (!docf) {
 		/*
@@ -88,7 +88,6 @@ dep_setup(int docf)
 	TAILQ_FOREACH(j, &cfjails, tq)
 		jails_byname[njails++] = j;
 	qsort(jails_byname, njails, sizeof(struct cfjail *), cmp_jailptr);
-	error = 0;
 	deps = 0;
 	ldeps = 0;
 	plen = 0;
@@ -331,15 +330,15 @@ start_state(const char *target, int docf, unsigned state, int running)
 			 * -R matches its wildcards against currently running
 			 * jails, not against the config file.
 			 */
-			*(const void **)&jiov[0].iov_base = "lastjid";
+			jiov[0].iov_base = __DECONST(char *, "lastjid");
 			jiov[0].iov_len = sizeof("lastjid");
 			jiov[1].iov_base = &jid;
 			jiov[1].iov_len = sizeof(jid);
-			*(const void **)&jiov[2].iov_base = "jid";
+			jiov[2].iov_base = __DECONST(char *, "jid");
 			jiov[2].iov_len = sizeof("jid");
 			jiov[3].iov_base = &jid;
 			jiov[3].iov_len = sizeof(jid);
-			*(const void **)&jiov[4].iov_base = "name";
+			jiov[4].iov_base = __DECONST(char *, "name");
 			jiov[4].iov_len = sizeof("name");
 			jiov[5].iov_base = &namebuf;
 			jiov[5].iov_len = sizeof(namebuf);
@@ -454,12 +453,12 @@ running_jid(const char *name, int flags)
 	int jid;
 
 	if ((jid = strtol(name, &ep, 10)) && !*ep) {
-		*(const void **)&jiov[0].iov_base = "jid";
+		jiov[0].iov_base = __DECONST(char *, "jid");
 		jiov[0].iov_len = sizeof("jid");
 		jiov[1].iov_base = &jid;
 		jiov[1].iov_len = sizeof(jid);
 	} else {
-		*(const void **)&jiov[0].iov_base = "name";
+		jiov[0].iov_base = __DECONST(char *, "name");
 		jiov[0].iov_len = sizeof("name");
 		jiov[1].iov_len = strlen(name) + 1;
 		jiov[1].iov_base = alloca(jiov[1].iov_len);

@@ -1,11 +1,10 @@
-# $FreeBSD: head/usr.sbin/pppctl/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.sbin/pppctl/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	pppctl
 MAN=	pppctl.8
 
 WARNS?=	2
 
-DPADD=	${LIBPTHREAD} ${LIBEDIT} ${LIBTERMCAPW}
-LDADD=	-lpthread -ledit -ltermcapw
+LIBADD=	edit pthread
 
 .include <bsd.prog.mk>

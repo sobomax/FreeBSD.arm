@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/libssp/Makefile 264928 2014-04-25 19:25:26Z imp $
+# $FreeBSD: head/gnu/lib/libssp/Makefile 276128 2014-12-23 10:43:35Z bapt $
 
 SHLIBDIR?=	/lib
 
@@ -15,6 +15,7 @@ SRCDIR=	${GCCLIB}/libssp
 
 LIB=		ssp
 SHLIB_MAJOR=	0
+LD_FATAL_WARNINGS=	no
 
 SRCS=	ssp.c gets-chk.c memcpy-chk.c memmove-chk.c mempcpy-chk.c \
 	memset-chk.c snprintf-chk.c sprintf-chk.c stpcpy-chk.c \

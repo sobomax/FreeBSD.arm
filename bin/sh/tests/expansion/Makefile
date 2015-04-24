@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/expansion/Makefile 273920 2014-10-31 22:28:10Z jilles $
+# $FreeBSD: head/bin/sh/tests/expansion/Makefile 280920 2015-03-31 20:59:37Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -48,6 +48,9 @@ FILES+=		ifs1.0
 FILES+=		ifs2.0
 FILES+=		ifs3.0
 FILES+=		ifs4.0
+FILES+=		ifs5.0
+FILES+=		ifs6.0
+FILES+=		ifs7.0
 FILES+=		length1.0
 FILES+=		length2.0
 FILES+=		length3.0
@@ -62,6 +65,7 @@ FILES+=		pathname1.0
 FILES+=		pathname2.0
 FILES+=		pathname3.0
 FILES+=		pathname4.0
+FILES+=		pathname5.0
 FILES+=		plus-minus1.0
 FILES+=		plus-minus2.0
 FILES+=		plus-minus3.0

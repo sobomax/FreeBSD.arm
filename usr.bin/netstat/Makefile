@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/12/93
-# $FreeBSD: head/usr.bin/netstat/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/netstat/Makefile 279122 2015-02-21 23:47:20Z marcel $
 
 .include <src.opts.mk>
 
@@ -33,14 +33,14 @@ CFLAGS+=-DPF
 
 BINGRP=	kmem
 BINMODE=2555
-DPADD=	${LIBKVM} ${LIBMEMSTAT} ${LIBUTIL}
-LDADD=	-lkvm -lmemstat -lutil
+LIBADD=	kvm memstat util
 
 .if ${MK_NETGRAPH_SUPPORT} != "no"
 SRCS+=	netgraph.c
-DPADD+=	${LIBNETGRAPH}
-LDADD+=	-lnetgraph
+LIBADD+=	netgraph
 CFLAGS+=-DNETGRAPH
 .endif
+
+LIBADD+= xo
 
 .include <bsd.prog.mk>

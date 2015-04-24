@@ -1,9 +1,9 @@
 #
-# $FreeBSD: head/tools/regression/sockets/shutdown/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/shutdown/Makefile 281395 2015-04-11 03:19:48Z ngie $
 #
 
 PROG=	shutdown
 MAN=
-WARNS?=	2
+WARNS?=	6
 
 .include <bsd.prog.mk>

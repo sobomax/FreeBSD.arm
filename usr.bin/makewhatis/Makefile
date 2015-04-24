@@ -1,8 +1,7 @@
-# $FreeBSD: head/usr.bin/makewhatis/Makefile 107053 2002-11-18 10:11:22Z ru $
+# $FreeBSD: head/usr.bin/makewhatis/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=		makewhatis
-DPADD=		${LIBZ}
-LDADD=		-lz
+LIBADD=		z
 SCRIPTS=	makewhatis.local.sh
 MAN=		makewhatis.1 makewhatis.local.8
 SCRIPTSDIR=	/usr/libexec

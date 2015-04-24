@@ -35,10 +35,9 @@
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
-#include "opt_global.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_machdep.c 266301 2014-05-17 11:27:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_machdep.c 274668 2014-11-18 17:06:56Z imp $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>

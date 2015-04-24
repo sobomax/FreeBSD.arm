@@ -1,6 +1,6 @@
 # ex:ts=8
 #
-# $FreeBSD: head/usr.sbin/amd/Makefile.inc 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/amd/Makefile.inc 275054 2014-11-25 16:57:27Z bapt $
 #
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998.
@@ -28,13 +28,6 @@ CFLAGS+= -DYES_HESIOD
 .endif
 
 CFLAGS+= -DHOST_CPU=\"${MACHINE_CPUARCH}\" -DHOST_ARCH=\"${MACHINE_ARCH}\"
-
-.if exists(${.OBJDIR}/../libamu)
-LIBAMUDIR=	${.OBJDIR}/../libamu
-.else
-LIBAMUDIR=	${.CURDIR}/../libamu
-.endif
-LIBAMU=		${LIBAMUDIR}/libamu.a
 
 RPCCOM=		RPCGEN_CPP=${CPP:Q} rpcgen
 MOUNT_X=	${DESTDIR}/usr/include/rpcsvc/mount.x

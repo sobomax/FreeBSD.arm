@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/tblgen/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.bin/clang/tblgen/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -31,9 +31,7 @@ SRCS=	AsmMatcherEmitter.cpp \
 	OptParserEmitter.cpp \
 	PseudoLoweringEmitter.cpp \
 	RegisterInfoEmitter.cpp \
-	SetTheory.cpp \
 	SubtargetEmitter.cpp \
-	TGValueTypes.cpp \
 	TableGen.cpp \
 	X86DisassemblerTables.cpp \
 	X86ModRMFilters.cpp \

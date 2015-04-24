@@ -38,7 +38,7 @@
 #include "opt_rootdevname.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_mountroot.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_mountroot.c 274476 2014-11-13 18:01:51Z kib $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -238,7 +238,7 @@ vfs_mountroot_devfs(struct thread *td, struct mount **mpp)
 	*mpp = mp;
 	set_rootvnode();
 
-	error = kern_symlink(td, "/", "dev", UIO_SYSSPACE);
+	error = kern_symlinkat(td, "/", AT_FDCWD, "dev", UIO_SYSSPACE);
 	if (error)
 		printf("kern_symlink /dev -> / returns %d\n", error);
 
@@ -350,7 +350,8 @@ vfs_mountroot_shuffle(struct thread *td, struct mount *mpdevfs)
 	if (mporoot == mpdevfs) {
 		vfs_unbusy(mpdevfs);
 		/* Unlink the no longer needed /dev/dev -> / symlink */
-		error = kern_unlink(td, "/dev/dev", UIO_SYSSPACE);
+		error = kern_unlinkat(td, AT_FDCWD, "/dev/dev",
+		    UIO_SYSSPACE, 0);
 		if (error && bootverbose)
 			printf("mountroot: unable to unlink /dev/dev "
 			    "(error %d)\n", error);
@@ -524,12 +525,13 @@ parse_dir_md(char **conf)
 	free(tok, M_TEMP);
 
 	/* Get file status. */
-	error = kern_stat(td, path, UIO_SYSSPACE, &sb);
+	error = kern_statat(td, 0, AT_FDCWD, path, UIO_SYSSPACE, &sb, NULL);
 	if (error)
 		goto out;
 
 	/* Open /dev/mdctl so that we can attach/detach. */
-	error = kern_open(td, "/dev/" MDCTL_NAME, UIO_SYSSPACE, O_RDWR, 0);
+	error = kern_openat(td, AT_FDCWD, "/dev/" MDCTL_NAME, UIO_SYSSPACE,
+	    O_RDWR, 0);
 	if (error)
 		goto out;
 

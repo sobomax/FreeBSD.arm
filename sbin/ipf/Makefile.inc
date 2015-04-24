@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/Makefile.inc 269585 2014-08-05 13:01:21Z cy $
+#	$FreeBSD: head/sbin/ipf/Makefile.inc 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -18,9 +18,7 @@ CFLAGS+=	-DUSE_INET6
 CFLAGS+=	-DNOINET6
 .endif
 
-LIBIPF=		${.OBJDIR}/../libipf/libipf.a
-DPADD+=		${LIBIPF} ${LIBKVM}
-LDADD+=		${LIBIPF} -lkvm
+LIBADD+=	ipf
 
 CLEANFILES+=	y.tab.c y.tab.h
 

@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: head/sys/sys/disk.h 223089 2011-06-14 17:10:32Z gibbs $
+ * $FreeBSD: head/sys/sys/disk.h 278672 2015-02-13 13:26:23Z mav $
  *
  */
 
@@ -14,6 +14,7 @@
 #define	_SYS_DISK_H_
 
 #include <sys/ioccom.h>
+#include <sys/types.h>
 
 #ifdef _KERNEL
 
@@ -123,5 +124,16 @@ void disk_err(struct bio *bp, const char *what, int blkdone, int nl);
 	 * identify the physical location of the device, not the current
 	 * occupant of that location.
 	 */
+
+struct diocgattr_arg {
+	char name[64];
+	int len;
+	union {
+		char str[DISK_IDENT_SIZE];
+		off_t off;
+		int i;
+	} value;
+};
+#define	DIOCGATTR _IOWR('d', 142, struct diocgattr_arg)
 
 #endif /* _SYS_DISK_H_ */

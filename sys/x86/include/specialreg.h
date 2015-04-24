@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)specialreg.h	7.1 (Berkeley) 5/9/91
- * $FreeBSD: head/sys/x86/include/specialreg.h 273338 2014-10-20 18:09:33Z neel $
+ * $FreeBSD: head/sys/x86/include/specialreg.h 278473 2015-02-09 21:00:56Z kib $
  */
 
 #ifndef _MACHINE_SPECIALREG_H_
@@ -154,6 +154,7 @@
 #define	CPUID2_TM2	0x00000100
 #define	CPUID2_SSSE3	0x00000200
 #define	CPUID2_CNXTID	0x00000400
+#define	CPUID2_SDBG	0x00000800
 #define	CPUID2_FMA	0x00001000
 #define	CPUID2_CX16	0x00002000
 #define	CPUID2_XTPR	0x00004000
@@ -469,6 +470,7 @@
 /*
  * X2APIC MSRs
  */
+#define	MSR_APIC_000		0x800
 #define	MSR_APIC_ID		0x802
 #define	MSR_APIC_VERSION	0x803
 #define	MSR_APIC_TPR		0x808

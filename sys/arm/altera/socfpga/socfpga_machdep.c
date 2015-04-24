@@ -32,7 +32,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/altera/socfpga/socfpga_machdep.c 272896 2014-10-10 14:35:51Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/altera/socfpga/socfpga_machdep.c 275049 2014-11-25 16:06:19Z br $");
 
 #define	_ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -94,6 +94,9 @@ platform_devmap_init(void)
 
 	/* scu */
 	arm_devmap_add_entry(0xfff00000, 0x100000);
+
+	/* FPGA memory window, 256MB */
+	arm_devmap_add_entry(0xd0000000, 0x10000000);
 
 	return (0);
 }

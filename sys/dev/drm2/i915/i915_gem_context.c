@@ -86,7 +86,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem_context.c 271705 2014-09-17 08:28:50Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem_context.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/i915/i915_drm.h>
@@ -317,10 +317,10 @@ void i915_gem_context_close(struct drm_device *dev, struct drm_file *file)
 {
 	struct drm_i915_file_private *file_priv = file->driver_priv;
 
-	//DRM_LOCK(dev); /* Called from preclose(), the lock is already owned. */
+	DRM_LOCK(dev);
 	drm_gem_names_foreach(&file_priv->context_idr, context_idr_cleanup, NULL);
 	drm_gem_names_fini(&file_priv->context_idr);
-	//DRM_UNLOCK(dev);
+	DRM_UNLOCK(dev);
 }
 
 static struct i915_hw_context *
@@ -405,7 +405,7 @@ static int do_switch(struct i915_hw_context *to)
 	}
 
 	if (!to->obj->has_global_gtt_mapping)
-		i915_gem_gtt_bind_object(to->obj);
+		i915_gem_gtt_bind_object(to->obj, to->obj->cache_level);
 
 	if (!to->is_initialized || is_default_context(to))
 		hw_flags |= MI_RESTORE_INHIBIT;

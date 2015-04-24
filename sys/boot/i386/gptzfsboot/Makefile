@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/gptzfsboot/Makefile 271609 2014-09-15 06:21:28Z avg $
+# $FreeBSD: head/sys/boot/i386/gptzfsboot/Makefile 280980 2015-04-02 06:58:17Z dim $
 
 .PATH:		${.CURDIR}/../boot2 ${.CURDIR}/../gptboot \
 		${.CURDIR}/../zfsboot ${.CURDIR}/../common \
@@ -53,7 +53,7 @@ gptzfsboot: gptldr.bin gptzfsboot.bin ${BTXKERN}
 CLEANFILES+=	gptldr.bin gptldr.out gptldr.o
 
 gptldr.bin: gptldr.out
-	objcopy -S -O binary gptldr.out ${.TARGET}
+	${OBJCOPY} -S -O binary gptldr.out ${.TARGET}
 
 gptldr.out: gptldr.o
 	${LD} ${LD_FLAGS} -e start -Ttext ${ORG1} -o ${.TARGET} gptldr.o
@@ -62,7 +62,7 @@ CLEANFILES+=	gptzfsboot.bin gptzfsboot.out zfsboot.o sio.o cons.o \
 		drv.o gpt.o util.o
 
 gptzfsboot.bin: gptzfsboot.out
-	objcopy -S -O binary gptzfsboot.out ${.TARGET}
+	${OBJCOPY} -S -O binary gptzfsboot.out ${.TARGET}
 
 gptzfsboot.out: ${BTXCRT} zfsboot.o sio.o gpt.o drv.o cons.o util.o
 	${LD} ${LD_FLAGS} -Ttext ${ORG2} -o ${.TARGET} ${.ALLSRC} ${LIBSTAND}

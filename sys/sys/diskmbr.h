@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)disklabel.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: head/sys/sys/diskmbr.h 247961 2013-03-07 22:32:41Z gavin $
+ * $FreeBSD: head/sys/sys/diskmbr.h 276894 2015-01-09 19:37:12Z emaste $
  */
 
 #ifndef _SYS_DISKMBR_H_
@@ -57,6 +57,7 @@
 #define	DOSPTYP_LINUX	0x83	/* Linux partition */
 #define	DOSPTYP_LINLVM	0x8e	/* Linux LVM partition */
 #define	DOSPTYP_PMBR	0xee	/* GPT Protective MBR */
+#define	DOSPTYP_EFI	0xef	/* EFI FAT parition */
 #define	DOSPTYP_VMFS	0xfb	/* VMware VMFS partition */
 #define	DOSPTYP_VMKDIAG	0xfc	/* VMware vmkDiagnostic partition */
 #define	DOSPTYP_LINRAID	0xfd	/* Linux raid partition */

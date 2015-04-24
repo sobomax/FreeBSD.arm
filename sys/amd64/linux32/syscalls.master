@@ -1,4 +1,4 @@
- $FreeBSD: head/sys/amd64/linux32/syscalls.master 271743 2014-09-18 08:36:45Z bz $
+ $FreeBSD: head/sys/amd64/linux32/syscalls.master 276508 2015-01-01 18:37:03Z dchagin $
 
 ;	@(#)syscalls.master	8.1 (Berkeley) 7/19/93
 ; System call name/number master file (or rather, slave, from LINUX).
@@ -207,7 +207,7 @@
 112	AUE_NULL	UNIMPL	idle
 113	AUE_NULL	UNIMPL	vm86old
 114	AUE_WAIT4	STD	{ int linux_wait4(l_pid_t pid, \
-				    l_uint *status, l_int options, \
+				    l_int *status, l_int options, \
 				    struct l_rusage *rusage); }
 115	AUE_SWAPOFF	STD	{ int linux_swapoff(void); }
 116	AUE_NULL	STD	{ int linux_sysinfo(struct l_sysinfo *info); }

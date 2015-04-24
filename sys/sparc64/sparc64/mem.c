@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/mem.c 273716 2014-10-27 01:10:40Z alc $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/mem.c 277643 2015-01-24 12:51:15Z kib $");
 
 /*
  * Memory special file
@@ -98,8 +98,6 @@ memrw(struct cdev *dev, struct uio *uio, int flags)
 	colors = 1;
 	error = 0;
 	ova = 0;
-
-	GIANT_REQUIRED;
 
 	while (uio->uio_resid > 0 && error == 0) {
 		iov = uio->uio_iov;

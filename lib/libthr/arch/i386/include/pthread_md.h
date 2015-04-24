@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/arch/i386/include/pthread_md.h 228536 2011-12-15 19:42:25Z dim $
+ * $FreeBSD: head/lib/libthr/arch/i386/include/pthread_md.h 277490 2015-01-21 16:41:05Z andrew $
  */
 
 /*
@@ -75,12 +75,6 @@ struct tcb {
 								\
 	__result;						\
 })
-
-/*
- * The constructors.
- */
-struct tcb	*_tcb_ctor(struct pthread *, int);
-void		_tcb_dtor(struct tcb *tcb);
 
 /* Called from the thread to set its private data. */
 static __inline void

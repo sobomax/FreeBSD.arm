@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/svnlook/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.bin/svn/svnlook/Makefile 275079 2014-11-25 21:43:51Z bapt $
 
 MAN=
 
@@ -26,13 +26,11 @@ LDADD=	-L${LIBSVN_REPOSDIR} -lsvn_repos \
 	-L${LIBSVN_DIFFDIR} -lsvn_diff \
 	-L${LIBSVN_SUBRDIR} -lsvn_subr \
 	-L${LIBAPR_UTILDIR} -lapr-util \
-	-lbsdxml \
-	-L${LIBAPRDIR} -lapr \
-	-L${LIBSQLITEDIR} -lsqlite3 \
-	-lz -lcrypt
+	-L${LIBAPRDIR} -lapr
+LIBADD+=	bsdxml sqlite3 z pthread
 
 DPADD=	${LIBSVN_REPOS} ${LIBSVN_FS} ${LIBSVN_FS_FS} ${LIBSVN_FS_UTIL} \
 	${LIBSVN_DELTA} ${LIBSVN_DIFF} ${LIBSVN_SUBR} ${LIBAPR_UTIL} \
-	${LIBBSDXML} ${LIBAPR} ${LIBSQLITE} ${LIBZ} ${LIBCRYPT}
+	${LIBAPR}
 
 .include <bsd.prog.mk>

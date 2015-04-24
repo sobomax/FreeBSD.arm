@@ -23,18 +23,17 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/atf/libatf-c++/Makefile 273929 2014-11-01 11:17:54Z jmmv $
+# $FreeBSD: head/lib/atf/libatf-c++/Makefile 280179 2015-03-17 15:16:36Z bdrewery $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
 
-LIB=		atf-c++
+LIB_CXX=	atf-c++
 PRIVATELIB=	true
 SHLIB_MAJOR=	2
 
 # libatf-c++ depends on the C version of the ATF library to build.
-DPADD=		${LIBATF_C}
-LDADD=		-latf-c
+LIBADD+=	atf_c
 
 LDFLAGS+=	-L${.OBJDIR}/../libatf-c
 

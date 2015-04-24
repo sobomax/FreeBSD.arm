@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/asmacros.h 263002 2014-03-11 10:07:01Z royger $
+ * $FreeBSD: head/sys/amd64/include/asmacros.h 274489 2014-11-13 22:11:44Z scottl $
  */
 
 #ifndef _MACHINE_ASMACROS_H_
@@ -131,6 +131,16 @@
 #define MCOUNT_LABEL(name)
 #define MEXITCOUNT
 #endif /* GPROF */
+
+/*
+ * Convenience for adding frame pointers to hand-coded ASM.  Useful for
+ * DTrace, HWPMC, and KDB.
+ */
+#define PUSH_FRAME_POINTER	\
+	pushq	%rbp ;		\
+	movq	%rsp, %rbp ;
+#define POP_FRAME_POINTER	\
+	popq	%rbp
 
 #ifdef LOCORE
 /*

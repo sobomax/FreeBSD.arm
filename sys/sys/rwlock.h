@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/rwlock.h 261520 2014-02-05 18:13:27Z jhb $
+ * $FreeBSD: head/sys/sys/rwlock.h 275751 2014-12-13 21:00:10Z dchagin $
  */
 
 #ifndef _SYS_RWLOCK_H_
@@ -258,6 +258,7 @@ struct rw_args_flags {
 #define	RW_NOWITNESS	0x04
 #define	RW_QUIET	0x08
 #define	RW_RECURSE	0x10
+#define	RW_NEW		0x20
 
 /*
  * The INVARIANTS-enabled rw_assert() functionality.

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athratestats/main.c 244967 2013-01-02 18:29:11Z adrian $
+ * $FreeBSD: head/tools/tools/ath/athratestats/main.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include "opt_ah.h"
@@ -38,7 +38,6 @@
 #include <net/ethernet.h>
 #include <net/if.h>
 #include <net/if_media.h>
-#include <net/if_var.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -115,7 +114,7 @@ static void
 ath_sample_stats(struct ath_ratestats *r, struct ath_rateioctl_rt *rt,
     struct sample_node *sn)
 {
-	uint32_t mask;
+	uint64_t mask;
 	int rix, y;
 
 	PRINTMSG("static_rix (%d) ratemask 0x%llx\n",

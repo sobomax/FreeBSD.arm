@@ -1,5 +1,5 @@
 #	@(#)keywords	8.2 (Berkeley) 3/19/94
-# $FreeBSD: head/sbin/route/keywords 263152 2014-03-14 06:29:43Z glebius $
+# $FreeBSD: head/sbin/route/keywords 274363 2014-11-11 02:52:40Z melifaro $
 
 4
 6
@@ -40,7 +40,6 @@ osi
 prefixlen
 proto1
 proto2
-proto3
 proxy
 recvpipe
 reject

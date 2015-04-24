@@ -33,7 +33,7 @@
  *
  *	@(#)machAsmDefs.h	8.1 (Berkeley) 6/10/93
  *	JNPR: asm.h,v 1.10 2007/08/09 11:23:32 katta
- * $FreeBSD: head/sys/mips/include/asm.h 256497 2013-10-15 04:45:09Z imp $
+ * $FreeBSD: head/sys/mips/include/asm.h 274816 2014-11-21 20:02:06Z brooks $
  */
 
 /*
@@ -666,6 +666,20 @@ _C_LABEL(x):
 /* Only valid with the _JB_MAGIC_SETJMP magic */
 
 #define _JB_SIGMASK		13
+
+#define _JB_FPREG_F20		14
+#define _JB_FPREG_F21		15
+#define _JB_FPREG_F22		16
+#define _JB_FPREG_F23		17
+#define _JB_FPREG_F24		18
+#define _JB_FPREG_F25		19
+#define _JB_FPREG_F26		20
+#define _JB_FPREG_F27		21
+#define _JB_FPREG_F28		22
+#define _JB_FPREG_F29		23
+#define _JB_FPREG_F30		24
+#define _JB_FPREG_F31		25
+#define _JB_FPREG_FCSR		26
 
 /*
  * Various macros for dealing with TLB hazards

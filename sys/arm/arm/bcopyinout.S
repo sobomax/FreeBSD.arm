@@ -46,13 +46,13 @@
 .L_min_memcpy_size:
 	.word	_C_LABEL(_min_memcpy_size)
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 261415 2014-02-02 20:58:23Z cognet $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 276596 2015-01-02 23:46:26Z ian $");
 #ifdef _ARM_ARCH_5E
 #include <arm/arm/bcopyinout_xscale.S>
 #else
 
 	.text
-	.align	0
+	.align	2
 
 #ifdef _ARM_ARCH_6
 #define GET_PCB(tmp) \

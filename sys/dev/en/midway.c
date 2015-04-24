@@ -32,7 +32,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/en/midway.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/en/midway.c 276692 2015-01-05 09:58:32Z rwatson $");
 
 /*
  *
@@ -1935,7 +1935,7 @@ en_mget(struct en_softc *sc, u_int pktlen)
 	m->m_pkthdr.rcvif = NULL;
 	m->m_pkthdr.len = pktlen;
 	m->m_len = EN_RX1BUF;
-	MH_ALIGN(m, EN_RX1BUF);
+	M_ALIGN(m, EN_RX1BUF);
 	if (m->m_len >= totlen) {
 		m->m_len = totlen;
 

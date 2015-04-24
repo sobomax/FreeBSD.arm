@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/rk3188-radxa-lite.dts 266871 2014-05-30 06:37:06Z ganbold $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/rk3188-radxa-lite.dts 277413 2015-01-20 09:07:28Z ganbold $
  */
 
 /dts-v1/;
@@ -45,6 +45,10 @@
 	SOC: rk3188 {
 
 		uart2: serial@20064000 {
+			status = "okay";
+		};
+
+		mmc@10214000 {
 			status = "okay";
 		};
 

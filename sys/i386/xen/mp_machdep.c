@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/xen/mp_machdep.c 271409 2014-09-10 21:37:47Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/xen/mp_machdep.c 281940 2015-04-24 16:20:56Z kib $");
 
 #include "opt_apic.h"
 #include "opt_cpu.h"
@@ -96,13 +96,10 @@ extern	struct pcpu __pcpu[];
 
 extern void Xhypervisor_callback(void);
 extern void failsafe_callback(void);
-extern void pmap_lazyfix_action(void);
 
 /*--------------------------- Forward Declarations ---------------------------*/
 static driver_filter_t	smp_reschedule_interrupt;
 static driver_filter_t	smp_call_function_interrupt;
-static void		assign_cpu_ids(void);
-static void		set_interrupt_apic_ids(void);
 static int		start_all_aps(void);
 static int		start_ap(int apic_id);
 static void		release_aps(void *dummy);
@@ -112,12 +109,6 @@ static void		release_aps(void *dummy);
 
 /*-------------------------------- Local Types -------------------------------*/
 typedef void call_data_func_t(uintptr_t , uintptr_t);
-
-struct cpu_info {
-	int	cpu_present:1;
-	int	cpu_bsp:1;
-	int	cpu_disabled:1;
-};
 
 struct xen_ipi_handler
 {
@@ -137,7 +128,7 @@ static cpuset_t	hyperthreading_cpus_mask;
 int	mp_naps;		/* # of Applications processors */
 int	boot_cpu_id = -1;	/* designated BSP */
 
-static int bootAP;
+int bootAP;
 static union descriptor *bootAPgdt;
 
 /* Free these after use */
@@ -154,24 +145,24 @@ static u_int logical_cpus;
 static volatile cpuset_t ipi_nmi_pending;
 
 /* used to hold the AP's until we are ready to release them */
-static struct mtx ap_boot_mtx;
+struct mtx ap_boot_mtx;
 
 /* Set to 1 once we're ready to let the APs out of the pen. */
-static volatile int aps_ready = 0;
+volatile int aps_ready = 0;
 
 /*
  * Store data from cpu_add() until later in the boot when we actually setup
  * the APs.
  */
-static struct cpu_info cpu_info[MAX_APIC_ID + 1];
+struct cpu_info cpu_info[MAX_APIC_ID + 1];
 int cpu_apic_ids[MAXCPU];
 int apic_cpuids[MAX_APIC_ID + 1];
 
 /* Holds pending bitmap based IPIs per CPU */
-static volatile u_int cpu_ipi_pending[MAXCPU];
+volatile u_int cpu_ipi_pending[MAXCPU];
 
-static int cpu_logical;
-static int cpu_cores;
+int cpu_logical;
+int cpu_cores;
 
 static const struct xen_ipi_handler xen_ipis[] = 
 {
@@ -370,24 +361,16 @@ iv_invlcache(uintptr_t a, uintptr_t b)
 	atomic_add_int(&smp_tlb_wait, 1);
 }
 
-static void
-iv_lazypmap(uintptr_t a, uintptr_t b)
-{
-	pmap_lazyfix_action();
-	atomic_add_int(&smp_tlb_wait, 1);
-}
-
 /*
  * These start from "IPI offset" APIC_IPI_INTS
  */
-static call_data_func_t *ipi_vectors[6] = 
+static call_data_func_t *ipi_vectors[5] = 
 {
 	iv_rendezvous,
 	iv_invltlb,
 	iv_invlpg,
 	iv_invlrng,
 	iv_invlcache,
-	iv_lazypmap,
 };
 
 /*
@@ -604,7 +587,7 @@ init_secondary(void)
 #endif
 
 	/* set up FPU state on the AP */
-	npxinit();
+	npxinit(false);
 #if 0
 	/* A quick check from sanity claus */
 	if (PCPU_GET(apic_id) != lapic_id()) {
@@ -677,7 +660,7 @@ init_secondary(void)
  * We also do not tell it about the BSP since it tells itself about
  * the BSP internally to work with UP kernels and on UP machines.
  */
-static void
+void
 set_interrupt_apic_ids(void)
 {
 	u_int i, apic_id;
@@ -703,7 +686,7 @@ set_interrupt_apic_ids(void)
 /*
  * Assign logical CPU IDs to local APICs.
  */
-static void
+void
 assign_cpu_ids(void)
 {
 	u_int i;
@@ -995,7 +978,7 @@ ipi_pcpu(int cpu, u_int ipi)
 /*
  * send an IPI to a specific CPU.
  */
-static void
+void
 ipi_send_cpu(int cpu, u_int ipi)
 {
 	u_int bitmap, old_pending, new_pending;

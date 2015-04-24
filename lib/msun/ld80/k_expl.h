@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/msun/ld80/k_expl.h 260066 2013-12-30 00:51:25Z kargl $");
+__FBSDID("$FreeBSD: head/lib/msun/ld80/k_expl.h 275819 2014-12-16 09:21:56Z ed $");
 
 /*
  * See s_expl.c for more comments about __k_expl().
@@ -299,7 +299,7 @@ __ldexp_cexpl(long double complex z, int expt)
 	scale2 = 1;
 	SET_LDBL_EXPSIGN(scale1, BIAS + expt - half_expt);
 
-	return (cpackl(cos(y) * exp_x * scale1 * scale2,
+	return (CMPLXL(cos(y) * exp_x * scale1 * scale2,
 	    sinl(y) * exp_x * scale1 * scale2));
 }
 #endif /* _COMPLEX_H */

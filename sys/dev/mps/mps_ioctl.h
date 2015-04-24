@@ -27,12 +27,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * LSI MPT-Fusion Host Adapter FreeBSD userland interface
+ * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: head/sys/dev/mps/mps_ioctl.h 237683 2012-06-28 03:48:54Z ken $
+ * $FreeBSD: head/sys/dev/mps/mps_ioctl.h 279253 2015-02-24 22:07:42Z slm $
  */
 /*-
- * Copyright (c) 2011, 2012 LSI Corp.
+ * Copyright (c) 2011-2015 LSI Corp.
+ * Copyright (c) 2013-2015 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,9 +57,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * LSI MPT-Fusion Host Adapter FreeBSD
+ * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps_ioctl.h 237683 2012-06-28 03:48:54Z ken $
+ * $FreeBSD: head/sys/dev/mps/mps_ioctl.h 279253 2015-02-24 22:07:42Z slm $
  */
 
 #ifndef _MPS_IOCTL_H_

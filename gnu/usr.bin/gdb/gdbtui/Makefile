@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/gdb/gdbtui/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/gdb/gdbtui/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG=	gdbtui${GDB_SUFFIX}
 SRCS=	tui-main.c
@@ -12,7 +12,8 @@ GDBLIBS= ${OBJ_GDB}/libgdb/libgdb.a
 # global symbols visible.
 LDFLAGS+= -Wl,-E
 
-DPADD=	${GDBLIBS} ${BULIBS} ${LIBM} ${LIBREADLINE} ${LIBTERMCAPW} ${LIBGNUREGEX}
-LDADD=	${GDBLIBS} ${BULIBS} -lm ${LDREADLINE} -ltermcapw -lgnuregex
+DPADD=	${GDBLIBS} ${BULIBS}
+LDADD=	${GDBLIBS} ${BULIBS}
+LIBADD+=	m readline ncursesw gnuregex
 
 .include <bsd.prog.mk>

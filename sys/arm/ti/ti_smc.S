@@ -24,9 +24,9 @@
 
 #include <machine/armreg.h>
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_smc.S 269395 2014-08-01 20:32:29Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_smc.S 275524 2014-12-05 19:23:51Z andrew $");
 
-	.arch armv7a
+	.cpu cortex-a8
 	.arch_extension sec
 
 /* Issue a smc #0 call */

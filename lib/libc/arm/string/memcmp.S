@@ -64,7 +64,9 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcmp.S 270882 2014-08-31 17:21:51Z ian $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcmp.S 275256 2014-11-29 15:56:52Z andrew $");
+
+.syntax	unified
 
 ENTRY(memcmp)
 	mov	ip, r0
@@ -76,7 +78,7 @@ ENTRY(memcmp)
 
 	/* Are both addresses aligned the same way? */
 	cmp	r2, #0x00
-	eornes	r3, ip, r1
+	eorsne	r3, ip, r1
 	RETeq			/* len == 0, or same addresses! */
 	tst	r3, #0x03
 	subne	r2, r2, #0x01

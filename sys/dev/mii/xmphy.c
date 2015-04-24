@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/xmphy.c 257184 2013-10-26 18:40:17Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/xmphy.c 281817 2015-04-21 06:59:40Z glebius $");
 
 /*
  * driver for the XaQti XMAC II's internal PHY. This is sort of
@@ -116,16 +116,15 @@ xmphy_attach(device_t dev)
 
 	PHY_RESET(sc);
 
-#define	ADD(m, c)	ifmedia_add(&sc->mii_pdata->mii_media, (m), (c), NULL)
+#define	ADD(m)		ifmedia_add(&sc->mii_pdata->mii_media, (m), 0, NULL)
 #define PRINT(s)	printf("%s%s", sep, s); sep = ", "
 
 	device_printf(dev, " ");
-	ADD(IFM_MAKEWORD(IFM_ETHER, IFM_1000_SX, 0, sc->mii_inst),
-	    XMPHY_BMCR_FDX);
+	ADD(IFM_MAKEWORD(IFM_ETHER, IFM_1000_SX, 0, sc->mii_inst));
 	PRINT("1000baseSX");
-	ADD(IFM_MAKEWORD(IFM_ETHER, IFM_1000_SX, IFM_FDX, sc->mii_inst), 0);
+	ADD(IFM_MAKEWORD(IFM_ETHER, IFM_1000_SX, IFM_FDX, sc->mii_inst));
 	PRINT("1000baseSX-FDX");
-	ADD(IFM_MAKEWORD(IFM_ETHER, IFM_AUTO, 0, sc->mii_inst), 0);
+	ADD(IFM_MAKEWORD(IFM_ETHER, IFM_AUTO, 0, sc->mii_inst));
 	PRINT("auto");
 
 	printf("\n");

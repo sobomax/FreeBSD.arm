@@ -1,10 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/vmstat/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/vmstat/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	vmstat
 MAN=	vmstat.8
-DPADD=	${LIBDEVSTAT} ${LIBKVM} ${LIBMEMSTAT} ${LIBUTIL}
-LDADD=	-ldevstat -lkvm -lmemstat -lutil
+LIBADD=	devstat kvm memstat util
 
 WARNS?=	1
 

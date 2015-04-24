@@ -26,10 +26,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/mem.c 251245 2013-06-02 09:43:48Z gabor $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/mem.c 281132 2015-04-06 02:35:55Z pfg $");
 
 #include <err.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 

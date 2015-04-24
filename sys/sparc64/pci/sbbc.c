@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/pci/sbbc.c 248965 2013-04-01 00:44:20Z ian $");
+__FBSDID("$FreeBSD: head/sys/sparc64/pci/sbbc.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -813,7 +813,8 @@ struct uart_class uart_sbbc_class = {
 	sizeof(struct uart_softc),
 	.uc_ops = &sbbc_uart_ops,
 	.uc_range = 1,
-	.uc_rclk = 0x5bbc	/* arbitrary */
+	.uc_rclk = 0x5bbc,	/* arbitrary */
+	.uc_rshift = 0
 };
 
 #define	SIGCHG(c, i, s, d)						\

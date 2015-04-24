@@ -1,14 +1,20 @@
 /* $NetBSD: machdep.h,v 1.7 2002/02/21 02:52:21 thorpej Exp $ */
-/* $FreeBSD: head/sys/arm/include/machdep.h 266301 2014-05-17 11:27:36Z andrew $ */
+/* $FreeBSD: head/sys/arm/include/machdep.h 280712 2015-03-26 21:13:53Z ian $ */
 
 #ifndef _MACHDEP_BOOT_MACHDEP_H_
 #define _MACHDEP_BOOT_MACHDEP_H_
 
 /* Structs that need to be initialised by initarm */
+#ifdef ARM_NEW_PMAP
+extern vm_offset_t irqstack;
+extern vm_offset_t undstack;
+extern vm_offset_t abtstack;
+#else
 struct pv_addr;
 extern struct pv_addr irqstack;
 extern struct pv_addr undstack;
 extern struct pv_addr abtstack;
+#endif
 
 /* Define various stack sizes in pages */
 #define IRQ_STACK_SIZE	1
@@ -20,8 +26,7 @@ struct trapframe;
 void arm_lock_cache_line(vm_offset_t);
 void init_proc0(vm_offset_t kstack);
 void halt(void);
-void data_abort_handler(struct trapframe *);
-void prefetch_abort_handler(struct trapframe *);
+void abort_handler(struct trapframe *, int );
 void set_stackptrs(int cpu);
 void undefinedinstruction_bounce(struct trapframe *);
 

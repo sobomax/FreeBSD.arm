@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/uma_int.h 258336 2013-11-19 10:05:53Z mav $
+ * $FreeBSD: head/sys/vm/uma_int.h 281942 2015-04-24 17:03:53Z scottl $
  *
  */
 
@@ -341,7 +341,7 @@ zone_first_keg(uma_zone_t zone)
 #ifdef _KERNEL
 /* Internal prototypes */
 static __inline uma_slab_t hash_sfind(struct uma_hash *hash, uint8_t *data);
-void *uma_large_malloc(int size, int wait);
+void *uma_large_malloc(vm_size_t size, int wait);
 void uma_large_free(uma_slab_t slab);
 
 /* Lock Macros */
@@ -424,8 +424,9 @@ vsetslab(vm_offset_t va, uma_slab_t slab)
  * if they can provide more effecient allocation functions.  This is useful
  * for using direct mapped addresses.
  */
-void *uma_small_alloc(uma_zone_t zone, int bytes, uint8_t *pflag, int wait);
-void uma_small_free(void *mem, int size, uint8_t flags);
+void *uma_small_alloc(uma_zone_t zone, vm_size_t bytes, uint8_t *pflag,
+    int wait);
+void uma_small_free(void *mem, vm_size_t size, uint8_t flags);
 #endif /* _KERNEL */
 
 #endif /* VM_UMA_INT_H */

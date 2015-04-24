@@ -25,7 +25,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/usr.sbin/bluetooth/btpand/btpand.c 192308 2009-05-18 16:00:18Z emax $ */
+/* $FreeBSD: head/usr.sbin/bluetooth/btpand/btpand.c 281210 2015-04-07 16:48:23Z takawata $ */
 
 #include <sys/cdefs.h>
 __COPYRIGHT("@(#) Copyright (c) 2008 Iain Hibbert. All rights reserved.");
@@ -33,6 +33,7 @@ __RCSID("$NetBSD: btpand.c,v 1.1 2008/08/17 13:20:57 plunky Exp $");
 
 #include <sys/wait.h>
 
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <err.h>
 #include <fcntl.h>

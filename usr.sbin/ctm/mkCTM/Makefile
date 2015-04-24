@@ -1,10 +1,9 @@
-# $FreeBSD: head/usr.sbin/ctm/mkCTM/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.sbin/ctm/mkCTM/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	mkctm
 MAN=
 
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 test:	mkctm
 	rm -f tst.out*

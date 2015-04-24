@@ -1,6 +1,6 @@
-# $FreeBSD: head/etc/root/dot.profile 199243 2009-11-13 05:54:55Z ed $
+# $FreeBSD: head/etc/root/dot.profile 278616 2015-02-12 05:35:00Z cperciva $
 #
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:~/bin
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:~/bin
 export PATH
 HOME=/root
 export HOME

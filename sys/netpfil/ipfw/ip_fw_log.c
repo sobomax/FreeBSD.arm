@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 272840 2014-10-09 19:32:35Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 280910 2015-03-31 14:41:29Z ae $");
 
 /*
  * Logging support for ipfw
@@ -525,7 +525,7 @@ ipfw_log(struct ip_fw_chain *chain, struct ip_fw *f, u_int hlen,
 
 #ifdef INET6
 		if (IS_IP6_FLOW_ID(&(args->f_id))) {
-			if (offset & (IP6F_OFF_MASK | IP6F_MORE_FRAG))
+			if (offset || ip6f_mf)
 				snprintf(SNPARGS(fragment, 0),
 				    " (frag %08x:%d@%d%s)",
 				    args->f_id.extra,

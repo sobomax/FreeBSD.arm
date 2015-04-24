@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: if_ethersubr.c,v 1.5 1994/12/13 22:31:45 wollman Exp
- * $FreeBSD: head/sys/net/if_fddisubr.c 271867 2014-09-19 10:39:58Z glebius $
+ * $FreeBSD: head/sys/net/if_fddisubr.c 275211 2014-11-28 14:51:49Z bz $
  */
 
 #include "opt_inet.h"
@@ -92,7 +92,6 @@ static void fddi_input(struct ifnet *ifp, struct mbuf *m);
  * Encapsulate a packet of type family for the local net.
  * Use trailer local net encapsulation if enough data in first
  * packet leaves a multiple of 512 bytes of data in remainder.
- * Assumes that ifp is actually pointer to arpcom structure.
  */
 static int
 fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
@@ -102,8 +101,8 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	int loop_copy = 0, error = 0, hdrcmplt = 0;
  	u_char esrc[FDDI_ADDR_LEN], edst[FDDI_ADDR_LEN];
 	struct fddi_header *fh;
-#if defined(INET) || defined(INET6)
-	struct llentry *lle;
+#ifdef INET
+	int is_gw;
 #endif
 
 #ifdef MAC
@@ -122,11 +121,11 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	switch (dst->sa_family) {
 #ifdef INET
 	case AF_INET: {
-		struct rtentry *rt0 = NULL;
-
-		if (ro != NULL)
-			rt0 = ro->ro_rt;
-		error = arpresolve(ifp, rt0, m, dst, edst, &lle);
+		is_gw = 0;
+		if (ro != NULL && ro->ro_rt != NULL &&
+		    (ro->ro_rt->rt_flags & RTF_GATEWAY) != 0)
+			is_gw = 1;
+		error = arpresolve(ifp, is_gw, m, dst, edst, NULL);
 		if (error)
 			return (error == EWOULDBLOCK ? 0 : error);
 		type = htons(ETHERTYPE_IP);
@@ -162,7 +161,7 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 #endif /* INET */
 #ifdef INET6
 	case AF_INET6:
-		error = nd6_storelladdr(ifp, m, dst, (u_char *)edst, &lle);
+		error = nd6_storelladdr(ifp, m, dst, (u_char *)edst, NULL);
 		if (error)
 			return (error); /* Something bad happened */
 		type = htons(ETHERTYPE_IPV6);

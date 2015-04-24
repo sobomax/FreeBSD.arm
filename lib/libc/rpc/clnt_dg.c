@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)clnt_dg.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_dg.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_dg.c 278932 2015-02-18 03:33:17Z pfg $");
 
 /*
  * Implements a connectionless client side RPC.
@@ -327,7 +327,7 @@ clnt_dg_call(cl, proc, xargs, argsp, xresults, resultsp, utimeout)
 	struct sockaddr *sa;
 	sigset_t mask;
 	sigset_t newmask;
-	socklen_t inlen, salen;
+	socklen_t salen;
 	ssize_t recvlen = 0;
 	int kin_len, n, rpc_lock_value;
 	u_int32_t xid;
@@ -520,7 +520,6 @@ get_reply:
 				goto call_again_same_xid;
 		}
 	}
-	inlen = (socklen_t)recvlen;
 
 	/*
 	 * now decode and validate the response

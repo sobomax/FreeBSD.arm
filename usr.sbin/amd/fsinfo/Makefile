@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: head/usr.sbin/amd/fsinfo/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/amd/fsinfo/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .PATH: ${.CURDIR}/../../../contrib/amd/fsinfo
 
@@ -15,8 +15,7 @@ SRCS+=	wr_bparam.c wr_dumpset.c wr_exportfs.c wr_fstab.c
 
 CFLAGS+= -I${.CURDIR}/../../../contrib/amd/fsinfo
 
-DPADD=	${LIBAMU}
-LDADD=	${LIBAMU}
+LIBADD=	amu
 
 CLEANFILES+=	fsi_gram.c fsi_gram.h fsi_lex.c
 

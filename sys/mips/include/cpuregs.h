@@ -52,7 +52,7 @@
  * from: Header: /sprite/src/kernel/vm/ds3100.md/RCS/vmPmaxConst.h,
  *	v 9.1 89/09/18 17:33:00 shirriff Exp  SPRITE (DECWRL)
  *
- * $FreeBSD: head/sys/mips/include/cpuregs.h 256172 2013-10-09 00:27:12Z adrian $
+ * $FreeBSD: head/sys/mips/include/cpuregs.h 274752 2014-11-20 17:06:41Z br $
  */
 
 #ifndef _MIPS_CPUREGS_H_
@@ -549,6 +549,13 @@
 #define MIPS_CONFIG1_CA			0x00000004	/* MIPS16e ISA implemented */
 #define MIPS_CONFIG1_EP			0x00000002	/* EJTAG implemented */
 #define MIPS_CONFIG1_FP			0x00000001	/* FPU implemented */
+
+#define MIPS_CONFIG2_SA_SHIFT		0		/* Secondary cache associativity */
+#define MIPS_CONFIG2_SA_MASK		0xf
+#define MIPS_CONFIG2_SL_SHIFT		4		/* Secondary cache line size */
+#define MIPS_CONFIG2_SL_MASK		0xf
+#define MIPS_CONFIG2_SS_SHIFT		8		/* Secondary cache sets per way */
+#define MIPS_CONFIG2_SS_MASK		0xf
 
 #define MIPS_CONFIG4_MMUSIZEEXT		0x000000FF	/* bits 7.. 0 MMU Size Extension */
 #define MIPS_CONFIG4_MMUEXTDEF		0x0000C000	/* bits 15.14 MMU Extension Definition */

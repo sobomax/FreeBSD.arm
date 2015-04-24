@@ -1,4 +1,4 @@
-/* $FreeBSD: head/bin/csh/config.h 231990 2012-02-22 03:36:15Z mp $ */
+/* $FreeBSD: head/bin/csh/config.h 281550 2015-04-15 09:09:20Z tijl $ */
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.in by autoheader.  */
 
@@ -198,7 +198,7 @@
 #define HAVE_WCWIDTH 1
 
 /* Define as const if the declaration of iconv() needs const. */
-#define ICONV_CONST const
+#define ICONV_CONST
 
 /* Support NLS. */
 #define NLS 1

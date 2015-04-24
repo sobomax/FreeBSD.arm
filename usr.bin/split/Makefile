@@ -1,8 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/split/Makefile 257885 2013-11-09 09:05:50Z eadler $
+# $FreeBSD: head/usr.bin/split/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	split
-LDADD=	-lutil
-DPADD=	${LIBUTIL}
+
+LIBADD=	util
 
 .include <bsd.prog.mk>

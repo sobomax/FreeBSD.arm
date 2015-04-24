@@ -29,7 +29,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fbd.c 266010 2014-05-14 11:15:48Z ray $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fbd.c 281092 2015-04-04 23:03:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,6 +52,9 @@ __FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fbd.c 266010 2014-05-1
 #include <sys/consio.h>
 
 #include <sys/kdb.h>
+
+#include <vm/vm.h>
+#include <vm/pmap.h>
 
 #include <machine/bus.h>
 #include <machine/cpu.h>
@@ -186,17 +189,12 @@ bcm_fb_init(void *arg)
 
 		fbd = device_add_child(sc->dev, "fbd",
 		    device_get_unit(sc->dev));
-		if (fbd == NULL) {
+		if (fbd == NULL)
 			device_printf(sc->dev, "Failed to add fbd child\n");
-			return;
-		}
-		if (device_probe_and_attach(fbd) != 0) {
+		else if (device_probe_and_attach(fbd) != 0)
 			device_printf(sc->dev, "Failed to attach fbd device\n");
-			return;
-		}
 	} else {
 		device_printf(sc->dev, "Failed to set framebuffer info\n");
-		return;
 	}
 
 	config_intrhook_disestablish(&sc->init_hook);

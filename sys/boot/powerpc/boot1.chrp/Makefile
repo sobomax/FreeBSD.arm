@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/powerpc/boot1.chrp/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sys/boot/powerpc/boot1.chrp/Makefile 276356 2014-12-29 09:24:21Z dim $
 
 SSP_CFLAGS=
 
@@ -15,7 +15,7 @@ MAN=
 CFLAGS= -ffreestanding -msoft-float -Os \
 	-I${.CURDIR}/../../common -I${.CURDIR}/../../../ \
 	-D_STANDALONE
-LDFLAGS=-nostdlib -static -N
+LDFLAGS=-nostdlib -static -Wl,-N
 
 .include "${.CURDIR}/../Makefile.inc"
 .PATH:  ${.CURDIR}/../../../libkern ${.CURDIR}/../../../../lib/libc/powerpc/gen ${.CURDIR}

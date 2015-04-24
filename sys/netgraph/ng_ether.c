@@ -39,7 +39,7 @@
  * Authors: Archie Cobbs <archie@freebsd.org>
  *	    Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_ether.c 257241 2013-10-28 07:29:16Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_ether.c 274231 2014-11-07 15:14:10Z glebius $
  */
 
 /*
@@ -74,7 +74,7 @@
 
 MODULE_VERSION(ng_ether, 1);
 
-#define IFP2NG(ifp)  (IFP2AC((ifp))->ac_netgraph)
+#define IFP2NG(ifp)  ((ifp)->if_l2com)
 
 /* Per-node private data */
 struct private {

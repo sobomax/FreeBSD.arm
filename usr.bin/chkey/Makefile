@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/chkey/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/chkey/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -10,7 +10,6 @@ CFLAGS+= -I${.CURDIR}/../newkey
 .if ${MK_NIS} != "no"
 CFLAGS+= -DYP
 .endif
-DPADD=	${LIBRPCSVC} ${LIBMP} ${LIBCRYPTO}
-LDADD=	-lrpcsvc -lmp -lcrypto
+LIBADD+=	rpcsvc mp
 
 .include <bsd.prog.mk>

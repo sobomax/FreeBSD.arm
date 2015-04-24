@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_lock.c 261520 2014-02-05 18:13:27Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_lock.c 275751 2014-12-13 21:00:10Z dchagin $");
 
 #include "opt_ddb.h"
 #include "opt_mprof.h"
@@ -75,8 +75,8 @@ lock_init(struct lock_object *lock, struct lock_class *class, const char *name,
 	int i;
 
 	/* Check for double-init and zero object. */
-	KASSERT(!lock_initialized(lock), ("lock \"%s\" %p already initialized",
-	    name, lock));
+	KASSERT(flags & LO_NEW || !lock_initialized(lock),
+	    ("lock \"%s\" %p already initialized", name, lock));
 
 	/* Look up lock class to find its index. */
 	for (i = 0; i < LOCK_CLASS_MAX; i++)

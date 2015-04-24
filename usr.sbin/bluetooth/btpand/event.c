@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/usr.sbin/bluetooth/btpand/event.c 191232 2009-04-17 23:33:30Z emax $ */
+/* $FreeBSD: head/usr.sbin/bluetooth/btpand/event.c 281210 2015-04-07 16:48:23Z takawata $ */
 
 /*
  * Hack to provide libevent (see devel/libevent port) like API.
@@ -45,6 +45,7 @@
 #include <syslog.h>
 
 #include "event.h"
+#define L2CAP_SOCKET_CHECKED
 #include "btpand.h"
 
 #define		__event_link(ev) \

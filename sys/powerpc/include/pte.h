@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pte.h,v 1.2 1998/08/31 14:43:40 tsubai Exp $
- * $FreeBSD: head/sys/powerpc/include/pte.h 255415 2013-09-09 12:44:48Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/pte.h 279595 2015-03-04 17:04:22Z nwhitehorn $
  */
 
 #ifndef	_MACHINE_PTE_H_
@@ -157,12 +157,6 @@ typedef	struct lpte lpte_t;
 #define	ISSRR1_DIRECT	0x10000000
 #define	ISSRR1_PROTECT	0x08000000
 #define	ISSRR1_SEGMENT	0x00200000
-
-#ifdef	_KERNEL
-#ifndef	LOCORE
-extern u_int dsisr(void);
-#endif	/* _KERNEL */
-#endif	/* LOCORE */
 
 #else /* BOOKE */
 

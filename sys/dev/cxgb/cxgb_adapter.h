@@ -25,7 +25,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-$FreeBSD: head/sys/dev/cxgb/cxgb_adapter.h 272222 2014-09-27 18:35:16Z np $
+$FreeBSD: head/sys/dev/cxgb/cxgb_adapter.h 278977 2015-02-19 01:19:42Z glebius $
 
 ***************************************************************************/
 
@@ -59,7 +59,6 @@ $FreeBSD: head/sys/dev/cxgb/cxgb_adapter.h 272222 2014-09-27 18:35:16Z np $
 #include <dev/pci/pcivar.h>
 
 #include <cxgb_osdep.h>
-#include <sys/mbufq.h>
 
 struct adapter;
 struct sge_qset;
@@ -251,7 +250,7 @@ struct sge_txq {
 	bus_dma_tag_t	desc_tag;
 	bus_dmamap_t	desc_map;
 	bus_dma_tag_t   entry_tag;
-	struct mbuf_head sendq;
+	struct mbufq	sendq;
 
 	struct buf_ring *txq_mr;
 	struct ifaltq	*txq_ifq;

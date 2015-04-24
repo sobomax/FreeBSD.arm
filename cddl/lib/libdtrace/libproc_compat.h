@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE. 
  *
- * $FreeBSD: head/cddl/lib/libdtrace/libproc_compat.h 272488 2014-10-03 23:20:37Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/libproc_compat.h 281257 2015-04-08 02:36:37Z markj $
  */
 
 /*
@@ -59,6 +59,6 @@
 #define	Pstate proc_state
 #define	Psymbol_iter_by_addr proc_iter_symbyaddr
 #define	Punsetflags proc_clearflags
-#define	Pupdate_maps(p) do { } while (0)
+#define	Pupdate_maps proc_rdagent
 #define	Pupdate_syms proc_updatesyms
 #define	Pxecbkpt proc_bkptexec

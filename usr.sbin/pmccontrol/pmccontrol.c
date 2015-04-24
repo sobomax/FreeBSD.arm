@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pmccontrol/pmccontrol.c 241737 2012-10-19 14:49:42Z ed $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmccontrol/pmccontrol.c 279156 2015-02-22 14:45:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -147,10 +147,8 @@ pmcc_do_enable_disable(struct pmcc_op_list *op_list)
 	if (npmc == 0)
 		errx(EX_CONFIG, "No PMCs found");
 
-	if ((map = malloc(npmc * ncpu)) == NULL)
+	if ((map = calloc(npmc, ncpu)) == NULL)
 		err(EX_SOFTWARE, "Out of memory");
-
-	(void) memset(map, PMCC_OP_IGNORE, npmc*ncpu);
 
 	error = 0;
 	STAILQ_FOREACH(np, op_list, op_next) {

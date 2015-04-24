@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 273477 2014-10-22 17:09:12Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 279394 2015-02-28 15:21:06Z royger $");
 
 /**
  * \file netback.c
@@ -43,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 273477 2014-10-22 17:09:1
  */
 #include "opt_inet.h"
 #include "opt_inet6.h"
-#include "opt_global.h"
 
 #include "opt_sctp.h"
 
@@ -99,7 +98,7 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 273477 2014-10-22 17:09:1
 static MALLOC_DEFINE(M_XENNETBACK, "xnb", "Xen Net Back Driver Data");
 
 #define	XNB_SG	1	/* netback driver supports feature-sg */
-#define	XNB_GSO_TCPV4 1	/* netback driver supports feature-gso-tcpv4 */
+#define	XNB_GSO_TCPV4 0	/* netback driver supports feature-gso-tcpv4 */
 #define	XNB_RX_COPY 1	/* netback driver supports feature-rx-copy */
 #define	XNB_RX_FLIP 0	/* netback driver does not support feature-rx-flip */
 
@@ -2252,7 +2251,6 @@ xnb_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			mtx_unlock(&xnb->sc_lock);
 			break;
 		case SIOCSIFADDR:
-		case SIOCGIFADDR:
 #ifdef INET
 			mtx_lock(&xnb->sc_lock);
 			if (ifa->ifa_addr->sa_family == AF_INET) {

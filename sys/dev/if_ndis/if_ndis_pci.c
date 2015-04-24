@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/if_ndis/if_ndis_pci.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/if_ndis/if_ndis_pci.c 280347 2015-03-22 16:10:28Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -298,7 +298,8 @@ ndis_attach_pci(dev)
 			BUS_SPACE_MAXADDR_32BIT,/* lowaddr */
                         BUS_SPACE_MAXADDR,	/* highaddr */
 			NULL, NULL,		/* filter, filterarg */
-			MAXBSIZE, NDIS_NSEG_NEW,/* maxsize, nsegments */
+			BUS_SPACE_MAXSIZE_32BIT, /* maxsize */
+			NDIS_NSEG_NEW,		/* nsegments */
 			BUS_SPACE_MAXSIZE_32BIT,/* maxsegsize */
 			BUS_DMA_ALLOCNOW,       /* flags */
 			NULL, NULL,		/* lockfunc, lockarg */

@@ -1,9 +1,9 @@
 #
-# $FreeBSD: head/tools/regression/sockets/sblock/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/sblock/Makefile 281393 2015-04-11 03:13:09Z ngie $
 #
 
 PROG=	sblock
 MAN=
-WARNS?=	2
+WARNS?=	6
 
 .include <bsd.prog.mk>

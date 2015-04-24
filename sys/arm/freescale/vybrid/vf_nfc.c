@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_nfc.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_nfc.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_nfc.c 261410 2014-02-02 19:
 #include <dev/nand/nandbus.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include "nfc_if.h"
 

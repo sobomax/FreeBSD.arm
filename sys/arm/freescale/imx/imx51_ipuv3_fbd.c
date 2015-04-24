@@ -29,7 +29,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx51_ipuv3_fbd.c 269791 2014-08-10 22:24:14Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx51_ipuv3_fbd.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx51_ipuv3_fbd.c 269791 2014-08-
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/cpufunc.h>
-#include <machine/fdt.h>
 #include <machine/resource.h>
 #include <machine/frame.h>
 #include <machine/intr.h>

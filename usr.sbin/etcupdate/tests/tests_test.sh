@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2010 Advanced Computing Technologies LLC
+# Copyright (c) 2010 Hudson River Trading LLC
 # Written by: John H. Baldwin <jhb@FreeBSD.org>
 # All rights reserved.
 #
@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/etcupdate/tests/tests_test.sh 263226 2014-03-16 04:09:22Z jmmv $
+# $FreeBSD: head/usr.sbin/etcupdate/tests/tests_test.sh 281887 2015-04-23 14:22:20Z jhb $
 
 # Various regression tests to run for the 'update' command.
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_hast/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_hast/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
@@ -29,8 +29,7 @@ CFLAGS+=-DYY_NO_UNPUT
 CFLAGS+=-DYY_NO_INPUT
 CFLAGS+= -DSNMPTREE_TYPES
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 XSYM=	begemotHast
 DEFS=	${MOD}_tree.def

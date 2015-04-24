@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/ifq.h 272260 2014-09-28 15:38:21Z bz $
+ * $FreeBSD: head/sys/net/ifq.h 281613 2015-04-16 20:22:40Z glebius $
  */
 
 #ifndef	_NET_IFQ_H_
@@ -47,7 +47,7 @@
  */
 #define	IF_DUNIT_NONE	-1
 
-#include <altq/if_altq.h>
+#include <net/altq/if_altq.h>
 
 /*
  * Structure defining a queue for a network interface.

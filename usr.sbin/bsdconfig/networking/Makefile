@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/networking/Makefile 240684 2012-09-18 22:28:42Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/networking/Makefile 274073 2014-11-04 00:14:38Z dteske $
 
 NO_OBJ=
 
@@ -9,8 +9,5 @@ FILES=		INDEX USAGE
 
 SCRIPTSDIR=	${FILESDIR}
 SCRIPTS=	defaultrouter devices hostname nameservers networking
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${FILESDIR}
 
 .include <bsd.prog.mk>

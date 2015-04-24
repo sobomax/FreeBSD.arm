@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmx.h 271888 2014-09-20 02:35:21Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmx.h 279228 2015-02-24 05:35:15Z neel $
  */
 
 #ifndef _VMX_H_
@@ -78,6 +78,7 @@ struct vmxcap {
 };
 
 struct vmxstate {
+	uint64_t nextrip;	/* next instruction to be executed by guest */
 	int	lastcpu;	/* host cpu that this 'vcpu' last ran on */
 	uint16_t vpid;
 };
@@ -102,6 +103,7 @@ enum {
 	IDX_MSR_STAR,
 	IDX_MSR_SF_MASK,
 	IDX_MSR_KGSBASE,
+	IDX_MSR_PAT,
 	GUEST_MSR_NUM		/* must be the last enumeration */
 };
 

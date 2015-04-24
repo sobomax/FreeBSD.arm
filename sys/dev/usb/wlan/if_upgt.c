@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_upgt.c,v 1.35 2008/04/16 18:32:15 damien Exp $ */
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_upgt.c 271866 2014-09-19 10:35:56Z glebius $ */
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_upgt.c 275646 2014-12-09 15:26:04Z mp $ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>
@@ -182,7 +182,7 @@ static const STRUCT_USB_HOST_ID upgt_devs[] = {
 	UPGT_DEV(FSC,		E5400),
 	UPGT_DEV(GLOBESPAN,	PRISM_GT_1),
 	UPGT_DEV(GLOBESPAN,	PRISM_GT_2),
-	UPGT_DEV(NETGEAR,	WG111V2_2),
+	UPGT_DEV(NETGEAR,	WG111V1_2),
 	UPGT_DEV(INTERSIL,	PRISM_GT),
 	UPGT_DEV(SMC,		2862WG),
 	UPGT_DEV(USR,		USR5422),

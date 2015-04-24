@@ -48,7 +48,7 @@
 
 #define HDA_DRV_TEST_REV	"20120126_0002"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdac.c 267581 2014-06-17 16:07:57Z jhb $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdac.c 281544 2015-04-15 05:24:39Z rpaulo $");
 
 #define hdac_lock(sc)		snd_mtxlock((sc)->lock)
 #define hdac_unlock(sc)		snd_mtxunlock((sc)->lock)
@@ -81,11 +81,14 @@ static const struct {
 	{ HDA_INTEL_HSW1,    "Intel Haswell",	0, 0 },
 	{ HDA_INTEL_HSW2,    "Intel Haswell",	0, 0 },
 	{ HDA_INTEL_HSW3,    "Intel Haswell",	0, 0 },
+	{ HDA_INTEL_BDW1,    "Intel Broadwell",	0, 0 },
+	{ HDA_INTEL_BDW2,    "Intel Broadwell",	0, 0 },
 	{ HDA_INTEL_CPT,     "Intel Cougar Point",	0, 0 },
 	{ HDA_INTEL_PATSBURG,"Intel Patsburg",  0, 0 },
 	{ HDA_INTEL_PPT1,    "Intel Panther Point",	0, 0 },
 	{ HDA_INTEL_LPT1,    "Intel Lynx Point",	0, 0 },
 	{ HDA_INTEL_LPT2,    "Intel Lynx Point",	0, 0 },
+	{ HDA_INTEL_WCPT,    "Intel Wildcat Point",	0, 0 },
 	{ HDA_INTEL_WELLS1,  "Intel Wellsburg",	0, 0 },
 	{ HDA_INTEL_WELLS2,  "Intel Wellsburg",	0, 0 },
 	{ HDA_INTEL_LPTLP1,  "Intel Lynx Point-LP",	0, 0 },

@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/25/94
-# $FreeBSD: head/usr.sbin/mountd/Makefile 158857 2006-05-23 17:10:17Z rodrigc $
+# $FreeBSD: head/usr.sbin/mountd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	mountd
 SRCS=	mountd.c getmntopts.c
@@ -11,7 +11,6 @@ WARNS?= 2
 
 .PATH: ${MOUNT}
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 .include <bsd.prog.mk>

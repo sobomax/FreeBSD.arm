@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/clang/Makefile 281049 2015-04-03 19:43:39Z dim $
 
 .include <src.opts.mk>
 
@@ -13,13 +13,16 @@ SUBDIR+=bugpoint \
 	llvm-as \
 	llvm-bcanalyzer \
 	llvm-diff \
+	llvm-cov \
 	llvm-dis \
 	llvm-extract \
 	llvm-link \
 	llvm-mc \
 	llvm-nm \
 	llvm-objdump \
+	llvm-profdata \
 	llvm-rtdyld \
+	llvm-symbolizer \
 	macho-dump \
 	opt
 .endif

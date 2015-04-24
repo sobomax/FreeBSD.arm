@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)options.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/options.h 273700 2014-10-26 17:50:33Z jilles $
+ * $FreeBSD: head/bin/sh/options.h 279503 2015-03-01 21:46:55Z jilles $
  */
 
 struct shparam {
@@ -73,6 +73,7 @@ struct optent {
 	char val;
 };
 
+extern struct optent optlist[NOPTS];
 #ifdef DEFINE_OPTIONS
 struct optent optlist[NOPTS] = {
 	{ "errexit",	'e',	0 },
@@ -95,8 +96,6 @@ struct optent optlist[NOPTS] = {
 	{ "physical",	'P',	0 },
 	{ "trackall",	'h',	0 },
 };
-#else
-extern struct optent optlist[NOPTS];
 #endif
 
 

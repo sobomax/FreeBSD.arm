@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ctladm/Makefile 273464 2014-10-22 09:17:17Z trasz $
+# $FreeBSD: head/usr.sbin/ctladm/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=		ctladm
 SRCS=		ctladm.c util.c ctl_util.c ctl_scsi_all.c
@@ -14,8 +14,7 @@ CFLAGS+=	-I${SDIR}
 WARNS?= 3
 .endif
 
-DPADD=		${LIBCAM} ${LIBSBUF} ${LIBBSDXML} ${LIBUTIL}
-LDADD=		-lcam -lsbuf -lbsdxml -lutil
+LIBADD=		cam sbuf bsdxml util
 MAN=		ctladm.8
 
 .include <bsd.prog.mk>

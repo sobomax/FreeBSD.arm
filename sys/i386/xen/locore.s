@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)locore.s	7.3 (Berkeley) 5/13/91
- * $FreeBSD: head/sys/i386/xen/locore.s 254671 2013-08-22 20:07:06Z gibbs $
+ * $FreeBSD: head/sys/i386/xen/locore.s 274668 2014-11-18 17:06:56Z imp $
  *
  *		originally from: locore.s, by William F. Jolitz
  *
@@ -42,7 +42,6 @@
 #include "opt_bootp.h"
 #include "opt_compat.h"
 #include "opt_nfsroot.h"
-#include "opt_global.h"
 #include "opt_pmap.h"
 
 #include <sys/syscall.h>

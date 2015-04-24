@@ -21,7 +21,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe.c 271807 2014-09-18 20:15:53Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  *
@@ -1880,8 +1880,7 @@ fe_get_packet (struct fe_softc * sc, u_short len)
 
 	/* Attach a cluster if this packet doesn't fit in a normal mbuf.  */
 	if (len > MHLEN - NFS_MAGIC_OFFSET) {
-		MCLGET(m, M_NOWAIT);
-		if (!(m->m_flags & M_EXT)) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			m_freem(m);
 			return -1;
 		}

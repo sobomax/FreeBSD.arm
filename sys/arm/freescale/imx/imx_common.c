@@ -33,10 +33,8 @@
  * SUCH DAMAGE.
  */
 
-#include "opt_global.h"
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_common.c 262916 2014-03-08 00:14:40Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_common.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,7 +48,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_common.c 262916 2014-03-08 00
 #include <dev/ofw/openfirm.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 #include <machine/vmparam.h>
 
 struct fdt_fixup_entry fdt_fixup_table[] = {

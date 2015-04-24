@@ -1,7 +1,8 @@
-# $FreeBSD: head/sys/arm/mv/std-pj4b.mv 239362 2012-08-18 05:48:19Z andrew $
+# $FreeBSD: head/sys/arm/mv/std-pj4b.mv 276520 2015-01-01 23:21:46Z ian $
 
 files		"../mv/files.mv"
 cpu		CPU_MV_PJ4B
 machine 	arm	armv6
+makeoptions	CONF_CFLAGS="-march=armv7a"
 
 options		VM_MAXUSER_ADDRESS="(KERNBASE-(1024*1024*1024))"

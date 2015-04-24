@@ -1,11 +1,10 @@
-# $FreeBSD: head/libexec/rpc.sprayd/Makefile 201380 2010-01-02 09:50:19Z ed $
+# $FreeBSD: head/libexec/rpc.sprayd/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG =	rpc.sprayd
 SRCS =	sprayd.c
 MAN =	rpc.sprayd.8
 
-DPADD=	${LIBRPCSVC}
-LDADD=	-lrpcsvc
+LIBADD=	rpcsvc
 
 WARNS?=	2
 

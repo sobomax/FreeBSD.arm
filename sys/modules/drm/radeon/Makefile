@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/drm/radeon/Makefile 242203 2012-10-28 02:15:35Z nwhitehorn $
+# $FreeBSD: head/sys/modules/drm/radeon/Makefile 276606 2015-01-03 03:35:18Z imp $
 
 .PATH:	${.CURDIR}/../../../dev/drm
 KMOD	= radeon
@@ -10,4 +10,3 @@ SRCS	+=device_if.h bus_if.h pci_if.h opt_drm.h
 
 CWARNFLAGS.r600_cp.c=	-Wno-unused ${NO_WCONSTANT_CONVERSION}
 CWARNFLAGS.radeon_cp.c=	-Wno-unused ${NO_WCONSTANT_CONVERSION}
-CWARNFLAGS+=		${CWARNFLAGS.${.IMPSRC:T}}

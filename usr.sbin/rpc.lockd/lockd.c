@@ -1,5 +1,5 @@
 /*	$NetBSD: lockd.c,v 1.7 2000/08/12 18:08:44 thorpej Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpc.lockd/lockd.c 260251 2014-01-04 01:12:28Z delphij $ */
+/*	$FreeBSD: head/usr.sbin/rpc.lockd/lockd.c 277352 2015-01-19 00:33:32Z rstone $ */
 
 /*
  * Copyright (c) 1995
@@ -518,7 +518,6 @@ create_service(struct netconfig *nconf)
 
 	/* Get rpc.statd's address on this transport */
 	memset(&hints, 0, sizeof hints);
-	hints.ai_flags = AI_PASSIVE;
 	hints.ai_family = si.si_af;
 	hints.ai_socktype = si.si_socktype;
 	hints.ai_protocol = si.si_proto;
@@ -534,6 +533,7 @@ create_service(struct netconfig *nconf)
 			out_of_mem();
 		sock_fd[sock_fdcnt++] = -1;	/* Set invalid for now. */
 		mallocd_res = 0;
+		hints.ai_flags = AI_PASSIVE;
 
 		/*	
 		 * XXX - using RPC library internal functions.

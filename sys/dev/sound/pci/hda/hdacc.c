@@ -41,7 +41,7 @@
 #include <dev/sound/pci/hda/hda_reg.h>
 #include <dev/sound/pci/hda/hdac.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdacc.c 264832 2014-04-23 19:32:50Z marius $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdacc.c 281544 2015-04-15 05:24:39Z rpaulo $");
 
 struct hdacc_fg {
 	device_t	dev;
@@ -87,6 +87,7 @@ static const struct {
 	{ HDA_CODEC_ALC273, 0,		"Realtek ALC273" },
 	{ HDA_CODEC_ALC275, 0,		"Realtek ALC275" },
 	{ HDA_CODEC_ALC276, 0,		"Realtek ALC276" },
+	{ HDA_CODEC_ALC292, 0,		"Realtek ALC292" },
 	{ HDA_CODEC_ALC660, 0,		"Realtek ALC660-VD" },
 	{ HDA_CODEC_ALC662, 0x0002,	"Realtek ALC662 rev2" },
 	{ HDA_CODEC_ALC662, 0,		"Realtek ALC662" },
@@ -319,6 +320,7 @@ static const struct {
 	{ HDA_CODEC_INTELCPT, 0,	"Intel Cougar Point" },
 	{ HDA_CODEC_INTELPPT, 0,	"Intel Panther Point" },
 	{ HDA_CODEC_INTELHSW, 0,	"Intel Haswell" },
+	{ HDA_CODEC_INTELBDW, 0,	"Intel Broadwell" },
 	{ HDA_CODEC_INTELCL, 0,		"Intel Crestline" },
 	{ HDA_CODEC_SII1390, 0,		"Silicon Image SiI1390" },
 	{ HDA_CODEC_SII1392, 0,		"Silicon Image SiI1392" },

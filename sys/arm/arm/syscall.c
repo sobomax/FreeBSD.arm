@@ -80,10 +80,11 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/syscall.c 272356 2014-10-01 12:44:16Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/syscall.c 275639 2014-12-09 10:21:31Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/kernel.h>
 #include <sys/proc.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>

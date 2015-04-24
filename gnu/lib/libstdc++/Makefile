@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/libstdc++/Makefile 272350 2014-10-01 08:26:51Z andrew $
+# $FreeBSD: head/gnu/lib/libstdc++/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .include <src.opts.mk>
 
@@ -23,8 +23,8 @@ CXXFLAGS+=	-fno-implicit-templates -ffunction-sections -fdata-sections \
 		-Wno-deprecated
 PO_CXXFLAGS=	${CXXFLAGS:N-ffunction-sections}
 
-DPADD=		${LIBM}
-LDADD=		-lm  -Wl,-f,libsupc++.so.1
+LIBADD+=	m
+LDADD=		-Wl,-f,libsupc++.so.1
 
 # libstdc++ sources
 SRCS+=	bitmap_allocator.cc pool_allocator.cc \

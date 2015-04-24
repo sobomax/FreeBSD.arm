@@ -26,10 +26,11 @@
  * SUCH DAMAGE.
  *
  * $Id: l2control.c,v 1.6 2003/09/05 00:38:25 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/l2control/l2control.c 220840 2011-04-19 16:21:57Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/l2control/l2control.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <assert.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <err.h>
 #include <errno.h>

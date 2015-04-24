@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_ipheth.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_ipheth.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -86,7 +86,7 @@ static uether_fn_t ipheth_setpromisc;
 static int ipheth_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, ipheth, CTLFLAG_RW, 0, "USB iPhone ethernet");
-SYSCTL_INT(_hw_usb_ipheth, OID_AUTO, debug, CTLFLAG_RW, &ipheth_debug, 0, "Debug level");
+SYSCTL_INT(_hw_usb_ipheth, OID_AUTO, debug, CTLFLAG_RWTUN, &ipheth_debug, 0, "Debug level");
 #endif
 
 static const struct usb_config ipheth_config[IPHETH_N_TRANSFER] = {

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/config.c 272972 2014-10-11 23:24:09Z hrs $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/config.c 281143 2015-04-06 09:42:23Z glebius $	*/
 /*	$KAME: config.c,v 1.84 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*
@@ -36,7 +36,6 @@
 #include <sys/socket.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/route.h>
 #include <net/if_dl.h>
 

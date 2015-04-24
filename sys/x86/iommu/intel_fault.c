@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_fault.c 264008 2014-04-01 15:48:46Z rstone $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_fault.c 280260 2015-03-19 13:57:47Z kib $");
 
 #include "opt_acpi.h"
 
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: head/sys/x86/iommu/intel_fault.c 264008 2014-04-01 15:48:46Z
 #include <sys/rman.h>
 #include <sys/taskqueue.h>
 #include <sys/tree.h>
+#include <sys/vmem.h>
 #include <machine/bus.h>
 #include <contrib/dev/acpica/include/acpi.h>
 #include <contrib/dev/acpica/include/accommon.h>
@@ -230,8 +231,9 @@ dmar_fault_task(void *arg, int pending __unused)
 		}
 		DMAR_UNLOCK(unit);
 		printf(
-		    "pci%d:%d:%d fault acc %x adt 0x%x reason 0x%x addr %jx\n",
-		    bus, slot, func, DMAR_FRCD2_T(fault_rec[1]),
+		    "pci%d:%d:%d sid %x fault acc %x adt 0x%x reason 0x%x "
+		    "addr %jx\n",
+		    bus, slot, func, sid, DMAR_FRCD2_T(fault_rec[1]),
 		    DMAR_FRCD2_AT(fault_rec[1]), DMAR_FRCD2_FR(fault_rec[1]),
 		    (uintmax_t)fault_rec[0]);
 		DMAR_FAULT_LOCK(unit);

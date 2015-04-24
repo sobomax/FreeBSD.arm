@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)disklabel.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: head/sys/sys/disklabel.h 268351 2014-07-07 00:27:09Z marcel $
+ * $FreeBSD: head/sys/sys/disklabel.h 276737 2015-01-06 05:28:37Z imp $
  */
 
 #ifndef _SYS_DISKLABEL_H_
@@ -284,15 +284,8 @@ static const char *fstypenames[] = {
 #define	D_CHAIN		0x10		/* can do back-back transfers */
 
 /*
- * Disklabel-specific ioctls.
- *
  * NB: <sys/disk.h> defines ioctls from 'd'/128 and up.
  */
-		/* get and set disklabel */
-#define DIOCGDINFO	_IOR('d', 101, struct disklabel)/* get */
-#define DIOCSDINFO	_IOW('d', 102, struct disklabel)/* set */
-#define DIOCWDINFO	_IOW('d', 103, struct disklabel)/* set, update disk */
-#define DIOCBSDBB	_IOW('d', 110, void *)	/* write bootblocks */
 
 /*
  * Functions for proper encoding/decoding of struct disklabel into/from

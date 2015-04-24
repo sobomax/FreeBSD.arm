@@ -20,7 +20,7 @@
  *          Wolfram Schneider <wosch@FreeBSD.org>
  *          Thomas Moestl <tmoestl@gmx.net>
  *
- * $FreeBSD: head/usr.bin/top/machine.c 273835 2014-10-29 19:21:19Z jkim $
+ * $FreeBSD: head/usr.bin/top/machine.c 280680 2015-03-26 09:13:16Z kevlo $
  */
 
 #include <sys/param.h>
@@ -373,7 +373,7 @@ machine_init(struct statics *statics, char do_unames)
 	size = sizeof(long) * maxcpu * CPUSTATES;
 	times = malloc(size);
 	if (times == NULL)
-		err(1, "malloc %zd bytes", size);
+		err(1, "malloc %zu bytes", size);
 	if (sysctlbyname("kern.cp_times", times, &size, NULL, 0) == -1)
 		err(1, "sysctlbyname kern.cp_times");
 	pcpu_cp_time = calloc(1, size);
@@ -1004,7 +1004,7 @@ format_next_process(caddr_t handle, char *(*get_userid)(int), int flags)
 			argbuflen = cmdlen * 4;
 			argbuf = (char *)malloc(argbuflen + 1);
 			if (argbuf == NULL) {
-				warn("malloc(%zd)", argbuflen + 1);
+				warn("malloc(%zu)", argbuflen + 1);
 				free(cmdbuf);
 				return NULL;
 			}

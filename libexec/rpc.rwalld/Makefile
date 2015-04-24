@@ -1,11 +1,10 @@
-# $FreeBSD: head/libexec/rpc.rwalld/Makefile 201380 2010-01-02 09:50:19Z ed $
+# $FreeBSD: head/libexec/rpc.rwalld/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG =	rpc.rwalld
 SRCS =	rwalld.c
 MAN =	rpc.rwalld.8
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 WARNS?=	2
 

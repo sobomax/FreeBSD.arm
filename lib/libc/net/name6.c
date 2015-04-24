@@ -84,7 +84,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/name6.c 255328 2013-09-06 21:02:06Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/net/name6.c 281143 2015-04-06 09:42:23Z glebius $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -94,7 +94,6 @@ __FBSDID("$FreeBSD: head/lib/libc/net/name6.c 255328 2013-09-06 21:02:06Z jilles
 #include <netinet/in.h>
 #ifdef INET6
 #include <net/if.h>
-#include <net/if_var.h>
 #include <sys/sysctl.h>
 #include <sys/ioctl.h>
 #include <netinet6/in6_var.h>	/* XXX */

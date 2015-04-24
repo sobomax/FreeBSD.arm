@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/rpc.ypupdated/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.sbin/rpc.ypupdated/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .PATH: ${.CURDIR}/../ypserv ${.CURDIR}/../../libexec/ypxfr
 
@@ -13,8 +13,7 @@ CFLAGS+= -I${.CURDIR}/../ypserv -I. -I${.CURDIR}/../../libexec/ypxfr
 
 WARNS?=	1
 
-DPADD=	${LIBRPCSVC}
-LDADD=	-lrpcsvc
+LIBADD=	rpcsvc
 
 CLEANFILES= ypupdate_prot_svc.c ypupdate_prot.h
 

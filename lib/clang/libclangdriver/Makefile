@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangdriver/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclangdriver/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -6,22 +6,22 @@ LIB=	clangdriver
 
 SRCDIR=	tools/clang/lib/Driver
 SRCS=	Action.cpp \
-	CC1AsOptions.cpp \
 	Compilation.cpp \
+	CrossWindowsToolChain.cpp \
 	Driver.cpp \
 	DriverOptions.cpp \
 	Job.cpp \
+	MSVCToolChain.cpp \
+	Multilib.cpp \
 	Phases.cpp \
 	SanitizerArgs.cpp \
 	Tool.cpp \
 	ToolChain.cpp \
 	ToolChains.cpp \
 	Tools.cpp \
-	Types.cpp \
-	WindowsToolChain.cpp
+	Types.cpp
 
-TGHDRS=	CC1AsOptions \
-	DiagnosticCommonKinds \
+TGHDRS=	DiagnosticCommonKinds \
 	DiagnosticDriverKinds \
 	DiagnosticSemaKinds \
 	Options

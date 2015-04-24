@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Advanced Computing Technologies LLC
+ * Copyright (c) 2014 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -27,7 +27,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_irq.c 269896 2014-08-13 00:14:26Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_irq.c 281887 2015-04-23 14:22:20Z jhb $");
 
 #include <sys/param.h>
 #include <machine/vmm.h>

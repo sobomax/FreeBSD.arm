@@ -28,7 +28,7 @@
  | $Id: isc_soc.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_soc.c 268530 2014-07-11 14:34:29Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_soc.c 276692 2015-01-05 09:58:32Z rwatson $");
 
 #include "opt_iscsi_initiator.h"
 
@@ -110,7 +110,7 @@ isc_sendPDU(isc_session_t *sp, pduq_t *pq)
 	   | Add any AHS to the iSCSI hdr mbuf
 	   */
 	  if((mh->m_len + pp->ahs_len) < MHLEN) {
-	       MH_ALIGN(mh, mh->m_len + pp->ahs_len);
+	       M_ALIGN(mh, mh->m_len + pp->ahs_len);
 	       bcopy(&pp->ipdu, mh->m_data, mh->m_len);
 	       bcopy(pp->ahs_addr, mh->m_data + mh->m_len, pp->ahs_len);
 	       mh->m_len += pp->ahs_len;
@@ -119,7 +119,7 @@ isc_sendPDU(isc_session_t *sp, pduq_t *pq)
 	       panic("len AHS=%d too big, not impleneted yet", pp->ahs_len);
      }
      else {
-	  MH_ALIGN(mh, mh->m_len);
+	  M_ALIGN(mh, mh->m_len);
 	  bcopy(&pp->ipdu, mh->m_data, mh->m_len);
      }
      mh->m_pkthdr.len = mh->m_len;

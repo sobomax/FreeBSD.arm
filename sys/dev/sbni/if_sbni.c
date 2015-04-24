@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sbni/if_sbni.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/sbni/if_sbni.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * Device driver for Granch SBNI12 leased line adapters
@@ -878,8 +878,7 @@ get_rx_buf(struct sbni_softc *sc)
 	 */
 	if (ETHER_MAX_LEN + 2 > MHLEN) {
 		/* Attach an mbuf cluster */
-		MCLGET(m, M_NOWAIT);
-		if ((m->m_flags & M_EXT) == 0) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			m_freem(m);
 			return (0);
 		}

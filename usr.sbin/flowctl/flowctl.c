@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcs_id[] =
-    "@(#) $FreeBSD: head/usr.sbin/flowctl/flowctl.c 236808 2012-06-09 10:10:12Z melifaro $";
+    "@(#) $FreeBSD: head/usr.sbin/flowctl/flowctl.c 278737 2015-02-13 23:57:20Z glebius $";
 #endif
 
 #include <sys/types.h>
@@ -222,12 +222,12 @@ ctl_show(int argc, char **argv)
 static void
 do_show(int version, void (*func)(struct ngnf_show_header *))
 {
+	char buf[SORCVBUF_SIZE];
 	struct ng_mesg *ng_mesg;
 	struct ngnf_show_header req, *resp;
 	int token, nread;
 
-	ng_mesg = alloca(SORCVBUF_SIZE);
-
+	ng_mesg = (struct ng_mesg *)buf;
 	req.version = version;
 	req.hash_id = req.list_id = 0;
 

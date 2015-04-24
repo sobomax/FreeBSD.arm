@@ -41,7 +41,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)nfsd.c	8.9 (Berkeley) 3/29/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/nfsd/nfsd.c 246781 2013-02-14 02:00:41Z delphij $";
+  "$FreeBSD: head/usr.sbin/nfsd/nfsd.c 281199 2015-04-07 10:25:27Z mav $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -626,7 +626,7 @@ main(int argc, char **argv)
 					    bindhost[i]);
 					nfsd_exit(1);
 				}
-				if (listen(tcpsock, 5) < 0) {
+				if (listen(tcpsock, -1) < 0) {
 					syslog(LOG_ERR, "listen failed");
 					nfsd_exit(1);
 				}
@@ -701,7 +701,7 @@ main(int argc, char **argv)
 					    bindhost[i]);
 					nfsd_exit(1);
 				}
-				if (listen(tcp6sock, 5) < 0) {
+				if (listen(tcp6sock, -1) < 0) {
 					syslog(LOG_ERR, "listen failed");
 					nfsd_exit(1);
 				}

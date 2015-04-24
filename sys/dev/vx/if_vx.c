@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vx/if_vx.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vx/if_vx.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * Created from if_ep.c driver by Fred Gray (fgray@rice.edu) to support
@@ -865,8 +865,7 @@ vx_get(struct vx_softc *sc, u_int totlen)
 			len = MLEN;
 		}
 		if (totlen >= MINCLSIZE) {
-			MCLGET(m, M_NOWAIT);
-			if (m->m_flags & M_EXT)
+			if (MCLGET(m, M_NOWAIT))
 				len = MCLBYTES;
 		}
 		len = min(totlen, len);

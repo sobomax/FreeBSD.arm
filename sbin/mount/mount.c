@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)mount.c	8.25 (Berkeley) 5/8/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/mount/mount.c 270096 2014-08-17 09:44:42Z trasz $");
+__FBSDID("$FreeBSD: head/sbin/mount/mount.c 281691 2015-04-18 16:08:06Z trasz $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -144,7 +144,7 @@ use_mountprog(const char *vfstype)
 	unsigned int i;
 	const char *fs[] = {
 	"cd9660", "mfs", "msdosfs", "nfs",
-	"nullfs", "oldnfs", "smbfs", "udf", "unionfs",
+	"nullfs", "smbfs", "udf", "unionfs",
 	NULL
 	};
 

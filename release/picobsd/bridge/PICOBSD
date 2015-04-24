@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/release/picobsd/bridge/PICOBSD 201034 2009-12-27 01:19:55Z luigi $
+# $FreeBSD: head/release/picobsd/bridge/PICOBSD 274331 2014-11-09 21:33:01Z melifaro $
 #
 # Line starting with #PicoBSD contains PicoBSD build parameters
 #marker         def_sz  init    MFS_inodes      floppy_inodes
@@ -109,7 +109,6 @@ device		tun		# Packet tunnel.
 device		pty		# Pseudo-ttys (telnet etc)
 device		md		# Memory "disks"
 #device		gif	4	# IPv6 and IPv4 tunneling
-#device		faith	1	# IPv6-to-IPv4 relaying (translation)
 device		tap
 
 #options               DEVICE_POLLING

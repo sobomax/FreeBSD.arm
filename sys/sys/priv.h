@@ -26,7 +26,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/priv.h 273331 2014-10-20 14:42:42Z bryanv $
+ * $FreeBSD: head/sys/sys/priv.h 277322 2015-01-18 15:13:11Z kib $
  */
 
 /*
@@ -111,6 +111,7 @@
 #define	PRIV_DEBUG_DIFFCRED	80	/* Exempt debugging other users. */
 #define	PRIV_DEBUG_SUGID	81	/* Exempt debugging setuid proc. */
 #define	PRIV_DEBUG_UNPRIV	82	/* Exempt unprivileged debug limit. */
+#define	PRIV_DEBUG_DENIED	83	/* Exempt P2_NOTRACE. */
 
 /*
  * Dtrace privileges.

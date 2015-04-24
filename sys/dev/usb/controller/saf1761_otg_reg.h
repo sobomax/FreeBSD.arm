@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/saf1761_otg_reg.h 266946 2014-06-01 10:22:18Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/saf1761_otg_reg.h 274842 2014-11-22 08:47:04Z hselasky $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.
@@ -211,7 +211,8 @@
 #define	SOTG_PTD_DW3_CERR_3 (3U << 23)
 #define	SOTG_PTD_DW3_CERR_2 (2U << 23)	/* infinite NAKs */
 #define	SOTG_PTD_DW3_CERR_1 (1U << 23)
-#define	SOTG_PTD_DW3_XFER_COUNT 0x7FFF
+#define	SOTG_PTD_DW3_XFER_COUNT_HS 0x7FFF
+#define	SOTG_PTD_DW3_XFER_COUNT_SPLIT 0x03FF
 #define	SOTG_PTD_DW4 16
 #define	SOTG_PTD_DW5 20
 #define	SOTG_PTD_DW6 24

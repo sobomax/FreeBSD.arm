@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/uart/Makefile 249765 2013-04-22 13:02:41Z nyan $
+# $FreeBSD: head/sys/modules/uart/Makefile 276637 2015-01-03 21:47:32Z jhibbits $
 
 .PATH: ${.CURDIR}/../../dev/uart
 
@@ -10,7 +10,8 @@ uart_bus_ebus=	uart_bus_ebus.c
 uart_dev_lpc=	uart_dev_lpc.c
 .endif
 
-.if ${MACHINE_CPUARCH} == "arm" || ${MACHINE_CPUARCH} == "sparc64"
+.if ${MACHINE_CPUARCH} == "arm" || ${MACHINE_CPUARCH} == "sparc64" || \
+    ${MACHINE_CPUARCH} == "powerpc"
 ofw_bus_if=	ofw_bus_if.h
 .endif
 

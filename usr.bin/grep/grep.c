@@ -1,5 +1,5 @@
 /*	$NetBSD: grep.c,v 1.6 2011/04/18 03:48:23 joerg Exp $	*/
-/* 	$FreeBSD: head/usr.bin/grep/grep.c 268799 2014-07-17 15:48:11Z pfg $	*/
+/* 	$FreeBSD: head/usr.bin/grep/grep.c 280307 2015-03-21 00:21:30Z pfg $	*/
 /*	$OpenBSD: grep.c,v 1.42 2010/07/02 22:18:03 tedu Exp $	*/
 
 /*-
@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/grep/grep.c 268799 2014-07-17 15:48:11Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/grep/grep.c 280307 2015-03-21 00:21:30Z pfg $");
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -316,7 +316,7 @@ read_patterns(const char *fn)
 	len = 0;
 	line = NULL;
 	while ((rlen = getline(&line, &len, f)) != -1)
-		add_pattern(line, line[0] == '\n' ? 0 : len);
+		add_pattern(line, line[0] == '\n' ? 0 : (size_t)rlen);
 	free(line);
 	if (ferror(f))
 		err(2, "%s", fn);

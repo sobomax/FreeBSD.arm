@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/include/Makefile 265925 2014-05-12 18:45:56Z dim $
+# $FreeBSD: head/lib/clang/include/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,13 +8,21 @@ LLVM_SRCS= ${.CURDIR}/../../../contrib/llvm
 
 .PATH: ${LLVM_SRCS}/tools/clang/lib/Headers
 
-INCSDIR=${INCLUDEDIR}/clang/3.4.1
+INCSDIR=${LIBDIR}/clang/3.6.0/include
 
-INCS=	__wmmintrin_aes.h \
+INCS=	__stddef_max_align_t.h \
+	__wmmintrin_aes.h \
 	__wmmintrin_pclmul.h \
+	adxintrin.h \
 	altivec.h \
 	ammintrin.h \
+	arm_acle.h \
 	avx2intrin.h \
+	avx512bwintrin.h \
+	avx512erintrin.h \
+	avx512fintrin.h \
+	avx512vlbwintrin.h \
+	avx512vlintrin.h \
 	avxintrin.h \
 	bmi2intrin.h \
 	bmiintrin.h \
@@ -23,12 +31,13 @@ INCS=	__wmmintrin_aes.h \
 	f16cintrin.h \
 	fma4intrin.h \
 	fmaintrin.h \
+	ia32intrin.h \
 	immintrin.h \
 	lzcntintrin.h \
 	mm3dnow.h \
 	mm_malloc.h \
 	mmintrin.h \
-	module.map \
+	module.modulemap \
 	nmmintrin.h \
 	pmmintrin.h \
 	popcntintrin.h \

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs.c 271836 2014-09-18 21:14:46Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  *
@@ -716,8 +716,7 @@ cs_get_packet(struct cs_softc *sc)
 		return (-1);
 
 	if (length > MHLEN) {
-		MCLGET(m, M_NOWAIT);
-		if (!(m->m_flags & M_EXT)) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			m_freem(m);
 			return (-1);
 		}

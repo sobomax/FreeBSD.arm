@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)getdirentries.2	8.2 (Berkeley) 5/3/95
-.\" $FreeBSD: head/lib/libc/sys/getdirentries.2 231564 2012-02-12 18:29:56Z ed $
+.\" $FreeBSD: head/lib/libc/sys/getdirentries.2 276006 2014-12-21 12:36:36Z brueffer $
 .\"
 .Dd May 3, 1995
 .Dt GETDIRENTRIES 2
@@ -134,8 +134,9 @@ The current position pointer should only be set to a value returned by
 .Xr lseek 2 ,
 a value returned in the location pointed to by
 .Fa basep
-.Fn ( getdirentries
-only)
+.Po Fn getdirentries
+only
+.Pc
 or zero.
 .Sh RETURN VALUES
 If successful, the number of bytes actually transferred is returned.

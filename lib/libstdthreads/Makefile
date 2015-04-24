@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libstdthreads/Makefile 228904 2011-12-26 21:51:53Z ed $
+# $FreeBSD: head/lib/libstdthreads/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 LIB=	stdthreads
 SHLIB_MAJOR= 0
@@ -32,8 +32,7 @@ MLINKS=	thrd_create.3 call_once.3 \
 	thrd_create.3 tss_get.3 \
 	thrd_create.3 tss_set.3
 
-DPADD=	${LIBPTHREAD}
-LDADD=	-lpthread
+LIBADD=	pthread
 
 VERSION_DEF= ${.CURDIR}/../libc/Versions.def
 SYMBOL_MAPS= ${.CURDIR}/Symbol.map

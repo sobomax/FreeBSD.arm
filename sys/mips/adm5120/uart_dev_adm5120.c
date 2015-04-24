@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/adm5120/uart_dev_adm5120.c 260889 2014-01-19 19:36:11Z imp $");
+__FBSDID("$FreeBSD: head/sys/mips/adm5120/uart_dev_adm5120.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -175,7 +175,8 @@ struct uart_class uart_adm5120_uart_class = {
 	sizeof(struct adm5120_uart_softc),
 	.uc_ops = &uart_adm5120_uart_ops,
 	.uc_range = 1, /* use hinted range */
-	.uc_rclk = 62500000
+	.uc_rclk = 62500000,
+	.uc_rshift = 0
 };
 
 #define	SIGCHG(c, i, s, d)				\

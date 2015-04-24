@@ -1,10 +1,10 @@
 #
-# $FreeBSD: head/usr.sbin/bhyve/Makefile 273683 2014-10-26 04:44:28Z neel $
+# $FreeBSD: head/usr.sbin/bhyve/Makefile 281338 2015-04-09 21:38:40Z bapt $
 #
 
 PROG=	bhyve
 
-DEBUG_FLAGS= -g -O0 
+DEBUG_FLAGS= -g -O0
 
 MAN=	bhyve.8
 
@@ -43,8 +43,7 @@ SRCS=	\
 .PATH:	${.CURDIR}/../../sys/amd64/vmm
 SRCS+=	vmm_instruction_emul.c
 
-DPADD=	${LIBVMMAPI} ${LIBMD} ${LIBUTIL} ${LIBPTHREAD}
-LDADD=	-lvmmapi -lmd -lutil -lpthread
+LIBADD=	vmmapi md pthread
 
 WARNS?=	2
 

@@ -1,9 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libheimsqlite/Makefile 233294 2012-03-22 08:48:42Z stas $
+# $FreeBSD: head/kerberos5/lib/libheimsqlite/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	heimsqlite
 SRCS=	sqlite3.c
-DPADD=	${LIBPTHREAD}
-LDADD=	-lpthread
+LIBADD=	pthread
 CFLAGS+=-I${KRB5DIR}/lib/sqlite
 
 .include <bsd.lib.mk>

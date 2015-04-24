@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx51_ccm.c 271055 2014-09-03 21:45:39Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx51_ccm.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -78,7 +78,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx51_ccm.c 271055 2014-09-03 21:
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <arm/freescale/imx/imx51_ccmvar.h>
 #include <arm/freescale/imx/imx51_ccmreg.h>

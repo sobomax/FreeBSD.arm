@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/stg/tmc18c30_pccard.c 240325 2012-09-10 18:49:49Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/stg/tmc18c30_pccard.c 274760 2014-11-20 20:50:05Z jhb $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -83,7 +83,7 @@ stg_pccard_probe(device_t dev)
 	    sizeof(stg_products[0]), NULL)) != NULL) {
 		if (pp->pp_name != NULL)
 			device_set_desc(dev, pp->pp_name);
-		return(0);
+		return (BUS_PROBE_DEFAULT);
 	}
 	return(EIO);
 }
@@ -105,8 +105,8 @@ stg_pccard_attach(device_t dev)
 		stg_release_resource(dev);
 		return(ENXIO);
 	}
-	error = bus_setup_intr(dev, sc->irq_res, INTR_TYPE_CAM | INTR_ENTROPY,
-			       NULL, stg_intr, (void *)sc, &sc->stg_intrhand);
+	error = bus_setup_intr(dev, sc->irq_res, INTR_TYPE_CAM | INTR_ENTROPY |
+	    INTR_MPSAFE, NULL, stg_intr, sc, &sc->stg_intrhand);
 	if (error) {
 		stg_release_resource(dev);
 		return(error);

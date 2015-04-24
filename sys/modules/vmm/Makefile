@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/vmm/Makefile 273744 2014-10-27 18:37:11Z jhb $
+# $FreeBSD: head/sys/modules/vmm/Makefile 279971 2015-03-14 02:32:08Z neel $
 
 KMOD=	vmm
 
@@ -19,13 +19,11 @@ SRCS+=	vmm.c		\
 	vmm_host.c	\
 	vmm_instruction_emul.c	\
 	vmm_ioport.c	\
-	vmm_ipi.c	\
 	vmm_lapic.c	\
 	vmm_mem.c	\
 	vmm_stat.c	\
 	vmm_util.c	\
-	x86.c		\
-	vmm_support.S
+	x86.c
 
 .PATH: ${.CURDIR}/../../amd64/vmm/io
 SRCS+=	iommu.c		\
@@ -35,7 +33,8 @@ SRCS+=	iommu.c		\
 	vhpet.c		\
 	vioapic.c	\
 	vlapic.c	\
-	vpmtmr.c
+	vpmtmr.c	\
+	vrtc.c
 
 # intel-specific files
 .PATH: ${.CURDIR}/../../amd64/vmm/intel
@@ -58,16 +57,10 @@ SRCS+=	vmcb.c		\
 CLEANFILES=	vmx_assym.h vmx_genassym.o svm_assym.h svm_genassym.o
 
 vmx_assym.h:    vmx_genassym.o
-.if exists(@)
-vmx_assym.h:    @/kern/genassym.sh
-.endif
-	sh @/kern/genassym.sh vmx_genassym.o > ${.TARGET}
+	sh ${SYSDIR}/kern/genassym.sh vmx_genassym.o > ${.TARGET}
 
 svm_assym.h:    svm_genassym.o
-.if exists(@)
-svm_assym.h:    @/kern/genassym.sh
-.endif
-	sh @/kern/genassym.sh svm_genassym.o > ${.TARGET}
+	sh ${SYSDIR}/kern/genassym.sh svm_genassym.o > ${.TARGET}
 
 vmx_support.o:
 	${CC} -c -x assembler-with-cpp -DLOCORE ${CFLAGS} \

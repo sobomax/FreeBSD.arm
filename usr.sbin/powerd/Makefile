@@ -1,9 +1,8 @@
-# $FreeBSD: head/usr.sbin/powerd/Makefile 203482 2010-02-04 07:26:26Z imp $
+# $FreeBSD: head/usr.sbin/powerd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	powerd
 MAN=	powerd.8
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 .include <bsd.prog.mk>

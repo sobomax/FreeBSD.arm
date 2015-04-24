@@ -1,5 +1,5 @@
 
-# $FreeBSD: head/sys/modules/aic7xxx/ahc/Makefile 269812 2014-08-11 14:50:49Z imp $
+# $FreeBSD: head/sys/modules/aic7xxx/ahc/Makefile 276951 2015-01-10 23:43:39Z imp $
 
 SYSDIR?=${.CURDIR}/../../..
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -35,7 +35,11 @@ ${GENSRCS}:								 \
 			${REG_PRINT_OPT}				 \
 			-i ${SYSDIR}/dev/aic7xxx/aic7xxx_osm.h \
 			${SYSDIR}/dev/aic7xxx/aic7xxx.seq
-.else
+.elif defined(.MAKE.LEVEL)
+# This target interfers with fmake's world view and causes this message
+# to appear when building the tree from 8.x worlds where fmake is the
+# default. fmake doens't define .MAKE.LEVEL so key off that to omit it,
+# while still allowing more-modern makes to theoretically update things.
 ${GENSRCS}:
 	@echo "Error: ${.TARGET} is missing.  Run 'make ahcfirmware'"
 .endif

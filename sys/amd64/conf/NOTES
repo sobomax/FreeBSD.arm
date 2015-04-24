@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/amd64/conf/NOTES 272022 2014-09-23 08:33:03Z bz $
+# $FreeBSD: head/sys/amd64/conf/NOTES 277227 2015-01-16 01:39:24Z np $
 #
 
 #
@@ -215,7 +215,7 @@ hint.atkbd.0.irq="1"
 
 # Options for atkbd:
 options 	ATKBD_DFLT_KEYMAP	# specify the built-in keymap
-makeoptions	ATKBD_DFLT_KEYMAP=jp.106
+makeoptions	ATKBD_DFLT_KEYMAP=fr.dvorak
 
 # `flags' for atkbd:
 #       0x01    Force detection of keyboard, else we always assume a keyboard
@@ -492,6 +492,7 @@ device		virtio_blk	# VirtIO Block device
 device		virtio_scsi	# VirtIO SCSI device
 device		virtio_balloon	# VirtIO Memory Balloon device
 device		virtio_random	# VirtIO Entropy device
+device		virtio_console	# VirtIO Console device
 
 device 		hyperv		# HyperV drivers
 

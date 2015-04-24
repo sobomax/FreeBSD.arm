@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/stdlib/Symbol.map 270952 2014-09-01 22:25:42Z pfg $
+ * $FreeBSD: head/lib/libc/stdlib/Symbol.map 276630 2015-01-03 18:38:46Z kib $
  */
 
 FBSD_1.0 {
@@ -118,4 +118,5 @@ FBSD_1.4 {
 FBSDprivate_1.0 {
 	__system;
 	_system;
+	__libc_system;
 };

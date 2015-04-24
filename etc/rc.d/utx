@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/utx 240336 2012-09-11 05:04:59Z obrien $
+# $FreeBSD: head/etc/rc.d/utx 278706 2015-02-13 20:52:23Z ngie $
 #
 
 # PROVIDE: utx
 # REQUIRE: DAEMON FILESYSTEMS
+# BEFORE: LOGIN
 # KEYWORD: shutdown
 
 . /etc/rc.subr

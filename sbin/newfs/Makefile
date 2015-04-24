@@ -1,11 +1,10 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/27/94
-# $FreeBSD: head/sbin/newfs/Makefile 204654 2010-03-03 19:25:28Z sobomax $
+# $FreeBSD: head/sbin/newfs/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../../sys/geom
 
 PROG=	newfs
-DPADD=	${LIBUFS} ${LIBUTIL}
-LDADD=	-lufs -lutil
+LIBADD=	ufs util
 SRCS=	newfs.c mkfs.c geom_bsd_enc.c
 
 WARNS?=	3

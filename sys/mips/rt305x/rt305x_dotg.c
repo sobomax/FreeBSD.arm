@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rt305x/rt305x_dotg.c 228483 2011-12-14 00:28:54Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/mips/rt305x/rt305x_dotg.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 /*-
  * Copyright (c) 2010,2011 Aleksandr Rybalko. All rights reserved.
@@ -92,6 +92,7 @@ dotg_obio_attach(device_t dev)
 	sc->sc_dci.sc_bus.parent = dev;
 	sc->sc_dci.sc_bus.devices = sc->sc_dci.sc_devices;
 	sc->sc_dci.sc_bus.devices_max = DOTG_MAX_DEVICES;
+	sc->sc_dci.sc_bus.dma_bits = 32;
 
 	/* get all DMA memory */
 	if (usb_bus_mem_alloc_all(&sc->sc_dci.sc_bus,

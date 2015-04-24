@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: head/usr.bin/su/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/su/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -7,13 +7,11 @@ PROG=	su
 
 WARNS?=	5
 
-DPADD=	${LIBUTIL} ${LIBPAM}
-LDADD=	-lutil ${MINUSLPAM}
+LIBADD=	util pam
 
 .if ${MK_AUDIT} != "no"
 CFLAGS+= -DUSE_BSM_AUDIT
-DPADD+=  ${LIBBSM}
-LDADD+=  -lbsm
+LIBADD+=	bsm
 .endif
 
 BINOWN=	root

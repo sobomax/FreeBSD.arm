@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/opieinfo/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/opieinfo/Makefile 275042 2014-11-25 14:29:10Z bapt $
 #
 OPIE_DIST?=	${.CURDIR}/../../contrib/opie
 
@@ -10,8 +10,7 @@ CFLAGS+=-DINSECURE_OVERRIDE
 
 WARNS?=	0
 
-DPADD=	${LIBOPIE} ${LIBMD}
-LDADD=	-lopie -lmd
+LIBADD=	opie
 
 BINOWN=	root
 BINMODE=4555

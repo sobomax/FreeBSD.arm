@@ -33,7 +33,7 @@
  * partition StorVSP driver over the Hyper-V VMBUS.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 273577 2014-10-24 06:27:45Z delphij $");
+__FBSDID("$FreeBSD: head/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 274819 2014-11-21 21:01:24Z smh $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -983,9 +983,8 @@ storvsc_timeout(void *arg)
 		mtx_unlock(&sc->hs_lock);
 
 		reqp->retries++;
-		callout_reset(&reqp->callout,
-				(ccb->ccb_h.timeout * hz) / 1000,
-				storvsc_timeout, reqp);
+		callout_reset_sbt(&reqp->callout, SBT_1MS * ccb->ccb_h.timeout,
+		    0, storvsc_timeout, reqp, 0);
 #if HVS_TIMEOUT_TEST
 		storvsc_timeout_test(reqp, SEND_DIAGNOSTIC, 0);
 #endif
@@ -1158,9 +1157,9 @@ storvsc_action(struct cam_sim *sim, union ccb *ccb)
 
 		if (ccb->ccb_h.timeout != CAM_TIME_INFINITY) {
 			callout_init(&reqp->callout, CALLOUT_MPSAFE);
-			callout_reset(&reqp->callout,
-					(ccb->ccb_h.timeout * hz) / 1000,
-					storvsc_timeout, reqp);
+			callout_reset_sbt(&reqp->callout,
+			    SBT_1MS * ccb->ccb_h.timeout, 0,
+			    storvsc_timeout, reqp, 0);
 #if HVS_TIMEOUT_TEST
 			cv_init(&reqp->event.cv, "storvsc timeout cv");
 			mtx_init(&reqp->event.mtx, "storvsc timeout mutex",

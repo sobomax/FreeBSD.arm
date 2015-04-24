@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/includes/Makefile 258400 2013-11-20 20:37:21Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/includes/Makefile 274073 2014-11-04 00:14:38Z dteske $
 
 NO_OBJ=
 
@@ -9,8 +9,5 @@ FILES=		INDEX USAGE
 
 SCRIPTSDIR=	${FILESDIR}
 SCRIPTS=	includes
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${FILESDIR}
 
 .include <bsd.prog.mk>

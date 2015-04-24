@@ -24,13 +24,12 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libprocstat/udf.c 221807 2011-05-12 10:11:39Z stas $");
+__FBSDID("$FreeBSD: head/lib/libprocstat/udf.c 274913 2014-11-23 10:26:28Z glebius $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/vnode.h>
-#include <sys/buf.h>
 #define _KERNEL
 #include <sys/mount.h>
 #undef _KERNEL

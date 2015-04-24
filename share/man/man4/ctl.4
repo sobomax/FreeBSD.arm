@@ -22,8 +22,8 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ctl.4 273690 2014-10-26 13:30:53Z trasz $
-.Dd October 23, 2014
+.\" $FreeBSD: head/share/man/man4/ctl.4 281265 2015-04-08 11:59:00Z trasz $
+.Dd April 8, 2015
 .Dt CTL 4
 .Os
 .Sh NAME
@@ -34,6 +34,7 @@ To compile this driver into the kernel,
 place the following line in your
 kernel configuration file:
 .Bd -ragged -offset indent
+.Cd "device iscsi"
 .Cd "device ctl"
 .Ed
 .Pp

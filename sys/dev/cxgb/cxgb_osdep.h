@@ -26,7 +26,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 
-$FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 270710 2014-08-27 13:21:53Z hselasky $
+$FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 278364 2015-02-07 21:29:17Z ngie $
 
 ***************************************************************************/
 
@@ -38,6 +38,8 @@ $FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 270710 2014-08-27 13:21:53Z hselasky $
 
 #include <sys/lock.h>
 #include <sys/mutex.h>
+
+#include <sys/kdb.h>
 
 #include <dev/mii/mii.h>
 
@@ -128,10 +130,8 @@ void prefetch(void *x)
 #define smp_mb() mb()
 
 #define L1_CACHE_BYTES 128
-extern void kdb_backtrace(void);
-
 #define WARN_ON(condition) do { \
-       if (__predict_false((condition)!=0)) {  \
+	if (__predict_false((condition)!=0)) {  \
                 log(LOG_WARNING, "BUG: warning at %s:%d/%s()\n", __FILE__, __LINE__, __FUNCTION__); \
                 kdb_backtrace(); \
         } \

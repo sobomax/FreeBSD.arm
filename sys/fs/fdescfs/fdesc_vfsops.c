@@ -31,7 +31,7 @@
  *
  *	@(#)fdesc_vfsops.c	8.4 (Berkeley) 1/21/94
  *
- * $FreeBSD: head/sys/fs/fdescfs/fdesc_vfsops.c 247602 2013-03-02 00:53:12Z pjd $
+ * $FreeBSD: head/sys/fs/fdescfs/fdesc_vfsops.c 277855 2015-01-28 21:08:09Z jamie $
  */
 
 /*
@@ -42,6 +42,7 @@
 #include <sys/systm.h>
 #include <sys/filedesc.h>
 #include <sys/kernel.h>
+#include <sys/jail.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/malloc.h>
@@ -78,7 +79,11 @@ fdesc_mount(struct mount *mp)
 {
 	int error = 0;
 	struct fdescmount *fmp;
+	struct thread *td = curthread;
 	struct vnode *rvp;
+
+	if (!prison_allow(td->td_ucred, PR_ALLOW_MOUNT_FDESCFS))
+		return (EPERM);
 
 	/*
 	 * Update is a no-op
@@ -237,4 +242,4 @@ static struct vfsops fdesc_vfsops = {
 	.vfs_unmount =		fdesc_unmount,
 };
 
-VFS_SET(fdesc_vfsops, fdescfs, VFCF_SYNTHETIC);
+VFS_SET(fdesc_vfsops, fdescfs, VFCF_SYNTHETIC | VFCF_JAIL);

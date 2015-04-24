@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009 Advanced Computing Technologies LLC
+ * Copyright (c) 2009 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/mca.h 233781 2012-04-02 15:07:22Z jhb $
+ * $FreeBSD: head/sys/x86/include/mca.h 281887 2015-04-23 14:22:20Z jhb $
  */
 
 #ifndef __X86_MCA_H__

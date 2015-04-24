@@ -27,9 +27,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libbluetooth/dev.c 189462 2009-03-06 23:30:07Z emax $
+ * $FreeBSD: head/lib/libbluetooth/dev.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <stdio.h>
 #include <string.h>

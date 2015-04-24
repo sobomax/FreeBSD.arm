@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtsold/rtsold.c 254462 2013-08-17 19:23:35Z hrs $
+ * $FreeBSD: head/usr.sbin/rtsold/rtsold.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include <sys/types.h>
@@ -38,7 +38,6 @@
 
 #include <net/if.h>
 #include <net/if_dl.h>
-#include <net/if_var.h>
 
 #include <netinet/in.h>
 #include <netinet/icmp6.h>

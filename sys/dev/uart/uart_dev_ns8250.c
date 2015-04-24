@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,6 +45,9 @@ __FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 267992 2014-06-28 03:56:
 
 #include <dev/uart/uart.h>
 #include <dev/uart/uart_cpu.h>
+#ifdef FDT
+#include <dev/uart/uart_cpu_fdt.h>
+#endif
 #include <dev/uart/uart_bus.h>
 #include <dev/uart/uart_dev_ns8250.h>
 
@@ -375,8 +378,17 @@ struct uart_class uart_ns8250_class = {
 	sizeof(struct ns8250_softc),
 	.uc_ops = &uart_ns8250_ops,
 	.uc_range = 8,
-	.uc_rclk = DEFAULT_RCLK
+	.uc_rclk = DEFAULT_RCLK,
+	.uc_rshift = 0
 };
+
+#ifdef FDT
+static struct ofw_compat_data compat_data[] = {
+	{"ns16550",		(uintptr_t)&uart_ns8250_class},
+	{NULL,			(uintptr_t)NULL},
+};
+UART_FDT_CLASS_AND_DEVICE(compat_data);
+#endif
 
 #define	SIGCHG(c, i, s, d)				\
 	if (c) {					\

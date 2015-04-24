@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/bwn/Makefile 239462 2012-08-20 18:33:03Z dim $
+# $FreeBSD: head/sys/modules/bwn/Makefile 276606 2015-01-03 03:35:18Z imp $
 
 .PATH: ${.CURDIR}/../../dev/bwn
 
@@ -10,4 +10,3 @@ SRCS+=	device_if.h bus_if.h pci_if.h
 
 # XXX Work around clang warning, until maintainer approves fix.
 CWARNFLAGS.if_bwn.c=	${NO_WSOMETIMES_UNINITIALIZED}
-CWARNFLAGS+=		${CWARNFLAGS.${.IMPSRC:T}}

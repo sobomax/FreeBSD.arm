@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/local_unbound 255825 2013-09-23 20:03:23Z des $
+# $FreeBSD: head/etc/rc.d/local_unbound 278704 2015-02-13 20:49:43Z ngie $
 #
 
 # PROVIDE: local_unbound
 # REQUIRE: FILESYSTEMS netif resolv
+# BEFORE: NETWORKING
 # KEYWORD: shutdown
 
 . /etc/rc.subr
@@ -26,6 +27,7 @@ pidfile="/var/run/${name}.pid"
 : ${local_unbound_config:=${local_unbound_workdir}/unbound.conf}
 : ${local_unbound_flags:=-c${local_unbound_config}}
 : ${local_unbound_forwardconf:=${local_unbound_workdir}/forward.conf}
+: ${local_unbound_controlconf:=${local_unbound_workdir}/control.conf}
 : ${local_unbound_anchor:=${local_unbound_workdir}/root.key}
 : ${local_unbound_forwarders:=}
 
@@ -66,6 +68,7 @@ local_unbound_setup()
 	    -w ${local_unbound_workdir} \
 	    -c ${local_unbound_config} \
 	    -f ${local_unbound_forwardconf} \
+	    -o ${local_unbound_controlconf} \
 	    -a ${local_unbound_anchor} \
 	    ${local_unbound_forwarders}
 }

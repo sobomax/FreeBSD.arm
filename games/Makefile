@@ -1,9 +1,8 @@
-# $FreeBSD: head/games/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/games/Makefile 279150 2015-02-22 08:50:05Z cperciva $
 
 .include <src.opts.mk>
 
 SUBDIR= \
-	bcd \
 	caesar \
 	factor \
 	fortune \
@@ -11,7 +10,6 @@ SUBDIR= \
 	morse \
 	number \
 	pom \
-	ppt \
 	primes \
 	random \
 	${_tests}

@@ -1,12 +1,11 @@
-# $FreeBSD: head/usr.bin/ar/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/ar/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
 PROG=	ar
 SRCS=	ar.c acplex.l acpyacc.y read.c util.c write.c y.tab.h
 
-DPADD=	${LIBARCHIVE} ${LIBELF} ${LIBZ}
-LDADD=	-larchive -lelf -lz
+LIBADD=	archive elf
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 

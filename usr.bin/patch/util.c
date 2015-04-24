@@ -24,16 +24,16 @@
  * behaviour
  *
  * $OpenBSD: util.c,v 1.35 2010/07/24 01:10:12 ray Exp $
- * $FreeBSD: head/usr.bin/patch/util.c 255894 2013-09-26 18:00:45Z delphij $
+ * $FreeBSD: head/usr.bin/patch/util.c 281800 2015-04-20 22:15:18Z pfg $
  */
 
-#include <sys/param.h>
 #include <sys/stat.h>
 
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <libgen.h>
+#include <limits.h>
 #include <paths.h>
 #include <signal.h>
 #include <stdarg.h>
@@ -96,7 +96,7 @@ int
 backup_file(const char *orig)
 {
 	struct stat	filestat;
-	char		bakname[MAXPATHLEN], *s, *simplename;
+	char		bakname[PATH_MAX], *s, *simplename;
 	dev_t		orig_device;
 	ino_t		orig_inode;
 
@@ -198,6 +198,22 @@ savestr(const char *s)
 		else
 			fatal("out of memory\n");
 	}
+	return rv;
+}
+
+/*
+ * Allocate a unique area for a string.  Call fatal if out of memory.
+ */
+char *
+xstrdup(const char *s)
+{
+	char	*rv;
+
+	if (!s)
+		s = "Oops";
+	rv = strdup(s);
+	if (rv == NULL)
+		fatal("out of memory\n");
 	return rv;
 }
 
@@ -390,7 +406,7 @@ fetchname(const char *at, bool *exists, int strip_leading)
 char *
 checked_in(char *file)
 {
-	char		*filebase, *filedir, tmpbuf[MAXPATHLEN];
+	char		*filebase, *filedir, tmpbuf[PATH_MAX];
 	struct stat	filestat;
 
 	filebase = basename(file);
@@ -412,7 +428,7 @@ checked_in(char *file)
 void
 version(void)
 {
-	fprintf(stderr, "patch 2.0-12u10 FreeBSD\n");
+	printf("patch 2.0-12u10 FreeBSD\n");
 	my_exit(EXIT_SUCCESS);
 }
 

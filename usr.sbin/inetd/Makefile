@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/inetd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/inetd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
@@ -16,14 +16,12 @@ CFLAGS+= -DLOGIN_CAP
 CFLAGS+= -DINET6
 .endif
 
-DPADD=	${LIBUTIL} ${LIBWRAP}
-LDADD=	-lutil -lwrap
+LIBADD=	util wrap
 
 # XXX for src/release/picobsd
 .if !defined(RELEASE_CRUNCH)
 CFLAGS+= -DIPSEC
-DPADD+=	${LIBIPSEC}
-LDADD+=	-lipsec
+LIBADD+=	ipsec
 .endif
 
 .include <bsd.prog.mk>

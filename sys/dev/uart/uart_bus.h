@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/uart/uart_bus.h 246243 2013-02-02 11:38:26Z avg $
+ * $FreeBSD: head/sys/dev/uart/uart_bus.h 281438 2015-04-11 17:16:23Z andrew $
  */
 
 #ifndef _DEV_UART_BUS_H_
@@ -70,6 +70,7 @@ struct uart_class {
 	struct uart_ops *uc_ops;	/* Low-level console operations. */
 	u_int	uc_range;		/* Bus space address range. */
 	u_int	uc_rclk;		/* Default rclk for this device. */
+	u_int	uc_rshift;		/* Default regshift for this device. */
 };
 
 struct uart_softc {

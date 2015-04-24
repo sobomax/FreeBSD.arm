@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/rlphy.c 271864 2014-09-19 10:32:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/rlphy.c 277093 2015-01-12 22:27:38Z glebius $");
 
 /*
  * driver for RealTek 8139 internal PHYs
@@ -108,15 +108,13 @@ static const struct mii_phy_funcs rlphy_funcs = {
 static int
 rlphy_probe(device_t dev)
 {
-	const char *nic;
 	int rv;
 
 	rv = mii_phy_dev_probe(dev, rlphys, BUS_PROBE_DEFAULT);
 	if (rv <= 0)
 		return (rv);
 
-	nic = device_get_name(device_get_parent(device_get_parent(dev)));
-	if (strcmp(nic, "rl") == 0 || strcmp(nic, "re") == 0)
+	if (mii_dev_mac_match(dev, "rl") || mii_dev_mac_match(dev, "re"))
 		return (mii_phy_dev_probe(dev, rlintphys, BUS_PROBE_DEFAULT));
 	return (ENXIO);
 }

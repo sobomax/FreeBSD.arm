@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_run.c 273448 2014-10-22 03:32:27Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_run.c 281745 2015-04-19 15:53:58Z kevlo $");
 
 /*-
  * Ralink Technology RT2700U/RT2800U/RT3000U/RT3900E chipset driver.
@@ -84,7 +84,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_run.c 273448 2014-10-22 03:32:27Z k
 #ifdef	RUN_DEBUG
 int run_debug = 0;
 static SYSCTL_NODE(_hw_usb, OID_AUTO, run, CTLFLAG_RW, 0, "USB run");
-SYSCTL_INT(_hw_usb_run, OID_AUTO, debug, CTLFLAG_RW, &run_debug, 0,
+SYSCTL_INT(_hw_usb_run, OID_AUTO, debug, CTLFLAG_RWTUN, &run_debug, 0,
     "run debug level");
 #endif
 
@@ -225,13 +225,14 @@ static const STRUCT_USB_HOST_ID run_devs[] = {
     RUN_DEV(LOGITEC,		LANW300NU2),
     RUN_DEV(LOGITEC,		LANW150NU2),
     RUN_DEV(LOGITEC,		LANW300NU2S),
-    RUN_DEV(MELCO,		RT2870_1),
+    RUN_DEV(MELCO,		WLIUCG300HP),
     RUN_DEV(MELCO,		RT2870_2),
     RUN_DEV(MELCO,		WLIUCAG300N),
     RUN_DEV(MELCO,		WLIUCG300N),
     RUN_DEV(MELCO,		WLIUCG301N),
     RUN_DEV(MELCO,		WLIUCGN),
     RUN_DEV(MELCO,		WLIUCGNM),
+    RUN_DEV(MELCO,		WLIUCG300HPV1),
     RUN_DEV(MELCO,		WLIUCGNM2),
     RUN_DEV(MOTOROLA4,		RT2770),
     RUN_DEV(MOTOROLA4,		RT3070),

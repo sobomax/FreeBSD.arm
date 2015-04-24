@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/twe/twe.c 240209 2012-09-07 18:41:19Z jhb $
+ *	$FreeBSD: head/sys/dev/twe/twe.c 280347 2015-03-22 16:10:28Z mav $
  */
 
 /*
@@ -985,7 +985,7 @@ twe_immediate_request(struct twe_request *tr, int usetmp)
 
     if (usetmp && (tr->tr_data != NULL)) {
 	tr->tr_flags |= TWE_CMD_IMMEDIATE;
-	if (tr->tr_length > MAXBSIZE)
+	if (tr->tr_length > DFLTPHYS)
 	    return (EINVAL);
 	bcopy(tr->tr_data, sc->twe_immediate, tr->tr_length);
     }

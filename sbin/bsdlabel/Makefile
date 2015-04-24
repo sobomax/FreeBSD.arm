@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/17/94
-# $FreeBSD: head/sbin/bsdlabel/Makefile 219449 2011-03-10 08:24:33Z uqs $
+# $FreeBSD: head/sbin/bsdlabel/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../../sys/geom
 
@@ -12,7 +12,6 @@ LINKS=	${BINDIR}/bsdlabel ${BINDIR}/disklabel
 MLINKS=	bsdlabel.8 disklabel.8
 .endif
 
-DPADD=	${LIBGEOM} ${LIBBSDXML} ${LIBSBUF}
-LDADD=	-lgeom -lbsdxml -lsbuf
+LIBADD=	geom
 
 .include <bsd.prog.mk>

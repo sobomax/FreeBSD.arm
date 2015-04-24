@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_altq.c 259916 2013-12-26 15:51:14Z bz $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_altq.c 281613 2015-04-16 20:22:40Z glebius $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -38,10 +38,10 @@ __FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_altq.c 259916 2013-12-26 15:51:14Z bz 
 #include <string.h>
 #include <unistd.h>
 
-#include <altq/altq.h>
-#include <altq/altq_cbq.h>
-#include <altq/altq_priq.h>
-#include <altq/altq_hfsc.h>
+#include <net/altq/altq.h>
+#include <net/altq/altq_cbq.h>
+#include <net/altq/altq_priq.h>
+#include <net/altq/altq_hfsc.h>
 
 #include "pfctl_parser.h"
 #include "pfctl.h"

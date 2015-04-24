@@ -27,7 +27,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/random_adaptors.c 273997 2014-11-02 23:30:50Z delphij $");
+__FBSDID("$FreeBSD: head/sys/dev/random/random_adaptors.c 278907 2015-02-17 17:37:00Z jmg $");
 
 #include "opt_random.h"
 
@@ -149,10 +149,14 @@ random_adaptor_choose(void)
 		    (random_adaptor_previous == NULL ? "NULL" : random_adaptor_previous->ra_ident),
 		    random_adaptor->ra_ident);
 #endif
-		if (random_adaptor_previous != NULL)
+		if (random_adaptor_previous != NULL) {
+			randomdev_deinit_reader();
 			(random_adaptor_previous->ra_deinit)();
+		}
 		(random_adaptor->ra_init)();
 	}
+
+	randomdev_init_reader(random_adaptor->ra_read);
 }
 
 
@@ -274,10 +278,6 @@ int
 random_adaptor_read_rate(void)
 {
 	int ret;
-
-	sx_assert(&random_adaptors_lock, SA_LOCKED);
-
-	KASSERT(random_adaptor != NULL, ("No active random adaptor in %s", __func__));
 
 	mtx_lock(&random_read_rate_mtx);
 

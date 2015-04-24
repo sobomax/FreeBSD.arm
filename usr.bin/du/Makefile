@@ -1,8 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/du/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/du/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	du
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 .include <bsd.prog.mk>

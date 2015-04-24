@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx6_anatopvar.h 262280 2014-02-21 06:00:06Z ian $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx6_anatopvar.h 277644 2015-01-24 13:07:07Z br $
  */
 
 #ifndef	IMX6_ANATOPVAR_H
@@ -41,5 +41,7 @@ uint32_t imx6_anatop_read_4(bus_size_t _offset);
 void imx6_anatop_write_4(bus_size_t _offset, uint32_t _value);
 
 uint32_t imx6_get_cpu_clock(void);
+
+uint32_t pll4_configure_output(uint32_t mfi, uint32_t mfn, uint32_t mfd);
 
 #endif

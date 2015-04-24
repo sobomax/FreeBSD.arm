@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/pc98/loader/conf.c 199864 2009-11-27 13:19:06Z sobomax $");
+__FBSDID("$FreeBSD: head/sys/boot/pc98/loader/conf.c 274537 2014-11-15 03:34:34Z nyan $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -61,19 +61,19 @@ struct fs_ops *file_system[] = {
     &ext2fs_fsops,
     &dosfs_fsops,
     &cd9660_fsops,
-    &splitfs_fsops,
-#ifdef LOADER_GZIP_SUPPORT
-    &gzipfs_fsops,
-#endif
-#ifdef LOADER_BZIP2_SUPPORT
-    &bzipfs_fsops,
-#endif
 #ifdef LOADER_NFS_SUPPORT 
     &nfs_fsops,
 #endif
 #ifdef LOADER_TFTP_SUPPORT
     &tftp_fsops,
 #endif
+#ifdef LOADER_GZIP_SUPPORT
+    &gzipfs_fsops,
+#endif
+#ifdef LOADER_BZIP2_SUPPORT
+    &bzipfs_fsops,
+#endif
+    &splitfs_fsops,
     NULL
 };
 

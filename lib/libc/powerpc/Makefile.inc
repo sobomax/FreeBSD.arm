@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/libc/powerpc/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/powerpc/Makefile.inc 281004 2015-04-02 21:18:11Z emaste $
 
-SRCS+=	__vdso_gettc.c
+SRCS+=	trivial-vdso_tc.c
 
 # Long double is 64-bits
 MDSRCS+=machdep_ldisd.c

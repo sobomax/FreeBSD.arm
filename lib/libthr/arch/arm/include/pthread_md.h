@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/arch/arm/include/pthread_md.h 239270 2012-08-15 03:08:29Z gonzo $
+ * $FreeBSD: head/lib/libthr/arch/arm/include/pthread_md.h 277490 2015-01-21 16:41:05Z andrew $
  */
 
 /*
@@ -46,12 +46,6 @@ struct tcb {
 	void			*tcb_dtv;	/* required by rtld */
 	struct pthread		*tcb_thread;	/* our hook */
 };
-
-/*
- * The tcb constructors.
- */
-struct tcb	*_tcb_ctor(struct pthread *, int);
-void		_tcb_dtor(struct tcb *);
 
 /* Called from the thread to set its private data. */
 static __inline void

@@ -39,7 +39,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/envy24.c 267581 2014-06-17 16:07:57Z jhb $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/envy24.c 277214 2015-01-15 16:09:35Z bapt $");
 
 static MALLOC_DEFINE(M_ENVY24, "envy24", "envy24 audio");
 
@@ -2312,7 +2312,7 @@ envy24_putcfg(struct sc_info *sc)
 		printf("from external clock synthesizer chip\n");
 		break;
 	default:
-		printf("illeagal system setting\n");
+		printf("illegal system setting\n");
 	}
 	printf("  MPU-401 UART(s) #: ");
 	if (sc->cfg->scfg & PCIM_SCFG_MPU)
@@ -2690,11 +2690,7 @@ static device_method_t envy24_methods[] = {
 static driver_t envy24_driver = {
 	"pcm",
 	envy24_methods,
-#if __FreeBSD_version > 500000
 	PCM_SOFTC_SIZE,
-#else
-	sizeof(struct snddev_info),
-#endif
 };
 
 DRIVER_MODULE(snd_envy24, pci, envy24_driver, pcm_devclass, 0, 0);

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/null/null.c 265136 2014-04-30 06:40:30Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/null/null.c 274366 2014-11-11 04:48:09Z pjd $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -37,7 +37,6 @@ __FBSDID("$FreeBSD: head/sys/dev/null/null.c 265136 2014-04-30 06:40:30Z eadler 
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
-#include <sys/priv.h>
 #include <sys/disk.h>
 #include <sys/bus.h>
 #include <sys/filio.h>
@@ -110,9 +109,7 @@ null_ioctl(struct cdev *dev __unused, u_long cmd, caddr_t data __unused,
 
 	switch (cmd) {
 	case DIOCSKERNELDUMP:
-		error = priv_check(td, PRIV_SETDUMPER);
-		if (error == 0)
-			error = set_dumper(NULL, NULL);
+		error = set_dumper(NULL, NULL, td);
 		break;
 	case FIONBIO:
 		break;

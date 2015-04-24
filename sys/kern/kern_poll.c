@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_poll.c 272257 2014-09-28 14:05:18Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_poll.c 281528 2015-04-14 14:22:34Z gnn $");
 
 #include "opt_device_polling.h"
 
@@ -367,6 +367,9 @@ netisr_pollmore()
 	struct timeval t;
 	int kern_load;
 
+	if (poll_handlers == 0)
+		return;
+
 	mtx_lock(&poll_mtx);
 	if (!netisr_pollmore_scheduled) {
 		mtx_unlock(&poll_mtx);
@@ -423,6 +426,9 @@ netisr_poll(void)
 {
 	int i, cycles;
 	enum poll_cmd arg = POLL_ONLY;
+
+	if (poll_handlers == 0)
+		return;
 
 	mtx_lock(&poll_mtx);
 	if (!netisr_poll_scheduled) {

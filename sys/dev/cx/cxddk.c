@@ -17,7 +17,7 @@
  * Cronyx Id: cxddk.c,v 1.1.2.2 2003/11/27 14:24:50 rik Exp $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cx/cxddk.c 139749 2005-01-06 01:43:34Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/cx/cxddk.c 277565 2015-01-23 15:14:30Z kevlo $");
 
 #include <dev/cx/machdep.h>
 #include <dev/cx/cxddk.h>
@@ -875,9 +875,9 @@ int cx_get_port (cx_chan_t *c)
 
 		if (iftype)
 			switch (c->type) {
-			case T_UNIV_V35:   return 1; break;
-			case T_UNIV_RS449: return 2; break;
-			default:	   return -1; break;
+			case T_UNIV_V35:   return 1;
+			case T_UNIV_RS449: return 2;
+			default:	   return -1;
 			}
 		else
 			return 0;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/hastd/Makefile 270433 2014-08-23 20:45:00Z ngie $
+# $FreeBSD: head/sbin/hastd/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -30,11 +30,9 @@ CFLAGS+=-DINET
 CFLAGS+=-DINET6
 .endif
 
-DPADD=	${LIBGEOM} ${LIBBSDXML} ${LIBSBUF} ${LIBPTHREAD} ${LIBUTIL}
-LDADD=	-lgeom -lbsdxml -lsbuf -lpthread -lutil
+LIBADD=	geom pthread util
 .if ${MK_OPENSSL} != "no"
-DPADD+=	${LIBCRYPTO}
-LDADD+=	-lcrypto
+LIBADD+=	crypto
 CFLAGS+=-DHAVE_CRYPTO
 .endif
 

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/bitset.h 273338 2014-10-20 18:09:33Z neel $
+ * $FreeBSD: head/sys/sys/bitset.h 280279 2015-03-20 10:27:06Z jhb $
  */
 
 #ifndef _SYS_BITSET_H_
@@ -176,4 +176,14 @@
 	__bit;								\
 })
 
+#define	BIT_COUNT(_s, p) __extension__ ({				\
+	__size_t __i;							\
+	int __count;							\
+									\
+	__count = 0;							\
+	for (__i = 0; __i < __bitset_words((_s)); __i++)		\
+		__count += __bitcountl((p)->__bits[__i]);		\
+	__count;							\
+})
+	
 #endif /* !_SYS_BITSET_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/lex/Makefile 250881 2013-05-21 19:32:35Z jkim $
+# $FreeBSD: head/usr.bin/lex/Makefile 277273 2015-01-16 21:39:08Z will $
 #
 # By default, flex will be configured to generate 8-bit scanners only if the
 # -8 flag is given.  If you want it to always generate 8-bit scanners, add
@@ -51,7 +51,7 @@ bootstrap: ${GENFILES:S/^/init/g}
 	@diff -I '^#line ' -I '\$$FreeBS[D]: .*\$$' -q \
 	    ${.CURDIR}/init${_f} ${_f} 2> /dev/null || { \
 		echo "Bootstrapping ${_f}" ; \
-		cp -f ${.CURDIR}/init${_f} ${_f} ; \
+		${CP} ${.CURDIR}/init${_f} ${_f} ; \
 	}
 .endfor
 

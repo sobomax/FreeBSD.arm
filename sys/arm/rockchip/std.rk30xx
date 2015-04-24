@@ -1,8 +1,9 @@
 # Rockchip rk30xx common options
-#$FreeBSD: head/sys/arm/rockchip/std.rk30xx 261227 2014-01-28 09:12:04Z andrew $
+#$FreeBSD: head/sys/arm/rockchip/std.rk30xx 276520 2015-01-01 23:21:46Z ian $
 
 cpu		CPU_CORTEXA
 machine		arm armv6
+makeoptions	CONF_CFLAGS="-march=armv7a"
 makeoption	ARM_LITTLE_ENDIAN
 
 # Physical memory starts at 0x60400000.  We assume images are loaded at

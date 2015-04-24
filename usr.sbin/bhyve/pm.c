@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013 Advanced Computing Technologies LLC
+ * Copyright (c) 2013 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pm.c 269094 2014-07-25 20:18:35Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pm.c 281887 2015-04-23 14:22:20Z jhb $");
 
 #include <sys/types.h>
 #include <machine/vmm.h>

@@ -1,7 +1,7 @@
 #
 # Custom kernel for EA3250 boards.
 #
-# $FreeBSD: head/sys/arm/conf/EA3250 271050 2014-09-03 19:37:41Z ian $
+# $FreeBSD: head/sys/arm/conf/EA3250 276096 2014-12-23 00:47:46Z rmacklem $
 #
 
 ident		EA3250
@@ -19,7 +19,7 @@ options 	INET6			# IPv6 communications protocols
 options 	FFS			# Berkeley Fast Filesystem
 options 	NFSCL			# Network Filesystem Client
 options 	NFSLOCKD		# Network Lock Manager
-options 	NFS_ROOT		# NFS usable as /, requires NFSCLIENT
+options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 options 	GEOM_PART_BSD		# BSD partition scheme
 options 	GEOM_PART_MBR		# MBR partition scheme
 options 	TMPFS			# Efficient memory filesystem

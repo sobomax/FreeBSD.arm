@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_net_vsc.c 264177 2014-04-05 22:42:00Z imp $
+ * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_net_vsc.c 274231 2014-11-07 15:14:10Z glebius $
  */
 
 /**
@@ -529,7 +529,7 @@ hv_nv_connect_to_vsp(struct hv_device *device)
 	int ret = 0;
 	device_t dev = device->device;
 	hn_softc_t *sc = device_get_softc(dev);
-	struct ifnet *ifp = sc->arpcom.ac_ifp;
+	struct ifnet *ifp = sc->hn_ifp;
 
 	net_dev = hv_nv_get_outbound_net_device(device);
 	if (!net_dev) {

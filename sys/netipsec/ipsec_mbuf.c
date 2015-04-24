@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netipsec/ipsec_mbuf.c 252026 2013-06-20 09:55:53Z ae $
+ * $FreeBSD: head/sys/netipsec/ipsec_mbuf.c 275392 2014-12-02 04:20:50Z ae $
  */
 
 /*
@@ -37,11 +37,8 @@
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 
-#include <net/route.h>
 #include <net/vnet.h>
-
 #include <netinet/in.h>
-
 #include <netipsec/ipsec.h>
 
 /*

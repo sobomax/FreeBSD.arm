@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\"	$FreeBSD: head/share/man/man9/usbdi.9 268818 2014-07-17 23:23:01Z delphij $
+.\"	$FreeBSD: head/share/man/man9/usbdi.9 275993 2014-12-21 10:57:42Z brueffer $
 .Dd June 24, 2009
 .Dt USBDI 9
 .Os
@@ -199,7 +199,7 @@ callback.
 .
 .Fn usbd_transfer_start
 This function will start the USB transfer pointed to by
-.Fa xfer,
+.Fa xfer ,
 if not already started.
 .
 This function is always non-blocking and must be called with the
@@ -212,7 +212,7 @@ pointer.
 .
 .Fn usbd_transfer_stop
 This function will stop the USB transfer pointed to by
-.Fa xfer,
+.Fa xfer ,
 if not already stopped.
 .
 This function is always non-blocking and must be called with the

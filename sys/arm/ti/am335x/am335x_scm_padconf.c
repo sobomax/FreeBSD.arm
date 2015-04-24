@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_scm_padconf.c 273262 2014-10-18 17:51:34Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_scm_padconf.c 279312 2015-02-26 07:47:35Z dim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -298,6 +298,6 @@ const static struct ti_scm_padconf ti_padconf_devmap[] = {
 const struct ti_scm_device ti_scm_dev = {
 	.padconf_muxmode_mask	= 0x7,
 	.padconf_sate_mask	= 0x78,
-	.padstate		= (struct ti_scm_padstate *) &ti_padstate_devmap,
-	.padconf		= (struct ti_scm_padconf *) &ti_padconf_devmap,
+	.padstate		= ti_padstate_devmap,
+	.padconf		= ti_padconf_devmap,
 };

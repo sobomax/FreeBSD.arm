@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aac/aac.c 266281 2014-05-17 02:45:04Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/aac/aac.c 280347 2015-03-22 16:10:28Z mav $");
 
 /*
  * Driver for the Adaptec 'FSA' family of PCI/SCSI RAID adapters.
@@ -507,9 +507,9 @@ aac_alloc(struct aac_softc *sc)
 			       BUS_SPACE_MAXADDR_32BIT,	/* lowaddr */
 			       BUS_SPACE_MAXADDR, 	/* highaddr */
 			       NULL, NULL, 		/* filter, filterarg */
-			       MAXBSIZE,		/* maxsize */
+			       sc->aac_max_sectors << 9, /* maxsize */
 			       sc->aac_sg_tablesize,	/* nsegments */
-			       MAXBSIZE,		/* maxsegsize */
+			       BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			       BUS_DMA_ALLOCNOW,	/* flags */
 			       busdma_lock_mutex,	/* lockfunc */
 			       &sc->aac_io_lock,	/* lockfuncarg */

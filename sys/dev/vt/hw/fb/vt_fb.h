@@ -26,17 +26,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vt/hw/fb/vt_fb.h 271684 2014-09-16 18:02:24Z dumbbell $
+ * $FreeBSD: head/sys/dev/vt/hw/fb/vt_fb.h 279488 2015-03-01 12:54:22Z dumbbell $
  */
 
 #ifndef _DEV_VT_HW_FB_VT_FB_H_
 #define	_DEV_VT_HW_FB_VT_FB_H_
 /* Generic framebuffer interface call vt_fb_attach to init VT(9) */
 int vt_fb_attach(struct fb_info *info);
-void vt_fb_resume(void);
-void vt_fb_suspend(void);
+void vt_fb_resume(struct vt_device *vd);
+void vt_fb_suspend(struct vt_device *vd);
+int vt_fb_detach(struct fb_info *info);
 
 vd_init_t		vt_fb_init;
+vd_fini_t		vt_fb_fini;
 vd_blank_t		vt_fb_blank;
 vd_bitblt_text_t	vt_fb_bitblt_text;
 vd_bitblt_bmp_t		vt_fb_bitblt_bitmap;

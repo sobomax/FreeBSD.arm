@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_systimer.c 262534 2014-02-26 22:06:10Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_systimer.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_systimer.c 262534 2014
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #define	BCM2835_NUM_TIMERS	4
 

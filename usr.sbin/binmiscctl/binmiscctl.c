@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/binmiscctl/binmiscctl.c 264269 2014-04-08 20:10:22Z sbruno $");
+__FBSDID("$FreeBSD: head/usr.sbin/binmiscctl/binmiscctl.c 278827 2015-02-15 23:58:57Z sbruno $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -363,7 +363,7 @@ add_cmd(__unused int argc, char *argv[], ximgact_binmisc_entry_t *xbe)
 		usage("Error: Missing magic argument");
 	}
 
-	if (!xbe->xbe_interpreter) {
+	if (!strnlen(xbe->xbe_interpreter, IBE_INTERP_LEN_MAX)) {
 		usage("Error: Missing 'interpreter' argument");
 	}
 
@@ -371,8 +371,10 @@ add_cmd(__unused int argc, char *argv[], ximgact_binmisc_entry_t *xbe)
 }
 
 int
-name_cmd(__unused int argc, char *argv[], ximgact_binmisc_entry_t *xbe)
+name_cmd(int argc, char *argv[], ximgact_binmisc_entry_t *xbe)
 {
+	if (argc == 0)
+		usage("Required argument missing\n");
 	if (strlen(argv[0]) > IBE_NAME_MAX)
 		usage("'%s' string length longer than IBE_NAME_MAX (%d)",
 		    IBE_NAME_MAX);

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/libefi/efinet.c 264088 2014-04-03 21:39:59Z emaste $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/libefi/efinet.c 277943 2015-01-30 18:25:53Z ambrisko $");
 
 #include <sys/param.h>
 #include <netinet/in.h>
@@ -99,8 +99,11 @@ dump_mode(EFI_SIMPLE_NETWORK_MODE *mode)
 static int
 efinet_match(struct netif *nif, void *machdep_hint)
 {
+	struct devdesc *dev = machdep_hint;
 
-	return (1);
+	if (dev->d_unit - 1 == nif->nif_unit)
+		return (1);
+	return(0);
 }
 
 static int

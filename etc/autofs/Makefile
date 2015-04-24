@@ -1,6 +1,6 @@
-# $FreeBSD: head/etc/autofs/Makefile 270096 2014-08-17 09:44:42Z trasz $
+# $FreeBSD: head/etc/autofs/Makefile 279955 2015-03-13 12:44:46Z trasz $
 
-FILES=		include_ldap special_hosts special_null
+FILES=		include_ldap special_hosts special_media special_noauto special_null
 
 NO_OBJ=
 FILESDIR=	/etc/autofs

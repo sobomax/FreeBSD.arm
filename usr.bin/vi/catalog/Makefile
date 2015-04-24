@@ -1,5 +1,5 @@
 #	$Id: Makefile,v 9.0 2012/10/19 15:13:11 zy Exp $
-# $FreeBSD: head/usr.bin/vi/catalog/Makefile 254244 2013-08-12 09:56:52Z peter $
+# $FreeBSD: head/usr.bin/vi/catalog/Makefile 275234 2014-11-29 06:53:06Z ngie $
 
 .include <bsd.own.mk>
 
@@ -101,7 +101,7 @@ english.base: dump ${SCAN} #Makefile
 
 
 dump: dump.c
-	${CC} -o dump ${.ALLSRC}
+	${CC} -o ${.TARGET} ${.ALLSRC}
 
 CLEANFILES+= dump ${CAT} english.base *.check __ck1 __ck2
 

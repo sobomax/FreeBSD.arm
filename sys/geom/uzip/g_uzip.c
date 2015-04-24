@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/uzip/g_uzip.c 268986 2014-07-22 17:30:05Z marcel $");
+__FBSDID("$FreeBSD: head/sys/geom/uzip/g_uzip.c 281855 2015-04-22 14:38:58Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -38,9 +38,9 @@ __FBSDID("$FreeBSD: head/sys/geom/uzip/g_uzip.c 268986 2014-07-22 17:30:05Z marc
 #include <sys/malloc.h>
 #include <sys/sysctl.h>
 #include <sys/systm.h>
+#include <sys/zlib.h>
 
 #include <geom/geom.h>
-#include <net/zlib.h>
 
 FEATURE(geom_uzip, "GEOM uzip read-only compressed disks support");
 

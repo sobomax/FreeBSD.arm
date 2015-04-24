@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/macho-dump/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.bin/clang/macho-dump/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 MAN=
 .include <bsd.own.mk>
@@ -9,6 +9,10 @@ SRCDIR=	tools/macho-dump
 SRCS=	macho-dump.cpp
 
 LIBDEPS=llvmobject \
+	llvmmcparser \
+	llvmmc \
+	llvmbitreader \
+	llvmcore \
 	llvmsupport
 
 .include "../clang.prog.mk"

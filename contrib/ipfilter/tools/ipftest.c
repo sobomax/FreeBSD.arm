@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/tools/ipftest.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/tools/ipftest.c 280971 2015-04-01 22:26:39Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -863,4 +863,12 @@ void fixv4sums(m, ip)
 		*csump = 0;
 		*(u_short *)csump = fr_cksum(&tmp, ip, p, hdr);
 	}
+}
+
+void
+ip_fillid(struct ip *ip)
+{
+	static uint16_t ip_id;
+
+	ip->ip_id = ip_id++;
 }

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sbin/ifconfig/carp.c 228577 2011-12-16 14:30:58Z glebius $ */
+/*	$FreeBSD: head/sbin/ifconfig/carp.c 281143 2015-04-06 09:42:23Z glebius $ */
 /*	from $OpenBSD: ifconfig.c,v 1.82 2003/10/19 05:43:35 mcbride Exp $ */
 
 /*
@@ -36,7 +36,6 @@
 #include <unistd.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 #include <netinet/in.h>
 #include <netinet/in_var.h>
 #include <netinet/ip_carp.h>

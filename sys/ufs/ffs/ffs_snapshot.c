@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_snapshot.c 262678 2014-03-02 02:52:34Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_snapshot.c 275897 2014-12-18 10:01:12Z kib $");
 
 #include "opt_quota.h"
 
@@ -256,7 +256,8 @@ ffs_snapshot(mp, snapfile)
 	 * Create the snapshot file.
 	 */
 restart:
-	NDINIT(&nd, CREATE, LOCKPARENT | LOCKLEAF, UIO_SYSSPACE, snapfile, td);
+	NDINIT(&nd, CREATE, LOCKPARENT | LOCKLEAF | NOCACHE, UIO_SYSSPACE,
+	    snapfile, td);
 	if ((error = namei(&nd)) != 0)
 		return (error);
 	if (nd.ni_vp != NULL) {

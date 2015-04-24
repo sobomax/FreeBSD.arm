@@ -1,11 +1,10 @@
-# $FreeBSD: head/usr.sbin/ckdist/Makefile 80029 2001-07-20 06:20:32Z obrien $
+# $FreeBSD: head/usr.sbin/ckdist/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .PATH: ${.CURDIR}/../../usr.bin/cksum
 
 PROG=	ckdist
 SRCS=   ckdist.c crc.c
 
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 .include <bsd.prog.mk>

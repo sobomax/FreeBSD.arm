@@ -1,11 +1,10 @@
 # $Id: Makefile,v 1.5 2003/08/14 20:06:21 max Exp $
-# $FreeBSD: head/usr.sbin/bluetooth/hcseriald/Makefile 140941 2005-01-28 16:08:11Z ru $
+# $FreeBSD: head/usr.sbin/bluetooth/hcseriald/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=		hcseriald
 MAN=		hcseriald.8
 WARNS?=		2
 
-DPADD=		${LIBNETGRAPH}
-LDADD=		-lnetgraph
+LIBADD=		netgraph
 
 .include <bsd.prog.mk>

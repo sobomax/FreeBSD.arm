@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_capability.c 269023 2014-07-23 19:33:49Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_capability.c 280130 2015-03-16 00:10:03Z mjg $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -102,10 +102,9 @@ sys_cap_enter(struct thread *td, struct cap_enter_args *uap)
 	newcred = crget();
 	p = td->td_proc;
 	PROC_LOCK(p);
-	oldcred = p->p_ucred;
-	crcopy(newcred, oldcred);
+	oldcred = crcopysafe(p, newcred);
 	newcred->cr_flags |= CRED_FLAG_CAPMODE;
-	p->p_ucred = newcred;
+	proc_set_cred(p, newcred);
 	PROC_UNLOCK(p);
 	crfree(oldcred);
 	return (0);

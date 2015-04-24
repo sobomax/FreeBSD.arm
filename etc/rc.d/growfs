@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/growfs 273955 2014-11-02 00:11:25Z jmg $
+# $FreeBSD: head/etc/rc.d/growfs 274164 2014-11-06 07:27:14Z jmg $
 #
 
 # PROVIDE: growfs
@@ -35,9 +35,7 @@
 # and have it work on essentially any size drive.
 #
 # TODO: Figure out where this should really be ordered.
-# I suspect it should go just after fsck but before mountcritlocal
-# but it's hard to tell for sure because of the bug described
-# below.
+# I suspect it should go just after fsck but before mountcritlocal.
 # 
 
 . /etc/rc.subr
@@ -49,20 +47,20 @@ rcvar="growfs_enable"
 
 growfs_start ()
 {
-    echo "Growing root partition to fill device"
-    rootdev=$(df / | tail -n 1 | awk '{ sub("/dev/", "", $1); print $1 }')
-    if [ x"$rootdev" = x"${rootdev%/*}" ]; then
-	# raw device
-	rawdev="$rootdev"
-    else
-	rawdev=$(glabel status | awk '$1 == "'"$rootdev"'" { print $3 }')
-	if [ x"$rawdev" = x"" ]; then
-	    echo "Can't figure out device for: $rootdev"
-	    return
+	echo "Growing root partition to fill device"
+	rootdev=$(df / | tail -n 1 | awk '{ sub("/dev/", "", $1); print $1 }')
+	if [ x"$rootdev" = x"${rootdev%/*}" ]; then
+		# raw device
+		rawdev="$rootdev"
+	else
+		rawdev=$(glabel status | awk '$1 == "'"$rootdev"'" { print $3 }')
+		if [ x"$rawdev" = x"" ]; then
+			echo "Can't figure out device for: $rootdev"
+			return
+		fi
 	fi
-    fi
 
-    sysctl -b kern.geom.conftxt | awk '
+	sysctl -b kern.geom.conftxt | awk '
 {
 	lvl=$1
 	device[lvl] = $3
@@ -91,7 +89,7 @@ growfs_start ()
 		exit 0
 	}
 }' dev="$rawdev"
-    growfs -y /dev/"$rootdev"
+	growfs -y /dev/"$rootdev"
 }
 
 load_rc_config $name

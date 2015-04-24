@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/bufobj.h 258391 2013-11-20 13:22:22Z glebius $
+ * $FreeBSD: head/sys/sys/bufobj.h 275743 2014-12-13 16:02:37Z kib $
  */
 
 /*
@@ -112,6 +112,7 @@ struct bufobj {
  */
 #define	BO_ONWORKLST	(1 << 0)	/* On syncer work-list */
 #define	BO_WWAIT	(1 << 1)	/* Wait for output to complete */
+#define	BO_DEAD		(1 << 2)	/* Dead; only with INVARIANTS */
 
 #define	BO_LOCKPTR(bo)		(&(bo)->bo_lock)
 #define	BO_LOCK(bo)		rw_wlock(BO_LOCKPTR((bo)))

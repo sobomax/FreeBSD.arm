@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/wb/if_wb.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/wb/if_wb.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * Winbond fast ethernet PCI NIC driver
@@ -1194,8 +1194,7 @@ wb_encap(sc, c, m_head)
 		if (m_new == NULL)
 			return(1);
 		if (m_head->m_pkthdr.len > MHLEN) {
-			MCLGET(m_new, M_NOWAIT);
-			if (!(m_new->m_flags & M_EXT)) {
+			if (!(MCLGET(m_new, M_NOWAIT))) {
 				m_freem(m_new);
 				return(1);
 			}

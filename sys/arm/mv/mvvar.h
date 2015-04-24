@@ -34,7 +34,7 @@
  *
  * from: FreeBSD: //depot/projects/arm/src/sys/arm/xscale/pxa2x0/pxa2x0var.h, rev 1
  *
- * $FreeBSD: head/sys/arm/mv/mvvar.h 265854 2014-05-10 20:31:05Z andrew $
+ * $FreeBSD: head/sys/arm/mv/mvvar.h 281087 2015-04-04 22:05:43Z andrew $
  */
 
 #ifndef _MVVAR_H_
@@ -140,5 +140,6 @@ struct arm_devmap_entry;
 
 int mv_pci_devmap(phandle_t, struct arm_devmap_entry *, vm_offset_t,
     vm_offset_t);
+int fdt_localbus_devmap(phandle_t, struct arm_devmap_entry *, int, int *);
 
 #endif /* _MVVAR_H_ */

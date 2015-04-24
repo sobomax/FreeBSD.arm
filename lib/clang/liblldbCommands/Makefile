@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbCommands/Makefile 262528 2014-02-26 16:09:54Z emaste $
+# $FreeBSD: head/lib/clang/liblldbCommands/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -34,7 +34,9 @@ SRCS=	CommandCompletions.cpp \
 	CommandObjectWatchpoint.cpp \
 	CommandObjectWatchpointCommand.cpp
 
-TGHDRS=	DiagnosticCommonKinds \
+TGHDRS=	AttrList \
+	Attrs \
+	DiagnosticCommonKinds \
 	DeclNodes \
 	StmtNodes \
 	CommentCommandList

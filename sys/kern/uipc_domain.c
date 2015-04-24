@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_domain.c 247667 2013-03-02 21:11:30Z pjd $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_domain.c 275329 2014-11-30 13:24:21Z glebius $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -152,6 +152,7 @@ protosw_init(struct protosw *pr)
 	DEFAULT(pu->pru_sosend, sosend_generic);
 	DEFAULT(pu->pru_soreceive, soreceive_generic);
 	DEFAULT(pu->pru_sopoll, sopoll_generic);
+	DEFAULT(pu->pru_ready, pru_ready_notsupp);
 #undef DEFAULT
 	if (pr->pr_init)
 		(*pr->pr_init)();

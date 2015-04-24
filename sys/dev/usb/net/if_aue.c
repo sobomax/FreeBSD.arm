@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_aue.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_aue.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * ADMtek AN986 Pegasus and AN8511 Pegasus II USB to ethernet driver.
@@ -107,7 +107,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/net/if_aue.c 271832 2014-09-18 21:09:22Z gl
 static int aue_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, aue, CTLFLAG_RW, 0, "USB aue");
-SYSCTL_INT(_hw_usb_aue, OID_AUTO, debug, CTLFLAG_RW, &aue_debug, 0,
+SYSCTL_INT(_hw_usb_aue, OID_AUTO, debug, CTLFLAG_RWTUN, &aue_debug, 0,
     "Debug level");
 #endif
 

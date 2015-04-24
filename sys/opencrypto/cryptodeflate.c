@@ -29,11 +29,11 @@
 
 /*
  * This file contains a wrapper around the deflate algo compression
- * functions using the zlib library (see net/zlib.{c,h})
+ * functions using the zlib library (see libkern/zlib.c and sys/zlib.h})
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/opencrypto/cryptodeflate.c 259109 2013-12-08 21:59:46Z peter $");
+__FBSDID("$FreeBSD: head/sys/opencrypto/cryptodeflate.c 281855 2015-04-22 14:38:58Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -42,7 +42,7 @@ __FBSDID("$FreeBSD: head/sys/opencrypto/cryptodeflate.c 259109 2013-12-08 21:59:
 #include <sys/kernel.h>
 #include <sys/sdt.h>
 #include <sys/systm.h>
-#include <net/zlib.h>
+#include <sys/zlib.h>
 
 #include <opencrypto/cryptodev.h>
 #include <opencrypto/deflate.h>

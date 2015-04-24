@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs.c 271736 2014-09-18 03:11:59Z davide $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs.c 277085 2015-01-12 19:26:31Z brueffer $");
 
 #include <sys/param.h>
 
@@ -191,7 +191,7 @@ ffs_parse_opts(const char *option, fsinfo_t *fsopts)
 					"bytes per inode" },
 		{ "minfree",	&ffs_opts->minfree,	0,	99,
 					"minfree" },
-		{ "maxbpf",	&ffs_opts->maxbpg,	1,	INT_MAX,
+		{ "maxbpg",	&ffs_opts->maxbpg,	1,	INT_MAX,
 					"max blocks per file in a cg" },
 		{ "avgfilesize", &ffs_opts->avgfilesize,1,	INT_MAX,
 					"expected average file size" },

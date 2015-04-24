@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/timer.c 272397 2014-10-02 06:00:55Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/timer.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/timer.c 272397 2014-10-02 06:00:55Z g
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <sys/kdb.h>
 

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_shutdown.c 269105 2014-07-25 23:52:53Z gavin $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_shutdown.c 281915 2015-04-24 03:17:21Z markj $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -73,6 +73,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_shutdown.c 269105 2014-07-25 23:52:53Z ga
 #include <ddb/ddb.h>
 
 #include <machine/cpu.h>
+#include <machine/dump.h>
 #include <machine/pcb.h>
 #include <machine/smp.h>
 
@@ -153,7 +154,6 @@ static void poweroff_wait(void *, int);
 static void shutdown_halt(void *junk, int howto);
 static void shutdown_panic(void *junk, int howto);
 static void shutdown_reset(void *junk, int howto);
-static void vpanic(const char *fmt, va_list ap) __dead2;
 
 /* register various local shutdown events */
 static void
@@ -675,7 +675,7 @@ panic(const char *fmt, ...)
 	vpanic(fmt, ap);
 }
 
-static void
+void
 vpanic(const char *fmt, va_list ap)
 {
 #ifdef SMP
@@ -827,9 +827,14 @@ SYSCTL_STRING(_kern_shutdown, OID_AUTO, dumpdevname, CTLFLAG_RD,
 
 /* Registration of dumpers */
 int
-set_dumper(struct dumperinfo *di, const char *devname)
+set_dumper(struct dumperinfo *di, const char *devname, struct thread *td)
 {
 	size_t wantcopy;
+	int error;
+
+	error = priv_check(td, PRIV_SETDUMPER);
+	if (error != 0)
+		return (error);
 
 	if (di == NULL) {
 		bzero(&dumper, sizeof dumper);

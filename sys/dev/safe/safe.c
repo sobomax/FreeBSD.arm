@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 273808 2014-10-29 02:23:50Z jmg $");
+__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * SafeNet SafeXcel-1141 hardware crypto accelerator
@@ -1328,8 +1328,7 @@ safe_process(device_t dev, struct cryptop *crp, int hint)
 					goto errout;
 				}
 				if (totlen >= MINCLSIZE) {
-					MCLGET(m, M_NOWAIT);
-					if ((m->m_flags & M_EXT) == 0) {
+					if (!(MCLGET(m, M_NOWAIT))) {
 						m_free(m);
 						safestats.st_nomcl++;
 						err = sc->sc_nqchip ?
@@ -1355,8 +1354,7 @@ safe_process(device_t dev, struct cryptop *crp, int hint)
 						len = MLEN;
 					}
 					if (top && totlen >= MINCLSIZE) {
-						MCLGET(m, M_NOWAIT);
-						if ((m->m_flags & M_EXT) == 0) {
+						if (!(MCLGET(m, M_NOWAIT))) {
 							*mp = m;
 							m_freem(top);
 							safestats.st_nomcl++;

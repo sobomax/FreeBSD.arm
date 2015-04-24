@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-serverworks.c 249213 2013-04-06 19:12:49Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-serverworks.c 280393 2015-03-23 19:47:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -96,7 +96,7 @@ ata_serverworks_probe(device_t dev)
 
     ata_set_desc(dev);
     ctlr->chipinit = ata_serverworks_chipinit;
-    return (BUS_PROBE_DEFAULT);
+    return (BUS_PROBE_LOW_PRIORITY);
 }
 
 static int

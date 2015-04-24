@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/time.h 269466 2014-08-03 09:47:51Z delphij $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/time.h 277449 2015-01-20 22:29:27Z will $
  */
 
 #ifndef _OPENSOLARIS_SYS_TIME_H_
@@ -51,7 +51,7 @@ typedef longlong_t	hrtime_t;
 #endif
 
 #define	SEC_TO_TICK(sec)	((sec) * hz)
-#define	NSEC_TO_TICK(usec)	((usec) / (NANOSEC / hz))
+#define	NSEC_TO_TICK(nsec)	((nsec) / (NANOSEC / hz))
 
 #ifdef _KERNEL
 static __inline hrtime_t

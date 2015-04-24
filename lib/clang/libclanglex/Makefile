@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclanglex/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libclanglex/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -28,7 +28,7 @@ SRCS=	HeaderMap.cpp \
 	TokenConcatenation.cpp \
 	TokenLexer.cpp
 
-TGHDRS=	AttrSpellings \
+TGHDRS=	AttrSpellingListIndex \
 	DiagnosticCommonKinds \
 	DiagnosticLexKinds
 

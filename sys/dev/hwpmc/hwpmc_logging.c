@@ -34,10 +34,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_logging.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_logging.c 279894 2015-03-11 20:15:49Z rrs $");
 
 #include <sys/param.h>
+#if (__FreeBSD_version >= 1100000)
 #include <sys/capsicum.h>
+#else
+#include <sys/capability.h>
+#endif
 #include <sys/file.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
@@ -569,7 +573,6 @@ pmclog_configure_log(struct pmc_mdep *md, struct pmc_owner *po, int logfd)
 	int error;
 	struct proc *p;
 	cap_rights_t rights;
-
 	/*
 	 * As long as it is possible to get a LOR between pmc_sx lock and
 	 * proctree/allproc sx locks used for adding a new process, assure

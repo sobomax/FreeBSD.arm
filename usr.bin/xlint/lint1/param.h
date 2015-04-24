@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/xlint/lint1/param.h 268351 2014-07-07 00:27:09Z marcel $
+ * $FreeBSD: head/usr.bin/xlint/lint1/param.h 280218 2015-03-18 13:07:19Z emaste $
  */
 
 /*
@@ -95,6 +95,9 @@
 #elif __mips__
 #define PTRDIFF_IS_LONG		0
 #define SIZEOF_IS_ULONG		0
+#elif __aarch64__
+#define PTRDIFF_IS_LONG		1
+#define SIZEOF_IS_ULONG		1
 #else
 #error unknown machine type
 #endif

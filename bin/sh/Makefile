@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.4 (Berkeley) 5/5/95
-# $FreeBSD: head/bin/sh/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/bin/sh/Makefile 275028 2014-11-25 11:15:40Z bapt $
 
 .include <src.opts.mk>
 
@@ -18,8 +18,7 @@ SRCS= ${SHSRCS} ${GENSRCS} ${GENHDRS}
 # utilities of the same name are handled with the associated manpage,
 # builtin.1 in share/man/man1/.
 
-DPADD= ${LIBEDIT} ${LIBTERMCAPW}
-LDADD= -ledit -ltermcapw
+LIBADD=	edit
 
 CFLAGS+=-DSHELL -I. -I${.CURDIR}
 # for debug:

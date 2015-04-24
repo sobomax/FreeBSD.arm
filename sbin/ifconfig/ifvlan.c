@@ -40,7 +40,6 @@
 
 #include <net/ethernet.h>
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/if_vlan_var.h>
 #include <net/route.h>
 
@@ -56,7 +55,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifvlan.c 228641 2011-12-17 15:44:34Z bz $";
+  "$FreeBSD: head/sbin/ifconfig/ifvlan.c 281143 2015-04-06 09:42:23Z glebius $";
 #endif
 
 #define	NOTAG	((u_short) -1)

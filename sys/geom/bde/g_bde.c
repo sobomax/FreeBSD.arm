@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/bde/g_bde.c 243333 2012-11-20 12:32:18Z jh $
+ * $FreeBSD: head/sys/geom/bde/g_bde.c 274313 2014-11-09 15:52:11Z phk $
  *
  */
 
@@ -204,6 +204,23 @@ g_bde_create_geom(struct gctl_req *req, struct g_class *mp, struct g_provider *p
 	if (gp->softc != NULL)
 		g_free(gp->softc);
 	g_destroy_geom(gp);
+	switch (error) {
+	case ENOENT:
+		gctl_error(req, "Lock was destroyed");
+		break;
+	case ESRCH:
+		gctl_error(req, "Lock was nuked");
+		break;
+	case EINVAL:
+		gctl_error(req, "Could not open lock");
+		break;
+	case ENOTDIR:
+		gctl_error(req, "Lock not found");
+		break;
+	default:
+		gctl_error(req, "Could not open lock (%d)", error);
+		break;
+	}
 	return;
 }
 

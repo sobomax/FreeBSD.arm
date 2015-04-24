@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/omap4/omap4_prcm_clks.c 266648 2014-05-25 10:49:07Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/omap4/omap4_prcm_clks.c 279816 2015-03-09 15:54:14Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1423,5 +1423,6 @@ static driver_t omap4_prcm_driver = {
 
 static devclass_t omap4_prcm_devclass;
 
-DRIVER_MODULE(omap4_prcm, simplebus, omap4_prcm_driver, omap4_prcm_devclass, 0, 0);
+EARLY_DRIVER_MODULE(omap4_prcm, simplebus, omap4_prcm_driver,
+    omap4_prcm_devclass, 0, 0, BUS_PASS_TIMER + BUS_PASS_ORDER_EARLY);
 MODULE_VERSION(omap4_prcm, 1);

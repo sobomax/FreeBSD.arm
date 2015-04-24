@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 268115 2014-07-01 20:47:16Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 281199 2015-04-07 10:25:27Z mav $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -143,7 +143,7 @@ SVCXPRT *
 svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
     size_t recvsize)
 {
-	SVCXPRT *xprt;
+	SVCXPRT *xprt = NULL;
 	struct sockaddr* sa;
 	int error;
 
@@ -177,7 +177,7 @@ svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
 
 	xprt_register(xprt);
 
-	solisten(so, SOMAXCONN, curthread);
+	solisten(so, -1, curthread);
 
 	SOCKBUF_LOCK(&so->so_rcv);
 	xprt->xp_upcallset = 1;
@@ -546,7 +546,7 @@ svc_vc_ack(SVCXPRT *xprt, uint32_t *ack)
 {
 
 	*ack = atomic_load_acq_32(&xprt->xp_snt_cnt);
-	*ack -= xprt->xp_socket->so_snd.sb_cc;
+	*ack -= sbused(&xprt->xp_socket->so_snd);
 	return (TRUE);
 }
 

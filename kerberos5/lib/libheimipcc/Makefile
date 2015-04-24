@@ -1,9 +1,8 @@
-#$FreeBSD: head/kerberos5/lib/libheimipcc/Makefile 255455 2013-09-10 18:40:43Z des $
+#$FreeBSD: head/kerberos5/lib/libheimipcc/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	heimipcc
 PRIVATELIB=
-LDADD=	-lheimbase -lroken -lpthread
-DPADD=	${LIBHEIMBASE} ${LIBROKEN} ${LIBPTHREAD}
+LIBADD=	heimbase roken pthread
 
 SRCS=	\
 	client.c \

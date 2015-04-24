@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ipmon 255450 2013-09-10 13:48:33Z cy $
+# $FreeBSD: head/etc/rc.d/ipmon 275324 2014-11-30 12:34:48Z ngie $
 #
 
 # PROVIDE: ipmon
-# REQUIRE: FILESYSTEMS hostname sysctl FILESYSTEMS ipfilter
+# REQUIRE: FILESYSTEMS hostname sysctl ipfilter
 # BEFORE:  SERVERS
 # KEYWORD: nojail
 

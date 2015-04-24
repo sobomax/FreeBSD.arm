@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_quota.c 273165 2014-10-16 12:41:14Z mjg $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_quota.c 277794 2015-01-27 10:32:49Z kib $");
 
 #include "opt_ffs.h"
 
@@ -495,11 +495,15 @@ quotaon(struct thread *td, struct mount *mp, int type, void *fname)
 	struct nameidata nd;
 
 	error = priv_check(td, PRIV_UFS_QUOTAON);
-	if (error)
+	if (error != 0) {
+		vfs_unbusy(mp);
 		return (error);
+	}
 
-	if (mp->mnt_flag & MNT_RDONLY)
+	if ((mp->mnt_flag & MNT_RDONLY) != 0) {
+		vfs_unbusy(mp);
 		return (EROFS);
+	}
 
 	ump = VFSTOUFS(mp);
 	dq = NODQUOT;

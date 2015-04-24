@@ -1,13 +1,14 @@
-# $FreeBSD: head/usr.sbin/ntp/libopts/Makefile 182019 2008-08-22 20:04:35Z roberto $
+# $FreeBSD: head/usr.sbin/ntp/libopts/Makefile 280849 2015-03-30 13:30:15Z cy $
 
-.PATH: ${.CURDIR}/../../../contrib/ntp/libopts 
+.PATH: ${.CURDIR}/../../../contrib/ntp/sntp/libopts 
 
-LIB= opts
+LIB=	opts
 INTERNALLIB=
 
 SRCS=	libopts.c
 
-CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include -I${.CURDIR}/../ \
-		 -I${.CURDIR}/../../../contrib/ntp/libopts
+CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include \
+	-I${.CURDIR}/../../../contrib/ntp/sntp/libopts \
+	-I${.CURDIR}/../
 
 .include <bsd.lib.mk>

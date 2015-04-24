@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fcntl.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/fcntl.h 264628 2014-04-17 21:29:22Z jilles $
+ * $FreeBSD: head/sys/sys/fcntl.h 281845 2015-04-22 01:54:25Z rodrigc $
  */
 
 #ifndef _SYS_FCNTL_H_
@@ -127,6 +127,10 @@ typedef	__pid_t		pid_t;
 #define	O_TTY_INIT	0x00080000	/* Restore default termios attributes */
 
 #define	O_CLOEXEC	0x00100000
+#endif
+
+#if __BSD_VISIBLE
+#define	O_VERIFY	0x00200000	/* open only after verification */
 #endif
 
 /*

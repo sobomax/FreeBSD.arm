@@ -1,10 +1,10 @@
-# $FreeBSD: head/share/mk/bsd.incs.mk 264930 2014-04-25 19:25:45Z imp $
+# $FreeBSD: head/share/mk/bsd.incs.mk 274662 2014-11-18 17:06:44Z imp $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.incs.mk cannot be included directly.
 .endif
 
-.if ${MK_TOOLCHAIN} != "no"
+.if ${MK_INCLUDES} != "no"
 
 INCSGROUPS?=	INCS
 

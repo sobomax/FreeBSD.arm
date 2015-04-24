@@ -27,13 +27,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/netstat/flowtable.c 261883 2014-02-14 10:56:26Z glebius $");
+__FBSDID("$FreeBSD: head/usr.bin/netstat/flowtable.c 279122 2015-02-21 23:47:20Z marcel $");
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <net/flowtable.h>
 #include <err.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "netstat.h"
 
 /*

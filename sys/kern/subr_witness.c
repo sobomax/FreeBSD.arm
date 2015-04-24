@@ -85,7 +85,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_witness.c 273342 2014-10-20 20:21:40Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_witness.c 279390 2015-02-28 04:19:02Z kib $");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
@@ -492,6 +492,11 @@ static struct witness_order_list_entry order_lists[] = {
 	{ "time lock", &lock_class_mtx_sleep },
 	{ NULL, NULL },
 	/*
+	 * umtx
+	 */
+	{ "umtx lock", &lock_class_mtx_sleep },
+	{ NULL, NULL },
+	/*
 	 * Sockets
 	 */
 	{ "accept", &lock_class_mtx_sleep },
@@ -637,7 +642,6 @@ static struct witness_order_list_entry order_lists[] = {
 #endif
 	{ "process slock", &lock_class_mtx_spin },
 	{ "sleepq chain", &lock_class_mtx_spin },
-	{ "umtx lock", &lock_class_mtx_spin },
 	{ "rm_spinlock", &lock_class_mtx_spin },
 	{ "turnstile chain", &lock_class_mtx_spin },
 	{ "turnstile lock", &lock_class_mtx_spin },

@@ -4,14 +4,14 @@
 # configuration.  This kernel configration must be further specialized to
 # to include a root filesystem specification.
 #
-# $FreeBSD: head/sys/mips/conf/BERI_DE4_BASE 266832 2014-05-29 10:46:09Z hselasky $
+# $FreeBSD: head/sys/mips/conf/BERI_DE4_BASE 276755 2015-01-06 16:15:57Z jhb $
 #
 
 include "BERI_TEMPLATE"
 
 ident		BERI_DE4_BASE
 
-options 	NFSCL			# New Network Filesystem Client
+options 	NFSCL			# Network Filesystem Client
 options 	NFSLOCKD		# Network Lock Manager
 options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 
@@ -33,7 +33,8 @@ device		cfi
 device		cfid
 options 	CFI_SUPPORT_STRATAFLASH
 options 	ATSE_CFI_HACK
-device		sc
+device		vt
+device		kbdmux
 
 device		uart
 

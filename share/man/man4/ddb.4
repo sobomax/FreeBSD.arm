@@ -58,9 +58,9 @@
 .\" 	Created.
 .\" 	[90/08/30            dbg]
 .\"
-.\" $FreeBSD: head/share/man/man4/ddb.4 268988 2014-07-22 19:37:38Z pluknet $
+.\" $FreeBSD: head/share/man/man4/ddb.4 280158 2015-03-17 00:15:55Z stas $
 .\"
-.Dd July 15, 2014
+.Dd March 16, 2015
 .Dt DDB 4
 .Os
 .Sh NAME
@@ -618,6 +618,13 @@ for more details.
 .Pp
 .It Ic show Cm cyrixreg
 Show registers specific to the Cyrix processor.
+.\"
+.Pp
+.It Ic show Cm devmap
+Prints the contents of the static device mapping table.
+Currently only available on the
+ARM
+architecture.
 .\"
 .Pp
 .It Ic show Cm domain Ar addr

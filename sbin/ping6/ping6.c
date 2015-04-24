@@ -76,7 +76,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ping6/ping6.c 273295 2014-10-20 00:27:40Z hrs $");
+__FBSDID("$FreeBSD: head/sbin/ping6/ping6.c 275830 2014-12-16 14:59:20Z ae $");
 
 /*
  * Using the InterNet Control Message Protocol (ICMP) "ECHO" facility,
@@ -648,11 +648,20 @@ main(int argc, char *argv[])
 		err(1, "socket");
 
 	/* set the source address if specified. */
-	if ((options & F_SRCADDR) &&
-	    bind(s, (struct sockaddr *)&src, srclen) != 0) {
-		err(1, "bind");
+	if ((options & F_SRCADDR) != 0) {
+		/* properly fill sin6_scope_id */
+		if (IN6_IS_ADDR_LINKLOCAL(&src.sin6_addr) && (
+		    IN6_IS_ADDR_LINKLOCAL(&dst.sin6_addr) ||
+		    IN6_IS_ADDR_MC_LINKLOCAL(&dst.sin6_addr) ||
+		    IN6_IS_ADDR_MC_NODELOCAL(&dst.sin6_addr))) {
+			if (src.sin6_scope_id == 0)
+				src.sin6_scope_id = dst.sin6_scope_id;
+			if (dst.sin6_scope_id == 0)
+				dst.sin6_scope_id = src.sin6_scope_id;
+		}
+		if (bind(s, (struct sockaddr *)&src, srclen) != 0)
+			err(1, "bind");
 	}
-
 	/* set the gateway (next hop) if specified */
 	if (gateway) {
 		memset(&hints, 0, sizeof(hints));

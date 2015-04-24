@@ -19,13 +19,8 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/libpcap/scanner.l 251129 2013-05-30 08:02:00Z delphij $
+ * $FreeBSD: head/contrib/libpcap/scanner.l 276768 2015-01-06 22:29:12Z delphij $
  */
-
-#ifndef lint
-static const char rcsid[] _U_ =
-    "@(#) $Header: /tcpdump/master/libpcap/scanner.l,v 1.112 2008-02-06 10:21:30 guy Exp $ (LBL)";
-#endif
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -312,13 +307,20 @@ fisu		return FISU;
 lssu		return LSSU;
 lsu		return LSSU;
 msu		return MSU;
+hfisu		return HFISU;
+hlssu		return HLSSU;
+hmsu		return HMSU;
 sio		return SIO;
 opc		return OPC;
 dpc		return DPC;
 sls		return SLS;
+hsio		return HSIO;
+hopc		return HOPC;
+hdpc		return HDPC;
+hsls		return HSLS;
 
 [ \r\n\t]		;
-[+\-*/:\[\]!<>()&|=]	return yytext[0];
+[+\-*/%:\[\]!<>()&|\^=]	return yytext[0];
 ">="			return GEQ;
 "<="			return LEQ;
 "!="			return NEQ;
@@ -326,8 +328,12 @@ sls		return SLS;
 "<<"			return LSH;
 ">>"			return RSH;
 ${B}			{ yylval.e = pcap_ether_aton(((char *)yytext)+1);
+			  if (yylval.e == NULL)
+				bpf_error("malloc");
 			  return AID; }
 {MAC}			{ yylval.e = pcap_ether_aton((char *)yytext);
+			  if (yylval.e == NULL)
+				bpf_error("malloc");
 			  return EID; }
 {N}			{ yylval.i = stoi((char *)yytext); return NUM; }
 ({N}\.{N})|({N}\.{N}\.{N})|({N}\.{N}\.{N}\.{N})	{

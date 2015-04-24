@@ -34,7 +34,7 @@
  * Authors: Julian Elischer <julian@freebsd.org>
  *          Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_base.c 273377 2014-10-21 07:31:21Z hselasky $
+ * $FreeBSD: head/sys/netgraph/ng_base.c 278640 2015-02-12 22:20:34Z glebius $
  * $Whistle: ng_base.c,v 1.39 1999/01/28 23:54:53 julian Exp $
  */
 
@@ -2952,7 +2952,7 @@ uma_zone_t			ng_qzone;
 uma_zone_t			ng_qdzone;
 static int			numthreads = 0; /* number of queue threads */
 static int			maxalloc = 4096;/* limit the damage of a leak */
-static int			maxdata = 512;	/* limit the damage of a DoS */
+static int			maxdata = 4096;	/* limit the damage of a DoS */
 
 SYSCTL_INT(_net_graph, OID_AUTO, threads, CTLFLAG_RDTUN, &numthreads,
     0, "Number of queue processing threads");

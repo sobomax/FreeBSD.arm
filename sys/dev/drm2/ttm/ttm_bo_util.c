@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_bo_util.c 273969 2014-11-02 14:08:54Z tijl $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/ttm/ttm_bo_util.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>
@@ -439,7 +439,7 @@ ttm_buffer_object_transfer(struct ttm_buffer_object *bo,
 vm_memattr_t
 ttm_io_prot(uint32_t caching_flags)
 {
-#if defined(__i386__) || defined(__amd64__)
+#if defined(__i386__) || defined(__amd64__) || defined(__powerpc__)
 	if (caching_flags & TTM_PL_FLAG_WC)
 		return (VM_MEMATTR_WRITE_COMBINING);
 	else

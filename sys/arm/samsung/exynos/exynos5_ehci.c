@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_ehci.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_ehci.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 #include "opt_bus.h"
 
@@ -259,6 +259,7 @@ exynos_ehci_attach(device_t dev)
 	sc->sc_bus.parent = dev;
 	sc->sc_bus.devices = sc->sc_devices;
 	sc->sc_bus.devices_max = EHCI_MAX_DEVICES;
+	sc->sc_bus.dma_bits = 32;
 
 	if (bus_alloc_resources(dev, exynos_ehci_spec, esc->res)) {
 		device_printf(dev, "could not allocate resources\n");

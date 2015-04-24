@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_load.c 267851 2014-06-25 03:54:02Z davide $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_load.c 278166 2015-02-03 19:39:53Z pfg $
  *
  */
 
@@ -136,17 +136,6 @@ dtrace_load(void *dummy)
 	    dtrace_provider, NULL, NULL, "ERROR", 1, NULL);
 
 	mutex_exit(&cpu_lock);
-
-	/*
-	 * If DTrace helper tracing is enabled, we need to allocate the
-	 * trace buffer and initialize the values.
-	 */
-	if (dtrace_helptrace_enabled) {
-		ASSERT(dtrace_helptrace_buffer == NULL);
-		dtrace_helptrace_buffer =
-		    kmem_zalloc(dtrace_helptrace_bufsize, KM_SLEEP);
-		dtrace_helptrace_next = 0;
-	}
 
 	mutex_exit(&dtrace_lock);
 	mutex_exit(&dtrace_provider_lock);

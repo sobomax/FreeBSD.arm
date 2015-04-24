@@ -1,5 +1,5 @@
 # Makefile for mrsas driver
-# $FreeBSD: head/sys/modules/mrsas/Makefile 272738 2014-10-08 09:30:35Z kadesai $
+# $FreeBSD: head/sys/modules/mrsas/Makefile 274183 2014-11-06 16:48:35Z imp $
 
 KMOD=mrsas
 .PATH: ${.CURDIR}/../../dev/${KMOD}
@@ -27,4 +27,3 @@ cscope:	clean_cscope
 	/usr/local/bin/cscope -b *.[ch]
 
 cleanall:	clean clean_cscope
-	rm -f '@' machine

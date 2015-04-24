@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_osdep.c 271834 2014-09-18 21:13:03Z bz $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_osdep.c 274205 2014-11-06 23:45:05Z jfv $*/
 
 #include <machine/stdarg.h>
 
@@ -107,6 +107,7 @@ i40e_allocate_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem,
 		    "error %u\n", err);
 		goto fail_2;
 	}
+	mem->nseg = 1;
 	mem->size = size;
 	bus_dmamap_sync(mem->tag, mem->map,
 	    BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);

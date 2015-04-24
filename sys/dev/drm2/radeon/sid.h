@@ -25,7 +25,7 @@
 #define SI_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/sid.h 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/sid.h 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #define TAHITI_RB_BITMAP_WIDTH_PER_SH  2
 
@@ -62,6 +62,8 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/sid.h 258780 2013-11-30 22:17:27Z e
 #define		VGA_MEMORY_DISABLE				(1 << 4)
 
 #define DMIF_ADDR_CONFIG  				0xBD4
+
+#define DMIF_ADDR_CALC  				0xC00
 
 #define	SRBM_STATUS				        0xE50
 

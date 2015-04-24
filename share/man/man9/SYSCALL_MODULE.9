@@ -26,9 +26,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/SYSCALL_MODULE.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/SYSCALL_MODULE.9 277668 2015-01-25 00:36:42Z markj $
 .\"
-.Dd January 7, 2005
+.Dd January 24, 2015
 .Dt SYSCALL_MODULE 9
 .Os
 .Sh NAME
@@ -46,8 +46,8 @@ The
 .Fn SYSCALL_MODULE
 macro declares a new syscall.
 .Fn SYSCALL_MODULE
-expands into a kernel module declaration named as
-.Fa name .
+expands into a kernel module declaration with name
+.Ql sys/ Ns Fa name .
 .Pp
 The rest of the arguments expected by this macro are:
 .Bl -tag -width ".Fa new_sysent"

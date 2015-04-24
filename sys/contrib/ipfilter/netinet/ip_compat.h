@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_compat.h	1.8 1/14/96
- * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_compat.h 269585 2014-08-05 13:01:21Z cy $
+ * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_compat.h 281192 2015-04-07 06:22:22Z glebius $
  * Id: ip_compat.h,v 2.142.2.57 2007/10/10 09:51:42 darrenr Exp $
  */
 
@@ -153,7 +153,8 @@ struct  ether_addr {
 #   include <sys/rwlock.h>
 #   define	KMUTEX_T		struct mtx
 #   define	KRWLOCK_T		struct rwlock
-#   ifdef _KERNEL
+
+#ifdef _KERNEL
 #    define	READ_ENTER(x)		rw_rlock(&(x)->ipf_lk)
 #    define	WRITE_ENTER(x)		rw_wlock(&(x)->ipf_lk)
 #    define	MUTEX_DOWNGRADE(x)	rw_downgrade(&(x)->ipf_lk)
@@ -165,16 +166,7 @@ struct  ether_addr {
 					    else \
 						rw_runlock(&(x)->ipf_lk); \
 					} while (0)
-#   endif
-
 #  include <net/if_var.h>
-#  define	IFNAME(x)	((struct ifnet *)x)->if_xname
-#  define	COPYIFNAME(v, x, b) \
-				(void) strncpy(b, \
-					       ((struct ifnet *)x)->if_xname, \
-					       LIFNAMSIZ)
-
-# ifdef _KERNEL
 #  define	GETKTIME(x)	microtime((struct timeval *)x)
 
 #   include <netinet/in_systm.h>
@@ -216,8 +208,28 @@ struct  ether_addr {
 #  define	M_DUP(m)	m_dup(m, M_NOWAIT)
 #  define	IPF_PANIC(x,y)	if (x) { printf y; panic("ipf_panic"); }
 typedef struct mbuf mb_t;
-# endif /* _KERNEL */
 
+#else	/* !_KERNEL */
+#ifndef _NET_IF_VAR_H_
+/*
+ * Userland emulation of struct ifnet.
+ */
+struct route;
+struct mbuf;
+struct ifnet {
+	char			if_xname[IFNAMSIZ];
+	TAILQ_HEAD(, ifaddr)	if_addrlist;
+	int	(*if_output)(struct ifnet *, struct mbuf *,
+	    const struct sockaddr *, struct route *);
+};
+#endif /* _NET_IF_VAR_H_ */
+#endif /* _KERNEL */
+
+#  define	IFNAME(x)	((struct ifnet *)x)->if_xname
+#  define	COPYIFNAME(v, x, b) \
+				(void) strncpy(b, \
+					       ((struct ifnet *)x)->if_xname, \
+					       LIFNAMSIZ)
 
 typedef	u_long		ioctlcmd_t;
 typedef	struct uio	uio_t;

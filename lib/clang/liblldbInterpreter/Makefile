@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 255722 2013-09-20 01:52:02Z emaste $
+# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -11,6 +11,7 @@ SRCS=	Args.cpp \
 	CommandObject.cpp \
 	CommandObjectRegexCommand.cpp \
 	CommandObjectScript.cpp \
+	CommandOptionValidators.cpp \
 	CommandReturnObject.cpp \
 	OptionGroupArchitecture.cpp \
 	OptionGroupBoolean.cpp \
@@ -27,6 +28,7 @@ SRCS=	Args.cpp \
 	OptionValueArgs.cpp \
 	OptionValueArray.cpp \
 	OptionValueBoolean.cpp \
+	OptionValueChar.cpp \
 	OptionValueDictionary.cpp \
 	OptionValueEnumeration.cpp \
 	OptionValueFileSpec.cpp \
@@ -48,7 +50,9 @@ SRCS=	Args.cpp \
 	ScriptInterpreterNone.cpp \
 	ScriptInterpreterPython.cpp
 
-TGHDRS=	DiagnosticCommonKinds \
+TGHDRS=	AttrList \
+	Attrs \
+	DiagnosticCommonKinds \
 	DeclNodes \
 	StmtNodes \
 	CommentCommandList

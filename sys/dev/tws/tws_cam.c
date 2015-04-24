@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/tws/tws_cam.c 272000 2014-09-22 20:38:01Z jhb $
+ * $FreeBSD: head/sys/dev/tws/tws_cam.c 274819 2014-11-21 21:01:24Z smh $
  */
 
 #include <dev/tws/tws.h>
@@ -747,7 +747,8 @@ tws_execute_scsi(struct tws_softc *sc, union ccb *ccb)
      * and submit the I/O.
      */
     sc->stats.scsi_ios++;
-    callout_reset(&req->timeout, (ccb_h->timeout * hz) / 1000, tws_timeout, req);
+    callout_reset_sbt(&req->timeout, SBT_1MS * ccb->ccb_h.timeout, 0,
+      tws_timeout, req, 0);
     error = tws_map_request(sc, req);
     return(error);
 }

@@ -1,12 +1,11 @@
-# $FreeBSD: head/sbin/quotacheck/Makefile 207736 2010-05-07 00:41:12Z mckusick $
+# $FreeBSD: head/sbin/quotacheck/Makefile 275030 2014-11-25 11:23:12Z bapt $
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
 
 PROG=	quotacheck
 SRCS=	quotacheck.c preen.c fsutil.c utilities.c
 WARNS?=	2
 MAN=	quotacheck.8
-DPADD=  ${LIBUTIL}
-LDADD=  -lutil
+LIBADD=	util
 
 .PATH:	${.CURDIR}/../fsck ${.CURDIR}/../fsck_ffs
 

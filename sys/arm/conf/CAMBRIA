@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CAMBRIA 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/arm/conf/CAMBRIA 276755 2015-01-06 16:15:57Z jhb $
 
 ident		CAMBRIA
 
@@ -53,7 +53,7 @@ options 	GEOM_PART_MBR		# MBR partition scheme
 options 	TMPFS			# Efficient memory filesystem
 options 	FFS			# Berkeley Fast Filesystem
 options 	SOFTUPDATES		# Enable FFS soft updates support
-options 	NFSCL			# New Network Filesystem Client
+options 	NFSCL			# Network Filesystem Client
 options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 options 	BOOTP
 options 	BOOTP_NFSROOT

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/syscons 271958 2014-09-22 11:54:13Z se $
+# $FreeBSD: head/etc/rc.d/syscons 274059 2014-11-03 19:23:49Z jmg $
 #
 
 # PROVIDE: syscons
@@ -139,7 +139,7 @@ uk.*)				echo uk;;
 us.iso.acc)			echo us.acc;;
 us.pc-ctrl)			echo us.ctrl;;
 us.iso)				echo us;;
-    esac
+	esac
 }
 
 kbdcontrol_load_keymap()

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcasper/Makefile 258850 2013-12-02 17:07:22Z pjd $
+# $FreeBSD: head/lib/libcasper/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 LIB=	casper
 
@@ -8,8 +8,7 @@ SHLIBDIR?=	/lib
 SRCS=	libcasper.c
 INCS=	libcasper.h
 
-DPADD=	${LIBCAPSICUM} ${LIBNV} ${LIBPJDLOG}
-LDADD=	-lcapsicum -lnv -lpjdlog
+LIBADD=	capsicum nv pjdlog
 
 CFLAGS+=-I${.CURDIR}
 CFLAGS+=-I${.CURDIR}/../libpjdlog

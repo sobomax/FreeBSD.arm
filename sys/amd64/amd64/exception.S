@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/exception.S 268869 2014-07-19 02:27:31Z markj $
+ * $FreeBSD: head/sys/amd64/amd64/exception.S 275833 2014-12-16 18:28:33Z kib $
  */
 
 #include "opt_atpic.h"
@@ -153,9 +153,13 @@ IDTVEC(xmm)
 IDTVEC(tss)
 	TRAP_ERR(T_TSSFLT)
 IDTVEC(missing)
-	TRAP_ERR(T_SEGNPFLT)
+	subq	$TF_ERR,%rsp
+	movl	$T_SEGNPFLT,TF_TRAPNO(%rsp)
+	jmp	prot_addrf
 IDTVEC(stk)
-	TRAP_ERR(T_STKFLT)
+	subq	$TF_ERR,%rsp
+	movl	$T_STKFLT,TF_TRAPNO(%rsp)
+	jmp	prot_addrf
 IDTVEC(align)
 	TRAP_ERR(T_ALIGNFLT)
 
@@ -318,6 +322,7 @@ IDTVEC(page)
 IDTVEC(prot)
 	subq	$TF_ERR,%rsp
 	movl	$T_PROTFLT,TF_TRAPNO(%rsp)
+prot_addrf:
 	movq	$0,TF_ADDR(%rsp)
 	movq	%rdi,TF_RDI(%rsp)	/* free up a GP register */
 	leaq	doreti_iret(%rip),%rdi

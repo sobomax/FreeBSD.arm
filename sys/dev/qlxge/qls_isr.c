@@ -30,7 +30,7 @@
  * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxge/qls_isr.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxge/qls_isr.c 275358 2014-12-01 11:45:24Z hselasky $");
 
 
 
@@ -190,7 +190,7 @@ qls_rx_comp(qla_host_t *ha, uint32_t rxr_idx, uint32_t cq_idx, q81_rx_t *cq_e)
 			if ((cq_e->flags1 & Q81_RX_FLAGS1_RSS_MATCH_MASK)) {
 				rxr->rss_int++;
 				mp->m_pkthdr.flowid = cq_e->rss;
-				mp->m_flags |= M_FLOWID;
+				M_HASHTYPE_SET(mp, M_HASHTYPE_OPAQUE);
 			}
 			if (cq_e->flags0 & (Q81_RX_FLAGS0_TE |
 				Q81_RX_FLAGS0_NU | Q81_RX_FLAGS0_IE)) {

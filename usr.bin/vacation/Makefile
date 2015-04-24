@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/vacation/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.bin/vacation/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/vacation
@@ -11,17 +11,7 @@ CFLAGS+=-D_FFR_LISTDB -D_FFR_DEBUG
 
 WARNS?=	2
 
-LIBSMDIR=	${.OBJDIR}/../../lib/libsm
-LIBSM=		${LIBSMDIR}/libsm.a
-
-LIBSMDBDIR=	${.OBJDIR}/../../lib/libsmdb
-LIBSMDB=	${LIBSMDBDIR}/libsmdb.a
-
-LIBSMUTILDIR=	${.OBJDIR}/../../lib/libsmutil
-LIBSMUTIL=	${LIBSMUTILDIR}/libsmutil.a
-
-DPADD=	${LIBSMDB} ${LIBSMUTIL} ${LIBSM}
-LDADD=	${LIBSMDB} ${LIBSMUTIL} ${LIBSM}
+LIBADD=	smdb smutil sm
 
 SRCS+=	sm_os.h
 CLEANFILES+=sm_os.h

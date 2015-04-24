@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_hints.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_hints.c 278320 2015-02-06 16:09:01Z jhb $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -460,4 +460,32 @@ resource_disabled(const char *name, int unit)
 	if (error)
 	       return (0);
 	return (value);
+}
+
+/*
+ * Clear a value associated with a device by removing it from
+ * the kernel environment.  This only removes a hint for an
+ * exact unit.
+ */
+int
+resource_unset_value(const char *name, int unit, const char *resname)
+{
+	char varname[128];
+	const char *retname, *retvalue;
+	int error, line;
+	size_t len;
+
+	line = 0;
+	error = resource_find(&line, NULL, name, &unit, resname, NULL,
+	    &retname, NULL, NULL, NULL, NULL, &retvalue);
+	if (error)
+		return (error);
+
+	retname -= strlen("hint.");
+	len = retvalue - retname - 1;
+	if (len > sizeof(varname) - 1)
+		return (ENAMETOOLONG);
+	memcpy(varname, retname, len);
+	varname[len] = '\0';
+	return (kern_unsetenv(varname));
 }

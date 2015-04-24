@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mpic.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mpic.c 276180 2014-12-24 15:25:18Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -375,7 +375,7 @@ pic_ipi_send(cpuset_t cpus, u_int ipi)
 }
 
 int
-pic_ipi_get(int i __unused)
+pic_ipi_read(int i __unused)
 {
 	uint32_t val;
 

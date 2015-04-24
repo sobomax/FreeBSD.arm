@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/usr.sbin/amd/include/config.h 194880 2009-06-24 18:42:21Z dfr $
+ * $FreeBSD: head/usr.sbin/amd/include/config.h 281143 2015-04-06 09:42:23Z glebius $
  *
  * portions derived from
  *      $NetBSD: config.h,v 1.11 1998/08/08 22:33:37 christos Exp $
@@ -667,9 +667,6 @@
 
 /* Define to 1 if you have the <net/if.h> header file. */
 #define HAVE_NET_IF_H 1
-
-/* Define to 1 if you have the <net/if_var.h> header file. */
-#define HAVE_NET_IF_VAR_H 1
 
 /* Define to 1 if you have the <net/route.h> header file. */
 #define HAVE_NET_ROUTE_H 1

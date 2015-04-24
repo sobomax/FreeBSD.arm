@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/linker.h 273334 2014-10-20 17:04:03Z marcel $
+ * $FreeBSD: head/sys/sys/linker.h 275261 2014-11-29 17:29:30Z imp $
  */
 
 #ifndef _SYS_LINKER_H_
@@ -228,6 +228,7 @@ void *linker_hwpmc_list_objects(void);
 #endif
 
 #define	LINKER_HINTS_VERSION	1		/* linker.hints file version */
+#define	LINKER_HINTS_MAX	(1 << 20)	/* Allow at most 1MB for linker.hints */
 
 #ifdef _KERNEL
 

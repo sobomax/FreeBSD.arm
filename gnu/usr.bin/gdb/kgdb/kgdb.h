@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/gnu/usr.bin/gdb/kgdb/kgdb.h 246893 2013-02-17 02:15:19Z marcel $
+ * $FreeBSD: head/gnu/usr.bin/gdb/kgdb/kgdb.h 274391 2014-11-11 18:54:57Z dim $
  */
 
 #ifndef _KGDB_H_
@@ -41,7 +41,7 @@ struct kthr {
 	uintptr_t	pcb;
 	int		tid;
 	int		pid;
-	u_char		cpu;
+	int		cpu;
 };
 
 extern struct kthr *curkthr;

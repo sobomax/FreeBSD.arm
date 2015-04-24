@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vlapic.c 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/io/vlapic.c 279971 2015-03-14 02:32:08Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 279971 2015-03-14 02:32:08Z neel $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -45,7 +45,6 @@ __FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 273375 2014-10-21 07:10:43Z n
 
 #include <machine/vmm.h>
 
-#include "vmm_ipi.h"
 #include "vmm_lapic.h"
 #include "vmm_ktr.h"
 #include "vmm_stat.h"

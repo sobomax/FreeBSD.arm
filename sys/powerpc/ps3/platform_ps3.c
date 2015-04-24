@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/platform_ps3.c 268898 2014-07-20 00:08:50Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/platform_ps3.c 276680 2015-01-05 01:05:35Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,6 +48,8 @@ __FBSDID("$FreeBSD: head/sys/powerpc/ps3/platform_ps3.c 268898 2014-07-20 00:08:
 #include <machine/smp.h>
 #include <machine/spr.h>
 #include <machine/vmparam.h>
+
+#include <dev/ofw/openfirm.h>
 
 #include "platform_if.h"
 #include "ps3-hvcall.h"
@@ -103,8 +105,17 @@ PLATFORM_DEF(ps3_platform);
 static int
 ps3_probe(platform_t plat)
 {
+	phandle_t root;
+	char compatible[64];
 
-	return (BUS_PROBE_NOWILDCARD);
+	root = OF_finddevice("/");
+	if (OF_getprop(root, "compatible", compatible, sizeof(compatible)) <= 0)
+                return (BUS_PROBE_NOWILDCARD);
+	
+	if (strncmp(compatible, "sony,ps3", sizeof(compatible)) != 0)
+		return (BUS_PROBE_NOWILDCARD);
+
+	return (BUS_PROBE_SPECIFIC);
 }
 
 static int

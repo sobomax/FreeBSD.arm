@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211.c 271861 2014-09-19 09:20:55Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211.c 276757 2015-01-06 18:25:10Z adrian $");
 
 /*
  * IEEE 802.11 generic handler
@@ -1747,3 +1747,23 @@ ieee80211_mac_hash(const struct ieee80211com *ic,
 	return c;
 }
 #undef mix
+
+char
+ieee80211_channel_type_char(const struct ieee80211_channel *c)
+{
+	if (IEEE80211_IS_CHAN_ST(c))
+		return 'S';
+	if (IEEE80211_IS_CHAN_108A(c))
+		return 'T';
+	if (IEEE80211_IS_CHAN_108G(c))
+		return 'G';
+	if (IEEE80211_IS_CHAN_HT(c))
+		return 'n';
+	if (IEEE80211_IS_CHAN_A(c))
+		return 'a';
+	if (IEEE80211_IS_CHAN_ANYG(c))
+		return 'g';
+	if (IEEE80211_IS_CHAN_B(c))
+		return 'b';
+	return 'f';
+}

@@ -1,6 +1,8 @@
-# $FreeBSD: head/etc/periodic/security/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/etc/periodic/security/Makefile 274130 2014-11-05 06:42:07Z bapt $
 
 .include <src.opts.mk>
+
+FILESGROUPS=	FILES DATA
 
 FILES=	100.chksetuid \
 	110.neggrpperm \
@@ -10,8 +12,8 @@ FILES=	100.chksetuid \
 	410.logincheck \
 	700.kernelmsg \
 	800.loginfail \
-	900.tcpwrap \
-	security.functions
+	900.tcpwrap
+DATA=	security.functions
 
 # NB: keep these sorted by MK_* knobs
 

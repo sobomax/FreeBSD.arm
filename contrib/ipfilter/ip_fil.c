@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/ip_fil.c 255761 2013-09-21 14:22:07Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/ip_fil.c 279029 2015-02-19 23:14:35Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -44,6 +44,9 @@ static int	write_output __P((struct ifnet *, struct mbuf *,
 # endif
 #endif
 
+struct ifaddr {
+	struct sockaddr_storage ifa_addr;
+};
 
 int
 ipfattach(softc)

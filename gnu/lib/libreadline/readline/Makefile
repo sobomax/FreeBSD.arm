@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/libreadline/readline/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/gnu/lib/libreadline/readline/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 LIB=    readline
 INTERNALLIB=	yes
@@ -23,7 +23,6 @@ ${.OBJDIR}/${_h}:	${SRCDIR}/${_h}
 	${INSTALL} ${.ALLSRC} ${.TARGET}
 .endfor
 
-DPADD=	${LIBTERMCAPW}
-LDADD=	-ltermcapw
+LIBADD=	ncursesw
 
 .include <bsd.lib.mk>

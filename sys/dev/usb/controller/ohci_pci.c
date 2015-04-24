@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_pci.c 254438 2013-08-17 06:29:45Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_pci.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 /*
  * USB Open Host Controller driver.
@@ -175,6 +175,8 @@ ohci_pci_match(device_t self)
 
 	case 0x0019106b:
 		return ("Apple KeyLargo USB controller");
+	case 0x003f106b:
+		return ("Apple KeyLargo/Intrepid USB controller");
 
 	default:
 		break;
@@ -211,6 +213,7 @@ ohci_pci_attach(device_t self)
 	sc->sc_bus.parent = self;
 	sc->sc_bus.devices = sc->sc_devices;
 	sc->sc_bus.devices_max = OHCI_MAX_DEVICES;
+	sc->sc_bus.dma_bits = 32;
 
 	/* get all DMA memory */
 	if (usb_bus_mem_alloc_all(&sc->sc_bus, USB_GET_DMA_TAG(self),

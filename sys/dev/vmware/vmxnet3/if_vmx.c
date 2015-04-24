@@ -20,7 +20,7 @@
 /* Driver for VMware vmxnet3 virtual ethernet devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vmware/vmxnet3/if_vmx.c 272099 2014-09-25 08:36:11Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vmware/vmxnet3/if_vmx.c 275358 2014-12-01 11:45:24Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -2059,7 +2059,7 @@ vmxnet3_rxq_input(struct vmxnet3_rxqueue *rxq,
 	}
 #else
 	m->m_pkthdr.flowid = rxq->vxrxq_id;
-	m->m_flags |= M_FLOWID;
+	M_HASHTYPE_SET(m, M_HASHTYPE_OPAQUE);
 #endif
 
 	if (!rxcd->no_csum)
@@ -3002,7 +3002,8 @@ vmxnet3_txq_mq_start(struct ifnet *ifp, struct mbuf *m)
 	sc = ifp->if_softc;
 	ntxq = sc->vmx_ntxqueues;
 
-	if (m->m_flags & M_FLOWID)
+	/* check if flowid is set */
+	if (M_HASHTYPE_GET(m) != M_HASHTYPE_NONE)
 		i = m->m_pkthdr.flowid % ntxq;
 	else
 		i = curcpu % ntxq;

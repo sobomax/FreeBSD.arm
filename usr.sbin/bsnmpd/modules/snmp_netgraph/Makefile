@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_netgraph/Makefile 152269 2005-11-10 10:14:57Z harti $
+# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_netgraph/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 
@@ -11,7 +11,6 @@ BMIBS=	BEGEMOT-NETGRAPH.txt
 DEFS=	${MOD}_tree.def
 INCS=	snmp_${MOD}.h
 
-DPADD=	${LIBNETGRAPH}
-LDADD=	-lnetgraph
+LIBADD=	netgraph
 
 .include <bsd.snmpmod.mk>

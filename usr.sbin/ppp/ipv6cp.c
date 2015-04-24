@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/ipv6cp.c 210936 2010-08-06 15:09:21Z jhb $
+ * $FreeBSD: head/usr.sbin/ppp/ipv6cp.c 277857 2015-01-28 21:33:49Z dim $
  */
 
 #include <sys/param.h>
@@ -486,7 +486,7 @@ ipv6cp_LayerUp(struct fsm *fp)
    * evaluated.
    */
   if (!Enabled(fp->bundle, OPT_IPCP)) {
-    if (fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
+    if (*fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
       system_Select(fp->bundle, fp->bundle->radius.filterid, LINKUPFILE,
 		    NULL, NULL);
   }
@@ -539,7 +539,7 @@ ipv6cp_LayerDown(struct fsm *fp)
      * evaluated.
      */
     if (!Enabled(fp->bundle, OPT_IPCP)) {
-      if (fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
+      if (*fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
 	system_Select(fp->bundle, fp->bundle->radius.filterid, LINKDOWNFILE,
 		      NULL, NULL);
     }

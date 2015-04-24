@@ -37,7 +37,7 @@
  *	from: Utah Hdr: vmparam.h 1.16 91/01/18
  *	@(#)vmparam.h	8.2 (Berkeley) 4/22/94
  *	JNPR: vmparam.h,v 1.3.2.1 2007/09/10 06:01:28 girish
- * $FreeBSD: head/sys/mips/include/vmparam.h 271213 2014-09-06 22:38:32Z adrian $
+ * $FreeBSD: head/sys/mips/include/vmparam.h 276439 2014-12-31 00:54:38Z alc $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -160,13 +160,11 @@
 #define	VM_FREEPOOL_DIRECT	1
 
 /*
- * we support 2 free lists:
- *
- *	- DEFAULT for direct mapped (KSEG0) pages.
- *	  Note: This usage of DEFAULT may be misleading because we use
- *	  DEFAULT for allocating direct mapped pages. The normal page
- *	  allocations use HIGHMEM if available, and then DEFAULT. 
- *	- HIGHMEM for other pages 
+ * Create up to two free lists on !__mips_n64: VM_FREELIST_DEFAULT is for
+ * physical pages that are above the largest physical address that is
+ * accessible through the direct map (KSEG0) and VM_FREELIST_LOWMEM is for
+ * physical pages that are below that address.  VM_LOWMEM_BOUNDARY is the
+ * physical address for the end of the direct map (KSEG0).
  */
 #ifdef __mips_n64
 #define	VM_NFREELIST		1
@@ -174,10 +172,10 @@
 #define	VM_FREELIST_DIRECT	VM_FREELIST_DEFAULT
 #else
 #define	VM_NFREELIST		2
-#define	VM_FREELIST_DEFAULT	1
-#define	VM_FREELIST_HIGHMEM	0
-#define	VM_FREELIST_DIRECT	VM_FREELIST_DEFAULT
-#define	VM_HIGHMEM_ADDRESS	((vm_paddr_t)0x20000000)
+#define	VM_FREELIST_DEFAULT	0
+#define	VM_FREELIST_LOWMEM	1
+#define	VM_FREELIST_DIRECT	VM_FREELIST_LOWMEM
+#define	VM_LOWMEM_BOUNDARY	((vm_paddr_t)0x20000000)
 #endif
 
 /*

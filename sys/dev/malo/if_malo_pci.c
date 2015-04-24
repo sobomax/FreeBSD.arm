@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/dev/malo/if_malo_pci.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/malo/if_malo_pci.c 275871 2014-12-17 21:27:27Z adrian $");
 #endif
 
 /*
@@ -225,9 +225,9 @@ malo_pci_attach(device_t dev)
 			       BUS_SPACE_MAXADDR_32BIT,	/* lowaddr */
 			       BUS_SPACE_MAXADDR,	/* highaddr */
 			       NULL, NULL,		/* filter, filterarg */
-			       BUS_SPACE_MAXADDR,	/* maxsize */
+			       BUS_SPACE_MAXSIZE,	/* maxsize */
 			       0,			/* nsegments */
-			       BUS_SPACE_MAXADDR,	/* maxsegsize */
+			       BUS_SPACE_MAXSIZE,	/* maxsegsize */
 			       0,			/* flags */
 			       NULL,			/* lockfunc */
 			       NULL,			/* lockarg */

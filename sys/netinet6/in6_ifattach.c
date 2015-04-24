@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 273858 2014-10-30 12:44:46Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 274345 2014-11-10 15:56:30Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -407,7 +407,7 @@ get_ifid(struct ifnet *ifp0, struct ifnet *altifp,
 
 	/* next, try to get it from some other hardware interface */
 	IFNET_RLOCK_NOSLEEP();
-	TAILQ_FOREACH(ifp, &V_ifnet, if_list) {
+	TAILQ_FOREACH(ifp, &V_ifnet, if_link) {
 		if (ifp == ifp0)
 			continue;
 		if (in6_get_hw_ifid(ifp, in6) != 0)
@@ -847,7 +847,7 @@ in6_tmpaddrtimer(void *arg)
 	    V_ip6_temp_regen_advance) * hz, in6_tmpaddrtimer, curvnet);
 
 	bzero(nullbuf, sizeof(nullbuf));
-	TAILQ_FOREACH(ifp, &V_ifnet, if_list) {
+	TAILQ_FOREACH(ifp, &V_ifnet, if_link) {
 		if (ifp->if_afdata[AF_INET6] == NULL)
 			continue;
 		ndi = ND_IFINFO(ifp);

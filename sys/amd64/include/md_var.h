@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/md_var.h 273800 2014-10-28 19:17:44Z jhb $
+ * $FreeBSD: head/sys/amd64/include/md_var.h 281851 2015-04-22 12:32:14Z kib $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -61,6 +61,7 @@ extern	u_int	cpu_vendor_id;
 extern	u_int	cpu_mon_mwait_flags;
 extern	u_int	cpu_mon_min_size;
 extern	u_int	cpu_mon_max_size;
+extern	u_int	cpu_maxphyaddr;
 extern	char	ctx_switch_xsave[];
 extern	u_int	hv_high;
 extern	char	hv_vendor[];
@@ -90,6 +91,7 @@ struct	dumperinfo;
 void	*alloc_fpusave(int flags);
 void	amd64_syscall(struct thread *td, int traced);
 void	busdma_swi(void);
+void	cpu_probe_amdc1e(void);
 void	cpu_setregs(void);
 void	doreti_iret(void) __asm(__STRING(doreti_iret));
 void	doreti_iret_fault(void) __asm(__STRING(doreti_iret_fault));

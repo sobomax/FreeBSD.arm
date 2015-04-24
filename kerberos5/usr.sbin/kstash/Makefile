@@ -1,13 +1,12 @@
-# $FreeBSD: head/kerberos5/usr.sbin/kstash/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.sbin/kstash/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kstash
 MAN=	kstash.8
 CFLAGS+=-I${KRB5DIR}/lib/asn1 -I${KRB5DIR}/lib/krb5 -I${KRB5DIR}/lib/roken \
 	-I${KRB5DIR}/kdc ${LDAPCFLAGS}
-DPADD=	${LIBHDB} ${LIBKRB5} ${LIBROKEN} ${LIBVERS} \
-	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT} ${LDAPDPADD}
-LDADD=	-lhdb -lkrb5 -lroken ${LIBVERS} \
-	-lasn1 -lcrypto -lcrypt ${LDAPLDADD}
+LIBADD=	hdb krb5 crypto vers
+DPADD=	${LDAPDPADD}
+LDADD=	${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
 
 .include <bsd.prog.mk>

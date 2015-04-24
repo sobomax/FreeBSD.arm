@@ -1,5 +1,5 @@
 # 	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/config/Makefile 249657 2013-04-19 19:45:00Z ed $
+# $FreeBSD: head/usr.sbin/config/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	config
 MAN=	config.5 config.8
@@ -13,8 +13,7 @@ CFLAGS+= -I. -I${.CURDIR}
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 
-DPADD=	${LIBL} ${LIBSBUF}
-LDADD=	-ll -lsbuf
+LIBADD=	l sbuf
 
 CLEANFILES+=	kernconf.c
 

@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_mqueue.c 273707 2014-10-26 19:42:44Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_mqueue.c 281436 2015-04-11 15:40:28Z mjg $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -2022,7 +2022,7 @@ kern_kmq_open(struct thread *td, const char *upath, int flags, mode_t mode,
 
 	if (error) {
 		sx_xunlock(&mqfs_data.mi_lock);
-		fdclose(fdp, fp, fd, td);
+		fdclose(td, fp, fd);
 		fdrop(fp, td);
 		return (error);
 	}

@@ -1,10 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libgssapi_krb5/Makefile 236337 2012-05-30 22:21:25Z obrien $
+# $FreeBSD: head/kerberos5/lib/libgssapi_krb5/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	gssapi_krb5
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined
-LDADD=	-lgssapi -lkrb5 -lhx509 -lcrypto -lroken -lasn1 -lcom_err -lcrypt
-DPADD=	${LIBGSSAPI} ${LIBKRB5} ${LIBHX509} ${LIBCRYPTO} ${LIBROKEN} ${LIBASN1} \
-	${LIBCOM_ERR} ${LIBCRYPT}
+LIBADD=	gssapi krb5 crypto roken asn1 com_err
 SHLIB_MAJOR=	10
 
 INCS=	${KRB5DIR}/lib/gssapi/gssapi/gssapi_krb5.h

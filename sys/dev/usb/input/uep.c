@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/usb/input/uep.c 233774 2012-04-02 10:50:42Z hselasky $
+ * $FreeBSD: head/sys/dev/usb/input/uep.c 276701 2015-01-05 15:04:17Z hselasky $
  */
 
 /*
@@ -58,7 +58,7 @@
 static int uep_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, uep, CTLFLAG_RW, 0, "USB uep");
-SYSCTL_INT(_hw_usb_uep, OID_AUTO, debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_uep, OID_AUTO, debug, CTLFLAG_RWTUN,
     &uep_debug, 0, "Debug level");
 #endif
 

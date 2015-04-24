@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fb.c 261513 2014-02-05 14:44:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fb.c 279780 2015-03-08 14:15:57Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -240,7 +240,6 @@ bcm_fb_init(void *arg)
 	}
 	else {
 		device_printf(sc->dev, "Failed to set framebuffer info\n");
-		return;
 	}
 
 	config_intrhook_disestablish(&sc->init_hook);

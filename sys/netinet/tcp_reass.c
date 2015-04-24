@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_reass.c 271123 2014-09-04 19:28:02Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_reass.c 275329 2014-11-30 13:24:21Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -262,7 +262,7 @@ present:
 			m_freem(mq);
 		else {
 			mq->m_nextpkt = NULL;
-			sbappendstream_locked(&so->so_rcv, mq);
+			sbappendstream_locked(&so->so_rcv, mq, 0);
 			wakeup = 1;
 		}
 	}

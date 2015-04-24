@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nfc_fsl.c 238046 2012-07-03 01:00:29Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nfc_fsl.c 280891 2015-03-31 05:26:30Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,7 +50,6 @@ __FBSDID("$FreeBSD: head/sys/dev/nand/nfc_fsl.c 238046 2012-07-03 01:00:29Z marc
 #include <sys/kdb.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>

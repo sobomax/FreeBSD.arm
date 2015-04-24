@@ -27,14 +27,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/token.l 273822 2014-10-29 12:22:32Z trasz $
+ * $FreeBSD: head/usr.sbin/ctld/token.l 281532 2015-04-14 18:13:55Z delphij $
  */
 
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 
-#include "ctld.h"
 #include "y.tab.h"
 
 int lineno;
@@ -65,13 +64,16 @@ listen			{ return LISTEN; }
 listen-iser		{ return LISTEN_ISER; }
 lun			{ return LUN; }
 maxproc			{ return MAXPROC; }
+offload			{ return OFFLOAD; }
 option			{ return OPTION; }
 path			{ return PATH; }
 pidfile			{ return PIDFILE; }
 isns-server		{ return ISNS_SERVER; }
 isns-period		{ return ISNS_PERIOD; }
 isns-timeout		{ return ISNS_TIMEOUT; }
+port			{ return PORT; }
 portal-group		{ return PORTAL_GROUP; }
+redirect		{ return REDIRECT; }
 serial			{ return SERIAL; }
 size			{ return SIZE; }
 target			{ return TARGET; }

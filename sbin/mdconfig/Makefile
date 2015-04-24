@@ -1,12 +1,11 @@
-# $FreeBSD: head/sbin/mdconfig/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/mdconfig/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
 PROG=		mdconfig
 MAN=		mdconfig.8
 
-DPADD=	${LIBUTIL} ${LIBGEOM} ${LIBBSDXML} ${LIBSBUF} 
-LDADD=	-lutil -lgeom -lbsdxml -lsbuf
+LIBADD=		util geom
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=    tests

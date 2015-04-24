@@ -31,16 +31,23 @@
 static char sccsid[] = "@(#)creat.c	8.1 (Berkeley) 6/2/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/compat-43/creat.c 165903 2007-01-09 00:28:16Z imp $");
+__FBSDID("$FreeBSD: head/lib/libc/compat-43/creat.c 277032 2015-01-11 22:16:31Z kib $");
 
 #include "namespace.h"
 #include <fcntl.h>
 #include "un-namespace.h"
+#include "libc_private.h"
 
+__weak_reference(__creat, creat);
+__weak_reference(__creat, _creat);
+
+#pragma weak creat
 int
 __creat(const char *path, mode_t mode)
 {
-	return(_open(path, O_WRONLY|O_CREAT|O_TRUNC, mode));
+
+	return (((int (*)(int, const char *, int, ...))
+	    __libc_interposing[INTERPOS_openat])(AT_FDCWD, path, O_WRONLY |
+	    O_CREAT | O_TRUNC, mode));
 }
-__weak_reference(__creat, creat);
-__weak_reference(__creat, _creat);
+

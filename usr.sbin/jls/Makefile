@@ -1,11 +1,10 @@
-# $FreeBSD: head/usr.sbin/jls/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/jls/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
 PROG=	jls
 MAN=	jls.8
-DPADD=	${LIBJAIL}
-LDADD=	-ljail
+LIBADD=	jail
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+= -DINET6

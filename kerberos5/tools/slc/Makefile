@@ -1,9 +1,10 @@
-# $FreeBSD: head/kerberos5/tools/slc/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/tools/slc/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	slc
 LIBROKEN_A=     ${.OBJDIR}/../../lib/libroken/libroken.a
-LDADD=  ${LIBROKEN_A} ${LIBVERS}
-DPADD=  ${LIBROKEN_A} ${LIBVERS}
+LIBADD=	vers
+LDADD=  ${LIBROKEN_A}
+DPADD=  ${LIBROKEN_A}
 MAN=
 
 SRCS=	roken.h \

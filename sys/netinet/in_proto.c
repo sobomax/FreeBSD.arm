@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_proto.c 269142 2014-07-26 19:27:34Z marcel $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_proto.c 274177 2014-11-06 14:39:04Z melifaro $");
 
 #include "opt_mrouting.h"
 #include "opt_ipsec.h"
@@ -365,8 +365,6 @@ struct domain inetdomain = {
 #ifdef VIMAGE
 	.dom_rtdetach =		in_detachhead,
 #endif
-	.dom_rtoffset =		32,
-	.dom_maxrtkey =		sizeof(struct sockaddr_in),
 	.dom_ifattach =		in_domifattach,
 	.dom_ifdetach =		in_domifdetach
 };

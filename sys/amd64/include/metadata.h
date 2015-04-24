@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/metadata.h 263826 2014-03-27 19:43:38Z emaste $
+ * $FreeBSD: head/sys/amd64/include/metadata.h 281381 2015-04-10 19:26:45Z emaste $
  */
 
 #ifndef _MACHINE_METADATA_H_
@@ -34,19 +34,20 @@
 #define	MODINFOMD_DTBP		0x1003
 #define	MODINFOMD_EFI_MAP	0x1004
 #define	MODINFOMD_EFI_FB	0x1005
+#define	MODINFOMD_MODULEP	0x1006
 
 struct efi_map_header {
-	size_t		memory_size;
-	size_t		descriptor_size;
+	uint64_t	memory_size;
+	uint64_t	descriptor_size;
 	uint32_t	descriptor_version;
 };
 
 struct efi_fb {
 	uint64_t	fb_addr;
 	uint64_t	fb_size;
-	int		fb_height;
-	int		fb_width;
-	int		fb_stride;
+	uint32_t	fb_height;
+	uint32_t	fb_width;
+	uint32_t	fb_stride;
 	uint32_t	fb_mask_red;
 	uint32_t	fb_mask_green;
 	uint32_t	fb_mask_blue;

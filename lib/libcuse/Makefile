@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcuse/Makefile 270083 2014-08-17 06:28:57Z hselasky $
+# $FreeBSD: head/lib/libcuse/Makefile 275024 2014-11-25 11:07:26Z bapt $
 #
 # Copyright (c) 2010 Hans Petter Selasky. All rights reserved.
 #
@@ -30,14 +30,12 @@ SHLIB_MINOR=	0
 SRCS=		cuse_lib.c
 INCS=		cuse.h
 MAN=		cuse.3
-PTHREAD_LIBS?=	-lpthread
 CFLAGS+=	-D_GNU_SOURCE
 .if defined(HAVE_DEBUG)
 CFLAGS+=	-g
 CFLAGS+=	-DHAVE_DEBUG
 .endif
-DPADD+=	${LIBPTHREAD}
-LDADD+=	${PTHREAD_LIBS}
+LIBADD=	pthread
 
 MLINKS=
 MLINKS+= cuse.3 cuse_alloc_unit_number.3

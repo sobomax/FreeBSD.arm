@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/rrenum.c 253970 2013-08-05 20:13:02Z hrs $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/rrenum.c 281143 2015-04-06 09:42:23Z glebius $	*/
 /*	$KAME: rrenum.c,v 1.12 2002/06/10 19:59:47 itojun Exp $	*/
 
 /*
@@ -37,7 +37,6 @@
 
 #include <net/if.h>
 #include <net/if_dl.h>
-#include <net/if_var.h>
 #include <net/route.h>
 #include <netinet/in.h>
 #include <netinet/in_var.h>

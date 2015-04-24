@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/sec/rmisec.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/sec/rmisec.c 275732 2014-12-12 19:56:36Z jmg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -423,13 +423,8 @@ xlr_sec_process(device_t dev, struct cryptop *crp, int hint)
 
 	cmd->op.source_buf = (uint64_t) (unsigned long)crp->crp_buf;
 	cmd->op.source_buf_size = crp->crp_ilen;
-	if (crp->crp_flags & CRYPTO_F_REL) {
-		cmd->op.dest_buf = (uint64_t) (unsigned long)crp->crp_buf;
-		cmd->op.dest_buf_size = crp->crp_ilen;
-	} else {
-		cmd->op.dest_buf = (uint64_t) (unsigned long)crp->crp_buf;
-		cmd->op.dest_buf_size = crp->crp_ilen;
-	}
+	cmd->op.dest_buf = (uint64_t) (unsigned long)crp->crp_buf;
+	cmd->op.dest_buf_size = crp->crp_ilen;
 	cmd->op.num_packets = 1;
 	cmd->op.num_fragments = 1;
 

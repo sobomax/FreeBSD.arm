@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/misc/organization.dot 268459 2014-07-09 13:37:24Z pgj $
+# $FreeBSD: head/share/misc/organization.dot 280629 2015-03-25 18:02:06Z culot $
 
 # This file is meant to show the infrastructural organization of the
 # FreeBSD Project; what kind of teams we have and how they relate to
@@ -30,7 +30,7 @@ coresecretary [label="Core Team Secretary\ncore-secretary@FreeBSD.org\nmatthew"]
 doccommitters [label="Doc/www Committers\ndoc-committers@FreeBSD.org"]
 doceng [label="Documentation Engineering Team\ndoceng@FreeBSD.org\ngjb, blackend,\ngabor, hrs"]
 portscommitters [label="Ports Committers\nports-committers@FreeBSD.org"]
-portmgr [label="Port Management Team\nportmgr@FreeBSD.org\nantoine, bapt, bdrewery,\ndecke, erwin, mat,\nmiwi, swills, tabthorpe"]
+portmgr [label="Port Management Team\nportmgr@FreeBSD.org\nantoine, bapt, bdrewery,\nerwin, mat, swills"]
 portmgrsecretary [label="Port Management Team Secretary\nportmgr-secretary@FreeBSD.org\nculot"]
 re [label="Primary Release Engineering Team\nre@FreeBSD.org\nkib, blackend, jpaetzel, hrs, kensmith"]
 secteam [label="Security Team\nsecteam@FreeBSD.org\nsimon, qingli, delphij,\nremko, philip, stas, cperciva,\ncsjp, rwatson, miwi, bz"]

@@ -47,7 +47,7 @@ __KERNEL_RCSID(0, "$NetBSD$");
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isp/isp.c 259860 2013-12-25 04:51:56Z mjacob $");
+__FBSDID("$FreeBSD: head/sys/dev/isp/isp.c 277515 2015-01-21 20:32:36Z will $");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__
@@ -1219,7 +1219,7 @@ isp_reset(ispsoftc_t *isp, int do_load_defaults)
 	 * work for them).
 	 */
 	if (IS_FC(isp) && isp->isp_nchan > 1) {
-		if (!IS_24XX(isp) || (fwt & ISP2400_FW_ATTR_MULTIID) == 0) {
+		if (!ISP_CAP_MULTI_ID(isp)) {
 			isp_prt(isp, ISP_LOGWARN, "non-MULTIID f/w loaded, only can enable 1 of %d channels", isp->isp_nchan);
 			isp->isp_nchan = 1;
 		}
@@ -5224,7 +5224,10 @@ again:
 			}
 			scsi_status = sp2->req_scsi_status;
 			completion_status = sp2->req_completion_status;
-			req_state_flags = 0;
+			if ((scsi_status & 0xff) != 0)
+				req_state_flags = RQSF_GOT_STATUS;
+			else
+				req_state_flags = 0;
 			resid = sp2->req_resid;
 		} else if (etype == RQSTYPE_RESPONSE) {
 			isp_get_response(isp, (ispstatusreq_t *) hp, sp);

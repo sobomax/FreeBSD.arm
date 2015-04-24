@@ -26,9 +26,10 @@
  * SUCH DAMAGE.
  *
  * $Id: link_control.c,v 1.4 2003/08/18 19:19:54 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/link_control.c 250460 2013-05-10 16:41:26Z eadler $
+ * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/link_control.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <stdio.h>

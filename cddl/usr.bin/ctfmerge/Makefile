@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/ctfmerge/Makefile 211187 2010-08-11 18:00:45Z rpaulo $
+# $FreeBSD: head/cddl/usr.bin/ctfmerge/Makefile 281327 2015-04-09 21:08:21Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/tools/ctf/common
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/tools/ctf/cvt
@@ -33,7 +33,6 @@ CFLAGS+=	-I${.CURDIR}/../../../sys/cddl/compat/opensolaris \
 		-I${OPENSOLARIS_USR_DISTDIR}/tools/ctf/cvt \
 		-I${OPENSOLARIS_SYS_DISTDIR}/uts/common
 
-DPADD=		${LIBCTF} ${LIBDWARF} ${LIBELF} ${LIBZ} ${LIBPTHREAD}
-LDADD=		-lctf -ldwarf -lelf -lz -lpthread
+LIBADD=		elf z pthread
 
 .include <bsd.prog.mk>

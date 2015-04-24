@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_drv.h 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_drv.h 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #ifndef __RADEON_DRV_H__
 #define __RADEON_DRV_H__
@@ -328,6 +328,10 @@ typedef struct drm_radeon_kcmd_buffer {
 extern int radeon_no_wb;
 extern struct drm_ioctl_desc radeon_ioctls[];
 extern int radeon_max_ioctl;
+#ifdef COMPAT_FREEBSD32
+extern struct drm_ioctl_desc radeon_compat_ioctls[];
+extern int radeon_num_compat_ioctls;
+#endif
 
 extern u32 radeon_get_ring_head(drm_radeon_private_t *dev_priv);
 extern void radeon_set_ring_head(drm_radeon_private_t *dev_priv, u32 val);
@@ -463,8 +467,13 @@ extern void r600_blit_swap(struct drm_device *dev,
 			   int w, int h, int src_pitch, int dst_pitch, int cpp);
 
 /* atpx handler */
+#if defined(CONFIG_VGA_SWITCHEROO)
 void radeon_register_atpx_handler(void);
 void radeon_unregister_atpx_handler(void);
+#else
+static inline void radeon_register_atpx_handler(void) {}
+static inline void radeon_unregister_atpx_handler(void) {}
+#endif
 
 /* Flags for stats.boxes
  */
@@ -2004,7 +2013,7 @@ do {									\
 
 #define VB_AGE_TEST_WITH_RETURN( dev_priv )				\
 do {								\
-	struct drm_radeon_master_private *master_priv = file_priv->masterp->driver_priv;\
+	struct drm_radeon_master_private *master_priv = file_priv->master->driver_priv;	\
 	drm_radeon_sarea_t *sarea_priv = master_priv->sarea_priv;	\
 	if ( sarea_priv->last_dispatch >= RADEON_MAX_VB_AGE ) {		\
 		int __ret;						\

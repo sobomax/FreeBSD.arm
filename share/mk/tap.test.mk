@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/tap.test.mk 268445 2014-07-09 00:55:50Z jmmv $
+# $FreeBSD: head/share/mk/tap.test.mk 274077 2014-11-04 01:57:31Z ngie $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -86,7 +86,11 @@ CLEANFILES+= ${_T} ${_T}.tmp
 TAP_TESTS_SH_SED_${_T}?= # empty
 TAP_TESTS_SH_SRC_${_T}?= ${_T}.sh
 ${_T}: ${TAP_TESTS_SH_SRC_${_T}}
+.if empty(TAP_TESTS_SH_SED_${_T})
+	cat ${.ALLSRC} >${.TARGET}.tmp
+.else
 	cat ${.ALLSRC} | sed ${TAP_TESTS_SH_SED_${_T}} >${.TARGET}.tmp
+.endif
 	chmod +x ${.TARGET}.tmp
 	mv ${.TARGET}.tmp ${.TARGET}
 .endfor

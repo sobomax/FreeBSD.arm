@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 271406 2014-09-10 21:07:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 281138 2015-04-06 06:55:47Z rpaulo $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -43,6 +43,7 @@ __FBSDID("$FreeBSD: head/sys/boot/i386/loader/main.c 271406 2014-09-10 21:07:00Z
 #include "bootstrap.h"
 #include "common/bootargs.h"
 #include "libi386/libi386.h"
+#include "libi386/smbios.h"
 #include "btxv86.h"
 
 #ifdef LOADER_ZFS_SUPPORT
@@ -115,7 +116,7 @@ main(void)
     }
     setheap(heap_bottom, heap_top);
 
-    /* 
+    /*
      * XXX Chicken-and-egg problem; we want to have console output early, but some
      * console attributes may depend on reading from eg. the boot device, which we
      * can't do yet.
@@ -181,7 +182,7 @@ main(void)
     biosacpi_detect();
 
     /* detect SMBIOS for future reference */
-    smbios_detect();
+    smbios_detect(NULL);
 
     /* detect PCI BIOS for future reference */
     biospci_detect();

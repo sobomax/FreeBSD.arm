@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_isa.c 267761 2014-06-23 02:00:14Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_isa.c 280834 2015-03-30 03:55:51Z markj $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -54,6 +54,8 @@ uint8_t dtrace_fuword8_nocheck(void *);
 uint16_t dtrace_fuword16_nocheck(void *);
 uint32_t dtrace_fuword32_nocheck(void *);
 uint64_t dtrace_fuword64_nocheck(void *);
+
+int	dtrace_ustackdepth_max = 2048;
 
 void
 dtrace_getpcstack(pc_t *pcstack, int pcstack_limit, int aframes,
@@ -113,11 +115,13 @@ dtrace_getustack_common(uint64_t *pcstack, int pcstack_limit, uintptr_t pc,
 	uintptr_t oldcontext = lwp->lwp_oldcontext; /* XXX signal stack. */
 	size_t s1, s2;
 #endif
+	uintptr_t oldsp;
 	volatile uint16_t *flags =
 	    (volatile uint16_t *)&cpu_core[curcpu].cpuc_dtrace_flags;
 	int ret = 0;
 
 	ASSERT(pcstack == NULL || pcstack_limit > 0);
+	ASSERT(dtrace_ustackdepth_max > 0);
 
 #ifdef notyet /* XXX signal stack. */
 	if (p->p_model == DATAMODEL_NATIVE) {
@@ -130,7 +134,16 @@ dtrace_getustack_common(uint64_t *pcstack, int pcstack_limit, uintptr_t pc,
 #endif
 
 	while (pc != 0) {
-		ret++;
+		/*
+		 * We limit the number of times we can go around this
+		 * loop to account for a circular stack.
+		 */
+		if (ret++ >= dtrace_ustackdepth_max) {
+			*flags |= CPU_DTRACE_BADSTACK;
+			cpu_core[curcpu].cpuc_dtrace_illval = sp;
+			break;
+		}
+
 		if (pcstack != NULL) {
 			*pcstack++ = (uint64_t)pc;
 			pcstack_limit--;
@@ -140,6 +153,8 @@ dtrace_getustack_common(uint64_t *pcstack, int pcstack_limit, uintptr_t pc,
 
 		if (sp == 0)
 			break;
+
+		oldsp = sp;
 
 #ifdef notyet /* XXX signal stack. */ 
 		if (oldcontext == sp + s1 || oldcontext == sp + s2) {
@@ -178,6 +193,12 @@ dtrace_getustack_common(uint64_t *pcstack, int pcstack_limit, uintptr_t pc,
 			offsetof(struct i386_frame, f_retaddr)));
 		sp = dtrace_fuword32((void *)sp);
 #endif /* ! notyet */
+
+		if (sp == oldsp) {
+			*flags |= CPU_DTRACE_BADSTACK;
+			cpu_core[curcpu].cpuc_dtrace_illval = sp;
+			break;
+		}
 
 		/*
 		 * This is totally bogus:  if we faulted, we're going to clear

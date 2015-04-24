@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/fdt/fdt_clock.c 270959 2014-09-02 03:46:24Z ian $
+ * $FreeBSD: head/sys/dev/fdt/fdt_clock.c 277989 2015-01-31 18:57:45Z ian $
  */
 
 #include <sys/cdefs.h>
@@ -149,7 +149,8 @@ void
 fdt_clock_register_provider(device_t provider)
 {
 
-	OF_device_register_xref(OF_xref_from_device(provider), provider);
+	OF_device_register_xref(
+	    OF_xref_from_node(ofw_bus_get_node(provider)), provider);
 }
 
 void

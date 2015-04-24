@@ -1,10 +1,9 @@
-# $FreeBSD: head/sbin/mount_udf/Makefile 247861 2013-03-06 00:36:33Z jkim $
+# $FreeBSD: head/sbin/mount_udf/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	mount_udf
 SRCS=	mount_udf.c getmntopts.c
 MAN=	mount_udf.8
-DPADD=	${LIBKICONV}
-LDADD=	-lkiconv
+LIBADD=	kiconv
 
 MOUNT=	${.CURDIR}/../mount
 CFLAGS+= -I${MOUNT} -I${.CURDIR}/../../sys

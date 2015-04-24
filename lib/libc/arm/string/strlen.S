@@ -25,7 +25,9 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/strlen.S 270882 2014-08-31 17:21:51Z ian $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/strlen.S 275256 2014-11-29 15:56:52Z andrew $");
+
+.syntax	unified
 
 ENTRY(strlen)
 	mov	r1, #0
@@ -53,23 +55,23 @@ ENTRY(strlen)
 	addne	r1, r1, #1
 .Ldo_3:
 #ifndef __ARMEB__
-	andnes    r3, r2, #0x0000ff00
+	andsne    r3, r2, #0x0000ff00
 #else
-  	andnes    r3, r2, #0x00ff0000
+  	andsne    r3, r2, #0x00ff0000
 #endif  
 	addne     r1, r1, #1
 .Ldo_2:
 #ifndef __ARMEB__
-	andnes    r3, r2, #0x00ff0000
+	andsne    r3, r2, #0x00ff0000
 #else
-	andnes    r3, r2, #0x0000ff00
+	andsne    r3, r2, #0x0000ff00
 #endif  
 	addne	r1, r1, #1
 .Ldo_1:
 #ifndef __ARMEB__
-	andnes	r3, r2, #0xff000000
+	andsne	r3, r2, #0xff000000
 #else
-	andnes	r3, r2, #0x000000ff
+	andsne	r3, r2, #0x000000ff
 #endif  
 	addne	r1, r1, #1
 	bne	.Loop				

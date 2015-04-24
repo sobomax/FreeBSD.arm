@@ -34,7 +34,7 @@ static char sccsid[] = "@(#)print.c	8.6 (Berkeley) 4/16/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/ps/print.c 256838 2013-10-21 09:12:04Z trasz $");
+__FBSDID("$FreeBSD: head/bin/ps/print.c 280171 2015-03-17 12:40:33Z feld $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -383,7 +383,6 @@ started(KINFO *k, VARENT *ve __unused)
 {
 	time_t then;
 	struct tm *tp;
-	static int use_ampm = -1;
 	size_t buflen = 100;
 	char *buf;
 
@@ -394,16 +393,12 @@ started(KINFO *k, VARENT *ve __unused)
 	if (buf == NULL)
 		errx(1, "malloc failed");
 
-	if (use_ampm < 0)
-		use_ampm = (*nl_langinfo(T_FMT_AMPM) != '\0');
 	then = k->ki_p->ki_start.tv_sec;
 	tp = localtime(&then);
 	if (now - k->ki_p->ki_start.tv_sec < 24 * 3600) {
-		(void)strftime(buf, buflen,
-		    use_ampm ? "%l:%M%p" : "%k:%M  ", tp);
+		(void)strftime(buf, buflen, "%H:%M  ", tp);
 	} else if (now - k->ki_p->ki_start.tv_sec < 7 * 86400) {
-		(void)strftime(buf, buflen,
-		    use_ampm ? "%a%I%p" : "%a%H  ", tp);
+		(void)strftime(buf, buflen, "%a%H  ", tp);
 	} else
 		(void)strftime(buf, buflen, "%e%b%y", tp);
 	return (buf);

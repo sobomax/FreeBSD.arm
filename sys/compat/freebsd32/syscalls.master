@@ -1,4 +1,4 @@
- $FreeBSD: head/sys/compat/freebsd32/syscalls.master 272823 2014-10-09 15:16:52Z marcel $
+ $FreeBSD: head/sys/compat/freebsd32/syscalls.master 277610 2015-01-23 21:07:08Z jilles $
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;	from: src/sys/kern/syscalls.master 1.107
 ;
@@ -583,7 +583,7 @@
 323	AUE_NULL	OBSOL	thr_wakeup
 324	AUE_MLOCKALL	NOPROTO	{ int mlockall(int how); }
 325	AUE_MUNLOCKALL	NOPROTO	{ int munlockall(void); }
-326	AUE_GETCWD	NOPROTO	{ int __getcwd(u_char *buf, u_int buflen); }
+326	AUE_GETCWD	NOPROTO	{ int __getcwd(char *buf, u_int buflen); }
 
 327	AUE_NULL	NOPROTO	{ int sched_setparam (pid_t pid, \
 				    const struct sched_param *param); }
@@ -1066,3 +1066,11 @@
 				    uint32_t id1, uint32_t id2, int com, \
 				    void *data); }
 #endif
+545	AUE_POLL	STD	{ int freebsd32_ppoll(struct pollfd *fds, \
+				    u_int nfds, const struct timespec32 *ts, \
+				    const sigset_t *set); }
+546	AUE_FUTIMES	STD	{ int freebsd32_futimens(int fd, \
+				    struct timespec *times); }
+547	AUE_FUTIMESAT	STD	{ int freebsd32_utimensat(int fd, \
+				    char *path, \
+				    struct timespec *times, int flag); }

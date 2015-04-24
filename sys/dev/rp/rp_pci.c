@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/rp/rp_pci.c 254263 2013-08-12 23:30:01Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/rp/rp_pci.c 274390 2014-11-11 18:15:05Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -237,7 +237,7 @@ rp_pcishutdown(device_t dev)
 static void
 rp_pcireleaseresource(CONTROLLER_t *ctlp)
 {
-	rp_untimeout();
+	rp_releaseresource(ctlp);
 	if (ctlp->io != NULL) {
 		if (ctlp->io[0] != NULL)
 			bus_release_resource(ctlp->dev, SYS_RES_IOPORT, ctlp->io_rid[0], ctlp->io[0]);
@@ -248,7 +248,6 @@ rp_pcireleaseresource(CONTROLLER_t *ctlp)
 		free(ctlp->io_rid, M_DEVBUF);
 		ctlp->io = NULL;
 	}
-	rp_releaseresource(ctlp);
 }
 
 static int

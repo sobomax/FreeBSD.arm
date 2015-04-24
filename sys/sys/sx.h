@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sx.h 258541 2013-11-25 07:38:45Z attilio $
+ * $FreeBSD: head/sys/sys/sx.h 275751 2014-12-13 21:00:10Z dchagin $
  */
 
 #ifndef	_SYS_SX_H_
@@ -292,6 +292,7 @@ __sx_sunlock(struct sx *sx, const char *file, int line)
 #define	SX_QUIET		0x08
 #define	SX_NOADAPTIVE		0x10
 #define	SX_RECURSE		0x20
+#define	SX_NEW			0x40
 
 /*
  * Options passed to sx_*lock_hard().

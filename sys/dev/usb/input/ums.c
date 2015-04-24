@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf
@@ -77,7 +77,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 246128 2013-01-30 18:01:20Z sbz
 static int ums_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, ums, CTLFLAG_RW, 0, "USB ums");
-SYSCTL_INT(_hw_usb_ums, OID_AUTO, debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_ums, OID_AUTO, debug, CTLFLAG_RWTUN,
     &ums_debug, 0, "Debug level");
 #endif
 

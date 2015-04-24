@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclanganalysis/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclanganalysis/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -12,6 +12,7 @@ SRCS=	AnalysisDeclContext.cpp \
 	CFGStmtMap.cpp \
 	CallGraph.cpp \
 	CocoaConventions.cpp \
+	CodeInjector.cpp \
 	Consumed.cpp \
 	Dominators.cpp \
 	FormatString.cpp \
@@ -24,9 +25,13 @@ SRCS=	AnalysisDeclContext.cpp \
 	ReachableCode.cpp \
 	ScanfFormatString.cpp \
 	ThreadSafety.cpp \
+	ThreadSafetyCommon.cpp \
+	ThreadSafetyLogical.cpp \
+	ThreadSafetyTIL.cpp \
 	UninitializedValues.cpp
 
 TGHDRS=	AttrList \
+	AttrVisitor \
 	Attrs \
 	CommentCommandList \
 	CommentNodes \

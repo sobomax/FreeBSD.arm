@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iic.h 268564 2014-07-12 06:23:42Z rpaulo $
+ * $FreeBSD: head/sys/dev/iicbus/iic.h 281828 2015-04-21 11:50:31Z jah $
  *
  */
 #ifndef __IIC_H
@@ -63,5 +63,6 @@ struct iic_rdwr_data {
 #define I2CREAD		_IOW('i', 5, struct iiccmd)	/* receive data */
 #define I2CRDWR		_IOW('i', 6, struct iic_rdwr_data)	/* General read/write interface */
 #define I2CRPTSTART	_IOW('i', 7, struct iiccmd)	/* repeated start */
+#define I2CSADDR	_IOW('i', 8, uint8_t)		/* set slave address for future I/O */
 
 #endif

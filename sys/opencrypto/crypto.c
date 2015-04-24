@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/opencrypto/crypto.c 262994 2014-03-11 01:45:46Z jmg $");
+__FBSDID("$FreeBSD: head/sys/opencrypto/crypto.c 275732 2014-12-12 19:56:36Z jmg $");
 
 /*
  * Cryptographic Subsystem.
@@ -368,9 +368,8 @@ again:
 				best = cap;
 		}
 	}
-	if (best != NULL)
-		return best;
-	if (match == CRYPTOCAP_F_HARDWARE && (flags & CRYPTOCAP_F_SOFTWARE)) {
+	if (best == NULL && match == CRYPTOCAP_F_HARDWARE &&
+	    (flags & CRYPTOCAP_F_SOFTWARE)) {
 		/* sort of an Algol 68-style for loop */
 		match = CRYPTOCAP_F_SOFTWARE;
 		goto again;
@@ -421,9 +420,12 @@ crypto_newsession(u_int64_t *sid, struct cryptoini *cri, int crid)
 			(*sid) <<= 32;
 			(*sid) |= (lid & 0xffffffff);
 			cap->cc_sessions++;
-		}
-	} else
+		} else
+			CRYPTDEB("dev newsession failed");
+	} else {
+		CRYPTDEB("no driver");
 		err = EINVAL;
+	}
 	CRYPTO_DRIVER_UNLOCK();
 	return err;
 }

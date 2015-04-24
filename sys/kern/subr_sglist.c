@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_sglist.c 260581 2014-01-13 04:41:08Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_sglist.c 277759 2015-01-26 16:26:28Z jhb $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -215,6 +215,9 @@ sglist_alloc(int nsegs, int mflags)
 void
 sglist_free(struct sglist *sg)
 {
+
+	if (sg == NULL)
+		return;
 
 	if (refcount_release(&sg->sg_refs))
 		free(sg, M_SGLIST);

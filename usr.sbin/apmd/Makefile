@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/apmd/Makefile 208289 2010-05-19 08:52:51Z uqs $
+# $FreeBSD: head/usr.sbin/apmd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	apmd
 MAN=	apmd.8
@@ -7,8 +7,7 @@ SRCS=	apmd.c apmdlex.l apmdparse.y y.tab.h
 
 WARNS?=	3
 
-DPADD=	${LIBL}
-LDADD=	-ll
+LIBADD=	l
 
 CFLAGS+= -I${.CURDIR}
 

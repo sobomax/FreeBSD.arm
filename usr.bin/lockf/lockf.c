@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/lockf/lockf.c 250462 2013-05-10 17:30:29Z eadler $");
+__FBSDID("$FreeBSD: head/usr.bin/lockf/lockf.c 281582 2015-04-16 02:24:40Z bdrewery $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -169,7 +169,7 @@ acquire_lock(const char *name, int flags)
 {
 	int fd;
 
-	if ((fd = open(name, flags|O_RDONLY|O_EXLOCK|flags, 0666)) == -1) {
+	if ((fd = open(name, O_RDONLY|O_EXLOCK|flags, 0666)) == -1) {
 		if (errno == EAGAIN || errno == EINTR)
 			return (-1);
 		err(EX_CANTCREAT, "cannot open %s", name);

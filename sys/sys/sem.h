@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/sys/sem.h 224016 2011-07-14 14:18:14Z bz $ */
+/* $FreeBSD: head/sys/sys/sem.h 275985 2014-12-21 05:07:11Z imp $ */
 /*	$NetBSD: sem.h,v 1.5 1994/06/29 06:45:15 cgd Exp $	*/
 
 /*
@@ -37,7 +37,7 @@ struct semid_ds_old {
 	long		sem_pad1;	/* SVABI/386 says I need this here */
 	time_t		sem_ctime;	/* last change time */
     					/* Times measured in secs since */
-    					/* 00:00:00 GMT, Jan. 1, 1970 */
+    					/* 00:00:00 UTC, Jan. 1, 1970, without leap seconds */
 	long		sem_pad2;	/* SVABI/386 says I need this here */
 	long		sem_pad3[4];	/* SVABI/386 says I need this here */
 };
@@ -50,7 +50,7 @@ struct semid_ds {
 	time_t		sem_otime;	/* last operation time */
 	time_t		sem_ctime;	/* last change time */
     					/* Times measured in secs since */
-    					/* 00:00:00 GMT, Jan. 1, 1970 */
+    					/* 00:00:00 UTC, Jan. 1, 1970, without leap seconds */
 };
 
 /*

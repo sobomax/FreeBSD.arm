@@ -1,9 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libkadm5srv/Makefile 236337 2012-05-30 22:21:25Z obrien $
+# $FreeBSD: head/kerberos5/lib/libkadm5srv/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	kadm5srv
 LDFLAGS=	-Wl,--no-undefined
-LDADD=	-lcom_err -lhdb -lkrb5 -lroken
-DPADD=	${LIBCOM_ERR} ${LIBHDB} ${LIBKRB5} ${LIBROKEN}
+LIBADD=	com_err hdb krb5 roken
 VERSION_MAP= ${KRB5DIR}/lib/kadm5/version-script.map
 MAN=	kadm5_pwcheck.3
 

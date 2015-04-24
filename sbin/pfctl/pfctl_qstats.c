@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_qstats.c 240494 2012-09-14 11:51:49Z glebius $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_qstats.c 281613 2015-04-16 20:22:40Z glebius $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -34,10 +34,10 @@ __FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_qstats.c 240494 2012-09-14 11:51:49Z g
 #include <string.h>
 #include <unistd.h>
 
-#include <altq/altq.h>
-#include <altq/altq_cbq.h>
-#include <altq/altq_priq.h>
-#include <altq/altq_hfsc.h>
+#include <net/altq/altq.h>
+#include <net/altq/altq_cbq.h>
+#include <net/altq/altq_priq.h>
+#include <net/altq/altq_hfsc.h>
 
 #include "pfctl.h"
 #include "pfctl_parser.h"

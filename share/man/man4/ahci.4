@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ahci.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/ahci.4 280451 2015-03-24 18:09:07Z mav $
 .\"
 .Dd October 22, 2013
 .Dt AHCI 4
@@ -143,12 +143,6 @@ device for localization and status reporting purposes.
 Supporting AHCI controllers may transmit that information to the backplane
 controllers via SGPIO interface. Backplane controllers interpret received
 statuses in some way (IBPI standard) to report them using present indicators.
-.Pp
-AHCI hardware is also supported by ataahci driver from
-.Xr ata 4
-subsystem.
-If both drivers are loaded at the same time, this one will be
-given precedence as the more functional of the two.
 .Sh HARDWARE
 The
 .Nm

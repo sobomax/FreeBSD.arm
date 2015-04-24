@@ -30,7 +30,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/dev/mwl/if_mwl_pci.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mwl/if_mwl_pci.c 275870 2014-12-17 21:26:25Z adrian $");
 #endif
 
 /*
@@ -178,9 +178,9 @@ mwl_pci_attach(device_t dev)
 			       BUS_SPACE_MAXADDR_32BIT,	/* lowaddr */
 			       BUS_SPACE_MAXADDR,	/* highaddr */
 			       NULL, NULL,		/* filter, filterarg */
-			       BUS_SPACE_MAXADDR,	/* maxsize */
+			       BUS_SPACE_MAXSIZE,	/* maxsize */
 			       MWL_TXDESC,		/* nsegments */
-			       BUS_SPACE_MAXADDR,	/* maxsegsize */
+			       BUS_SPACE_MAXSIZE,	/* maxsegsize */
 			       0,			/* flags */
 			       NULL,			/* lockfunc */
 			       NULL,			/* lockarg */

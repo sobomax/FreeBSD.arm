@@ -36,7 +36,7 @@
 /* The actual program logic is in the file procs.c			*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/rpc.statd/statd.c 222627 2011-06-02 20:15:32Z rmacklem $");
+__FBSDID("$FreeBSD: head/usr.sbin/rpc.statd/statd.c 277352 2015-01-19 00:33:32Z rstone $");
 
 #include <err.h>
 #include <errno.h>
@@ -343,7 +343,6 @@ create_service(struct netconfig *nconf)
 
 	/* Get rpc.statd's address on this transport */
 	memset(&hints, 0, sizeof hints);
-	hints.ai_flags = AI_PASSIVE;
 	hints.ai_family = si.si_af;
 	hints.ai_socktype = si.si_socktype;
 	hints.ai_protocol = si.si_proto;
@@ -359,6 +358,7 @@ create_service(struct netconfig *nconf)
 			out_of_mem();
 		sock_fd[sock_fdcnt++] = -1;	/* Set invalid for now. */
 		mallocd_res = 0;
+		hints.ai_flags = AI_PASSIVE;
 
 		/*	
 		 * XXX - using RPC library internal functions.

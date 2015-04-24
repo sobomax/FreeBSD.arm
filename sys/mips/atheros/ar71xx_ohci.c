@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ohci.c 228483 2011-12-14 00:28:54Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ohci.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,6 +76,7 @@ ar71xx_ohci_attach(device_t dev)
 	sc->sc_ohci.sc_bus.parent = dev;
 	sc->sc_ohci.sc_bus.devices = sc->sc_ohci.sc_devices;
 	sc->sc_ohci.sc_bus.devices_max = OHCI_MAX_DEVICES;
+	sc->sc_ohci.sc_bus.dma_bits = 32;
 
 	/* get all DMA memory */
 	if (usb_bus_mem_alloc_all(&sc->sc_ohci.sc_bus,

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/iscsictl/token.l 273822 2014-10-29 12:22:32Z trasz $
+ * $FreeBSD: head/usr.bin/iscsictl/token.l 278232 2015-02-05 06:37:59Z trasz $
  */
 
 #include <stdio.h>
@@ -63,6 +63,7 @@ tgtChapSecret		{ return MUTUAL_SECRET; }
 AuthMethod		{ return AUTH_METHOD; }
 SessionType		{ return SESSION_TYPE; }
 protocol		{ return PROTOCOL; }
+offload			{ return OFFLOAD; }
 port			{ return IGNORED; }
 MaxConnections		{ return IGNORED; }
 TargetAlias		{ return IGNORED; }

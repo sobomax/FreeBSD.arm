@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/tmpfs/tmpfs.h 268617 2014-07-14 09:52:33Z kib $
+ * $FreeBSD: head/sys/fs/tmpfs/tmpfs.h 277828 2015-01-28 10:37:23Z kib $
  */
 
 #ifndef _FS_TMPFS_TMPFS_H_
@@ -398,6 +398,7 @@ int	tmpfs_alloc_vp(struct mount *, struct tmpfs_node *, int,
 void	tmpfs_free_vp(struct vnode *);
 int	tmpfs_alloc_file(struct vnode *, struct vnode **, struct vattr *,
 	    struct componentname *, char *);
+void	tmpfs_check_mtime(struct vnode *);
 void	tmpfs_dir_attach(struct vnode *, struct tmpfs_dirent *);
 void	tmpfs_dir_detach(struct vnode *, struct tmpfs_dirent *);
 void	tmpfs_dir_destroy(struct tmpfs_mount *, struct tmpfs_node *);

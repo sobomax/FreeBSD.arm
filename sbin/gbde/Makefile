@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/gbde/Makefile 249657 2013-04-19 19:45:00Z ed $
+# $FreeBSD: head/sbin/gbde/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	gbde
 SRCS=	gbde.c template.c
@@ -20,8 +20,7 @@ CFLAGS+= -I${.CURDIR}/../../sys
 CLEANFILES+= template.c
 
 MAN=	gbde.8
-DPADD=	${LIBMD} ${LIBUTIL} ${LIBGEOM}
-LDADD=	-lmd -lutil -lgeom
+LIBADD=	md util geom
 
 template.c: template.txt
 	file2c 'const char template[] = {' ',0};' \

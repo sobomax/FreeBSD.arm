@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/powerpc64/sys/Makefile.inc 264155 2014-04-05 17:54:43Z imp $
+# $FreeBSD: head/lib/libc/powerpc64/sys/Makefile.inc 281714 2015-04-18 21:50:13Z kib $
 
 MDASM+=	brk.S cerror.S exect.S pipe.S ptrace.S sbrk.S setlogin.S
 
@@ -6,6 +6,3 @@ MDASM+=	brk.S cerror.S exect.S pipe.S ptrace.S sbrk.S setlogin.S
 NOASM=	break.o exit.o getlogin.o openbsd_poll.o sstk.o yield.o
 
 PSEUDO=	_getlogin.o _exit.o
-.if ${MK_SYSCALL_COMPAT} != "no"
-PSEUDO+= _pread.o _pwrite.o _lseek.o _mmap.o _ftruncate.o _truncate.o
-.endif

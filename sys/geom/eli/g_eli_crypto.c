@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/eli/g_eli_crypto.c 271148 2014-09-04 23:53:51Z jmg $");
+__FBSDID("$FreeBSD: head/sys/geom/eli/g_eli_crypto.c 275732 2014-12-12 19:56:36Z jmg $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -101,7 +101,7 @@ g_eli_crypto_cipher(u_int algo, int enc, u_char *data, size_t datasize,
 	crp->crp_opaque = NULL;
 	crp->crp_callback = g_eli_crypto_done;
 	crp->crp_buf = (void *)data;
-	crp->crp_flags = CRYPTO_F_CBIFSYNC | CRYPTO_F_REL;
+	crp->crp_flags = CRYPTO_F_CBIFSYNC;
 	crp->crp_desc = crd;
 
 	error = crypto_dispatch(crp);

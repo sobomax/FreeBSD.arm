@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/tty.c 272789 2014-10-09 02:30:38Z marcel $");
+__FBSDID("$FreeBSD: head/sys/kern/tty.c 278930 2015-02-17 23:54:06Z mjg $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -1897,7 +1897,7 @@ ttyhook_register(struct tty **rtp, struct proc *p, int fd,
 	/* Validate the file descriptor. */
 	fdp = p->p_fd;
 	error = fget_unlocked(fdp, fd, cap_rights_init(&rights, CAP_TTYHOOK),
-	    0, &fp, NULL);
+	    &fp, NULL);
 	if (error != 0)
 		return (error);
 	if (fp->f_ops == &badfileops) {

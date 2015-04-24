@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_mbox.c 269693 2014-08-07 21:56:46Z imp $ */
+/* $FreeBSD: head/sys/dev/oce/oce_mbox.c 278695 2015-02-13 19:44:04Z jmg $ */
 
 #include "oce_if.h"
 extern uint32_t sfp_vpd_dump_buffer[TRANSCEIVER_DATA_NUM_ELE];
@@ -811,7 +811,6 @@ oce_config_nic_rss(POCE_SOFTC sc, uint32_t if_id, uint16_t enable_rss)
 	fwcmd->params.req.flush = OCE_FLUSH;
 	fwcmd->params.req.if_id = LE_32(if_id);
 
-	srandom(arc4random());	/* random entropy seed */
 	read_random(fwcmd->params.req.hash, sizeof(fwcmd->params.req.hash));
 	
 	rc = oce_rss_itbl_init(sc, fwcmd);

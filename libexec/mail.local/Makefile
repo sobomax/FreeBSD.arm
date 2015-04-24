@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: head/libexec/mail.local/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/libexec/mail.local/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/mail.local
@@ -12,11 +12,7 @@ CFLAGS+=-I${SENDMAIL_DIR}/include -I.
 WARNS?=	2
 WFORMAT=0
 
-LIBSMDIR=	${.OBJDIR}/../../lib/libsm
-LIBSM=		${LIBSMDIR}/libsm.a
-
-DPADD=	${LIBSM}
-LDADD=	${LIBSM}
+LIBADD=	sm
 
 SRCS+=	sm_os.h
 CLEANFILES+=sm_os.h

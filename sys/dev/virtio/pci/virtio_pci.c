@@ -27,7 +27,7 @@
 /* Driver for the VirtIO PCI interface. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/pci/virtio_pci.c 267522 2014-06-16 04:25:04Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/pci/virtio_pci.c 280090 2015-03-15 21:00:10Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -730,7 +730,7 @@ vtpci_describe_features(struct vtpci_softc *sc, const char *msg,
 	dev = sc->vtpci_dev;
 	child = sc->vtpci_child_dev;
 
-	if (device_is_attached(child) && bootverbose == 0)
+	if (device_is_attached(child) || bootverbose == 0)
 		return;
 
 	virtio_describe(dev, msg, features, sc->vtpci_child_feat_desc);

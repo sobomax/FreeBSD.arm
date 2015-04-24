@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/i386/include/param.h 250338 2013-05-07 22:46:24Z attilio $
+ * $FreeBSD: head/sys/i386/include/param.h 281495 2015-04-13 15:22:45Z kib $
  */
 
 
@@ -90,7 +90,7 @@
 #define PAGE_MASK	(PAGE_SIZE-1)
 #define NPTEPG		(PAGE_SIZE/(sizeof (pt_entry_t)))
 
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 #define NPGPTD		4
 #define PDRSHIFT	21		/* LOG2(NBPDR) */
 #define NPGPTD_SHIFT	9

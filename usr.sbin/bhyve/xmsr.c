@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/xmsr.c 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/xmsr.c 279227 2015-02-24 05:15:40Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/xmsr.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/xmsr.c 279227 2015-02-24 05:15:40Z neel $");
 
 #include <sys/types.h>
 
@@ -183,6 +183,15 @@ emulate_rdmsr(struct vmctx *ctx, int vcpu, uint32_t num, uint64_t *val)
 		case MSR_P_STATE_STATUS:
 		case MSR_P_STATE_CONFIG(0):	/* P0 configuration */
 			*val = 0;
+			break;
+
+		/*
+		 * OpenBSD guests test bit 0 of this MSR to detect if the
+		 * workaround for erratum 721 is already applied.
+		 * http://support.amd.com/TechDocs/41322_10h_Rev_Gd.pdf
+		 */
+		case 0xC0011029:
+			*val = 1;
 			break;
 
 		default:

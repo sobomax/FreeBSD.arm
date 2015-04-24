@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/unbound/control/Makefile 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/usr.sbin/unbound/control/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../../contrib/ldns
@@ -10,9 +10,7 @@ PROG=	unbound-control
 SCRIPTS=	unbound-control-setup.sh
 SRCS=	unbound-control.c worker_cb.c
 CFLAGS=	-I${UNBOUNDDIR} -I${LDNSDIR}
-DPADD=	${LIBUNBOUND} ${LIBLDNS} ${LIBUTIL} ${LIBSSL} ${LIBCRYPTO} ${LIBPTHREAD}
-LDADD=	${LDUNBOUND} ${LDLDNS} -lutil -lssl -lcrypto -lpthread
-USEPRIVATELIB=	ldns
+LIBADD=	unbound crypto ssl pthread
 MAN=	unbound-control.8
 
 .include <bsd.prog.mk>

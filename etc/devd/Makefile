@@ -1,13 +1,17 @@
-# $FreeBSD: head/etc/devd/Makefile 273155 2014-10-16 00:33:06Z imp $
+# $FreeBSD: head/etc/devd/Makefile 277730 2015-01-26 08:04:38Z ngie $
 
 .include <src.opts.mk>
+
+FILES=
 
 .if ${MACHINE} == "powerpc"
 FILES+=	apple.conf
 .endif
 
 .if ${MACHINE} == "amd64" || ${MACHINE} == "i386"
+.if ${MK_ACPI} != "no"
 FILES+=	asus.conf
+.endif
 .if ${MK_HYPERV} != "no"
 FILES+=	hyperv.conf
 .endif

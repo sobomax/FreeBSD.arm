@@ -1,12 +1,11 @@
-# $FreeBSD: head/lib/librpcsec_gss/Makefile 264928 2014-04-25 19:25:26Z imp $
+# $FreeBSD: head/lib/librpcsec_gss/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 LIB=	rpcsec_gss
 SHLIB_MAJOR= 1
 SRCS+=	rpcsec_gss.c rpcsec_gss_prot.c rpcsec_gss_conf.c rpcsec_gss_misc.c \
 	svc_rpcsec_gss.c
 
-DPADD+=	${LIBGSSAPI}
-LDADD+=	-lgssapi
+LIBADD=	gssapi
 
 VERSION_DEF=	${.CURDIR}/../libc/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/Symbol.map

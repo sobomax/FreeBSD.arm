@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.3 (Berkeley) 4/4/95
- * $FreeBSD: head/sys/sys/param.h 273875 2014-10-30 22:47:32Z mjg $
+ * $FreeBSD: head/sys/sys/param.h 281613 2015-04-16 20:22:40Z glebius $
  */
 
 #ifndef _SYS_PARAM_H_
@@ -50,7 +50,7 @@
  * there.
  * Currently this lives here in the doc/ repository:
  *
- *	head/en_US.ISO8859-1/books/porters-handbook/book.xml
+ *	head/en_US.ISO8859-1/books/porters-handbook/versions/chapter.xml
  *
  * scheme is:  <major><two digit minor>Rxx
  *		'R' is in the range 0 to 4 if this is a release branch or
@@ -58,7 +58,7 @@
  *		in the range 5 to 9.
  */
 #undef __FreeBSD_version
-#define __FreeBSD_version 1100041	/* Master, propagated to newvers */
+#define __FreeBSD_version 1100070	/* Master, propagated to newvers */
 
 /*
  * __FreeBSD_kernel__ indicates that this system uses the kernel of FreeBSD,
@@ -81,7 +81,6 @@
 #define	P_OSREL_SIGSEGV		700004
 #define	P_OSREL_MAP_ANON	800104
 #define	P_OSREL_MAP_FSTRICT	1100036
-#define	P_OSREL_MAP_RENAME	1100039
 
 #define	P_OSREL_MAJOR(x)	((x) / 100000)
 #endif

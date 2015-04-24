@@ -37,7 +37,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv5_ec.S 248361 2013-03-16 02:48:49Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv5_ec.S 275417 2014-12-02 18:35:34Z andrew $");
 
 /*
  * Functions to set the MMU Translation Table Base register
@@ -58,7 +58,7 @@ ENTRY(armv5_ec_setttb)
 	 * do it directly and entirely avoid the problem.
 	 */
 	mcr	p15, 0, r0, c7, c5, 0	/* Invalidate ICache */
-1:	mrc	p15, 0, r15, c7, c14, 3	/* Test, clean and invalidate DCache */
+1:	mrc	p15, 0, APSR_nzcv, c7, c14, 3	/* Test, clean and invalidate DCache */
 	bne	1b			/* More to do? */
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 
@@ -105,7 +105,7 @@ ENTRY_NP(armv5_ec_icache_sync_all)
 
 .Larmv5_ec_dcache_wb:
 1:
-	mrc	p15, 0, r15, c7, c10, 3	/* Test and clean (don't invalidate) */
+	mrc	p15, 0, APSR_nzcv, c7, c10, 3	/* Test and clean (don't invalidate) */
 	bne	1b			/* More to do? */
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 	RET
@@ -208,7 +208,7 @@ END(armv5_ec_idcache_wbinv_all)
 
 ENTRY(armv5_ec_dcache_wbinv_all)
 .Larmv5_ec_dcache_wbinv_all:
-1:	mrc	p15, 0, r15, c7, c14, 3	/* Test, clean and invalidate DCache */
+1:	mrc	p15, 0, APSR_nzcv, c7, c14, 3	/* Test, clean and invalidate DCache */
 	bne	1b			/* More to do? */
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 	RET

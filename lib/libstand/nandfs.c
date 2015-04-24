@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/nandfs.c 247613 2013-03-02 05:28:55Z marcel $");
+__FBSDID("$FreeBSD: head/lib/libstand/nandfs.c 276079 2014-12-22 20:42:36Z ian $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -921,7 +921,7 @@ nandfs_bmap_lookup(struct nandfs *fs, struct nandfs_node *node,
 			return (0);
 		}
 
-		twiddle();
+		twiddle(1);
 		NANDFS_DEBUG("calling get_map with %jx\n", ind_block_num);
 		map = nandfs_get_map(fs, node, ind_block_num, phys);
 		if (map == NULL)

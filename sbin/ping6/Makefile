@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ping6/Makefile 273295 2014-10-20 00:27:40Z hrs $
+# $FreeBSD: head/sbin/ping6/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	ping6
 MAN=	ping6.8
@@ -10,7 +10,6 @@ WARNS?=	3
 BINOWN=	root
 BINMODE=4555
 
-LDADD=	-lipsec -lm -lmd
-DPADD= ${LIBIPSEC} ${LIBM} ${LIBMD}
+LIBADD=	ipsec m md
 
 .include <bsd.prog.mk>

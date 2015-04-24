@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/lpc/lpc_ohci.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/lpc/lpc_ohci.c 276717 2015-01-05 20:22:18Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -122,6 +122,7 @@ lpc_ohci_attach(device_t dev)
 	sc->sc_bus.parent = dev;
 	sc->sc_bus.devices = sc->sc_devices;
 	sc->sc_bus.devices_max = OHCI_MAX_DEVICES;
+	sc->sc_bus.dma_bits = 32;
 
 	if (usb_bus_mem_alloc_all(&sc->sc_bus, USB_GET_DMA_TAG(dev),
 	    &ohci_iterate_hw_softc))

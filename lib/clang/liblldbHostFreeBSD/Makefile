@@ -1,11 +1,14 @@
-# $FreeBSD: head/lib/clang/liblldbHostFreeBSD/Makefile 255722 2013-09-20 01:52:02Z emaste $
+# $FreeBSD: head/lib/clang/liblldbHostFreeBSD/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
 LIB=	lldbHostFreeBSD
 
 SRCDIR=	tools/lldb/source/Host/freebsd
-SRCS=	Host.cpp
+SRCS=	Host.cpp \
+	HostInfoFreeBSD.cpp \
+	HostThreadFreeBSD.cpp \
+	ThisThread.cpp
 
 TGHDRS=	DiagnosticCommonKinds \
 	DeclNodes \

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_lookup.c 262812 2014-03-06 00:10:07Z jeff $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_lookup.c 275897 2014-12-18 10:01:12Z kib $");
 
 #include "opt_ufs.h"
 #include "opt_quota.h"
@@ -550,7 +550,7 @@ notfound:
 	/*
 	 * Insert name into cache (as non-existent) if appropriate.
 	 */
-	if ((cnp->cn_flags & MAKEENTRY) && nameiop != CREATE)
+	if ((cnp->cn_flags & MAKEENTRY) != 0)
 		cache_enter(vdp, NULL, cnp);
 	return (ENOENT);
 
@@ -1475,7 +1475,8 @@ ufs_checkpath(ino_t source_ino, ino_t parent_ino, struct inode *target, struct u
 			}
 		}
 		KASSERT(dd_ino == VTOI(vp1)->i_number,
-		    ("directory %d reparented\n", VTOI(vp1)->i_number));
+		    ("directory %ju reparented\n",
+		    (uintmax_t)VTOI(vp1)->i_number));
 		if (vp != tvp)
 			vput(vp);
 		vp = vp1;

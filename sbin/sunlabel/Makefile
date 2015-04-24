@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/sunlabel/Makefile 211725 2010-08-23 22:24:11Z imp $
+# $FreeBSD: head/sbin/sunlabel/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../../sys/geom
 
@@ -11,8 +11,7 @@ LINKS=	${BINDIR}/sunlabel ${BINDIR}/disklabel
 MLINKS=	sunlabel.8 disklabel.8
 .endif
 
-DPADD=	${LIBGEOM}
-LDADD=	-lgeom
+LIBADD=	geom
 
 .include <bsd.prog.mk>
 

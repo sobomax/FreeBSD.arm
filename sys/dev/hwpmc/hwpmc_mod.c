@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mod.c 273953 2014-11-01 22:36:40Z mjg $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mod.c 277177 2015-01-14 12:46:58Z rrs $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -320,8 +320,12 @@ static struct syscall_module_data pmc_syscall_mod = {
 	NULL,
 	&pmc_syscall_num,
 	&pmc_sysent,
+#if (__FreeBSD_version >= 1100000)
 	{ 0, NULL },
 	SY_THR_STATIC_KLD,
+#else
+	{ 0, NULL }
+#endif
 };
 
 static moduledata_t pmc_mod = {
@@ -4749,8 +4753,9 @@ pmc_initialize(void)
 	if (pmc_callchaindepth <= 0 ||
 	    pmc_callchaindepth > PMC_CALLCHAIN_DEPTH_MAX) {
 		(void) printf("hwpmc: tunable \"callchaindepth\"=%d out of "
-		    "range.\n", pmc_callchaindepth);
-		pmc_callchaindepth = PMC_CALLCHAIN_DEPTH;
+		    "range - using %d.\n", pmc_callchaindepth,
+		    PMC_CALLCHAIN_DEPTH_MAX);
+		pmc_callchaindepth = PMC_CALLCHAIN_DEPTH_MAX;
 	}
 
 	md = pmc_md_initialize();

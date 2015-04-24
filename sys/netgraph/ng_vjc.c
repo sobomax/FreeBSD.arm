@@ -38,7 +38,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_vjc.c 243882 2012-12-05 08:04:20Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_vjc.c 276750 2015-01-06 12:59:37Z rwatson $
  * $Whistle: ng_vjc.c,v 1.17 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -484,8 +484,7 @@ ng_vjc_rcvdata(hook_p hook, item_p item)
 		hm->m_len = 0;
 		hm->m_pkthdr.rcvif = NULL;
 		if (hlen > MHLEN) {		/* unlikely, but can happen */
-			MCLGET(hm, M_NOWAIT);
-			if ((hm->m_flags & M_EXT) == 0) {
+			if (!(MCLGET(hm, M_NOWAIT))) {
 				m_freem(hm);
 				priv->slc.sls_errorin++;
 				NG_FREE_M(m);

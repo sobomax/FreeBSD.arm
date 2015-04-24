@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/stack_machdep.c 256941 2013-10-22 21:47:34Z cognet $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/stack_machdep.c 276190 2014-12-24 18:54:31Z ian $");
 
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -76,7 +76,7 @@ stack_save_td(struct stack *st, struct thread *td)
 	 * as it doesn't have a frame pointer, however it's value is not used
 	 * when building for EABI.
 	 */
-	frame = (u_int32_t *)td->td_pcb->un_32.pcb32_r11;
+	frame = (u_int32_t *)td->td_pcb->pcb_regs.sf_r11;
 	stack_zero(st);
 	stack_capture(st, frame);
 }

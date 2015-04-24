@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/builtins/Makefile 272983 2014-10-12 13:12:06Z jilles $
+# $FreeBSD: head/bin/sh/tests/builtins/Makefile 281718 2015-04-18 23:49:57Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -137,6 +137,8 @@ FILES+=		trap11.0
 FILES+=		trap12.0
 FILES+=		trap13.0
 FILES+=		trap14.0
+FILES+=		trap15.0
+FILES+=		trap16.0
 FILES+=		trap2.0
 FILES+=		trap3.0
 FILES+=		trap4.0

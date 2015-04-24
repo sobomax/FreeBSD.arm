@@ -42,7 +42,7 @@ static const char sccsid[] = "@(#)du.c	8.5 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/du/du.c 238817 2012-07-26 20:41:36Z pluknet $");
+__FBSDID("$FreeBSD: head/usr.bin/du/du.c 278921 2015-02-17 21:12:45Z pfg $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -376,7 +376,7 @@ linkchk(FTSENT *p)
 	/* If the hash table is getting too full, enlarge it. */
 	if (number_entries > number_buckets * 10 && !stop_allocating) {
 		new_size = number_buckets * 2;
-		new_buckets = malloc(new_size * sizeof(struct links_entry *));
+		new_buckets = calloc(new_size, sizeof(struct links_entry *));
 
 		/* Try releasing the free list to see if that helps. */
 		if (new_buckets == NULL && free_list != NULL) {
@@ -385,16 +385,13 @@ linkchk(FTSENT *p)
 				free_list = le->next;
 				free(le);
 			}
-			new_buckets = malloc(new_size *
-			    sizeof(new_buckets[0]));
+			new_buckets = calloc(new_size, sizeof(new_buckets[0]));
 		}
 
 		if (new_buckets == NULL) {
 			stop_allocating = 1;
 			warnx("No more memory for tracking hard links");
 		} else {
-			memset(new_buckets, 0,
-			    new_size * sizeof(struct links_entry *));
 			for (i = 0; i < number_buckets; i++) {
 				while (buckets[i] != NULL) {
 					/* Remove entry from old bucket. */

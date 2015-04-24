@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/devinfo/devinfo.c 227252 2011-11-06 19:01:48Z ed $");
+__FBSDID("$FreeBSD: head/usr.sbin/devinfo/devinfo.c 278299 2015-02-05 22:42:44Z jhb $");
 
 #include <sys/types.h>
 #include <err.h>
@@ -146,6 +146,10 @@ print_device(struct devinfo_dev *dev, void *arg)
 			printf(" pnpinfo %s", dev->dd_pnpinfo);
 		if (vflag && *dev->dd_location)
 			printf(" at %s", dev->dd_location);
+		if (!(dev->dd_flags & DF_ENABLED))
+			printf(" (disabled)");
+		else if (dev->dd_flags & DF_SUSPENDED)
+			printf(" (suspended)");
 		printf("\n");
 		if (rflag) {
 			ia.indent = indent + 4;

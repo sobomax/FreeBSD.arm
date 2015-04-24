@@ -25,12 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_gjournal.c 197408 2009-09-22 16:22:05Z rdivacky $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_gjournal.c 274906 2014-11-23 01:01:14Z glebius $");
 
 #include "opt_ufs.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/buf.h>
 #include <sys/kernel.h>
 #include <sys/vnode.h>
 #include <sys/lock.h>

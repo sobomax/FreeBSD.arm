@@ -1,18 +1,16 @@
-# $FreeBSD: head/usr.sbin/wpa/wpa_passphrase/Makefile 267715 2014-06-22 10:00:33Z jmg $
+# $FreeBSD: head/usr.sbin/wpa/wpa_passphrase/Makefile 281806 2015-04-21 01:45:11Z rpaulo $
 
 .include "${.CURDIR}/../Makefile.inc"
 
 .PATH.c:${WPA_SUPPLICANT_DISTDIR}
 
 PROG=	wpa_passphrase
-SRCS=	common.c md5-internal.c md5.c os_unix.c sha1-internal.c sha1-pbkdf2.c sha1.c \
-	wpa_passphrase.c
+SRCS=	common.c md5-internal.c md5.c os_unix.c sha1-internal.c sha1-pbkdf2.c \
+	sha1.c wpa_passphrase.c
 
-CFLAGS+= -DINTERNAL_SHA1
-CFLAGS+= -DINTERNAL_MD5
+CFLAGS+= -DCONFIG_CRYPTO_INTERNAL -DINTERNAL_SHA1 -DINTERNAL_MD5
 
-DPADD+=	${LIBUTIL}
-LDADD+=	-lutil
+LIBADD+=	util
 
 MAN=	wpa_passphrase.8
 

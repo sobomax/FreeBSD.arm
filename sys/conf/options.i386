@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/options.i386 266531 2014-05-22 05:04:40Z jhibbits $
+# $FreeBSD: head/sys/conf/options.i386 281495 2015-04-13 15:22:45Z kib $
 # Options specific to the i386 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h
@@ -35,6 +35,11 @@ KVA_PAGES		opt_global.h
 
 # Physical address extensions and support for >4G ram.  As above.
 PAE			opt_global.h
+
+# Use PAE page tables, but limit memory support to 4GB.
+# This keeps the i386 non-PAE KBI, in particular, drivers see
+# 32bit vm_paddr_t.
+PAE_TABLES		opt_global.h
 
 TIMER_FREQ			opt_clock.h
 
@@ -109,7 +114,6 @@ NETGRAPH_CRONYX		opt_ng_cronyx.h
 DEV_APIC		opt_apic.h
 DEV_ATPIC		opt_atpic.h
 DEV_NPX			opt_npx.h
-ASR_COMPAT		opt_asr.h
 
 # Debugging
 NPX_DEBUG		opt_npx.h

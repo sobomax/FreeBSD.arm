@@ -24,7 +24,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/printf.9 162155 2006-09-08 14:05:03Z ru $
+.\" $FreeBSD: head/share/man/man9/printf.9 281785 2015-04-20 20:03:26Z vangyzen $
 .\"
 .Dd September 8, 2006
 .Dt PRINTF 9
@@ -67,7 +67,8 @@ The
 .Fn log
 function sends the message to the kernel logging facility, using
 the log level as indicated by
-.Fa pri .
+.Fa pri ,
+and to the console if no process is yet reading the log.
 .Pp
 Each of these related functions use the
 .Fa fmt
@@ -151,7 +152,7 @@ void
 printf_test(void)
 {
 
-	printf("reg=%b\en", 3, "\e10\e2BITTWO\e1BITONE\en");
+	printf("reg=%b\en", 3, "\e10\e2BITTWO\e1BITONE");
 	printf("out: %4D\en", "AAAA", ":");
 }
 .Ed

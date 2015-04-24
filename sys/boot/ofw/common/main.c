@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/ofw/common/main.c 269153 2014-07-27 16:12:51Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/ofw/common/main.c 279799 2015-03-09 02:57:34Z nwhitehorn $");
 
 #include <stand.h>
 #include "openfirm.h"
@@ -45,7 +45,7 @@ u_int32_t	acells, scells;
 
 static char bootargs[128];
 
-#define	HEAP_SIZE	0x80000
+#define	HEAP_SIZE	0x100000
 
 #define OF_puts(fd, text) OF_write(fd, text, strlen(text))
 

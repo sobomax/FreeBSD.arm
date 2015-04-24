@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.19 (Berkeley) 1/14/97
-# $FreeBSD: head/etc/sendmail/Makefile 124839 2004-01-22 17:51:02Z ru $
+# $FreeBSD: head/etc/sendmail/Makefile 277787 2015-01-27 04:06:47Z gshapiro $
 
 M4=		m4
 CHMOD=		chmod
@@ -17,7 +17,8 @@ M4FILES!=	find ${SENDMAIL_CF_DIR} -type f -name '*.m4' -print
 
 .mc.cf: ${M4FILES}
 	${RM} ${.TARGET}
-	${M4} -D_CF_DIR_=${SENDMAIL_CF_DIR}/ ${SENDMAIL_M4_FLAGS} \
+	${M4} -D_CF_DIR_=${SENDMAIL_CF_DIR}/ -D_NO_MAKEINFO_ \
+	    ${SENDMAIL_M4_FLAGS} \
 	    ${SENDMAIL_CF_DIR}/m4/cf.m4 ${.IMPSRC} > ${.TARGET}
 	${CHMOD} ${ROMODE} ${.TARGET}
 

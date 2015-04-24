@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/amr/amr_pci.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/amr/amr_pci.c 280347 2015-03-22 16:10:28Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -260,7 +260,8 @@ amr_pci_attach(device_t dev)
 			   BUS_SPACE_MAXADDR_32BIT,	/* lowaddr */
 			   BUS_SPACE_MAXADDR, 		/* highaddr */
 			   NULL, NULL, 			/* filter, filterarg */
-			   MAXBSIZE, AMR_NSEG,		/* maxsize, nsegments */
+			   BUS_SPACE_MAXSIZE,		/* maxsize */
+			   BUS_SPACE_UNRESTRICTED,	/* nsegments */
 			   BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			   0,				/* flags */
 			   NULL, NULL,			/* lockfunc, lockarg */
@@ -277,8 +278,9 @@ amr_pci_attach(device_t dev)
 			   BUS_SPACE_MAXADDR_32BIT,	/* lowaddr */
 			   BUS_SPACE_MAXADDR,		/* highaddr */
 			   NULL, NULL,			/* filter, filterarg */
-			   MAXBSIZE, AMR_NSEG,		/* maxsize, nsegments */
-			   MAXBSIZE,			/* maxsegsize */
+			   DFLTPHYS,			/* maxsize */
+			   AMR_NSEG,			/* nsegments */
+			   BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			   0,		/* flags */
 			   busdma_lock_mutex,		/* lockfunc */
 			   &sc->amr_list_lock,		/* lockarg */
@@ -292,8 +294,9 @@ amr_pci_attach(device_t dev)
 			   BUS_SPACE_MAXADDR,		/* lowaddr */
 			   BUS_SPACE_MAXADDR,		/* highaddr */
 			   NULL, NULL,			/* filter, filterarg */
-			   MAXBSIZE, AMR_NSEG,		/* maxsize, nsegments */
-			   MAXBSIZE,			/* maxsegsize */
+			   DFLTPHYS,			/* maxsize */
+			   AMR_NSEG,			/* nsegments */
+			   BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			   0,		/* flags */
 			   busdma_lock_mutex,		/* lockfunc */
 			   &sc->amr_list_lock,		/* lockarg */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 273088 2014-10-14 14:27:51Z andrew $
+# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 276853 2015-01-08 20:11:38Z dim $
 
 .PATH: ${LIBC_SRCTOP}/arm/aeabi
 
@@ -20,7 +20,7 @@ SRCS+=	aeabi_vfp_double.S	\
 # libc. This causes issues when other parts of libc call these functions.
 # We work around this by including these functions in libc but mark them as
 # hidden so users of libc will not pick up these versions.
-.PATH: ${LIBC_SRCTOP}/../../contrib/compiler-rt/lib/arm
+.PATH: ${LIBC_SRCTOP}/../../contrib/compiler-rt/lib/builtins/arm
 
 SRCS+=	aeabi_memcmp.S		\
 	aeabi_memcpy.S		\

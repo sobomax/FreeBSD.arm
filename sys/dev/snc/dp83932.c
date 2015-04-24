@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/snc/dp83932.c 271821 2014-09-18 20:43:17Z glebius $	*/
+/*	$FreeBSD: head/sys/dev/snc/dp83932.c 276750 2015-01-06 12:59:37Z rwatson $	*/
 /*	$NecBSD: dp83932.c,v 1.5 1999/07/29 05:08:44 kmatsuda Exp $	*/
 /*	$NetBSD: if_snc.c,v 1.18 1998/04/25 21:27:40 scottr Exp $	*/
 
@@ -1129,8 +1129,7 @@ sonic_get(struct snc_softc *sc, u_int32_t pkt, int datalen)
 			len = MLEN;
 		}
 		if (datalen >= MINCLSIZE) {
-			MCLGET(m, M_NOWAIT);
-			if ((m->m_flags & M_EXT) == 0) {
+			if (!(MCLGET(m, M_NOWAIT))) {
 				if (top) m_freem(top);
 				return (0);
 			}

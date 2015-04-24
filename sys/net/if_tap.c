@@ -31,7 +31,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/net/if_tap.c 271867 2014-09-19 10:39:58Z glebius $
+ * $FreeBSD: head/sys/net/if_tap.c 281363 2015-04-10 09:50:13Z glebius $
  * $Id: if_tap.c,v 0.21 2000/07/23 21:46:02 max Exp $
  */
 
@@ -532,11 +532,11 @@ tapclose(struct cdev *dev, int foo, int bar, struct thread *td)
 	IF_DRAIN(&ifp->if_snd);
 
 	/*
-	 * do not bring the interface down, and do not anything with
-	 * interface, if we are in VMnet mode. just close the device.
+	 * Do not bring the interface down, and do not anything with
+	 * interface, if we are in VMnet mode. Just close the device.
 	 */
-
-	if (((tp->tap_flags & TAP_VMNET) == 0) && (ifp->if_flags & IFF_UP)) {
+	if (((tp->tap_flags & TAP_VMNET) == 0) &&
+	    (ifp->if_flags & (IFF_UP | IFF_LINK0)) == IFF_UP) {
 		mtx_unlock(&tp->tap_mtx);
 		if_down(ifp);
 		mtx_lock(&tp->tap_mtx);

@@ -7,7 +7,7 @@
 **
 *******************************************************************/
 
-/* $FreeBSD: head/sys/boot/ficl/i386/sysdep.c 51786 1999-09-29 04:43:16Z dcs $ */
+/* $FreeBSD: head/sys/boot/ficl/i386/sysdep.c 274528 2014-11-14 21:08:51Z imp $ */
 
 #ifdef TESTMAIN
 #include <stdio.h>
@@ -133,5 +133,3 @@ int ficlLockDictionary(short fLock)
 	return 0;
 }
 #endif /* FICL_MULTITHREAD */
-
-

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aacraid/aacraid.c 260243 2014-01-03 20:45:56Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/dev/aacraid/aacraid.c 280347 2015-03-22 16:10:28Z mav $");
 
 /*
  * Driver for the Adaptec by PMC Series 6,7,8,... families of RAID controllers
@@ -597,9 +597,9 @@ aac_alloc(struct aac_softc *sc)
 			       BUS_SPACE_MAXADDR_32BIT,	/* lowaddr */
 			       BUS_SPACE_MAXADDR, 	/* highaddr */
 			       NULL, NULL, 		/* filter, filterarg */
-			       MAXBSIZE,		/* maxsize */
+			       sc->aac_max_sectors << 9, /* maxsize */
 			       sc->aac_sg_tablesize,	/* nsegments */
-			       MAXBSIZE,		/* maxsegsize */
+			       BUS_SPACE_MAXSIZE_32BIT,	/* maxsegsize */
 			       BUS_DMA_ALLOCNOW,	/* flags */
 			       busdma_lock_mutex,	/* lockfunc */
 			       &sc->aac_io_lock,	/* lockfuncarg */

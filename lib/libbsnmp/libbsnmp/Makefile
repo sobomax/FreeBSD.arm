@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libbsnmp/libbsnmp/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libbsnmp/libbsnmp/Makefile 276128 2014-12-23 10:43:35Z bapt $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 
@@ -9,14 +9,14 @@ CONTRIB= ${.CURDIR}/../../../contrib/bsnmp/lib
 
 LIB=	bsnmp
 SHLIB_MAJOR=	6
+LD_FATAL_WARNINGS=	no
 
 CFLAGS+= -I${CONTRIB} -DHAVE_ERR_H -DHAVE_GETADDRINFO -DHAVE_STRLCPY
 CFLAGS+= -DHAVE_STDINT_H -DHAVE_INTTYPES_H -DQUADFMT='"llu"' -DQUADXFMT='"llx"'
 
 .if ${MK_OPENSSL} != "no"
 CFLAGS+= -DHAVE_LIBCRYPTO
-DPADD+= ${LIBCRYPTO}
-LDADD+= -lcrypto
+LIBADD=	crypto
 .endif
 
 SRCS=	asn1.c snmp.c snmpagent.c snmpclient.c snmpcrypto.c support.c

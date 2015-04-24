@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2010-2013 Advanced Computing Technologies LLC
+# Copyright (c) 2010-2013 Hudson River Trading LLC
 # Written by: John H. Baldwin <jhb@FreeBSD.org>
 # All rights reserved.
 #
@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/etcupdate/etcupdate.sh 261031 2014-01-22 16:59:53Z jhb $
+# $FreeBSD: head/usr.sbin/etcupdate/etcupdate.sh 281887 2015-04-23 14:22:20Z jhb $
 
 # This is a tool to manage updating files that are not updated as part
 # of 'make installworld' such as files in /etc.  Unlike other tools,

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/acpica/OsdEnvironment.c 217265 2011-01-11 13:59:06Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/acpica/OsdEnvironment.c 281475 2015-04-12 22:40:27Z jkim $");
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -68,7 +68,7 @@ acpi_get_root_from_loader(void)
 static u_long
 acpi_get_root_from_memory(void)
 {
-	ACPI_SIZE acpi_root;
+	ACPI_PHYSICAL_ADDRESS acpi_root;
 
 	if (ACPI_SUCCESS(AcpiFindRootPointer(&acpi_root)))
 		return (acpi_root);

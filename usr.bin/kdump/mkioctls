@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/usr.bin/kdump/mkioctls 261797 2014-02-12 09:59:48Z glebius $
+# $FreeBSD: head/usr.bin/kdump/mkioctls 281143 2015-04-06 09:42:23Z glebius $
 #
 # When editing this script, keep in mind that truss also uses it.
 #
@@ -54,7 +54,6 @@ BEGIN {
 	print "#include <bsm/audit.h>"
 	print "#include <net/ethernet.h>"
 	print "#include <net/if.h>"
-	print "#include <net/if_var.h>"
 	print "#ifdef PF"
 	print "#include <net/pfvar.h>"
 	print "#include <net/if_pfsync.h>"

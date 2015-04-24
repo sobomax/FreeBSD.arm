@@ -1,10 +1,10 @@
-#$FreeBSD: head/sys/modules/ixl/Makefile 270346 2014-08-22 18:59:19Z jfv $
+#$FreeBSD: head/sys/modules/ixl/Makefile 277084 2015-01-12 18:43:34Z jfv $
 
 .PATH:  ${.CURDIR}/../../dev/ixl
 
 KMOD    = if_ixl
 SRCS    = device_if.h bus_if.h pci_if.h opt_bdg.h
-SRCS    += opt_inet.h opt_inet6.h
+SRCS    += opt_inet.h opt_inet6.h opt_rss.h
 SRCS    += if_ixl.c ixl_txrx.c i40e_osdep.c
 
 # Shared source

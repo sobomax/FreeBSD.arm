@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/random/Makefile 273872 2014-10-30 21:21:53Z markm $
+# $FreeBSD: head/sys/modules/random/Makefile 274252 2014-11-07 20:23:43Z kib $
 
 .PATH: ${.CURDIR}/../../dev/random
 .PATH: ${.CURDIR}/../../crypto/rijndael
@@ -6,8 +6,7 @@
 
 KMOD=	random
 SRCS=	randomdev_soft.c
-SRCS+=	yarrow.c hash.c
-SRCS+=	random_harvestq.c live_entropy_sources.c
+SRCS+=	yarrow.c fortuna.c hash.c
 SRCS+=	rijndael-alg-fst.c rijndael-api-fst.c sha2.c sha256c.c
 SRCS+=	bus_if.h device_if.h vnode_if.h opt_cpu.h opt_random.h
 

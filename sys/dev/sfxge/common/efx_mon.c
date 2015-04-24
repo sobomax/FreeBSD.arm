@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_mon.c 228078 2011-11-28 17:19:05Z philip $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_mon.c 279076 2015-02-20 19:37:10Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -195,7 +195,7 @@ fail1:
 
 #if EFSYS_OPT_NAMES
 
-/* START MKCONFIG GENERATED MonitorStatNamesBlock 08518fd1fb4e2612 */
+/* START MKCONFIG GENERATED MonitorStatNamesBlock 89ff37f1d74ad8b3 */
 static const char 	__cs * __cs __mon_stat_name[] = {
 	"value_2_5v",
 	"value_vccp1",
@@ -213,6 +213,20 @@ static const char 	__cs * __cs __mon_stat_name[] = {
 	"1_2v",
 	"1_8v",
 	"3_3v",
+	"1_2va",
+	"vref",
+	"vaoe",
+	"aoe_temperature",
+	"psu_aoe_temperature",
+	"psu_temperature",
+	"fan0",
+	"fan1",
+	"fan2",
+	"fan3",
+	"fan4",
+	"vaoe_in",
+	"iaoe",
+	"iaoe_in",
 };
 
 /* END MKCONFIG GENERATED MonitorStatNamesBlock */

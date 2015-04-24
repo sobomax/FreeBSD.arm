@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/Makefile.inc 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/kerberos5/Makefile.inc 275022 2014-11-25 09:57:42Z bapt $
 
 .include <src.opts.mk>
 
@@ -15,9 +15,6 @@ LDAPDPADD=	${LDAPLDADD:C;^-l(.*)$;${OPENLDAPBASE}/lib/lib\1.a;}
 LDAPCFLAGS=	-I${OPENLDAPBASE}/include -DOPENLDAP=1 -DLDAP_DEPRECATED=1
 LDAPLDFLAGS=	-L${OPENLDAPBASE}/lib -Wl,-rpath,${OPENLDAPBASE}/lib
 .endif
-
-LIBVERS=	${.OBJDIR}/../../lib/libvers/libvers.a
-LIBSL=		${.OBJDIR}/../../lib/libsl/libsl.a
 
 .if defined(SRCS)
 

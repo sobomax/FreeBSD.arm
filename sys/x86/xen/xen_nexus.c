@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/xen_nexus.c 272310 2014-09-30 16:46:45Z royger $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/xen_nexus.c 276530 2015-01-02 08:42:44Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -67,7 +67,7 @@ nexus_xen_attach(device_t dev)
 {
 	int error;
 #ifndef XEN
-	device_t acpi_dev;
+	device_t acpi_dev = NULL;
 #endif
 
 	nexus_init_resources();

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_hostres/Makefile 202206 2010-01-13 18:17:53Z ed $
+# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_hostres/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 
 LPRSRC=	${.CURDIR}/../../../lpr/common_source
@@ -69,8 +69,7 @@ MAN=	snmp_hostres.3
 DEFS=	${MOD}_tree.def
 BMIBS=	BEGEMOT-HOSTRES-MIB.txt
 
-DPADD=	${LIBKVM} ${LIBDEVINFO} ${LIBM} ${LIBGEOM} ${LIBMEMSTAT}
-LDADD=	-lkvm -ldevinfo -lm -lgeom -lmemstat
+LIBADD=	kvm devinfo m geom memstat
 
 .include <bsd.snmpmod.mk>
 

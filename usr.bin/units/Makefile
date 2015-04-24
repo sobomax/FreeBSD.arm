@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/units/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/units/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -6,8 +6,7 @@ PROG=	units
 FILES=	units.lib
 FILESDIR=	${SHAREDIR}/misc
 
-LDADD+=-ledit -ltermcapw
-DPADD+=${LIBEDIT} ${LIBTERMCAPW}
+LIBADD=	edit
 
 .if ${MK_TESTS} != "no"
 SUBDIR+= tests

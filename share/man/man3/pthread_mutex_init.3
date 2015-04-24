@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man3/pthread_mutex_init.3 172880 2007-10-22 10:08:01Z ru $
+.\" $FreeBSD: head/share/man/man3/pthread_mutex_init.3 276261 2014-12-26 22:41:10Z bapt $
 .\"
 .Dd November 4, 2006
 .Dt PTHREAD_MUTEX_INIT 3
@@ -66,11 +66,11 @@ is invalid.
 The process cannot allocate enough memory to create another mutex.
 .El
 .Sh SEE ALSO
-.Xr pthread_mutexattr 3 ,
 .Xr pthread_mutex_destroy 3 ,
 .Xr pthread_mutex_lock 3 ,
 .Xr pthread_mutex_trylock 3 ,
-.Xr pthread_mutex_unlock 3
+.Xr pthread_mutex_unlock 3 ,
+.Xr pthread_mutexattr 3
 .Sh STANDARDS
 The
 .Fn pthread_mutex_init

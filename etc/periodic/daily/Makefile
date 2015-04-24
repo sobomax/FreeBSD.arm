@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/periodic/daily/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/etc/periodic/daily/Makefile 277216 2015-01-15 19:52:19Z gjb $
 
 .include <src.opts.mk>
 
@@ -16,6 +16,7 @@ FILES=	100.clean-disks \
 	409.status-gconcat \
 	420.status-network \
 	450.status-security \
+	510.status-world-kernel \
 	999.local
 
 # NB: keep these sorted by MK_* knobs

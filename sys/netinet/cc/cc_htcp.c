@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_htcp.c 220592 2011-04-13 11:28:46Z pluknet $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_htcp.c 274225 2014-11-07 09:39:05Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -512,9 +512,11 @@ htcp_ssthresh_update(struct cc_var *ccv)
 SYSCTL_DECL(_net_inet_tcp_cc_htcp);
 SYSCTL_NODE(_net_inet_tcp_cc, OID_AUTO, htcp, CTLFLAG_RW,
     NULL, "H-TCP related settings");
-SYSCTL_VNET_UINT(_net_inet_tcp_cc_htcp, OID_AUTO, adaptive_backoff, CTLFLAG_RW,
-    &VNET_NAME(htcp_adaptive_backoff), 0, "enable H-TCP adaptive backoff");
-SYSCTL_VNET_UINT(_net_inet_tcp_cc_htcp, OID_AUTO, rtt_scaling, CTLFLAG_RW,
-    &VNET_NAME(htcp_rtt_scaling), 0, "enable H-TCP RTT scaling");
+SYSCTL_UINT(_net_inet_tcp_cc_htcp, OID_AUTO, adaptive_backoff,
+    CTLFLAG_VNET | CTLFLAG_RW, &VNET_NAME(htcp_adaptive_backoff), 0,
+    "enable H-TCP adaptive backoff");
+SYSCTL_UINT(_net_inet_tcp_cc_htcp, OID_AUTO, rtt_scaling,
+    CTLFLAG_VNET | CTLFLAG_RW, &VNET_NAME(htcp_rtt_scaling), 0,
+    "enable H-TCP RTT scaling");
 
 DECLARE_CC_MODULE(htcp, &htcp_cc_algo);

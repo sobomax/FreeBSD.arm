@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_common.c 263711 2014-03-25 08:31:47Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_common.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,7 +36,6 @@ __FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_common.c 263711 2014-03-25 08:3
 #include <dev/ofw/openfirm.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 #include <machine/vmparam.h>
 
 struct fdt_fixup_entry fdt_fixup_table[] = {

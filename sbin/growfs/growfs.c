@@ -51,7 +51,7 @@ All rights reserved.\n";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/growfs/growfs.c 261655 2014-02-09 14:28:47Z brueffer $");
+__FBSDID("$FreeBSD: head/sbin/growfs/growfs.c 281929 2015-04-24 12:48:48Z trasz $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -161,7 +161,7 @@ growfs(int fsi, int fso, unsigned int Nflag)
 #ifdef FS_DEBUG
 	{
 		struct csum *dbg_csp;
-		int dbg_csc;
+		u_int32_t dbg_csc;
 		char dbg_line[80];
 
 		dbg_csp = fscs;
@@ -242,7 +242,7 @@ growfs(int fsi, int fso, unsigned int Nflag)
 #ifdef FS_DEBUG
 	{
 		struct csum	*dbg_csp;
-		int	dbg_csc;
+		u_int32_t	dbg_csc;
 		char	dbg_line[80];
 
 		dbg_csp = fscs;

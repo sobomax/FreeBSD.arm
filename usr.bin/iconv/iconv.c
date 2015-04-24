@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/iconv/iconv.c 267439 2014-06-13 08:44:03Z tijl $ */
+/* $FreeBSD: head/usr.bin/iconv/iconv.c 281550 2015-04-15 09:09:20Z tijl $ */
 /* $NetBSD: iconv.c,v 1.16 2009/02/20 15:28:21 yamt Exp $ */
 
 /*-
@@ -71,9 +71,8 @@ do_conv(FILE *fp, const char *from, const char *to, bool silent,
     bool hide_invalid)
 {
 	iconv_t cd;
-	char inbuf[INBUFSIZE], outbuf[OUTBUFSIZE], *out;
+	char inbuf[INBUFSIZE], outbuf[OUTBUFSIZE], *in, *out;
 	unsigned long long invalids;
-	const char *in;
 	size_t inbytes, outbytes, ret;
 
 	if ((cd = iconv_open(to, from)) == (iconv_t)-1)

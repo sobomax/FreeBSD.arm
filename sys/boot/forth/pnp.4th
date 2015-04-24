@@ -1,4 +1,4 @@
-\ Copyright (c) 2000 Daniel C. Sobral <dcs@freebsd.org>
+\ Copyright (c) 2000 Daniel C. Sobral <dcs@FreeBSD.org>
 \ All rights reserved.
 \
 \ Redistribution and use in source and binary forms, with or without
@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: head/sys/boot/forth/pnp.4th 186789 2009-01-05 20:09:54Z luigi $
+\ $FreeBSD: head/sys/boot/forth/pnp.4th 280924 2015-03-31 22:32:35Z dteske $
 
 
 \ The following pnp code is used in pnp.4th and pnp.c

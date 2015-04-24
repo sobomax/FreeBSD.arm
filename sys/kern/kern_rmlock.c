@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_rmlock.c 258541 2013-11-25 07:38:45Z attilio $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_rmlock.c 275751 2014-12-13 21:00:10Z dchagin $");
 
 #include "opt_ddb.h"
 
@@ -277,22 +277,28 @@ void
 rm_init_flags(struct rmlock *rm, const char *name, int opts)
 {
 	struct lock_class *lc;
-	int liflags;
+	int liflags, xflags;
 
 	liflags = 0;
 	if (!(opts & RM_NOWITNESS))
 		liflags |= LO_WITNESS;
 	if (opts & RM_RECURSE)
 		liflags |= LO_RECURSABLE;
+	if (opts & RM_NEW)
+		liflags |= LO_NEW;
 	rm->rm_writecpus = all_cpus;
 	LIST_INIT(&rm->rm_activeReaders);
 	if (opts & RM_SLEEPABLE) {
 		liflags |= LO_SLEEPABLE;
 		lc = &lock_class_rm_sleepable;
-		sx_init_flags(&rm->rm_lock_sx, "rmlock_sx", SX_NOWITNESS);
+		xflags = (opts & RM_NEW ? SX_NEW : 0);
+		sx_init_flags(&rm->rm_lock_sx, "rmlock_sx",
+		    xflags | SX_NOWITNESS);
 	} else {
 		lc = &lock_class_rm;
-		mtx_init(&rm->rm_lock_mtx, name, "rmlock_mtx", MTX_NOWITNESS);
+		xflags = (opts & RM_NEW ? MTX_NEW : 0);
+		mtx_init(&rm->rm_lock_mtx, name, "rmlock_mtx",
+		    xflags | MTX_NOWITNESS);
 	}
 	lock_init(&rm->lock_object, lc, name, NULL, liflags);
 }

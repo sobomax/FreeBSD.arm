@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_core.c 262932 2014-03-08 19:59:52Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_core.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -86,6 +86,12 @@ int
 uart_getrange(struct uart_class *uc)
 {
 	return ((uc != NULL) ? uc->uc_range : 0);
+}
+
+u_int
+uart_getregshift(struct uart_class *uc)
+{
+	return ((uc != NULL) ? uc->uc_rshift : 0);
 }
 
 /*

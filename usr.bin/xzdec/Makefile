@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/xzdec/Makefile 226421 2011-10-16 08:04:43Z ed $
+# $FreeBSD: head/usr.bin/xzdec/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	xzdec
 
@@ -22,7 +22,6 @@ CFLAGS+=	-DHAVE_CONFIG_H \
 		-I${LZMALIBDIR} \
 		-I${XZDIR}/common
 
-DPADD=	${LIBLZMA}
-LDADD=	-llzma
+LIBADD=	lzma
 
 .include <bsd.prog.mk>

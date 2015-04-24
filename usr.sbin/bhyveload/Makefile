@@ -1,11 +1,10 @@
-# $FreeBSD: head/usr.sbin/bhyveload/Makefile 256176 2013-10-09 03:56:07Z neel $
+# $FreeBSD: head/usr.sbin/bhyveload/Makefile 281338 2015-04-09 21:38:40Z bapt $
 
 PROG=	bhyveload
 SRCS=	bhyveload.c
 MAN=	bhyveload.8
 
-DPADD+=	${LIBVMMAPI} ${LIBUTIL}
-LDADD+=	-lvmmapi -lutil
+LIBADD=	vmmapi
 
 WARNS?=	3
 

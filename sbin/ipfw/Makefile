@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ipfw/Makefile 272840 2014-10-09 19:32:35Z melifaro $
+# $FreeBSD: head/sbin/ipfw/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -11,8 +11,7 @@ SRCS+=	altq.c
 CFLAGS+=-DPF
 .endif
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 MAN=	ipfw.8
 
 .include <bsd.prog.mk>

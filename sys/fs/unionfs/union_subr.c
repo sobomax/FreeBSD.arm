@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)union_subr.c	8.20 (Berkeley) 5/20/95
- * $FreeBSD: head/sys/fs/unionfs/union_subr.c 243311 2012-11-19 22:43:45Z attilio $
+ * $FreeBSD: head/sys/fs/unionfs/union_subr.c 275897 2014-12-18 10:01:12Z kib $
  */
 
 #include <sys/param.h>
@@ -536,6 +536,8 @@ unionfs_relookup(struct vnode *dvp, struct vnode **vpp,
 		cn->cn_flags |= (cnp->cn_flags & (DOWHITEOUT | SAVESTART));
 	else if (RENAME == nameiop)
 		cn->cn_flags |= (cnp->cn_flags & SAVESTART);
+	else if (nameiop == CREATE)
+		cn->cn_flags |= NOCACHE;
 
 	vref(dvp);
 	VOP_UNLOCK(dvp, LK_RELEASE);

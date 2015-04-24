@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/event.h 272528 2014-10-04 15:59:15Z ian $
+ * $FreeBSD: head/sys/sys/event.h 274560 2014-11-16 01:18:41Z jmg $
  */
 
 #ifndef _SYS_EVENT_H_
@@ -69,6 +69,7 @@ struct kevent {
 #define EV_DELETE	0x0002		/* delete event from kq */
 #define EV_ENABLE	0x0004		/* enable event */
 #define EV_DISABLE	0x0008		/* disable event (not reported) */
+#define EV_FORCEONESHOT	0x0100		/* enable _ONESHOT and force trigger */
 
 /* flags */
 #define EV_ONESHOT	0x0010		/* only report one occurrence */

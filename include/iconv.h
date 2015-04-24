@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/include/iconv.h 258537 2013-11-25 01:26:06Z hrs $	*/
+/*	$FreeBSD: head/include/iconv.h 281550 2015-04-15 09:09:20Z tijl $	*/
 /*	$NetBSD: iconv.h,v 1.6 2005/02/03 04:39:32 perry Exp $	*/
 
 /*-
@@ -53,7 +53,7 @@ typedef	struct __tag_iconv_t	*iconv_t;
 
 __BEGIN_DECLS
 iconv_t	iconv_open(const char *, const char *);
-size_t	iconv(iconv_t, const char ** __restrict,
+size_t	iconv(iconv_t, char ** __restrict,
 	      size_t * __restrict, char ** __restrict,
 	      size_t * __restrict);
 int	iconv_close(iconv_t);
@@ -62,7 +62,7 @@ int	iconv_close(iconv_t);
  */
 int	__iconv_get_list(char ***, size_t *, __iconv_bool);
 void	__iconv_free_list(char **, size_t);
-size_t	__iconv(iconv_t, const char **, size_t *, char **,
+size_t	__iconv(iconv_t, char **, size_t *, char **,
 		     size_t *, __uint32_t, size_t *);
 #define __ICONV_F_HIDE_INVALID	0x0001
 

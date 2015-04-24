@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/uhci_pci.c 228483 2011-12-14 00:28:54Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/uhci_pci.c 281499 2015-04-13 19:13:51Z neel $");
 
 /* Universal Host Controller Interface
  *
@@ -244,7 +244,7 @@ uhci_pci_probe(device_t self)
 
 	if (desc) {
 		device_set_desc(self, desc);
-		return (0);
+		return (BUS_PROBE_DEFAULT);
 	} else {
 		return (ENXIO);
 	}
@@ -261,6 +261,7 @@ uhci_pci_attach(device_t self)
 	sc->sc_bus.parent = self;
 	sc->sc_bus.devices = sc->sc_devices;
 	sc->sc_bus.devices_max = UHCI_MAX_DEVICES;
+	sc->sc_bus.dma_bits = 32;
 
 	/* get all DMA memory */
 	if (usb_bus_mem_alloc_all(&sc->sc_bus, USB_GET_DMA_TAG(self),

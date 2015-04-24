@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/tzsetup/Makefile 266157 2014-05-15 16:44:25Z brooks $
+# $FreeBSD: head/usr.sbin/tzsetup/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	tzsetup
 MAN=	tzsetup.8
@@ -7,7 +7,6 @@ CFLAGS+= -I${.CURDIR}/../../contrib/dialog -I.
 
 WARNS?=	3
 
-DPADD=	${LIBDIALOG} ${LIBNCURSESW} ${LIBM}
-LDADD=	-ldialog -lncursesw -lm
+LIBADD=	dialog ncursesw
 
 .include <bsd.prog.mk>

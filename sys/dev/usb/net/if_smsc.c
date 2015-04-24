@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_smsc.c 273546 2014-10-23 13:47:19Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_smsc.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * SMSC LAN9xxx devices (http://www.smsc.com/)
@@ -114,7 +114,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/net/if_smsc.c 273546 2014-10-23 13:47:19Z l
 static int smsc_debug = 0;
 
 SYSCTL_NODE(_hw_usb, OID_AUTO, smsc, CTLFLAG_RW, 0, "USB smsc");
-SYSCTL_INT(_hw_usb_smsc, OID_AUTO, debug, CTLFLAG_RW, &smsc_debug, 0,
+SYSCTL_INT(_hw_usb_smsc, OID_AUTO, debug, CTLFLAG_RWTUN, &smsc_debug, 0,
     "Debug level");
 #endif
 

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/sys/dev/lmc/if_lmc.c 272095 2014-09-25 07:00:31Z glebius $
+ * $FreeBSD: head/sys/dev/lmc/if_lmc.c 276750 2015-01-06 12:59:37Z rwatson $
  *
  * Copyright (c) 2002-2004 David Boggs. <boggs@boggs.palo-alto.ca.us>
  * All rights reserved.
@@ -2689,8 +2689,7 @@ rxintr_setup(softc_t *sc)
       printf("%s: rxintr_setup: MGETHDR() failed\n", NAME_UNIT);
     return 0;
     }
-  MCLGET(m, M_NOWAIT);
-  if ((m->m_flags & M_EXT) == 0)
+  if (!(MCLGET(m, M_NOWAIT)))
     {
     m_freem(m);
     sc->status.cntrs.rxdma++;

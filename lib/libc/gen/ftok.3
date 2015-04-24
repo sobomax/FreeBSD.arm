@@ -23,7 +23,7 @@
 .\" OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 .\" ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/lib/libc/gen/ftok.3 267774 2014-06-23 08:25:03Z bapt $
+.\" $FreeBSD: head/lib/libc/gen/ftok.3 276006 2014-12-21 12:36:36Z brueffer $
 .Dd July 9, 2009
 .Dt FTOK 3
 .Os
@@ -64,9 +64,9 @@ function will return -1 if
 .Fa path
 does not exist or if it cannot be accessed by the calling process.
 .Sh SEE ALSO
+.Xr msgget 2 ,
 .Xr semget 2 ,
-.Xr shmget 2 ,
-.Xr msgget 2
+.Xr shmget 2
 .Sh HISTORY
 The
 .Fn ftok

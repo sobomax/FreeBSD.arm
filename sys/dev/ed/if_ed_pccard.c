@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ed/if_ed_pccard.c 260050 2013-12-29 19:21:59Z marius $
+ * $FreeBSD: head/sys/dev/ed/if_ed_pccard.c 279500 2015-03-01 21:41:33Z imp $
  */
 
 /*
@@ -1172,8 +1172,8 @@ ed_ifmedia_sts(struct ifnet *ifp, struct ifmediareq *ifmr)
 	sc = ifp->if_softc;
 	ED_LOCK(sc);
 	if (sc->miibus == NULL) {
-		return;
 		ED_UNLOCK(sc);
+		return;
 	}
 
 	mii = device_get_softc(sc->miibus);

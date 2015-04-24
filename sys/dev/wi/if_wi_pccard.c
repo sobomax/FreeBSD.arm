@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/wi/if_wi_pccard.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/wi/if_wi_pccard.c 274879 2014-11-22 18:40:14Z imp $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -63,7 +63,6 @@ __FBSDID("$FreeBSD: head/sys/dev/wi/if_wi_pccard.c 257176 2013-10-26 17:58:36Z g
 #include <net80211/ieee80211_var.h>
 #include <net80211/ieee80211_radiotap.h>
 
-#define PCCARD_API_LEVEL 6
 #include <dev/pccard/pccardvar.h>
 #include <dev/pccard/pccard_cis.h>
 

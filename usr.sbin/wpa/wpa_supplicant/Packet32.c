@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/wpa/wpa_supplicant/Packet32.c 223492 2011-06-24 07:05:20Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.sbin/wpa/wpa_supplicant/Packet32.c 281143 2015-04-06 09:42:23Z glebius $");
 
 /*
  * This file implements a small portion of the Winpcap API for the
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/wpa/wpa_supplicant/Packet32.c 223492 2011-06-2
 #include <sys/fcntl.h>
 #include <net/if.h>
 #include <net/if_dl.h>
-#include <net/if_var.h>
 
 #include <netinet/in.h>
 #include <arpa/inet.h>

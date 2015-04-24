@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/tools/ippool.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/tools/ippool.c 281143 2015-04-06 09:42:23Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -15,9 +15,6 @@
 #include <sys/ioctl.h>
 
 #include <net/if.h>
-#if __FreeBSD_version >= 300000
-# include <net/if_var.h>
-#endif
 #include <netinet/in.h>
 
 #include <arpa/inet.h>

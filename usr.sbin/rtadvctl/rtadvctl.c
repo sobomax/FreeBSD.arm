@@ -23,7 +23,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtadvctl/rtadvctl.c 253970 2013-08-05 20:13:02Z hrs $
+ * $FreeBSD: head/usr.sbin/rtadvctl/rtadvctl.c 281143 2015-04-06 09:42:23Z glebius $
  *
  */
 
@@ -36,7 +36,6 @@
 #include <net/if.h>
 #include <net/if_dl.h>
 #include <net/if_types.h>
-#include <net/if_var.h>
 #include <net/ethernet.h>
 #include <netinet/in.h>
 #include <netinet/ip6.h>

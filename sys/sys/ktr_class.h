@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	from BSDI $Id: ktr.h,v 1.10.2.7 2000/03/16 21:44:42 cp Exp $
- * $FreeBSD: head/sys/sys/ktr_class.h 258858 2013-12-02 22:34:47Z attilio $
+ * $FreeBSD: head/sys/sys/ktr_class.h 279539 2015-03-02 20:05:16Z jmg $
  */
 
 #ifndef _SYS_KTR_CLASS_H_
@@ -51,12 +51,12 @@
 #define	KTR_TRAP	0x00000100		/* Trap processing */
 #define	KTR_INTR	0x00000200		/* Interrupt tracing */
 #define	KTR_SIG		0x00000400		/* Signal processing */
-#define	KTR_SPARE2	0x00000800		/* XXX Used by cxgb */
+#define	KTR_SPARE2	0x00000800		/* cxgb, amd64, xen, clk, &c */
 #define	KTR_PROC	0x00001000		/* Process scheduling */
 #define	KTR_SYSC	0x00002000		/* System call */
 #define	KTR_INIT	0x00004000		/* System initialization */
-#define	KTR_SPARE3	0x00008000		/* XXX Used by cxgb */
-#define	KTR_SPARE4	0x00010000		/* XXX Used by cxgb */
+#define	KTR_SPARE3	0x00008000		/* cxgb, drm2, ntb */
+#define	KTR_SPARE4	0x00010000		/* geom_sched */
 #define	KTR_EVH		0x00020000		/* Eventhandler */
 #define	KTR_VFS		0x00040000		/* VFS events */
 #define	KTR_VOP		0x00080000		/* Auto-generated vop events */

@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/ipsend/Makefile 145630 2005-04-28 16:26:35Z darrenr $
+#	$FreeBSD: head/sbin/ipf/ipsend/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 NOGCCERROR=	# defined
 
@@ -8,8 +8,7 @@ PROG=		ipsend
 SRCS=		ipsend.c ip.c ipsopt.c iplang_y.c iplang_l.l sbpf.c \
 		sock.c 44arp.c
 MAN=		ipsend.1 ipsend.5
-DPADD+=		${LIBL}
-LDADD+=		-ll
+LIBADD+=	l
 
 CFLAGS+=	-I${NETBSDSRCDIR}/dist/ipf/ipsend
 CFLAGS+=	-I${NETBSDSRCDIR}/dist/ipf/iplang

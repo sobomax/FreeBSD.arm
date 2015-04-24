@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/tom/cxgb_listen.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/tom/cxgb_listen.c 276563 2015-01-02 19:06:27Z rwatson $");
 
 #include "opt_inet.h"
 
@@ -442,26 +442,13 @@ static struct synq_entry *
 mbuf_to_synq_entry(struct mbuf *m)
 {
 	int len = roundup(sizeof (struct synq_entry), 8);
-	uint8_t *buf;
-	int buflen;
 
 	if (__predict_false(M_TRAILINGSPACE(m) < len)) {
 	    panic("%s: no room for synq_entry (%td, %d)\n", __func__,
 	    M_TRAILINGSPACE(m), len);
 	}
 
-	if (m->m_flags & M_EXT) {
-		buf = m->m_ext.ext_buf;
-		buflen = m->m_ext.ext_size;
-	} else if (m->m_flags & M_PKTHDR) {
-		buf = &m->m_pktdat[0];
-		buflen = MHLEN;
-	} else {
-		buf = &m->m_dat[0];
-		buflen = MLEN;
-	}
-
-	return ((void *)(buf + buflen - len));
+	return ((void *)(M_START(m) + M_SIZE(m) - len));
 }
 
 #ifdef KTR

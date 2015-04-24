@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_types.h 255219 2013-09-05 00:09:56Z pjd $
+ * $FreeBSD: head/sys/sys/_types.h 276660 2015-01-04 15:26:02Z kevlo $
  */
 
 #ifndef _SYS__TYPES_H_
@@ -35,7 +35,7 @@
 /*
  * Standard type definitions.
  */
-typedef	__uint32_t	__blksize_t;	/* file block size */
+typedef	__int32_t	__blksize_t;	/* file block size */
 typedef	__int64_t	__blkcnt_t;	/* file block count */
 typedef	__int32_t	__clockid_t;	/* clock_gettime()... */
 typedef	__uint32_t	__fflags_t;	/* file flags */

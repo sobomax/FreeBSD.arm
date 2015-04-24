@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/vt_font.c 260160 2014-01-01 19:38:15Z emaste $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/vt_font.c 281537 2015-04-14 19:18:34Z emaste $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -41,8 +41,8 @@ __FBSDID("$FreeBSD: head/sys/dev/vt/vt_font.c 260160 2014-01-01 19:38:15Z emaste
 static MALLOC_DEFINE(M_VTFONT, "vtfont", "vt font");
 
 /* Some limits to prevent abnormal fonts from being loaded. */
-#define	VTFONT_MAXMAPPINGS	8192
-#define	VTFONT_MAXGLYPHSIZE	1048576
+#define	VTFONT_MAXMAPPINGS	65536
+#define	VTFONT_MAXGLYPHSIZE	2097152
 #define	VTFONT_MAXDIMENSION	128
 
 static uint16_t

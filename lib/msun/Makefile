@@ -1,5 +1,5 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: head/lib/msun/Makefile 271651 2014-09-15 23:21:57Z kargl $
+# $FreeBSD: head/lib/msun/Makefile 274618 2014-11-17 09:19:09Z ngie $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -218,5 +218,9 @@ MLINKS+=sqrt.3 cbrt.3 sqrt.3 cbrtf.3 sqrt.3 cbrtl.3 sqrt.3 sqrtf.3 \
 MLINKS+=tan.3 tanf.3 tan.3 tanl.3
 MLINKS+=tanh.3 tanhf.3 tanh.3 tanhl.3
 MLINKS+=trunc.3 truncf.3 trunc.3 truncl.3
+
+.include <src.opts.mk>
+
+.include <bsd.arch.inc.mk>
 
 .include <bsd.lib.mk>

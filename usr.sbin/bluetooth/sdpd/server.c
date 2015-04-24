@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: server.c,v 1.6 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/sdpd/server.c 229655 2012-01-05 21:36:45Z uqs $
+ * $FreeBSD: head/usr.sbin/bluetooth/sdpd/server.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/param.h>
@@ -38,6 +38,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <assert.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <pwd.h>

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: scope6_var.h,v 1.4 2000/05/18 15:03:27 jinmei Exp $
- * $FreeBSD: head/sys/netinet6/scope6_var.h 271425 2014-09-11 12:33:37Z ae $
+ * $FreeBSD: head/sys/netinet6/scope6_var.h 274348 2014-11-10 16:12:51Z ae $
  */
 
 #ifndef _NETINET6_SCOPE6_VAR_H_
@@ -58,6 +58,7 @@ u_int32_t scope6_addr2default(struct in6_addr *);
 int	sa6_embedscope(struct sockaddr_in6 *, int);
 int	sa6_recoverscope(struct sockaddr_in6 *);
 int	sa6_checkzone(struct sockaddr_in6 *);
+int	sa6_checkzone_ifp(struct ifnet *, struct sockaddr_in6 *);
 int	in6_setscope(struct in6_addr *, struct ifnet *, u_int32_t *);
 int	in6_clearscope(struct in6_addr *);
 uint16_t in6_getscope(struct in6_addr *);

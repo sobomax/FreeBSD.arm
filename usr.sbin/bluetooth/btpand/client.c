@@ -25,11 +25,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/usr.sbin/bluetooth/btpand/client.c 241699 2012-10-18 16:34:00Z emax $ */
+/* $FreeBSD: head/usr.sbin/bluetooth/btpand/client.c 281210 2015-04-07 16:48:23Z takawata $ */
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: client.c,v 1.2 2008/12/06 20:01:14 plunky Exp $");
 
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <sdp.h>
@@ -65,6 +66,9 @@ client_init(void)
 	memset(&sa, 0, sizeof(sa));
 	sa.l2cap_family = AF_BLUETOOTH;
 	sa.l2cap_len = sizeof(sa);
+	sa.l2cap_bdaddr_type = BDADDR_BREDR;
+	sa.l2cap_cid = 0;
+	 
 	bdaddr_copy(&sa.l2cap_bdaddr, &local_bdaddr);
 	if (bind(fd, (struct sockaddr *)&sa, sizeof(sa)) == -1) {
 		log_err("Could not bind client socket: %m");

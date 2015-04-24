@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/18/94
- * $FreeBSD: head/bin/pax/extern.h 241720 2012-10-19 05:43:38Z ed $
+ * $FreeBSD: head/bin/pax/extern.h 280206 2015-03-18 05:48:05Z eadler $
  */
 
 /*
@@ -217,6 +217,7 @@ extern int vflag;
 extern int Dflag;
 extern int Hflag;
 extern int Lflag;
+extern int Oflag;
 extern int Xflag;
 extern int Yflag;
 extern int Zflag;

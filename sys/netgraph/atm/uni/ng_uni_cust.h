@@ -28,7 +28,7 @@
  *
  * Customisation of signalling source to the NG environment.
  *
- * $FreeBSD: head/sys/netgraph/atm/uni/ng_uni_cust.h 189170 2009-02-28 16:21:25Z ed $
+ * $FreeBSD: head/sys/netgraph/atm/uni/ng_uni_cust.h 280785 2015-03-28 12:50:24Z rrs $
  */
 
 #include <sys/param.h>
@@ -87,8 +87,8 @@ struct uni_timer {
 #define	_TIMER_STOP(UNI,FIELD) do {						\
 	ng_uncallout(&FIELD.c, (UNI)->arg);					\
     } while (0)
-#define	TIMER_ISACT(UNI,T)	((UNI)->T.c.c_flags & (CALLOUT_ACTIVE |	\
-							CALLOUT_PENDING))
+#define	TIMER_ISACT(UNI,T)	(callout_active(&(UNI)->T.c) ||		\
+	callout_pending(&(UNI)->T.c))
 #define	_TIMER_START(UNI,ARG,FIELD,DUE,FUNC) do {			\
 	_TIMER_STOP(UNI, FIELD);					\
 	ng_callout(&FIELD.c, (UNI)->arg, NULL,				\

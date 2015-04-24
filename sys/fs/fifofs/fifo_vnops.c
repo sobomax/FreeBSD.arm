@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fifo_vnops.c	8.10 (Berkeley) 5/27/95
- * $FreeBSD: head/sys/fs/fifofs/fifo_vnops.c 265206 2014-05-02 00:52:13Z mjg $
+ * $FreeBSD: head/sys/fs/fifofs/fifo_vnops.c 277321 2015-01-18 15:03:26Z kib $
  */
 
 #include <sys/param.h>
@@ -137,7 +137,7 @@ fifo_open(ap)
 	struct thread *td;
 	struct fifoinfo *fip;
 	struct pipe *fpipe;
-	int error;
+	int error, stops_deferred;
 
 	vp = ap->a_vp;
 	fp = ap->a_fp;
@@ -188,8 +188,11 @@ fifo_open(ap)
 	if ((ap->a_mode & O_NONBLOCK) == 0) {
 		if ((ap->a_mode & FREAD) && fip->fi_writers == 0) {
 			VOP_UNLOCK(vp, 0);
+			stops_deferred = sigallowstop();
 			error = msleep(&fip->fi_readers, PIPE_MTX(fpipe),
 			    PDROP | PCATCH | PSOCK, "fifoor", 0);
+			if (stops_deferred)
+				sigdeferstop();
 			vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
 			if (error) {
 				fip->fi_readers--;
@@ -212,8 +215,11 @@ fifo_open(ap)
 		}
 		if ((ap->a_mode & FWRITE) && fip->fi_readers == 0) {
 			VOP_UNLOCK(vp, 0);
+			stops_deferred = sigallowstop();
 			error = msleep(&fip->fi_writers, PIPE_MTX(fpipe),
 			    PDROP | PCATCH | PSOCK, "fifoow", 0);
+			if (stops_deferred)
+				sigdeferstop();
 			vn_lock(vp, LK_EXCLUSIVE | LK_RETRY);
 			if (error) {
 				fip->fi_writers--;

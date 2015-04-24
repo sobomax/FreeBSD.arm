@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/geom/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sbin/geom/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .if defined(RESCUE) || defined(RELEASE_CRUNCH)
 
@@ -14,8 +14,7 @@ MAN=
 WARNS?=	2
 CFLAGS+=-I${.CURDIR} -I${.CURDIR}/core -DSTATIC_GEOM_CLASSES
 
-DPADD=	${LIBGEOM} ${LIBSBUF} ${LIBBSDXML} ${LIBUTIL}
-LDADD=	-lgeom -lsbuf -lbsdxml -lutil
+LIBADD=	geom util
 
 .include <bsd.prog.mk>
 

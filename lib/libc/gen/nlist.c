@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)nlist.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 271723 2014-09-17 20:26:27Z bdrewery $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 280219 2015-03-18 13:54:53Z andrew $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -47,7 +47,10 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 271723 2014-09-17 20:26:27Z bdrewe
 #include <unistd.h>
 #include "un-namespace.h"
 
+/* There is no a.out support on arm64 */
+#ifndef __aarch64__
 #define _NLIST_DO_AOUT
+#endif
 #define _NLIST_DO_ELF
 
 #ifdef _NLIST_DO_ELF

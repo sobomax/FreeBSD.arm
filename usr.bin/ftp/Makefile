@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/ftp/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/ftp/Makefile 275042 2014-11-25 14:29:10Z bapt $
 #	$NetBSD: Makefile,v 1.15 1997/10/18 15:31:20 lukem Exp $
 #	from: @(#)Makefile	8.2 (Berkeley) 4/3/94
 
@@ -20,8 +20,7 @@ CFLAGS+= -DINET6
 .endif
 
 CFLAGS+= -I${.CURDIR} -I${TNFTP}
-LDADD=	-ledit -ltermcapw -lutil
-DPADD=	${LIBEDIT} ${LIBTERMCAPW} ${LIBUTIL}
+LIBADD=	edit
 
 WARNS?=	2
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/dtrace/dtrace/Makefile 269325 2014-07-31 08:07:23Z rpaulo $
+# $FreeBSD: head/sys/modules/dtrace/dtrace/Makefile 278529 2015-02-10 19:41:30Z gnn $
 
 SYSDIR?=	${.CURDIR}/../../..
 
@@ -52,6 +52,11 @@ EXPORT_SYMS=	dtrace_register \
 		dtrace_probe_lookup
 
 dtrace_asm.o:  assym.s
+
+.if ${MACHINE_CPUARCH} == "arm"
+assym.o: assym.s
+	${AS} -meabi=5 -o assym.o assym.s
+.endif
 
 .include <bsd.kmod.mk>
 

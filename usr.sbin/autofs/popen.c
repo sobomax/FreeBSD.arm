@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/autofs/popen.c 270276 2014-08-21 15:07:25Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/autofs/popen.c 279813 2015-03-09 15:31:33Z trasz $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -104,7 +104,7 @@ auto_popen(const char *argv0, ...)
 		if (arg == NULL)
 			break;
 
-		command = separated_concat(command, arg, ' ');
+		command = concat(command, ' ', arg);
 	}
 	va_end(ap);
 

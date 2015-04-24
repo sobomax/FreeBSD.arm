@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	from BSDI Id: mutex.h,v 2.7.2.35 2000/04/27 03:10:26 cp
- * $FreeBSD: head/sys/sys/lock.h 261238 2014-01-28 17:27:54Z jmg $
+ * $FreeBSD: head/sys/sys/lock.h 275751 2014-12-13 21:00:10Z dchagin $
  */
 
 #ifndef _SYS_LOCK_H_
@@ -84,6 +84,7 @@ struct lock_class {
 #define	LO_IS_VNODE	0x00800000	/* Tell WITNESS about a VNODE lock */
 #define	LO_CLASSMASK	0x0f000000	/* Class index bitmask. */
 #define LO_NOPROFILE    0x10000000      /* Don't profile this lock */
+#define	LO_NEW		0x20000000	/* Don't check for double-init */
 
 /*
  * Lock classes are statically assigned an index into the gobal lock_classes

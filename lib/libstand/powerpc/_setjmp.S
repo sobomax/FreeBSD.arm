@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/lib/libstand/powerpc/_setjmp.S 261591 2014-02-07 14:24:36Z nwhitehorn $  */
+/*	$FreeBSD: head/lib/libstand/powerpc/_setjmp.S 279798 2015-03-09 02:19:44Z nwhitehorn $  */
 /*	from:	NetBSD: setjmp.S,v 1.1 1998/01/27 15:13:12 sakamoto Exp $  */
 /*	from:	OpenBSD: setjmp.S,v 1.2 1996/12/28 06:22:18 rahnds Exp 	*/
 /* kernel version of this file, does not have signal goop */
@@ -42,7 +42,7 @@
 #define JMP_xer	24*REGWIDTH
 #define JMP_sig	25*REGWIDTH
 
-ASENTRY_NOPROF(setjmp)
+ASENTRY_NOPROF(_setjmp)
 	ST_REG 31, JMP_r31(3)
 	/* r1, r2, r14-r30 */
 	ST_REG 1,  JMP_r1 (3)
@@ -79,7 +79,7 @@ ASENTRY_NOPROF(setjmp)
 
 
 .extern sigsetmask
-ASENTRY_NOPROF(longjmp)
+ASENTRY_NOPROF(_longjmp)
 	LD_REG 31, JMP_r31(3)
 	/* r1, r2, r14-r30 */
 	LD_REG 1,  JMP_r1 (3)

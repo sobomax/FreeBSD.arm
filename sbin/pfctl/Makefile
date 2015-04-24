@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/pfctl/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/pfctl/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -28,7 +28,6 @@ CFLAGS+= -DWITH_INET
 
 YFLAGS=
 
-LDADD+=	-lm -lmd
-DPADD+=	${LIBM} ${LIBMD}
+LIBADD=	m md
 
 .include <bsd.prog.mk>

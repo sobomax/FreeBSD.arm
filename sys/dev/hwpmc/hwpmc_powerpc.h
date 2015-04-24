@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hwpmc/hwpmc_powerpc.h 261342 2014-02-01 02:03:50Z jhibbits $
+ * $FreeBSD: head/sys/dev/hwpmc/hwpmc_powerpc.h 281713 2015-04-18 21:39:17Z jhibbits $
  */
 
 #ifndef _DEV_HWPMC_POWERPC_H_
@@ -51,6 +51,7 @@ struct powerpc_cpu {
 
 extern struct powerpc_cpu **powerpc_pcpu;
 
+extern int pmc_e500_initialize(struct pmc_mdep *pmc_mdep);
 extern int pmc_mpc7xxx_initialize(struct pmc_mdep *pmc_mdep);
 extern int pmc_ppc970_initialize(struct pmc_mdep *pmc_mdep);
 

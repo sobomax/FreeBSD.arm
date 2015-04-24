@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_exec.c 273897 2014-10-31 09:56:00Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_exec.c 281883 2015-04-23 11:27:21Z kib $");
 
 #include "opt_capsicum.h"
 #include "opt_hwpmc_hooks.h"
@@ -289,7 +289,7 @@ kern_execve(td, args, mac_p)
 	    args->endp - args->begin_envv);
 	if (p->p_flag & P_HADTHREADS) {
 		PROC_LOCK(p);
-		if (thread_single(SINGLE_BOUNDARY)) {
+		if (thread_single(p, SINGLE_BOUNDARY)) {
 			PROC_UNLOCK(p);
 	       		exec_free_args(args);
 			return (ERESTART);	/* Try again later. */
@@ -308,9 +308,9 @@ kern_execve(td, args, mac_p)
 		 * force other threads to suicide.
 		 */
 		if (error == 0)
-			thread_single(SINGLE_EXIT);
+			thread_single(p, SINGLE_EXIT);
 		else
-			thread_single_end();
+			thread_single_end(p, SINGLE_BOUNDARY);
 		PROC_UNLOCK(p);
 	}
 	if ((td->td_pflags & TDP_EXECVMSPC) != 0) {
@@ -634,6 +634,8 @@ interpret:
 	 * it that it now has its own resources back
 	 */
 	p->p_flag |= P_EXEC;
+	if ((p->p_flag2 & P2_NOTRACE_EXEC) == 0)
+		p->p_flag2 &= ~P2_NOTRACE;
 	if (p->p_flag & P_PPWAIT) {
 		p->p_flag &= ~(P_PPWAIT | P_PPTRACE);
 		cv_broadcast(&p->p_pwait);
@@ -723,7 +725,7 @@ interpret:
 		 */
 		change_svuid(newcred, newcred->cr_uid);
 		change_svgid(newcred, newcred->cr_gid);
-		p->p_ucred = newcred;
+		proc_set_cred(p, newcred);
 	} else {
 		if (oldcred->cr_uid == oldcred->cr_ruid &&
 		    oldcred->cr_gid == oldcred->cr_rgid)
@@ -749,7 +751,7 @@ interpret:
 			PROC_LOCK(p);
 			change_svuid(newcred, newcred->cr_uid);
 			change_svgid(newcred, newcred->cr_gid);
-			p->p_ucred = newcred;
+			proc_set_cred(p, newcred);
 		}
 	}
 
@@ -931,10 +933,7 @@ exec_map_first_page(imgp)
 		return (EACCES);
 	VM_OBJECT_WLOCK(object);
 #if VM_NRESERVLEVEL > 0
-	if ((object->flags & OBJ_COLORED) == 0) {
-		object->flags |= OBJ_COLORED;
-		object->pg_color = 0;
-	}
+	vm_object_color(object, 0);
 #endif
 	ma[0] = vm_page_grab(object, 0, VM_ALLOC_NORMAL);
 	if (ma[0]->valid != VM_PAGE_BITS_ALL) {
@@ -1010,6 +1009,7 @@ exec_new_vmspace(imgp, sv)
 	struct proc *p = imgp->proc;
 	struct vmspace *vmspace = p->p_vmspace;
 	vm_object_t obj;
+	struct rlimit rlim_stack;
 	vm_offset_t sv_minuser, stack_addr;
 	vm_map_t map;
 	u_long ssiz;
@@ -1059,10 +1059,22 @@ exec_new_vmspace(imgp, sv)
 	}
 
 	/* Allocate a new stack */
-	if (sv->sv_maxssiz != NULL)
+	if (imgp->stack_sz != 0) {
+		ssiz = trunc_page(imgp->stack_sz);
+		PROC_LOCK(p);
+		lim_rlimit(p, RLIMIT_STACK, &rlim_stack);
+		PROC_UNLOCK(p);
+		if (ssiz > rlim_stack.rlim_max)
+			ssiz = rlim_stack.rlim_max;
+		if (ssiz > rlim_stack.rlim_cur) {
+			rlim_stack.rlim_cur = ssiz;
+			kern_setrlimit(curthread, RLIMIT_STACK, &rlim_stack);
+		}
+	} else if (sv->sv_maxssiz != NULL) {
 		ssiz = *sv->sv_maxssiz;
-	else
+	} else {
 		ssiz = maxssiz;
+	}
 	stack_addr = sv->sv_usrstack - ssiz;
 	error = vm_map_stack(map, stack_addr, (vm_size_t)ssiz,
 	    obj != NULL && imgp->stack_prot != 0 ? imgp->stack_prot :

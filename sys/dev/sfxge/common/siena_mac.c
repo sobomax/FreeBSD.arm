@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_mac.c 228078 2011-11-28 17:19:05Z philip $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_mac.c 279141 2015-02-22 07:08:57Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -534,6 +534,7 @@ siena_mac_stats_update(
 			    &generation_start);
 
 	/* Check that we didn't read the stats in the middle of a DMA */
+	/* Not a good enough check ? */
 	if (memcmp(&generation_start, &generation_end,
 	    sizeof (generation_start)))
 		return (EAGAIN);

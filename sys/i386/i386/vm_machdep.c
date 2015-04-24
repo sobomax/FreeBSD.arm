@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 281495 2015-04-13 15:22:45Z kib $");
 
 #include "opt_isa.h"
 #include "opt_npx.h"
@@ -106,6 +106,10 @@ __FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 273995 2014-11-02 22:58:30Z 
 #define	NSFBUFS		(512 + maxusers * 16)
 #endif
 
+#if !defined(CPU_DISABLE_SSE) && defined(I686_CPU)
+#define CPU_ENABLE_SSE
+#endif
+
 _Static_assert(OFFSETOF_CURTHREAD == offsetof(struct pcpu, pc_curthread),
     "OFFSETOF_CURTHREAD does not correspond with offset of pc_curthread.");
 _Static_assert(OFFSETOF_CURPCB == offsetof(struct pcpu, pc_curpcb),
@@ -152,14 +156,18 @@ void *
 alloc_fpusave(int flags)
 {
 	void *res;
+#ifdef CPU_ENABLE_SSE
 	struct savefpu_ymm *sf;
+#endif
 
 	res = malloc(cpu_max_ext_state_size, M_DEVBUF, flags);
+#ifdef CPU_ENABLE_SSE
 	if (use_xsave) {
 		sf = (struct savefpu_ymm *)res;
 		bzero(&sf->sv_xstate.sx_hd, sizeof(sf->sv_xstate.sx_hd));
 		sf->sv_xstate.sx_hd.xstate_bv = xsave_mask;
 	}
+#endif
 	return (res);
 }
 /*
@@ -254,7 +262,7 @@ cpu_fork(td1, p2, td2, flags)
 	 * Set registers for trampoline to user mode.  Leave space for the
 	 * return address on stack.  These are the kernel mode register values.
 	 */
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	pcb2->pcb_cr3 = vtophys(vmspace_pmap(p2->p_vmspace)->pm_pdpt);
 #else
 	pcb2->pcb_cr3 = vtophys(vmspace_pmap(p2->p_vmspace)->pm_pdir);
@@ -398,17 +406,21 @@ void
 cpu_thread_alloc(struct thread *td)
 {
 	struct pcb *pcb;
+#ifdef CPU_ENABLE_SSE
 	struct xstate_hdr *xhdr;
+#endif
 
 	td->td_pcb = pcb = get_pcb_td(td);
 	td->td_frame = (struct trapframe *)((caddr_t)pcb - 16) - 1;
 	pcb->pcb_ext = NULL; 
 	pcb->pcb_save = get_pcb_user_save_pcb(pcb);
+#ifdef CPU_ENABLE_SSE
 	if (use_xsave) {
 		xhdr = (struct xstate_hdr *)(pcb->pcb_save + 1);
 		bzero(xhdr, sizeof(*xhdr));
 		xhdr->xstate_bv = xsave_mask;
 	}
+#endif
 }
 
 void

@@ -44,7 +44,7 @@
 #define SND_USE_FXDIV
 #include "snd_fxdiv_gen.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/feeder_eq.c 267992 2014-06-28 03:56:17Z hselasky $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pcm/feeder_eq.c 280442 2015-03-24 16:31:22Z hselasky $");
 #endif
 
 #include "feeder_eq_gen.h"
@@ -682,11 +682,9 @@ feeder_eq_initsys(device_t dev)
 
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
-	    "eq", CTLTYPE_INT | CTLFLAG_RW, d, sizeof(d),
+	    "eq", CTLTYPE_INT | CTLFLAG_RWTUN, d, sizeof(d),
 	    sysctl_dev_pcm_eq, "I",
 	    "Bass/Treble Equalizer (0=disable, 1=enable, 2=bypass)");
-
-	bzero(buf, sizeof(buf));
 
 	(void)snprintf(buf, sizeof(buf), "Bass/Treble Equalizer Preamp "
 	    "(-/+ %d.0dB , %d.%ddB step)",
@@ -696,7 +694,7 @@ feeder_eq_initsys(device_t dev)
 
 	SYSCTL_ADD_PROC(device_get_sysctl_ctx(dev),
 	    SYSCTL_CHILDREN(device_get_sysctl_tree(dev)), OID_AUTO,
-	    "eq_preamp", CTLTYPE_STRING | CTLFLAG_RW, d, sizeof(d),
+	    "eq_preamp", CTLTYPE_STRING | CTLFLAG_RWTUN, d, sizeof(d),
 	    sysctl_dev_pcm_eq_preamp, "A", buf);
 }
 #endif

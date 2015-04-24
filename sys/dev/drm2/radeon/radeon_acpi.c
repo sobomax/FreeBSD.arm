@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_acpi.c 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_acpi.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc_helper.h>
@@ -31,6 +31,8 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_acpi.c 254885 2013-08-25 19:
 #include "atom.h"
 
 #define ACPI_AC_CLASS           "ac_adapter"
+
+extern void radeon_pm_acpi_event_handler(struct radeon_device *rdev);
 
 struct atif_verify_interface {
 	u16 size;		/* structure size in bytes (includes size field) */
@@ -358,7 +360,7 @@ void radeon_atif_handler(struct radeon_device *rdev,
 
 			radeon_set_backlight_level(rdev, enc, req.backlight_level);
 
-#ifdef DUMBBELL_WIP
+#ifdef FREEBSD_WIP
 			if (rdev->is_atom_bios) {
 				struct radeon_encoder_atom_dig *dig = enc->enc_priv;
 				backlight_force_update(dig->bl_dev,
@@ -368,7 +370,7 @@ void radeon_atif_handler(struct radeon_device *rdev,
 				backlight_force_update(dig->bl_dev,
 						       BACKLIGHT_UPDATE_HOTKEY);
 			}
-#endif /* DUMBBELL_WIP */
+#endif /* FREEBSD_WIP */
 		}
 	}
 	/* TODO: check other events */
@@ -508,7 +510,7 @@ static void radeon_acpi_event(ACPI_HANDLE handle, UINT32 type,
 {
 	struct radeon_device *rdev = (struct radeon_device *)context;
 
-#ifdef DUMBBELL_WIP
+#ifdef FREEBSD_WIP
 	if (strcmp(entry->device_class, ACPI_AC_CLASS) == 0) {
 		if (power_supply_is_system_supplied() > 0)
 			DRM_DEBUG_DRIVER("pm: AC\n");
@@ -517,7 +519,7 @@ static void radeon_acpi_event(ACPI_HANDLE handle, UINT32 type,
 
 		radeon_pm_acpi_event_handler(rdev);
 	}
-#endif /* DUMBBELL_WIP */
+#endif /* FREEBSD_WIP */
 
 	/* Check for pending SBIOS requests */
 	radeon_atif_handler(rdev, type);

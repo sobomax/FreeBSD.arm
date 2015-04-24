@@ -3,7 +3,7 @@
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998
 #
-# $FreeBSD: head/usr.sbin/amd/amd/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/amd/amd/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 
 .include <src.opts.mk>
@@ -27,8 +27,7 @@ SRCS+=	srvr_amfs_auto.c srvr_nfs.c
 CFLAGS+= -I${.CURDIR}/../../../contrib/amd/amd \
 	 -I${DESTDIR}/usr/include/rpcsvc
 
-DPADD=	${LIBAMU} ${LIBWRAP}
-LDADD=	${LIBAMU} -lwrap
+LIBADD=	amu wrap
 
 CLEANFILES+=	conf_parse.c conf_parse.h conf_tok.c
 

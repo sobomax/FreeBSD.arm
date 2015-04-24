@@ -1,12 +1,11 @@
-# $FreeBSD: head/usr.sbin/dconschat/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/dconschat/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	dconschat
 MAN=	dconschat.8
 
 CFLAGS+= -I${.CURDIR}/../../sys
 
-DPADD=  ${LIBKVM}
-LDADD=  -lkvm
+LIBADD=	kvm
 
 WARNS?=	1
 

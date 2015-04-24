@@ -39,11 +39,10 @@
  *	JNPR: trap.c,v 1.13.2.2 2007/08/29 10:03:49 girish
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/trap.c 268600 2014-07-14 04:38:17Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/trap.c 276142 2014-12-23 15:38:19Z markj $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
-#include "opt_global.h"
 #include "opt_ktrace.h"
 
 #include <sys/param.h>
@@ -618,7 +617,8 @@ trap(struct trapframe *trapframe)
 	 * XXXDTRACE: add pid probe handler here (if ever)
 	 */
 	if (!usermode) {
-		if (dtrace_trap_func != NULL && (*dtrace_trap_func)(trapframe))
+		if (dtrace_trap_func != NULL &&
+		    (*dtrace_trap_func)(trapframe, type) != 0)
 			return (trapframe->pc);
 	}
 #endif

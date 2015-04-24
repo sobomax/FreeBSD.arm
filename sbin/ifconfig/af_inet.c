@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/af_inet.c 228574 2011-12-16 13:30:17Z glebius $";
+  "$FreeBSD: head/sbin/ifconfig/af_inet.c 281143 2015-04-06 09:42:23Z glebius $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -46,7 +46,6 @@ static const char rcsid[] =
 #include <ifaddrs.h>
 
 #include <netinet/in.h>
-#include <net/if_var.h>		/* for struct ifaddr */
 #include <netinet/in_var.h>
 #include <arpa/inet.h>
 #include <netdb.h>

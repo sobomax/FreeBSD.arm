@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bge/if_bge.c 272257 2014-09-28 14:05:18Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/bge/if_bge.c 279786 2015-03-08 19:55:46Z pfg $");
 
 /*
  * Broadcom BCM57xx(x)/BCM590x NetXtreme and NetLink family Ethernet driver
@@ -1383,8 +1383,7 @@ bge_newbuf_jumbo(struct bge_softc *sc, int i)
 	if (m == NULL)
 		return (ENOBUFS);
 
-	m_cljget(m, M_NOWAIT, MJUM9BYTES);
-	if (!(m->m_flags & M_EXT)) {
+	if (m_cljget(m, M_NOWAIT, MJUM9BYTES) == NULL) {
 		m_freem(m);
 		return (ENOBUFS);
 	}
@@ -1638,6 +1637,7 @@ bge_setmulti(struct bge_softc *sc)
 	if (if_getflags(ifp) & IFF_ALLMULTI || if_getflags(ifp) & IFF_PROMISC) {
 		for (i = 0; i < 4; i++)
 			CSR_WRITE_4(sc, BGE_MAR0 + (i * 4), 0xFFFFFFFF);
+		free(mta, M_DEVBUF);
 		return;
 	}
 
@@ -1946,11 +1946,9 @@ bge_chipinit(struct bge_softc *sc)
 
 	/*
 	 * Disable memory write invalidate.  Apparently it is not supported
-	 * properly by these devices.  Also ensure that INTx isn't disabled,
-	 * as these chips need it even when using MSI.
+	 * properly by these devices.
 	 */
-	PCI_CLRBIT(sc->bge_dev, BGE_PCI_CMD,
-	    PCIM_CMD_INTxDIS | PCIM_CMD_MWIEN, 4);
+	PCI_CLRBIT(sc->bge_dev, BGE_PCI_CMD, PCIM_CMD_MWIEN, 4);
 
 	/* Set the timer prescaler (always 66 MHz). */
 	CSR_WRITE_4(sc, BGE_MISC_CFG, BGE_32BITTIME_66MHZ);

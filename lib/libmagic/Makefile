@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libmagic/Makefile 267897 2014-06-26 06:03:39Z delphij $
+# $FreeBSD: head/lib/libmagic/Makefile 275024 2014-11-25 11:07:26Z bapt $
 # Copyright (c) David E. O'Brien, 2000-2004, 2006, 2009
 
 CONTRDIR=	${.CURDIR}/../../contrib/file
@@ -7,8 +7,7 @@ CONTRDIR=	${.CURDIR}/../../contrib/file
 
 LIB=	magic
 SHLIB_MAJOR=	4
-DPADD=	${LIBZ}
-LDADD=	-lz
+LIBADD=	z
 MAN=	libmagic.3 magic.5
 
 SRCS=	apprentice.c apptype.c ascmagic.c cdf.c cdf_time.c compress.c \

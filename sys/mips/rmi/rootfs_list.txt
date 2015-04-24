@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/mips/rmi/rootfs_list.txt 267672 2014-06-20 11:47:49Z gavin $
+# $FreeBSD: head/sys/mips/rmi/rootfs_list.txt 274331 2014-11-09 21:33:01Z melifaro $
 #
 # This is the list of files that
 # should be in your rootfs (copy it from
@@ -197,7 +197,6 @@
 ./etc/rc.d/dmesg
 ./etc/rc.d/dumpon
 ./etc/rc.d/encswap
-./etc/rc.d/faith
 ./etc/rc.d/fsck
 ./etc/rc.d/ftp-proxy
 ./etc/rc.d/ftpd

@@ -1,4 +1,0 @@
-.\" $FreeBSD: head/tools/build/options/WITH_INFO 268496 2014-07-10 15:05:41Z bapt $
-Set to make or install
-.Xr info 5
-files.

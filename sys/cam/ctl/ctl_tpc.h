@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/ctl/ctl_tpc.h 268767 2014-07-16 15:57:17Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_tpc.h 278625 2015-02-12 15:46:44Z mav $
  */
 
 #ifndef	_CTL_TPC_H
@@ -31,7 +31,8 @@
 
 void tpc_done(union ctl_io *io);
 
-uint64_t tpcl_resolve(int init_port, struct scsi_ec_cscd *cscd, uint32_t *ss);
+uint64_t tpcl_resolve(struct ctl_softc *softc, int init_port,
+    struct scsi_ec_cscd *cscd, uint32_t *ss, uint32_t *ps, uint32_t *pso);
 union ctl_io * tpcl_alloc_io(void);
 int tpcl_queue(union ctl_io *io, uint64_t lun);
 

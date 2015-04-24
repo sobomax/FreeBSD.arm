@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/ept.c 271888 2014-09-20 02:35:21Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/ept.c 279971 2015-03-14 02:32:08Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/ept.c 271888 2014-09-20 02:35:21Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/ept.c 279971 2015-03-14 02:32:08Z neel $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -43,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/ept.c 271888 2014-09-20 02:35:21Z n
 #include <machine/vmm.h>
 
 #include "vmx_cpufunc.h"
-#include "vmm_ipi.h"
 #include "ept.h"
 
 #define	EPT_SUPPORTS_EXEC_ONLY(cap)	((cap) & (1UL << 0))

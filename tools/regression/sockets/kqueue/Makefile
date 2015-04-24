@@ -1,8 +1,9 @@
 #
-# $FreeBSD: head/tools/regression/sockets/kqueue/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/kqueue/Makefile 281356 2015-04-10 08:01:49Z ngie $
 #
 
 PROG=	kqueue
 MAN=
+WARNS?=	6
 
 .include <bsd.prog.mk>

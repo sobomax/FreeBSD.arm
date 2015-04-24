@@ -28,7 +28,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_vxlan.c 273371 2014-10-21 05:45:57Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/net/if_vxlan.c 275358 2014-12-01 11:45:24Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -2236,6 +2236,7 @@ vxlan_pick_source_port(struct vxlan_softc *sc, struct mbuf *m)
 
 	range = sc->vxl_max_port - sc->vxl_min_port + 1;
 
+	/* check if flowid is set and not opaque */
 	if (M_HASHTYPE_GET(m) != M_HASHTYPE_NONE &&
 	    M_HASHTYPE_GET(m) != M_HASHTYPE_OPAQUE)
 		hash = m->m_pkthdr.flowid;

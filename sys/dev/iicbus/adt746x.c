@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/adt746x.c 261421 2014-02-03 01:22:50Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/adt746x.c 277314 2015-01-18 07:08:06Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -539,9 +539,10 @@ static int
 adt746x_sensor_read(struct adt746x_sensor *sens)
 {
 	struct adt746x_softc *sc;
-	uint16_t tmp = 0;
+	int tmp = 0;
 	uint16_t val;
-	uint8_t temp, data[1], data1[1];
+	uint8_t data[1], data1[1];
+	int8_t temp;
 
 	sc = device_get_softc(sens->dev);
 	if (sens->type != ADT746X_SENSOR_SPEED) {

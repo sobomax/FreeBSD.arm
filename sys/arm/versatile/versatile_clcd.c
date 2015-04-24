@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_clcd.c 267340 2014-06-10 20:25:45Z jhb $");
+__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_clcd.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_clcd.c 267340 2014-06-10 20
 #include <dev/syscons/syscons.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #define	PL110_VENDOR_ARM926PXP	1
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/Makefile 272849 2014-10-09 23:05:31Z emaste $
+# $FreeBSD: head/gnu/usr.bin/Makefile 276551 2015-01-02 18:45:03Z bapt $
 
 .include <src.opts.mk>
 
@@ -14,8 +14,7 @@ SUBDIR= ${_binutils} \
 	${_groff} \
 	${_rcs} \
 	sdiff \
-	${_tests} \
-	${_texinfo}
+	${_tests}
 
 .if ${MK_CXX} != "no"
 .if ${MK_GCC} != "no"
@@ -28,10 +27,6 @@ _groff=		groff
 
 .if ${MK_GPL_DTC} != "no"
 _dtc=		dtc
-.endif
-
-.if ${MK_INFO} != "no"
-_texinfo=	texinfo
 .endif
 
 .if ${MK_RCS} != "no"

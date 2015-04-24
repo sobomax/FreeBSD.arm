@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 273850 2014-10-30 08:53:56Z jch $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 274225 2014-11-07 09:39:05Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -169,7 +169,7 @@ SYSCTL_PROC(_net_inet_tcp, OID_AUTO, maxtcptw, CTLTYPE_INT|CTLFLAG_RW,
 
 VNET_DEFINE(int, nolocaltimewait) = 0;
 #define	V_nolocaltimewait	VNET(nolocaltimewait)
-SYSCTL_VNET_INT(_net_inet_tcp, OID_AUTO, nolocaltimewait, CTLFLAG_RW,
+SYSCTL_INT(_net_inet_tcp, OID_AUTO, nolocaltimewait, CTLFLAG_VNET | CTLFLAG_RW,
     &VNET_NAME(nolocaltimewait), 0,
     "Do not create compressed TCP TIME_WAIT entries for local connections");
 

@@ -35,7 +35,7 @@ __KERNEL_RCSID(0, "$NetBSD$");
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isp/isp_library.c 272937 2014-10-11 08:50:19Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/isp/isp_library.c 275112 2014-11-26 12:25:00Z mav $");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__
@@ -2369,7 +2369,7 @@ isp_find_pdb_by_wwn(ispsoftc_t *isp, int chan, uint64_t wwn, fcportdb_t **lptr)
 
 	if (chan < isp->isp_nchan) {
 		fcp = FCPARAM(isp, chan);
-		for (i = 0; i < MAX_FC_TARG; i++) {
+		for (i = MAX_FC_TARG - 1; i >= 0; i--) {
 			fcportdb_t *lp = &fcp->portdb[i];
 
 			if (lp->target_mode == 0) {
@@ -2392,7 +2392,7 @@ isp_find_pdb_by_loopid(ispsoftc_t *isp, int chan, uint32_t loopid, fcportdb_t **
 
 	if (chan < isp->isp_nchan) {
 		fcp = FCPARAM(isp, chan);
-		for (i = 0; i < MAX_FC_TARG; i++) {
+		for (i = MAX_FC_TARG - 1; i >= 0; i--) {
 			fcportdb_t *lp = &fcp->portdb[i];
 
 			if (lp->target_mode == 0) {
@@ -2418,7 +2418,7 @@ isp_find_pdb_by_sid(ispsoftc_t *isp, int chan, uint32_t sid, fcportdb_t **lptr)
 	}
 
 	fcp = FCPARAM(isp, chan);
-	for (i = 0; i < MAX_FC_TARG; i++) {
+	for (i = MAX_FC_TARG - 1; i >= 0; i--) {
 		fcportdb_t *lp = &fcp->portdb[i];
 
 		if (lp->target_mode == 0) {

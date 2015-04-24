@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_usie.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_usie.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -82,7 +82,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/net/if_usie.c 271832 2014-09-18 21:09:22Z g
 static int usie_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, usie, CTLFLAG_RW, 0, "sierra USB modem");
-SYSCTL_INT(_hw_usb_usie, OID_AUTO, debug, CTLFLAG_RW, &usie_debug, 0,
+SYSCTL_INT(_hw_usb_usie, OID_AUTO, debug, CTLFLAG_RWTUN, &usie_debug, 0,
     "usie debug level");
 #endif
 

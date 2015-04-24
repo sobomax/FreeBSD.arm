@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/devd/Makefile 270004 2014-08-14 22:33:56Z asomers $
+# $FreeBSD: head/sbin/devd/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -10,8 +10,7 @@ WARNS?=	3
 
 NO_SHARED?=YES
 
-DPADD=	${LIBL} ${LIBUTIL}
-LDADD=	-ll -lutil
+LIBADD=	l util
 
 YFLAGS+=-v
 CFLAGS+=-I. -I${.CURDIR}

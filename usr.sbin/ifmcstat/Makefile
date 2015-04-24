@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/usr.sbin/ifmcstat/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/ifmcstat/Makefile 279028 2015-02-19 22:42:33Z glebius $
 
 .include <src.opts.mk>
 
@@ -13,12 +13,6 @@ WARNS?=	2
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=-DINET6
-.endif
-
-.if ${MK_KVM_SUPPORT} != "no"
-CFLAGS+=-DWITH_KVM
-DPADD=	${LIBKVM}
-LDADD=	-lkvm
 .endif
 
 .include <bsd.prog.mk>

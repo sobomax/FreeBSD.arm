@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/trap.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/trap.c 281495 2015-04-13 15:22:45Z kib $");
 
 /*
  * 386 Trap and System call handling
@@ -246,7 +246,7 @@ trap(struct trapframe *frame)
 	 * flag is cleared and finally re-scheduling is enabled.
 	 */
 	if ((type == T_PROTFLT || type == T_PAGEFLT) &&
-	    dtrace_trap_func != NULL && (*dtrace_trap_func)(frame))
+	    dtrace_trap_func != NULL && (*dtrace_trap_func)(frame, type))
 		goto out;
 #endif
 
@@ -881,7 +881,7 @@ trap_pfault(frame, usermode, eva)
 	 */
 	if (frame->tf_err & PGEX_W)
 		ftype = VM_PROT_WRITE;
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	else if ((frame->tf_err & PGEX_I) && pg_nx != 0)
 		ftype = VM_PROT_EXECUTE;
 #endif

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_cpu_s3c2410.c 272103 2014-09-25 11:38:26Z gavin $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_cpu_s3c2410.c 279724 2015-03-07 15:24:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,10 +39,10 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_cpu_s3c2410.c 272103 2014-
 
 #include <arm/samsung/s3c2xx0/s3c2xx0var.h>
 
+extern struct uart_class uart_s3c2410_class;
+
 bus_space_tag_t uart_bus_space_io;
 bus_space_tag_t uart_bus_space_mem;
-
-extern struct uart_ops uart_s3c2410_ops;
 
 vm_offset_t s3c2410_uart_vaddr;
 unsigned int s3c2410_pclk;
@@ -61,7 +61,7 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 
 	di->ops = uart_getops(&uart_s3c2410_class);
 	di->bas.chan = 0;
-	di->bas.bst = &s3c2xx0_bs_tag;
+	di->bas.bst = s3c2xx0_bs_tag;
 	di->bas.bsh = s3c2410_uart_vaddr;
 	di->bas.regshft = 0;
 	di->bas.rclk = s3c2410_pclk;
@@ -69,7 +69,7 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 	di->databits = 8;
 	di->stopbits = 1;
 	di->parity = UART_PARITY_NONE;
-	uart_bus_space_io = &s3c2xx0_bs_tag;
+	uart_bus_space_io = s3c2xx0_bs_tag;
 	uart_bus_space_mem = NULL;
 	
 	return (0);

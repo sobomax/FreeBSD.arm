@@ -1,10 +1,9 @@
-# $FreeBSD: head/kerberos5/usr.bin/kgetcred/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kgetcred/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kgetcred
 CFLAGS+=	-I${KRB5DIR}/lib/asn1 \
 		-I${KRB5DIR}/lib/roken
-DPADD=	${LIBKRB5} ${LIBROKEN} ${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT} ${LIBVERS}
-LDADD=	-lkrb5 -lroken -lasn1 -lcrypto -lcrypt ${LIBVERS}
+LIBADD=	krb5 roken asn1 vers
 
 .include <bsd.prog.mk>
 

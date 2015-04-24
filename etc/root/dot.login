@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/root/dot.login 243153 2012-11-16 14:25:13Z eadler $
+# $FreeBSD: head/etc/root/dot.login 278616 2015-02-12 05:35:00Z cperciva $
 #
 # .login - csh login script, read by login shell, after `.cshrc' at login.
 #
@@ -6,4 +6,4 @@
 #
 
 # Uncomment to display a random cookie each login:
-# if ( -x /usr/games/fortune ) /usr/games/fortune -s
+# if ( -x /usr/bin/fortune ) /usr/bin/fortune -s

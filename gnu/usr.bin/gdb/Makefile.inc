@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/gdb/Makefile.inc 269648 2014-08-06 22:17:26Z bapt $
+# $FreeBSD: head/gnu/usr.bin/gdb/Makefile.inc 276565 2015-01-02 20:34:55Z ngie $
 
 VERSION= "6.1.1 [FreeBSD]"
 VENDOR= marcel
@@ -32,8 +32,6 @@ TARGET_SUBDIR= ${BMAKE_GDB}/arch/${TARGET_CPUARCH}
 GDB_CROSS_DEBUGGER=
 .endif
 
-.if !defined(INFO)
-
 .PATH:	${CNTRB_GDB}/gdb ${CNTRB_GDB}/gdb/cli ${CNTRB_GDB}/gdb/mi	\
 	${CNTRB_GDB}/gdb/signals ${CNTRB_GDB}/gdb/tui ${TARGET_SUBDIR}
 
@@ -61,11 +59,5 @@ MAN=
 
 SRCS+= ${GENSRCS}
 CLEANFILES+= ${GENSRCS}
-
-.else
-
-.PATH:	${CNTRB_GDB}/gdb ${CNTRB_GDB}/gdb/doc ${CNTRB_RL}/doc
-
-.endif
 
 .include "../Makefile.inc"

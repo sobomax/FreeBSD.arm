@@ -1,8 +1,3 @@
-# $FreeBSD: head/usr.sbin/fifolog/Makefile.inc 201390 2010-01-02 11:07:44Z ed $
-
-LIBFIFOLOG= ${.OBJDIR}/../lib/libfifolog.a
-
-#LINT=	flint
-#LINTFLAGS= ${.CURDIR}/../flint.lnt -I/usr/include
+# $FreeBSD: head/usr.sbin/fifolog/Makefile.inc 275218 2014-11-28 22:03:35Z bapt $
 
 .include "../Makefile.inc"

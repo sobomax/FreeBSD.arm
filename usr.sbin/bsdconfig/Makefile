@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/Makefile 258400 2013-11-20 20:37:21Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/Makefile 274073 2014-11-04 00:14:38Z dteske $
 
 SUBDIR=	console \
 	diskmgmt \
@@ -24,10 +24,5 @@ FILES=		USAGE
 SCRIPTS= bsdconfig
 
 MAN= bsdconfig.8
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${FILESDIR}
-	mkdir -p ${DESTDIR}${SCRIPTSDIR}
-	mkdir -p ${DESTDIR}${MANDIR}8
 
 .include <bsd.prog.mk>

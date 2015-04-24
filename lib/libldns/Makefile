@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libldns/Makefile 266138 2014-05-15 15:22:32Z des $
+# $FreeBSD: head/lib/libldns/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 # Vendor sources and generated files
 LDNSDIR = ${.CURDIR}/../../contrib/ldns
@@ -18,8 +18,7 @@ SRCS=	buffer.c dane.c dname.c dnssec.c dnssec_sign.c dnssec_verify.c \
 
 SRCS+=	b64_ntop.c b64_pton.c
 
-DPADD+=	${LIBCRYPTO}
-LDADD+=	-lcrypto
+LIBADD=	crypto
 
 WARNS ?= 3
 

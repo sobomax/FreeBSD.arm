@@ -1,8 +1,7 @@
-# $FreeBSD: head/sbin/savecore/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/savecore/Makefile 280348 2015-03-22 17:29:14Z scottl $
 
 PROG=	savecore
-DPADD=	${LIBZ}
-LDADD=	-lz
+LIBADD=	z xo
 MAN=	savecore.8
 
 .include <bsd.prog.mk>

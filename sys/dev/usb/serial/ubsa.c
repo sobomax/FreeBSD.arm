@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ubsa.c 263289 2014-03-18 01:40:25Z emaste $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ubsa.c 276701 2015-01-05 15:04:17Z hselasky $");
 /*-
  * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -89,7 +89,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/serial/ubsa.c 263289 2014-03-18 01:40:25Z e
 static int ubsa_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, ubsa, CTLFLAG_RW, 0, "USB ubsa");
-SYSCTL_INT(_hw_usb_ubsa, OID_AUTO, debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_ubsa, OID_AUTO, debug, CTLFLAG_RWTUN,
     &ubsa_debug, 0, "ubsa debug level");
 #endif
 

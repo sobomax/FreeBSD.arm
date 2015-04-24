@@ -1,9 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libkadm5clnt/Makefile 236337 2012-05-30 22:21:25Z obrien $
+# $FreeBSD: head/kerberos5/lib/libkadm5clnt/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	kadm5clnt
 LDFLAGS=	-Wl,--no-undefined
-LDADD=	-lcom_err -lkrb5 -lroken
-DPADD=	${LIBCOM_ERR} ${LIBKRB5} ${LIBROKEN}
+LIBADD=	com_err krb5 roken
 
 INCS=	admin.h \
 	kadm5-private.h \

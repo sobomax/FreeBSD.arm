@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/ee/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.bin/ee/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .PATH:	${.CURDIR}/../../contrib/ee
 
@@ -8,8 +8,7 @@ CFLAGS+= -DHAS_NCURSES -DHAS_UNISTD -DHAS_STDARG -DHAS_STDLIB \
 PROG=	ee
 LINKS=	${BINDIR}/ee ${BINDIR}/ree ${BINDIR}/ee ${BINDIR}/edit
 MLINKS=	ee.1 ree.1 ee.1 edit.1
-DPADD=	${LIBNCURSESW}
-LDADD=	-lncursesw
+LIBADD=	ncursesw
 
 WARNS?=	2
 

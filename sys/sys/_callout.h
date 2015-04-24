@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)callout.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/_callout.h 247777 2013-03-04 11:09:56Z davide $
+ * $FreeBSD: head/sys/sys/_callout.h 280871 2015-03-31 00:15:27Z rrs $
  */
 
 #ifndef _SYS__CALLOUT_H
@@ -57,7 +57,8 @@ struct callout {
 	void	*c_arg;				/* function argument */
 	void	(*c_func)(void *);		/* function to call */
 	struct lock_object *c_lock;		/* lock to handle */
-	int	c_flags;			/* state of this entry */
+	short	c_flags;			/* User State */
+	short	c_iflags;			/* Internal State */
 	volatile int c_cpu;			/* CPU we're scheduled on */
 };
 

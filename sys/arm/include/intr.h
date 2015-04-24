@@ -32,12 +32,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/intr.h 271601 2014-09-14 21:21:03Z ian $
+ * $FreeBSD: head/sys/arm/include/intr.h 280824 2015-03-29 21:12:59Z andrew $
  *
  */
 
 #ifndef _MACHINE_INTR_H_
 #define _MACHINE_INTR_H_
+
+#ifdef FDT
+#include <dev/ofw/openfirm.h>
+#endif
 
 /* XXX move to std.* files? */
 #ifdef CPU_XSCALE_81342
@@ -54,7 +58,7 @@
 #define NIRQ		1020
 #elif defined(CPU_KRAIT)
 #define NIRQ		288
-#elif defined(CPU_ARM1136) || defined(CPU_ARM1176)
+#elif defined(CPU_ARM1176)
 #define NIRQ		128
 #elif defined(SOC_MV_ARMADAXP)
 #define MAIN_IRQ_NUM		116
@@ -81,8 +85,12 @@ extern int (*arm_config_irq)(int irq, enum intr_trigger trig,
 
 void arm_irq_memory_barrier(uintptr_t);
 
-void gic_init_secondary(void);
+void arm_init_secondary_ic(void);
 int  gic_decode_fdt(uint32_t iparentnode, uint32_t *intrcells, int *interrupt,
     int *trig, int *pol);
+
+#ifdef FDT
+int arm_fdt_map_irq(phandle_t, pcell_t *, int);
+#endif
 
 #endif	/* _MACHINE_INTR_H */

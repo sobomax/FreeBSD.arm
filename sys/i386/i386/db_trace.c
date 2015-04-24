@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/db_trace.c 243836 2012-12-03 22:16:51Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/db_trace.c 281707 2015-04-18 21:23:16Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -316,8 +316,7 @@ db_nextframe(struct i386_frame **fp, db_addr_t *ip, struct thread *td)
 			frame_type = TRAP_TIMERINT;
 		else if (strcmp(name, "Xcpustop") == 0 ||
 		    strcmp(name, "Xrendezvous") == 0 ||
-		    strcmp(name, "Xipi_intr_bitmap_handler") == 0 ||
-		    strcmp(name, "Xlazypmap") == 0)
+		    strcmp(name, "Xipi_intr_bitmap_handler") == 0)
 			frame_type = TRAP_INTERRUPT;
 	}
 

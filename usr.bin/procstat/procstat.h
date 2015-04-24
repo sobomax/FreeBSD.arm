@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/procstat/procstat.h 266293 2014-05-17 03:54:51Z jhb $
+ * $FreeBSD: head/usr.bin/procstat/procstat.h 279842 2015-03-10 09:41:48Z scottl $
  */
 
 #ifndef PROCSTAT_H
@@ -39,6 +39,7 @@ void	procstat_auxv(struct procstat *prstat, struct kinfo_proc *kipp);
 void	procstat_basic(struct kinfo_proc *kipp);
 void	procstat_bin(struct procstat *prstat, struct kinfo_proc *kipp);
 void	procstat_cred(struct procstat *prstat, struct kinfo_proc *kipp);
+void	procstat_cs(struct procstat *prstat, struct kinfo_proc *kipp);
 void	procstat_env(struct procstat *prstat, struct kinfo_proc *kipp);
 void	procstat_files(struct procstat *prstat, struct kinfo_proc *kipp);
 void	procstat_kstack(struct procstat *prstat, struct kinfo_proc *kipp,

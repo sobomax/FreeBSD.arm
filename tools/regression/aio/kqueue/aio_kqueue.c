@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/aio/kqueue/aio_kqueue.c 218938 2011-02-22 05:13:26Z miwi $
+ * $FreeBSD: head/tools/regression/aio/kqueue/aio_kqueue.c 280895 2015-03-31 06:51:13Z ngie $
  */
 
 /* 
@@ -177,7 +177,7 @@ main (int argc, char *argv[])
 #endif
 			if (result != sizeof(buffer)) {
 				printf("FAIL: run %d, operation %d, result %d "
-				    " (errno=%d) should be %d\n", run, pending,
+				    " (errno=%d) should be %zu\n", run, pending,
 				    result, errno, sizeof(buffer));
 				failed++;
 			} else

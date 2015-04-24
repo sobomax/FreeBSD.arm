@@ -1,7 +1,7 @@
-# $FreeBSD: head/tools/regression/sockets/pr_atomic/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/pr_atomic/Makefile 281409 2015-04-11 07:33:04Z ngie $
 
 PROG=	pr_atomic
 MAN=
-WARNS?=	3
+WARNS?=	6
 
 .include <bsd.prog.mk>

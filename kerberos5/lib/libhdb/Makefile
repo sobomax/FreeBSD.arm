@@ -1,10 +1,10 @@
-# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 264774 2014-04-22 20:37:07Z emaste $
+# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 277273 2015-01-16 21:39:08Z will $
 
 LIB=	hdb
 LDFLAGS=	-Wl,--no-undefined
 VERSION_MAP=	${KRB5DIR}/lib/hdb/version-script.map
-LDADD=	-lasn1 -lcom_err -lkrb5 -lroken -lheimsqlite
-DPADD=	${LIBASN1} ${LIBCOM_ERR} ${LIBKRB5} ${LIBROKEN} ${LIBHEIMSQLITE} ${LDAPDPADD}
+LIBADD=	asn1 com_err krb5 roken heimsqlite
+DPADD=	${LDAPDPADD}
 
 MAN=	HDB.3 hdb_entry_ex.3
 
@@ -91,10 +91,10 @@ ${GEN}: hdb.asn1
 .SUFFIXES: .h .c .x .hx
 
 .x.c:   
-	cp ${.IMPSRC} ${.TARGET}
+	${CP} ${.IMPSRC} ${.TARGET}
 
 .hx.h:
-	cp ${.IMPSRC} ${.TARGET}
+	${CP} ${.IMPSRC} ${.TARGET}
 
 .include <bsd.lib.mk>
 

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ip6addrctl/ip6addrctl.c 241737 2012-10-19 14:49:42Z ed $
+ * $FreeBSD: head/usr.sbin/ip6addrctl/ip6addrctl.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include <sys/types.h>
@@ -39,7 +39,6 @@
 #include <sys/sysctl.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 
 #include <netinet/in.h>
 #include <netinet6/in6_var.h>

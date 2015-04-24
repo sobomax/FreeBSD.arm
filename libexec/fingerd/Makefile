@@ -1,9 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/libexec/fingerd/Makefile 201380 2010-01-02 09:50:19Z ed $
+# $FreeBSD: head/libexec/fingerd/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG=	fingerd
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 MAN=	fingerd.8
 
 WARNS?=	2

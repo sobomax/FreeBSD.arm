@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/mips/atheros/ar71xxreg.h 258780 2013-11-30 22:17:27Z eadler $ */
+/* $FreeBSD: head/sys/mips/atheros/ar71xxreg.h 279509 2015-03-02 01:23:59Z adrian $ */
 
 #ifndef _AR71XX_REG_H_
 #define _AR71XX_REG_H_
@@ -273,6 +273,7 @@ typedef enum {
 	AR71XX_MII_MODE_MII,
 	AR71XX_MII_MODE_RGMII,
 	AR71XX_MII_MODE_RMII,
+	AR71XX_MII_MODE_SGMII	/* not hardware defined, though! */
 } ar71xx_mii_mode;
 
 /*

@@ -25,7 +25,7 @@
 #define NI_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/nid.h 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/nid.h 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #define CAYMAN_MAX_SH_GPRS           256
 #define CAYMAN_MAX_TEMP_GPRS         16
@@ -48,6 +48,10 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/nid.h 258780 2013-11-30 22:17:27Z e
 #define ARUBA_GB_ADDR_CONFIG_GOLDEN        0x12010001
 
 #define DMIF_ADDR_CONFIG  				0xBD4
+
+/* DCE6 only */
+#define DMIF_ADDR_CALC  				0xC00
+
 #define	SRBM_GFX_CNTL				        0x0E44
 #define		RINGID(x)					(((x) & 0x3) << 0)
 #define		VMID(x)						(((x) & 0x7) << 0)

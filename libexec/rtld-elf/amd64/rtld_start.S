@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/amd64/rtld_start.S 264481 2014-04-14 22:44:50Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/amd64/rtld_start.S 280816 2015-03-29 18:53:21Z kib $
  */
 
 	.text
@@ -36,7 +36,7 @@
 	movq	%rsp,%rsi		# save address of exit proc
 	movq	%rsp,%rdx		# construct address of obj_main
 	addq	$8,%rdx
-	call	_rtld@PLT		# Call rtld(sp); returns entry point
+	call	_rtld			# Call rtld(sp); returns entry point
 	popq	%rsi			# Get exit procedure address
 	movq	%r12,%rdi		# *ap
 /*
@@ -118,7 +118,7 @@ _rtld_bind_start:
 	leaq	(%rsi,%rsi,2),%rsi	# multiply by 3
 	leaq	(,%rsi,8),%rsi		# now 8, for 24 (sizeof Elf_Rela)
 
-	call	_rtld_bind@PLT		# Transfer control to the binder
+	call	_rtld_bind		# Transfer control to the binder
 	/* Now %rax contains the entry point of the function being called. */
 
 	movq	%rax,0x60(%rsp)		# Store target over reloff argument

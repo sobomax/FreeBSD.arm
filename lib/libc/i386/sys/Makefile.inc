@@ -1,5 +1,5 @@
 #	from: Makefile.inc,v 1.1 1993/09/03 19:04:23 jtc Exp
-# $FreeBSD: head/lib/libc/i386/sys/Makefile.inc 264155 2014-04-05 17:54:43Z imp $
+# $FreeBSD: head/lib/libc/i386/sys/Makefile.inc 281714 2015-04-18 21:50:13Z kib $
 
 .if !defined(COMPAT_32BIT)
 SRCS+=	i386_clr_watch.c i386_set_watch.c i386_vm86.c
@@ -15,9 +15,6 @@ MDASM=	Ovfork.S brk.S cerror.S exect.S getcontext.S pipe.S ptrace.S \
 NOASM=	break.o exit.o getlogin.o openbsd_poll.o sstk.o vfork.o yield.o
 
 PSEUDO=	_getlogin.o _exit.o
-.if ${MK_SYSCALL_COMPAT} != "no"
-PSEUDO+= _pread.o _pwrite.o _lseek.o _mmap.o _ftruncate.o _truncate.o
-.endif
 
 MAN+=	i386_get_ioperm.2 i386_get_ldt.2 i386_vm86.2
 MAN+=	i386_set_watch.3

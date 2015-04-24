@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netpfil/ipfw/ip_fw_private.h 273453 2014-10-22 05:21:36Z luigi $
+ * $FreeBSD: head/sys/netpfil/ipfw/ip_fw_private.h 279948 2015-03-13 09:03:25Z ae $
  */
 
 #ifndef _IPFW2_PRIVATE_H
@@ -66,14 +66,12 @@ enum {
  */
 struct _ip6dn_args {
        struct ip6_pktopts *opt_or;
-       struct route_in6 ro_or;
        int flags_or;
        struct ip6_moptions *im6o_or;
        struct ifnet *origifp_or;
        struct ifnet *ifp_or;
        struct sockaddr_in6 dst_or;
        u_long mtu_or;
-       struct route_in6 ro_pmtu_or;
 };
 
 
@@ -104,7 +102,10 @@ struct ip_fw_args {
 	struct inpcb	*inp;
 
 	struct _ip6dn_args	dummypar; /* dummynet->ip6_output */
-	struct sockaddr_in hopstore;	/* store here if cannot use a pointer */
+	union {		/* store here if cannot use a pointer */
+		struct sockaddr_in hopstore;
+		struct sockaddr_in6 hopstore6;
+	};
 };
 
 MALLOC_DECLARE(M_IPFW);
@@ -296,11 +297,12 @@ struct table_value {
 	uint32_t	nat;		/* O_NAT */
 	uint32_t	nh4;
 	uint8_t		dscp;
-	uint8_t		spare0[3];
+	uint8_t		spare0;
+	uint16_t	spare1;
 	/* -- 32 bytes -- */
 	struct in6_addr	nh6;
 	uint32_t	limit;		/* O_LIMIT */
-	uint32_t	spare1;
+	uint32_t	zoneid;		/* scope zone id for nh6 */
 	uint64_t	refcnt;		/* Number of references */
 };
 
@@ -431,6 +433,7 @@ struct ipfw_ifc {
 
 #define	IPFW_UH_RLOCK_ASSERT(_chain)	rw_assert(&(_chain)->uh_lock, RA_RLOCKED)
 #define	IPFW_UH_WLOCK_ASSERT(_chain)	rw_assert(&(_chain)->uh_lock, RA_WLOCKED)
+#define	IPFW_UH_UNLOCK_ASSERT(_chain)	rw_assert(&(_chain)->uh_lock, RA_UNLOCKED)
 
 #define IPFW_UH_RLOCK(p) rw_rlock(&(p)->uh_lock)
 #define IPFW_UH_RUNLOCK(p) rw_runlock(&(p)->uh_lock)

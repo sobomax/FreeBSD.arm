@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)reg.h	5.5 (Berkeley) 1/18/91
- * $FreeBSD: head/sys/x86/include/reg.h 233125 2012-03-18 19:12:11Z tijl $
+ * $FreeBSD: head/sys/x86/include/reg.h 281266 2015-04-08 16:30:45Z jhb $
  */
 
 #ifndef _MACHINE_REG_H_
@@ -91,6 +91,7 @@
 #define	__fpreg64	fpreg
 #define	__dbreg32	dbreg32
 #define	__dbreg64	dbreg
+#define	__HAVE_REG32
 #endif
 
 /*

@@ -125,7 +125,7 @@
 
 	# Percentage of dynamic memory (in either the EDRAM or external MEM)
 	# to use for TP RX payload
-	tp_pmrx = 34 
+	tp_pmrx = 34, 512
 
 	# TP RX payload page size
 	tp_pmrx_pagesize = 64K
@@ -135,7 +135,7 @@
 
 	# Percentage of dynamic memory (in either the EDRAM or external MEM)
 	# to use for TP TX payload
-	tp_pmtx = 32
+	tp_pmtx = 32, 512
 
 	# TP TX payload page size
 	tp_pmtx_pagesize = 64K
@@ -544,7 +544,7 @@
 
 [fini]
 	version = 0x14250012
-	checksum = 0xd9ae0325
+	checksum = 0x22f592a9
 
 # Total resources used by above allocations:
 #   Virtual Interfaces: 104
@@ -554,5 +554,5 @@
 #   MSI-X Vectors: 736
 #   Virtual Functions: 64
 #
-# $FreeBSD: head/sys/dev/cxgbe/firmware/t4fw_cfg_uwire.txt 267757 2014-06-22 23:40:20Z np $
+# $FreeBSD: head/sys/dev/cxgbe/firmware/t4fw_cfg_uwire.txt 274351 2014-11-10 19:45:28Z np $
 #

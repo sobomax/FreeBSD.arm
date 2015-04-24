@@ -32,7 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/tools/cxgbtool/cxgbtool.c 216285 2010-12-08 01:35:19Z kevlo $");
+__FBSDID("$FreeBSD: head/tools/tools/cxgbtool/cxgbtool.c 281143 2015-04-06 09:42:23Z glebius $");
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -52,7 +52,6 @@ __FBSDID("$FreeBSD: head/tools/tools/cxgbtool/cxgbtool.c 216285 2010-12-08 01:35
 #include <arpa/inet.h>
 
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/if_types.h>
 #include <sys/endian.h>
 

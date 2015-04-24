@@ -1,11 +1,10 @@
-# $FreeBSD: head/usr.sbin/watch/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.sbin/watch/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	watch
 MAN=	watch.8
 
 WARNS?=	2
 
-DPADD=	${LIBTERMCAPW}
-LDADD=	-ltermcapw
+LIBADD=	ncursesw
 
 .include <bsd.prog.mk>

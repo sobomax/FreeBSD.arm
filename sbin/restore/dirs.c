@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)dirs.c	8.7 (Berkeley) 5/1/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/restore/dirs.c 241013 2012-09-27 23:31:06Z mdf $";
+  "$FreeBSD: head/sbin/restore/dirs.c 279986 2015-03-14 13:45:43Z jilles $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -80,8 +80,8 @@ static struct inotab *inotab[HASHSIZE];
  */
 struct modeinfo {
 	ino_t ino;
-	struct timeval ctimep[2];
-	struct timeval mtimep[2];
+	struct timespec ctimep[2];
+	struct timespec mtimep[2];
 	mode_t mode;
 	uid_t uid;
 	gid_t gid;
@@ -656,8 +656,8 @@ setdirmodes(int flags)
 			else
 				(void) chown(cp, node.uid, node.gid);
 			(void) chmod(cp, node.mode);
-			utimes(cp, node.ctimep);
-			utimes(cp, node.mtimep);
+			utimensat(AT_FDCWD, cp, node.ctimep, 0);
+			utimensat(AT_FDCWD, cp, node.mtimep, 0);
 			(void) chflags(cp, node.flags);
 		}
 		ep->e_flags &= ~NEW;
@@ -746,13 +746,13 @@ allocinotab(struct context *ctxp, long seekpt)
 		return (itp);
 	node.ino = ctxp->ino;
 	node.mtimep[0].tv_sec = ctxp->atime_sec;
-	node.mtimep[0].tv_usec = ctxp->atime_nsec / 1000;
+	node.mtimep[0].tv_nsec = ctxp->atime_nsec;
 	node.mtimep[1].tv_sec = ctxp->mtime_sec;
-	node.mtimep[1].tv_usec = ctxp->mtime_nsec / 1000;
+	node.mtimep[1].tv_nsec = ctxp->mtime_nsec;
 	node.ctimep[0].tv_sec = ctxp->atime_sec;
-	node.ctimep[0].tv_usec = ctxp->atime_nsec / 1000;
+	node.ctimep[0].tv_nsec = ctxp->atime_nsec;
 	node.ctimep[1].tv_sec = ctxp->birthtime_sec;
-	node.ctimep[1].tv_usec = ctxp->birthtime_nsec / 1000;
+	node.ctimep[1].tv_nsec = ctxp->birthtime_nsec;
 	node.extsize = ctxp->extsize;
 	node.mode = ctxp->mode;
 	node.flags = ctxp->file_flags;

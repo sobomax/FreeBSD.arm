@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/2/94
-# $FreeBSD: head/usr.bin/chpass/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/chpass/Makefile 278664 2015-02-13 07:51:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -16,11 +16,9 @@ CFLAGS+= -DYP
 #CFLAGS+=-DRESTRICT_FULLNAME_CHANGE
 CFLAGS+=-I${.CURDIR}/../../usr.sbin/pwd_mkdb -I${.CURDIR}/../../lib/libc/gen -I.
 
-DPADD=	${LIBCRYPT} ${LIBUTIL}
-LDADD=	-lcrypt -lutil
+LIBADD=	crypt util
 .if ${MK_NIS} != "no"
-DPADD+=	${LIBYPCLNT}
-LDADD+=	-lypclnt
+LIBADD+=	ypclnt
 .endif 
 
 LINKS=	${BINDIR}/chpass ${BINDIR}/chfn

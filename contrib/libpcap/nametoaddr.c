@@ -21,13 +21,8 @@
  * Name to id translation routines used by the scanner.
  * These functions are not time critical.
  *
- * $FreeBSD: head/contrib/libpcap/nametoaddr.c 251129 2013-05-30 08:02:00Z delphij $
+ * $FreeBSD: head/contrib/libpcap/nametoaddr.c 276768 2015-01-06 22:29:12Z delphij $
  */
-
-#ifndef lint
-static const char rcsid[] _U_ =
-    "@(#) $Header: /tcpdump/master/libpcap/nametoaddr.c,v 1.83 2008-02-06 10:21:30 guy Exp $ (LBL)";
-#endif
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -426,6 +421,8 @@ pcap_ether_aton(const char *s)
 	register u_int d;
 
 	e = ep = (u_char *)malloc(6);
+	if (e == NULL)
+		return (NULL);
 
 	while (*s) {
 		if (*s == ':' || *s == '.' || *s == '-')

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/ipfilter/Makefile 269540 2014-08-04 22:37:02Z imp $ 
+# $FreeBSD: head/sys/modules/ipfilter/Makefile 276606 2015-01-03 03:35:18Z imp $ 
 
 .PATH: ${.CURDIR}/../../contrib/ipfilter/netinet
 
@@ -31,4 +31,3 @@ CWARNFLAGS.ip_proxy.c=		${NO_WSELF_ASSIGN} -Wno-unused
 CWARNFLAGS.ip_scan.c=		-Wno-unused
 CWARNFLAGS.ip_state.c=		-Wno-unused
 CWARNFLAGS.ip_sync.c=		-Wno-unused
-CWARNFLAGS+=			${CWARNFLAGS.${.IMPSRC:T}}

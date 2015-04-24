@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/kcc/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kcc/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kcc
 MAN=	klist.1 kswitch.1
@@ -8,10 +8,7 @@ CFLAGS+=	-I${KRB5DIR}/lib/hx509 \
 		-I${KRB5DIR}/lib/asn1 \
 		-I${KRB5DIR}/lib/roken \
 		-I${KRB5DIR}/lib/sl -I.
-DPADD=	${LIBKRB5} ${LIBHEIMNTLM} ${LIBROKEN} ${LIBASN1} ${LIBCRYPTO} \
-	${LIBCRYPT} ${LIBKAFS5} ${LIBSL} ${LIBVERS} ${LIBEDIT}
-LDADD=	-lkrb5 -lheimntlm -lroken -lasn1 -lcrypto -lcrypt -lkafs5 ${LIBSL} \
-	${LIBVERS} -ledit
+LIBADD=	krb5 roken asn1 kafs5 edit sl vers
 SRCS=	kcc.c \
 	kcc-commands.c \
 	kcc-commands.h \

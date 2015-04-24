@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.2 (Berkeley) 4/20/94
-# $FreeBSD: head/share/doc/usd/Makefile 202843 2010-01-22 23:19:48Z delphij $
+# $FreeBSD: head/share/doc/usd/Makefile 281379 2015-04-10 19:07:43Z bapt $
 
 # The following modules are not provided:
 # 14.jove
@@ -10,10 +10,6 @@ SUBDIR=	title \
 	05.dc \
 	06.bc \
 	07.mail \
-	10.exref \
-	11.vitut \
-	12.vi \
-	13.viref \
 	18.msdiffs \
 	19.memacros \
 	20.meref \

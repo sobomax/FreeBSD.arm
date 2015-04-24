@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/pmc.h 267062 2014-06-04 16:06:38Z kib $
+ * $FreeBSD: head/sys/sys/pmc.h 281721 2015-04-19 00:33:21Z jhibbits $
  */
 
 #ifndef _SYS_PMC_H_
@@ -73,6 +73,7 @@
 #define	__PMC_CPUS()						\
 	__PMC_CPU(AMD_K7,	0x00,	"AMD K7")		\
 	__PMC_CPU(AMD_K8,	0x01,	"AMD K8")		\
+	__PMC_CPU(ARMV7,	0x500,	"ARMv7")		\
 	__PMC_CPU(INTEL_P5,	0x80,	"Intel Pentium")	\
 	__PMC_CPU(INTEL_P6,	0x81,	"Intel Pentium Pro")	\
 	__PMC_CPU(INTEL_CL,	0x82,	"Intel Celeron")	\
@@ -94,10 +95,15 @@
 	__PMC_CPU(INTEL_ATOM_SILVERMONT, 0x92,	"Intel Atom Silvermont")    \
 	__PMC_CPU(INTEL_NEHALEM_EX, 0x93,   "Intel Nehalem Xeon 7500")	\
 	__PMC_CPU(INTEL_WESTMERE_EX, 0x94,   "Intel Westmere Xeon E7")	\
+	__PMC_CPU(INTEL_HASWELL_XEON, 0x95,   "Intel Haswell Xeon E5 v3") \
+	__PMC_CPU(INTEL_BROADWELL, 0x96,   "Intel Broadwell") \
 	__PMC_CPU(INTEL_XSCALE,	0x100,	"Intel XScale")		\
 	__PMC_CPU(MIPS_24K,     0x200,  "MIPS 24K")		\
 	__PMC_CPU(MIPS_OCTEON,  0x201,  "Cavium Octeon")	\
+	__PMC_CPU(MIPS_74K,     0x202,  "MIPS 74K")		\
 	__PMC_CPU(PPC_7450,     0x300,  "PowerPC MPC7450")	\
+	__PMC_CPU(PPC_E500,     0x340,  "PowerPC e500 Core")	\
+	__PMC_CPU(PPC_MPC85XX,  0x340,  "Freescale PowerPC MPC85XX")	\
 	__PMC_CPU(PPC_970,      0x380,  "IBM PowerPC 970")	\
 	__PMC_CPU(GENERIC, 	0x400,  "Generic")
 
@@ -126,10 +132,13 @@ enum pmc_cputype {
 	__PMC_CLASS(UCF)	/* Intel Uncore fixed function */	\
 	__PMC_CLASS(UCP)	/* Intel Uncore programmable */		\
 	__PMC_CLASS(XSCALE)	/* Intel XScale counters */		\
+	__PMC_CLASS(ARMV7)	/* ARMv7 */				\
 	__PMC_CLASS(MIPS24K)	/* MIPS 24K */				\
 	__PMC_CLASS(OCTEON)	/* Cavium Octeon */			\
+	__PMC_CLASS(MIPS74K)	/* MIPS 74K */				\
 	__PMC_CLASS(PPC7450)	/* Motorola MPC7450 class */		\
 	__PMC_CLASS(PPC970)	/* IBM PowerPC 970 class */		\
+	__PMC_CLASS(E500)	/* Freescale e500 class */		\
 	__PMC_CLASS(SOFT)	/* Software events */
 
 enum pmc_class {
@@ -349,7 +358,7 @@ enum pmc_ops {
 #define	PMC_F_NEEDS_LOGFILE	0x00020000 /*needs log file */
 #define	PMC_F_ATTACH_DONE	0x00040000 /*attached at least once */
 
-#define	PMC_CALLCHAIN_DEPTH_MAX	32
+#define	PMC_CALLCHAIN_DEPTH_MAX	128
 
 #define	PMC_CC_F_USERSPACE	0x01	   /*userspace callchain*/
 
@@ -605,7 +614,7 @@ struct pmc_op_getdyneventinfo {
 #define	PMC_LOG_BUFFER_SIZE			4
 #define	PMC_NLOGBUFFERS				1024
 #define	PMC_NSAMPLES				1024
-#define	PMC_CALLCHAIN_DEPTH			16
+#define	PMC_CALLCHAIN_DEPTH			32
 
 #define PMC_SYSCTL_NAME_PREFIX "kern." PMC_MODULE_NAME "."
 

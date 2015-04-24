@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/syscons/syscons.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/syscons/syscons.c 277796 2015-01-27 17:33:18Z avg $");
 
 #include "opt_compat.h"
 #include "opt_syscons.h"
@@ -549,7 +549,7 @@ sc_attach_unit(int unit, int flags)
 
     /* Register suspend/resume/shutdown callbacks for the kernel console. */
     if (sc_console_unit == unit) {
-	EVENTHANDLER_REGISTER(power_suspend, scsuspend, NULL,
+	EVENTHANDLER_REGISTER(power_suspend_early, scsuspend, NULL,
 			      EVENTHANDLER_PRI_ANY);
 	EVENTHANDLER_REGISTER(power_resume, scresume, NULL,
 			      EVENTHANDLER_PRI_ANY);

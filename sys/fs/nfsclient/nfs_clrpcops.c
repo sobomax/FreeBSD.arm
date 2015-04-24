@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clrpcops.c 264749 2014-04-22 04:42:46Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clrpcops.c 281770 2015-04-20 16:40:13Z pfg $");
 
 /*
  * Rpc op calls, generally called from the vnode op calls or through the
@@ -537,8 +537,10 @@ nfsrpc_openrpc(struct nfsmount *nmp, vnode_t vp, u_int8_t *nfhp, int fhlen,
 			    (void) nfs_catnap(PZERO, ret, "nfs_open2");
 		    } while (ret == NFSERR_DELAY);
 		    if (ret) {
-			if (ndp != NULL)
+			if (ndp != NULL) {
 				FREE((caddr_t)ndp, M_NFSCLDELEG);
+				ndp = NULL;
+			}
 			if (ret == NFSERR_STALECLIENTID ||
 			    ret == NFSERR_STALEDONTRECOVER ||
 			    ret == NFSERR_BADSESSION)
@@ -2153,8 +2155,10 @@ nfsrpc_createv4(vnode_t dvp, char *name, int namelen, struct vattr *vap,
 			    (void) nfs_catnap(PZERO, ret, "nfs_crt2");
 		    } while (ret == NFSERR_DELAY);
 		    if (ret) {
-			if (dp != NULL)
+			if (dp != NULL) {
 				FREE((caddr_t)dp, M_NFSCLDELEG);
+				dp = NULL;
+			}
 			if (ret == NFSERR_STALECLIENTID ||
 			    ret == NFSERR_STALEDONTRECOVER ||
 			    ret == NFSERR_BADSESSION)

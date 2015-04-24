@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt.c,v 1.16 2003/10/10 19:15:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/drivers/ubt/ng_ubt.c 260482 2014-01-09 15:31:44Z adrian $
+ * $FreeBSD: head/sys/netgraph/bluetooth/drivers/ubt/ng_ubt.c 276750 2015-01-06 12:59:37Z rwatson $
  */
 
 /*
@@ -816,8 +816,7 @@ ubt_intr_read_callback(struct usb_xfer *xfer, usb_error_t error)
 			goto submit_next;
 		}
 
-		MCLGET(m, M_NOWAIT);
-		if (!(m->m_flags & M_EXT)) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			UBT_STAT_IERROR(sc);
 			goto submit_next;
 		}
@@ -916,8 +915,7 @@ ubt_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 			goto submit_next;
 		}
 
-		MCLGET(m, M_NOWAIT);
-		if (!(m->m_flags & M_EXT)) {
+		if (!(MCLGET(m, M_NOWAIT))) {
 			UBT_STAT_IERROR(sc);
 			goto submit_next;
 		}
@@ -1126,8 +1124,7 @@ ubt_isoc_read_one_frame(struct usb_xfer *xfer, int frame_no)
 				return (-1);	/* XXX out of sync! */
 			}
 
-			MCLGET(m, M_NOWAIT);
-			if (!(m->m_flags & M_EXT)) {
+			if (!(MCLGET(m, M_NOWAIT))) {
 				UBT_STAT_IERROR(sc);
 				NG_FREE_M(m);
 				return (-1);	/* XXX out of sync! */

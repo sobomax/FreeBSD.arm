@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_trap.c 263475 2014-03-21 14:25:09Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_trap.c 277055 2015-01-12 08:58:07Z kib $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_ktrace.h"
@@ -157,8 +157,6 @@ userret(struct thread *td, struct trapframe *frame)
 	    td->td_rw_rlocks));
 	KASSERT((td->td_pflags & TDP_NOFAULTING) == 0,
 	    ("userret: Returning with pagefaults disabled"));
-	KASSERT((td->td_pflags & TDP_DEVMEMIO) == 0,
-	    ("userret: Returning with /dev/mem i/o leaked"));
 	KASSERT(td->td_no_sleeping == 0,
 	    ("userret: Returning with sleep disabled"));
 	KASSERT(td->td_pinned == 0 || (td->td_pflags & TDP_CALLCHAIN) != 0,

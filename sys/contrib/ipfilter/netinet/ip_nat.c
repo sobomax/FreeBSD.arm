@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 272555 2014-10-05 03:58:30Z cy $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 280971 2015-04-01 22:26:39Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -112,7 +112,7 @@ extern struct ifnet vpnif;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_nat.c	1.11 6/5/96 (C) 1995 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 272555 2014-10-05 03:58:30Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 280971 2015-04-01 22:26:39Z glebius $";
 /* static const char rcsid[] = "@(#)$Id: ip_nat.c,v 2.195.2.102 2007/10/16 10:08:10 darrenr Exp $"; */
 #endif
 
@@ -5221,7 +5221,7 @@ ipf_nat_out(fin, nat, natadd, nflags)
 		}
 
 		ip = MTOD(m, ip_t *);
-		ip->ip_id = htons(ipf_nextipid(fin));
+		ip_fillid(ip);
 		s2 = ntohs(ip->ip_id);
 
 		s1 = ip->ip_len;
@@ -5666,7 +5666,7 @@ ipf_nat_in(fin, nat, natadd, nflags)
 		}
 
 		ip = MTOD(m, ip_t *);
-		ip->ip_id = htons(ipf_nextipid(fin));
+		ip_fillid(ip);
 		sum1 = ntohs(ip->ip_len);
 		ip->ip_len = ntohs(ip->ip_len);
 		ip->ip_len += fin->fin_plen;

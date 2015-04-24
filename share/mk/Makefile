@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/Makefile 268565 2014-07-12 07:46:18Z rpaulo $
+# $FreeBSD: head/share/mk/Makefile 276846 2015-01-08 18:28:06Z imp $
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
 
 .include <src.opts.mk>
@@ -11,6 +11,7 @@ FILES=	\
 	bsd.crunchgen.mk \
 	bsd.dep.mk \
 	bsd.doc.mk \
+	bsd.dtb.mk \
 	bsd.endian.mk \
 	bsd.files.mk \
 	bsd.incs.mk \

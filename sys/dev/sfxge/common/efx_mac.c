@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_mac.c 228078 2011-11-28 17:19:05Z philip $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_mac.c 278839 2015-02-16 06:12:04Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -669,11 +669,11 @@ chosen:
 	EFSYS_ASSERT(emop != NULL);
 
 	epp->ep_mac_type = type;
-	
+
 	if (emop->emo_reset != NULL) {
 		if ((rc = emop->emo_reset(enp)) != 0)
 			goto fail1;
-		
+
 		EFSYS_ASSERT(enp->en_reset_flags & EFX_RESET_MAC);
 		enp->en_reset_flags &= ~EFX_RESET_MAC;
 	}

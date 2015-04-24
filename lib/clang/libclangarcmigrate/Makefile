@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangarcmigrate/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libclangarcmigrate/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -28,6 +28,7 @@ SRCS=	ARCMT.cpp \
 
 TGHDRS=	AttrList \
 	AttrParsedAttrList \
+	AttrVisitor \
 	Attrs \
 	CommentCommandList \
 	CommentNodes \

@@ -32,7 +32,7 @@
 .\" the referee document.  The original Standard can be obtained online at
 .\"	http://www.opengroup.org/unix/online.html.
 .\"
-.\" $FreeBSD: head/lib/libc/iconv/iconvlist.3 267774 2014-06-23 08:25:03Z bapt $
+.\" $FreeBSD: head/lib/libc/iconv/iconvlist.3 276294 2014-12-27 08:31:52Z joel $
 .\"
 .Dd October 20, 2009
 .Dt ICONVLIST 3
@@ -78,9 +78,9 @@ If an error occurs,
 will be NULL when calling
 .Fn do_one .
 .Sh SEE ALSO
-.Xr iconv 3 ,
+.Xr __iconv_free_list 3 ,
 .Xr __iconv_get_list 3 ,
-.Xr __iconv_free_list 3
+.Xr iconv 3
 .Sh STANDARDS
 The
 .Nm

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/part/g_part.h 268256 2014-07-04 15:55:32Z nwhitehorn $
+ * $FreeBSD: head/sys/geom/part/g_part.h 279935 2015-03-12 18:51:31Z ae $
  */
 
 #ifndef _GEOM_PART_H_
@@ -85,6 +85,7 @@ enum g_part_alias {
 	G_PART_ALIAS_DFBSD_HAMMER,	/* A DfBSD HAMMER FS partition entry */
 	G_PART_ALIAS_DFBSD_HAMMER2,	/* A DfBSD HAMMER2 FS partition entry */
 	G_PART_ALIAS_PREP_BOOT,		/* A PREP/CHRP boot partition entry. */
+	G_PART_ALIAS_APPLE_CORE_STORAGE,/* An Apple Core Storage partition. */
 	/* Keep the following last */
 	G_PART_ALIAS_COUNT
 };

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzerfrontend/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzerfrontend/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,9 +7,13 @@ LIB=	clangstaticanalyzerfrontend
 SRCDIR=	tools/clang/lib/StaticAnalyzer/Frontend
 SRCS=	AnalysisConsumer.cpp \
 	CheckerRegistration.cpp \
-	FrontendActions.cpp
+	ModelConsumer.cpp \
+	FrontendActions.cpp \
+	ModelInjector.cpp
 
 TGHDRS=	AttrList \
+	AttrParsedAttrList \
+	AttrVisitor \
 	Attrs \
 	Checkers \
 	CommentCommandList \

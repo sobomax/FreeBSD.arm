@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vfsops.c 269422 2014-08-02 05:05:16Z imp $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vfsops.c 281562 2015-04-15 20:16:31Z rmacklem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1391,6 +1391,7 @@ nandfs_mountfs(struct vnode *devvp, struct mount *mp)
 	nmp->nm_ronly = ronly;
 	MNT_ILOCK(mp);
 	mp->mnt_flag |= MNT_LOCAL;
+	mp->mnt_kern_flag |= MNTK_USES_BCACHE;
 	MNT_IUNLOCK(mp);
 	nmp->nm_nandfsdev = nandfsdev;
 	/* Add our mountpoint */

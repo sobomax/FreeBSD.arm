@@ -1,7 +1,7 @@
-# $FreeBSD: head/tools/regression/sockets/unix_sorflush/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/unix_sorflush/Makefile 281403 2015-04-11 03:57:35Z ngie $
 
 PROG=	unix_sorflush
 MAN=
-WARNS?=	3
+WARNS?=	6
 
 .include <bsd.prog.mk>

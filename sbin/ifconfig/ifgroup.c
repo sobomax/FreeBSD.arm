@@ -25,7 +25,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifgroup.c 256768 2013-10-19 09:59:11Z des $";
+  "$FreeBSD: head/sbin/ifconfig/ifgroup.c 274710 2014-11-19 13:57:39Z feld $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -86,9 +86,6 @@ getifgroups(int s)
 	struct ifgroupreq	 ifgr;
 	struct ifg_req		*ifg;
 
-	if (!verbose)
-		return;
-
 	memset(&ifgr, 0, sizeof(ifgr));
 	strlcpy(ifgr.ifgr_name, name, IFNAMSIZ);
 
@@ -121,6 +118,8 @@ getifgroups(int s)
 	}
 	if (cnt)
 		printf("\n");
+
+	free(ifgr.ifgr_groups);
 }
 
 static void

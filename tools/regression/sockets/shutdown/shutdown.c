@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/shutdown/shutdown.c 150156 2005-09-15 13:20:39Z maxim $
+ * $FreeBSD: head/tools/regression/sockets/shutdown/shutdown.c 281395 2015-04-11 03:19:48Z ngie $
  */
 
 #include <sys/types.h>
@@ -44,6 +44,8 @@ main(void)
 	socklen_t len;
 	int listen_sock, connect_sock;
 	u_short port;
+
+	listen_sock = -1;
 
 	/* Shutdown(2) on an invalid file descriptor has to return EBADF. */
 	if ((shutdown(listen_sock, SHUT_RDWR) != -1) && (errno != EBADF))

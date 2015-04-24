@@ -68,7 +68,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/eui64.c 254700 2013-08-23 13:59:47Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/net/eui64.c 279363 2015-02-27 18:13:06Z pfg $");
 
 #include <stdio.h>
 #include <paths.h>
@@ -132,6 +132,7 @@ eui64_line(const char *l, struct eui64 *e, char *hostname, size_t len)
 			goto bad;
 	}
 
+	free(linehead);
 	return (0);
 
 bad:

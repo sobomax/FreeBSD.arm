@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: head/sys/sys/smp.h 264984 2014-04-26 20:27:54Z scottl $
+ * $FreeBSD: head/sys/sys/smp.h 276829 2015-01-08 15:53:13Z jhb $
  */
 
 #ifndef _SYS_SMP_H_
@@ -85,6 +85,7 @@ extern int mp_ncpus;
 extern volatile int smp_started;
 
 extern cpuset_t all_cpus;
+extern cpuset_t cpuset_domain[MAXMEMDOM]; 	/* CPUs in each NUMA domain. */
 
 /*
  * Macro allowing us to determine whether a CPU is absent at any given

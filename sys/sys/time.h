@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)time.h	8.5 (Berkeley) 5/4/95
- * $FreeBSD: head/sys/sys/time.h 267896 2014-06-26 05:23:48Z davide $
+ * $FreeBSD: head/sys/sys/time.h 275985 2014-12-21 05:07:11Z imp $
  */
 
 #ifndef _SYS_TIME_H_
@@ -398,7 +398,7 @@ extern sbintime_t sbt_tickthreshold;
  * Functions containing "up" returns time relative to boot and
  * should be used for calculating time intervals.
  *
- * Functions without "up" returns GMT time.
+ * Functions without "up" returns UTC time.
  *
  * Functions with the "get" prefix returns a less precise result
  * much faster than the functions without "get" prefix and should

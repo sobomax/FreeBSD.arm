@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/rtsocket/rtsocket.c 157603 2006-04-09 14:48:38Z rwatson $
+ * $FreeBSD: head/tools/regression/sockets/rtsocket/rtsocket.c 281392 2015-04-11 02:59:45Z ngie $
  */
 
 /*
@@ -41,7 +41,7 @@
 #include <unistd.h>
 
 int
-main(int argc, char *argv[])
+main(void)
 {
 	int sock, socks[2];
 

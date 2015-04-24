@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: vmparam.h,v 1.11 2000/02/11 19:25:16 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/vmparam.h 270201 2014-08-20 08:02:38Z kib $
+ * $FreeBSD: head/sys/powerpc/include/vmparam.h 276905 2015-01-10 06:54:10Z jhibbits $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -38,7 +38,7 @@
 #define	USRSTACK	SHAREDPAGE
 
 #ifndef	MAXTSIZ
-#define	MAXTSIZ		(64*1024*1024)		/* max text size */
+#define	MAXTSIZ		(1*1024*1024*1024)		/* max text size */
 #endif
 
 #ifndef	DFLDSIZ

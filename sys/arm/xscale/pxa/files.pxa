@@ -1,7 +1,6 @@
-# $FreeBSD: head/sys/arm/xscale/pxa/files.pxa 262979 2014-03-10 18:10:09Z ian $
+# $FreeBSD: head/sys/arm/xscale/pxa/files.pxa 280831 2015-03-29 22:43:39Z andrew $
 
 arm/arm/bus_space_generic.c		standard
-arm/arm/cpufunc_asm_xscale.S		standard
 
 arm/xscale/pxa/pxa_gpio.c		standard
 arm/xscale/pxa/pxa_icu.c		standard

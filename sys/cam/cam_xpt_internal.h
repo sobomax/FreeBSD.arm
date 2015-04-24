@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/cam_xpt_internal.h 256843 2013-10-21 12:00:26Z mav $
+ * $FreeBSD: head/sys/cam/cam_xpt_internal.h 278228 2015-02-05 00:12:21Z ken $
  */
 
 #ifndef _CAM_CAM_XPT_INTERNAL_H
@@ -83,6 +83,8 @@ struct cam_ed {
 	uint8_t		 supported_vpds_len;
 	uint32_t	 device_id_len;
 	uint8_t		 *device_id;
+	uint32_t	 ext_inq_len;
+	uint8_t		 *ext_inq;
 	uint8_t		 physpath_len;
 	uint8_t		 *physpath;	/* physical path string form */
 	uint32_t	 rcap_len;

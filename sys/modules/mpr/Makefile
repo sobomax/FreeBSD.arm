@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/mpr/Makefile 265236 2014-05-02 20:25:09Z ken $
+# $FreeBSD: head/sys/modules/mpr/Makefile 276606 2015-01-03 03:35:18Z imp $
 
 .PATH: ${.CURDIR}/../../dev/mpr
 
@@ -15,4 +15,3 @@ SRCS+=	device_if.h bus_if.h pci_if.h
 CWARNFLAGS.mpr_sas.c=		${NO_WUNNEEDED_INTERNAL_DECL}
 # XXX Work around clang warning, until maintainer approves fix.
 CWARNFLAGS.mpr_mapping.c=	${NO_WSOMETIMES_UNINITIALIZED}
-CWARNFLAGS+=			${CWARNFLAGS.${.IMPSRC:T}}

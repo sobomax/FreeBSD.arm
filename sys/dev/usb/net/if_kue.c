@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_kue.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_kue.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * Kawasaki LSI KL5KUSB101B USB to ethernet adapter driver.
@@ -170,7 +170,7 @@ static void	kue_reset(struct kue_softc *);
 static int kue_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, kue, CTLFLAG_RW, 0, "USB kue");
-SYSCTL_INT(_hw_usb_kue, OID_AUTO, debug, CTLFLAG_RW, &kue_debug, 0,
+SYSCTL_INT(_hw_usb_kue, OID_AUTO, debug, CTLFLAG_RWTUN, &kue_debug, 0,
     "Debug level");
 #endif
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iscsi/iscsi.h 268326 2014-07-06 17:37:49Z mav $
+ * $FreeBSD: head/sys/dev/iscsi/iscsi.h 278397 2015-02-08 19:15:14Z trasz $
  */
 
 #ifndef ISCSI_H
@@ -45,6 +45,7 @@ struct iscsi_outstanding {
 	size_t				io_received;
 	uint32_t			io_initiator_task_tag;
 	uint32_t			io_datasn;
+	void				*io_icl_prv;
 };
 
 struct iscsi_session {

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.h,v 1.4 2003/03/25 23:53:33 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket_l2cap.h 271908 2014-09-20 16:43:14Z jhb $
+ * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket_l2cap.h 281198 2015-04-07 10:22:56Z takawata $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_L2CAP_H_
@@ -70,6 +70,8 @@ struct ng_btsocket_l2cap_raw_pcb {
 
 	bdaddr_t				 src;	/* source address */
 	bdaddr_t				 dst;	/* dest address */
+	uint8_t			 	 	 srctype;/*source addr type*/
+	uint8_t			 	 	 dsttype;/*source addr type*/
 	ng_btsocket_l2cap_rtentry_p		 rt;    /* routing info */
 
 	u_int32_t				 token;	/* message token */
@@ -129,6 +131,8 @@ struct ng_btsocket_l2cap_pcb {
 
 	bdaddr_t			 src;	     /* Source address */
 	bdaddr_t			 dst;	     /* Destination address */
+	uint8_t			 	 srctype;	/*source addr type*/
+	uint8_t			 	 dsttype;	/*source addr type*/
 
 	u_int16_t			 psm;	     /* PSM */
 	u_int16_t			 cid;	     /* Local channel ID */

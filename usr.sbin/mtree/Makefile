@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/mtree/Makefile 271771 2014-09-18 14:41:57Z will $
+# $FreeBSD: head/usr.sbin/mtree/Makefile 277273 2015-01-16 21:39:08Z will $
 
 .include <bsd.own.mk>
 
@@ -11,12 +11,11 @@ SRCS=	compare.c crc.c create.c excludes.c misc.c mtree.c spec.c verify.c
 SRCS+=	specspec.c
 
 CFLAGS+= -DMD5 -DSHA1 -DRMD160 -DSHA256
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 CLEANFILES+=	fmtree.8
 
 fmtree.8: mtree.8
-	cp -f ${.ALLSRC} ${.TARGET}
+	${CP} ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

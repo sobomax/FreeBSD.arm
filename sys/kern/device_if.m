@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/kern/device_if.m 239299 2012-08-15 15:42:57Z hselasky $
+# $FreeBSD: head/sys/kern/device_if.m 276855 2015-01-08 21:46:28Z jhb $
 #
 
 #include <sys/bus.h>
@@ -60,7 +60,7 @@ CODE {
 
 	static int null_quiesce(device_t dev)
 	{
-	    return EOPNOTSUPP;
+	    return 0;
 	}
 };
 	

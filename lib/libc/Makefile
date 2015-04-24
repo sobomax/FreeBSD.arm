@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: head/lib/libc/Makefile 271771 2014-09-18 14:41:57Z will $
+# $FreeBSD: head/lib/libc/Makefile 281714 2015-04-18 21:50:13Z kib $
 
 SHLIBDIR?= /lib
 
@@ -44,13 +44,11 @@ CFLAGS+=${CANCELPOINTS_CFLAGS}
 #
 # Link with static libcompiler_rt.a.
 #
-DPADD+=	${LIBCOMPILER_RT}
 LDFLAGS+= -nodefaultlibs
-LDADD+= -lcompiler_rt
+LIBADD+=	compiler_rt
 
 .if ${MK_SSP} != "no"
-DPADD+= ${LIBSSP_NONSHARED}
-LDADD+= -lssp_nonshared
+LIBADD+=	ssp_nonshared
 .endif
 
 # Extras that live in either libc.a or libc_nonshared.a
@@ -81,7 +79,8 @@ NOASM=
 .include "${LIBC_SRCTOP}/net/Makefile.inc"
 .include "${LIBC_SRCTOP}/nls/Makefile.inc"
 .include "${LIBC_SRCTOP}/posix1e/Makefile.inc"
-.if ${LIBC_ARCH} != "amd64" && \
+.if ${LIBC_ARCH} != "aarch64" && \
+    ${LIBC_ARCH} != "amd64" && \
     ${LIBC_ARCH} != "powerpc64" && \
     ${LIBC_ARCH} != "sparc64" && \
     ${MACHINE_ARCH:Mmipsn32*} == "" && \
@@ -151,12 +150,14 @@ KSRCS=	bcmp.c ffs.c ffsl.c fls.c flsl.c mcount.c strcat.c strchr.c \
 libkern: libkern.gen libkern.${LIBC_ARCH}
 
 libkern.gen: ${KQSRCS} ${KSRCS}
-	cp -fp ${LIBC_SRCTOP}/quad/quad.h ${.ALLSRC} ${DESTDIR}/sys/libkern
+	${CP} ${LIBC_SRCTOP}/quad/quad.h ${.ALLSRC} ${DESTDIR}/sys/libkern
 
 libkern.${LIBC_ARCH}:: ${KMSRCS}
 .if defined(KMSRCS) && !empty(KMSRCS)
-	cp -fp ${.ALLSRC} ${DESTDIR}/sys/libkern/${LIBC_ARCH}
+	${CP} ${.ALLSRC} ${DESTDIR}/sys/libkern/${LIBC_ARCH}
 .endif
+
+.include <bsd.arch.inc.mk>
 
 .include <bsd.lib.mk>
 

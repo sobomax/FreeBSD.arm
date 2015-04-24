@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/tinybsd/conf/wrap/TINYBSD 171923 2007-08-22 18:45:00Z remko $
+# $FreeBSD: head/tools/tools/tinybsd/conf/wrap/TINYBSD 274331 2014-11-09 21:33:01Z melifaro $
 machine		i386
 cpu		I586_CPU
 ident		TINYBSD
@@ -110,7 +110,6 @@ device		tun		# Packet tunnel.
 device		pty		# Pseudo-ttys (telnet etc)
 device		md		# Memory "disks"
 device		gif		# IPv6 and IPv4 tunneling
-device		faith		# IPv6-to-IPv4 relaying (translation)
 
 # The `bpf' device enables the Berkeley Packet Filter.
 # Be aware of the administrative consequences of enabling this!

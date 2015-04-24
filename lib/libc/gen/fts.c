@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/fts.c 262872 2014-03-06 22:47:11Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/fts.c 281082 2015-04-04 20:22:12Z jilles $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -905,12 +905,13 @@ fts_stat(FTS *sp, FTSENT *p, int follow, int dfd)
 	if (ISSET(FTS_LOGICAL) || follow) {
 		if (fstatat(dfd, path, sbp, 0)) {
 			saved_errno = errno;
-			if (!fstatat(dfd, path, sbp, AT_SYMLINK_NOFOLLOW)) {
-				errno = 0;
-				return (FTS_SLNONE);
+			if (fstatat(dfd, path, sbp, AT_SYMLINK_NOFOLLOW)) {
+				p->fts_errno = saved_errno;
+				goto err;
 			}
-			p->fts_errno = saved_errno;
-			goto err;
+			errno = 0;
+			if (S_ISLNK(sbp->st_mode))
+				return (FTS_SLNONE);
 		}
 	} else if (fstatat(dfd, path, sbp, AT_SYMLINK_NOFOLLOW)) {
 		p->fts_errno = errno;

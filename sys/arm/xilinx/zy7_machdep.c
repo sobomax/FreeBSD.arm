@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 266301 2014-05-17 11:27:36Z andrew $
+ * $FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 274668 2014-11-18 17:06:56Z imp $
  */
 
 /*
@@ -33,10 +33,8 @@
  * (v1.4) November 16, 2012.  Xilinx doc UG585.
  */
 
-#include "opt_global.h"
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 266301 2014-05-17 11:27:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 274668 2014-11-18 17:06:56Z imp $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>

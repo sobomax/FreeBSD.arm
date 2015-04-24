@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/virtqueue.c 270046 2014-08-16 13:13:17Z luigi $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/virtqueue.c 275728 2014-12-12 11:19:10Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -567,8 +567,11 @@ virtqueue_poll(struct virtqueue *vq, uint32_t *len)
 {
 	void *cookie;
 
-	while ((cookie = virtqueue_dequeue(vq, len)) == NULL)
+	VIRTIO_BUS_POLL(vq->vq_dev);
+	while ((cookie = virtqueue_dequeue(vq, len)) == NULL) {
 		cpu_spinwait();
+		VIRTIO_BUS_POLL(vq->vq_dev);
+	}
 
 	return (cookie);
 }

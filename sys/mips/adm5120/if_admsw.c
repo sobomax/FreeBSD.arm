@@ -76,7 +76,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/adm5120/if_admsw.c 271858 2014-09-19 09:19:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/mips/adm5120/if_admsw.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -655,8 +655,7 @@ admsw_start(struct ifnet *ifp)
 				break;
 			}
 			if (m0->m_pkthdr.len > MHLEN) {
-				MCLGET(m, M_NOWAIT);
-				if ((m->m_flags & M_EXT) == 0) {
+				if (!(MCLGET(m, M_NOWAIT))) {
 					device_printf(sc->sc_dev, 
 					    "unable to allocate Tx cluster\n");
 					m_freem(m);
@@ -1227,8 +1226,7 @@ admsw_add_rxbuf(struct admsw_softc *sc, int idx, int high)
 	if (m == NULL)
 		return (ENOBUFS);
 
-	MCLGET(m, M_NOWAIT);
-	if ((m->m_flags & M_EXT) == 0) {
+	if (!(MCLGET(m, M_NOWAIT))) {
 		m_freem(m);
 		return (ENOBUFS);
 	}

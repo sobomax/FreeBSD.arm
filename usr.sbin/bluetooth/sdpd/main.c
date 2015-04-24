@@ -26,10 +26,11 @@
  * SUCH DAMAGE.
  *
  * $Id: main.c,v 1.8 2004/01/13 19:31:54 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/sdpd/main.c 124758 2004-01-20 20:48:26Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/sdpd/main.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/select.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <grp.h>

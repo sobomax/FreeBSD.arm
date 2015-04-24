@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libcompat/4.3/rexec.c 189077 2009-02-26 17:46:54Z rdivacky $
+ * $FreeBSD: head/lib/libcompat/4.3/rexec.c 278867 2015-02-16 21:35:29Z pfg $
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
@@ -332,10 +332,10 @@ retry:
 		perror(hp->h_name);
 		return (-1);
 	}
-	if (fd2p == 0) {
-		(void) write(s, "", 1);
-		port = 0;
-	} else {
+	port = 0;
+	if (fd2p == 0)
+		(void) write(s, "", 1);	
+	else {
 		char num[8];
 		int s2, sin2len;
 

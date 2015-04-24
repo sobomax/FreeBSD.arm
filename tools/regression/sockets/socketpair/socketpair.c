@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/socketpair/socketpair.c 168278 2007-04-02 19:15:47Z jhb $
+ * $FreeBSD: head/tools/regression/sockets/socketpair/socketpair.c 281398 2015-04-11 03:35:33Z ngie $
  */
 
 #include <sys/types.h>
@@ -47,7 +47,7 @@
  * right places.
  */
 int
-main(int argc, char *argv[])
+main(void)
 {
 	int fd1, fd2, fd3;
 	int sv[2];

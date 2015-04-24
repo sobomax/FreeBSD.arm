@@ -1,11 +1,10 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/iostat/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/iostat/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	iostat
 MAN=	iostat.8
 
-DPADD=	${LIBDEVSTAT} ${LIBKVM} ${LIBM}
-LDADD=	-ldevstat -lkvm -lm
+LIBADD=	devstat kvm m
 
 WARNS?=	1
 

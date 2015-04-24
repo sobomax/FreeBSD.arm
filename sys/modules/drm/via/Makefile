@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/drm/via/Makefile 242203 2012-10-28 02:15:35Z nwhitehorn $
+# $FreeBSD: head/sys/modules/drm/via/Makefile 276606 2015-01-03 03:35:18Z imp $
 
 .PATH:	${.CURDIR}/../../../dev/drm
 KMOD	= via
@@ -24,4 +24,3 @@ opt_drm.h:
 
 CWARNFLAGS.via_dma.c=		-Wno-unused-value
 CWARNFLAGS.via_dmablit.c=	-Wno-unused-value
-CWARNFLAGS+=			${CWARNFLAGS.${.IMPSRC:T}}

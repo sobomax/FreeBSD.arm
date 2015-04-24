@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/cpufunc.h 273995 2014-11-02 22:58:30Z jhb $
+ * $FreeBSD: head/sys/i386/include/cpufunc.h 278473 2015-02-09 21:00:56Z kib $
  */
 
 /*
@@ -344,6 +344,15 @@ rdmsr(u_int msr)
 
 	__asm __volatile("rdmsr" : "=A" (rv) : "c" (msr));
 	return (rv);
+}
+
+static __inline uint32_t
+rdmsr32(u_int msr)
+{
+	uint32_t low;
+
+	__asm __volatile("rdmsr" : "=a" (low) : "c" (msr) : "edx");
+	return (low);
 }
 
 static __inline uint64_t

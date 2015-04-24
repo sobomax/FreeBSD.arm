@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.obj.mk 268970 2014-07-22 00:42:55Z sjg $
+# $FreeBSD: head/share/mk/bsd.obj.mk 279980 2015-03-14 12:29:44Z dim $
 #
 # The include file <bsd.obj.mk> handles creating the 'obj' directory
 # and cleaning up object files, etc.
@@ -89,6 +89,16 @@ obj: .PHONY
 		fi; \
 		${ECHO} "${CANONICALOBJDIR} created for ${.CURDIR}"; \
 	fi
+.for dir in ${SRCS:H:O:u}
+	@if ! test -d ${CANONICALOBJDIR}/${dir}/; then \
+		mkdir -p ${CANONICALOBJDIR}/${dir}; \
+		if ! test -d ${CANONICALOBJDIR}/${dir}/; then \
+			${ECHO} "Unable to create ${CANONICALOBJDIR}/${dir}."; \
+			exit 1; \
+		fi; \
+		${ECHO} "${CANONICALOBJDIR}/${dir} created for ${.CURDIR}"; \
+	fi
+.endfor
 .endif
 
 .if !target(objlink)
@@ -112,7 +122,7 @@ whereobj:
 
 .if ${CANONICALOBJDIR} != ${.CURDIR} && exists(${CANONICALOBJDIR}/)
 cleanobj:
-	@rm -rf ${CANONICALOBJDIR}
+	@-rm -rf ${CANONICALOBJDIR}
 .else
 cleanobj: clean cleandepend
 .endif
@@ -130,7 +140,7 @@ clean:
 	rm -f ${CLEANFILES}
 .endif
 .if defined(CLEANDIRS) && !empty(CLEANDIRS)
-	rm -rf ${CLEANDIRS}
+	-rm -rf ${CLEANDIRS}
 .endif
 .endif
 

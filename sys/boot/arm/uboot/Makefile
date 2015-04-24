@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/arm/uboot/Makefile 273934 2014-11-01 17:12:44Z andrew $
+# $FreeBSD: head/sys/boot/arm/uboot/Makefile 281009 2015-04-03 02:27:40Z jkim $
 
 .include <src.opts.mk>
 
@@ -76,7 +76,7 @@ LIBUBOOT_FDT=	${.OBJDIR}/../../uboot/fdt/libuboot_fdt.a
 LIBFDT=		${.OBJDIR}/../../fdt/libfdt.a
 .endif
 
-.if !defined(NO_FORTH)
+.if ${MK_FORTH} != "no"
 # Enable BootForth
 BOOT_FORTH=	yes
 CFLAGS+=	-DBOOT_FORTH -I${.CURDIR}/../../ficl -I${.CURDIR}/../../ficl/arm
@@ -137,11 +137,7 @@ ldscript.generated::
 
 .if !defined(LOADER_ONLY)
 .PATH: ${.CURDIR}/../../forth
-FILES+=	loader.help loader.4th support.4th loader.conf
-FILES+=	screen.4th frames.4th beastie.4th
-FILES+=	brand.4th check-password.4th color.4th delay.4th
-FILES+=	menu.4th menu-commands.4th menusets.4th shortcuts.4th version.4th
-FILESDIR_loader.conf=	/boot/defaults
+.include	"${.CURDIR}/../../forth/Makefile.inc"
 
 # Put sample loader.rc and menu.rc on disk but don't enable them
 # by default.

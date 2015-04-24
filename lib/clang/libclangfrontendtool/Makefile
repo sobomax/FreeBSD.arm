@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangfrontendtool/Makefile 246259 2013-02-02 22:28:29Z dim $
+# $FreeBSD: head/lib/clang/libclangfrontendtool/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,8 +7,11 @@ LIB=	clangfrontendtool
 SRCDIR=	tools/clang/lib/FrontendTool
 SRCS=	ExecuteCompilerInvocation.cpp
 
-TGHDRS=	DiagnosticCommonKinds \
+TGHDRS=	CommentCommandList \
+	DeclNodes \
+	DiagnosticCommonKinds \
 	DiagnosticFrontendKinds \
-	Options
+	Options \
+	StmtNodes
 
 .include "../clang.lib.mk"

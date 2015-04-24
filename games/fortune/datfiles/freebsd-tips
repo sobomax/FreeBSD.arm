@@ -1,5 +1,5 @@
 This fortune brought to you by:
-$FreeBSD: head/games/fortune/datfiles/freebsd-tips 269089 2014-07-25 14:47:44Z allanjude $
+$FreeBSD: head/games/fortune/datfiles/freebsd-tips 278543 2015-02-10 23:18:36Z jmg $
 %
 Any user that is a member of the wheel group can use "su -" to simulate
 a root login. You can add a user to the wheel group by editing /etc/group.
@@ -443,7 +443,7 @@ on this system.  Example entries are in
 %
 You can use "pkg info" to see a list of packages you have installed.
 %
-You can use the 'fetch' command to retrieve files over ftp or http.
+You can use the 'fetch' command to retrieve files over ftp, http or https.
 
 	 fetch http://www.FreeBSD.org/index.html
 

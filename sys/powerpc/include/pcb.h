@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pcb.h,v 1.4 2000/06/04 11:57:17 tsubai Exp $
- * $FreeBSD: head/sys/powerpc/include/pcb.h 258257 2013-11-17 14:44:22Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/pcb.h 279189 2015-02-22 21:40:27Z nwhitehorn $
  */
 
 #ifndef _MACHINE_PCB_H_
@@ -50,17 +50,21 @@ struct pcb {
 #define	PCB_FPU		1	/* Process uses FPU */
 #define	PCB_FPREGS	2	/* Process had FPU registers initialized */
 #define	PCB_VEC		4	/* Process had Altivec initialized */
+#define	PCB_VSX		8	/* Process had VSX initialized */
 	struct fpu {
-		double	fpr[32];
+		union {
+			double fpr;
+			uint32_t vsr[4];
+		} fpr[32];
 		double	fpscr;	/* FPSCR stored as double for easier access */
 	} pcb_fpu;		/* Floating point processor */
 	unsigned int	pcb_fpcpu;		/* which CPU had our FPU
 							stuff. */
 	struct vec {
 		uint32_t vr[32][4];
-		register_t vrsave;
-		register_t spare[2];
-		register_t vscr;	/* aligned at vector element 3 */
+		uint32_t spare[2];
+		uint32_t vrsave;
+		uint32_t vscr;	/* aligned at vector element 3 */
 	} pcb_vec __aligned(16);	/* Vector processor */
 	unsigned int	pcb_veccpu;		/* which CPU had our vector
 							stuff. */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kcm/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/libexec/kcm/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kcm
 MAN=	kcm.8
@@ -19,11 +19,9 @@ SRCS=	acl.c \
 
 CFLAGS+=-I${KRB5DIR}/lib/krb5 -I${KRB5DIR}/lib/asn1 -I${KRB5DIR}/lib/roken \
 	-I${KRB5DIR}/kcm -I${KRB5DIR}/lib/ipc ${LDAPCFLAGS}
-DPADD=	${LIBHDB} ${LIBKRB5} ${LIBROKEN} ${LIBASN1} ${LIBHEIMNTLM} \
-	${LIBHEIMIPCS} ${LIBCRYPTO} ${LIBCRYPT} ${LIBVERS} ${LDAPDPADD}
-LDADD=	-lhdb -lkrb5 -lroken -lasn1 -lheimntlm ${LDHEIMIPCS} \
-	-lcrypto -lcrypt ${LIBVERS} ${LDAPLDADD}
-USEPRIVATELIB= heimipcs
+LIBADD=	krb5 roken heimntlm heimipcs crypto
+DPADD=	${LDAPDPADD}
+LDADD=	${LIBVERS} ${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
 
 .include <bsd.prog.mk>

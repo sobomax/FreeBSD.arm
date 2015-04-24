@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmd/mdXhl.c 154479 2006-01-17 15:35:57Z phk $");
+__FBSDID("$FreeBSD: head/lib/libmd/mdXhl.c 281928 2015-04-24 11:03:47Z ngie $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -74,7 +74,7 @@ MDXFileChunk(const char *filename, char *buf, off_t ofs, off_t len)
 			i = read(f, buffer, sizeof(buffer));
 		else
 			i = read(f, buffer, n);
-		if (i < 0) 
+		if (i <= 0) 
 			break;
 		MDXUpdate(&ctx, buffer, i);
 		n -= i;

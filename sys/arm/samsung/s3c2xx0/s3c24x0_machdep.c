@@ -46,7 +46,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/s3c24x0_machdep.c 272103 2014-09-25 11:38:26Z gavin $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/s3c24x0_machdep.c 280823 2015-03-29 20:37:28Z andrew $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -350,7 +350,7 @@ initarm(struct arm_boot_params *abp)
 	 * this problem will not occur after initarm().
 	 */
 	cpu_idcache_wbinv_all();
-	cpu_setup("");
+	cpu_setup();
 
 	/* Disable all peripheral interrupts */
 	ioreg_write32(S3C24X0_INTCTL_BASE + INTCTL_INTMSK, ~0);

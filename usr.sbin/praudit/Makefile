@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/praudit/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/praudit/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 
 OPENBSMDIR=${.CURDIR}/../../contrib/openbsm
@@ -10,7 +10,6 @@ MAN=	praudit.1
 
 WARNS?=	3
 
-DPADD=	${LIBBSM}
-LDADD=	-lbsm
+LIBADD=	bsm
 
 .include <bsd.prog.mk>

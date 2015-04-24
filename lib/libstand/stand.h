@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libstand/stand.h 269361 2014-07-31 23:25:13Z marcel $
+ * $FreeBSD: head/lib/libstand/stand.h 276079 2014-12-22 20:42:36Z ian $
  * From	$NetBSD: stand.h,v 1.22 1997/06/26 19:17:40 drochner Exp $	
  */
 
@@ -242,7 +242,8 @@ extern int	sprintf(char *buf, const char *cfmt, ...) __printflike(2, 3);
 extern int	snprintf(char *buf, size_t size, const char *cfmt, ...) __printflike(3, 4);
 extern void	vsprintf(char *buf, const char *cfmt, __va_list);
 
-extern void	twiddle(void);
+extern void	twiddle(u_int callerdiv);
+extern void	twiddle_divisor(u_int globaldiv);
 
 extern void	ngets(char *, int);
 #define gets(x)	ngets((x), 0)

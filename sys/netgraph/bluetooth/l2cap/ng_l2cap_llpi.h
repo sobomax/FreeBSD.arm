@@ -28,13 +28,13 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_llpi.h,v 1.2 2003/04/28 21:44:59 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_llpi.h 139823 2005-01-07 01:45:51Z imp $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_llpi.h 281198 2015-04-07 10:22:56Z takawata $
  */
 
 #ifndef _NETGRAPH_L2CAP_LLPI_H_
 #define _NETGRAPH_L2CAP_LLPI_H_
 
-int  ng_l2cap_lp_con_req             (ng_l2cap_p, bdaddr_p);
+int  ng_l2cap_lp_con_req             (ng_l2cap_p, bdaddr_p, int);
 int  ng_l2cap_lp_con_cfm             (ng_l2cap_p, struct ng_mesg *);
 int  ng_l2cap_lp_con_ind             (ng_l2cap_p, struct ng_mesg *);
 int  ng_l2cap_lp_discon_ind          (ng_l2cap_p, struct ng_mesg *);

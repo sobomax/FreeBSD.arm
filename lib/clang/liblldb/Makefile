@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldb/Makefile 255722 2013-09-20 01:52:02Z emaste $
+# $FreeBSD: head/lib/clang/liblldb/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -10,7 +10,9 @@ SRCDIR=	tools/lldb/source
 SRCS=	lldb.cpp \
 	lldb-log.cpp
 
-TGHDRS=	DiagnosticCommonKinds \
+TGHDRS=	AttrList \
+	Attrs \
+	DiagnosticCommonKinds \
 	DeclNodes \
 	StmtNodes \
 	CommentCommandList

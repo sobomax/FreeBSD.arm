@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/bmap.c 264657 2014-04-18 17:03:35Z imp $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/bmap.c 279502 2015-03-01 21:41:37Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -317,7 +317,8 @@ bmap_truncate_indirect(struct nandfs_node *node, int level, nandfs_lbn_t *left,
 
 	error = nandfs_bread_meta(node, lbn, NOCRED, 0, &bp);
 	if (error) {
-		brelse(bp);
+		if (bp != NULL)
+			brelse(bp);
 		return (error);
 	}
 
@@ -460,6 +461,7 @@ bmap_truncate_mapping(struct nandfs_node *node, nandfs_lbn_t lastblk,
 			error = bmap_truncate_indirect(node, level, &left,
 			    &cleaned, ap, f, copy);
 			if (error) {
+				free(copy, M_NANDFSTEMP);
 				nandfs_error("%s: error %d when truncate "
 				    "at level %d\n", __func__, error, level);
 				return (error);

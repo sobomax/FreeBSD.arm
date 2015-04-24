@@ -1,13 +1,12 @@
 # From:	@(#)Makefile	8.3 (Berkeley) 4/2/94
-# $FreeBSD: head/usr.bin/passwd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/passwd/Makefile 278669 2015-02-13 09:02:15Z bapt $
 
 .include <src.opts.mk>
 
 PROG	 = passwd
 BINOWN	 = root
 BINMODE	 = 4555
-DPADD	 = ${LIBPAM}
-LDADD	 = ${MINUSLPAM}
+LIBADD   = pam
 .if ${MK_NIS} != "no"
 LINKS	 = ${BINDIR}/passwd ${BINDIR}/yppasswd
 MLINKS	 = passwd.1 yppasswd.1

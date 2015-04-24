@@ -1,9 +1,8 @@
-# $FreeBSD: head/kerberos5/lib/libgssapi_ntlm/Makefile 236337 2012-05-30 22:21:25Z obrien $
+# $FreeBSD: head/kerberos5/lib/libgssapi_ntlm/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 LIB=	gssapi_ntlm
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined
-LDADD=	-lcrypto -lgssapi -lkrb5 -lhx509 -lheimntlm -lroken
-DPADD=	${LIBCRYPTO} ${LIBGSSAPI} ${LIBKRB5} ${LIBHX509} ${LIBHEIMNTLM} ${LIBROKEN}
+LIBADD=	crypto gssapi krb5 heimntlm roken
 SHLIB_MAJOR=	10
 
 SRCS=	accept_sec_context.c \

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/awk/Makefile 201989 2010-01-10 08:02:07Z ru $
+# $FreeBSD: head/usr.bin/awk/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 AWKSRC=	${.CURDIR}/../../contrib/one-true-awk
 .PATH: ${AWKSRC}
@@ -10,8 +10,7 @@ CFLAGS+= -DHAS_ISBLANK -I. -I${AWKSRC} -DFOPEN_MAX=64
 
 WARNS?=	1
 
-DPADD=	${LIBM}
-LDADD=	-lm
+LIBADD=	m
 
 LINKS=	${BINDIR}/awk ${BINDIR}/nawk
 MLINKS=	awk.1 nawk.1

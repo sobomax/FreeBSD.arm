@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/mips/beri/loader/loader.ldscript 266893 2014-05-30 16:47:54Z hselasky $
+ * $FreeBSD: head/sys/boot/mips/beri/loader/loader.ldscript 275457 2014-12-03 14:04:57Z emaste $
  */
 
 INCLUDE ../common/common.ldscript
@@ -57,7 +57,7 @@ SECTIONS
 	. = __loader_base_vaddr__;
 	. += SIZEOF_HEADERS;
 
-	.text ALIGN(0x8): {
+	.text ALIGN(0x10): {
 		start.o(.text*)
 		*(EXCLUDE_FILE (start.o) .text*)
 		*(.rodata*)
@@ -66,8 +66,8 @@ SECTIONS
 		KEEP(*(set_Xcommand_set))
 		__stop_set_Xcommand_set = .;
 	}
-	.data ALIGN(0x8): { *(.data*)}
-	.bss ALIGN(0x8): { *(.bss*) }
+	.data ALIGN(0x10): { *(.data*)}
+	.bss ALIGN(0x10): { *(.bss*) }
 
 	__heap = ALIGN(0x8);	/* 64-bit aligned heap pointer */
 	__data_end = .;

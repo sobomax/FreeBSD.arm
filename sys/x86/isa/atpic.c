@@ -29,10 +29,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 269675 2014-08-07 17:00:50Z royger $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 277311 2015-01-18 03:43:47Z imp $");
 
 #include "opt_auto_eoi.h"
 #include "opt_isa.h"
+#include "opt_mca.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,6 +58,9 @@ __FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 269675 2014-08-07 17:00:50Z royger 
 #include <isa/isareg.h>
 #endif
 #include <isa/isavar.h>
+#ifdef DEV_MCA
+#include <i386/bios/mca_machdep.h>
+#endif
 
 #ifdef __amd64__
 #define	SDT_ATPIC	SDT_SYSIGT

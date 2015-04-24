@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libdevstat/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/libdevstat/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 LIB=	devstat
 SHLIBDIR?= /lib
@@ -7,8 +7,7 @@ SHLIB_MAJOR= 7
 SRCS=	devstat.c
 INCS=	devstat.h
 
-DPADD=	${LIBKVM}
-LDADD=	-lkvm
+LIBADD=	kvm
 
 MAN=	devstat.3
 

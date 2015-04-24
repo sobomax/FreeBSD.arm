@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/if_npe.c 271859 2014-09-19 09:20:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/if_npe.c 278577 2015-02-11 10:37:55Z andrew $");
 
 /*
  * Intel XScale NPE Ethernet driver.
@@ -285,7 +285,7 @@ unit2npeid(int unit)
 	};
 	/* XXX check feature register instead */
 	return (unit < 3 ? npeidmap[
-	    (cpu_id() & CPU_ID_CPU_MASK) == CPU_ID_IXP435][unit] : -1);
+	    (cpu_ident() & CPU_ID_CPU_MASK) == CPU_ID_IXP435][unit] : -1);
 }
 
 static int

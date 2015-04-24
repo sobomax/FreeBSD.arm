@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.3 1995/07/04 01:53:05 cgd Exp $
-# $FreeBSD: head/usr.bin/xlint/lint1/Makefile 125503 2004-02-05 22:44:25Z ru $
+# $FreeBSD: head/usr.bin/xlint/lint1/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	lint1
 SRCS=	cgram.y scan.l mem1.c mem.c err.c main1.c decl.c tree.c func.c \
@@ -7,8 +7,7 @@ SRCS=	cgram.y scan.l mem1.c mem.c err.c main1.c decl.c tree.c func.c \
 MAN=	lint.7
 CLEANFILES= lint.7
 
-LDADD=	-ll -lm
-DPADD=	${LIBL} ${LIBM}
+LIBADD=	l m
 CFLAGS+= -I. -I${.CURDIR}
 LINTFLAGS=-aehpz
 

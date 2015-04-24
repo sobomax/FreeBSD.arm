@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cpuctl/cpuctl.c 267814 2014-06-24 06:52:32Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/cpuctl/cpuctl.c 275960 2014-12-20 16:40:49Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -63,7 +63,7 @@ static d_ioctl_t cpuctl_ioctl;
 # define	DPRINTF(...)
 #endif
 
-#define	UCODE_SIZE_MAX	(16 * 1024)
+#define	UCODE_SIZE_MAX	(32 * 1024)
 
 static int cpuctl_do_msr(int cpu, cpuctl_msr_args_t *data, u_long cmd,
     struct thread *td);

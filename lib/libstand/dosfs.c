@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/dosfs.c 259590 2013-12-19 05:23:10Z marcel $");
+__FBSDID("$FreeBSD: head/lib/libstand/dosfs.c 279931 2015-03-12 17:10:04Z jhb $");
 
 /*
  * Readonly filesystem for Microsoft FAT12/FAT16/FAT32 filesystems,
@@ -786,7 +786,8 @@ static int
 ioget(struct open_file *fd, u_int lsec, void *buf, u_int nsec)
 {
     int	err;
-    
+
+    twiddle(1);
     if ((err = (fd->f_dev->dv_strategy)(fd->f_devdata, F_READ, lsec, 
 					secbyt(nsec), buf, NULL)))
 	return(err);

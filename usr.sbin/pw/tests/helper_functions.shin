@@ -1,4 +1,7 @@
-# $FreeBSD: head/usr.sbin/pw/tests/helper_functions.shin 272445 2014-10-02 19:53:37Z brd $
+# $FreeBSD: head/usr.sbin/pw/tests/helper_functions.shin 274727 2014-11-19 23:07:46Z brd $
+
+# The pw command
+PW="pw -V ${HOME}"
 
 # Workdir to run tests in
 TESTDIR=$(atf_get_srcdir)

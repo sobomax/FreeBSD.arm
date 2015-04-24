@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/mpcore_timer.c 271906 2014-09-20 14:49:21Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/mpcore_timer.c 281089 2015-04-04 22:22:04Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -65,7 +65,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/mpcore_timer.c 271906 2014-09-20 14:49:21Z 
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <arm/arm/mpcore_timervar.h>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/gptboot/Makefile 261567 2014-02-06 21:54:21Z emaste $
+# $FreeBSD: head/sys/boot/i386/gptboot/Makefile 280980 2015-04-02 06:58:17Z dim $
 
 .PATH:		${.CURDIR}/../boot2 ${.CURDIR}/../common ${.CURDIR}/../../common
 
@@ -55,7 +55,7 @@ gptboot: gptldr.bin gptboot.bin ${BTXKERN}
 CLEANFILES+=	gptldr.bin gptldr.out gptldr.o
 
 gptldr.bin: gptldr.out
-	objcopy -S -O binary gptldr.out ${.TARGET}
+	${OBJCOPY} -S -O binary gptldr.out ${.TARGET}
 
 gptldr.out: gptldr.o
 	${LD} ${LD_FLAGS} -e start -Ttext ${ORG1} -o ${.TARGET} gptldr.o
@@ -64,7 +64,7 @@ CLEANFILES+=	gptboot.bin gptboot.out gptboot.o sio.o gpt.o crc32.o drv.o \
 		cons.o util.o
 
 gptboot.bin: gptboot.out
-	objcopy -S -O binary gptboot.out ${.TARGET}
+	${OBJCOPY} -S -O binary gptboot.out ${.TARGET}
 
 gptboot.out: ${BTXCRT} gptboot.o sio.o gpt.o crc32.o drv.o cons.o util.o
 	${LD} ${LD_FLAGS} -Ttext ${ORG2} -o ${.TARGET} ${.ALLSRC} ${LIBSTAND}

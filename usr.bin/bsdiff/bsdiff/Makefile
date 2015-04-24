@@ -1,8 +1,7 @@
-# $FreeBSD: head/usr.bin/bsdiff/bsdiff/Makefile 148771 2005-08-06 01:59:06Z cperciva $
+# $FreeBSD: head/usr.bin/bsdiff/bsdiff/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	bsdiff
 
-DPADD=	${LIBBZ2}
-LDADD=	-lbz2
+LIBADD=	bz2
 
 .include <bsd.prog.mk>

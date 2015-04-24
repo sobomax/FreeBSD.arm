@@ -31,7 +31,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/tws/tws_user.c 262572 2014-02-27 21:41:52Z delphij $
+ * $FreeBSD: head/sys/dev/tws/tws_user.c 276715 2015-01-05 19:49:20Z jhb $
  */
 
 #include <dev/tws/tws.h>
@@ -41,7 +41,7 @@
 
 
 int tws_ioctl(struct cdev *dev, long unsigned int cmd, caddr_t buf, int flags, 
-                                                    d_thread_t *proc);
+                                                    struct thread *td);
 void tws_passthru_complete(struct tws_request *req);
 extern void tws_circular_aenq_insert(struct tws_softc *sc,
                     struct tws_circular_q *cq, struct tws_event_packet *aen);
@@ -60,7 +60,7 @@ extern void tws_timeout(void *arg);
 
 int
 tws_ioctl(struct cdev *dev, u_long cmd, caddr_t buf, int flags, 
-                                                    d_thread_t *proc)
+                                                    struct thread *td)
 {
     struct tws_softc *sc = (struct tws_softc *)(dev->si_drv1);
     int error;

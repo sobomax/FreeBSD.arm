@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/mips/freebsd32_machdep.c 232896 2012-03-12 21:25:32Z jmallett $
+ * $FreeBSD: head/sys/mips/mips/freebsd32_machdep.c 278001 2015-01-31 21:43:46Z kib $
  */
 
 /*
@@ -68,7 +68,7 @@
 
 static void freebsd32_exec_setregs(struct thread *, struct image_params *, u_long);
 static int get_mcontext32(struct thread *, mcontext32_t *, int);
-static int set_mcontext32(struct thread *, const mcontext32_t *);
+static int set_mcontext32(struct thread *, mcontext32_t *);
 static void freebsd32_sendsig(sig_t, ksiginfo_t *, sigset_t *);
 
 extern const char *freebsd32_syscallnames[];
@@ -227,7 +227,7 @@ get_mcontext32(struct thread *td, mcontext32_t *mcp, int flags)
 }
 
 static int
-set_mcontext32(struct thread *td, const mcontext32_t *mcp)
+set_mcontext32(struct thread *td, mcontext32_t *mcp)
 {
 	mcontext_t mcp64;
 	unsigned i;

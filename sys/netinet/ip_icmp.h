@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_icmp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/ip_icmp.h 269699 2014-08-08 01:57:15Z kevlo $
+ * $FreeBSD: head/sys/netinet/ip_icmp.h 275985 2014-12-21 05:07:11Z imp $
  */
 
 #ifndef _NETINET_IP_ICMP_H_
@@ -99,7 +99,7 @@ struct icmp {
 		struct id_ts {			/* ICMP Timestamp */
 			/*
 			 * The next 3 fields are in network format,
-			 * milliseconds since 00:00 GMT
+			 * milliseconds since 00:00 UTC
 			 */
 			uint32_t its_otime;	/* Originate */
 			uint32_t its_rtime;	/* Receive */

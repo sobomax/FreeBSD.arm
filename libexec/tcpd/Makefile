@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/tcpd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/libexec/tcpd/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .include <src.opts.mk>
 
@@ -15,8 +15,7 @@ CFLAGS+=-DREAL_DAEMON_DIR=\"/usr/libexec\" \
 CFLAGS+=-DINET6
 .endif
 
-DPADD=	${LIBWRAP}
-LDADD=	-lwrap
+LIBADD=	wrap
 
 WARNS?=	1
 

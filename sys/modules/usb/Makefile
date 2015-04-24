@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/usb/Makefile 271159 2014-09-05 11:25:58Z kevlo $
+# $FreeBSD: head/sys/modules/usb/Makefile 281645 2015-04-17 07:11:10Z hselasky $
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #
@@ -29,6 +29,11 @@ SYSDIR?=${.CURDIR}/../..
 .include "${SYSDIR}/conf/kern.opts.mk"
 
 #
+# Allow USB modules to be built in parallel
+#
+SUBDIR_PARALLEL=
+
+#
 # Check for common USB debug flags to pass when building the USB
 # modules in this directory:
 #
@@ -51,6 +56,7 @@ SUBDIR += ${_urtwn} ${_urtwnfw}
 SUBDIR += atp uhid ukbd ums udbp ufm uep wsp uled
 SUBDIR += ucom u3g uark ubsa ubser uchcom ucycom ufoma uftdi ugensa uipaq ulpt \
 	  umct umcs umodem umoscom uplcom uslcom uvisor uvscom
+SUBDIR += udl
 SUBDIR += uether aue axe axge cdce cue ${_kue} mos rue smsc udav uhso ipheth
 SUBDIR += urndis
 SUBDIR += usfs umass urio

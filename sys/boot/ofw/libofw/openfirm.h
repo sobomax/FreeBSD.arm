@@ -54,7 +54,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/ofw/libofw/openfirm.h 215438 2010-11-17 19:35:56Z andreast $
+ * $FreeBSD: head/sys/boot/ofw/libofw/openfirm.h 279799 2015-03-09 02:57:34Z nwhitehorn $
  */
 #ifndef _OPENFIRM_H_
 #define	_OPENFIRM_H_
@@ -82,6 +82,7 @@ void		OF_init(int (*openfirm)(void *));
 
 /* Generic functions */
 int		OF_test(char *);
+void		OF_quiesce(); /* Disable firmware */
 
 /* Device tree functions */
 phandle_t	OF_peer(phandle_t);

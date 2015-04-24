@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/zerosend/zerosend.c 243313 2012-11-19 22:53:57Z emaste $
+ * $FreeBSD: head/tools/regression/sockets/zerosend/zerosend.c 281404 2015-04-11 05:20:01Z ngie $
  */
 
 #include <sys/select.h>
@@ -209,12 +209,12 @@ setup_pipe(const char *test, int *fdp)
 static void
 setup_fifo(const char *test, int *fdp)
 {
-	char path[PATH_MAX];
+	char path[] = "0send_fifo.XXXXXXX";
 	int fd1, fd2;
 
-	strcpy(path, "/tmp/0send_fifo.XXXXXXX");
-	if (mktemp(path) == NULL)
+	if (mkstemp(path) == -1)
 		err(-1, "%s: setup_fifo: mktemp", test);
+	unlink(path);
 
 	if (mkfifo(path, 0600) < 0)
 		err(-1, "%s: setup_fifo: mkfifo(%s)", test, path);

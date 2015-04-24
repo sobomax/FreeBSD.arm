@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/locate/locate/util.c 229655 2012-01-05 21:36:45Z uqs $
+ * $FreeBSD: head/usr.bin/locate/locate/util.c 274847 2014-11-22 12:13:05Z dim $
  */
 
 
@@ -235,7 +235,7 @@ getwm(p)
 		char buf[INTSIZE];
 		int i;
 	} u;
-	register int i;
+	register int i, hi;
 
 	for (i = 0; i < (int)INTSIZE; i++)
 		u.buf[i] = *p++;
@@ -243,10 +243,11 @@ getwm(p)
 	i = u.i;
 
 	if (i > MAXPATHLEN || i < -(MAXPATHLEN)) {
-		i = ntohl(i);
-		if (i > MAXPATHLEN || i < -(MAXPATHLEN))
+		hi = ntohl(i);
+		if (hi > MAXPATHLEN || hi < -(MAXPATHLEN))
 			errx(1, "integer out of +-MAXPATHLEN (%d): %u",
-			    MAXPATHLEN, abs(i) < abs(htonl(i)) ? i : htonl(i));
+			    MAXPATHLEN, abs(i) < abs(hi) ? i : hi);
+		return(hi);
 	}
 	return(i);
 }
@@ -263,16 +264,16 @@ int
 getwf(fp)
 	FILE *fp;
 {
-	register int word;
+	register int word, hword;
 
 	word = getw(fp);
 
 	if (word > MAXPATHLEN || word < -(MAXPATHLEN)) {
-		word = ntohl(word);
-		if (word > MAXPATHLEN || word < -(MAXPATHLEN))
+		hword = ntohl(word);
+		if (hword > MAXPATHLEN || hword < -(MAXPATHLEN))
 			errx(1, "integer out of +-MAXPATHLEN (%d): %u",
-			    MAXPATHLEN, abs(word) < abs(htonl(word)) ? word :
-				htonl(word));
+			    MAXPATHLEN, abs(word) < abs(hword) ? word : hword);
+		return(hword);
 	}
 	return(word);
 }

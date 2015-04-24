@@ -29,10 +29,11 @@
  * SUCH DAMAGE.
  *
  * $Id: parser.y,v 1.7 2006/09/07 21:06:53 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/bthidd/parser.y 235789 2012-05-22 16:33:10Z bapt $
+ * $FreeBSD: head/usr.sbin/bluetooth/bthidd/parser.y 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/queue.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <dev/usb/usb.h>
 #include <dev/usb/usbhid.h>

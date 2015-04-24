@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmarmcodegen/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libllvmarmcodegen/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -9,7 +9,6 @@ SRCS=	A15SDOptimizer.cpp \
 	ARMAsmPrinter.cpp \
 	ARMBaseInstrInfo.cpp \
 	ARMBaseRegisterInfo.cpp \
-	ARMCodeEmitter.cpp \
 	ARMConstantIslandPass.cpp \
 	ARMConstantPoolValue.cpp \
 	ARMExpandPseudoInsts.cpp \
@@ -19,11 +18,11 @@ SRCS=	A15SDOptimizer.cpp \
 	ARMISelDAGToDAG.cpp \
 	ARMISelLowering.cpp \
 	ARMInstrInfo.cpp \
-	ARMJITInfo.cpp \
 	ARMLoadStoreOptimizer.cpp \
 	ARMMCInstLower.cpp \
 	ARMMachineFunctionInfo.cpp \
 	ARMRegisterInfo.cpp \
+	ARMOptimizeBarriersPass.cpp \
 	ARMSelectionDAGInfo.cpp \
 	ARMSubtarget.cpp \
 	ARMTargetMachine.cpp \

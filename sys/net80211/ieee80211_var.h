@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_var.h 264854 2014-04-24 01:28:39Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_var.h 276757 2015-01-06 18:25:10Z adrian $
  */
 #ifndef _NET80211_IEEE80211_VAR_H_
 #define _NET80211_IEEE80211_VAR_H_
@@ -711,6 +711,7 @@ int	ieee80211_setmode(struct ieee80211com *, enum ieee80211_phymode);
 enum ieee80211_phymode ieee80211_chan2mode(const struct ieee80211_channel *);
 uint32_t ieee80211_mac_hash(const struct ieee80211com *,
 		const uint8_t addr[IEEE80211_ADDR_LEN]);
+char	ieee80211_channel_type_char(const struct ieee80211_channel *c);
 
 void	ieee80211_radiotap_attach(struct ieee80211com *,
 	    struct ieee80211_radiotap_header *th, int tlen,

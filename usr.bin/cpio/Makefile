@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/cpio/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/cpio/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -23,15 +23,7 @@ CFLAGS+= -I${LIBARCHIVEDIR}/cpio -I${LIBARCHIVEDIR}/libarchive_fe
 # statically linked, cannot use -lcrypto, and are size sensitive.
 CFLAGS+= -DSMALLER
 .endif
-DPADD=	${LIBARCHIVE} ${LIBZ} ${LIBBZ2} ${LIBLZMA} ${LIBBSDXML}
-LDADD=	-larchive -lz -lbz2 -llzma -lbsdxml
-.if ${MK_OPENSSL} != "no"
-DPADD+=	${LIBCRYPTO}
-LDADD+= -lcrypto
-.else
-DPADD+= ${LIBMD}
-LDADD+= -lmd
-.endif
+LIBADD=	archive
 
 .if ${MK_ICONV} != "no"
 CFLAGS+=	-DHAVE_ICONV=1 -DHAVE_ICONV_H=1 -DICONV_CONST=const

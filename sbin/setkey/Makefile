@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sbin/setkey/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/setkey/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -37,8 +37,7 @@ WARNS?=	1
 CFLAGS+= -I${.CURDIR} -I${.CURDIR}/../../lib/libipsec
 YFLAGS=	-d
 
-DPADD=	${LIBL} ${LIBY}
-LDADD=	-ll -ly
+LIBADD=	l y
 
 CLEANFILES=	y.tab.c y.tab.h key_test.o keytest
 
@@ -55,8 +54,7 @@ CFLAGS+= -DIPSEC_DEBUG -DYY_NO_UNPUT
 CFLAGS+= -DINET6
 .endif
 CFLAGS+= -I.
-DPADD+=	${LIBIPSEC}
-LDADD+=	-lipsec
+LIBADD+=	ipsec
 CLEANFILES+=	scriptdump y.tab.h
 
 #SCRIPTS= scriptdump

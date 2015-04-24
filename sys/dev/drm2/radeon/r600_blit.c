@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r600_blit.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r600_blit.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/radeon/radeon_drm.h>
@@ -539,7 +539,7 @@ static void r600_nomm_put_vb(struct drm_device *dev)
 	drm_radeon_private_t *dev_priv = dev->dev_private;
 
 	dev_priv->blit_vb->used = 0;
-	radeon_cp_discard_buffer(dev, dev_priv->blit_vb->file_priv->masterp, dev_priv->blit_vb);
+	radeon_cp_discard_buffer(dev, dev_priv->blit_vb->file_priv->master, dev_priv->blit_vb);
 }
 
 static void *r600_nomm_get_vb_ptr(struct drm_device *dev)

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/bzip2/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/bzip2/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 BZ2DIR=	${.CURDIR}/../../contrib/bzip2
 .PATH: ${BZ2DIR}
@@ -8,8 +8,7 @@ CFLAGS+= -D_FILE_OFFSET_BITS=64
 
 WARNS?=	3
 
-DPADD=	${LIBBZ2}
-LDADD=	-lbz2
+LIBADD=	bz2
 
 LINKS=	${BINDIR}/bzip2 ${BINDIR}/bunzip2
 LINKS+=	${BINDIR}/bzip2 ${BINDIR}/bzcat

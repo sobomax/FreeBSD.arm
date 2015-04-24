@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmobjcarcopts/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libllvmobjcarcopts/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -13,7 +13,8 @@ SRCS=	ObjCARC.cpp \
 	ObjCARCUtil.cpp \
 	ObjCARCContract.cpp \
 	DependencyAnalysis.cpp \
-	ProvenanceAnalysis.cpp
+	ProvenanceAnalysis.cpp \
+	ProvenanceAnalysisEvaluator.cpp
 
 TGHDRS=	Intrinsics
 

@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: asm.h,v 1.6.18.1 2000/07/25 08:37:14 kleink Exp $
- * $FreeBSD: head/sys/powerpc/include/asm.h 232488 2012-03-04 11:55:28Z andreast $
+ * $FreeBSD: head/sys/powerpc/include/asm.h 277335 2015-01-18 20:00:33Z nwhitehorn $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -80,6 +80,12 @@
 	name:
 
 #ifdef __powerpc64__
+#define TOC_REF(name)	__CONCAT(.L,name)
+#define TOC_ENTRY(name) \
+	.section ".toc","aw"; \
+	TOC_REF(name): \
+        .tc name[TC],name
+
 #define	_ENTRY(name) \
 	.section ".text"; \
 	.p2align 2; \

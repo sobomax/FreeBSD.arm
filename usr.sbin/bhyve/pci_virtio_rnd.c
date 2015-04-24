@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_rnd.c 271299 2014-09-09 04:11:54Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_rnd.c 280026 2015-03-15 11:37:07Z mav $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -103,10 +103,9 @@ pci_vtrnd_notify(void *vsc, struct vqueue_info *vq)
 	struct iovec iov;
 	struct pci_vtrnd_softc *sc;
 	int len;
+	uint16_t idx;
 
 	sc = vsc;
-
-	vq_startchains(vq);
 
 	if (sc->vrsc_fd < 0) {
 		vq_endchains(vq, 0);
@@ -114,7 +113,7 @@ pci_vtrnd_notify(void *vsc, struct vqueue_info *vq)
 	}
 
 	while (vq_has_descs(vq)) {
-		vq_getchain(vq, &iov, 1, NULL);
+		vq_getchain(vq, &idx, &iov, 1, NULL);
 
 		len = read(sc->vrsc_fd, iov.iov_base, iov.iov_len);
 
@@ -126,7 +125,7 @@ pci_vtrnd_notify(void *vsc, struct vqueue_info *vq)
 		/*
 		 * Release this chain and handle more
 		 */
-		vq_relchain(vq, len);
+		vq_relchain(vq, idx, len);
 	}
 	vq_endchains(vq, 1);	/* Generate interrupt if appropriate. */
 }

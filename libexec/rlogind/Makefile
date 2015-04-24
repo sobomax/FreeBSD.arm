@@ -1,12 +1,11 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/libexec/rlogind/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/libexec/rlogind/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .include <src.opts.mk>
 
 PROG=	rlogind
 MAN=	rlogind.8
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 WARNS?=	2
 
 .if ${MK_INET6_SUPPORT} != "no"

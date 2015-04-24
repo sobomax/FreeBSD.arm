@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 .\" DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/domain.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/domain.9 274177 2014-11-06 14:39:04Z melifaro $
 .\"
-.Dd December 7, 2012
+.Dd November 6, 2014
 .Dt DOMAIN 9
 .Os
 .Sh NAME
@@ -82,10 +82,9 @@ struct domain {
 		(void **, int);
 	int	(*dom_rtdetach)		/* clean up routing table */
 		(void **, int);
-	int	dom_rtoffset;		/* an arg to rtattach, in bits */
-	int	dom_maxrtkey;		/* for routing layer */
 	void	*(*dom_ifattach)(struct ifnet *);
 	void	(*dom_ifdetach)(struct ifnet *, void *);
+	int	(*dom_ifmtu)(struct ifnet *);
 					/* af-dependent data on ifnet */
 };
 .Ed

@@ -48,7 +48,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 271398 2014-09-10 15:25:15Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 279667 2015-03-05 17:55:31Z andrew $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -84,6 +84,10 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 271398 2014-09-10 15:25:15Z and
 
 #ifdef KDB
 #include <machine/db_machdep.h>
+#endif
+
+#ifdef KDTRACE_HOOKS
+int (*dtrace_invop_jump_addr)(struct trapframe *);
 #endif
 
 static int gdb_trapper(u_int, u_int, struct trapframe *, int);
@@ -286,7 +290,14 @@ undefinedinstruction(struct trapframe *frame)
 			printf("No debugger in kernel.\n");
 #endif
 			return;
-		} else
+		}
+#ifdef KDTRACE_HOOKS
+		else if (dtrace_invop_jump_addr != 0) {
+			dtrace_invop_jump_addr(frame);
+			return;
+		}
+#endif
+		else
 			panic("Undefined instruction in kernel.\n");
 	}
 

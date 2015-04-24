@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/genassym.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/genassym.c 278473 2015-02-09 21:00:56Z kib $");
 
 #include "opt_compat.h"
 #include "opt_hwpmc_hooks.h"
@@ -61,11 +61,6 @@ __FBSDID("$FreeBSD: head/sys/amd64/amd64/genassym.c 273995 2014-11-02 22:58:30Z 
 #include <vm/pmap.h>
 #include <vm/vm_map.h>
 #include <sys/proc.h>
-#include <net/if.h>
-#include <netinet/in.h>
-#include <nfs/nfsproto.h>
-#include <nfsclient/nfs.h>
-#include <nfs/nfsdiskless.h>
 #include <x86/apicreg.h>
 #include <machine/cpu.h>
 #include <machine/pcb.h>
@@ -225,13 +220,8 @@ ASSYM(PC_COMMONTSSP, offsetof(struct pcpu, pc_commontssp));
 ASSYM(PC_TSS, offsetof(struct pcpu, pc_tss));
 ASSYM(PC_PM_SAVE_CNT, offsetof(struct pcpu, pc_pm_save_cnt));
  
-ASSYM(LA_VER, offsetof(struct LAPIC, version));
-ASSYM(LA_TPR, offsetof(struct LAPIC, tpr));
-ASSYM(LA_EOI, offsetof(struct LAPIC, eoi));
-ASSYM(LA_SVR, offsetof(struct LAPIC, svr));
-ASSYM(LA_ICR_LO, offsetof(struct LAPIC, icr_lo));
-ASSYM(LA_ICR_HI, offsetof(struct LAPIC, icr_hi));
-ASSYM(LA_ISR, offsetof(struct LAPIC, isr0));
+ASSYM(LA_EOI, LAPIC_EOI * LAPIC_MEM_MUL);
+ASSYM(LA_ISR, LAPIC_ISR0 * LAPIC_MEM_MUL);
 
 ASSYM(KCSEL, GSEL(GCODE_SEL, SEL_KPL));
 ASSYM(KDSEL, GSEL(GDATA_SEL, SEL_KPL));

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/tools/ipnat.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/tools/ipnat.c 281143 2015-04-06 09:42:23Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -37,9 +37,6 @@
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
 #include <net/if.h>
-#if __FreeBSD_version >= 300000
-# include <net/if_var.h>
-#endif
 #include <netdb.h>
 #include <arpa/nameser.h>
 #include <arpa/inet.h>

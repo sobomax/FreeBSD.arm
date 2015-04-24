@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/regex/engine.c 265202 2014-05-01 23:34:14Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/regex/engine.c 279104 2015-02-21 15:02:27Z pfg $");
 
 /*
  * The matching engine and friends.  This file is #included by regexec.c
@@ -157,7 +157,7 @@ matcher(struct re_guts *g,
 	int i;
 	struct match mv;
 	struct match *m = &mv;
-	const char *dp;
+	const char *dp = NULL;
 	const sopno gf = g->firststate+1;	/* +1 for OEND */
 	const sopno gl = g->laststate;
 	const char *start;
@@ -244,7 +244,7 @@ matcher(struct re_guts *g,
 	ZAPSTATE(&m->mbs);
 
 	/* Adjust start according to moffset, to speed things up */
-	if (g->moffset > -1)
+	if (dp != NULL && g->moffset > -1)
 		start = ((dp - g->moffset) < start) ? start : dp - g->moffset;
 
 	SP("mloop", m->st, *start);

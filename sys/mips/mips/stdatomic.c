@@ -28,14 +28,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/stdatomic.c 251781 2013-06-15 08:15:22Z ed $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/stdatomic.c 274668 2014-11-18 17:06:56Z imp $");
 
 #include <sys/stdatomic.h>
 #include <sys/types.h>
-
-#ifdef _KERNEL
-#include "opt_global.h"
-#endif
 
 #if defined(__SYNC_ATOMICS)
 

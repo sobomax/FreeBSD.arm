@@ -1,11 +1,10 @@
 #	@(#)Makefile	8.3 (Berkeley) 3/27/94
-# $FreeBSD: head/sbin/mount_cd9660/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/mount_cd9660/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	mount_cd9660
 SRCS=	mount_cd9660.c getmntopts.c
 MAN=	mount_cd9660.8
-DPADD=	${LIBKICONV}
-LDADD=	-lkiconv
+LIBADD=	kiconv
 
 MOUNT=	${.CURDIR}/../mount
 CFLAGS+= -I${MOUNT}

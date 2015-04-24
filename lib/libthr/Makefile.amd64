@@ -1,0 +1,6 @@
+# $FreeBSD: head/lib/libthr/Makefile.amd64 274578 2014-11-16 06:35:20Z ngie $
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
+

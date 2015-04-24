@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_sa.c 259684 2013-12-21 15:40:36Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_sa.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"
@@ -327,7 +327,7 @@ int radeon_sa_bo_new(struct radeon_device *rdev,
 	KASSERT(align <= RADEON_GPU_PAGE_SIZE, ("align > RADEON_GPU_PAGE_SIZE"));
 	KASSERT(size <= sa_manager->size, ("size > sa_manager->size"));
 
-	*sa_bo = malloc(sizeof(struct radeon_sa_bo), DRM_MEM_DRIVER, M_WAITOK);
+	*sa_bo = malloc(sizeof(struct radeon_sa_bo), DRM_MEM_DRIVER, M_NOWAIT);
 	if ((*sa_bo) == NULL) {
 		return -ENOMEM;
 	}

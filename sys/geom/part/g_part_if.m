@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/geom/part/g_part_if.m 214352 2010-10-25 16:23:35Z ae $
+# $FreeBSD: head/sys/geom/part/g_part_if.m 274661 2014-11-18 17:06:40Z imp $
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -70,6 +70,14 @@ CODE {
 	default_recover(struct g_part_table *t __unused)
 	{
 		return (ENOSYS);
+	}
+
+	static int
+	default_ioctl(struct g_part_table *table __unused, struct g_provider *pp __unused,
+	    u_long cmd __unused, void *data __unused, int fflag __unused,
+	    struct thread *td __unused)
+	{
+		return (ENOIOCTL);
 	}
 };
 
@@ -119,6 +127,16 @@ METHOD void fullname {
 	struct sbuf *sb;
 	const char *pfx;
 } DEFAULT default_fullname;
+
+# ioctl() - implement historic ioctls, perhaps.
+METHOD int ioctl {
+	struct g_part_table *table;
+	struct g_provider *pp;
+	u_long cmd;
+	void *data;
+	int fflag;
+	struct thread *td;
+} DEFAULT default_ioctl;
 
 # modify() - scheme specific processing for the modify verb.
 METHOD int modify {

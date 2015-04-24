@@ -1,6 +1,6 @@
 /*	$NetBSD: if_udav.c,v 1.2 2003/09/04 15:17:38 tsutsui Exp $	*/
 /*	$nabe: if_udav.c,v 1.3 2003/08/21 16:57:19 nabe Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/net/if_udav.c 271832 2014-09-18 21:09:22Z glebius $	*/
+/*	$FreeBSD: head/sys/dev/usb/net/if_udav.c 276701 2015-01-05 15:04:17Z hselasky $	*/
 /*-
  * Copyright (c) 2003
  *     Shingo WATANABE <nabe@nabechan.org>.  All rights reserved.
@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_udav.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_udav.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -198,7 +198,7 @@ static const struct usb_ether_methods udav_ue_methods_nophy = {
 static int udav_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, udav, CTLFLAG_RW, 0, "USB udav");
-SYSCTL_INT(_hw_usb_udav, OID_AUTO, debug, CTLFLAG_RW, &udav_debug, 0,
+SYSCTL_INT(_hw_usb_udav, OID_AUTO, debug, CTLFLAG_RWTUN, &udav_debug, 0,
     "Debug level");
 #endif
 

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/virtio/virtio_bus_if.m 252707 2013-07-04 17:57:26Z bryanv $
+# $FreeBSD: head/sys/dev/virtio/virtio_bus_if.m 275728 2014-12-12 11:19:10Z br $
 
 #include <sys/bus.h>
 #include <machine/bus.h>
@@ -87,3 +87,8 @@ METHOD void write_device_config {
 	void		*src;
 	int		len;
 };
+
+METHOD void poll {
+	device_t	dev;
+};
+

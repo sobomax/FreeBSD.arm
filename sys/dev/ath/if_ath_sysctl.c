@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_sysctl.c 265409 2014-05-06 01:15:42Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_sysctl.c 276150 2014-12-23 18:48:45Z adrian $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -446,7 +446,15 @@ ath_sysctl_rfsilent(SYSCTL_HANDLER_ARGS)
 		return error;
 	if (!ath_hal_setrfsilent(sc->sc_ah, rfsilent))
 		return EINVAL;
-	sc->sc_rfsilentpin = rfsilent & 0x1c;
+	/*
+	 * Earlier chips (< AR5212) have up to 8 GPIO
+	 * pins exposed.
+	 *
+	 * AR5416 and later chips have many more GPIO
+	 * pins (up to 16) so the mask is expanded to
+	 * four bits.
+	 */
+	sc->sc_rfsilentpin = rfsilent & 0x3c;
 	sc->sc_rfsilentpol = (rfsilent & 0x2) != 0;
 	return 0;
 }

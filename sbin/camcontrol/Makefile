@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/camcontrol/Makefile 268240 2014-07-03 23:09:44Z ken $
+# $FreeBSD: head/sbin/camcontrol/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	camcontrol
 SRCS=	camcontrol.c util.c
@@ -11,8 +11,7 @@ CFLAGS+= -DMINIMALISTIC
 .if ${MACHINE_CPUARCH} == "arm"
 WARNS?= 3
 .endif
-DPADD=	${LIBCAM} ${LIBSBUF} ${LIBUTIL}
-LDADD=	-lcam -lsbuf -lutil
+LIBADD=	cam sbuf util
 MAN=	camcontrol.8
 
 .include <bsd.prog.mk>

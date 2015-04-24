@@ -35,18 +35,35 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/twiddle.c 165906 2007-01-09 01:02:06Z imp $");
+__FBSDID("$FreeBSD: head/lib/libstand/twiddle.c 276079 2014-12-22 20:42:36Z ian $");
 
 #include <sys/types.h>
 #include "stand.h"
 
 /* Extra functions from NetBSD standalone printf.c */
 
+static u_int globaldiv;
+
 void
-twiddle()
+twiddle(u_int callerdiv)
 {
-	static int pos;
+	static u_int callercnt, globalcnt, pos;
+
+	callercnt++;
+	if (callerdiv > 1 && (callercnt % callerdiv) != 0)
+		return;
+
+	globalcnt++;
+	if (globaldiv > 1 && (globalcnt % globaldiv) != 0)
+		return;
 
 	putchar("|/-\\"[pos++ & 3]);
 	putchar('\b');
+}
+
+void
+twiddle_divisor(u_int gdiv)
+{
+
+	globaldiv = gdiv;
 }

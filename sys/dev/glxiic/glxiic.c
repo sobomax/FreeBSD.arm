@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/glxiic/glxiic.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/glxiic/glxiic.c 274819 2014-11-21 21:01:24Z smh $");
 /*
  * AMD Geode LX CS5536 System Management Bus controller.
  *
@@ -559,8 +559,8 @@ glxiic_start_timeout_locked(struct glxiic_softc *sc)
 
 	GLXIIC_ASSERT_LOCKED(sc);
 
-	callout_reset(&sc->callout, sc->timeout * 1000 / hz, glxiic_timeout,
-	    sc);
+	callout_reset_sbt(&sc->callout, SBT_1MS * sc->timeout, 0,
+	    glxiic_timeout, sc, 0);
 }
 
 static void

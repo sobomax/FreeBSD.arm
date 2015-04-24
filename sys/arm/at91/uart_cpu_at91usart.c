@@ -31,7 +31,7 @@
 
 #ifndef FDT
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/uart_cpu_at91usart.c 261126 2014-01-24 16:50:15Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/uart_cpu_at91usart.c 279724 2015-03-07 15:24:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,6 +51,7 @@ bus_space_tag_t uart_bus_space_io;
 bus_space_tag_t uart_bus_space_mem;
 
 extern struct bus_space at91_bs_tag;
+extern struct uart_class at91_usart_class;
 
 int
 uart_cpu_eqres(struct uart_bas *b1, struct uart_bas *b2)

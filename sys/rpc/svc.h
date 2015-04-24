@@ -29,7 +29,7 @@
  *
  *	from: @(#)svc.h 1.35 88/12/17 SMI
  *	from: @(#)svc.h      1.27    94/04/25 SMI
- * $FreeBSD: head/sys/rpc/svc.h 268115 2014-07-01 20:47:16Z rmacklem $
+ * $FreeBSD: head/sys/rpc/svc.h 280930 2015-04-01 00:45:47Z wollman $
  */
 
 /*
@@ -371,10 +371,10 @@ typedef struct __rpc_svcpool {
 	 * amount of memory used by RPC requests which are queued
 	 * waiting for execution.
 	 */
-	unsigned int	sp_space_low;
-	unsigned int	sp_space_high;
-	unsigned int	sp_space_used;
-	unsigned int	sp_space_used_highest;
+	unsigned long	sp_space_low;
+	unsigned long	sp_space_high;
+	unsigned long	sp_space_used;
+	unsigned long	sp_space_used_highest;
 	bool_t		sp_space_throttled;
 	int		sp_space_throttle_count;
 

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/bcm2835.dtsi 262614 2014-02-28 18:29:09Z imp $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/bcm2835.dtsi 278915 2015-02-17 19:38:16Z loos $
  */
 
 / {
@@ -397,6 +397,8 @@
 		};
 
 		bsc0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			compatible = "broadcom,bcm2835-bsc",
 				     "broadcom,bcm2708-bsc";
 			reg = <0x205000 0x20>;
@@ -405,6 +407,8 @@
 		};
 
 		bsc1 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			compatible = "broadcom,bcm2835-bsc",
 				     "broadcom,bcm2708-bsc";
 			reg = <0x804000 0x20>;

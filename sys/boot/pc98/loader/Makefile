@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/pc98/loader/Makefile 272256 2014-09-28 13:34:43Z nyan $
+# $FreeBSD: head/sys/boot/pc98/loader/Makefile 281009 2015-04-03 02:27:40Z jkim $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -87,11 +87,7 @@ FILES=	${LOADER}
 FILESMODE_${LOADER}= ${BINMODE} -b
 
 .PATH: ${.CURDIR}/../../forth
-FILES+=	loader.help loader.4th support.4th loader.conf
-FILES+= screen.4th frames.4th beastie.4th
-FILES+= brand.4th check-password.4th color.4th delay.4th
-FILES+= menu.4th menu-commands.4th menusets.4th shortcuts.4th version.4th
-FILESDIR_loader.conf=	/boot/defaults
+.include	"${.CURDIR}/../../forth/Makefile.inc"
 
 .if !exists(${DESTDIR}/boot/loader.rc)
 FILES+=	${.CURDIR}/../../i386/loader/loader.rc

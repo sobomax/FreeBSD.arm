@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/acphy.c 257184 2013-10-26 18:40:17Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/acphy.c 281821 2015-04-21 09:39:48Z glebius $");
 
 /*
  * Driver for Altima AC101 10/100 PHY
@@ -139,14 +139,12 @@ acphy_attach(device_t dev)
 	sc->mii_capabilities = PHY_READ(sc, MII_BMSR) & sc->mii_capmask;
 	device_printf(dev, " ");
 
-#define	ADD(m, c)	ifmedia_add(&sc->mii_pdata->mii_media, (m), (c), NULL)
+#define	ADD(m)	ifmedia_add(&sc->mii_pdata->mii_media, (m), 0, NULL)
 	if ((PHY_READ(sc, MII_ACPHY_MCTL) & AC_MCTL_FX_SEL) != 0) {
 		sc->mii_flags |= MIIF_HAVEFIBER;
-		ADD(IFM_MAKEWORD(IFM_ETHER, IFM_100_FX, 0, sc->mii_inst),
-		    MII_MEDIA_100_TX);
+		ADD(IFM_MAKEWORD(IFM_ETHER, IFM_100_FX, 0, sc->mii_inst));
 		printf("100baseFX, ");
-		ADD(IFM_MAKEWORD(IFM_ETHER, IFM_100_FX, IFM_FDX, sc->mii_inst),
-		    MII_MEDIA_100_TX_FDX);
+		ADD(IFM_MAKEWORD(IFM_ETHER, IFM_100_FX, IFM_FDX, sc->mii_inst));
 		printf("100baseFX-FDX, ");
 	}
 #undef ADD

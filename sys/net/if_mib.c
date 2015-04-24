@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/if_mib.c 271856 2014-09-19 09:01:19Z glebius $
+ * $FreeBSD: head/sys/net/if_mib.c 274225 2014-11-07 09:39:05Z glebius $
  */
 
 #include <sys/param.h>
@@ -67,9 +67,9 @@ SYSCTL_DECL(_net_link_generic);
 static SYSCTL_NODE(_net_link_generic, IFMIB_SYSTEM, system, CTLFLAG_RW, 0,
 	    "Variables global to all interfaces");
 
-SYSCTL_VNET_INT(_net_link_generic_system, IFMIB_IFCOUNT, ifcount, CTLFLAG_RD,
-	    &VNET_NAME(if_index), 0,
-	     "Number of configured interfaces");
+SYSCTL_INT(_net_link_generic_system, IFMIB_IFCOUNT, ifcount,
+	CTLFLAG_VNET | CTLFLAG_RD, &VNET_NAME(if_index), 0,
+	"Number of configured interfaces");
 
 static int
 sysctl_ifdata(SYSCTL_HANDLER_ARGS) /* XXX bad syntax! */

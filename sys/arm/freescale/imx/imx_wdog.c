@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_wdog.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_wdog.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_wdog.c 261410 2014-02-02 19:1
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
-#include <machine/fdt.h>
 
 #include <arm/freescale/imx/imx_wdogreg.h>
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/smbfs/smbfs_vfsops.c 264494 2014-04-15 09:10:01Z ae $
+ * $FreeBSD: head/sys/fs/smbfs/smbfs_vfsops.c 274784 2014-11-21 06:21:39Z trasz $
  */
 
 #include <sys/param.h>
@@ -401,8 +401,6 @@ smbfs_statfs(struct mount *mp, struct statfs *sbp)
 	scred = smbfs_malloc_scred();
 	smb_makescred(scred, td, td->td_ucred);
 	error = smbfs_smb_statfs(ssp, sbp, scred);
-	if (error == 0)
-		sbp->f_flags = 0;	/* copy of mount exported flags */
 	smbfs_free_scred(scred);
 	return (error);
 }

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/mountd 231667 2012-02-14 10:51:24Z dougb $
+# $FreeBSD: head/etc/rc.d/mountd 281691 2015-04-18 16:08:06Z trasz $
 #
 
 # PROVIDE: mountd
@@ -31,12 +31,6 @@ mountd_precmd()
 		if checkyesno mountd_enable; then
 			checkyesno weak_mountd_authentication && rc_flags="-n"
 		fi
-	fi
-
-	# If oldnfs_server_enable is yes, force use of the old NFS server
-	#
-	if checkyesno oldnfs_server_enable; then
-		rc_flags="-o ${rc_flags}"
 	fi
 
 	if checkyesno zfs_enable; then

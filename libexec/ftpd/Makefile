@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/4/94
-# $FreeBSD: head/libexec/ftpd/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/libexec/ftpd/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .include <src.opts.mk>
 
@@ -13,19 +13,16 @@ YFLAGS=
 WARNS?=	2
 WFORMAT=0
 
-DPADD=	${LIBUTIL} ${LIBCRYPT}
-LDADD=	-lutil -lcrypt
+LIBADD=	util crypt
 
 # XXX Kluge! Conversation mechanism needs to be fixed.
-DPADD+=	${LIBOPIE} ${LIBMD}
-LDADD+=	-lopie -lmd
+LIBADD+=	opie md
 
 LSDIR=	../../bin/ls
 .PATH:	${.CURDIR}/${LSDIR}
 SRCS+=	ls.c cmp.c print.c util.c
 CFLAGS+=-Dmain=ls_main -I${.CURDIR}/${LSDIR}
-DPADD+=	${LIBM}
-LDADD+=	-lm
+LIBADD+=	m
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=-DINET6
@@ -33,8 +30,7 @@ CFLAGS+=-DINET6
 
 .if ${MK_PAM_SUPPORT} != "no"
 CFLAGS+=-DUSE_PAM
-DPADD+= ${LIBPAM}
-LDADD+= ${MINUSLPAM}
+LIBADD+=	pam
 .endif
 
 .include <bsd.prog.mk>

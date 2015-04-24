@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/minidump_machdep.c 272766 2014-10-08 20:25:21Z markj $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/minidump_machdep.c 281495 2015-04-13 15:22:45Z kib $");
 
 #include "opt_watchdog.h"
 
@@ -265,7 +265,7 @@ minidumpsys(struct dumperinfo *di)
 	mdhdr.bitmapsize = vm_page_dump_size;
 	mdhdr.ptesize = ptesize;
 	mdhdr.kernbase = KERNBASE;
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 	mdhdr.paemode = 1;
 #endif
 

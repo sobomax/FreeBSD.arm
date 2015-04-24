@@ -22,9 +22,12 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: head/sys/boot/forth/menusets.4th 257650 2013-11-04 20:28:10Z dteske $
+\ $FreeBSD: head/sys/boot/forth/menusets.4th 280937 2015-04-01 01:54:28Z dteske $
 
 marker task-menusets.4th
+
+vocabulary menusets-infrastructure
+only forth also menusets-infrastructure definitions
 
 variable menuset_use_name
 
@@ -437,6 +440,8 @@ create menuset_y        1   allot
 	s" affix" unsetenv
 ;
 
+only forth definitions also menusets-infrastructure
+
 : menuset-loadsetnum ( N -- )
 
 	menuset-checksetnum ( n -- )
@@ -537,16 +542,6 @@ create menuset_y        1   allot
 	menuset-cleanup
 ;
 
-: menuset-loadinitial ( -- )
-	s" menuset_initial" getenv dup -1 <> if
-		?number 0<> if
-			menuset-loadsetnum
-		then
-	else
-		drop \ cruft
-	then
-;
-
 : menusets-unset ( -- )
 
 	s" menuset_initial" unsetenv
@@ -614,4 +609,16 @@ create menuset_y        1   allot
 
 	s" buf" unsetenv
 	menuset-cleanup
+;
+
+only forth definitions
+
+: menuset-loadinitial ( -- )
+	s" menuset_initial" getenv dup -1 <> if
+		?number 0<> if
+			menuset-loadsetnum
+		then
+	else
+		drop \ cruft
+	then
 ;

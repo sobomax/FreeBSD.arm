@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.usr.dist 271493 2014-09-13 02:15:31Z delphij $
+# $FreeBSD: head/etc/mtree/BSD.usr.dist 281405 2015-04-11 05:38:07Z jkim $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -7,12 +7,20 @@
 .
     bin
     ..
-    games
-    ..
     include
     ..
     lib
         aout
+        ..
+        clang
+            3.6.0
+                include
+                ..
+                lib
+                    freebsd
+                    ..
+                ..
+            ..
         ..
         compat
             aout
@@ -126,6 +134,8 @@
     sbin
     ..
     share
+        atf
+        ..
         bsdconfig
             media
             ..
@@ -169,6 +179,8 @@
         doc
             IPv6
             ..
+            atf
+            ..
             atm
             ..
             legal
@@ -186,8 +198,24 @@
             ncurses
             ..
             ntp
+                drivers
+                    icons
+                    ..
+                    scripts
+                    ..
+                ..
+                hints
+                ..
+                icons
+                ..
+                pic
+                ..
+                scripts
+                ..
             ..
             papers
+            ..
+            pjdfstest
             ..
             psd
                 01.cacm
@@ -263,14 +291,6 @@
                 06.bc
                 ..
                 07.mail
-                ..
-                10.exref
-                ..
-                11.edit
-                ..
-                12.vi
-                ..
-                13.viref
                 ..
                 18.msdiffs
                 ..
@@ -400,6 +420,8 @@
                 ..
             ..
             tcsh
+            ..
+            uefisign
             ..
         ..
         games

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-dis/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-dis/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -11,7 +11,6 @@ TGHDRS=	Intrinsics
 LIBDEPS=llvmanalysis \
 	llvmtarget \
 	llvmmc \
-	llvmobject \
 	llvmbitreader \
 	llvmcore \
 	llvmsupport

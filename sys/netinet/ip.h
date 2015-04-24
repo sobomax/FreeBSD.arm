@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip.h	8.2 (Berkeley) 6/1/94
- * $FreeBSD: head/sys/netinet/ip.h 235036 2012-05-04 21:00:32Z delphij $
+ * $FreeBSD: head/sys/netinet/ip.h 279236 2015-02-24 12:57:03Z zbb $
  */
 
 #ifndef _NETINET_IP_H_
@@ -67,7 +67,7 @@ struct ip {
 	u_char	ip_p;			/* protocol */
 	u_short	ip_sum;			/* checksum */
 	struct	in_addr ip_src,ip_dst;	/* source and dest address */
-} __packed __aligned(4);
+} __packed __aligned(2);
 
 #define	IP_MAXPACKET	65535		/* maximum packet size */
 

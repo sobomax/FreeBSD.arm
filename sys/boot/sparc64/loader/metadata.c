@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/sparc64/loader/metadata.c 263005 2014-03-11 10:13:06Z royger $");
+__FBSDID("$FreeBSD: head/sys/boot/sparc64/loader/metadata.c 279799 2015-03-09 02:57:34Z nwhitehorn $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -276,7 +276,7 @@ md_copymodules(vm_offset_t addr)
  * - Module metadata are formatted and placed in kernel space.
  */
 int
-md_load(char *args, vm_offset_t *modulep)
+md_load(char *args, vm_offset_t *modulep, vm_offset_t *dtbp)
 {
     struct preloaded_file	*kfp;
     struct preloaded_file	*xp;
@@ -289,6 +289,7 @@ md_load(char *args, vm_offset_t *modulep)
     int				howto;
 
     howto = md_getboothowto(args);
+    *dtbp = 0;
 
     /* 
      * Allow the environment variable 'rootdev' to override the supplied device 

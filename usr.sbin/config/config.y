@@ -65,7 +65,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.y	8.1 (Berkeley) 6/6/93
- * $FreeBSD: head/usr.sbin/config/config.y 216372 2010-12-11 09:38:12Z joel $
+ * $FreeBSD: head/usr.sbin/config/config.y 277567 2015-01-23 16:03:02Z will $
  */
 
 #include <assert.h>
@@ -178,7 +178,7 @@ Config_spec:
 	      } |
 	OPTIONS Opt_list
 		|
-	NOOPTION Save_id { rmopt_schedule(&opt, $2); } |
+	NOOPTION NoOpt_list |
 	MAKEOPTIONS Mkopt_list
 		|
 	NOMAKEOPTION Save_id { rmopt_schedule(&mkopt, $2); } |
@@ -225,6 +225,11 @@ Opt_list:
 	Option
 		;
 
+NoOpt_list:
+	NoOpt_list COMMA NoOption
+	  	|
+	NoOption
+		;
 Option:
 	Save_id {
 		newopt(&opt, $1, NULL, 0);
@@ -235,6 +240,11 @@ Option:
 	Save_id EQUALS Opt_value {
 		newopt(&opt, $1, $3, 0);
 	      } ;
+
+NoOption:
+	Save_id {
+		rmopt_schedule(&opt, $1);
+		};
 
 Opt_value:
 	ID { $$ = $1; } |

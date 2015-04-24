@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/gpio.h 213237 2010-09-28 03:24:53Z gonzo $
+ * $FreeBSD: head/sys/sys/gpio.h 279761 2015-03-08 00:47:50Z loos $
  *
  */
 
@@ -93,5 +93,6 @@ struct gpio_req {
 #define	GPIOGET			_IOWR('G', 3, struct gpio_req)
 #define	GPIOSET			_IOW('G', 4, struct gpio_req)
 #define	GPIOTOGGLE		_IOWR('G', 5, struct gpio_req)
+#define	GPIOSETNAME		_IOW('G', 6, struct gpio_pin)
 
 #endif /* __GPIO_H__ */

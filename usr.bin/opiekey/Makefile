@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/opiekey/Makefile 269810 2014-08-11 14:37:57Z ache $
+# $FreeBSD: head/usr.bin/opiekey/Makefile 275042 2014-11-25 14:29:10Z bapt $
 #
 OPIE_DIST?=	${.CURDIR}/../../contrib/opie
 
@@ -10,8 +10,7 @@ CFLAGS+=-DINSECURE_OVERRIDE
 
 WARNS?=	0
 
-DPADD=	${LIBOPIE} ${LIBMD}
-LDADD=	-lopie -lmd
+LIBADD=	opie
 
 LINKS=	${BINDIR}/opiekey ${BINDIR}/otp-md4
 LINKS+=	${BINDIR}/opiekey ${BINDIR}/otp-md5

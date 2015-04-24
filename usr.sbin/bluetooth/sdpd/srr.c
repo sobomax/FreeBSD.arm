@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: srr.c,v 1.1 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/sdpd/srr.c 153176 2005-12-06 17:56:36Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/sdpd/srr.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <sys/queue.h>
@@ -34,6 +34,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <assert.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <errno.h>
 #include <sdp.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/Makefile 272034 2014-09-23 18:22:40Z rpaulo $
+# $FreeBSD: head/cddl/usr.sbin/Makefile 278529 2015-02-10 19:41:30Z gnn $
 
 .include <src.opts.mk>
 
@@ -28,6 +28,12 @@ _lockstat=	lockstat
 .if defined(WITH_PLOCKSTAT)
 _plockstat=	plockstat
 .endif
+.endif
+
+.if ${MACHINE_CPUARCH} == "arm"
+_dtrace=	dtrace
+_dtruss=	dtruss
+_lockstat=	lockstat
 .endif
 
 .if ${MACHINE_CPUARCH} == "mips"

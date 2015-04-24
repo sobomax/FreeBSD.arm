@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbPluginSymbolFileDWARF/Makefile 258054 2013-11-12 17:25:33Z emaste $
+# $FreeBSD: head/lib/clang/liblldbPluginSymbolFileDWARF/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -31,7 +31,9 @@ SRCS=	DWARFAbbreviationDeclaration.cpp \
 	SymbolFileDWARFDebugMap.cpp \
 	UniqueDWARFASTType.cpp
 
-TGHDRS=	DiagnosticCommonKinds \
+TGHDRS=	AttrList \
+	Attrs \
+	DiagnosticCommonKinds \
 	DeclNodes \
 	StmtNodes \
 	CommentCommandList \

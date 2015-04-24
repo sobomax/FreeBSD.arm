@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmarmdesc/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmarmdesc/Makefile 276479 2014-12-31 20:31:32Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,6 +7,7 @@ LIB=	llvmarmdesc
 SRCDIR=	lib/Target/ARM/MCTargetDesc
 SRCS=	ARMAsmBackend.cpp \
 	ARMELFObjectWriter.cpp \
+	ARMELFObjectWriter.cpp \
 	ARMELFStreamer.cpp \
 	ARMMCAsmInfo.cpp \
 	ARMMCCodeEmitter.cpp \
@@ -14,7 +15,10 @@ SRCS=	ARMAsmBackend.cpp \
 	ARMMCTargetDesc.cpp \
 	ARMMachORelocationInfo.cpp \
 	ARMMachObjectWriter.cpp \
-	ARMUnwindOpAsm.cpp
+	ARMTargetStreamer.cpp \
+	ARMUnwindOpAsm.cpp \
+	ARMWinCOFFObjectWriter.cpp \
+	ARMWinCOFFStreamer.cpp
 CFLAGS+= -I${LLVM_SRCS}/${SRCDIR}/..
 
 TGHDRS=	ARMGenInstrInfo \

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_mp.c 268401 2014-07-08 14:35:09Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_mp.c 281092 2015-04-04 23:03:11Z andrew $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -33,6 +33,9 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_mp.c 268401 2014-07-08 14:35
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/smp.h>
+
+#include <vm/vm.h>
+#include <vm/pmap.h>
 
 #include <machine/smp.h>
 #include <machine/fdt.h>
@@ -66,7 +69,7 @@ void
 platform_mp_init_secondary(void)
 {
 
-	gic_init_secondary();
+	arm_init_secondary_ic();
 }
 
 void

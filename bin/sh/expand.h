@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)expand.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/expand.h 262533 2014-02-26 21:38:42Z jilles $
+ * $FreeBSD: head/bin/sh/expand.h 276037 2014-12-21 22:18:30Z jilles $
  */
 
 struct strlist {
@@ -50,7 +50,6 @@ struct arglist {
 #define EXP_FULL	0x1	/* perform word splitting & file globbing */
 #define EXP_TILDE	0x2	/* do normal tilde expansion */
 #define	EXP_VARTILDE	0x4	/* expand tildes in an assignment */
-#define	EXP_REDIR	0x8	/* file glob for a redirection (1 match only) */
 #define EXP_CASE	0x10	/* keeps quotes around for CASE pattern */
 #define EXP_SPLIT_LIT	0x20	/* IFS split literal text ${v+-a b c} */
 #define EXP_LIT_QUOTED	0x40	/* for EXP_SPLIT_LIT, start off quoted */

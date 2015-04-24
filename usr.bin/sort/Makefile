@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/sort/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.bin/sort/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -13,10 +13,10 @@ CLEANFILES+= sort.1
 
 .if ${MK_SORT_THREADS} != "no"
 CFLAGS+= -DSORT_THREADS
-LDFLAGS+= -lpthread -lmd
+LIBADD=	pthread md
 MAN_SUB+= -e 's|%%THREADS%%||g'
 .else
-LDFLAGS+= -lmd
+LIBADD=	md
 MAN_SUB+= -e 's|%%THREADS%%|\.\\"|g'
 .endif
 

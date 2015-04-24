@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/racct.h 272582 2014-10-06 02:31:33Z mjg $
+ * $FreeBSD: head/sys/sys/racct.h 274911 2014-11-23 08:25:44Z mjg $
  */
 
 /*
@@ -220,15 +220,8 @@ racct_get_available(struct proc *p, int resource)
 	return (UINT64_MAX);
 }
 
-static inline void
-racct_create(struct racct **racctp)
-{
-}
-
-static inline void
-racct_destroy(struct racct **racctp)
-{
-}
+#define	racct_create(x)
+#define	racct_destroy(x)
 
 static inline int
 racct_proc_fork(struct proc *parent, struct proc *child)

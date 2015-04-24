@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/killall/killall.c 260801 2014-01-17 04:16:39Z csjp $");
+__FBSDID("$FreeBSD: head/usr.bin/killall/killall.c 275855 2014-12-17 07:10:48Z gleb $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -37,6 +37,7 @@ __FBSDID("$FreeBSD: head/usr.bin/killall/killall.c 260801 2014-01-17 04:16:39Z c
 #include <fcntl.h>
 #include <dirent.h>
 #include <jail.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -262,7 +263,7 @@ main(int ac, char **av)
 			errx(1, "%s: not a character device", buf);
 		tdev = sb.st_rdev;
 		if (dflag)
-			printf("ttydev:0x%x\n", tdev);
+			printf("ttydev:0x%jx\n", (uintmax_t)tdev);
 	}
 	if (user) {
 		uid = strtol(user, &ep, 10);
@@ -410,8 +411,9 @@ main(int ac, char **av)
 		if (matched == 0)
 			continue;
 		if (dflag)
-			printf("sig:%d, cmd:%s, pid:%d, dev:0x%x uid:%d\n", sig,
-			    thiscmd, thispid, thistdev, thisuid);
+			printf("sig:%d, cmd:%s, pid:%d, dev:0x%jx uid:%d\n",
+			    sig, thiscmd, thispid, (uintmax_t)thistdev,
+			    thisuid);
 
 		if (vflag || sflag)
 			printf("kill -%s %d\n", sys_signame[sig], thispid);

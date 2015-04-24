@@ -1,4 +1,4 @@
-#	$FreeBSD: head/usr.sbin/makefs/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+#	$FreeBSD: head/usr.sbin/makefs/Makefile 274990 2014-11-24 22:15:30Z bapt $
 
 PROG=	makefs
 
@@ -30,12 +30,6 @@ SRCS+=	pack_dev.c
 SRCS+=	ffs_tables.c
 
 CFLAGS+=	-I${.CURDIR}/../../lib/libnetbsd
-LIBNETBSDDIR=	${.OBJDIR}/../../lib/libnetbsd
-LIBNETBSD=	${LIBNETBSDDIR}/libnetbsd.a
-DPADD+=		${LIBNETBSD}
-LDADD+=		${LIBNETBSD}
-
-DPADD+=  ${LIBSBUF} ${LIBUTIL}
-LDADD+=  -lsbuf -lutil
+LIBADD=		netbsd util sbuf
 
 .include <bsd.prog.mk>

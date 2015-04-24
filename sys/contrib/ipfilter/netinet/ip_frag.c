@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_frag.c 272052 2014-09-24 01:21:31Z cy $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_frag.c 275199 2014-11-28 04:07:06Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -86,7 +86,7 @@ struct file;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_frag.c	1.11 3/24/96 (C) 1993-2000 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_frag.c 272052 2014-09-24 01:21:31Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_frag.c 275199 2014-11-28 04:07:06Z cy $";
 /* static const char rcsid[] = "@(#)$Id: ip_frag.c,v 2.77.2.12 2007/09/20 12:51:51 darrenr Exp $"; */
 #endif
 
@@ -112,7 +112,7 @@ static void ipf_frag_free __P((ipf_frag_softc_t *, ipfr_t *));
 
 static frentry_t ipfr_block;
 
-ipftuneable_t ipf_tuneables[] = {
+const ipftuneable_t ipf_tuneables[] = {
 	{ { (void *)offsetof(ipf_frag_softc_t, ipfr_size) },
 		"frag_size",		1,	0x7fffffff,
 		stsizeof(ipf_frag_softc_t, ipfr_size),

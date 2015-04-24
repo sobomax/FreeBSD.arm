@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/ficl/Makefile 264199 2014-04-06 19:51:57Z imp $
+# $FreeBSD: head/sys/boot/ficl/Makefile 279949 2015-03-13 09:38:16Z jhb $
 #
 
 FICLDIR?=	${.CURDIR}
@@ -20,6 +20,9 @@ CFLAGS+=	-ffreestanding
     (${MACHINE_CPUARCH} == "amd64" && defined(FICL32))
 CFLAGS+=	-march=i386
 CFLAGS.gcc+=	-mpreferred-stack-boundary=2
+.endif
+.if ${MACHINE_CPUARCH} == "amd64"
+CFLAGS+=	-mno-red-zone
 .endif
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
 CFLAGS+=	-mno-mmx -mno-3dnow -mno-sse -mno-sse2 -mno-sse3 -msoft-float

@@ -1,13 +1,15 @@
-# $FreeBSD: head/etc/mtree/BSD.include.dist 273567 2014-10-23 23:14:23Z marcel $
+# $FreeBSD: head/etc/mtree/BSD.include.dist 281613 2015-04-16 20:22:40Z glebius $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
 
 /set type=dir uname=root gname=wheel mode=0755
 .
-    altq
-    ..
     arpa
+    ..
+    atf-c
+    ..
+    atf-c++
     ..
     bsm
     ..
@@ -91,10 +93,6 @@
         scsi
         ..
     ..
-    clang
-        3.4.1
-        ..
-    ..
     crypto
     ..
     dev
@@ -115,8 +113,6 @@
         hwpmc
         ..
         ic
-        ..
-        ieee488
         ..
         iicbus
         ..
@@ -225,8 +221,6 @@
         posix
         ..
     ..
-    gpib
-    ..
     gssapi
     ..
     infiniband
@@ -258,6 +252,8 @@
         ..
     ..
     net
+        altq
+        ..
     ..
     net80211
     ..
@@ -306,8 +302,6 @@
     protocols
     ..
     rdma
-    ..
-    readline
     ..
     rpc
     ..

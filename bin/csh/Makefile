@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/csh/Makefile 271771 2014-09-18 14:41:57Z will $
+# $FreeBSD: head/bin/csh/Makefile 277273 2015-01-16 21:39:08Z will $
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
 #
 # C Shell with process control; VM/UNIX VAX Makefile
@@ -40,8 +40,7 @@ MLINKS= csh.1 tcsh.1
 # utilities of the same name are handled with the associated manpage,
 # builtin.1 in share/man/man1/.
 
-DPADD=	${LIBTERMCAPW} ${LIBCRYPT}
-LDADD=	-ltermcapw -lcrypt
+LIBADD=	termcapw crypt
 
 LINKS=	${BINDIR}/csh ${BINDIR}/tcsh
 
@@ -94,7 +93,7 @@ GENHDRS+= iconv.h
 SRCS+=	iconv_stub.c
 
 iconv.h: ${.CURDIR}/iconv_stub.h
-	cp -f ${.CURDIR}/iconv_stub.h ${.TARGET}
+	${CP} ${.CURDIR}/iconv_stub.h ${.TARGET}
 .endif
 .endif
 

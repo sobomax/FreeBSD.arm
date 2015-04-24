@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009 Advanced Computing Technologies LLC
+ * Copyright (c) 2009 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/sg_pager.c 254182 2013-08-10 17:36:42Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/sg_pager.c 281887 2015-04-23 14:22:20Z jhb $");
 
 /*
  * This pager manages OBJT_SG objects.  These objects are backed by

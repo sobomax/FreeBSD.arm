@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/powerpc/uboot/Makefile 273934 2014-11-01 17:12:44Z andrew $
+# $FreeBSD: head/sys/boot/powerpc/uboot/Makefile 276145 2014-12-23 15:42:34Z ian $
 
 .include <src.opts.mk>
 
@@ -66,7 +66,7 @@ LIBUBOOT_FDT=	${.OBJDIR}/../../uboot/fdt/libuboot_fdt.a
 LIBFDT=		${.OBJDIR}/../../fdt/libfdt.a
 .endif
 
-.if !defined(NO_FORTH)
+.if ${MK_FORTH} != "no"
 # Enable BootForth
 BOOT_FORTH=	yes
 CFLAGS+=	-DBOOT_FORTH -I${.CURDIR}/../../ficl -I${.CURDIR}/../../ficl/powerpc

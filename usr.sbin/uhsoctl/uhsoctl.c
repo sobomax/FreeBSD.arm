@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/uhsoctl/uhsoctl.c 268299 2014-07-05 20:08:25Z gavin $
+ * $FreeBSD: head/usr.sbin/uhsoctl/uhsoctl.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include <sys/types.h>
@@ -37,7 +37,6 @@
 
 #include <arpa/inet.h>
 #include <net/if.h>
-#include <net/if_var.h>
 #include <net/if_dl.h>
 #include <net/route.h>
 #include <netinet/in.h>

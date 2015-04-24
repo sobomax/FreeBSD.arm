@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libfetch/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libfetch/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 .include <src.opts.mk>
 
@@ -16,11 +16,9 @@ CFLAGS+=	-DINET6
 
 .if ${MK_OPENSSL} != "no"
 CFLAGS+=	-DWITH_SSL
-DPADD=		${LIBSSL} ${LIBCRYPTO}
-LDADD=		-lssl -lcrypto
+LIBADD+=	ssl crypto
 .else
-DPADD=		${LIBMD}
-LDADD=		-lmd
+LIBADD+=	md
 .endif
 
 CFLAGS+=	-DFTP_COMBINE_CWDS

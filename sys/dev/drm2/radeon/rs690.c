@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/rs690.c 268954 2014-07-21 19:33:08Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/rs690.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"
@@ -45,7 +45,7 @@ int rs690_mc_wait_for_idle(struct radeon_device *rdev)
 		tmp = RREG32_MC(R_000090_MC_SYSTEM_STATUS);
 		if (G_000090_MC_SYSTEM_IDLE(tmp))
 			return 0;
-		DRM_UDELAY(1);
+		udelay(1);
 	}
 	return -1;
 }

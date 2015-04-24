@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptrr/hptrr_os_bsd.c 269615 2014-08-05 23:47:26Z jhb $
+ * $FreeBSD: head/sys/dev/hptrr/hptrr_os_bsd.c 274819 2014-11-21 21:01:24Z smh $
  */
 #include <dev/hptrr/hptrr_config.h>
 /* $Id: os_bsd.c,v 1.11 2005/06/03 14:06:38 kdh Exp $
@@ -221,8 +221,8 @@ void  os_request_timer(void * osext, HPT_U32 interval)
 
 	HPT_ASSERT(vbus_ext->ext_type==EXT_TYPE_VBUS);
 
-	callout_reset(&vbus_ext->timer, interval * hz / 1000000,
-	    os_timer_for_ldm, vbus_ext);
+	callout_reset_sbt(&vbus_ext->timer, SBT_1US * interval, 0,
+	    os_timer_for_ldm, vbus_ext, 0);
 }
 
 HPT_TIME os_query_time(void)

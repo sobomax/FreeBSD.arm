@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/siis.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/siis.4 280451 2015-03-24 18:09:07Z mav $
 .\"
-.Dd April 8, 2011
+.Dd March 23, 2015
 .Dt SIIS 4
 .Os
 .Sh NAME
@@ -98,12 +98,6 @@ The activity LEDs of the adapters supported by the
 driver can be controlled via the
 .Xr led 4
 API for localization or status reporting purposes.
-.Pp
-Same hardware is also supported by the atasiliconimage driver from
-.Xr ata 4
-subsystem.
-If both drivers are loaded at the same time, this one will be
-given precedence as the more functional of the two.
 .Sh HARDWARE
 The
 .Nm

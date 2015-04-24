@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/Makefile.amd64 264087 2014-04-03 21:18:03Z emaste $
+# $FreeBSD: head/sys/boot/Makefile.amd64 280808 2015-03-29 15:43:24Z andrew $
 
 SUBDIR+=		efi
 SUBDIR+=		libstand32
@@ -8,3 +8,5 @@ SUBDIR+=		userboot
 .if ${MK_FORTH} != "no"
 SUBDIR+=		ficl32
 .endif
+
+SUBDIR+=		i386

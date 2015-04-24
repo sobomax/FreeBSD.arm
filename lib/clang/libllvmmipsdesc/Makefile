@@ -1,16 +1,21 @@
-# $FreeBSD: head/lib/clang/libllvmmipsdesc/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmmipsdesc/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
 LIB=	llvmmipsdesc
 
 SRCDIR=	lib/Target/Mips/MCTargetDesc
-SRCS=	MipsAsmBackend.cpp \
+SRCS=	MipsABIFlagsSection.cpp \
+	MipsABIInfo.cpp \
+	MipsAsmBackend.cpp \
 	MipsELFObjectWriter.cpp \
+	MipsELFStreamer.cpp \
 	MipsMCAsmInfo.cpp \
 	MipsMCCodeEmitter.cpp \
+	MipsMCExpr.cpp \
 	MipsMCTargetDesc.cpp \
-	MipsReginfo.cpp \
+	MipsNaClELFStreamer.cpp \
+	MipsOptionRecord.cpp \
 	MipsTargetStreamer.cpp
 CFLAGS+= -I${LLVM_SRCS}/${SRCDIR}/..
 

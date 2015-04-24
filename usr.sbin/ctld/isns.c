@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/isns.c 273635 2014-10-25 12:50:26Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/isns.c 281532 2015-04-14 18:13:55Z delphij $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -35,14 +35,8 @@ __FBSDID("$FreeBSD: head/usr.sbin/ctld/isns.c 273635 2014-10-25 12:50:26Z mav $"
 #include <sys/endian.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <assert.h>
-#include <ctype.h>
-#include <errno.h>
 #include <netdb.h>
-#include <signal.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -63,7 +57,7 @@ isns_req_alloc(void)
 	req->ir_buflen = sizeof(struct isns_hdr);
 	req->ir_usedlen = 0;
 	req->ir_buf = calloc(req->ir_buflen, 1);
-	if (req == NULL) {
+	if (req->ir_buf == NULL) {
 		free(req);
 		log_err(1, "calloc");
 		return (NULL);

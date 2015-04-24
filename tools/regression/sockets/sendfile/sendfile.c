@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/sendfile/sendfile.c 255451 2013-09-10 13:51:19Z emaste $
+ * $FreeBSD: head/tools/regression/sockets/sendfile/sendfile.c 281394 2015-04-11 03:18:14Z ngie $
  */
 
 #include <sys/types.h>
@@ -452,8 +452,8 @@ run_parent(void)
 static void
 cleanup(void)
 {
-	if (*path != '\0')
-		unlink(path);
+
+	unlink(path);
 }
 
 int
@@ -461,12 +461,12 @@ main(int argc, char *argv[])
 {
 	int pagesize;
 
-	*path = '\0';
+	path[0] = '\0';
 
 	pagesize = getpagesize();
 
 	if (argc == 1) {
-		snprintf(path, PATH_MAX, "/tmp/sendfile.XXXXXXXXXXXX");
+		snprintf(path, sizeof(path), "sendfile.XXXXXXXXXXXX");
 		file_fd = mkstemp(path);
 		if (file_fd == -1)
 			FAIL_ERR("mkstemp");

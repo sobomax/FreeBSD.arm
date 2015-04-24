@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ida/ida.c 239740 2012-08-27 17:24:07Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/ida/ida.c 280347 2015-03-22 16:10:28Z mav $");
 
 /*
  * Generic driver for Compaq SMART RAID adapters.
@@ -241,7 +241,7 @@ ida_init(struct ida_softc *ida)
 		/* highaddr	*/ BUS_SPACE_MAXADDR,
 		/* filter	*/ NULL,
 		/* filterarg	*/ NULL,
-		/* maxsize	*/ MAXBSIZE,
+		/* maxsize	*/ DFLTPHYS,
 		/* nsegments	*/ IDA_NSEG,
 		/* maxsegsz	*/ BUS_SPACE_MAXSIZE_32BIT,
 		/* flags	*/ 0,

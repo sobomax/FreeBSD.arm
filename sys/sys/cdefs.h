@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cdefs.h	8.8 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/cdefs.h 272881 2014-10-10 00:35:13Z imp $
+ * $FreeBSD: head/sys/sys/cdefs.h 281945 2015-04-24 18:07:34Z pfg $
  */
 
 #ifndef	_SYS_CDEFS_H_
@@ -40,6 +40,9 @@
  * Testing against Clang-specific extensions.
  */
 
+#ifndef	__has_attribute
+#define	__has_attribute(x)	0
+#endif
 #ifndef	__has_extension
 #define	__has_extension		__has_feature
 #endif
@@ -70,33 +73,33 @@
 #if defined(__GNUC__) || defined(__INTEL_COMPILER)
 
 #if __GNUC__ >= 3 || defined(__INTEL_COMPILER)
-#define __GNUCLIKE_ASM 3
-#define __GNUCLIKE_MATH_BUILTIN_CONSTANTS
+#define	__GNUCLIKE_ASM 3
+#define	__GNUCLIKE_MATH_BUILTIN_CONSTANTS
 #else
-#define __GNUCLIKE_ASM 2
+#define	__GNUCLIKE_ASM 2
 #endif
-#define __GNUCLIKE___TYPEOF 1
-#define __GNUCLIKE___OFFSETOF 1
-#define __GNUCLIKE___SECTION 1
+#define	__GNUCLIKE___TYPEOF 1
+#define	__GNUCLIKE___OFFSETOF 1
+#define	__GNUCLIKE___SECTION 1
 
 #ifndef __INTEL_COMPILER
-# define __GNUCLIKE_CTOR_SECTION_HANDLING 1
+#define	__GNUCLIKE_CTOR_SECTION_HANDLING 1
 #endif
 
-#define __GNUCLIKE_BUILTIN_CONSTANT_P 1
-# if defined(__INTEL_COMPILER) && defined(__cplusplus) \
-    && __INTEL_COMPILER < 800
-#  undef __GNUCLIKE_BUILTIN_CONSTANT_P
-# endif
+#define	__GNUCLIKE_BUILTIN_CONSTANT_P 1
+#if defined(__INTEL_COMPILER) && defined(__cplusplus) && \
+   __INTEL_COMPILER < 800
+#undef __GNUCLIKE_BUILTIN_CONSTANT_P
+#endif
 
 #if (__GNUC_MINOR__ > 95 || __GNUC__ >= 3) && !defined(__INTEL_COMPILER)
-# define __GNUCLIKE_BUILTIN_VARARGS 1
-# define __GNUCLIKE_BUILTIN_STDARG 1
-# define __GNUCLIKE_BUILTIN_VAALIST 1
+#define	__GNUCLIKE_BUILTIN_VARARGS 1
+#define	__GNUCLIKE_BUILTIN_STDARG 1
+#define	__GNUCLIKE_BUILTIN_VAALIST 1
 #endif
 
 #if defined(__GNUC__)
-# define __GNUC_VA_LIST_COMPATIBILITY 1
+#define	__GNUC_VA_LIST_COMPATIBILITY 1
 #endif
 
 /*
@@ -107,23 +110,23 @@
 #endif
 
 #ifndef __INTEL_COMPILER
-# define __GNUCLIKE_BUILTIN_NEXT_ARG 1
-# define __GNUCLIKE_MATH_BUILTIN_RELOPS
+#define	__GNUCLIKE_BUILTIN_NEXT_ARG 1
+#define	__GNUCLIKE_MATH_BUILTIN_RELOPS
 #endif
 
-#define __GNUCLIKE_BUILTIN_MEMCPY 1
+#define	__GNUCLIKE_BUILTIN_MEMCPY 1
 
 /* XXX: if __GNUC__ >= 2: not tested everywhere originally, where replaced */
-#define __CC_SUPPORTS_INLINE 1
-#define __CC_SUPPORTS___INLINE 1
-#define __CC_SUPPORTS___INLINE__ 1
+#define	__CC_SUPPORTS_INLINE 1
+#define	__CC_SUPPORTS___INLINE 1
+#define	__CC_SUPPORTS___INLINE__ 1
 
-#define __CC_SUPPORTS___FUNC__ 1
-#define __CC_SUPPORTS_WARNING 1
+#define	__CC_SUPPORTS___FUNC__ 1
+#define	__CC_SUPPORTS_WARNING 1
 
-#define __CC_SUPPORTS_VARADIC_XXX 1 /* see varargs.h */
+#define	__CC_SUPPORTS_VARADIC_XXX 1 /* see varargs.h */
 
-#define __CC_SUPPORTS_DYNAMIC_ARRAY_INIT 1
+#define	__CC_SUPPORTS_DYNAMIC_ARRAY_INIT 1
 
 #endif /* __GNUC__ || __INTEL_COMPILER */
 
@@ -209,6 +212,7 @@
 #define	__unused
 #define	__packed
 #define	__aligned(x)
+#define	__arg_type_tag(arg_kind, arg_idx, type_tag_idx)
 #define	__section(x)
 #define	__weak
 #else
@@ -233,16 +237,22 @@
 #define	__aligned(x)	__attribute__((__aligned__(x)))
 #define	__section(x)	__attribute__((__section__(x)))
 #endif
+#if __has_attribute(argument_with_type_tag)
+#define	__arg_type_tag(arg_kind, arg_idx, type_tag_idx) \
+	    __attribute__((__argument_with_type_tag__(arg_kind, arg_idx, type_tag_idx)))
+#else
+#define	__arg_type_tag(arg_kind, arg_idx, type_tag_idx)
+#endif
 #if defined(__INTEL_COMPILER)
-#define __dead2		__attribute__((__noreturn__))
-#define __pure2		__attribute__((__const__))
-#define __unused	__attribute__((__unused__))
-#define __used		__attribute__((__used__))
-#define __packed	__attribute__((__packed__))
-#define __aligned(x)	__attribute__((__aligned__(x)))
-#define __section(x)	__attribute__((__section__(x)))
+#define	__dead2		__attribute__((__noreturn__))
+#define	__pure2		__attribute__((__const__))
+#define	__unused	__attribute__((__unused__))
+#define	__used		__attribute__((__used__))
+#define	__packed	__attribute__((__packed__))
+#define	__aligned(x)	__attribute__((__aligned__(x)))
+#define	__section(x)	__attribute__((__section__(x)))
 #endif
-#endif
+#endif /* lint */
 
 #if !__GNUC_PREREQ__(2, 95)
 #define	__alignof(x)	__offsetof(struct { char __a; x __b; }, __b)
@@ -252,7 +262,7 @@
  * Keywords added in C11.
  */
 
-#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 201112L
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 201112L || defined(lint)
 
 #if !__has_extension(c_alignas)
 #if (defined(__cplusplus) && __cplusplus >= 201103L) || \
@@ -293,7 +303,8 @@
 #elif defined(__COUNTER__)
 #define	_Static_assert(x, y)	__Static_assert(x, __COUNTER__)
 #define	__Static_assert(x, y)	___Static_assert(x, y)
-#define	___Static_assert(x, y)	typedef char __assert_ ## y[(x) ? 1 : -1]
+#define	___Static_assert(x, y)	typedef char __assert_ ## y[(x) ? 1 : -1] \
+				__unused
 #else
 #define	_Static_assert(x, y)	struct __hack
 #endif
@@ -355,21 +366,39 @@
 #endif
 
 #if __GNUC_PREREQ__(3, 3)
-#define __nonnull(x)	__attribute__((__nonnull__(x)))
+#define	__nonnull(x)	__attribute__((__nonnull__(x)))
+#define	__nonnull_all	__attribute__((__nonnull__))
 #else
-#define __nonnull(x)
+#define	__nonnull(x)
+#define	__nonnull_all
 #endif
 
 #if __GNUC_PREREQ__(3, 4)
 #define	__fastcall	__attribute__((__fastcall__))
+#define	__result_use_check	__attribute__((__warn_unused_result__))
 #else
 #define	__fastcall
+#define	__result_use_check
 #endif
 
 #if __GNUC_PREREQ__(4, 1)
+#define	__gnu_inline	__attribute__((__gnu_inline__))
 #define	__returns_twice	__attribute__((__returns_twice__))
 #else
+#define	__gnu_inline
 #define	__returns_twice
+#endif
+
+#if __has_attribute(alloc_size) || __GNUC_PREREQ__(4, 3)
+#define	__alloc_size(x)	__attribute__((__alloc_size__(x)))
+#else
+#define	__alloc_size(x)
+#endif
+
+#if __has_attribute(alloc_align) || __GNUC_PREREQ__(4, 9)
+#define	__alloc_align(x)	__attribute__((__alloc_align__(x)))
+#else
+#define	__alloc_align(x)
 #endif
 
 /* XXX: should use `#if __STDC_VERSION__ < 199901'. */
@@ -435,11 +464,11 @@
  *	  larger code.
  */
 #if __GNUC_PREREQ__(2, 96)
-#define __predict_true(exp)     __builtin_expect((exp), 1)
-#define __predict_false(exp)    __builtin_expect((exp), 0)
+#define	__predict_true(exp)     __builtin_expect((exp), 1)
+#define	__predict_false(exp)    __builtin_expect((exp), 0)
 #else
-#define __predict_true(exp)     (exp)
-#define __predict_false(exp)    (exp)
+#define	__predict_true(exp)     (exp)
+#define	__predict_false(exp)    (exp)
 #endif
 
 #if __GNUC_PREREQ__(4, 2)
@@ -455,13 +484,13 @@
  * require it.
  */
 #if __GNUC_PREREQ__(4, 1)
-#define __offsetof(type, field)	 __builtin_offsetof(type, field)
+#define	__offsetof(type, field)	 __builtin_offsetof(type, field)
 #else
 #ifndef __cplusplus
 #define	__offsetof(type, field) \
 	((__size_t)(__uintptr_t)((const volatile void *)&((type *)0)->field))
 #else
-#define __offsetof(type, field)					\
+#define	__offsetof(type, field)					\
   (__offsetof__ (reinterpret_cast <__size_t>			\
                  (&reinterpret_cast <const volatile char &>	\
                   (static_cast<type *> (0)->field))))
@@ -561,7 +590,7 @@
  * The following definition might not work well if used in header files,
  * but it should be better than nothing.  If you want a "do nothing"
  * version, then it should generate some harmless declaration, such as:
- *    #define __IDSTRING(name,string)	struct __hack
+ *    #define	__IDSTRING(name,string)	struct __hack
  */
 #define	__IDSTRING(name,string)	static const char name[] __unused = string
 #endif
@@ -570,7 +599,7 @@
  * Embed the rcs id of a source file in the resulting library.  Note that in
  * more recent ELF binutils, we use .ident allowing the ID to be stripped.
  * Usage:
- *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 272881 2014-10-10 00:35:13Z imp $");
+ *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 281945 2015-04-24 18:07:34Z pfg $");
  */
 #ifndef	__FBSDID
 #if !defined(lint) && !defined(STRIP_FBSDID)
@@ -743,7 +772,7 @@
 #endif
 
 #if defined(__mips) || defined(__powerpc64__)
-#define __NO_TLS 1
+#define	__NO_TLS 1
 #endif
 
 /*

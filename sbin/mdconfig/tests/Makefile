@@ -1,13 +1,10 @@
-# $FreeBSD: head/sbin/mdconfig/tests/Makefile 263222 2014-03-16 02:32:44Z jmmv $
+# $FreeBSD: head/sbin/mdconfig/tests/Makefile 275170 2014-11-27 06:04:00Z ngie $
 
 TESTSDIR=	${TESTSBASE}/sbin/mdconfig
 
-TAP_TESTS_SH=			legacy_test
-TAP_TESTS_SH_SED_legacy_test=   's,__PERL__,${TAP_PERL_INTERPRETER},g'
-TEST_METADATA.legacy_test+=	required_programs="${TAP_PERL_INTERPRETER}"
+ATF_TESTS_SH=	mdconfig_test
 
-FILESDIR=	${TESTSDIR}
-FILES=		mdconfig.test
-FILES+=		run.pl
+
+TEST_METADATA.mdconfig_test+=	required_user="root"
 
 .include <bsd.test.mk>

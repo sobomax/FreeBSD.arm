@@ -1,5 +1,5 @@
 /*	$NetBSD: ucomvar.h,v 1.9 2001/01/23 21:56:17 augustss Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/serial/usb_serial.h 268080 2014-07-01 07:30:29Z hselasky $	*/
+/*	$FreeBSD: head/sys/dev/usb/serial/usb_serial.h 279729 2015-03-07 18:25:58Z hselasky $	*/
 
 /*-
  * Copyright (c) 2001-2002, Shunsuke Akiyama <akiyama@jp.FreeBSD.org>.
@@ -64,6 +64,7 @@
 #include <sys/serial.h>
 #include <sys/fcntl.h>
 #include <sys/sysctl.h>
+#include <sys/timepps.h>
 
 /* Module interface related macros */
 #define	UCOM_MODVER	1
@@ -155,6 +156,8 @@ struct ucom_softc {
 	struct ucom_cfg_task	sc_line_state_task[2];
 	struct ucom_cfg_task	sc_status_task[2];
 	struct ucom_param_task	sc_param_task[2];
+	/* pulse capturing support, PPS */
+	struct pps_state	sc_pps;
 	/* Used to set "UCOM_FLAG_GP_DATA" flag: */
 	struct usb_proc_msg	*sc_last_start_xfer;
 	const struct ucom_callback *sc_callback;

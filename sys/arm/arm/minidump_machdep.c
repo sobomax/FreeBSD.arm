@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/minidump_machdep.c 272766 2014-10-08 20:25:21Z markj $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/minidump_machdep.c 280712 2015-03-26 21:13:53Z ian $");
 
 #include "opt_watchdog.h"
 
@@ -61,7 +61,10 @@ CTASSERT(sizeof(struct kerneldumpheader) == 512);
 uint32_t *vm_page_dump;
 int vm_page_dump_size;
 
+#ifndef ARM_NEW_PMAP
+
 static struct kerneldumpheader kdh;
+
 static off_t dumplo;
 
 /* Handle chunked writes. */
@@ -473,7 +476,19 @@ fail:
 	else
 		printf("\n** DUMP FAILED (ERROR %d) **\n", error);
 	return (error);
+	return (0);
 }
+
+#else /* ARM_NEW_PMAP */
+
+int
+minidumpsys(struct dumperinfo *di)
+{
+
+	return (0);
+}
+
+#endif
 
 void
 dump_add_page(vm_paddr_t pa)

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/multipath/g_multipath.c 260883 2014-01-19 16:37:57Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/multipath/g_multipath.c 281310 2015-04-09 13:09:05Z mav $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
@@ -369,9 +369,9 @@ g_multipath_done(struct bio *bp)
 		mtx_lock(&sc->sc_mtx);
 		(*cnt)--;
 		if (*cnt == 0 && (cp->index & MP_LOST)) {
-			cp->index |= MP_POSTED;
+			if (g_post_event(g_mpd, cp, M_NOWAIT, NULL) == 0)
+				cp->index |= MP_POSTED;
 			mtx_unlock(&sc->sc_mtx);
-			g_post_event(g_mpd, cp, M_WAITOK, NULL);
 		} else
 			mtx_unlock(&sc->sc_mtx);
 		g_std_done(bp);

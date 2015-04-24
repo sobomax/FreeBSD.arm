@@ -1,10 +1,11 @@
 #
 # std.zynq7		- Generic configuration for Xilinx Zynq-7000 PS.
 #
-# $FreeBSD: head/sys/arm/xilinx/std.zynq7 265099 2014-04-29 17:48:57Z ian $
+# $FreeBSD: head/sys/arm/xilinx/std.zynq7 276520 2015-01-01 23:21:46Z ian $
 
 cpu		CPU_CORTEXA
 machine		arm	armv6
+makeoptions	CONF_CFLAGS="-march=armv7a"
 
 files		"../xilinx/files.zynq7"
 

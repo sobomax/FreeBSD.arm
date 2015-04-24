@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sysctl.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/sysctl.h 273899 2014-10-31 10:18:58Z hselasky $
+ * $FreeBSD: head/sys/sys/sysctl.h 280005 2015-03-14 21:38:51Z ian $
  */
 
 #ifndef _SYS_SYSCTL_H_
@@ -186,6 +186,7 @@ struct sysctl_oid {
 
 #define	SYSCTL_IN(r, p, l)	(r->newfunc)(r, p, l)
 #define	SYSCTL_OUT(r, p, l)	(r->oldfunc)(r, p, l)
+#define	SYSCTL_OUT_STR(r, p)	(r->oldfunc)(r, p, strlen(p) + 1)
 
 int sysctl_handle_int(SYSCTL_HANDLER_ARGS);
 int sysctl_msec_to_ticks(SYSCTL_HANDLER_ARGS);
@@ -657,6 +658,7 @@ TAILQ_HEAD(sysctl_ctx_list, sysctl_ctx_entry);
 #define	KERN_PROC_UMASK		39	/* process umask */
 #define	KERN_PROC_OSREL		40	/* osreldate for process binary */
 #define	KERN_PROC_SIGTRAMP	41	/* signal trampoline location */
+#define	KERN_PROC_CWD		42	/* process current working directory */
 
 /*
  * KERN_IPC identifiers

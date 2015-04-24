@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ndiscvt/Makefile 228665 2011-12-17 22:16:27Z dim $
+# $FreeBSD: head/usr.sbin/ndiscvt/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .PATH:	${.CURDIR}/../../sys/compat/ndis
 
@@ -13,8 +13,7 @@ MAN+=	ndisgen.8
 WARNS?=	4
 NO_WCAST_ALIGN=
 
-DPADD=  ${LIBL}
-LDADD=  -ll
+LIBADD=	l
 
 YFLAGS+=-v
 

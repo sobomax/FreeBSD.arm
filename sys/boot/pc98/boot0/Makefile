@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/pc98/boot0/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sys/boot/pc98/boot0/Makefile 280980 2015-04-02 06:58:17Z dim $
 
 PROG=	${BOOT}.out
 INTERNALPROG=
@@ -16,6 +16,6 @@ BOOT_BOOT0_ORG?=	0x0000
 LDFLAGS=-e start -Ttext ${BOOT_BOOT0_ORG} -Wl,-N
 
 ${BOOT}: ${BOOT}.out
-	objcopy -S -O binary ${BOOT}.out ${.TARGET}
+	${OBJCOPY} -S -O binary ${BOOT}.out ${.TARGET}
 
 .include <bsd.prog.mk>

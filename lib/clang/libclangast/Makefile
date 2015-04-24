@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangast/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclangast/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -39,7 +39,6 @@ SRCS=	APValue.cpp \
 	ItaniumCXXABI.cpp \
 	ItaniumMangle.cpp \
 	Mangle.cpp \
-	MangleNumberingContext.cpp \
 	MicrosoftCXXABI.cpp \
 	MicrosoftMangle.cpp \
 	NSAPI.cpp \
@@ -65,6 +64,7 @@ SRCS=	APValue.cpp \
 TGHDRS=	AttrDump \
 	AttrImpl \
 	AttrList \
+	AttrVisitor \
 	Attrs \
 	CommentCommandInfo \
 	CommentCommandList \
@@ -76,6 +76,7 @@ TGHDRS=	AttrDump \
 	DiagnosticASTKinds \
 	DiagnosticCommentKinds \
 	DiagnosticCommonKinds \
+	DiagnosticFrontendKinds \
 	DiagnosticSemaKinds \
 	StmtNodes
 

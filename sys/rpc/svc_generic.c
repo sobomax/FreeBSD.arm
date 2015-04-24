@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)svc_generic.c 1.21 89/02/28 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc_generic.c 267228 2014-06-08 11:19:32Z mav $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc_generic.c 281199 2015-04-07 10:25:27Z mav $");
 
 /*
  * svc_generic.c, Server side for RPC.
@@ -168,7 +168,7 @@ svc_tp_create(
 		taddr = uaddr2taddr(nconf, uaddr);
 		bind.addr = *taddr;
 		free(taddr, M_RPC);
-		bind.qlen = SOMAXCONN;
+		bind.qlen = -1;
 		xprt = svc_tli_create(pool, NULL, nconf, &bind, 0, 0);
 		free(bind.addr.buf, M_RPC);
 	} else {
@@ -256,7 +256,7 @@ svc_tli_create(
 					goto freedata;
 				}
 			}
-			solisten(so, SOMAXCONN, curthread);
+			solisten(so, -1, curthread);
 		} else {
 			if (bindresvport(so,
 				(struct sockaddr *)bindaddr->addr.buf)) {

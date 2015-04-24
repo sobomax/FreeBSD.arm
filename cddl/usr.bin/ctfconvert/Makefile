@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/ctfconvert/Makefile 211187 2010-08-11 18:00:45Z rpaulo $
+# $FreeBSD: head/cddl/usr.bin/ctfconvert/Makefile 279376 2015-02-27 22:10:31Z obrien $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/tools/ctf/common
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/tools/ctf/cvt
@@ -36,7 +36,7 @@ CFLAGS+=	-I${.CURDIR}/../../../sys/cddl/compat/opensolaris \
 		-I${OPENSOLARIS_USR_DISTDIR}/tools/ctf/cvt \
 		-I${OPENSOLARIS_SYS_DISTDIR}/uts/common
 
-DPADD=		${LIBCTF} ${LIBDWARF} ${LIBELF} ${LIBZ} ${LIBPTHREAD}
-LDADD=		-lctf -ldwarf -lelf -lz -lpthread
+DPADD=		${LIBDWARF} ${LIBELF} ${LIBZ} ${LIBPTHREAD}
+LDADD=		-ldwarf -lelf -lz -lpthread
 
 .include <bsd.prog.mk>

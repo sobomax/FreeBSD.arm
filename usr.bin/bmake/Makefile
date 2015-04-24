@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: head/usr.bin/bmake/Makefile 268437 2014-07-08 22:27:50Z sjg $
+# $FreeBSD: head/usr.bin/bmake/Makefile 281812 2015-04-21 04:40:38Z sjg $
 
 .sinclude "Makefile.inc"
 
@@ -14,10 +14,10 @@ CFLAGS+= -I${.CURDIR}
 CLEANDIRS+= FreeBSD
 CLEANFILES+= bootstrap
 
-#	$Id: Makefile,v 1.27 2014/06/20 14:51:54 sjg Exp $
+#	$Id: Makefile,v 1.36 2015/04/18 19:58:53 sjg Exp $
 
 # Base version on src date
-MAKE_VERSION= 20140620
+MAKE_VERSION= 20150418
 
 PROG?=	${.CURDIR:T}
 
@@ -148,9 +148,9 @@ COPTS.parse.c += -Wno-format-nonliteral
 COPTS.var.c += -Wno-format-nonliteral
 
 # Force these
-SHAREDIR= ${prefix}/share
-BINDIR= ${prefix}/bin
-MANDIR= ${SHAREDIR}/man
+SHAREDIR= ${SHAREDIR.bmake:U${prefix}/share}
+BINDIR= ${BINDIR.bmake:U${prefix}/bin}
+MANDIR= ${MANDIR.bmake:U${SHAREDIR}/man}
 
 .if !exists(.depend)
 ${OBJS}: config.h

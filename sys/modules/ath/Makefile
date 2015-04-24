@@ -26,7 +26,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: head/sys/modules/ath/Makefile 260025 2013-12-28 23:12:32Z dim $
+# $FreeBSD: head/sys/modules/ath/Makefile 276606 2015-01-03 03:35:18Z imp $
 #
 
 ATH_RATE?=	sample		# tx rate control algorithm
@@ -162,7 +162,6 @@ opt_ah.h:
 CWARNFLAGS.ah_regdomain.c=	${NO_WSHIFT_COUNT_NEGATIVE} ${NO_WSHIFT_COUNT_OVERFLOW}
 # XXX Work around clang warnings, until maintainer approves fix.
 CWARNFLAGS.if_ath.c=		${NO_WSOMETIMES_UNINITIALIZED}
-CWARNFLAGS+=			${CWARNFLAGS.${.IMPSRC:T}}
 
 # AR9300 HAL build overrides, as there's still some code to tidy up
 CWARNFLAGS.ar9300_eeprom.c=	${NO_WCONSTANT_CONVERSION}

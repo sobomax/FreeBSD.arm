@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_adc.c 267507 2014-06-15 12:08:33Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_adc.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_adc.c 267507 2014-06-15 12:
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 #include <machine/cpu.h>
 #include <machine/intr.h>
 

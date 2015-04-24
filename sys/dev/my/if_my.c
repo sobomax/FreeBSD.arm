@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/my/if_my.c 271827 2014-09-18 20:59:59Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/my/if_my.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1085,8 +1085,7 @@ my_newbuf(struct my_softc * sc, struct my_chain_onefrag * c)
 		    "no memory for rx list -- packet dropped!\n");
 		return (ENOBUFS);
 	}
-	MCLGET(m_new, M_NOWAIT);
-	if (!(m_new->m_flags & M_EXT)) {
+	if (!(MCLGET(m_new, M_NOWAIT))) {
 		device_printf(sc->my_dev,
 		    "no memory for rx list -- packet dropped!\n");
 		m_freem(m_new);
@@ -1352,8 +1351,7 @@ my_encap(struct my_softc * sc, struct my_chain * c, struct mbuf * m_head)
 		return (1);
 	}
 	if (m_head->m_pkthdr.len > MHLEN) {
-		MCLGET(m_new, M_NOWAIT);
-		if (!(m_new->m_flags & M_EXT)) {
+		if (!(MCLGET(m_new, M_NOWAIT))) {
 			m_freem(m_new);
 			device_printf(sc->my_dev, "no memory for tx list");
 			return (1);

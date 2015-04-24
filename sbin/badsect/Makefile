@@ -1,9 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/badsect/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/badsect/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	badsect
-DPADD=	${LIBUFS}
-LDADD=	-lufs
+LIBADD=	ufs
 MAN=	badsect.8
 WARNS?=	2
 

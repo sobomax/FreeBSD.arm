@@ -28,7 +28,7 @@
 #define R600D_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r600d.h 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r600d.h 280183 2015-03-17 18:50:33Z dumbbell $");
 
 #define CP_PACKET2			0x80000000
 #define		PACKET2_PAD_SHIFT		0
@@ -48,11 +48,17 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r600d.h 258780 2013-11-30 22:17:27Z
 #define R6XX_MAX_PIPES_MASK			0xff
 
 /* PTE flags */
+/*
+ * FIXME Linux<->FreeBSD: PTE_VALID is already defined on PowerPC on FreeBSD.
+ * Fortunately, it's never used in the Radeon driver.
+ */
+/*
 #define PTE_VALID				(1 << 0)
 #define PTE_SYSTEM				(1 << 1)
 #define PTE_SNOOPED				(1 << 2)
 #define PTE_READABLE				(1 << 5)
 #define PTE_WRITEABLE				(1 << 6)
+*/
 
 /* tiling bits */
 #define     ARRAY_LINEAR_GENERAL              0x00000000

@@ -28,7 +28,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/vm_phys.h 263620 2014-03-22 10:26:09Z bdrewery $
+ * $FreeBSD: head/sys/vm/vm_phys.h 276439 2014-12-31 00:54:38Z alc $
  */
 
 /*
@@ -69,9 +69,10 @@ extern int vm_phys_nsegs;
  * The following functions are only to be used by the virtual memory system.
  */
 void vm_phys_add_page(vm_paddr_t pa);
+void vm_phys_add_seg(vm_paddr_t start, vm_paddr_t end);
 vm_page_t vm_phys_alloc_contig(u_long npages, vm_paddr_t low, vm_paddr_t high,
     u_long alignment, vm_paddr_t boundary);
-vm_page_t vm_phys_alloc_freelist_pages(int flind, int pool, int order);
+vm_page_t vm_phys_alloc_freelist_pages(int freelist, int pool, int order);
 vm_page_t vm_phys_alloc_pages(int pool, int order);
 boolean_t vm_phys_domain_intersects(long mask, vm_paddr_t low, vm_paddr_t high);
 int vm_phys_fictitious_reg_range(vm_paddr_t start, vm_paddr_t end,

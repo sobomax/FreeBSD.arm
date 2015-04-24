@@ -15,14 +15,14 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/WANDBOARD-SOLO 270879 2014-08-31 15:25:40Z ian $
-
-#NO_UNIVERSE
+# $FreeBSD: head/sys/arm/conf/WANDBOARD-SOLO 279357 2015-02-27 12:40:44Z andrew $
 
 include  	"IMX6"
 ident		WANDBOARD-SOLO
 
+nooptions	SMP
+
 # Flattened Device Tree
-options  	FDT_DTB_STATIC
-makeoptions  	FDT_DTS_FILE=wandboard-solo.dts
+options 	FDT_DTB_STATIC
+makeoptions	FDT_DTS_FILE=wandboard-solo.dts
 

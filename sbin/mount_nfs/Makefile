@@ -1,17 +1,14 @@
 #	@(#)Makefile	8.2 (Berkeley) 3/27/94
 #
-# $FreeBSD: head/sbin/mount_nfs/Makefile 273896 2014-10-31 09:51:54Z trasz $
+# $FreeBSD: head/sbin/mount_nfs/Makefile 281691 2015-04-18 16:08:06Z trasz $
 
 PROG=	mount_nfs
 SRCS=	mount_nfs.c getmntopts.c mounttab.c
 MAN=	mount_nfs.8
-MLINKS=	mount_nfs.8 mount_oldnfs.8
 
 MOUNT=	${.CURDIR}/../mount
 UMNTALL= ${.CURDIR}/../../usr.sbin/rpc.umntall
 CFLAGS+= -DNFS -I${MOUNT} -I${UMNTALL}
-
-LINKS=	${BINDIR}/mount_nfs ${BINDIR}/mount_oldnfs
 
 .PATH: ${MOUNT} ${UMNTALL}
 

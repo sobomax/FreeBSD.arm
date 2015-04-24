@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)random.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: head/lib/libc/stdlib/random.3 251672 2013-06-13 00:19:30Z emaste $
+.\" $FreeBSD: head/lib/libc/stdlib/random.3 279269 2015-02-25 07:49:15Z cperciva $
 .\"
 .Dd April 2, 2013
 .Dt RANDOM 3
@@ -54,9 +54,8 @@
 .Fn setstate "char *state"
 .Sh DESCRIPTION
 .Bf -symbolic
-The functions described in this manual page are not cryptographically
-secure.
-Cryptographic applications should use
+The functions described in this manual page are not secure.
+Applications which require unpredictable random numbers should use
 .Xr arc4random 3
 instead.
 .Ef

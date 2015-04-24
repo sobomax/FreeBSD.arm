@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ipf/ipf/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/sbin/ipf/ipf/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=		ipf
 SRCS=		${GENHDRS} ipf.c ipfcomp.c ipf_y.c ipf_l.c bpf_filter.c
@@ -35,8 +35,7 @@ ipf_l.h: lexer.h
 LIBIPF_SRCS!=	cd ${.CURDIR}/../libipf && ${MAKE} -V SRCS
 SRCS+=	${LIBIPF_SRCS}
 .else
-DPADD+=	${LIBPCAP}
-LDADD+=	-lpcap
+LIBADD+=	pcap
 .endif
 
 .include <bsd.prog.mk>

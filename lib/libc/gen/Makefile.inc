@@ -1,10 +1,11 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: head/lib/libc/gen/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/gen/Makefile.inc 276630 2015-01-03 18:38:46Z kib $
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen
 
 SRCS+=	__getosreldate.c \
+	__pthread_mutex_init_calloc_cb_stub.c \
 	__xuname.c \
 	_once_stub.c \
 	_pthread_stubs.c \

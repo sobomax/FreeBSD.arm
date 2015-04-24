@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/link_elf.c 273334 2014-10-20 17:04:03Z marcel $");
+__FBSDID("$FreeBSD: head/sys/kern/link_elf.c 281855 2015-04-22 14:38:58Z rodrigc $");
 
 #include "opt_ddb.h"
 #include "opt_gdb.h"
@@ -66,7 +66,7 @@ __FBSDID("$FreeBSD: head/sys/kern/link_elf.c 273334 2014-10-20 17:04:03Z marcel 
 #include <sys/link_elf.h>
 
 #ifdef DDB_CTF
-#include <net/zlib.h>
+#include <sys/zlib.h>
 #endif
 
 #include "linker_if.h"
@@ -381,6 +381,8 @@ link_elf_link_common_finish(linker_file_t lf)
 	return (0);
 }
 
+extern vm_offset_t __startkernel;
+
 static void
 link_elf_init(void* arg)
 {
@@ -409,7 +411,11 @@ link_elf_init(void* arg)
 
 	ef = (elf_file_t) linker_kernel_file;
 	ef->preloaded = 1;
+#ifdef __powerpc__
+	ef->address = (caddr_t) (__startkernel - KERNBASE);
+#else
 	ef->address = 0;
+#endif
 #ifdef SPARSE_MAPPING
 	ef->object = 0;
 #endif
@@ -417,7 +423,7 @@ link_elf_init(void* arg)
 
 	if (dp != NULL)
 		parse_dynamic(ef);
-	linker_kernel_file->address = (caddr_t) KERNBASE;
+	linker_kernel_file->address += KERNBASE;
 	linker_kernel_file->size = -(intptr_t)linker_kernel_file->address;
 
 	if (modptr != NULL) {

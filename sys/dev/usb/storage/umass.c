@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 280165 2015-03-17 08:42:09Z hselasky $");
 
 /*-
  * Copyright (c) 1999 MAEKAWA Masahide <bishop@rr.iij4u.or.jp>,
@@ -27,7 +27,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 267992 2014-06-28 03:56:17Z
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/usb/storage/umass.c 267992 2014-06-28 03:56:17Z hselasky $
+ *	$FreeBSD: head/sys/dev/usb/storage/umass.c 280165 2015-03-17 08:42:09Z hselasky $
  *	$NetBSD: umass.c,v 1.28 2000/04/02 23:46:53 augustss Exp $
  */
 
@@ -2698,8 +2698,7 @@ umass_rbc_transform(struct umass_softc *sc, uint8_t *cmd_ptr, uint8_t cmd_len)
 	case START_STOP_UNIT:
 	case SYNCHRONIZE_CACHE:
 	case WRITE_10:
-	case 0x2f:			/* VERIFY_10 is absent from
-					 * scsi_all.h??? */
+	case VERIFY_10:
 	case INQUIRY:
 	case MODE_SELECT_10:
 	case MODE_SENSE_10:

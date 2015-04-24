@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 272984 2014-10-12 15:49:52Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 280971 2015-04-01 22:26:39Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"
@@ -178,7 +178,7 @@ static VNET_DEFINE(vifi_t, numvifs);
 #define	V_numvifs		VNET(numvifs)
 static VNET_DEFINE(struct vif, viftable[MAXVIFS]);
 #define	V_viftable		VNET(viftable)
-SYSCTL_VNET_OPAQUE(_net_inet_ip, OID_AUTO, viftable, CTLFLAG_RD,
+SYSCTL_OPAQUE(_net_inet_ip, OID_AUTO, viftable, CTLFLAG_VNET | CTLFLAG_RD,
     &VNET_NAME(viftable), sizeof(V_viftable), "S,vif[MAXVIFS]",
     "IPv4 Multicast Interfaces (struct vif[MAXVIFS], netinet/ip_mroute.h)");
 
@@ -2501,7 +2501,6 @@ pim_register_send_rp(struct ip *ip, struct vif *vifp, struct mbuf *mb_copy,
      */
     ip_outer = mtod(mb_first, struct ip *);
     *ip_outer = pim_encap_iphdr;
-    ip_outer->ip_id = ip_newid();
     ip_outer->ip_len = htons(len + sizeof(pim_encap_iphdr) +
 	sizeof(pim_encap_pimhdr));
     ip_outer->ip_src = V_viftable[vifi].v_lcl_addr;
@@ -2513,6 +2512,7 @@ pim_register_send_rp(struct ip *ip, struct vif *vifp, struct mbuf *mb_copy,
     ip_outer->ip_tos = ip->ip_tos;
     if (ip->ip_off & htons(IP_DF))
 	ip_outer->ip_off |= htons(IP_DF);
+    ip_fillid(ip_outer);
     pimhdr = (struct pim_encap_pimhdr *)((caddr_t)ip_outer
 					 + sizeof(pim_encap_iphdr));
     *pimhdr = pim_encap_pimhdr;

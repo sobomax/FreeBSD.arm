@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2012 Advanced Computing Technologies LLC
+ * Copyright (c) 2012 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-    "$FreeBSD: head/usr.sbin/pciconf/err.c 240680 2012-09-18 22:04:59Z gavin $";
+    "$FreeBSD: head/usr.sbin/pciconf/err.c 281887 2015-04-23 14:22:20Z jhb $";
 #endif /* not lint */
 
 #include <sys/param.h>

@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/sbin/geom/class/label/glabel.8 267667 2014-06-20 09:40:43Z bapt $
+.\" $FreeBSD: head/sbin/geom/class/label/glabel.8 276360 2014-12-29 13:50:59Z joel $
 .\"
 .Dd April 22, 2013
 .Dt GLABEL 8
@@ -227,11 +227,11 @@ maximum amount of debug information is printed.
 .It Va kern.geom.label.*.enable : No 1
 Most
 .Nm LABEL
-providers implement a 
+providers implement a
 .Xr sysctl 8
 flag and a tunable variable named in the above format. This flag
 controls if the label provider will be active, tasting devices
-and creating label nodes in the 
+and creating label nodes in the
 .Xr devfs 5
 tree. It is sometimes desirable to disable certain label types if
 they conflict with other classes in complex GEOM topologies.

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_z8530.c 260890 2014-01-19 19:39:13Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_z8530.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -307,7 +307,8 @@ struct uart_class uart_z8530_class = {
 	sizeof(struct z8530_softc),
 	.uc_ops = &uart_z8530_ops,
 	.uc_range = 2,
-	.uc_rclk = DEFAULT_RCLK
+	.uc_rclk = DEFAULT_RCLK,
+	.uc_rshift = 0
 };
 
 #define	SIGCHG(c, i, s, d)				\

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_lpc.c 260890 2014-01-19 19:39:13Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_lpc.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_lpc.c 260890 2014-01-19 19:39:13Z
 
 #include <dev/uart/uart.h>
 #include <dev/uart/uart_cpu.h>
+#include <dev/uart/uart_cpu_fdt.h>
 #include <dev/uart/uart_bus.h>
 
 #include <dev/ic/ns16550.h>
@@ -421,14 +422,21 @@ static kobj_method_t lpc_ns8250_methods[] = {
 	{ 0, 0 }
 };
 
-struct uart_class uart_lpc_class = {
+static struct uart_class uart_lpc_class = {
 	"lpc_ns8250",
 	lpc_ns8250_methods,
 	sizeof(struct lpc_ns8250_softc),
 	.uc_ops = &uart_lpc_ns8250_ops,
 	.uc_range = 8,
-	.uc_rclk = DEFAULT_RCLK
+	.uc_rclk = DEFAULT_RCLK,
+	.uc_rshift = 0
 };
+
+static struct ofw_compat_data compat_data[] = {
+	{"lpc,uart",		(uintptr_t)&uart_lpc_class},
+	{NULL,			(uintptr_t)NULL},
+};
+UART_FDT_CLASS_AND_DEVICE(compat_data);
 
 #define	SIGCHG(c, i, s, d)				\
 	if (c) {					\

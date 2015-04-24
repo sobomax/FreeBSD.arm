@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/freebsd32/freebsd32.h 273266 2014-10-18 19:36:11Z adrian $
+ * $FreeBSD: head/sys/compat/freebsd32/freebsd32.h 281266 2015-04-08 16:30:45Z jhb $
  */
 
 #ifndef _COMPAT_FREEBSD32_FREEBSD32_H_
@@ -243,32 +243,6 @@ struct i386_ldt_args32 {
 	uint32_t num;
 };
 
-/*
- * Alternative layouts for <sys/procfs.h>
- */
-struct prstatus32 {
-        int     pr_version;
-        u_int   pr_statussz;
-        u_int   pr_gregsetsz;
-        u_int   pr_fpregsetsz;
-        int     pr_osreldate;
-        int     pr_cursig;
-        pid_t   pr_pid;
-        struct reg32 pr_reg;
-};
-
-struct prpsinfo32 {
-        int     pr_version;
-        u_int   pr_psinfosz;
-        char    pr_fname[PRFNAMESZ+1];
-        char    pr_psargs[PRARGSZ+1];
-};
-
-struct thrmisc32 {
-        char    pr_tname[MAXCOMLEN+1];
-        u_int   _pad;
-};
-
 struct mq_attr32 {
 	int	mq_flags;
 	int	mq_maxmsg;
@@ -388,6 +362,12 @@ struct kld32_file_stat {
 	uint32_t address;	/* load address */
 	uint32_t size;		/* size in bytes */
 	char	pathname[MAXPATHLEN];
+};
+
+struct procctl_reaper_pids32 {
+	u_int	rp_count;
+	u_int	rp_pad0[15];
+	uint32_t rp_pids;
 };
 
 #endif /* !_COMPAT_FREEBSD32_FREEBSD32_H_ */

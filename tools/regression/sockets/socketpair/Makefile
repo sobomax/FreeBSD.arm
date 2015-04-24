@@ -1,9 +1,9 @@
 #
-# $FreeBSD: head/tools/regression/sockets/socketpair/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/socketpair/Makefile 281398 2015-04-11 03:35:33Z ngie $
 #
 
 PROG=	socketpair
 MAN=
-WARNS?=	2
+WARNS?=	6
 
 .include <bsd.prog.mk>

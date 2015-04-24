@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/tty_pts.c 273129 2014-10-15 12:38:26Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/tty_pts.c 281436 2015-04-11 15:40:28Z mjg $");
 
 /* Add compatibility bits for FreeBSD. */
 #define PTS_COMPAT
@@ -845,7 +845,7 @@ sys_posix_openpt(struct thread *td, struct posix_openpt_args *uap)
 	/* Allocate the actual pseudo-TTY. */
 	error = pts_alloc(FFLAGS(uap->flags & O_ACCMODE), td, fp);
 	if (error != 0) {
-		fdclose(td->td_proc->p_fd, fp, fd, td);
+		fdclose(td, fp, fd);
 		fdrop(fp, td);
 		return (error);
 	}

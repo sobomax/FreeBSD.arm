@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_rfcomm.c 271908 2014-09-20 16:43:14Z jhb $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_rfcomm.c 274421 2014-11-12 09:57:15Z glebius $
  */
 
 #include <sys/param.h>
@@ -3279,7 +3279,7 @@ ng_btsocket_rfcomm_pcb_send(ng_btsocket_rfcomm_pcb_p pcb, int limit)
 	}
 
 	for (error = 0, sent = 0; sent < limit; sent ++) { 
-		length = min(pcb->mtu, pcb->so->so_snd.sb_cc);
+		length = min(pcb->mtu, sbavail(&pcb->so->so_snd));
 		if (length == 0)
 			break;
 

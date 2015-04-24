@@ -63,7 +63,7 @@
 #ifdef __FreeBSD__
 
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: head/sys/dev/netmap/netmap_generic.c 270063 2014-08-16 15:00:01Z luigi $");
+__FBSDID("$FreeBSD: head/sys/dev/netmap/netmap_generic.c 274353 2014-11-10 20:19:58Z luigi $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -821,7 +821,7 @@ generic_netmap_attach(struct ifnet *ifp)
 
 	num_tx_desc = num_rx_desc = netmap_generic_ringsize; /* starting point */
 
-	generic_find_num_desc(ifp, &num_tx_desc, &num_rx_desc);
+	generic_find_num_desc(ifp, &num_tx_desc, &num_rx_desc); /* ignore errors */
 	ND("Netmap ring size: TX = %d, RX = %d", num_tx_desc, num_rx_desc);
 	if (num_tx_desc == 0 || num_rx_desc == 0) {
 		D("Device has no hw slots (tx %u, rx %u)", num_tx_desc, num_rx_desc);

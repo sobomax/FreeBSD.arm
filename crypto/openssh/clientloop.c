@@ -1,5 +1,5 @@
 /* $OpenBSD: clientloop.c,v 1.258 2014/02/02 03:44:31 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/clientloop.c 263712 2014-03-25 11:05:34Z des $ */
+/* $FreeBSD: head/crypto/openssh/clientloop.c 280999 2015-04-02 18:43:25Z bdrewery $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -61,7 +61,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/clientloop.c 263712 2014-03-25 11:05:34Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/clientloop.c 280999 2015-04-02 18:43:25Z bdrewery $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -1923,7 +1923,7 @@ client_request_agent(const char *request_type, int rchan)
 	if (options.hpn_disabled)
 		c = channel_new("authentication agent connection",
 		    SSH_CHANNEL_OPEN, sock, sock, -1,
-		    CHAN_X11_WINDOW_DEFAULT, CHAN_TCP_WINDOW_DEFAULT, 0,
+		    CHAN_X11_WINDOW_DEFAULT, CHAN_TCP_PACKET_DEFAULT, 0,
 		    "authentication agent connection", 1);
 	else
 		c = channel_new("authentication agent connection",

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/accf_data_attach/accf_data_attach.c 197432 2009-09-23 14:23:09Z jhb $
+ * $FreeBSD: head/tools/regression/sockets/accf_data_attach/accf_data_attach.c 281355 2015-04-10 07:59:46Z ngie $
  */
 
 #include <sys/types.h>
@@ -58,7 +58,7 @@
  *   make sure it is removed.
  */
 int
-main(int argc, char *argv[])
+main(void)
 {
 	struct accept_filter_arg afa;
 	struct sockaddr_in sin;

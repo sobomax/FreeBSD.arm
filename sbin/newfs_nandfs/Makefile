@@ -1,9 +1,8 @@
-# $FreeBSD: head/sbin/newfs_nandfs/Makefile 235537 2012-05-17 10:11:18Z gber $
+# $FreeBSD: head/sbin/newfs_nandfs/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	newfs_nandfs
 MAN=	newfs_nandfs.8
 
-LDADD+= -lgeom
-DPADD+= ${LIBGEOM}
+LIBADD=	geom
 
 .include <bsd.prog.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/fdt/Makefile 273934 2014-11-01 17:12:44Z andrew $
+# $FreeBSD: head/sys/boot/fdt/Makefile 276711 2015-01-05 16:52:25Z nwhitehorn $
 
 .PATH:		${.CURDIR}/../../contrib/libfdt/
 
@@ -6,7 +6,8 @@ LIB=		fdt
 INTERNALLIB=
 
 # Vendor sources of libfdt.
-SRCS+=		fdt.c fdt_ro.c fdt_wip.c fdt_sw.c fdt_rw.c fdt_strerror.c
+SRCS+=		fdt.c fdt_ro.c fdt_wip.c fdt_sw.c fdt_rw.c fdt_strerror.c \
+		fdt_empty_tree.c
 
 # Loader's fdt commands extension sources.
 SRCS+=		fdt_loader_cmd.c

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-fsl.c 264181 2014-04-05 23:20:04Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-fsl.c 280393 2015-03-23 19:47:52Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -79,7 +79,7 @@ imx_ata_probe(device_t dev)
 	ctrl = device_get_softc(dev);
 
 	device_set_desc(dev, "Freescale Integrated PATA Controller");
-	return (BUS_PROBE_DEFAULT);
+	return (BUS_PROBE_LOW_PRIORITY);
 }
 
 static void

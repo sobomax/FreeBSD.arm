@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/uart_dev_ar933x.c 269148 2014-07-27 05:44:42Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/uart_dev_ar933x.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -351,7 +351,8 @@ struct uart_class uart_ar933x_class = {
 	sizeof(struct ar933x_softc),
 	.uc_ops = &uart_ar933x_ops,
 	.uc_range = 8,
-	.uc_rclk = DEFAULT_RCLK
+	.uc_rclk = DEFAULT_RCLK,
+	.uc_rshift = 0
 };
 
 #define	SIGCHG(c, i, s, d)				\

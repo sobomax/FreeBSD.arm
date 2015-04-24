@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/traceroute/Makefile 270929 2014-09-01 14:04:51Z glebius $
+# $FreeBSD: head/usr.sbin/traceroute/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 TRACEROUTE_DISTDIR?= ${.CURDIR}/../../contrib/traceroute
 .PATH: ${TRACEROUTE_DISTDIR}
@@ -25,8 +25,7 @@ CFLAGS+= -DIPSEC
 # CFLAGS+= -DSANE_PRECISION
 
 .if !defined(TRACEROUTE_NO_IPSEC)
-DPADD=	${LIBIPSEC}
-LDADD=	-lipsec
+LIBADD+=	ipsec
 .endif
 
 CFLAGS+= -I${TRACEROUTE_DISTDIR}

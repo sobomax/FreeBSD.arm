@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/crashinfo/crashinfo.sh 259870 2013-12-25 15:23:01Z pluknet $
+# $FreeBSD: head/usr.sbin/crashinfo/crashinfo.sh 281291 2015-04-09 07:49:42Z glebius $
 
 usage()
 {
@@ -265,12 +265,6 @@ echo "------------------------------------------------------------------------"
 echo "netstat -m"
 echo
 netstat -M $VMCORE -N $KERNEL -m
-echo
-
-echo "------------------------------------------------------------------------"
-echo "netstat -anr"
-echo
-netstat -M $VMCORE -N $KERNEL -anr
 echo
 
 echo "------------------------------------------------------------------------"

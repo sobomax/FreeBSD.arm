@@ -1,4 +1,3 @@
-/* @(#) $Header: /tcpdump/master/tcpdump/ppp.h,v 1.16 2004-10-20 16:14:16 hannes Exp $ (LBL) */
 /*
  * Point to Point Protocol (PPP) RFC1331
  *
@@ -15,7 +14,7 @@
  * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
  *
- * $FreeBSD: head/contrib/tcpdump/ppp.h 190207 2009-03-21 18:30:25Z rpaulo $
+ * $FreeBSD: head/contrib/tcpdump/ppp.h 276788 2015-01-07 19:55:18Z delphij $
  */
 #define PPP_HDRLEN	4	/* length of PPP header */
 
@@ -69,5 +68,3 @@
 #define PPP_MPCP		0xc03d	/* Multi-Link */
 #define PPP_SPAP_OLD    0xc123
 #define PPP_EAP         0xc227
-
-extern struct tok ppptype2str[];

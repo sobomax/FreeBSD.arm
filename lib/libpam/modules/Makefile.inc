@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libpam/modules/Makefile.inc 264928 2014-04-25 19:25:26Z imp $
+# $FreeBSD: head/lib/libpam/modules/Makefile.inc 275024 2014-11-25 11:07:26Z bapt $
 
 PAMDIR=		${.CURDIR}/../../../../contrib/openpam
 
@@ -14,8 +14,7 @@ CFLAGS+= -I${PAMDIR}/include -I${.CURDIR}/../../libpam
 NO_PIC=
 .else
 SHLIB_NAME?=	${LIB}.so.${SHLIB_MAJOR}
-DPADD+=		${LIBPAM}
-LDADD+=		-lpam
+LIBADD+=	pam
 .endif
 
 .include "../Makefile.inc"

@@ -1,7 +1,6 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 5/31/93
-# $FreeBSD: head/games/Makefile.inc 219177 2011-03-02 14:39:26Z nwhitehorn $
+# $FreeBSD: head/games/Makefile.inc 278616 2015-02-12 05:35:00Z cperciva $
 
-BINDIR?=	/usr/games
+BINDIR?=	/usr/bin
 FILESDIR?=	${SHAREDIR}/games
 WARNS?=		6
-DISTRIBUTION?=	games

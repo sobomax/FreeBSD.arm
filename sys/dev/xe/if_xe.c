@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xe/if_xe.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/xe/if_xe.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*		
  * FreeBSD device driver for Xircom CreditCard PCMCIA Ethernet adapters.  The
@@ -765,8 +765,7 @@ xe_rxintr(struct xe_softc *scp, uint8_t rst0)
 			}
 
 			if (len + 3 > MHLEN) {
-				MCLGET(mbp, M_NOWAIT);
-				if ((mbp->m_flags & M_EXT) == 0) {
+				if (!(MCLGET(mbp, M_NOWAIT))) {
 					m_freem(mbp);
 					if_inc_counter(ifp, IFCOUNTER_IQDROPS, 1);
 					continue;

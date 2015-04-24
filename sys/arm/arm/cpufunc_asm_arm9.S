@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm9.S 269390 2014-08-01 18:24:44Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm9.S 276596 2015-01-02 23:46:26Z ian $");
 
 /*
  * Functions to set the MMU Translation Table Base register
@@ -252,7 +252,7 @@ END(arm9_context_switch)
  * four variables is assumed in the code above.  Hence the reason for
  * declaring them in the assembler file.
  */
-	.align 0
+	.align 2
 C_OBJECT(arm9_dcache_sets_max)
 	.space	4
 C_OBJECT(arm9_dcache_index_max)

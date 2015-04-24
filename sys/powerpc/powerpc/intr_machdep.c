@@ -57,7 +57,7 @@
  *	from: @(#)isa.c	7.2 (Berkeley) 5/13/91
  *	form: src/sys/i386/isa/intr_machdep.c,v 1.57 2001/07/20
  *
- * $FreeBSD: head/sys/powerpc/powerpc/intr_machdep.c 271712 2014-09-17 17:33:22Z adrian $
+ * $FreeBSD: head/sys/powerpc/powerpc/intr_machdep.c 277334 2015-01-18 18:32:43Z nwhitehorn $
  */
 
 #include "opt_isa.h"
@@ -126,6 +126,11 @@ static u_int nirqs = 16;	/* Allocated IRQS (ISA pre-allocated). */
 static u_int nirqs = 0;		/* Allocated IRQs. */
 #endif
 static u_int stray_count;
+
+u_long intrcnt[INTR_VECTORS];
+char intrnames[INTR_VECTORS * MAXCOMLEN];
+size_t sintrcnt = sizeof(intrcnt);
+size_t sintrnames = sizeof(intrnames);
 
 device_t root_pic;
 

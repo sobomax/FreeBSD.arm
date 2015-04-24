@@ -27,7 +27,7 @@
  * The split of ipcs.c into ipcs.c and ipc.c to accommodate the
  * changes in ipcrm.c was done by Edwin Groothuis <edwin@FreeBSD.org>
  *
- * $FreeBSD: head/usr.bin/ipcs/ipc.h 228992 2011-12-30 11:02:40Z uqs $
+ * $FreeBSD: head/usr.bin/ipcs/ipc.h 281517 2015-04-14 04:52:52Z eadler $
  */
 
 /* Part of struct nlist symbols[] */
@@ -52,7 +52,7 @@
 /* SysCtlGatherStruct structure. */
 struct scgs_vector {
 	const char *sysctl;
-	off_t offset;
+	size_t offset;
 	size_t size;
 };
 
@@ -64,8 +64,5 @@ extern struct nlist symbols[];
 extern kvm_t *kd;
 
 extern struct semid_kernel	*sema;
-extern struct seminfo		seminfo;
-extern struct msginfo		msginfo;
 extern struct msqid_kernel	*msqids;
-extern struct shminfo		shminfo;
 extern struct shmid_kernel	*shmsegs;

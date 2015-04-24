@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/mptutil/Makefile 204352 2010-02-26 09:41:16Z ru $
+# $FreeBSD: head/usr.sbin/mptutil/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	mptutil
 SRCS=	mptutil.c mpt_cam.c mpt_cmd.c mpt_config.c mpt_drive.c mpt_evt.c \
@@ -8,8 +8,7 @@ MAN=	mptutil.8
 
 WARNS?= 3
 
-DPADD=	${LIBCAM} ${LIBSBUF} ${LIBUTIL}
-LDADD=	-lcam -lsbuf -lutil
+LIBADD=	cam util
 
 # Here be dragons
 .ifdef DEBUG

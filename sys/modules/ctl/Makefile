@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/ctl/Makefile 268767 2014-07-16 15:57:17Z mav $
+# $FreeBSD: head/sys/modules/ctl/Makefile 277963 2015-01-31 07:49:50Z trasz $
 
 .PATH: ${.CURDIR}/../../cam/ctl
 
@@ -22,8 +22,11 @@ SRCS+=	scsi_ctl.c
 SRCS+=	bus_if.h
 SRCS+=	device_if.h
 SRCS+=	vnode_if.h
+SRCS+=	icl_conn_if.h
 SRCS+=	opt_cam.h
 
 #CFLAGS+=-DICL_KERNEL_PROXY
+
+MFILES=	kern/bus_if.m kern/device_if.m dev/iscsi/icl_conn_if.m
 
 .include <bsd.kmod.mk>

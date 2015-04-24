@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/editmap/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.sbin/editmap/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/editmap
@@ -12,17 +12,7 @@ CFLAGS+= -DNEWDB -DNOT_SENDMAIL
 
 WARNS?=	2
 
-LIBSMDIR=	${.OBJDIR}/../../lib/libsm
-LIBSM=		${LIBSMDIR}/libsm.a
-
-LIBSMDBDIR=	${.OBJDIR}/../../lib/libsmdb
-LIBSMDB=	${LIBSMDBDIR}/libsmdb.a
-
-LIBSMUTILDIR=	${.OBJDIR}/../../lib/libsmutil
-LIBSMUTIL=	${LIBSMUTILDIR}/libsmutil.a
-
-DPADD=	${LIBSMDB} ${LIBSMUTIL} ${LIBSM}
-LDADD=	${LIBSMDB} ${LIBSMUTIL} ${LIBSM}
+LIBADD=	smdb smutil sm
 
 SRCS+=	sm_os.h
 CLEANFILES+=sm_os.h

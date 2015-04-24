@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/geom/core/Makefile 216470 2010-12-15 23:45:12Z obrien $
+# $FreeBSD: head/sbin/geom/core/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../misc
 
@@ -11,7 +11,6 @@ NO_SHARED=NO
 CFLAGS+= -DGEOM_CLASS_DIR=\"${GEOM_CLASS_DIR}\"
 CFLAGS+= -I${.CURDIR}/../../../sys -I${.CURDIR} -I${.CURDIR}/..
 
-DPADD=	${LIBGEOM} ${LIBSBUF} ${LIBBSDXML} ${LIBUTIL}
-LDADD=	-lgeom -lsbuf -lbsdxml -lutil
+LIBADD=	geom util
 
 .include <bsd.prog.mk>

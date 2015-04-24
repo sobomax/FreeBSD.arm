@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonkrpc.c 268115 2014-07-01 20:47:16Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonkrpc.c 276096 2014-12-23 00:47:46Z rmacklem $");
 
 /*
  * Socket operations for use by nfs
@@ -260,7 +260,7 @@ newnfs_connect(struct nfsmount *nmp, struct nfssockreq *nrp,
 
 	client = clnt_reconnect_create(nconf, saddr, nrp->nr_prog,
 	    nrp->nr_vers, sndreserve, rcvreserve);
-	CLNT_CONTROL(client, CLSET_WAITCHAN, "newnfsreq");
+	CLNT_CONTROL(client, CLSET_WAITCHAN, "nfsreq");
 	if (nmp != NULL) {
 		if ((nmp->nm_flag & NFSMNT_INT))
 			CLNT_CONTROL(client, CLSET_INTERRUPTIBLE, &one);
@@ -1166,10 +1166,10 @@ nfs_msg(struct thread *td, const char *server, const char *msg, int error)
 
 	p = td ? td->td_proc : NULL;
 	if (error) {
-		tprintf(p, LOG_INFO, "newnfs server %s: %s, error %d\n",
+		tprintf(p, LOG_INFO, "nfs server %s: %s, error %d\n",
 		    server, msg, error);
 	} else {
-		tprintf(p, LOG_INFO, "newnfs server %s: %s\n", server, msg);
+		tprintf(p, LOG_INFO, "nfs server %s: %s\n", server, msg);
 	}
 	return (0);
 }

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: head/bin/rmail/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/bin/rmail/Makefile 275028 2014-11-25 11:15:40Z bapt $
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/rmail
@@ -14,11 +14,7 @@ MAN=	rmail.8
 WARNS?=	2
 CFLAGS+=-I${SENDMAIL_DIR}/include -I.
 
-LIBSMDIR=	${.OBJDIR}/../../lib/libsm
-LIBSM=		${LIBSMDIR}/libsm.a
-
-DPADD=	${LIBSM}
-LDADD=	${LIBSM}
+LIBADD=	sm
 
 SRCS+=	sm_os.h
 CLEANFILES+=sm_os.h

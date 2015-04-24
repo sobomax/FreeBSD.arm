@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ggate/ggatec/Makefile 168422 2007-04-06 11:19:48Z pjd $
+# $FreeBSD: head/sbin/ggate/ggatec/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .PATH: ${.CURDIR}/../shared
 
@@ -10,7 +10,6 @@ CFLAGS+= -DMAX_SEND_SIZE=32768
 CFLAGS+= -DLIBGEOM
 CFLAGS+= -I${.CURDIR}/../shared
 
-DPADD=	${LIBGEOM} ${LIBSBUF} ${LIBBSDXML} ${LIBUTIL} ${LIBPTHREAD}
-LDADD=	-lgeom -lsbuf -lbsdxml -lutil -lpthread
+LIBADD=	geom util pthread
 
 .include <bsd.prog.mk>

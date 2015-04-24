@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 272266 2014-09-28 19:05:22Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -191,8 +191,7 @@ static struct mbuf *makembuf (void *buf, unsigned len)
 	MGETHDR (m, M_NOWAIT, MT_DATA);
 	if (! m)
 		return 0;
-	MCLGET (m, M_NOWAIT);
-	if (! (m->m_flags & M_EXT)) {
+	if (!(MCLGET (m, M_NOWAIT))) {
 		m_freem (m);
 		return 0;
 	}

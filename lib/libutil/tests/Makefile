@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libutil/tests/Makefile 269904 2014-08-13 04:56:27Z ngie $
+# $FreeBSD: head/lib/libutil/tests/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 TESTSDIR=	${TESTSBASE}/lib/libutil
 
@@ -9,7 +9,6 @@ TAP_TESTS_C+=	pidfile_test
 TAP_TESTS_C+=	trimdomain_test
 TAP_TESTS_C+=	trimdomain-nodomain_test
 
-DPADD+=		${LIBUTIL}
-LDADD+=		-lutil
+LIBADD+=	util
 
 .include <bsd.test.mk>

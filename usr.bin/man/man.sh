@@ -24,7 +24,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.bin/man/man.sh 245514 2013-01-16 23:20:24Z brooks $
+# $FreeBSD: head/usr.bin/man/man.sh 279527 2015-03-02 16:58:57Z bapt $
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.
@@ -279,8 +279,7 @@ man_check_for_so() {
 # Usage: man_display_page
 # Display either the manpage or catpage depending on the use_cat variable
 man_display_page() {
-	local EQN NROFF PIC TBL TROFF REFER VGRIND
-	local IFS l nroff_dev pipeline preproc_arg tool
+	local IFS pipeline testline
 
 	# We are called with IFS set to colon. This causes really weird
 	# things to happen for the variables that have spaces in them.
@@ -311,6 +310,36 @@ man_display_page() {
 		ret=0
 		return
 	fi
+
+	testline="mandoc -Tlint -Wunsupp 2>/dev/null"
+	pipeline="mandoc | $MANPAGER"
+
+	if ! eval "$cattool $manpage | $testline" ;then
+		if which -s groff; then
+			man_display_page_groff
+		else
+			echo "This manpage needs groff(1) to be rendered" >&2
+			echo "First install groff(1): " >&2
+			echo "pkg install groff " >&2
+			ret=1
+		fi
+		return
+	fi
+
+	if [ $debug -gt 0 ]; then
+		decho "Command: $cattool $manpage | $pipeline"
+		ret=0
+	else
+		eval "$cattool $manpage | $pipeline"
+		ret=$?
+	fi
+}
+
+# Usage: man_display_page_groff
+# Display the manpage using groff
+man_display_page_groff() {
+	local EQN NROFF PIC TBL TROFF REFER VGRIND
+	local IFS l nroff_dev pipeline preproc_arg tool
 
 	# So, we really do need to parse the manpage. First, figure out the
 	# device flag (-T) we have to pass to eqn(1) and groff(1). Then,

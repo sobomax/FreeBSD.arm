@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbSymbol/Makefile 255722 2013-09-20 01:52:02Z emaste $
+# $FreeBSD: head/lib/clang/liblldbSymbol/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -12,6 +12,7 @@ SRCS=	Block.cpp \
 	ClangExternalASTSourceCallbacks.cpp \
 	ClangExternalASTSourceCommon.cpp \
 	ClangNamespaceDecl.cpp \
+	CompactUnwindInfo.cpp \
 	CompileUnit.cpp \
 	Declaration.cpp \
 	DWARFCallFrameInfo.cpp \

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mv_pci.c 265852 2014-05-10 20:03:03Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mv_pci.c 275802 2014-12-15 12:15:18Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -180,8 +180,7 @@ mv_pci_ranges_decode(phandle_t node, struct mv_pci_range *io_space,
 			rangesptr += offset_cells;
 		}
 
-		if (fdt_data_verify((void *)rangesptr, par_addr_cells -
-		    offset_cells)) {
+		if ((par_addr_cells - offset_cells) > 2) {
 			rv = ERANGE;
 			goto out;
 		}
@@ -189,7 +188,7 @@ mv_pci_ranges_decode(phandle_t node, struct mv_pci_range *io_space,
 		    par_addr_cells - offset_cells);
 		rangesptr += par_addr_cells - offset_cells;
 
-		if (fdt_data_verify((void *)rangesptr, size_cells)) {
+		if (size_cells > 2) {
 			rv = ERANGE;
 			goto out;
 		}
@@ -1171,7 +1170,7 @@ mv_pcib_alloc_msi(device_t dev, device_t child, int count,
 
 	for (i = start; i < start + count; i++) {
 		setbit(&sc->sc_msi_bitmap, i);
-		irqs[i] = MSI_IRQ + i;
+		*irqs++ = MSI_IRQ + i;
 	}
 	debugf("%s: start: %x count: %x\n", __func__, start, count);
 

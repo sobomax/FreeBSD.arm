@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/ipcp.c 214011 2010-10-18 07:28:53Z glebius $
+ * $FreeBSD: head/usr.sbin/ppp/ipcp.c 277857 2015-01-28 21:33:49Z dim $
  */
 
 #include <sys/param.h>
@@ -880,7 +880,7 @@ IpcpLayerDown(struct fsm *fp)
     radius_Account(&fp->bundle->radius, &fp->bundle->radacct,
                    fp->bundle->links, RAD_STOP, &ipcp->throughput);
 
-    if (fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
+    if (*fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
       system_Select(fp->bundle, fp->bundle->radius.filterid, LINKDOWNFILE,
                     NULL, NULL);
     radius_StopTimer(&fp->bundle->radius);
@@ -949,7 +949,7 @@ IpcpLayerUp(struct fsm *fp)
   radius_Account(&fp->bundle->radius, &fp->bundle->radacct, fp->bundle->links,
                  RAD_START, &ipcp->throughput);
 
-  if (fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
+  if (*fp->bundle->radius.cfg.file && fp->bundle->radius.filterid)
     system_Select(fp->bundle, fp->bundle->radius.filterid, LINKUPFILE,
                   NULL, NULL);
   radius_StartTimer(fp->bundle);

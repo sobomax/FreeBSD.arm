@@ -1,9 +1,7 @@
-# $FreeBSD: head/sys/arm/lpc/files.lpc 262979 2014-03-10 18:10:09Z ian $
+# $FreeBSD: head/sys/arm/lpc/files.lpc 280831 2015-03-29 22:43:39Z andrew $
+arm/arm/bus_space_base.c		standard
 arm/arm/bus_space_generic.c		standard
-arm/arm/cpufunc_asm_arm9.S		standard
-arm/arm/cpufunc_asm_armv5.S		standard
 arm/lpc/lpc_machdep.c			standard
-arm/lpc/lpc_space.c			standard
 arm/lpc/lpc_pwr.c			standard
 arm/lpc/lpc_intc.c			standard
 arm/lpc/lpc_timer.c			standard

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/an/if_an.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/an/if_an.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * The Aironet 4500/4800 series cards come in PCMCIA, ISA and PCI form.
@@ -943,8 +943,7 @@ an_rxeof(struct an_softc *sc)
 				if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 				return;
 			}
-			MCLGET(m, M_NOWAIT);
-			if (!(m->m_flags & M_EXT)) {
+			if (!(MCLGET(m, M_NOWAIT))) {
 				m_freem(m);
 				if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 				return;
@@ -1034,8 +1033,7 @@ an_rxeof(struct an_softc *sc)
 					if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 					return;
 				}
-				MCLGET(m, M_NOWAIT);
-				if (!(m->m_flags & M_EXT)) {
+				if (!(MCLGET(m, M_NOWAIT))) {
 					m_freem(m);
 					if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 					return;

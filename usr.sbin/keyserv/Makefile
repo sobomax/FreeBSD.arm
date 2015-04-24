@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/keyserv/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/usr.sbin/keyserv/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	keyserv
 MAN=	keyserv.8
@@ -6,8 +6,7 @@ SRCS=	keyserv.c setkey.c crypt_svc.c crypt_server.c crypt.h
 
 CFLAGS+= -DKEYSERV_RANDOM -DBROKEN_DES -I.
 
-DPADD=	${LIBMP} ${LIBCRYPTO} ${LIBRPCSVC}
-LDADD=	-lmp -lcrypto -lrpcsvc
+LIBADD=	mp rpcsvc
 
 WARNS?=	1
 

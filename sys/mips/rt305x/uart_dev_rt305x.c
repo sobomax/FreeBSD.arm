@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rt305x/uart_dev_rt305x.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/mips/rt305x/uart_dev_rt305x.c 281438 2015-04-11 17:16:23Z andrew $");
 
 #include "opt_ddb.h"
 
@@ -217,7 +217,8 @@ struct uart_class uart_rt305x_uart_class = {
 	sizeof(struct rt305x_uart_softc),
 	.uc_ops = &uart_rt305x_uart_ops,
 	.uc_range = 1, /* use hinted range */
-	.uc_rclk = SYSTEM_CLOCK
+	.uc_rclk = SYSTEM_CLOCK,
+	.uc_rshift = 0
 };
 
 #define	SIGCHG(c, i, s, d)				\

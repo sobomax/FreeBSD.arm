@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/Makefile.amd64 271493 2014-09-13 02:15:31Z delphij $
+# $FreeBSD: head/usr.sbin/Makefile.amd64 277727 2015-01-26 06:44:48Z ngie $
 
 # kgzip: builds, but missing support files
 # mptable: broken (not 64 bit clean)
@@ -10,9 +10,11 @@ SUBDIR+=	acpi
 SUBDIR+=	apm
 .endif
 SUBDIR+=	asf
+.if ${MK_BHYVE} != "no"
 SUBDIR+=	bhyve
 SUBDIR+=	bhyvectl
 SUBDIR+=	bhyveload
+.endif
 SUBDIR+=	boot0cfg
 .if ${MK_TOOLCHAIN} != "no"
 SUBDIR+=	btxld

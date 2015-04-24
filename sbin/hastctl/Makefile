@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/hastctl/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/hastctl/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 .include <src.opts.mk>
 
@@ -32,11 +32,9 @@ CFLAGS+=-DINET6
 CFLAGS+=-DYY_NO_UNPUT
 CFLAGS+=-DYY_NO_INPUT
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 .if ${MK_OPENSSL} != "no"
-DPADD+=	${LIBCRYPTO}
-LDADD+=	-lcrypto
+LIBADD+=	crypto
 CFLAGS+=-DHAVE_CRYPTO
 .endif
 

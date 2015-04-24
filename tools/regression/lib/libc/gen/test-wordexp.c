@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/libc/gen/test-wordexp.c 253581 2013-07-23 21:09:26Z jilles $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/libc/gen/test-wordexp.c 280830 2015-03-29 22:00:24Z jilles $");
 
 #include <sys/wait.h>
 
@@ -231,6 +231,21 @@ main(int argc, char *argv[])
 	r = setenv("IFS", ":", 1);
 	assert(r == 0);
 	r = wordexp("hello world", &we, 0);
+	assert(r == 0);
+	assert(we.we_wordc == 2);
+	assert(strcmp(we.we_wordv[0], "hello") == 0);
+	assert(strcmp(we.we_wordv[1], "world") == 0);
+	assert(we.we_wordv[2] == NULL);
+	wordfree(&we);
+	r = unsetenv("IFS");
+	assert(r == 0);
+
+	/*
+	 * With IFS set to a non-default value, and using it.
+	 */
+	r = setenv("IFS", ":", 1);
+	assert(r == 0);
+	r = wordexp("${IFS+hello:world}", &we, 0);
 	assert(r == 0);
 	assert(we.we_wordc == 2);
 	assert(strcmp(we.we_wordv[0], "hello") == 0);

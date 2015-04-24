@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/boot/usb/usbcore.mk 269567 2014-08-05 07:03:16Z hselasky $
+# $FreeBSD: head/sys/boot/usb/usbcore.mk 277134 2015-01-13 16:06:38Z hselasky $
 #
 # Copyright (c) 2013 Hans Petter Selasky.
 # Copyright (c) 2014 SRI International
@@ -142,6 +142,7 @@ KSRCS+=	usb_template_mouse.c
 KSRCS+=	usb_template_kbd.c
 KSRCS+=	usb_template_audio.c
 KSRCS+=	usb_template_phone.c
+KSRCS+=	usb_template_serialnet.c
 
 #
 # USB mass storage support

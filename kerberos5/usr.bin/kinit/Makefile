@@ -1,11 +1,8 @@
-# $FreeBSD: head/kerberos5/usr.bin/kinit/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kinit/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kinit
 CFLAGS+=-I${KRB5DIR}/lib/roken
-DPADD=	${LIBKAFS5} ${LIBKRB5} ${LIBHEIMNTLM} ${LIBROKEN} ${LIBVERS} \
-	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT}
-LDADD=	-lkafs5 -lkrb5 -lheimntlm -lroken ${LIBVERS} \
-	-lasn1 -lcrypto -lcrypt -lcom_err
+LIBADD=	kafs5 krb5 heimntlm roken crypto vers
 
 .include <bsd.prog.mk>
 

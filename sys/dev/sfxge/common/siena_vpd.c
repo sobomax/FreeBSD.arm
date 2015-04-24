@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_vpd.c 228078 2011-11-28 17:19:05Z philip $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_vpd.c 278839 2015-02-16 06:12:04Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -541,11 +541,9 @@ siena_vpd_write(
 
 	/* Copy in new vpd and update header */
 	vpd_offset = dcfg_size - vpd_length;
-	EFX_POPULATE_DWORD_1(dcfg->dynamic_vpd_offset,
-			     EFX_DWORD_0, vpd_offset);
+	EFX_POPULATE_DWORD_1(dcfg->dynamic_vpd_offset, EFX_DWORD_0, vpd_offset);
 	memcpy((caddr_t)dcfg + vpd_offset, data, vpd_length);
-	EFX_POPULATE_DWORD_1(dcfg->dynamic_vpd_length,
-			    EFX_DWORD_0, vpd_length);
+	EFX_POPULATE_DWORD_1(dcfg->dynamic_vpd_length, EFX_DWORD_0, vpd_length);
 
 	/* Update the checksum */
 	cksum = 0;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.info.mk 245752 2013-01-21 22:40:39Z brooks $
+# $FreeBSD: head/share/mk/bsd.info.mk 276592 2015-01-02 22:55:30Z ngie $
 #
 # The include file <bsd.info.mk> handles installing GNU (tech)info files.
 # Texinfo is a documentation system that uses a single source
@@ -121,7 +121,6 @@ DVIPS2ASCII?=	dvips2ascii
 IFILENS+=	${INFO:S/$/.${_f}/}
 .endfor
 
-.if ${MK_INFO} != "no"
 CLEANFILES+=	${IFILENS}
 .if !defined(NO_INFOCOMPRESS)
 CLEANFILES+=	${IFILENS:S/$/${ICOMPRESS_EXT}/}
@@ -130,9 +129,6 @@ all: ${IFILES}
 .else
 IFILES=	${IFILENS}
 all: ${IFILES}
-.endif
-.else
-all:
 .endif
 
 .for x in ${IFILENS}
@@ -177,7 +173,7 @@ CLEANFILES+=	${INFO:S/$/-la.texi/}
 CLEANFILES+=	${INFO:S/$/.info.*.html/} ${INFO:S/$/.info/}
 .endif
 
-.if ${MK_INFO} != "no" && defined(INFO)
+.if defined(INFO)
 install: ${INSTALLINFODIRS}
 .if !empty(IFILES:N*.html)
 	${INSTALL} -o ${INFOOWN} -g ${INFOGRP} -m ${INFOMODE} \

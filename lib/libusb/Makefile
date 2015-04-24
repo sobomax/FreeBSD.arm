@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libusb/Makefile 273756 2014-10-27 23:43:25Z jmg $
+# $FreeBSD: head/lib/libusb/Makefile 275024 2014-11-25 11:07:26Z bapt $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
@@ -19,8 +19,7 @@ PTHREAD_LIBS?=	-lpthread
 
 WARNS?=		2
 
-DPADD=		${LIBPTHREAD}
-LDADD=		${PTHREAD_LIBS}
+LIBADD=		pthread
 
 MLINKS+=	libusb.3 usb.3
 

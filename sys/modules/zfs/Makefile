@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/zfs/Makefile 272367 2014-10-01 15:34:48Z will $
+# $FreeBSD: head/sys/modules/zfs/Makefile 276606 2015-01-03 03:35:18Z imp $
 
 SYSDIR?=${.CURDIR}/../..
 
@@ -103,7 +103,6 @@ DEBUG_FLAGS=-g
 
 CFLAGS+=	-include ${SYSDIR}/cddl/compat/opensolaris/sys/debug_compat.h
 
-CWARNFLAGS+=-Wno-unknown-pragmas
 CWARNFLAGS+=-Wno-missing-prototypes
 CWARNFLAGS+=-Wno-undef
 CWARNFLAGS+=-Wno-strict-prototypes

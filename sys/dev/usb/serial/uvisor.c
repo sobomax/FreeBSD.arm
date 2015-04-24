@@ -1,5 +1,5 @@
 /*	$NetBSD: uvisor.c,v 1.9 2001/01/23 14:04:14 augustss Exp $	*/
-/*      $FreeBSD: head/sys/dev/usb/serial/uvisor.c 239299 2012-08-15 15:42:57Z hselasky $ */
+/*      $FreeBSD: head/sys/dev/usb/serial/uvisor.c 276701 2015-01-05 15:04:17Z hselasky $ */
 
 /* Also already merged from NetBSD:
  *	$NetBSD: uvisor.c,v 1.12 2001/11/13 06:24:57 lukem Exp $
@@ -81,7 +81,7 @@
 static int uvisor_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, uvisor, CTLFLAG_RW, 0, "USB uvisor");
-SYSCTL_INT(_hw_usb_uvisor, OID_AUTO, debug, CTLFLAG_RW,
+SYSCTL_INT(_hw_usb_uvisor, OID_AUTO, debug, CTLFLAG_RWTUN,
     &uvisor_debug, 0, "Debug level");
 #endif
 

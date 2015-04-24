@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)user.h	8.2 (Berkeley) 9/23/93
- * $FreeBSD: head/sys/sys/user.h 273266 2014-10-18 19:36:11Z adrian $
+ * $FreeBSD: head/sys/sys/user.h 274167 2014-11-06 08:12:34Z mjg $
  */
 
 #ifndef _SYS_USER_H_
@@ -530,6 +530,7 @@ struct sbuf;
  */
 
 int	kern_proc_filedesc_out(struct proc *p, struct sbuf *sb, ssize_t maxlen);
+int	kern_proc_cwd_out(struct proc *p, struct sbuf *sb, ssize_t maxlen);
 int	kern_proc_out(struct proc *p, struct sbuf *sb, int flags);
 int	kern_proc_vmmap_out(struct proc *p, struct sbuf *sb);
 

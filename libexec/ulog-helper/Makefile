@@ -1,11 +1,10 @@
-# $FreeBSD: head/libexec/ulog-helper/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/libexec/ulog-helper/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 PROG=	ulog-helper
 BINOWN=	root
 BINMODE=4555
 MAN=
 
-DPADD=	${LIBULOG}
-LDADD=	-lulog
+LIBADD=	ulog
 
 .include <bsd.prog.mk>

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/uart/uart.h 272399 2014-10-02 08:12:42Z ganbold $
+ * $FreeBSD: head/sys/dev/uart/uart.h 279724 2015-03-07 15:24:15Z ian $
  */
 
 #ifndef _DEV_UART_H_
@@ -64,25 +64,12 @@ struct uart_bas {
  */
 struct uart_class;
 
-extern struct uart_class uart_imx_class __attribute__((weak));
-extern struct uart_class uart_msm_class __attribute__((weak));
 extern struct uart_class uart_ns8250_class __attribute__((weak));
 extern struct uart_class uart_quicc_class __attribute__((weak));
 extern struct uart_class uart_s3c2410_class __attribute__((weak));
 extern struct uart_class uart_sab82532_class __attribute__((weak));
 extern struct uart_class uart_sbbc_class __attribute__((weak));
 extern struct uart_class uart_z8530_class __attribute__((weak));
-extern struct uart_class uart_lpc_class __attribute__((weak));
-extern struct uart_class uart_pl011_class __attribute__((weak));
-extern struct uart_class uart_cdnc_class __attribute__((weak));
-extern struct uart_class uart_ti8250_class __attribute__((weak));
-extern struct uart_class uart_vybrid_class __attribute__((weak));
-extern struct uart_class at91_usart_class __attribute__((weak));
-
-#ifdef FDT
-struct ofw_compat_data;
-extern const struct ofw_compat_data *uart_fdt_compat_data;
-#endif
 
 #ifdef PC98
 struct uart_class *uart_pc98_getdev(u_long port);

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/beri/beri_machdep.c 273234 2014-10-17 17:34:05Z davide $");
+__FBSDID("$FreeBSD: head/sys/mips/beri/beri_machdep.c 275936 2014-12-19 12:09:29Z br $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -88,6 +88,11 @@ static void
 mips_init(void)
 {
 	int i;
+#ifdef FDT
+	struct mem_region mr[FDT_MEM_REGIONS];
+	int mr_cnt, val;
+	int j;
+#endif
 
 	for (i = 0; i < 10; i++) {
 		phys_avail[i] = 0;
@@ -101,6 +106,29 @@ mips_init(void)
 	dump_avail[1] = phys_avail[1];
 
 	physmem = realmem;
+
+#ifdef FDT
+	if (fdt_get_mem_regions(mr, &mr_cnt, &val) == 0) {
+
+		physmem = btoc(val);
+
+		KASSERT((phys_avail[0] >= mr[0].mr_start) && \
+			(phys_avail[0] < (mr[0].mr_start + mr[0].mr_size)),
+			("First region is not within FDT memory range"));
+
+		/* Limit size of the first region */
+		phys_avail[1] = (mr[0].mr_start + MIN(mr[0].mr_size, ctob(realmem)));
+		dump_avail[1] = phys_avail[1];
+
+		/* Add the rest of regions */
+		for (i = 1, j = 2; i < mr_cnt; i++, j+=2) {
+			phys_avail[j] = mr[i].mr_start;
+			phys_avail[j+1] = (mr[i].mr_start + mr[i].mr_size);
+			dump_avail[j] = phys_avail[j];
+			dump_avail[j+1] = phys_avail[j+1];
+		}
+	}
+#endif
 
 	init_param1();
 	init_param2(physmem);

@@ -1,4 +1,4 @@
-$FreeBSD: head/contrib/xz/FREEBSD-Xlist 273493 2014-10-23 00:31:26Z delphij $
+$FreeBSD: head/contrib/xz/FREEBSD-Xlist 276898 2015-01-10 00:11:10Z bapt $
 */*/*/Makefile.*
 */*/Makefile.*
 */.gitignore
@@ -32,7 +32,6 @@ macosx/
 makefile.am
 po/
 src/*/*.rc
-src/liblzma/liblzma.pc.in
 src/scripts/
 tests/
 version.sh

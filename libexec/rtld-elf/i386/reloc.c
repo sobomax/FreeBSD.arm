@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/i386/reloc.c 270802 2014-08-29 10:43:56Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/i386/reloc.c 280816 2015-03-29 18:53:21Z kib $
  */
 
 /*
@@ -48,6 +48,7 @@
 
 #include "debug.h"
 #include "rtld.h"
+#include "rtld_tls.h"
 
 /*
  * Process the special R_386_COPY relocations in the main program.  These

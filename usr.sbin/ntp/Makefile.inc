@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/Makefile.inc 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/ntp/Makefile.inc 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
@@ -13,10 +13,6 @@ CFLAGS+= ${NTPDEFS} ${DEFS_LOCAL} ${CLOCKDEFS}
 .if ${MK_OPENSSL} != "no" && !defined(RELEASE_CRUNCH)
 CFLAGS+= -DOPENSSL
 .endif
-
-LIBOPTS=	${.OBJDIR}/../libopts/libopts.a
-LIBPARSE=	${.OBJDIR}/../libparse/libparse.a
-LIBNTP=	${.OBJDIR}/../libntp/libntp.a
 
 WARNS?=	0
 

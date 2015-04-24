@@ -77,7 +77,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ti/if_ti.c 272169 2014-09-26 10:47:57Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ti/if_ti.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 #include "opt_ti.h"
 
@@ -1596,8 +1596,7 @@ ti_newbuf_jumbo(struct ti_softc *sc, int idx, struct mbuf *m_old)
 			    "failed -- packet dropped!\n");
 			goto nobufs;
 		}
-		MCLGET(m[NPAYLOAD], M_NOWAIT);
-		if ((m[NPAYLOAD]->m_flags & M_EXT) == 0) {
+		if (!(MCLGET(m[NPAYLOAD], M_NOWAIT))) {
 			device_printf(sc->ti_dev, "mbuf allocation failed "
 			    "-- packet dropped!\n");
 			goto nobufs;

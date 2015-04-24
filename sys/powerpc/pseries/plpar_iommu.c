@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/plpar_iommu.c 258427 2013-11-21 15:41:52Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/plpar_iommu.c 277792 2015-01-27 07:20:00Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -191,13 +191,13 @@ phyp_iommu_map(device_t dev, bus_dma_segment_t *segs, int *nsegs,
 
 		tce = trunc_page(segs[i].ds_addr);
 		tce |= 0x3; /* read/write */
-		if (papr_supports_stuff_tce) {
-			error = phyp_hcall(H_STUFF_TCE, window->map->iobn,
-			    alloced, tce, allocsize/PAGE_SIZE);
-		} else {
-			for (j = 0; j < allocsize; j += PAGE_SIZE)
-				error = phyp_hcall(H_PUT_TCE, window->map->iobn,
-				    alloced + j, tce + j);
+		for (j = 0; j < allocsize; j += PAGE_SIZE) {
+			error = phyp_hcall(H_PUT_TCE, window->map->iobn,
+			    alloced + j, tce + j);
+			if (error < 0) {
+				panic("IOMMU mapping error: %d\n", error);
+				return (ENOMEM);
+			}
 		}
 
 		segs[i].ds_addr = alloced + (segs[i].ds_addr & PAGE_MASK);

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/iface.c 230347 2012-01-20 01:37:31Z eadler $
+ * $FreeBSD: head/usr.sbin/ppp/iface.c 281143 2015-04-06 09:42:23Z glebius $
  */
 
 #include <sys/param.h>
@@ -31,9 +31,6 @@
 #include <netinet/in.h>
 #include <net/if.h>
 #include <net/if_dl.h>
-#ifdef __FreeBSD__
-#include <net/if_var.h>
-#endif
 #include <net/route.h>
 #include <netinet/in_systm.h>
 #include <netinet/in_var.h>

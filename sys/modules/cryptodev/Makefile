@@ -1,8 +1,8 @@
-# $FreeBSD: head/sys/modules/cryptodev/Makefile 213781 2010-10-13 14:44:38Z rpaulo $
+# $FreeBSD: head/sys/modules/cryptodev/Makefile 275931 2014-12-19 06:51:01Z lwhsu $
 
 .PATH:	${.CURDIR}/../../opencrypto
 KMOD	= cryptodev
 SRCS	= cryptodev.c
-SRCS	+= bus_if.h device_if.h opt_compat.h
+SRCS	+= bus_if.h device_if.h opt_compat.h opt_kdtrace.h
 
 .include <bsd.kmod.mk>

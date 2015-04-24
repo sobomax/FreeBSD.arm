@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/systat/Makefile 266157 2014-05-15 16:44:25Z brooks $
+# $FreeBSD: head/usr.bin/systat/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 .include <src.opts.mk>
 
@@ -16,7 +16,6 @@ CFLAGS+= -DINET6
 
 WARNS?=	0
 
-DPADD=	${LIBNCURSESW} ${LIBM} ${LIBDEVSTAT} ${LIBKVM}
-LDADD=	-lncursesw -lm -ldevstat -lkvm
+LIBADD=	ncursesw m devstat kvm
 
 .include <bsd.prog.mk>

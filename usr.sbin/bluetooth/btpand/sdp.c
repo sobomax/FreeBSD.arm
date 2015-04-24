@@ -25,13 +25,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/usr.sbin/bluetooth/btpand/sdp.c 187938 2009-01-30 22:23:21Z emax $ */
+/* $FreeBSD: head/usr.sbin/bluetooth/btpand/sdp.c 281210 2015-04-07 16:48:23Z takawata $ */
 
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: sdp.c,v 1.2 2008/12/06 20:01:14 plunky Exp $");
 
 #include <string.h>
 
+#define L2CAP_SOCKET_CHECKED
 #include "sdp.h"
 
 /*

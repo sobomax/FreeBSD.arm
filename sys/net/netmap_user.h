@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/net/netmap_user.h 270063 2014-08-16 15:00:01Z luigi $
+ * $FreeBSD: head/sys/net/netmap_user.h 274338 2014-11-10 08:31:56Z luigi $
  *
  * Functions and macros to manipulate netmap structures and packets
  * in userspace. See netmap(4) for more information.
@@ -40,7 +40,7 @@
  * From there:
  *	struct netmap_ring *NETMAP_TXRING(nifp, index)
  *	struct netmap_ring *NETMAP_RXRING(nifp, index)
- *		we can access ring->nr_cur, ring->nr_avail, ring->nr_flags
+ *		we can access ring->cur, ring->head, ring->tail, etc.
  *
  *	ring->slot[i] gives us the i-th slot (we can access
  *		directly len, flags, buf_idx)
@@ -543,7 +543,8 @@ fail:
 	nm_close(d);
 	if (errmsg)
 		D("%s %s", errmsg, ifname);
-	errno = EINVAL;
+	if (errno == 0)
+		errno = EINVAL;
 	return NULL;
 }
 

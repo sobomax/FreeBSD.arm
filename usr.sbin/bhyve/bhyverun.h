@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/bhyverun.h 269094 2014-07-25 20:18:35Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/bhyverun.h 277310 2015-01-18 03:08:30Z neel $
  */
 
 #ifndef	_FBSDRUN_H_
@@ -35,9 +35,8 @@
 #define	__CTASSERT(x, y)	typedef char __assert ## y[(x) ? 1 : -1]
 #endif
 
-#define	VMEXIT_CONTINUE		1	/* continue from next instruction */
-#define	VMEXIT_RESTART		2	/* restart current instruction */
-#define	VMEXIT_ABORT		3	/* abort the vm run loop */
+#define	VMEXIT_CONTINUE		(0)
+#define	VMEXIT_ABORT		(-1)
 
 struct vmctx;
 extern int guest_ncpus;

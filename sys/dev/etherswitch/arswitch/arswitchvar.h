@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitchvar.h 262681 2014-03-02 05:48:56Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitchvar.h 279943 2015-03-13 02:16:39Z adrian $
  */
 #ifndef	__ARSWITCHVAR_H__
 #define	__ARSWITCHVAR_H__
@@ -60,7 +60,7 @@ struct arswitch_softc {
 	int		is_internal_switch;
 	int		chip_ver;
 	int		chip_rev;
-	int		mii_lo_first;
+	int		mii_lo_first;		/* Send low data DWORD before high */
 	ar8x16_switch_type	sc_switchtype;
 	/* should be the max of both pre-AR8327 and AR8327 ports */
 	char		*ifname[ARSWITCH_NUM_PHYS];
@@ -98,6 +98,22 @@ struct arswitch_softc {
 		    int *);
 		int (* arswitch_vlan_set_pvid) (struct arswitch_softc *, int,
 		    int);
+
+		int (* arswitch_flush_dot1q_vlan) (struct arswitch_softc *sc);
+		int (* arswitch_purge_dot1q_vlan) (struct arswitch_softc *sc,
+		    int vid);
+		int (* arswitch_get_dot1q_vlan) (struct arswitch_softc *,
+		    uint32_t *ports, uint32_t *untagged_ports, int vid);
+		int (* arswitch_set_dot1q_vlan) (struct arswitch_softc *sc,
+		    uint32_t ports, uint32_t untagged_ports, int vid);
+		int (* arswitch_get_port_vlan) (struct arswitch_softc *sc,
+		    uint32_t *ports, int vid);
+		int (* arswitch_set_port_vlan) (struct arswitch_softc *sc,
+		    uint32_t ports, int vid);
+
+		/* PHY functions */
+		int (* arswitch_phy_read) (device_t, int, int);
+		int (* arswitch_phy_write) (device_t, int, int, int);
 	} hal;
 
 	struct {

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/eli/g_eli_privacy.c 271148 2014-09-04 23:53:51Z jmg $");
+__FBSDID("$FreeBSD: head/sys/geom/eli/g_eli_privacy.c 275732 2014-12-12 19:56:36Z jmg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -286,7 +286,7 @@ g_eli_crypto_run(struct g_eli_worker *wr, struct bio *bp)
 			crp->crp_callback = g_eli_crypto_write_done;
 		else /* if (bp->bio_cmd == BIO_READ) */
 			crp->crp_callback = g_eli_crypto_read_done;
-		crp->crp_flags = CRYPTO_F_CBIFSYNC | CRYPTO_F_REL;
+		crp->crp_flags = CRYPTO_F_CBIFSYNC;
 		if (g_eli_batch)
 			crp->crp_flags |= CRYPTO_F_BATCH;
 		crp->crp_desc = crd;

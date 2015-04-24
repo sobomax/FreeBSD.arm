@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/BWCT 265155 2014-04-30 18:02:10Z imp $
+# $FreeBSD: head/sys/arm/conf/BWCT 276755 2015-01-06 16:15:57Z jhb $
 
 #NO_UNIVERSE
 
@@ -46,8 +46,8 @@ options 	SOFTUPDATES		# Enable FFS soft updates support
 #options 	MD_ROOT_SIZE=4096	# 4MB ram disk
 #options 	ROOTDEVNAME=\"ufs:md0\"
 #options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s1a\"
-options 	NFSCL			# New Network Filesystem Client
-#options 	NFSD			# New Network Filesystem Server
+options 	NFSCL			# Network Filesystem Client
+#options 	NFSD			# Network Filesystem Server
 #options 	NFSLOCKD		# Network Lock Manager
 options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 options 	BOOTP_NFSROOT

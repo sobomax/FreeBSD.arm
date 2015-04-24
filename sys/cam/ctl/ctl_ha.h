@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ha.h#1 $
- * $FreeBSD: head/sys/cam/ctl/ctl_ha.h 229997 2012-01-12 00:34:33Z ken $
+ * $FreeBSD: head/sys/cam/ctl/ctl_ha.h 274785 2014-11-21 06:27:37Z mav $
  */
 
 #ifndef _CTL_HA_H_
@@ -38,6 +38,8 @@
 /*
  * CTL High Availability Modes:
  *
+ * CTL_HA_MODE_ACT_STBY:  One side is in Active state and processing commands,
+ *			  the other side is in Standby state, returning errors.
  * CTL_HA_MODE_SER_ONLY:  Commands are serialized to the other side.  Write
  *			  mirroring and read re-direction are assumed to
  * 			  happen in the back end.
@@ -46,6 +48,7 @@
  */
 
 typedef enum {
+	CTL_HA_MODE_ACT_STBY,
 	CTL_HA_MODE_SER_ONLY,
 	CTL_HA_MODE_XFER
 } ctl_ha_mode;

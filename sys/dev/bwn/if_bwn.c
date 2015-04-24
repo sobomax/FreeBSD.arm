@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bwn/if_bwn.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/bwn/if_bwn.c 280347 2015-03-22 16:10:28Z mav $");
 
 /*
  * The Broadcom Wireless LAN controller driver.
@@ -10381,7 +10381,7 @@ bwn_dma_attach(struct bwn_mac *mac)
 			       lowaddr,			/* lowaddr */
 			       BUS_SPACE_MAXADDR,	/* highaddr */
 			       NULL, NULL,		/* filter, filterarg */
-			       MAXBSIZE,		/* maxsize */
+			       BUS_SPACE_MAXSIZE,	/* maxsize */
 			       BUS_SPACE_UNRESTRICTED,	/* nsegments */
 			       BUS_SPACE_MAXSIZE,	/* maxsegsize */
 			       0,			/* flags */

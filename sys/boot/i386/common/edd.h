@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2011 Advanced Computing Technologies LLC
+ * Copyright (c) 2011 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/i386/common/edd.h 243025 2012-11-14 11:05:16Z avg $
+ * $FreeBSD: head/sys/boot/i386/common/edd.h 281887 2015-04-23 14:22:20Z jhb $
  */
 
 #ifndef	_EDD_H_

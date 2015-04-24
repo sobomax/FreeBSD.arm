@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.bin/sort/file.h 264744 2014-04-21 22:52:18Z pfg $	*/
+/*	$FreeBSD: head/usr.bin/sort/file.h 281182 2015-04-07 01:17:49Z pfg $	*/
 
 /*-
  * Copyright (C) 2009 Gabor Kovesdan <gabor@FreeBSD.org>
@@ -55,7 +55,7 @@ struct sort_list
 };
 
 /*
- * File reader object 
+ * File reader object
  */
 struct file_reader;
 
@@ -68,16 +68,6 @@ struct file_list
 	size_t			 count;
 	size_t			 sz;
 	bool			 tmp;
-};
-
-/*
- * Structure for zero-separated file reading (for input files list)
- */
-struct file0_reader
-{
-	char			*current_line;
-	FILE			*f;
-	size_t			 current_sz;
 };
 
 /* memory */
@@ -109,8 +99,6 @@ extern const char* compress_program;
 struct file_reader *file_reader_init(const char *fsrc);
 struct bwstring *file_reader_readline(struct file_reader *fr);
 void file_reader_free(struct file_reader *fr);
-
-char *read_file0_line(struct file0_reader *f0r);
 
 void init_tmp_files(void);
 void clear_tmp_files(void);

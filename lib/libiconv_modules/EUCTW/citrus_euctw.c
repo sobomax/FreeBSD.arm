@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libiconv_modules/EUCTW/citrus_euctw.c 263986 2014-04-01 10:36:11Z tijl $ */
+/* $FreeBSD: head/lib/libiconv_modules/EUCTW/citrus_euctw.c 281550 2015-04-15 09:09:20Z tijl $ */
 /*	$NetBSD: citrus_euctw.c,v 1.11 2008/06/14 16:01:07 tnozaki Exp $	*/
 
 /*-
@@ -176,10 +176,10 @@ _citrus_EUCTW_encoding_module_uninit(_EUCTWEncodingInfo *ei __unused)
 
 static int
 _citrus_EUCTW_mbrtowc_priv(_EUCTWEncodingInfo * __restrict ei,
-    wchar_t * __restrict pwc, const char ** __restrict s,
+    wchar_t * __restrict pwc, char ** __restrict s,
     size_t n, _EUCTWState * __restrict psenc, size_t * __restrict nresult)
 {
-	const char *s0;
+	char *s0;
 	wchar_t wchar;
 	int c, chlenbak, cs;
 

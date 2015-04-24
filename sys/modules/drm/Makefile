@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/drm/Makefile 269812 2014-08-11 14:50:49Z imp $
+# $FreeBSD: head/sys/modules/drm/Makefile 276639 2015-01-03 22:36:18Z jhibbits $
 
 SYSDIR?=${.CURDIR}/../..
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -21,7 +21,9 @@ SUBDIR = \
 .if ${MK_SOURCELESS_UCODE} != "no"
 _mga=		mga
 _r128=		r128
+.if ${MACHINE_CPUARCH} != "powerpc"
 _radeon=	radeon
+.endif
 .endif
 
 .include <bsd.subdir.mk>

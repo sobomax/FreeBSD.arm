@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/nfs.c 252468 2013-07-01 17:23:13Z mav $");
+__FBSDID("$FreeBSD: head/lib/libstand/nfs.c 276079 2014-12-22 20:42:36Z ian $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -662,7 +662,7 @@ nfs_read(struct open_file *f, void *buf, size_t size, size_t *resid)
 		       (int)fp->off);
 #endif
 	while ((int)size > 0) {
-		twiddle();
+		twiddle(16);
 		cc = nfs_readdata(fp, fp->off, (void *)addr, size);
 		/* XXX maybe should retry on certain errors */
 		if (cc == -1) {
@@ -1311,7 +1311,7 @@ nfs_read(struct open_file *f, void *buf, size_t size, size_t *resid)
 		       (int)fp->off);
 #endif
 	while ((int)size > 0) {
-		twiddle();
+		twiddle(16);
 		cc = nfs_readdata(fp, fp->off, (void *)addr, size);
 		/* XXX maybe should retry on certain errors */
 		if (cc == -1) {

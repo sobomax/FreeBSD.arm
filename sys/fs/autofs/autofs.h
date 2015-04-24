@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/autofs/autofs.h 273127 2014-10-15 09:28:45Z trasz $
+ * $FreeBSD: head/sys/fs/autofs/autofs.h 274859 2014-11-22 16:48:29Z trasz $
  */
 
 #ifndef AUTOFS_H
@@ -133,6 +133,7 @@ int	autofs_trigger(struct autofs_node *anp, const char *component,
 	    int componentlen);
 bool	autofs_cached(struct autofs_node *anp, const char *component,
 	    int componentlen);
+void	autofs_flush(struct autofs_mount *amp);
 bool	autofs_ignore_thread(const struct thread *td);
 int	autofs_node_new(struct autofs_node *parent, struct autofs_mount *amp,
 	    const char *name, int namelen, struct autofs_node **anpp);

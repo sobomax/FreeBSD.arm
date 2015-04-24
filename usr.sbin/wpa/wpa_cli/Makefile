@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/wpa_cli/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/usr.sbin/wpa/wpa_cli/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -14,8 +14,7 @@ CFLAGS+= -DCONFIG_CTRL_IFACE_UNIX
 # enable use of d_type to identify unix domain sockets
 CFLAGS+= -D_DIRENT_HAVE_D_TYPE
 
-CFLAGS+= -DCONFIG_READLINE -I${DESTDIR}/${INCLUDEDIR}/edit
-LDADD+= -ledit -ltermcapw -lutil
-DPADD+= ${LIBEDIT} ${LIBTERMCAPW} ${LIBUTIL}
+CFLAGS+= -DCONFIG_WPA_CLI_EDIT=y
+LIBADD+=	util
 
 .include <bsd.prog.mk>

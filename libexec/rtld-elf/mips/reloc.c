@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/mips/reloc.c 270798 2014-08-29 09:29:10Z kib $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/mips/reloc.c 281107 2015-04-05 14:06:11Z emaste $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -245,7 +245,7 @@ _mips_rtld_bind(Obj_Entry *obj, Elf_Size reloff)
         def = find_symdef(reloff, obj, &defobj, SYMLOOK_IN_PLT, NULL,
 	    NULL);
         if (def == NULL)
-		_rtld_error("bind failed no symbol");
+		rtld_die();
 
         target = (Elf_Addr)(defobj->relocbase + def->st_value);
         dbg("bind now/fixup at %s sym # %jd in %s --> was=%p new=%p",

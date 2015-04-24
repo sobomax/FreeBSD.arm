@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_mbuf.c 272336 2014-09-30 23:16:26Z np $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_mbuf.c 280957 2015-04-01 12:42:26Z rstone $");
 
 #include "opt_param.h"
 
@@ -284,7 +284,7 @@ static int	mb_zinit_pack(void *, int, int);
 static void	mb_zfini_pack(void *, int);
 
 static void	mb_reclaim(void *);
-static void    *mbuf_jumbo_alloc(uma_zone_t, int, uint8_t *, int);
+static void    *mbuf_jumbo_alloc(uma_zone_t, vm_size_t, uint8_t *, int);
 
 /* Ensure that MSIZE is a power of 2. */
 CTASSERT((((MSIZE - 1) ^ MSIZE) + 1) >> 1 == MSIZE);
@@ -389,7 +389,7 @@ SYSINIT(mbuf, SI_SUB_MBUF, SI_ORDER_FIRST, mbuf_init, NULL);
  * pages.
  */
 static void *
-mbuf_jumbo_alloc(uma_zone_t zone, int bytes, uint8_t *flags, int wait)
+mbuf_jumbo_alloc(uma_zone_t zone, vm_size_t bytes, uint8_t *flags, int wait)
 {
 
 	/* Inform UMA that this allocator uses kernel_map/object. */

@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/randomdev.c 273872 2014-10-30 21:21:53Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/randomdev.c 278907 2015-02-17 17:37:00Z jmg $");
 
 #include "opt_random.h"
 
@@ -159,15 +159,7 @@ randomdev_modevent(module_t mod __unused, int type, void *data __unused)
 	return (error);
 }
 
-#define	EARLY_2_DEV_MODULE(name, evh, arg)	\
-static moduledata_t name##_mod = {		\
-    #name,					\
-    evh,					\
-    arg						\
-};						\
-DECLARE_MODULE(name, name##_mod, SI_SUB_DRIVERS, SI_ORDER_SECOND)
-
-EARLY_2_DEV_MODULE(randomdev, randomdev_modevent, NULL);
+DEV_MODULE_ORDERED(randomdev, randomdev_modevent, NULL, SI_ORDER_SECOND);
 MODULE_VERSION(randomdev, 1);
 
 /* ================
@@ -222,11 +214,11 @@ random_harvest(const void *entropy, u_int count, u_int bits, enum random_entropy
  */
 
 /* Hold the address of the routine which is actually called */
-static u_int (*read_func)(uint8_t *, u_int) = dummy_random_read_phony;
+static void (*read_func)(uint8_t *, u_int) = dummy_random_read_phony;
 
 /* Initialise the reader when/if it is loaded */
 void
-randomdev_init_reader(u_int (*reader)(uint8_t *, u_int))
+randomdev_init_reader(void (*reader)(uint8_t *, u_int))
 {
 
 	read_func = reader;
@@ -248,5 +240,10 @@ int
 read_random(void *buf, int count)
 {
 
-	return ((int)(*read_func)(buf, (u_int)count));
+	if (count < 0)
+		return 0;
+
+	read_func(buf, count);
+
+	return count;
 }

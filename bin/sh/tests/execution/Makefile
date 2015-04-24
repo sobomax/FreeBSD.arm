@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/execution/Makefile 269902 2014-08-13 04:14:50Z ngie $
+# $FreeBSD: head/bin/sh/tests/execution/Makefile 275766 2014-12-14 16:26:19Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -44,6 +44,7 @@ FILES+=		set-n4.0
 FILES+=		set-x1.0
 FILES+=		set-x2.0
 FILES+=		set-x3.0
+FILES+=		set-x4.0
 FILES+=		shellproc1.0
 FILES+=		subshell1.0 subshell1.0.stdout
 FILES+=		subshell2.0

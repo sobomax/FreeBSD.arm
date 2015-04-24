@@ -22,11 +22,11 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/netif 272959 2014-10-11 20:28:04Z hrs $
+# $FreeBSD: head/etc/rc.d/netif 279463 2015-03-01 00:58:23Z rstone $
 #
 
 # PROVIDE: netif
-# REQUIRE: atm1 FILESYSTEMS serial sppp sysctl
+# REQUIRE: atm1 FILESYSTEMS iovctl serial sppp sysctl
 # REQUIRE: ipfilter ipfs
 # KEYWORD: nojailvnet
 
@@ -252,5 +252,8 @@ netif_common()
 	debug "The following interfaces were not configured: $_fail"
 }
 
+# Load the old "network" config file also for compatibility.
+# This is needed for mfsBSD at least.
+load_rc_config network
 load_rc_config $name
 run_rc_command $*

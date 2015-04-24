@@ -1,7 +1,6 @@
-# $FreeBSD: head/usr.bin/limits/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/limits/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 PROG=	limits
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 
 .include <bsd.prog.mk>

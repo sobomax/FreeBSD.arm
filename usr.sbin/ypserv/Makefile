@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ypserv/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/usr.sbin/ypserv/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 RPCDIR=	${.CURDIR}/../../include/rpcsvc
 .PATH: ${RPCDIR}
@@ -12,8 +12,7 @@ CFLAGS+= -DDB_CACHE -DTCP_WRAPPER -I.
 
 WARNS?=	0
 
-DPADD=	${LIBWRAP}
-LDADD=	-lwrap
+LIBADD=	wrap
 
 CLEANFILES= yp_svc.c ypxfr_clnt.c yp.h
 

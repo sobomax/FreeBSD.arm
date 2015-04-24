@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/dc/stack.c 203443 2010-02-03 21:06:13Z gabor $");
+__FBSDID("$FreeBSD: head/usr.bin/dc/stack.c 275162 2014-11-27 01:37:01Z kevlo $");
 
 #include <err.h>
 #include <stdlib.h>
@@ -137,14 +137,12 @@ stack_swap(struct stack *stack)
 static void
 stack_grow(struct stack *stack)
 {
-	size_t i, new_size;
+	size_t new_size;
 
 	if (++stack->sp == stack->size) {
 		new_size = stack->size * 2 + 1;
 		stack->stack = brealloc(stack->stack,
 		    new_size * sizeof(*stack->stack));
-		for (i = stack->size; i < new_size; i++)
-			stack->stack[i].array = NULL;
 		stack->size = new_size;
 	}
 }
@@ -156,6 +154,7 @@ stack_pushnumber(struct stack *stack, struct number *b)
 	stack_grow(stack);
 	stack->stack[stack->sp].type = BCODE_NUMBER;
 	stack->stack[stack->sp].u.num = b;
+	stack->stack[stack->sp].array = NULL;
 }
 
 void
@@ -165,6 +164,7 @@ stack_pushstring(struct stack *stack, char *string)
 	stack_grow(stack);
 	stack->stack[stack->sp].type = BCODE_STRING;
 	stack->stack[stack->sp].u.string = string;
+	stack->stack[stack->sp].array = NULL;
 }
 
 void

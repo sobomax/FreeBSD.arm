@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fatm/if_fatm.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/fatm/if_fatm.c 276692 2015-01-05 09:58:32Z rwatson $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -1105,7 +1105,7 @@ fatm_supply_small_buffers(struct fatm_softc *sc)
 				LIST_INSERT_HEAD(&sc->rbuf_free, rb, link);
 				break;
 			}
-			MH_ALIGN(m, SMALL_BUFFER_LEN);
+			M_ALIGN(m, SMALL_BUFFER_LEN);
 			error = bus_dmamap_load(sc->rbuf_tag, rb->map,
 			    m->m_data, SMALL_BUFFER_LEN, dmaload_helper,
 			    &phys, BUS_DMA_NOWAIT);

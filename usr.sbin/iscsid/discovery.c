@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iscsid/discovery.c 270279 2014-08-21 15:32:38Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/discovery.c 275864 2014-12-17 15:13:21Z mav $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -66,7 +66,7 @@ text_receive(struct connection *conn)
 		log_errx(1, "received Text PDU with unsupported \"C\" flag");
 	if (ntohl(bhstr->bhstr_statsn) != conn->conn_statsn + 1) {
 		log_errx(1, "received Text PDU with wrong StatSN: "
-		    "is %d, should be %d", ntohl(bhstr->bhstr_statsn),
+		    "is %u, should be %u", ntohl(bhstr->bhstr_statsn),
 		    conn->conn_statsn + 1);
 	}
 	conn->conn_statsn = ntohl(bhstr->bhstr_statsn);
@@ -112,7 +112,7 @@ logout_receive(struct connection *conn)
 		    ntohs(bhslr->bhslr_response));
 	if (ntohl(bhslr->bhslr_statsn) != conn->conn_statsn + 1) {
 		log_errx(1, "received Logout PDU with wrong StatSN: "
-		    "is %d, should be %d", ntohl(bhslr->bhslr_statsn),
+		    "is %u, should be %u", ntohl(bhslr->bhslr_statsn),
 		    conn->conn_statsn + 1);
 	}
 	conn->conn_statsn = ntohl(bhslr->bhslr_statsn);

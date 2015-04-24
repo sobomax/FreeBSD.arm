@@ -1,11 +1,8 @@
-# $FreeBSD: head/kerberos5/usr.bin/kdestroy/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/kerberos5/usr.bin/kdestroy/Makefile 275022 2014-11-25 09:57:42Z bapt $
 
 PROG=	kdestroy
 CFLAGS+=-I${KRB5DIR}/lib/roken
-DPADD=	${LIBKAFS5} ${LIBKRB5} ${LIBHEIMNTLM} ${LIBROKEN} ${LIBVERS} \
-	${LIBASN1} ${LIBCRYPTO} ${LIBCRYPT}
-LDADD=	-lkafs5 -lkrb5 -lheimntlm -lroken ${LIBVERS} \
-	-lasn1 -lcrypto -lcrypt
+LIBADD=	kafs5 krb5 roken vers
 MAN=	kdestroy.1
 
 .include <bsd.prog.mk>

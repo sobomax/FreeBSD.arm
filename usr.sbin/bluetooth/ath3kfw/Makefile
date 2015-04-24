@@ -1,8 +1,7 @@
-# $FreeBSD: head/usr.sbin/bluetooth/ath3kfw/Makefile 222772 2011-06-06 20:24:17Z ed $
+# $FreeBSD: head/usr.sbin/bluetooth/ath3kfw/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=		ath3kfw
 MAN=		ath3kfw.8
-DPADD+=		${LIBUSB}
-LDADD+=		-lusb
+LIBADD+=	usb
 
 .include <bsd.prog.mk>

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
- __FBSDID("$FreeBSD: head/sys/fs/autofs/autofs_vfsops.c 272512 2014-10-04 09:37:40Z trasz $");
+ __FBSDID("$FreeBSD: head/sys/fs/autofs/autofs_vfsops.c 274859 2014-11-22 16:48:29Z trasz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -61,8 +61,10 @@ autofs_mount(struct mount *mp)
 	if (vfs_filteropt(mp->mnt_optnew, autofs_opts))
 		return (EINVAL);
 
-	if (mp->mnt_flag & MNT_UPDATE)
+	if (mp->mnt_flag & MNT_UPDATE) {
+		autofs_flush(VFSTOAUTOFS(mp));
 		return (0);
+	}
 
 	if (vfs_getopt(mp->mnt_optnew, "from", (void **)&from, NULL))
 		return (EINVAL);

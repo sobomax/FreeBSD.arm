@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_vnops.c 272952 2014-10-11 19:09:56Z kib $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_vnops.c 274914 2014-11-23 12:01:52Z glebius $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -124,6 +124,7 @@ struct vop_vector ffs_vnodeops1 = {
 	.vop_default =		&ufs_vnodeops,
 	.vop_fsync =		ffs_fsync,
 	.vop_getpages =		vnode_pager_local_getpages,
+	.vop_getpages_async =	vnode_pager_local_getpages_async,
 	.vop_lock1 =		ffs_lock,
 	.vop_read =		ffs_read,
 	.vop_reallocblks =	ffs_reallocblks,
@@ -143,6 +144,7 @@ struct vop_vector ffs_vnodeops2 = {
 	.vop_default =		&ufs_vnodeops,
 	.vop_fsync =		ffs_fsync,
 	.vop_getpages =		vnode_pager_local_getpages,
+	.vop_getpages_async =	vnode_pager_local_getpages_async,
 	.vop_lock1 =		ffs_lock,
 	.vop_read =		ffs_read,
 	.vop_reallocblks =	ffs_reallocblks,

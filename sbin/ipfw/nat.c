@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: head/sbin/ipfw/nat.c 272840 2014-10-09 19:32:35Z melifaro $
+ * $FreeBSD: head/sbin/ipfw/nat.c 281740 2015-04-19 12:49:30Z melifaro $
  *
  * In-kernel nat support
  */
@@ -163,9 +163,9 @@ set_addr_dynamic(const char *ifn, struct nat44_cfg_nat *n)
 		}
 	}
 	if (sin == NULL)
-		errx(1, "%s: cannot get interface address", ifn);
-
-	n->ip = sin->sin_addr;
+		n->ip.s_addr = htonl(INADDR_ANY);
+	else
+		n->ip = sin->sin_addr;
 	strncpy(n->if_name, ifn, IF_NAMESIZE);
 
 	free(buf);
@@ -1008,11 +1008,10 @@ nat_foreach(nat_cb_t *f, void *arg, int sort)
 
 		olh->size = sz;
 		if (do_get3(IP_FW_NAT44_LIST_NAT, &olh->opheader, &sz) != 0) {
+			sz = olh->size;
 			free(olh);
-			if (errno == ENOMEM) {
-				sz = olh->size;
+			if (errno == ENOMEM)
 				continue;
-			}
 			return (errno);
 		}
 

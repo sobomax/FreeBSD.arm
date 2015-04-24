@@ -1,9 +1,10 @@
-# $FreeBSD: head/etc/pam.d/Makefile 236281 2012-05-30 03:10:22Z miwi $
+# $FreeBSD: head/etc/pam.d/Makefile 277737 2015-01-26 08:50:12Z ngie $
+
+.include <src.opts.mk>
 
 NO_OBJ=
 
 FILES=	README \
-	atrun \
 	cron \
 	ftpd \
 	imap \
@@ -14,6 +15,10 @@ FILES=	README \
 	sshd su system \
 	telnetd \
 	xdm
+
+.if ${MK_AT} != "no"
+FILES+=	atrun
+.endif
 
 FILESDIR=	/etc/pam.d
 FILESMODE=	644

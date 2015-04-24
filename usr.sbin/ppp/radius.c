@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/radius.c 241844 2012-10-22 03:00:37Z eadler $
+ * $FreeBSD: head/usr.sbin/ppp/radius.c 277857 2015-01-28 21:33:49Z dim $
  *
  */
 
@@ -1345,7 +1345,7 @@ radius_alive(void *v)
 void
 radius_StartTimer(struct bundle *bundle)
 {
-  if (bundle->radius.cfg.file && bundle->radius.alive.interval) {
+  if (*bundle->radius.cfg.file && bundle->radius.alive.interval) {
     bundle->radius.alive.timer.func = radius_alive;
     bundle->radius.alive.timer.name = "radius alive";
     bundle->radius.alive.timer.load = bundle->radius.alive.interval * SECTICKS;

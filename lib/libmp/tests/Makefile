@@ -1,10 +1,9 @@
-# $FreeBSD: head/lib/libmp/tests/Makefile 269534 2014-08-04 22:10:07Z ngie $
+# $FreeBSD: head/lib/libmp/tests/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 TESTSDIR=	${TESTSBASE}/lib/libmp
 
 TAP_TESTS_C+=	legacy_test
 
-DPADD+=		${LIBCRYPTO} ${LIBMP}
-LDADD+=		-lcrypto -lmp
+LIBADD+=	mp
 
 .include <bsd.test.mk>

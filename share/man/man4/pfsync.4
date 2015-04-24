@@ -24,9 +24,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/pfsync.4 240494 2012-09-14 11:51:49Z glebius $
+.\" $FreeBSD: head/share/man/man4/pfsync.4 276259 2014-12-26 22:30:18Z bapt $
 .\"
-.Dd December 20 2011
+.Dd December 20, 2011
 .Dt PFSYNC 4
 .Os
 .Sh NAME
@@ -200,6 +200,7 @@ The following must also be added to
 net.inet.carp.preempt=1
 .Ed
 .Sh SEE ALSO
+.Xr tcpdump 1 ,
 .Xr bpf 4 ,
 .Xr carp 4 ,
 .Xr enc 4 ,
@@ -211,8 +212,7 @@ net.inet.carp.preempt=1
 .Xr pf.conf 5 ,
 .Xr protocols 5 ,
 .Xr rc.conf 5 ,
-.Xr ifconfig 8 ,
-.Xr tcpdump 1
+.Xr ifconfig 8
 .Sh HISTORY
 The
 .Nm

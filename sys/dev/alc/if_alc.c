@@ -28,7 +28,7 @@
 /* Driver for Atheros AR813x/AR815x PCIe Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/alc/if_alc.c 273018 2014-10-13 01:06:40Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/alc/if_alc.c 277907 2015-01-30 01:13:07Z yongari $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,11 +114,11 @@ static struct alc_ident alc_ident_table[] = {
 	{ VENDORID_ATHEROS, DEVICEID_ATHEROS_AR8161, 9 * 1024,
 		"Atheros AR8161 PCIe Gigabit Ethernet" },
 	{ VENDORID_ATHEROS, DEVICEID_ATHEROS_AR8162, 9 * 1024,
-		"Atheros AR8161 PCIe Fast Ethernet" },
+		"Atheros AR8162 PCIe Fast Ethernet" },
 	{ VENDORID_ATHEROS, DEVICEID_ATHEROS_AR8171, 9 * 1024,
-		"Atheros AR8161 PCIe Gigabit Ethernet" },
+		"Atheros AR8171 PCIe Gigabit Ethernet" },
 	{ VENDORID_ATHEROS, DEVICEID_ATHEROS_AR8172, 9 * 1024,
-		"Atheros AR8161 PCIe Fast Ethernet" },
+		"Atheros AR8172 PCIe Fast Ethernet" },
 	{ VENDORID_ATHEROS, DEVICEID_ATHEROS_E2200, 9 * 1024,
 		"Killer E2200 Gigabit Ethernet" },
 	{ 0, 0, 0, NULL}

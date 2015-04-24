@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drm_sysctl.c 271013 2014-09-03 09:58:59Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drm_sysctl.c 275856 2014-12-17 07:27:19Z gleb $");
 
 /** @file drm_sysctl.c
  * Implementation of various sysctls for controlling DRM behavior and reporting
@@ -137,8 +137,9 @@ static int drm_name_info DRM_SYSCTL_HANDLER_ARGS
 	int retcode;
 	int hasunique = 0;
 
-	DRM_SYSCTL_PRINT("%s 0x%x", dev->driver->name, dev2udev(dev->devnode));
-	
+	DRM_SYSCTL_PRINT("%s 0x%jx", dev->driver->name,
+	    (uintmax_t)dev2udev(dev->devnode));
+
 	DRM_LOCK();
 	if (dev->unique) {
 		snprintf(buf, sizeof(buf), " %s", dev->unique);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libucl/Makefile 268831 2014-07-18 06:58:01Z bapt $
+# $FreeBSD: head/lib/libucl/Makefile 279560 2015-03-03 07:51:36Z bapt $
 
 LIBUCL=	${.CURDIR}/../../contrib/libucl
 
@@ -16,9 +16,12 @@ SRCS=		ucl_emitter_streamline.c \
 
 .PATH:		${LIBUCL}/src
 
+LIBADD=		m
+
 WARNS=		1
 CFLAGS+=	-I${LIBUCL}/include \
 		-I${LIBUCL}/src \
-		-I${LIBUCL}/uthash
+		-I${LIBUCL}/uthash \
+		-I${LIBUCL}/klib
 
 .include <bsd.lib.mk>

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 271832 2014-09-18 21:09:22Z glebius $ */
+/* $FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 280008 2015-03-14 21:40:33Z ian $ */
 /*-
  * Copyright (c) 2009 Andrew Thompson (thompsa@FreeBSD.org)
  *
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 280008 2015-03-14 21:40:33Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -155,7 +155,7 @@ ue_sysctl_parent(SYSCTL_HANDLER_ARGS)
 	const char *name;
 
 	name = device_get_nameunit(ue->ue_dev);
-	return SYSCTL_OUT(req, name, strlen(name));
+	return SYSCTL_OUT_STR(req, name);
 }
 
 int

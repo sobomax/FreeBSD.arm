@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_options.c 271628 2014-09-15 14:43:58Z hrs $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_options.c 276752 2015-01-06 14:32:28Z rwatson $");
 
 #include "opt_ipstealth.h"
 
@@ -500,7 +500,7 @@ ip_insertoptions(struct mbuf *m, struct mbuf *opt, int *phlen)
 	}
 	if (p->ipopt_dst.s_addr)
 		ip->ip_dst = p->ipopt_dst;
-	if (m->m_flags & M_EXT || m->m_data - optlen < m->m_pktdat) {
+	if (!M_WRITABLE(m) || M_LEADINGSPACE(m) < optlen) {
 		n = m_gethdr(M_NOWAIT, MT_DATA);
 		if (n == NULL) {
 			*phlen = 0;

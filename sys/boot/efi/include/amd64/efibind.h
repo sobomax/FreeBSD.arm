@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/amd64/efibind.h 263115 2014-03-13 18:17:18Z emaste $ */
+/* $FreeBSD: head/sys/boot/efi/include/amd64/efibind.h 279038 2015-02-20 01:40:55Z imp $ */
 /*++
 
 Copyright (c)  1999 - 2003 Intel Corporation. All rights reserved
@@ -85,6 +85,9 @@ Revision History
 // Basic EFI types of various widths
 //
 
+#ifndef ACPI_THREAD_ID		/* ACPI's definitions are fine */
+#define ACPI_USE_SYSTEM_INTTYPES 1	/* Tell ACPI we've defined types */
+
 typedef uint64_t   UINT64;
 typedef int64_t    INT64;
 
@@ -98,6 +101,7 @@ typedef int16_t    INT16;
 typedef uint8_t    UINT8;
 typedef int8_t     INT8;
 
+#endif
 
 #undef VOID
 #define VOID    void

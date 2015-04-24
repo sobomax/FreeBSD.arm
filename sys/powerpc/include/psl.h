@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: psl.h,v 1.5 2000/11/19 19:52:37 matt Exp $
- * $FreeBSD: head/sys/powerpc/include/psl.h 264189 2014-04-06 06:18:43Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/include/psl.h 279189 2015-02-22 21:40:27Z nwhitehorn $
  */
 
 #ifndef	_MACHINE_PSL_H_
@@ -39,6 +39,7 @@
  * Machine State Register (MSR) - All cores
  */
 #define	PSL_VEC		0x02000000UL	/* AltiVec/SPE vector unit available */
+#define	PSL_VSX		0x00800000UL	/* Vector-Scalar unit available */
 #define	PSL_EE		0x00008000UL	/* external interrupt enable */
 #define	PSL_PR		0x00004000UL	/* privilege mode (1 == user) */
 #define	PSL_FP		0x00002000UL	/* floating point enable */

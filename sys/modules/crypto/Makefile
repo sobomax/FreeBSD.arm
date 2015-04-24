@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/crypto/Makefile 263219 2014-03-16 01:55:30Z jmg $
+# $FreeBSD: head/sys/modules/crypto/Makefile 275732 2014-12-12 19:56:36Z jmg $
 
 .PATH:	${.CURDIR}/../../opencrypto
 .PATH:	${.CURDIR}/../../crypto
@@ -18,6 +18,7 @@ SRCS	+= camellia.c camellia-api.c
 SRCS	+= des_ecb.c des_enc.c des_setkey.c
 SRCS	+= sha1.c sha2.c sha256c.c
 SRCS	+= siphash.c
+SRCS	+= gmac.c gfmult.c
 SRCS	+= opt_param.h cryptodev_if.h bus_if.h device_if.h
 SRCS	+= opt_ddb.h
 

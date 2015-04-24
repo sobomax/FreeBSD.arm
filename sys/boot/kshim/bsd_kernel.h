@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/kshim/bsd_kernel.h 269541 2014-08-04 23:00:13Z brooks $ */
+/* $FreeBSD: head/sys/boot/kshim/bsd_kernel.h 275506 2014-12-05 12:04:47Z hselasky $ */
 /*-
  * Copyright (c) 2011 Hans Petter Selasky. All rights reserved.
  *
@@ -109,6 +109,8 @@ SYSINIT_ENTRY(uniq##_entry, "sysuninit", (subs),	\
 #define	cold 0
 #define	BUS_PROBE_GENERIC 0
 #define	CALLOUT_RETURNUNLOCKED 0x1
+#undef ffs
+#define	ffs(x) __builtin_ffs(x)
 #undef va_list
 #define	va_list __builtin_va_list
 #undef va_size

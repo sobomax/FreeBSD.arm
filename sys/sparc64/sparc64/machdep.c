@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 278001 2015-01-31 21:43:46Z kib $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -811,7 +811,7 @@ get_mcontext(struct thread *td, mcontext_t *mc, int flags)
 }
 
 int
-set_mcontext(struct thread *td, const mcontext_t *mc)
+set_mcontext(struct thread *td, mcontext_t *mc)
 {
 	struct trapframe *tf;
 	struct pcb *pcb;

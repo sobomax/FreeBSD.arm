@@ -1,5 +1,5 @@
-# $FreeBSD: head/sys/modules/ata/atapci/chipsets/Makefile 183724 2008-10-09 12:56:57Z sos $
+# $FreeBSD: head/sys/modules/ata/atapci/chipsets/Makefile 280451 2015-03-24 18:09:07Z mav $
 
-SUBDIR += ataacard ataacerlabs ataadaptec ataahci ataamd ataati atacenatek atacypress atacyrix atahighpoint ataintel ataite atajmicron atamarvell atamicron atanational atanetcell atanvidia atapromise ataserverworks atasiliconimage atasis atavia
+SUBDIR += ataacard ataacerlabs ataamd ataati atacenatek atacypress atacyrix atahighpoint ataintel ataite atajmicron atamarvell atamicron atanational atanetcell atanvidia atapromise ataserverworks atasiliconimage atasis atavia
 
 .include <bsd.subdir.mk>

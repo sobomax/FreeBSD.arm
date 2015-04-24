@@ -28,6 +28,6 @@
 # SUCH DAMAGE.
 #
 #	@(#)rot13.sh	8.1 (Berkeley) 5/31/93
-# $FreeBSD: head/games/caesar/rot13.sh 216239 2010-12-06 19:12:51Z uqs $
+# $FreeBSD: head/games/caesar/rot13.sh 278616 2015-02-12 05:35:00Z cperciva $
 
-exec /usr/games/caesar 13 "$@"
+exec /usr/bin/caesar 13 "$@"

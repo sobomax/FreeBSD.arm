@@ -1,10 +1,9 @@
-# $FreeBSD: head/usr.sbin/moused/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/moused/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 PROG=	moused
 MAN=	moused.8
 
-DPADD=	${LIBUTIL}  ${LIBM}
-LDADD=	-lutil -lm
+LIBADD=	m util
 
 #BINMODE=4555
 #PRECIOUSPROG=

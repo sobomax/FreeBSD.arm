@@ -27,7 +27,7 @@
 /* General Register File for Rockchip RK30xx */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_grf.c 263711 2014-03-25 08:31:47Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_grf.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_grf.c 263711 2014-03-25 08:31:4
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include "rk30xx_grf.h"
 

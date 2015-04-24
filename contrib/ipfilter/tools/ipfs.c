@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/tools/ipfs.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/tools/ipfs.c 281143 2015-04-06 09:42:23Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -33,9 +33,6 @@
 #include <netinet/in_systm.h>
 #include <sys/time.h>
 #include <net/if.h>
-#if __FreeBSD_version >= 300000
-# include <net/if_var.h>
-#endif
 #include <netinet/ip.h>
 #include <netdb.h>
 #include <arpa/nameser.h>

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/md_promise.c 265054 2014-04-28 15:03:52Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/md_promise.c 279278 2015-02-25 10:18:11Z mav $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -1105,9 +1105,9 @@ g_raid_md_taste_promise(struct g_raid_md_object *md, struct g_class *mp,
 
 	/* Read metadata from device. */
 	meta = NULL;
-	vendor = 0xffff;
 	g_topology_unlock();
-	len = 2;
+	vendor = 0xffff;
+	len = sizeof(vendor);
 	if (pp->geom->rank == 1)
 		g_io_getattr("GEOM::hba_vendor", cp, &len, &vendor);
 	subdisks = promise_meta_read(cp, metaarr);

@@ -42,7 +42,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/vibes.c 254263 2013-08-12 23:30:01Z scottl $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/vibes.c 274035 2014-11-03 11:11:45Z bapt $");
 
 /* ------------------------------------------------------------------------- */
 /* Constants */
@@ -730,13 +730,11 @@ sv_attach(device_t dev) {
 
 	pci_enable_busmaster(dev);
 
-#if __FreeBSD_version > 500000
         if (pci_get_powerstate(dev) != PCI_POWERSTATE_D0) {
                 device_printf(dev, "chip is in D%d power mode "
                               "-- setting to D0\n", pci_get_powerstate(dev));
                 pci_set_powerstate(dev, PCI_POWERSTATE_D0);
         }
-#endif
 	sc->enh_rid  = SV_PCI_ENHANCED;
 	sc->enh_type = SYS_RES_IOPORT;
 	sc->enh_reg  = bus_alloc_resource(dev, sc->enh_type,

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netpfil/pf/pf_mtag.h 257215 2013-10-27 16:25:57Z glebius $	*/
+/*	$FreeBSD: head/sys/netpfil/pf/pf_mtag.h 278843 2015-02-16 07:01:02Z glebius $	*/
 /*
  * Copyright (c) 2001 Daniel Hartmeier
  * All rights reserved.
@@ -39,6 +39,7 @@
 #define	PF_TAG_TRANSLATE_LOCALHOST	0x04
 #define	PF_PACKET_LOOPED		0x08
 #define	PF_FASTFWD_OURS_PRESENT		0x10
+#define	PF_REASSEMBLED			0x20
 
 struct pf_mtag {
 	void		*hdr;		/* saved hdr pos in mbuf, for ECN */

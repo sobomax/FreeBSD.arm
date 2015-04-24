@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/udf/udf_vnops.c 248282 2013-03-14 20:28:26Z kib $
+ * $FreeBSD: head/sys/fs/udf/udf_vnops.c 277952 2015-01-30 22:01:45Z dim $
  */
 
 /* udf_vnops.c */
@@ -526,8 +526,9 @@ udf_transname(char *cs0string, char *destname, int len, struct udf_mnt *udfmp)
 		}
 
 		while (unilen > 0 && destleft > 0) {
-			udf_iconv->conv(udfmp->im_d2l, (const char **)&unibuf,
-				(size_t *)&unilen, (char **)&destname, &destleft);
+			udf_iconv->conv(udfmp->im_d2l, __DECONST(const char **,
+			    &unibuf), (size_t *)&unilen, (char **)&destname,
+			    &destleft);
 			/* Unconverted character found */
 			if (unilen > 0 && destleft > 0) {
 				*destname++ = '?';

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangfrontend/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libclangfrontend/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -11,6 +11,7 @@ SRCS=	ASTConsumers.cpp \
 	CacheTokens.cpp \
 	ChainedDiagnosticConsumer.cpp \
 	ChainedIncludesSource.cpp \
+	CodeGenOptions.cpp \
 	CompilerInstance.cpp \
 	CompilerInvocation.cpp \
 	CreateInvocationFromCommandLine.cpp \
@@ -26,17 +27,19 @@ SRCS=	ASTConsumers.cpp \
 	LangStandards.cpp \
 	LayoutOverrideSource.cpp \
 	LogDiagnosticPrinter.cpp \
+	ModuleDependencyCollector.cpp \
 	MultiplexConsumer.cpp \
 	PrintPreprocessedOutput.cpp \
 	SerializedDiagnosticPrinter.cpp \
+	SerializedDiagnosticReader.cpp \
 	TextDiagnostic.cpp \
 	TextDiagnosticBuffer.cpp \
 	TextDiagnosticPrinter.cpp \
-	VerifyDiagnosticConsumer.cpp \
-	Warnings.cpp
+	VerifyDiagnosticConsumer.cpp
 
 TGHDRS=	AttrList \
 	AttrParsedAttrList \
+	AttrVisitor \
 	Attrs \
 	CommentCommandList \
 	CommentNodes \

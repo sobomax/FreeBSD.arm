@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)pax.c	8.2 (Berkeley) 4/18/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/pax/pax.c 222177 2011-05-22 14:03:38Z uqs $");
+__FBSDID("$FreeBSD: head/bin/pax/pax.c 280206 2015-03-18 05:48:05Z eadler $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -85,6 +85,7 @@ int	vflag;			/* produce verbose output */
 int	Dflag;			/* same as uflag except inode change time */
 int	Hflag;			/* follow command line symlinks (write only) */
 int	Lflag;			/* follow symlinks when writing */
+int	Oflag;			/* limit to single volume */
 int	Xflag;			/* archive files with same device id only */
 int	Yflag;			/* same as Dflg except after name mode */
 int	Zflag;			/* same as uflg except after name mode */

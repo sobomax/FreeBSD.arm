@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libpam/modules/pam_passwdqc/Makefile 254960 2013-08-27 15:50:26Z will $
+# $FreeBSD: head/lib/libpam/modules/pam_passwdqc/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 SRCDIR=	${.CURDIR}/../../../../contrib/pam_modules/pam_passwdqc
 .PATH: ${SRCDIR}
@@ -10,8 +10,7 @@ MAN=	pam_passwdqc.8
 WARNS?=	2
 CFLAGS+= -I${SRCDIR}
 
-DPADD=	${LIBCRYPT}
-LDADD=	-lcrypt
+LIBADD+=	crypt
 
 .include <bsd.lib.mk>
 

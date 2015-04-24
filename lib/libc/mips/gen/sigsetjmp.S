@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/mips/gen/sigsetjmp.S 209231 2010-06-16 12:55:14Z jchandra $");
+__FBSDID("$FreeBSD: head/lib/libc/mips/gen/sigsetjmp.S 277877 2015-01-29 15:30:04Z emaste $");
 #include <machine/regnum.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 	ASMSTR("from: @(#)setjmp.s	8.1 (Berkeley) 6/4/93")
@@ -61,7 +61,7 @@ __FBSDID("$FreeBSD: head/lib/libc/mips/gen/sigsetjmp.S 209231 2010-06-16 12:55:1
 LEAF(sigsetjmp)
 	PIC_PROLOGUE(sigsetjmp)
 
-	bne	a1, 0x0, 1f			# do saving of signal mask?
+	bne	a1, zero, 1f			# do saving of signal mask?
 	PIC_TAILCALL(_setjmp)
 
 1:	PIC_TAILCALL(setjmp)

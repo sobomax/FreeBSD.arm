@@ -26,7 +26,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/sem_new.c 273604 2014-10-24 20:02:44Z jhb $
+ * $FreeBSD: head/lib/libc/gen/sem_new.c 277862 2015-01-28 22:42:56Z jilles $
  */
 
 #include "namespace.h"
@@ -439,8 +439,10 @@ _sem_post(sem_t *sem)
 
 	do {
 		count = sem->_kern._count;
-		if (USEM_COUNT(count) + 1 > SEM_VALUE_MAX)
-			return (EOVERFLOW);
+		if (USEM_COUNT(count) + 1 > SEM_VALUE_MAX) {
+			errno = EOVERFLOW;
+			return (-1);
+		}
 	} while (!atomic_cmpset_rel_int(&sem->_kern._count, count, count + 1));
 	if (count & USEM_HAS_WAITERS)
 		usem_wake(&sem->_kern);

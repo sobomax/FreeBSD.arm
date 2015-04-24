@@ -24,9 +24,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/file/flock/flock.c 268385 2014-07-08 08:11:52Z kib $
+ * $FreeBSD: head/tools/regression/file/flock/flock.c 277527 2015-01-22 09:25:31Z ngie $
  */
 
+#include <sys/param.h>
 #include <sys/file.h>
 #include <sys/time.h>
 #ifdef __FreeBSD__
@@ -52,6 +53,10 @@
 #endif
 #include <sys/cdefs.h>
 #else
+#ifndef nitems
+#define	nitems(x)	(sizeof((x)) / sizeof((x)[0]))
+#endif
+
 #ifndef __unused
 #ifdef __GNUC__
 #define	__unused	__attribute__((__unused__))
@@ -61,7 +66,7 @@
 #endif
 #endif
 
-int verbose = 0;
+static int verbose = 0;
 
 static int
 make_file(const char *pathname, off_t sz)
@@ -1519,7 +1524,7 @@ struct test {
 	int intr;		/* non-zero if the test interrupts a lock */
 };
 
-struct test tests[] = {
+static struct test tests[] = {
 	{	test1,		1,	0	},
 	{	test2,		2,	0	},
 	{	test3,		3,	1	},
@@ -1537,7 +1542,6 @@ struct test tests[] = {
 	{	test15,		15,	1	},
 	{	test16,		16,	1	},
 };
-int test_count = sizeof(tests) / sizeof(tests[0]);
 
 int
 main(int argc, const char *argv[])
@@ -1545,7 +1549,7 @@ main(int argc, const char *argv[])
 	int testnum;
 	int fd;
 	int nointr;
-	int i;
+	unsigned i;
 	struct sigaction sa;
 	int test_argc;
 	const char **test_argv;
@@ -1583,7 +1587,7 @@ main(int argc, const char *argv[])
 	}
 #endif
 
-	for (i = 0; i < test_count; i++) {
+	for (i = 0; i < nitems(tests); i++) {
 		if (tests[i].intr && nointr)
 			continue;
 		if (!testnum || tests[i].num == testnum)

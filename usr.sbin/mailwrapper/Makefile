@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/mailwrapper/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/mailwrapper/Makefile 275054 2014-11-25 16:57:27Z bapt $
 
 .include <src.opts.mk>
 
@@ -6,8 +6,7 @@
 PROG=	mailwrapper
 MAN=	mailwrapper.8
 
-DPADD=	${LIBUTIL}
-LDADD=	-lutil
+LIBADD=	util
 .endif
 
 .if ${MK_MAILWRAPPER} != "no" || ${MK_SENDMAIL} != "no"

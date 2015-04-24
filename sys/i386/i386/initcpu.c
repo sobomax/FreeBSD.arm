@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/initcpu.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/initcpu.c 281495 2015-04-13 15:22:45Z kib $");
 
 #include "opt_cpu.h"
 
@@ -107,6 +107,7 @@ u_int	cpu_mon_mwait_flags;	/* MONITOR/MWAIT flags (CPUID.05H.ECX) */
 u_int	cpu_mon_min_size;	/* MONITOR minimum range size, bytes */
 u_int	cpu_mon_max_size;	/* MONITOR minimum range size, bytes */
 u_int	cyrix_did;		/* Device ID of Cyrix CPU */
+u_int	cpu_maxphyaddr;		/* Max phys addr width in bits */
 
 SYSCTL_UINT(_hw, OID_AUTO, via_feature_rng, CTLFLAG_RD,
 	&via_feature_rng, 0, "VIA RNG feature available in CPU");
@@ -783,7 +784,7 @@ initializecpu(void)
 			init_transmeta();
 			break;
 		}
-#ifdef PAE
+#if defined(PAE) || defined(PAE_TABLES)
 		if ((amd_feature & AMDID_NX) != 0) {
 			uint64_t msr;
 

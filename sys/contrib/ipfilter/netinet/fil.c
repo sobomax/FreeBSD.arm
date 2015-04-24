@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/fil.c 272552 2014-10-05 03:45:19Z cy $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/fil.c 280971 2015-04-01 22:26:39Z glebius $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -139,7 +139,7 @@ extern struct timeout ipf_slowtimer_ch;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)fil.c	1.36 6/5/96 (C) 1993-2000 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/fil.c 272552 2014-10-05 03:45:19Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/fil.c 280971 2015-04-01 22:26:39Z glebius $";
 /* static const char rcsid[] = "@(#)$Id: fil.c,v 2.243.2.125 2007/10/10 09:27:20 darrenr Exp $"; */
 #endif
 
@@ -252,7 +252,7 @@ static const	struct	optlist	ipopts[20] = {
 };
 
 #ifdef USE_INET6
-static struct optlist ip6exthdr[] = {
+static const struct optlist ip6exthdr[] = {
 	{ IPPROTO_HOPOPTS,		0x000001 },
 	{ IPPROTO_IPV6,			0x000002 },
 	{ IPPROTO_ROUTING,		0x000004 },
@@ -6086,23 +6086,24 @@ ipf_updateipid(fin)
 	u_32_t sumd, sum;
 	ip_t *ip;
 
+	ip = fin->fin_ip;
+	ido = ntohs(ip->ip_id);
 	if (fin->fin_off != 0) {
 		sum = ipf_frag_ipidknown(fin);
 		if (sum == 0xffffffff)
 			return -1;
 		sum &= 0xffff;
 		id = (u_short)sum;
+		ip->ip_id = htons(id);
 	} else {
-		id = ipf_nextipid(fin);
-		if (fin->fin_off == 0 && (fin->fin_flx & FI_FRAG) != 0)
+		ip_fillid(ip);
+		id = ntohs(ip->ip_id);
+		if ((fin->fin_flx & FI_FRAG) != 0)
 			(void) ipf_frag_ipidnew(fin, (u_32_t)id);
 	}
 
-	ip = fin->fin_ip;
-	ido = ntohs(ip->ip_id);
 	if (id == ido)
 		return 0;
-	ip->ip_id = htons(id);
 	CALC_SUMD(ido, id, sumd);	/* DESTRUCTIVE MACRO! id,ido change */
 	sum = (~ntohs(ip->ip_sum)) & 0xffff;
 	sum += sumd;

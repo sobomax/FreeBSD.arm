@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_semaphore.c 254885 2013-08-25 19:37:15Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_semaphore.c 280183 2015-03-17 18:50:33Z dumbbell $");
 
 /*
  * Authors:
@@ -41,7 +41,7 @@ int radeon_semaphore_create(struct radeon_device *rdev,
 	int r;
 
 	*semaphore = malloc(sizeof(struct radeon_semaphore),
-	    DRM_MEM_DRIVER, M_WAITOK);
+	    DRM_MEM_DRIVER, M_NOWAIT);
 	if (*semaphore == NULL) {
 		return -ENOMEM;
 	}

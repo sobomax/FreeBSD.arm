@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: head/sys/netinet/tcp_var.h 273850 2014-10-30 08:53:56Z jch $
+ * $FreeBSD: head/sys/netinet/tcp_var.h 281599 2015-04-16 10:00:06Z jch $
  */
 
 #ifndef _NETINET_TCP_VAR_H_
@@ -200,13 +200,12 @@ struct tcpcb {
 	u_int	t_keepcnt;		/* number of keepalives before close */
 
 	u_int	t_tsomax;		/* TSO total burst length limit in bytes */
+	u_int	t_tsomaxsegcount;	/* TSO maximum segment count */
+	u_int	t_tsomaxsegsize;	/* TSO maximum segment size in bytes */
 	u_int	t_pmtud_saved_maxopd;	/* pre-blackhole MSS */
 	u_int	t_flags2;		/* More tcpcb flags storage */
 
-	uint32_t t_ispare[6];		/* 5 UTO, 1 TBD */
-	uint32_t t_tsomaxsegcount;	/* TSO maximum segment count */
-	uint32_t t_tsomaxsegsize;	/* TSO maximum segment size in bytes */
-
+	uint32_t t_ispare[8];		/* 5 UTO, 3 TBD */
 	void	*t_pspare2[4];		/* 1 TCP_SIGNATURE, 3 TBD */
 	uint64_t _pad[6];		/* 6 TBD (1-2 CC/RTT?) */
 };
@@ -358,6 +357,8 @@ struct tcptw {
 	u_int		t_starttime;
 	int		tw_time;
 	TAILQ_ENTRY(tcptw) tw_2msl;
+	void		*tw_pspare;	/* TCP_SIGNATURE */
+	u_int		*tw_spare;	/* TCP_SIGNATURE */
 };
 
 #define	intotcpcb(ip)	((struct tcpcb *)(ip)->inp_ppcb)
@@ -707,8 +708,9 @@ void	 tcp_slowtimo(void);
 struct tcptemp *
 	 tcpip_maketemplate(struct inpcb *);
 void	 tcpip_fillheaders(struct inpcb *, void *, void *);
-void	 tcp_timer_activate(struct tcpcb *, int, u_int);
-int	 tcp_timer_active(struct tcpcb *, int);
+void	 tcp_timer_activate(struct tcpcb *, uint32_t, u_int);
+int	 tcp_timer_active(struct tcpcb *, uint32_t);
+void	 tcp_timer_stop(struct tcpcb *, uint32_t);
 void	 tcp_trace(short, short, struct tcpcb *, void *, struct tcphdr *, int);
 /*
  * All tcp_hc_* functions are IPv4 and IPv6 (via in_conninfo)

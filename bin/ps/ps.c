@@ -47,7 +47,7 @@ static char sccsid[] = "@(#)ps.c	8.4 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/ps/ps.c 265229 2014-05-02 15:05:47Z bdrewery $");
+__FBSDID("$FreeBSD: head/bin/ps/ps.c 277979 2015-01-31 15:41:01Z pfg $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -178,7 +178,7 @@ main(int argc, char *argv[])
 	KINFO *kinfo = NULL, *next_KINFO;
 	KINFO_STR *ks;
 	struct varent *vent;
-	struct winsize ws;
+	struct winsize ws = { .ws_row = 0 };
 	const char *nlistf, *memf, *fmtstr, *str;
 	char *cols;
 	int all, ch, elem, flag, _fmt, i, lineno, linelen, left;

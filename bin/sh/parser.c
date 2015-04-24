@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)parser.c	8.7 (Berkeley) 5/16/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/parser.c 273276 2014-10-19 11:59:15Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/parser.c 278820 2015-02-15 21:47:43Z jilles $");
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -1879,6 +1879,8 @@ synerror(const char *msg)
 {
 	if (commandname)
 		outfmt(out2, "%s: %d: ", commandname, startlinno);
+	else if (arg0)
+		outfmt(out2, "%s: ", arg0);
 	outfmt(out2, "Syntax error: %s\n", msg);
 	error((char *)NULL);
 }
@@ -1938,7 +1940,7 @@ getprompt(void *unused __unused)
 	 */
 	switch (whichprompt) {
 	case 0:
-		fmt = nullstr;
+		fmt = "";
 		break;
 	case 1:
 		fmt = ps1val();

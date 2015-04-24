@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libdevinfo/devinfo.h 218505 2011-02-10 04:53:09Z imp $
+ *	$FreeBSD: head/lib/libdevinfo/devinfo.h 278299 2015-02-05 22:42:44Z jhb $
  */
 
 #ifndef _DEVINFO_H_INCLUDED
@@ -50,7 +50,7 @@ struct devinfo_dev {
 	char			*dd_location;	/* Where bus thinks dev at */
 	uint32_t		dd_devflags;	/* API flags */
 	uint16_t		dd_flags;	/* internal dev flags */
-	devinfo_state_t		dd_state;	/* attacement state of dev */
+	devinfo_state_t		dd_state;	/* attachment state of dev */
 };
 
 struct devinfo_rman {

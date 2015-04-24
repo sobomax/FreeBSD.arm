@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/mips/dtrace_subr.c 268600 2014-07-14 04:38:17Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/mips/dtrace_subr.c 276142 2014-12-23 15:38:19Z markj $
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cddl/dev/dtrace/mips/dtrace_subr.c 268600 2014-07-14 04:38:17Z markj $");
+__FBSDID("$FreeBSD: head/sys/cddl/dev/dtrace/mips/dtrace_subr.c 276142 2014-12-23 15:38:19Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -137,11 +137,8 @@ dtrace_gethrestime(void)
 
 /* Function to handle DTrace traps during probes. See amd64/amd64/trap.c */
 int
-dtrace_trap(struct trapframe *frame)
+dtrace_trap(struct trapframe *frame, u_int type)
 {
-	u_int type;
-
-	type = (trapframe->cause & MIPS_CR_EXC_CODE) >> MIPS_CR_EXC_CODE_SHIFT;
 
 	/*
 	 * A trap can occur while DTrace executes a probe. Before

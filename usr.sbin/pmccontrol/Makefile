@@ -1,12 +1,11 @@
 #
-# $FreeBSD: head/usr.sbin/pmccontrol/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/pmccontrol/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 
 PROG=	pmccontrol
 MAN=	pmccontrol.8
 
-DPADD=	${LIBPMC}
-LDADD=	-lpmc
+LIBADD+=	pmc
 
 SRCS=	pmccontrol.c
 

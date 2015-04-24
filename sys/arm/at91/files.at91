@@ -1,5 +1,5 @@
-# $FreeBSD: head/sys/arm/at91/files.at91 271548 2014-09-13 19:59:16Z ian $
-arm/arm/cpufunc_asm_arm9.S	standard
+# $FreeBSD: head/sys/arm/at91/files.at91 280831 2015-03-29 22:43:39Z andrew $
+arm/arm/bus_space_generic.c	standard
 arm/at91/at91_machdep.c		standard
 arm/at91/at91_aic.c		standard
 arm/at91/at91.c			standard

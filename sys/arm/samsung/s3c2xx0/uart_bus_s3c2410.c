@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_bus_s3c2410.c 272103 2014-09-25 11:38:26Z gavin $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_bus_s3c2410.c 279724 2015-03-07 15:24:15Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -18,6 +18,8 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/s3c2xx0/uart_bus_s3c2410.c 272103 2014-
 #include <arm/samsung/s3c2xx0/s3c24x0reg.h>
 
 #include "uart_if.h"
+
+extern struct uart_class uart_s3c2410_class;
 
 static int uart_s3c2410_probe(device_t dev);
 

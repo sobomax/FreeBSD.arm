@@ -1,6 +1,6 @@
 #	$NetBSD: Makefile,v 1.1.1.1 1995/10/08 23:08:36 thorpej Exp $
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/fsdb/Makefile 268804 2014-07-17 18:24:34Z brooks $
+# $FreeBSD: head/sbin/fsdb/Makefile 275030 2014-11-25 11:23:12Z bapt $
 
 PROG=	fsdb
 MAN=	fsdb.8
@@ -9,8 +9,7 @@ SRCS=	fsdb.c fsdbutil.c \
 	pass5.c setup.c utilities.c ffs_subr.c ffs_tables.c globs.c
 CFLAGS+= -I${.CURDIR}/../fsck_ffs
 WARNS?= 2
-LDADD=	-ledit -ltermcapw
-DPADD=	${LIBEDIT} ${LIBTERMCAPW}
+LIBADD=	edit
 .PATH:	${.CURDIR}/../fsck_ffs ${.CURDIR}/../../sys/ufs/ffs
 
 .include <bsd.prog.mk>

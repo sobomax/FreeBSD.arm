@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)ttyname.c	8.2 (Berkeley) 1/27/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/ttyname.c 188497 2009-02-11 20:24:59Z ed $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/ttyname.c 278038 2015-02-01 22:50:33Z jilles $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -65,7 +65,7 @@ ttyname_r(int fd, char *buf, size_t len)
 
 	/* Must be a terminal. */
 	if (!isatty(fd))
-		return (ENOTTY);
+		return (errno);
 	/* Must have enough room */
 	if (len <= sizeof(_PATH_DEV))
 		return (ERANGE);
@@ -73,7 +73,7 @@ ttyname_r(int fd, char *buf, size_t len)
 	strcpy(buf, _PATH_DEV);
 	used = strlen(buf);
 	if (fdevname_r(fd, buf + used, len - used) == NULL)
-		return (ENOTTY);
+		return (errno == EINVAL ? ERANGE : errno);
 	return (0);
 }
 

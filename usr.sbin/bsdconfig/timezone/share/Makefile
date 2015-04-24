@@ -1,12 +1,9 @@
-# $FreeBSD: head/usr.sbin/bsdconfig/timezone/share/Makefile 240684 2012-09-18 22:28:42Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/timezone/share/Makefile 274073 2014-11-04 00:14:38Z dteske $
 
 NO_OBJ=
 
 FILESDIR=	${SHAREDIR}/bsdconfig/timezone
 FILES=		continents.subr countries.subr iso3166.subr menus.subr \
 		zones.subr
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${FILESDIR}
 
 .include <bsd.prog.mk>

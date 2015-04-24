@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/audit/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/audit/Makefile 275054 2014-11-25 16:57:27Z bapt $
 #
 
 OPENBSMDIR=${.CURDIR}/../../contrib/openbsm
@@ -10,8 +10,7 @@ CFLAGS+=	-I${OPENBSMDIR}
 PROG=	audit
 MAN=	audit.8
 
-DPADD=	${LIBBSM}
-LDADD=	-lbsm
+LIBADD=	bsm
 
 WARNS?=	5
 

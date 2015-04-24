@@ -1,10 +1,9 @@
-# $FreeBSD: head/usr.bin/smbutil/Makefile 201386 2010-01-02 10:27:05Z ed $
+# $FreeBSD: head/usr.bin/smbutil/Makefile 281333 2015-04-09 21:30:11Z bapt $
 
 PROG=	smbutil
 SRCS=	smbutil.c dumptree.c login.c lookup.c view.c print.c
 
-DPADD=	${LIBSMB} ${LIBKICONV}
-LDADD=	-lsmb -lkiconv
+LIBADD=	smb
 
 CONTRIBDIR=	${.CURDIR}/../../contrib/smbfs
 CFLAGS+=	-I${CONTRIBDIR}/include

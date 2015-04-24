@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/pw/Makefile 272445 2014-10-02 19:53:37Z brd $
+# $FreeBSD: head/usr.sbin/pw/Makefile 274986 2014-11-24 21:49:01Z brd $
 
 PROG=	pw
 MAN=	pw.conf.5 pw.8
@@ -8,8 +8,7 @@ SRCS=	pw.c pw_conf.c pw_user.c pw_group.c pw_log.c pw_nis.c pw_vpw.c \
 
 WARNS?=	2
 
-DPADD=	${LIBCRYPT} ${LIBUTIL}
-LDADD=	-lcrypt -lutil
+LIBADD=	crypt util
 
 .include <src.opts.mk>
 

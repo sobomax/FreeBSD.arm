@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)system.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/system.c 255129 2013-09-01 19:59:54Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/system.c 276630 2015-01-03 18:38:46Z kib $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -46,8 +46,17 @@ __FBSDID("$FreeBSD: head/lib/libc/stdlib/system.c 255129 2013-09-01 19:59:54Z ji
 #include "un-namespace.h"
 #include "libc_private.h"
 
+#pragma weak system
 int
-__system(const char *command)
+system(const char *command)
+{
+
+	return (((int (*)(const char *))
+	    __libc_interposing[INTERPOS_system])(command));
+}
+
+int
+__libc_system(const char *command)
 {
 	pid_t pid, savedpid;
 	int pstat;
@@ -95,5 +104,5 @@ __system(const char *command)
 	return(pid == -1 ? -1 : pstat);
 }
 
-__weak_reference(__system, system);
-__weak_reference(__system, _system);
+__weak_reference(__libc_system, __system);
+__weak_reference(__libc_system, _system);

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powermac/pmuvar.h 259284 2013-12-13 02:37:35Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/powermac/pmuvar.h 274733 2014-11-20 03:23:33Z jhibbits $
  *
  */
 
@@ -99,6 +99,7 @@
 
 /* Bits from PMU_GET_LID_STATE or PMU_INT_ENVIRONMENT on core99 */
 #define PMU_ENV_LID_CLOSED	0x01	/* The lid is closed */
+#define PMU_ENV_POWER		0x08	/* Power Button pressed */
 
 /* PMU PMU_POWER_EVENTS commands */
 enum {

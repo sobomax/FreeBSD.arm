@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/nxge/Makefile 242731 2012-11-08 01:35:02Z kevlo $
+# $FreeBSD: head/sys/modules/nxge/Makefile 276606 2015-01-03 03:35:18Z imp $
 
 .PATH: ${.CURDIR}/../../dev/nxge
 .PATH: ${.CURDIR}/../../dev/nxge/xgehal
@@ -48,4 +48,3 @@ CWARNFLAGS.xgehal-channel.c=	${NO_WSELF_ASSIGN}
 CWARNFLAGS.xgehal-fifo.c=	${NO_WSELF_ASSIGN}
 CWARNFLAGS.xgehal-stats.c=	${NO_WSELF_ASSIGN}
 CWARNFLAGS.xgehal-mgmt.c=	${NO_WSELF_ASSIGN}
-CWARNFLAGS+=			${CWARNFLAGS.${.IMPSRC:T}}

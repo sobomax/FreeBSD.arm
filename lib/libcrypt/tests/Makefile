@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcrypt/tests/Makefile 270144 2014-08-18 17:35:39Z ngie $
+# $FreeBSD: head/lib/libcrypt/tests/Makefile 275024 2014-11-25 11:07:26Z bapt $
 
 # exercise libcrypt
 
@@ -7,7 +7,6 @@ TESTSDIR= ${TESTSBASE}/lib/libcrypt
 ATF_TESTS_C= crypt_tests
 
 CFLAGS+= -I${.CURDIR:H}
-DPADD+=	${LIBCRYPT}
-LDADD+= -lcrypt
+LIBADD=	crypt
 
 .include <bsd.test.mk>

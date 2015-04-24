@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mn/if_mn.c 254263 2013-08-12 23:30:01Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/mn/if_mn.c 276750 2015-01-06 12:59:37Z rwatson $");
 
 /*
  * Stuff to describe the MUNIC32X and FALC54 chips.
@@ -1165,8 +1165,7 @@ mn_rx_intr(struct mn_softc *sc, u_int32_t vector)
 				mn_free_desc(dp);
 				return; /* ENOBUFS */
 			}
-			MCLGET(m, M_NOWAIT);
-			if((m->m_flags & M_EXT) == 0) {
+			if (!(MCLGET(m, M_NOWAIT))) {
 				mn_free_desc(dp);
 				m_freem(m);
 				return; /* ENOBUFS */

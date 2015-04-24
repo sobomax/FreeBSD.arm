@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/cam.h 259397 2013-12-14 22:07:40Z nwhitehorn $
+ * $FreeBSD: head/sys/cam/cam.h 278111 2015-02-02 20:23:05Z mav $
  */
 
 #ifndef _CAM_CAM_H
@@ -121,7 +121,8 @@ enum {
 	SF_QUIET_IR		= 0x04,	/* Be quiet about Illegal Request reponses */
 	SF_PRINT_ALWAYS		= 0x08,	/* Always print error status. */
 	SF_NO_RECOVERY		= 0x10,	/* Don't do active error recovery. */
-	SF_NO_RETRY		= 0x20	/* Don't do any retries. */
+	SF_NO_RETRY		= 0x20,	/* Don't do any retries. */
+	SF_RETRY_BUSY		= 0x40	/* Retry BUSY status. */
 };
 
 /* CAM  Status field values */

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_cue.c 271832 2014-09-18 21:09:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_cue.c 276701 2015-01-05 15:04:17Z hselasky $");
 
 /*
  * CATC USB-EL1210A USB to ethernet driver. Used in the CATC Netmate
@@ -129,7 +129,7 @@ static void	cue_reset(struct cue_softc *);
 static int cue_debug = 0;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, cue, CTLFLAG_RW, 0, "USB cue");
-SYSCTL_INT(_hw_usb_cue, OID_AUTO, debug, CTLFLAG_RW, &cue_debug, 0,
+SYSCTL_INT(_hw_usb_cue, OID_AUTO, debug, CTLFLAG_RWTUN, &cue_debug, 0,
     "Debug level");
 #endif
 

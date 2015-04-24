@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/citrus_prop.c 263986 2014-04-01 10:36:11Z tijl $ */
+/* $FreeBSD: head/lib/libc/iconv/citrus_prop.c 281798 2015-04-20 22:09:50Z pfg $ */
 /* $NetBSD: citrus_prop.c,v 1.4 2011/03/30 08:22:01 jruoho Exp $ */
 
 /*-
@@ -293,8 +293,10 @@ done:
 		}
 		_memstream_ungetc(ms, ch);
 		errnum = _citrus_prop_read_character_common(ms, &ch);
-		if (errnum != 0)
+		if (errnum != 0) {
+			free(s);
 			return (errnum);
+		}
 		s[n] = ch;
 		++n, --m;
 	}

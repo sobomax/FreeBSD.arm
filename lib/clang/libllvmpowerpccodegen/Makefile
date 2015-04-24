@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmpowerpccodegen/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmpowerpccodegen/Makefile 280031 2015-03-15 13:31:13Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,14 +8,12 @@ SRCDIR=	lib/Target/PowerPC
 SRCS=	PPCAsmPrinter.cpp \
 	PPCBranchSelector.cpp \
 	PPCCTRLoops.cpp \
-	PPCCodeEmitter.cpp \
-	PPCFastISel.cpp \
+ 	PPCFastISel.cpp \
 	PPCFrameLowering.cpp \
 	PPCHazardRecognizers.cpp \
 	PPCISelDAGToDAG.cpp \
 	PPCISelLowering.cpp \
 	PPCInstrInfo.cpp \
-	PPCJITInfo.cpp \
 	PPCMCInstLower.cpp \
 	PPCMachineFunctionInfo.cpp \
 	PPCRegisterInfo.cpp \

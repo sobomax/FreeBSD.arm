@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/versatile/pl050.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/versatile/pl050.c 281085 2015-04-04 21:34:26Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: head/sys/arm/versatile/pl050.c 261410 2014-02-02 19:17:28Z i
 #include <dev/kbd/kbdreg.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
 #include <dev/kbd/kbdtables.h>
 

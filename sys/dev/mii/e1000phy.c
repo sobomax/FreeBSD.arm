@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/e1000phy.c 271073 2014-09-04 01:04:37Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/e1000phy.c 277105 2015-01-13 06:22:55Z glebius $");
 
 /*
  * driver for the Marvell 88E1000 series external 1000/100/10-BT PHY.
@@ -132,14 +132,12 @@ static int
 e1000phy_attach(device_t dev)
 {
 	struct mii_softc *sc;
-	if_t ifp;
 
 	sc = device_get_softc(dev);
 
 	mii_phy_dev_attach(dev, MIIF_NOMANPAUSE, &e1000phy_funcs, 0);
 
-	ifp = sc->mii_pdata->mii_ifp;
-	if (strcmp(if_getdname(ifp), "msk") == 0 &&
+	if (mii_dev_mac_match(dev, "msk") &&
 	    (sc->mii_flags & MIIF_MACPRIV0) != 0)
 		sc->mii_flags |= MIIF_PHYPRIV0;
 

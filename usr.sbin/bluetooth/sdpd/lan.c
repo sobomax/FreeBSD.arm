@@ -26,11 +26,12 @@
  * SUCH DAMAGE.
  *
  * $Id: lan.c,v 1.5 2004/01/13 01:54:39 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/sdpd/lan.c 177358 2008-03-18 18:21:39Z emax $
+ * $FreeBSD: head/usr.sbin/bluetooth/sdpd/lan.c 281210 2015-04-07 16:48:23Z takawata $
  */
 
 #include <arpa/inet.h>
 #include <sys/queue.h>
+#define L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <sdp.h>
 #include <stdio.h>

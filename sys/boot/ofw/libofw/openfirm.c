@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/ofw/libofw/openfirm.c 215577 2010-11-20 19:23:16Z andreast $");
+__FBSDID("$FreeBSD: head/sys/boot/ofw/libofw/openfirm.c 279799 2015-03-09 02:57:34Z nwhitehorn $");
 
 #include <machine/stdarg.h>
 
@@ -727,6 +727,20 @@ OF_exit()
 	openfirmware(&args);
 	for (;;)			/* just in case */
 		;
+}
+
+void
+OF_quiesce()
+{
+	static struct {
+		cell_t name;
+		cell_t nargs;
+		cell_t nreturns;
+	} args = {
+		(cell_t)"quiesce",
+	};
+
+	openfirmware(&args);
 }
 
 /* Free <size> bytes starting at <virt>, then call <entry> with <arg>. */

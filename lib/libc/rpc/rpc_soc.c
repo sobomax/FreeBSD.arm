@@ -41,7 +41,7 @@
 static char sccsid[] = "@(#)rpc_soc.c 1.41 89/05/02 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_soc.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_soc.c 278932 2015-02-18 03:33:17Z pfg $");
 
 #ifdef PORTMAP
 /*
@@ -462,12 +462,10 @@ clntunix_create(raddr, prog, vers, sockp, sendsz, recvsz)
 	u_int recvsz;
 {
 	struct netbuf *svcaddr;
-	struct netconfig *nconf;
 	CLIENT *cl;
 	int len;
 
 	cl = NULL;
-	nconf = NULL;
 	svcaddr = NULL;
 	if ((raddr->sun_len == 0) ||
 	   ((svcaddr = malloc(sizeof(struct netbuf))) == NULL ) ||

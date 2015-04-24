@@ -1,6 +1,7 @@
-# $FreeBSD: head/sys/arm/freescale/imx/std.imx51 271550 2014-09-13 20:09:34Z ian $
+# $FreeBSD: head/sys/arm/freescale/imx/std.imx51 281909 2015-04-23 22:20:43Z andrew $
 machine		arm	armv6
 cpu 		CPU_CORTEXA
+makeoptions	CONF_CFLAGS="-march=armv7a"
 makeoptions	ARM_LITTLE_ENDIAN
 options		ARM_L2_PIPT
 
@@ -12,5 +13,4 @@ options		PHYSADDR=0x90000000
 
 device  	fdt_pinctrl
 
-files "../freescale/imx/files.imx51"
-
+files "../freescale/imx/files.imx5"

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/2/95
-# $FreeBSD: head/libexec/smrsh/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/libexec/smrsh/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/smrsh
@@ -9,11 +9,7 @@ SRCS=	smrsh.c
 MAN=	smrsh.8
 CFLAGS+=-I${SENDMAIL_DIR}/src -I${SENDMAIL_DIR}/include -I.
 
-LIBSMDIR=	${.OBJDIR}/../../lib/libsm
-LIBSM=		${LIBSMDIR}/libsm.a
-
-DPADD=	${LIBSM}
-LDADD=	${LIBSM}
+LIBADD=	sm
 
 WARNS?=	2
 

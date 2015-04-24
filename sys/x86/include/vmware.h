@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/vmware.h 273800 2014-10-28 19:17:44Z jhb $
+ * $FreeBSD: head/sys/x86/include/vmware.h 278749 2015-02-14 09:00:12Z kib $
  */
 
 #ifndef _X86_VMWARE_H_
@@ -31,8 +31,13 @@
 
 #define	VMW_HVMAGIC		0x564d5868
 #define	VMW_HVPORT		0x5658
+
 #define	VMW_HVCMD_GETVERSION	10
 #define	VMW_HVCMD_GETHZ		45
+#define	VMW_HVCMD_GETVCPU_INFO	68
+
+#define	VMW_VCPUINFO_LEGACY_X2APIC	(1 << 3)
+#define	VMW_VCPUINFO_VCPU_RESERVED	(1 << 31)
 
 static __inline void
 vmware_hvcall(u_int cmd, u_int *p)

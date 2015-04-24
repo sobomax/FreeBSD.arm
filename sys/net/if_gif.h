@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/net/if_gif.h 273087 2014-10-14 13:31:47Z ae $	*/
+/*	$FreeBSD: head/sys/net/if_gif.h 276901 2015-01-10 03:13:16Z ae $	*/
 /*	$KAME: if_gif.h,v 1.17 2000/09/11 11:36:41 sumikawa Exp $	*/
 
 /*-
@@ -90,9 +90,6 @@ struct gif_softc {
 #define	GIF_MTU_MIN	(1280)	/* Minimum MTU */
 #define	GIF_MTU_MAX	(8192)	/* Maximum MTU */
 
-#define	MTAG_GIF	1080679712
-#define	MTAG_GIF_CALLED	0
-
 struct etherip_header {
 #if BYTE_ORDER == LITTLE_ENDIAN
 	u_int	eip_resvl:4,	/* reserved */
@@ -114,6 +111,16 @@ void gif_input(struct mbuf *, struct ifnet *, int, uint8_t);
 int gif_output(struct ifnet *, struct mbuf *, const struct sockaddr *,
 	       struct route *);
 int gif_encapcheck(const struct mbuf *, int, int, void *);
+#ifdef INET
+int in_gif_output(struct ifnet *, struct mbuf *, int, uint8_t);
+int in_gif_encapcheck(const struct mbuf *, int, int, void *);
+int in_gif_attach(struct gif_softc *);
+#endif
+#ifdef INET6
+int in6_gif_output(struct ifnet *, struct mbuf *, int, uint8_t);
+int in6_gif_encapcheck(const struct mbuf *, int, int, void *);
+int in6_gif_attach(struct gif_softc *);
+#endif
 #endif /* _KERNEL */
 
 #define GIFGOPTS	_IOWR('i', 150, struct ifreq)

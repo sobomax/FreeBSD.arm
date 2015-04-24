@@ -1,5 +1,5 @@
 #	$OpenBSD: Makefile,v 1.13 2014/05/12 19:11:19 espie Exp $
-# $FreeBSD: head/usr.bin/m4/Makefile 269660 2014-08-07 09:38:27Z bapt $
+# $FreeBSD: head/usr.bin/m4/Makefile 275042 2014-11-25 14:29:10Z bapt $
 
 # -DEXTENDED 
 # 	if you want the paste & spaste macros.
@@ -8,8 +8,7 @@
 
 PROG=	m4
 CFLAGS+=-DEXTENDED -I${.CURDIR} -I${.CURDIR}/../../lib/libohash
-DPADD=	${LIBY} ${LIBL} ${LIBM} ${LIBOHASH}
-LDADD=	-ly -ll -lm ${LDOHASH}
+LIBADD=	y l m ohash
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 

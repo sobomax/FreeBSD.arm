@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: head/sys/netpfil/pf/pf.h 270022 2014-08-15 14:02:24Z glebius $
+ *	$FreeBSD: head/sys/netpfil/pf/pf.h 278843 2015-02-16 07:01:02Z glebius $
  */
 
 #ifndef	_NET_PF_H_
@@ -43,7 +43,7 @@
 #endif
 #endif
 
-enum	{ PF_INOUT, PF_IN, PF_OUT };
+enum	{ PF_INOUT, PF_IN, PF_OUT, PF_FWD };
 enum	{ PF_PASS, PF_DROP, PF_SCRUB, PF_NOSCRUB, PF_NAT, PF_NONAT,
 	  PF_BINAT, PF_NOBINAT, PF_RDR, PF_NORDR, PF_SYNPROXY_DROP, PF_DEFER };
 enum	{ PF_RULESET_SCRUB, PF_RULESET_FILTER, PF_RULESET_NAT,

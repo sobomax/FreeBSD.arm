@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013 Advanced Computing Technologies LLC
+ * Copyright (c) 2013 Hudson River Trading LLC
  * Written by: John H. Baldwin <jhb@FreeBSD.org>
  * All rights reserved.
  *
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/libc/stdio/test-open_wmemstream.c 247411 2013-02-27 19:50:46Z jhb $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/libc/stdio/test-open_wmemstream.c 281887 2015-04-23 14:22:20Z jhb $");
 
 #include <err.h>
 #include <errno.h>

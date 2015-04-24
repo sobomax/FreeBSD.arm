@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/aim/uma_machdep.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/powerpc/aim/uma_machdep.c 280957 2015-04-01 12:42:26Z rstone $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -50,7 +50,7 @@ SYSCTL_INT(_hw, OID_AUTO, uma_mdpages, CTLFLAG_RD, &hw_uma_mdpages, 0,
 	   "UMA MD pages in use");
 
 void *
-uma_small_alloc(uma_zone_t zone, int bytes, u_int8_t *flags, int wait)
+uma_small_alloc(uma_zone_t zone, vm_size_t bytes, u_int8_t *flags, int wait)
 {
 	void *va;
 	vm_page_t m;
@@ -82,7 +82,7 @@ uma_small_alloc(uma_zone_t zone, int bytes, u_int8_t *flags, int wait)
 }
 
 void
-uma_small_free(void *mem, int size, u_int8_t flags)
+uma_small_free(void *mem, vm_size_t size, u_int8_t flags)
 {
 	vm_page_t m;
 

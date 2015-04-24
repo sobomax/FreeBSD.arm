@@ -1,6 +1,6 @@
 # Makefile for libopie
 #
-# $FreeBSD: head/lib/libopie/Makefile 269961 2014-08-14 04:42:09Z ache $
+# $FreeBSD: head/lib/libopie/Makefile 275024 2014-11-25 11:07:26Z bapt $
 #
 OPIE_DIST?=	${.CURDIR}/../../contrib/opie
 DIST_DIR=	${OPIE_DIST}/${.CURDIR:T}
@@ -27,8 +27,7 @@ CFLAGS+=	-DINSECURE_OVERRIDE -DPATH_ACCESS_FILE=${ACCESSFILE}
 
 WARNS?=	0
 
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 MAN=	${OPIE_DIST}/opie.4 ${OPIE_DIST}/opiekeys.5 ${OPIE_DIST}/opieaccess.5
 

@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/cxgb_main.c 272222 2014-09-27 18:35:16Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/cxgb_main.c 276959 2015-01-11 07:51:58Z np $");
 
 #include "opt_inet.h"
 
@@ -2289,7 +2289,8 @@ check_link_status(void *arg, int pending)
 
 	t3_link_changed(sc, pi->port_id);
 
-	if (pi->link_fault || !(pi->phy.caps & SUPPORTED_LINK_IRQ))
+	if (pi->link_fault || !(pi->phy.caps & SUPPORTED_LINK_IRQ) ||
+	    pi->link_config.link_ok == 0)
 		callout_reset(&pi->link_check_ch, hz, link_check_callout, pi);
 }
 

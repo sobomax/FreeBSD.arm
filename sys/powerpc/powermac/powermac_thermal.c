@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/powermac_thermal.c 257093 2013-10-25 03:55:52Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/powermac_thermal.c 279045 2015-02-20 06:19:23Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -41,6 +41,9 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/powermac_thermal.c 257093 2013-10-
 #include <sys/queue.h>
 
 #include "powermac_thermal.h"
+
+/* A 10 second timer for spinning down fans. */
+#define FAN_HYSTERESIS_TIMER	10
 
 static void fan_management_proc(void);
 static void pmac_therm_manage_fans(void);
@@ -63,6 +66,7 @@ static MALLOC_DEFINE(M_PMACTHERM, "pmactherm", "Powermac Thermal Management");
 struct pmac_fan_le {
 	struct pmac_fan			*fan;
 	int				last_val;
+	int				timer;
 	SLIST_ENTRY(pmac_fan_le)	entries;
 };
 struct pmac_sens_le {
@@ -95,6 +99,7 @@ pmac_therm_manage_fans(void)
 	struct pmac_sens_le *sensor;
 	struct pmac_fan_le *fan;
 	int average_excess, max_excess_zone, frac_excess;
+	int fan_speed;
 	int nsens, nsens_zone;
 	int temp;
 
@@ -137,10 +142,11 @@ pmac_therm_manage_fans(void)
 		nsens = nsens_zone = 0;
 		average_excess = max_excess_zone = 0;
 		SLIST_FOREACH(sensor, &sensors, entries) {
-			frac_excess = (sensor->last_val -
+			temp = imin(sensor->last_val,
+			    sensor->sensor->max_temp);
+			frac_excess = (temp -
 			    sensor->sensor->target_temp)*100 /
-			    (sensor->sensor->max_temp -
-			    sensor->sensor->target_temp);
+			    (sensor->sensor->max_temp - temp + 1);
 			if (frac_excess < 0)
 				frac_excess = 0;
 			if (sensor->sensor->zone == fan->fan->zone) {
@@ -166,9 +172,21 @@ pmac_therm_manage_fans(void)
 		 * Scale the fan linearly in the max temperature in its
 		 * thermal zone.
 		 */
-		fan->fan->set(fan->fan, max_excess_zone *
+		max_excess_zone = imin(max_excess_zone, 100);
+		fan_speed = max_excess_zone * 
 		    (fan->fan->max_rpm - fan->fan->min_rpm)/100 +
-		    fan->fan->min_rpm);
+		    fan->fan->min_rpm;
+		if (fan_speed >= fan->last_val) {
+		    fan->timer = FAN_HYSTERESIS_TIMER;
+		    fan->last_val = fan_speed;
+		} else {
+		    fan->timer--;
+		    if (fan->timer == 0) {
+		    	fan->last_val = fan_speed;
+		    	fan->timer = FAN_HYSTERESIS_TIMER;
+		    }
+		}
+		fan->fan->set(fan->fan, fan->last_val);
 	}
 }
 

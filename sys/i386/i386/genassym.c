@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/genassym.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/genassym.c 278473 2015-02-09 21:00:56Z kib $");
 
 #include "opt_apic.h"
 #include "opt_compat.h"
@@ -219,13 +219,8 @@ ASSYM(PC_CURPMAP, offsetof(struct pcpu, pc_curpmap));
 ASSYM(PC_PRIVATE_TSS, offsetof(struct pcpu, pc_private_tss));
 
 #ifdef DEV_APIC
-ASSYM(LA_VER, offsetof(struct LAPIC, version));
-ASSYM(LA_TPR, offsetof(struct LAPIC, tpr));
-ASSYM(LA_EOI, offsetof(struct LAPIC, eoi));
-ASSYM(LA_SVR, offsetof(struct LAPIC, svr));
-ASSYM(LA_ICR_LO, offsetof(struct LAPIC, icr_lo));
-ASSYM(LA_ICR_HI, offsetof(struct LAPIC, icr_hi));
-ASSYM(LA_ISR, offsetof(struct LAPIC, isr0));
+ASSYM(LA_EOI, LAPIC_EOI * LAPIC_MEM_MUL);
+ASSYM(LA_ISR, LAPIC_ISR0 * LAPIC_MEM_MUL);
 #endif
 
 ASSYM(KCSEL, GSEL(GCODE_SEL, SEL_KPL));

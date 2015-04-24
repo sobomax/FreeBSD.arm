@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/libexec/atf/atf-sh/Makefile 273929 2014-11-01 11:17:54Z jmmv $
+# $FreeBSD: head/libexec/atf/atf-sh/Makefile 275077 2014-11-25 21:18:18Z bapt $
 
 .include <src.opts.mk>
 .include <bsd.init.mk>
@@ -42,9 +42,7 @@ CFLAGS+=	-DATF_PKGDATADIR='"${SHAREDIR}/atf"'
 CFLAGS+=	-DATF_SHELL='"/bin/sh"'
 CFLAGS+=	-I${ATF}
 
-DPADD+=		${LIBATF_C} ${LIBATF_CXX}
-LDADD+=		${LDATF_C} ${LDATF_CXX}
-USEPRIVATELIB=	atf-c++ atf-c
+LIBADD=		atf_cxx
 
 FILESGROUPS=	SUBR
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_pci.c 273376 2014-10-21 07:24:58Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_pci.c 281499 2015-04-13 19:13:51Z neel $");
 
 /*
  * USB Enhanced Host Controller Driver, a.k.a. USB 2.0 controller.
@@ -164,6 +164,12 @@ ehci_pci_match(device_t self)
 		return ("Intel Lynx Point USB 2.0 controller USB-A");
 	case 0x8c2d8086:
 		return ("Intel Lynx Point USB 2.0 controller USB-B");
+	case 0x8ca68086:
+		return ("Intel Wildcat Point USB 2.0 controller USB-A");
+	case 0x8cad8086:
+		return ("Intel Wildcat Point USB 2.0 controller USB-B");
+	case 0x9c268086:
+		return ("Intel Lynx Point LP USB 2.0 controller USB");
 
 	case 0x00e01033:
 		return ("NEC uPD 720100 USB 2.0 controller");
@@ -214,7 +220,7 @@ ehci_pci_probe(device_t self)
 
 	if (desc) {
 		device_set_desc(self, desc);
-		return (0);
+		return (BUS_PROBE_DEFAULT);
 	} else {
 		return (ENXIO);
 	}
@@ -276,6 +282,7 @@ ehci_pci_attach(device_t self)
 	sc->sc_bus.parent = self;
 	sc->sc_bus.devices = sc->sc_devices;
 	sc->sc_bus.devices_max = EHCI_MAX_DEVICES;
+	sc->sc_bus.dma_bits = 32;
 
 	/* get all DMA memory */
 	if (usb_bus_mem_alloc_all(&sc->sc_bus,
