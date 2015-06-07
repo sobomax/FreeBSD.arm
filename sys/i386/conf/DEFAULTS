@@ -1,7 +1,7 @@
 #
 # DEFAULTS -- Default kernel configuration file for FreeBSD/i386
 #
-# $FreeBSD: head/sys/i386/conf/DEFAULTS 232619 2012-03-06 20:01:25Z attilio $
+# $FreeBSD: head/sys/i386/conf/DEFAULTS 282274 2015-04-30 15:48:48Z jhb $
 
 machine		i386
 
@@ -26,7 +26,6 @@ options 	GEOM_PART_EBR_COMPAT
 options 	GEOM_PART_MBR
 
 # enable support for native hardware
-options 	NATIVE
 device		atpic
 
 options 	NEW_PCIB

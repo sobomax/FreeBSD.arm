@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonport.c 281725 2015-04-19 06:18:41Z trasz $");
+__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonport.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * Functions that need to be different for different versions of BSD
@@ -589,7 +589,7 @@ nfscommon_modevent(module_t mod, int type, void *data)
 		mtx_init(&nfs_req_mutex, "nfs_req_mutex", NULL, MTX_DEF);
 		mtx_init(&nfsrv_nfsuserdsock.nr_mtx, "nfsuserd", NULL,
 		    MTX_DEF);
-		callout_init(&newnfsd_callout, CALLOUT_MPSAFE);
+		callout_init(&newnfsd_callout, 1);
 		newnfs_init();
 		nfsd_call_nfscommon = nfssvc_nfscommon;
 		loaded = 1;

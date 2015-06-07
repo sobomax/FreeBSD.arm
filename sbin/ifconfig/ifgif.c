@@ -25,7 +25,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifgif.c 196931 2009-09-07 15:52:15Z hrs $";
+  "$FreeBSD: head/sbin/ifconfig/ifgif.c 282965 2015-05-15 12:19:45Z ae $";
 #endif
 
 #include <sys/param.h>
@@ -51,7 +51,7 @@ static const char rcsid[] =
 
 #include "ifconfig.h"
 
-#define	GIFBITS	"\020\1ACCEPT_REV_ETHIP_VER\5SEND_REV_ETHIP_VER"
+#define	GIFBITS	"\020\1ACCEPT_REV_ETHIP_VER\2IGNORE_SOURCE\5SEND_REV_ETHIP_VER"
 
 static void	gif_status(int);
 
@@ -95,6 +95,8 @@ setgifopts(const char *val,
 static struct cmd gif_cmds[] = {
 	DEF_CMD("accept_rev_ethip_ver",	GIF_ACCEPT_REVETHIP,	setgifopts),
 	DEF_CMD("-accept_rev_ethip_ver",-GIF_ACCEPT_REVETHIP,	setgifopts),
+	DEF_CMD("ignore_source",	GIF_IGNORE_SOURCE,	setgifopts),
+	DEF_CMD("-ignore_source",	-GIF_IGNORE_SOURCE,	setgifopts),
 	DEF_CMD("send_rev_ethip_ver",	GIF_SEND_REVETHIP,	setgifopts),
 	DEF_CMD("-send_rev_ethip_ver",	-GIF_SEND_REVETHIP,	setgifopts),
 };

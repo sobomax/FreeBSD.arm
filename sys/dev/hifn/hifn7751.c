@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * Driver for various Hifn encryption processors.
@@ -589,7 +589,7 @@ hifn_attach(device_t dev)
 	if (sc->sc_flags & (HIFN_HAS_PUBLIC | HIFN_HAS_RNG))
 		hifn_init_pubrng(sc);
 
-	callout_init(&sc->sc_tickto, CALLOUT_MPSAFE);
+	callout_init(&sc->sc_tickto, 1);
 	callout_reset(&sc->sc_tickto, hz, hifn_tick, sc);
 
 	return (0);
@@ -765,7 +765,7 @@ hifn_init_pubrng(struct hifn_softc *sc)
 			sc->sc_rnghz = hz / 100;
 		else
 			sc->sc_rnghz = 1;
-		callout_init(&sc->sc_rngto, CALLOUT_MPSAFE);
+		callout_init(&sc->sc_rngto, 1);
 		callout_reset(&sc->sc_rngto, sc->sc_rnghz, hifn_rng, sc);
 	}
 

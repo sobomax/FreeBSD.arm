@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_adc.c 266960 2014-06-02 02:00:17Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_adc.c 283276 2015-05-22 03:16:18Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -467,7 +467,7 @@ static int
 ti_adc_probe(device_t dev)
 {
 
-	if (!ofw_bus_is_compatible(dev, "ti,adc"))
+	if (!ofw_bus_is_compatible(dev, "ti,am3359-tscadc"))
 		return (ENXIO);
 	device_set_desc(dev, "TI ADC controller");
 

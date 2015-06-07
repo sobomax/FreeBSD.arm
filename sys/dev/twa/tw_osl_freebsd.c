@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/twa/tw_osl_freebsd.c 254263 2013-08-12 23:30:01Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/twa/tw_osl_freebsd.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * AMCC'S 3ware driver for 9000 series storage controllers.
@@ -423,8 +423,8 @@ twa_attach(device_t dev)
 	}
 
 	sc->watchdog_index = 0;
-	callout_init(&(sc->watchdog_callout[0]), CALLOUT_MPSAFE);
-	callout_init(&(sc->watchdog_callout[1]), CALLOUT_MPSAFE);
+	callout_init(&(sc->watchdog_callout[0]), 1);
+	callout_init(&(sc->watchdog_callout[1]), 1);
 	callout_reset(&(sc->watchdog_callout[0]), 5*hz, twa_watchdog, &sc->ctlr_handle);
 
 	return(0);

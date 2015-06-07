@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/md_var.h 281851 2015-04-22 12:32:14Z kib $
+ * $FreeBSD: head/sys/i386/include/md_var.h 284104 2015-06-06 22:03:24Z kib $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -49,6 +49,7 @@ extern	u_int	via_feature_rng;
 extern	u_int	via_feature_xcrypt;
 extern	u_int	cpu_clflush_line_size;
 extern	u_int	cpu_stdext_feature;
+extern	u_int	cpu_stdext_feature2;
 extern	u_int	cpu_fxsr;
 extern	u_int	cpu_high;
 extern	u_int	cpu_id;
@@ -97,6 +98,7 @@ struct	dumperinfo;
 void	*alloc_fpusave(int flags);
 void	bcopyb(const void *from, void *to, size_t len);
 void	busdma_swi(void);
+bool	cpu_mwait_usable(void);
 void	cpu_probe_amdc1e(void);
 void	cpu_setregs(void);
 void	cpu_switch_load_gs(void) __asm(__STRING(cpu_switch_load_gs));

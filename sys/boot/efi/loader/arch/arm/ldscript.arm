@@ -1,6 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/loader/arch/arm/ldscript.arm 281431 2015-04-11 10:07:58Z andrew $ */
-OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm",
-	      "elf32-littlearm")
+/* $FreeBSD: head/sys/boot/efi/loader/arch/arm/ldscript.arm 282896 2015-05-14 12:43:39Z andrew $ */
 OUTPUT_ARCH(arm)
 ENTRY(_start)
 SECTIONS

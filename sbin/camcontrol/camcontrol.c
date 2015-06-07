@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/camcontrol/camcontrol.c 280249 2015-03-19 12:22:57Z mav $");
+__FBSDID("$FreeBSD: head/sbin/camcontrol/camcontrol.c 283907 2015-06-02 09:05:45Z araujo $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -2566,12 +2566,11 @@ atahpa(struct cam_device *device, int retry_count, int timeout,
 	struct ata_params *ident_buf;
 	struct ccb_getdev cgd;
 	struct ata_set_max_pwd pwd;
-	int error, confirm, quiet, c, action, actions, setpwd, persist;
+	int error, confirm, quiet, c, action, actions, persist;
 	int security, is48bit, pwdsize;
 	u_int64_t hpasize, maxsize;
 
 	actions = 0;
-	setpwd = 0;
 	confirm = 0;
 	quiet = 0;
 	maxsize = 0;

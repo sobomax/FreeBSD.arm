@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/mca.c 281887 2015-04-23 14:22:20Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/mca.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #ifdef __amd64__
 #define	DEV_APIC
@@ -762,7 +762,7 @@ mca_setup(uint64_t mcg_cap)
 	mtx_init(&mca_lock, "mca", NULL, MTX_SPIN);
 	STAILQ_INIT(&mca_records);
 	TASK_INIT(&mca_scan_task, 0, mca_scan_cpus, NULL);
-	callout_init(&mca_timer, CALLOUT_MPSAFE);
+	callout_init(&mca_timer, 1);
 	STAILQ_INIT(&mca_freelist);
 	TASK_INIT(&mca_refill_task, 0, mca_refill, NULL);
 	mca_fill_freelist();

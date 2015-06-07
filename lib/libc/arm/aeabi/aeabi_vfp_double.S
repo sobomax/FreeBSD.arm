@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_double.S 273088 2014-10-14 14:27:51Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_double.S 282816 2015-05-12 10:03:14Z andrew $");
 
 #include "aeabi_vfp.h"
 
@@ -66,6 +66,7 @@ AEABI_ENTRY(dcmpeq)
 	LOAD_DREG(d1, r2, r3)
 	vcmp.f64 d0, d1
 	vmrs     APSR_nzcv, fpscr
+	ite      ne
 	movne    r0, #0
 	moveq    r0, #1
 	RET
@@ -77,8 +78,9 @@ AEABI_ENTRY(dcmplt)
 	LOAD_DREG(d1, r2, r3)
 	vcmp.f64 d0, d1
 	vmrs     APSR_nzcv, fpscr
+	ite      cs
 	movcs    r0, #0
-	movlt    r0, #1
+	movcc    r0, #1
 	RET
 AEABI_END(dcmplt)
 
@@ -88,6 +90,7 @@ AEABI_ENTRY(dcmple)
 	LOAD_DREG(d1, r2, r3)
 	vcmp.f64 d0, d1
 	vmrs     APSR_nzcv, fpscr
+	ite      hi
 	movhi    r0, #0
 	movls    r0, #1
 	RET
@@ -99,6 +102,7 @@ AEABI_ENTRY(dcmpge)
 	LOAD_DREG(d1, r2, r3)
 	vcmp.f64 d0, d1
 	vmrs     APSR_nzcv, fpscr
+	ite      lt
 	movlt    r0, #0
 	movge    r0, #1
 	RET
@@ -110,6 +114,7 @@ AEABI_ENTRY(dcmpgt)
 	LOAD_DREG(d1, r2, r3)
 	vcmp.f64 d0, d1
 	vmrs     APSR_nzcv, fpscr
+	ite      le
 	movle    r0, #0
 	movgt    r0, #1
 	RET
@@ -121,6 +126,7 @@ AEABI_ENTRY(dcmpun)
 	LOAD_DREG(d1, r2, r3)
 	vcmp.f64 d0, d1
 	vmrs     APSR_nzcv, fpscr
+	ite      vc
 	movvc    r0, #0
 	movvs    r0, #1
 	RET

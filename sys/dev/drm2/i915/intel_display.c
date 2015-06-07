@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_display.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_display.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>
@@ -6449,7 +6449,7 @@ static void intel_crtc_init(struct drm_device *dev, int pipe)
 
 	intel_crtc->busy = false;
 
-	callout_init(&intel_crtc->idle_callout, CALLOUT_MPSAFE);
+	callout_init(&intel_crtc->idle_callout, 1);
 }
 
 int intel_get_pipe_from_crtc_id(struct drm_device *dev, void *data,
@@ -7038,7 +7038,7 @@ void intel_modeset_init(struct drm_device *dev)
 	intel_setup_outputs(dev);
 
 	TASK_INIT(&dev_priv->idle_task, 0, intel_idle_update, dev_priv);
-	callout_init(&dev_priv->idle_callout, CALLOUT_MPSAFE);
+	callout_init(&dev_priv->idle_callout, 1);
 }
 
 void intel_modeset_gem_init(struct drm_device *dev)

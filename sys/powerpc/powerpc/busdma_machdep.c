@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/busdma_machdep.c 273423 2014-10-21 21:04:44Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/busdma_machdep.c 282120 2015-04-28 06:12:37Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1121,8 +1121,8 @@ add_bounce_page(bus_dma_tag_t dmat, bus_dmamap_t map, vm_offset_t vaddr,
 
 	if (dmat->flags & BUS_DMA_KEEP_PG_OFFSET) {
 		/* Page offset needs to be preserved. */
-		bpage->vaddr |= vaddr & PAGE_MASK;
-		bpage->busaddr |= vaddr & PAGE_MASK;
+		bpage->vaddr |= addr & PAGE_MASK;
+		bpage->busaddr |= addr & PAGE_MASK;
 	}
 	bpage->datavaddr = vaddr;
 	bpage->dataaddr = addr;

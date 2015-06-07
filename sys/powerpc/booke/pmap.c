@@ -49,7 +49,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/booke/pmap.c 280794 2015-03-28 21:39:42Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/booke/pmap.c 282264 2015-04-30 01:24:25Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -1031,13 +1031,8 @@ mmu_booke_bootstrap(mmu_t mmu, vm_offset_t start, vm_offset_t kernelend)
 	 * Align kernel start and end address (kernel image).
 	 * Note that kernel end does not necessarily relate to kernsize.
 	 * kernsize is the size of the kernel that is actually mapped.
-	 * Also note that "start - 1" is deliberate. With SMP, the
-	 * entry point is exactly a page from the actual load address.
-	 * As such, trunc_page() has no effect and we're off by a page.
-	 * Since we always have the ELF header between the load address
-	 * and the entry point, we can safely subtract 1 to compensate.
 	 */
-	kernstart = trunc_page(start - 1);
+	kernstart = trunc_page(start);
 	data_start = round_page(kernelend);
 	data_end = data_start;
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/dtrace/Makefile 210691 2010-07-31 17:09:37Z rpaulo $
+# $FreeBSD: head/cddl/usr.sbin/dtrace/Makefile 283133 2015-05-19 22:24:19Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/dtrace
 
@@ -20,9 +20,6 @@ CFLAGS+=	-I${.CURDIR}/../../../sys/cddl/compat/opensolaris \
 #CFLAGS+=	-DNEED_ERRLOC
 #YFLAGS+=	-d
 
-DPADD=		${LIBPTHREAD} ${LIBDTRACE} ${LIBY} ${LIBL} ${LIBPROC} \
-		${LIBCTF} ${LIBELF} ${LIBZ} ${LIBUTIL} ${LIBRTLD_DB}
-LDADD=		-lpthread -ldtrace -ly -ll -lproc -lctf -lelf -lz -lutil \
-		-lrtld_db
+LIBADD=	dtrace
 
 .include <bsd.prog.mk>

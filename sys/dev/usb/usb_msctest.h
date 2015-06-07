@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_msctest.h 269576 2014-08-05 09:35:25Z n_hibma $ */
+/* $FreeBSD: head/sys/dev/usb/usb_msctest.h 282577 2015-05-07 12:54:27Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -52,5 +52,7 @@ usb_error_t usb_msc_write_10(struct usb_device *udev,
 usb_error_t usb_msc_read_capacity(struct usb_device *udev,
 	    uint8_t iface_index, uint32_t *lba_last,
 	    uint32_t *block_size);
+usb_error_t usb_dymo_eject(struct usb_device *udev,
+	    uint8_t iface_index);
 
 #endif					/* _USB_MSCTEST_H_ */

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/proto/proto_bus_pci.c 265055 2014-04-28 17:58:40Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/proto/proto_bus_pci.c 284079 2015-06-06 16:09:25Z marcel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,6 +87,7 @@ proto_pci_attach(device_t dev)
 	sc = device_get_softc(dev);
 
 	proto_add_resource(sc, PROTO_RES_PCICFG, 0, NULL);
+	proto_add_resource(sc, PROTO_RES_BUSDMA, 0, NULL);
 
 	for (bar = 0; bar < PCIR_MAX_BAR_0; bar++) {
 		rid = PCIR_BAR(bar);

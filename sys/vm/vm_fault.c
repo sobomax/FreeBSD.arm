@@ -72,7 +72,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_fault.c 281118 2015-04-05 20:07:33Z alc $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_fault.c 282128 2015-04-28 08:20:23Z kib $");
 
 #include "opt_ktrace.h"
 #include "opt_vm.h"
@@ -348,6 +348,10 @@ RetryFault:;
 		vm_map_lock(fs.map);
 		if (vm_map_lookup_entry(fs.map, vaddr, &fs.entry) &&
 		    (fs.entry->eflags & MAP_ENTRY_IN_TRANSITION)) {
+			if (fs.vp != NULL) {
+				vput(fs.vp);
+				fs.vp = NULL;
+			}
 			fs.entry->eflags |= MAP_ENTRY_NEEDS_WAKEUP;
 			vm_map_unlock_and_wait(fs.map, 0);
 		} else

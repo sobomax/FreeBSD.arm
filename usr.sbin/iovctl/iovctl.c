@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iovctl/iovctl.c 279461 2015-03-01 00:52:41Z rstone $");
+__FBSDID("$FreeBSD: head/usr.sbin/iovctl/iovctl.c 282346 2015-05-02 17:45:52Z oshogbo $");
 
 #include <sys/param.h>
 #include <sys/iov.h>
@@ -80,7 +80,7 @@ get_schema(int fd)
 		err(1, "Could not fetch config schema");
 	}
 
-	schema = nvlist_unpack(arg.schema, arg.len);
+	schema = nvlist_unpack(arg.schema, arg.len, NV_FLAG_IGNORE_CASE);
 	if (schema == NULL)
 		err(1, "Could not unpack schema");
 

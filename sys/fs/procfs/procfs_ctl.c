@@ -34,7 +34,7 @@
  *
  * From:
  *	$Id: procfs_ctl.c,v 1.51 2003/12/07 17:40:00 des Exp $
- * $FreeBSD: head/sys/fs/procfs/procfs_ctl.c 225617 2011-09-16 13:58:51Z kmacy $
+ * $FreeBSD: head/sys/fs/procfs/procfs_ctl.c 283891 2015-06-01 18:49:31Z delphij $
  */
 
 #include <sys/param.h>
@@ -143,8 +143,8 @@ procfs_control(struct thread *td, struct proc *p, int op)
 		p->p_flag |= P_TRACED;
 		faultin(p);
 		p->p_xstat = 0;		/* XXX ? */
+		p->p_oppid = p->p_pptr->p_pid;
 		if (p->p_pptr != td->td_proc) {
-			p->p_oppid = p->p_pptr->p_pid;
 			proc_reparent(p, td->td_proc);
 		}
 		kern_psignal(p, SIGSTOP);
@@ -235,6 +235,7 @@ out:
 		} else
 			PROC_LOCK(p);
 		p->p_oppid = 0;
+		p->p_stops = 0;
 		p->p_flag &= ~P_WAITED;	/* XXX ? */
 		sx_xunlock(&proctree_lock);
 

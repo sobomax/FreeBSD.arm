@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ddb.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ddb.c 283529 2015-05-25 14:30:44Z glebius $");
 
 #include "opt_ddb.h"
 #include "opt_wlan.h"
@@ -521,6 +521,7 @@ _db_show_com(const struct ieee80211com *ic, int showvaps, int showsta,
 		db_printf(" %s(%p)", vap->iv_ifp->if_xname, vap);
 	db_printf("\n");
 	db_printf("\tifp %p(%s)", ic->ic_ifp, ic->ic_ifp->if_xname);
+	db_printf("\tname %s", ic->ic_name);
 	db_printf(" comlock %p", &ic->ic_comlock);
 	db_printf("\n");
 	db_printf("\theadroom %d", ic->ic_headroom);

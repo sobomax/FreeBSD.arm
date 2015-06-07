@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)vmstat.8	8.1 (Berkeley) 6/6/93
-.\" $FreeBSD: head/usr.bin/vmstat/vmstat.8 269727 2014-08-08 16:32:06Z bjk $
+.\" $FreeBSD: head/usr.bin/vmstat/vmstat.8 283624 2015-05-27 18:11:05Z jhb $
 .\"
 .Dd August 8, 2014
 .Dt VMSTAT 8
@@ -37,7 +37,7 @@
 .Sh SYNOPSIS
 .Nm
 .\" .Op Fl fimst
-.Op Fl afHhimPsz
+.Op Fl afHhimoPsz
 .Op Fl M Ar core Op Fl N Ar system
 .Op Fl c Ar count
 .Op Fl n Ar devs
@@ -119,6 +119,9 @@ Report on the usage of kernel dynamic memory allocated using
 by type.
 .It Fl n
 Change the maximum number of disks to display from the default of 2.
+.It Fl o
+Display a list of virtual memory objects in the system and the resident
+memory used by each object.
 .It Fl P
 Report per-cpu system/user/idle cpu statistics.
 .It Fl p

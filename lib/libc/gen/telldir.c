@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)telldir.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/telldir.c 269204 2014-07-29 00:16:33Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/telldir.c 282560 2015-05-06 17:23:42Z jhb $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -101,13 +101,50 @@ _seekdir(dirp, loc)
 		return;
 	if (lp->loc_loc == dirp->dd_loc && lp->loc_seek == dirp->dd_seek)
 		return;
+
+	/* If it's within the same chunk of data, don't bother reloading. */
+	if (lp->loc_seek == dirp->dd_seek) {
+		/*
+		 * If we go back to 0 don't make the next readdir
+		 * trigger a call to getdirentries().
+		 */
+		if (lp->loc_loc == 0)
+			dirp->dd_flags |= __DTF_SKIPREAD;
+		dirp->dd_loc = lp->loc_loc;
+		return;
+	}
 	(void) lseek(dirp->dd_fd, (off_t)lp->loc_seek, SEEK_SET);
 	dirp->dd_seek = lp->loc_seek;
 	dirp->dd_loc = 0;
+	dirp->dd_flags &= ~__DTF_SKIPREAD; /* current contents are invalid */
 	while (dirp->dd_loc < lp->loc_loc) {
 		dp = _readdir_unlocked(dirp, 0);
 		if (dp == NULL)
 			break;
+	}
+}
+
+/*
+ * After readdir returns the last entry in a block, a call to telldir
+ * returns a location that is after the end of that last entry.
+ * However, that location doesn't refer to a valid directory entry.
+ * Ideally, the call to telldir would return a location that refers to
+ * the first entry in the next block.  That location is not known
+ * until the next block is read, so readdir calls this function after
+ * fetching a new block to fix any such telldir locations.
+ */
+void
+_fixtelldir(DIR *dirp, long oldseek, long oldloc)
+{
+	struct ddloc *lp;
+
+	lp = LIST_FIRST(&dirp->dd_td->td_locq);
+	if (lp != NULL) {
+		if (lp->loc_loc == oldloc &&
+		    lp->loc_seek == oldseek) {
+			lp->loc_seek = dirp->dd_seek;
+			lp->loc_loc = dirp->dd_loc;
+		}
 	}
 }
 

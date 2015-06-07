@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/dwc_otg.h 267210 2014-06-07 07:23:17Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/dwc_otg.h 283067 2015-05-18 16:18:04Z hselasky $ */
 /*-
  * Copyright (c) 2012 Hans Petter Selasky. All rights reserved.
  *
@@ -38,6 +38,9 @@
 #define	DWC_OTG_SLOT_IDLE_MAX 3
 #define	DWC_OTG_SLOT_IDLE_MIN 2
 #define	DWC_OTG_NAK_MAX 8	/* 1 ms */
+#ifndef DWC_OTG_TX_MAX_FIFO_SIZE
+#define	DWC_OTG_TX_MAX_FIFO_SIZE DWC_OTG_MAX_TXN
+#endif
 
 #define	DWC_OTG_READ_4(sc, reg) \
   bus_space_read_4((sc)->sc_io_tag, (sc)->sc_io_hdl, reg)

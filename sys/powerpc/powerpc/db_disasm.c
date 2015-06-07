@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/powerpc/powerpc/db_disasm.c 104435 2002-10-04 01:19:18Z grehan $	*/
+/*	$FreeBSD: head/sys/powerpc/powerpc/db_disasm.c 283248 2015-05-21 15:16:18Z pfg $	*/
 /*	$NetBSD: db_disasm.c,v 1.12 2002/01/05 22:07:26 jhawk Exp $	*/
 /*	$OpenBSD: db_disasm.c,v 1.2 1996/12/28 06:21:48 rahnds Exp $	*/
 
@@ -936,7 +936,7 @@ dis_ppc(const struct opcode *opcodeset, instr_t instr, vm_offset_t loc)
 }
 
 db_addr_t
-db_disasm(db_addr_t loc, boolean_t extended)
+db_disasm(db_addr_t loc, bool extended)
 {
 	int class;
 	instr_t opcode;

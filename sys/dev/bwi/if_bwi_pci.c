@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bwi/if_bwi_pci.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/bwi/if_bwi_pci.c 283637 2015-05-27 22:27:15Z glebius $");
 
 /*
  * PCI/Cardbus front-end for the Broadcom Wireless LAN controller driver.
@@ -161,12 +161,6 @@ bwi_pci_attach(device_t dev)
 		device_printf(dev, "could not map interrupt\n");
 		goto bad1;
 	}
-	if (bus_setup_intr(dev, sc->sc_irq_res,
-			   INTR_TYPE_NET | INTR_MPSAFE,
-			   NULL, bwi_intr, sc, &sc->sc_irq_handle)) {
-		device_printf(dev, "could not establish interrupt\n");
-		goto bad2;
-	}
 
 	/* Get more PCI information */
 	sc->sc_pci_did = pci_get_device(dev);
@@ -174,11 +168,17 @@ bwi_pci_attach(device_t dev)
 	sc->sc_pci_subvid = pci_get_subvendor(dev);
 	sc->sc_pci_subdid = pci_get_subdevice(dev);
 
-	error = bwi_attach(sc);
-	if (error == 0)					/* success */
-		return 0;
+	if ((error = bwi_attach(sc)) != 0)
+		goto bad2;
 
-	bus_teardown_intr(dev, sc->sc_irq_res, sc->sc_irq_handle);
+	if (bus_setup_intr(dev, sc->sc_irq_res,
+			   INTR_TYPE_NET | INTR_MPSAFE,
+			   NULL, bwi_intr, sc, &sc->sc_irq_handle)) {
+		device_printf(dev, "could not establish interrupt\n");
+		goto bad2;
+	}
+	return (0);
+
 bad2:
 	bus_release_resource(dev, SYS_RES_IRQ, 0, sc->sc_irq_res);
 bad1:

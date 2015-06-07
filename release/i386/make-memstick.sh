@@ -7,7 +7,7 @@
 #
 # Usage: make-memstick.sh <directory tree> <image filename>
 #
-# $FreeBSD: head/release/i386/make-memstick.sh 264933 2014-04-25 19:43:18Z gjb $
+# $FreeBSD: head/release/i386/make-memstick.sh 283307 2015-05-23 00:32:58Z gjb $
 #
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
@@ -29,20 +29,13 @@ if [ -e ${2} ]; then
 fi
 
 echo '/dev/ufs/FreeBSD_Install / ufs ro,noatime 1 1' > ${1}/etc/fstab
-makefs -B little -o label=FreeBSD_Install ${2} ${1}
+makefs -B little -o label=FreeBSD_Install ${2}.part ${1}
 if [ $? -ne 0 ]; then
 	echo "makefs failed"
 	exit 1
 fi
 rm ${1}/etc/fstab
 
-unit=$(mdconfig -a -t vnode -f ${2})
-if [ $? -ne 0 ]; then
-	echo "mdconfig failed"
-	exit 1
-fi
-gpart create -s BSD ${unit}
-gpart bootcode -b ${1}/boot/boot ${unit}
-gpart add -t freebsd-ufs ${unit}
-mdconfig -d -u ${unit}
+mkimg -s gpt -b ${1}/boot/pmbr -p freebsd-boot:=${1}/boot/gptboot -p freebsd-ufs:=${2}.part -p freebsd-swap::1M -o ${2}
+rm ${2}.part
 

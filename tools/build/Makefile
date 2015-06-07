@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/build/Makefile 264398 2014-04-13 05:21:43Z imp $
+# $FreeBSD: head/tools/build/Makefile 282994 2015-05-15 22:19:35Z dim $
 
 .PATH: ${.CURDIR}/../../include
 
@@ -23,6 +23,14 @@ _WITH_STRSVIS!=	grep -c strsvis /usr/include/vis.h || true
 SRCS+=		vis.c
 CFLAGS+=	-I${.CURDIR}/../../contrib/libc-vis \
 		-I${.CURDIR}/../../lib/libc/include
+.endif
+
+_WITH_REALLOCARRAY!= grep -c reallocarray /usr/include/stdlib.h || true
+.if ${_WITH_REALLOCARRAY} == 0
+.PATH: ${.CURDIR}/../../lib/libc/stdlib
+INCS+=		stdlib.h
+SRCS+=		reallocarray.c
+CFLAGS+=	-I${.CURDIR}/../../lib/libc/include
 .endif
 
 .if empty(SRCS)

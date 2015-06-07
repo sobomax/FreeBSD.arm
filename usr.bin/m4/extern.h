@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: head/usr.bin/m4/extern.h 269162 2014-07-27 22:54:13Z bapt $
+ * $FreeBSD: head/usr.bin/m4/extern.h 283089 2015-05-18 22:40:12Z bapt $
  */
 
 /* eval.c */
@@ -43,7 +43,6 @@ extern unsigned long expansion_id;
 
 /* expr.c */
 extern int	expr(const char *);
-extern int32_t end_result;
 
 /* gnum4.c */
 extern void	addtoincludepath(const char *);

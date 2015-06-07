@@ -27,7 +27,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/bus_space_asm.S 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/bus_space_asm.S 282200 2015-04-28 20:33:31Z br $");
 
 ENTRY(generic_bs_r_1)
 	ldrb	w0, [x1, x2]
@@ -63,7 +63,7 @@ ENTRY(generic_bs_rm_1)
 
 	/* Read the data. */
 1:	ldrb	w1, [x0]
-	strb	w1, [x3], #2
+	strb	w1, [x3], #1
 	subs	x4, x4, #1
 	b.ne	1b
 
@@ -105,7 +105,7 @@ ENTRY(generic_bs_rm_4)
 
 	/* Read the data. */
 1:	ldr	w1, [x0]
-	str	w1, [x3], #2
+	str	w1, [x3], #4
 	subs	x4, x4, #1
 	b.ne	1b
 
@@ -126,7 +126,7 @@ ENTRY(generic_bs_rm_8)
 
 	/* Read the data. */
 1:	ldr	x1, [x0]
-	str	x1, [x3], #2
+	str	x1, [x3], #8
 	subs	x4, x4, #1
 	b.ne	1b
 

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/linux_ioctl.h 253338 2013-07-14 10:13:01Z hselasky $
+ * $FreeBSD: head/sys/compat/linux/linux_ioctl.h 283496 2015-05-24 18:12:04Z dchagin $
  */
 
 #ifndef _LINUX_IOCTL_H_
@@ -581,13 +581,6 @@
 #define	LINUX_IOCTL_DRM_MAX	0x64ff
 
 /*
- * This doesn't really belong here, but I can't think of a better
- * place to put it.
- */
-struct ifnet;
-int		 linux_ifname(struct ifnet *, char *, size_t);
-
-/*
  * video
  */
 #define LINUX_VIDIOCGCAP		0x7601
@@ -750,6 +743,12 @@ int		 linux_ifname(struct ifnet *, char *, size_t);
 
 #define	FBSD_LUSB_MAX			0xffff
 #define	FBSD_LUSB_MIN			0xffdd
+
+/*
+ * Linux btrfs clone operation
+ */
+#define LINUX_BTRFS_IOC_CLONE		0x9409 /* 0x40049409 */
+
 
 /*
  * Pluggable ioctl handlers

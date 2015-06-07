@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/share/man/man8/Makefile 273747 2014-10-27 21:29:42Z delphij $
+# $FreeBSD: head/share/man/man8/Makefile 283957 2015-06-03 17:10:52Z jmg $
 
 MAN=	crash.8 \
 	diskless.8 \
@@ -13,7 +13,9 @@ MAN=	crash.8 \
 	${_uefi.8} \
 	yp.8
 
-MLINKS=	rc.8 rc.atm.8 \
+MLINKS= \
+	nanobsd.8 nanobsd.sh.8 \
+	rc.8 rc.atm.8 \
 	rc.8 rc.d.8 \
 	rc.8 rc.firewall.8 \
 	rc.8 rc.local.8 \

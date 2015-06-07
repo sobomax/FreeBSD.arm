@@ -1,4 +1,4 @@
-#$FreeBSD: head/sys/modules/ix/Makefile 280182 2015-03-17 18:32:28Z jfv $
+#$FreeBSD: head/sys/modules/ix/Makefile 282290 2015-04-30 22:56:43Z erj $
 
 .PATH:  ${.CURDIR}/../../dev/ixgbe
 
@@ -9,7 +9,7 @@ SRCS    += if_ix.c ix_txrx.c
 # Shared source
 SRCS    += ixgbe_common.c ixgbe_api.c ixgbe_phy.c ixgbe_mbx.c ixgbe_vf.c
 SRCS    += ixgbe_dcb.c ixgbe_dcb_82598.c ixgbe_dcb_82599.c
-SRCS    += ixgbe_82599.c ixgbe_82598.c ixgbe_x540.c
+SRCS    += ixgbe_82598.c ixgbe_82599.c ixgbe_x540.c ixgbe_x550.c
 CFLAGS+= -I${.CURDIR}/../../dev/ixgbe -DSMP
 
 .include <bsd.kmod.mk>

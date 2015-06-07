@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/include/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/include/Makefile 283526 2015-05-25 13:43:03Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,7 @@ LLVM_SRCS= ${.CURDIR}/../../../contrib/llvm
 
 .PATH: ${LLVM_SRCS}/tools/clang/lib/Headers
 
-INCSDIR=${LIBDIR}/clang/3.6.0/include
+INCSDIR=${LIBDIR}/clang/3.6.1/include
 
 INCS=	__stddef_max_align_t.h \
 	__wmmintrin_aes.h \

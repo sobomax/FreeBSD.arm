@@ -40,10 +40,11 @@ static char sccsid[] = "@(#)date.c	8.2 (Berkeley) 4/28/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/date/date.c 264968 2014-04-26 13:05:56Z dumbbell $");
+__FBSDID("$FreeBSD: head/bin/date/date.c 282608 2015-05-07 20:54:38Z delphij $");
 
 #include <sys/param.h>
 #include <sys/time.h>
+#include <sys/stat.h>
 
 #include <ctype.h>
 #include <err.h>
@@ -85,6 +86,7 @@ main(int argc, char *argv[])
 	struct vary *v;
 	const struct vary *badv;
 	struct tm lt;
+	struct stat sb;
 
 	v = NULL;
 	fmt = NULL;
@@ -116,8 +118,12 @@ main(int argc, char *argv[])
 		case 'r':		/* user specified seconds */
 			rflag = 1;
 			tval = strtoq(optarg, &tmp, 0);
-			if (*tmp != 0)
-				usage();
+			if (*tmp != 0) {
+				if (stat(optarg, &sb) == 0)
+					tval = sb.st_mtim.tv_sec;
+				else
+					usage();
+			}
 			break;
 		case 't':		/* minutes west of UTC */
 					/* error check; don't allow "PST" */

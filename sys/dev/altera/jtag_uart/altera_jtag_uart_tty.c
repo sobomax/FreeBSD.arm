@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/altera/jtag_uart/altera_jtag_uart_tty.c 274821 2014-11-21 21:14:05Z brooks $");
+__FBSDID("$FreeBSD: head/sys/dev/altera/jtag_uart/altera_jtag_uart_tty.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -454,11 +454,11 @@ altera_jtag_uart_attach(struct altera_jtag_uart_softc *sc)
 		aju_intr_readable_enable(sc);
 		AJU_UNLOCK(sc);
 	} else {
-		callout_init(&sc->ajus_io_callout, CALLOUT_MPSAFE);
+		callout_init(&sc->ajus_io_callout, 1);
 		callout_reset(&sc->ajus_io_callout, AJU_IO_POLLINTERVAL,
 		    aju_io_callout, sc);
 	}
-	callout_init(&sc->ajus_ac_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->ajus_ac_callout, 1);
 	callout_reset(&sc->ajus_ac_callout, AJU_AC_POLLINTERVAL,
 	    aju_ac_callout, sc);
 	return (0);

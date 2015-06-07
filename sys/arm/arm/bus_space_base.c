@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_base.c 277516 2015-01-21 21:31:26Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_base.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -116,10 +116,10 @@ static struct bus_space arm_base_bus_space __aligned(CACHE_LINE_SIZE) = {
 	.bs_c_8		= BS_UNIMPLEMENTED,
 
 	/* read stream (single) */
-	.bs_r_1_s	= NULL,   /* Use inline code in bus.h */ 
-	.bs_r_2_s	= NULL,   /* Use inline code in bus.h */ 
-	.bs_r_4_s	= NULL,   /* Use inline code in bus.h */ 
-	.bs_r_8_s	= NULL,   /* Use inline code in bus.h */ 
+	.bs_r_1_s	= NULL,   /* Use inline code in bus.h */
+	.bs_r_2_s	= NULL,   /* Use inline code in bus.h */
+	.bs_r_4_s	= NULL,   /* Use inline code in bus.h */
+	.bs_r_8_s	= NULL,   /* Use inline code in bus.h */
 
 	/* read multiple stream */
 	.bs_rm_1_s	= generic_bs_rm_1,
@@ -134,10 +134,10 @@ static struct bus_space arm_base_bus_space __aligned(CACHE_LINE_SIZE) = {
 	.bs_rr_8_s	= BS_UNIMPLEMENTED,
 
 	/* write stream (single) */
-	.bs_w_1_s	= NULL,   /* Use inline code in bus.h */ 
-	.bs_w_2_s	= NULL,   /* Use inline code in bus.h */ 
-	.bs_w_4_s	= NULL,   /* Use inline code in bus.h */ 
-	.bs_w_8_s	= NULL,   /* Use inline code in bus.h */ 
+	.bs_w_1_s	= NULL,   /* Use inline code in bus.h */
+	.bs_w_2_s	= NULL,   /* Use inline code in bus.h */
+	.bs_w_4_s	= NULL,   /* Use inline code in bus.h */
+	.bs_w_8_s	= NULL,   /* Use inline code in bus.h */
 
 	/* write multiple stream */
 	.bs_wm_1_s	= generic_bs_wm_1,

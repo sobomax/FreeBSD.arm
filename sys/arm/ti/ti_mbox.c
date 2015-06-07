@@ -24,7 +24,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_mbox.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_mbox.c 283276 2015-05-22 03:16:18Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -121,7 +121,7 @@ ti_mbox_probe(device_t dev)
 	if (!ofw_bus_status_okay(dev))
 		return (ENXIO);
 
-	if (ofw_bus_is_compatible(dev, "ti,system-mbox")) {
+	if (ofw_bus_is_compatible(dev, "ti,omap4-mailbox")) {
 		device_set_desc(dev, "TI System Mailbox");
 		return (BUS_PROBE_DEFAULT);
 	}

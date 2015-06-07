@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/ia32/ia32_sysvec.c 274817 2014-11-21 20:53:17Z jhb $");
+__FBSDID("$FreeBSD: head/sys/compat/ia32/ia32_sysvec.c 283382 2015-05-24 14:51:29Z dchagin $");
 
 #include "opt_compat.h"
 
@@ -136,6 +136,7 @@ struct sysentvec ia32_freebsd_sysvec = {
 	.sv_shared_page_base = FREEBSD32_SHAREDPAGE,
 	.sv_shared_page_len = PAGE_SIZE,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 INIT_SYSENTVEC(elf_ia32_sysvec, &ia32_freebsd_sysvec);
 

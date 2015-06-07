@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/pax/getoldopt.c 205942 2010-03-30 23:14:35Z delphij $");
+__FBSDID("$FreeBSD: head/bin/pax/getoldopt.c 283257 2015-05-21 18:29:36Z delphij $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -19,8 +19,7 @@ __FBSDID("$FreeBSD: head/bin/pax/getoldopt.c 205942 2010-03-30 23:14:35Z delphij
 #include <string.h>
 #include <unistd.h>
 
-#include "pax.h"
-#include "extern.h"
+int getoldopt(int, char **, const char *);
 
 int
 getoldopt(int argc, char **argv, const char *optstring)

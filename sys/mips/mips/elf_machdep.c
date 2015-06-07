@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/elf_machdep.c 230046 2012-01-13 07:00:47Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/elf_machdep.c 283382 2015-05-24 14:51:29Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -83,6 +83,7 @@ struct sysentvec elf64_freebsd_sysvec = {
 	.sv_fetch_syscall_args = cpu_fetch_syscall_args,
 	.sv_syscallnames = syscallnames,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 
 static Elf64_Brandinfo freebsd_brand_info = {
@@ -139,6 +140,7 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_fetch_syscall_args = cpu_fetch_syscall_args,
 	.sv_syscallnames = syscallnames,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 
 static Elf32_Brandinfo freebsd_brand_info = {

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/mp_watchdog.c 267992 2014-06-28 03:56:17Z hselasky $
+ * $FreeBSD: head/sys/i386/i386/mp_watchdog.c 283291 2015-05-22 17:05:21Z jkim $
  */
 
 #include "opt_mp_watchdog.h"
@@ -85,7 +85,7 @@ static void
 watchdog_init(void *arg)
 {
 
-	callout_init(&watchdog_callout, CALLOUT_MPSAFE);
+	callout_init(&watchdog_callout, 1);
 	if (watchdog_cpu != -1)
 		watchdog_change(watchdog_cpu);
 }

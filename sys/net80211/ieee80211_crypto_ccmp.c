@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_crypto_ccmp.c 209636 2010-07-01 20:50:12Z bschmidt $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_crypto_ccmp.c 283614 2015-05-27 14:05:46Z glebius $");
 
 /*
  * IEEE 802.11i AES-CCMP crypto support.
@@ -96,8 +96,8 @@ ccmp_attach(struct ieee80211vap *vap, struct ieee80211_key *k)
 {
 	struct ccmp_ctx *ctx;
 
-	ctx = (struct ccmp_ctx *) malloc(sizeof(struct ccmp_ctx),
-		M_80211_CRYPTO, M_NOWAIT | M_ZERO);
+	ctx = (struct ccmp_ctx *) IEEE80211_MALLOC(sizeof(struct ccmp_ctx),
+		M_80211_CRYPTO, IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 	if (ctx == NULL) {
 		vap->iv_stats.is_crypto_nomem++;
 		return NULL;
@@ -113,7 +113,7 @@ ccmp_detach(struct ieee80211_key *k)
 {
 	struct ccmp_ctx *ctx = k->wk_private;
 
-	free(ctx, M_80211_CRYPTO);
+	IEEE80211_FREE(ctx, M_80211_CRYPTO);
 	KASSERT(nrefs > 0, ("imbalanced attach/detach"));
 	nrefs--;			/* NB: we assume caller locking */
 }

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 278001 2015-01-31 21:43:46Z kib $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -653,10 +653,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	PROC_UNLOCK(p);
 
 	fp = (struct frame *)sfp - 1;
-
-	/* Translate the signal if appropriate. */
-	if (p->p_sysent->sv_sigtbl && sig <= p->p_sysent->sv_sigsize)
-		sig = p->p_sysent->sv_sigtbl[_SIG_IDX(sig)];
 
 	/* Build the argument list for the signal handler. */
 	tf->tf_out[0] = sig;

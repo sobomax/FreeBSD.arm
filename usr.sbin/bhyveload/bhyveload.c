@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267959 2014-06-27 15:20:34Z jhb $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 283075 2015-05-18 19:45:46Z allanjude $
  */
 
 /*-
@@ -51,11 +51,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267959 2014-06-27 15:20:34Z jhb $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 283075 2015-05-18 19:45:46Z allanjude $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 267959 2014-06-27 15:20:34Z jhb $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 283075 2015-05-18 19:45:46Z allanjude $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -609,7 +609,7 @@ disk_open(char *path)
 {
 	int err, fd;
 
-	if (ndisks > NDISKS)
+	if (ndisks >= NDISKS)
 		return (ERANGE);
 
 	err = 0;

@@ -23,9 +23,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/sleep.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/sleep.9 283507 2015-05-25 01:09:18Z markj $
 .\"
-.Dd February 19, 2013
+.Dd May 24, 2015
 .Dt SLEEP 9
 .Os
 .Sh NAME
@@ -130,19 +130,6 @@ possible, and
 is returned if the system call should be interrupted by the signal
 (return
 .Er EINTR ) .
-If the
-.Dv PBDRY
-flag is specified in addition to
-.Dv PCATCH ,
-then the sleeping thread is not stopped when
-.Dv SIGSTOP
-becomes pending
-or some other stop action occurs while it is sleeping.
-Instead, it is woken up, with the assumption
-that the stop will occur on reaching a stop
-point when returning to usermode.
-The flag should be used when the sleeping thread owns resources, for instance
-vnode locks, that should be released in a timely fashion.
 .Pp
 The parameter
 .Fa wmesg

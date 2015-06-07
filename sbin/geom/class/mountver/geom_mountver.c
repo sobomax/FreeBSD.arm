@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/geom/class/mountver/geom_mountver.c 212554 2010-09-13 13:48:18Z pjd $");
+__FBSDID("$FreeBSD: head/sbin/geom/class/mountver/geom_mountver.c 283074 2015-05-18 19:37:55Z allanjude $");
 
 #include <stdio.h>
 #include <stdint.h>
@@ -43,14 +43,14 @@ struct g_command class_commands[] = {
 	    {
 		G_OPT_SENTINEL
 	    },
-	    "[-v] dev ..."
+	    "[-v] prov ..."
 	},
 	{ "destroy", G_FLAG_VERBOSE, NULL,
 	    {
 		{ 'f', "force", NULL, G_TYPE_BOOL },
 		G_OPT_SENTINEL
 	    },
-	    "[-fv] prov ..."
+	    "[-fv] name"
 	},
 	G_CMD_SENTINEL
 };

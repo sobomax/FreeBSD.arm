@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)nice.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: head/lib/libc/gen/nice.3 279397 2015-02-28 18:22:10Z jilles $
+.\" $FreeBSD: head/lib/libc/gen/nice.3 282008 2015-04-26 10:56:06Z bapt $
 .\"
 .Dd February 28, 2015
 .Dt NICE 3
@@ -87,7 +87,7 @@ The
 function conforms to
 .St -p1003.1-2008
 except for the return value.
-This implementation returns 0 upon successful completion but 
+This implementation returns 0 upon successful completion but
 the standard requires returning the new nice value,
 which could be \-1.
 .Sh HISTORY

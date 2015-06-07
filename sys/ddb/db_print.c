@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_print.c 272958 2014-10-11 20:25:19Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_print.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -47,7 +47,7 @@ __FBSDID("$FreeBSD: head/sys/ddb/db_print.c 272958 2014-10-11 20:25:19Z pfg $");
 #include <ddb/db_sym.h>
 
 void
-db_show_regs(db_expr_t _1, boolean_t _2, db_expr_t _3, char *_4)
+db_show_regs(db_expr_t _1, bool _2, db_expr_t _3, char *_4)
 {
 	struct db_variable *regp;
 	db_expr_t value, offset;

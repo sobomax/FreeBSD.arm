@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_uio.c 273911 2014-10-31 17:43:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_uio.c 283998 2015-06-04 19:41:15Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -417,7 +417,7 @@ copyout_map(struct thread *td, vm_offset_t *addr, size_t sz)
 	/* round size up to page boundry */
 	size = (vm_size_t)round_page(sz);
 
-	error = vm_mmap(&vms->vm_map, addr, size, PROT_READ | PROT_WRITE,
+	error = vm_mmap(&vms->vm_map, addr, size, VM_PROT_READ | VM_PROT_WRITE,
 	    VM_PROT_ALL, MAP_PRIVATE | MAP_ANON, OBJT_DEFAULT, NULL, 0);
 
 	return (error);

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * SafeNet SafeXcel-1141 hardware crypto accelerator
@@ -425,7 +425,7 @@ safe_attach(device_t dev)
 #endif
 		safe_rng_init(sc);
 
-		callout_init(&sc->sc_rngto, CALLOUT_MPSAFE);
+		callout_init(&sc->sc_rngto, 1);
 		callout_reset(&sc->sc_rngto, hz*safe_rnginterval, safe_rng, sc);
 	}
 #endif /* SAFE_NO_RNG */

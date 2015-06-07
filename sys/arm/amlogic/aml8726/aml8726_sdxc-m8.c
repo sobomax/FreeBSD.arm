@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_sdxc-m8.c 280905 2015-03-31 11:50:46Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_sdxc-m8.c 283183 2015-05-21 07:09:01Z ganbold $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -758,7 +758,6 @@ aml8726_sdxc_attach(device_t dev)
 		device_printf(dev, "unsupported SoC\n");
 		return (ENXIO);
 		/* NOTREACHED */
-		break;
 	}
 
 	node = ofw_bus_get_node(dev);

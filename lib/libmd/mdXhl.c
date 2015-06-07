@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmd/mdXhl.c 281928 2015-04-24 11:03:47Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libmd/mdXhl.c 282774 2015-05-11 16:45:33Z thomas $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -96,3 +96,18 @@ MDXData (const void *data, unsigned int len, char *buf)
 	MDXUpdate(&ctx,data,len);
 	return (MDXEnd(&ctx, buf));
 }
+
+#ifdef WEAK_REFS
+/* When building libmd, provide weak references. Note: this is not
+   activated in the context of compiling these sources for internal
+   use in libcrypt.
+ */
+#undef MDXEnd
+__weak_reference(_libmd_MDXEnd, MDXEnd);
+#undef MDXFile
+__weak_reference(_libmd_MDXFile, MDXFile);
+#undef MDXFileChunk
+__weak_reference(_libmd_MDXFileChunk, MDXFileChunk);
+#undef MDXData
+__weak_reference(_libmd_MDXData, MDXData);
+#endif

@@ -1,11 +1,12 @@
 #
 # Custom kernel for Marvell DB-88F5xxx boards.
 #
-# $FreeBSD: head/sys/arm/conf/DB-88F5XXX 279850 2015-03-10 14:36:51Z ian $
+# $FreeBSD: head/sys/arm/conf/DB-88F5XXX 282576 2015-05-07 12:38:23Z andrew $
 #
 
 ident		DB-88F5XXX
-include		"../mv/orion/std.db88f5xxx"
+include 	"std.arm"
+include 	"../mv/orion/std.db88f5xxx"
 
 options 	SOC_MV_ORION
 

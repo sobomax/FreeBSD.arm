@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: head/lib/libc/Makefile 281714 2015-04-18 21:50:13Z kib $
+# $FreeBSD: head/lib/libc/Makefile 282057 2015-04-27 06:49:27Z ngie $
 
 SHLIBDIR?= /lib
 
@@ -157,7 +157,9 @@ libkern.${LIBC_ARCH}:: ${KMSRCS}
 	${CP} ${.ALLSRC} ${DESTDIR}/sys/libkern/${LIBC_ARCH}
 .endif
 
-.include <bsd.arch.inc.mk>
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>
 

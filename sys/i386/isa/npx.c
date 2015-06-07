@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 279936 2015-03-12 20:14:48Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 282274 2015-04-30 15:48:48Z jhb $");
 
 #include "opt_cpu.h"
 #include "opt_isa.h"
@@ -69,10 +69,6 @@ __FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 279936 2015-03-12 20:14:48Z kib $");
 #include <machine/ucontext.h>
 
 #include <machine/intr_machdep.h>
-#ifdef XEN
-#include <xen/xen-os.h>
-#include <xen/hypervisor.h>
-#endif
 
 #ifdef DEV_ISA
 #include <isa/isavar.h>
@@ -157,13 +153,8 @@ void	xsaveopt(char *addr, uint64_t mask);
 
 #endif	/* __GNUCLIKE_ASM && !lint */
 
-#ifdef XEN
-#define	start_emulating()	(HYPERVISOR_fpu_taskswitch(1))
-#define	stop_emulating()	(HYPERVISOR_fpu_taskswitch(0))
-#else
 #define	start_emulating()	load_cr0(rcr0() | CR0_TS)
 #define	stop_emulating()	clts()
-#endif
 
 #ifdef CPU_ENABLE_SSE
 #define GET_FPU_CW(thread) \

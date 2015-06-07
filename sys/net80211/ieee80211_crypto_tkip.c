@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_crypto_tkip.c 209636 2010-07-01 20:50:12Z bschmidt $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_crypto_tkip.c 283614 2015-05-27 14:05:46Z glebius $");
 
 /*
  * IEEE 802.11i TKIP crypto support.
@@ -109,8 +109,8 @@ tkip_attach(struct ieee80211vap *vap, struct ieee80211_key *k)
 {
 	struct tkip_ctx *ctx;
 
-	ctx = (struct tkip_ctx *) malloc(sizeof(struct tkip_ctx),
-		M_80211_CRYPTO, M_NOWAIT | M_ZERO);
+	ctx = (struct tkip_ctx *) IEEE80211_MALLOC(sizeof(struct tkip_ctx),
+		M_80211_CRYPTO, IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 	if (ctx == NULL) {
 		vap->iv_stats.is_crypto_nomem++;
 		return NULL;
@@ -126,7 +126,7 @@ tkip_detach(struct ieee80211_key *k)
 {
 	struct tkip_ctx *ctx = k->wk_private;
 
-	free(ctx, M_80211_CRYPTO);
+	IEEE80211_FREE(ctx, M_80211_CRYPTO);
 	KASSERT(nrefs > 0, ("imbalanced attach/detach"));
 	nrefs--;			/* NB: we assume caller locking */
 }

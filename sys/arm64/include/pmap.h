@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/pmap.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pmap.h 282221 2015-04-29 15:00:43Z andrew $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -142,7 +142,9 @@ void	pmap_kremove(vm_offset_t);
 void	pmap_kremove_device(vm_offset_t, vm_size_t);
 
 void	*pmap_mapdev(vm_offset_t, vm_size_t);
+void	*pmap_mapbios(vm_paddr_t, vm_size_t);
 void	pmap_unmapdev(vm_offset_t, vm_size_t);
+void	pmap_unmapbios(vm_offset_t, vm_size_t);
 
 boolean_t pmap_map_io_transient(vm_page_t *, vm_offset_t *, int, boolean_t);
 void	pmap_unmap_io_transient(vm_page_t *, vm_offset_t *, int, boolean_t);

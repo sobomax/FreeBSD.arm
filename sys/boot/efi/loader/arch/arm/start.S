@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/efi/loader/arch/arm/start.S 281527 2015-04-14 14:15:14Z andrew $
+ * $FreeBSD: head/sys/boot/efi/loader/arch/arm/start.S 282727 2015-05-10 13:24:26Z ian $
  */
 
 #include <machine/asm.h>
@@ -153,7 +153,7 @@ _start:
 	ldr	r1, .Ldynamic
 	add	r1, r1, r5
 
-	bl	_C_LABEL(_reloc)
+	bl	_C_LABEL(self_reloc)
 
 	/* Zero the BSS, _reloc fixed the values for us */
 	ldr	r0, .Lbss

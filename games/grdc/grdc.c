@@ -11,7 +11,7 @@
  * modified 03-25-03 for 12 hour option
  *     - Samy Al Bahra <samy@kerneled.com>
  *
- * $FreeBSD: head/games/grdc/grdc.c 227101 2011-11-05 07:18:53Z ed $
+ * $FreeBSD: head/games/grdc/grdc.c 283929 2015-06-02 20:53:17Z emaste $
  */
 
 #include <err.h>
@@ -150,14 +150,14 @@ main(int argc, char *argv[])
 		set(tm->tm_min/10, 14);
 
 		if (t12) {
-			if (tm->tm_hour > 12) {
-				tm->tm_hour -= 12;
-				mvaddstr(YBASE + 5, XBASE + 52, "PM");
-			} else {
+			if (tm->tm_hour < 12) {
 				if (tm->tm_hour == 0)
 					tm->tm_hour = 12;
-
 				mvaddstr(YBASE + 5, XBASE + 52, "AM");
+			} else {
+				if (tm->tm_hour > 12)
+					tm->tm_hour -= 12;
+				mvaddstr(YBASE + 5, XBASE + 52, "PM");
 			}
 		}
 

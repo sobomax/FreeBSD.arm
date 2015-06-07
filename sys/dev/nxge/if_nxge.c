@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/nxge/if_nxge.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/dev/nxge/if_nxge.c 283291 2015-05-22 17:05:21Z jkim $
  */
 
 #include <dev/nxge/if_nxge.h>
@@ -1744,7 +1744,7 @@ xge_device_init(xge_lldev_t *lldev, xge_hal_channel_reopen_e option)
 	    return;
 
 	/* Initializing timer */
-	callout_init(&lldev->timer, CALLOUT_MPSAFE);
+	callout_init(&lldev->timer, 1);
 
 	xge_trace(XGE_TRACE, "Set MTU size");
 	status = xge_hal_device_mtu_set(hldev, ifnetp->if_mtu);

@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)display.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/hexdump/display.c 229403 2012-01-03 18:51:58Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/hexdump/display.c 282041 2015-04-26 21:34:55Z jilles $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -380,7 +380,7 @@ doskip(const char *fname, int statok)
 			return;
 		}
 	}
-	if (S_ISREG(sb.st_mode)) {
+	if (statok && S_ISREG(sb.st_mode)) {
 		if (fseeko(stdin, skip, SEEK_SET))
 			err(1, "%s", fname);
 		address += skip;

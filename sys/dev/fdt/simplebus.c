@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdt/simplebus.c 280772 2015-03-27 23:10:15Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/fdt/simplebus.c 282972 2015-05-15 13:55:18Z br $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -251,7 +251,7 @@ simplebus_setup_dinfo(device_t dev, phandle_t node,
 
 	resource_list_init(&ndi->rl);
 	ofw_bus_reg_to_rl(dev, node, sc->acells, sc->scells, &ndi->rl);
-	ofw_bus_intr_to_rl(dev, node, &ndi->rl);
+	ofw_bus_intr_to_rl(dev, node, &ndi->rl, NULL);
 
 	return (ndi);
 }

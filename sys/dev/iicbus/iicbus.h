@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iicbus.h 274641 2014-11-18 01:54:31Z ian $
+ * $FreeBSD: head/sys/dev/iicbus/iicbus.h 282674 2015-05-09 03:05:44Z loos $
  *
  */
 #ifndef __IICBUS_H
@@ -50,6 +50,7 @@ struct iicbus_softc
 struct iicbus_ivar
 {
 	uint32_t	addr;
+	struct resource_list	rl;
 	bool		nostop;
 };
 

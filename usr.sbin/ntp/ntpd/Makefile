@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/ntpd/Makefile 280849 2015-03-30 13:30:15Z cy $
+# $FreeBSD: head/usr.sbin/ntp/ntpd/Makefile 283542 2015-05-25 20:27:46Z bapt $
 
 MAN=
 
@@ -35,10 +35,12 @@ CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/ntpd \
 	-I${.CURDIR}/../ \
 	-I${.CURDIR}
 
-LIBADD=	parse ntp m rt opts md pthread
+LIBADD=	parse ntp m opts pthread
 
 .if ${MK_OPENSSL} != "no"
 LIBADD+=	crypto
+.else
+LIBADD+=	md
 .endif
 
 CLEANFILES+= .version version.c

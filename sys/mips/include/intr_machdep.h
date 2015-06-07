@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/include/intr_machdep.h 228982 2011-12-30 03:54:22Z marcel $
+ * $FreeBSD: head/sys/mips/include/intr_machdep.h 283022 2015-05-16 23:51:24Z adrian $
  */
 
 #ifndef	_MACHINE_INTR_MACHDEP_H_
@@ -70,5 +70,6 @@ mips_intrcnt_inc(mips_intrcnt_t counter)
 {
 	if (counter)
 		atomic_add_long(counter, 1);
+	PCPU_INC(cnt.v_intr);
 }
 #endif /* !_MACHINE_INTR_MACHDEP_H_ */

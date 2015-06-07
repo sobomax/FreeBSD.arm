@@ -38,7 +38,7 @@
  *
  * Prototypes for cpu, mmu and tlb related functions.
  *
- * $FreeBSD: head/sys/arm/include/cpufunc.h 280847 2015-03-30 09:29:45Z andrew $
+ * $FreeBSD: head/sys/arm/include/cpufunc.h 282934 2015-05-15 00:39:51Z ganbold $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -376,7 +376,6 @@ void	armv7_setup			(void);
 void	armv7_context_switch		(void);
 void	armv7_drain_writebuf		(void);
 void	armv7_sev			(void);
-void	armv7_sleep			(int unused);
 u_int	armv7_auxctrl			(u_int, u_int);
 
 void	armadaxp_idcache_wbinv_all	(void);

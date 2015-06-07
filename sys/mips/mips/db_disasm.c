@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/db_disasm.c 229798 2012-01-08 00:34:39Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/db_disasm.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include <sys/param.h>
 #include <vm/vm_param.h>
@@ -130,7 +130,7 @@ static char *c0_reg[32] = {
 static int md_printins(int ins, int mdbdot);
 
 db_addr_t
-db_disasm(db_addr_t loc, boolean_t altfmt)
+db_disasm(db_addr_t loc, bool altfmt)
 
 {
 	int ins;

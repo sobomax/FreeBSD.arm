@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sound/pcm/channel.h 193979 2009-06-11 09:06:09Z ariff $
+ * $FreeBSD: head/sys/dev/sound/pcm/channel.h 282650 2015-05-08 17:00:33Z hselasky $
  */
 
 struct pcmchan_caps {
@@ -162,6 +162,7 @@ struct pcm_channel {
 	} channels;
 
 	struct pcmchan_matrix matrix;
+  	struct pcmchan_matrix matrix_scratch;
 
 	int volume[SND_VOL_C_MAX][SND_CHN_T_VOL_MAX];
 

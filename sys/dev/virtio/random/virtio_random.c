@@ -27,7 +27,7 @@
 /* Driver for VirtIO entropy device. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/random/virtio_random.c 264867 2014-04-24 05:04:54Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/random/virtio_random.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -129,7 +129,7 @@ vtrnd_attach(device_t dev)
 	sc = device_get_softc(dev);
 	sc->vtrnd_dev = dev;
 
-	callout_init(&sc->vtrnd_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->vtrnd_callout, 1);
 
 	virtio_set_feature_desc(dev, vtrnd_feature_desc);
 	vtrnd_negotiate_features(sc);

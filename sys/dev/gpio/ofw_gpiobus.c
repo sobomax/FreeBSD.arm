@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/gpio/ofw_gpiobus.c 279761 2015-03-08 00:47:50Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/gpio/ofw_gpiobus.c 282972 2015-05-15 13:55:18Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -147,7 +147,7 @@ ofw_gpiobus_setup_devinfo(device_t bus, device_t child, phandle_t node)
 	}
 	free(pins, M_DEVBUF);
 	/* Parse the interrupt resources. */
-	if (ofw_bus_intr_to_rl(bus, node, &dinfo->opd_dinfo.rl) != 0) {
+	if (ofw_bus_intr_to_rl(bus, node, &dinfo->opd_dinfo.rl, NULL) != 0) {
 		ofw_gpiobus_destroy_devinfo(bus, dinfo);
 		return (NULL);
 	}

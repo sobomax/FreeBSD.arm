@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_random.c 258838 2013-12-02 08:21:28Z pjd $");
+__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_random.c 282346 2015-05-02 17:45:52Z oshogbo $");
 
 #include <assert.h>
 #include <errno.h>
@@ -57,7 +57,7 @@ cap_random_buf(cap_channel_t *chan, void *buf, size_t nbytes)
 		nvlist_add_string(nvl, "cmd", "generate");
 		nvlist_add_number(nvl, "size",
 		    (uint64_t)(left > MAXSIZE ? MAXSIZE : left));
-		nvl = cap_xfer_nvlist(chan, nvl);
+		nvl = cap_xfer_nvlist(chan, nvl, 0);
 		if (nvl == NULL)
 			return (-1);
 		if (nvlist_get_number(nvl, "error") != 0) {

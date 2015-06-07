@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 260169 2014-01-01 21:48:04Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_inet6.h"
 #include "opt_route.h"
@@ -259,7 +259,7 @@ ng_netflow_constructor(node_p node)
 		priv->ifaces[i].info.conf = NG_NETFLOW_CONF_INGRESS;
 
 	/* Initialize callout handle */
-	callout_init(&priv->exp_callout, CALLOUT_MPSAFE);
+	callout_init(&priv->exp_callout, 1);
 
 	/* Allocate memory and set up flow cache */
 	ng_netflow_cache_init(priv);

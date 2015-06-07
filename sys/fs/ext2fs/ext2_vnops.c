@@ -39,7 +39,7 @@
  *
  *	@(#)ufs_vnops.c	8.7 (Berkeley) 2/3/94
  *	@(#)ufs_vnops.c 8.27 (Berkeley) 5/27/95
- * $FreeBSD: head/sys/fs/ext2fs/ext2_vnops.c 277354 2015-01-19 03:30:45Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_vnops.c 283669 2015-05-28 21:06:59Z pfg $
  */
 
 #include "opt_suiddir.h"
@@ -128,6 +128,7 @@ struct vop_vector ext2_vnodeops = {
 	.vop_create =		ext2_create,
 	.vop_fsync =		ext2_fsync,
 	.vop_getpages =		vnode_pager_local_getpages,
+	.vop_getpages_async =	vnode_pager_local_getpages_async,
 	.vop_getattr =		ext2_getattr,
 	.vop_inactive =		ext2_inactive,
 	.vop_ioctl =		ext2_ioctl,

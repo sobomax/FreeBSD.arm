@@ -1,4 +1,4 @@
-/*	$OpenBSD: main.c,v 1.83 2014/05/12 19:11:19 espie Exp $ */
+/*	$OpenBSD: main.c,v 1.84 2014/12/21 09:33:12 espie Exp $	*/
 /*	$NetBSD: main.c,v 1.12 1997/02/08 23:54:49 cgd Exp $	*/
 
 /*-
@@ -39,7 +39,7 @@
  * by: oz
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/m4/main.c 269162 2014-07-27 22:54:13Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/m4/main.c 283089 2015-05-18 22:40:12Z bapt $");
 
 #include <assert.h>
 #include <signal.h>
@@ -143,6 +143,9 @@ static struct keyblk keywrds[] = {	/* m4 keywords to be installed */
 };
 
 #define MAXKEYS	(sizeof(keywrds)/sizeof(struct keyblk))
+
+extern int optind;
+extern char *optarg;
 
 #define MAXRECORD 50
 static struct position {
@@ -396,7 +399,7 @@ macro(void)
 		/*
 		 * now push the string arguments:
 		 */
-				pushs1(macro_getdef(p)->defn);	/* defn string */
+				pushdef(p);			/* defn string */
 				pushs1((char *)macro_name(p));	/* macro name  */
 				pushs(ep);			/* start next..*/
 

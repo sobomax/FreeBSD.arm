@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/template/usb_template.c 277129 2015-01-13 14:03:56Z br $ */
+/* $FreeBSD: head/sys/dev/usb/template/usb_template.c 283879 2015-06-01 11:24:34Z hselasky $ */
 /*-
  * Copyright (c) 2007 Hans Petter Selasky. All rights reserved.
  *
@@ -1373,6 +1373,9 @@ usb_temp_setup_by_index(struct usb_device *udev, uint16_t index)
 		break;
 	case USB_TEMP_SERIALNET:
 		err = usb_temp_setup(udev, &usb_template_serialnet);
+		break;
+	case USB_TEMP_MIDI:
+		err = usb_temp_setup(udev, &usb_template_midi);
 		break;
 	default:
 		return (USB_ERR_INVAL);

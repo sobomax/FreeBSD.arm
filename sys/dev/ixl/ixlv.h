@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/ixlv.h 279858 2015-03-10 19:17:40Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/ixlv.h 284049 2015-06-05 22:52:42Z jfv $*/
 
 
 #ifndef _IXLV_H_
@@ -117,6 +117,7 @@ struct ixlv_sc {
 	struct ifmedia		media;
 	struct callout		timer;
 	int			msix;
+	int			pf_version;
 	int			if_flags;
 
 	bool			link_up;

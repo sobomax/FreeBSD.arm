@@ -29,10 +29,10 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/af_inet.c 281143 2015-04-06 09:42:23Z glebius $";
+  "$FreeBSD: head/sbin/ifconfig/af_inet.c 282747 2015-05-11 04:54:56Z ngie $";
 #endif /* not lint */
 
-#include <sys/types.h>
+#include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <net/if.h>
@@ -100,7 +100,6 @@ static struct sockaddr_in *sintab[] = {
 static void
 in_getaddr(const char *s, int which)
 {
-#define	MIN(a,b)	((a)<(b)?(a):(b))
 	struct sockaddr_in *sin = sintab[which];
 	struct hostent *hp;
 	struct netent *np;
@@ -141,7 +140,6 @@ in_getaddr(const char *s, int which)
 		sin->sin_addr = inet_makeaddr(np->n_net, INADDR_ANY);
 	else
 		errx(1, "%s: bad value", s);
-#undef MIN
 }
 
 static void

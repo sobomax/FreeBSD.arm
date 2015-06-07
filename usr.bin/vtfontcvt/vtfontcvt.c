@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/vtfontcvt/vtfontcvt.c 268949 2014-07-21 17:43:37Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/vtfontcvt/vtfontcvt.c 282920 2015-05-14 20:17:53Z emaste $");
 
 #include <sys/types.h>
 #include <sys/fnv_hash.h>
@@ -473,24 +473,24 @@ print_font_info(void)
 {
 	printf(
 "Statistics:\n"
-"- glyph_total:                 %5u\n"
-"- glyph_normal:                %5u\n"
-"- glyph_normal_right:          %5u\n"
-"- glyph_bold:                  %5u\n"
-"- glyph_bold_right:            %5u\n"
-"- glyph_unique:                %5u\n"
-"- glyph_dupe:                  %5u\n"
-"- mapping_total:               %5u\n"
-"- mapping_normal:              %5u\n"
-"- mapping_normal_folded:       %5u\n"
-"- mapping_normal_right:        %5u\n"
-"- mapping_normal_right_folded: %5u\n"
-"- mapping_bold:                %5u\n"
-"- mapping_bold_folded:         %5u\n"
-"- mapping_bold_right:          %5u\n"
-"- mapping_bold_right_folded:   %5u\n"
-"- mapping_unique:              %5u\n"
-"- mapping_dupe:                %5u\n",
+"- glyph_total:                 %6u\n"
+"- glyph_normal:                %6u\n"
+"- glyph_normal_right:          %6u\n"
+"- glyph_bold:                  %6u\n"
+"- glyph_bold_right:            %6u\n"
+"- glyph_unique:                %6u\n"
+"- glyph_dupe:                  %6u\n"
+"- mapping_total:               %6u\n"
+"- mapping_normal:              %6u\n"
+"- mapping_normal_folded:       %6u\n"
+"- mapping_normal_right:        %6u\n"
+"- mapping_normal_right_folded: %6u\n"
+"- mapping_bold:                %6u\n"
+"- mapping_bold_folded:         %6u\n"
+"- mapping_bold_right:          %6u\n"
+"- mapping_bold_right_folded:   %6u\n"
+"- mapping_unique:              %6u\n"
+"- mapping_dupe:                %6u\n",
 	    glyph_total,
 	    glyph_count[0],
 	    glyph_count[1],

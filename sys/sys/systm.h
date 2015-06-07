@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)systm.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD: head/sys/sys/systm.h 281915 2015-04-24 03:17:21Z markj $
+ * $FreeBSD: head/sys/sys/systm.h 283600 2015-05-27 09:20:42Z kib $
  */
 
 #ifndef _SYS_SYSTM_H_
@@ -237,7 +237,7 @@ void	hexdump(const void *ptr, int length, const char *hdr, int flags);
 #define ovbcopy(f, t, l) bcopy((f), (t), (l))
 void	bcopy(const void *from, void *to, size_t len) __nonnull(1) __nonnull(2);
 void	bzero(void *buf, size_t len) __nonnull(1);
-void	explicit_bzero(void *, size_t) __nonnull(1);;
+void	explicit_bzero(void *, size_t) __nonnull(1);
 
 void	*memcpy(void *to, const void *from, size_t len) __nonnull(1) __nonnull(2);
 void	*memmove(void *dest, const void *src, size_t n) __nonnull(1) __nonnull(2);
@@ -430,5 +430,7 @@ int alloc_unrl(struct unrhdr *uh);
 void free_unr(struct unrhdr *uh, u_int item);
 
 void	intr_prof_stack_use(struct thread *td, struct trapframe *frame);
+
+extern void (*softdep_ast_cleanup)(void);
 
 #endif /* !_SYS_SYSTM_H_ */

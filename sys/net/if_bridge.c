@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_bridge.c 278766 2015-02-14 18:15:14Z hrs $");
+__FBSDID("$FreeBSD: head/sys/net/if_bridge.c 282806 2015-05-12 03:35:45Z hrs $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -3065,9 +3065,11 @@ bridge_state_change(struct ifnet *ifp, int state)
 		"discarding"
 	};
 
+	CURVNET_SET(ifp->if_vnet);
 	if (V_log_stp)
 		log(LOG_NOTICE, "%s: state changed to %s on %s\n",
 		    sc->sc_ifp->if_xname, stpstates[state], ifp->if_xname);
+	CURVNET_RESTORE();
 }
 
 /*

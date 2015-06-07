@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/man/man9/Makefile 281915 2015-04-24 03:17:21Z markj $
+# $FreeBSD: head/share/man/man9/Makefile 283670 2015-05-28 22:01:50Z jhb $
 
 .include <src.opts.mk>
 
@@ -195,10 +195,10 @@ MAN=	accept_filter.9 \
 	p_candebug.9 \
 	p_cansee.9 \
 	pci.9 \
-	PCI_ADD_VF.9 \
-	PCI_INIT_IOV.9 \
+	PCI_IOV_ADD_VF.9 \
+	PCI_IOV_INIT.9 \
 	pci_iov_schema.9 \
-	PCI_UNINIT_IOV.9 \
+	PCI_IOV_UNINIT.9 \
 	pfil.9 \
 	pfind.9 \
 	pget.9 \
@@ -1113,7 +1113,6 @@ MLINKS+=mutex.9 mtx_assert.9 \
 	mutex.9 mtx_unlock_spin.9 \
 	mutex.9 mtx_unlock_spin_flags.9
 MLINKS+=namei.9 NDFREE.9 \
-	namei.9 NDHASGIANT.9 \
 	namei.9 NDINIT.9
 MLINKS+=netisr.9 netisr_clearqdrops.9 \
 	netisr.9 netisr_default_flow2cpu.9 \

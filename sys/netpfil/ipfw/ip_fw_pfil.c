@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_pfil.c 279948 2015-03-13 09:03:25Z ae $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_pfil.c 283116 2015-05-19 16:51:30Z luigi $");
 
 #include "opt_ipfw.h"
 #include "opt_inet.h"
@@ -505,7 +505,7 @@ static int
 ipfw_hook(int onoff, int pf)
 {
 	struct pfil_head *pfh;
-	void *hook_func;
+	pfil_func_t hook_func;
 
 	pfh = pfil_head_get(PFIL_TYPE_AF, pf);
 	if (pfh == NULL)

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_attach.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_attach.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -208,7 +208,7 @@ patm_attach(device_t dev)
 	mtx_init(&sc->tst_lock, "tst lock", NULL, MTX_DEF);
 	cv_init(&sc->vcc_cv, "vcc_close");
 
-	callout_init(&sc->tst_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->tst_callout, 1);
 
 	sysctl_ctx_init(&sc->sysctl_ctx);
 

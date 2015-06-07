@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_qi.c 280260 2015-03-19 13:57:47Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_qi.c 283692 2015-05-29 09:17:59Z kib $");
 
 #include "opt_acpi.h"
 
@@ -411,6 +411,7 @@ dmar_init_qi(struct dmar_unit *unit)
 		ics = DMAR_ICS_IWC;
 		dmar_write4(unit, DMAR_ICS_REG, ics);
 	}
+	dmar_enable_qi_intr(unit);
 	DMAR_UNLOCK(unit);
 
 	return (0);
@@ -434,6 +435,7 @@ dmar_fini_qi(struct dmar_unit *unit)
 	dmar_qi_advance_tail(unit);
 	dmar_qi_wait_for_seq(unit, &gseq, false);
 	/* only after the quisce, disable queue */
+	dmar_disable_qi_intr(unit);
 	dmar_disable_qi(unit);
 	KASSERT(unit->inv_seq_waiters == 0,
 	    ("dmar%d: waiters on disabled queue", unit->unit));

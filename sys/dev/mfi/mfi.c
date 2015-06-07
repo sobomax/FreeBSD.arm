@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mfi/mfi.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/mfi/mfi.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_compat.h"
 #include "opt_mfi.h"
@@ -780,7 +780,7 @@ mfi_attach(struct mfi_softc *sc)
 	bus_generic_attach(sc->mfi_dev);
 
 	/* Start the timeout watchdog */
-	callout_init(&sc->mfi_watchdog_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->mfi_watchdog_callout, 1);
 	callout_reset(&sc->mfi_watchdog_callout, mfi_cmd_timeout * hz,
 	    mfi_timeout, sc);
 

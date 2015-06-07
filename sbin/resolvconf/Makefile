@@ -1,11 +1,11 @@
-# $FreeBSD: head/sbin/resolvconf/Makefile 219738 2011-03-18 12:18:52Z ume $
+# $FreeBSD: head/sbin/resolvconf/Makefile 282434 2015-05-04 21:07:20Z gjb $
 
 DIST=		${.CURDIR}/../../contrib/openresolv
 .PATH:		${DIST}
 
 SCRIPTS=	resolvconf
 
-FILES=		libc dnsmasq named pdnsd unbound
+FILES=		libc dnsmasq named pdnsd pdns_recursor unbound
 FILESDIR=	/libexec/resolvconf
 
 MAN=		resolvconf.conf.5 resolvconf.8

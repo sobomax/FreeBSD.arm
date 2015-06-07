@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_dummynet.c 272840 2014-10-09 19:32:35Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_dummynet.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * Configuration and internal object management for dummynet.
@@ -2169,7 +2169,7 @@ ip_dn_init(void)
 	    taskqueue_thread_enqueue, &dn_tq);
 	taskqueue_start_threads(&dn_tq, 1, PI_NET, "dummynet");
 
-	callout_init(&dn_timeout, CALLOUT_MPSAFE);
+	callout_init(&dn_timeout, 1);
 	dn_reschedule();
 
 	/* Initialize curr_time adjustment mechanics. */

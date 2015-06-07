@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)mkstr.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkstr/mkstr.c 216370 2010-12-11 08:32:16Z joel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkstr/mkstr.c 284063 2015-06-06 12:39:00Z bapt $");
 
 #include <err.h>
 #include <errno.h>
@@ -76,8 +76,8 @@ __FBSDID("$FreeBSD: head/usr.bin/mkstr/mkstr.c 216370 2010-12-11 08:32:16Z joel 
  * existing error message file for recompilation of single routines.
  */
 
-FILE	*mesgread, *mesgwrite;
-char	name[100], *np;
+static FILE	*mesgread, *mesgwrite;
+static char	name[100], *np;
 
 void copystr(void);
 int fgetNUL(char *, int, FILE *);
@@ -267,7 +267,7 @@ inithash(void)
 
 #define	NBUCKETS	511
 
-struct	hash {
+static struct	hash {
 	long	hval;
 	unsigned hpt;
 	struct	hash *hnext;

@@ -42,7 +42,7 @@
  *      from: @(#)pmap.h        7.4 (Berkeley) 5/12/91
  * 	from: FreeBSD: src/sys/i386/include/pmap.h,v 1.70 2000/11/30
  *
- * $FreeBSD: head/sys/arm/include/pmap-v6.h 281369 2015-04-10 13:26:35Z ian $
+ * $FreeBSD: head/sys/arm/include/pmap-v6.h 282780 2015-05-11 19:55:01Z alc $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -193,7 +193,6 @@ void pmap_unmapdev(vm_offset_t, vm_size_t);
 void pmap_kenter_device(vm_offset_t, vm_size_t, vm_paddr_t);
 void pmap_kremove_device(vm_offset_t, vm_size_t);
 void pmap_set_pcb_pagedir(pmap_t , struct pcb *);
-void pmap_lazyfix_action(void);
 
 void pmap_tlb_flush(pmap_t , vm_offset_t );
 void pmap_tlb_flush_range(pmap_t , vm_offset_t , vm_size_t );

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/doc/papers/Makefile 163030 2006-10-05 13:42:30Z ru $
+# $FreeBSD: head/share/doc/papers/Makefile 282219 2015-04-29 13:30:04Z bapt $
 
 SUBDIR=	beyond4.3 \
 	bufbio \
@@ -6,7 +6,6 @@ SUBDIR=	beyond4.3 \
 	devfs \
 	diskperf \
 	fsinterface \
-	hwpmc \
 	jail \
 	kernmalloc \
 	kerntune \

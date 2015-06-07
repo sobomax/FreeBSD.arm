@@ -33,7 +33,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: head/sys/arm/include/_types.h 263998 2014-04-01 14:46:11Z tijl $
+ * $FreeBSD: head/sys/arm/include/_types.h 283812 2015-05-31 10:51:06Z andrew $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -105,15 +105,9 @@ typedef	__uint32_t	__vm_paddr_t;
 typedef	__uint64_t	__vm_pindex_t;
 typedef	__uint32_t	__vm_size_t;
 
-#ifdef __ARM_EABI__
 typedef	unsigned int	___wchar_t;
 #define	__WCHAR_MIN	0		/* min value for a wchar_t */
 #define	__WCHAR_MAX	__UINT_MAX	/* max value for a wchar_t */
-#else
-typedef	int		___wchar_t;
-#define	__WCHAR_MIN	__INT_MIN	/* min value for a wchar_t */
-#define	__WCHAR_MAX	__INT_MAX	/* max value for a wchar_t */
-#endif
 
 /*
  * Unusual type definitions.

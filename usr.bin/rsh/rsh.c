@@ -51,7 +51,7 @@ static const char sccsid[] = "From: @(#)rsh.c	8.3 (Berkeley) 4/6/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rsh/rsh.c 216585 2010-12-20 08:47:43Z charnier $");
+__FBSDID("$FreeBSD: head/usr.bin/rsh/rsh.c 284065 2015-06-06 12:43:05Z bapt $");
 
 #include <sys/param.h>
 #include <sys/signal.h>
@@ -77,10 +77,10 @@ __FBSDID("$FreeBSD: head/usr.bin/rsh/rsh.c 216585 2010-12-20 08:47:43Z charnier 
 /*
  * rsh - remote shell
  */
-int	rfd2;
+static int	rfd2;
 
-int family = PF_UNSPEC;
-char rlogin[] = "rlogin";
+static int family = PF_UNSPEC;
+static char rlogin[] = "rlogin";
 
 void	connect_timeout(int);
 char   *copyargs(char * const *);

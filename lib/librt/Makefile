@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/librt/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/librt/Makefile 282057 2015-04-27 06:49:27Z ngie $
 
 .include <src.opts.mk>
 
@@ -19,6 +19,8 @@ PRECIOUSLIB=
 
 VERSION_MAP=	${.CURDIR}/Version.map
 
-.include <bsd.arch.inc.mk>
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>

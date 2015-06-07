@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/mp_machdep.c 280823 2015-03-29 20:37:28Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/mp_machdep.c 284109 2015-06-07 10:50:15Z andrew $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -185,8 +185,11 @@ init_secondary(int cpu)
 	atomic_add_rel_32(&mp_naps, 1);
 
 	/* Spin until the BSP releases the APs */
-	while (!aps_ready)
-		;
+	while (!atomic_load_acq_int(&aps_ready)) {
+#if __ARM_ARCH >= 7
+		__asm __volatile("wfe");
+#endif
+	}
 
 	/* Initialize curthread */
 	KASSERT(PCPU_GET(idlethread) != NULL, ("no idle thread"));
@@ -194,8 +197,6 @@ init_secondary(int cpu)
 	pc->pc_curpcb = pc->pc_idlethread->td_pcb;
 	set_curthread(pc->pc_idlethread);
 #ifdef VFP
-	pc->pc_cpu = cpu;
-
 	vfp_init();
 #endif
 
@@ -219,7 +220,7 @@ init_secondary(int cpu)
 	end = IPI_IRQ_START;
 #endif
 #endif
-				
+
 	for (int i = start; i <= end; i++)
 		arm_unmask_irq(i);
 	enable_interrupts(PSR_I);
@@ -309,12 +310,6 @@ ipi_handler(void *arg)
 			CTR1(KTR_SMP, "%s: IPI_TLB", __func__);
 			cpufuncs.cf_tlb_flushID();
 			break;
-#ifdef ARM_NEW_PMAP
-		case IPI_LAZYPMAP:
-			CTR1(KTR_SMP, "%s: IPI_LAZYPMAP", __func__);
-			pmap_lazyfix_action();
-			break;
-#endif
 		default:
 			panic("Unknown IPI 0x%0x on cpu %d", ipi, curcpu);
 		}
@@ -347,7 +342,7 @@ release_aps(void *dummy __unused)
 		/*
 		 * IPI handler
 		 */
-		/* 
+		/*
 		 * Use 0xdeadbeef as the argument value for irq 0,
 		 * if we used 0, the intr code will give the trap frame
 		 * pointer instead.
@@ -359,6 +354,10 @@ release_aps(void *dummy __unused)
 		arm_unmask_irq(i);
 	}
 	atomic_store_rel_int(&aps_ready, 1);
+	/* Wake the other threads up */
+#if __ARM_ARCH >= 7
+	armv7_sev();
+#endif
 
 	printf("Release APs\n");
 

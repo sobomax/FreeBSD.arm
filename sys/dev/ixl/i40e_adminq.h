@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2014, Intel Corporation 
+  Copyright (c) 2013-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_adminq.h 277082 2015-01-12 18:32:45Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_adminq.h 284049 2015-06-05 22:52:42Z jfv $*/
 
 #ifndef _I40E_ADMINQ_H_
 #define _I40E_ADMINQ_H_
@@ -77,6 +77,7 @@ struct i40e_asq_cmd_details {
 	u16 flags_dis;
 	bool async;
 	bool postpone;
+	struct i40e_aq_desc *wb_desc;
 };
 
 #define I40E_ADMINQ_DETAILS(R, i)   \

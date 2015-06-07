@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/if_pfsync.c 280971 2015-04-01 22:26:39Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/if_pfsync.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -324,7 +324,7 @@ pfsync_clone_create(struct if_clone *ifc, int unit, caddr_t param)
 	ifp->if_mtu = ETHERMTU;
 	mtx_init(&sc->sc_mtx, pfsyncname, NULL, MTX_DEF);
 	mtx_init(&sc->sc_bulk_mtx, "pfsync bulk", NULL, MTX_DEF);
-	callout_init(&sc->sc_tmo, CALLOUT_MPSAFE);
+	callout_init(&sc->sc_tmo, 1);
 	callout_init_mtx(&sc->sc_bulk_tmo, &sc->sc_bulk_mtx, 0);
 	callout_init_mtx(&sc->sc_bulkfail_tmo, &sc->sc_bulk_mtx, 0);
 

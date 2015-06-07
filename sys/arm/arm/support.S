@@ -87,7 +87,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/support.S 275522 2014-12-05 19:14:05Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/support.S 283366 2015-05-24 12:20:11Z andrew $");
 
 #include "assym.s"
 
@@ -430,7 +430,7 @@ EENTRY(memmove)
 
 	/* blat 32 bytes at a time */
 	/* XXX for really big copies perhaps we should use more registers */
-.Lmemmove_floop32:	
+.Lmemmove_floop32:
 	ldmia	r1!, {r3, r4, r12, lr}
 	stmia	r0!, {r3, r4, r12, lr}
 	ldmia	r1!, {r3, r4, r12, lr}
@@ -988,7 +988,7 @@ ENTRY(memcpy)
 
 	/* blat 32 bytes at a time */
 	/* XXX for really big copies perhaps we should use more registers */
-.Lmemcpy_loop32:	
+.Lmemcpy_loop32:
 	ldmia	r1!, {r3, r4, r12, lr}
 	stmia	r0!, {r3, r4, r12, lr}
 	ldmia	r1!, {r3, r4, r12, lr}

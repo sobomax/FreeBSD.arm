@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_bmap.c 239359 2012-08-17 17:45:27Z mjg $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_bmap.c 283735 2015-05-29 13:24:17Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,7 +114,6 @@ ufs_bmaparray(vp, bn, bnp, nbp, runp, runb)
 	struct buf *bp;
 	struct ufsmount *ump;
 	struct mount *mp;
-	struct vnode *devvp;
 	struct indir a[NIADDR+1], *ap;
 	ufs2_daddr_t daddr;
 	ufs_lbn_t metalbn;
@@ -125,7 +124,6 @@ ufs_bmaparray(vp, bn, bnp, nbp, runp, runb)
 	ip = VTOI(vp);
 	mp = vp->v_mount;
 	ump = VFSTOUFS(mp);
-	devvp = ump->um_devvp;
 
 	if (runp) {
 		maxrun = mp->mnt_iosize_max / mp->mnt_stat.f_iosize - 1;

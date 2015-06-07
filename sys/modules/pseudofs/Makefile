@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/pseudofs/Makefile 193588 2009-06-06 17:01:44Z rwatson $
+# $FreeBSD: head/sys/modules/pseudofs/Makefile 283495 2015-05-24 18:11:22Z dchagin $
 
 .PATH: ${.CURDIR}/../../fs/pseudofs
 
@@ -22,5 +22,11 @@ EXPORT_SYMS=	pfs_mount	\
 		pfs_disable	\
 		pfs_enable	\
 		pfs_destroy
+
+.if !defined(KERNBUILDDIR)
+.if defined(PSEUDOFS_TRACE)
+CFLAGS+=-DPSEUDOFS_TRACE
+.endif
+.endif
 
 .include <bsd.kmod.mk>

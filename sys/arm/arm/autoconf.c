@@ -47,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/autoconf.c 146794 2005-05-29 23:44:22Z marcel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/autoconf.c 283337 2015-05-23 23:08:16Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -94,6 +94,7 @@ static void
 configure_final(void *dummy)
 {
 
+	enable_interrupts(PSR_I | PSR_F);
 	cninit_finish();
 	cold = 0;
 }

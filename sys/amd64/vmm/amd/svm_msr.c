@@ -25,14 +25,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/svm_msr.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/svm_msr.c 282336 2015-05-02 04:19:11Z neel $");
 
-#include <sys/types.h>
+#include <sys/param.h>
 #include <sys/errno.h>
+#include <sys/systm.h>
 
 #include <machine/cpufunc.h>
 #include <machine/specialreg.h>
+#include <machine/vmm.h>
 
+#include "svm.h"
+#include "vmcb.h"
+#include "svm_softc.h"
 #include "svm_msr.h"
 
 #ifndef MSR_AMDK8_IPM
@@ -105,6 +110,18 @@ svm_rdmsr(struct svm_softc *sc, int vcpu, u_int num, uint64_t *result,
 	int error = 0;
 
 	switch (num) {
+	case MSR_MCG_CAP:
+	case MSR_MCG_STATUS:
+		*result = 0;
+		break;
+	case MSR_MTRRcap:
+	case MSR_MTRRdefType:
+	case MSR_MTRR4kBase ... MSR_MTRR4kBase + 8:
+	case MSR_MTRR16kBase ... MSR_MTRR16kBase + 1:
+	case MSR_MTRR64kBase:
+	case MSR_SYSCFG:
+		*result = 0;
+		break;
 	case MSR_AMDK8_IPM:
 		*result = 0;
 		break;
@@ -122,6 +139,18 @@ svm_wrmsr(struct svm_softc *sc, int vcpu, u_int num, uint64_t val, bool *retu)
 	int error = 0;
 
 	switch (num) {
+	case MSR_MCG_CAP:
+	case MSR_MCG_STATUS:
+		break;		/* ignore writes */
+	case MSR_MTRRcap:
+		vm_inject_gp(sc->vm, vcpu);
+		break;
+	case MSR_MTRRdefType:
+	case MSR_MTRR4kBase ... MSR_MTRR4kBase + 8:
+	case MSR_MTRR16kBase ... MSR_MTRR16kBase + 1:
+	case MSR_MTRR64kBase:
+	case MSR_SYSCFG:
+		break;		/* Ignore writes */
 	case MSR_AMDK8_IPM:
 		/*
 		 * Ignore writes to the "Interrupt Pending Message" MSR.

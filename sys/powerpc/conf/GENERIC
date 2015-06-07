@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/powerpc/conf/GENERIC 276755 2015-01-06 16:15:57Z jhb $
+# $FreeBSD: head/sys/powerpc/conf/GENERIC 282901 2015-05-14 14:03:55Z trasz $
 
 cpu		AIM
 ident		GENERIC
@@ -32,6 +32,7 @@ options 	PSIM			#GDB PSIM ppc simulator
 options 	MAMBO			#IBM Mambo Full System Simulator
 options 	PSERIES			#PAPR-compliant systems
 
+options		FDT
 options 	SCHED_ULE		#ULE scheduler
 options 	PREEMPTION		#Enable kernel thread preemption
 options 	INET			#InterNETworking
@@ -76,6 +77,9 @@ options 	MAC			# TrustedBSD MAC Framework
 options 	KDTRACE_HOOKS		# Kernel DTrace hooks
 options 	DDB_CTF			# Kernel ELF linker loads CTF data
 options 	INCLUDE_CONFIG_FILE     # Include this file in kernel
+options 	RACCT			# Resource accounting framework
+options 	RACCT_DEFAULT_TO_DISABLED # Set kern.racct.enable=0 by default
+options 	RCTL			# Resource limits
 
 # Debugging support.  Always need this:
 options 	KDB			# Enable kernel debugger support.

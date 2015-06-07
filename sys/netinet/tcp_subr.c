@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_subr.c 281950 2015-04-24 21:05:29Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_subr.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -791,11 +791,11 @@ tcp_newtcpcb(struct inpcb *inp)
 		V_tcp_mssdflt;
 
 	/* Set up our timeouts. */
-	callout_init(&tp->t_timers->tt_rexmt, CALLOUT_MPSAFE);
-	callout_init(&tp->t_timers->tt_persist, CALLOUT_MPSAFE);
-	callout_init(&tp->t_timers->tt_keep, CALLOUT_MPSAFE);
-	callout_init(&tp->t_timers->tt_2msl, CALLOUT_MPSAFE);
-	callout_init(&tp->t_timers->tt_delack, CALLOUT_MPSAFE);
+	callout_init(&tp->t_timers->tt_rexmt, 1);
+	callout_init(&tp->t_timers->tt_persist, 1);
+	callout_init(&tp->t_timers->tt_keep, 1);
+	callout_init(&tp->t_timers->tt_2msl, 1);
+	callout_init(&tp->t_timers->tt_delack, 1);
 
 	if (V_tcp_do_rfc1323)
 		tp->t_flags = (TF_REQ_SCALE|TF_REQ_TSTMP);

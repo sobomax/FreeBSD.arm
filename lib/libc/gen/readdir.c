@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)readdir.c	8.3 (Berkeley) 9/29/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/readdir.c 268531 2014-07-11 16:16:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/readdir.c 282485 2015-05-05 14:52:33Z julian $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -54,19 +54,25 @@ _readdir_unlocked(dirp, skip)
 	int skip;
 {
 	struct dirent *dp;
+	long initial_seek;
+	long initial_loc = 0;
 
 	for (;;) {
 		if (dirp->dd_loc >= dirp->dd_size) {
 			if (dirp->dd_flags & __DTF_READALL)
 				return (NULL);
+			initial_loc = dirp->dd_loc;
+			dirp->dd_flags &= ~__DTF_SKIPREAD;
 			dirp->dd_loc = 0;
 		}
 		if (dirp->dd_loc == 0 &&
 		    !(dirp->dd_flags & (__DTF_READALL | __DTF_SKIPREAD))) {
+			initial_seek = dirp->dd_seek;
 			dirp->dd_size = _getdirentries(dirp->dd_fd,
 			    dirp->dd_buf, dirp->dd_len, &dirp->dd_seek);
 			if (dirp->dd_size <= 0)
 				return (NULL);
+			_fixtelldir(dirp, initial_seek, initial_loc);
 		}
 		dirp->dd_flags &= ~__DTF_SKIPREAD;
 		dp = (struct dirent *)(dirp->dd_buf + dirp->dd_loc);

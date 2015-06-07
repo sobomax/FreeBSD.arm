@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2008 John Birrell <jb@freebsd.org>
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/amd64/dtrace_asm.S 281916 2015-04-24 03:19:30Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/amd64/dtrace_asm.S 283509 2015-05-25 01:22:56Z markj $
  *
  */
 /*
@@ -60,8 +60,6 @@
 1:	addq	$TF_RIP,%rsp;
 
 
-	.globl	calltrap
-	.type	calltrap,@function
 	ENTRY(dtrace_invop_start)
 
 	/*

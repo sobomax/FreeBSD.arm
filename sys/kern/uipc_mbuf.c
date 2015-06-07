@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_mbuf.c 278920 2015-02-17 20:52:51Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_mbuf.c 282594 2015-05-07 18:35:01Z ae $");
 
 #include "opt_param.h"
 #include "opt_mbuf_stress_test.h"
@@ -813,6 +813,7 @@ m_dup(struct mbuf *m, int how)
 			}
 			if ((n->m_flags & M_EXT) == 0)
 				nsize = MHLEN;
+			n->m_flags &= ~M_RDONLY;
 		}
 		n->m_len = 0;
 

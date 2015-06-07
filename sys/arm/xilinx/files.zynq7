@@ -1,7 +1,7 @@
 #
 # files.zynq7
 #
-# $FreeBSD: head/sys/arm/xilinx/files.zynq7 280831 2015-03-29 22:43:39Z andrew $
+# $FreeBSD: head/sys/arm/xilinx/files.zynq7 282723 2015-05-10 12:13:27Z andrew $
 
 kern/kern_clocksource.c				standard
 
@@ -9,7 +9,6 @@ arm/arm/bus_space_base.c			standard
 arm/arm/bus_space_generic.c			standard
 arm/arm/bus_space_asm_generic.S			standard
 
-arm/arm/gic.c					standard
 arm/arm/mpcore_timer.c				standard
 arm/arm/pl310.c					standard
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/support.s 273783 2014-10-28 15:22:13Z kib $
+ * $FreeBSD: head/sys/i386/i386/support.s 282274 2015-04-30 15:48:48Z jhb $
  */
 
 #include "opt_npx.h"
@@ -695,11 +695,9 @@ END(bcmp)
  */
 /* void lgdt(struct region_descriptor *rdp); */
 ENTRY(lgdt)
-#ifndef XEN
 	/* reload the descriptor table */
 	movl	4(%esp),%eax
 	lgdt	(%eax)
-#endif
 
 	/* flush the prefetch q */
 	jmp	1f

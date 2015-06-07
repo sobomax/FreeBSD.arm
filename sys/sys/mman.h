@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mman.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/mman.h 273250 2014-10-18 12:28:51Z jhb $
+ * $FreeBSD: head/sys/sys/mman.h 283998 2015-06-04 19:41:15Z jhb $
  */
 
 #ifndef _SYS_MMAN_H_
@@ -230,8 +230,6 @@ struct shmfd {
 #endif
 
 #ifdef _KERNEL
-int	shm_mmap(struct shmfd *shmfd, vm_size_t objsize, vm_ooffset_t foff,
-	    vm_object_t *obj);
 int	shm_map(struct file *fp, size_t size, off_t offset, void **memp);
 int	shm_unmap(struct file *fp, void *mem, size_t size);
 

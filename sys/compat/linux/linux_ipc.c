@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_ipc.c 230132 2012-01-15 13:23:18Z uqs $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_ipc.c 283416 2015-05-24 15:44:41Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -116,16 +116,6 @@ bsd_to_linux_shm_info( struct shm_info *bpp, struct l_shm_info *lpp)
 	lpp->swap_attempts = bpp->swap_attempts ;
 	lpp->swap_successes = bpp->swap_successes ;
 }
-
-struct l_ipc_perm {
-	l_key_t		key;
-	l_uid16_t	uid;
-	l_gid16_t	gid;
-	l_uid16_t	cuid;
-	l_gid16_t	cgid;
-	l_ushort	mode;
-	l_ushort	seq;
-};
 
 static void
 linux_to_bsd_ipc_perm(struct l_ipc_perm *lpp, struct ipc_perm *bpp)

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.incs.mk 274662 2014-11-18 17:06:44Z imp $
+# $FreeBSD: head/share/mk/bsd.incs.mk 282420 2015-05-04 16:28:54Z bapt $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.incs.mk cannot be included directly.
@@ -23,7 +23,7 @@ all: buildincludes
 ${group}OWN?=	${BINOWN}
 ${group}GRP?=	${BINGRP}
 ${group}MODE?=	${NOBINMODE}
-${group}DIR?=	${INCLUDEDIR}
+${group}DIR?=	${INCLUDEDIR}${PRIVATELIB:D/private/${LIB}}
 
 _${group}INCS=
 .for header in ${${group}}

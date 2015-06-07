@@ -1,6 +1,6 @@
 <!-- -*- sgml -*-
 
-     $FreeBSD: head/release/doc/share/xml/sponsor.ent 280144 2015-03-16 15:54:50Z gjb $
+     $FreeBSD: head/release/doc/share/xml/sponsor.ent 282489 2015-05-05 15:16:05Z gjb $
 
      Sponsors of various works.
 
@@ -23,12 +23,20 @@
 
 <!ENTITY google		"Google">
 
+<!ENTITY juniper	"Juniper Networks, Inc.">
+
 <!ENTITY ix		"iXsystems">
 
 <!ENTITY limelight	"Limelight Networks">
 <!ENTITY lsi		"LSI">
 
+<!ENTITY msostc		"Microsoft Open Source Technology Center">
+<!ENTITY mitail		"MIT Computer Science &amp; Artificial Intelligence Laboratory">
+<!ENTITY multiplay	"Multiplay">
+
+<!ENTITY netflix	"Netflix">
 <!ENTITY netgate	"Netgate">
+<!ENTITY nginx		"Nginx, Inc.">
 
 <!ENTITY sandvine	"Sandvine, Inc.">
 <!ENTITY scaleengine	"ScaleEngine, Inc.">

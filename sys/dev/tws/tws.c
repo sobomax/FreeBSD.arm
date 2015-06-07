@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tws/tws.c 276715 2015-01-05 19:49:20Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/tws/tws.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <dev/tws/tws.h>
 #include <dev/tws/tws_services.h>
@@ -198,7 +198,7 @@ tws_attach(device_t dev)
     mtx_init( &sc->sim_lock,  "tws_sim_lock", NULL, MTX_DEF);
     mtx_init( &sc->gen_lock,  "tws_gen_lock", NULL, MTX_DEF);
     mtx_init( &sc->io_lock,  "tws_io_lock", NULL, MTX_DEF | MTX_RECURSE);
-    callout_init(&sc->stats_timer, CALLOUT_MPSAFE);
+    callout_init(&sc->stats_timer, 1);
 
     if ( tws_init_trace_q(sc) == FAILURE )
         printf("trace init failure\n");
@@ -719,7 +719,7 @@ tws_init_reqs(struct tws_softc *sc, u_int32_t dma_mem_size)
 
         sc->reqs[i].cmd_pkt->hdr.header_desc.size_header = 128;
 
-	callout_init(&sc->reqs[i].timeout, CALLOUT_MPSAFE);
+	callout_init(&sc->reqs[i].timeout, 1);
         sc->reqs[i].state = TWS_REQ_STATE_FREE;
         if ( i >= TWS_RESERVED_REQS )
             tws_q_insert_tail(sc, &sc->reqs[i], TWS_FREE_Q);

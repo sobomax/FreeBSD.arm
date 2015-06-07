@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_bufs.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_bufs.c 283998 2015-06-04 19:41:15Z jhb $");
 
 #include <sys/param.h>
 #include <sys/shm.h>
@@ -1635,12 +1635,12 @@ int drm_mapbufs(struct drm_device *dev, void *data,
 				goto done;
 			}
 			retcode = vm_mmap(&vms->vm_map, &virtual, map->size,
-			    PROT_READ | PROT_WRITE, VM_PROT_ALL,
+			    VM_PROT_READ | VM_PROT_WRITE, VM_PROT_ALL,
 			    MAP_SHARED | MAP_NOSYNC, OBJT_DEVICE,
 			    file_priv->minor->device, token);
 		} else {
 			retcode = vm_mmap(&vms->vm_map, &virtual, dma->byte_count,
-			    PROT_READ | PROT_WRITE, VM_PROT_ALL,
+			    VM_PROT_READ | VM_PROT_WRITE, VM_PROT_ALL,
 			    MAP_SHARED | MAP_NOSYNC, OBJT_DEVICE,
 			    file_priv->minor->device, 0);
 		}

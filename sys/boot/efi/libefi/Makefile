@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/efi/libefi/Makefile 281524 2015-04-14 10:40:37Z andrew $
+# $FreeBSD: head/sys/boot/efi/libefi/Makefile 282474 2015-05-05 11:00:50Z andrew $
 
 LIB=	efi
 INTERNALLIB=
@@ -6,6 +6,9 @@ INTERNALLIB=
 SRCS=	delay.c efi_console.c efinet.c efipart.c errno.c handles.c \
 	libefi.c time.c
 
+.if ${MACHINE_CPUARCH} == "aarch64"
+CFLAGS+=	-msoft-float -mgeneral-regs-only
+.endif
 .if ${MACHINE_ARCH} == "amd64"
 CFLAGS+= -fPIC -mno-red-zone
 .endif

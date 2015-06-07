@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 274345 2014-11-10 15:56:30Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 282354 2015-05-02 20:31:27Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -274,9 +274,7 @@ found:
 	case IFT_ISO88025:
 	case IFT_ATM:
 	case IFT_IEEE1394:
-#ifdef IFT_IEEE80211
 	case IFT_IEEE80211:
-#endif
 		/* IEEE802/EUI64 cases - what others? */
 		/* IEEE1394 uses 16byte length address starting with EUI64 */
 		if (addrlen > 8)
@@ -338,9 +336,7 @@ found:
 		break;
 
 	case IFT_GIF:
-#ifdef IFT_STF
 	case IFT_STF:
-#endif
 		/*
 		 * RFC2893 says: "SHOULD use IPv4 address as ifid source".
 		 * however, IPv4 address is not very suitable as unique

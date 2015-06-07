@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/tools/ipf.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/contrib/ipfilter/tools/ipf.c 283295 2015-05-22 18:31:26Z emaste $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -296,7 +296,7 @@ static void packetlogon(opt)
 			printf("set log flag: nomatch\n");
 		change = 1;
 	}
-	if (strstr(opt, "block") || index(opt, 'd')) {
+	if (strstr(opt, "block") || strchr(opt, 'd')) {
 		flag |= FF_LOGBLOCK;
 		if (opts & OPT_VERBOSE)
 			printf("set log flag: block\n");

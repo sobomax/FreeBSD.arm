@@ -1,5 +1,6 @@
-/* $FreeBSD: head/tools/regression/p1003_1b/main.c 57257 2000-02-16 14:28:42Z dufault $ */
+/* $FreeBSD: head/tools/regression/p1003_1b/main.c 283018 2015-05-16 22:53:26Z ngie $ */
 #include <stdio.h>
+#include <string.h>
 
 int fifo(int argc, char *argv[]);
 int memlock(int argc, char *argv[]);

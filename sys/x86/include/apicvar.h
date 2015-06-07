@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/apicvar.h 280260 2015-03-19 13:57:47Z kib $
+ * $FreeBSD: head/sys/x86/include/apicvar.h 282212 2015-04-29 10:12:34Z whu $
  */
 
 #ifndef _X86_APICVAR_H_
@@ -454,6 +454,7 @@ void	lapic_handle_error(void);
 void	lapic_handle_intr(int vector, struct trapframe *frame);
 void	lapic_handle_timer(struct trapframe *frame);
 void	xen_intr_handle_upcall(struct trapframe *frame);
+void	hv_vector_handler(struct trapframe *frame);
 
 extern int x2apic_mode;
 extern int lapic_eoi_suppression;

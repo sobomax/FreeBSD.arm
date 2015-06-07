@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/phys_pager.c 254138 2013-08-09 11:11:11Z attilio $");
+__FBSDID("$FreeBSD: head/sys/vm/phys_pager.c 282660 2015-05-08 19:43:37Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -131,6 +131,8 @@ phys_pager_dealloc(vm_object_t object)
 		mtx_unlock(&phys_pager_mtx);
 		VM_OBJECT_WLOCK(object);
 	}
+	object->handle = NULL;
+	object->type = OBJT_DEAD;
 }
 
 /*

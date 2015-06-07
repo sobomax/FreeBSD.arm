@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_service.c 258838 2013-12-02 08:21:28Z pjd $");
+__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_service.c 282346 2015-05-02 17:45:52Z oshogbo $");
 
 #include <assert.h>
 #include <errno.h>
@@ -56,7 +56,7 @@ cap_service_open(const cap_channel_t *chan, const char *name)
 	nvlist_add_string(nvl, "service", name);
 	if (fd_is_valid(STDERR_FILENO))
 		nvlist_add_descriptor(nvl, "stderrfd", STDERR_FILENO);
-	nvl = cap_xfer_nvlist(chan, nvl);
+	nvl = cap_xfer_nvlist(chan, nvl, 0);
 	if (nvl == NULL)
 		return (NULL);
 	error = (int)nvlist_get_number(nvl, "error");

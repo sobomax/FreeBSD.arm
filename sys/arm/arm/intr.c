@@ -40,7 +40,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/intr.c 281089 2015-04-04 22:22:04Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/intr.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -78,7 +78,7 @@ int (*arm_config_irq)(int irq, enum intr_trigger trig,
 
 /* Data for statistics reporting. */
 u_long intrcnt[NIRQ];
-char intrnames[NIRQ * INTRNAME_LEN];
+char intrnames[(NIRQ * INTRNAME_LEN) + 1];
 size_t sintrcnt = sizeof(intrcnt);
 size_t sintrnames = sizeof(intrnames);
 
@@ -149,7 +149,7 @@ arm_setup_irqhandler(const char *name, driver_filter_t *filt,
 		if (error)
 			return;
 		intr_events[irq] = event;
-		snprintf(&intrnames[irq * INTRNAME_LEN], INTRNAME_LEN, 
+		snprintf(&intrnames[irq * INTRNAME_LEN], INTRNAME_LEN,
 		    "irq%d: %-*s", irq, INTRNAME_LEN - 1, name);
 	}
 	intr_event_add_handler(event, name, filt, hand, arg,
@@ -164,7 +164,7 @@ arm_remove_irqhandler(int irq, void *cookie)
 
 	event = intr_events[irq];
 	arm_mask_irq(irq);
-	
+
 	error = intr_event_remove_handler(cookie);
 
 	if (!TAILQ_EMPTY(&event->ie_handlers))

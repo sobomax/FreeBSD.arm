@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/intr_machdep.h 280260 2015-03-19 13:57:47Z kib $
+ * $FreeBSD: head/sys/i386/include/intr_machdep.h 282274 2015-04-30 15:48:48Z jhb $
  */
 
 #ifndef __MACHINE_INTR_MACHDEP_H__
@@ -58,13 +58,7 @@
     (FIRST_MSI_INT + NUM_MSI_INTS)
 #define	LAST_EVTCHN_INT \
     (FIRST_EVTCHN_INT + NUM_EVTCHN_INTS - 1)
-#elif defined(XEN)
-#include <xen/xen-os.h>
-#define	NUM_EVTCHN_INTS	NR_EVENT_CHANNELS
-#define	FIRST_EVTCHN_INT 0
-#define	LAST_EVTCHN_INT \
-    (FIRST_EVTCHN_INT + NUM_EVTCHN_INTS - 1)
-#else /* !XEN && !XENHVM */
+#else /* !XENHVM */
 #define	NUM_EVTCHN_INTS	0
 #endif
 #define	NUM_IO_INTS	(FIRST_MSI_INT + NUM_MSI_INTS + NUM_EVTCHN_INTS)

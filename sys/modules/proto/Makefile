@@ -1,10 +1,11 @@
-# $FreeBSD: head/sys/modules/proto/Makefile 265055 2014-04-28 17:58:40Z marcel $
+# $FreeBSD: head/sys/modules/proto/Makefile 284081 2015-06-06 16:20:39Z marcel $
 
 .PATH: ${.CURDIR}/../../dev/proto
 
 KMOD=	proto
 SRCS=	\
 	proto_bus_pci.c \
+	proto_busdma.c \
 	proto_core.c
 
 SRCS+=	\

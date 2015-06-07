@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/msun/src/e_j0f.c 279856 2015-03-10 17:10:54Z kargl $");
+__FBSDID("$FreeBSD: head/lib/msun/src/e_j0f.c 283032 2015-05-17 16:27:06Z kargl $");
 
 /*
  * See e_j0.c for complete comments.
@@ -23,7 +23,7 @@ __FBSDID("$FreeBSD: head/lib/msun/src/e_j0f.c 279856 2015-03-10 17:10:54Z kargl 
 #include "math.h"
 #include "math_private.h"
 
-static float pzerof(float), qzerof(float);
+static __inline float pzerof(float), qzerof(float);
 
 static const volatile float vone = 1,  vzero = 0;
 

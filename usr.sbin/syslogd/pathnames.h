@@ -27,10 +27,8 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: head/usr.sbin/syslogd/pathnames.h 133249 2004-08-07 04:28:56Z imp $
+ * $FreeBSD: head/usr.sbin/syslogd/pathnames.h 283003 2015-05-16 08:12:00Z delphij $
  */
-
-#include <paths.h>
 
 #define	_PATH_KLOG	"/dev/klog"
 #define	_PATH_LOGCONF	"/etc/syslog.conf"

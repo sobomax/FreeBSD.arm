@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_uio.h 269945 2014-08-13 15:50:16Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_uio.h 283988 2015-06-04 12:46:56Z tuexen $");
 
 #ifndef _NETINET_SCTP_UIO_H_
 #define _NETINET_SCTP_UIO_H_
@@ -1165,7 +1165,12 @@ struct xsctp_inpcb {
 	uint16_t local_port;
 	uint16_t qlen;
 	uint16_t maxqlen;
-	uint32_t extra_padding[31];	/* future */
+	void *socket;
+#if defined(__LP64__)
+	uint32_t extra_padding[29];	/* future */
+#else
+	uint32_t extra_padding[30];	/* future */
+#endif
 };
 
 struct xsctp_tcb {

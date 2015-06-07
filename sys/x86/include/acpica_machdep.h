@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/acpica_machdep.h 269512 2014-08-04 08:58:50Z royger $
+ * $FreeBSD: head/sys/x86/include/acpica_machdep.h 282678 2015-05-09 12:28:48Z kib $
  */
 
 /******************************************************************************
@@ -74,6 +74,7 @@ enum intr_polarity;
 
 void	acpi_SetDefaultIntrModel(int model);
 void	acpi_cpu_c1(void);
+void	acpi_cpu_idle_mwait(uint32_t mwait_hint);
 void	*acpi_map_table(vm_paddr_t pa, const char *sig);
 void	acpi_unmap_table(void *table);
 vm_paddr_t acpi_find_table(const char *sig);

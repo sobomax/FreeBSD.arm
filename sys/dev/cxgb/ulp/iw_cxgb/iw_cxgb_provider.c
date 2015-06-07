@@ -27,7 +27,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb_provider.c 278886 2015-02-17 08:40:27Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb_provider.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_inet.h"
 
@@ -906,7 +906,7 @@ static struct ib_qp *iwch_create_qp(struct ib_pd *pd,
 		insert_mmap(ucontext, mm2);
 	}
 	qhp->ibqp.qp_num = qhp->wq.qpid;
-	callout_init(&(qhp->timer), TRUE);
+	callout_init(&(qhp->timer), 1);
 	CTR6(KTR_IW_CXGB, "sq_num_entries %d, rq_num_entries %d "
 	     "qpid 0x%0x qhp %p dma_addr 0x%llx size %d",
 	     qhp->attr.sq_num_entries, qhp->attr.rq_num_entries,

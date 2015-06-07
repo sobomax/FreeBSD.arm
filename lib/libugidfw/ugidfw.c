@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libugidfw/ugidfw.c 216953 2011-01-04 13:02:52Z emaste $
+ * $FreeBSD: head/lib/libugidfw/ugidfw.c 283974 2015-06-04 02:44:37Z araujo $
  */
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -64,11 +64,10 @@ bsde_rule_to_string(struct mac_bsdextended_rule *rule, char *buf, size_t buflen)
 	struct statfs *mntbuf;
 	char *cur, type[sizeof(rule->mbr_object.mbo_type) * CHAR_BIT + 1];
 	size_t left, len;
-	int anymode, unknownmode, truncated, numfs, i, notdone;
+	int anymode, unknownmode, numfs, i, notdone;
 
 	cur = buf;
 	left = buflen;
-	truncated = 0;
 
 	len = snprintf(cur, left, "subject ");
 	if (len < 0 || len > left)
@@ -1216,7 +1215,7 @@ bsde_delete_rule(int rulenum, size_t buflen, char *errstr)
 {
 	struct mac_bsdextended_rule rule;
 	int name[10];
-	size_t len, size;
+	size_t len;
 	int error;
 
 	if (bsde_check_version(buflen, errstr) != 0)
@@ -1233,7 +1232,6 @@ bsde_delete_rule(int rulenum, size_t buflen, char *errstr)
 	name[len] = rulenum;
 	len++;
 
-	size = sizeof(rule);
 	error = sysctl(name, len, NULL, NULL, &rule, 0);
 	if (error) {
 		len = snprintf(errstr, buflen, "%s.%d: %s", MIB ".rules",

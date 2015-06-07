@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_textdump.c 272958 2014-10-11 20:25:19Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_textdump.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include "opt_config.h"
 
@@ -516,8 +516,7 @@ db_textdump_usage(void)
 }
 
 void
-db_textdump_cmd(db_expr_t addr, boolean_t have_addr, db_expr_t count,
-    char *modif)
+db_textdump_cmd(db_expr_t addr, bool have_addr, db_expr_t count, char *modif)
 {
 	int t;
 
@@ -543,7 +542,7 @@ db_textdump_cmd(db_expr_t addr, boolean_t have_addr, db_expr_t count,
 		db_printf("textdump unset\n");
 	} else if (strcmp(db_tok_string, "dump") == 0) {
 		textdump_pending = 1;
-		doadump(TRUE);
+		doadump(true);
 	} else {
 		db_textdump_usage();
 	}

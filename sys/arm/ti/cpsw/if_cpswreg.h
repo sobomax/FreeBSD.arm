@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/cpsw/if_cpswreg.h 246276 2013-02-03 01:08:01Z kientzle $
+ * $FreeBSD: head/sys/arm/ti/cpsw/if_cpswreg.h 283276 2015-05-22 03:16:18Z gonzo $
  */
 
 #ifndef	_IF_CPSWREG_H
@@ -117,6 +117,8 @@
 
 #define CPSW_CPPI_RAM_OFFSET		0x2000
 #define	CPSW_CPPI_RAM_SIZE		0x2000
+
+#define	CPSW_MEMWINDOW_SIZE		0x4000
 
 #define CPDMA_BD_SOP		(1<<15)
 #define CPDMA_BD_EOP		(1<<14)

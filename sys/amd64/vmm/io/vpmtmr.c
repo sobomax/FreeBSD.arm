@@ -25,11 +25,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vpmtmr.c 273706 2014-10-26 19:03:06Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vpmtmr.c 282287 2015-04-30 22:23:22Z neel $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
-#include <sys/cpuset.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/systm.h>

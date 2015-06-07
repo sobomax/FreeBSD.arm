@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/elf_machdep.c 219533 2011-03-11 21:08:02Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/elf_machdep.c 283382 2015-05-24 14:51:29Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -87,6 +87,7 @@ static struct sysentvec elf64_freebsd_sysvec = {
 	.sv_fetch_syscall_args = cpu_fetch_syscall_args,
 	.sv_syscallnames = syscallnames,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 
 static Elf64_Brandinfo freebsd_brand_info = {

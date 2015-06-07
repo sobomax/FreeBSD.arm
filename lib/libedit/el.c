@@ -41,7 +41,7 @@ __RCSID("$NetBSD: el.c,v 1.73 2014/06/18 18:12:28 christos Exp $");
 #endif
 #endif /* not lint && not SCCSID */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libedit/el.c 276881 2015-01-09 07:40:56Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libedit/el.c 283084 2015-05-18 22:03:05Z bapt $");
 
 /*
  * el.c: EditLine interface functions
@@ -96,7 +96,7 @@ el_init_fd(const char *prog, FILE *fin, FILE *fout, FILE *ferr,
          */
 	el->el_flags = 0;
 #ifdef WIDECHAR
-	if (setlocale(LC_CTYPE, "") != NULL) {
+	if (setlocale(LC_CTYPE, NULL) != NULL){
 		if (strcmp(nl_langinfo(CODESET), "UTF-8") == 0)
 			el->el_flags |= CHARSET_IS_UTF8;
 	}

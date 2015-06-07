@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ubsec/ubsec.c 267448 2014-06-13 19:34:34Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/ubsec/ubsec.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * uBsec 5[56]01, 58xx hardware crypto accelerator
@@ -456,7 +456,7 @@ ubsec_attach(device_t dev)
 			sc->sc_rnghz = hz / 100;
 		else
 			sc->sc_rnghz = 1;
-		callout_init(&sc->sc_rngto, CALLOUT_MPSAFE);
+		callout_init(&sc->sc_rngto, 1);
 		callout_reset(&sc->sc_rngto, sc->sc_rnghz, ubsec_rng, sc);
 skip_rng:
 	;

@@ -1,8 +1,9 @@
-# $FreeBSD: head/tests/Makefile 261978 2014-02-16 12:56:05Z jmmv $
+# $FreeBSD: head/tests/Makefile 283845 2015-05-31 22:24:29Z ngie $
 
 .include <bsd.own.mk>
 
-SUBDIR= sys
+SUBDIR+= etc
+SUBDIR+= sys
 
 TESTSDIR= ${TESTSBASE}
 KYUAFILE= yes

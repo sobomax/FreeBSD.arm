@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/physmem.c 279702 2015-03-06 20:52:05Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/physmem.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include "opt_ddb.h"
 
@@ -62,7 +62,7 @@ static size_t hwcnt;
 static size_t excnt;
 
 /*
- * These "avail lists" are globals used to communicate physical memory layout to 
+ * These "avail lists" are globals used to communicate physical memory layout to
  * other parts of the kernel.  Within the arrays, each value is the starting
  * address of a contiguous area of physical address space.  The values at even
  * indexes are areas that contain usable memory and the values at odd indexes

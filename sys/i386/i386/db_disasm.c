@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/db_disasm.c 278655 2015-02-13 01:35:53Z markj $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/db_disasm.c 283248 2015-05-21 15:16:18Z pfg $");
 
 /*
  * Instruction disassembler.
@@ -1148,9 +1148,7 @@ db_disasm_esc(loc, inst, short_addr, size, seg)
  * next instruction.
  */
 db_addr_t
-db_disasm(loc, altfmt)
-	db_addr_t	loc;
-	boolean_t	altfmt;
+db_disasm(db_addr_t loc, bool altfmt)
 {
 	int	inst;
 	int	size;

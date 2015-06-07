@@ -23,17 +23,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_stat.c 267884 2014-06-25 22:13:35Z grehan $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_stat.c 283657 2015-05-28 17:37:01Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_stat.c 267884 2014-06-25 22:13:35Z grehan $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_stat.c 283657 2015-05-28 17:37:01Z neel $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
 #include <sys/malloc.h>
-#include <sys/smp.h>
 
 #include <machine/vmm.h>
 #include "vmm_util.h"
@@ -165,6 +164,7 @@ VMM_STAT(VMEXIT_NESTED_FAULT, "vm exits due to nested page fault");
 VMM_STAT(VMEXIT_INST_EMUL, "vm exits for instruction emulation");
 VMM_STAT(VMEXIT_UNKNOWN, "number of vm exits for unknown reason");
 VMM_STAT(VMEXIT_ASTPENDING, "number of times astpending at exit");
+VMM_STAT(VMEXIT_REQIDLE, "number of times idle requested at exit");
 VMM_STAT(VMEXIT_USERSPACE, "number of vm exits handled in userspace");
 VMM_STAT(VMEXIT_RENDEZVOUS, "number of times rendezvous pending at exit");
 VMM_STAT(VMEXIT_EXCEPTION, "number of vm exits due to exceptions");

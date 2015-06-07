@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/template/usb_template.h 277129 2015-01-13 14:03:56Z br $ */
+/* $FreeBSD: head/sys/dev/usb/template/usb_template.h 283879 2015-06-01 11:24:34Z hselasky $ */
 /*-
  * Copyright (c) 2007 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.
@@ -107,6 +107,7 @@ extern const struct usb_temp_device_desc usb_template_msc;
 extern const struct usb_temp_device_desc usb_template_mtp;
 extern const struct usb_temp_device_desc usb_template_phone;
 extern const struct usb_temp_device_desc usb_template_serialnet;
+extern const struct usb_temp_device_desc usb_template_midi;
 
 usb_error_t	usb_temp_setup(struct usb_device *,
 		    const struct usb_temp_device_desc *);

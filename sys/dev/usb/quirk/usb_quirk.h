@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.h 269576 2014-08-05 09:35:25Z n_hibma $ */
+/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.h 282577 2015-05-07 12:54:27Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -108,6 +108,7 @@ enum {
 	UQ_BAD_MIDI,		/* device claims MIDI class, but isn't */
 	UQ_AU_VENDOR_CLASS,	/* audio device uses vendor and not audio class */
 	UQ_SINGLE_CMD_MIDI,	/* at most one command per USB packet */
+	UQ_MSC_DYMO_EJECT,	/* ejects Dymo MSC device */
 
 	USB_QUIRK_MAX
 };

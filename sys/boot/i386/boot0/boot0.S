@@ -14,7 +14,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD: head/sys/boot/i386/boot0/boot0.S 228738 2011-12-20 15:19:29Z jhb $
+ * $FreeBSD: head/sys/boot/i386/boot0/boot0.S 283006 2015-05-16 10:31:15Z thomas $
  */
 
 /* build options: */
@@ -541,11 +541,11 @@ putchr:
 		int $0x10			#  character
 		popw %bx			# Restore
 #else /* SIO */
-		movb $0x01,%ah			# BIOS: Send
+		movb $0x01,%ah			# BIOS: Send character
 bioscom:
 		pushw %dx			# Save
 		xorw %dx,%dx 			# Use COM1
-		int $0x14			#  Character
+		int $0x14			# BIOS: Serial I/O
 		popw %dx			# Restore
 #endif /* SIO */
 		retw				# To caller

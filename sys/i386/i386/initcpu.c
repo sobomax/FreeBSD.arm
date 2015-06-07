@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/initcpu.c 281495 2015-04-13 15:22:45Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/initcpu.c 284104 2015-06-06 22:03:24Z kib $");
 
 #include "opt_cpu.h"
 
@@ -102,6 +102,7 @@ u_int	cpu_mxcsr_mask;		/* Valid bits in mxcsr */
 #endif
 u_int	cpu_clflush_line_size = 32;
 u_int	cpu_stdext_feature;
+u_int	cpu_stdext_feature2;
 u_int	cpu_max_ext_state_size;
 u_int	cpu_mon_mwait_flags;	/* MONITOR/MWAIT flags (CPUID.05H.ECX) */
 u_int	cpu_mon_min_size;	/* MONITOR minimum range size, bytes */

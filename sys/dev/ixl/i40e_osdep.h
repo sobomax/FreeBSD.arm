@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2014, Intel Corporation 
+  Copyright (c) 2013-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_osdep.h 274205 2014-11-06 23:45:05Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_osdep.h 284049 2015-06-05 22:52:42Z jfv $*/
 
 #ifndef _I40E_OSDEP_H_
 #define _I40E_OSDEP_H_
@@ -112,6 +112,9 @@
 
 #define FIELD_SIZEOF(x, y) (sizeof(((x*)0)->y))
 
+#define BIT(a) 		(1UL << (a))
+#define BIT_ULL(a) 	(1ULL << (a))
+
 typedef uint8_t		u8;
 typedef int8_t		s8;
 typedef uint16_t	u16;
@@ -189,7 +192,7 @@ rd32_osdep(struct i40e_osdep *osdep, uint32_t reg)
 {
 
 	KASSERT(reg < osdep->mem_bus_space_size,
-	    ("ixl: register offset %#jx too large (max is %#jx",
+	    ("ixl: register offset %#jx too large (max is %#jx)",
 	    (uintmax_t)reg, (uintmax_t)osdep->mem_bus_space_size));
 
 	return (bus_space_read_4(osdep->mem_bus_space_tag,
@@ -201,7 +204,7 @@ wr32_osdep(struct i40e_osdep *osdep, uint32_t reg, uint32_t value)
 {
 
 	KASSERT(reg < osdep->mem_bus_space_size,
-	    ("ixl: register offset %#jx too large (max is %#jx",
+	    ("ixl: register offset %#jx too large (max is %#jx)",
 	    (uintmax_t)reg, (uintmax_t)osdep->mem_bus_space_size));
 
 	bus_space_write_4(osdep->mem_bus_space_tag,
@@ -211,7 +214,6 @@ wr32_osdep(struct i40e_osdep *osdep, uint32_t reg, uint32_t value)
 static __inline void
 ixl_flush_osdep(struct i40e_osdep *osdep)
 {
-
 	rd32_osdep(osdep, osdep->flush_reg);
 }
 

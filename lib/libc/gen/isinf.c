@@ -23,8 +23,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/isinf.c 131898 2004-07-10 15:52:26Z marcel $
+ * $FreeBSD: head/lib/libc/gen/isinf.c 283693 2015-05-29 09:23:20Z andrew $
  */
+
+#include <machine/float.h>
 
 #include <math.h>
 
@@ -62,9 +64,9 @@ __isinfl(long double e)
 
 	u.e = e;
 	mask_nbit_l(u);
-#ifndef __alpha__
-	return (u.bits.exp == 32767 && u.bits.manl == 0 && u.bits.manh == 0);
-#else
+#if LDBL_MANT_DIG == 53
 	return (u.bits.exp == 2047 && u.bits.manl == 0 && u.bits.manh == 0);
+#else
+	return (u.bits.exp == 32767 && u.bits.manl == 0 && u.bits.manh == 0);
 #endif
 }

@@ -28,7 +28,7 @@
 #define BXE_STATS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.h 271782 2014-09-18 15:56:14Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.h 283274 2015-05-22 01:44:07Z davidcs $");
 
 #include <sys/types.h>
 
@@ -218,6 +218,7 @@ struct bxe_eth_stats {
     uint32_t rx_calls;
     uint32_t rx_pkts;
     uint32_t rx_tpa_pkts;
+    uint32_t rx_jumbo_sge_pkts;
     uint32_t rx_soft_errors;
     uint32_t rx_hw_csum_errors;
     uint32_t rx_ofld_frames_csum_ip;
@@ -318,6 +319,7 @@ struct bxe_eth_q_stats {
     uint32_t rx_calls;
     uint32_t rx_pkts;
     uint32_t rx_tpa_pkts;
+    uint32_t rx_jumbo_sge_pkts;
     uint32_t rx_soft_errors;
     uint32_t rx_hw_csum_errors;
     uint32_t rx_ofld_frames_csum_ip;
@@ -411,6 +413,7 @@ struct bxe_eth_q_stats_old {
     uint32_t rx_calls_old;
     uint32_t rx_pkts_old;
     uint32_t rx_tpa_pkts_old;
+    uint32_t rx_jumbo_sge_pkts_old;
     uint32_t rx_soft_errors_old;
     uint32_t rx_hw_csum_errors_old;
     uint32_t rx_ofld_frames_csum_ip_old;

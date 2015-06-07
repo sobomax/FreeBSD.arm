@@ -12,7 +12,7 @@
  * documentation and/or software. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 220496 2011-04-09 13:56:29Z markm $");
+__FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 282726 2015-05-10 13:21:36Z thomas $");
 
 #include <sys/types.h>
 
@@ -31,10 +31,13 @@ __FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 220496 2011-04-09 13:56:29Z markm
 #endif
 
 #if SHA == 1
+#undef SHA_Data
 #define SHA_Data SHA1_Data
 #elif SHA == 256
+#undef SHA_Data
 #define SHA_Data SHA256_Data
 #elif SHA == 512
+#undef SHA_Data
 #define SHA_Data SHA512_Data
 #endif
 

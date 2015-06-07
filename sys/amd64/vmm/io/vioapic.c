@@ -24,15 +24,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vioapic.c 262139 2014-02-17 22:57:51Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/io/vioapic.c 282287 2015-04-30 22:23:22Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vioapic.c 262139 2014-02-17 22:57:51Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vioapic.c 282287 2015-04-30 22:23:22Z neel $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
-#include <sys/cpuset.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
 #include <sys/systm.h>

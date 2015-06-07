@@ -23,11 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/nvpair.h 279437 2015-03-01 00:22:45Z rstone $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/nvpair.h 284107 2015-06-07 08:54:25Z avg $
  */
 
 #ifndef _OPENSOLARIS_SYS_NVPAIR_H_
 #define _OPENSOLARIS_SYS_NVPAIR_H_
+
+#ifdef _KERNEL
 
 /*
  * Some of the symbols in the Illumos nvpair library conflict with symbols
@@ -253,6 +255,8 @@
 #define nvpair_type_string illumos_nvpair_type_string
 #define nvpair_unpack illumos_nvpair_unpack
 #define nvpair_unpack_descriptor illumos_nvpair_unpack_descriptor
+
+#endif /* _KERNEL */
 
 #include_next <sys/nvpair.h>
 

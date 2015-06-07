@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)00.contents	8.2 (Berkeley) 4/20/94
-.\" $FreeBSD: head/share/doc/usd/contents/contents.ms 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: head/share/doc/usd/contents/contents.ms 282218 2015-04-29 12:57:55Z bapt $
 .\"
 .de ND
 .KE
@@ -35,6 +35,7 @@
 ..
 .OH '''USD Contents'
 .EH 'USD Contents'''
+.ND
 .TL
 UNIX User's Supplementary Documents (USD)
 .if !r.U .nr .U 0

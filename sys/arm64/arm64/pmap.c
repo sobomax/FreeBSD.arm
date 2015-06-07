@@ -86,7 +86,7 @@
 #define	AMD64_NPT_AWARE
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/pmap.c 281846 2015-04-22 09:52:51Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/pmap.c 282221 2015-04-29 15:00:43Z andrew $");
 
 /*
  *	Manages physical address maps.
@@ -2934,6 +2934,18 @@ pmap_clear_modify(vm_page_t m)
 		return;
 
 	/* TODO: We lack support for tracking if a page is modified */
+}
+
+void *
+pmap_mapbios(vm_paddr_t pa, vm_size_t size)
+{
+
+        return ((void *)PHYS_TO_DMAP(pa));
+}
+
+void
+pmap_unmapbios(vm_paddr_t pa, vm_size_t size)
+{
 }
 
 /*

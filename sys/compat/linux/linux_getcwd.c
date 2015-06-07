@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_getcwd.c 281882 2015-04-23 08:41:50Z trasz $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_getcwd.c 283427 2015-05-24 16:14:41Z dchagin $");
 
 #include "opt_compat.h"
 
@@ -74,7 +74,7 @@ linux_getcwd(struct thread *td, struct linux_getcwd_args *args)
 	if (args->bufsize < 2)
 		return (ERANGE);
 
-	path = malloc(LINUX_PATH_MAX, M_TEMP, M_WAITOK);
+	path = malloc(LINUX_PATH_MAX, M_LINUX, M_WAITOK);
 
 	error = kern___getcwd(td, path, UIO_SYSSPACE, args->bufsize,
 	    LINUX_PATH_MAX);
@@ -85,6 +85,6 @@ linux_getcwd(struct thread *td, struct linux_getcwd_args *args)
 			td->td_retval[0] = lenused;
 	}
 
-	free(path, M_TEMP);
+	free(path, M_LINUX);
 	return (error);
 }

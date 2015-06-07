@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/vdevice.c 276726 2015-01-05 21:39:35Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/vdevice.c 282972 2015-05-15 13:55:18Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -146,7 +146,7 @@ vdevice_attach(device_t dev)
                 }
 		resource_list_init(&dinfo->mdi_resources);
 
-		ofw_bus_intr_to_rl(dev, child, &dinfo->mdi_resources);
+		ofw_bus_intr_to_rl(dev, child, &dinfo->mdi_resources, NULL);
 
                 cdev = device_add_child(dev, NULL, -1);
                 if (cdev == NULL) {

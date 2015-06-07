@@ -16,11 +16,11 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/RADXA-LITE 266919 2014-05-31 06:17:34Z ganbold $
+# $FreeBSD: head/sys/arm/conf/RADXA-LITE 282576 2015-05-07 12:38:23Z andrew $
 
 #NO_UNIVERSE
 
-include		"RK3188"
+include 	"RK3188"
 ident		RADXA-LITE
 
 # Flattened Device Tree

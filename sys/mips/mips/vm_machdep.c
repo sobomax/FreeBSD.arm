@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/vm_machdep.c 269577 2014-08-05 09:44:10Z glebius $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/vm_machdep.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -571,7 +571,7 @@ DB_SHOW_COMMAND(pcb, ddb_dump_pcb)
 
 	/* Determine which thread to examine. */
 	if (have_addr)
-		td = db_lookup_thread(addr, TRUE);
+		td = db_lookup_thread(addr, true);
 	else
 		td = curthread;
 	

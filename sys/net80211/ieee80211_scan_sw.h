@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_scan_sw.h 276730 2015-01-06 02:08:45Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_scan_sw.h 282742 2015-05-10 22:07:53Z adrian $
  */
 #ifndef	__NET80211_IEEE80211_SCAN_SW_H__
 #define	__NET80211_IEEE80211_SCAN_SW_H__
@@ -53,6 +53,7 @@ extern	void ieee80211_swscan_scan_done(struct ieee80211vap *vap);
 extern	void ieee80211_swscan_probe_curchan(struct ieee80211vap *vap,
 	    int force);
 extern	void ieee80211_swscan_add_scan(struct ieee80211vap *vap,
+	    struct ieee80211_channel *curchan,
 	    const struct ieee80211_scanparams *sp,
 	    const struct ieee80211_frame *wh,
 	    int subtype, int rssi, int noise);

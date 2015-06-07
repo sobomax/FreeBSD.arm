@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 281656 2015-04-17 15:26:08Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 283696 2015-05-29 10:24:16Z ae $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -1279,6 +1279,7 @@ in6_broadcast_ifa(struct ifnet *ifp, struct in6_aliasreq *ifra,
 		nd6_dad_start((struct ifaddr *)ia, delay);
 	}
 
+	in6_newaddrmsg(ia, RTM_ADD);
 	ifa_free(&ia->ia_ifa);
 	return (error);
 }
@@ -1327,6 +1328,7 @@ in6_purgeaddr(struct ifaddr *ifa)
 		ia->ia_flags &= ~IFA_ROUTE;
 	}
 
+	in6_newaddrmsg(ia, RTM_DELETE);
 	in6_unlink_ifa(ia, ifp);
 }
 
@@ -1997,18 +1999,9 @@ in6_if2idlen(struct ifnet *ifp)
 {
 	switch (ifp->if_type) {
 	case IFT_ETHER:		/* RFC2464 */
-#ifdef IFT_PROPVIRTUAL
 	case IFT_PROPVIRTUAL:	/* XXX: no RFC. treat it as ether */
-#endif
-#ifdef IFT_L2VLAN
 	case IFT_L2VLAN:	/* ditto */
-#endif
-#ifdef IFT_IEEE80211
 	case IFT_IEEE80211:	/* ditto */
-#endif
-#ifdef IFT_MIP
-	case IFT_MIP:	/* ditto */
-#endif
 	case IFT_INFINIBAND:
 		return (64);
 	case IFT_FDDI:		/* RFC2467 */

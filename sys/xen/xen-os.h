@@ -24,7 +24,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/xen/xen-os.h 264178 2014-04-05 22:43:18Z imp $
+ * $FreeBSD: head/sys/xen/xen-os.h 282634 2015-05-08 14:48:40Z royger $
  */
 
 #ifndef _XEN_XEN_OS_H_
@@ -88,6 +88,13 @@ xen_initial_domain(void)
 	return (xen_domain() && HYPERVISOR_start_info != NULL &&
 	    (HYPERVISOR_start_info->flags & SIF_INITDOMAIN) != 0);
 }
+
+/*
+ * Functions to allocate/free unused memory in order
+ * to map memory from other domains.
+ */
+struct resource *xenmem_alloc(device_t dev, int *res_id, size_t size);
+int xenmem_free(device_t dev, int res_id, struct resource *res);
 
 /* Debug/emergency function, prints directly to hypervisor console */
 void xc_printf(const char *, ...) __printflike(1, 2);

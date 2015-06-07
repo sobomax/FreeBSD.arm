@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/kbdmap/kbdmap.c 269976 2014-08-14 14:22:12Z se $");
+__FBSDID("$FreeBSD: head/usr.sbin/kbdmap/kbdmap.c 282904 2015-05-14 14:20:50Z emaste $");
 
 #include <sys/types.h>
 #include <sys/queue.h>
@@ -571,7 +571,7 @@ menu_read(void)
 	char *p;
 	int mark, num_keymaps, items, i;
 	char buffer[256], filename[PATH_MAX];
-	char keym[64], lng[64], desc[64];
+	char keym[64], lng[64], desc[256];
 	char dialect[64], lang_abk[64];
 	struct keymap *km;
 	struct keymap **km_sorted;
@@ -616,7 +616,7 @@ menu_read(void)
 				continue;
 
 			/* Parse input, removing newline */
-			matches = sscanf(p, "%64[^:]:%64[^:]:%64[^:\n]", 
+			matches = sscanf(p, "%64[^:]:%64[^:]:%256[^:\n]", 
 			    keym, lng, desc);
 			if (matches == 3) {
 				if (strcmp(keym, "FONT")

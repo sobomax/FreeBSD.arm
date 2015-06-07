@@ -3,7 +3,7 @@
 # I'm assuming this is an AP135-020. The AP136-010 in openwrt has
 # the ethernet ports wired up to the switch in the reverse way.
 
-# $FreeBSD: head/sys/mips/conf/AP135.hints 280316 2015-03-21 06:12:46Z adrian $
+# $FreeBSD: head/sys/mips/conf/AP135.hints 283096 2015-05-19 05:33:07Z adrian $
 
 # QCA955X_ETH_CFG_RGMII_EN (1 << 0)
 hint.qca955x_gmac.0.gmac_cfg=0x1
@@ -117,11 +117,11 @@ hint.ath.0.eepromsize=16384
 # to find it.
 
 # ath1 hint - pcie slot 0
-hint.pcib.0.bus.0.0.0.ath_fixup_addr=0x1fff4000
-hint.pcib.0.bus.0.0.0.ath_fixup_size=16384
+# hint.pcib.0.bus.0.0.0.ath_fixup_addr=0x1fff4000
+# hint.pcib.0.bus.0.0.0.ath_fixup_size=16384
 
 # ath0 - eeprom comes from here
-hint.ath.1.eeprom_firmware="pcib.0.bus.0.0.0.eeprom_firmware"
+# hint.ath.1.eeprom_firmware="pcib.0.bus.0.0.0.eeprom_firmware"
 
 # flash layout:
 #

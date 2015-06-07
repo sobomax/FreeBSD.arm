@@ -48,7 +48,7 @@
 
 #define HDA_DRV_TEST_REV	"20120126_0002"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdac.c 281544 2015-04-15 05:24:39Z rpaulo $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdac.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #define hdac_lock(sc)		snd_mtxlock((sc)->lock)
 #define hdac_unlock(sc)		snd_mtxunlock((sc)->lock)
@@ -1110,7 +1110,7 @@ hdac_attach(device_t dev)
 	sc->lock = snd_mtxcreate(device_get_nameunit(dev), "HDA driver mutex");
 	sc->dev = dev;
 	TASK_INIT(&sc->unsolq_task, 0, hdac_unsolq_task, sc);
-	callout_init(&sc->poll_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->poll_callout, 1);
 	for (i = 0; i < HDAC_CODEC_MAX; i++)
 		sc->codecs[i].dev = NULL;
 	if (devid >= 0) {

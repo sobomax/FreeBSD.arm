@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/cubieboard2.dts 270971 2014-09-02 16:38:00Z imp $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/cubieboard2.dts 283253 2015-05-21 17:39:42Z loos $
  */
 
 /dts-v1/;
@@ -54,6 +54,10 @@
 		};
 
 		UART0: serial@01c28000 {
+			status = "okay";
+		};
+
+		mmc0: mmc@01c0f000 {
 			status = "okay";
 		};
 

@@ -31,7 +31,7 @@ static const char copyright[] _U_ =
 The Regents of the University of California.  All rights reserved.\n";
 #endif
 
-/* $FreeBSD: head/contrib/tcpdump/tcpdump.c 277638 2015-01-24 06:06:46Z delphij $ */
+/* $FreeBSD: head/contrib/tcpdump/tcpdump.c 282436 2015-05-04 21:44:51Z brooks $ */
 
 /*
  * tcpdump - monitor tcp/ip traffic on an ethernet.
@@ -1921,8 +1921,6 @@ main(int argc, char **argv)
 #endif
 	if (cansandbox && cap_enter() < 0 && errno != ENOSYS)
 		error("unable to enter the capability mode");
-	if (cap_sandboxed())
-		fprintf(stderr, "capability mode sandbox enabled\n");
 #endif	/* __FreeBSD__ */
 
 	do {

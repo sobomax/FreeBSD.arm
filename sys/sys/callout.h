@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)callout.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/callout.h 280872 2015-03-31 00:18:00Z rrs $
+ * $FreeBSD: head/sys/sys/callout.h 283291 2015-05-22 17:05:21Z jkim $
  */
 
 #ifndef _SYS_CALLOUT_H_
@@ -43,7 +43,7 @@
 #define	CALLOUT_LOCAL_ALLOC	0x0001 /* was allocated from callfree */
 #define	CALLOUT_ACTIVE		0x0002 /* callout is currently active */
 #define	CALLOUT_PENDING		0x0004 /* callout is waiting for timeout */
-#define	CALLOUT_MPSAFE		0x0008 /* callout handler is mp safe */
+#define	CALLOUT_MPSAFE		0x0008 /* deprecated */
 #define	CALLOUT_RETURNUNLOCKED	0x0010 /* handler returns with mtx unlocked */
 #define	CALLOUT_SHAREDLOCK	0x0020 /* callout lock held in shared mode */
 #define	CALLOUT_DFRMIGRATION	0x0040 /* callout in deferred migration mode */

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/casperd/casperd.c 263234 2014-03-16 11:04:44Z rwatson $");
+__FBSDID("$FreeBSD: head/sbin/casperd/casperd.c 282346 2015-05-02 17:45:52Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -357,7 +357,7 @@ service_external_execute(int chanfd)
 	int stderrfd, execfd, procfd;
 	nvlist_t *nvl;
 
-	nvl = nvlist_recv(chanfd);
+	nvl = nvlist_recv(chanfd, 0);
 	if (nvl == NULL)
 		pjdlog_exit(1, "Unable to receive nvlist");
 	service = nvlist_take_string(nvl, "service");

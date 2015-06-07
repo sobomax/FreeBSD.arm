@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/genassym.c 278473 2015-02-09 21:00:56Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/genassym.c 282684 2015-05-09 19:11:01Z kib $");
 
 #include "opt_compat.h"
 #include "opt_hwpmc_hooks.h"
@@ -71,8 +71,6 @@ __FBSDID("$FreeBSD: head/sys/amd64/amd64/genassym.c 278473 2015-02-09 21:00:56Z 
 ASSYM(P_VMSPACE, offsetof(struct proc, p_vmspace));
 ASSYM(VM_PMAP, offsetof(struct vmspace, vm_pmap));
 ASSYM(PM_ACTIVE, offsetof(struct pmap, pm_active));
-ASSYM(PM_SAVE, offsetof(struct pmap, pm_save));
-ASSYM(PM_PCID, offsetof(struct pmap, pm_pcid));
 
 ASSYM(P_MD, offsetof(struct proc, p_md));
 ASSYM(MD_LDT, offsetof(struct mdproc, md_ldt));

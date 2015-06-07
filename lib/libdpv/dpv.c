@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libdpv/dpv.c 274121 2014-11-05 01:57:32Z dteske $");
+__FBSDID("$FreeBSD: head/lib/libdpv/dpv.c 283863 2015-06-01 02:06:57Z dteske $");
 
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -692,7 +692,7 @@ dpv(struct dpv_config *config, struct dpv_file_node *file_list)
 		if (!dpv_interrupt)
 			printf("\n");
 	} else
-		warnx("%s: %lli lines read", __func__, dpv_overall_read);
+		warnx("%s: %lli overall read", __func__, dpv_overall_read);
 
 	if (dpv_interrupt || dpv_abort)
 		return (-1);

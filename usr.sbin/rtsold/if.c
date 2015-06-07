@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtsold/if.c 281143 2015-04-06 09:42:23Z glebius $
+ * $FreeBSD: head/usr.sbin/rtsold/if.c 282354 2015-05-02 20:31:27Z glebius $
  */
 
 #include <sys/param.h>
@@ -247,9 +247,7 @@ lladdropt_length(struct sockaddr_dl *sdl)
 {
 	switch (sdl->sdl_type) {
 	case IFT_ETHER:
-#ifdef IFT_IEEE80211
 	case IFT_IEEE80211:
-#endif
 		return (ROUNDUP8(ETHER_ADDR_LEN + 2));
 	default:
 		return (0);
@@ -265,9 +263,7 @@ lladdropt_fill(struct sockaddr_dl *sdl, struct nd_opt_hdr *ndopt)
 
 	switch (sdl->sdl_type) {
 	case IFT_ETHER:
-#ifdef IFT_IEEE80211
 	case IFT_IEEE80211:
-#endif
 		ndopt->nd_opt_len = (ROUNDUP8(ETHER_ADDR_LEN + 2)) >> 3;
 		addr = (char *)(ndopt + 1);
 		memcpy(addr, LLADDR(sdl), ETHER_ADDR_LEN);

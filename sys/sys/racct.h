@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/racct.h 274911 2014-11-23 08:25:44Z mjg $
+ * $FreeBSD: head/sys/sys/racct.h 282213 2015-04-29 10:23:02Z trasz $
  */
 
 /*
@@ -83,6 +83,10 @@ struct ucred;
 #define	RACCT_DECAYING		0x20
 
 extern int racct_types[];
+extern int racct_enable;
+
+#define ASSERT_RACCT_ENABLED()	KASSERT(racct_enable, \
+				    ("%s called with !racct_enable", __func__))
 
 /*
  * Amount stored in c_resources[] is 10**6 times bigger than what's

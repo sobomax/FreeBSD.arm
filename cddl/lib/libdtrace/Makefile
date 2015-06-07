@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libdtrace/Makefile 278529 2015-02-10 19:41:30Z gnn $
+# $FreeBSD: head/cddl/lib/libdtrace/Makefile 283133 2015-05-19 22:24:19Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libdtrace/common
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libgen/common
@@ -50,6 +50,7 @@ DSRCS=		errno.d			\
 		io.d			\
 		ip.d			\
 		psinfo.d		\
+		siftr.d			\
 		signal.d		\
 		tcp.d			\
 		udp.d			\
@@ -102,6 +103,8 @@ DSRCS+=		regs_x86.d
 LFLAGS+=-l
 
 YFLAGS+=-d
+
+LIBADD=	ctf elf proc pthread rtld_db
 
 CLEANFILES=	dt_errtags.c dt_names.c
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/nvpair_impl.h 279439 2015-03-01 00:34:27Z rstone $
+ * $FreeBSD: head/sys/sys/nvpair_impl.h 283155 2015-05-20 17:42:40Z oshogbo $
  */
 
 #ifndef	_NVPAIR_IMPL_H_
@@ -85,7 +85,7 @@ const unsigned char *nvpair_unpack_number(bool isbe, nvpair_t *nvp,
 const unsigned char *nvpair_unpack_string(bool isbe, nvpair_t *nvp,
     const unsigned char *ptr, size_t *leftp);
 const unsigned char *nvpair_unpack_nvlist(bool isbe, nvpair_t *nvp,
-    const unsigned char *ptr, size_t *leftp, size_t nvlist, nvlist_t **child);
+    const unsigned char *ptr, size_t *leftp, size_t nfds, nvlist_t **child);
 const unsigned char *nvpair_unpack_descriptor(bool isbe, nvpair_t *nvp,
     const unsigned char *ptr, size_t *leftp, const int *fds, size_t nfds);
 const unsigned char *nvpair_unpack_binary(bool isbe, nvpair_t *nvp,

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_hw.c 255281 2013-09-05 23:14:27Z carl $");
+__FBSDID("$FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_hw.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -266,8 +266,8 @@ ntb_attach(device_t device)
 	ntb->features = p->features;
 
 	/* Heartbeat timer for NTB_SOC since there is no link interrupt */
-	callout_init(&ntb->heartbeat_timer, CALLOUT_MPSAFE);
-	callout_init(&ntb->lr_timer, CALLOUT_MPSAFE);
+	callout_init(&ntb->heartbeat_timer, 1);
+	callout_init(&ntb->lr_timer, 1);
 
 	DETACH_ON_ERROR(ntb_map_pci_bars(ntb));
 	DETACH_ON_ERROR(ntb_initialize_hw(ntb));

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/elf_machdep.c 276840 2015-01-08 17:46:42Z imp $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/elf_machdep.c 283382 2015-05-24 14:51:29Z dchagin $");
 
 #include "opt_cpu.h"
 
@@ -88,6 +88,7 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_shared_page_base = SHAREDPAGE,
 	.sv_shared_page_len = PAGE_SIZE,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 INIT_SYSENTVEC(elf32_sysvec, &elf32_freebsd_sysvec);
 

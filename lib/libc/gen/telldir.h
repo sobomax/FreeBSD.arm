@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/telldir.h 268531 2014-07-11 16:16:26Z jhb $
+ * $FreeBSD: head/lib/libc/gen/telldir.h 282485 2015-05-05 14:52:33Z julian $
  */
 
 #ifndef _TELLDIR_H_
@@ -64,5 +64,6 @@ bool		_filldir(DIR *, bool);
 struct dirent	*_readdir_unlocked(DIR *, int);
 void 		_reclaim_telldir(DIR *);
 void 		_seekdir(DIR *, long);
+void		_fixtelldir(DIR *dirp, long oldseek, long oldloc);
 
 #endif

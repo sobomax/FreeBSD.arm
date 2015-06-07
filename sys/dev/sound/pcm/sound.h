@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sound/pcm/sound.h 274035 2014-11-03 11:11:45Z bapt $
+ * $FreeBSD: head/sys/dev/sound/pcm/sound.h 282650 2015-05-08 17:00:33Z hselasky $
  */
 
 /*
@@ -213,10 +213,12 @@ struct snd_mixer;
  * ~(0xb00ff7ff)
  */
 #define AFMT_ENCODING_MASK	0xf00fffff
-#define AFMT_CHANNEL_MASK	0x01f00000
+#define AFMT_CHANNEL_MASK	0x07f00000
 #define AFMT_CHANNEL_SHIFT	20
-#define AFMT_EXTCHANNEL_MASK	0x0e000000
-#define AFMT_EXTCHANNEL_SHIFT	25
+#define AFMT_CHANNEL_MAX	0x7f
+#define AFMT_EXTCHANNEL_MASK	0x08000000
+#define AFMT_EXTCHANNEL_SHIFT	27
+#define AFMT_EXTCHANNEL_MAX	1
 
 #define AFMT_ENCODING(v)	((v) & AFMT_ENCODING_MASK)
 

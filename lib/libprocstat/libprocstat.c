@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libprocstat/libprocstat.c 263234 2014-03-16 11:04:44Z rwatson $");
+__FBSDID("$FreeBSD: head/lib/libprocstat/libprocstat.c 283868 2015-06-01 06:05:53Z araujo $");
 
 #include <sys/param.h>
 #include <sys/elf.h>
@@ -1235,7 +1235,7 @@ procstat_get_vnode_info_kvm(kvm_t *kd, struct filestat *fst,
 	struct vnode vnode;
 	char tagstr[12];
 	void *vp;
-	int error, found;
+	int error;
 	unsigned int i;
 
 	assert(kd);
@@ -1264,7 +1264,7 @@ procstat_get_vnode_info_kvm(kvm_t *kd, struct filestat *fst,
 	/*
 	 * Find appropriate handler.
 	 */
-	for (i = 0, found = 0; i < NTYPES; i++)
+	for (i = 0; i < NTYPES; i++)
 		if (!strcmp(fstypes[i].tag, tagstr)) {
 			if (fstypes[i].handler(kd, &vnode, vn) != 0) {
 				goto fail;

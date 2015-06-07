@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ahci/ahci.h 280184 2015-03-17 18:59:47Z zbb $
+ * $FreeBSD: head/sys/dev/ahci/ahci.h 283936 2015-06-02 23:11:12Z mav $
  */
 
 /* ATA register defines */
@@ -578,7 +578,7 @@ enum ahci_err_type {
 #define AHCI_Q_RESTORE_CAP	0x00080000
 
 #define AHCI_Q_BIT_STRING	\
-	"\021"			\
+	"\020"			\
 	"\001NOFORCE"		\
 	"\002NOPMP"		\
 	"\003NONCQ"		\

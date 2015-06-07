@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/NOTES 281824 2015-04-21 10:35:23Z glebius $
+# $FreeBSD: head/sys/conf/NOTES 283959 2015-06-03 18:01:09Z sbruno $
 #
 # NOTES -- Lines that can be cut/pasted into kernel and hints configs.
 #
@@ -576,6 +576,7 @@ options 	STACK
 # please see hwpmc(4).
 
 device		hwpmc			# Driver (also a loadable module)
+options 	HWPMC_DEBUG
 options 	HWPMC_HOOKS		# Other necessary kernel hooks
 
 
@@ -2978,6 +2979,9 @@ options 	RANDOM_DEBUG	# Debugging messages
 
 # Module to enable execution of application via emulators like QEMU
 options         IMAGACT_BINMISC
+
+# Intel em(4) driver
+options		EM_MULTIQUEUE # Activate multiqueue features/disable MSI-X
 
 # zlib I/O stream support
 # This enables support for compressed core dumps.

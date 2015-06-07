@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_asm_double.S 273088 2014-10-14 14:27:51Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_asm_double.S 283807 2015-05-31 09:07:26Z andrew $");
 
 #define	PCR_Z	(1 << 30)
 #define	PCR_C	(1 << 29)
@@ -56,7 +56,7 @@ ENTRY(__aeabi_cdcmple)
 	cmp	r0, #1
 	bne	1f
 	/* Yes, clear Z and C */
-	msr	cpsr_c, #(0)
+	mov	ip, #(0)
 	b	99f
 
 1:
@@ -70,14 +70,15 @@ ENTRY(__aeabi_cdcmple)
 	cmp	r0, #1
 	bne	2f
 	/* Yes, set Z and C */
-	msr	cpsr_c, #(PCR_Z | PCR_C)
+	mov	ip, #(PCR_Z | PCR_C)
 	b 99f
 
 2:
 	/* Not less than or equal, set C and clear Z */
-	msr	cpsr_c, #(PCR_C)
+	mov	ip, #(PCR_C)
 
 99:
+	msr	cpsr_c, ip
 	pop	{r4, r5, r6, r7, ip, pc}
 END(__aeabi_cdcmple)
 
@@ -112,6 +113,7 @@ ENTRY(__aeabi_cdcmpeq)
 	RET
 
 1:
-	msr	cpsr_c, #(PCR_C)
+	mov	ip, #(PCR_C)
+	msr	cpsr_c, ip
 	RET
 END(__aeabi_cdcmpeq)

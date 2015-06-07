@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)user.h	8.2 (Berkeley) 9/23/93
- * $FreeBSD: head/sys/sys/user.h 274167 2014-11-06 08:12:34Z mjg $
+ * $FreeBSD: head/sys/sys/user.h 283624 2015-05-27 18:11:05Z jhb $
  */
 
 #ifndef _SYS_USER_H_
@@ -483,6 +483,27 @@ struct kinfo_vmentry {
 	int	 _kve_ispare[12];		/* Space for more stuff. */
 	/* Truncated before copyout in sysctl */
 	char	 kve_path[PATH_MAX];		/* Path to VM obj, if any. */
+};
+
+/*
+ * The "vm.objects" sysctl provides a list of all VM objects in the system
+ * via an array of these entries.
+ */
+struct kinfo_vmobject {
+	int	kvo_structsize;			/* Variable size of record. */
+	int	kvo_type;			/* Object type: KVME_TYPE_*. */
+	uint64_t kvo_size;			/* Object size in pages. */
+	uint64_t kvo_vn_fileid;			/* inode number if vnode. */
+	uint32_t kvo_vn_fsid;			/* dev_t of vnode location. */
+	int	kvo_ref_count;			/* Reference count. */
+	int	kvo_shadow_count;		/* Shadow count. */
+	int	kvo_memattr;			/* Memory attribute. */
+	uint64_t kvo_resident;			/* Number of resident pages. */
+	uint64_t kvo_active;			/* Number of active pages. */
+	uint64_t kvo_inactive;			/* Number of inactive pages. */
+	uint64_t _kvo_qspare[8];
+	uint32_t _kvo_ispare[8];
+	char	kvo_path[PATH_MAX];		/* Pathname, if any. */
 };
 
 /*

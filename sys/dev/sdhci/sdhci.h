@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sdhci/sdhci.h 277307 2015-01-17 19:57:03Z ian $
+ * $FreeBSD: head/sys/dev/sdhci/sdhci.h 283263 2015-05-21 20:09:36Z loos $
  */
 
 #ifndef	__SDHCI_H__
@@ -271,6 +271,7 @@ struct sdhci_slot {
 #define SDHCI_HAVE_DMA			1
 #define SDHCI_PLATFORM_TRANSFER		2
 	u_char		version;
+	int		timeout;	/* Transfer timeout */
 	uint32_t	max_clk;	/* Max possible freq */
 	uint32_t	timeout_clk;	/* Timeout freq */
 	bus_dma_tag_t 	dmatag;

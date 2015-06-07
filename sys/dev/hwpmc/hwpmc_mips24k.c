@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mips24k.c 233319 2012-03-22 18:01:23Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mips24k.c 282658 2015-05-08 19:40:00Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -223,7 +223,7 @@ mips_get_perfctl(int cpu, int ri, uint32_t event, uint32_t caps)
 	if (caps & PMC_CAP_INTERRUPT)
 		config |= MIPS24K_PMC_INTERRUPT_ENABLE;
 
-	PMCDBG(MDP,ALL,2,"mips24k-get_perfctl ri=%d -> config=0x%x", ri, config);
+	PMCDBG2(MDP,ALL,2,"mips24k-get_perfctl ri=%d -> config=0x%x", ri, config);
 
 	return (config);
 }

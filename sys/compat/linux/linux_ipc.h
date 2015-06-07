@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/linux_ipc.h 246085 2013-01-29 18:41:30Z jhb $
+ * $FreeBSD: head/sys/compat/linux/linux_ipc.h 283416 2015-05-24 15:44:41Z dchagin $
  */
 
 #ifndef _LINUX_IPC_H_
@@ -82,7 +82,7 @@
 #define	LINUX_IPC_64	0x0100	/* New version (support 32-bit UIDs, bigger
 				   message sizes, etc. */
 
-#if defined(__i386__) || defined(__amd64__)
+#if defined(__i386__) || (defined(__amd64__) && defined(COMPAT_LINUX32))
 
 struct linux_msgctl_args 
 {
@@ -177,6 +177,6 @@ int linux_shmctl(struct thread *, struct linux_shmctl_args *);
 int linux_shmdt(struct thread *, struct linux_shmdt_args *);
 int linux_shmget(struct thread *, struct linux_shmget_args *);
 
-#endif	/* __i386__ || __amd64__ */
+#endif	/* __i386__ || (__amd64__ && COMPAT_LINUX32) */
 
 #endif /* _LINUX_IPC_H_ */

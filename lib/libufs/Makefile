@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libufs/Makefile 225227 2011-08-28 09:26:48Z kib $
+# $FreeBSD: head/lib/libufs/Makefile 283243 2015-05-21 14:36:11Z imp $
 
 LIB=	ufs
 SHLIBDIR?= /lib
@@ -21,7 +21,6 @@ MLINKS+= ufs_disk_close.3 ufs_disk_write.3
 
 WARNS?=	2
 
-DEBUG_FLAGS = -g
 CFLAGS+= -D_LIBUFS
 .if defined(LIBUFS_DEBUG)
 CFLAGS+= -D_LIBUFS_DEBUGGING

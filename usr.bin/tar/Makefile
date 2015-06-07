@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/tar/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/tar/Makefile 283245 2015-05-21 14:36:14Z imp $
 .include <src.opts.mk>
 
 LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
@@ -31,7 +31,6 @@ CFLAGS+=	-I${LIBARCHIVEDIR}/tar -I${LIBARCHIVEDIR}/libarchive
 CFLAGS+=	-I${LIBARCHIVEDIR}/libarchive_fe
 SYMLINKS=	bsdtar ${BINDIR}/tar
 MLINKS=	bsdtar.1 tar.1
-DEBUG_FLAGS=-g
 
 .PHONY: check test clean-test
 check test: $(PROG) bsdtar.1.gz

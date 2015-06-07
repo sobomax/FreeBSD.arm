@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Marcel Moolenaar
+ * Copyright (c) 2014, 2015 Marcel Moolenaar
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/proto/proto_dev.h 265055 2014-04-28 17:58:40Z marcel $
+ * $FreeBSD: head/sys/dev/proto/proto_dev.h 284079 2015-06-06 16:09:25Z marcel $
  */
 
 #ifndef _DEV_PROTO_DEV_H_
@@ -39,5 +39,28 @@ struct proto_ioc_region {
 };
 
 #define PROTO_IOC_REGION _IOWR(PROTO_IOC_CLASS, 1, struct proto_ioc_region)
+
+struct proto_ioc_busdma {
+	unsigned int	request;
+#define	PROTO_IOC_BUSDMA_TAG_CREATE	1
+#define	PROTO_IOC_BUSDMA_TAG_DERIVE	2
+#define	PROTO_IOC_BUSDMA_TAG_DESTROY	3
+	unsigned long	key;
+	union {
+		struct {
+			unsigned long	align;
+			unsigned long	bndry;
+			unsigned long	maxaddr;
+			unsigned long	maxsz;
+			unsigned long	maxsegsz;
+			unsigned int	nsegs;
+			unsigned int	datarate;
+			unsigned int	flags;
+		} tag;
+	} u;
+	unsigned long	result;
+};
+
+#define PROTO_IOC_BUSDMA _IOWR(PROTO_IOC_CLASS, 2, struct proto_ioc_busdma)
 
 #endif /* _DEV_PROTO_H_ */

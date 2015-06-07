@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/arm/include/smp.h 280712 2015-03-26 21:13:53Z ian $ */
+/* $FreeBSD: head/sys/arm/include/smp.h 282780 2015-05-11 19:55:01Z alc $ */
 
 #ifndef _MACHINE_SMP_H_
 #define _MACHINE_SMP_H_
@@ -14,7 +14,6 @@
 #define IPI_HARDCLOCK	6
 #define IPI_TLB		7
 #define IPI_CACHE	8
-#define IPI_LAZYPMAP	9
 
 void	init_secondary(int cpu);
 void	mpentry(void);

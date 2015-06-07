@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.h 281695 2015-04-18 16:58:33Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.h 282048 2015-04-27 01:12:51Z ae $	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-
@@ -309,7 +309,6 @@ struct inpcb;
 extern int ipsec_init_policy(struct socket *so, struct inpcbpolicy **);
 extern int ipsec_copy_policy(struct inpcbpolicy *, struct inpcbpolicy *);
 extern u_int ipsec_get_reqlevel(struct ipsecrequest *);
-extern int ipsec_in_reject(struct secpolicy *, struct mbuf *);
 
 extern int ipsec_set_policy(struct inpcb *inp, int optname,
 	caddr_t request, size_t len, struct ucred *cred);

@@ -28,7 +28,7 @@
  */
 
 #ifndef lint
-static char copyright[] =
+static const char copyright[] =
 "@(#) Copyright (c) 1980, 1993\n\
 	The Regents of the University of California.  All rights reserved.\n";
 #endif /* not lint */
@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)main.c	8.2 (Berkeley) 4/20/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mail/main.c 229655 2012-01-05 21:36:45Z uqs $");
+__FBSDID("$FreeBSD: head/usr.bin/mail/main.c 284070 2015-06-06 13:13:39Z bapt $");
 
 #include "rcv.h"
 #include <fcntl.h>

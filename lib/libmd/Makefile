@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libmd/Makefile 263218 2014-03-16 01:43:23Z jmg $
+# $FreeBSD: head/lib/libmd/Makefile 282774 2015-05-11 16:45:33Z thomas $
 
 LIB=	md
 SHLIB_MAJOR= 6
@@ -42,7 +42,13 @@ CLEANFILES+=	md[245]hl.c md[245].ref md[245].3 mddriver \
 		sha0.ref sha0hl.c sha1.ref sha1hl.c shadriver \
 		sha256.ref sha256hl.c sha512.ref sha512hl.c
 
-CFLAGS+= -I${.CURDIR}
+# Define WEAK_REFS to provide weak aliases for libmd symbols
+#
+# Note that the same sources are also used internally by libcrypt,
+# in which case:
+#   * macros are used to rename symbols to libcrypt internal names
+#   * no weak aliases are generated
+CFLAGS+= -I${.CURDIR} -DWEAK_REFS
 .PATH: ${.CURDIR}/${MACHINE_ARCH} ${.CURDIR}/../../sys/crypto/sha2
 
 .if exists(${MACHINE_ARCH}/sha.S)

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libcapsicum/libcapsicum.h 258838 2013-12-02 08:21:28Z pjd $
+ * $FreeBSD: head/lib/libcapsicum/libcapsicum.h 282346 2015-05-02 17:45:52Z oshogbo $
  */
 
 #ifndef	_LIBCAPSICUM_H_
@@ -105,11 +105,11 @@ int	cap_send_nvlist(const cap_channel_t *chan, const nvlist_t *nvl);
 /*
  * Function receives nvlist over the given capability.
  */
-nvlist_t *cap_recv_nvlist(const cap_channel_t *chan);
+nvlist_t *cap_recv_nvlist(const cap_channel_t *chan, int flags);
 /*
  * Function sends the given nvlist, destroys it and receives new nvlist in
  * response over the given capability.
  */
-nvlist_t *cap_xfer_nvlist(const cap_channel_t *chan, nvlist_t *nvl);
+nvlist_t *cap_xfer_nvlist(const cap_channel_t *chan, nvlist_t *nvl, int flags);
 
 #endif	/* !_LIBCAPSICUM_H_ */

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_init.c 273400 2014-10-21 19:02:26Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_init.c 283735 2015-05-29 13:24:17Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -311,9 +311,7 @@ static int
 vfs_unregister(struct vfsconf *vfc)
 {
 	struct vfsconf *vfsp;
-	int error, i, maxtypenum;
-
-	i = vfc->vfc_typenum;
+	int error, maxtypenum;
 
 	vfsconf_lock();
 	vfsp = vfs_byname_locked(vfc->vfc_name);

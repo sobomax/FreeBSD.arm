@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mambo/mambo_console.c 228631 2011-12-17 15:08:43Z avg $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mambo/mambo_console.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -89,7 +89,7 @@ cn_drvinit(void *unused)
 
 		polltime = 1;
 
-		callout_init(&mambo_callout, CALLOUT_MPSAFE);
+		callout_init(&mambo_callout, 1);
 		callout_reset(&mambo_callout, polltime, mambo_timeout, NULL);
 	}
 }

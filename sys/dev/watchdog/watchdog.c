@@ -31,7 +31,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/watchdog/watchdog.c 279413 2015-02-28 22:37:48Z rstone $");
+__FBSDID("$FreeBSD: head/sys/dev/watchdog/watchdog.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -389,8 +389,8 @@ watchdog_modevent(module_t mod __unused, int type, void *data __unused)
 {
 	switch(type) {
 	case MOD_LOAD:
-		callout_init(&wd_pretimeo_handle, true);
-		callout_init(&wd_softtimeo_handle, true);
+		callout_init(&wd_pretimeo_handle, 1);
+		callout_init(&wd_softtimeo_handle, 1);
 		wd_dev = make_dev(&wd_cdevsw, 0,
 		    UID_ROOT, GID_WHEEL, 0600, _PATH_WATCHDOG);
 		return 0;

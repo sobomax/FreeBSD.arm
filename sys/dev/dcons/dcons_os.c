@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/dcons/dcons_os.c 247005 2013-02-19 18:22:25Z mav $
+ * $FreeBSD: head/sys/dev/dcons/dcons_os.c 283291 2015-05-22 17:05:21Z jkim $
  */
 
 #include <sys/param.h>
@@ -374,7 +374,7 @@ dcons_attach(void)
 
 	dcons_attach_port(DCONS_CON, "dcons", 0);
 	dcons_attach_port(DCONS_GDB, "dgdb", DC_GDB);
-	callout_init(&dcons_callout, CALLOUT_MPSAFE);
+	callout_init(&dcons_callout, 1);
 	polltime = hz / poll_hz;
 	callout_reset(&dcons_callout, polltime, dcons_timeout, NULL);
 	return(0);

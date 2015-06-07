@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/net/if_gif.h 276901 2015-01-10 03:13:16Z ae $	*/
+/*	$FreeBSD: head/sys/net/if_gif.h 282965 2015-05-15 12:19:45Z ae $	*/
 /*	$KAME: if_gif.h,v 1.17 2000/09/11 11:36:41 sumikawa Exp $	*/
 
 /*-
@@ -127,7 +127,9 @@ int in6_gif_attach(struct gif_softc *);
 #define GIFSOPTS	_IOW('i', 151, struct ifreq)
 
 #define	GIF_ACCEPT_REVETHIP	0x0001
+#define	GIF_IGNORE_SOURCE	0x0002
 #define	GIF_SEND_REVETHIP	0x0010
-#define	GIF_OPTMASK		(GIF_ACCEPT_REVETHIP|GIF_SEND_REVETHIP)
+#define	GIF_OPTMASK		(GIF_ACCEPT_REVETHIP|GIF_SEND_REVETHIP| \
+    GIF_IGNORE_SOURCE)
 
 #endif /* _NET_IF_GIF_H_ */

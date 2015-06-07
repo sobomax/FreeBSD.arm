@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_octeon.c 233334 2012-03-23 00:09:27Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_octeon.c 282658 2015-05-08 19:40:00Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -189,7 +189,8 @@ mips_get_perfctl(int cpu, int ri, uint32_t event, uint32_t caps)
 	if (caps & PMC_CAP_INTERRUPT)
 		control.s.ie = 1;
 
-	PMCDBG(MDP,ALL,2,"mips-allocate ri=%d -> config=0x%x", ri, control.u32);
+	PMCDBG2(MDP,ALL,2,"mips-allocate ri=%d -> config=0x%x", ri,
+	    control.u32);
 
 	return (control.u32);
 }

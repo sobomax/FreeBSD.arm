@@ -1,15 +1,10 @@
-# $FreeBSD: head/sys/modules/linprocfs/Makefile 211690 2010-08-23 06:13:29Z imp $
+# $FreeBSD: head/sys/modules/linprocfs/Makefile 283421 2015-05-24 15:51:18Z dchagin $
 
 .PATH: ${.CURDIR}/../../compat/linprocfs
 
 KMOD=	linprocfs
 SRCS=	vnode_if.h \
 	device_if.h bus_if.h \
-	linprocfs.c \
-	opt_compat.h
-
-.if ${MACHINE_CPUARCH} == "amd64"
-CFLAGS+=-DCOMPAT_LINUX32
-.endif
+	linprocfs.c
 
 .include <bsd.kmod.mk>

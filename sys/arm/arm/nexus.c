@@ -42,7 +42,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/nexus.c 276032 2014-12-21 21:27:12Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/nexus.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -127,7 +127,7 @@ static driver_t nexus_driver = {
 	nexus_methods,
 	1			/* no softc */
 };
-EARLY_DRIVER_MODULE(nexus, root, nexus_driver, nexus_devclass, 0, 0, 
+EARLY_DRIVER_MODULE(nexus, root, nexus_driver, nexus_devclass, 0, 0,
     BUS_PASS_BUS + BUS_PASS_ORDER_EARLY);
 
 static int
@@ -236,7 +236,7 @@ nexus_release_resource(device_t bus, device_t child, int type, int rid,
     struct resource *res)
 {
 	int error;
-	
+
 	if (rman_get_flags(res) & RF_ACTIVE) {
 		error = bus_deactivate_resource(child, type, rid, res);
 		if (error)

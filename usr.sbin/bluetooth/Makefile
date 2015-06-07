@@ -1,12 +1,10 @@
 # $Id: Makefile,v 1.5 2003/09/08 02:28:35 max Exp $
-# $FreeBSD: head/usr.sbin/bluetooth/Makefile 215195 2010-11-12 19:43:12Z emax $
+# $FreeBSD: head/usr.sbin/bluetooth/Makefile 282054 2015-04-27 06:34:51Z ngie $
+
+.include <src.opts.mk>
 
 SUBDIR= \
-	ath3kfw \
-	bcmfw \
 	bt3cfw \
-	bthidcontrol \
-	bthidd \
 	btpand \
 	hccontrol \
 	hcsecd \
@@ -16,6 +14,13 @@ SUBDIR= \
 	rfcomm_pppd \
 	sdpcontrol \
 	sdpd
+
+.if ${MK_USB} != "no"
+SUBDIR+=	ath3kfw
+SUBDIR+=	bcmfw
+SUBDIR+=	bthidcontrol
+SUBDIR+=	bthidd
+.endif
 
 .include <bsd.subdir.mk>
 

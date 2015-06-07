@@ -16,13 +16,14 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/AVILA 276755 2015-01-06 16:15:57Z jhb $
+# $FreeBSD: head/sys/arm/conf/AVILA 282576 2015-05-07 12:38:23Z andrew $
 
 ident		AVILA
 
-include		"../xscale/ixp425/std.ixp425"
+include 	"std.arm"
+include 	"../xscale/ixp425/std.ixp425"
 # NB: memory mapping is defined in std.avila
-include		"../xscale/ixp425/std.avila"
+include 	"../xscale/ixp425/std.avila"
 options 	XSCALE_CACHE_READ_WRITE_ALLOCATE
 #To statically compile in device wiring instead of /boot/device.hints
 hints		"AVILA.hints"		# Default places to look for devices.

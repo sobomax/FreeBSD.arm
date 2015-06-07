@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/Makefile.inc 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/ntp/Makefile.inc 283542 2015-05-25 20:27:46Z bapt $
 
 .include <src.opts.mk>
 
@@ -11,7 +11,7 @@ NTPDEFS=   -DSYS_FREEBSD
 CFLAGS+= ${NTPDEFS} ${DEFS_LOCAL} ${CLOCKDEFS}
 
 .if ${MK_OPENSSL} != "no" && !defined(RELEASE_CRUNCH)
-CFLAGS+= -DOPENSSL
+CFLAGS+= -DOPENSSL -DUSE_OPENSSL_CRYPTO_RAND -DAUTOKEY
 .endif
 
 WARNS?=	0

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/rpi2.dts 281899 2015-04-23 18:36:36Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/rpi2.dts 282610 2015-05-07 22:11:44Z loos $
  */
 /dts-v1/;
 
@@ -41,6 +41,24 @@
 			compatible = "arm,cortex-a7";
 			device_type = "cpu";
 			reg = <0xf00>;			/* CPU ID=0xf00 */
+			clock-frequency = <800000000>;	/* 800MHz */
+		};
+		cpu@1 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			reg = <0xf01>;			/* CPU ID=0xf01 */
+			clock-frequency = <800000000>;	/* 800MHz */
+		};
+		cpu@2 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			reg = <0xf02>;			/* CPU ID=0xf02 */
+			clock-frequency = <800000000>;	/* 800MHz */
+		};
+		cpu@3 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			reg = <0xf03>;			/* CPU ID=0xf03 */
 			clock-frequency = <800000000>;	/* 800MHz */
 		};
 	};

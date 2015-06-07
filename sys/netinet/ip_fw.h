@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/ip_fw.h 279948 2015-03-13 09:03:25Z ae $
+ * $FreeBSD: head/sys/netinet/ip_fw.h 282070 2015-04-27 08:29:39Z melifaro $
  */
 
 #ifndef _IPFW2_H
@@ -40,10 +40,12 @@
 #define	IPFW_MAX_SETS		32	/* Number of sets supported by ipfw*/
 
 /*
- * Default number of ipfw tables.
+ * Compat values for old clients
  */
+#ifndef	_KERNEL
 #define	IPFW_TABLES_MAX		65535
 #define	IPFW_TABLES_DEFAULT	128
+#endif
 
 /*
  * Most commands (queue, pipe, tag, untag, limit...) can have a 16-bit
@@ -963,7 +965,6 @@ typedef struct _ipfw_ta_info {
 	uint64_t	spare1;
 } ipfw_ta_info;
 
-#define	IPFW_OBJTYPE_TABLE	1
 typedef struct _ipfw_obj_header {
 	ip_fw3_opheader	opheader;	/* IP_FW3 opcode		*/
 	uint32_t	spare;

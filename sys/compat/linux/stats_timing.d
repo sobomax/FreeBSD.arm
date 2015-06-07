@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/stats_timing.d 235063 2012-05-05 19:42:38Z netchild $
+ * $FreeBSD: head/sys/compat/linux/stats_timing.d 283383 2015-05-24 14:53:16Z dchagin $
  */
 
 /**
@@ -39,7 +39,6 @@
  *      possible for a given application
  *  - graph of longest running (CPU-time!) function in total
  *    - may help finding problem cases in the kernel code
- * - timing statistics for the emul_lock
  * - graph of longest held (CPU-time!) locks
  */
 

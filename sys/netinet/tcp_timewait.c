@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 274225 2014-11-07 09:39:05Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 282300 2015-05-01 12:49:03Z gnn $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -250,6 +250,13 @@ tcp_twstart(struct tcpcb *tp)
 			return;
 		}
 	}
+
+
+	/*
+	 * For use only by DTrace.  We do not reference the state
+	 * after this point so modifying it in place is not a problem.
+	 */
+	tcp_state_change(tp, TCPS_TIME_WAIT);
 
 	tw = uma_zalloc(V_tcptw_zone, M_NOWAIT);
 	if (tw == NULL) {

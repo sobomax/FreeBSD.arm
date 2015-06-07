@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_pic.c 280905 2015-03-31 11:50:46Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_pic.c 283057 2015-05-18 11:04:07Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -121,6 +121,8 @@ aml8726_pic_eoi(void *arg)
 	if (nb >= AML_PIC_NIRQS)
 		return;
 
+	arm_irq_memory_barrier(nb);
+
 	CSR_WRITE_4(aml8726_pic_sc, AML_PIC_STAT_CLR_REG(nb), AML_PIC_BIT(nb));
 
 	CSR_BARRIER(aml8726_pic_sc, AML_PIC_STAT_CLR_REG(nb));
@@ -167,7 +169,7 @@ aml8726_pic_attach(device_t dev)
 		CSR_WRITE_4(sc, AML_PIC_0_FIRQ_SEL + i * 16, 0);
 	}
 
-#ifndef SMP
+#ifndef DEV_GIC
 	arm_post_filter = aml8726_pic_eoi;
 #else
 	device_printf(dev, "disabled in favor of gic\n");
@@ -205,7 +207,7 @@ static devclass_t aml8726_pic_devclass;
 EARLY_DRIVER_MODULE(pic, simplebus, aml8726_pic_driver, aml8726_pic_devclass,
     0, 0, BUS_PASS_INTERRUPT);
 
-#ifndef SMP
+#ifndef DEV_GIC
 int
 arm_get_next_irq(int last)
 {
@@ -265,8 +267,12 @@ arm_unmask_irq(uintptr_t nb)
 	if (nb >= AML_PIC_NIRQS)
 		return;
 
+	arm_irq_memory_barrier(nb);
+
 	mask = CSR_READ_4(aml8726_pic_sc, AML_PIC_MASK_REG(nb));
 	mask |= AML_PIC_BIT(nb);
 	CSR_WRITE_4(aml8726_pic_sc, AML_PIC_MASK_REG(nb), mask);
+
+	CSR_BARRIER(aml8726_pic_sc, AML_PIC_MASK_REG(nb));
 }
 #endif

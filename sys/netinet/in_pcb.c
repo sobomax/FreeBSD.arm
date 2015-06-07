@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 277331 2015-01-18 18:06:40Z adrian $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_ddb.h"
 #include "opt_ipsec.h"
@@ -2249,7 +2249,7 @@ ipport_tick_init(const void *unused __unused)
 {
 
 	/* Start ipport_tick. */
-	callout_init(&ipport_tick_callout, CALLOUT_MPSAFE);
+	callout_init(&ipport_tick_callout, 1);
 	callout_reset(&ipport_tick_callout, 1, ipport_tick, NULL);
 	EVENTHANDLER_REGISTER(shutdown_pre_sync, ip_fini, NULL,
 		SHUTDOWN_PRI_DEFAULT);

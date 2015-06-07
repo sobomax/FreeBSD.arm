@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_usb_phy-m6.c 280905 2015-03-31 11:50:46Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_usb_phy-m6.c 283188 2015-05-21 07:35:20Z ganbold $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -181,8 +181,10 @@ aml8726_usb_phy_attach(device_t dev)
 		sc->pwr_en[i].pin = prop[i * 3 + 1];
 		sc->pwr_en[i].pol = prop[i * 3 + 2];
 
-		if (sc->pwr_en[i].dev == NULL)
+		if (sc->pwr_en[i].dev == NULL) {
 			err = 1;
+			break;
+		}
 	}
 
 	free(prop, M_OFWPROP);

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/share/mk/bsd.mkopt.mk 280771 2015-03-27 21:47:15Z imp $
+# $FreeBSD: head/share/mk/bsd.mkopt.mk 284050 2015-06-06 01:18:28Z sjg $
 #
 # Generic mechanism to deal with WITH and WITHOUT options and turn
 # them into MK_ options.
@@ -70,3 +70,16 @@ MK_${var}:=	no
 .for var in ${BROKEN_OPTIONS}
 MK_${var}:=	no
 .endfor
+
+.for vv in ${__DEFAULT_DEPENDENT_OPTIONS}
+.if defined(WITH_${vv:H}) && defined(WITHOUT_${vv:H})
+MK_${vv:H}?= no
+.elif defined(WITH_${vv:H})
+MK_${vv:H}?= yes
+.elif defined(WITHOUT_${vv:H})
+MK_${vv:H}?= no
+.else
+MK_${vv:H}?= ${MK_${vv:T}}
+.endif
+.endfor
+.undef __DEFAULT_DEPENDENT_OPTIONS

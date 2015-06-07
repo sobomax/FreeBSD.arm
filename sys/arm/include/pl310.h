@@ -24,7 +24,7 @@
 
 
 /*
- * $FreeBSD: head/sys/arm/include/pl310.h 269598 2014-08-05 17:39:58Z ian $
+ * $FreeBSD: head/sys/arm/include/pl310.h 282586 2015-05-07 16:56:20Z emaste $
  */
 
 #ifndef PL310_H_
@@ -133,7 +133,7 @@
 #define		PREFETCH_CTRL_DATA_PREFETCH	(1 << 28)
 #define		PREFETCH_CTRL_INSTR_PREFETCH	(1 << 29)
 #define		PREFETCH_CTRL_DL		(1 << 30)
-#define PL310_POWER_CTRL		0xF60
+#define PL310_POWER_CTRL		0xF80
 #define		POWER_CTRL_ENABLE_GATING	(1 << 0)
 #define		POWER_CTRL_ENABLE_STANDBY	(1 << 1)
 

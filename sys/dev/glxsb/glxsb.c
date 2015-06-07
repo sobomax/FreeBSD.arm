@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/glxsb/glxsb.c 273872 2014-10-30 21:21:53Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/glxsb/glxsb.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -331,7 +331,7 @@ glxsb_attach(device_t dev)
 		sc->sc_rnghz = hz / 100;
 	else
 		sc->sc_rnghz = 1;
-	callout_init(&sc->sc_rngco, CALLOUT_MPSAFE);
+	callout_init(&sc->sc_rngco, 1);
 	glxsb_rnd(sc);
 
 	return (0);

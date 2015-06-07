@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_turnstile.c 258622 2013-11-26 08:46:27Z avg $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_turnstile.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_turnstile_profiling.h"
@@ -1151,7 +1151,7 @@ DB_SHOW_COMMAND(lockchain, db_show_lockchain)
 
 	/* Figure out which thread to start with. */
 	if (have_addr)
-		td = db_lookup_thread(addr, TRUE);
+		td = db_lookup_thread(addr, true);
 	else
 		td = kdb_thread;
 
@@ -1236,7 +1236,7 @@ DB_SHOW_COMMAND(sleepchain, db_show_sleepchain)
 
 	/* Figure out which thread to start with. */
 	if (have_addr)
-		td = db_lookup_thread(addr, TRUE);
+		td = db_lookup_thread(addr, true);
 	else
 		td = kdb_thread;
 

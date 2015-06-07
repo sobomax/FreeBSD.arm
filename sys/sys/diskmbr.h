@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)disklabel.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: head/sys/sys/diskmbr.h 276894 2015-01-09 19:37:12Z emaste $
+ * $FreeBSD: head/sys/sys/diskmbr.h 282465 2015-05-05 09:33:02Z ae $
  */
 
 #ifndef _SYS_DISKMBR_H_
@@ -51,11 +51,13 @@
 #define	DOSPTYP_EXTLBA	0x0f	/* DOS extended partition */
 #define	DOSPTYP_PPCBOOT	0x41	/* PReP/CHRP boot partition */
 #define	DOSPTYP_LDM	0x42	/* Win2k dynamic extended partition */
-#define	DOSPTYP_386BSD	0xa5	/* 386BSD partition type */
-#define	DOSPTYP_HFS	0xaf	/* HFS/HFS+ partition type */
 #define	DOSPTYP_LINSWP	0x82	/* Linux swap partition */
 #define	DOSPTYP_LINUX	0x83	/* Linux partition */
 #define	DOSPTYP_LINLVM	0x8e	/* Linux LVM partition */
+#define	DOSPTYP_386BSD	0xa5	/* 386BSD partition type */
+#define	DOSPTYP_APPLE_UFS	0xa8	/* Apple Mac OS X boot */
+#define	DOSPTYP_APPLE_BOOT	0xab	/* Apple Mac OS X UFS */
+#define	DOSPTYP_HFS	0xaf	/* HFS/HFS+ partition type */
 #define	DOSPTYP_PMBR	0xee	/* GPT Protective MBR */
 #define	DOSPTYP_EFI	0xef	/* EFI FAT parition */
 #define	DOSPTYP_VMFS	0xfb	/* VMware VMFS partition */

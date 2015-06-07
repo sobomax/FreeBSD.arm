@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/casperd/zygote.c 264089 2014-04-03 22:14:18Z delphij $");
+__FBSDID("$FreeBSD: head/sbin/casperd/zygote.c 282346 2015-05-02 17:45:52Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -91,7 +91,7 @@ zygote_clone(zygote_func_t *func, int flags, int *chanfdp, int *procfdp)
 	nvl = nvlist_create(0);
 	nvlist_add_number(nvl, "func", (uint64_t)(uintptr_t)func);
 	nvlist_add_number(nvl, "flags", (uint64_t)flags);
-	nvl = nvlist_xfer(zygote_sock, nvl);
+	nvl = nvlist_xfer(zygote_sock, nvl, 0);
 	if (nvl == NULL)
 		return (-1);
 	if (nvlist_exists_number(nvl, "error")) {
@@ -134,7 +134,7 @@ zygote_main(int sock)
 	closefrom(sock + 1);
 
 	for (;;) {
-		nvlin = nvlist_recv(sock);
+		nvlin = nvlist_recv(sock, 0);
 		if (nvlin == NULL) {
 			if (errno == ENOTCONN) {
 				/* Casperd exited. */

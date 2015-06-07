@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/ntpq/Makefile 280849 2015-03-30 13:30:15Z cy $
+# $FreeBSD: head/usr.sbin/ntp/ntpq/Makefile 283542 2015-05-25 20:27:46Z bapt $
 
 MAN=
 
@@ -21,10 +21,12 @@ CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include \
 	-I${.CURDIR}/../../../contrib/ntp/sntp/libopts \
 	-I${.CURDIR}/../
 
-LIBADD+=	edit md ntp opts m pthread
+LIBADD+=	edit ntp opts m pthread
 
 .if ${MK_OPENSSL} != "no"
-LIBADD+=	ssl crypto
+LIBADD+=	crypto
+.else
+LIBADD+=	md
 .endif
 
 CFLAGS+=	-DHAVE_LIBEDIT -DHAVE_READLINE_READLINE_H \

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_mbr.c 269857 2014-08-12 10:31:31Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_mbr.c 282465 2015-05-05 09:33:02Z ae $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -138,6 +138,9 @@ static struct g_part_mbr_alias {
 	{ DOSPTYP_PPCBOOT,	G_PART_ALIAS_PREP_BOOT },
 	{ DOSPTYP_VMFS,		G_PART_ALIAS_VMFS },
 	{ DOSPTYP_VMKDIAG,	G_PART_ALIAS_VMKDIAG },
+	{ DOSPTYP_APPLE_UFS,	G_PART_ALIAS_APPLE_UFS },
+	{ DOSPTYP_APPLE_BOOT,	G_PART_ALIAS_APPLE_BOOT },
+	{ DOSPTYP_HFS,		G_PART_ALIAS_APPLE_HFS },
 };
 
 static int

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/pci/pci_pir.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/i386/pci/pci_pir.c 282274 2015-04-30 15:48:48Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -137,9 +137,6 @@ pci_pir_open(void)
 	int i;
 	uint8_t ck, *cv;
 
-#ifdef XEN
-	return;
-#else	
 	/* Don't try if we've already found a table. */
 	if (pci_route_table != NULL)
 		return;
@@ -150,7 +147,7 @@ pci_pir_open(void)
 		sigaddr = bios_sigsearch(0, "_PIR", 4, 16, 0);
 	if (sigaddr == 0)
 		return;
-#endif
+
 	/* If we found something, check the checksum and length. */
 	/* XXX - Use pmap_mapdev()? */
 	pt = (struct PIR_table *)(uintptr_t)BIOS_PADDRTOVADDR(sigaddr);
@@ -481,11 +478,7 @@ pci_pir_biosroute(int bus, int device, int func, int pin, int irq)
 	args.eax = PCIBIOS_ROUTE_INTERRUPT;
 	args.ebx = (bus << 8) | (device << 3) | func;
 	args.ecx = (irq << 8) | (0xa + pin);
-#ifdef XEN
-	return (0);
-#else	
 	return (bios32(&args, PCIbios.ventry, GSEL(GCODE_SEL, SEL_KPL)));
-#endif
 }
 
 

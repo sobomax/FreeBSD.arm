@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/freescale/imx/files.imx6 280831 2015-03-29 22:43:39Z andrew $
+# $FreeBSD: head/sys/arm/freescale/imx/files.imx6 282723 2015-05-10 12:13:27Z andrew $
 
 #
 # Standard ARM support.
@@ -10,7 +10,6 @@ kern/kern_clocksource.c			standard
 #
 # Standard imx6 devices and support.
 #
-arm/arm/gic.c				standard
 arm/arm/pl310.c				standard
 arm/arm/bus_space_base.c		standard
 arm/arm/mpcore_timer.c			standard

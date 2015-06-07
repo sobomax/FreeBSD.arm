@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/imgact_aout.c 238687 2012-07-22 13:41:45Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/imgact_aout.c 283382 2015-05-24 14:51:29Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -99,6 +99,7 @@ struct sysentvec aout_sysvec = {
 	.sv_fetch_syscall_args = cpu_fetch_syscall_args,
 	.sv_syscallnames = syscallnames,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 
 #elif defined(__amd64__)

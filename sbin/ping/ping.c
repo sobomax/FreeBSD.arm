@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ping/ping.c 277562 2015-01-23 13:26:35Z ae $");
+__FBSDID("$FreeBSD: head/sbin/ping/ping.c 282436 2015-05-04 21:44:51Z brooks $");
 
 /*
  *			P I N G . C
@@ -736,9 +736,6 @@ main(int argc, char *const *argv)
 	 */
 	if (cansandbox && cap_enter() < 0 && errno != ENOSYS)
 		err(1, "cap_enter");
-
-	if (cap_sandboxed())
-		fprintf(stderr, "capability mode sandbox enabled\n");
 
 	cap_rights_init(&rights, CAP_RECV, CAP_EVENT, CAP_SETSOCKOPT);
 	if (cap_rights_limit(srecv, &rights) < 0 && errno != ENOSYS)

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_irq.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_irq.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <dev/drm2/drmP.h>
 
@@ -210,7 +210,7 @@ int drm_vblank_init(struct drm_device *dev, int num_crtcs)
 {
 	int i, ret = -ENOMEM;
 
-	callout_init(&dev->vblank_disable_callout, CALLOUT_MPSAFE);
+	callout_init(&dev->vblank_disable_callout, 1);
 	mtx_init(&dev->vbl_lock, "drmvbl", NULL, MTX_DEF);
 	mtx_init(&dev->vblank_time_lock, "drmvtl", NULL, MTX_DEF);
 

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/default_pager.c 274100 2014-11-04 19:56:04Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/default_pager.c 282660 2015-05-08 19:43:37Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -113,6 +113,7 @@ default_pager_dealloc(object)
 	/*
 	 * OBJT_DEFAULT objects have no special resources allocated to them.
 	 */
+	object->type = OBJT_DEAD;
 }
 
 /*

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_pcibus.c 272181 2014-09-26 15:16:53Z ian $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_pcibus.c 282972 2015-05-15 13:55:18Z br $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -201,7 +201,8 @@ ofw_pcibus_enum_devtree(device_t dev, u_int domain, u_int busno)
 		 * resource list.
 		 */
 		if (dinfo->opd_dinfo.cfg.intpin == 0)
-			ofw_bus_intr_to_rl(dev, child, &dinfo->opd_dinfo.resources);
+			ofw_bus_intr_to_rl(dev, child,
+				&dinfo->opd_dinfo.resources, NULL);
 	}
 }
 

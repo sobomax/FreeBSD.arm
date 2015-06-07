@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_sizeof.c 259118 2013-12-09 05:01:38Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_sizeof.c 283835 2015-05-31 19:09:24Z rodrigc $");
 
 #include "namespace.h"
 #include <rpc/types.h>
@@ -47,9 +47,7 @@ __FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_sizeof.c 259118 2013-12-09 05:01:38Z h
 
 /* ARGSUSED */
 static bool_t
-x_putlong(xdrs, longp)
-	XDR *xdrs;
-	long *longp;
+x_putlong(XDR *xdrs, const long *longp)
 {
 	xdrs->x_handy += BYTES_PER_XDR_UNIT;
 	return (TRUE);
@@ -57,36 +55,28 @@ x_putlong(xdrs, longp)
 
 /* ARGSUSED */
 static bool_t
-x_putbytes(xdrs, bp, len)
-	XDR *xdrs;
-	char  *bp;
-	u_int len;
+x_putbytes(XDR *xdrs, const char *bp, u_int len)
 {
 	xdrs->x_handy += len;
 	return (TRUE);
 }
 
 static u_int
-x_getpostn(xdrs)
-	XDR *xdrs;
+x_getpostn(XDR *xdrs)
 {
 	return (xdrs->x_handy);
 }
 
 /* ARGSUSED */
 static bool_t
-x_setpostn(xdrs, pos)
-	XDR *xdrs;
-	u_int pos;
+x_setpostn(XDR *xdrs, u_int pos)
 {
 	/* This is not allowed */
 	return (FALSE);
 }
 
 static int32_t *
-x_inline(xdrs, len)
-	XDR *xdrs;
-	u_int len;
+x_inline(XDR *xdrs, u_int len)
 {
 	if (len == 0) {
 		return (NULL);
@@ -113,15 +103,14 @@ x_inline(xdrs, len)
 }
 
 static int
-harmless()
+harmless(void)
 {
 	/* Always return FALSE/NULL, as the case may be */
 	return (0);
 }
 
 static void
-x_destroy(xdrs)
-	XDR *xdrs;
+x_destroy(XDR *xdrs)
 {
 	xdrs->x_handy = 0;
 	xdrs->x_base = 0;
@@ -133,9 +122,7 @@ x_destroy(xdrs)
 }
 
 unsigned long
-xdr_sizeof(func, data)
-	xdrproc_t func;
-	void *data;
+xdr_sizeof(xdrproc_t func, void *data)
 {
 	XDR x;
 	struct xdr_ops ops;

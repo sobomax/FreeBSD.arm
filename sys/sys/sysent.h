@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sysent.h 273953 2014-11-01 22:36:40Z mjg $
+ * $FreeBSD: head/sys/sys/sysent.h 283382 2015-05-24 14:51:29Z dchagin $
  */
 
 #ifndef _SYS_SYSENT_H_
@@ -136,6 +136,7 @@ struct sysentvec {
 	uint32_t	sv_timekeep_gen;
 	void		*sv_shared_page_obj;
 	void		(*sv_schedtail)(struct thread *);
+	void		(*sv_thread_detach)(struct thread *);
 };
 
 #define	SV_ILP32	0x000100

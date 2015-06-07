@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)hash.c	8.9 (Berkeley) 6/16/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash.c 254222 2013-08-11 15:38:48Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash.c 283068 2015-05-18 16:28:13Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -808,7 +808,7 @@ __expand_table(HTAB *hashp)
 			hashp->DSIZE = dirsize << 1;
 		}
 		if ((hashp->dir[new_segnum] =
-		    (SEGMENT)calloc(hashp->SGSIZE, sizeof(SEGMENT))) == NULL)
+		    calloc(hashp->SGSIZE, sizeof(SEGMENT))) == NULL)
 			return (-1);
 		hashp->exsegs++;
 		hashp->nsegs++;
@@ -877,7 +877,7 @@ alloc_segs(HTAB *hashp, int nsegs)
 	int save_errno;
 
 	if ((hashp->dir =
-	    (SEGMENT *)calloc(hashp->DSIZE, sizeof(SEGMENT *))) == NULL) {
+	    calloc(hashp->DSIZE, sizeof(SEGMENT *))) == NULL) {
 		save_errno = errno;
 		(void)hdestroy(hashp);
 		errno = save_errno;
@@ -887,8 +887,7 @@ alloc_segs(HTAB *hashp, int nsegs)
 	if (nsegs == 0)
 		return (0);
 	/* Allocate segments */
-	if ((store = (SEGMENT)calloc(nsegs << hashp->SSHIFT,
-	    sizeof(SEGMENT))) == NULL) {
+	if ((store = calloc(nsegs << hashp->SSHIFT, sizeof(SEGMENT))) == NULL) {
 		save_errno = errno;
 		(void)hdestroy(hashp);
 		errno = save_errno;

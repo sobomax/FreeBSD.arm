@@ -12,7 +12,7 @@
  * Portions of this software were developed by Julien Ridoux at the University
  * of Melbourne under sponsorship from the FreeBSD Foundation.
  *
- * $FreeBSD: head/sys/sys/timepps.h 279728 2015-03-07 18:23:32Z hselasky $
+ * $FreeBSD: head/sys/sys/timepps.h 282424 2015-05-04 17:59:39Z ian $
  *
  * The is a FreeBSD version of the RFC 2783 API for Pulse Per Second 
  * timing interfaces.  
@@ -135,15 +135,19 @@ struct pps_kcbind_args {
 
 struct mtx;
 
+#define	KCMODE_EDGEMASK		0x03
+#define	KCMODE_ABIFLAG		0x80000000 /* Internal use: abi-aware driver. */
+
+#define	PPS_ABI_VERSION		1
+
+#define	PPSFLAG_MTX_SPIN	0x01	/* Driver mtx is MTX_SPIN type. */
+
 struct pps_state {
 	/* Capture information. */
 	struct timehands *capth;
 	struct fftimehands *capffth;
 	unsigned	capgen;
 	unsigned	capcount;
-
-	/* pointer to mutex protecting this state, if any */
-	struct mtx	*mtx;
 
 	/* State information. */
 	pps_params_t	ppsparam;
@@ -153,11 +157,19 @@ struct pps_state {
 	int		ppscap;
 	struct timecounter *ppstc;
 	unsigned	ppscount[3];
+	/*
+	 * The following fields are valid if the driver calls pps_init_abi().
+	 */
+	uint16_t	driver_abi;	/* Driver sets before pps_init_abi(). */
+	uint16_t	kernel_abi;	/* Kernel sets during pps_init_abi(). */
+	struct mtx	*driver_mtx;	/* Optional, valid if non-NULL. */
+	uint32_t	flags;
 };
 
 void pps_capture(struct pps_state *pps);
 void pps_event(struct pps_state *pps, int event);
 void pps_init(struct pps_state *pps);
+void pps_init_abi(struct pps_state *pps);
 int pps_ioctl(unsigned long cmd, caddr_t data, struct pps_state *pps);
 void hardpps(struct timespec *tsp, long nsec);
 

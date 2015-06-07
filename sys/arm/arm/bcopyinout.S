@@ -46,7 +46,7 @@
 .L_min_memcpy_size:
 	.word	_C_LABEL(_min_memcpy_size)
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 276596 2015-01-02 23:46:26Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 283366 2015-05-24 12:20:11Z andrew $");
 #ifdef _ARM_ARCH_5E
 #include <arm/arm/bcopyinout_xscale.S>
 #else
@@ -69,7 +69,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 276596 2015-01-02 23:46:26Z ia
 
 #define SAVE_REGS	stmfd	sp!, {r4-r11}
 #define RESTORE_REGS	ldmfd	sp!, {r4-r11}
-		
+
 #if defined(_ARM_ARCH_5E)
 #define HELLOCPP #
 #define PREFETCH(rx,o)	pld	[ rx , HELLOCPP (o) ]
@@ -88,7 +88,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 276596 2015-01-02 23:46:26Z ia
  * r4-r11 are scratch
  */
 ENTRY(copyin)
-	/* Quick exit if length is zero */	
+	/* Quick exit if length is zero */
 	teq	r2, #0
 	moveq	r0, #0
 	RETeq
@@ -326,7 +326,7 @@ END(copyin)
  */
 
 ENTRY(copyout)
-	/* Quick exit if length is zero */	
+	/* Quick exit if length is zero */
 	teq	r2, #0
 	moveq	r0, #0
 	RETeq

@@ -23,18 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/xen/xenfunc.h 207673 2010-05-05 20:39:02Z joel $
+ * $FreeBSD: head/sys/amd64/include/xen/xenfunc.h 282274 2015-04-30 15:48:48Z jhb $
  */
 
 #ifndef _XEN_XENFUNC_H_
 #define _XEN_XENFUNC_H_
 
-#ifdef XENHVM
 #include <machine/xen/xenvar.h>
-#else
-#include <machine/xen/xenpmap.h>
-#include <machine/segments.h>
-#endif
 
 #define BKPT __asm__("int3");
 #define XPQ_CALL_DEPTH 5
@@ -63,10 +58,6 @@ void _xen_machphys_update(vm_paddr_t, vm_paddr_t, char *file, int line);
 #else
 #define xen_machphys_update(a, b) _xen_machphys_update((a), (b), NULL, 0)
 #endif	
-
-#ifndef XENHVM
-void xen_update_descriptor(union descriptor *, union descriptor *);
-#endif
 
 extern struct mtx balloon_lock;
 #if 0

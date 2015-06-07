@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/fiq.c 271398 2014-09-10 15:25:15Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/fiq.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,7 +59,7 @@ extern uint32_t fiq_nullhandler_size;
  * fiq_installhandler:
  *
  *	Actually install the FIQ handler down at the FIQ vector.
- *	
+ *
  *	The FIQ vector is fixed by the hardware definition as the
  *	seventh 32-bit word in the vector page.
  *

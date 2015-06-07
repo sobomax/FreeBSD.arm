@@ -1,7 +1,7 @@
 #
 # Ubiquiti Routerstation: Boot from onboard flash
 #
-# $FreeBSD: head/sys/mips/conf/ROUTERSTATION 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/ROUTERSTATION 283099 2015-05-19 06:45:56Z adrian $
 #
 
 include		"AR71XX_BASE"
@@ -12,8 +12,8 @@ hints		"ROUTERSTATION.hints"
 
 # GEOM modules
 device		geom_redboot	# to get access to the SPI flash partitions
-device		geom_uzip	# compressed in-memory filesystem support
-options 	GEOM_UZIP
+device		geom_uncompress	# compressed in-memory filesystem support
+options 	GEOM_UNCOMPRESS
 
 # For DOS
 options 	MSDOSFS
@@ -25,4 +25,4 @@ device		etherswitch
 device		ukswitch
 
 # Boot path - redboot MFS
-options 	ROOTDEVNAME=\"ufs:redboot/rootfs.uzip\"
+options 	ROOTDEVNAME=\"ufs:redboot/rootfs.uncompress\"

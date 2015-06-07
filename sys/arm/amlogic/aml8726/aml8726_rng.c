@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_rng.c 280905 2015-03-31 11:50:46Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_rng.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -115,7 +115,7 @@ aml8726_rng_attach(device_t dev)
 	else
 		sc->ticks = 1;
 
-	callout_init(&sc->co, CALLOUT_MPSAFE);
+	callout_init(&sc->co, 1);
 	callout_reset(&sc->co, sc->ticks, aml8726_rng_harvest, sc);
 
 	return (0);

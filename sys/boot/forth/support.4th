@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: head/sys/boot/forth/support.4th 280937 2015-04-01 01:54:28Z dteske $
+\ $FreeBSD: head/sys/boot/forth/support.4th 283933 2015-06-02 22:23:20Z dteske $
 
 \ Loader.rc support functions:
 \
@@ -1437,12 +1437,12 @@ also builtins
   abort" Unable to load a kernel!"
 ;
 
-: load_xen ( -- )
+: load_xen ( -- flag )
   s" xen_kernel" getenv dup -1 <> if
-    1 1 load
+    1 1 load ( c-addr/u flag N -- flag )
   else
     drop
-    0
+    0 ( -1 -- flag )
   then
 ;
 

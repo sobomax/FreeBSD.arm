@@ -42,7 +42,7 @@
 #define _CTL_C
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl.c 280463 2015-03-24 21:42:28Z ken $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl.c 284044 2015-06-05 20:30:36Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -5011,9 +5011,9 @@ ctl_disable_lun(struct ctl_be_lun *be_lun)
 					 lun->lun);
 		mtx_lock(&softc->ctl_lock);
 		if (retval != 0) {
-			printf("ctl_alloc_lun: FETD %s port %d returned error "
+			printf("%s: FETD %s port %d returned error "
 			       "%d for lun_disable on target %ju lun %jd\n",
-			       port->port_name, port->targ_port, retval,
+			       __func__, port->port_name, port->targ_port, retval,
 			       (uintmax_t)lun->target.id, (intmax_t)lun->lun);
 		}
 	}

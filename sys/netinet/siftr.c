@@ -59,7 +59,7 @@
  ******************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/siftr.c 280441 2015-03-24 15:08:43Z lstewart $");
+__FBSDID("$FreeBSD: head/sys/netinet/siftr.c 282276 2015-04-30 17:43:40Z gnn $");
 
 #include <sys/param.h>
 #include <sys/alq.h>
@@ -75,6 +75,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/siftr.c 280441 2015-03-24 15:08:43Z lstewar
 #include <sys/pcpu.h>
 #include <sys/proc.h>
 #include <sys/sbuf.h>
+#include <sys/sdt.h>
 #include <sys/smp.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
@@ -86,6 +87,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/siftr.c 280441 2015-03-24 15:08:43Z lstewar
 #include <net/pfil.h>
 
 #include <netinet/in.h>
+#include <netinet/in_kdtrace.h>
 #include <netinet/in_pcb.h>
 #include <netinet/in_systm.h>
 #include <netinet/in_var.h>
@@ -811,6 +813,8 @@ siftr_siftdata(struct pkt_node *pn, struct inpcb *inp, struct tcpcb *tp,
 	 * maximum pps throughput processing when SIFTR is loaded and enabled.
 	 */
 	microtime(&pn->tval);
+	TCP_PROBE1(siftr, &pn);
+
 }
 
 

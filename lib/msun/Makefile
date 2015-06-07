@@ -1,5 +1,5 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: head/lib/msun/Makefile 274618 2014-11-17 09:19:09Z ngie $
+# $FreeBSD: head/lib/msun/Makefile 282057 2015-04-27 06:49:27Z ngie $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -221,6 +221,8 @@ MLINKS+=trunc.3 truncf.3 trunc.3 truncl.3
 
 .include <src.opts.mk>
 
-.include <bsd.arch.inc.mk>
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>

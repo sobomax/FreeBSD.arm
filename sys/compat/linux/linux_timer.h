@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/linux_timer.h 271743 2014-09-18 08:36:45Z bz $
+ * $FreeBSD: head/sys/compat/linux/linux_timer.h 283464 2015-05-24 17:30:31Z dchagin $
  */
 
 #ifndef	_LINUX_TIMER_H
@@ -55,6 +55,23 @@
 #define	LINUX_CLOCK_BOOTTIME_ALARM		9
 #define	LINUX_CLOCK_SGI_CYCLE			10
 #define	LINUX_CLOCK_TAI				11
+
+#define	LINUX_CPUCLOCK_PERTHREAD_MASK		4
+#define	LINUX_CPUCLOCK_MASK			3
+#define	LINUX_CPUCLOCK_WHICH(clock)		\
+	((clock) & (clockid_t) LINUX_CPUCLOCK_MASK)
+#define	LINUX_CPUCLOCK_PROF			0
+#define	LINUX_CPUCLOCK_VIRT			1
+#define	LINUX_CPUCLOCK_SCHED			2
+#define	LINUX_CPUCLOCK_MAX			3
+#define	LINUX_CLOCKFD				LINUX_CPUCLOCK_MAX
+#define	LINUX_CLOCKFD_MASK			\
+	(LINUX_CPUCLOCK_PERTHREAD_MASK|LINUX_CPUCLOCK_MASK)
+
+#define	LINUX_CPUCLOCK_ID(clock)		((pid_t) ~((clock) >> 3))
+#define	LINUX_CPUCLOCK_PERTHREAD(clock)		\
+	(((clock) & (clockid_t) LINUX_CPUCLOCK_PERTHREAD_MASK) != 0)
+
 
 #define	L_SIGEV_SIGNAL				0
 #define	L_SIGEV_NONE				1
@@ -93,5 +110,11 @@ struct l_itimerspec {
 	struct l_timespec it_interval;
 	struct l_timespec it_value;
 };
+
+void native_to_linux_timespec(struct l_timespec *,
+				     struct timespec *);
+int linux_to_native_timespec(struct timespec *,
+				     struct l_timespec *);
+int linux_to_native_clockid(clockid_t *, clockid_t);
 
 #endif	/* _LINUX_TIMER_H */

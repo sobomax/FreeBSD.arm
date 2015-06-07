@@ -1,7 +1,7 @@
 /*
  * Holiday
  *
- * $FreeBSD: head/usr.bin/calendar/calendars/calendar.holiday 268292 2014-07-05 19:02:53Z gavin $
+ * $FreeBSD: head/usr.bin/calendar/calendars/calendar.holiday 282099 2015-04-27 17:04:27Z rene $
  */
 
 #ifndef _calendar_holiday_
@@ -144,8 +144,8 @@
 04/26	Confederate Memorial Day in Florida & Georgia
 04/26	Union Day in Tanzania
 04/27	Independence Day in Togo
+04/27	King's Birthday in the Netherlands, the Netherlands Antilles
 04/29	Showa Day in Japan
-04/30	Queen's Birthday in the Netherlands, the Netherlands Antilles
 04/30	The Workers Day in Uruguay
 04/MonLast	Arbor Day in Wyoming (last Monday)
 04/MonLast	Confederate Memorial Day in Alabama & Mississippi (last Monday)

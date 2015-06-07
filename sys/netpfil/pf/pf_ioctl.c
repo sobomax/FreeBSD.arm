@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_ioctl.c 281613 2015-04-16 20:22:40Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_ioctl.c 283106 2015-05-19 14:02:40Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -3756,6 +3756,7 @@ pf_unload(void)
 		wakeup_one(pf_purge_thread);
 		rw_sleep(pf_purge_thread, &pf_rules_lock, 0, "pftmo", 0);
 	}
+	PF_RULES_WUNLOCK();
 	pf_normalize_cleanup();
 	pfi_cleanup();
 	pfr_cleanup();
@@ -3763,7 +3764,6 @@ pf_unload(void)
 	pf_cleanup();
 	if (IS_DEFAULT_VNET(curvnet))
 		pf_mtag_cleanup();
-	PF_RULES_WUNLOCK();
 	destroy_dev(pf_dev);
 	rw_destroy(&pf_rules_lock);
 	sx_destroy(&pf_ioctl_lock);

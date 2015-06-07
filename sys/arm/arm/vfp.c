@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/vfp.c 276518 2015-01-01 23:15:52Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/vfp.c 284109 2015-06-07 10:50:15Z andrew $");
 
 #ifdef VFP
 #include <sys/param.h>
@@ -107,7 +107,7 @@ vfp_init(void)
 	coproc = get_coprocessorACR();
 	coproc |= COPROC10 | COPROC11;
 	set_coprocessorACR(coproc);
-	
+
 	fpsid = fmrx(fpsid);		/* read the vfp system id */
 	fpexc = fmrx(fpexc);		/* read the vfp exception reg */
 
@@ -199,7 +199,7 @@ vfp_bounce(u_int addr, u_int insn, struct trapframe *frame, int code)
 	 */
 	fmxr(fpexc, fpexc | VFPEXC_EN);
 	curpcb = curthread->td_pcb;
-	cpu = PCPU_GET(cpu);
+	cpu = PCPU_GET(cpuid);
 	if (curpcb->pcb_vfpcpu != cpu || curthread != PCPU_GET(fpcurthread)) {
 		vfp_restore(&curpcb->pcb_vfpstate);
 		curpcb->pcb_vfpcpu = cpu;

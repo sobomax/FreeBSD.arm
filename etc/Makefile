@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.11 (Berkeley) 5/21/91
-# $FreeBSD: head/etc/Makefile 281141 2015-04-06 08:37:40Z andrew $
+# $FreeBSD: head/etc/Makefile 283989 2015-06-04 15:02:05Z gjb $
 
 .include <src.opts.mk>
 
@@ -8,10 +8,6 @@ SUBDIR=	\
 
 .if ${MK_SENDMAIL} != "no"
 SUBDIR+=sendmail
-.endif
-
-.if ${MK_TESTS} != "no"
-SUBDIR+=tests
 .endif
 
 BIN1=	crontab \
@@ -53,10 +49,6 @@ BIN1=	crontab \
 	sysctl.conf \
 	syslog.conf \
 	termcap.small
-
-.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "powerpc64"
-BIN1+=	libmap32.conf
-.endif
 
 .if exists(${.CURDIR}/etc.${MACHINE}/ttys)
 BIN1+=	etc.${MACHINE}/ttys
@@ -196,13 +188,10 @@ distribute:
 .include <bsd.endian.mk>
 .if ${TARGET_ENDIANNESS} == "1234"
 CAP_MKDB_ENDIAN?= -l
-PWD_MKDB_ENDIAN?= -L
 .elif ${TARGET_ENDIANNESS} == "4321"
 CAP_MKDB_ENDIAN?= -b
-PWD_MKDB_ENDIAN?= -B
 .else
 CAP_MKDB_ENDIAN?=
-PWD_MKDB_ENDIAN?=
 .endif
 
 .if defined(NO_ROOT)
@@ -218,6 +207,8 @@ distribution:
 	    ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
 		${BIN1} ${DESTDIR}/etc; \
 	    cap_mkdb ${CAP_MKDB_ENDIAN} ${DESTDIR}/etc/login.conf; \
+	    services_mkdb ${CAP_MKDB_ENDIAN} -q -o ${DESTDIR}/var/db/services.db \
+		${DESTDIR}/etc/services; \
 	    ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 755 \
 		${BIN2} ${DESTDIR}/etc; \
 	    ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 600 \
@@ -228,8 +219,7 @@ distribution:
 .if ${MK_TCSH} == "no"
 	sed -i "" -e 's;/bin/csh;/bin/sh;' ${DESTDIR}/etc/master.passwd
 .endif
-	pwd_mkdb ${PWD_MKDB_ENDIAN} -i -p -d ${DESTDIR}/etc \
-	    ${DESTDIR}/etc/master.passwd
+	pwd_mkdb -i -p -d ${DESTDIR}/etc ${DESTDIR}/etc/master.passwd
 .if defined(NO_ROOT)
 	( \
 		echo "./etc/login.conf.db type=file mode=0644 uname=root gname=wheel"; \

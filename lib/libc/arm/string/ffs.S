@@ -30,7 +30,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/ffs.S 275256 2014-11-29 15:56:52Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/ffs.S 283831 2015-05-31 14:04:11Z andrew $");
 
 .syntax unified
 
@@ -78,6 +78,7 @@ ENTRY(ffs)
 	.byte	31,  0,  0,  0,  0, 24,  0, 20  /* 48-55 */
 	.byte   30,  0, 23, 19, 29, 18, 17,  0  /* 56-63 */
 #else
+	itt	ne
 	clzne	r0, r0
 	rsbne	r0, r0, #32
 	RET

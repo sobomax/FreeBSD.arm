@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/acpica/acpivar.h 281747 2015-04-19 17:15:55Z adrian $
+ * $FreeBSD: head/sys/dev/acpica/acpivar.h 282678 2015-05-09 12:28:48Z kib $
  */
 
 #ifndef _ACPIVAR_H_
@@ -467,6 +467,8 @@ int		acpi_PkgInt32(ACPI_OBJECT *res, int idx, uint32_t *dst);
 int		acpi_PkgStr(ACPI_OBJECT *res, int idx, void *dst, size_t size);
 int		acpi_PkgGas(device_t dev, ACPI_OBJECT *res, int idx, int *type,
 		    int *rid, struct resource **dst, u_int flags);
+int		acpi_PkgFFH_IntelCpu(ACPI_OBJECT *res, int idx, int *vendor,
+		    int *class, uint64_t *address, int *accsize);
 ACPI_HANDLE	acpi_GetReference(ACPI_HANDLE scope, ACPI_OBJECT *obj);
 
 /*

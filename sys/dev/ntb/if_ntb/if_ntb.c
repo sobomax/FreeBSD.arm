@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 255281 2013-09-05 23:14:27Z carl $");
+__FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -555,8 +555,8 @@ ntb_transport_init_queue(struct ntb_netdev *nt, unsigned int qp_num)
 	qp->tx_index = 0;
 
 	callout_init(&qp->link_work, 0);
-	callout_init(&qp->queue_full, CALLOUT_MPSAFE);
-	callout_init(&qp->rx_full, CALLOUT_MPSAFE);
+	callout_init(&qp->queue_full, 1);
+	callout_init(&qp->rx_full, 1);
 
 	mtx_init(&qp->ntb_rx_pend_q_lock, "ntb rx pend q", NULL, MTX_SPIN);
 	mtx_init(&qp->ntb_rx_free_q_lock, "ntb rx free q", NULL, MTX_SPIN);

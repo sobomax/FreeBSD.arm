@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hyperv/utilities/hv_kvp.c 271493 2014-09-13 02:15:31Z delphij $");
+__FBSDID("$FreeBSD: head/sys/dev/hyperv/utilities/hv_kvp.c 282212 2015-04-29 10:12:34Z whu $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -55,6 +55,7 @@ __FBSDID("$FreeBSD: head/sys/dev/hyperv/utilities/hv_kvp.c 271493 2014-09-13 02:
 #include <sys/_null.h>
 #include <sys/signal.h>
 #include <sys/syslog.h>
+#include <sys/systm.h>
 #include <sys/mutex.h>
 #include <net/if_arp.h>
 
@@ -232,7 +233,7 @@ hv_kvp_negotiate_version(struct hv_vmbus_icmsg_hdr *icmsghdrp,
 	 */
 	if ((icframe_vercnt >= 2) && (negop->icversion_data[1].major == 3)) {
 		icframe_vercnt = 3;
-		if (icmsg_vercnt >= 2)
+		if (icmsg_vercnt > 2)
 			icmsg_vercnt = 4;
 		else
 			icmsg_vercnt = 3;
@@ -734,8 +735,8 @@ hv_kvp_process_request(void *context)
 		recvlen = 0;
 		ret = hv_vmbus_channel_recv_packet(channel, kvp_buf, 2 * PAGE_SIZE,
 			&recvlen, &requestid);
-		hv_kvp_log_info("%s: read: context %p, pending_cnt %ju ret =%d, recvlen=%d\n",
-			__func__, context, pending_cnt, ret, recvlen);
+		hv_kvp_log_info("%s: read: context %p, pending_cnt %llu ret =%d, recvlen=%d\n",
+			__func__, context, (unsigned long long)pending_cnt, ret, recvlen);
 	} 
 }
 
@@ -813,9 +814,9 @@ static void
 hv_kvp_dev_destroy(void)
 {
 
-        if (daemon_task != NULL) {
+	if (daemon_task != NULL) {
 		PROC_LOCK(daemon_task);
-        	kern_psignal(daemon_task, SIGKILL);
+		kern_psignal(daemon_task, SIGKILL);
 		PROC_UNLOCK(daemon_task);
 	}
 	

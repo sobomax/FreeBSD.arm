@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/Makefile 280729 2015-03-27 02:35:33Z imp $
+# $FreeBSD: head/sys/modules/Makefile 284087 2015-06-06 17:08:06Z imp $
 
 SYSDIR?=${.CURDIR}/..
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -196,6 +196,8 @@ SUBDIR=	\
 	${_linprocfs} \
 	${_linsysfs} \
 	${_linux} \
+	${_linux_common} \
+	${_linux64} \
 	${_linuxapi} \
 	lmc \
 	lpt \
@@ -456,6 +458,7 @@ _txp=		txp
 .endif
 
 .if ${MK_SOURCELESS_UCODE} != "no" && ${MACHINE_CPUARCH} != "arm" && \
+	${MACHINE_ARCH:C/mips(el)?/mips/} != "mips" && \
 	${MACHINE_ARCH} != "powerpc"
 _cxgbe=		cxgbe
 .endif
@@ -509,7 +512,6 @@ _io=		io
 .if ${MK_OFED} != "no" || defined(ALL_MODULES)
 _ipoib=         ipoib
 .endif
-_ix=		ix
 _ixv=		ixv
 _linprocfs=	linprocfs
 _linsysfs=	linsysfs
@@ -618,6 +620,8 @@ _x86bios=	x86bios
 .if ${MACHINE_CPUARCH} == "amd64"
 _ixl=		ixl
 _ixlv=		ixlv
+_linux64=	linux64
+_linux_common=	linux_common
 _ntb=		ntb
 _qlxge=		qlxge
 _qlxgb=		qlxgb

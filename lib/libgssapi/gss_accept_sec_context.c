@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libgssapi/gss_accept_sec_context.c 178828 2008-05-07 13:53:12Z dfr $
+ *	$FreeBSD: head/lib/libgssapi/gss_accept_sec_context.c 283906 2015-06-02 09:03:15Z araujo $
  */
 
 #include <gssapi/gssapi.h>
@@ -165,7 +165,6 @@ OM_uint32 gss_accept_sec_context(OM_uint32 *minor_status,
 	struct _gss_mechanism_cred *mc;
 	gss_cred_id_t acceptor_mc, delegated_mc;
 	gss_name_t src_mn;
-	int allocated_ctx;
 
 	*minor_status = 0;
 	if (src_name)
@@ -206,11 +205,8 @@ OM_uint32 gss_accept_sec_context(OM_uint32 *minor_status,
 			free(ctx);
 			return (GSS_S_BAD_MECH);
 		}
-		allocated_ctx = 1;
-	} else {
+	} else
 		m = ctx->gc_mech;
-		allocated_ctx = 0;
-	}
 
 	if (cred) {
 		SLIST_FOREACH(mc, &cred->gc_mc, gmc_link)

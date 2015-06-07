@@ -1,4 +1,4 @@
-#$FreeBSD: head/sys/modules/ixlv/Makefile 277084 2015-01-12 18:43:34Z jfv $
+#$FreeBSD: head/sys/modules/ixlv/Makefile 284049 2015-06-05 22:52:42Z jfv $
 
 .PATH:  ${.CURDIR}/../../dev/ixl
 
@@ -8,7 +8,7 @@ SRCS    += opt_inet.h opt_inet6.h opt_rss.h
 SRCS    += if_ixlv.c ixlvc.c ixl_txrx.c i40e_osdep.c
 
 # Shared source
-SRCS    += i40e_common.c i40e_nvm.c i40e_adminq.c i40e_lan_hmc.c i40e_hmc.c
+SRCS    += i40e_common.c i40e_nvm.c i40e_adminq.c
 
 CFLAGS	+= -DSMP
 

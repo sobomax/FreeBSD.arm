@@ -27,7 +27,7 @@
 /*
  * The API to write a packet scheduling algorithm for dummynet.
  *
- * $FreeBSD: head/sys/netpfil/ipfw/dn_sched.h 258467 2013-11-22 05:02:37Z luigi $
+ * $FreeBSD: head/sys/netpfil/ipfw/dn_sched.h 283111 2015-05-19 14:49:31Z luigi $
  */
 
 #ifndef _DN_SCHED_H
@@ -188,5 +188,5 @@ int dn_sched_modevent(module_t mod, int cmd, void *arg);
 	};							\
 	DECLARE_MODULE(name, name##_mod, 			\
 		SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_ANY); 	\
-        MODULE_DEPEND(name, dummynet, 3, 3, 3);
+        MODULE_DEPEND(name, dummynet, 3, 3, 3)
 #endif /* _DN_SCHED_H */

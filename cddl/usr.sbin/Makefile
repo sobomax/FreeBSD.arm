@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/Makefile 278529 2015-02-10 19:41:30Z gnn $
+# $FreeBSD: head/cddl/usr.sbin/Makefile 283147 2015-05-20 12:26:09Z ngie $
 
 .include <src.opts.mk>
 
@@ -45,5 +45,7 @@ _dtrace=	dtrace
 _dtruss=	dtruss
 _lockstat=	lockstat
 .endif
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/virtio.c 280725 2015-03-27 01:58:44Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/virtio.c 282784 2015-05-11 21:24:10Z grehan $");
 
 #include <sys/param.h>
 #include <sys/uio.h>
@@ -316,7 +316,7 @@ vq_getchain(struct vqueue_info *vq, uint16_t *pidx,
 		if ((vdir->vd_flags & VRING_DESC_F_INDIRECT) == 0) {
 			_vq_record(i, vdir, ctx, iov, n_iov, flags);
 			i++;
-		} else if ((vs->vs_negotiated_caps &
+		} else if ((vs->vs_vc->vc_hv_caps &
 		    VIRTIO_RING_F_INDIRECT_DESC) == 0) {
 			fprintf(stderr,
 			    "%s: descriptor has forbidden INDIRECT flag, "

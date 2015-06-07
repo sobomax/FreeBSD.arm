@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sched_4bsd.c 270423 2014-08-23 17:31:56Z mav $");
+__FBSDID("$FreeBSD: head/sys/kern/sched_4bsd.c 282213 2015-04-29 10:23:02Z trasz $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_sched.h"
@@ -1585,7 +1585,7 @@ sched_pctcpu(struct thread *td)
 	return (ts->ts_pctcpu);
 }
 
-#ifdef	RACCT
+#ifdef RACCT
 /*
  * Calculates the contribution to the thread cpu usage for the latest
  * (unfinished) second.

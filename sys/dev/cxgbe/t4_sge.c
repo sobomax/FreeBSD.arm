@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_sge.c 280706 2015-03-26 18:45:51Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_sge.c 283858 2015-06-01 00:55:15Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -2665,7 +2665,7 @@ alloc_iq_fl(struct port_info *pi, struct sge_iq *iq, struct sge_fl *fl,
 				    F_FW_IQ_CMD_FL0CONGEN);
 		}
 		c.fl0dcaen_to_fl0cidxfthresh =
-		    htobe16(V_FW_IQ_CMD_FL0FBMIN(X_FETCHBURSTMIN_64B) |
+		    htobe16(V_FW_IQ_CMD_FL0FBMIN(X_FETCHBURSTMIN_128B) |
 			V_FW_IQ_CMD_FL0FBMAX(X_FETCHBURSTMAX_512B));
 		c.fl0size = htobe16(fl->qsize);
 		c.fl0addr = htobe64(fl->ba);

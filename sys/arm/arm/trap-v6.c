@@ -30,7 +30,7 @@
 #include "opt_ktrace.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 281647 2015-04-17 09:14:58Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 283947 2015-06-03 14:07:50Z ian $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -67,6 +67,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 281647 2015-04-17 09:14:58Z andre
 #endif
 
 extern char fusubailout[];
+extern char cachebailout[];
 
 #ifdef DEBUG
 int last_fault_code;	/* For the benefit of pmap_fault_fixup() */
@@ -133,7 +134,7 @@ static const struct abort aborts[] = {
 	{abort_align,	"Alignment Fault"},
 	{abort_fatal,	"Debug Event"},
 	{NULL,		"Access Bit (L1)"},
-	{abort_icache,	"Instruction cache maintenance"},
+	{NULL,		"Instruction cache maintenance"},
 	{NULL,		"Translation Fault (L1)"},
 	{NULL,		"Access Bit (L2)"},
 	{NULL,		"Translation Fault (L2)"},
@@ -401,6 +402,24 @@ abort_handler(struct trapframe *tf, int prefetch)
 	/* Invoke the appropriate handler, if necessary. */
 	if (__predict_false(aborts[idx].func != NULL)) {
 		if ((aborts[idx].func)(tf, idx, fsr, far, prefetch, td, &ksig))
+			goto do_trapsignal;
+		goto out;
+	}
+
+	/*
+	 * Don't pass faulting cache operation to vm_fault(). We don't want
+	 * to handle all vm stuff at this moment.
+	 */
+	pcb = td->td_pcb;
+	if (__predict_false(pcb->pcb_onfault == cachebailout)) {
+		tf->tf_r0 = far;		/* return failing address */
+		tf->tf_pc = (register_t)pcb->pcb_onfault;
+		return;
+	}
+
+	/* Handle remaining I cache aborts. */
+	if (idx == FAULT_ICACHE) {
+		if (abort_icache(tf, idx, fsr, far, prefetch, td, &ksig))
 			goto do_trapsignal;
 		goto out;
 	}

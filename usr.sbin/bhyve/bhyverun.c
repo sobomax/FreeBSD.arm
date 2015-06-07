@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/bhyverun.c 281611 2015-04-16 20:11:49Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/bhyverun.c 283657 2015-05-28 17:37:01Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 281611 2015-04-16 20:11:49Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 283657 2015-05-28 17:37:01Z neel $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -100,7 +100,7 @@ static struct vm_exit vmexit[VM_MAXCPU];
 
 struct bhyvestats {
         uint64_t        vmexit_bogus;
-        uint64_t        vmexit_bogus_switch;
+	uint64_t	vmexit_reqidle;
         uint64_t        vmexit_hlt;
         uint64_t        vmexit_pause;
         uint64_t        vmexit_mtrap;
@@ -461,6 +461,17 @@ vmexit_bogus(struct vmctx *ctx, struct vm_exit *vmexit, int *pvcpu)
 }
 
 static int
+vmexit_reqidle(struct vmctx *ctx, struct vm_exit *vmexit, int *pvcpu)
+{
+
+	assert(vmexit->inst_length == 0);
+
+	stats.vmexit_reqidle++;
+
+	return (VMEXIT_CONTINUE);
+}
+
+static int
 vmexit_hlt(struct vmctx *ctx, struct vm_exit *vmexit, int *pvcpu)
 {
 
@@ -571,6 +582,7 @@ static vmexit_handler_t handler[VM_EXITCODE_MAX] = {
 	[VM_EXITCODE_VMX]    = vmexit_vmx,
 	[VM_EXITCODE_SVM]    = vmexit_svm,
 	[VM_EXITCODE_BOGUS]  = vmexit_bogus,
+	[VM_EXITCODE_REQIDLE] = vmexit_reqidle,
 	[VM_EXITCODE_RDMSR]  = vmexit_rdmsr,
 	[VM_EXITCODE_WRMSR]  = vmexit_wrmsr,
 	[VM_EXITCODE_MTRAP]  = vmexit_mtrap,

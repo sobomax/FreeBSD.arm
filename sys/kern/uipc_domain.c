@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_domain.c 275329 2014-11-30 13:24:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_domain.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -248,8 +248,8 @@ domaininit(void *dummy)
 	if (max_linkhdr < 16)		/* XXX */
 		max_linkhdr = 16;
 
-	callout_init(&pffast_callout, CALLOUT_MPSAFE);
-	callout_init(&pfslow_callout, CALLOUT_MPSAFE);
+	callout_init(&pffast_callout, 1);
+	callout_init(&pfslow_callout, 1);
 
 	mtx_lock(&dom_mtx);
 	KASSERT(domain_init_status == 0, ("domaininit called too late!"));

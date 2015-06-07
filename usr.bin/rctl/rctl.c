@@ -26,14 +26,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/rctl/rctl.c 220166 2011-03-30 18:27:52Z trasz $
+ * $FreeBSD: head/usr.bin/rctl/rctl.c 282238 2015-04-29 17:01:28Z trasz $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rctl/rctl.c 220166 2011-03-30 18:27:52Z trasz $");
+__FBSDID("$FreeBSD: head/usr.bin/rctl/rctl.c 282238 2015-04-29 17:01:28Z trasz $");
 
 #include <sys/types.h>
 #include <sys/rctl.h>
+#include <sys/sysctl.h>
 #include <assert.h>
 #include <ctype.h>
 #include <err.h>
@@ -305,13 +306,37 @@ print_rules(char *rules, int hflag, int nflag)
 }
 
 static void
+enosys(void)
+{
+	int error, racct_enable;
+	size_t racct_enable_len;
+
+	racct_enable_len = sizeof(racct_enable);
+	error = sysctlbyname("kern.racct.enable",
+	    &racct_enable, &racct_enable_len, NULL, 0);
+
+	if (error != 0) {
+		if (errno == ENOENT)
+			errx(1, "RACCT/RCTL support not present in kernel; see rctl(8) for details");
+
+		err(1, "sysctlbyname");
+	}
+
+	if (racct_enable == 0)
+		errx(1, "RACCT/RCTL present, but disabled; enable using kern.racct.enable=1 tunable");
+}
+
+static void
 add_rule(char *rule)
 {
 	int error;
 
 	error = rctl_add_rule(rule, strlen(rule) + 1, NULL, 0);
-	if (error != 0)
+	if (error != 0) {
+		if (errno == ENOSYS)
+			enosys();
 		err(1, "rctl_add_rule");
+	}
 	free(rule);
 }
 
@@ -330,8 +355,11 @@ show_limits(char *filter, int hflag, int nflag)
 
 		error = rctl_get_limits(filter, strlen(filter) + 1, outbuf,
 		    outbuflen);
-		if (error && errno != ERANGE)
+		if (error && errno != ERANGE) {
+			if (errno == ENOSYS)
+				enosys();
 			err(1, "rctl_get_limits");
+		}
 	} while (error && errno == ERANGE);
 
 	print_rules(outbuf, hflag, nflag);
@@ -345,8 +373,11 @@ remove_rule(char *filter)
 	int error;
 
 	error = rctl_remove_rule(filter, strlen(filter) + 1, NULL, 0);
-	if (error != 0)
+	if (error != 0) {
+		if (errno == ENOSYS)
+			enosys();
 		err(1, "rctl_remove_rule");
+	}
 	free(filter);
 }
 
@@ -399,8 +430,11 @@ show_usage(char *filter, int hflag)
 
 		error = rctl_get_racct(filter, strlen(filter) + 1, outbuf,
 		    outbuflen);
-		if (error && errno != ERANGE)
+		if (error && errno != ERANGE) {
+			if (errno == ENOSYS)
+				enosys();
 			err(1, "rctl_get_racct");
+		}
 	} while (error && errno == ERANGE);
 
 	while ((tmp = strsep(&outbuf, ",")) != NULL) {
@@ -439,8 +473,11 @@ show_rules(char *filter, int hflag, int nflag)
 			err(1, "realloc");
 
 		error = rctl_get_rules(filter, filterlen, outbuf, outbuflen);
-		if (error && errno != ERANGE)
+		if (error && errno != ERANGE) {
+			if (errno == ENOSYS)
+				enosys();
 			err(1, "rctl_get_rules");
+		}
 	} while (error && errno == ERANGE);
 
 	print_rules(outbuf, hflag, nflag);

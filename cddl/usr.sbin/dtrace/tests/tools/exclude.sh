@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/tools/exclude.sh 279418 2015-02-28 23:30:06Z markj $
+# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/tools/exclude.sh 283039 2015-05-17 23:09:58Z markj $
 
 # This file lists DTrace tests which are known to fail or hang/crash the
 # system. They were pulled from the legacy DTrace test infrastructure in
@@ -38,7 +38,6 @@ exclude EXFAIL common/ip/tst.ipv4localudp.ksh
 exclude EXFAIL common/mdb/tst.dtracedcmd.ksh
 exclude EXFAIL common/misc/tst.dofmax.ksh
 exclude EXFAIL common/misc/tst.include.ksh
-exclude EXFAIL common/pragma/tst.libchain.ksh
 exclude EXFAIL common/safety/tst.copyin2.d
 exclude EXFAIL common/safety/tst.msgdsize.d
 exclude EXFAIL common/safety/tst.msgsize.d

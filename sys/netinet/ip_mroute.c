@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 280971 2015-04-01 22:26:39Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"
@@ -2816,9 +2816,9 @@ vnet_mroute_init(const void *unused __unused)
 
 	MALLOC(V_nexpire, u_char *, mfchashsize, M_MRTABLE, M_WAITOK|M_ZERO);
 	bzero(V_bw_meter_timers, sizeof(V_bw_meter_timers));
-	callout_init(&V_expire_upcalls_ch, CALLOUT_MPSAFE);
-	callout_init(&V_bw_upcalls_ch, CALLOUT_MPSAFE);
-	callout_init(&V_bw_meter_ch, CALLOUT_MPSAFE);
+	callout_init(&V_expire_upcalls_ch, 1);
+	callout_init(&V_bw_upcalls_ch, 1);
+	callout_init(&V_bw_meter_ch, 1);
 }
 
 VNET_SYSINIT(vnet_mroute_init, SI_SUB_PSEUDO, SI_ORDER_ANY, vnet_mroute_init,

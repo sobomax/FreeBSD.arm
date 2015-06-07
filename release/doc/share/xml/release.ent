@@ -1,6 +1,6 @@
 <!-- -*- sgml -*-
 
-     $FreeBSD: head/release/doc/share/xml/release.ent 278262 2015-02-05 14:08:57Z gjb $
+     $FreeBSD: head/release/doc/share/xml/release.ent 282166 2015-04-28 18:10:53Z gjb $
 
      OS Release Information -->
 
@@ -70,6 +70,7 @@
 <!-- Architecture names -->
 <!ENTITY arch.amd64 "amd64">
 <!ENTITY arch.arm "arm">
+<!ENTITY arch.arm64 "aarch64">
 <!ENTITY arch.i386 "i386">
 <!ENTITY arch.mips "mips">
 <!ENTITY arch.pc98 "pc98">

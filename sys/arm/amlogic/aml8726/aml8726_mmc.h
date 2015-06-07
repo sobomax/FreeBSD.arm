@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_mmc.h 280905 2015-03-31 11:50:46Z ganbold $
+ * $FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_mmc.h 282129 2015-04-28 08:27:44Z ganbold $
  */
 
 #ifndef	_ARM_AMLOGIC_AML8726_MMC_H
@@ -46,20 +46,6 @@
 #define	AML_MMC_READ_TIMEOUT			100
 #define	AML_MMC_WRITE_TIMEOUT			500
 #define	AML_MMC_MAX_TIMEOUT			5000
-
-/*
- * Internally the timeout is implemented by counting clock cycles.
- *
- * Since the hardware implements timeouts by counting cycles
- * the minimum read / write timeout (assuming the minimum
- * conversion factor of 1 cycle per usec) is:
- *
- *   (8 bits * 512 bytes per block + 16 bits CRC) = 4112 usec
- */
-#if ((AML_MMC_READ_TIMEOUT * 1000) < 4112 ||	\
-    (AML_MMC_WRITE_TIMEOUT * 1000) < 4112)
-#error "Single block timeout is smaller than supported"
-#endif
 
 #define	AML_MMC_CMD_ARGUMENT_REG		0
 

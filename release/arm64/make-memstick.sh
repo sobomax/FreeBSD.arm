@@ -7,7 +7,7 @@
 #
 # Usage: make-memstick.sh <directory tree> <image filename>
 #
-# $FreeBSD: head/release/arm64/make-memstick.sh 281854 2015-04-22 13:52:29Z gjb $
+# $FreeBSD: head/release/arm64/make-memstick.sh 282107 2015-04-27 18:07:11Z gjb $
 #
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
@@ -36,6 +36,6 @@ if [ $? -ne 0 ]; then
 fi
 rm ${1}/etc/fstab
 
-mkimg -s gpt -p efi:=${1}/boot/boot1.efifat -p freebsd-ufs:=${2}.part -p freebsd-swap::1M -o ${2}
+mkimg -s mbr -p efi:=${1}/boot/boot1.efifat -p freebsd:=${2}.part -o ${2}
 rm ${2}.part
 

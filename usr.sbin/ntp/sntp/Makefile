@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/sntp/Makefile 280849 2015-03-30 13:30:15Z cy $
+# $FreeBSD: head/usr.sbin/ntp/sntp/Makefile 283542 2015-05-25 20:27:46Z bapt $
 
 .include <src.opts.mk>
 
@@ -23,7 +23,9 @@ CFLAGS+= -I${.CURDIR}/../../../contrib/ntp/include \
 LIBADD=	m opts ntp ntpevent pthread
 
 .if ${MK_OPENSSL} != "no"
-LIBADD+=	md ssl crypto
+LIBADD+=	crypto
+.else
+LIBADD+=	md
 .endif
 
 .include <bsd.prog.mk>

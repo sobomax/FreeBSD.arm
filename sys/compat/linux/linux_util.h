@@ -28,7 +28,7 @@
  *
  * from: svr4_util.h,v 1.5 1994/11/18 02:54:31 christos Exp
  * from: linux_util.h,v 1.2 1995/03/05 23:23:50 fvdl Exp
- * $FreeBSD: head/sys/compat/linux/linux_util.h 235063 2012-05-05 19:42:38Z netchild $
+ * $FreeBSD: head/sys/compat/linux/linux_util.h 283447 2015-05-24 16:52:45Z dchagin $
  */
 
 #ifndef	_LINUX_UTIL_H_
@@ -43,6 +43,11 @@
 #include <sys/syslog.h>
 #include <sys/cdefs.h>
 #include <sys/uio.h>
+
+MALLOC_DECLARE(M_LINUX);
+MALLOC_DECLARE(M_EPOLL);
+MALLOC_DECLARE(M_FUTEX);
+MALLOC_DECLARE(M_FUTEX_WP);
 
 extern const char linux_emul_path[];
 
@@ -115,7 +120,6 @@ void	linux_free_get_char_devices(char *string);
 #define	LINUX_CTRFMT(nm, fmt)	#nm"("fmt")"
 
 #define	LINUX_CTR6(f, m, p1, p2, p3, p4, p5, p6) do {			\
-	if (ldebug(f))							\
 		CTR6(KTR_LINUX, LINUX_CTRFMT(f, m),			\
 		    p1, p2, p3, p4, p5, p6);				\
 } while (0)

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_meter.c 263620 2014-03-22 10:26:09Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_meter.c 282660 2015-05-08 19:43:37Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -111,14 +111,7 @@ vmtotal(SYSCTL_HANDLER_ARGS)
 	 */
 	mtx_lock(&vm_object_list_mtx);
 	TAILQ_FOREACH(object, &vm_object_list, object_list) {
-		if (!VM_OBJECT_TRYWLOCK(object)) {
-			/*
-			 * Avoid a lock-order reversal.  Consequently,
-			 * the reported number of active pages may be
-			 * greater than the actual number.
-			 */
-			continue;
-		}
+		VM_OBJECT_WLOCK(object);
 		vm_object_clear_flag(object, OBJ_ACTIVE);
 		VM_OBJECT_WUNLOCK(object);
 	}
@@ -196,10 +189,9 @@ vmtotal(SYSCTL_HANDLER_ARGS)
 	mtx_lock(&vm_object_list_mtx);
 	TAILQ_FOREACH(object, &vm_object_list, object_list) {
 		/*
-		 * Perform unsynchronized reads on the object to avoid
-		 * a lock-order reversal.  In this case, the lack of
-		 * synchronization should not impair the accuracy of
-		 * the reported statistics. 
+		 * Perform unsynchronized reads on the object.  In
+		 * this case, the lack of synchronization should not
+		 * impair the accuracy of the reported statistics.
 		 */
 		if ((object->flags & OBJ_FICTITIOUS) != 0) {
 			/*

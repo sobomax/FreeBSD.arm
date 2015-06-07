@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_dev.c 277136 2015-01-13 16:37:43Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_dev.c 284011 2015-06-05 06:06:07Z hselasky $ */
 /*-
  * Copyright (c) 2006-2008 Hans Petter Selasky. All rights reserved.
  *
@@ -830,7 +830,8 @@ usb_fifo_close(struct usb_fifo *f, int fflags)
 			    (!f->flag_iserror)) {
 				/* wait until all data has been written */
 				f->flag_sleeping = 1;
-				err = cv_wait_sig(&f->cv_io, f->priv_mtx);
+				err = cv_timedwait_sig(&f->cv_io, f->priv_mtx,
+				    USB_MS_TO_TICKS(USB_DEFAULT_TIMEOUT));
 				if (err) {
 					DPRINTF("signal received\n");
 					break;

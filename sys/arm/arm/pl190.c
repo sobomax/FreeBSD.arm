@@ -26,7 +26,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/pl190.c 269605 2014-08-05 18:51:51Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/pl190.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -121,7 +121,7 @@ pl190_intc_attach(device_t dev)
 
 	id = 0;
 	for (i = 3; i >= 0; i--) {
-		id = (id << 8) | 
+		id = (id << 8) |
 		     (intc_vic_read_4(VICPERIPHID + i*4) & 0xff);
 	}
 
@@ -129,7 +129,7 @@ pl190_intc_attach(device_t dev)
 
 	id = 0;
 	for (i = 3; i >= 0; i--) {
-		id = (id << 8) | 
+		id = (id << 8) |
 		     (intc_vic_read_4(VICPRIMECELLID + i*4) & 0xff);
 	}
 
@@ -152,7 +152,7 @@ static driver_t pl190_intc_driver = {
 
 static devclass_t pl190_intc_devclass;
 
-EARLY_DRIVER_MODULE(intc, simplebus, pl190_intc_driver, pl190_intc_devclass, 
+EARLY_DRIVER_MODULE(intc, simplebus, pl190_intc_driver, pl190_intc_devclass,
     0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_MIDDLE);
 
 int
@@ -164,7 +164,7 @@ arm_get_next_irq(int last_irq)
 	/* Sanity check */
 	if (irq < 0)
 		irq = 0;
-	
+
 	pending = intc_vic_read_4(VICIRQSTATUS);
 	while (irq < VIC_NIRQS) {
 		if (pending & (1 << irq))

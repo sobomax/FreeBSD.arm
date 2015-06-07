@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nandsim_chip.c 235537 2012-05-17 10:11:18Z gber $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nandsim_chip.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -94,7 +94,7 @@ nandsim_chip_init(struct nandsim_softc* sc, uint8_t chip_num,
 		return (NULL);
 
 	mtx_init(&chip->ns_lock, "nandsim lock", NULL, MTX_DEF);
-	callout_init(&chip->ns_callout, CALLOUT_MPSAFE);
+	callout_init(&chip->ns_callout, 1);
 	STAILQ_INIT(&chip->nandsim_events);
 
 	chip->chip_num = chip_num;

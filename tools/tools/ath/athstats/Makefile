@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/ath/athstats/Makefile 275084 2014-11-25 22:37:27Z bapt $
+# $FreeBSD: head/tools/tools/ath/athstats/Makefile 283002 2015-05-16 06:18:39Z adrian $
 
 MAN=
 
@@ -8,10 +8,6 @@ MAN=
 
 PROG=	athstats
 
-# Because of a clang preprocessor parser limitation causing this
-# to not compile, use gcc for now.
-#CC=	gcc
-
 SRCS=	main.c athstats.c opt_ah.h ah_osdep.h
 
 CLEANFILES+=	opt_ah.h
@@ -20,6 +16,8 @@ CLEANFILES+=	opt_ah.h
 
 CFLAGS+=-DATH_SUPPORT_ANI
 CFLAGS+=-DATH_SUPPORT_TDMA
+
+CFLAGS+=-I${.CURDIR}/../../../../lib/libbsdstat/
 
 CFLAGS.clang+= -fbracket-depth=512
 

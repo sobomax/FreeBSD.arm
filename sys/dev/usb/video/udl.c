@@ -1,5 +1,5 @@
 /*	$OpenBSD: udl.c,v 1.81 2014/12/09 07:05:06 doug Exp $ */
-/*	$FreeBSD: head/sys/dev/usb/video/udl.c 281815 2015-04-21 06:11:47Z hselasky $ */
+/*	$FreeBSD: head/sys/dev/usb/video/udl.c 282725 2015-05-10 12:45:21Z hselasky $ */
 
 /*-
  * Copyright (c) 2015 Hans Petter Selasky <hselasky@freebsd.org>
@@ -203,12 +203,14 @@ udl_buffer_alloc(uint32_t size)
 	}
 	mtx_unlock(&udl_buffer_mtx);
 	if (buf != NULL) {
+		uint8_t *ptr = ((uint8_t *)buf) - size;
 		/* wipe and recycle buffer */
-		memset(buf, 0, size);
-		return (buf);
+		memset(ptr, 0, size);
+		/* return buffer pointer */
+		return (ptr);
 	}
 	/* allocate new buffer */
-	return (malloc(size, M_USB_DL, M_WAITOK | M_ZERO));
+	return (malloc(size + sizeof(*buf), M_USB_DL, M_WAITOK | M_ZERO));
 }
 
 static void
@@ -216,9 +218,11 @@ udl_buffer_free(void *_buf, uint32_t size)
 {
 	struct udl_buffer *buf;
 
-	buf = (struct udl_buffer *)_buf;
-	if (buf == NULL)
+	/* check for NULL pointer */
+	if (_buf == NULL)
 		return;
+	/* compute pointer to recycle list */
+	buf = (struct udl_buffer *)(((uint8_t *)_buf) + size);
 
 	/*
 	 * Memory mapped buffers should never be freed.

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/pm_machdep.c 278001 2015-01-31 21:43:46Z kib $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/pm_machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
 
 #include "opt_compat.h"
 
@@ -132,12 +132,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	} else
 		sfp = (struct sigframe *)((vm_offset_t)(regs->sp - 
 		    sizeof(struct sigframe)) & ~(sizeof(__int64_t) - 1));
-
-	/* Translate the signal if appropriate */
-	if (p->p_sysent->sv_sigtbl) {
-		if (sig <= p->p_sysent->sv_sigsize)
-			sig = p->p_sysent->sv_sigtbl[_SIG_IDX(sig)];
-	}
 
 	/* Build the argument list for the signal handler. */
 	regs->a0 = sig;

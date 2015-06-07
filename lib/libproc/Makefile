@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libproc/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libproc/Makefile 283132 2015-05-19 22:23:15Z bapt $
 
 .include <src.opts.mk>
 
@@ -22,6 +22,8 @@ LIBADD+=		cxxrt
 .else
 LIBADD+=	supcplusplus
 .endif
+
+LIBADD+=	elf rtld_db util
 
 .if ${MK_CDDL} != "no"
 LIBADD+=	ctf

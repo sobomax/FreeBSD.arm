@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uftdi.c 281367 2015-04-10 13:20:31Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uftdi.c 282505 2015-05-05 19:34:23Z hselasky $");
 
 /*
  * NOTE: all function names beginning like "uftdi_cfg_" can only
@@ -497,6 +497,7 @@ static const STRUCT_USB_HOST_ID uftdi_devs[] = {
 	UFTDI_DEV(FTDI, SCS_DEVICE_5, 0),
 	UFTDI_DEV(FTDI, SCS_DEVICE_6, 0),
 	UFTDI_DEV(FTDI, SCS_DEVICE_7, 0),
+	UFTDI_DEV(FTDI, SCX8_USB_PHOENIX, 0),
 	UFTDI_DEV(FTDI, SDMUSBQSS, 0),
 	UFTDI_DEV(FTDI, SEMC_DSS20, 0),
 	UFTDI_DEV(FTDI, SERIAL_2232C, UFTDI_JTAG_CHECK_STRING),

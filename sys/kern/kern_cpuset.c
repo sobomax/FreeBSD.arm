@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_cpuset.c 276850 2015-01-08 19:11:14Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_cpuset.c 282906 2015-05-14 15:14:03Z jonathan $");
 
 #include "opt_ddb.h"
 
@@ -113,7 +113,7 @@ static struct unrhdr *cpuset_unr;
 static struct cpuset *cpuset_zero, *cpuset_default;
 
 /* Return the size of cpuset_t at the kernel level */
-SYSCTL_INT(_kern_sched, OID_AUTO, cpusetsize, CTLFLAG_RD,
+SYSCTL_INT(_kern_sched, OID_AUTO, cpusetsize, CTLFLAG_RD | CTLFLAG_CAPRD,
     SYSCTL_NULL_INT_PTR, sizeof(cpuset_t), "sizeof(cpuset_t)");
 
 cpuset_t *cpuset_root;

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/if_wtapvar.h 229970 2012-01-11 17:41:14Z adrian $
+ * $FreeBSD: head/sys/dev/wtap/if_wtapvar.h 283527 2015-05-25 13:51:13Z glebius $
  */
 
 #ifndef _DEV_WTAP_WTAPVAR_H
@@ -130,6 +130,7 @@ struct wtap_vap {
 struct taskqueue;
 
 struct wtap_softc {
+	char 			name[7];	/* wtapXX\0 */
 	int32_t			id;
 	int32_t			up;
 	struct ifnet		*sc_ifp;	/* interface common */

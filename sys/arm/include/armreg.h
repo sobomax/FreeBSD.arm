@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/armreg.h 278518 2015-02-10 14:11:23Z zbb $
+ * $FreeBSD: head/sys/arm/include/armreg.h 282547 2015-05-06 15:17:28Z zbb $
  */
 
 #ifndef MACHINE_ARMREG_H
@@ -345,6 +345,9 @@
 #define	CPUV7_CT_xSIZE_LEN(x)	((x) & 0x7)		/* line size */
 #define	CPUV7_CT_xSIZE_ASSOC(x)	(((x) >> 3) & 0x3ff)	/* associativity */
 #define	CPUV7_CT_xSIZE_SET(x)	(((x) >> 13) & 0x7fff)	/* num sets */
+
+#define	CPUV7_L2CTLR_NPROC_SHIFT	24
+#define	CPUV7_L2CTLR_NPROC(r)	((((r) >> CPUV7_L2CTLR_NPROC_SHIFT) & 3) + 1)
 
 #define	CPU_CLIDR_CTYPE(reg,x)	(((reg) >> ((x) * 3)) & 0x7)
 #define	CPU_CLIDR_LOUIS(reg)	(((reg) >> 21) & 0x7)

@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_amrr.c 270206 2014-08-20 09:10:03Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_amrr.c 283538 2015-05-25 19:18:16Z adrian $");
 
 /*-
  * Naive implementation of the Adaptive Multi Rate Retry algorithm:
@@ -113,8 +113,8 @@ amrr_init(struct ieee80211vap *vap)
 
 	KASSERT(vap->iv_rs == NULL, ("%s called multiple times", __func__));
 
-	amrr = vap->iv_rs = malloc(sizeof(struct ieee80211_amrr),
-	    M_80211_RATECTL, M_NOWAIT|M_ZERO);
+	amrr = vap->iv_rs = IEEE80211_MALLOC(sizeof(struct ieee80211_amrr),
+	    M_80211_RATECTL, IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 	if (amrr == NULL) {
 		if_printf(vap->iv_ifp, "couldn't alloc ratectl structure\n");
 		return;
@@ -128,7 +128,7 @@ amrr_init(struct ieee80211vap *vap)
 static void
 amrr_deinit(struct ieee80211vap *vap)
 {
-	free(vap->iv_rs, M_80211_RATECTL);
+	IEEE80211_FREE(vap->iv_rs, M_80211_RATECTL);
 }
 
 /*
@@ -160,8 +160,8 @@ amrr_node_init(struct ieee80211_node *ni)
 	uint8_t rate;
 
 	if (ni->ni_rctls == NULL) {
-		ni->ni_rctls = amn = malloc(sizeof(struct ieee80211_amrr_node),
-		    M_80211_RATECTL, M_NOWAIT|M_ZERO);
+		ni->ni_rctls = amn = IEEE80211_MALLOC(sizeof(struct ieee80211_amrr_node),
+		    M_80211_RATECTL, IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 		if (amn == NULL) {
 			if_printf(vap->iv_ifp, "couldn't alloc per-node ratectl "
 			    "structure\n");
@@ -225,7 +225,7 @@ amrr_node_init(struct ieee80211_node *ni)
 static void
 amrr_node_deinit(struct ieee80211_node *ni)
 {
-	free(ni->ni_rctls, M_80211_RATECTL);
+	IEEE80211_FREE(ni->ni_rctls, M_80211_RATECTL);
 }
 
 static int

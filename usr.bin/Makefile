@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 281522 2015-04-14 10:15:58Z andrew $
+# $FreeBSD: head/usr.bin/Makefile 283777 2015-05-30 17:41:37Z bapt $
 
 .include <src.opts.mk>
 
@@ -36,7 +36,7 @@ SUBDIR=	${_addr2line} \
 	csplit \
 	ctlstat \
 	cut \
-	demandoc \
+	${_cxxfilt} \
 	dirname \
 	dpv \
 	du \
@@ -150,7 +150,7 @@ SUBDIR=	${_addr2line} \
 	showmount \
 	${_size} \
 	sockstat \
-	soeliminate \
+	soelim \
 	sort \
 	split \
 	stat \
@@ -237,6 +237,7 @@ SUBDIR+=	ee
 
 .if ${MK_ELFTOOLCHAIN_TOOLS} != "no"
 _addr2line=	addr2line
+_cxxfilt=	cxxfilt
 _elfcopy=	elfcopy
 _nm=		nm
 _readelf=	readelf
@@ -316,7 +317,9 @@ SUBDIR+=	bmake
 
 .if ${MK_MAN_UTILS} != "no"
 SUBDIR+=	catman
+.if ${MK_MANDOCDB} == "no"
 _makewhatis=	makewhatis
+.endif
 _man=		man
 .endif
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsdport.h 268115 2014-07-01 20:47:16Z rmacklem $
+ * $FreeBSD: head/sys/fs/nfs/nfsdport.h 283635 2015-05-27 22:00:05Z rmacklem $
  */
 
 /*
@@ -88,7 +88,7 @@ struct nfsexstuff {
      bcmp(&(f1)->fh_fid, &(f2)->fh_fid, sizeof(struct fid)) == 0)
 
 #define	NFSLOCKHASH(f) 							\
-	(&nfslockhash[nfsrv_hashfh(f) % NFSLOCKHASHSIZE])
+	(&nfslockhash[nfsrv_hashfh(f) % nfsrv_lockhashsize])
 
 #define	NFSFPVNODE(f)	((struct vnode *)((f)->f_data))
 #define	NFSFPCRED(f)	((f)->f_cred)

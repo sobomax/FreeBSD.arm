@@ -24,7 +24,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.bin/man/man.sh 279527 2015-03-02 16:58:57Z bapt $
+# $FreeBSD: head/usr.bin/man/man.sh 282980 2015-05-15 15:56:28Z bapt $
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.
@@ -311,8 +311,11 @@ man_display_page() {
 		return
 	fi
 
+	if [ -n "$use_width" ]; then
+		mandoc_args="-O width=${use_width}"
+	fi
 	testline="mandoc -Tlint -Wunsupp 2>/dev/null"
-	pipeline="mandoc | $MANPAGER"
+	pipeline="mandoc $mandoc_args | $MANPAGER"
 
 	if ! eval "$cattool $manpage | $testline" ;then
 		if which -s groff; then

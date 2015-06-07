@@ -33,7 +33,7 @@
 
 /*
  * crt0-efi-x86_64.S - x86_64 EFI startup code.
- * $FreeBSD: head/sys/boot/efi/loader/arch/amd64/start.S 280950 2015-04-01 08:30:40Z andrew $
+ * $FreeBSD: head/sys/boot/efi/loader/arch/amd64/start.S 282727 2015-05-10 13:24:26Z ian $
  */
 
 	.text
@@ -53,7 +53,7 @@ _start:
 	popq %rdx
 	pushq %rcx
 	pushq %rdx
-	call _reloc
+	call self_reloc
 
 	popq %rdi
 	popq %rsi

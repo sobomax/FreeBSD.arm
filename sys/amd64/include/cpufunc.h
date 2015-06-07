@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/cpufunc.h 278473 2015-02-09 21:00:56Z kib $
+ * $FreeBSD: head/sys/amd64/include/cpufunc.h 282684 2015-05-09 19:11:01Z kib $
  */
 
 /*
@@ -540,9 +540,8 @@ static __inline void
 invpcid(struct invpcid_descr *d, int type)
 {
 
-	/* invpcid (%rdx),%rax */
-	__asm __volatile(".byte 0x66,0x0f,0x38,0x82,0x02"
-	    : : "d" (d), "a" ((u_long)type) : "memory");
+	__asm __volatile("invpcid (%0),%1"
+	    : : "r" (d), "r" ((u_long)type) : "memory");
 }
 
 static __inline u_short

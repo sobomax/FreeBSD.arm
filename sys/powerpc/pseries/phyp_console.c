@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/phyp_console.c 258697 2013-11-27 22:02:55Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/phyp_console.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -256,7 +256,7 @@ uart_phyp_attach(device_t dev)
 		bus_setup_intr(dev, sc->irqres, INTR_TYPE_TTY | INTR_MPSAFE,
 		    NULL, uart_phyp_intr, sc, &sc->sc_icookie);
 	} else {
-		callout_init(&sc->callout, CALLOUT_MPSAFE);
+		callout_init(&sc->callout, 1);
 		sc->polltime = hz / 20;
 		if (sc->polltime < 1)
 			sc->polltime = 1;

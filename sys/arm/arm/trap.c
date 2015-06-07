@@ -83,7 +83,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/trap.c 278529 2015-02-10 19:41:30Z gnn $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/trap.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -119,7 +119,7 @@ struct ksig {
 	u_long code;
 };
 struct data_abort {
-	int (*func)(struct trapframe *, u_int, u_int, struct thread *, 
+	int (*func)(struct trapframe *, u_int, u_int, struct thread *,
 	    struct ksig *);
 	const char *desc;
 };

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 280971 2015-04-01 22:26:39Z glebius $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 283291 2015-05-22 17:05:21Z jkim $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -189,7 +189,7 @@ ipf_timer_func(arg)
 #if 0
 		softc->ipf_slow_ch = timeout(ipf_timer_func, softc, hz/2);
 #endif
-		callout_init(&softc->ipf_slow_ch, CALLOUT_MPSAFE);
+		callout_init(&softc->ipf_slow_ch, 1);
 		callout_reset(&softc->ipf_slow_ch,
 			(hz / IPF_HZ_DIVIDE) * IPF_HZ_MULT,
 			ipf_timer_func, softc);
@@ -235,7 +235,7 @@ ipfattach(softc)
 	softc->ipf_slow_ch = timeout(ipf_timer_func, softc,
 				     (hz / IPF_HZ_DIVIDE) * IPF_HZ_MULT);
 #endif
-	callout_init(&softc->ipf_slow_ch, CALLOUT_MPSAFE);
+	callout_init(&softc->ipf_slow_ch, 1);
 	callout_reset(&softc->ipf_slow_ch, (hz / IPF_HZ_DIVIDE) * IPF_HZ_MULT,
 		ipf_timer_func, softc);
 	return 0;

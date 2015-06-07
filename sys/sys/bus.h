@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/bus.h 279868 2015-03-10 23:27:13Z rstone $
+ * $FreeBSD: head/sys/sys/bus.h 284088 2015-06-06 17:25:45Z marcel $
  */
 
 #ifndef _SYS_BUS_H_
@@ -612,7 +612,7 @@ void	bus_data_generation_update(void);
 #define BUS_PROBE_DEFAULT	(-20)	/* Base OS default driver */
 #define BUS_PROBE_LOW_PRIORITY	(-40)	/* Older, less desirable drivers */
 #define BUS_PROBE_GENERIC	(-100)	/* generic driver for dev */
-#define BUS_PROBE_HOOVER	(-500)	/* Generic dev for all devs on bus */
+#define BUS_PROBE_HOOVER	(-1000000) /* Driver for any dev on bus */
 #define BUS_PROBE_NOWILDCARD	(-2000000000) /* No wildcard device matches */
 
 /**

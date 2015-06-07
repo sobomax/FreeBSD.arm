@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_device.c 277179 2015-01-14 14:04:29Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_device.c 282577 2015-05-07 12:54:27Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -1342,6 +1342,12 @@ usb_probe_and_attach(struct usb_device *udev, uint8_t iface_index)
 	 * handler(s):
 	 */
 	if (iface_index == USB_IFACE_INDEX_ANY) {
+
+		if (usb_test_quirk(&uaa, UQ_MSC_DYMO_EJECT) != 0 &&
+		    usb_dymo_eject(udev, 0) == 0) {
+			/* success, mark the udev as disappearing */
+			uaa.dev_state = UAA_DEV_EJECTING;
+		}
 
 		EVENTHANDLER_INVOKE(usb_dev_configured, udev, &uaa);
 

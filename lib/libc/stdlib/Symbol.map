@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/stdlib/Symbol.map 276630 2015-01-03 18:38:46Z kib $
+ * $FreeBSD: head/lib/libc/stdlib/Symbol.map 282314 2015-05-01 18:32:16Z bapt $
  */
 
 FBSD_1.0 {
@@ -113,6 +113,7 @@ FBSD_1.4 {
 	hcreate_r;
 	hdestroy_r;
 	hsearch_r;
+	reallocarray;
 };
 
 FBSDprivate_1.0 {

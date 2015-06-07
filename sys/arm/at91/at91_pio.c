@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pio.c 270025 2014-08-15 16:08:52Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pio.c 283277 2015-05-22 05:02:53Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -646,5 +646,9 @@ static driver_t at91_pio_driver = {
 	sizeof(struct at91_pio_softc),
 };
 
+#ifdef FDT
 EARLY_DRIVER_MODULE(at91_pio, at91_pinctrl, at91_pio_driver, at91_pio_devclass,
     NULL, NULL, BUS_PASS_INTERRUPT);
+#else
+DRIVER_MODULE(at91_pio, atmelarm, at91_pio_driver, at91_pio_devclass, NULL, NULL);
+#endif

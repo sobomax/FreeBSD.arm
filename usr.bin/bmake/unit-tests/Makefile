@@ -1,13 +1,13 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: head/usr.bin/bmake/unit-tests/Makefile 281812 2015-04-21 04:40:38Z sjg $
+# $FreeBSD: head/usr.bin/bmake/unit-tests/Makefile 282740 2015-05-10 22:03:59Z sjg $
 
 SRCTOP?= ${.CURDIR:H:H:H}
 
-# $Id: Makefile.in,v 1.46 2014/11/06 01:47:57 sjg Exp $
+# $Id: Makefile.in,v 1.47 2015/05/05 21:58:06 sjg Exp $
 #
-# $NetBSD: Makefile,v 1.51 2014/10/20 23:21:11 sjg Exp $
+# $NetBSD: Makefile,v 1.52 2015/05/05 21:51:09 sjg Exp $
 #
 # Unit tests for make(1)
 # The main targets are:
@@ -34,6 +34,7 @@ UNIT_TESTS:= ${srcdir}
 TESTNAMES= \
 	comment \
 	cond1 \
+	cond2 \
 	error \
 	export \
 	export-all \

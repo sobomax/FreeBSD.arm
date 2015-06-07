@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	from BSDI $Id: ktr.h,v 1.10.2.7 2000/03/16 21:44:42 cp Exp $
- * $FreeBSD: head/sys/sys/ktr_class.h 279539 2015-03-02 20:05:16Z jmg $
+ * $FreeBSD: head/sys/sys/ktr_class.h 283546 2015-05-25 22:13:22Z jhb $
  */
 
 #ifndef _SYS_KTR_CLASS_H_
@@ -71,7 +71,8 @@
 #define	KTR_INET6	0x10000000		/* IPv6 stack */
 #define	KTR_SCHED	0x20000000		/* Machine parsed sched info. */
 #define	KTR_BUF		0x40000000		/* Buffer cache */
-#define	KTR_ALL		0x7fffffff
+#define	KTR_PTRACE	0x80000000		/* Process debugging. */
+#define	KTR_ALL		0xffffffff
 
 /* KTR trace classes to compile in */
 #ifdef KTR

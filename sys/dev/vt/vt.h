@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vt/vt.h 279488 2015-03-01 12:54:22Z dumbbell $
+ * $FreeBSD: head/sys/dev/vt/vt.h 282646 2015-05-08 16:37:40Z hselasky $
  */
 
 #ifndef _DEV_VT_VT_H_
@@ -83,9 +83,8 @@
 #define	ISSIGVALID(sig)	((sig) > 0 && (sig) < NSIG)
 
 #define	VT_SYSCTL_INT(_name, _default, _descr)				\
-static int vt_##_name = _default;					\
-SYSCTL_INT(_kern_vt, OID_AUTO, _name, CTLFLAG_RWTUN, &vt_##_name, _default,\
-		_descr);
+static int vt_##_name = (_default);					\
+SYSCTL_INT(_kern_vt, OID_AUTO, _name, CTLFLAG_RWTUN, &vt_##_name, 0, _descr)
 
 struct vt_driver;
 

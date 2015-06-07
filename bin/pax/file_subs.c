@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)file_subs.c	8.1 (Berkeley) 5/31/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/pax/file_subs.c 222177 2011-05-22 14:03:38Z uqs $");
+__FBSDID("$FreeBSD: head/bin/pax/file_subs.c 283257 2015-05-21 18:29:36Z delphij $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: head/bin/pax/file_subs.c 222177 2011-05-22 14:03:38Z uqs $")
 #include <stdio.h>
 #include <errno.h>
 #include <sys/uio.h>
-#include <stdlib.h>
 #include "pax.h"
 #include "options.h"
 #include "extern.h"

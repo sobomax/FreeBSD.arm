@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/systat/main.c 266157 2014-05-15 16:44:25Z brooks $");
+__FBSDID("$FreeBSD: head/usr.bin/systat/main.c 284067 2015-06-06 13:08:31Z bapt $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
@@ -138,7 +138,6 @@ main(int argc, char **argv)
 {
 	char errbuf[_POSIX2_LINE_MAX], dummy;
 	size_t	size;
-	double t;
 	struct cmdentry *cmd = NULL;
 
 	(void) setlocale(LC_ALL, "");

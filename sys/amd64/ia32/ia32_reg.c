@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/ia32/ia32_reg.c 233125 2012-03-18 19:12:11Z tijl $
+ * $FreeBSD: head/sys/amd64/ia32/ia32_reg.c 283735 2015-05-29 13:24:17Z kib $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_reg.c 233125 2012-03-18 19:12:11Z tijl $");
+__FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_reg.c 283735 2015-05-29 13:24:17Z kib $");
 
 #include "opt_compat.h"
 
@@ -79,11 +79,9 @@ __FBSDID("$FreeBSD: head/sys/amd64/ia32/ia32_reg.c 233125 2012-03-18 19:12:11Z t
 int
 fill_regs32(struct thread *td, struct reg32 *regs)
 {
-	struct pcb *pcb;
 	struct trapframe *tp;
 
 	tp = td->td_frame;
-	pcb = td->td_pcb;
 	if (tp->tf_flags & TF_HASSEGS) {
 		regs->r_gs = tp->tf_gs;
 		regs->r_fs = tp->tf_fs;
@@ -113,18 +111,16 @@ fill_regs32(struct thread *td, struct reg32 *regs)
 int
 set_regs32(struct thread *td, struct reg32 *regs)
 {
-	struct pcb *pcb;
 	struct trapframe *tp;
 
 	tp = td->td_frame;
 	if (!EFL_SECURE(regs->r_eflags, tp->tf_rflags) || !CS_SECURE(regs->r_cs))
 		return (EINVAL);
-	pcb = td->td_pcb;
 	tp->tf_gs = regs->r_gs;
 	tp->tf_fs = regs->r_fs;
 	tp->tf_es = regs->r_es;
 	tp->tf_ds = regs->r_ds;
-	set_pcb_flags(pcb, PCB_FULL_IRET);
+	set_pcb_flags(td->td_pcb, PCB_FULL_IRET);
 	tp->tf_flags = TF_HASSEGS;
 	tp->tf_rdi = regs->r_edi;
 	tp->tf_rsi = regs->r_esi;

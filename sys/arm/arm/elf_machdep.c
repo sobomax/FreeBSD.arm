@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/elf_machdep.c 270124 2014-08-18 02:45:06Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/elf_machdep.c 283382 2015-05-24 14:51:29Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -81,6 +81,7 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_fetch_syscall_args = cpu_fetch_syscall_args,
 	.sv_syscallnames = syscallnames,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
 };
 
 static Elf32_Brandinfo freebsd_brand_info = {
@@ -105,7 +106,6 @@ elf32_arm_abi_supported(struct image_params *imgp)
 {
 	const Elf_Ehdr *hdr = (const Elf_Ehdr *)imgp->image_header;
 
-#ifdef __ARM_EABI__
 	/*
 	 * When configured for EABI, FreeBSD supports EABI vesions 4 and 5.
 	 */
@@ -115,17 +115,6 @@ elf32_arm_abi_supported(struct image_params *imgp)
 			    EF_ARM_EABI_VERSION(hdr->e_flags), imgp->args->fname);
 		return (FALSE);
 	}
-#else
-	/*
-	 * When configured for OABI, that's all we do, so reject EABI binaries.
-	 */
-	if (EF_ARM_EABI_VERSION(hdr->e_flags) != EF_ARM_EABI_VERSION_UNKNOWN) {
-		if (bootverbose)
-			uprintf("Attempting to execute EABI binary (rev %d) image %s",
-			    EF_ARM_EABI_VERSION(hdr->e_flags), imgp->args->fname);
-		return (FALSE);
-	}
-#endif
 	return (TRUE);
 }
 

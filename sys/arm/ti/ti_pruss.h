@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_pruss.h 258210 2013-11-16 08:23:15Z rpaulo $
+ * $FreeBSD: head/sys/arm/ti/ti_pruss.h 283138 2015-05-20 06:23:01Z rpaulo $
  */
 #ifndef _TI_PRUSS_H_
 #define _TI_PRUSS_H_
@@ -32,5 +32,9 @@
 #define	PRUSS_AM18XX_REV	0x4e825900
 #define	PRUSS_AM33XX_REV	0x4e82A900
 #define	PRUSS_AM33XX_INTC	0x20000
+
+#define PRUSS_INTC_HIER		0x1500
+#define PRUSS_INTC_HIDISR	0x0038
+#define PRUSS_INTC_HIPIR_BASE	0x0900
 
 #endif /* _TI_PRUSS_H_ */

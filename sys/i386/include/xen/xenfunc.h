@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/xen/xenfunc.h 255040 2013-08-29 19:52:18Z gibbs $
+ * $FreeBSD: head/sys/i386/include/xen/xenfunc.h 282274 2015-04-30 15:48:48Z jhb $
  */
 
 #ifndef _XEN_XENFUNC_H_
@@ -34,7 +34,6 @@
 
 #include <vm/pmap.h>
 
-#include <machine/xen/xenpmap.h>
 #include <machine/segments.h>
 
 #include <sys/pcpu.h>

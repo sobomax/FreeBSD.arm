@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/check_internal_locks.d 235063 2012-05-05 19:42:38Z netchild $
+ * $FreeBSD: head/sys/compat/linux/check_internal_locks.d 283383 2015-05-24 14:53:16Z dchagin $
  */
 
 /**
@@ -41,14 +41,9 @@
 
 BEGIN
 {
-	check["emul_lock"] = 0;
-	check["emul_shared_rlock"] = 0;
-	check["emul_shared_wlock"] = 0;
 	check["futex_mtx"] = 0;
 }
 
-linuxulator*:locks:emul_lock:locked,
-linuxulator*:locks:emul_shared_wlock:locked,
 linuxulator*:locks:futex_mtx:locked
 /check[probefunc] > 0/
 {
@@ -57,9 +52,6 @@ linuxulator*:locks:futex_mtx:locked
 	stack();
 }
 
-linuxulator*:locks:emul_lock:locked,
-linuxulator*:locks:emul_shared_rlock:locked,
-linuxulator*:locks:emul_shared_wlock:locked,
 linuxulator*:locks:futex_mtx:locked
 {
 	++check[probefunc];
@@ -69,9 +61,6 @@ linuxulator*:locks:futex_mtx:locked
 	spec[probefunc] = speculation();
 }
 
-linuxulator*:locks:emul_lock:unlock,
-linuxulator*:locks:emul_shared_rlock:unlock,
-linuxulator*:locks:emul_shared_wlock:unlock,
 linuxulator*:locks:futex_mtx:unlock
 /check[probefunc] == 0/
 {
@@ -82,9 +71,6 @@ linuxulator*:locks:futex_mtx:unlock
 	stack();
 }
 
-linuxulator*:locks:emul_lock:unlock,
-linuxulator*:locks:emul_shared_rlock:unlock,
-linuxulator*:locks:emul_shared_wlock:unlock,
 linuxulator*:locks:futex_mtx:unlock
 {
 	discard(spec[probefunc]);
@@ -93,27 +79,6 @@ linuxulator*:locks:futex_mtx:unlock
 }
 
 /* Timeout handling */
-
-tick-10s
-/spec["emul_lock"] != 0 && timestamp - ts["emul_lock"] >= 9999999000/
-{
-	commit(spec["emul_lock"]);
-	spec["emul_lock"] = 0;
-}
-
-tick-10s
-/spec["emul_shared_wlock"] != 0 && timestamp - ts["emul_shared_wlock"] >= 9999999000/
-{
-	commit(spec["emul_shared_wlock"]);
-	spec["emul_shared_wlock"] = 0;
-}
-
-tick-10s
-/spec["emul_shared_rlock"] != 0 && timestamp - ts["emul_shared_rlock"] >= 9999999000/
-{
-	commit(spec["emul_shared_rlock"]);
-	spec["emul_shared_rlock"] = 0;
-}
 
 tick-10s
 /spec["futex_mtx"] != 0 && timestamp - ts["futex_mtx"] >= 9999999000/

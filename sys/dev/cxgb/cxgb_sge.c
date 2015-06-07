@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/cxgb_sge.c 279993 2015-03-14 17:08:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/cxgb_sge.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "opt_inet6.h"
 #include "opt_inet.h"
@@ -1008,7 +1008,7 @@ sge_timer_cb(void *arg)
 int
 t3_sge_init_adapter(adapter_t *sc)
 {
-	callout_init(&sc->sge_timer_ch, CALLOUT_MPSAFE);
+	callout_init(&sc->sge_timer_ch, 1);
 	callout_reset(&sc->sge_timer_ch, TX_RECLAIM_PERIOD, sge_timer_cb, sc);
 	TASK_INIT(&sc->slow_intr_task, 0, sge_slow_intr_handler, sc);
 	return (0);

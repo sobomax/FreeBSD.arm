@@ -15,11 +15,11 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/IMX53-QSB 276004 2014-12-21 11:55:40Z andrew $
+# $FreeBSD: head/sys/arm/conf/IMX53-QSB 282576 2015-05-07 12:38:23Z andrew $
 
 #NO_UNIVERSE
 
-include		"IMX53"
+include 	"IMX53"
 ident		IMX53-QSB
 
 options 	HZ=250			# 4ms scheduling quantum

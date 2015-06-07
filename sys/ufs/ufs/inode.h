@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)inode.h	8.9 (Berkeley) 5/14/95
- * $FreeBSD: head/sys/ufs/ufs/inode.h 262678 2014-03-02 02:52:34Z pfg $
+ * $FreeBSD: head/sys/ufs/ufs/inode.h 281956 2015-04-24 23:27:50Z mckusick $
  */
 
 #ifndef _UFS_UFS_INODE_H_
@@ -86,6 +86,8 @@ struct inode {
 		struct dirhash *dirhash; /* Hashing for large directories. */
 		daddr_t *snapblklist;    /* Collect expunged snapshot blocks. */
 	} i_un;
+
+	int	i_nextclustercg; /* last cg searched for cluster */
 
 	/*
 	 * Data for extended attribute modification.

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 280355 2015-03-22 21:18:44Z ian $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 283924 2015-06-02 18:37:04Z vangyzen $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -2113,7 +2113,15 @@ sysctl_kern_proc_ovmmap(SYSCTL_HANDLER_ARGS)
 				vref(vp);
 				break;
 			case OBJT_SWAP:
-				kve->kve_type = KVME_TYPE_SWAP;
+				if ((lobj->flags & OBJ_TMPFS_NODE) != 0) {
+					kve->kve_type = KVME_TYPE_VNODE;
+					if ((lobj->flags & OBJ_TMPFS) != 0) {
+						vp = lobj->un_pager.swp.swp_tmpfs;
+						vref(vp);
+					}
+				} else {
+					kve->kve_type = KVME_TYPE_SWAP;
+				}
 				break;
 			case OBJT_DEVICE:
 				kve->kve_type = KVME_TYPE_DEVICE;
@@ -2339,7 +2347,15 @@ kern_proc_vmmap_out(struct proc *p, struct sbuf *sb)
 				vref(vp);
 				break;
 			case OBJT_SWAP:
-				kve->kve_type = KVME_TYPE_SWAP;
+				if ((lobj->flags & OBJ_TMPFS_NODE) != 0) {
+					kve->kve_type = KVME_TYPE_VNODE;
+					if ((lobj->flags & OBJ_TMPFS) != 0) {
+						vp = lobj->un_pager.swp.swp_tmpfs;
+						vref(vp);
+					}
+				} else {
+					kve->kve_type = KVME_TYPE_SWAP;
+				}
 				break;
 			case OBJT_DEVICE:
 				kve->kve_type = KVME_TYPE_DEVICE;
@@ -2822,7 +2838,7 @@ static SYSCTL_NODE(_kern_proc, KERN_PROC_PROC, proc, CTLFLAG_RD | CTLFLAG_MPSAFE
 	sysctl_kern_proc, "Return process table, no threads");
 
 static SYSCTL_NODE(_kern_proc, KERN_PROC_ARGS, args,
-	CTLFLAG_RW | CTLFLAG_ANYBODY | CTLFLAG_MPSAFE,
+	CTLFLAG_RW | CTLFLAG_CAPWR | CTLFLAG_ANYBODY | CTLFLAG_MPSAFE,
 	sysctl_kern_proc_args, "Process argument list");
 
 static SYSCTL_NODE(_kern_proc, KERN_PROC_ENV, env, CTLFLAG_RD | CTLFLAG_MPSAFE,

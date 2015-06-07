@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/ixl.h 279858 2015-03-10 19:17:40Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/ixl.h 283670 2015-05-28 22:01:50Z jhb $*/
 
 
 #ifndef _IXL_H_
@@ -93,6 +93,7 @@
 #ifdef PCI_IOV
 #include <sys/nv.h>
 #include <sys/iov_schema.h>
+#include <dev/pci/pci_iov.h>
 #endif
 
 #include "i40e_type.h"
@@ -324,7 +325,7 @@
 #define IXL_SET_IMCASTS(vsi, count)	(vsi)->imcasts = (count)
 #define IXL_SET_OMCASTS(vsi, count)	(vsi)->omcasts = (count)
 #define IXL_SET_IQDROPS(vsi, count)	(vsi)->iqdrops = (count)
-#define IXL_SET_OQDROPS(vsi, count)	(vsi)->iqdrops = (count)
+#define IXL_SET_OQDROPS(vsi, count)	(vsi)->oqdrops = (count)
 #define IXL_SET_NOPROTO(vsi, count)	(vsi)->noproto = (count)
 #else
 #define IXL_SET_IPACKETS(vsi, count)	(vsi)->ifp->if_ipackets = (count)

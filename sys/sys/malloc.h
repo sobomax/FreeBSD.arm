@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)malloc.h	8.5 (Berkeley) 5/3/95
- * $FreeBSD: head/sys/sys/malloc.h 281203 2015-04-07 14:47:27Z pfg $
+ * $FreeBSD: head/sys/sys/malloc.h 282988 2015-05-15 20:43:37Z pfg $
  */
 
 #ifndef _SYS_MALLOC_H_
@@ -174,7 +174,7 @@ void	contigfree(void *addr, unsigned long size, struct malloc_type *type);
 void	*contigmalloc(unsigned long size, struct malloc_type *type, int flags,
 	    vm_paddr_t low, vm_paddr_t high, unsigned long alignment,
 	    vm_paddr_t boundary) __malloc_like __result_use_check
-	    __alloc_size(1);
+	    __alloc_size(1) __alloc_align(6);
 void	free(void *addr, struct malloc_type *type);
 void	*malloc(unsigned long size, struct malloc_type *type, int flags)
 	    __malloc_like __result_use_check __alloc_size(1);

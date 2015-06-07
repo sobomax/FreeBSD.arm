@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/msun/src/e_j1.c 279856 2015-03-10 17:10:54Z kargl $");
+__FBSDID("$FreeBSD: head/lib/msun/src/e_j1.c 283032 2015-05-17 16:27:06Z kargl $");
 
 /* __ieee754_j1(x), __ieee754_y1(x)
  * Bessel function of the first and second kinds of order zero.
@@ -62,7 +62,7 @@ __FBSDID("$FreeBSD: head/lib/msun/src/e_j1.c 279856 2015-03-10 17:10:54Z kargl $
 #include "math.h"
 #include "math_private.h"
 
-static double pone(double), qone(double);
+static __inline double pone(double), qone(double);
 
 static const volatile double vone = 1, vzero = 0;
 

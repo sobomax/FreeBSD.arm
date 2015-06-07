@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/pcpu.h 256073 2013-10-05 23:11:01Z gibbs $
+ * $FreeBSD: head/sys/amd64/include/pcpu.h 282684 2015-05-09 19:11:01Z kib $
  */
 
 #ifndef _MACHINE_PCPU_H_
@@ -63,7 +63,9 @@
 	uint64_t pc_dbreg[16];		/* ddb debugging regs */	\
 	int pc_dbreg_cmd;		/* ddb debugging reg cmd */	\
 	u_int	pc_vcpu_id;		/* Xen vCPU ID */		\
-	char	__pad[157]		/* be divisor of PAGE_SIZE	\
+	uint32_t pc_pcid_next;						\
+	uint32_t pc_pcid_gen;						\
+	char	__pad[149]		/* be divisor of PAGE_SIZE	\
 					   after cache alignment */
 
 #define	PC_DBREG_CMD_NONE	0

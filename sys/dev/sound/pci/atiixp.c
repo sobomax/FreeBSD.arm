@@ -67,7 +67,7 @@
 
 #include <dev/sound/pci/atiixp.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/atiixp.c 267581 2014-06-17 16:07:57Z jhb $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/atiixp.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #define ATI_IXP_DMA_RETRY_MAX	100
 
@@ -1194,7 +1194,7 @@ atiixp_pci_attach(device_t dev)
 	sc->lock = snd_mtxcreate(device_get_nameunit(dev), "snd_atiixp softc");
 	sc->dev = dev;
 
-	callout_init(&sc->poll_timer, CALLOUT_MPSAFE);
+	callout_init(&sc->poll_timer, 1);
 	sc->poll_ticks = 1;
 
 	if (resource_int_value(device_get_name(sc->dev),

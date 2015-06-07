@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_ipsec.c 275713 2014-12-11 18:55:54Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_ipsec.c 282047 2015-04-27 01:11:09Z ae $");
 
 #include "opt_ipsec.h"
 #include "opt_sctp.h"
@@ -199,6 +199,9 @@ ip_ipsec_output(struct mbuf **m, struct inpcb *inp, int *error)
 
 		/* NB: callee frees mbuf */
 		*error = ipsec4_process_packet(*m, sp->req);
+		/* Release SP if an error occured */
+		if (*error != 0)
+			KEY_FREESP(&sp);
 		if (*error == EJUSTRETURN) {
 			/*
 			 * We had a SP with a level of 'use' and no SA. We
@@ -234,13 +237,9 @@ ip_ipsec_output(struct mbuf **m, struct inpcb *inp, int *error)
 		/* No IPsec processing for this packet. */
 	}
 done:
-	if (sp != NULL)
-		KEY_FREESP(&sp);
-	return 0;
+	return (0);
 reinjected:
-	if (sp != NULL)
-		KEY_FREESP(&sp);
-	return -1;
+	return (-1);
 bad:
 	if (sp != NULL)
 		KEY_FREESP(&sp);

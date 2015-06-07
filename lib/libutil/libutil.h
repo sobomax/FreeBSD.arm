@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libutil/libutil.h 247919 2013-03-07 19:00:00Z db $
+ * $FreeBSD: head/lib/libutil/libutil.h 283984 2015-06-04 08:00:11Z bapt $
  */
 
 #ifndef _LIBUTIL_H_
@@ -102,6 +102,8 @@ struct kinfo_file *
 	kinfo_getfile(pid_t _pid, int *_cntp);
 struct kinfo_vmentry *
 	kinfo_getvmmap(pid_t _pid, int *_cntp);
+struct kinfo_vmobject *
+	kinfo_getvmobject(int *_cntp);
 struct kinfo_proc *
 	kinfo_getallproc(int *_cntp);
 struct kinfo_proc *

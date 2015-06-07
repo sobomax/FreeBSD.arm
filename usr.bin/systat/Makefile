@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/systat/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/systat/Makefile 284068 2015-06-06 13:08:48Z bapt $
 
 .include <src.opts.mk>
 
@@ -14,7 +14,7 @@ SRCS+=	icmp6.c ip6.c
 CFLAGS+= -DINET6
 .endif
 
-WARNS?=	0
+WARNS?=	1
 
 LIBADD=	ncursesw m devstat kvm
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/stack_machdep.c 276190 2014-12-24 18:54:31Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/stack_machdep.c 283888 2015-06-01 18:15:44Z andrew $");
 
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -49,16 +49,6 @@ extern vm_offset_t kernel_vm_end;
 static void
 stack_capture(struct stack *st, u_int32_t *frame)
 {
-#if !defined(__ARM_EABI__) && !defined(__clang__)
-	vm_offset_t callpc;
-
-	while (INKERNEL(frame) && (vm_offset_t)frame < kernel_vm_end) {
-		callpc = frame[FR_SCP];
-		if (stack_put(st, callpc) == -1)
-			break;
-		frame = (u_int32_t *)(frame[FR_RFP]);
-	}
-#endif
 }
 
 void

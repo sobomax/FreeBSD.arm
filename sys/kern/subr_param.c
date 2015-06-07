@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_param.c 280006 2015-03-14 21:40:01Z ian $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_param.c 282274 2015-04-30 15:48:48Z jhb $");
 
 #include "opt_param.h"
 #include "opt_msgbuf.h"
@@ -99,11 +99,7 @@ pid_t	pid_max = PID_MAX;
 long	maxswzone;			/* max swmeta KVA storage */
 long	maxbcache;			/* max buffer cache KVA storage */
 long	maxpipekva;			/* Limit on pipe KVA */
-#ifdef XEN
-int	vm_guest = VM_GUEST_XEN;
-#else
 int	vm_guest = VM_GUEST_NO;		/* Running as virtual machine guest? */
-#endif
 u_long	maxtsiz;			/* max text size */
 u_long	dfldsiz;			/* initial data size limit */
 u_long	maxdsiz;			/* max data size */

@@ -32,7 +32,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read.c 282932 2015-05-14 22:35:26Z delphij $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -1395,6 +1395,8 @@ __archive_read_filter_consume(struct archive_read_filter * filter,
 {
 	int64_t skipped;
 
+	if (request < 0)
+		return ARCHIVE_FATAL;
 	if (request == 0)
 		return 0;
 

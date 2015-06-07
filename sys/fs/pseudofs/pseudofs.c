@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/pseudofs/pseudofs.c 242833 2012-11-09 18:02:25Z attilio $");
+__FBSDID("$FreeBSD: head/sys/fs/pseudofs/pseudofs.c 283495 2015-05-24 18:11:22Z dchagin $");
 
 #include "opt_pseudofs.h"
 
@@ -52,9 +52,11 @@ static MALLOC_DEFINE(M_PFSNODES, "pfs_nodes", "pseudofs nodes");
 SYSCTL_NODE(_vfs, OID_AUTO, pfs, CTLFLAG_RW, 0,
     "pseudofs");
 
+#ifdef PSEUDOFS_TRACE
 int pfs_trace;
 SYSCTL_INT(_vfs_pfs, OID_AUTO, trace, CTLFLAG_RW, &pfs_trace, 0,
     "enable tracing of pseudofs vnode operations");
+#endif
 
 #if PFS_FSNAMELEN != MFSNAMELEN
 #error "PFS_FSNAMELEN is not equal to MFSNAMELEN"

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgb/qla_os.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgb/qla_os.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include "qla_os.h"
 #include "qla_reg.h"
@@ -378,7 +378,7 @@ qla_pci_attach(device_t dev)
 	ha->flags.qla_watchdog_active = 1;
 	ha->flags.qla_watchdog_pause = 1;
 	
-	callout_init(&ha->tx_callout, TRUE);
+	callout_init(&ha->tx_callout, 1);
 
 	/* create ioctl device interface */
 	if (qla_make_cdev(ha)) {

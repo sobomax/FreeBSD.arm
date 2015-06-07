@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/tools/build/check-links.sh 281814 2015-04-21 05:41:56Z bdrewery $
+# $FreeBSD: head/tools/build/check-links.sh 282295 2015-05-01 05:01:56Z bdrewery $
 
 libkey() {
 	libkey="lib_symbols_$1"
@@ -20,9 +20,11 @@ libkey() {
 
 ret=0
 CHECK_UNRESOLVED=1
-while getopts "U" flag; do
+VERBOSE_RESOLVED=0
+while getopts "Uv" flag; do
 	case "${flag}" in
 		U) CHECK_UNRESOLVED=0 ;;
+		v) VERBOSE_RESOLVED=1 ;;
 	esac
 done
 shift $((OPTIND-1))
@@ -83,7 +85,7 @@ if [ ${CHECK_UNRESOLVED} -eq 1 ]; then
 	libkey "crt1.o"
 	setvar "${libkey}" "${lib_symbols}"
 
-	# No search libs for all symbols and report missing ones.
+	# Now search libs for all symbols and report missing ones.
 	for sym in ${unresolved_symbols}; do
 		found=0
 		for lib in ${list_libs}; do
@@ -91,7 +93,12 @@ if [ ${CHECK_UNRESOLVED} -eq 1 ]; then
 			eval "lib_symbols=\"\${${libkey}}\""
 			# lib_symbols now contains symbols for the lib.
 			case " ${lib_symbols} " in
-				*\ ${sym}\ *) found=1 && break ;;
+				*\ ${sym}\ *)
+					[ ${VERBOSE_RESOLVED} -eq 1 ] &&
+					    echo "Resolved symbol ${sym} from ${lib}"
+					found=1
+					break
+					;;
 			esac
 		done
 		if [ $found -eq 0 ]; then

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/vga_pci.c 279494 2015-03-01 20:54:29Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/vga_pci.c 284012 2015-06-05 06:23:03Z hselasky $");
 
 /*
  * Simple driver for PCI VGA display devices.  Drivers such as agp(4) and
@@ -125,6 +125,13 @@ vga_pci_is_boot_display(device_t dev)
 	config = pci_read_config(dev, PCIR_COMMAND, 2);
 	if ((config & (PCIM_CMD_PORTEN | PCIM_CMD_MEMEN)) == 0)
 		return (0);
+
+	/*
+	 * Disable interrupts until a chipset driver is loaded for
+	 * this PCI device. Else unhandled display adapter interrupts
+	 * might freeze the CPU.
+	 */
+	pci_write_config(dev, PCIR_COMMAND, config | PCIM_CMD_INTxDIS, 2);
 
 	/* This video card is the boot display: record its unit number. */
 	vga_pci_default_unit = unit;

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_common.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_common.c 283276 2015-05-22 03:16:18Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,28 +44,12 @@ __FBSDID("$FreeBSD: head/sys/arm/ti/ti_common.c 281085 2015-04-04 21:34:26Z andr
 #include <dev/ofw/openfirm.h>
 
 #include <machine/bus.h>
+#include <machine/intr.h>
 #include <machine/vmparam.h>
 
 struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
-
-#ifdef SOC_OMAP4
-static int
-fdt_gic_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
-    int *pol)
-{
-
-	if (!fdt_is_compatible(node, "arm,gic"))
-		return (ENXIO);
-
-	*interrupt = fdt32_to_cpu(intr[0]);
-	*trig = INTR_TRIGGER_CONFORM;
-	*pol = INTR_POLARITY_CONFORM;
-
-	return (0);
-}
-#endif
 
 #ifdef SOC_TI_AM335X
 static int
@@ -73,7 +57,8 @@ fdt_aintc_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
     int *pol)
 {
 
-	if (!fdt_is_compatible(node, "ti,aintc"))
+	if (!fdt_is_compatible(node, "ti,aintc") &&
+	    !fdt_is_compatible(node, "ti,am33xx-intc"))
 		return (ENXIO);
 
 	*interrupt = fdt32_to_cpu(intr[0]);
@@ -86,7 +71,7 @@ fdt_aintc_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
 
 fdt_pic_decode_t fdt_pic_table[] = {
 #ifdef SOC_OMAP4
-	&fdt_gic_decode_ic,
+	&gic_decode_fdt,
 #endif
 #ifdef SOC_TI_AM335X
 	&fdt_aintc_decode_ic,

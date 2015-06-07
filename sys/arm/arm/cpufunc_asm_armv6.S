@@ -35,9 +35,9 @@
  */
 
 /*
- * $FreeBSD: head/sys/arm/arm/cpufunc_asm_armv6.S 280813 2015-03-29 18:44:15Z andrew $
+ * $FreeBSD: head/sys/arm/arm/cpufunc_asm_armv6.S 283366 2015-05-24 12:20:11Z andrew $
  */
- 
+
 #include <machine/asm.h>
 
 	.arch	armv6
@@ -69,7 +69,7 @@ ENTRY(armv6_dcache_wb_range)
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 	RET
 END(armv6_dcache_wb_range)
-	
+
 /* LINTSTUB: void armv6_dcache_wbinv_range(vaddr_t, vsize_t); */
 ENTRY(armv6_dcache_wbinv_range)
 	add	r1, r1, r0
@@ -78,7 +78,7 @@ ENTRY(armv6_dcache_wbinv_range)
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 	RET
 END(armv6_dcache_wbinv_range)
-	
+
 /*
  * Note, we must not invalidate everything.  If the range is too big we
  * must use wb-inv of the entire cache.

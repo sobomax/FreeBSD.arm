@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libdpv/dprompt.c 274116 2014-11-04 23:46:01Z dteske $");
+__FBSDID("$FreeBSD: head/lib/libdpv/dprompt.c 283975 2015-06-04 02:48:04Z araujo $");
 
 #include <sys/types.h>
 
@@ -391,7 +391,6 @@ dprompt_add_files(struct dpv_file_node *file_list,
 	enum dprompt_state dstate;
 	int estext_lsize;
 	int estext_rsize;
-	int estext_size;
 	int flabel_size;
 	int hlen;
 	int lsize;
@@ -559,13 +558,11 @@ dprompt_add_files(struct dpv_file_node *file_list,
 			bg_code = "\\Zr\\Z1"; /* Red */
 			estext_lsize = fail_lsize;
 			estext_rsize = fail_rsize;
-			estext_size = fail_size;
 			estext = fail;
 		} else { /* e.g., DPV_STATUS_DONE */
 			bg_code = "\\Zr\\Z2"; /* Green */
 			estext_lsize = done_lsize;
 			estext_rsize = done_rsize;
-			estext_size = done_size;
 			estext = done;
 		}
 		switch (dstate) {

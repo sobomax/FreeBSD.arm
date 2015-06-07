@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/exec_machdep.c 279937 2015-03-12 21:15:38Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/exec_machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
 
 #include "opt_compat.h"
 #include "opt_fpu_emu.h"
@@ -224,12 +224,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	} else {
 		usfp = (void *)(tf->fixreg[1] - rndfsize);
 	}
-
-	/*
-	 * Translate the signal if appropriate (Linux emu ?)
-	 */
-	if (p->p_sysent->sv_sigtbl && sig <= p->p_sysent->sv_sigsize)
-		sig = p->p_sysent->sv_sigtbl[_SIG_IDX(sig)];
 
 	/*
 	 * Save the floating-point state, if necessary, then copy it.

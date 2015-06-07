@@ -88,7 +88,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/es137x.c 254263 2013-08-12 23:30:01Z scottl $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/es137x.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #define MEM_MAP_REG 0x14
 
@@ -1741,7 +1741,7 @@ es_pci_attach(device_t dev)
 
 	es->st = rman_get_bustag(es->reg);
 	es->sh = rman_get_bushandle(es->reg);
-	callout_init(&es->poll_timer, CALLOUT_MPSAFE);
+	callout_init(&es->poll_timer, 1);
 	es->poll_ticks = 1;
 
 	if (resource_int_value(device_get_name(dev),

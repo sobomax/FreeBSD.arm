@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_machdep.c 277987 2015-01-31 18:39:32Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_machdep.c 282267 2015-04-30 03:15:07Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -62,11 +62,12 @@ __FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_machdep.c 277987 2015-01-31 18:39:3
 #include <machine/ofw_machdep.h>
 #include <machine/trap.h>
 
+static void	*fdt;
+int		ofw_real_mode;
+
 #ifdef AIM
 extern register_t ofmsr[5];
 extern void	*openfirmware_entry;
-static void	*fdt;
-int		ofw_real_mode;
 char		save_trap_init[0x2f00];          /* EXC_LAST */
 char		save_trap_of[0x2f00];            /* EXC_LAST */
 
@@ -336,10 +337,10 @@ ofw_mem_regions(struct mem_region *memp, int *memsz,
 	*availsz = asz;
 }
 
-#ifdef AIM
 void
 OF_initial_setup(void *fdt_ptr, void *junk, int (*openfirm)(void *))
 {
+#ifdef AIM
 	ofmsr[0] = mfmsr();
 	#ifdef __powerpc64__
 	ofmsr[0] &= ~PSL_SF;
@@ -348,22 +349,25 @@ OF_initial_setup(void *fdt_ptr, void *junk, int (*openfirm)(void *))
 	__asm __volatile("mfsprg1 %0" : "=&r"(ofmsr[2]));
 	__asm __volatile("mfsprg2 %0" : "=&r"(ofmsr[3]));
 	__asm __volatile("mfsprg3 %0" : "=&r"(ofmsr[4]));
+	openfirmware_entry = openfirm;
 
 	if (ofmsr[0] & PSL_DR)
 		ofw_real_mode = 0;
 	else
 		ofw_real_mode = 1;
 
+	ofw_save_trap_vec(save_trap_init);
+#else
+	ofw_real_mode = 1;
+#endif
+
 	fdt = fdt_ptr;
-	openfirmware_entry = openfirm;
 
 	#ifdef FDT_DTB_STATIC
 	/* Check for a statically included blob */
 	if (fdt == NULL)
 		fdt = &fdt_static_dtb;
 	#endif
-
-	ofw_save_trap_vec(save_trap_init);
 }
 
 boolean_t
@@ -371,6 +375,7 @@ OF_bootstrap()
 {
 	boolean_t status = FALSE;
 
+#ifdef AIM
 	if (openfirmware_entry != NULL) {
 		if (ofw_real_mode) {
 			status = OF_install(OFW_STD_REAL, 0);
@@ -386,18 +391,22 @@ OF_bootstrap()
 			return status;
 
 		OF_init(openfirmware);
-	} else if (fdt != NULL) {
+	} else
+#endif
+	if (fdt != NULL) {
 		status = OF_install(OFW_FDT, 0);
 
 		if (status != TRUE)
 			return status;
 
 		OF_init(fdt);
+		OF_interpret("perform-fixup", 0);
 	} 
 
 	return (status);
 }
 
+#ifdef AIM
 void
 ofw_quiesce(void)
 {

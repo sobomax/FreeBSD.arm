@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmd/sha256c.c 260554 2014-01-11 20:49:22Z jmg $");
+__FBSDID("$FreeBSD: head/lib/libmd/sha256c.c 282774 2015-05-11 16:45:33Z thomas $");
 
 #include <sys/endian.h>
 #include <sys/types.h>
@@ -295,3 +295,18 @@ SHA256_Final(unsigned char digest[32], SHA256_CTX * ctx)
 	/* Clear the context state */
 	memset((void *)ctx, 0, sizeof(*ctx));
 }
+
+#ifdef WEAK_REFS
+/* When building libmd, provide weak references. Note: this is not
+   activated in the context of compiling these sources for internal
+   use in libcrypt.
+ */
+#undef SHA256_Init
+__weak_reference(_libmd_SHA256_Init, SHA256_Init);
+#undef SHA256_Update
+__weak_reference(_libmd_SHA256_Update, SHA256_Update);
+#undef SHA256_Final
+__weak_reference(_libmd_SHA256_Final, SHA256_Final);
+#undef SHA256_Transform
+__weak_reference(_libmd_SHA256_Transform, SHA256_Transform);
+#endif

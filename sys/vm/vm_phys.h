@@ -28,7 +28,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/vm_phys.h 276439 2014-12-31 00:54:38Z alc $
+ * $FreeBSD: head/sys/vm/vm_phys.h 282621 2015-05-08 06:02:23Z adrian $
  */
 
 /*
@@ -61,6 +61,7 @@ struct vm_phys_seg {
 };
 
 extern struct mem_affinity *mem_affinity;
+extern int *mem_locality;
 extern int vm_ndomains;
 extern struct vm_phys_seg vm_phys_segs[];
 extern int vm_phys_nsegs;

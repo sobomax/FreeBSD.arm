@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_sdhci.c 270948 2014-09-01 19:20:34Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_sdhci.c 283291 2015-05-22 17:05:21Z jkim $");
 
 /*
  * SDHCI driver glue for Freescale i.MX SoC family.
@@ -745,7 +745,7 @@ imx_sdhci_attach(device_t dev)
 		sc->force_card_present = true;
 	}
 
-	callout_init(&sc->r1bfix_callout, true);
+	callout_init(&sc->r1bfix_callout, 1);
 	sdhci_init_slot(dev, &sc->slot, 0);
 
 	bus_generic_probe(dev);

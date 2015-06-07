@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tdma.c 265588 2014-05-07 19:07:45Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tdma.c 283744 2015-05-29 14:35:16Z glebius $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -259,7 +259,7 @@ ath_tdma_config(struct ath_softc *sc, struct ieee80211vap *vap)
 	if (vap == NULL) {
 		vap = TAILQ_FIRST(&ic->ic_vaps);   /* XXX */
 		if (vap == NULL) {
-			if_printf(ifp, "%s: no vaps?\n", __func__);
+			device_printf(sc->sc_dev, "%s: no vaps?\n", __func__);
 			return;
 		}
 	}

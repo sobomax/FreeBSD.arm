@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/pci/pcib_private.h 281874 2015-04-22 22:02:27Z jhb $
+ * $FreeBSD: head/sys/dev/pci/pcib_private.h 282783 2015-05-11 20:58:05Z jhibbits $
  */
 
 #ifndef __PCIB_PRIVATE_H__
@@ -145,6 +145,7 @@ void		pcib_setup_secbus(device_t dev, struct pcib_secbus *bus,
 #endif
 int		pcib_attach(device_t dev);
 void		pcib_attach_common(device_t dev);
+void		pcib_bridge_init(device_t dev);	
 #ifdef NEW_PCIB
 const char	*pcib_child_name(device_t child);
 #endif

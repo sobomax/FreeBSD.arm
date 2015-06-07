@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/boot/efi/loader/arch/i386/start.S 281322 2015-04-09 19:48:42Z emaste $
+ *	$FreeBSD: head/sys/boot/efi/loader/arch/i386/start.S 282728 2015-05-10 13:30:21Z ian $
  */
 
 	.text
@@ -53,9 +53,7 @@ ENTRY(_start)
 	addl	$_DYNAMIC-0b, %ebx
 	pushl	%ebx		/* dynamic */
 	pushl	%eax		/* ImageBase */
-	call	_reloc
-	cmpl	$EFI_SUCCESS, %eax
-	jne	1f
+	call	self_reloc
 	popl	%ebx		/* remove ImageBase from the stack */
 	popl	%ebx		/* remove dynamic from the stack */
 	call	efi_main

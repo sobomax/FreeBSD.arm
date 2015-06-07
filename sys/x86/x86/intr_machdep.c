@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/x86/intr_machdep.c 280260 2015-03-19 13:57:47Z kib $
+ * $FreeBSD: head/sys/x86/x86/intr_machdep.c 282274 2015-04-30 15:48:48Z jhb $
  */
 
 /*
@@ -531,13 +531,6 @@ intr_shuffle_irqs(void *arg __unused)
 {
 	struct intsrc *isrc;
 	int i;
-
-#ifdef XEN
-	/*
-	 * Doesn't work yet
-	 */
-	return;
-#endif
 
 	/* Don't bother on UP. */
 	if (mp_ncpus == 1)

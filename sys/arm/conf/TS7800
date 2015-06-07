@@ -1,11 +1,12 @@
 #
 # Custom kernel for the TS-7800 board.
 #
-# $FreeBSD: head/sys/arm/conf/TS7800 279837 2015-03-10 02:33:51Z ian $
+# $FreeBSD: head/sys/arm/conf/TS7800 282576 2015-05-07 12:38:23Z andrew $
 #
 
 ident		TS7800
-include		"../mv/orion/std.ts7800"
+include 	"std.arm"
+include 	"../mv/orion/std.ts7800"
 
 options 	SOC_MV_ORION
 

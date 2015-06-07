@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 278682 2015-02-13 17:33:27Z jhb $
+# $FreeBSD: head/share/mk/bsd.prog.mk 282420 2015-05-04 16:28:54Z bapt $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -49,10 +49,6 @@ STRIP?=	-s
 
 .if defined(NO_SHARED) && (${NO_SHARED} != "no" && ${NO_SHARED} != "NO")
 LDFLAGS+= -static
-.endif
-
-.if defined(USEPRIVATELIB)
-LDFLAGS+= -L${_SHLIBDIRPREFIX}${LIBPRIVATEDIR} -rpath ${LIBPRIVATEDIR}
 .endif
 
 .if ${MK_DEBUG_FILES} != "no"

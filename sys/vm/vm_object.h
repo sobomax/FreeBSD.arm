@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm_object.h 280327 2015-03-21 17:56:55Z alc $
+ * $FreeBSD: head/sys/vm/vm_object.h 283924 2015-06-02 18:37:04Z vangyzen $
  */
 
 /*
@@ -322,6 +322,7 @@ boolean_t vm_object_sync(vm_object_t, vm_ooffset_t, vm_size_t, boolean_t,
     boolean_t);
 void vm_object_unwire(vm_object_t object, vm_ooffset_t offset,
     vm_size_t length, uint8_t queue);
+struct vnode *vm_object_vnode(vm_object_t object);
 #endif				/* _KERNEL */
 
 #endif				/* _VM_OBJECT_ */

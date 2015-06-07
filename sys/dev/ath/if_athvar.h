@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_athvar.h 272292 2014-09-30 03:19:29Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_athvar.h 283535 2015-05-25 16:37:41Z adrian $
  */
 
 /*
@@ -481,7 +481,8 @@ struct ath_vap {
 	struct ath_txq	av_mcastq;	/* buffered mcast s/w queue */
 
 	void		(*av_recv_mgmt)(struct ieee80211_node *,
-				struct mbuf *, int, int, int);
+				struct mbuf *, int,
+				const struct ieee80211_rx_stats *, int, int);
 	int		(*av_newstate)(struct ieee80211vap *,
 				enum ieee80211_state, int);
 	void		(*av_bmiss)(struct ieee80211vap *);

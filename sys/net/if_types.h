@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_types.h	8.3 (Berkeley) 4/28/95
- * $FreeBSD: head/sys/net/if_types.h 281643 2015-04-17 06:39:15Z glebius $
+ * $FreeBSD: head/sys/net/if_types.h 282355 2015-05-02 20:37:40Z glebius $
  * $NetBSD: if_types.h,v 1.16 2000/04/19 06:30:53 itojun Exp $
  */
 
@@ -254,4 +254,20 @@ typedef enum {
 	IFT_PFLOG	= 0xf6,		/* PF packet filter logging */
 	IFT_PFSYNC	= 0xf7,		/* PF packet filter synchronization */
 } ifType;
+
+/*
+ * Some (broken) software uses #ifdef IFT_TYPE to check whether
+ * an operating systems supports certain interface type.  Lack of
+ * ifdef leads to a piece of functionality compiled out.
+ */
+#ifndef BURN_BRIDGES
+#define	IFT_BRIDGE	IFT_BRIDGE
+#define	IFT_PPP		IFT_PPP
+#define	IFT_PROPVIRTUAL	IFT_PROPVIRTUAL
+#define	IFT_L2VLAN	IFT_L2VLAN
+#define	IFT_L3IPVLAN	IFT_L3IPVLAN
+#define	IFT_IEEE1394	IFT_IEEE1394
+#define	IFT_INFINIBAND	IFT_INFINIBAND
+#endif
+
 #endif /* !_NET_IF_TYPES_H_ */

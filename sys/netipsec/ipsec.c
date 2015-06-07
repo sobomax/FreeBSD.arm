@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.c 281695 2015-04-18 16:58:33Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.c 282048 2015-04-27 01:12:51Z ae $	*/
 /*	$KAME: ipsec.c,v 1.103 2001/05/24 07:14:18 sakane Exp $	*/
 
 /*-
@@ -238,6 +238,7 @@ SYSCTL_VNET_PCPUSTAT(_net_inet6_ipsec6, IPSECCTL_STATS, ipsecstats,
     struct ipsecstat, ipsec6stat, "IPsec IPv6 statistics.");
 #endif /* INET6 */
 
+static int ipsec_in_reject(struct secpolicy *, struct mbuf *);
 static int ipsec_setspidx_inpcb(struct mbuf *, struct inpcb *);
 static int ipsec_setspidx(struct mbuf *, struct secpolicyindex *, int);
 static void ipsec4_get_ulp(struct mbuf *m, struct secpolicyindex *, int);
@@ -1191,7 +1192,7 @@ ipsec_get_reqlevel(struct ipsecrequest *isr)
  *	0: valid
  *	1: invalid
  */
-int
+static int
 ipsec_in_reject(struct secpolicy *sp, struct mbuf *m)
 {
 	struct ipsecrequest *isr;

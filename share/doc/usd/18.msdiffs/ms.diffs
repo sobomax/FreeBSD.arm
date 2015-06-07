@@ -27,7 +27,7 @@
 .\"
 .\"	@(#)ms.diffs	8.1 (Berkeley) 6/8/93
 .\"
-.\"	$FreeBSD: head/share/doc/usd/18.msdiffs/ms.diffs 263142 2014-03-14 03:07:51Z eadler $
+.\"	$FreeBSD: head/share/doc/usd/18.msdiffs/ms.diffs 282218 2015-04-29 12:57:55Z bapt $
 .\"
 .nr LL 6.5i
 .nr FL 6.0i
@@ -37,6 +37,7 @@
 .AM
 .OH 'A Revised Version of \*ms''USD:18-%'
 .EH 'USD:18-%''A Revised Version of \*ms'
+.ND
 .TL
 A Revised Version of \*ms
 .AU

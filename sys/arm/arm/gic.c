@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/gic.c 280905 2015-03-31 11:50:46Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/gic.c 283366 2015-05-24 12:20:11Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -197,8 +197,8 @@ gic_decode_fdt(uint32_t iparent, uint32_t *intr, int *interrupt,
 	static u_int num_intr_cells;
 
 	if (num_intr_cells == 0) {
-		if (OF_searchencprop(OF_node_from_xref(iparent), 
-		    "#interrupt-cells", &num_intr_cells, 
+		if (OF_searchencprop(OF_node_from_xref(iparent),
+		    "#interrupt-cells", &num_intr_cells,
 		    sizeof(num_intr_cells)) == -1) {
 			num_intr_cells = 1;
 		}

@@ -25,13 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/md.c 200460 2009-12-13 01:20:32Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/common/md.c 282064 2015-04-27 07:38:46Z scottl $");
 
+#include <stand.h>
 #include <sys/param.h>
 #include <sys/endian.h>
 #include <sys/queue.h>
 #include <machine/stdarg.h>
-#include <stand.h>
 
 #include "bootstrap.h"
 

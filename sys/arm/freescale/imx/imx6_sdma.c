@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_sdma.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_sdma.c 284077 2015-06-06 14:26:40Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,6 +48,7 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_sdma.c 281085 2015-04-04 21:
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_kern.h>
+#include <vm/pmap.h>
 
 #include <dev/fdt/fdt_common.h>
 #include <dev/ofw/openfirm.h>

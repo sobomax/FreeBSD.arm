@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/files.arm 281466 2015-04-12 13:00:58Z andrew $
+# $FreeBSD: head/sys/conf/files.arm 282715 2015-05-10 09:33:03Z andrew $
 arm/arm/autoconf.c		standard
 arm/arm/bcopy_page.S		standard
 arm/arm/bcopyinout.S		standard
@@ -37,6 +37,7 @@ arm/arm/fiq.c			standard
 arm/arm/fiq_subr.S		standard
 arm/arm/fusu.S			standard
 arm/arm/gdb_machdep.c		optional	gdb
+arm/arm/gic.c			optional	gic
 arm/arm/identcpu.c		standard
 arm/arm/in_cksum.c		optional	inet | inet6
 arm/arm/in_cksum_arm.S		optional	inet | inet6

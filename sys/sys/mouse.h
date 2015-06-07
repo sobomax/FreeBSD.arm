@@ -20,7 +20,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/mouse.h 281440 2015-04-11 18:44:07Z rpaulo $
+ * $FreeBSD: head/sys/sys/mouse.h 282734 2015-05-10 20:36:57Z rpaulo $
  */
 
 #ifndef _SYS_MOUSE_H_
@@ -128,6 +128,13 @@ typedef struct synapticshw {
 	int verticalScroll;
 	int horizontalScroll;
 	int verticalWheel;
+	int capEWmode;
+	int minimumXCoord;
+	int minimumYCoord;
+	int maximumXCoord;
+	int maximumYCoord;
+	int infoXupmm;
+	int infoYupmm;
 } synapticshw_t;
 
 /* iftype */

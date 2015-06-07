@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/gdb/gdb_cons.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/gdb/gdb_cons.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -76,7 +76,7 @@ gdb_cninit(struct consdev *cp)
 	/* setup tx buffer and callout */
 	if (c->npending == -1) {
 		c->npending = 0;
-		callout_init(&c->flush, CALLOUT_MPSAFE);
+		callout_init(&c->flush, 1);
 		cp->cn_arg = c;
 	}
 }

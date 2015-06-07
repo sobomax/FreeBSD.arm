@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: head/sbin/ipfw/ipfw2.h 272840 2014-10-09 19:32:35Z melifaro $
+ * $FreeBSD: head/sbin/ipfw/ipfw2.h 282004 2015-04-26 10:53:35Z melifaro $
  */
 
 /*
@@ -344,8 +344,6 @@ int fill_ext6hdr(struct _ipfw_insn *cmd, char *av);
 
 /* tables.c */
 struct _ipfw_obj_ctlv;
-char *table_search_ctlv(struct _ipfw_obj_ctlv *ctlv, uint16_t idx);
-void table_sort_ctlv(struct _ipfw_obj_ctlv *ctlv);
 int table_check_name(char *tablename);
 void ipfw_list_ta(int ac, char *av[]);
 void ipfw_list_values(int ac, char *av[]);

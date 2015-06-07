@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/cpsw/if_cpswvar.h 246276 2013-02-03 01:08:01Z kientzle $
+ * $FreeBSD: head/sys/arm/ti/cpsw/if_cpswvar.h 283276 2015-05-22 03:16:18Z gonzo $
  */
 
 #ifndef	_IF_CPSWVAR_H
@@ -78,7 +78,9 @@ struct cpsw_softc {
 	device_t	miibus;
 	struct mii_data	*mii;
 	/* We expect 1 memory resource and 4 interrupts from the device tree. */
-	struct resource	*res[1 + CPSW_INTR_COUNT];
+	struct resource	*mem_res;
+	int		mem_rid;
+	struct resource	*irq_res[CPSW_INTR_COUNT];
 
 	/* Interrupts get recorded here as we initialize them. */
 	/* Interrupt teardown just walks this list. */

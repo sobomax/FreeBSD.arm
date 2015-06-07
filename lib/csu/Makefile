@@ -1,8 +1,7 @@
-# $FreeBSD: head/lib/csu/Makefile 250863 2013-05-21 17:47:53Z marcel $
+# $FreeBSD: head/lib/csu/Makefile 283125 2015-05-19 21:00:53Z emaste $
 
-ARCH= ${MACHINE_ARCH:S/i386/i386-elf/}
-.if exists(${.CURDIR}/${ARCH})
-SUBDIR+= ${ARCH}
+.if exists(${.CURDIR}/${MACHINE_ARCH})
+SUBDIR+= ${MACHINE_ARCH}
 .else
 SUBDIR+= ${MACHINE_CPUARCH}
 .endif

@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_input.c 277054 2015-01-12 08:33:04Z hiren $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_input.c 283124 2015-05-19 19:17:20Z hiren $");
 
 #include "opt_ipfw.h"		/* for ipfw_fwd	*/
 #include "opt_inet.h"
@@ -1542,7 +1542,7 @@ tcp_do_segment(struct mbuf *m, struct tcphdr *th, struct socket *so,
 		tcp_timer_activate(tp, TT_KEEP, TP_KEEPIDLE(tp));
 
 	/*
-	 * Unscale the window into a 32-bit value.
+	 * Scale up the window into a 32-bit value.
 	 * For the SYN_SENT state the scale is zero.
 	 */
 	tiwin = th->th_win << tp->snd_scale;

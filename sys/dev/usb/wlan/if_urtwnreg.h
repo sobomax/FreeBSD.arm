@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: head/sys/dev/usb/wlan/if_urtwnreg.h 264912 2014-04-25 08:01:22Z kevlo $
+ * $FreeBSD: head/sys/dev/usb/wlan/if_urtwnreg.h 282623 2015-05-08 09:01:00Z kevlo $
  */
 
 #define URTWN_CONFIG_INDEX	0
@@ -177,13 +177,13 @@
 #define R92C_RD_NAV_NXT			0x544
 #define R92C_NAV_PROT_LEN		0x546
 #define R92C_BCN_CTRL			0x550
-#define R92C_USTIME_TSF			0x551
 #define R92C_MBID_NUM			0x552
 #define R92C_DUAL_TSF_RST		0x553
 #define R92C_BCN_INTERVAL		0x554
 #define R92C_DRVERLYINT			0x558
 #define R92C_BCNDMATIM			0x559
 #define R92C_ATIMWND			0x55a
+#define R92C_USTIME_TSF			0x55c
 #define R92C_BCN_MAX_ERR		0x55d
 #define R92C_RXTSF_OFFSET_CCK		0x55e
 #define R92C_RXTSF_OFFSET_OFDM		0x55f

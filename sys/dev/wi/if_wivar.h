@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/wi/if_wivar.h 194023 2009-06-11 17:14:28Z avg $
+ * $FreeBSD: head/sys/dev/wi/if_wivar.h 283535 2015-05-25 16:37:41Z adrian $
  */
 
 /*
@@ -61,7 +61,7 @@ struct wi_vap {
 	struct ieee80211_beacon_offsets	wv_bo;
 
 	void		(*wv_recv_mgmt)(struct ieee80211_node *, struct mbuf *,
-			    int, int, int);
+			    int, const struct ieee80211_rx_stats *rxs, int, int);
 	int		(*wv_newstate)(struct ieee80211vap *,
 			    enum ieee80211_state, int);
 };

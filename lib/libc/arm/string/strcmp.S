@@ -30,13 +30,14 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/strcmp.S 270882 2014-08-31 17:21:51Z ian $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/strcmp.S 283831 2015-05-31 14:04:11Z andrew $");
 
 ENTRY(strcmp)
 1:
 	ldrb	r2, [r0], #1
 	ldrb	r3, [r1], #1
 	cmp	r2, #1
+	it	cs
 	cmpcs	r2, r3
 	beq	1b
 	sub	r0, r2, r3

@@ -15,9 +15,9 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CHROMEBOOK 269369 2014-08-01 06:20:25Z br $
+# $FreeBSD: head/sys/arm/conf/CHROMEBOOK 282576 2015-05-07 12:38:23Z andrew $
 
-include		"EXYNOS5250"
+include 	"EXYNOS5250"
 ident		CHROMEBOOK
 
 hints		"CHROMEBOOK.hints"

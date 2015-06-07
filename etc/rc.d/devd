@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/devd 263758 2014-03-26 02:25:40Z mjg $
+# $FreeBSD: head/etc/rc.d/devd 282145 2015-04-28 13:13:23Z glebius $
 #
 
 # PROVIDE: devd
-# REQUIRE: netif
+# REQUIRE: netif ldconfig
 # BEFORE: NETWORKING mountcritremote
 # KEYWORD: nojail shutdown
 

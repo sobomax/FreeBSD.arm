@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/clang/include/llvm/Config/llvm-config.h 280031 2015-03-15 13:31:13Z dim $ */
+/* $FreeBSD: head/lib/clang/include/llvm/Config/llvm-config.h 283526 2015-05-25 13:43:03Z dim $ */
 /* include/llvm/Config/llvm-config.h.  Generated from llvm-config.h.in by configure.  */
 /*===------- llvm/Config/llvm-config.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
@@ -95,9 +95,9 @@
 #define LLVM_VERSION_MINOR 6
 
 /* Patch version of the LLVM API */
-#define LLVM_VERSION_PATCH 0
+#define LLVM_VERSION_PATCH 1
 
 /* LLVM version string */
-#define LLVM_VERSION_STRING "3.6.0"
+#define LLVM_VERSION_STRING "3.6.1"
 
 #endif

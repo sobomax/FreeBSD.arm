@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/ctfdump/Makefile 211187 2010-08-11 18:00:45Z rpaulo $
+# $FreeBSD: head/cddl/usr.bin/ctfdump/Makefile 283129 2015-05-19 21:57:11Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/tools/ctf/common
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/tools/ctf/dump
@@ -17,7 +17,6 @@ CFLAGS+=	-I${OPENSOLARIS_USR_DISTDIR} \
 		-I${OPENSOLARIS_USR_DISTDIR}/tools/ctf/common \
 		-I${OPENSOLARIS_SYS_DISTDIR}/uts/common
 
-DPADD=		${LIBPTHREAD} ${LIBELF} ${LIBZ}
-LDADD=		-lpthread -lelf -lz
+LIBADD=		elf z
 
 .include <bsd.prog.mk>

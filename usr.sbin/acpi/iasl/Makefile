@@ -1,11 +1,11 @@
-# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 278970 2015-02-18 20:33:00Z jkim $
+# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 283092 2015-05-18 23:46:11Z jkim $
 
 PROG=	iasl
 
 # common
 SRCS=	adfile.c adisasm.c adwalk.c ahids.c ahpredef.c		\
-	ahuuids.c cmfsize.c dmextern.c dmrestag.c dmtable.c	\
-	dmtbdump.c dmtbinfo.c getopt.c
+	ahtable.c ahuuids.c cmfsize.c dmextern.c dmrestag.c	\
+	dmtable.c dmtbdump.c dmtbinfo.c getopt.c
 
 # compiler
 SRCS+=	aslanalyze.c aslascii.c aslbtypes.c aslcodegen.c	\

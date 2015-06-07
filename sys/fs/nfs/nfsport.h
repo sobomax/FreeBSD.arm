@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsport.h 276140 2014-12-23 14:24:36Z rmacklem $
+ * $FreeBSD: head/sys/fs/nfs/nfsport.h 281960 2015-04-25 00:52:01Z rmacklem $
  */
 
 #ifndef _NFS_NFSPORT_H_
@@ -950,7 +950,7 @@ struct nfsreq {
 };
 
 #ifndef NFS_MAXBSIZE
-#define	NFS_MAXBSIZE	MAXBSIZE
+#define	NFS_MAXBSIZE	MAXBCACHEBUF
 #endif
 
 /*

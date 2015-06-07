@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_dynamic.c 274225 2014-11-07 09:39:05Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_dynamic.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #define        DEB(x)
 #define        DDB(x) x
@@ -1395,7 +1395,7 @@ ipfw_dyn_init(struct ip_fw_chain *chain)
 	/* Enforce limit on dynamic rules */
 	uma_zone_set_max(V_ipfw_dyn_rule_zone, V_dyn_max);
 
-        callout_init(&V_ipfw_timeout, CALLOUT_MPSAFE);
+        callout_init(&V_ipfw_timeout, 1);
 
 	/*
 	 * This can potentially be done on first dynamic rule

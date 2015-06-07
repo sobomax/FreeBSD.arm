@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/mirror/g_mirror.c 280758 2015-03-27 12:45:20Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/mirror/g_mirror.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -2935,7 +2935,7 @@ g_mirror_create(struct g_class *mp, const struct g_mirror_metadata *md)
 	LIST_INIT(&sc->sc_disks);
 	TAILQ_INIT(&sc->sc_events);
 	mtx_init(&sc->sc_events_mtx, "gmirror:events", NULL, MTX_DEF);
-	callout_init(&sc->sc_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->sc_callout, 1);
 	mtx_init(&sc->sc_done_mtx, "gmirror:done", NULL, MTX_DEF);
 	sc->sc_state = G_MIRROR_DEVICE_STATE_STARTING;
 	gp->softc = sc;

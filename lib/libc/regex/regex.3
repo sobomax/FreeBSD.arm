@@ -30,7 +30,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)regex.3	8.4 (Berkeley) 3/20/94
-.\" $FreeBSD: head/lib/libc/regex/regex.3 165903 2007-01-09 00:28:16Z imp $
+.\" $FreeBSD: head/lib/libc/regex/regex.3 282007 2015-04-26 10:55:39Z bapt $
 .\"
 .Dd August 17, 2005
 .Dt REGEX 3
@@ -420,10 +420,12 @@ it should have been the result from the most recent
 using that
 .Ft regex_t .
 The
-.Fn ( regerror
+.Po
+.Fn regerror
 may be able to supply a more detailed message using information
 from the
-.Ft regex_t . )
+.Ft regex_t .
+.Pc
 The
 .Fn regerror
 function

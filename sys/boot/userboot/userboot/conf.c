@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/conf.c 265165 2014-05-01 00:12:24Z grehan $");
+__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/conf.c 283939 2015-06-03 10:10:00Z avg $");
 
 #include <stand.h>
 
@@ -65,10 +65,11 @@ struct fs_ops *file_system[] = {
 	&host_fsops,
 	&ufs_fsops,
 	&cd9660_fsops,
-	&gzipfs_fsops,
 #if defined(USERBOOT_ZFS_SUPPORT)
 	&zfs_fsops,
 #endif
+	&gzipfs_fsops,
+	&bzipfs_fsops,
 	NULL
 };
 

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: head/sys/netinet6/nd6.h 279676 2015-03-05 21:27:49Z hrs $
+ * $FreeBSD: head/sys/netinet6/nd6.h 282805 2015-05-12 03:31:57Z hrs $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -87,8 +87,7 @@ struct nd_ifinfo {
 #define ND6_IFF_AUTO_LINKLOCAL	0x20
 #define	ND6_IFF_NO_RADR		0x40
 #define ND6_IFF_NO_PREFER_IFACE	0x80 /* XXX: not related to ND. */
-#define ND6_IFF_IGNORELOOP	0x100
-#define ND6_IFF_NO_DAD		0x200
+#define ND6_IFF_NO_DAD		0x100
 
 #define	ND6_CREATE		LLE_CREATE
 #define	ND6_EXCLUSIVE		LLE_EXCLUSIVE

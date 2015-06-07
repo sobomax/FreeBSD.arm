@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_capture.c 217326 2011-01-12 19:54:19Z mdf $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_capture.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -331,8 +331,7 @@ db_capture_usage(void)
 }
 
 void
-db_capture_cmd(db_expr_t addr, boolean_t have_addr, db_expr_t count,
-    char *modif)
+db_capture_cmd(db_expr_t addr, bool have_addr, db_expr_t count, char *modif)
 {
 	int t;
 

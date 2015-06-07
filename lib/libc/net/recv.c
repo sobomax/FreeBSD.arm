@@ -31,10 +31,11 @@
 static char sccsid[] = "@(#)recv.c	8.2 (Berkeley) 2/21/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/recv.c 251575 2013-06-09 14:31:59Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/net/recv.c 282729 2015-05-10 14:50:50Z jilles $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "libc_private.h"
 
 #include <stddef.h>
 
@@ -48,5 +49,8 @@ recv(s, buf, len, flags)
 	 * POSIX says recv() shall be a cancellation point, so call the
 	 * cancellation-enabled recvfrom() and not _recvfrom().
 	 */
-	return (recvfrom(s, buf, len, flags, NULL, 0));
+	return (((ssize_t (*)(int, void *, size_t, int,
+	    struct sockaddr *, socklen_t *))
+	    __libc_interposing[INTERPOS_recvfrom])(s, buf, len, flags,
+	   NULL, NULL));
 }

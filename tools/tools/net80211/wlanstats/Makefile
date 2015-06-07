@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/net80211/wlanstats/Makefile 275084 2014-11-25 22:37:27Z bapt $
+# $FreeBSD: head/tools/tools/net80211/wlanstats/Makefile 283002 2015-05-16 06:18:39Z adrian $
 
 .include <bsd.compiler.mk>
 
@@ -6,6 +6,7 @@ PROG=	wlanstats
 BINDIR=	/usr/local/bin
 MAN=
 LIBADD=	bsdstat
+CFLAGS+=-I${.CURDIR}/../../../../lib/libbsdstat/
 
 SRCS=	wlanstats.c main.c
 

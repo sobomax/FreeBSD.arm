@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_hostbridge.c 256711 2013-10-17 22:01:17Z grehan $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_hostbridge.c 283264 2015-05-21 20:11:52Z tychon $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_hostbridge.c 256711 2013-10-17 22:01:17Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_hostbridge.c 283264 2015-05-21 20:11:52Z tychon $");
 
 #include "pci_emul.h"
 
@@ -38,7 +38,7 @@ pci_hostbridge_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	/* config space */
 	pci_set_cfgdata16(pi, PCIR_VENDOR, 0x1275);	/* NetApp */
 	pci_set_cfgdata16(pi, PCIR_DEVICE, 0x1275);	/* NetApp */
-	pci_set_cfgdata8(pi, PCIR_HDRTYPE, PCIM_HDRTYPE_BRIDGE);
+	pci_set_cfgdata8(pi, PCIR_HDRTYPE, PCIM_HDRTYPE_NORMAL);
 	pci_set_cfgdata8(pi, PCIR_CLASS, PCIC_BRIDGE);
 	pci_set_cfgdata8(pi, PCIR_SUBCLASS, PCIS_BRIDGE_HOST);
 

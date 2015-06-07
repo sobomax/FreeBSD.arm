@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libdevstat/devstat.c 279346 2015-02-27 02:44:12Z ken $");
+__FBSDID("$FreeBSD: head/lib/libdevstat/devstat.c 283976 2015-06-04 02:50:13Z araujo $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -334,7 +334,6 @@ devstat_getdevs(kvm_t *kd, struct statinfo *stats)
 {
 	int error;
 	size_t dssize;
-	int oldnumdevs;
 	long oldgeneration;
 	int retval = 0;
 	struct devinfo *dinfo;
@@ -348,7 +347,6 @@ devstat_getdevs(kvm_t *kd, struct statinfo *stats)
 		return(-1);
 	}
 
-	oldnumdevs = dinfo->numdevs;
 	oldgeneration = dinfo->generation;
 
 	if (kd == NULL) {

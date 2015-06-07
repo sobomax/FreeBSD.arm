@@ -31,11 +31,11 @@
  */
 
 /**
- *      Cortex-A15 (and probably A7) Generic Timer
+ *      Cortex-A7, Cortex-A15, ARMv8 and later Generic Timer
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/generic_timer.c 281072 2015-04-04 09:07:31Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/generic_timer.c 282483 2015-05-05 14:17:15Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

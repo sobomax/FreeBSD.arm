@@ -75,7 +75,7 @@
 
 #include <machine/armreg.h>
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale_c3.S 275321 2014-11-30 12:20:24Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale_c3.S 283366 2015-05-24 12:20:11Z andrew $");
 
 /*
  * Size of the XScale core D-cache.
@@ -135,7 +135,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale_c3.S 275321 2014-11-30 1
 	ldr	r4, .Lblock_userspace_access			;	\
 	ldr	ip, [r4]					;	\
 	orr	r0, ip, #1					;	\
-	str	r0, [r4]	
+	str	r0, [r4]
 
 #define	XSCALE_CACHE_CLEAN_UNBLOCK					\
 	str	ip, [r3]					;	\
@@ -217,7 +217,7 @@ ENTRY(xscalec3_cache_syncI_rng)
 
 	CPWAIT_AND_RETURN(r0)
 END(xscalec3_cache_syncI_rng)
-	
+
 ENTRY(xscalec3_cache_purgeD_rng)
 
 	cmp	r1, #0x4000

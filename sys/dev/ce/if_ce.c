@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ce/if_ce.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/ce/if_ce.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 
@@ -103,10 +103,6 @@ __FBSDID("$FreeBSD: head/sys/dev/ce/if_ce.c 276750 2015-01-06 12:59:37Z rwatson 
 				printf ("%s: ", d->name); printf s;}})
 #define CE_DEBUG2(d,s)	({if (d->chan->debug>1) {\
 				printf ("%s: ", d->name); printf s;}})
-
-#ifndef CALLOUT_MPSAFE
-#define CALLOUT_MPSAFE		0
-#endif
 
 #ifndef IF_DRAIN
 #define IF_DRAIN(ifq) do {		\
@@ -609,7 +605,7 @@ static int ce_attach (device_t dev)
 		return (ENXIO);
 	}
 #if __FreeBSD_version >= 500000
-	callout_init (&led_timo[unit], CALLOUT_MPSAFE);
+	callout_init (&led_timo[unit], 1);
 #else
 	callout_init (&led_timo[unit]);
 #endif
@@ -661,7 +657,7 @@ static int ce_attach (device_t dev)
 			continue;
 		d = c->sys;
 
-		callout_init (&d->timeout_handle, CALLOUT_MPSAFE);
+		callout_init (&d->timeout_handle, 1);
 #ifdef NETGRAPH
 		if (ng_make_node_common (&typestruct, &d->node) != 0) {
 			printf ("%s: cannot make common node\n", d->name);
@@ -2558,7 +2554,7 @@ static int ce_modevent (module_t mod, int type, void *unused)
 		cdevsw_add (&ce_cdevsw);
 #endif
 #if __FreeBSD_version >= 500000
-		callout_init (&timeout_handle, CALLOUT_MPSAFE);
+		callout_init (&timeout_handle, 1);
 #else
 		callout_init (&timeout_handle);
 #endif

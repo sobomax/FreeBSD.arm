@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/linux_ptrace.c 273995 2014-11-02 22:58:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/linux_ptrace.c 283474 2015-05-24 17:47:20Z dchagin $");
 
 #include "opt_cpu.h"
 
@@ -91,8 +91,7 @@ static __inline int
 map_signum(int signum)
 {
 
-	if (signum > 0 && signum <= LINUX_SIGTBLSZ)
-		signum = linux_to_bsd_signal[_SIG_IDX(signum)];
+	signum = linux_to_bsd_signal(signum);
 	return ((signum == SIGSTOP)? 0 : signum);
 }
 

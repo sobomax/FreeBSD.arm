@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_asm.S 281916 2015-04-24 03:19:30Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_asm.S 283509 2015-05-25 01:22:56Z markj $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -34,8 +34,6 @@
 
 #include "assym.s"
 
-	.globl	calltrap
-	.type	calltrap,@function
 	ENTRY(dtrace_invop_start)
 
 	pushl	%eax			/* push %eax -- may be return value */

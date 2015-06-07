@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/acpi.c 272838 2014-10-09 19:02:32Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/acpi.c 282206 2015-04-28 23:44:47Z neel $
  */
 
 /*
@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/acpi.c 272838 2014-10-09 19:02:32Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/acpi.c 282206 2015-04-28 23:44:47Z neel $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -386,7 +386,7 @@ basl_fwrite_fadt(FILE *fp)
 	EFPRINTF(fp, "[0001]\t\tDuty Cycle Width : 00\n");
 	EFPRINTF(fp, "[0001]\t\tRTC Day Alarm Index : 00\n");
 	EFPRINTF(fp, "[0001]\t\tRTC Month Alarm Index : 00\n");
-	EFPRINTF(fp, "[0001]\t\tRTC Century Index : 00\n");
+	EFPRINTF(fp, "[0001]\t\tRTC Century Index : 32\n");
 	EFPRINTF(fp, "[0002]\t\tBoot Flags (decoded below) : 0000\n");
 	EFPRINTF(fp, "\t\t\tLegacy Devices Supported (V2) : 0\n");
 	EFPRINTF(fp, "\t\t\t8042 Present on ports 60/64 (V2) : 0\n");

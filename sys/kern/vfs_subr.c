@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_subr.c 281562 2015-04-15 20:16:31Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_subr.c 283602 2015-05-27 09:22:50Z kib $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -3502,8 +3502,9 @@ vfs_unmountall(void)
 	 */
 	while(!TAILQ_EMPTY(&mountlist)) {
 		mp = TAILQ_LAST(&mountlist, mntlist);
+		vfs_ref(mp);
 		error = dounmount(mp, MNT_FORCE, td);
-		if (error) {
+		if (error != 0) {
 			TAILQ_REMOVE(&mountlist, mp, mnt_list);
 			/*
 			 * XXX: Due to the way in which we mount the root

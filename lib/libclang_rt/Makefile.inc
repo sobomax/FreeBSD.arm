@@ -1,11 +1,11 @@
-# $FreeBSD: head/lib/libclang_rt/Makefile.inc 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/libclang_rt/Makefile.inc 283526 2015-05-25 13:43:03Z dim $
 
 .include <src.opts.mk>
 
 CRTARCH=${MACHINE_CPUARCH:C/amd64/x86_64/}
 CRTSRC=${.CURDIR}/../../../contrib/compiler-rt
 
-LIBDIR=/usr/lib/clang/3.6.0/lib/freebsd
+LIBDIR=/usr/lib/clang/3.6.1/lib/freebsd
 
 NO_PIC=
 MK_PROFILE=no

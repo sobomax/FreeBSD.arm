@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/debug.h 157219 2006-03-28 18:26:47Z des $
+ * $FreeBSD: head/libexec/rtld-elf/debug.h 282551 2015-05-06 15:29:11Z emaste $
  */
 
 /*
@@ -31,10 +31,6 @@
 
 #ifndef DEBUG_H
 #define DEBUG_H 1
-
-#ifndef __GNUC__
-#error "This file must be compiled with GCC"
-#endif
 
 #include <sys/cdefs.h>
 

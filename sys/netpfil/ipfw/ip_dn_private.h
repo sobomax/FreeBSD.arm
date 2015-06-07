@@ -27,7 +27,7 @@
 /*
  * internal dummynet APIs.
  *
- * $FreeBSD: head/sys/netpfil/ipfw/ip_dn_private.h 258467 2013-11-22 05:02:37Z luigi $
+ * $FreeBSD: head/sys/netpfil/ipfw/ip_dn_private.h 283113 2015-05-19 15:29:00Z luigi $
  */
 
 #ifndef _IP_DN_PRIVATE_H
@@ -92,7 +92,7 @@ set_oid(struct dn_id *o, int type, int len)
         o->type = type;
         o->len = len;
         o->subtype = 0;
-};
+}
 
 /*
  * configuration and global data for a dummynet instance

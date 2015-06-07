@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec_input.c 281695 2015-04-18 16:58:33Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec_input.c 282132 2015-04-28 09:29:28Z ae $	*/
 /*	$OpenBSD: ipsec_input.c,v 1.63 2003/02/20 18:35:43 deraadt Exp $	*/
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -391,6 +391,7 @@ ipsec4_common_input_cb(struct mbuf *m, struct secasvar *sav, int skip,
 	ipsec_bpf(m, sav, AF_INET, ENC_IN|ENC_BEFORE);
 	if ((error = ipsec_filter(&m, PFIL_IN, ENC_IN|ENC_BEFORE)) != 0)
 		return (error);
+	ip = mtod(m, struct ip *);
 #endif /* DEV_ENC */
 
 	/* IP-in-IP encapsulation */

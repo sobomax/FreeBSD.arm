@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/sys/Makefile 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/sys/Makefile 282091 2015-04-27 13:56:20Z andrew $
 
 .include <bsd.own.mk>
 
@@ -12,7 +12,9 @@ NETBSD_ATF_TESTS_C+=		clock_gettime_test
 NETBSD_ATF_TESTS_C+=		connect_test
 NETBSD_ATF_TESTS_C+=		dup_test
 NETBSD_ATF_TESTS_C+=		fsync_test
+.if ${MACHINE} != "arm64" # ARM64TODO: Missing makecontext
 NETBSD_ATF_TESTS_C+=		getcontext_test
+.endif
 NETBSD_ATF_TESTS_C+=		getgroups_test
 NETBSD_ATF_TESTS_C+=		getitimer_test
 NETBSD_ATF_TESTS_C+=		getlogin_test

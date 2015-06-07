@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/db_interface.c 236991 2012-06-13 04:59:55Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/db_interface.c 283366 2015-05-24 12:20:11Z andrew $");
 #include "opt_ddb.h"
 
 #include <sys/param.h>
@@ -326,12 +326,9 @@ branch_taken(u_int insn, db_addr_t pc)
 				default:
 					break; /* XXX */
 				}
-					
 			}
 			return (addr + offset);
-				
 		}
-		
 	case 0xa:	/* b ... */
 	case 0xb:	/* bl ... */
 		addr = ((insn << 2) & 0x03ffffff);

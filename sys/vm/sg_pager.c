@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/sg_pager.c 281887 2015-04-23 14:22:20Z jhb $");
+__FBSDID("$FreeBSD: head/sys/vm/sg_pager.c 282660 2015-05-08 19:43:37Z jhb $");
 
 /*
  * This pager manages OBJT_SG objects.  These objects are backed by
@@ -130,6 +130,8 @@ sg_pager_dealloc(vm_object_t object)
 	
 	sg = object->handle;
 	sglist_free(sg);
+	object->handle = NULL;
+	object->type = OBJT_DEAD;
 }
 
 static int

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/dev/malo/if_malo.c 278532 2015-02-10 21:33:32Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/malo/if_malo.c 283540 2015-05-25 19:53:29Z glebius $");
 #endif
 
 #include "opt_malo.h"
@@ -133,7 +133,7 @@ static	void	malo_tx_cleanupq(struct malo_softc *, struct malo_txq *);
 static	void	malo_start(struct ifnet *);
 static	void	malo_watchdog(void *);
 static	int	malo_ioctl(struct ifnet *, u_long, caddr_t);
-static	void	malo_updateslot(struct ifnet *);
+static	void	malo_updateslot(struct ieee80211com *);
 static	int	malo_newstate(struct ieee80211vap *, enum ieee80211_state, int);
 static	void	malo_scan_start(struct ieee80211com *);
 static	void	malo_scan_end(struct ieee80211com *);
@@ -276,6 +276,8 @@ malo_attach(uint16_t devid, struct malo_softc *sc)
 	IFQ_SET_READY(&ifp->if_snd);
 
 	ic->ic_ifp = ifp;
+	ic->ic_softc = sc;
+	ic->ic_name = device_get_nameunit(sc->malo_dev);
 	/* XXX not right but it's not used anywhere important */
 	ic->ic_phytype = IEEE80211_T_OFDM;
 	ic->ic_opmode = IEEE80211_M_STA;
@@ -1764,15 +1766,14 @@ malo_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
  * like slot time and preamble.
  */
 static void
-malo_updateslot(struct ifnet *ifp)
+malo_updateslot(struct ieee80211com *ic)
 {
-	struct malo_softc *sc = ifp->if_softc;
-	struct ieee80211com *ic = ifp->if_l2com;
+	struct malo_softc *sc = ic->ic_softc;
 	struct malo_hal *mh = sc->malo_mh;
 	int error;
 	
 	/* NB: can be called early; suppress needless cmds */
-	if ((ifp->if_drv_flags & IFF_DRV_RUNNING) == 0)
+	if ((ic->ic_ifp->if_drv_flags & IFF_DRV_RUNNING) == 0)
 		return;
 
 	DPRINTF(sc, MALO_DEBUG_RESET,

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_rnd.c 280026 2015-03-15 11:37:07Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_rnd.c 282865 2015-05-13 17:38:07Z grehan $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -170,6 +170,7 @@ pci_vtrnd_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	pci_set_cfgdata16(pi, PCIR_VENDOR, VIRTIO_VENDOR);
 	pci_set_cfgdata8(pi, PCIR_CLASS, PCIC_CRYPTO);
 	pci_set_cfgdata16(pi, PCIR_SUBDEV_0, VIRTIO_TYPE_ENTROPY);
+	pci_set_cfgdata16(pi, PCIR_SUBVEND_0, VIRTIO_VENDOR);
 
 	if (vi_intr_init(&sc->vrsc_vs, 1, fbsdrun_virtio_msix()))
 		return (1);

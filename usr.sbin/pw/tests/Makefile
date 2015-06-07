@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/pw/tests/Makefile 278475 2015-02-09 21:15:52Z brd $
+# $FreeBSD: head/usr.sbin/pw/tests/Makefile 284137 2015-06-07 20:59:59Z bapt $
 
 TESTSRC=	${.CURDIR}/../../../contrib/netbsd-tests/usr.sbin/useradd
 .PATH: ${TESTSRC}
@@ -7,6 +7,7 @@ TESTSDIR=	${TESTSBASE}/usr.sbin/pw
 
 ATF_TESTS_SH=	pw_etcdir \
 		pw_lock \
+		pw_config \
 		pw_groupdel \
 		pw_groupmod \
 		pw_useradd \
@@ -18,7 +19,8 @@ ATF_TESTS_SH=	pw_etcdir \
 TEST_METADATA.${tp}+=	required_user="root"
 .endfor
 
-FILES=		group helper_functions.shin master.passwd
+FILES=		group helper_functions.shin master.passwd pw.conf \
+		pw-modified.conf
 FILESDIR=       ${TESTSDIR}
 
 ATF_TESTS_SH+=	pw_test

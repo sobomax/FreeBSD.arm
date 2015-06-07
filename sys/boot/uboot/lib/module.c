@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/module.c 273927 2014-11-01 10:50:18Z andrew $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/module.c 283579 2015-05-26 20:32:14Z gonzo $");
 
 /*
  * U-Boot-specific module functionality.
@@ -47,8 +47,10 @@ uboot_autoload(void)
 #if defined(LOADER_FDT_SUPPORT)
 	int err;
 
-	if ((err = fdt_setup_fdtp()) != 0)
+	if ((err = fdt_setup_fdtp()) != 0) {
+		printf("No valid device tree blob found!\n");
 		return (err);
+	}
 #endif
 
 	return(0);

@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vhpet.c 276428 2014-12-30 22:19:34Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/io/vhpet.c 282287 2015-04-30 22:23:22Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vhpet.c 276428 2014-12-30 22:19:34Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vhpet.c 282287 2015-04-30 22:23:22Z neel $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -36,7 +36,6 @@ __FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vhpet.c 276428 2014-12-30 22:19:34Z ne
 #include <sys/kernel.h>
 #include <sys/malloc.h>
 #include <sys/systm.h>
-#include <sys/cpuset.h>
 
 #include <dev/acpica/acpi_hpet.h>
 

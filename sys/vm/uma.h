@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/uma.h 280957 2015-04-01 12:42:26Z rstone $
+ * $FreeBSD: head/sys/vm/uma.h 282690 2015-05-09 20:08:36Z kib $
  *
  */
 
@@ -689,5 +689,8 @@ struct uma_percpu_stat {
 	uint64_t	ups_cache_free;	/* Cache: free items in cache. */
 	uint64_t	_ups_reserved[5];	/* Reserved. */
 };
+
+void uma_reclaim_wakeup(void);
+void uma_reclaim_worker(void *);
 
 #endif	/* _VM_UMA_H_ */

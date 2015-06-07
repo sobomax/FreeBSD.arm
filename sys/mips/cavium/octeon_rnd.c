@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/cavium/octeon_rnd.c 257338 2013-10-29 14:07:31Z nwhitehorn $
+ * $FreeBSD: head/sys/mips/cavium/octeon_rnd.c 283291 2015-05-22 17:05:21Z jkim $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/octeon_rnd.c 257338 2013-10-29 14:07:31Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/octeon_rnd.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -95,7 +95,7 @@ octeon_rnd_attach(device_t dev)
 	struct octeon_rnd_softc *sc;
 
 	sc = device_get_softc(dev);
-	callout_init(&sc->sc_callout, CALLOUT_MPSAFE);
+	callout_init(&sc->sc_callout, 1);
 	callout_reset(&sc->sc_callout, hz * 5, octeon_rnd_harvest, sc);
 
 	cvmx_rng_enable();

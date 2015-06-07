@@ -26,33 +26,12 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/fileupd.c 242349 2012-10-30 08:00:53Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/fileupd.c 282686 2015-05-09 19:22:33Z bapt $";
 #endif /* not lint */
 
-#include <stdio.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/param.h>
-#include <errno.h>
-#include <unistd.h>
 
 #include "pwupd.h"
-
-int
-extendline(char **buf, int * buflen, int needed)
-{
-	if (needed > *buflen) {
-		char	*tmp = realloc(*buf, needed);
-		if (tmp == NULL)
-			return -1;
-		*buf = tmp;
-		*buflen = needed;
-	}
-	return *buflen;
-}
 
 int
 extendarray(char ***buf, int * buflen, int needed)

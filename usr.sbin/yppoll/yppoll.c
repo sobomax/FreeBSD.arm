@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/yppoll/yppoll.c 129665 2004-05-24 16:10:57Z stefanf $");
+__FBSDID("$FreeBSD: head/usr.sbin/yppoll/yppoll.c 283837 2015-05-31 20:20:24Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -49,7 +49,11 @@ __FBSDID("$FreeBSD: head/usr.sbin/yppoll/yppoll.c 129665 2004-05-24 16:10:57Z st
 static void
 usage(void)
 {
+#if 0
 	fprintf(stderr, "usage: yppoll [-h host] [-d domainname] mapname\n");
+#else
+	fprintf(stderr, "usage: yppoll [-d domainname] mapname\n");
+#endif
 	exit(1);
 }
 
@@ -57,7 +61,9 @@ int
 main(int argc, char *argv[])
 {
 	char *domainname;
+#if 0
         char *hostname = "localhost";
+#endif
         char *inmap, *master;
         int order;
 	int c, r;
@@ -71,7 +77,11 @@ main(int argc, char *argv[])
                         domainname = optarg;
 			break;
                 case 'h':
+#if 0
                         hostname = optarg;
+#else
+			/* does nothing */
+#endif
                         break;
                 case '?':
                         usage();

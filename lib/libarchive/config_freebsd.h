@@ -22,8 +22,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libarchive/config_freebsd.h 269125 2014-07-26 15:33:20Z dim $
+ * $FreeBSD: head/lib/libarchive/config_freebsd.h 281988 2015-04-25 21:25:00Z jilles $
  */
+
+#include <osreldate.h>
 
 /* FreeBSD 5.0 and later have ACL and extattr support. */
 #if __FreeBSD__ > 4
@@ -219,6 +221,11 @@
 #define HAVE_WMEMCPY 1
 #define HAVE_ZLIB_H 1
 #define TIME_WITH_SYS_TIME 1
+
+#if __FreeBSD_version >= 1100056
+#define HAVE_FUTIMENS 1
+#define HAVE_UTIMENSAT 1
+#endif
 
 /* FreeBSD 4 and earlier lack intmax_t/uintmax_t */
 #if __FreeBSD__ < 5

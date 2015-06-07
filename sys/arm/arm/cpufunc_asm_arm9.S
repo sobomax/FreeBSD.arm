@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm9.S 276596 2015-01-02 23:46:26Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm9.S 283366 2015-05-24 12:20:11Z andrew $");
 
 /*
  * Functions to set the MMU Translation Table Base register
@@ -130,7 +130,7 @@ ENTRY(arm9_dcache_wb_range)
 	bhi	.Larm9_wb_next
 	mov	pc, lr
 END(arm9_dcache_wb_range)
-	
+
 ENTRY(arm9_dcache_wbinv_range)
 	ldr	ip, .Larm9_line_size
 	cmp	r1, #0x4000
@@ -147,7 +147,7 @@ ENTRY(arm9_dcache_wbinv_range)
 	bhi	.Larm9_wbinv_next
 	mov	pc, lr
 END(arm9_dcache_wbinv_range)
-	
+
 /*
  * Note, we must not invalidate everything.  If the range is too big we
  * must use wb-inv of the entire cache.

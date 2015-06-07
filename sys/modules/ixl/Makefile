@@ -1,16 +1,16 @@
-#$FreeBSD: head/sys/modules/ixl/Makefile 277084 2015-01-12 18:43:34Z jfv $
+#$FreeBSD: head/sys/modules/ixl/Makefile 284049 2015-06-05 22:52:42Z jfv $
 
 .PATH:  ${.CURDIR}/../../dev/ixl
 
 KMOD    = if_ixl
-SRCS    = device_if.h bus_if.h pci_if.h opt_bdg.h
+SRCS    = device_if.h bus_if.h pci_if.h pci_iov_if.h opt_bdg.h
 SRCS    += opt_inet.h opt_inet6.h opt_rss.h
 SRCS    += if_ixl.c ixl_txrx.c i40e_osdep.c
 
 # Shared source
 SRCS    += i40e_common.c i40e_nvm.c i40e_adminq.c i40e_lan_hmc.c i40e_hmc.c
 
-CFLAGS	+= -DSMP
+CFLAGS	+= -DSMP -DIXL_DEBUG_SYSCTL
 
 # Add Flow Director support
 # CFLAGS += -DIXL_FDIR

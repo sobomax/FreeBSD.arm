@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact_elf.h 274817 2014-11-21 20:53:17Z jhb $
+ * $FreeBSD: head/sys/sys/imgact_elf.h 283297 2015-05-22 20:50:35Z imp $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -52,6 +52,7 @@ typedef struct {
 	Elf_Size	base;
 	Elf_Size	flags;
 	Elf_Size	entry;
+	Elf_Word	hdr_eflags;		/* e_flags field from ehdr */
 } __ElfN(Auxargs);
 
 typedef struct {

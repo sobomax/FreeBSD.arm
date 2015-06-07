@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/isci_io_request.c 274819 2014-11-21 21:01:24Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/isci_io_request.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <dev/isci/isci.h>
 
@@ -680,7 +680,7 @@ isci_request_construct(struct ISCI_REQUEST *request,
 	request->dma_tag = io_buffer_dma_tag;
 	request->physical_address = physical_address;
 	bus_dmamap_create(request->dma_tag, 0, &request->dma_map);
-	callout_init(&request->timer, CALLOUT_MPSAFE);
+	callout_init(&request->timer, 1);
 }
 
 static void

@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/ufs/ffs/ffs_suspend.c 274906 2014-11-23 01:01:14Z glebius $
+ * $FreeBSD: head/sys/ufs/ffs/ffs_suspend.c 283735 2015-05-29 13:24:17Z kib $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_suspend.c 274906 2014-11-23 01:01:14Z glebius $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_suspend.c 283735 2015-05-29 13:24:17Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -177,7 +177,6 @@ out:
 static int
 ffs_susp_suspend(struct mount *mp)
 {
-	struct fs *fs;
 	struct ufsmount *ump;
 	int error;
 
@@ -189,7 +188,6 @@ ffs_susp_suspend(struct mount *mp)
 		return (EBUSY);
 
 	ump = VFSTOUFS(mp);
-	fs = ump->um_fs;
 
 	/*
 	 * Make sure the calling thread is permitted to access the mounted

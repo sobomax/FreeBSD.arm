@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_rmx.c 274363 2014-11-11 02:52:40Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_rmx.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -263,7 +263,7 @@ in6_inithead(void **head, int off)
 	rnh->rnh_addaddr = in6_addroute;
 
 	if (V__in6_rt_was_here == 0) {
-		callout_init(&V_rtq_mtutimer, CALLOUT_MPSAFE);
+		callout_init(&V_rtq_mtutimer, 1);
 		in6_mtutimo(curvnet);	/* kick off timeout first time */
 		V__in6_rt_was_here = 1;
 	}

@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/netgraph.h 231831 2012-02-16 19:10:01Z glebius $
+ * $FreeBSD: head/sys/netgraph/netgraph.h 283291 2015-05-22 17:05:21Z jkim $
  * $Whistle: netgraph.h,v 1.29 1999/11/01 07:56:13 julian Exp $
  */
 
@@ -1161,7 +1161,7 @@ int 	ng_send_fn2(node_p node, hook_p hook, item_p pitem, ng_item_fn2 *fn,
 int	ng_uncallout(struct callout *c, node_p node);
 int	ng_callout(struct callout *c, node_p node, hook_p hook, int ticks,
 	    ng_item_fn *fn, void * arg1, int arg2);
-#define	ng_callout_init(c)	callout_init(c, CALLOUT_MPSAFE)
+#define	ng_callout_init(c)	callout_init(c, 1)
 
 /* Flags for netgraph functions. */
 #define	NG_NOFLAGS	0x00000000	/* no special options */

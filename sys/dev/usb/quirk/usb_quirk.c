@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 279725 2015-03-07 17:11:07Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 284125 2015-06-07 15:47:58Z hselasky $ */
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -94,6 +94,7 @@ static struct usb_quirk_entry usb_quirks[USB_DEV_QUIRKS_MAX] = {
 	USB_QUIRK(SILICONPORTALS, YAPPHONE, 0x100, 0x100, UQ_AU_INP_ASYNC),
 	USB_QUIRK(LOGITECH, UN53B, 0x0000, 0xffff, UQ_NO_STRINGS),
 	USB_QUIRK(REALTEK, RTL8196EU, 0x0000, 0xffff, UQ_CFG_INDEX_1),
+	USB_QUIRK(REALTEK, RTL8153, 0x0000, 0xffff, UQ_CFG_INDEX_1),
 	USB_QUIRK(ELSA, MODEM1, 0x0000, 0xffff, UQ_CFG_INDEX_1),
 	USB_QUIRK(PLANEX2, MZKUE150N, 0x0000, 0xffff, UQ_CFG_INDEX_1),
 	/* Quirks for printer devices */
@@ -523,6 +524,9 @@ static struct usb_quirk_entry usb_quirks[USB_DEV_QUIRKS_MAX] = {
 	USB_QUIRK(FEIYA, DUMMY, 0x0000, 0xffff, UQ_MSC_NO_SYNC_CACHE, UQ_MATCH_VENDOR_ONLY),
 	USB_QUIRK(REALTEK, DUMMY, 0x0000, 0xffff, UQ_MSC_NO_SYNC_CACHE, UQ_MATCH_VENDOR_ONLY),
 	USB_QUIRK(INITIO, DUMMY, 0x0000, 0xffff, UQ_MSC_NO_SYNC_CACHE, UQ_MATCH_VENDOR_ONLY),
+
+	/* DYMO LabelManager Pnp */
+	USB_QUIRK(DYMO, LABELMANAGERPNP, 0x0000, 0xffff, UQ_MSC_DYMO_EJECT),
 };
 #undef USB_QUIRK_VP
 #undef USB_QUIRK
@@ -592,6 +596,7 @@ static const char *usb_quirk_str[USB_QUIRK_MAX] = {
 	[UQ_BAD_MIDI]			= "UQ_BAD_MIDI",
 	[UQ_AU_VENDOR_CLASS]		= "UQ_AU_VENDOR_CLASS",
 	[UQ_SINGLE_CMD_MIDI]		= "UQ_SINGLE_CMD_MIDI",
+	[UQ_MSC_DYMO_EJECT]		= "UQ_MSC_DYMO_EJECT",
 };
 
 /*------------------------------------------------------------------------*

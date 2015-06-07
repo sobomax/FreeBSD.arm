@@ -23,16 +23,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/amd/amdv.c 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/amd/amdv.c 282287 2015-04-30 22:23:22Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/amdv.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/amdv.c 282287 2015-04-30 22:23:22Z neel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/errno.h>
-#include <sys/smp.h>
 
 #include <machine/vmm.h>
 #include "io/iommu.h"

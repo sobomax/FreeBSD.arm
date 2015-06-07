@@ -53,7 +53,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)dumpfs.c	8.5 (Berkeley) 4/29/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/dumpfs/dumpfs.c 250710 2013-05-16 20:07:08Z mckusick $";
+  "$FreeBSD: head/sbin/dumpfs/dumpfs.c 283577 2015-05-26 18:27:38Z ae $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -165,7 +165,7 @@ dumpfs(const char *name)
 		fstime = afs.fs_time;
 		printf("magic\t%x (UFS2)\ttime\t%s",
 		    afs.fs_magic, ctime(&fstime));
-		printf("superblock location\t%jd\tid\t[ %x %x ]\n",
+		printf("superblock location\t%jd\tid\t[ %08x %08x ]\n",
 		    (intmax_t)afs.fs_sblockloc, afs.fs_id[0], afs.fs_id[1]);
 		printf("ncg\t%d\tsize\t%jd\tblocks\t%jd\n",
 		    afs.fs_ncg, (intmax_t)fssize, (intmax_t)afs.fs_dsize);

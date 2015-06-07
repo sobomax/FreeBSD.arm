@@ -80,7 +80,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/syscall.c 275639 2014-12-09 10:21:31Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/syscall.c 282779 2015-05-11 19:20:30Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -171,16 +171,7 @@ swi_handler(struct trapframe *frame)
 	td->td_frame = frame;
 
 	td->td_pticks = 0;
-	/*
-	 * Make sure the program counter is correctly aligned so we
-	 * don't take an alignment fault trying to read the opcode.
-	 * XXX: Fix for Thumb mode
-	 */
-	if (__predict_false(((frame->tf_pc - INSN_SIZE) & 3) != 0)) {
-		call_trapsignal(td, SIGILL, 0);
-		userret(td, frame);
-		return;
-	}
+
 	/*
 	 * Enable interrupts if they were enabled before the exception.
 	 * Since all syscalls *should* come from user mode it will always

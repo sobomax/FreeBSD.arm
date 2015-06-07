@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ratectl_none.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ratectl_none.c 283614 2015-05-27 14:05:46Z glebius $");
 
 #include "opt_wlan.h"
 
@@ -56,7 +56,7 @@ none_init(struct ieee80211vap *vap)
 static void
 none_deinit(struct ieee80211vap *vap)
 {
-	free(vap->iv_rs, M_80211_RATECTL);
+	IEEE80211_FREE(vap->iv_rs, M_80211_RATECTL);
 }
 
 static void

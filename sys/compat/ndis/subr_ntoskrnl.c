@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_ntoskrnl.c 254025 2013-08-07 06:21:20Z jeff $");
+__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_ntoskrnl.c 283291 2015-05-22 17:05:21Z jkim $");
 
 #include <sys/ctype.h>
 #include <sys/unistd.h>
@@ -3749,7 +3749,7 @@ ntoskrnl_insert_timer(timer, ticks)
 
 	timer->k_callout = c;
 
-	callout_init(c, CALLOUT_MPSAFE);
+	callout_init(c, 1);
 	callout_reset(c, ticks, ntoskrnl_timercall, timer);
 }
 

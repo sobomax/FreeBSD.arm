@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/smbus/smbus_if.m 162234 2006-09-11 20:52:41Z jhb $
+# $FreeBSD: head/sys/dev/smbus/smbus_if.m 281985 2015-04-25 16:15:01Z grembo $
 #
 
 #include <sys/bus.h>
@@ -148,4 +148,21 @@ METHOD int bread {
 	char cmd;
 	u_char *count;
 	char *buf;
+};
+
+#
+# SMB roll-up transaction with flags that also allow it to be     
+# used for (mostly) i2c pass-through and with 10-bit addresses.   
+# This function can be used to roll-up all of the above functions.
+#
+METHOD int trans {       
+	device_t dev;    
+	int     slave;   
+	char    cmd;     
+	int     op;      
+	char    *wbuf;   
+	int     wcount;  
+	char    *rbuf;   
+	int     rcount;  
+	int     *actualp;
 };

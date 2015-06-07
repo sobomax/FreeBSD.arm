@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/allwinner/files.allwinner 281679 2015-04-18 03:07:01Z loos $
+# $FreeBSD: head/sys/arm/allwinner/files.allwinner 283253 2015-05-21 17:39:42Z loos $
 kern/kern_clocksource.c			standard
 
 arm/arm/bus_space_base.c		standard
@@ -10,6 +10,7 @@ arm/allwinner/a10_common.c		standard
 arm/allwinner/a10_ehci.c		optional	ehci
 arm/allwinner/a10_gpio.c		optional	gpio
 arm/allwinner/a10_machdep.c		standard
+arm/allwinner/a10_mmc.c			optional	mmc
 arm/allwinner/a10_sramc.c		standard
 arm/allwinner/a10_wdog.c		standard
 arm/allwinner/a20/a20_cpu_cfg.c 	standard

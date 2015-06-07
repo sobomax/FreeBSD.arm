@@ -1,11 +1,10 @@
-#$FreeBSD: head/sys/arm/amlogic/aml8726/files.aml8726 281903 2015-04-23 20:39:40Z andrew $
+#$FreeBSD: head/sys/arm/amlogic/aml8726/files.aml8726 283186 2015-05-21 07:23:50Z ganbold $
 
 kern/kern_clocksource.c				standard
 
 arm/arm/bus_space_base.c			standard
 arm/arm/bus_space_generic.c			standard
 
-arm/arm/gic.c					standard
 arm/arm/pl310.c					standard
 arm/amlogic/aml8726/aml8726_l2cache.c		standard
 
@@ -14,7 +13,7 @@ arm/amlogic/aml8726/aml8726_mp.c		optional	smp
 arm/amlogic/aml8726/aml8726_identsoc.c		standard
 arm/amlogic/aml8726/aml8726_ccm.c		standard
 arm/amlogic/aml8726/aml8726_clkmsr.c		standard
-arm/amlogic/aml8726/aml8726_pic.c		standard
+arm/amlogic/aml8726/aml8726_pic.c		optional	aml_pic
 arm/amlogic/aml8726/aml8726_rtc.c		standard
 arm/amlogic/aml8726/aml8726_timer.c		standard
 arm/amlogic/aml8726/aml8726_wdt.c		standard
@@ -31,6 +30,7 @@ arm/amlogic/aml8726/aml8726_sdxc-m8.c		optional	mmc gpio
 arm/amlogic/aml8726/aml8726_pinctrl.c		optional	fdt_pinctrl
 #arm/amlogic/aml8726/aml8726_rng.c		optional	random
 arm/amlogic/aml8726/uart_dev_aml8726.c		optional	uart
+arm/amlogic/aml8726/aml8726_usb_phy-m3.c	optional	dwcotg usb gpio
 arm/amlogic/aml8726/aml8726_usb_phy-m6.c	optional	dwcotg usb gpio
 
 dev/dwc/if_dwc.c				optional	dwc

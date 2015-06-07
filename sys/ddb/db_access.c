@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_access.c 273006 2014-10-12 18:01:52Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_access.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -54,7 +54,7 @@ static unsigned db_extend[] = {	/* table for sign-extending */
 #endif
 
 db_expr_t
-db_get_value(db_addr_t addr, int size, boolean_t is_signed)
+db_get_value(db_addr_t addr, int size, bool is_signed)
 {
 	char		data[sizeof(u_int64_t)];
 	register db_expr_t value;

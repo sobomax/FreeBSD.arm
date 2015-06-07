@@ -1,9 +1,8 @@
-# $FreeBSD: head/usr.bin/rup/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/rup/Makefile 284064 2015-06-06 12:41:25Z bapt $
 
 PROG=	rup
 
-WARNS?=	1
-
+WARNS?=	3
 LIBADD=	rpcsvc
 
 .include <bsd.prog.mk>

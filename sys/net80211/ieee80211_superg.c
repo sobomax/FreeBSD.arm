@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_superg.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_superg.c 283538 2015-05-25 19:18:16Z adrian $");
 
 #include "opt_wlan.h"
 
@@ -100,9 +100,9 @@ ieee80211_superg_attach(struct ieee80211com *ic)
 	struct ieee80211_superg *sg;
 
 	if (ic->ic_caps & IEEE80211_C_FF) {
-		sg = (struct ieee80211_superg *) malloc(
+		sg = (struct ieee80211_superg *) IEEE80211_MALLOC(
 		     sizeof(struct ieee80211_superg), M_80211_VAP,
-		     M_NOWAIT | M_ZERO);
+		     IEEE80211_M_NOWAIT | IEEE80211_M_ZERO);
 		if (sg == NULL) {
 			printf("%s: cannot allocate SuperG state block\n",
 			    __func__);
@@ -117,7 +117,7 @@ void
 ieee80211_superg_detach(struct ieee80211com *ic)
 {
 	if (ic->ic_superg != NULL) {
-		free(ic->ic_superg, M_80211_VAP);
+		IEEE80211_FREE(ic->ic_superg, M_80211_VAP);
 		ic->ic_superg = NULL;
 	}
 }

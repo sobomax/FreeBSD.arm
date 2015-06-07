@@ -27,7 +27,7 @@
 /* Driver for VirtIO network devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 276491 2015-01-01 02:06:00Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 282241 2015-04-29 17:48:25Z jhb $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -2744,6 +2744,11 @@ vtnet_drain_rxtx_queues(struct vtnet_softc *sc)
 	struct vtnet_rxq *rxq;
 	struct vtnet_txq *txq;
 	int i;
+
+#ifdef DEV_NETMAP
+	if (nm_native_on(NA(sc->vtnet_ifp)))
+		return;
+#endif /* DEV_NETMAP */
 
 	for (i = 0; i < sc->vtnet_act_vq_pairs; i++) {
 		rxq = &sc->vtnet_rxqs[i];

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drmP.h 261326 2014-01-31 17:39:51Z jamie $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drmP.h 283999 2015-06-04 20:36:16Z jhb $");
 
 #ifndef _DRM_P_H_
 #define _DRM_P_H_
@@ -51,9 +51,7 @@ struct drm_file;
 #include <sys/conf.h>
 #include <sys/sglist.h>
 #include <sys/stat.h>
-#if __FreeBSD_version >= 700000
 #include <sys/priv.h>
-#endif
 #include <sys/proc.h>
 #include <sys/lock.h>
 #include <sys/fcntl.h>
@@ -94,11 +92,7 @@ struct drm_file;
 #include <sys/mman.h>
 #include <sys/rman.h>
 #include <sys/memrange.h>
-#if __FreeBSD_version >= 800004
 #include <dev/agp/agpvar.h>
-#else /* __FreeBSD_version >= 800004 */
-#include <pci/agpvar.h>
-#endif /* __FreeBSD_version >= 800004 */
 #include <sys/agpio.h>
 #include <sys/mutex.h>
 #include <dev/pci/pcivar.h>
@@ -227,11 +221,7 @@ enum {
 
 #define PAGE_ALIGN(addr) round_page(addr)
 /* DRM_SUSER returns true if the user is superuser */
-#if __FreeBSD_version >= 700000
 #define DRM_SUSER(p)		(priv_check(p, PRIV_DRIVER) == 0)
-#else
-#define DRM_SUSER(p)		(suser(p) == 0)
-#endif
 #define DRM_AGP_FIND_DEVICE()	agp_find_device()
 #define DRM_MTRR_WC		MDF_WRITECOMBINE
 #define jiffies			ticks

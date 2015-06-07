@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/loader/main.c 281138 2015-04-06 06:55:47Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/loader/main.c 282477 2015-05-05 11:07:43Z andrew $");
 
 #include <stand.h>
 #include <string.h>
@@ -59,6 +59,7 @@ EFI_GUID dxe = DXE_SERVICES_TABLE_GUID;
 EFI_GUID hoblist = HOB_LIST_TABLE_GUID;
 EFI_GUID memtype = MEMORY_TYPE_INFORMATION_TABLE_GUID;
 EFI_GUID debugimg = DEBUG_IMAGE_INFO_TABLE_GUID;
+EFI_GUID fdtdtb = FDT_TABLE_GUID;
 
 EFI_STATUS
 main(int argc, CHAR16 *argv[])
@@ -287,6 +288,8 @@ command_configuration(int argc, char *argv[])
 			printf("Memory Type Information Table");
 		else if (!memcmp(guid, &debugimg, sizeof(EFI_GUID)))
 			printf("Debug Image Info Table");
+		else if (!memcmp(guid, &fdtdtb, sizeof(EFI_GUID)))
+			printf("FDT Table");
 		else
 			printf("Unknown Table (%s)", guid_to_string(guid));
 		printf(" at %p\n", ST->ConfigurationTable[i].VendorTable);

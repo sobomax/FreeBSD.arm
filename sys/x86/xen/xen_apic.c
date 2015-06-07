@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/xen_apic.c 281707 2015-04-18 21:23:16Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/xen_apic.c 282684 2015-05-09 19:11:01Z kib $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -423,6 +423,14 @@ xen_invltlb(void *arg)
 
 #ifdef __amd64__
 static int
+xen_invltlb_invpcid(void *arg)
+{
+
+	invltlb_invpcid_handler();
+	return (FILTER_HANDLED);
+}
+
+static int
 xen_invltlb_pcid(void *arg)
 {
 
@@ -438,16 +446,6 @@ xen_invlpg(void *arg)
 	invlpg_handler();
 	return (FILTER_HANDLED);
 }
-
-#ifdef __amd64__
-static int
-xen_invlpg_pcid(void *arg)
-{
-
-	invlpg_pcid_handler();
-	return (FILTER_HANDLED);
-}
-#endif
 
 static int
 xen_invlrng(void *arg)
@@ -532,8 +530,8 @@ xen_setup_cpus(void)
 
 #ifdef __amd64__
 	if (pmap_pcid_enabled) {
-		xen_ipis[IPI_TO_IDX(IPI_INVLTLB)].filter = xen_invltlb_pcid;
-		xen_ipis[IPI_TO_IDX(IPI_INVLPG)].filter = xen_invlpg_pcid;
+		xen_ipis[IPI_TO_IDX(IPI_INVLTLB)].filter = invpcid_works ?
+		    xen_invltlb_invpcid : xen_invltlb_pcid;
 	}
 #endif
 	CPU_FOREACH(i)

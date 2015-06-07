@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/elfdump/elfdump.c 274960 2014-11-24 09:31:38Z brueffer $");
+__FBSDID("$FreeBSD: head/usr.bin/elfdump/elfdump.c 282916 2015-05-14 18:29:05Z emaste $");
 
 #include <sys/types.h>
 
@@ -261,6 +261,7 @@ e_machines(u_int mach)
 	case EM_386:	return "EM_386";
 	case EM_68K:	return "EM_68K";
 	case EM_88K:	return "EM_88K";
+	case EM_IAMCU:	return "EM_IAMCU";
 	case EM_860:	return "EM_860";
 	case EM_MIPS:	return "EM_MIPS";
 	case EM_PPC:	return "EM_PPC";

@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/cddl/usr.bin/Makefile 283147 2015-05-20 12:26:09Z ngie $
 
 .include <src.opts.mk>
 
@@ -25,5 +25,7 @@ _ztest=	ztest
 _zstreamdump = zstreamdump
 .endif
 .endif
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

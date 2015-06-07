@@ -32,7 +32,7 @@
  *
  *	@(#)procfs_status.c	8.3 (Berkeley) 2/17/94
  *
- * $FreeBSD: head/sys/fs/procfs/procfs_map.c 251423 2013-06-05 17:00:10Z alc $
+ * $FreeBSD: head/sys/fs/procfs/procfs_map.c 283924 2015-06-02 18:37:04Z vangyzen $
  */
 
 #include "opt_compat.h"
@@ -159,11 +159,11 @@ procfs_doprocmap(PFS_FILL_ARGS)
 		freepath = NULL;
 		fullpath = "-";
 		if (lobj) {
+			vp = NULL;
 			switch (lobj->type) {
 			default:
 			case OBJT_DEFAULT:
 				type = "default";
-				vp = NULL;
 				break;
 			case OBJT_VNODE:
 				type = "vnode";
@@ -171,13 +171,19 @@ procfs_doprocmap(PFS_FILL_ARGS)
 				vref(vp);
 				break;
 			case OBJT_SWAP:
-				type = "swap";
-				vp = NULL;
+				if ((lobj->flags & OBJ_TMPFS_NODE) != 0) {
+					type = "vnode";
+					if ((lobj->flags & OBJ_TMPFS) != 0) {
+						vp = lobj->un_pager.swp.swp_tmpfs;
+						vref(vp);
+					}
+				} else {
+					type = "swap";
+				}
 				break;
 			case OBJT_SG:
 			case OBJT_DEVICE:
 				type = "device";
-				vp = NULL;
 				break;
 			}
 			if (lobj != obj)

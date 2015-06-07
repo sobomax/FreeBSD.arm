@@ -1,8 +1,12 @@
-# $FreeBSD: head/gnu/lib/Makefile 268508 2014-07-10 21:11:48Z imp $
+# $FreeBSD: head/gnu/lib/Makefile 283543 2015-05-25 20:29:35Z bapt $
 
 .include <src.opts.mk>
 
-SUBDIR= csu libgcc libgcov libdialog libgomp libregex libreadline
+SUBDIR= csu libgcc libdialog libregex
+
+.if ${MK_GCC} != "no"
+SUBDIR+= libgcov libgomp
+.endif
 
 .if ${MK_SSP} != "no"
 SUBDIR+= libssp
@@ -10,6 +14,10 @@ SUBDIR+= libssp
 
 .if ${MK_TESTS} != "no"
 SUBDIR+= tests
+.endif
+
+.if ${MK_GDB} != "no"
+SUBDIR+=	libreadline
 .endif
 
 # libsupc++ uses libstdc++ headers, although 'make includes' should

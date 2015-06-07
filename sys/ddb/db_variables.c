@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_variables.c 195699 2009-07-14 22:48:30Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_variables.c 283248 2015-05-21 15:16:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -128,7 +128,7 @@ db_write_variable(struct db_variable *vp, db_expr_t value)
 }
 
 void
-db_set_cmd(db_expr_t dummy1, boolean_t dummy2, db_expr_t dummy3, char *dummy4)
+db_set_cmd(db_expr_t dummy1, bool dummy2, db_expr_t dummy3, char *dummy4)
 {
 	struct db_variable *vp;
 	db_expr_t value;

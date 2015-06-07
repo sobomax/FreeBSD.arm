@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/efi/loader/arch/arm64/start.S 281526 2015-04-14 13:55:01Z andrew $
+ * $FreeBSD: head/sys/boot/efi/loader/arch/arm64/start.S 282727 2015-05-10 13:24:26Z ian $
  */
 
 /*
@@ -156,7 +156,7 @@ _start:
 	adr	x0, ImageBase
 	adr	x1, _DYNAMIC
 
-	bl	_reloc
+	bl	self_reloc
 
 	ldp	x0, x1, [sp], #16
 

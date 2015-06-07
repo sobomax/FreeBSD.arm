@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_cc_functions.c 279859 2015-03-10 19:49:25Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_cc_functions.c 283650 2015-05-28 16:00:23Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -226,7 +226,8 @@ sctp_cwnd_update_after_fr(struct sctp_tcb *stcb,
 				}
 
 				sctp_timer_stop(SCTP_TIMER_TYPE_SEND,
-				    stcb->sctp_ep, stcb, net, SCTP_FROM_SCTP_INDATA + SCTP_LOC_32);
+				    stcb->sctp_ep, stcb, net,
+				    SCTP_FROM_SCTP_CC_FUNCTIONS + SCTP_LOC_1);
 				sctp_timer_start(SCTP_TIMER_TYPE_SEND,
 				    stcb->sctp_ep, stcb, net);
 			}
@@ -1732,7 +1733,8 @@ sctp_hs_cwnd_update_after_fr(struct sctp_tcb *stcb,
 				}
 
 				sctp_timer_stop(SCTP_TIMER_TYPE_SEND,
-				    stcb->sctp_ep, stcb, net, SCTP_FROM_SCTP_INDATA + SCTP_LOC_32);
+				    stcb->sctp_ep, stcb, net,
+				    SCTP_FROM_SCTP_CC_FUNCTIONS + SCTP_LOC_2);
 				sctp_timer_start(SCTP_TIMER_TYPE_SEND,
 				    stcb->sctp_ep, stcb, net);
 			}
@@ -2264,7 +2266,8 @@ sctp_htcp_cwnd_update_after_fr(struct sctp_tcb *stcb,
 				}
 
 				sctp_timer_stop(SCTP_TIMER_TYPE_SEND,
-				    stcb->sctp_ep, stcb, net, SCTP_FROM_SCTP_INDATA + SCTP_LOC_32);
+				    stcb->sctp_ep, stcb, net,
+				    SCTP_FROM_SCTP_CC_FUNCTIONS + SCTP_LOC_3);
 				sctp_timer_start(SCTP_TIMER_TYPE_SEND,
 				    stcb->sctp_ep, stcb, net);
 			}

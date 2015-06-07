@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform_ipcomp.c 281695 2015-04-18 16:58:33Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/xform_ipcomp.c 282046 2015-04-27 00:55:56Z ae $	*/
 /* $OpenBSD: ip_ipcomp.c,v 1.1 2001/07/05 12:08:52 jjbg Exp $ */
 
 /*-
@@ -492,6 +492,7 @@ ipcomp_output_cb(struct cryptop *crp)
 	skip = tc->tc_skip;
 
 	isr = tc->tc_isr;
+	IPSEC_ASSERT(isr->sp != NULL, ("NULL isr->sp"));
 	IPSECREQUEST_LOCK(isr);
 	sav = tc->tc_sav;
 	/* With the isr lock released SA pointer can be updated. */
@@ -606,16 +607,18 @@ ipcomp_output_cb(struct cryptop *crp)
 	error = ipsec_process_done(m, isr);
 	KEY_FREESAV(&sav);
 	IPSECREQUEST_UNLOCK(isr);
-	return error;
+	KEY_FREESP(&isr->sp);
+	return (error);
 bad:
 	if (sav)
 		KEY_FREESAV(&sav);
 	IPSECREQUEST_UNLOCK(isr);
+	KEY_FREESP(&isr->sp);
 	if (m)
 		m_freem(m);
 	free(tc, M_XDATA);
 	crypto_freereq(crp);
-	return error;
+	return (error);
 }
 
 static struct xformsw ipcomp_xformsw = {

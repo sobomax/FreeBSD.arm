@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/device_pager.c 281720 2015-04-19 00:29:02Z alc $");
+__FBSDID("$FreeBSD: head/sys/vm/device_pager.c 282660 2015-05-08 19:43:37Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -254,6 +254,8 @@ dev_pager_dealloc(object)
 		    != NULL)
 			dev_pager_free_page(object, m);
 	}
+	object->handle = NULL;
+	object->type = OBJT_DEAD;
 }
 
 static int

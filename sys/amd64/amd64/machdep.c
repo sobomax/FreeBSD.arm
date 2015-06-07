@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/machdep.c 281851 2015-04-22 12:32:14Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
 
 #include "opt_atpic.h"
 #include "opt_compat.h"
@@ -397,10 +397,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	sp -= sizeof(struct sigframe);
 	/* Align to 16 bytes. */
 	sfp = (struct sigframe *)((unsigned long)sp & ~0xFul);
-
-	/* Translate the signal if appropriate. */
-	if (p->p_sysent->sv_sigtbl && sig <= p->p_sysent->sv_sigsize)
-		sig = p->p_sysent->sv_sigtbl[_SIG_IDX(sig)];
 
 	/* Build the argument list for the signal handler. */
 	regs->tf_rdi = sig;			/* arg 1 in %rdi */
@@ -1718,7 +1714,6 @@ hammer_time(u_int64_t modulep, u_int64_t physfree)
 
 	/* setup proc 0's pcb */
 	thread0.td_pcb->pcb_flags = 0;
-	thread0.td_pcb->pcb_cr3 = KPML4phys; /* PCID 0 is reserved for kernel */
 	thread0.td_frame = &proc0_tf;
 
         env = kern_getenv("kernelname");

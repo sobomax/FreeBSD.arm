@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_nat.c 278264 2015-02-05 14:54:53Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_nat.c 282081 2015-04-27 09:16:22Z melifaro $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -242,6 +242,8 @@ add_redir_spool_cfg(char *buf, struct cfg_nat *ptr)
 		}
 		if (r->alink[0] == NULL) {
 			printf("LibAliasRedirect* returned NULL\n");
+			free(r->alink, M_IPFW);
+			free(r, M_IPFW);
 			return (EINVAL);
 		}
 		/* LSNAT handling. */
@@ -262,6 +264,16 @@ add_redir_spool_cfg(char *buf, struct cfg_nat *ptr)
 
 	return (0);
 }
+
+static void
+free_nat_instance(struct cfg_nat *ptr)
+{
+
+	del_redir_spool_cfg(ptr, &ptr->redir_chain);
+	LibAliasUninit(ptr->lib);
+	free(ptr, M_IPFW);
+}
+
 
 /*
  * ipfw_nat - perform mbuf header translation.
@@ -536,7 +548,7 @@ nat44_config(struct ip_fw_chain *chain, struct nat44_cfg_nat *ucfg)
 	IPFW_UH_WUNLOCK(chain);
 
 	if (tcfg != NULL)
-		free(tcfg, M_IPFW);
+		free_nat_instance(ptr);
 }
 
 /*
@@ -626,9 +638,7 @@ nat44_destroy(struct ip_fw_chain *chain, ip_fw3_opheader *op3,
 	IPFW_WUNLOCK(chain);
 	IPFW_UH_WUNLOCK(chain);
 
-	del_redir_spool_cfg(ptr, &ptr->redir_chain);
-	LibAliasUninit(ptr->lib);
-	free(ptr, M_IPFW);
+	free_nat_instance(ptr);
 
 	return (0);
 }
@@ -994,9 +1004,7 @@ ipfw_nat_del(struct sockopt *sopt)
 	flush_nat_ptrs(chain, i);
 	IPFW_WUNLOCK(chain);
 	IPFW_UH_WUNLOCK(chain);
-	del_redir_spool_cfg(ptr, &ptr->redir_chain);
-	LibAliasUninit(ptr->lib);
-	free(ptr, M_IPFW);
+	free_nat_instance(ptr);
 	return (0);
 }
 
@@ -1139,9 +1147,7 @@ vnet_ipfw_nat_uninit(const void *arg __unused)
 	IPFW_WLOCK(chain);
 	LIST_FOREACH_SAFE(ptr, &chain->nat, _next, ptr_temp) {
 		LIST_REMOVE(ptr, _next);
-		del_redir_spool_cfg(ptr, &ptr->redir_chain);
-		LibAliasUninit(ptr->lib);
-		free(ptr, M_IPFW);
+		free_nat_instance(ptr);
 	}
 	flush_nat_ptrs(chain, -1 /* flush all */);
 	V_ipfw_nat_ready = 0;

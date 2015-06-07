@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libevent/Makefile 273065 2014-10-13 22:15:26Z delphij $
+# $FreeBSD: head/lib/libevent/Makefile 282420 2015-05-04 16:28:54Z bapt $
 
 .PATH:	${.CURDIR}/../../contrib/pf/libevent
 
@@ -7,7 +7,6 @@
 LIB=		event
 SHLIB_MAJOR=	1
 PRIVATELIB=
-INTERNALLIB=
 
 SRCS=	buffer.c evbuffer.c event.c kqueue.c log.c poll.c select.c signal.c
 HDRS=	event.h

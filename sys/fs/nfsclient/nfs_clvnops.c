@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvnops.c 276221 2014-12-25 22:29:37Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvnops.c 283273 2015-05-21 23:14:18Z rmacklem $");
 
 /*
  * vnode op calls for Sun NFS version 2, 3 and 4
@@ -2210,7 +2210,7 @@ nfs_readdir(struct vop_readdir_args *ap)
 	struct vnode *vp = ap->a_vp;
 	struct nfsnode *np = VTONFS(vp);
 	struct uio *uio = ap->a_uio;
-	ssize_t tresid;
+	ssize_t tresid, left;
 	int error = 0;
 	struct vattr vattr;
 	
@@ -2239,6 +2239,17 @@ nfs_readdir(struct vop_readdir_args *ap)
 	}
 
 	/*
+	 * NFS always guarantees that directory entries don't straddle
+	 * DIRBLKSIZ boundaries.  As such, we need to limit the size
+	 * to an exact multiple of DIRBLKSIZ, to avoid copying a partial
+	 * directory entry.
+	 */
+	left = uio->uio_resid % DIRBLKSIZ;
+	if (left == uio->uio_resid)
+		return (EINVAL);
+	uio->uio_resid -= left;
+
+	/*
 	 * Call ncl_bioread() to do the real work.
 	 */
 	tresid = uio->uio_resid;
@@ -2249,6 +2260,9 @@ nfs_readdir(struct vop_readdir_args *ap)
 		if (ap->a_eofflag != NULL)
 			*ap->a_eofflag = 1;
 	}
+	
+	/* Add the partial DIRBLKSIZ (left) back in. */
+	uio->uio_resid += left;
 	return (error);
 }
 

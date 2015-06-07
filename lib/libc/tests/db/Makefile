@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/db/Makefile 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/db/Makefile 281967 2015-04-25 04:35:43Z ngie $
 
 TESTSDIR=	${TESTSBASE}/lib/libc/db
 
@@ -11,6 +11,7 @@ FILESDIR=	${TESTSDIR}
 FILES=		README
 
 NETBSD_ATF_TESTS_SH+=	db_test
+ATF_TESTS_SH_SED_db_test=	-e 's,/bin/csh,/bin/cat,g'
 
 .include "../Makefile.netbsd-tests"
 

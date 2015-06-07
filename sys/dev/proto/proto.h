@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/proto/proto.h 265055 2014-04-28 17:58:40Z marcel $
+ * $FreeBSD: head/sys/dev/proto/proto.h 284079 2015-06-06 16:09:25Z marcel $
  */
 
 #ifndef _DEV_PROTO_H_
@@ -33,11 +33,15 @@
 
 #define	PROTO_RES_UNUSED	0
 #define	PROTO_RES_PCICFG	10
+#define	PROTO_RES_BUSDMA	11
 
 struct proto_res {
 	int		r_type;
 	int		r_rid;
-	struct resource *r_res;
+	union {
+		struct resource *res;
+		void *busdma;
+	} r_d;
 	u_long		r_size;
 	union {
 		void		*cookie;
