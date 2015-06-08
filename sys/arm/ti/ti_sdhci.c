@@ -362,13 +362,15 @@ ti_sdhci_update_ios(device_t brdev, device_t reqdev)
 static int
 ti_sdhci_get_ro(device_t brdev, device_t reqdev)
 {
-	struct ti_sdhci_softc *sc = device_get_softc(brdev);
 	unsigned int readonly = 0;
+#if !defined(GPIO_DISABLED)
+	struct ti_sdhci_softc *sc = device_get_softc(brdev);
 
 	/* If a gpio pin is configured, read it. */
 	if (sc->gpio_dev != NULL) {
 		GPIO_PIN_GET(sc->gpio_dev, sc->wp_gpio_pin, &readonly);
 	}
+#endif
 
 	return (readonly);
 }
@@ -516,9 +518,11 @@ ti_sdhci_attach(device_t dev)
 		if (sc->gpio_dev == NULL) 
 			device_printf(dev, "Error: No GPIO device, "
 			    "Write Protect pin will not function\n");
+#if !defined(GPIO_DISABLED)
 		else
 			GPIO_PIN_SETFLAGS(sc->gpio_dev, sc->wp_gpio_pin,
 			                  GPIO_PIN_INPUT);
+#endif
 	}
 
 	/*
