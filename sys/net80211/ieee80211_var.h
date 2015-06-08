@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_var.h 283567 2015-05-26 12:51:14Z glebius $
+ * $FreeBSD: head/sys/net80211/ieee80211_var.h 284143 2015-06-08 02:35:43Z adrian $
  */
 #ifndef _NET80211_IEEE80211_VAR_H_
 #define _NET80211_IEEE80211_VAR_H_
@@ -197,6 +197,7 @@ struct ieee80211com {
 	struct ieee80211_dfs_state ic_dfs;	/* DFS state */
 
 	struct ieee80211_scan_state *ic_scan;	/* scan state */
+	struct ieee80211_scan_methods *ic_scan_methods;	/* scan methods */
 	int			ic_lastdata;	/* time of last data frame */
 	int			ic_lastscan;	/* time last scan completed */
 

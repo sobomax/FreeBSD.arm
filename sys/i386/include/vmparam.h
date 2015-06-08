@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/i386/include/vmparam.h 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
  */
 
 
@@ -83,13 +83,12 @@
 #define	VM_PHYSSEG_MAX		17
 
 /*
- * Create two free page pools.  Since the i386 kernel virtual address
+ * Create one free page pool.  Since the i386 kernel virtual address
  * space does not include a mapping onto the machine's entire physical
  * memory, VM_FREEPOOL_DIRECT is defined as an alias for the default
  * pool, VM_FREEPOOL_DEFAULT.
  */
-#define	VM_NFREEPOOL		2
-#define	VM_FREEPOOL_CACHE	1
+#define	VM_NFREEPOOL		1
 #define	VM_FREEPOOL_DEFAULT	0
 #define	VM_FREEPOOL_DIRECT	0
 
