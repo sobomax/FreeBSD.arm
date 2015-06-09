@@ -82,7 +82,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 283795 2015-05-30 23:37:47Z alc $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 284147 2015-06-08 04:59:32Z alc $");
 
 #include "opt_vm.h"
 
@@ -2708,7 +2708,6 @@ vm_page_cache(vm_page_t m)
 #else
 	if (TRUE) {
 #endif
-		vm_phys_set_pool(VM_FREEPOOL_CACHE, m, 0);
 		vm_phys_free_pages(m, 0);
 	}
 	vm_page_free_wakeup();

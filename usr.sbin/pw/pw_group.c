@@ -26,7 +26,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_group.c 284139 2015-06-07 21:57:20Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw_group.c 284149 2015-06-08 05:27:34Z bapt $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -73,8 +73,11 @@ pw_group(int mode, char *name, long id, struct cargs * args)
 	 * next gid to stdout
 	 */
 	if (mode == M_NEXT) {
-		printf("%u\n", gr_gidpolicy(cnd, id));
-		return (EXIT_SUCCESS);
+		gid_t next = gr_gidpolicy(cnf, id);
+		if (getarg(args, 'q'))
+			return next;
+		printf("%u\n", next);
+		return EXIT_SUCCESS;
 	}
 
 	if (mode == M_PRINT && getarg(args, 'a')) {

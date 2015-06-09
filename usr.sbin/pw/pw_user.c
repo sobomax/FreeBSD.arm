@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_user.c 284139 2015-06-07 21:57:20Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw_user.c 284149 2015-06-08 05:27:34Z bapt $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -158,10 +158,14 @@ pw_user(int mode, char *name, long id, struct cargs * args)
 	 * With M_NEXT, we only need to return the
 	 * next uid to stdout
 	 */
-	if (mode == M_NEXT) {
-		printf("%u:", pw_uidpolicy(cnf, id));
+	if (mode == M_NEXT)
+	{
+		uid_t next = pw_uidpolicy(cnf, id);
+		if (getarg(args, 'q'))
+			return next;
+		printf("%u:", next);
 		pw_group(mode, name, -1, args);
-		return (EXIT_SUCCESS);
+		return EXIT_SUCCESS;
 	}
 
 	/*

@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: head/sys/sparc64/include/vmparam.h 270429 2014-08-23 18:11:54Z kib $
+ * $FreeBSD: head/sys/sparc64/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -75,13 +75,12 @@
 #define	VM_PHYSSEG_MAX		64
 
 /*
- * Create three free page pools: VM_FREEPOOL_DEFAULT is the default pool
+ * Create two free page pools: VM_FREEPOOL_DEFAULT is the default pool
  * from which physical pages are allocated and VM_FREEPOOL_DIRECT is
  * the pool from which physical pages for small UMA objects are
  * allocated.
  */
-#define	VM_NFREEPOOL		3
-#define	VM_FREEPOOL_CACHE	2
+#define	VM_NFREEPOOL		2
 #define	VM_FREEPOOL_DEFAULT	0
 #define	VM_FREEPOOL_DIRECT	1
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_gpt.c 279935 2015-03-12 18:51:31Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_gpt.c 284151 2015-06-08 12:52:41Z ae $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -760,7 +760,7 @@ g_part_gpt_resize(struct g_part_table *basetable,
 	struct g_part_gpt_entry *entry;
 
 	if (baseentry == NULL)
-		return (EOPNOTSUPP);
+		return (g_part_gpt_recover(basetable));
 
 	entry = (struct g_part_gpt_entry *)baseentry;
 	baseentry->gpe_end = baseentry->gpe_start + gpp->gpp_size - 1;
