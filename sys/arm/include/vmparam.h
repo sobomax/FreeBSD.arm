@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/vmparam.h 280712 2015-03-26 21:13:53Z ian $
+ * $FreeBSD: head/sys/arm/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -84,13 +84,12 @@
 #define	VM_PHYSSEG_SPARSE
 
 /*
- * Create two free page pools.  Since the ARM kernel virtual address
+ * Create one free page pool.  Since the ARM kernel virtual address
  * space does not include a mapping onto the machine's entire physical
  * memory, VM_FREEPOOL_DIRECT is defined as an alias for the default
  * pool, VM_FREEPOOL_DEFAULT.
  */
-#define	VM_NFREEPOOL		2
-#define	VM_FREEPOOL_CACHE	1
+#define	VM_NFREEPOOL		1
 #define	VM_FREEPOOL_DEFAULT	0
 #define	VM_FREEPOOL_DIRECT	0
 

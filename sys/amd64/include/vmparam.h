@@ -38,7 +38,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/amd64/include/vmparam.h 277052 2015-01-12 07:50:55Z kib $
+ * $FreeBSD: head/sys/amd64/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
  */
 
 
@@ -90,13 +90,12 @@
 #define	VM_PHYSSEG_MAX		63
 
 /*
- * Create three free page pools: VM_FREEPOOL_DEFAULT is the default pool
+ * Create two free page pools: VM_FREEPOOL_DEFAULT is the default pool
  * from which physical pages are allocated and VM_FREEPOOL_DIRECT is
  * the pool from which physical pages for page tables and small UMA
  * objects are allocated.
  */
-#define	VM_NFREEPOOL		3
-#define	VM_FREEPOOL_CACHE	2
+#define	VM_NFREEPOOL		2
 #define	VM_FREEPOOL_DEFAULT	0
 #define	VM_FREEPOOL_DIRECT	1
 

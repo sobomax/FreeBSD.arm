@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: vmparam.h,v 1.11 2000/02/11 19:25:16 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/vmparam.h 276905 2015-01-10 06:54:10Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -136,13 +136,12 @@ struct pmap_physseg {
 #endif
 
 /*
- * Create three free page pools: VM_FREEPOOL_DEFAULT is the default pool
+ * Create two free page pools: VM_FREEPOOL_DEFAULT is the default pool
  * from which physical pages are allocated and VM_FREEPOOL_DIRECT is
  * the pool from which physical pages for small UMA objects are
  * allocated.
  */
-#define	VM_NFREEPOOL		3
-#define	VM_FREEPOOL_CACHE	2
+#define	VM_NFREEPOOL		2
 #define	VM_FREEPOOL_DEFAULT	0
 #define	VM_FREEPOOL_DIRECT	1
 

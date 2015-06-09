@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/boot/ficl/loader.c 284116 2015-06-07 14:20:48Z araujo $
+ *	$FreeBSD: head/sys/boot/ficl/loader.c 284142 2015-06-08 02:31:46Z araujo $
  */
 
 /*******************************************************************
@@ -46,7 +46,6 @@
 #include "bootstrap.h"
 #include <string.h>
 #include "ficl.h"
-#include "../i386/libi386/libi386.h"
 
 /*		FreeBSD's loader interaction words and extras
  *

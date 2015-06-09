@@ -23,20 +23,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/proto/proto_busdma.h 284079 2015-06-06 16:09:25Z marcel $
+ * $FreeBSD: head/sys/dev/proto/proto_busdma.h 284144 2015-06-08 03:00:36Z marcel $
  */
 
 #ifndef _DEV_PROTO_BUSDMA_H_
 #define _DEV_PROTO_BUSDMA_H_
 
+struct proto_md;
+
 struct proto_tag {
-	LIST_ENTRY(proto_tag)	link;
+	LIST_ENTRY(proto_tag)	tags;
 	struct proto_tag	*parent;
-	bus_dma_tag_t		busdma_tag;
+	LIST_ENTRY(proto_tag)	peers;
+	LIST_HEAD(,proto_tag)	children;
+	LIST_HEAD(,proto_md)	mds;
+	bus_addr_t		align;
+	bus_addr_t		bndry;
+	bus_addr_t		maxaddr;
+	bus_size_t		maxsz;
+	bus_size_t		maxsegsz;
+	u_int			nsegs;
+	u_int			datarate;
+};
+
+struct proto_md {
+	LIST_ENTRY(proto_md)	mds;
+	LIST_ENTRY(proto_md)	peers;
+	struct proto_tag	*tag;
+	void			*kva;
+	bus_dma_tag_t		bd_tag;
+	bus_dmamap_t		bd_map;
 };
 
 struct proto_busdma {
 	LIST_HEAD(,proto_tag)	tags;
+	LIST_HEAD(,proto_md)	mds;
+	bus_dma_tag_t		bd_roottag;
 };
 
 struct proto_busdma *proto_busdma_attach(struct proto_softc *);
