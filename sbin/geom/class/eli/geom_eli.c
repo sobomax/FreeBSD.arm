@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/geom/class/eli/geom_eli.c 260254 2014-01-04 09:27:49Z pjd $");
+__FBSDID("$FreeBSD: head/sbin/geom/class/eli/geom_eli.c 284250 2015-06-11 00:24:33Z brueffer $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -423,7 +423,7 @@ eli_genkey_passphrase_prompt(struct gctl_req *req, bool new, char *passbuf,
 
 	for (;;) {
 		p = readpassphrase(
-		    new ? "Enter new passphrase:" : "Enter passphrase:",
+		    new ? "Enter new passphrase: " : "Enter passphrase: ",
 		    passbuf, passbufsize, RPP_ECHO_OFF | RPP_REQUIRE_TTY);
 		if (p == NULL) {
 			bzero(passbuf, passbufsize);

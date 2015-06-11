@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/pmap.c 281707 2015-04-18 21:23:16Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/pmap.c 284181 2015-06-09 18:04:28Z alc $");
 
 /*
  *	Manages physical address maps.
@@ -4035,6 +4035,7 @@ pmap_copy(pmap_t dst_pmap, pmap_t src_pmap, vm_offset_t dst_addr, vm_size_t len,
 				    ~PG_W;
 				dst_pmap->pm_stats.resident_count +=
 				    NBPDR / PAGE_SIZE;
+				pmap_pde_mappings++;
 			}
 			continue;
 		}

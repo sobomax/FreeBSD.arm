@@ -73,7 +73,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_pageout.c 282690 2015-05-09 20:08:36Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_pageout.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include "opt_vm.h"
 #include "opt_kdtrace.h"
@@ -1851,7 +1851,7 @@ again:
 			/*
 			 * get a limit
 			 */
-			lim_rlimit(p, RLIMIT_RSS, &rsslim);
+			lim_rlimit_proc(p, RLIMIT_RSS, &rsslim);
 			limit = OFF_TO_IDX(
 			    qmin(rsslim.rlim_cur, rsslim.rlim_max));
 

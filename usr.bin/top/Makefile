@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/top/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/top/Makefile 284165 2015-06-08 19:45:24Z marcel $
 
 TOPDIR=	${.CURDIR}/../../contrib/top
 .PATH: ${TOPDIR}
@@ -30,8 +30,8 @@ sigdesc.h: ${SIGCONV_AWK} ${SIGNAL_H}
 	awk -f ${SIGCONV_AWK} < ${SIGNAL_H} > ${.TARGET}
 
 CLEANFILES+= top.local.h top.x
-.SUFFIXES: .X .x .H .h
-.X.x .H.h:
+.SUFFIXES: .xs .x .hs .h
+.xs.x .hs.h:
 	@${ECHO} Making ${.TARGET} from ${.IMPSRC}
 	@sed -e's,%LoadMax%,5.0,g' \
 	-e's,%TableSize%,20011,g' \

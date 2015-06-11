@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/db_interface.c 282093 2015-04-27 14:18:07Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/db_interface.c 284196 2015-06-09 23:54:20Z zbb $");
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <vm/vm.h>
@@ -156,13 +156,11 @@ db_write_bytes(vm_offset_t addr, size_t size, char *data)
 		}
 		*dst++ = *data++;
 	}
+	dsb(ish);
 
-	dsb();
 	/* Clean D-cache and invalidate I-cache */
 	cpu_dcache_wb_range(addr, (vm_size_t)size);
 	cpu_icache_sync_range(addr, (vm_size_t)size);
-	dsb();
-	isb();
 
 	return (0);
 }

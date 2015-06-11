@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/machdep.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/machdep.c 284273 2015-06-11 15:45:33Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -392,6 +392,8 @@ cpu_est_clockrate(int cpu_id, uint64_t *rate)
 void
 cpu_pcpu_init(struct pcpu *pcpu, int cpuid, size_t size)
 {
+
+	pcpu->pc_acpi_id = 0xffffffff;
 }
 
 void

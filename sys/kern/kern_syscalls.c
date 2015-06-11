@@ -25,12 +25,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_syscalls.c 273953 2014-11-01 22:36:40Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_syscalls.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/mutex.h>
+#include <sys/proc.h>
+#include <sys/resourcevar.h>
 #include <sys/sx.h>
 #include <sys/syscall.h>
 #include <sys/sysent.h>

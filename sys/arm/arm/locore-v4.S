@@ -40,7 +40,7 @@
 #include <machine/cpuconf.h>
 #include <machine/pte.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/locore-v4.S 282025 2015-04-26 16:37:27Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/locore-v4.S 284264 2015-06-11 13:54:18Z andrew $");
 
 /*
  * Sanity check the configuration.
@@ -49,8 +49,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/locore-v4.S 282025 2015-04-26 16:37:27Z and
  *
  * TODO: Fix the ARMv4/v5 case.
  */
-#if (defined(FLASHADDR) || defined(LOADERRAMADDR) || !defined(_ARM_ARCH_6)) && \
-    !defined(PHYSADDR)
+#ifndef PHYSADDR
 #error PHYSADDR must be defined for this configuration
 #endif
 

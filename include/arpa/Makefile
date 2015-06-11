@@ -1,8 +1,7 @@
-# $FreeBSD: head/include/arpa/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/include/arpa/Makefile 284255 2015-06-11 04:22:17Z sjg $
 
 .include <src.opts.mk>
 
-NO_OBJ=
 INCS=	ftp.h inet.h nameser.h nameser_compat.h tftp.h
 .if ${MK_TELNET} == "no"
 INCS+=	telnet.h

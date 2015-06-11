@@ -1,6 +1,5 @@
-# $FreeBSD: head/include/protocols/Makefile 139103 2004-12-21 08:47:35Z ru $
+# $FreeBSD: head/include/protocols/Makefile 284255 2015-06-11 04:22:17Z sjg $
 
-NO_OBJ=
 INCS=	dumprestore.h routed.h rwhod.h talkd.h timed.h
 INCSDIR=${INCLUDEDIR}/protocols
 

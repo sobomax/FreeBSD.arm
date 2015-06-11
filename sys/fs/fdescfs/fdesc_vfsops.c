@@ -31,7 +31,7 @@
  *
  *	@(#)fdesc_vfsops.c	8.4 (Berkeley) 1/21/94
  *
- * $FreeBSD: head/sys/fs/fdescfs/fdesc_vfsops.c 277855 2015-01-28 21:08:09Z jamie $
+ * $FreeBSD: head/sys/fs/fdescfs/fdesc_vfsops.c 284215 2015-06-10 10:48:12Z mjg $
  */
 
 /*
@@ -199,9 +199,7 @@ fdesc_statfs(mp, sbp)
 	 * limit is ever reduced below the current number
 	 * of open files... ]
 	 */
-	PROC_LOCK(td->td_proc);
-	lim = lim_cur(td->td_proc, RLIMIT_NOFILE);
-	PROC_UNLOCK(td->td_proc);
+	lim = lim_cur(td, RLIMIT_NOFILE);
 	fdp = td->td_proc->p_fd;
 	FILEDESC_SLOCK(fdp);
 	limit = racct_get_limit(td->td_proc, RACCT_NOFILE);

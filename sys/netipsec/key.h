@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key.h 275438 2014-12-03 04:08:41Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/key.h 284259 2015-06-11 13:05:37Z jmg $	*/
 /*	$KAME: key.h,v 1.21 2001/07/27 03:51:30 itojun Exp $	*/
 
 /*-
@@ -105,7 +105,6 @@ extern void key_init(void);
 extern void key_destroy(void);
 #endif
 extern void key_sa_recordxfer(struct secasvar *, struct mbuf *);
-extern void key_sa_stir_iv(struct secasvar *);
 #ifdef IPSEC_NAT_T
 u_int16_t key_portfromsaddr(struct sockaddr *);
 #define	KEY_PORTFROMSADDR(saddr)				\

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/camcontrol/camcontrol.h 268240 2014-07-03 23:09:44Z ken $
+ * $FreeBSD: head/sbin/camcontrol/camcontrol.h 284192 2015-06-09 21:39:38Z ken $
  */
 
 #ifndef _CAMCONTROL_H
@@ -66,6 +66,9 @@ int scsidoinquiry(struct cam_device *device, int argc, char **argv,
 int scsipersist(struct cam_device *device, int argc, char **argv,
 		char *combinedopt, int retry_count, int timeout, int verbose,
 		int err_recover);
+int scsiattrib(struct cam_device *device, int argc, char **argv,
+	       char *combinedopt, int retry_count, int timeout, int verbose,
+	       int err_recover);
 char *cget(void *hook, char *name);
 int iget(void *hook, char *name);
 void arg_put(void *hook, int letter, void *arg, int count, char *name);

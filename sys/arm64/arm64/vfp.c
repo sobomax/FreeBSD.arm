@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/vfp.c 281557 2015-04-15 14:30:07Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/vfp.c 284196 2015-06-09 23:54:20Z zbb $");
 
 #ifdef VFP
 #include <sys/param.h>
@@ -120,7 +120,7 @@ vfp_save_state(struct thread *td)
 		td->td_pcb->pcb_fpcr = fpcr;
 		td->td_pcb->pcb_fpsr = fpsr;
 
-		dsb();
+		dsb(ish);
 		vfp_disable();
 	}
 	critical_exit();

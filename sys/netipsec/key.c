@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key.c 283291 2015-05-22 17:05:21Z jkim $	*/
+/*	$FreeBSD: head/sys/netipsec/key.c 284259 2015-06-11 13:05:37Z jmg $	*/
 /*	$KAME: key.c,v 1.191 2001/06/27 10:46:49 sakane Exp $	*/
 
 /*-
@@ -7712,14 +7712,6 @@ key_sa_chgstate(struct secasvar *sav, u_int8_t state)
 		sav->state = state;
 		LIST_INSERT_HEAD(&sav->sah->savtree[state], sav, chain);
 	}
-}
-
-void
-key_sa_stir_iv(struct secasvar *sav)
-{
-
-	IPSEC_ASSERT(sav->iv != NULL, ("null IV"));
-	key_randomfill(sav->iv, sav->ivlen);
 }
 
 /*

@@ -23,19 +23,35 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/atomic.h 281157 2015-04-06 16:27:22Z andrew $
+ * $FreeBSD: head/sys/arm64/include/atomic.h 284196 2015-06-09 23:54:20Z zbb $
  */
 
 #ifndef	_MACHINE_ATOMIC_H_
 #define	_MACHINE_ATOMIC_H_
 
-#define	isb()  __asm __volatile("isb" : : : "memory")
-#define	dsb()  __asm __volatile("dsb sy" : : : "memory")
-#define	dmb()  __asm __volatile("dmb sy" : : : "memory")
+#define	isb()		__asm __volatile("isb" : : : "memory")
 
-#define	mb()   dmb()
-#define	wmb()  dmb()
-#define	rmb()  dmb()
+/*
+ * Options for DMB and DSB:
+ *	oshld	Outer Shareable, load
+ *	oshst	Outer Shareable, store
+ *	osh	Outer Shareable, all
+ *	nshld	Non-shareable, load
+ *	nshst	Non-shareable, store
+ *	nsh	Non-shareable, all
+ *	ishld	Inner Shareable, load
+ *	ishst	Inner Shareable, store
+ *	ish	Inner Shareable, all
+ *	ld	Full system, load
+ *	st	Full system, store
+ *	sy	Full system, all
+ */
+#define	dsb(opt)	__asm __volatile("dsb " __STRING(opt) : : : "memory")
+#define	dmb(opt)	__asm __volatile("dmb " __STRING(opt) : : : "memory")
+
+#define	mb()	dmb(sy)	/* Full system memory barrier all */
+#define	wmb()	dmb(st)	/* Full system memory barrier store */
+#define	rmb()	dmb(ld)	/* Full system memory barrier load */
 
 static __inline void
 atomic_add_32(volatile uint32_t *p, uint32_t val)

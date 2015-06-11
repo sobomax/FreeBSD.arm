@@ -1,9 +1,9 @@
-# $FreeBSD: head/sbin/camcontrol/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/camcontrol/Makefile 284192 2015-06-09 21:39:38Z ken $
 
 PROG=	camcontrol
 SRCS=	camcontrol.c util.c
 .if !defined(RELEASE_CRUNCH)
-SRCS+=	fwdownload.c modeedit.c persist.c progress.c
+SRCS+=	attrib.c fwdownload.c modeedit.c persist.c progress.c
 .else
 CFLAGS+= -DMINIMALISTIC
 .endif

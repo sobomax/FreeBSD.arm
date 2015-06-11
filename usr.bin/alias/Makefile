@@ -1,8 +1,7 @@
-# $FreeBSD: head/usr.bin/alias/Makefile 207196 2010-04-25 17:38:53Z jilles $
+# $FreeBSD: head/usr.bin/alias/Makefile 284255 2015-06-11 04:22:17Z sjg $
 
 SCRIPTS=generic.sh
 SCRIPTSNAME=alias
-NO_OBJ=
 
 LINKS=	${BINDIR}/alias ${BINDIR}/bg \
 	${BINDIR}/alias ${BINDIR}/cd \

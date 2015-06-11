@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/bus_space/bus_space.h 265056 2014-04-28 18:06:11Z marcel $
+ * $FreeBSD: head/tools/bus_space/bus.h 284228 2015-06-10 16:00:09Z marcel $
  */
 
 #ifndef _TOOLS_BUS_SPACE_H_

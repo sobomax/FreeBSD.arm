@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/arm/include/pcpu.h 284109 2015-06-07 10:50:15Z andrew $
+ * $FreeBSD: head/sys/arm/include/pcpu.h 284265 2015-06-11 13:58:40Z andrew $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -32,6 +32,7 @@
 
 #ifdef _KERNEL
 
+#include <machine/acle-compat.h>
 #include <machine/cpuconf.h>
 
 #define	ALT_STACK_SIZE	128
@@ -40,7 +41,7 @@ struct vmspace;
 
 #endif	/* _KERNEL */
 
-#ifdef VFP
+#if __ARM_ARCH >= 6
 #define PCPU_MD_FIELDS							\
 	unsigned int pc_vfpsid;						\
 	unsigned int pc_vfpmvfr0;					\
@@ -58,9 +59,8 @@ struct pcb;
 struct pcpu;
 
 extern struct pcpu *pcpup;
-#if ARM_ARCH_6 || ARM_ARCH_7A
-/* or ARM_TP_ADDRESS 	mark REMOVE ME NOTE */
 
+#if __ARM_ARCH >= 6
 #define CPU_MASK (0xf)
 
 #ifndef SMP

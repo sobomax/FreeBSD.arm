@@ -39,16 +39,17 @@
  */
 
 #include "assym.s"
+#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/armreg.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 283839 2015-05-31 21:03:06Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 284264 2015-06-11 13:54:18Z andrew $");
 
 #include <sys/errno.h>
 
 	.text
 	.align	2
 
-#ifdef _ARM_ARCH_6
+#if __ARM_ARCH >= 6
 #define GET_PCB(tmp) \
 	mrc p15, 0, tmp, c13, c0, 4; \
 	add	tmp, tmp, #(TD_PCB)

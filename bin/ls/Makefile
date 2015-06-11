@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
-# $FreeBSD: head/bin/ls/Makefile 275028 2014-11-25 11:15:40Z bapt $
+# $FreeBSD: head/bin/ls/Makefile 284198 2015-06-10 01:27:38Z marcel $
 
 .include <src.opts.mk>
 
@@ -10,7 +10,7 @@ LIBADD=	util
 .if !defined(RELEASE_CRUNCH) && \
 	${MK_LS_COLORS} != no
 CFLAGS+= -DCOLORLS
-LIBADD+=	termcapw
+LIBADD+=	termcapw xo
 .endif
 
 .include <bsd.prog.mk>

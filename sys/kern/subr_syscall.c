@@ -41,7 +41,7 @@
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
 
-__FBSDID("$FreeBSD: head/sys/kern/subr_syscall.c 275616 2014-12-08 16:18:05Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_syscall.c 284214 2015-06-10 10:43:59Z mjg $");
 
 #include <sys/capsicum.h>
 #include <sys/ktr.h>
@@ -61,8 +61,8 @@ syscallenter(struct thread *td, struct syscall_args *sa)
 	p = td->td_proc;
 
 	td->td_pticks = 0;
-	if (td->td_ucred != p->p_ucred)
-		cred_update_thread(td);
+	if (td->td_cowgen != p->p_cowgen)
+		thread_cow_update(td);
 	if (p->p_flag & P_TRACED) {
 		traced = 1;
 		PROC_LOCK(p);

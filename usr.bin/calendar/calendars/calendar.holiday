@@ -1,7 +1,7 @@
 /*
  * Holiday
  *
- * $FreeBSD: head/usr.bin/calendar/calendars/calendar.holiday 282099 2015-04-27 17:04:27Z rene $
+ * $FreeBSD: head/usr.bin/calendar/calendars/calendar.holiday 284249 2015-06-11 00:12:33Z brueffer $
  */
 
 #ifndef _calendar_holiday_
@@ -357,7 +357,7 @@
 08/31	Independence Day (Merdeka) in Malaysia
 08/31	Independence Day in Trinidad and Tobago
 08/31	Pashtoonian Day in Afghanistan
-08/FriThird	Admission Day in Hawaii, 1984 (3rd Friday)
+08/FriThird	Admission Day in Hawaii, 1959 (3rd Friday)
 09/01	Army Day in Chile
 09/03	Independence Day in Qatar
 09/03	Memorial Day in Tunisia

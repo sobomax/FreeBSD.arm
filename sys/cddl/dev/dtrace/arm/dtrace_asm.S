@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/arm/dtrace_asm.S 281916 2015-04-24 03:19:30Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/arm/dtrace_asm.S 284213 2015-06-10 09:59:26Z br $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -28,7 +28,6 @@
 
 #define _ASM
 #define _LOCORE
-#define LOCORE
 
 #include <sys/cpuvar_defs.h>
 #include <sys/dtrace.h>

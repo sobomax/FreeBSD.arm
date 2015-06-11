@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/proto/proto_busdma.c 284144 2015-06-08 03:00:36Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/proto/proto_busdma.c 284246 2015-06-10 22:33:56Z marcel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -129,6 +129,16 @@ proto_busdma_tag_lookup(struct proto_busdma *busdma, u_long key)
 	return (NULL);
 }
 
+static void
+proto_busdma_mem_alloc_callback(void *arg, bus_dma_segment_t *segs, int	nseg,
+    int error)
+{
+	struct proto_ioc_busdma *ioc = arg;
+
+	ioc->u.mem.bus_nsegs = nseg;
+	ioc->u.mem.bus_addr = segs[0].ds_addr;
+}
+
 static int
 proto_busdma_mem_alloc(struct proto_busdma *busdma, struct proto_tag *tag,
     struct proto_ioc_busdma *ioc)
@@ -146,16 +156,25 @@ proto_busdma_mem_alloc(struct proto_busdma *busdma, struct proto_tag *tag,
 		free(md, M_PROTO_BUSDMA);
 		return (error);
 	}
-	error = bus_dmamem_alloc(md->bd_tag, &md->kva, 0, &md->bd_map);
+	error = bus_dmamem_alloc(md->bd_tag, &md->virtaddr, 0, &md->bd_map);
 	if (error) {
+		bus_dma_tag_destroy(md->bd_tag);
+		free(md, M_PROTO_BUSDMA);
+		return (error);
+	}
+	md->physaddr = pmap_kextract((uintptr_t)(md->virtaddr));
+	error = bus_dmamap_load(md->bd_tag, md->bd_map, md->virtaddr,
+	    tag->maxsz, proto_busdma_mem_alloc_callback, ioc, BUS_DMA_NOWAIT);
+	if (error) {
+		bus_dmamem_free(md->bd_tag, md->virtaddr, md->bd_map);
 		bus_dma_tag_destroy(md->bd_tag);
 		free(md, M_PROTO_BUSDMA);
 		return (error);
 	}
 	LIST_INSERT_HEAD(&tag->mds, md, peers);
 	LIST_INSERT_HEAD(&busdma->mds, md, mds);
-	ioc->u.mem.nsegs = 1;
-	ioc->u.mem.physaddr = pmap_kextract((uintptr_t)(md->kva));
+	ioc->u.mem.phys_nsegs = 1;
+	ioc->u.mem.phys_addr = md->physaddr;
 	ioc->result = (uintptr_t)(void *)md;
 	return (0);
 }
@@ -166,7 +185,7 @@ proto_busdma_mem_free(struct proto_busdma *busdma, struct proto_md *md)
 
 	LIST_REMOVE(md, mds);
 	LIST_REMOVE(md, peers);
-	bus_dmamem_free(md->bd_tag, md->kva, md->bd_map);
+	bus_dmamem_free(md->bd_tag, md->virtaddr, md->bd_map);
 	bus_dma_tag_destroy(md->bd_tag);
 	free(md, M_PROTO_BUSDMA);
 	return (0);
@@ -266,4 +285,17 @@ proto_busdma_ioctl(struct proto_softc *sc, struct proto_busdma *busdma,
 		break;
 	}
 	return (error);
+}
+
+int
+proto_busdma_mmap_allowed(struct proto_busdma *busdma, vm_paddr_t physaddr)
+{
+	struct proto_md *md;
+
+	LIST_FOREACH(md, &busdma->mds, mds) {
+		if (physaddr >= trunc_page(md->physaddr) &&
+		    physaddr <= trunc_page(md->physaddr + md->tag->maxsz))
+			return (1);
+	}
+	return (0);
 }

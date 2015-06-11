@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/bus_space/bus_space.c 265056 2014-04-28 18:06:11Z marcel $");
+__FBSDID("$FreeBSD: head/tools/bus_space/bus.c 284228 2015-06-10 16:00:09Z marcel $");
 
 #include <sys/ioctl.h>
 #include <sys/mman.h>
@@ -35,7 +35,7 @@ __FBSDID("$FreeBSD: head/tools/bus_space/bus_space.c 265056 2014-04-28 18:06:11Z
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "bus_space.h"
+#include "bus.h"
 
 #include "../../sys/dev/proto/proto_dev.h"
 

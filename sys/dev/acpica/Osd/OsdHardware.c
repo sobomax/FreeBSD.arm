@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdHardware.c 213787 2010-10-13 17:06:25Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdHardware.c 284273 2015-06-11 15:45:33Z andrew $");
 
 #include <contrib/dev/acpica/include/acpi.h>
 
@@ -89,6 +89,10 @@ AcpiOsReadPciConfiguration(ACPI_PCI_ID *PciId, UINT32 Register, UINT64 *Value,
     UINT32 Width)
 {
 
+#ifdef __aarch64__
+    /* ARM64TODO: Add pci support */
+    return (AE_SUPPORT);
+#else
     if (Width == 64)
 	return (AE_SUPPORT);
 
@@ -99,6 +103,7 @@ AcpiOsReadPciConfiguration(ACPI_PCI_ID *PciId, UINT32 Register, UINT64 *Value,
 	PciId->Function, Register, Width / 8);
 
     return (AE_OK);
+#endif
 }
 
 
@@ -107,6 +112,10 @@ AcpiOsWritePciConfiguration (ACPI_PCI_ID *PciId, UINT32 Register,
     UINT64 Value, UINT32 Width)
 {
 
+#ifdef __aarch64__
+    /* ARM64TODO: Add pci support */
+    return (AE_SUPPORT);
+#else
     if (Width == 64)
 	return (AE_SUPPORT);
 
@@ -117,4 +126,5 @@ AcpiOsWritePciConfiguration (ACPI_PCI_ID *PciId, UINT32 Register,
 	Value, Width / 8);
 
     return (AE_OK);
+#endif
 }

@@ -49,7 +49,7 @@
 #include "opt_timer.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/machdep.c 284109 2015-06-07 10:50:15Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/machdep.c 284264 2015-06-11 13:54:18Z andrew $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -911,7 +911,7 @@ fake_preload_metadata(struct arm_boot_params *abp __unused)
 void
 pcpu0_init(void)
 {
-#if ARM_ARCH_6 || ARM_ARCH_7A || defined(CPU_MV_PJ4B)
+#if __ARM_ARCH >= 6
 	set_curthread(&thread0);
 #endif
 	pcpu_init(pcpup, 0, sizeof(struct pcpu));

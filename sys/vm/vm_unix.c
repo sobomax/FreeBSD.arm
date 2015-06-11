@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_unix.c 282213 2015-04-29 10:23:02Z trasz $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_unix.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -83,11 +83,9 @@ sys_obreak(td, uap)
 	int error = 0;
 	boolean_t do_map_wirefuture;
 
-	PROC_LOCK(td->td_proc);
-	datalim = lim_cur(td->td_proc, RLIMIT_DATA);
-	lmemlim = lim_cur(td->td_proc, RLIMIT_MEMLOCK);
-	vmemlim = lim_cur(td->td_proc, RLIMIT_VMEM);
-	PROC_UNLOCK(td->td_proc);
+	datalim = lim_cur(td, RLIMIT_DATA);
+	lmemlim = lim_cur(td, RLIMIT_MEMLOCK);
+	vmemlim = lim_cur(td, RLIMIT_VMEM);
 
 	do_map_wirefuture = FALSE;
 	new = round_page((vm_offset_t)uap->nsize);

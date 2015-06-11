@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_event.c 283440 2015-05-24 16:36:29Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_event.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"
@@ -754,14 +754,10 @@ kern_kqueue(struct thread *td, int flags)
 	p = td->td_proc;
 	cred = td->td_ucred;
 	crhold(cred);
-	PROC_LOCK(p);
-	if (!chgkqcnt(cred->cr_ruidinfo, 1, lim_cur(td->td_proc,
-	    RLIMIT_KQUEUES))) {
-		PROC_UNLOCK(p);
+	if (!chgkqcnt(cred->cr_ruidinfo, 1, lim_cur(td, RLIMIT_KQUEUES))) {
 		crfree(cred);
 		return (ENOMEM);
 	}
-	PROC_UNLOCK(p);
 
 	fdp = p->p_fd;
 	error = falloc(td, &fp, &fd, flags);

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/imgact_linux.c 255426 2013-09-09 18:11:59Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/imgact_linux.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -108,7 +108,7 @@ exec_linux_imgact(struct image_params *imgp)
      */
     PROC_LOCK(imgp->proc);
     if (a_out->a_text > maxtsiz ||
-	a_out->a_data + bss_size > lim_cur(imgp->proc, RLIMIT_DATA) ||
+	a_out->a_data + bss_size > lim_cur_proc(imgp->proc, RLIMIT_DATA) ||
 	racct_set(imgp->proc, RACCT_DATA, a_out->a_data + bss_size) != 0) {
 	PROC_UNLOCK(imgp->proc);
 	return (ENOMEM);

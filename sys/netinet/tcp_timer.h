@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/tcp_timer.h 281599 2015-04-16 10:00:06Z jch $
+ * $FreeBSD: head/sys/netinet/tcp_timer.h 284245 2015-06-10 20:43:07Z jch $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -159,6 +159,12 @@ struct tcp_timer {
 #define TT_KEEP		0x0008
 #define TT_2MSL		0x0010
 #define TT_MASK		(TT_DELACK|TT_REXMT|TT_PERSIST|TT_KEEP|TT_2MSL)
+
+#define TT_DELACK_RST	0x0100
+#define TT_REXMT_RST	0x0200
+#define TT_PERSIST_RST	0x0400
+#define TT_KEEP_RST	0x0800
+#define TT_2MSL_RST	0x1000
 
 #define TT_STOPPED	0x00010000
 

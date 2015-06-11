@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/arm64/include/pcpu.h 280364 2015-03-23 11:54:56Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pcpu.h 284273 2015-06-11 15:45:33Z andrew $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -36,7 +36,8 @@
 #define	ALT_STACK_SIZE	128
 
 #define	PCPU_MD_FIELDS							\
-	char __pad[129]
+	u_int	pc_acpi_id;	/* ACPI CPU id */			\
+	char __pad[125]
 
 #ifdef _KERNEL
 

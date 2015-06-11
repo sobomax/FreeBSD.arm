@@ -1,8 +1,8 @@
-# $FreeBSD: head/lib/libsbuf/Makefile 269179 2014-07-28 07:20:22Z gahr $
+# $FreeBSD: head/lib/libsbuf/Makefile 284192 2015-06-09 21:39:38Z ken $
 
 LIB=		sbuf
 SHLIBDIR?= 	/lib
-SRCS=		subr_sbuf.c 
+SRCS=		subr_prf.c subr_sbuf.c
 
 SHLIB_MAJOR	= 6
 

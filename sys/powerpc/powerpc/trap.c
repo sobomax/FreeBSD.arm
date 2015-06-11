@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/trap.c 281262 2015-04-08 04:37:11Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/trap.c 284214 2015-06-10 10:43:59Z mjg $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -196,8 +196,8 @@ trap(struct trapframe *frame)
 	if (user) {
 		td->td_pticks = 0;
 		td->td_frame = frame;
-		if (td->td_ucred != p->p_ucred)
-			cred_update_thread(td);
+		if (td->td_cowgen != p->p_cowgen)
+			thread_cow_update(td);
 
 		/* User Mode Traps */
 		switch (type) {
