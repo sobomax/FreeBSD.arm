@@ -23,26 +23,27 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/bus_space/C/libbus_space.h 284146 2015-06-08 03:23:20Z marcel $
+ * $FreeBSD: head/tools/bus_space/C/libbus.h 284253 2015-06-11 03:02:40Z marcel $
  */
 
 #ifndef _LIBBUS_SPACE_H_
 #define	_LIBBUS_SPACE_H_
 
-int	bus_space_map(const char *dev);
-int16_t	bus_space_read_1(int rid, long ofs);
-int32_t	bus_space_read_2(int rid, long ofs);
-int64_t bus_space_read_4(int rid, long ofs);
-int	bus_space_subregion(int rid, long ofs, long sz);
-int	bus_space_unmap(int rid);
-int	bus_space_write_1(int rid, long ofs, uint8_t val);
-int	bus_space_write_2(int rid, long ofs, uint16_t val);
-int	bus_space_write_4(int rid, long ofs, uint32_t val);
+int	bus_map(const char *dev);
+int16_t	bus_read_1(int rid, long ofs);
+int32_t	bus_read_2(int rid, long ofs);
+int64_t bus_read_4(int rid, long ofs);
+int	bus_subregion(int rid, long ofs, long sz);
+int	bus_unmap(int rid);
+int	bus_write_1(int rid, long ofs, uint8_t val);
+int	bus_write_2(int rid, long ofs, uint16_t val);
+int	bus_write_4(int rid, long ofs, uint32_t val);
 
 typedef unsigned long bus_addr_t;
 typedef unsigned long bus_size_t;
 typedef int busdma_tag_t;
 typedef int busdma_md_t;
+typedef int busdma_seg_t;
 
 int	busdma_tag_create(const char *dev, bus_addr_t align, bus_addr_t bndry,
 	    bus_addr_t maxaddr, bus_size_t maxsz, u_int nsegs,
@@ -56,5 +57,15 @@ int	busdma_tag_destroy(busdma_tag_t tag);
 
 int	busdma_mem_alloc(busdma_tag_t tag, u_int flags, busdma_md_t *out_p);
 int	busdma_mem_free(busdma_md_t md);
+
+#define	BUSDMA_MD_BUS_SPACE	0
+#define	BUSDMA_MD_PHYS_SPACE	1
+#define	BUSDMA_MD_VIRT_SPACE	2
+
+int	busdma_md_first_seg(busdma_md_t, int space);
+int	busdma_md_next_seg(busdma_md_t, busdma_seg_t seg);
+
+bus_addr_t	busdma_seg_get_addr(busdma_seg_t seg);
+bus_size_t	busdma_seg_get_size(busdma_seg_t seg);
 
 #endif /* _LIBBUS_SPACE_H_ */

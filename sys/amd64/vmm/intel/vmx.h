@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmx.h 279228 2015-02-24 05:35:15Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmx.h 284174 2015-06-09 00:14:47Z tychon $
  */
 
 #ifndef _VMX_H_
@@ -134,6 +134,8 @@ void	vmx_call_isr(uintptr_t entry);
 
 u_long	vmx_fix_cr0(u_long cr0);
 u_long	vmx_fix_cr4(u_long cr4);
+
+int	vmx_set_tsc_offset(struct vmx *vmx, int vcpu, uint64_t offset);
 
 extern char	vmx_exit_guest[];
 

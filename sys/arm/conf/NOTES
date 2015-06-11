@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/conf/NOTES 277227 2015-01-16 01:39:24Z np $
+# $FreeBSD: head/sys/arm/conf/NOTES 284227 2015-06-10 15:53:39Z br $
 
 machine	arm
 
@@ -86,3 +86,26 @@ nodevice	cxgbe
 nodevice	pcii
 nodevice	snd_cmi
 nodevice	tnt4882
+
+#
+# Enable the kernel DTrace hooks which are required to load the DTrace
+# kernel modules.
+#
+options 	KDTRACE_HOOKS
+
+# DTrace core
+# NOTE: introduces CDDL-licensed components into the kernel
+#device		dtrace
+
+# DTrace modules
+#device		dtrace_lockstat
+#device		dtrace_profile
+#device		dtrace_sdt
+#device		dtrace_fbt
+#device		dtrace_systrace
+#device		dtrace_prototype
+#device		dtnfscl
+#device		dtmalloc
+
+# Alternatively include all the DTrace modules
+#device		dtraceall

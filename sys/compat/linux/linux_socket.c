@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_socket.c 283497 2015-05-24 18:13:21Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_socket.c 284166 2015-06-08 20:03:15Z jkim $");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"
@@ -787,6 +787,7 @@ linux_accept_common(struct thread *td, int s, l_uintptr_t addr,
 	/* XXX: */
 	bsd_args.name = (struct sockaddr * __restrict)PTRIN(addr);
 	bsd_args.anamelen = PTRIN(namelen);/* XXX */
+	bsd_args.flags = 0;
 	error = linux_set_socket_flags(flags, &bsd_args.flags);
 	if (error != 0)
 		return (error);

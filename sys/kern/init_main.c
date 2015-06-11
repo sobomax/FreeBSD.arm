@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/init_main.c 283382 2015-05-24 14:51:29Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/kern/init_main.c 284214 2015-06-10 10:43:59Z mjg $");
 
 #include "opt_ddb.h"
 #include "opt_init_path.h"
@@ -523,8 +523,6 @@ proc0_init(void *dummy __unused)
 #ifdef MAC
 	mac_cred_create_swapper(newcred);
 #endif
-	td->td_ucred = crhold(newcred);
-
 	/* Create sigacts. */
 	p->p_sigacts = sigacts_alloc();
 
@@ -555,6 +553,10 @@ proc0_init(void *dummy __unused)
 	p->p_limit->pl_rlimit[RLIMIT_MEMLOCK].rlim_cur = pageablemem / 3;
 	p->p_limit->pl_rlimit[RLIMIT_MEMLOCK].rlim_max = pageablemem;
 	p->p_cpulimit = RLIM_INFINITY;
+
+	PROC_LOCK(p);
+	thread_cow_get_proc(td, p);
+	PROC_UNLOCK(p);
 
 	/* Initialize resource accounting structures. */
 	racct_create(&p->p_racct);
@@ -843,10 +845,10 @@ create_init(const void *udata __unused)
 	audit_cred_proc1(newcred);
 #endif
 	proc_set_cred(initproc, newcred);
+	cred_update_thread(FIRST_THREAD_IN_PROC(initproc));
 	PROC_UNLOCK(initproc);
 	sx_xunlock(&proctree_lock);
 	crfree(oldcred);
-	cred_update_thread(FIRST_THREAD_IN_PROC(initproc));
 	cpu_set_fork_handler(FIRST_THREAD_IN_PROC(initproc), start_init, NULL);
 }
 SYSINIT(init, SI_SUB_CREATE_INIT, SI_ORDER_FIRST, create_init, NULL);

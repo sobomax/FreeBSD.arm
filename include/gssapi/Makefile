@@ -1,6 +1,5 @@
-# $FreeBSD: head/include/gssapi/Makefile 153838 2005-12-29 14:40:22Z dfr $
+# $FreeBSD: head/include/gssapi/Makefile 284255 2015-06-11 04:22:17Z sjg $
 
-NO_OBJ=
 INCS= gssapi.h
 INCSDIR= ${INCLUDEDIR}/gssapi
 

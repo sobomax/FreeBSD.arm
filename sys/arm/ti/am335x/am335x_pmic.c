@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_pmic.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_pmic.c 284190 2015-06-09 19:22:13Z sobomax $");
 /*
 * TI TPS65217 PMIC companion chip for AM335x SoC sitting on I2C bus
 */
@@ -131,7 +131,7 @@ am335x_pmic_intr(void *arg)
 		shutdown_nice(RB_POWEROFF);
 	if (int_reg.aci) {
 		snprintf(notify_buf, sizeof(notify_buf), "notify=0x%02x",
-		    status_reg.acpwr ? 1 : 0);
+		    status_reg.acpwr);
 		devctl_notify_f("ACPI", "ACAD", "power", notify_buf, M_NOWAIT);
 	}
 }
@@ -165,7 +165,7 @@ am335x_pmic_dump_chgconfig(device_t dev)
 	const char *d_e[] = {"disabled", "enabled"};
 	const char *i_a[] = {"inactive", "active"};
 	const char *f_t[] = {"false", "true"};
-        const char *timer_c[] = {"4h", "5h", "6h", "8h"};
+	const char *timer_c[] = {"4h", "5h", "6h", "8h"};
 	const char *ntc_type_c[] = {"100k", "10k"};
 	const char *vprechg_c[] = {"2.9V", "2.5V"};
 	const char *trange_c[] = {"0-45 C", "0-60 C"};

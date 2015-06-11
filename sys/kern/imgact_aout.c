@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/imgact_aout.c 283382 2015-05-24 14:51:29Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/kern/imgact_aout.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -248,7 +248,7 @@ exec_aout_imgact(struct image_params *imgp)
 	    a_out->a_text > maxtsiz ||
 
 	    /* data + bss can't exceed rlimit */
-	    a_out->a_data + bss_size > lim_cur(imgp->proc, RLIMIT_DATA) ||
+	    a_out->a_data + bss_size > lim_cur_proc(imgp->proc, RLIMIT_DATA) ||
 	    racct_set(imgp->proc, RACCT_DATA, a_out->a_data + bss_size) != 0) {
 			PROC_UNLOCK(imgp->proc);
 			return (ENOMEM);

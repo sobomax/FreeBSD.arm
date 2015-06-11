@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/trap.c 283870 2015-06-01 06:50:39Z dim $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/trap.c 284214 2015-06-10 10:43:59Z mjg $");
 
 /*
  * AMD64 Trap and System call handling
@@ -257,8 +257,8 @@ trap(struct trapframe *frame)
 		td->td_pticks = 0;
 		td->td_frame = frame;
 		addr = frame->tf_rip;
-		if (td->td_ucred != p->p_ucred) 
-			cred_update_thread(td);
+		if (td->td_cowgen != p->p_cowgen)
+			thread_cow_update(td);
 
 		switch (type) {
 		case T_PRIVINFLT:	/* privileged instruction fault */

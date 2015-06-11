@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.sbin/pc-sysinstall/conf/Makefile 209514 2010-06-24 22:29:36Z imp $
-
-NO_OBJ=
+# $FreeBSD: head/usr.sbin/pc-sysinstall/conf/Makefile 284255 2015-06-11 04:22:17Z sjg $
 
 FILESGROUPS=	CONF LICENSE
 CONF=		exclude-from-upgrade pc-sysinstall.conf avail-langs

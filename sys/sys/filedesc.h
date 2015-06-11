@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/filedesc.h 281436 2015-04-11 15:40:28Z mjg $
+ * $FreeBSD: head/sys/sys/filedesc.h 284211 2015-06-10 09:34:50Z mjg $
  */
 
 #ifndef _SYS_FILEDESC_H_
@@ -83,8 +83,8 @@ struct filedesc {
 	int	fd_lastfile;		/* high-water mark of fd_ofiles */
 	int	fd_freefile;		/* approx. next free file */
 	u_short	fd_cmask;		/* mask for file creation */
-	u_short	fd_refcnt;		/* thread reference count */
-	u_short	fd_holdcnt;		/* hold count on structure + mutex */
+	int	fd_refcnt;		/* thread reference count */
+	int	fd_holdcnt;		/* hold count on structure + mutex */
 	struct	sx fd_sx;		/* protects members of this struct */
 	struct	kqlist fd_kqlist;	/* list of kqueues on this filedesc */
 	int	fd_holdleaderscount;	/* block fdfree() for shared close() */

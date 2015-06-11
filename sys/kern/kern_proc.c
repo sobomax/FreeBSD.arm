@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 283924 2015-06-02 18:37:04Z vangyzen $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -2615,7 +2615,7 @@ sysctl_kern_proc_rlimit(SYSCTL_HANDLER_ARGS)
 	 */
 	if (req->oldptr != NULL) {
 		PROC_LOCK(p);
-		lim_rlimit(p, which, &rlim);
+		lim_rlimit_proc(p, which, &rlim);
 		PROC_UNLOCK(p);
 	}
 	error = SYSCTL_OUT(req, &rlim, sizeof(rlim));

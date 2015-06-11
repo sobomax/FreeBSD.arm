@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_kern.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_kern.c 284207 2015-06-10 05:17:14Z alc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -391,8 +391,7 @@ void
 kmem_unback(vm_object_t object, vm_offset_t addr, vm_size_t size)
 {
 	vm_page_t m;
-	vm_offset_t offset;
-	int i;
+	vm_offset_t i, offset;
 
 	KASSERT(object == kmem_object || object == kernel_object,
 	    ("kmem_unback: only supports kernel objects."));

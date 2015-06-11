@@ -52,7 +52,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>
@@ -1874,7 +1874,7 @@ i915_gem_mmap_ioctl(struct drm_device *dev, void *data,
 	map = &p->p_vmspace->vm_map;
 	size = round_page(args->size);
 	PROC_LOCK(p);
-	if (map->size + size > lim_cur(p, RLIMIT_VMEM)) {
+	if (map->size + size > lim_cur_proc(p, RLIMIT_VMEM)) {
 		PROC_UNLOCK(p);
 		error = -ENOMEM;
 		goto out;

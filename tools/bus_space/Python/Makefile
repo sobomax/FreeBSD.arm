@@ -1,6 +1,6 @@
-# $FreeBSD: head/tools/bus_space/Python/Makefile 265056 2014-04-28 18:06:11Z marcel $
+# $FreeBSD: head/tools/bus_space/Python/Makefile 284228 2015-06-10 16:00:09Z marcel $
 
-SHLIB_NAME=	bus_space.so
+SHLIB_NAME=	bus.so
 SRCS=		lang.c
 
 CFLAGS+= -I${.CURDIR}/.. -I/usr/local/include/python2.7

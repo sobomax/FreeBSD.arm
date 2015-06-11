@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: head/sys/sys/vnode.h 283601 2015-05-27 09:21:47Z kib $
+ * $FreeBSD: head/sys/sys/vnode.h 284215 2015-06-10 10:48:12Z mjg $
  */
 
 #ifndef _SYS_VNODE_H_
@@ -692,7 +692,7 @@ int	vn_rdwr_inchunks(enum uio_rw rw, struct vnode *vp, void *base,
 	    struct ucred *active_cred, struct ucred *file_cred, size_t *aresid,
 	    struct thread *td);
 int	vn_rlimit_fsize(const struct vnode *vn, const struct uio *uio,
-	    const struct thread *td);
+	    struct thread *td);
 int	vn_stat(struct vnode *vp, struct stat *sb, struct ucred *active_cred,
 	    struct ucred *file_cred, struct thread *td);
 int	vn_start_write(struct vnode *vp, struct mount **mpp, int flags);

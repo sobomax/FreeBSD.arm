@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/linux_machdep.c 283544 2015-05-25 20:44:46Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/linux_machdep.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -509,7 +509,7 @@ linux_mmap_common(struct thread *td, l_uintptr_t addr, l_size_t len, l_int prot,
 			 */
 			PROC_LOCK(p);
 			p->p_vmspace->vm_maxsaddr = (char *)USRSTACK -
-			    lim_cur(p, RLIMIT_STACK);
+			    lim_cur_proc(p, RLIMIT_STACK);
 			PROC_UNLOCK(p);
 		}
 

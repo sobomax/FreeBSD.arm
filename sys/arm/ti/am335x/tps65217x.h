@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD$
+ * $FreeBSD: head/sys/arm/ti/am335x/tps65217x.h 284189 2015-06-09 19:17:33Z sobomax $
  */
 
 #ifndef __TPS65217X_H__
@@ -34,7 +34,7 @@
  * TPS65217 PMIC is a companion chip for AM335x SoC sitting on I2C bus
  */
 
-/* TPS65217 Reisters */
+/* TPS65217 Registers */
 #define	TPS65217_CHIPID_REG	0x00
 struct tps65217_chipid_reg {
 	unsigned int rev:4;

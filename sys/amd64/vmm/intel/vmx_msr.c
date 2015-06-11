@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vmx_msr.c 282336 2015-05-02 04:19:11Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vmx_msr.c 284174 2015-06-09 00:14:47Z tychon $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vmx_msr.c 282336 2015-05-02 04:19:11Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vmx_msr.c 284174 2015-06-09 00:14:47Z tychon $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -473,6 +473,9 @@ vmx_wrmsr(struct vmx *vmx, int vcpuid, u_int num, uint64_t val, bool *retu)
 			guest_msrs[IDX_MSR_PAT] = val;
 		else
 			vm_inject_gp(vmx->vm, vcpuid);
+		break;
+	case MSR_TSC:
+		error = vmx_set_tsc_offset(vmx, vcpuid, val - rdtsc());
 		break;
 	default:
 		error = EINVAL;

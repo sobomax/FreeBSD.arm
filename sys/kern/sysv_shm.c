@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sysv_shm.c 282213 2015-04-29 10:23:02Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/sysv_shm.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include "opt_compat.h"
 #include "opt_sysvipc.h"
@@ -382,7 +382,7 @@ kern_shmat_locked(struct thread *td, int shmid, const void *shmaddr,
 		 */
 		PROC_LOCK(p);
 		attach_va = round_page((vm_offset_t)p->p_vmspace->vm_daddr +
-		    lim_max(p, RLIMIT_DATA));
+		    lim_max_proc(p, RLIMIT_DATA));
 		PROC_UNLOCK(p);
 	}
 

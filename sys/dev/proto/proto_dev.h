@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/proto/proto_dev.h 284144 2015-06-08 03:00:36Z marcel $
+ * $FreeBSD: head/sys/dev/proto/proto_dev.h 284246 2015-06-10 22:33:56Z marcel $
  */
 
 #ifndef _DEV_PROTO_DEV_H_
@@ -62,8 +62,10 @@ struct proto_ioc_busdma {
 		struct {
 			unsigned long	tag;
 			unsigned int	flags;
-			unsigned int	nsegs;
-			unsigned long	physaddr;
+			unsigned int	phys_nsegs;
+			unsigned long	phys_addr;
+			unsigned long	bus_addr;
+			unsigned int	bus_nsegs;
 		} mem;
 	} u;
 	unsigned long	result;

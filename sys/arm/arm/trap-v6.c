@@ -30,7 +30,7 @@
 #include "opt_ktrace.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 283947 2015-06-03 14:07:50Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 284214 2015-06-10 10:43:59Z mjg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -395,8 +395,8 @@ abort_handler(struct trapframe *tf, int prefetch)
 	p = td->td_proc;
 	if (usermode) {
 		td->td_pticks = 0;
-		if (td->td_ucred != p->p_ucred)
-			cred_update_thread(td);
+		if (td->td_cowgen != p->p_cowgen)
+			thread_cow_update(td);
 	}
 
 	/* Invoke the appropriate handler, if necessary. */

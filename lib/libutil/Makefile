@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-#	$FreeBSD: head/lib/libutil/Makefile 283984 2015-06-04 08:00:11Z bapt $
+#	$FreeBSD: head/lib/libutil/Makefile 284225 2015-06-10 15:07:13Z brooks $
 
 SHLIBDIR?= /lib
 
@@ -9,7 +9,7 @@ LIB=	util
 SHLIB_MAJOR= 9
 
 SRCS=	_secure_path.c auth.c expand_number.c flopen.c fparseln.c gr_util.c \
-	hexdump.c humanize_number.c kinfo_getfile.c kinfo_getfile.c \
+	hexdump.c humanize_number.c kinfo_getfile.c \
 	kinfo_getallproc.c kinfo_getproc.c kinfo_getvmmap.c \
 	kinfo_getvmobject.c kld.c \
 	login_auth.c login_cap.c \

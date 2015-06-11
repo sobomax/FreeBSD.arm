@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/amd64/conf/NOTES 282212 2015-04-29 10:12:34Z whu $
+# $FreeBSD: head/sys/amd64/conf/NOTES 284227 2015-06-10 15:53:39Z br $
 #
 
 #
@@ -16,6 +16,23 @@ profile         2
 # kernel modules.
 #
 options 	KDTRACE_HOOKS
+
+# DTrace core
+# NOTE: introduces CDDL-licensed components into the kernel
+#device		dtrace
+
+# DTrace modules
+#device		dtrace_lockstat
+#device		dtrace_profile
+#device		dtrace_sdt
+#device		dtrace_fbt
+#device		dtrace_systrace
+#device		dtrace_prototype
+#device		dtnfscl
+#device		dtmalloc
+
+# Alternatively include all the DTrace modules
+#device		dtraceall
 
 
 #####################################################################

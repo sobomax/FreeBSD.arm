@@ -70,7 +70,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/pmap-v6-new.c 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/pmap-v6-new.c 284181 2015-06-09 18:04:28Z alc $");
 
 /*
  *	Manages physical address maps.
@@ -5768,6 +5768,7 @@ pmap_copy(pmap_t dst_pmap, pmap_t src_pmap, vm_offset_t dst_addr, vm_size_t len,
 				    ~PTE1_W;
 				dst_pmap->pm_stats.resident_count +=
 				    PTE1_SIZE / PAGE_SIZE;
+				pmap_pte1_mappings++;
 			}
 			continue;
 		} else if (!pte1_is_link(src_pte1))

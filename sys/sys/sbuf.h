@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *      $FreeBSD: head/sys/sys/sbuf.h 279992 2015-03-14 16:02:11Z ian $
+ *      $FreeBSD: head/sys/sys/sbuf.h 284192 2015-06-09 21:39:38Z ken $
  */
 
 #ifndef _SYS_SBUF_H_
@@ -58,6 +58,14 @@ struct sbuf {
 	ssize_t		 s_sect_len;	/* current length of section */
 };
 
+#ifndef HD_COLUMN_MASK
+#define	HD_COLUMN_MASK	0xff
+#define	HD_DELIM_MASK	0xff00
+#define	HD_OMIT_COUNT	(1 << 16)
+#define	HD_OMIT_HEX	(1 << 17)
+#define	HD_OMIT_CHARS	(1 << 18)
+#endif /* HD_COLUMN_MASK */
+
 __BEGIN_DECLS
 /*
  * API functions
@@ -89,6 +97,8 @@ int		 sbuf_done(const struct sbuf *);
 void		 sbuf_delete(struct sbuf *);
 void		 sbuf_start_section(struct sbuf *, ssize_t *);
 ssize_t		 sbuf_end_section(struct sbuf *, ssize_t, size_t, int);
+void		 sbuf_hexdump(struct sbuf *, const void *, int, const char *,
+		     int);
 
 #ifdef _KERNEL
 struct uio;

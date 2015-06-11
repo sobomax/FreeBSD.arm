@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_exec.c 282708 2015-05-10 09:00:40Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_exec.c 284215 2015-06-10 10:48:12Z mjg $");
 
 #include "opt_capsicum.h"
 #include "opt_hwpmc_hooks.h"
@@ -1073,7 +1073,7 @@ exec_new_vmspace(imgp, sv)
 	if (imgp->stack_sz != 0) {
 		ssiz = trunc_page(imgp->stack_sz);
 		PROC_LOCK(p);
-		lim_rlimit(p, RLIMIT_STACK, &rlim_stack);
+		lim_rlimit_proc(p, RLIMIT_STACK, &rlim_stack);
 		PROC_UNLOCK(p);
 		if (ssiz > rlim_stack.rlim_max)
 			ssiz = rlim_stack.rlim_max;

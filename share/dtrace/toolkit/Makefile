@@ -1,4 +1,4 @@
-#$FreeBSD: head/share/dtrace/toolkit/Makefile 269764 2014-08-09 20:25:17Z jmg $
+#$FreeBSD: head/share/dtrace/toolkit/Makefile 284255 2015-06-11 04:22:17Z sjg $
 #
 # Install scripts from the DTraceToolkit
 #
@@ -11,7 +11,5 @@ SCRIPTS=	${DTRACETOOLKIT}/execsnoop \
 		${DTRACETOOLKIT}/procsystime
 
 SCRIPTSDIR= ${SHAREDIR}/dtrace/toolkit
-
-NO_OBJ=
 
 .include <bsd.prog.mk>

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/trap.c 281495 2015-04-13 15:22:45Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/trap.c 284214 2015-06-10 10:43:59Z mjg $");
 
 /*
  * 386 Trap and System call handling
@@ -306,8 +306,8 @@ trap(struct trapframe *frame)
 		td->td_pticks = 0;
 		td->td_frame = frame;
 		addr = frame->tf_eip;
-		if (td->td_ucred != p->p_ucred) 
-			cred_update_thread(td);
+		if (td->td_cowgen != p->p_cowgen)
+			thread_cow_update(td);
 
 		switch (type) {
 		case T_PRIVINFLT:	/* privileged instruction fault */
@@ -998,12 +998,8 @@ trap_fatal(frame, eva)
 	if (frame->tf_eflags & PSL_VM)
 		printf("vm86, ");
 	printf("IOPL = %d\n", (frame->tf_eflags & PSL_IOPL) >> 12);
-	printf("current process		= ");
-	if (curproc) {
-		printf("%lu (%s)\n", (u_long)curproc->p_pid, curthread->td_name);
-	} else {
-		printf("Idle\n");
-	}
+	printf("current process		= %d (%s)\n",
+	    curproc->p_pid, curthread->td_name);
 
 #ifdef KDB
 	if (debugger_on_panic || kdb_active) {

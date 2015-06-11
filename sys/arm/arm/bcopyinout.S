@@ -38,6 +38,7 @@
 
 #include "assym.s"
 
+#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <sys/errno.h>
 
@@ -46,7 +47,7 @@
 .L_min_memcpy_size:
 	.word	_C_LABEL(_min_memcpy_size)
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 284264 2015-06-11 13:54:18Z andrew $");
 #ifdef _ARM_ARCH_5E
 #include <arm/arm/bcopyinout_xscale.S>
 #else
@@ -54,7 +55,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 283366 2015-05-24 12:20:11Z an
 	.text
 	.align	2
 
-#ifdef _ARM_ARCH_6
+#if __ARM_ARCH >= 6
 #define GET_PCB(tmp) \
 	mrc p15, 0, tmp, c13, c0, 4; \
 	add	tmp, tmp, #(TD_PCB)

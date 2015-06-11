@@ -1,9 +1,9 @@
-# $FreeBSD: head/tools/bus_space/C/Makefile 284080 2015-06-06 16:14:03Z marcel $
+# $FreeBSD: head/tools/bus_space/C/Makefile 284228 2015-06-10 16:00:09Z marcel $
 
-LIB=		bus_space
+LIB=		bus
 SHLIB_MAJOR=	0
 SRCS=		lang.c
-INCS=		libbus_space.h
+INCS=		libbus.h
 
 CFLAGS+= -I${.CURDIR}/..
 

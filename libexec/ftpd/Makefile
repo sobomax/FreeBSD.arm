@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/4/94
-# $FreeBSD: head/libexec/ftpd/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: head/libexec/ftpd/Makefile 284221 2015-06-10 13:17:41Z marcel $
 
 .include <src.opts.mk>
 
@@ -13,7 +13,7 @@ YFLAGS=
 WARNS?=	2
 WFORMAT=0
 
-LIBADD=	util crypt
+LIBADD=	util crypt xo
 
 # XXX Kluge! Conversation mechanism needs to be fixed.
 LIBADD+=	opie md

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/trap.c 240244 2012-09-08 18:27:11Z attilio $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/trap.c 284214 2015-06-10 10:43:59Z mjg $");
 
 #include "opt_ddb.h"
 #include "opt_ktr.h"
@@ -277,8 +277,8 @@ trap(struct trapframe *tf)
 		td->td_pticks = 0;
 		td->td_frame = tf;
 		addr = tf->tf_tpc;
-		if (td->td_ucred != p->p_ucred)
-			cred_update_thread(td);
+		if (td->td_cowgen != p->p_cowgen)
+			thread_cow_update(td);
 
 		switch (tf->tf_type) {
 		case T_DATA_MISS:
