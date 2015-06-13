@@ -102,7 +102,10 @@ uboot_loadaddr(u_int type, void *data, uint64_t addr)
 		biggest_size = 0;
 		subldr = rounddown2((uintptr_t)_start, KERN_ALIGN);
 		eubldr = roundup2(uboot_heap_end, KERN_ALIGN);
+		printf("subldr=%lu, eubldr=%lu\n", (unsigned long)subldr, (unsigned long)eubldr);
 		for (i = 0; i < si->mr_no; i++) {
+			printf("si->mr[%d]: .flags=%d, .start=%lu, .size=%lu\n",
+			    i, si->mr[i].flags, si->mr[i].start, si->mr[i].size);
 			if (si->mr[i].flags != MR_ATTR_DRAM)
 				continue;
 			sblock = roundup2(si->mr[i].start, KERN_ALIGN);
@@ -110,6 +113,7 @@ uboot_loadaddr(u_int type, void *data, uint64_t addr)
 			    KERN_ALIGN);
 			if (biggest_size == 0)
 				sblock += KERN_MINADDR;
+			printf("    sblock=%d, eblock=%d\n", sblock, eblock);
 			if (subldr >= sblock && subldr < eblock) {
 				if (subldr - sblock > eblock - eubldr) {
 					this_block = sblock;
@@ -118,7 +122,16 @@ uboot_loadaddr(u_int type, void *data, uint64_t addr)
 					this_block = eubldr;
 					this_size = eblock - eubldr;
 				}
+			} else if (subldr < sblock && eubldr < eblock) {
+				/* Loader is below or engulfs the sblock */
+				this_block = (eubldr < sblock) ? sblock : eubldr;
+				this_size = eblock - this_block;
+			} else {
+				this_block = 0;
+				this_size = 0;
 			}
+			printf("    this_block=%lu, this_size=%lu\n",
+			    (unsigned long)this_block, (unsigned long)this_size);
 			if (biggest_size < this_size) {
 				biggest_block = this_block;
 				biggest_size  = this_size;
