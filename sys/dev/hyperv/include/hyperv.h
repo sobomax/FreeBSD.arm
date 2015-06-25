@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/include/hyperv.h 282212 2015-04-29 10:12:34Z whu $
+ * $FreeBSD: head/sys/dev/hyperv/include/hyperv.h 284746 2015-06-24 06:01:29Z whu $
  */
 
 /**
@@ -107,7 +107,7 @@ typedef uint8_t	hv_bool_uint8_t;
 #define HV_MAX_PIPE_USER_DEFINED_BYTES	116
 
 
-#define HV_MAX_PAGE_BUFFER_COUNT	16
+#define HV_MAX_PAGE_BUFFER_COUNT	32
 #define HV_MAX_MULTIPAGE_BUFFER_COUNT	32
 
 #define HV_ALIGN_UP(value, align)					\

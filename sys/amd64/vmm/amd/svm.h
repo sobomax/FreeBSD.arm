@@ -23,11 +23,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/amd/svm.h 273375 2014-10-21 07:10:43Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/amd/svm.h 284712 2015-06-23 02:17:23Z neel $
  */
 
 #ifndef _SVM_H_
 #define _SVM_H_
+
+struct pcpu;
 
 /*
  * Guest register state that is saved outside the VMCB.
@@ -49,6 +51,6 @@ struct svm_regctx {
 	register_t	sctx_r15;
 };
 
-void svm_launch(uint64_t pa, struct svm_regctx *);
+void svm_launch(uint64_t pa, struct svm_regctx *gctx, struct pcpu *pcpu);
 
 #endif /* _SVM_H_ */

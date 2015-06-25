@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.2 (Berkeley) 12/15/93
-# $FreeBSD: head/lib/libtelnet/Makefile 267147 2014-06-06 04:09:07Z imp $
+# $FreeBSD: head/lib/libtelnet/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 .include <src.opts.mk>
 
@@ -25,8 +25,5 @@ SRCS+=		kerberos5.c
 CFLAGS+=	-DKRB5 -I${KRB5DIR}/lib/krb5 -I${KRB5OBJDIR} -I${ASN1OBJDIR}
 CFLAGS+=	-DFORWARD -Dnet_write=telnet_net_write
 .endif
-
-INCS=		${TELNETDIR}/arpa/telnet.h
-INCSDIR=	${INCLUDEDIR}/arpa
 
 .include <bsd.lib.mk>

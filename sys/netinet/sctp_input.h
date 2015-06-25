@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_input.h 273168 2014-10-16 15:36:04Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_input.h 284515 2015-06-17 15:20:14Z tuexen $");
 
 #ifndef _NETINET_SCTP_INPUT_H_
 #define _NETINET_SCTP_INPUT_H_
@@ -45,7 +45,7 @@ sctp_common_input_processing(struct mbuf **, int, int, int,
     uint8_t,
 #endif
     uint8_t,
-    uint8_t, uint32_t,
+    uint8_t, uint32_t, uint16_t,
     uint32_t, uint16_t);
 
 struct sctp_stream_reset_request *

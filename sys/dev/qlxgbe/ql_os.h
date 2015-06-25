@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Qlogic Corporation
+ * Copyright (c) 2013-2016 Qlogic Corporation
  * All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/qlxgbe/ql_os.h 257241 2013-10-28 07:29:16Z glebius $
+ * $FreeBSD: head/sys/dev/qlxgbe/ql_os.h 284741 2015-06-23 22:22:36Z davidcs $
  */
 /*
  * File: ql_os.h

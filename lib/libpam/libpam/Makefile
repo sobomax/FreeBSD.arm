@@ -33,7 +33,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libpam/libpam/Makefile 274138 2014-11-05 16:13:42Z des $
+# $FreeBSD: head/lib/libpam/libpam/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 OPENPAM=	${.CURDIR}/../../../contrib/openpam
 .PATH: ${OPENPAM}/include ${OPENPAM}/lib/libpam ${OPENPAM}/doc/man
@@ -172,32 +172,11 @@ HEADERS=	security/openpam.h \
 
 ADD_HEADERS=	security/pam_mod_misc.h
 
-#
-# Static modules
-#
-# We build static versions of all modules and of openpam_static.o,
-# then link them all together into openpam_static_modules.o.  None of
-# the modules export any symbols, but they store structures with
-# pointers to their service functions in a linker set which the code
-# in openpam_static.c traverses to locate the individual modules.
-#
-MODULE_DIR=	../modules
-.include "${.CURDIR}/${MODULE_DIR}/modules.inc"
-STATIC_MODULES=	${MODULES:C/.*/${MODULE_DIR}\/&\/lib&.a/}
-STATICOBJS+=	openpam_static_modules.o
-CLEANFILES+=	openpam_static.o \
-		openpam_static_modules.o
-
-openpam_static_modules.o: openpam_static.o ${STATIC_MODULES}
-	${LD} -o ${.TARGET} -r --whole-archive ${.ALLSRC}
-
-# We can't put openpam_static.c in SRCS, but we still want to scan it
-# for dependencies.
-DPSRCS=		openpam_static.c
-
 # Headers
 INCS=		${HEADERS} ${ADD_HEADERS}
 INCSDIR=	${INCLUDEDIR}/security
+
+.include <src.opts.mk>
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=        tests

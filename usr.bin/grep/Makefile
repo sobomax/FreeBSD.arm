@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.4 2011/02/16 01:31:33 joerg Exp $
-#	$FreeBSD: head/usr.bin/grep/Makefile 277939 2015-01-30 18:07:46Z ngie $
+#	$FreeBSD: head/usr.bin/grep/Makefile 284345 2015-06-13 19:20:56Z sjg $
 #	$OpenBSD: Makefile,v 1.6 2003/06/25 15:00:04 millert Exp $
 
 .include <src.opts.mk>
@@ -39,6 +39,7 @@ LIBADD=	z
 .if ${MK_LZMA_SUPPORT} != "no"
 LIBADD+=	lzma
 
+.if ${MK_BSD_GREP} == "yes"
 LINKS+=	${BINDIR}/${PROG} ${BINDIR}/xzgrep \
 	${BINDIR}/${PROG} ${BINDIR}/xzegrep \
 	${BINDIR}/${PROG} ${BINDIR}/xzfgrep \
@@ -52,6 +53,7 @@ MLINKS+= grep.1 xzgrep.1 \
 	 grep.1 lzgrep.1 \
 	 grep.1 lzegrep.1 \
 	 grep.1 lzfgrep.1
+.endif
 .else
 CFLAGS+= -DWITHOUT_LZMA
 .endif

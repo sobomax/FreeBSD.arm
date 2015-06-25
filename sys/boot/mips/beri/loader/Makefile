@@ -27,10 +27,11 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 281010 2015-04-03 02:31:59Z jkim $
+# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 284597 2015-06-19 14:20:21Z bapt $
 
 .include <src.opts.mk>
 MK_SSP=		no
+MAN=
 
 PROG?=		loader
 NEWVERSWHAT=	"BERI loader" ${MACHINE_CPUARCH}

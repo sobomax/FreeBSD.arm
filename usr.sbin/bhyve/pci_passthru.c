@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_passthru.c 264770 2014-04-22 18:55:21Z delphij $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_passthru.c 284539 2015-06-18 06:00:17Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_passthru.c 264770 2014-04-22 18:55:21Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_passthru.c 284539 2015-06-18 06:00:17Z neel $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -548,11 +548,17 @@ done:
 static int
 passthru_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 {
-	int bus, slot, func, error;
+	int bus, slot, func, error, memflags;
 	struct passthru_softc *sc;
 
 	sc = NULL;
 	error = 1;
+
+	memflags = vm_get_memflags(ctx);
+	if (!(memflags & VM_MEM_F_WIRED)) {
+		fprintf(stderr, "passthru requires guest memory to be wired\n");
+		goto done;
+	}
 
 	if (pcifd < 0) {
 		pcifd = open(_PATH_DEVPCI, O_RDWR, 0);

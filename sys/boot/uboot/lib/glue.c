@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/glue.c 263052 2014-03-11 22:02:49Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/glue.c 284614 2015-06-19 22:24:58Z sobomax $");
 
 #include <sys/types.h>
 
@@ -513,7 +513,7 @@ ub_env_enum(const char *last)
 	if (!syscall(API_ENV_ENUM, NULL, (uint32_t)last, (uint32_t)&env))
 		return (NULL);
 
-	if (env == NULL)
+	if (env == NULL || last == env)
 		/* no more env. variables to enumerate */
 		return (NULL);
 

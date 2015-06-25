@@ -1,7 +1,8 @@
-# $FreeBSD: head/sys/boot/powerpc/kboot/Makefile 281009 2015-04-03 02:27:40Z jkim $
+# $FreeBSD: head/sys/boot/powerpc/kboot/Makefile 284597 2015-06-19 14:20:21Z bapt $
 
 .include <src.opts.mk>
 MK_SSP=		no
+MAN=
 
 PROG=		loader.kboot
 NEWVERSWHAT=	"kboot loader" ${MACHINE_ARCH}

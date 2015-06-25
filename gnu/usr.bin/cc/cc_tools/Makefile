@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/cc_tools/Makefile 272350 2014-10-01 08:26:51Z andrew $
+# $FreeBSD: head/gnu/usr.bin/cc/cc_tools/Makefile 284289 2015-06-11 21:13:05Z sjg $
 
 .include <src.opts.mk>
 
@@ -215,6 +215,9 @@ tconfig.h:
 
 GENSRCS+=	tconfig.h
 CLEANFILES+=	cs-tconfig.h
+
+.NOPATH: ${GENSRCS} ${CLEANFILES}
+
 # Options
 optionlist: ${OPT_FILES}
 	LC_ALL=C awk -f ${GCCDIR}/opt-gather.awk ${.ALLSRC} > ${.TARGET}

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptnr/him.h 281387 2015-04-11 00:45:03Z delphij $
+ * $FreeBSD: head/sys/dev/hptnr/him.h 284792 2015-06-25 06:15:08Z delphij $
  */
 #include <dev/hptnr/hptnr_config.h>
 #ifndef _HPT_HIM_H_
@@ -198,7 +198,9 @@ typedef struct _HIM_DEVICE_CONFIG
 {
 	HPT_U64 capacity;
 	HPT_U32 logical_sector_size;
-	
+	HPT_U8 logicalsectors_per_physicalsector;
+	HPT_U16 lowest_aligned;
+
 	DEVICE_FLAGS flags;
 
 	HPT_U8  path_id;

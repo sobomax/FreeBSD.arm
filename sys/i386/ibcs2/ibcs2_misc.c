@@ -47,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/ibcs2/ibcs2_misc.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/i386/ibcs2/ibcs2_misc.c 284446 2015-06-16 13:09:18Z mjg $");
 
 /*
  * IBCS2 compatibility module.
@@ -342,8 +342,7 @@ ibcs2_getdents(td, uap)
 #define	BSD_DIRENT(cp)		((struct dirent *)(cp))
 #define	IBCS2_RECLEN(reclen)	(reclen + sizeof(u_short))
 
-	error = getvnode(td->td_proc->p_fd, uap->fd,
-	    cap_rights_init(&rights, CAP_READ), &fp);
+	error = getvnode(td, uap->fd, cap_rights_init(&rights, CAP_READ), &fp);
 	if (error != 0)
 		return (error);
 	if ((fp->f_flag & FREAD) == 0) {
@@ -498,8 +497,7 @@ ibcs2_read(td, uap)
 	u_long *cookies = NULL, *cookiep;
 	int ncookies;
 
-	error = getvnode(td->td_proc->p_fd, uap->fd,
-	    cap_rights_init(&rights, CAP_READ), &fp);
+	error = getvnode(td, uap->fd, cap_rights_init(&rights, CAP_READ), &fp);
 	if (error != 0) {
 		if (error == EINVAL)
 			return sys_read(td, (struct read_args *)uap);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/colldef/Makefile 196788 2009-09-03 16:53:11Z ache $
+# $FreeBSD: head/share/colldef/Makefile 284287 2015-06-11 21:09:03Z sjg $
 
 LOCALES=	bg_BG.CP1251 \
 		be_BY.CP1131 \
@@ -109,7 +109,7 @@ SYMLINKS=
 .for enc2 in ${ENCODINGS}
 .for lang_terr in ${${enc1}_${enc2}}
 SYMLINKS+=	../${lang_terr:C/:.*$//}.${enc1}/${FILESNAME} \
-		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}
+		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}/${FILESNAME}
 .endfor
 .endfor
 .endfor

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 278398 2015-02-08 19:18:23Z trasz $
+ * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 284640 2015-06-20 12:43:54Z mav $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 278398 2015-02-08 19:18:23Z trasz $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 284640 2015-06-20 12:43:54Z mav $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -147,10 +147,8 @@ int		cfiscsi_init(void);
 static void	cfiscsi_online(void *arg);
 static void	cfiscsi_offline(void *arg);
 static int	cfiscsi_info(void *arg, struct sbuf *sb);
-static int	cfiscsi_lun_enable(void *arg,
-		    struct ctl_id target_id, int lun_id);
-static int	cfiscsi_lun_disable(void *arg,
-		    struct ctl_id target_id, int lun_id);
+static int	cfiscsi_lun_enable(void *arg, int lun_id);
+static int	cfiscsi_lun_disable(void *arg, int lun_id);
 static int	cfiscsi_ioctl(struct cdev *dev,
 		    u_long cmd, caddr_t addr, int flag, struct thread *td);
 static void	cfiscsi_datamove(union ctl_io *io);
@@ -2373,14 +2371,14 @@ cfiscsi_target_find_or_create(struct cfiscsi_softc *softc, const char *name,
 }
 
 static int
-cfiscsi_lun_enable(void *arg, struct ctl_id target_id, int lun_id)
+cfiscsi_lun_enable(void *arg, int lun_id)
 {
 
 	return (0);
 }
 
 static int
-cfiscsi_lun_disable(void *arg, struct ctl_id target_id, int lun_id)
+cfiscsi_lun_disable(void *arg, int lun_id)
 {
 
 	return (0);

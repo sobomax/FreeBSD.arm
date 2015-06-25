@@ -22,8 +22,8 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/aacraid.4 267938 2014-06-26 21:46:14Z bapt $
-.Dd April 09, 2013
+.\" $FreeBSD: head/share/man/man4/aacraid.4 284610 2015-06-19 21:35:24Z delphij $
+.Dd June 19, 2015
 .Dt AACRAID 4
 .Os
 .Sh NAME
@@ -58,8 +58,9 @@ The RAID containers are handled via the
 bus.
 The physical buses are represented by the
 .Nm aacraidp?
-devices (beginning with aacraidp1). These devices enable the
-SCSI pass-thru interface and allows devices connected
+devices (beginning with aacraidp1).
+These devices enable the
+SCSI pass-passthrough interface and allows devices connected
 to the card such as CD-ROMs to be available via the CAM
 .Xr scsi 4
 subsystem.
@@ -129,7 +130,7 @@ and are also queued for retrieval by a management application.
 .Xr kldload 8
 .Sh AUTHORS
 .An Achim Leubner Aq Mt achim@FreeBSD.org
-.An Ed Maste Aq Mt emaste@FreeBSD.org
+.An \&Ed Maste Aq Mt emaste@FreeBSD.org
 .An Scott Long Aq Mt scottl@FreeBSD.org
 .Sh BUGS
 The controller is not actually paused on suspend/resume.

@@ -23,14 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/gdb_machdep.h 139790 2005-01-06 22:18:23Z imp $
+ * $FreeBSD: head/sys/i386/include/gdb_machdep.h 284325 2015-06-12 15:14:08Z jhb $
  */
 
 #ifndef _MACHINE_GDB_MACHDEP_H_
 #define	_MACHINE_GDB_MACHDEP_H_
 
 #define	GDB_BUFSZ	400
-#define	GDB_NREGS	14
+#define	GDB_NREGS	16
 #define	GDB_REG_PC	8
 
 static __inline size_t

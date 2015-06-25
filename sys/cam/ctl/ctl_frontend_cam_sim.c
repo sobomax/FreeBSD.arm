@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_cam_sim.c 275953 2014-12-20 13:33:31Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_cam_sim.c 284640 2015-06-20 12:43:54Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -99,8 +99,8 @@ int cfcs_init(void);
 static void cfcs_poll(struct cam_sim *sim);
 static void cfcs_online(void *arg);
 static void cfcs_offline(void *arg);
-static int cfcs_lun_enable(void *arg, struct ctl_id target_id, int lun_id);
-static int cfcs_lun_disable(void *arg, struct ctl_id target_id, int lun_id);
+static int cfcs_lun_enable(void *arg, int lun_id);
+static int cfcs_lun_disable(void *arg, int lun_id);
 static void cfcs_datamove(union ctl_io *io);
 static void cfcs_done(union ctl_io *io);
 void cfcs_action(struct cam_sim *sim, union ccb *ccb);
@@ -303,12 +303,12 @@ cfcs_offline(void *arg)
 }
 
 static int
-cfcs_lun_enable(void *arg, struct ctl_id target_id, int lun_id)
+cfcs_lun_enable(void *arg, int lun_id)
 {
 	return (0);
 }
 static int
-cfcs_lun_disable(void *arg, struct ctl_id target_id, int lun_id)
+cfcs_lun_disable(void *arg, int lun_id)
 {
 	return (0);
 }

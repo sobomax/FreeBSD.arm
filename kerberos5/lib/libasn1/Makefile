@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/lib/libasn1/Makefile 277273 2015-01-16 21:39:08Z will $
+# $FreeBSD: head/kerberos5/lib/libasn1/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 LIB=	asn1
 LDFLAGS=	-Wl,--no-undefined
@@ -115,7 +115,12 @@ ${GEN_KX509}: kx509.asn1
 
 .hx.h:
 	${CP} ${.IMPSRC} ${.TARGET}
-	
+
+# This makefile generates a lot of its headers
+# so tell bsd.sys.mk not to try and stage them before they are built.
+# Note: this is rare
+NO_BEFOREBUILD_INCLUDES=
+
 .include <bsd.lib.mk>
 
 .SUFFIXES: .h .c .x .hx

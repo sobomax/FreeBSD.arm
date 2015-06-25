@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 282420 2015-05-04 16:28:54Z bapt $
+# $FreeBSD: head/share/mk/bsd.prog.mk 284345 2015-06-13 19:20:56Z sjg $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -141,10 +141,14 @@ MAN1=	${MAN}
 .endif
 .endif # defined(PROG)
 
+.if defined(_SKIP_BUILD)
+all:
+.else
 all: beforebuild .WAIT ${PROG} ${SCRIPTS}
 beforebuild: objwarn
 .if ${MK_MAN} != "no"
 all: _manpages
+.endif
 .endif
 
 .if defined(PROG)
@@ -218,6 +222,10 @@ SCRIPTSOWN?=	${BINOWN}
 SCRIPTSGRP?=	${BINGRP}
 SCRIPTSMODE?=	${BINMODE}
 
+STAGE_AS_SETS+= scripts
+stage_as.scripts: ${SCRIPTS}
+FLAGS.stage_as.scripts= -m ${SCRIPTSMODE}
+STAGE_FILES_DIR.scripts= ${STAGE_OBJTOP}
 .for script in ${SCRIPTS}
 .if defined(SCRIPTSNAME)
 SCRIPTSNAME_${script:T}?=	${SCRIPTSNAME}
@@ -228,6 +236,7 @@ SCRIPTSDIR_${script:T}?=	${SCRIPTSDIR}
 SCRIPTSOWN_${script:T}?=	${SCRIPTSOWN}
 SCRIPTSGRP_${script:T}?=	${SCRIPTSGRP}
 SCRIPTSMODE_${script:T}?=	${SCRIPTSMODE}
+STAGE_AS_${script:T}=		${SCRIPTSDIR_${script:T}}/${SCRIPTSNAME_${script:T}}
 _scriptsinstall: _SCRIPTSINS_${script:T}
 _SCRIPTSINS_${script:T}: ${script}
 	${INSTALL} -o ${SCRIPTSOWN_${.ALLSRC:T}} \

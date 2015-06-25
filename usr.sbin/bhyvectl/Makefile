@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/bhyvectl/Makefile 281339 2015-04-09 21:39:58Z bapt $
+# $FreeBSD: head/usr.sbin/bhyvectl/Makefile 284539 2015-06-18 06:00:17Z neel $
 #
 
 PROG=	bhyvectl
@@ -7,7 +7,7 @@ SRCS=	bhyvectl.c
 
 MAN=
 
-LIBADD=	vmmapi
+LIBADD=	vmmapi util
 
 WARNS?=	3
 

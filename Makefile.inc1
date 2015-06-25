@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/Makefile.inc1 283946 2015-06-03 13:43:04Z bapt $
+# $FreeBSD: head/Makefile.inc1 284686 2015-06-21 22:45:53Z bapt $
 #
 # Make command line options:
 #	-DNO_CLEANDIR run ${MAKE} clean, instead of ${MAKE} cleandir
@@ -1258,7 +1258,7 @@ _bt=		_bootstrap-tools
 _strfile=	games/fortune/strfile
 .endif
 
-.if ${MK_CXX} != "no"
+.if ${MK_GCC} != "no" && ${MK_CXX} != "no"
 _gperf=		gnu/usr.bin/gperf
 .endif
 

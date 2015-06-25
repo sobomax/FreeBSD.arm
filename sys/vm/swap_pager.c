@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/swap_pager.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/vm/swap_pager.c 284529 2015-06-17 22:44:27Z glebius $");
 
 #include "opt_swap.h"
 #include "opt_vm.h"
@@ -1117,10 +1117,6 @@ swap_pager_getpages(vm_object_t object, vm_page_t *m, int count, int reqpage)
 	daddr_t blk;
 
 	mreq = m[reqpage];
-
-	KASSERT(mreq->object == object,
-	    ("swap_pager_getpages: object mismatch %p/%p",
-	    object, mreq->object));
 
 	/*
 	 * Calculate range to retrieve.  The pages have already been assigned

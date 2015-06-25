@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/include/Makefile 283526 2015-05-25 13:43:03Z dim $
+# $FreeBSD: head/lib/clang/include/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 .include <bsd.own.mk>
 
@@ -55,5 +55,8 @@ INCS=	__stddef_max_align_t.h \
 	${GENINCS}
 GENINCS= arm_neon.h
 CLEANFILES= ${GENINCS}
+
+# avoid a circular dependency
+GENDIRDEPS_FILTER+= Nusr.bin/clang/clang-tblgen.host
 
 .include <bsd.prog.mk>

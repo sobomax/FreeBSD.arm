@@ -28,7 +28,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/sigsetjmp.S 281197 2015-04-07 09:52:14Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/sigsetjmp.S 284768 2015-06-24 16:15:32Z andrew $");
 
 #include <machine/setjmp.h>
 
@@ -47,7 +47,7 @@ ENTRY(siglongjmp)
 	cmp	x2, x3
 	b.eq	_C_LABEL(_longjmp)
 	b	_C_LABEL(longjmp)
-.Lmagic:
 	.align	3
+.Lmagic:
 	.quad	_JB_MAGIC__SETJMP
 END(siglongjmp)

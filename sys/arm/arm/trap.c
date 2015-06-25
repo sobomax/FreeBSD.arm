@@ -78,12 +78,8 @@
  * Created      : 28/11/94
  */
 
-#ifdef KDTRACE_HOOKS
-#include <sys/dtrace_bsd.h>
-#endif
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/trap.c 284264 2015-06-11 13:54:18Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/trap.c 284449 2015-06-16 15:14:40Z bz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -107,6 +103,10 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/trap.c 284264 2015-06-11 13:54:18Z andrew $
 
 #ifdef KDB
 #include <sys/kdb.h>
+#endif
+
+#ifdef KDTRACE_HOOKS
+#include <sys/dtrace_bsd.h>
 #endif
 
 extern char fusubailout[];

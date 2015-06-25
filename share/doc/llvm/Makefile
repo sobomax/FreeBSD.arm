@@ -1,12 +1,10 @@
-# $FreeBSD: head/share/doc/llvm/Makefile 225880 2011-09-29 18:12:40Z dim $
+# $FreeBSD: head/share/doc/llvm/Makefile 284321 2015-06-12 14:30:27Z sjg $
 
 SUBDIR=		clang
 
 SRCDIR=		${.CURDIR}/../../../contrib/llvm
 
 .PATH: ${SRCDIR} ${SRCDIR}/lib/Support
-
-NO_OBJ=
 
 FILESGROUPS=	TOP
 TOP=		LICENSE.TXT COPYRIGHT.regex

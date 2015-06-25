@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf.c 283107 2015-05-19 14:04:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf.c 284777 2015-06-24 19:16:41Z eri $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -438,6 +438,20 @@ pf_hashsrc(struct pf_addr *addr, sa_family_t af)
 
 	return (h & pf_srchashmask);
 }
+
+#ifdef ALTQ
+static int
+pf_state_hash(struct pf_state *s)
+{
+	u_int32_t hv = (intptr_t)s / sizeof(*s);
+
+	hv ^= crc32(&s->src, sizeof(s->src));
+	hv ^= crc32(&s->dst, sizeof(s->dst));
+	if (hv == 0)
+		hv = 1;
+	return (hv);
+}
+#endif
 
 #ifdef INET6
 void
@@ -5900,6 +5914,8 @@ done:
 			action = PF_DROP;
 			REASON_SET(&reason, PFRES_MEMORY);
 		} else {
+			if (s != NULL)
+				pd.pf_mtag->qid_hash = pf_state_hash(s);
 			if (pqid || (pd.tos & IPTOS_LOWDELAY))
 				pd.pf_mtag->qid = r->pqid;
 			else
@@ -6332,6 +6348,8 @@ done:
 			action = PF_DROP;
 			REASON_SET(&reason, PFRES_MEMORY);
 		} else {
+			if (s != NULL)
+				pd.pf_mtag->qid_hash = pf_state_hash(s);
 			if (pd.tos & IPTOS_LOWDELAY)
 				pd.pf_mtag->qid = r->pqid;
 			else

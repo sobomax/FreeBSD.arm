@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.opts.mk 284274 2015-06-11 16:49:14Z andrew $
+# $FreeBSD: head/share/mk/src.opts.mk 284464 2015-06-16 20:58:33Z imp $
 #
 # Option file for FreeBSD /usr/src builds.
 #
@@ -179,7 +179,6 @@ __DEFAULT_NO_OPTIONS = \
     BSD_GREP \
     CLANG_EXTRAS \
     EISA \
-    FMAKE \
     HESIOD \
     LLDB \
     NAND \

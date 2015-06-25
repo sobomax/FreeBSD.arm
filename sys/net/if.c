@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.c	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/net/if.c 281236 2015-04-07 21:31:17Z erj $
+ * $FreeBSD: head/sys/net/if.c 284736 2015-06-23 18:48:41Z dim $
  */
 
 #include "opt_compat.h"
@@ -4005,7 +4005,7 @@ if_setgetcounterfn(if_t ifp, if_get_counter_t fn)
 int
 drbr_inuse_drv(if_t ifh, struct buf_ring *br)
 {
-	return drbr_inuse_drv(ifh, br);
+	return drbr_inuse(ifh, br);
 }
 
 struct mbuf*

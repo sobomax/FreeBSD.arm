@@ -1,5 +1,5 @@
 #	from: @(#)bsd.subdir.mk	5.9 (Berkeley) 2/1/91
-# $FreeBSD: head/share/mk/bsd.subdir.mk 267511 2014-06-15 13:45:37Z ian $
+# $FreeBSD: head/share/mk/bsd.subdir.mk 284345 2015-06-13 19:20:56Z sjg $
 #
 # The include file <bsd.subdir.mk> contains the default targets
 # for building subdirectories.
@@ -33,6 +33,15 @@
 __<bsd.subdir.mk>__:
 
 .include <bsd.init.mk>
+
+.if !defined(NEED_SUBDIR)
+.if ${.MAKE.LEVEL} == 0 && ${MK_META_MODE} == "yes" && !empty(SUBDIR) && !(make(clean*) || make(destroy*))
+.include <meta.subdir.mk>
+# ignore this
+_SUBDIR:
+.endif
+.endif
+.if !target(_SUBDIR)
 
 DISTRIBUTION?=	base
 .if !target(distribute)
@@ -121,6 +130,8 @@ ${__target}: .MAKE
 	${_+_}set -e; cd ${.CURDIR}; ${MAKE} build${__target}; ${MAKE} install${__target}
 .endif
 .endfor
+
+.endif
 
 .if !target(install)
 .if !target(beforeinstall)

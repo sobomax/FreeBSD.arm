@@ -29,7 +29,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_prcm.h 283276 2015-05-22 03:16:18Z gonzo $
+ * $FreeBSD: head/sys/arm/ti/ti_prcm.h 284532 2015-06-17 23:26:00Z gonzo $
  */
 
 
@@ -184,6 +184,8 @@ struct ti_clock_dev {
 	int (*clk_set_source)(struct ti_clock_dev *clkdev,
 	    clk_src_t clksrc);
 	int (*clk_accessible)(struct ti_clock_dev *clkdev);
+	int (*clk_set_source_freq)(struct ti_clock_dev *clkdev,
+	    unsigned int freq);
 	int (*clk_get_source_freq)(struct ti_clock_dev *clkdev,
 	    unsigned int *freq);
 };
@@ -194,6 +196,7 @@ int ti_prcm_clk_disable(clk_ident_t clk);
 int ti_prcm_clk_accessible(clk_ident_t clk);
 int ti_prcm_clk_disable_autoidle(clk_ident_t clk);
 int ti_prcm_clk_set_source(clk_ident_t clk, clk_src_t clksrc);
+int ti_prcm_clk_set_source_freq(clk_ident_t clk, unsigned int freq);
 int ti_prcm_clk_get_source_freq(clk_ident_t clk, unsigned int *freq);
 void ti_prcm_reset(void);
 

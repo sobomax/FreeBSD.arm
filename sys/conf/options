@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/options 284152 2015-06-08 13:23:56Z ae $
+# $FreeBSD: head/sys/conf/options 284777 2015-06-24 19:16:41Z eri $
 #
 #        On the handling of kernel options
 #
@@ -389,6 +389,7 @@ ALTQ_CBQ		opt_altq.h
 ALTQ_CDNR		opt_altq.h
 ALTQ_DEBUG		opt_altq.h
 ALTQ_HFSC		opt_altq.h
+ALTQ_FAIRQ		opt_altq.h
 ALTQ_NOPCC		opt_altq.h
 ALTQ_PRIQ		opt_altq.h
 ALTQ_RED		opt_altq.h

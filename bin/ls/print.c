@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)print.c	8.4 (Berkeley) 4/17/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/ls/print.c 284252 2015-06-11 02:29:39Z sbruno $");
+__FBSDID("$FreeBSD: head/bin/ls/print.c 284494 2015-06-17 04:26:48Z kan $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -178,7 +178,7 @@ printlong(const DISPLAY *dp)
 		sp = p->fts_statp;
 		name = getname(p->fts_name);
 		if (name)
-		    xo_emit("{ke:name}", name);
+		    xo_emit("{ke:name/%hs}", name);
 		if (f_inode)
 			xo_emit("{:inode/%*ju} ",
 			    dp->s_inode, (uintmax_t)sp->st_ino);
@@ -214,7 +214,7 @@ printlong(const DISPLAY *dp)
 #endif
 
 		if (name) {
-		    xo_emit("{dk:name}", name);
+		    xo_emit("{dk:name/%hs}", name);
 		    free(name);
 		}
 		
@@ -425,7 +425,7 @@ printtime(const char *field, time_t ftime)
 		format = d_first ? "%e %b  %Y" : "%b %e  %Y";
 	strftime(longstring, sizeof(longstring), format, localtime(&ftime));
 
-	snprintf(fmt, sizeof(fmt), "{:%s/%%s} ", field);
+	snprintf(fmt, sizeof(fmt), "{:%s/%%hs} ", field);
 	xo_attr("value", "%ld", (long) ftime);
 	xo_emit(fmt, longstring);
 }

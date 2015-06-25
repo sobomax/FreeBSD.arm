@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/lldb/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/lldb/Makefile 284432 2015-06-15 21:20:52Z bapt $
 
 .include <bsd.own.mk>
 
@@ -16,8 +16,7 @@ SRCS=	Driver.cpp \
 lldb.1:
 	ln -fs ${LLDB_SRCS}/docs/lldb.1 ${.TARGET}
 
-DPADD=	${LIBEDIT} ${LIBNCURSESW} ${LIBEXECINFO} ${LIBPANEL} ${LIBZ}
-LDADD=	-ledit -lncursesw -lexecinfo -lpanel -lz
+LIBADD=	edit panel ncursesw execinfo z
 
 LLDB_LIBS=\
 	lldb \
