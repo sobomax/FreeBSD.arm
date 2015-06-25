@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/files.arm64 284273 2015-06-11 15:45:33Z andrew $
+# $FreeBSD: head/sys/conf/files.arm64 284319 2015-06-12 13:54:25Z br $
 arm/arm/devmap.c		standard
 arm/arm/generic_timer.c		standard
 arm/arm/pmu.c			standard
@@ -51,6 +51,7 @@ dev/fdt/fdt_arm64.c		optional	fdt
 dev/hwpmc/hwpmc_arm64.c		optional	hwpmc
 dev/hwpmc/hwpmc_arm64_md.c	optional	hwpmc
 dev/ofw/ofw_cpu.c		optional	fdt
+dev/pci/pci_host_generic.c	optional	pci fdt
 dev/psci/psci.c			optional	psci
 dev/psci/psci_arm64.S		optional	psci
 dev/uart/uart_cpu_fdt.c		optional	uart fdt

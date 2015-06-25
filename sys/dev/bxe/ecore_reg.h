@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_reg.h 268854 2014-07-18 20:04:11Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_reg.h 284335 2015-06-13 01:28:19Z davidcs $");
 
 #ifndef ECORE_REG_H
 #define ECORE_REG_H
@@ -1965,6 +1965,7 @@ __FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_reg.h 268854 2014-07-18 20:04:11Z dav
 #define MISC_SPIO_SPIO5		       0x20
 #define HW_LOCK_MAX_RESOURCE_VALUE		 31
 #define HW_LOCK_RESOURCE_DRV_FLAGS		 10
+#define HW_LOCK_RESOURCE_MDIO	                 0	
 #define HW_LOCK_RESOURCE_GPIO			 1
 #define HW_LOCK_RESOURCE_NVRAM			 12
 #define HW_LOCK_RESOURCE_PORT0_ATT_MASK		 3

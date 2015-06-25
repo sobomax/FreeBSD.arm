@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/gpio/ofw_gpiobus.c 282972 2015-05-15 13:55:18Z br $");
+__FBSDID("$FreeBSD: head/sys/dev/gpio/ofw_gpiobus.c 284625 2015-06-20 04:48:53Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,6 +54,14 @@ ofw_gpiobus_add_fdt_child(device_t bus, const char *drvname, phandle_t child)
 	int i;
 	struct gpiobus_ivar *devi;
 	struct ofw_gpiobus_devinfo *dinfo;
+
+	/*
+	 * Check to see if we already have a child for @p child, and if so
+	 * return it.
+	 */
+	childdev = ofw_bus_find_child_device_by_phandle(bus, child);
+	if (childdev != NULL)
+		return (childdev);
 
 	/*
 	 * Set up the GPIO child and OFW bus layer devinfo and add it to bus.

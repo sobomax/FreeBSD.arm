@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.own.mk 278926 2015-02-17 23:13:45Z rpaulo $
+# $FreeBSD: head/share/mk/bsd.own.mk 284345 2015-06-13 19:20:56Z sjg $
 #
 # The include file <src.opts.mk> set common variables for owner,
 # group, mode, and directories. Defaults are in brackets.
@@ -140,7 +140,7 @@ _uid!=	id -u
 .if !defined(USER)
 USER!=	id -un
 .endif
-_gid!=	id -gn
+_gid!=	id -g
 .for x in BIN CONF DOC DTB INFO KMOD LIB MAN NLS SHARE
 $xOWN=	${USER}
 $xGRP=	${_gid}

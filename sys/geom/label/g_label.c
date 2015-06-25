@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/label/g_label.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/geom/label/g_label.c 284582 2015-06-18 21:55:55Z trasz $");
 
 #include "opt_geom.h"
 
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: head/sys/geom/label/g_label.c 267992 2014-06-28 03:56:17Z hs
 #include <sys/malloc.h>
 #include <sys/libkern.h>
 #include <sys/sbuf.h>
+#include <sys/stddef.h>
 #include <sys/sysctl.h>
 #include <geom/geom.h>
 #include <geom/geom_slice.h>
@@ -96,6 +97,20 @@ const struct g_label_desc *g_labels[] = {
 	NULL
 };
 
+void
+g_label_rtrim(char *label, size_t size)
+{
+	ptrdiff_t i;
+
+	for (i = size - 1; i >= 0; i--) {
+		if (label[i] == '\0')
+			continue;
+		else if (label[i] == ' ')
+			label[i] = '\0';
+		else
+			break;
+	}
+}
 
 static int
 g_label_destroy_geom(struct gctl_req *req __unused, struct g_class *mp,

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/http.c 267133 2014-06-05 22:16:26Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libfetch/http.c 284346 2015-06-13 19:26:48Z dim $");
 
 /*
  * The following copyright applies to the base64 code:
@@ -1625,10 +1625,8 @@ http_request_body(struct url *URL, const char *op, struct url_stat *us,
 			http_auth_params_t aparams;
 			init_http_auth_params(&aparams);
 			if (*purl->user || *purl->pwd) {
-				aparams.user = purl->user ?
-					strdup(purl->user) : strdup("");
-				aparams.password = purl->pwd?
-					strdup(purl->pwd) : strdup("");
+				aparams.user = strdup(purl->user);
+				aparams.password = strdup(purl->pwd);
 			} else if ((p = getenv("HTTP_PROXY_AUTH")) != NULL &&
 				   *p != '\0') {
 				if (http_authfromenv(p, &aparams) < 0) {
@@ -1654,10 +1652,8 @@ http_request_body(struct url *URL, const char *op, struct url_stat *us,
 			http_auth_params_t aparams;
 			init_http_auth_params(&aparams);
 			if (*url->user || *url->pwd) {
-				aparams.user = url->user ?
-					strdup(url->user) : strdup("");
-				aparams.password = url->pwd ?
-					strdup(url->pwd) : strdup("");
+				aparams.user = strdup(url->user);
+				aparams.password = strdup(url->pwd);
 			} else if ((p = getenv("HTTP_AUTH")) != NULL &&
 				   *p != '\0') {
 				if (http_authfromenv(p, &aparams) < 0) {
@@ -1666,10 +1662,8 @@ http_request_body(struct url *URL, const char *op, struct url_stat *us,
 				}
 			} else if (fetchAuthMethod &&
 				   fetchAuthMethod(url) == 0) {
-				aparams.user = url->user ?
-					strdup(url->user) : strdup("");
-				aparams.password = url->pwd ?
-					strdup(url->pwd) : strdup("");
+				aparams.user = strdup(url->user);
+				aparams.password = strdup(url->pwd);
 			} else {
 				http_seterr(HTTP_NEED_AUTH);
 				goto ouch;

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netpfil/pf/pf_mtag.h 278843 2015-02-16 07:01:02Z glebius $	*/
+/*	$FreeBSD: head/sys/netpfil/pf/pf_mtag.h 284777 2015-06-24 19:16:41Z eri $	*/
 /*
  * Copyright (c) 2001 Daniel Hartmeier
  * All rights reserved.
@@ -44,6 +44,7 @@
 struct pf_mtag {
 	void		*hdr;		/* saved hdr pos in mbuf, for ECN */
 	u_int32_t	 qid;		/* queue id */
+	u_int32_t	 qid_hash;	/* queue hashid used by WFQ like algos */
 	u_int16_t	 tag;		/* tag id */
 	u_int8_t	 flags;
 	u_int8_t	 routed;

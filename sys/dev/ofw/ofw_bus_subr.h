@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 283503 2015-05-24 23:53:10Z gonzo $
+ * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 284624 2015-06-20 04:48:48Z imp $
  */
 
 #ifndef	_DEV_OFW_OFW_BUS_SUBR_H_
@@ -106,5 +106,8 @@ phandle_t ofw_bus_find_compatible(phandle_t, const char *);
 
 /* Helper to search for a child with a given name */
 phandle_t ofw_bus_find_child(phandle_t, const char *);
+
+/* Helper routine to find a device_t child matchig a given phandle_t */
+device_t ofw_bus_find_child_device_by_phandle(device_t bus, phandle_t node);
 
 #endif /* !_DEV_OFW_OFW_BUS_SUBR_H_ */

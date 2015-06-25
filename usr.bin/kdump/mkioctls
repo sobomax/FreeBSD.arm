@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/usr.bin/kdump/mkioctls 281143 2015-04-06 09:42:23Z glebius $
+# $FreeBSD: head/usr.bin/kdump/mkioctls 284406 2015-06-15 06:44:22Z rodrigc $
 #
 # When editing this script, keep in mind that truss also uses it.
 #
@@ -39,7 +39,7 @@ case "${MACHINE}" in
 esac
 
 awk -v x="$ioctl_includes" 'BEGIN {print x}' |
-	$CPP -I$1 -dM -DCOMPAT_43TTY - |
+	$CPP -nostdinc -I$includedir -dM -DCOMPAT_43TTY - |
 	awk -v ioctl_includes="$ioctl_includes" -v style="$style" '
 BEGIN {
 	print "/* XXX obnoxious prerequisites. */"

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.libnames.mk 283768 2015-05-30 15:13:18Z sjg $
+# $FreeBSD: head/share/mk/src.libnames.mk 284431 2015-06-15 21:20:21Z bapt $
 #
 # The include file <src.libnames.mk> define library names suitable
 # for INTERNALLIB and PRIVATELIB definition
@@ -123,6 +123,8 @@ _LIBRARIES=	\
 		nv \
 		opie \
 		pam \
+		panel \
+		panelw \
 		pcap \
 		pcsclite \
 		pjdlog \
@@ -338,7 +340,7 @@ LIBIPFDIR=	${ROOTOBJDIR}/sbin/ipf/libipf
 LIBIPF?=	${LIBIPFDIR}/libipf.a
 
 LIBTELNETDIR=	${ROOTOBJDIR}/lib/libtelnet
-LIBTELNET?=	${LIBIPFDIR}/libtelnet.a
+LIBTELNET?=	${LIBTELNETDIR}/libtelnet.a
 
 LIBCRONDIR=	${ROOTOBJDIR}/usr.sbin/cron/lib
 LIBCRON?=	${LIBCRONDIR}/libcron.a

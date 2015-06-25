@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_main.c 283864 2015-06-01 03:24:39Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_main.c 284445 2015-06-16 12:36:29Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -585,6 +585,9 @@ t4_attach(device_t dev)
 
 	sc = device_get_softc(dev);
 	sc->dev = dev;
+#ifdef INVARIANTS
+	sc->debug_flags = DF_DUMP_MBOX;
+#endif
 
 	pci_enable_busmaster(dev);
 	if (pci_find_cap(dev, PCIY_EXPRESS, &i) == 0) {
@@ -4602,6 +4605,9 @@ t4_sysctls(struct adapter *sc)
 	sc->lro_timeout = 100;
 	SYSCTL_ADD_INT(ctx, children, OID_AUTO, "lro_timeout", CTLFLAG_RW,
 	    &sc->lro_timeout, 0, "lro inactive-flush timeout (in us)");
+
+	SYSCTL_ADD_INT(ctx, children, OID_AUTO, "debug_flags", CTLFLAG_RW,
+	    &sc->debug_flags, 0, "flags to enable runtime debugging");
 
 #ifdef SBUF_DRAIN
 	/*

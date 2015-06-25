@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_syscalls.c 281437 2015-04-11 16:00:33Z mjg $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_syscalls.c 284613 2015-06-19 21:55:12Z tuexen $");
 
 #include "opt_capsicum.h"
 #include "opt_inet.h"
@@ -277,6 +277,10 @@ sys_sctp_generic_sendmsg (td, uap)
 	auio.uio_td = td;
 	auio.uio_offset = 0;			/* XXX */
 	auio.uio_resid = 0;
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_GENIO))
+		ktruio = cloneuio(&auio);
+#endif /* KTRACE */
 	len = auio.uio_resid = uap->mlen;
 	CURVNET_SET(so->so_vnet);
 	error = sctp_lower_sosend(so, to, &auio, (struct mbuf *)NULL,
@@ -400,6 +404,10 @@ sys_sctp_generic_sendmsg_iov(td, uap)
 			goto sctp_bad;
 		}
 	}
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_GENIO))
+		ktruio = cloneuio(&auio);
+#endif /* KTRACE */
 	len = auio.uio_resid;
 	CURVNET_SET(so->so_vnet);
 	error = sctp_lower_sosend(so, to, &auio,

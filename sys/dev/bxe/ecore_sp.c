@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_sp.c 265411 2014-05-06 02:32:27Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_sp.c 284470 2015-06-16 21:11:32Z davidcs $");
 
 #include "bxe.h"
 #include "ecore_init.h"
@@ -474,7 +474,7 @@ static void __ecore_vlan_mac_h_exec_pending(struct bxe_softc *sc,
 	o->head_exe_request = FALSE;
 	o->saved_ramrod_flags = 0;
 	rc = ecore_exe_queue_step(sc, &o->exe_queue, &ramrod_flags);
-	if (rc != ECORE_SUCCESS) {
+	if ((rc != ECORE_SUCCESS) && (rc != ECORE_PENDING)) {
 		ECORE_ERR("execution of pending commands failed with rc %d\n",
 			  rc);
 #ifdef ECORE_STOP_ON_ERROR

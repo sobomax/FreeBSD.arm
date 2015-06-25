@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/monetdef/Makefile 253425 2013-07-17 14:00:51Z bapt $
+# $FreeBSD: head/share/monetdef/Makefile 284287 2015-06-11 21:09:03Z sjg $
 
 LOCALES=	af_ZA.ISO8859-1 \
 		am_ET.UTF-8 \
@@ -138,7 +138,7 @@ SYMLINKS=
 .for enc2 in ${ENCODINGS}
 .for lang_terr in ${${enc1}_${enc2}}
 SYMLINKS+=	../${lang_terr:C/:.*$//}.${enc1}/${FILESNAME} \
-		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}
+		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}/${FILESNAME}
 .endfor
 .endfor
 .endfor

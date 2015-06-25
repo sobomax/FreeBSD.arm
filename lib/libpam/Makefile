@@ -22,10 +22,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libpam/Makefile 112044 2003-03-09 20:06:38Z obrien $
+# $FreeBSD: head/lib/libpam/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 # The modules must be built first, because they are built into the
 # static version of libpam.
-SUBDIR+=	modules libpam
+SUBDIR+=	modules libpam static_modules
 
 .include <bsd.subdir.mk>

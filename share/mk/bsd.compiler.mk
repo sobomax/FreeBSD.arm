@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.compiler.mk 275589 2014-12-08 03:32:26Z ngie $
+# $FreeBSD: head/share/mk/bsd.compiler.mk 284345 2015-06-13 19:20:56Z sjg $
 
 # Setup variables for the compiler
 #
@@ -25,8 +25,14 @@
 .if !target(__<bsd.compiler.mk>__)
 __<bsd.compiler.mk>__:
 
-.if !defined(COMPILER_TYPE) || !defined(COMPILER_VERSION)
+.if ${MACHINE} == "common"
+# common is a pseudo machine for architecture independent
+# generated files - thus there is no compiler.
+COMPILER_TYPE= none
+COMPILER_VERSION= 0
+.elif !defined(COMPILER_TYPE) || !defined(COMPILER_VERSION)
 _v!=	${CC} --version 2>/dev/null || echo 0.0.0
+
 .if !defined(COMPILER_TYPE)
 . if ${CC:T:M*gcc*}
 COMPILER_TYPE:=	gcc  

@@ -1,0 +1,3 @@
+.\" $FreeBSD: head/tools/build/options/WITH_META_FILES 284708 2015-06-22 20:21:57Z sjg $
+Create meta files during non META_MODE build.
+The meta files can be useful for debugging.

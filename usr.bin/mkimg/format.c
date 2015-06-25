@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/format.c 266176 2014-05-15 19:19:57Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/format.c 284655 2015-06-21 01:35:32Z marcel $");
 
 #include <sys/types.h>
 #include <sys/linker_set.h>
@@ -78,14 +78,10 @@ format_selected(void)
 int
 format_write(int fd)
 {
-	lba_t size;
 	int error;
 
 	if (format == NULL)
 		return (ENOSYS);
-	size = image_get_size();
-	error = format->resize(size);
-	if (!error)
-		error = format->write(fd);
+	error = format->write(fd);
 	return (error);
 }

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_tpc_local.c 278625 2015-02-12 15:46:44Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_tpc_local.c 284640 2015-06-20 12:43:54Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,8 +69,8 @@ static int tpcl_init(void);
 static void tpcl_shutdown(void);
 static void tpcl_online(void *arg);
 static void tpcl_offline(void *arg);
-static int tpcl_lun_enable(void *arg, struct ctl_id target_id, int lun_id);
-static int tpcl_lun_disable(void *arg, struct ctl_id target_id, int lun_id);
+static int tpcl_lun_enable(void *arg, int lun_id);
+static int tpcl_lun_disable(void *arg, int lun_id);
 static void tpcl_datamove(union ctl_io *io);
 static void tpcl_done(union ctl_io *io);
 
@@ -152,14 +152,14 @@ tpcl_offline(void *arg)
 }
 
 static int
-tpcl_lun_enable(void *arg, struct ctl_id target_id, int lun_id)
+tpcl_lun_enable(void *arg, int lun_id)
 {
 
 	return (0);
 }
 
 static int
-tpcl_lun_disable(void *arg, struct ctl_id target_id, int lun_id)
+tpcl_lun_disable(void *arg, int lun_id)
 {
 
 	return (0);

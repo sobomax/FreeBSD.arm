@@ -31,7 +31,7 @@
  *
  *	@(#)fdesc_vnops.c	8.9 (Berkeley) 1/21/94
  *
- * $FreeBSD: head/sys/fs/fdescfs/fdesc_vnops.c 279401 2015-02-28 19:57:22Z kib $
+ * $FreeBSD: head/sys/fs/fdescfs/fdesc_vnops.c 284446 2015-06-16 13:09:18Z mjg $
  */
 
 /*
@@ -482,7 +482,7 @@ fdesc_setattr(ap)
 	/*
 	 * Allow setattr where there is an underlying vnode.
 	 */
-	error = getvnode(td->td_proc->p_fd, fd,
+	error = getvnode(td, fd,
 	    cap_rights_init(&rights, CAP_EXTATTR_SET), &fp);
 	if (error) {
 		/*

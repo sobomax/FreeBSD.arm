@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/linker_set.h 268138 2014-07-02 08:49:06Z hselasky $
+ * $FreeBSD: head/sys/sys/linker_set.h 284743 2015-06-23 22:40:22Z hselasky $
  */
 
 #ifndef _SYS_LINKER_SET_H_
@@ -80,8 +80,8 @@
  * Initialize before referring to a given linker set.
  */
 #define SET_DECLARE(set, ptype)					\
-	extern ptype __weak *__CONCAT(__start_set_,set);	\
-	extern ptype __weak *__CONCAT(__stop_set_,set)
+	extern ptype __weak_symbol *__CONCAT(__start_set_,set);	\
+	extern ptype __weak_symbol *__CONCAT(__stop_set_,set)
 
 #define SET_BEGIN(set)							\
 	(&__CONCAT(__start_set_,set))

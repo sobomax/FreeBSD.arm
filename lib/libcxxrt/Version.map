@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcxxrt/Version.map 273381 2014-10-21 10:19:45Z bapt $
+# $FreeBSD: head/lib/libcxxrt/Version.map 284732 2015-06-23 17:54:24Z dim $
 # Define the same version as the libsupc++ from gcc 4.2.1 so that we can use
 # libcxxrt as a drop-in replacement.
 
@@ -254,6 +254,10 @@ CXXABI_1.3.1 {
     __cxa_get_exception_ptr;
 } CXXABI_1.3;
 
+CXXABI_1.3.6 {
+    __cxa_deleted_virtual;
+} CXXABI_1.3.1;
+
 
 CXXRT_1.0 {
 
@@ -286,7 +290,7 @@ CXXRT_1.0 {
     __cxa_increment_exception_refcount;
     __cxa_rethrow_primary_exception;
 
-} CXXABI_1.3.1;
+} CXXABI_1.3.6;
 
 
 GLIBCXX_3.4 {

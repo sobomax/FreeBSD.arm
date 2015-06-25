@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 283075 2015-05-18 19:45:46Z allanjude $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 284539 2015-06-18 06:00:17Z neel $
  */
 
 /*-
@@ -51,11 +51,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 283075 2015-05-18 19:45:46Z allanjude $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 284539 2015-06-18 06:00:17Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 283075 2015-05-18 19:45:46Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 284539 2015-06-18 06:00:17Z neel $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -629,7 +629,7 @@ usage(void)
 {
 
 	fprintf(stderr,
-	    "usage: %s [-c <console-device>] [-d <disk-path>] [-e <name=value>]\n"
+	    "usage: %s [-S][-c <console-device>] [-d <disk-path>] [-e <name=value>]\n"
 	    "       %*s [-h <host-path>] [-m mem-size] <vmname>\n",
 	    progname,
 	    (int)strlen(progname), "");
@@ -642,16 +642,17 @@ main(int argc, char** argv)
 	void *h;
 	void (*func)(struct loader_callbacks *, void *, int, int);
 	uint64_t mem_size;
-	int opt, error, need_reinit;
+	int opt, error, need_reinit, memflags;
 
 	progname = basename(argv[0]);
 
+	memflags = 0;
 	mem_size = 256 * MB;
 
 	consin_fd = STDIN_FILENO;
 	consout_fd = STDOUT_FILENO;
 
-	while ((opt = getopt(argc, argv, "c:d:e:h:m:")) != -1) {
+	while ((opt = getopt(argc, argv, "Sc:d:e:h:m:")) != -1) {
 		switch (opt) {
 		case 'c':
 			error = altcons_open(optarg);
@@ -677,6 +678,9 @@ main(int argc, char** argv)
 			error = vm_parse_memsize(optarg, &mem_size);
 			if (error != 0)
 				errx(EX_USAGE, "Invalid memsize '%s'", optarg);
+			break;
+		case 'S':
+			memflags |= VM_MEM_F_WIRED;
 			break;
 		case '?':
 			usage();
@@ -715,6 +719,7 @@ main(int argc, char** argv)
 		}
 	}
 
+	vm_set_memflags(ctx, memflags);
 	error = vm_setup_memory(ctx, mem_size, VM_MMAP_ALL);
 	if (error) {
 		perror("vm_setup_memory");

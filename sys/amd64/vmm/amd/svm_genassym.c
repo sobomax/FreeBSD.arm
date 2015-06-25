@@ -25,10 +25,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/svm_genassym.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/svm_genassym.c 284712 2015-06-23 02:17:23Z neel $");
 
 #include <sys/param.h>
 #include <sys/assym.h>
+#include <x86/specialreg.h>
 
 #include "svm.h"
 
@@ -46,3 +47,4 @@ ASSYM(SCTX_R12, offsetof(struct svm_regctx, sctx_r12));
 ASSYM(SCTX_R13, offsetof(struct svm_regctx, sctx_r13));
 ASSYM(SCTX_R14, offsetof(struct svm_regctx, sctx_r14));
 ASSYM(SCTX_R15, offsetof(struct svm_regctx, sctx_r15));
+ASSYM(MSR_GSBASE, MSR_GSBASE);

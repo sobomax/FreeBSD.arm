@@ -1,6 +1,5 @@
-# $FreeBSD: head/share/doc/legal/realtek/Makefile 253139 2013-07-10 08:21:09Z hiren $
+# $FreeBSD: head/share/doc/legal/realtek/Makefile 284321 2015-06-12 14:30:27Z sjg $
 
-NO_OBJ=
 FILES=		${.CURDIR}/../../../../sys/contrib/dev/urtwn/LICENSE
 FILESDIR=	${SHAREDIR}/doc/legal/realtek
 

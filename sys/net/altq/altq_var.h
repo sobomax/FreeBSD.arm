@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_var.h,v 1.16 2003/10/03 05:05:15 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq_var.h 281642 2015-04-17 06:38:31Z glebius $
+ * $FreeBSD: head/sys/net/altq/altq_var.h 284777 2015-06-24 19:16:41Z eri $
  */
 #ifndef _ALTQ_ALTQ_VAR_H_
 #define	_ALTQ_ALTQ_VAR_H_
@@ -226,6 +226,13 @@ int	hfsc_remove_altq(struct pf_altq *);
 int	hfsc_add_queue(struct pf_altq *);
 int	hfsc_remove_queue(struct pf_altq *);
 int	hfsc_getqstats(struct pf_altq *, void *, int *);
+
+int	fairq_pfattach(struct pf_altq *);
+int	fairq_add_altq(struct pf_altq *);
+int	fairq_remove_altq(struct pf_altq *);
+int	fairq_add_queue(struct pf_altq *);
+int	fairq_remove_queue(struct pf_altq *);
+int	fairq_getqstats(struct pf_altq *, void *, int *);
 
 #endif /* _KERNEL */
 #endif /* _ALTQ_ALTQ_VAR_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/Makefile 281081 2015-04-04 19:56:54Z bapt $
+# $FreeBSD: head/sys/boot/Makefile 284590 2015-06-19 05:42:24Z bapt $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,8 @@
 SUBDIR+=		ficl
 SUBDIR+=		forth
 .endif
+
+SUBDIR+=		common
 
 .include <bsd.arch.inc.mk>
 

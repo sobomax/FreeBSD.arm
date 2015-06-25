@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_pcb.c 283664 2015-05-28 18:52:32Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_pcb.c 284515 2015-06-17 15:20:14Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <sys/proc.h>
@@ -2485,6 +2485,7 @@ sctp_inpcb_alloc(struct socket *so, uint32_t vrf_id)
 	inp->reconfig_supported = (uint8_t) SCTP_BASE_SYSCTL(sctp_reconfig_enable);
 	inp->nrsack_supported = (uint8_t) SCTP_BASE_SYSCTL(sctp_nrsack_enable);
 	inp->pktdrop_supported = (uint8_t) SCTP_BASE_SYSCTL(sctp_pktdrop_enable);
+	inp->fibnum = so->so_fibnum;
 	/* init the small hash table we use to track asocid <-> tcb */
 	inp->sctp_asocidhash = SCTP_HASH_INIT(SCTP_STACK_VTAG_HASH_SIZE, &inp->hashasocidmark);
 	if (inp->sctp_asocidhash == NULL) {
@@ -3949,7 +3950,9 @@ sctp_add_remote_addr(struct sctp_tcb *stcb, struct sockaddr *newaddr,
 		sin6->sin6_scope_id = 0;
 	}
 #endif
-	SCTP_RTALLOC((sctp_route_t *) & net->ro, stcb->asoc.vrf_id);
+	SCTP_RTALLOC((sctp_route_t *) & net->ro,
+	    stcb->asoc.vrf_id,
+	    stcb->sctp_ep->fibnum);
 
 	if (SCTP_ROUTE_HAS_VALID_IFN(&net->ro)) {
 		/* Get source address */

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/usr.sbin/bhyve/Makefile 281338 2015-04-09 21:38:40Z bapt $
+# $FreeBSD: head/usr.sbin/bhyve/Makefile 284539 2015-06-18 06:00:17Z neel $
 #
 
 PROG=	bhyve
@@ -13,6 +13,7 @@ SRCS=	\
 	acpi.c			\
 	bhyverun.c		\
 	block_if.c		\
+	bootrom.c		\
 	consport.c		\
 	dbgport.c		\
 	inout.c			\

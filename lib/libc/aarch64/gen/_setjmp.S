@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/_setjmp.S 281197 2015-04-07 09:52:14Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/_setjmp.S 284768 2015-06-24 16:15:32Z andrew $");
 
 #include <machine/setjmp.h>
 
@@ -59,8 +59,8 @@ ENTRY(_setjmp)
 	/* Return value */
 	mov	x0, #0
 	ret
-.Lmagic:
 	.align	3
+.Lmagic:
 	.quad	_JB_MAGIC__SETJMP
 END(_setjmp)
 

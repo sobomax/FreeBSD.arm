@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/secure/lib/libcrypt/crypt-blowfish.c 265995 2014-05-14 00:50:31Z delphij $");
+__FBSDID("$FreeBSD: head/secure/lib/libcrypt/crypt-blowfish.c 284483 2015-06-16 23:57:29Z allanjude $");
 
 /* This password hashing algorithm was designed by David Mazieres
  * <dm@lcs.mit.edu> and works as follows:
@@ -167,6 +167,9 @@ crypt_blowfish(const char *key, const char *salt)
 			 switch (salt[1]) {
 			 case 'a':	/* 'ab' should not yield the same as 'abab' */
 			 case 'b':	/* cap input length at 72 bytes */
+			 case 'y':	/* same as 'b', for compatibility
+					 * with openwall crypt_blowfish
+					 */
 				 minr = salt[1];
 				 salt++;
 				 break;

@@ -1,5 +1,5 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: head/lib/msun/Makefile 282057 2015-04-27 06:49:27Z ngie $
+# $FreeBSD: head/lib/msun/Makefile 284421 2015-06-15 19:28:07Z bapt $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -34,6 +34,8 @@ CFLAGS+=	-I${.CURDIR}/ld80
 .PATH:  ${.CURDIR}/ld128
 CFLAGS+=	-I${.CURDIR}/ld128
 .endif
+
+CFLAGS+=	-I${.CURDIR}/${ARCH_SUBDIR}
 
 .PATH:	${.CURDIR}/bsdsrc
 .PATH:	${.CURDIR}/src

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/token.l 281532 2015-04-14 18:13:55Z delphij $
+ * $FreeBSD: head/usr.sbin/ctld/token.l 284542 2015-06-18 10:17:47Z trasz $
  */
 
 #include <stdio.h>
@@ -80,7 +80,7 @@ target			{ return TARGET; }
 timeout			{ return TIMEOUT; }
 \"[^"]+\"		{ yylval.str = strndup(yytext + 1,
 			    strlen(yytext) - 2); return STR; }
-[a-zA-Z0-9\.\-_/\:\[\]]+ { yylval.str = strdup(yytext); return STR; }
+[a-zA-Z0-9\.\-@_/\:\[\]]+ { yylval.str = strdup(yytext); return STR; }
 \{			{ return OPENING_BRACKET; }
 \}			{ return CLOSING_BRACKET; }
 #.*$			/* ignore comments */;

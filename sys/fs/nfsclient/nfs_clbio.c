@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clbio.c 282881 2015-05-14 10:04:42Z mav $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clbio.c 284529 2015-06-17 22:44:27Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -127,12 +127,6 @@ ncl_getpages(struct vop_getpages_args *ap)
 		mtx_unlock(&nmp->nm_mtx);
 
 	npages = btoc(count);
-
-	/*
-	 * Since the caller has busied the requested page, that page's valid
-	 * field will not be changed by other threads.
-	 */
-	vm_page_assert_xbusied(pages[ap->a_reqpage]);
 
 	/*
 	 * If the requested page is partially valid, just return it and

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/amd/svm_support.S 279540 2015-03-02 20:13:49Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/amd/svm_support.S 284712 2015-06-23 02:17:23Z neel $
  */
 #include <machine/asmacros.h>
 
@@ -42,12 +42,16 @@
 #define	VMSAVE	.byte 0x0f, 0x01, 0xdb
 
 /*
- * svm_launch(uint64_t vmcb, struct svm_regctx *gctx)
+ * svm_launch(uint64_t vmcb, struct svm_regctx *gctx, struct pcpu *pcpu)
  * %rdi: physical address of VMCB
  * %rsi: pointer to guest context
+ * %rdx: pointer to the pcpu data
  */
 ENTRY(svm_launch)
 	VENTER
+
+	/* save pointer to the pcpu data */
+	push %rdx
 
 	/*
 	 * Host register state saved across a VMRUN.
@@ -115,6 +119,13 @@ ENTRY(svm_launch)
 	pop %r13
 	pop %r12
 	pop %rbx
+
+	/* Restore %GS.base to point to the host's pcpu data */
+	pop %rdx
+	mov %edx, %eax
+	shr $32, %rdx
+	mov $MSR_GSBASE, %ecx
+	wrmsr
 
 	VLEAVE
 	ret

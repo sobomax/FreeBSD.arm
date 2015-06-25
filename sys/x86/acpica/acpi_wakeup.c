@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 281495 2015-04-13 15:22:45Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 284583 2015-06-18 23:14:45Z jkim $");
 
 #if defined(__amd64__)
 #define DEV_APIC
@@ -210,7 +210,7 @@ acpi_sleep_machdep(struct acpi_softc *sc, int state)
 	if (acpi_resume_beep != 0)
 		timer_spkr_acquire();
 
-	AcpiSetFirmwareWakingVector(WAKECODE_PADDR(sc));
+	AcpiSetFirmwareWakingVector(WAKECODE_PADDR(sc), 0);
 
 	intr_suspend();
 
@@ -298,7 +298,7 @@ acpi_wakeup_machdep(struct acpi_softc *sc, int state, int sleep_result,
 #endif
 		intr_resume(/*suspend_cancelled*/false);
 
-		AcpiSetFirmwareWakingVector(0);
+		AcpiSetFirmwareWakingVector(0, 0);
 	} else {
 		/* Wakeup MD procedures in interrupt enabled context */
 		if (sleep_result == 1 && mem_range_softc.mr_op != NULL &&

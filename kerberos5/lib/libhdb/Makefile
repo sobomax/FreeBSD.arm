@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 283160 2015-05-20 18:56:29Z bapt $
+# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 LIB=	hdb
 LDFLAGS=	-Wl,--no-undefined
@@ -95,6 +95,11 @@ ${GEN}: hdb.asn1
 
 .hx.h:
 	${CP} ${.IMPSRC} ${.TARGET}
+
+# This makefile generates a lot of its headers
+# so tell bsd.sys.mk not to try and stage them before they are built.
+# Note: this is rare
+NO_BEFOREBUILD_INCLUDES=
 
 .include <bsd.lib.mk>
 

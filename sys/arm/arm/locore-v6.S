@@ -37,7 +37,7 @@
 #include <machine/cpuconf.h>
 #include <machine/pte.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/locore-v6.S 282025 2015-04-26 16:37:27Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/locore-v6.S 284452 2015-06-16 17:24:20Z andrew $");
 
 #ifndef ARM_NEW_PMAP
 #define	PTE1_OFFSET	L1_S_OFFSET
@@ -240,7 +240,7 @@ ASENTRY_NP(init_mmu)
 	 *  - All is set to uncacheable memory
 	 */
 	ldr	r0, =0xAAAAA
-	mrc	CP15_PRRR(r0)
+	mcr	CP15_PRRR(r0)
 	mov	r0, #0
 	mcr	CP15_NMRR(r0)
 #endif

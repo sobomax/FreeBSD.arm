@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/copy.c 283035 2015-05-17 19:59:05Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/copy.c 284599 2015-06-19 17:00:36Z sobomax $");
 #include <sys/param.h>
 
 #include <stand.h>
