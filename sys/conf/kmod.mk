@@ -1,5 +1,5 @@
 #	From: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/sys/conf/kmod.mk 283670 2015-05-28 22:01:50Z jhb $
+# $FreeBSD: head/sys/conf/kmod.mk 284419 2015-06-15 18:43:32Z sjg $
 #
 # The include file <bsd.kmod.mk> handles building and installing loadable
 # kernel modules.
@@ -239,7 +239,7 @@ beforedepend: ${_ILINKS}
 # causes all the modules to be rebuilt when the directory pointed to changes.
 .for _link in ${_ILINKS}
 .if !exists(${.OBJDIR}/${_link})
-${OBJS}: ${.OBJDIR}/${_link}
+${OBJS}: ${_link}
 .endif
 .endfor
 
@@ -253,12 +253,10 @@ SYSDIR=	${_dir}
 .error "can't find kernel source tree"
 .endif
 
-.for _link in ${_ILINKS}
-.PHONY: ${_link}
-${_link}: ${.OBJDIR}/${_link}
+.NOPATH: ${_ILINKS}
 
-${.OBJDIR}/${_link}:
-	@case ${.TARGET:T} in \
+${_ILINKS}:
+	@case ${.TARGET} in \
 	machine) \
 		path=${SYSDIR}/${MACHINE}/include ;; \
 	*) \
@@ -267,7 +265,6 @@ ${.OBJDIR}/${_link}:
 	path=`(cd $$path && /bin/pwd)` ; \
 	${ECHO} ${.TARGET:T} "->" $$path ; \
 	ln -sf $$path ${.TARGET:T}
-.endfor
 
 CLEANFILES+= ${PROG} ${KMOD}.kld ${OBJS}
 

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/share/examples/bhyve/vmrun.sh 284024 2015-06-05 15:16:26Z avg $
+# $FreeBSD: head/share/examples/bhyve/vmrun.sh 284539 2015-06-18 06:00:17Z neel $
 #
 
 LOADER=/usr/sbin/bhyveload
@@ -87,15 +87,15 @@ console=${DEFAULT_CONSOLE}
 cpus=${DEFAULT_CPUS}
 tap_total=0
 disk_total=0
-apic_opt=""
 gdbport=0
 loader_opt=""
+bhyverun_opt="-H -A -P"
 pass_total=0
 
 while getopts ac:C:d:e:g:hH:iI:m:p:t: c ; do
 	case $c in
 	a)
-		apic_opt="-a"
+		bhyverun_opt="${bhyverun_opt} -a"
 		;;
 	c)
 		cpus=${OPTARG}
@@ -161,6 +161,12 @@ fi
 vmname="$1"
 if [ -n "${host_base}" ]; then
 	loader_opt="${loader_opt} -h ${host_base}"
+fi
+
+# If PCI passthru devices are configured then guest memory must be wired
+if [ ${pass_total} -gt 0 ]; then
+	loader_opt="${loader_opt} -S"
+	bhyverun_opt="${bhyverun_opt} -S"
 fi
 
 make_and_check_diskdev()
@@ -263,7 +269,7 @@ while [ 1 ]; do
 	    i=$(($i + 1))
         done
 
-	${FBSDRUN} -c ${cpus} -m ${memsize} ${apic_opt} -A -H -P	\
+	${FBSDRUN} -c ${cpus} -m ${memsize} ${bhyverun_opt}		\
 		-g ${gdbport}						\
 		-s 0:0,hostbridge					\
 		-s 1:0,lpc						\

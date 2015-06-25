@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/ncurses/ncurses/Makefile 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/lib/ncurses/ncurses/Makefile 284695 2015-06-22 05:41:13Z antoine $
 
 SHLIBDIR?=	/lib
 
@@ -308,6 +308,7 @@ SYMLINKS+=	libncurses${LIB_SUFFIX}_p.a ${LIBDIR}/libtermlib${LIB_SUFFIX}_p.a
 SYMLINKS+=	libncurses${LIB_SUFFIX}_p.a ${LIBDIR}/libtinfo${LIB_SUFFIX}_p.a
 .endif
 
+.if ${.CURDIR:T} == "ncursesw"
 .if defined(ENABLE_WIDEC)
 DOCSDIR=	${SHAREDIR}/doc/ncurses
 DOCS=		ncurses-intro.html hackguide.html
@@ -316,6 +317,7 @@ DOCS=		ncurses-intro.html hackguide.html
 .if ${MK_HTML} != "no"
 .PATH: ${NCURSES_DIR}/doc/html
 FILESGROUPS=	DOCS
+.endif
 .endif
 
 # Generated source

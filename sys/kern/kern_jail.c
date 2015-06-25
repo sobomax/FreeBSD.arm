@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_jail.c 282213 2015-04-29 10:23:02Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_jail.c 284514 2015-06-17 13:15:54Z bz $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -1331,7 +1331,7 @@ kern_jail_set(struct thread *td, struct uio *optuio, int flags)
 
 		pr->pr_securelevel = ppr->pr_securelevel;
 		pr->pr_allow = JAIL_DEFAULT_ALLOW & ppr->pr_allow;
-		pr->pr_enforce_statfs = JAIL_DEFAULT_ENFORCE_STATFS;
+		pr->pr_enforce_statfs = jail_default_enforce_statfs;
 		pr->pr_devfs_rsnum = ppr->pr_devfs_rsnum;
 
 		pr->pr_osreldate = osreldt ? osreldt : ppr->pr_osreldate;

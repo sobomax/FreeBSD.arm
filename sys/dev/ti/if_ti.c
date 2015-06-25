@@ -77,7 +77,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ti/if_ti.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/ti/if_ti.c 284724 2015-06-23 06:59:46Z dim $");
 
 #include "opt_ti.h"
 
@@ -3350,7 +3350,7 @@ ti_ifmedia_upd(struct ifnet *ifp)
 
 	sc = ifp->if_softc;
 	TI_LOCK(sc);
-	error = ti_ifmedia_upd(ifp);
+	error = ti_ifmedia_upd_locked(sc);
 	TI_UNLOCK(sc);
 
 	return (error);

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/lockstat.h 228448 2011-12-12 23:29:32Z attilio $
+ * $FreeBSD: head/sys/sys/lockstat.h 284297 2015-06-12 10:01:24Z avg $
  */
  
 /*
@@ -197,6 +197,9 @@ extern uint64_t lockstat_nsecs(void);
 	if ((id = lockstat_probemap[(probe)])) 			     	     \
 		(*lockstat_probe_func)(id, (uintptr_t)(lp), 0, 0, 0, 0);     \
 } while (0)
+
+#define	LOCKSTAT_WRITER		0
+#define	LOCKSTAT_READER		1
 
 #else	/* !KDTRACE_HOOKS */
 

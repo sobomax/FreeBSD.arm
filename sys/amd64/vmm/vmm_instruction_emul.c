@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 284046 2015-06-05 21:22:26Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 284539 2015-06-18 06:00:17Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 284046 2015-06-05 21:22:26Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 284539 2015-06-18 06:00:17Z neel $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -1677,12 +1677,12 @@ ptp_release(void **cookie)
 }
 
 static void *
-ptp_hold(struct vm *vm, vm_paddr_t ptpphys, size_t len, void **cookie)
+ptp_hold(struct vm *vm, int vcpu, vm_paddr_t ptpphys, size_t len, void **cookie)
 {
 	void *ptr;
 
 	ptp_release(cookie);
-	ptr = vm_gpa_hold(vm, ptpphys, len, VM_PROT_RW, cookie);
+	ptr = vm_gpa_hold(vm, vcpu, ptpphys, len, VM_PROT_RW, cookie);
 	return (ptr);
 }
 
@@ -1729,7 +1729,8 @@ restart:
 			/* Zero out the lower 12 bits. */
 			ptpphys &= ~0xfff;
 
-			ptpbase32 = ptp_hold(vm, ptpphys, PAGE_SIZE, &cookie);
+			ptpbase32 = ptp_hold(vm, vcpuid, ptpphys, PAGE_SIZE,
+			    &cookie);
 
 			if (ptpbase32 == NULL)
 				goto error;
@@ -1788,7 +1789,8 @@ restart:
 		/* Zero out the lower 5 bits and the upper 32 bits */
 		ptpphys &= 0xffffffe0UL;
 
-		ptpbase = ptp_hold(vm, ptpphys, sizeof(*ptpbase) * 4, &cookie);
+		ptpbase = ptp_hold(vm, vcpuid, ptpphys, sizeof(*ptpbase) * 4,
+		    &cookie);
 		if (ptpbase == NULL)
 			goto error;
 
@@ -1811,7 +1813,7 @@ restart:
 		/* Zero out the lower 12 bits and the upper 12 bits */
 		ptpphys >>= 12; ptpphys <<= 24; ptpphys >>= 12;
 
-		ptpbase = ptp_hold(vm, ptpphys, PAGE_SIZE, &cookie);
+		ptpbase = ptp_hold(vm, vcpuid, ptpphys, PAGE_SIZE, &cookie);
 		if (ptpbase == NULL)
 			goto error;
 

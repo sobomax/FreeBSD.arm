@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/clang.prog.mk 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/usr.bin/clang/clang.prog.mk 284345 2015-06-13 19:20:56Z sjg $
 
 LLVM_SRCS= ${.CURDIR}/../../../contrib/llvm
 
@@ -13,5 +13,10 @@ DPADD+=	${LIBNCURSESW}
 LDADD+=	-lncursesw
 
 BINDIR?= /usr/bin
+
+
+.if ${MK_SHARED_TOOLCHAIN} == "no"
+NO_SHARED= yes
+.endif
 
 .include <bsd.prog.mk>

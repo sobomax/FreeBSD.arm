@@ -1,9 +1,10 @@
-# $FreeBSD: head/share/mk/Makefile 276846 2015-01-08 18:28:06Z imp $
+# $FreeBSD: head/share/mk/Makefile 284345 2015-06-13 19:20:56Z sjg $
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
 
 .include <src.opts.mk>
 
 FILES=	\
+	auto.obj.mk \
 	bsd.README \
 	bsd.arch.inc.mk \
 	bsd.compiler.mk \
@@ -39,7 +40,16 @@ FILES=	\
 	bsd.symver.mk \
 	bsd.sys.mk \
 	bsd.test.mk \
+	dirdeps.mk \
+	gendirdeps.mk \
+	install-new.mk \
+	meta.autodep.mk \
+	meta.stage.mk \
+	meta.subdir.mk \
+	meta.sys.mk \
+	stage-install.sh \
 	sys.mk \
+	sys.dependfile.mk \
 	version_gen.awk
 
 NO_OBJ=

@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/Makefile.inc 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/Makefile.inc 284289 2015-06-11 21:13:05Z sjg $
 
 .include <src.opts.mk>
 
@@ -34,7 +34,7 @@ ETSRCS=	\
 .for ET in ${ETSRCS}
 .for _ET in ${ET:T:R}
 .if ${SRCS:M${_ET}.[ch]} != ""
-.ORDER: ${_ET}.c ${_ET}.h
+.ORDER: ${_ET}.h ${_ET}.c
 ${_ET}.c ${_ET}.h: ${ET}
 	compile_et ${.ALLSRC}
 CLEANFILES+=	${_ET}.h ${_ET}.c

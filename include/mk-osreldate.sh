@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/include/mk-osreldate.sh 255957 2013-09-30 21:01:04Z ian $
+# $FreeBSD: head/include/mk-osreldate.sh 284289 2015-06-11 21:13:05Z sjg $
 
 set -e
 
@@ -49,4 +49,4 @@ $COPYRIGHT
 #endif
 EOF
 chmod 644 $tmpfile
-mv $tmpfile osreldate.h
+mv -f $tmpfile osreldate.h

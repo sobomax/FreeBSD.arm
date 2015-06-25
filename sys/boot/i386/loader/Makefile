@@ -1,10 +1,11 @@
-# $FreeBSD: head/sys/boot/i386/loader/Makefile 281009 2015-04-03 02:27:40Z jkim $
+# $FreeBSD: head/sys/boot/i386/loader/Makefile 284590 2015-06-19 05:42:24Z bapt $
 
 .include <src.opts.mk>
 MK_SSP=		no
 
 LOADER?=	loader
 PROG=		${LOADER}.sym
+MAN=	
 INTERNALPROG=
 NEWVERSWHAT?=	"bootstrap loader" x86
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/genassym.c 284115 2015-06-07 13:59:02Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/genassym.c 284771 2015-06-24 18:26:04Z ian $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/assym.h>
@@ -134,9 +134,9 @@ ASSYM(ARM_RAS_END, ARM_RAS_END);
 
 #ifdef VFP
 ASSYM(PCB_VFPSTATE, offsetof(struct pcb, pcb_vfpstate));
+#endif
 
 ASSYM(PC_CURPMAP, offsetof(struct pcpu, pc_curpmap));
-#endif
 
 ASSYM(PAGE_SIZE, PAGE_SIZE);
 ASSYM(PMAP_DOMAIN_KERNEL, PMAP_DOMAIN_KERNEL);

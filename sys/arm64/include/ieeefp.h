@@ -1,7 +1,7 @@
 /*-
  * Based on sys/sparc64/include/ieeefp.h
  * Public domain.
- * $FreeBSD: head/sys/arm64/include/ieeefp.h 280364 2015-03-23 11:54:56Z andrew $
+ * $FreeBSD: head/sys/arm64/include/ieeefp.h 284751 2015-06-24 12:19:49Z andrew $
  */
 
 #ifndef _MACHINE_IEEEFP_H_
@@ -10,12 +10,12 @@
 /* Deprecated FPU control interface */
 
 /* FP exception codes */
-#define	FP_EXCEPT_INV	0
-#define	FP_EXCEPT_DZ	1
-#define	FP_EXCEPT_OFL	2
-#define	FP_EXCEPT_UFL	3
-#define	FP_EXCEPT_IMP	4
-#define	FP_EXCEPT_DNML	7
+#define	FP_EXCEPT_INV	8
+#define	FP_EXCEPT_DZ	9
+#define	FP_EXCEPT_OFL	10
+#define	FP_EXCEPT_UFL	11
+#define	FP_EXCEPT_IMP	12
+#define	FP_EXCEPT_DNML	15
 
 typedef int fp_except_t;
 

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/copy.c 283035 2015-05-17 19:59:05Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/copy.c 284599 2015-06-19 17:00:36Z sobomax $");
 #include <sys/param.h>
 
 #include <stand.h>
@@ -118,6 +118,13 @@ uboot_loadaddr(u_int type, void *data, uint64_t addr)
 					this_block = eubldr;
 					this_size = eblock - eubldr;
 				}
+			} else if (subldr < sblock && eubldr < eblock) {
+				/* Loader is below or engulfs the sblock */
+				this_block = (eubldr < sblock) ? sblock : eubldr;
+				this_size = eblock - this_block;
+			} else {
+				this_block = 0;
+				this_size = 0;
 			}
 			if (biggest_size < this_size) {
 				biggest_block = this_block;

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/release/Makefile.vm 280928 2015-04-01 00:00:17Z cperciva $
+# $FreeBSD: head/release/Makefile.vm 284567 2015-06-18 19:20:00Z gjb $
 #
 #
 # Makefile for building virtual machine and cloud provider disk images.
@@ -154,3 +154,4 @@ cloudware-install:
 .endif
 
 .include "${.CURDIR}/Makefile.ec2"
+.include "${.CURDIR}/Makefile.azure"

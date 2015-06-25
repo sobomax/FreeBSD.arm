@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptnr/ldm.h 281387 2015-04-11 00:45:03Z delphij $
+ * $FreeBSD: head/sys/dev/hptnr/ldm.h 284792 2015-06-25 06:15:08Z delphij $
  */
 #include <dev/hptnr/hptnr_config.h>
 #ifndef _HPT_LDM_H_
@@ -244,7 +244,8 @@ typedef struct hpt_raw_disk
 	__HPT_RAW_LBA real_capacity;
 	__HPT_RAW_LBA head_position;
 	HPT_U32	logical_sector_size;
-
+	HPT_U8   logicalsectors_per_physicalsector;
+	HPT_U16 lowest_aligned;
 	HPT_U16 max_sectors_per_cmd;
 	HPT_U8  max_queue_depth;
 	HPT_U8  user_select_mode;

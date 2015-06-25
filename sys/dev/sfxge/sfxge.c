@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge.c 284747 2015-06-24 06:25:20Z arybchik $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -905,8 +905,15 @@ sfxge_vpd_init(struct sfxge_softc *sc)
 	efx_vpd_value_t value;
 	int rc;
 
-	if ((rc = efx_vpd_size(sc->enp, &sc->vpd_size)) != 0)
+	if ((rc = efx_vpd_size(sc->enp, &sc->vpd_size)) != 0) {
+		/*
+		 * Unpriviledged functions deny VPD access.
+		 * Simply skip VPD in this case.
+		 */
+		if (rc == EACCES)
+			goto done;
 		goto fail;
+	}
 	sc->vpd_data = malloc(sc->vpd_size, M_SFXGE, M_WAITOK);
 	if ((rc = efx_vpd_read(sc->enp, sc->vpd_data, sc->vpd_size)) != 0)
 		goto fail2;
@@ -935,6 +942,7 @@ sfxge_vpd_init(struct sfxge_softc *sc)
 	for (keyword[1] = 'A'; keyword[1] <= 'Z'; keyword[1]++)
 		sfxge_vpd_try_add(sc, vpd_list, EFX_VPD_RO, keyword);
 
+done:
 	return (0);
 
 fail2:

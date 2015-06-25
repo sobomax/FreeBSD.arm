@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libzfs_core/Makefile 248461 2013-03-18 09:32:29Z mm $
+# $FreeBSD: head/cddl/lib/libzfs_core/Makefile 284409 2015-06-15 10:48:48Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/compat/opensolaris/misc
 .PATH: ${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/zfs
@@ -11,7 +11,8 @@ DPADD=	${LIBNVPAIR}
 LDADD=	-lnvpair
 
 SRCS=	libzfs_core.c \
-	libzfs_core_compat.c
+	libzfs_core_compat.c \
+	zfs_ioctl_compat.c
 
 SRCS+=	libzfs_compat.c
 

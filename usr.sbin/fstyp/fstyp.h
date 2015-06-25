@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/fstyp/fstyp.h 275680 2014-12-10 14:14:16Z trasz $
+ * $FreeBSD: head/usr.sbin/fstyp/fstyp.h 284728 2015-06-23 16:34:43Z allanjude $
  */
 
 #ifndef FSTYP_H
@@ -36,11 +36,16 @@
 
 void	*read_buf(FILE *fp, off_t off, size_t len);
 char	*checked_strdup(const char *s);
+void	rtrim(char *label, size_t size);
 
 int	fstyp_cd9660(FILE *fp, char *label, size_t size);
 int	fstyp_ext2fs(FILE *fp, char *label, size_t size);
+int	fstyp_geli(FILE *fp, char *label, size_t size);
 int	fstyp_msdosfs(FILE *fp, char *label, size_t size);
 int	fstyp_ntfs(FILE *fp, char *label, size_t size);
 int	fstyp_ufs(FILE *fp, char *label, size_t size);
+#ifdef HAVE_ZFS
+int	fstyp_zfs(FILE *fp, char *label, size_t size);
+#endif
 
 #endif /* !FSTYP_H */

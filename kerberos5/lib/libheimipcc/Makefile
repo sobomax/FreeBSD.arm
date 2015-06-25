@@ -1,4 +1,4 @@
-#$FreeBSD: head/kerberos5/lib/libheimipcc/Makefile 275022 2014-11-25 09:57:42Z bapt $
+#$FreeBSD: head/kerberos5/lib/libheimipcc/Makefile 284289 2015-06-11 21:13:05Z sjg $
 
 LIB=	heimipcc
 PRIVATELIB=
@@ -10,7 +10,8 @@ SRCS=	\
 
 CFLAGS+=	-I${KRB5DIR}/lib/roken \
 		-I${KRB5DIR}/base \
-		-I${KRB5DIR}/lib/ipc
+		-I${KRB5DIR}/lib/ipc \
+		-I${KRB5DIR}/include
 
 .include <bsd.lib.mk>
 

@@ -1,5 +1,5 @@
 #	from: @(#)bsd.doc.mk	5.3 (Berkeley) 1/2/91
-# $FreeBSD: head/share/mk/bsd.doc.mk 265838 2014-05-10 16:38:54Z imp $
+# $FreeBSD: head/share/mk/bsd.doc.mk 284620 2015-06-20 00:17:57Z bapt $
 #
 # The include file <bsd.doc.mk> handles installing BSD troff documents.
 #
@@ -75,7 +75,7 @@ TRFLAGS+=	-p
 TRFLAGS+=	-R
 .endif
 .if defined(USE_SOELIM)
-TRFLAGS+=	-I${SRCDIR}
+TRFLAGS+=	-I${.CURDIR}
 .endif
 .if defined(USE_TBL)
 TRFLAGS+=	-t

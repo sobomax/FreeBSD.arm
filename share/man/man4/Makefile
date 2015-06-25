@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/18/93
-# $FreeBSD: head/share/man/man4/Makefile 283766 2015-05-30 12:17:18Z grembo $
+# $FreeBSD: head/share/man/man4/Makefile 284284 2015-06-11 19:06:58Z brueffer $
 
 .include <src.opts.mk>
 
@@ -869,6 +869,7 @@ MAN+=	\
 	ufoma.4 \
 	uftdi.4 \
 	ugen.4 \
+	ugold.4 \
 	uhci.4 \
 	uhid.4 \
 	uhso.4 \

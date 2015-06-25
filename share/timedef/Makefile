@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/timedef/Makefile 196814 2009-09-04 06:26:40Z ache $
+# $FreeBSD: head/share/timedef/Makefile 284287 2015-06-11 21:09:03Z sjg $
 
 LOCALES=	am_ET.UTF-8 \
 		be_BY.CP1131 \
@@ -148,7 +148,7 @@ SYMLINKS=
 .for enc2 in ${ENCODINGS}
 .for lang_terr in ${${enc1}_${enc2}}
 SYMLINKS+=	../${lang_terr:C/:.*$//}.${enc1}/${FILESNAME} \
-		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}
+		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}/${FILESNAME}
 .endfor
 .endfor
 .endfor

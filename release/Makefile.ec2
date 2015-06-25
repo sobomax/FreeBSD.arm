@@ -1,12 +1,12 @@
 #
-# $FreeBSD: head/release/Makefile.ec2 283919 2015-06-02 17:00:31Z gjb $
+# $FreeBSD: head/release/Makefile.ec2 284812 2015-06-25 14:24:06Z gjb $
 #
 #
 # Makefile for creating an EC2 AMI from a disk image.
 #
 
-.if ${BRANCH} == "CURRENT" || ${BRANCH} == "STABLE"
-AMINAMESUFFIX!=	date +-%Y-%m-%d
+.if ${BRANCH} == "CURRENT" || ${BRANCH} == "STABLE" || ${BRANCH} == "PRERELEASE"
+AMINAMESUFFIX!=	date +-%Y-%m-%d-%H-%M
 .endif
 .if defined(EC2PUBLIC)
 PUBLISH=	--public

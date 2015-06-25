@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)send.2	8.2 (Berkeley) 2/21/94
-.\" $FreeBSD: head/lib/libc/net/sctp_bindx.3 251067 2013-05-28 20:37:48Z emaste $
+.\" $FreeBSD: head/lib/libc/net/sctp_bindx.3 284386 2015-06-14 20:16:36Z tuexen $
 .\"
-.Dd December 15, 2006
+.Dd June 14, 2015
 .Dt SCTP_BINDX 3
 .Os
 .Sh NAME
@@ -71,7 +71,7 @@ must be one of the following values.
 This value indicates that the listed address(es) need to
 be added to the endpoint.
 .Pp
-.Dv SCTP_BINDX_DEL_ADDR
+.Dv SCTP_BINDX_REM_ADDR
 This value indicates that the listed address(es) need to
 be removed from the endpoint.
 .Pp

@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_frontend.h#2 $
- * $FreeBSD: head/sys/cam/ctl/ctl_frontend.h 278037 2015-02-01 21:50:28Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_frontend.h 284640 2015-06-20 12:43:54Z mav $
  */
 /*
  * CAM Target Layer front end registration hooks
@@ -41,16 +41,14 @@
 
 typedef enum {
 	CTL_PORT_STATUS_NONE		= 0x00,
-	CTL_PORT_STATUS_ONLINE		= 0x01,
-	CTL_PORT_STATUS_TARG_ONLINE	= 0x02,
-	CTL_PORT_STATUS_LUN_ONLINE	= 0x04
+	CTL_PORT_STATUS_ONLINE		= 0x01
 } ctl_port_status;
 
 typedef int (*fe_init_t)(void);
 typedef void (*fe_shutdown_t)(void);
 typedef void (*port_func_t)(void *onoff_arg);
 typedef int (*port_info_func_t)(void *onoff_arg, struct sbuf *sb);
-typedef	int (*lun_func_t)(void *arg, struct ctl_id targ_id, int lun_id);
+typedef	int (*lun_func_t)(void *arg, int lun_id);
 typedef int (*fe_ioctl_t)(struct cdev *dev, u_long cmd, caddr_t addr, int flag,
 			  struct thread *td);
 

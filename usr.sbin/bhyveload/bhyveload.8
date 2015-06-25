@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.sbin/bhyveload/bhyveload.8 267959 2014-06-27 15:20:34Z jhb $
+.\" $FreeBSD: head/usr.sbin/bhyveload/bhyveload.8 284539 2015-06-18 06:00:17Z neel $
 .\"
 .Dd January 7, 2012
 .Dt BHYVELOAD 8
@@ -35,6 +35,7 @@
 guest inside a bhyve virtual machine
 .Sh SYNOPSIS
 .Nm
+.Op Fl S
 .Op Fl c Ar cons-dev
 .Op Fl d Ar disk-path
 .Op Fl e Ar name=value
@@ -111,8 +112,10 @@ respectively.
 The default value of
 .Ar mem-size
 is 256M.
-.El
+.It Fl S
+Wire guest memory.
 .Sh EXAMPLES
+.El
 To create a virtual machine named
 .Ar freebsd-vm
 that boots off the ISO image

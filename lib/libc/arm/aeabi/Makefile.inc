@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 276853 2015-01-08 20:11:38Z dim $
+# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 284451 2015-06-16 16:40:25Z andrew $
 
 .PATH: ${LIBC_SRCTOP}/arm/aeabi
 
@@ -26,14 +26,6 @@ SRCS+=	aeabi_memcmp.S		\
 	aeabi_memcpy.S		\
 	aeabi_memmove.S		\
 	aeabi_memset.S
-
-# Mark the functions as hidden so they are not available outside of libc.
-CFLAGS.aeabi_memcmp.S=	-DVISIBILITY_HIDDEN
-CFLAGS.aeabi_memcpy.S=	-DVISIBILITY_HIDDEN
-CFLAGS.aeabi_memmove.S=	-DVISIBILITY_HIDDEN
-CFLAGS.aeabi_memset.S=	-DVISIBILITY_HIDDEN
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}
-
 
 SYM_MAPS+=${LIBC_SRCTOP}/arm/aeabi/Symbol.map
 

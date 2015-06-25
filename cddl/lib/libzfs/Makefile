@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libzfs/Makefile 272484 2014-10-03 20:36:09Z delphij $
+# $FreeBSD: head/cddl/lib/libzfs/Makefile 284409 2015-06-15 10:48:48Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/compat/opensolaris/misc
 .PATH: ${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/zfs
@@ -37,7 +37,6 @@ SRCS+=	libzfs_changelist.c \
 	zfs_comutil.c \
 	zfs_deleg.c \
 	zfs_fletcher.c \
-	zfs_ioctl_compat.c \
 	zfs_namecheck.c \
 	zfs_prop.c \
 	zpool_prop.c \

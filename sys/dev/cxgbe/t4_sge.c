@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_sge.c 283858 2015-06-01 00:55:15Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_sge.c 284718 2015-06-23 05:55:13Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1724,6 +1724,7 @@ get_segment:
 	}
 	*pnext = NULL;
 
+	M_ASSERTPKTHDR(m0);
 	return (m0);
 }
 

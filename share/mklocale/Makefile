@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mklocale/Makefile 196790 2009-09-03 17:12:45Z ache $
+# $FreeBSD: head/share/mklocale/Makefile 284287 2015-06-11 21:09:03Z sjg $
 
 LOCALES=	UTF-8 \
 		am_ET.UTF-8 \
@@ -94,7 +94,7 @@ SYMLINKS=
 .for enc2 in ${ENCODINGS}
 .for lang_terr in ${${enc1}_${enc2}}
 SYMLINKS+=	../${lang_terr:C/:.*$//:C/.+$/&./}${enc1}/${FILESNAME} \
-		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}
+		${LOCALEDIR}/${lang_terr:C/^.*://}.${enc2}/${FILESNAME}
 .endfor
 .endfor
 .endfor

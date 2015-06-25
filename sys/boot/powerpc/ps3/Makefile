@@ -1,7 +1,8 @@
-# $FreeBSD: head/sys/boot/powerpc/ps3/Makefile 281011 2015-04-03 02:37:43Z jkim $
+# $FreeBSD: head/sys/boot/powerpc/ps3/Makefile 284597 2015-06-19 14:20:21Z bapt $
 
 .include <src.opts.mk>
 MK_SSP=		no
+MAN=
 
 PROG=		loader.ps3
 NEWVERSWHAT=	"Playstation 3 loader" ${MACHINE_ARCH}
