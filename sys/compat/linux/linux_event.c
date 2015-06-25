@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_event.c 283484 2015-05-24 18:00:14Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_event.c 284626 2015-06-20 05:40:35Z dchagin $");
 
 #include "opt_compat.h"
 
@@ -260,6 +260,8 @@ epoll_to_kevent(struct thread *td, struct file *epfp,
 		*kev_flags |= EV_CLEAR;
 	if ((levents & LINUX_EPOLLERR) != 0)
 		*kev_flags |= EV_ERROR;
+	if ((levents & LINUX_EPOLLRDHUP) != 0)
+		*kev_flags |= EV_EOF;
 
 	/* flags related to what event is registered */
 	if ((levents & LINUX_EPOLL_EVRD) != 0) {
@@ -309,6 +311,8 @@ kevent_to_epoll(struct kevent *kevent, struct epoll_event *l_event)
 	switch (kevent->filter) {
 	case EVFILT_READ:
 		l_event->events = LINUX_EPOLLIN|LINUX_EPOLLRDNORM|LINUX_EPOLLPRI;
+		if ((kevent->flags & EV_EOF) != 0)
+			l_event->events |= LINUX_EPOLLRDHUP;
 	break;
 	case EVFILT_WRITE:
 		l_event->events = LINUX_EPOLLOUT|LINUX_EPOLLWRNORM;

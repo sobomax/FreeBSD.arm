@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 283777 2015-05-30 17:41:37Z bapt $
+# $FreeBSD: head/usr.bin/Makefile 284464 2015-06-16 20:58:33Z imp $
 
 .include <src.opts.mk>
 
@@ -251,10 +251,6 @@ SUBDIR+=	file
 
 .if ${MK_FINGER} != "no"
 SUBDIR+=	finger
-.endif
-
-.if ${MK_FMAKE} != "no"
-SUBDIR+=	make
 .endif
 
 .if ${MK_FTP} != "no"

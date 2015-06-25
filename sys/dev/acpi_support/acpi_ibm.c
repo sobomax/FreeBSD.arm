@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpi_support/acpi_ibm.c 283678 2015-05-29 05:28:24Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/acpi_support/acpi_ibm.c 284358 2015-06-13 22:29:43Z ngie $");
 
 /*
  * Driver for extra ACPI-controlled gadgets found on IBM ThinkPad laptops.
@@ -485,6 +485,9 @@ acpi_ibm_attach(device_t dev)
 	/* Enable per-model events. */
 	maker = kern_getenv("smbios.system.maker");
 	product = kern_getenv("smbios.system.product");
+	if (maker == NULL || product == NULL)
+		goto nosmbios;
+
 	for (i = 0; i < nitems(acpi_ibm_models); i++) {
 		if (strcmp(maker, acpi_ibm_models[i].maker) == 0 &&
 		    strcmp(product, acpi_ibm_models[i].product) == 0) {
@@ -494,6 +497,8 @@ acpi_ibm_attach(device_t dev)
 			ACPI_SERIAL_END(ibm);
 		}
 	}
+
+nosmbios:
 	freeenv(maker);
 	freeenv(product);
 

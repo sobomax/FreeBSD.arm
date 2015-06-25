@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/top/Makefile 284165 2015-06-08 19:45:24Z marcel $
+# $FreeBSD: head/usr.bin/top/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 TOPDIR=	${.CURDIR}/../../contrib/top
 .PATH: ${TOPDIR}
@@ -25,7 +25,8 @@ LIBADD=	ncursesw m kvm jail
 
 CLEANFILES= sigdesc.h
 SIGCONV_AWK= ${.CURDIR}/../../contrib/top/sigconv.awk
-SIGNAL_H= ${DESTDIR}/usr/include/sys/signal.h
+STAGED_INCLUDE_DIR?= ${DESTDIR}/usr/include
+SIGNAL_H= ${STAGED_INCLUDE_DIR}/sys/signal.h
 sigdesc.h: ${SIGCONV_AWK} ${SIGNAL_H}
 	awk -f ${SIGCONV_AWK} < ${SIGNAL_H} > ${.TARGET}
 

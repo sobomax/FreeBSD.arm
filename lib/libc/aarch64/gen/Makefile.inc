@@ -1,7 +1,9 @@
-# $FreeBSD: head/lib/libc/aarch64/gen/Makefile.inc 282909 2015-05-14 17:12:45Z emaste $
+# $FreeBSD: head/lib/libc/aarch64/gen/Makefile.inc 284807 2015-06-25 08:22:25Z andrew $
 
 SRCS+=	fabs.S \
 	flt_rounds.c \
+	fpgetmask.c \
+	fpsetmask.c \
 	ldexp.c \
 	_setjmp.S \
 	_set_tp.c \

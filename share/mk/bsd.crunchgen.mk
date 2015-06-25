@@ -25,7 +25,7 @@
 # If CRUNCH_GENERATE_LINKS is set to no, no links will be generated.
 #
 
-# $FreeBSD: head/share/mk/bsd.crunchgen.mk 264927 2014-04-25 19:25:18Z imp $
+# $FreeBSD: head/share/mk/bsd.crunchgen.mk 284341 2015-06-13 15:36:13Z sjg $
 
 ##################################################################
 #  The following is pretty nearly a generic crunchgen-handling makefile
@@ -106,11 +106,12 @@ $(CONF): Makefile
 .endfor
 .endfor
 
+CRUNCHGEN?= crunchgen
 # XXX Make sure we don't pass -P to crunchgen(1).
 .MAKEFLAGS:= ${.MAKEFLAGS:N-P}
 .ORDER: $(OUTPUTS) objs
-$(OUTPUTS): $(CONF)
-	MAKE=${MAKE} MAKEOBJDIRPREFIX=${CRUNCHOBJS} crunchgen -fq -m $(OUTMK) \
+$(OUTPUTS): $(CONF) .META
+	MAKE=${MAKE} MAKEOBJDIRPREFIX=${CRUNCHOBJS} ${CRUNCHGEN} -fq -m $(OUTMK) \
 	    -c $(OUTC) $(CONF)
 
 $(PROG): $(OUTPUTS) objs

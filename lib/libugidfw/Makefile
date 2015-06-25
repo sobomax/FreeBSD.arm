@@ -1,7 +1,7 @@
-# $FreeBSD: head/lib/libugidfw/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/libugidfw/Makefile 284745 2015-06-24 01:48:44Z araujo $
 
 LIB=		ugidfw
-SHLIB_MAJOR=	4
+SHLIB_MAJOR=	5	
 SRCS=		ugidfw.c
 INCS=		ugidfw.h
 

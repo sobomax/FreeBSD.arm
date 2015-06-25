@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: head/sys/netpfil/pf/pf_altq.h 257215 2013-10-27 16:25:57Z glebius $
+ *	$FreeBSD: head/sys/netpfil/pf/pf_altq.h 284777 2015-06-24 19:16:41Z eri $
  */
 
 #ifndef	_NET_PF_ALTQ_H_
@@ -65,6 +65,20 @@ struct hfsc_opts {
 	int		flags;
 };
 
+/*
+ * XXX this needs some work
+ */
+struct fairq_opts {
+	u_int           nbuckets;
+	u_int           hogs_m1;
+	int             flags;
+
+	/* link sharing service curve */
+	u_int           lssc_m1;
+	u_int           lssc_d;
+	u_int           lssc_m2;
+};
+
 struct pf_altq {
 	char			 ifname[IFNAMSIZ];
 
@@ -91,6 +105,7 @@ struct pf_altq {
 		struct cbq_opts		 cbq_opts;
 		struct priq_opts	 priq_opts;
 		struct hfsc_opts	 hfsc_opts;
+		struct fairq_opts        fairq_opts;
 	} pq_u;
 
 	uint32_t		 qid;		/* return value */

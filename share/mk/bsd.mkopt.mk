@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/share/mk/bsd.mkopt.mk 284050 2015-06-06 01:18:28Z sjg $
+# $FreeBSD: head/share/mk/bsd.mkopt.mk 284705 2015-06-22 19:01:09Z sjg $
 #
 # Generic mechanism to deal with WITH and WITHOUT options and turn
 # them into MK_ options.
@@ -81,5 +81,6 @@ MK_${vv:H}?= no
 .else
 MK_${vv:H}?= ${MK_${vv:T}}
 .endif
+MK_${vv:H}:= ${MK_${vv:H}}
 .endfor
 .undef __DEFAULT_DEPENDENT_OPTIONS

@@ -27,15 +27,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/virtio/mmio/virtio_mmio.h 274655 2014-11-18 14:11:14Z br $
+ * $FreeBSD: head/sys/dev/virtio/mmio/virtio_mmio.h 284544 2015-06-18 10:33:04Z br $
  */
 
 #ifndef	_VIRTIO_MMIO_H
 #define	_VIRTIO_MMIO_H
-
-#define	VIRTIO_MMIO_MAGIC_VALUE		0x000
-#define	VIRTIO_MMIO_VERSION		0x004
-#define	VIRTIO_MMIO_DEVICE_ID		0x008
 
 #define	VIRTIO_MMIO_MAGIC_VALUE		0x000
 #define	VIRTIO_MMIO_VERSION		0x004

@@ -1,4 +1,4 @@
-# $FreeBSD: head/tests/sys/pjdfstest/pjdfstest/Makefile 274016 2014-11-03 07:18:42Z ngie $
+# $FreeBSD: head/tests/sys/pjdfstest/pjdfstest/Makefile 284289 2015-06-11 21:13:05Z sjg $
 
 TOP=		${.CURDIR:H:H:H:H}
 
@@ -8,7 +8,7 @@ BINDIR=		${TESTSBASE}/sys/pjdfstest
 PROG=		pjdfstest
 MAN=
 
-CFLAGS=		-D__OS_FreeBSD__ -DHAS_LCHMOD -DHAS_CHFLAGS -DHAS_FCHFLAGS
+CFLAGS+=	-D__OS_FreeBSD__ -DHAS_LCHMOD -DHAS_CHFLAGS -DHAS_FCHFLAGS
 CFLAGS+=	-DHAS_CHFLAGSAT -DHAS_LCHFLAGS -DHAS_FREEBSD_ACL -DHAS_BINDAT
 CFLAGS+=	-DHAS_CONNECTAT
 

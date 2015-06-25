@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libproc/Makefile 283132 2015-05-19 22:23:15Z bapt $
+# $FreeBSD: head/lib/libproc/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 .include <src.opts.mk>
 
@@ -14,6 +14,9 @@ SRCS=	proc_bkpt.c		\
 INCS=	libproc.h
 
 CFLAGS+=	-I${.CURDIR}
+# avoid cyclic dependency
+CFLAGS+=	-I${.CURDIR:H}/librtld_db
+GENDIRDEPS_FILTER+= Nlib/librtld_db
 
 .if ${MK_CXX} == "no"
 CFLAGS+=	-DNO_CXA_DEMANGLE

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fstyp/cd9660.c 276703 2015-01-05 15:29:28Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/fstyp/cd9660.c 284582 2015-06-18 21:55:55Z trasz $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,7 +45,6 @@ int
 fstyp_cd9660(FILE *fp, char *label, size_t size)
 {
 	char *sector, *volume;
-	int i;
 
 	sector = read_buf(fp, ISO9660_OFFSET, 512);
 	if (sector == NULL)
@@ -58,13 +57,6 @@ fstyp_cd9660(FILE *fp, char *label, size_t size)
 	bzero(label, size);
 	strlcpy(label, volume, MIN(size, VOLUME_LEN));
 	free(sector);
-	for (i = size - 1; i > 0; i--) {
-		if (label[i] == '\0')
-			continue;
-		else if (label[i] == ' ')
-			label[i] = '\0';
-		else
-			break;
-	}
+	rtrim(label, size);
 	return (0);
 }

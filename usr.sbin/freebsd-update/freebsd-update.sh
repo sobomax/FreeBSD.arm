@@ -25,7 +25,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# $FreeBSD: head/usr.sbin/freebsd-update/freebsd-update.sh 281563 2015-04-15 20:55:43Z allanjude $
+# $FreeBSD: head/usr.sbin/freebsd-update/freebsd-update.sh 284425 2015-06-15 20:12:15Z delphij $
 
 #### Usage function -- called from command-line handling code.
 
@@ -216,7 +216,15 @@ config_KeepModifiedMetadata () {
 # Add to the list of components which should be kept updated.
 config_Components () {
 	for C in $@; do
-		COMPONENTS="${COMPONENTS} ${C}"
+		if [ "$C" = "src" ]; then
+			if [ -e /usr/src/COPYRIGHT ]; then
+				COMPONENTS="${COMPONENTS} ${C}"
+			else
+				echo "src component not installed, skipped"
+			fi
+		else
+			COMPONENTS="${COMPONENTS} ${C}"
+		fi
 	done
 }
 
@@ -2642,10 +2650,10 @@ install_unschg () {
 	while read F; do
 		if ! [ -e ${BASEDIR}/${F} ]; then
 			continue
+		else
+			echo ${BASEDIR}/${F}
 		fi
-
-		chflags noschg ${BASEDIR}/${F} || return 1
-	done < filelist
+	done < filelist | xargs chflags noschg || return 1
 
 	# Clean up
 	rm filelist

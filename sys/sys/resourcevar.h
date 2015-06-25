@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resourcevar.h 284215 2015-06-10 10:48:12Z mjg $
+ * $FreeBSD: head/sys/sys/resourcevar.h 284784 2015-06-25 01:24:36Z mjg $
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -90,7 +90,7 @@ struct racct;
  * Locking guide:
  * (a) Constant from inception
  * (b) Lockless, updated using atomics
- * (c) Locked by global uihashtbl_mtx
+ * (c) Locked by global uihashtbl_lock
  * (d) Locked by the ui_vmsize_mtx
  */
 struct uidinfo {

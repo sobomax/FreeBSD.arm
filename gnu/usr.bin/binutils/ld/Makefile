@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/binutils/ld/Makefile 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/gnu/usr.bin/binutils/ld/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 .include "../Makefile.inc0"
 .include <src.opts.mk>
@@ -69,5 +69,7 @@ stringify.sed:
 afterinstall:
 	${INSTALL} -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
 	    ${LDSCRIPTS:S|^|ldscripts/|} ${DESTDIR}${SCRIPTDIR}
+
+GENDIRDEPS_FILTER.host+= Nusr.bin/yacc
 
 .include <bsd.prog.mk>

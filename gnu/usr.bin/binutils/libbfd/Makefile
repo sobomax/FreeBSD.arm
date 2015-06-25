@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/binutils/libbfd/Makefile 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/gnu/usr.bin/binutils/libbfd/Makefile 284373 2015-06-14 03:33:27Z sjg $
 
 .include "../Makefile.inc0"
 
@@ -102,5 +102,8 @@ elf32-target.h: elfxx-target.h
 
 elf64-target.h: elfxx-target.h
 	sed -e s/NN/64/g ${.ALLSRC} > ${.TARGET}
+
+# avoid cicular dependency
+GENDIRDEPS_FILTER+= N*/nm
 
 .include <bsd.lib.mk>

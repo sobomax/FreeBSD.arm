@@ -1,6 +1,5 @@
-# $FreeBSD: head/share/doc/IPv6/Makefile 139103 2004-12-21 08:47:35Z ru $
+# $FreeBSD: head/share/doc/IPv6/Makefile 284321 2015-06-12 14:30:27Z sjg $
 
-NO_OBJ=
 FILES=		IMPLEMENTATION
 FILESDIR=	${SHAREDIR}/doc/IPv6
 

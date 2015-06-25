@@ -72,7 +72,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_fault.c 282128 2015-04-28 08:20:23Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_fault.c 284310 2015-06-12 11:32:20Z glebius $");
 
 #include "opt_ktrace.h"
 #include "opt_vm.h"
@@ -679,19 +679,12 @@ vnode_locked:
 				/*
 				 * Found the page. Leave it busy while we play
 				 * with it.
-				 */
-
-				/*
-				 * Relookup in case pager changed page. Pager
+				 *
+				 * Pager could have changed the page.  Pager
 				 * is responsible for disposition of old page
 				 * if moved.
 				 */
-				fs.m = vm_page_lookup(fs.object, fs.pindex);
-				if (!fs.m) {
-					unlock_and_deallocate(&fs);
-					goto RetryFault;
-				}
-
+				fs.m = marray[reqpage];
 				hardfault++;
 				break; /* break to PAGE HAS BEEN FOUND */
 			}

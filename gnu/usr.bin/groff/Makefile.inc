@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/groff/Makefile.inc 151504 2005-10-20 10:57:53Z ru $
+# $FreeBSD: head/gnu/usr.bin/groff/Makefile.inc 284289 2015-06-11 21:13:05Z sjg $
 
 BINDIR?=	/usr/bin
 SHELL=		/bin/sh
@@ -127,6 +127,7 @@ revision=`sed -e 's/^0$$//' -e 's/^[1-9].*$$/.&/' $(GROFF_DIST)/REVISION`
 
 .sh .pl:
 	@${ECHO} Making ${.TARGET} from ${.IMPSRC}
+	@rm -f ${.TARGET}
 	@sed -e "s|@BINDIR@|${BINDIR}|g" \
 	     -e 's|@GROFF_BIN_PATH_SETUP@|GROFF_RUNTIME="$${GROFF_BIN_PATH=${BINDIR}}:"|g' \
 	     -e "s;@FONTDIR@;$(fontdir);g" \

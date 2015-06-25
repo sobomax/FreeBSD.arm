@@ -1,5 +1,5 @@
 /*	$NetBSD: videomode.h,v 1.2 2010/05/04 21:17:10 macallan Exp $	*/
-/*	$FreeBSD: head/sys/dev/videomode/videomode.h 278798 2015-02-15 11:37:40Z hselasky $	*/
+/*	$FreeBSD: head/sys/dev/videomode/videomode.h 284533 2015-06-18 00:22:14Z gonzo $	*/
 
 /*
  * Copyright (c) 2001, 2002 Bang Jun-Young
@@ -43,6 +43,7 @@ struct videomode {
 	int vtotal;
 	int flags;		/* Video mode flags; see below. */
 	const char *name;
+	int hskew;
 };
 
 /*

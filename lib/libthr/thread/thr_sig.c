@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_sig.c 277488 2015-01-21 16:13:37Z kib $
+ * $FreeBSD: head/lib/libthr/thread/thr_sig.c 284385 2015-06-14 19:19:46Z kib $
  */
 
 #include "namespace.h"
@@ -293,8 +293,8 @@ check_cancel(struct pthread *curthread, ucontext_t *ucp)
 	 * 2) because _thr_ast() may be called by
 	 *    THR_CRITICAL_LEAVE() which is used by rtld rwlock
 	 *    and any libthr internal locks, when rtld rwlock
-	 *    is used, it is mostly caused my an unresolved PLT.
-	 *    those routines may clear the TDP_WAKEUP flag by
+	 *    is used, it is mostly caused by an unresolved PLT.
+	 *    Those routines may clear the TDP_WAKEUP flag by
 	 *    invoking some system calls, in those cases, we
 	 *    also should reenable the flag.
 	 * 3) thread is in sigsuspend(), and the syscall insists

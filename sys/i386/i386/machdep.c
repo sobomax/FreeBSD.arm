@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 284325 2015-06-12 15:14:08Z jhb $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -2867,6 +2867,7 @@ makectx(struct trapframe *tf, struct pcb *pcb)
 	pcb->pcb_ebx = tf->tf_ebx;
 	pcb->pcb_eip = tf->tf_eip;
 	pcb->pcb_esp = (ISPL(tf->tf_cs)) ? tf->tf_esp : (int)(tf + 1) - 8;
+	pcb->pcb_gs = rgs();
 }
 
 int

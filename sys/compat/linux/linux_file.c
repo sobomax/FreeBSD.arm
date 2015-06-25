@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_file.c 283465 2015-05-24 17:33:21Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_file.c 284446 2015-06-16 13:09:18Z mjg $");
 
 #include "opt_compat.h"
 
@@ -348,8 +348,7 @@ getdents_common(struct thread *td, struct linux_getdents64_args *args,
 	} else
 		justone = 0;
 
-	error = getvnode(td->td_proc->p_fd, args->fd,
-	    cap_rights_init(&rights, CAP_READ), &fp);
+	error = getvnode(td, args->fd, cap_rights_init(&rights, CAP_READ), &fp);
 	if (error != 0)
 		return (error);
 

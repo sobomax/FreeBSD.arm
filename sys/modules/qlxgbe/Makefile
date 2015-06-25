@@ -1,5 +1,5 @@
 #/*
-# * Copyright (c) 2011-2012 Qlogic Corporation
+# * Copyright (c) 2011-2016 Qlogic Corporation
 # * All rights reserved.
 # *
 # *  Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
 # */
 #
-# $FreeBSD: head/sys/modules/qlxgbe/Makefile 273182 2014-10-16 20:13:16Z imp $
+# $FreeBSD: head/sys/modules/qlxgbe/Makefile 284741 2015-06-23 22:22:36Z davidcs $
 #
 
 .PATH: ${.CURDIR}/../../dev/qlxgbe
@@ -37,8 +37,18 @@
 KMOD=if_qlxgbe
 SRCS=ql_os.c ql_dbg.c ql_hw.c ql_misc.c ql_isr.c ql_ioctl.c
 SRCS+= ql_reset.c
+SRCS+= ql_fw.c
+SRCS+= ql_boot.c
+SRCS+= ql_minidump.c
+
 SRCS+= device_if.h bus_if.h pci_if.h
 
 #CFLAGS += -DQL_DBG
+# Please turn off QL_LDFLASH_FW when you enable QL_ENABLE_ISCSI_TLV
+# You may comment out both QL_LDFLASH_FW and QL_ENABLE_ISCSI_TLV if you like
+# the firmware and boot loader compiled into the driver
+#CFLAGS += -DQL_ENABLE_ISCSI_TLV
+#CFLAGS += -DQL_LDFLASH_FW
+
 
 .include <bsd.kmod.mk>

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.dep.mk 281258 2015-04-08 02:43:05Z markj $
+# $FreeBSD: head/share/mk/bsd.dep.mk 284345 2015-06-13 19:20:56Z sjg $
 #
 # The include file <bsd.dep.mk> handles Makefile dependencies.
 #
@@ -145,6 +145,15 @@ ${_D}.po: ${_DSRC} ${POBJS:S/^${_D}.po$//}
 .endfor
 beforedepend: ${DHDRS}
 beforebuild: ${DHDRS}
+.endif
+
+.if ${MK_META_MODE} == "yes"
+.include <meta.autodep.mk>
+# this depend: bypasses that below
+# the dependency helps when bootstrapping
+depend: beforedepend ${DPSRCS} ${SRCS} afterdepend
+beforedepend:
+afterdepend: beforedepend
 .endif
 
 .if !target(depend)

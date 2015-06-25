@@ -1,6 +1,5 @@
-# $FreeBSD: head/share/doc/legal/intel_wpi/Makefile 173362 2007-11-05 11:47:19Z benjsc $
+# $FreeBSD: head/share/doc/legal/intel_wpi/Makefile 284321 2015-06-12 14:30:27Z sjg $
 
-NO_OBJ=
 FILES=          ${.CURDIR}/../../../../sys/contrib/dev/wpi/LICENSE
 FILESDIR=       ${SHAREDIR}/doc/legal/intel_wpi
 

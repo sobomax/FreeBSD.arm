@@ -1,0 +1,4 @@
+.\" $FreeBSD: head/tools/build/options/WITH_SYSROOT 284708 2015-06-22 20:21:57Z sjg $
+Enable use of sysroot during build.
+Depends on
+.Va WITH_META_MODE .

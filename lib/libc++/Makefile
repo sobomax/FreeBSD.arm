@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc++/Makefile 277217 2015-01-15 21:17:36Z dim $
+# $FreeBSD: head/lib/libc++/Makefile 284345 2015-06-13 19:20:56Z sjg $
 
 .include <src.opts.mk>
 
@@ -207,5 +207,9 @@ afterinstall:
 	ln -sf ${DESTDIR}${LIBDIR}/lib${LIB}.a \
 		${.OBJDIR}/libstdc++.a
 .endif
+
+# avoid cyclic dependency
+CFLAGS+= -I${LIBCXXRTDIR}
+GENDIRDEPS_FILTER= N*/libcxxrt
 
 .include <bsd.lib.mk>

@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/fts.c 281082 2015-04-04 20:22:12Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/fts.c 284649 2015-06-20 20:54:05Z jilles $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -515,7 +515,7 @@ FTSENT *
 fts_children(FTS *sp, int instr)
 {
 	FTSENT *p;
-	int fd;
+	int fd, rc, serrno;
 
 	if (instr != 0 && instr != FTS_NAMEONLY) {
 		errno = EINVAL;
@@ -571,11 +571,14 @@ fts_children(FTS *sp, int instr)
 	if ((fd = _open(".", O_RDONLY | O_CLOEXEC, 0)) < 0)
 		return (NULL);
 	sp->fts_child = fts_build(sp, instr);
-	if (fchdir(fd)) {
-		(void)_close(fd);
-		return (NULL);
-	}
+	serrno = (sp->fts_child == NULL) ? errno : 0;
+	rc = fchdir(fd);
+	if (rc < 0 && serrno == 0)
+		serrno = errno;
 	(void)_close(fd);
+	errno = serrno;
+	if (rc < 0)
+		return (NULL);
 	return (sp->fts_child);
 }
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.opts.mk 276556 2015-01-02 18:54:55Z bapt $
+# $FreeBSD: head/share/mk/bsd.opts.mk 284345 2015-06-13 19:20:56Z sjg $
 #
 # Option file for src builds.
 #
@@ -68,8 +68,14 @@ __DEFAULT_YES_OPTIONS = \
 __DEFAULT_NO_OPTIONS = \
     CTF \
     DEBUG_FILES \
-    INSTALL_AS_USER
+    INSTALL_AS_USER \
+    STALE_STAGED
 
+# meta mode related
+__DEFAULT_DEPENDENT_OPTIONS = \
+    STAGING_MAN/STAGING \
+    STAGING_PROG/STAGING \
+    
 .include <bsd.mkopt.mk>
 
 #
@@ -91,6 +97,10 @@ __DEFAULT_NO_OPTIONS = \
 MK_${var}:=no
 .endif
 .endfor
+
+.if ${MK_STAGING} == "no"
+MK_STALE_STAGED= no
+.endif
 
 .endif # !_WITHOUT_SRCCONF
 

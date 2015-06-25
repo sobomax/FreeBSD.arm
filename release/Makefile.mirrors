@@ -9,7 +9,7 @@
 #
 # Don't use this unless you know why you're using it.
 #
-# $FreeBSD: head/release/Makefile.mirrors 283618 2015-05-27 17:33:30Z gjb $
+# $FreeBSD: head/release/Makefile.mirrors 284811 2015-06-25 13:40:00Z gjb $
 #
 
 .include "${.CURDIR}/Makefile"
@@ -27,7 +27,7 @@ EMBEDDED=		1
 .endif
 
 # snapshot
-.if ${BRANCH} == "STABLE" || ${BRANCH} == "CURRENT"
+.if ${BRANCH} == "STABLE" || ${BRANCH} == "CURRENT" || ${BRANCH} == "PRERELEASE"
 SNAPSHOT=		1
 TLD?=			${FTPDIR}/snapshots
 . if !defined(SVNREVISION) || empty(SVNREVISION)
@@ -63,7 +63,7 @@ BOARDNAME:=		${KERNCONF}
 .  else
 OLDNAME:=		${KERNCONF}
 .  endif
-.  if ${BRANCH} == "STABLE" || ${BRANCH} == "CURRENT"
+.  if ${BRANCH} == "STABLE" || ${BRANCH} == "CURRENT" || ${BRANCH} == "PRERELEASE"
 SNAPSHOT=		1
 .  endif
 IMAGES:=		img

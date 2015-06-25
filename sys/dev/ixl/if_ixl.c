@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/if_ixl.c 284049 2015-06-05 22:52:42Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/if_ixl.c 284612 2015-06-19 21:40:26Z gallatin $*/
 
 #ifndef IXL_STANDALONE_BUILD
 #include "opt_inet.h"
@@ -2551,7 +2551,7 @@ ixl_setup_interface(device_t dev, struct ixl_vsi *vsi)
 	}
 	if_initname(ifp, device_get_name(dev), device_get_unit(dev));
 	ifp->if_mtu = ETHERMTU;
-	ifp->if_baudrate = 4000000000;  // ??
+	ifp->if_baudrate = IF_Gbps(40);
 	ifp->if_init = ixl_init;
 	ifp->if_softc = vsi;
 	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
