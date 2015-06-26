@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/uma_core.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/vm/uma_core.c 284861 2015-06-25 20:44:46Z jmg $");
 
 /* I should really use ktr.. */
 /*
@@ -1940,6 +1940,20 @@ uma_zcreate(const char *name, size_t size, uma_ctor ctor, uma_dtor dtor,
 	args.dtor = dtor;
 	args.uminit = uminit;
 	args.fini = fini;
+#ifdef  INVARIANTS
+	/*
+	 * If a zone is being created with an empty constructor and
+	 * destructor, pass UMA constructor/destructor which checks for
+	 * memory use after free.
+	 */
+	if ((!(flags & UMA_ZONE_ZINIT)) && ctor == NULL && dtor == NULL &&
+	    uminit == NULL && fini == NULL) {
+		args.ctor = trash_ctor;
+		args.dtor = trash_dtor;
+		args.uminit = trash_init;
+		args.fini = trash_fini;
+	}
+#endif
 	args.align = align;
 	args.flags = flags;
 	args.keg = NULL;

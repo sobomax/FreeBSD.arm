@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_cpuset.c 282906 2015-05-14 15:14:03Z jonathan $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_cpuset.c 284866 2015-06-26 04:14:05Z adrian $");
 
 #include "opt_ddb.h"
 
@@ -400,7 +400,7 @@ out:
  * -1 may be supplied for any argument to mean the current proc/thread or
  * the base set of the current thread.  May fail with ESRCH/EPERM.
  */
-static int
+int
 cpuset_which(cpuwhich_t which, id_t id, struct proc **pp, struct thread **tdp,
     struct cpuset **setp)
 {
