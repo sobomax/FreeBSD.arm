@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/net/altq/altq_fairq.c,v 1.1 2008/04/06 18:58:15 dillon Exp $
- * $FreeBSD: head/sys/net/altq/altq_fairq.c 284814 2015-06-25 15:05:58Z eri $
+ * $FreeBSD: head/sys/net/altq/altq_fairq.c 284863 2015-06-25 23:16:01Z bz $
  */
 /*
  * Matt: I gutted altq_priq.c and used it as a skeleton on which to build
@@ -742,8 +742,8 @@ fairq_pollq(struct fairq_class *cl, uint64_t cur_time, int *hit_limit)
 		if (bw > cl->cl_bandwidth)
 			*hit_limit = 1;
 #ifdef ALTQ_DEBUG
-		printf("BW %6lld relative to %6u %d queue %p\n",
-			bw, cl->cl_bandwidth, *hit_limit, b);
+		printf("BW %6ju relative to %6u %d queue %p\n",
+			(uintmax_t)bw, cl->cl_bandwidth, *hit_limit, b);
 #endif
 	}
 	return(m);

@@ -1,6 +1,6 @@
 <!-- -*- sgml -*-
 
-     $FreeBSD: head/release/doc/share/xml/sponsor.ent 282489 2015-05-05 15:16:05Z gjb $
+     $FreeBSD: head/release/doc/share/xml/sponsor.ent 284829 2015-06-25 18:44:31Z gjb $
 
      Sponsors of various works.
 
@@ -14,6 +14,8 @@
 
 <!ENTITY citrix		"Citrix Systems">
 <!ENTITY citrix.rd	"Citrix Systems R&amp;D">
+
+<!ENTITY clusterhq	"ClusterHQ">
 
 <!ENTITY darpa		"DARPA">
 <!ENTITY darpa_afrl	"DARPA, AFRL">

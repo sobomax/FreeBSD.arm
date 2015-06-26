@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/uma_dbg.c 252040 2013-06-20 19:08:12Z jeff $");
+__FBSDID("$FreeBSD: head/sys/vm/uma_dbg.c 284861 2015-06-25 20:44:46Z jmg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,8 +69,13 @@ trash_ctor(void *mem, int size, void *arg, int flags)
 
 	for (p = mem; cnt > 0; cnt--, p++)
 		if (*p != uma_junk) {
+#ifdef INVARIANTS
+			panic("Memory modified after free %p(%d) val=%x @ %p\n",
+			    mem, size, *p, p);
+#else
 			printf("Memory modified after free %p(%d) val=%x @ %p\n",
 			    mem, size, *p, p);
+#endif
 			return (0);
 		}
 	return (0);

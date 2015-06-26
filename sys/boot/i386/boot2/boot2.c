@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/boot2/boot2.c 275305 2014-11-30 08:43:55Z rdivacky $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/boot2/boot2.c 284878 2015-06-26 18:03:19Z delphij $");
 
 #include <sys/param.h>
 #include <sys/disklabel.h>
@@ -150,6 +150,7 @@ static int comspeed = SIOSPD;
 static uint8_t ioctrl = IO_KEYBOARD;
 #endif
 
+int main(void);
 void exit(int);
 static void load(void);
 static int parse(void);
@@ -481,7 +482,8 @@ parse()
 			     ? DRV_HARD : 0) + drv;
 		dsk_meta = 0;
 	    }
-	    if (k = ep - arg) {
+	    k = ep - arg;
+	    if (k > 0) {
 		if (k >= sizeof(knamebuf))
 		    return -1;
 		memcpy(knamebuf, arg, k + 1);
