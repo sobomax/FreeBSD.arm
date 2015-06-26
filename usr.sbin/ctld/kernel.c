@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/kernel.c 284765 2015-06-24 15:13:27Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/kernel.c 284875 2015-06-26 16:14:00Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -508,6 +508,8 @@ retry_port:
 
 	name = NULL;
 	STAILQ_FOREACH(port, &devlist.port_list, links) {
+		if (name)
+			free(name);
 		if (port->pp == 0 && port->vp == 0)
 			name = checked_strdup(port->port_name);
 		else if (port->vp == 0)

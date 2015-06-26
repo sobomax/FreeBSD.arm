@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mrsas/mrsas.h 282533 2015-05-06 10:46:28Z kadesai $");
+__FBSDID("$FreeBSD: head/sys/dev/mrsas/mrsas.h 284873 2015-06-26 12:00:51Z kadesai $");
 
 #ifndef MRSAS_H
 #define	MRSAS_H
@@ -102,7 +102,7 @@ __FBSDID("$FreeBSD: head/sys/dev/mrsas/mrsas.h 282533 2015-05-06 10:46:28Z kades
  */
 #define	BYTE_ALIGNMENT					1
 #define	MRSAS_MAX_NAME_LENGTH			32
-#define	MRSAS_VERSION					"06.707.04.03-fbsd"
+#define	MRSAS_VERSION					"06.707.05.00-fbsd"
 #define	MRSAS_ULONG_MAX					0xFFFFFFFFFFFFFFFF
 #define	MRSAS_DEFAULT_TIMEOUT			0x14	/* Temporarily set */
 #define	DONE							0
