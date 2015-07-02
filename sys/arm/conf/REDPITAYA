@@ -72,8 +72,8 @@ device		bpf			# Berkeley packet filter
 # USB support
 device		usb
 options 	USB_DEBUG
-#options 	USB_REQ_DEBUG
-#options 	USB_VERBOSE
+options 	USB_REQ_DEBUG
+options 	USB_VERBOSE
 device		ehci
 device		umass
 device		scbus			# SCSI bus (required for ATA/SCSI)
@@ -82,5 +82,5 @@ device		da			# Direct Access (disks)
 
 # Flattened Device Tree
 options 	FDT			# Configure using FDT/DTB data
-options 	FDT_DTB_STATIC
-makeoptions	FDT_DTS_FILE=redpitaya.dts
+#options 	FDT_DTB_STATIC
+#makeoptions	FDT_DTS_FILE=redpitaya.dts
