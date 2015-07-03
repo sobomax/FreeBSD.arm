@@ -66,11 +66,19 @@ struct am335x_pmic_softc {
 };
 
 static const char *tps65217_voreg_c[4] = {"4.10V", "4.15V", "4.20V", "4.25V"};
+static const char *tps65217_ichrg_c[] = {"300mA", "400mA", "500mA", "700mA"};
+static const char *tps65217_timer_c[] = {"4h", "5h", "6h", "8h"};
 
 static int am335x_pmic_bootverbose = 0;
 TUNABLE_INT("hw.am335x_pmic.bootverbose", &am335x_pmic_bootverbose);
 static char am335x_pmic_vo[6];
 TUNABLE_STR("hw.am335x_pmic.vo", am335x_pmic_vo, sizeof(am335x_pmic_vo));
+static char am335x_pmic_ichrg[6];
+TUNABLE_STR("hw.am335x_pmic.ichrg", am335x_pmic_ichrg,
+    sizeof(am335x_pmic_ichrg));
+static char am335x_pmic_timer[4];
+TUNABLE_STR("hw.am335x_pmic.safety_timer", am335x_pmic_timer,
+    sizeof(am335x_pmic_timer));
 
 static void am335x_pmic_shutdown(void *, int);
 
@@ -113,13 +121,15 @@ am335x_pmic_intr(void *arg)
 	char notify_buf[16];
 
 	THREAD_SLEEPING_OK();
-	rv = am335x_pmic_read(sc->sc_dev, TPS65217_INT_REG, (uint8_t *)&int_reg, 1);
+	rv = am335x_pmic_read(sc->sc_dev, TPS65217_INT_REG,
+	    (uint8_t *)&int_reg, 1);
 	if (rv != 0) {
 		device_printf(sc->sc_dev, "Cannot read interrupt register\n");
 		THREAD_NO_SLEEPING();
 		return;
 	}
-	rv = am335x_pmic_read(sc->sc_dev, TPS65217_STATUS_REG, (uint8_t *)&status_reg, 1);
+	rv = am335x_pmic_read(sc->sc_dev, TPS65217_STATUS_REG,
+	    (uint8_t *)&status_reg, 1);
 	if (rv != 0) {
 		device_printf(sc->sc_dev, "Cannot read status register\n");
 		THREAD_NO_SLEEPING();
@@ -165,21 +175,21 @@ am335x_pmic_dump_chgconfig(device_t dev)
 	const char *d_e[] = {"disabled", "enabled"};
 	const char *i_a[] = {"inactive", "active"};
 	const char *f_t[] = {"false", "true"};
-	const char *timer_c[] = {"4h", "5h", "6h", "8h"};
 	const char *ntc_type_c[] = {"100k", "10k"};
 	const char *vprechg_c[] = {"2.9V", "2.5V"};
 	const char *trange_c[] = {"0-45 C", "0-60 C"};
 	const char *termif_c[] = {"2.5%", "7.5%", "15%", "18%"};
 	const char *pchrgt_c[] = {"30 min", "60 min"};
 	const char *dppmth_c[] = {"3.50V", "3.75V", "4.00V", "4.25V"};
-	const char *ichrg_c[] = {"300mA", "400mA", "500mA", "700mA"};
 
 	am335x_pmic_read(dev, TPS65217_CHGCONFIG0_REG, (uint8_t *)&reg0, 1);
 	device_printf(dev, " BAT TEMP/NTC ERROR: %s\n", f_t[reg0.battemp]);
-	device_printf(dev, " Pre-charge timer time-out: %s\n", f_t[reg0.pchgtout]);
+	device_printf(dev, " Pre-charge timer time-out: %s\n",
+	    f_t[reg0.pchgtout]);
 	device_printf(dev, " Charge timer time-out: %s\n", f_t[reg0.chgtout]);
 	device_printf(dev, " Charger active: %s\n", f_t[reg0.active]);
-	device_printf(dev, " Termination current detected: %s\n", f_t[reg0.termi]);
+	device_printf(dev, " Termination current detected: %s\n",
+	    f_t[reg0.termi]);
 	device_printf(dev, " Thermal suspend: %s\n", f_t[reg0.tsusp]);
 	device_printf(dev, " DPPM active: %s\n", f_t[reg0.dppm]);
 	device_printf(dev, " Thermal regulation: %s\n", i_a[reg0.treg]);
@@ -191,24 +201,29 @@ am335x_pmic_dump_chgconfig(device_t dev)
 	device_printf(dev, " Charger reset: %s\n", i_a[reg1.reset]);
 	device_printf(dev, " NTC TYPE: %s\n", ntc_type_c[reg1.ntc_type]);
 	device_printf(dev, " Safety timer: %s\n", d_e[reg1.tmr_en]);
-	device_printf(dev, " Charge safety timer: %s\n", timer_c[reg1.timer]);
+	device_printf(dev, " Charge safety timer: %s\n", tps65217_timer_c[reg1.timer]);
 
 	am335x_pmic_read(dev, TPS65217_CHGCONFIG2_REG, (uint8_t *)&reg2, 1);
-	device_printf(dev, " Charge voltage: %s\n", tps65217_voreg_c[reg2.voreg]);
-	device_printf(dev, " Pre-charge to fast charge transition voltage: %s\n",
-	    vprechg_c[reg2.vprechg]);
+	device_printf(dev, " Charge voltage: %s\n",
+	    tps65217_voreg_c[reg2.voreg]);
+	device_printf(dev, " Pre-charge to fast charge transition voltage: "
+	    "%s\n", vprechg_c[reg2.vprechg]);
 	device_printf(dev, " Dynamic timer function: %s\n", d_e[reg2.dyntmr]);
 
 	am335x_pmic_read(dev, TPS65217_CHGCONFIG3_REG, (uint8_t *)&reg3, 1);
-	device_printf(dev, " Temperature range for charging: %s\n", trange_c[reg3.trange]);
-	device_printf(dev, " Termination current factor: %s\n", termif_c[reg3.termif]);
+	device_printf(dev, " Temperature range for charging: %s\n",
+	    trange_c[reg3.trange]);
+	device_printf(dev, " Termination current factor: %s\n",
+	    termif_c[reg3.termif]);
 	device_printf(dev, " Pre-charge time: %s\n", pchrgt_c[reg3.pchrgt]);
-	device_printf(dev, " Power path DPPM threshold: %s\n", dppmth_c[reg3.dppmth]);
-	device_printf(dev, " Charge current: %s\n", ichrg_c[reg3.ichrg]);
+	device_printf(dev, " Power path DPPM threshold: %s\n",
+	    dppmth_c[reg3.dppmth]);
+	device_printf(dev, " Charge current: %s\n",
+	    tps65217_ichrg_c[reg3.ichrg]);
 }
 
 static void
-am335x_pmic_setvo(device_t dev, uint8_t vo)
+am335x_pmic_set_vo(device_t dev, uint8_t vo)
 {
 	struct tps65217_chgconfig2_reg reg2;
 
@@ -218,13 +233,54 @@ am335x_pmic_setvo(device_t dev, uint8_t vo)
 }
 
 static void
+am335x_pmic_set_ichrg(device_t dev, uint8_t ichrg)
+{
+	struct tps65217_chgconfig3_reg reg3;
+
+	am335x_pmic_read(dev, TPS65217_CHGCONFIG3_REG, (uint8_t *)&reg3, 1);
+	reg3.ichrg = ichrg;
+	am335x_pmic_write(dev, TPS65217_CHGCONFIG3_REG, (uint8_t *)&reg3, 1);
+}
+
+static void
+am335x_pmic_set_timer(device_t dev, int8_t timer)
+{
+	struct tps65217_chgconfig1_reg reg1;
+
+	am335x_pmic_read(dev, TPS65217_CHGCONFIG1_REG, (uint8_t *)&reg1, 1);
+	if (timer < 0)  {
+		reg1.tmr_en = 0;
+	} else {
+		reg1.tmr_en = 1;
+		reg1.timer = timer;
+	}
+	am335x_pmic_write(dev, TPS65217_CHGCONFIG1_REG, (uint8_t *)&reg1, 1);
+}
+
+static int8_t
+am335x_pmic_parse_tunable(device_t dev, const char *tname, const char *tvalue,
+    const char *values_c[], int vlen)
+{
+	uint8_t rval;
+
+	for (rval = 0; rval < 4; rval++) {
+		if (strcmp(tvalue, values_c[rval]) == 0)
+			return (rval);
+	}
+	device_printf(dev, "WARNING: %s=\"%s\": unsupported value\n", tname,
+	    tvalue);
+	return (-1);
+}
+
+static void
 am335x_pmic_start(void *xdev)
 {
 	struct am335x_pmic_softc *sc;
 	device_t dev = (device_t)xdev;
 	struct tps65217_status_reg status_reg;
 	struct tps65217_chipid_reg chipid_reg;
-	uint8_t reg, vo;
+	uint8_t reg;
+	int8_t tval;
 	char name[20];
 	char pwr[4][11] = {"Battery", "USB", "AC", "USB and AC"};
 	int rv;
@@ -254,15 +310,30 @@ am335x_pmic_start(void *xdev)
 	    pwr[status_reg.usbpwr | (status_reg.acpwr << 1)]);
 
 	if (am335x_pmic_vo[0] != '\0') {
-		for (vo = 0; vo < 4; vo++) {
-			if (strcmp(tps65217_voreg_c[vo], am335x_pmic_vo) == 0)
-				break;
+		tval = am335x_pmic_parse_tunable(dev, "hw.am335x_pmic.vo",
+		    am335x_pmic_vo, tps65217_voreg_c, 4);
+		if (tval >= 0) {
+			am335x_pmic_set_vo(dev, tval);
 		}
-		if (vo == 4) {
-			device_printf(dev, "WARNING: hw.am335x_pmic.vo=\"%s\""
-			    ": unsupported value\n", am335x_pmic_vo);
+	}
+
+	if (am335x_pmic_ichrg[0] != '\0') {
+		tval = am335x_pmic_parse_tunable(dev, "hw.am335x_pmic.ichrg",
+		    am335x_pmic_ichrg, tps65217_ichrg_c, 4);
+		if (tval >= 0) {
+			am335x_pmic_set_ichrg(dev, tval);
+		}
+	}
+
+	if (am335x_pmic_timer[0] != '\0') {
+		if (strcmp(am335x_pmic_timer, "off") == 0) {
+			am335x_pmic_set_timer(dev, -1);
 		} else {
-			am335x_pmic_setvo(dev, vo);
+			tval = am335x_pmic_parse_tunable(dev, "hw.am335x_pmic.safety_timer",
+			    am335x_pmic_timer, tps65217_timer_c, 4);
+			if (tval >= 0) {
+				am335x_pmic_set_timer(dev, tval);
+			}
 		}
 	}
 
@@ -346,6 +417,7 @@ static driver_t am335x_pmic_driver = {
 
 static devclass_t am335x_pmic_devclass;
 
-DRIVER_MODULE(am335x_pmic, iicbus, am335x_pmic_driver, am335x_pmic_devclass, 0, 0);
+DRIVER_MODULE(am335x_pmic, iicbus, am335x_pmic_driver, am335x_pmic_devclass, 0,
+    0);
 MODULE_VERSION(am335x_pmic, 1);
 MODULE_DEPEND(am335x_pmic, iicbus, 1, 1, 1);
