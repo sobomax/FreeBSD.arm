@@ -62,6 +62,10 @@ __FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci_fdt.c 270885 2014-08-31 17:56:54Z m
 
 #define MAX_SLOTS	6
 
+static int sdhci_fdt_hs = 1;
+
+TUNABLE_INT("hw.sdhci_fdt.hs", &sdhci_fdt_hs);
+
 struct sdhci_fdt_softc {
 	device_t	dev;		/* Controller device */
 	u_int		quirks;		/* Chip specific quirks */
@@ -109,7 +113,17 @@ static uint32_t
 sdhci_fdt_read_4(device_t dev, struct sdhci_slot *slot, bus_size_t off)
 {
 	struct sdhci_fdt_softc *sc = device_get_softc(dev);
-	return (bus_read_4(sc->mem_res[slot->num], off));
+	uint32_t val32;
+
+	val32 = bus_read_4(sc->mem_res[slot->num], off);
+	/*
+	 * If we need to disallow highspeed mode, strip
+	 * that flag from the returned capabilities.
+	 */
+	if (off == SDHCI_CAPABILITIES && sdhci_fdt_hs == 0)
+		val32 &= ~SDHCI_CAN_DO_HISPD;
+
+	return (val32);
 }
 
 static void
