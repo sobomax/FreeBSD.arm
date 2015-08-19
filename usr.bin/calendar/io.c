@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)calendar.c  8.3 (Berkeley) 3/25/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/calendar/io.c 281723 2015-04-19 04:27:50Z eadler $");
+__FBSDID("$FreeBSD: head/usr.bin/calendar/io.c 285610 2015-07-15 18:49:15Z bapt $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -87,11 +87,16 @@ static void
 trimlr(char **buf)
 {
 	char *walk = *buf;
+	char *last;
 
 	while (isspace(*walk))
 		walk++;
-	while (isspace(walk[strlen(walk) -1]))
-		walk[strlen(walk) -1] = '\0';
+	if (*walk != '\0') {
+		last = walk + strlen(walk) - 1;
+		while (last > walk && isspace(*last))
+			last--;
+		*(last+1) = 0;
+	}
 
 	*buf = walk;
 }

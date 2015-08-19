@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/rndtest/rndtest.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/rndtest/rndtest.c 284959 2015-06-30 17:00:45Z markm $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -145,16 +145,9 @@ rndtest_harvest(struct rndtest_state *rsp, void *buf, u_int len)
 	 */
 	if (rsp->rs_discard)
 		rndstats.rst_discard += len;
-	else {
-#if __FreeBSD_version < 500000
-		/* XXX verify buffer is word aligned */
-		u_int32_t *p = buf;
-		for (len /= sizeof (u_int32_t); len; len--)
-			add_true_randomness(*p++);
-#else
-		random_harvest(buf, len, len*NBBY/2, RANDOM_PURE_RNDTEST);
-#endif
-	}
+	else
+	/* MarkM: FIX!! Check that this does not swamp the harvester! */
+	random_harvest_queue(buf, len, len*NBBY/2, RANDOM_PURE_RNDTEST);
 }
 
 static void

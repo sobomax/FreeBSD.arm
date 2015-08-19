@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pte.h,v 1.2 1998/08/31 14:43:40 tsubai Exp $
- * $FreeBSD: head/sys/powerpc/include/pte.h 279595 2015-03-04 17:04:22Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/pte.h 285148 2015-07-04 19:00:38Z jhibbits $
  */
 
 #ifndef	_MACHINE_PTE_H_
@@ -210,7 +210,7 @@ typedef	struct lpte lpte_t;
  */
 #ifndef	LOCORE
 struct pte {
-	vm_offset_t rpn;
+	vm_paddr_t rpn;
 	uint32_t flags;
 };
 typedef struct pte pte_t;
@@ -273,5 +273,5 @@ typedef struct pte pte_t;
 #define PTE_ISMODIFIED(pte)	((pte)->flags & PTE_MODIFIED)
 #define PTE_ISREFERENCED(pte)	((pte)->flags & PTE_REFERENCED)
 
-#endif /* BOOKE_PPC4XX */
+#endif /* BOOKE */
 #endif /* _MACHINE_PTE_H_ */

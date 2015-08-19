@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/xargs/tests/Makefile 263227 2014-03-16 08:04:06Z jmmv $
+# $FreeBSD: head/usr.bin/xargs/tests/Makefile 286461 2015-08-08 18:37:20Z allanjude $
 
 TESTSDIR=	${TESTSBASE}/usr.bin/xargs
 
@@ -10,13 +10,16 @@ FILES+=		regress.0.out
 FILES+=		regress.0I.out
 FILES+=		regress.0J.out
 FILES+=		regress.0L.out
+FILES+=		regress.0P1.out
 FILES+=		regress.I.out
 FILES+=		regress.J.out
 FILES+=		regress.L.out
+FILES+=		regress.P1.out
 FILES+=		regress.R.out
 FILES+=		regress.in
 FILES+=		regress.n1.out
 FILES+=		regress.n2.out
+FILES+=		regress.n2P0.out
 FILES+=		regress.n3.out
 FILES+=		regress.normal.out
 FILES+=		regress.quotes.in

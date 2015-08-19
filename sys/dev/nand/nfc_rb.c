@@ -27,20 +27,15 @@
 /* RouterBoard 600/800 NAND controller driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nfc_rb.c 284083 2015-06-06 16:38:40Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nfc_rb.c 286299 2015-08-05 01:52:52Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
-#include <sys/proc.h>
 #include <sys/bus.h>
-#include <sys/conf.h>
 #include <sys/kernel.h>
 #include <sys/module.h>
 #include <sys/malloc.h>
 #include <sys/rman.h>
-#include <sys/lock.h>
-#include <sys/mutex.h>
-#include <sys/time.h>
 
 #include <machine/bus.h>
 

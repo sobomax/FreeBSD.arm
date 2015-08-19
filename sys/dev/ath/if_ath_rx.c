@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_rx.c 283744 2015-05-29 14:35:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_rx.c 286835 2015-08-17 02:04:11Z adrian $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -330,7 +330,7 @@ ath_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m,
 	int subtype, const struct ieee80211_rx_stats *rxs, int rssi, int nf)
 {
 	struct ieee80211vap *vap = ni->ni_vap;
-	struct ath_softc *sc = vap->iv_ic->ic_ifp->if_softc;
+	struct ath_softc *sc = vap->iv_ic->ic_softc;
 	uint64_t tsf_beacon_old, tsf_beacon;
 	uint64_t nexttbtt;
 	int64_t tsf_delta;

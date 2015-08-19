@@ -23,7 +23,7 @@ Software Foundation, 51 Franklin Street, Fifth Floor, Boston, MA
 This paragraph is here to try to keep Sun CC from dying.
 The number of chars here seems crucial!!!!  */
 
-/* $FreeBSD: head/contrib/gcc/gcc.c 259666 2013-12-20 20:57:13Z pfg $ */
+/* $FreeBSD: head/contrib/gcc/gcc.c 286074 2015-07-30 14:31:09Z pfg $ */
 
 /* This program is the user interface to the C compiler and possibly to
 other compilers.  It is used because compilation is a complicated procedure
@@ -680,7 +680,7 @@ proper position among the other output files.  */
 #ifdef TARGET_LIBC_PROVIDES_SSP
 #define LINK_SSP_SPEC "%{fstack-protector:}"
 #else
-#define LINK_SSP_SPEC "%{fstack-protector|fstack-protector-all:-lssp_nonshared -lssp}"
+#define LINK_SSP_SPEC "%{fstack-protector|fstack-protector-strong|fstack-protector-all:-lssp_nonshared -lssp}"
 #endif
 #endif
 

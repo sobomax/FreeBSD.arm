@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm_object.h 283924 2015-06-02 18:37:04Z vangyzen $
+ * $FreeBSD: head/sys/vm/vm_object.h 285878 2015-07-25 18:29:06Z kib $
  */
 
 /*
@@ -207,7 +207,6 @@ struct vm_object {
  */
 #define	OBJPR_CLEANONLY	0x1		/* Don't remove dirty pages. */
 #define	OBJPR_NOTMAPPED	0x2		/* Don't unmap pages. */
-#define	OBJPR_NOTWIRED	0x4		/* Don't remove wired pages. */
 
 TAILQ_HEAD(object_q, vm_object);
 

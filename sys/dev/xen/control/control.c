@@ -89,7 +89,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 286372 2015-08-06 17:07:21Z jhb $");
 
 /**
  * \file control.c
@@ -144,9 +144,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:4
 #include <xen/interface/grant_table.h>
 
 #include <xen/xenbus/xenbusvar.h>
-
-#include <machine/xen/xenvar.h>
-#include <machine/xen/xenfunc.h>
 
 /*--------------------------- Forward Declarations --------------------------*/
 /** Function signature for shutdown event handlers. */

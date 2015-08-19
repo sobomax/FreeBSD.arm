@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/pte.h 280364 2015-03-23 11:54:56Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pte.h 285537 2015-07-14 12:37:47Z andrew $
  */
 
 #ifndef _MACHINE_PTE_H_
@@ -49,6 +49,10 @@ typedef	uint64_t	pt_entry_t;		/* page table entry */
 #define	ATTR_nG		(1 << 11)
 #define	ATTR_AF		(1 << 10)
 #define	ATTR_SH(x)	((x) << 8)
+#define	 ATTR_SH_MASK	ATTR_SH(3)
+#define	 ATTR_SH_NS	0		/* Non-shareable */
+#define	 ATTR_SH_OS	2		/* Outer-shareable */
+#define	 ATTR_SH_IS	3		/* Inner-shareable */
 #define	ATTR_AP_RW_BIT	(1 << 7)
 #define	ATTR_AP(x)	((x) << 6)
 #define	 ATTR_AP_MASK	ATTR_AP(3)
@@ -58,6 +62,12 @@ typedef	uint64_t	pt_entry_t;		/* page table entry */
 #define	ATTR_NS		(1 << 5)
 #define	ATTR_IDX(x)	((x) << 2)
 #define	ATTR_IDX_MASK	(7 << 2)
+
+#ifdef SMP
+#define	ATTR_DEFAULT	(ATTR_AF | ATTR_SH(ATTR_SH_IS))
+#else
+#define	ATTR_DEFAULT	(ATTR_AF)
+#endif
 
 #define	ATTR_DESCR_MASK	3
 

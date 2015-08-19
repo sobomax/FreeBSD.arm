@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 284103 2015-06-06 21:52:46Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 286740 2015-08-13 19:05:18Z emaste $");
 
 #include "assym.s"
 
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 284103 2015-06-06 21:52:46Z
 .macro	save_registers el
 .if \el == 1
 	mov	x18, sp
+	sub	sp, sp, #128
 .endif
 	stp	x28, x29, [sp, #-16]!
 	stp	x26, x27, [sp, #-16]!
@@ -103,7 +104,7 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 284103 2015-06-06 21:52:46Z
 
 	/* Read the current thread flags */
 1:	ldr	x1, [x18, #PC_CURTHREAD]	/* Load curthread */
-	ldr	x2, [x1, #TD_FLAGS]! /* TODO: No need for the ! but clang fails without it */
+	ldr	x2, [x1, #TD_FLAGS]
 
 	/* Check if we have either bits set */
 	mov	x3, #((TDF_ASTPENDING|TDF_NEEDRESCHED) >> 8)

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/eli/g_eli.h 238116 2012-07-04 17:54:17Z pjd $
+ * $FreeBSD: head/sys/geom/eli/g_eli.h 286444 2015-08-08 09:51:38Z pjd $
  */
 
 #ifndef	_G_ELI_H_
@@ -94,6 +94,8 @@
 #define	G_ELI_FLAG_AUTH			0x00000010
 /* Provider is read-only, we should deny all write attempts. */
 #define	G_ELI_FLAG_RO			0x00000020
+/* Don't pass through BIO_DELETE requests. */
+#define	G_ELI_FLAG_NODELETE		0x00000040
 /* RUNTIME FLAGS. */
 /* Provider was open for writing. */
 #define	G_ELI_FLAG_WOPEN		0x00010000

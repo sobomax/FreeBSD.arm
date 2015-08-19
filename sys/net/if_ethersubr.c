@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_ethersubr.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_ethersubr.c 277331 2015-01-18 18:06:40Z adrian $
+ * $FreeBSD: head/sys/net/if_ethersubr.c 284959 2015-06-30 17:00:45Z markm $
  */
 
 #include "opt_inet.h"
@@ -426,6 +426,8 @@ ether_input_internal(struct ifnet *ifp, struct mbuf *m)
 	}
 #endif
 
+	random_harvest_queue(m, sizeof(*m), 2, RANDOM_NET_ETHER);
+
 	CURVNET_SET_QUIET(ifp->if_vnet);
 
 	if (ETHER_IS_MULTICAST(eh->ether_dhost)) {
@@ -569,8 +571,6 @@ ether_input_internal(struct ifnet *ifp, struct mbuf *m)
 		    bcmp(IF_LLADDR(ifp), eh->ether_dhost, ETHER_ADDR_LEN) != 0)
 			m->m_flags |= M_PROMISC;
 	}
-
-	random_harvest(&(m->m_data), 12, 2, RANDOM_NET_ETHER);
 
 	ether_demux(ifp, m);
 	CURVNET_RESTORE();

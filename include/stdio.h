@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stdio.h	8.5 (Berkeley) 4/29/95
- * $FreeBSD: head/include/stdio.h 278600 2015-02-11 22:39:13Z bdrewery $
+ * $FreeBSD: head/include/stdio.h 285140 2015-07-04 16:42:14Z oshogbo $
  */
 
 #ifndef	_STDIO_H_
@@ -396,6 +396,7 @@ int	 (dprintf)(int, const char * __restrict, ...);
 int	 asprintf(char **, const char *, ...) __printflike(2, 3);
 char	*ctermid_r(char *);
 void	 fcloseall(void);
+int	 fdclose(FILE *, int *);
 char	*fgetln(FILE *, size_t *);
 const char *fmtcheck(const char *, const char *) __format_arg(2);
 int	 fpurge(FILE *);

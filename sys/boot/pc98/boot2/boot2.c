@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/pc98/boot2/boot2.c 275411 2014-12-02 14:48:21Z nyan $");
+__FBSDID("$FreeBSD: head/sys/boot/pc98/boot2/boot2.c 284885 2015-06-27 08:49:41Z nyan $");
 
 #include <sys/param.h>
 #include <sys/disklabel.h>
@@ -152,6 +152,7 @@ static int comspeed = SIOSPD;
 static uint8_t ioctrl = IO_KEYBOARD;
 #endif
 
+int main(void);
 void exit(int);
 static void load(void);
 static int parse(void);
@@ -620,7 +621,8 @@ parse()
 		dsk.daua = dsk.disk | dsk.unit;
 		dsk_meta = 0;
 	    }
-	    if (k = ep - arg) {
+	    k = ep - arg;
+	    if (k > 0) {
 		if (k >= sizeof(knamebuf))
 		    return -1;
 		memcpy(knamebuf, arg, k + 1);

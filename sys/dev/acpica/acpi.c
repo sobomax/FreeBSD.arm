@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi.c 285799 2015-07-22 16:26:17Z jkim $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -3664,7 +3664,7 @@ acpi_UserNotify(const char *subsystem, ACPI_HANDLE h, uint8_t notify)
 
     handle_buf.Pointer = NULL;
     handle_buf.Length = ACPI_ALLOCATE_BUFFER;
-    status = AcpiNsHandleToPathname(h, &handle_buf);
+    status = AcpiNsHandleToPathname(h, &handle_buf, FALSE);
     if (ACPI_FAILURE(status))
 	return;
     snprintf(notify_buf, sizeof(notify_buf), "notify=0x%02x", notify);

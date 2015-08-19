@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_sysctl.c 280495 2015-03-25 08:55:34Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_sysctl.c 286094 2015-07-30 19:52:43Z mjg $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -1784,7 +1784,7 @@ userland_sysctl(struct thread *td, int *name, u_int namelen, void *old,
 		ktrsysctl(name, namelen);
 #endif
 
-	if (req.oldlen > PAGE_SIZE) {
+	if (req.oldptr && req.oldlen > PAGE_SIZE) {
 		memlocked = 1;
 		sx_xlock(&sysctlmemlock);
 	} else

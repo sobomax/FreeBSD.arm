@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/umtx.h 273604 2014-10-24 20:02:44Z jhb $
+ * $FreeBSD: head/sys/sys/umtx.h 286257 2015-08-03 21:11:33Z ed $
  *
  */
 
@@ -153,7 +153,7 @@ umtx_key_match(const struct umtx_key *k1, const struct umtx_key *k2)
 }
 
 int umtx_copyin_timeout(const void *, struct timespec *);
-int umtx_key_get(void *, int, int, struct umtx_key *);
+int umtx_key_get(const void *, int, int, struct umtx_key *);
 void umtx_key_release(struct umtx_key *);
 struct umtx_q *umtxq_alloc(void);
 void umtxq_free(struct umtx_q *);

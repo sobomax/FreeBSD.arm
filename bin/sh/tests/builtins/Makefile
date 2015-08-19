@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/builtins/Makefile 281718 2015-04-18 23:49:57Z bdrewery $
+# $FreeBSD: head/bin/sh/tests/builtins/Makefile 286826 2015-08-16 12:57:17Z jilles $
 
 .include <src.opts.mk>
 
@@ -121,6 +121,7 @@ FILES+=		read4.0 read4.0.stdout
 FILES+=		read5.0
 FILES+=		read6.0
 FILES+=		read7.0
+FILES+=		read8.0
 FILES+=		return1.0
 FILES+=		return2.1
 FILES+=		return3.1

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libarchive/test/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libarchive/test/Makefile 285972 2015-07-28 18:41:28Z bdrewery $
 
 LIBARCHIVEDIR=	${.CURDIR}/../../../contrib/libarchive
 
@@ -120,6 +120,7 @@ TESTS= \
 	test_read_format_gtar_gz.c		\
 	test_read_format_gtar_lzma.c		\
 	test_read_format_gtar_sparse.c		\
+	test_read_format_gtar_sparse_skip_entry.c \
 	test_read_format_iso_Z.c		\
 	test_read_format_iso_multi_extent.c	\
 	test_read_format_iso_xorriso.c		\

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_dev.c 281310 2015-04-09 13:09:05Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_dev.c 286283 2015-08-04 10:40:08Z trasz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -358,6 +358,13 @@ g_dev_open(struct cdev *dev, int flags, int fmt, struct thread *td)
 #else
 	e = 0;
 #endif
+
+	/*
+	 * This happens on attempt to open a device node with O_EXEC.
+	 */
+	if (r + w + e == 0)
+		return (EINVAL);
+
 	if (w) {
 		/*
 		 * When running in very secure mode, do not allow
@@ -401,6 +408,20 @@ g_dev_close(struct cdev *dev, int flags, int fmt, struct thread *td)
 #else
 	e = 0;
 #endif
+
+	/*
+	 * The vgonel(9) - caused by eg. forced unmount of devfs - calls
+	 * VOP_CLOSE(9) on devfs vnode without any FREAD or FWRITE flags,
+	 * which would result in zero deltas, which in turn would cause
+	 * panic in g_access(9).
+	 *
+	 * Note that we cannot zero the counters (ie. do "r = cp->acr"
+	 * etc) instead, because the consumer might be opened in another
+	 * devfs instance.
+	 */
+	if (r + w + e == 0)
+		return (EINVAL);
+
 	sc = cp->private;
 	mtx_lock(&sc->sc_mtx);
 	sc->sc_open += r + w + e;

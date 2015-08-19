@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/Makefile 284699 2015-06-22 16:13:17Z sjg $
+# $FreeBSD: head/Makefile 285080 2015-07-03 06:10:09Z sjg $
 #
 # The user-driven targets are:
 #
@@ -102,7 +102,7 @@
 
 # Note: we use this awkward construct to be compatible with FreeBSD's
 # old make used in 10.0 and 9.2 and earlier.
-.if defined(MK_META_MODE) && ${MK_META_MODE} == "yes"
+.if defined(MK_META_MODE) && ${MK_META_MODE} == "yes" && !make(showconfig)
 # targets/Makefile plays the role of top-level
 .include "targets/Makefile"
 .else
@@ -538,7 +538,9 @@ MK_META_MODE= no
 MK_STAGING= no
 # tell meta.autodep.mk to not even think about updating anything.
 UPDATE_DEPENDFILE= NO
+.if !make(showconfig)
 .export MK_META_MODE MK_STAGING UPDATE_DEPENDFILE
+.endif
 
 .if make(universe)
 # we do not want a failure of one branch abort all.

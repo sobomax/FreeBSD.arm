@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/reloc.c 281556 2015-04-15 14:20:12Z andrew $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/reloc.c 285159 2015-07-05 11:42:01Z andrew $");
 
 #include <sys/types.h>
 
@@ -341,7 +341,8 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 			if (def == NULL)
 				return (-1);
 
-			*where = (Elf_Addr)defobj->relocbase + def->st_value;
+			*where = (Elf_Addr)defobj->relocbase + def->st_value +
+			    rela->r_addend;
 			break;
 		case R_AARCH64_COPY:
 			/*

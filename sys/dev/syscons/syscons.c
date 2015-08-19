@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/syscons/syscons.c 277796 2015-01-27 17:33:18Z avg $");
+__FBSDID("$FreeBSD: head/sys/dev/syscons/syscons.c 284959 2015-06-30 17:00:45Z markm $");
 
 #include "opt_compat.h"
 #include "opt_syscons.h"
@@ -3411,7 +3411,7 @@ next_code:
 	sc_touch_scrn_saver();
 
     if (!(flags & SCGETC_CN))
-	random_harvest(&c, sizeof(c), 1, RANDOM_KEYBOARD);
+	random_harvest_queue(&c, sizeof(c), 1, RANDOM_KEYBOARD);
 
     if (scp->kbd_mode != K_XLATE)
 	return KEYCHAR(c);

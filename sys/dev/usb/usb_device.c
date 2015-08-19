@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_device.c 282577 2015-05-07 12:54:27Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_device.c 286773 2015-08-14 12:57:53Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -2181,7 +2181,7 @@ usb_free_device(struct usb_device *udev, uint8_t flag)
 	 * anywhere:
 	 */
 	USB_BUS_LOCK(udev->bus);
-	usb_proc_mwait(USB_BUS_NON_GIANT_PROC(udev->bus),
+	usb_proc_mwait(USB_BUS_CS_PROC(udev->bus),
 	    &udev->cs_msg[0], &udev->cs_msg[1]);
 	USB_BUS_UNLOCK(udev->bus);
 

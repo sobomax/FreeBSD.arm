@@ -23,18 +23,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/teken/teken.c 261551 2014-02-06 13:28:06Z ray $
+ * $FreeBSD: head/sys/teken/teken.c 286827 2015-08-16 13:59:11Z ed $
  */
 
 #include <sys/cdefs.h>
 #if defined(__FreeBSD__) && defined(_KERNEL)
 #include <sys/param.h>
+#include <sys/limits.h>
 #include <sys/lock.h>
 #include <sys/systm.h>
 #define	teken_assert(x)		MPASS(x)
 #else /* !(__FreeBSD__ && _KERNEL) */
 #include <sys/types.h>
 #include <assert.h>
+#include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -405,18 +407,24 @@ teken_state_numbers(teken_t *t, teken_char_t c)
 	teken_assert(t->t_curnum < T_NUMSIZE);
 
 	if (c >= '0' && c <= '9') {
-		/*
-		 * Don't do math with the default value of 1 when a
-		 * custom number is inserted.
-		 */
 		if (t->t_stateflags & TS_FIRSTDIGIT) {
+			/* First digit. */
 			t->t_stateflags &= ~TS_FIRSTDIGIT;
-			t->t_nums[t->t_curnum] = 0;
-		} else {
-			t->t_nums[t->t_curnum] *= 10;
+			t->t_nums[t->t_curnum] = c - '0';
+		} else if (t->t_nums[t->t_curnum] < UINT_MAX / 100) {
+			/*
+			 * There is no need to continue parsing input
+			 * once the value exceeds the size of the
+			 * terminal. It would only allow for integer
+			 * overflows when performing arithmetic on the
+			 * cursor position.
+			 *
+			 * Ignore any further digits if the value is
+			 * already UINT_MAX / 100.
+			 */
+			t->t_nums[t->t_curnum] =
+			    t->t_nums[t->t_curnum] * 10 + c - '0';
 		}
-
-		t->t_nums[t->t_curnum] += c - '0';
 		return (1);
 	} else if (c == ';') {
 		if (t->t_stateflags & TS_FIRSTDIGIT)

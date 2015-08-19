@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/dtrace/Makefile.inc 275576 2014-12-07 11:21:41Z avg $
+# $FreeBSD: head/sys/modules/dtrace/Makefile.inc 285703 2015-07-19 22:14:09Z markj $
 
 IGNORE_PRAGMA=	1
 
@@ -6,7 +6,6 @@ load	:
 	-kldload dtrace
 .if ${MACHINE_CPUARCH} == "i386"
 	-kldload sdt
-	-kldload lockstat
 	-kldload fbt
 	-kldload prototype
 .endif
@@ -20,7 +19,6 @@ unload	:
 .if ${MACHINE_CPUARCH} == "i386"
 	-kldunload prototype
 	-kldunload fbt
-	-kldunload lockstat
 	-kldunload sdt
 .endif
 	-kldunload dtrace

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_syscalls.c 284310 2015-06-12 11:32:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_syscalls.c 285910 2015-07-27 13:17:57Z ed $");
 
 #include "opt_capsicum.h"
 #include "opt_inet.h"
@@ -1383,6 +1383,15 @@ sys_shutdown(td, uap)
 	if (error == 0) {
 		so = fp->f_data;
 		error = soshutdown(so, uap->how);
+		/*
+		 * Previous versions did not return ENOTCONN, but 0 in
+		 * case the socket was not connected. Some important
+		 * programs like syslogd up to r279016, 2015-02-19,
+		 * still depend on this behavior.
+		 */
+		if (error == ENOTCONN &&
+		    td->td_proc->p_osrel < P_OSREL_SHUTDOWN_ENOTCONN)
+			error = 0;
 		fdrop(fp, td);
 	}
 	return (error);

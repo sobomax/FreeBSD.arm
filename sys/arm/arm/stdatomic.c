@@ -25,13 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/stdatomic.c 282763 2015-05-11 08:57:23Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/stdatomic.c 286726 2015-08-13 14:53:29Z marcel $");
 
 #include <sys/param.h>
 #include <sys/stdatomic.h>
 #include <sys/types.h>
 
 #include <machine/acle-compat.h>
+#include <machine/atomic.h>
 #include <machine/cpufunc.h>
 #include <machine/sysarch.h>
 
@@ -67,19 +68,12 @@ do_sync(void)
 
 	__asm volatile ("" : : : "memory");
 }
-#elif __ARM_ARCH >= 7
-static inline void
-do_sync(void)
-{
-
-	__asm volatile ("dmb" : : : "memory");
-}
 #elif __ARM_ARCH >= 6
 static inline void
 do_sync(void)
 {
 
-	__asm volatile ("mcr p15, 0, %0, c7, c10, 5" : : "r" (0) : "memory");
+	dmb();
 }
 #endif
 

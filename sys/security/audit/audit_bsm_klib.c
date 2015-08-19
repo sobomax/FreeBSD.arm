@@ -29,9 +29,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/security/audit/audit_bsm_klib.c 263458 2014-03-21 01:30:33Z mjg $");
+__FBSDID("$FreeBSD: head/sys/security/audit/audit_bsm_klib.c 285172 2015-07-05 19:05:16Z mjg $");
 
 #include <sys/param.h>
+#include <sys/capsicum.h>
 #include <sys/fcntl.h>
 #include <sys/filedesc.h>
 #include <sys/libkern.h>
@@ -467,6 +468,7 @@ audit_canon_path(struct thread *td, int dirfd, char *path, char *cpath)
 	char *rbuf, *fbuf, *copy;
 	struct filedesc *fdp;
 	struct sbuf sbf;
+	cap_rights_t rights;
 	int error, needslash;
 
 	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL, "%s: at %s:%d",
@@ -495,7 +497,7 @@ audit_canon_path(struct thread *td, int dirfd, char *path, char *cpath)
 			vhold(cvnp);
 		} else {
 			/* XXX: fgetvp() that vhold()s vnode instead of vref()ing it would be better */
-			error = fgetvp(td, dirfd, NULL, &cvnp);
+			error = fgetvp(td, dirfd, cap_rights_init(&rights), &cvnp);
 			if (error) {
 				FILEDESC_SUNLOCK(fdp);
 				cpath[0] = '\0';

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_error.c 275458 2014-12-03 15:16:18Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_error.c 286806 2015-08-15 13:34:38Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_error.c 275458 2014-12-03 15:16:18Z mav
 #include <cam/ctl/ctl_io.h>
 #include <cam/ctl/ctl.h>
 #include <cam/ctl/ctl_frontend.h>
-#include <cam/ctl/ctl_frontend_internal.h>
 #include <cam/ctl/ctl_backend.h>
 #include <cam/ctl/ctl_ioctl.h>
 #include <cam/ctl/ctl_error.h>

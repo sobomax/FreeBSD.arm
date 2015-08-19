@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_ndis.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_ndis.c 285391 2015-07-11 16:22:48Z mjg $");
 
 /*
  * This file implements a translation layer between the BSD networking
@@ -2817,10 +2817,7 @@ NdisOpenFile(status, filehandle, filelength, filename, highestaddr)
 
 	/* Some threads don't have a current working directory. */
 
-	if (td->td_proc->p_fd->fd_rdir == NULL)
-		td->td_proc->p_fd->fd_rdir = rootvnode;
-	if (td->td_proc->p_fd->fd_cdir == NULL)
-		td->td_proc->p_fd->fd_cdir = rootvnode;
+	pwd_ensure_dirs();
 
 	NDINIT(&nd, LOOKUP, FOLLOW, UIO_SYSSPACE, path, td);
 

@@ -1,7 +1,7 @@
 #
 #	@(#)ttys	5.1 (Berkeley) 4/17/89
 #
-# $FreeBSD: head/release/picobsd/floppy.tree/etc/ttys 266779 2014-05-28 00:30:32Z luigi $
+# $FreeBSD: head/release/picobsd/floppy.tree/etc/ttys 285281 2015-07-08 16:42:28Z luigi $
 #
 # name	getty				type	status		comments
 #
@@ -33,3 +33,4 @@ ttyp7	none			network secure
 ttyp8	none			network secure
 ttyp9	none			network secure
 ttyu0   "/usr/libexec/getty 3wire"   dialup  on secure
+ttyu1   "/usr/libexec/getty 3wire"   dialup  on secure

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_uio.h 283988 2015-06-04 12:46:56Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_uio.h 285237 2015-07-07 06:34:28Z tuexen $");
 
 #ifndef _NETINET_SCTP_UIO_H_
 #define _NETINET_SCTP_UIO_H_
@@ -1228,7 +1228,8 @@ struct xsctp_raddr {
 	struct sctp_timeval start_time;	/* sctpAssocLocalRemEntry 8   */
 	uint32_t rtt;
 	uint32_t heartbeat_interval;
-	uint32_t extra_padding[31];	/* future */
+	uint32_t ssthresh;
+	uint32_t extra_padding[30];	/* future */
 };
 
 #define SCTP_MAX_LOGGING_SIZE 30000

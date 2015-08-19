@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)conf.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/conf.h 277897 2015-01-29 19:55:33Z jhb $
+ * $FreeBSD: head/sys/sys/conf.h 286640 2015-08-11 16:51:44Z kwm $
  */
 
 #ifndef _SYS_CONF_H_
@@ -299,6 +299,7 @@ void	devfs_free_cdp_inode(ino_t ino);
 #define		GID_OPERATOR	5
 #define		GID_BIN		7
 #define		GID_GAMES	13
+#define		GID_VIDEO	44
 #define		GID_DIALER	68
 #define		GID_NOBODY	65534
 

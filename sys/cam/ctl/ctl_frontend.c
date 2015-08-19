@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend.c 284640 2015-06-20 12:43:54Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend.c 286806 2015-08-15 13:34:38Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -55,7 +55,6 @@ __FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend.c 284640 2015-06-20 12:43:54Z 
 #include <cam/ctl/ctl_io.h>
 #include <cam/ctl/ctl.h>
 #include <cam/ctl/ctl_frontend.h>
-#include <cam/ctl/ctl_frontend_internal.h>
 #include <cam/ctl/ctl_backend.h>
 /* XXX KDM move defines from ctl_ioctl.h to somewhere else */
 #include <cam/ctl/ctl_ioctl.h>

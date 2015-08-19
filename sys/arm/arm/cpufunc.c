@@ -42,7 +42,7 @@
  * Created      : 30/01/97
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc.c 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc.c 286725 2015-08-13 14:50:11Z marcel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -904,6 +904,7 @@ set_cpufuncs()
 	    cputype == CPU_ID_CORTEXA9R1 ||
 	    cputype == CPU_ID_CORTEXA9R2 ||
 	    cputype == CPU_ID_CORTEXA9R3 ||
+	    cputype == CPU_ID_CORTEXA9R4 ||
 	    cputype == CPU_ID_CORTEXA12R0 ||
 	    cputype == CPU_ID_CORTEXA15R0 ||
 	    cputype == CPU_ID_CORTEXA15R1 ||

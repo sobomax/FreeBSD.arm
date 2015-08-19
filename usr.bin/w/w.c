@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/w/w.c 281625 2015-04-16 22:09:37Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.bin/w/w.c 285550 2015-07-14 18:53:24Z markm $");
 
 #ifndef lint
 static const char copyright[] =
@@ -120,7 +120,7 @@ static struct entry {
 
 #define	W_DISPUSERSIZE	10
 #define	W_DISPLINESIZE	8
-#define	W_DISPHOSTSIZE	24
+#define	W_DISPHOSTSIZE	40
 
 static void		 pr_header(time_t *, int);
 static struct stat	*ttystat(char *);

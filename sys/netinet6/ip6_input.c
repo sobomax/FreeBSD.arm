@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_input.c 279588 2015-03-04 11:20:01Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_input.c 286001 2015-07-29 08:12:05Z ae $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -82,6 +82,8 @@ __FBSDID("$FreeBSD: head/sys/netinet6/ip6_input.c 279588 2015-03-04 11:20:01Z ae
 #include <sys/errno.h>
 #include <sys/time.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
+#include <sys/rmlock.h>
 #include <sys/syslog.h>
 
 #include <net/if.h>
@@ -144,8 +146,8 @@ VNET_PCPUSTAT_SYSINIT(ip6stat);
 VNET_PCPUSTAT_SYSUNINIT(ip6stat);
 #endif /* VIMAGE */
 
-struct rwlock in6_ifaddr_lock;
-RW_SYSINIT(in6_ifaddr_lock, &in6_ifaddr_lock, "in6_ifaddr_lock");
+struct rmlock in6_ifaddr_lock;
+RM_SYSINIT(in6_ifaddr_lock, &in6_ifaddr_lock, "in6_ifaddr_lock");
 
 static void ip6_init2(void *);
 static int ip6_hopopts_input(u_int32_t *, u_int32_t *, struct mbuf **, int *);

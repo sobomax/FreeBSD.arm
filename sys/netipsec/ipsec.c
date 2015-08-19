@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.c 282048 2015-04-27 01:12:51Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.c 285096 2015-07-03 15:31:56Z eri $	*/
 /*	$KAME: ipsec.c,v 1.103 2001/05/24 07:14:18 sakane Exp $	*/
 
 /*-
@@ -333,6 +333,12 @@ ipsec_getpolicybysock(struct mbuf *m, u_int dir, struct inpcb *inp, int *error)
 	IPSEC_ASSERT(error != NULL, ("null error"));
 	IPSEC_ASSERT(dir == IPSEC_DIR_INBOUND || dir == IPSEC_DIR_OUTBOUND,
 		("invalid direction %u", dir));
+
+	if (!key_havesp(dir)) {
+		/* No SP found, use system default. */
+		sp = KEY_ALLOCSP_DEFAULT();
+		return (sp);
+	}
 
 	/* Set spidx in pcb. */
 	*error = ipsec_setspidx_inpcb(m, inp);

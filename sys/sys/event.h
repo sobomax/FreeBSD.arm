@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/event.h 274560 2014-11-16 01:18:41Z jmg $
+ * $FreeBSD: head/sys/sys/event.h 286307 2015-08-05 07:34:29Z ed $
  */
 
 #ifndef _SYS_EVENT_H_
@@ -108,6 +108,7 @@ struct kevent {
  * data/hint flags for EVFILT_{READ|WRITE}, shared with userspace
  */
 #define NOTE_LOWAT	0x0001			/* low water mark */
+#define NOTE_FILE_POLL	0x0002			/* behave like poll() */
 
 /*
  * data/hint flags for EVFILT_VNODE, shared with userspace

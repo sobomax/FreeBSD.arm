@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/rctl 261931 2014-02-15 14:50:47Z bdrewery $
+# $FreeBSD: head/etc/rc.d/rctl 286329 2015-08-05 17:38:02Z trasz $
 #
 
 # PROVIDE: rctl
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="rctl"
+rcvar="rctl_enable"
 start_cmd="rctl_start"
 stop_cmd="rctl_stop"
 

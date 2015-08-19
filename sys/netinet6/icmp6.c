@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/icmp6.c 275394 2014-12-02 05:41:03Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/icmp6.c 285084 2015-07-03 09:53:56Z bz $");
 
 #define	MBUF_PRIVATE	/* XXXRW: Optimisation tries to avoid M_EXT mbufs */
 
@@ -2404,7 +2404,6 @@ icmp6_redirect_input(struct mbuf *m, int off)
 		    icmp6_redirect_diag(&src6, &reddst6, &redtgt6)));
 		goto bad;
 	}
-	/* validation passed */
 
 	icmp6len -= sizeof(*nd_rd);
 	nd6_option_init(nd_rd + 1, icmp6len, &ndopts);
@@ -2428,6 +2427,8 @@ icmp6_redirect_input(struct mbuf *m, int off)
 		    icmp6_redirect_diag(&src6, &reddst6, &redtgt6)));
 		goto bad;
 	}
+
+	/* Validation passed. */
 
 	/* RFC 2461 8.3 */
 	nd6_cache_lladdr(ifp, &redtgt6, lladdr, lladdrlen, ND_REDIRECT,

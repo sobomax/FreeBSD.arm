@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libgeom/geom_xml2tree.c 281875 2015-04-22 22:23:56Z pfg $
+ * $FreeBSD: head/lib/libgeom/geom_xml2tree.c 286719 2015-08-13 13:19:56Z mav $
  */
 
 #include <stdio.h>
@@ -286,7 +286,7 @@ EndElement(void *userData, const char *name)
 			    "element", name);
 			return;
 		}
-		gc->lg_val = p ? p : strdup("1");
+		gc->lg_val = p;
 		LIST_INSERT_HEAD(c, gc, lg_config);
 		return;
 	}

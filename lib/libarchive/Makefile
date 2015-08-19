@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libarchive/Makefile 281550 2015-04-15 09:09:20Z tijl $
+# $FreeBSD: head/lib/libarchive/Makefile 285702 2015-07-19 21:31:52Z bapt $
 .include <src.opts.mk>
 
 LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
@@ -36,12 +36,6 @@ CFLAGS+=	-DPPMD_32BIT
 .endif
 .endif
 NO_WCAST_ALIGN.clang=
-
-.ifndef COMPAT_32BIT
-beforeinstall:
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libarchive.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-.endif
 
 .PATH: ${LIBARCHIVEDIR}/libarchive
 

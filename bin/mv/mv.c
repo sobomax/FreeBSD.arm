@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)mv.c	8.2 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/mv/mv.c 280386 2015-03-23 17:35:05Z jilles $");
+__FBSDID("$FreeBSD: head/bin/mv/mv.c 284916 2015-06-28 21:36:00Z jilles $");
 
 #include <sys/types.h>
 #include <sys/acl.h>
@@ -122,7 +122,7 @@ main(int argc, char *argv[])
 	 */
 	if (stat(argv[argc - 1], &sb) || !S_ISDIR(sb.st_mode)) {
 		if (argc > 2)
-			usage();
+			errx(1, "%s is not a directory", argv[argc - 1]);
 		exit(do_move(argv[0], argv[1]));
 	}
 

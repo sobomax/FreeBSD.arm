@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/netinet/ip_var.h 280971 2015-04-01 22:26:39Z glebius $
+ * $FreeBSD: head/sys/netinet/ip_var.h 285677 2015-07-18 15:28:32Z luigi $
  */
 
 #ifndef _NETINET_IP_VAR_H_
@@ -281,7 +281,7 @@ enum {
 	IPFW_IS_MASK	= 0x30000000,	/* which source ? */
 	IPFW_IS_DIVERT	= 0x20000000,
 	IPFW_IS_DUMMYNET =0x10000000,
-	IPFW_IS_PIPE	= 0x08000000,	/* pip1=1, queue = 0 */
+	IPFW_IS_PIPE	= 0x08000000,	/* pipe=1, queue = 0 */
 };
 #define MTAG_IPFW	1148380143	/* IPFW-tagged cookie */
 #define MTAG_IPFW_RULE	1262273568	/* rule reference */

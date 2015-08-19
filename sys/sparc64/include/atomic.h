@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/atomic.h,v 1.20 2001/02/11
- * $FreeBSD: head/sys/sparc64/include/atomic.h 253994 2013-08-06 15:34:11Z marius $
+ * $FreeBSD: head/sys/sparc64/include/atomic.h 285283 2015-07-08 18:12:24Z kib $
  */
 
 #ifndef	_MACHINE_ATOMIC_H_
@@ -278,6 +278,35 @@ atomic_store_rel_ ## name(volatile ptype p, vtype v)			\
 {									\
 	atomic_st_rel((p), (v), sz);					\
 }
+
+static __inline void
+atomic_thread_fence_acq(void)
+{
+
+	__compiler_membar();
+}
+
+static __inline void
+atomic_thread_fence_rel(void)
+{
+
+	__compiler_membar();
+}
+
+static __inline void
+atomic_thread_fence_acq_rel(void)
+{
+
+	__compiler_membar();
+}
+
+static __inline void
+atomic_thread_fence_seq_cst(void)
+{
+
+	membar(LoadLoad | LoadStore | StoreStore | StoreLoad);
+}
+
 
 ATOMIC_GEN(int, u_int *, u_int, u_int, 32);
 ATOMIC_GEN(32, uint32_t *, uint32_t, uint32_t, 32);

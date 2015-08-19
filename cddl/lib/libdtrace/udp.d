@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/cddl/lib/libdtrace/udp.d 266082 2014-05-14 19:02:00Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/udp.d 286420 2015-08-07 19:56:22Z markj $
  */
 /*
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
@@ -26,6 +26,7 @@
  */
 
 #pragma D depends_on library ip.d
+#pragma D depends_on module kernel
 #pragma D depends_on provider udp
 
 /*

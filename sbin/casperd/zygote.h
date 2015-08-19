@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/casperd/zygote.h 258838 2013-12-02 08:21:28Z pjd $
+ * $FreeBSD: head/sbin/casperd/zygote.h 285143 2015-07-04 17:38:56Z araujo $
  */
 
 #ifndef _ZYGOTE_H_
@@ -35,6 +35,6 @@
 typedef void zygote_func_t(int);
 
 int zygote_init(void);
-int zygote_clone(zygote_func_t *func, int flags, int *chanfdp, int *procfdp);
+int zygote_clone(zygote_func_t *func, int *chanfdp, int *procfdp);
 
 #endif	/* !_ZYGOTE_H_ */

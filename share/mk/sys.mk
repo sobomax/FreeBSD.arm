@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: head/share/mk/sys.mk 284598 2015-06-19 14:56:24Z sjg $
+# $FreeBSD: head/share/mk/sys.mk 286791 2015-08-14 22:54:52Z rpaulo $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -167,6 +167,7 @@ MAKE		?=	make
 
 .if !defined(%POSIX)
 NM		?=	nm
+NMFLAGS		?=
 
 OBJC		?=	cc
 OBJCFLAGS	?=	${OBJCINCLUDES} ${CFLAGS} -Wno-import

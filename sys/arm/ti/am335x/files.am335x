@@ -1,8 +1,9 @@
-#$FreeBSD: head/sys/arm/ti/am335x/files.am335x 284534 2015-06-18 00:57:52Z gonzo $
+#$FreeBSD: head/sys/arm/ti/am335x/files.am335x 286728 2015-08-13 15:19:30Z ian $
 
 arm/ti/aintc.c				standard
 
 arm/ti/am335x/am335x_dmtimer.c		standard
+arm/ti/am335x/am335x_dmtpps.c		optional	am335x_dmtpps
 arm/ti/am335x/am335x_gpio.c		optional	gpio
 arm/ti/am335x/am335x_lcd.c		optional	sc | vt
 arm/ti/am335x/am335x_lcd_syscons.c	optional	sc

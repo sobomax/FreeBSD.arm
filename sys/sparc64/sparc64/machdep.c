@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 285839 2015-07-24 15:13:21Z marius $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -499,7 +499,7 @@ sparc64_init(caddr_t mdp, u_long o1, u_long o2, u_long o3, ofw_vec_t *vec)
 	}
 
 #ifdef SMP
-	mp_init(cpu_impl);
+	mp_init();
 #endif
 
 	/*

@@ -22,7 +22,7 @@
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  * Portions Copyright 2013 Howard Su howardsu@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/arm/fbt_isa.c 280039 2015-03-15 15:19:02Z rwatson $
+ * $FreeBSD: head/sys/cddl/dev/fbt/arm/fbt_isa.c 286241 2015-08-03 17:39:36Z markj $
  *
  */
 
@@ -56,7 +56,6 @@ fbt_invop(uintptr_t addr, uintptr_t *stack, uintptr_t rval)
 
 	for (; fbt != NULL; fbt = fbt->fbtp_hashnext) {
 		if ((uintptr_t)fbt->fbtp_patchpoint == addr) {
-			fbt->fbtp_invop_cnt++;
 			cpu->cpu_dtrace_caller = addr;
 
 			/* TODO: Need 5th parameter from stack */

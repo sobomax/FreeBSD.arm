@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 281337 2015-04-09 21:35:44Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 285349 2015-07-10 05:51:36Z luigi $");
 
 /*
  * RealTek 8139C+/8169/8169S/8110S/8168/8111/8101E PCI NIC driver
@@ -304,6 +304,7 @@ static void re_set_linkspeed	(struct rl_softc *);
 
 #ifdef DEV_NETMAP	/* see ixgbe.c for details */
 #include <dev/netmap/if_re_netmap.h>
+MODULE_DEPEND(re, netmap, 1, 1, 1);
 #endif /* !DEV_NETMAP */
 
 #ifdef RE_DIAG

@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)kdump.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/kdump/kdump.c 283430 2015-05-24 16:22:03Z dchagin $");
+__FBSDID("$FreeBSD: head/usr.bin/kdump/kdump.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
 #define _KERNEL
 extern int errno;
@@ -61,6 +61,9 @@ extern int errno;
 #include <sys/un.h>
 #include <sys/queue.h>
 #include <sys/wait.h>
+#ifdef HAVE_LIBCAPSICUM
+#include <sys/nv.h>
+#endif
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <ctype.h>
@@ -77,9 +80,6 @@ extern int errno;
 #include <locale.h>
 #include <netdb.h>
 #include <nl_types.h>
-#ifdef HAVE_LIBCAPSICUM
-#include <nv.h>
-#endif
 #include <pwd.h>
 #include <stdio.h>
 #include <stdlib.h>

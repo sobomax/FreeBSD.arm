@@ -23,7 +23,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/amd64/include/stack.h 179886 2008-06-20 05:22:09Z alc $
+ * $FreeBSD: head/sys/amd64/include/stack.h 285041 2015-07-02 14:37:21Z kib $
  */
 
 #ifndef _MACHINE_STACK_H_
@@ -32,8 +32,6 @@
 /*
  * Stack trace.
  */
-#define	INKERNEL(va) (((va) >= DMAP_MIN_ADDRESS && (va) < DMAP_MAX_ADDRESS) \
-	    || ((va) >= VM_MIN_KERNEL_ADDRESS && (va) < VM_MAX_KERNEL_ADDRESS))
 
 struct amd64_frame {
 	struct amd64_frame	*f_frame;

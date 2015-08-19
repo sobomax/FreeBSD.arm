@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/trgt.c 260601 2014-01-13 19:08:25Z marcel $");
+__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/trgt.c 285041 2015-07-02 14:37:21Z kib $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -76,7 +76,7 @@ kvm_t *kvm;
 static char kvm_err[_POSIX2_LINE_MAX];
 
 #define	KERNOFF		(kgdb_kernbase ())
-#define	INKERNEL(x)	((x) >= KERNOFF)
+#define	PINKERNEL(x)	((x) >= KERNOFF)
 
 static CORE_ADDR
 kgdb_kernbase (void)
@@ -296,7 +296,7 @@ kgdb_set_proc_cmd (char *arg, int from_tty)
 
 	addr = (CORE_ADDR) parse_and_eval_address (arg);
 
-	if (!INKERNEL (addr)) {
+	if (!PINKERNEL (addr)) {
 		thr = kgdb_thr_lookup_pid((int)addr);
 		if (thr == NULL)
 			error ("invalid pid");
@@ -319,7 +319,7 @@ kgdb_set_tid_cmd (char *arg, int from_tty)
 
 	addr = (CORE_ADDR) parse_and_eval_address (arg);
 
-	if (kvm != NULL && INKERNEL (addr)) {
+	if (kvm != NULL && PINKERNEL (addr)) {
 		thr = kgdb_thr_lookup_taddr(addr);
 		if (thr == NULL)
 			error("invalid thread address");

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/vnode.h 274476 2014-11-13 18:01:51Z kib $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/vnode.h 285391 2015-07-11 16:22:48Z mjg $
  */
 
 #ifndef _OPENSOLARIS_SYS_VNODE_H_
@@ -162,7 +162,6 @@ vn_openat(char *pnamep, enum uio_seg seg, int filemode, int createmode,
     int fd)
 {
 	struct thread *td = curthread;
-	struct filedesc *fdc;
 	struct nameidata nd;
 	int error, operation;
 
@@ -179,17 +178,7 @@ vn_openat(char *pnamep, enum uio_seg seg, int filemode, int createmode,
 	}
 	ASSERT(umask == 0);
 
-	fdc = td->td_proc->p_fd;
-	FILEDESC_XLOCK(fdc);
-	if (fdc->fd_rdir == NULL) {
-		fdc->fd_rdir = rootvnode;
-		vref(fdc->fd_rdir);
-	}
-	if (fdc->fd_cdir == NULL) {
-		fdc->fd_cdir = rootvnode;
-		vref(fdc->fd_rdir);
-	}
-	FILEDESC_XUNLOCK(fdc);
+	pwd_ensure_dirs();
 
 	if (startvp != NULL)
 		vref(startvp);

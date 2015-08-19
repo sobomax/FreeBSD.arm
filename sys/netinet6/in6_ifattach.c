@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 282354 2015-05-02 20:31:27Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 286001 2015-07-29 08:12:05Z ae $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,7 +39,9 @@ __FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 282354 2015-05-02 20:31:27Z
 #include <sys/sockio.h>
 #include <sys/jail.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/proc.h>
+#include <sys/rmlock.h>
 #include <sys/syslog.h>
 #include <sys/md5.h>
 

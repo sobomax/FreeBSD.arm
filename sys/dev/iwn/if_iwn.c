@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwn/if_iwn.c 284588 2015-06-19 01:44:17Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/iwn/if_iwn.c 286864 2015-08-17 23:35:31Z adrian $");
 
 #include "opt_wlan.h"
 #include "opt_iwn.h"
@@ -4922,7 +4922,7 @@ iwn_raw_xmit(struct ieee80211_node *ni, struct mbuf *m,
 {
 	struct ieee80211com *ic = ni->ni_ic;
 	struct ifnet *ifp = ic->ic_ifp;
-	struct iwn_softc *sc = ifp->if_softc;
+	struct iwn_softc *sc = ic->ic_softc;
 	int error = 0;
 
 	DPRINTF(sc, IWN_DEBUG_XMIT | IWN_DEBUG_TRACE, "->%s begin\n", __func__);
@@ -5057,8 +5057,8 @@ iwn_watchdog(void *arg)
 static int
 iwn_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 {
-	struct iwn_softc *sc = ifp->if_softc;
 	struct ieee80211com *ic = ifp->if_l2com;
+	struct iwn_softc *sc = ic->ic_softc;
 	struct ieee80211vap *vap = TAILQ_FIRST(&ic->ic_vaps);
 	struct ifreq *ifr = (struct ifreq *) data;
 	int error = 0, startall = 0, stop = 0;
@@ -6503,6 +6503,34 @@ iwn5000_runtime_calib(struct iwn_softc *sc)
 	return iwn_cmd(sc, IWN5000_CMD_CALIB_CONFIG, &cmd, sizeof(cmd), 0);
 }
 
+static uint32_t
+iwn_get_rxon_ht_flags(struct iwn_softc *sc, struct ieee80211_channel *c)
+{
+	uint32_t htflags = 0;
+	struct ifnet *ifp = sc->sc_ifp;
+	struct ieee80211com *ic = ifp->if_l2com;
+
+	if (! IEEE80211_IS_CHAN_HT(c))
+		return (0);
+
+	htflags |= IWN_RXON_HT_PROTMODE(ic->ic_curhtprotmode);
+
+	if (IEEE80211_IS_CHAN_HT40(c)) {
+		switch (ic->ic_curhtprotmode) {
+		case IEEE80211_HTINFO_OPMODE_HT20PR:
+			htflags |= IWN_RXON_HT_MODEPURE40;
+			break;
+		default:
+			htflags |= IWN_RXON_HT_MODEMIXED;
+			break;
+		}
+	}
+	if (IEEE80211_IS_CHAN_HT40D(c))
+		htflags |= IWN_RXON_HT_HT40MINUS;
+
+	return (htflags);
+}
+
 static int
 iwn_config(struct iwn_softc *sc)
 {
@@ -6633,7 +6661,12 @@ iwn_config(struct iwn_softc *sc)
 	    __func__,
 	    sc->rxchainmask,
 	    sc->nrxchains);
-	DPRINTF(sc, IWN_DEBUG_RESET, "%s: setting configuration\n", __func__);
+
+	sc->rxon->flags |= htole32(iwn_get_rxon_ht_flags(sc, ic->ic_curchan));
+
+	DPRINTF(sc, IWN_DEBUG_RESET,
+	    "%s: setting configuration; flags=0x%08x\n",
+	    __func__, le32toh(sc->rxon->flags));
 	if (sc->sc_is_scanning)
 		device_printf(sc->sc_dev,
 		    "%s: is_scanning set, before RXON\n",
@@ -7036,6 +7069,10 @@ iwn_auth(struct iwn_softc *sc, struct ieee80211vap *vap)
 		sc->rxon->cck_mask  = 0x03;
 		sc->rxon->ofdm_mask = 0x15;
 	}
+
+	/* try HT */
+	sc->rxon->flags |= htole32(iwn_get_rxon_ht_flags(sc, ic->ic_curchan));
+
 	DPRINTF(sc, IWN_DEBUG_STATE, "rxon chan %d flags %x cck %x ofdm %x\n",
 	    sc->rxon->chan, sc->rxon->flags, sc->rxon->cck_mask,
 	    sc->rxon->ofdm_mask);
@@ -7080,7 +7117,6 @@ iwn_run(struct iwn_softc *sc, struct ieee80211vap *vap)
 	struct ieee80211com *ic = ifp->if_l2com;
 	struct ieee80211_node *ni = vap->iv_bss;
 	struct iwn_node_info node;
-	uint32_t htflags = 0;
 	int error;
 
 	DPRINTF(sc, IWN_DEBUG_TRACE, "->%s begin\n", __func__);
@@ -7119,25 +7155,11 @@ iwn_run(struct iwn_softc *sc, struct ieee80211vap *vap)
 		sc->rxon->cck_mask  = 0x0f;
 		sc->rxon->ofdm_mask = 0x15;
 	}
-	if (IEEE80211_IS_CHAN_HT(ni->ni_chan)) {
-		htflags |= IWN_RXON_HT_PROTMODE(ic->ic_curhtprotmode);
-		if (IEEE80211_IS_CHAN_HT40(ni->ni_chan)) {
-			switch (ic->ic_curhtprotmode) {
-			case IEEE80211_HTINFO_OPMODE_HT20PR:
-				htflags |= IWN_RXON_HT_MODEPURE40;
-				break;
-			default:
-				htflags |= IWN_RXON_HT_MODEMIXED;
-				break;
-			}
-		}
-		if (IEEE80211_IS_CHAN_HT40D(ni->ni_chan))
-			htflags |= IWN_RXON_HT_HT40MINUS;
-	}
-	sc->rxon->flags |= htole32(htflags);
+	/* try HT */
+	sc->rxon->flags |= htole32(iwn_get_rxon_ht_flags(sc, ni->ni_chan));
 	sc->rxon->filter |= htole32(IWN_FILTER_BSS);
-	DPRINTF(sc, IWN_DEBUG_STATE, "rxon chan %d flags %x\n",
-	    sc->rxon->chan, sc->rxon->flags);
+	DPRINTF(sc, IWN_DEBUG_STATE, "rxon chan %d flags %x, curhtprotmode=%d\n",
+	    sc->rxon->chan, le32toh(sc->rxon->flags), ic->ic_curhtprotmode);
 	if (sc->sc_is_scanning)
 		device_printf(sc->sc_dev,
 		    "%s: is_scanning set, before RXON\n",
@@ -8850,8 +8872,7 @@ iwn_stop(struct iwn_softc *sc)
 static void
 iwn_scan_start(struct ieee80211com *ic)
 {
-	struct ifnet *ifp = ic->ic_ifp;
-	struct iwn_softc *sc = ifp->if_softc;
+	struct iwn_softc *sc = ic->ic_softc;
 
 	IWN_LOCK(sc);
 	/* make the link LED blink while we're scanning */
@@ -8865,8 +8886,7 @@ iwn_scan_start(struct ieee80211com *ic)
 static void
 iwn_scan_end(struct ieee80211com *ic)
 {
-	struct ifnet *ifp = ic->ic_ifp;
-	struct iwn_softc *sc = ifp->if_softc;
+	struct iwn_softc *sc = ic->ic_softc;
 	struct ieee80211vap *vap = TAILQ_FIRST(&ic->ic_vaps);
 
 	IWN_LOCK(sc);
@@ -8884,8 +8904,7 @@ static void
 iwn_set_channel(struct ieee80211com *ic)
 {
 	const struct ieee80211_channel *c = ic->ic_curchan;
-	struct ifnet *ifp = ic->ic_ifp;
-	struct iwn_softc *sc = ifp->if_softc;
+	struct iwn_softc *sc = ic->ic_softc;
 	int error;
 
 	DPRINTF(sc, IWN_DEBUG_TRACE, "->Doing %s\n", __func__);

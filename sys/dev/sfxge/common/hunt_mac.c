@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/hunt_mac.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/hunt_mac.c 285798 2015-07-22 16:25:18Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -150,8 +150,19 @@ hunt_mac_addr_set(
 {
 	int rc;
 
-	if ((rc = efx_mcdi_vadapter_set_mac(enp)) != 0)
-		goto fail1;
+	if ((rc = efx_mcdi_vadapter_set_mac(enp)) != 0) {
+		if (rc != ENOTSUP)
+			goto fail1;
+
+		/* Fallback for older firmware without Vadapter support */
+		if ((rc = hunt_mac_reconfigure(enp)) != 0)
+			goto fail2;
+	}
+
+	return (0);
+
+fail2:
+	EFSYS_PROBE(fail2);
 
 fail1:
 	EFSYS_PROBE1(fail1, int, rc);

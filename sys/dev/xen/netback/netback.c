@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 282634 2015-05-08 14:48:40Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 286372 2015-08-06 17:07:21Z jhb $");
 
 /**
  * \file netback.c
@@ -87,8 +87,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 282634 2015-05-08 14:48:4
 #include <xen/interface/io/netif.h>
 #include <xen/xenbus/xenbusvar.h>
 
-#include <machine/xen/xenvar.h>
-
 /*--------------------------- Compile-time Tunables --------------------------*/
 
 /*---------------------------------- Macros ----------------------------------*/
@@ -132,7 +130,7 @@ static MALLOC_DEFINE(M_XENNETBACK, "xnb", "Xen Net Back Driver Data");
 	req < rsp ? req : rsp;                                          \
 })
 
-#define	virt_to_mfn(x) (vtomach(x) >> PAGE_SHIFT)
+#define	virt_to_mfn(x) (vtophys(x) >> PAGE_SHIFT)
 #define	virt_to_offset(x) ((x) & (PAGE_SIZE - 1))
 
 /**

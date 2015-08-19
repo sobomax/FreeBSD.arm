@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/lib/Makefile 283502 2015-05-24 23:19:47Z ngie $
+# $FreeBSD: head/lib/Makefile 286730 2015-08-13 17:50:47Z emaste $
 
 .include <src.opts.mk>
 
@@ -182,7 +182,7 @@ _clang=		clang
 _cuse=		libcuse
 .endif
 
-.if ${MK_ELFTOOLCHAIN_TOOLS} != "no"
+.if ${MK_TOOLCHAIN} != "no"
 _libelftc=	libelftc
 .endif
 
@@ -215,8 +215,9 @@ _libldns=	libldns
 # sense to build when clang is enabled at all.  Furthermore, they can only be
 # built for certain architectures.
 .if ${MK_CLANG} != "no" && ${COMPILER_TYPE} == "clang" && \
-    (${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64" || \
-    (${MACHINE_CPUARCH} == "arm" && ${MACHINE_ARCH} != "armeb"))
+    (${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
+    (${MACHINE_CPUARCH} == "arm" && ${MACHINE_ARCH} != "armeb") || \
+    (${MACHINE_CPUARCH} == "i386"))
 _libclang_rt=	libclang_rt
 .endif
 
@@ -273,7 +274,7 @@ _libsmb=	libsmb
 _libsmb=	libsmb
 .endif
 
-.if ${MACHINE_CPUARCH} == "arm"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
 _libsmb=	libsmb
 _libproc=	libproc
 _librtld_db=	librtld_db

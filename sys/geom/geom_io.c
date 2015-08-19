@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_io.c 256880 2013-10-22 08:22:19Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_io.c 286405 2015-08-07 08:24:12Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -517,11 +517,11 @@ g_io_request(struct bio *bp, struct g_consumer *cp)
 		getbinuptime(&bp->bio_t0);
 
 #ifdef GET_STACK_USAGE
-	direct = (cp->flags & G_CF_DIRECT_SEND) &&
-		 (pp->flags & G_PF_DIRECT_RECEIVE) &&
-		 !g_is_geom_thread(curthread) &&
-		 (((pp->flags & G_PF_ACCEPT_UNMAPPED) == 0 &&
-		   (bp->bio_flags & BIO_UNMAPPED) != 0) || THREAD_CAN_SLEEP());
+	direct = (cp->flags & G_CF_DIRECT_SEND) != 0 &&
+	    (pp->flags & G_PF_DIRECT_RECEIVE) != 0 &&
+	    !g_is_geom_thread(curthread) &&
+	    ((pp->flags & G_PF_ACCEPT_UNMAPPED) != 0 ||
+	    (bp->bio_flags & BIO_UNMAPPED) == 0 || THREAD_CAN_SLEEP());
 	if (direct) {
 		/* Block direct execution if less then half of stack left. */
 		size_t	st, su;

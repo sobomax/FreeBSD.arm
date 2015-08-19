@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pkg/pkg.c 281039 2015-04-03 17:35:30Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/pkg/pkg.c 286933 2015-08-19 18:24:39Z delphij $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -767,7 +767,13 @@ bootstrap_pkg(bool force)
 		goto fetchfail;
 
 	if (signature_type != NULL &&
-	    strcasecmp(signature_type, "FINGERPRINTS") == 0) {
+	    strcasecmp(signature_type, "NONE") != 0) {
+		if (strcasecmp(signature_type, "FINGERPRINTS") != 0) {
+			warnx("Signature type %s is not supported for "
+			    "bootstrapping.", signature_type);
+			goto cleanup;
+		}
+
 		snprintf(tmpsig, MAXPATHLEN, "%s/pkg.txz.sig.XXXXXX",
 		    getenv("TMPDIR") ? getenv("TMPDIR") : _PATH_TMP);
 		snprintf(url, MAXPATHLEN, "%s/Latest/pkg.txz.sig",
@@ -855,7 +861,13 @@ bootstrap_pkg_local(const char *pkgpath, bool force)
 		goto cleanup;
 	}
 	if (signature_type != NULL &&
-	    strcasecmp(signature_type, "FINGERPRINTS") == 0) {
+	    strcasecmp(signature_type, "NONE") != 0) {
+		if (strcasecmp(signature_type, "FINGERPRINTS") != 0) {
+			warnx("Signature type %s is not supported for "
+			    "bootstrapping.", signature_type);
+			goto cleanup;
+		}
+
 		snprintf(path, sizeof(path), "%s.sig", pkgpath);
 
 		if ((fd_sig = open(path, O_RDONLY)) == -1) {

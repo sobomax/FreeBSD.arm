@@ -28,7 +28,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/casper/pwd/pwd.c 258838 2013-12-02 08:21:28Z pjd $");
+__FBSDID("$FreeBSD: head/libexec/casper/pwd/pwd.c 285063 2015-07-02 21:58:10Z oshogbo $");
+
+#include <sys/nv.h>
 
 #include <errno.h>
 #include <pwd.h>
@@ -37,7 +39,6 @@ __FBSDID("$FreeBSD: head/libexec/casper/pwd/pwd.c 258838 2013-12-02 08:21:28Z pj
 
 #include <libcapsicum.h>
 #include <libcasper.h>
-#include <nv.h>
 #include <pjdlog.h>
 
 static bool

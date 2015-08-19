@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_config.c 279253 2015-02-24 22:07:42Z slm $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_config.c 286568 2015-08-10 09:02:34Z scottl $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
@@ -230,7 +230,7 @@ mps_config_get_man_pg10(struct mps_softc *sc, Mpi2ConfigReply_t *mpi_reply)
 	 * This page must be polled because the IOC isn't ready yet when this
 	 * page is needed.
 	 */  
-	error = mps_request_polled(sc, cm);
+	error = mps_wait_command(sc, cm, 60, 0);
 	reply = (MPI2_CONFIG_REPLY *)cm->cm_reply;
 	if (error || (reply == NULL)) {
 		/* FIXME */
@@ -286,7 +286,7 @@ mps_config_get_man_pg10(struct mps_softc *sc, Mpi2ConfigReply_t *mpi_reply)
 	 * This page must be polled because the IOC isn't ready yet when this
 	 * page is needed.
 	 */  
-	error = mps_request_polled(sc, cm);
+	error = mps_wait_command(sc, cm, 60, 0);
 	reply = (MPI2_CONFIG_REPLY *)cm->cm_reply;
 	if (error || (reply == NULL)) {
 		/* FIXME */
@@ -1123,7 +1123,7 @@ mps_config_get_raid_volume_pg0(struct mps_softc *sc, Mpi2ConfigReply_t
 	 * This page must be polled because the IOC isn't ready yet when this
 	 * page is needed.
 	 */  
-	error = mps_request_polled(sc, cm);
+	error = mps_wait_command(sc, cm, 60, 0);
 	reply = (MPI2_CONFIG_REPLY *)cm->cm_reply;
 	if (error || (reply == NULL)) {
 		/* FIXME */
@@ -1180,7 +1180,7 @@ mps_config_get_raid_volume_pg0(struct mps_softc *sc, Mpi2ConfigReply_t
 	 * This page must be polled because the IOC isn't ready yet when this
 	 * page is needed.
 	 */  
-	error = mps_request_polled(sc, cm);
+	error = mps_wait_command(sc, cm, 60, 0);
 	reply = (MPI2_CONFIG_REPLY *)cm->cm_reply;
 	if (error || (reply == NULL)) {
 		/* FIXME */
@@ -1409,7 +1409,7 @@ mps_config_get_raid_pd_pg0(struct mps_softc *sc, Mpi2ConfigReply_t *mpi_reply,
 	 * This page must be polled because the IOC isn't ready yet when this
 	 * page is needed.
 	 */  
-	error = mps_request_polled(sc, cm);
+	error = mps_wait_command(sc, cm, 60, 0);
 	reply = (MPI2_CONFIG_REPLY *)cm->cm_reply;
 	if (error || (reply == NULL)) {
 		/* FIXME */
@@ -1466,7 +1466,7 @@ mps_config_get_raid_pd_pg0(struct mps_softc *sc, Mpi2ConfigReply_t *mpi_reply,
 	 * This page must be polled because the IOC isn't ready yet when this
 	 * page is needed.
 	 */  
-	error = mps_request_polled(sc, cm);
+	error = mps_wait_command(sc, cm, 60, 0);
 	reply = (MPI2_CONFIG_REPLY *)cm->cm_reply;
 	if (error || (reply == NULL)) {
 		/* FIXME */

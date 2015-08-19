@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netpfil/ipfw/ip_fw_private.h 282070 2015-04-27 08:29:39Z melifaro $
+ * $FreeBSD: head/sys/netpfil/ipfw/ip_fw_private.h 285712 2015-07-20 07:26:31Z ae $
  */
 
 #ifndef _IPFW2_PRIVATE_H
@@ -724,6 +724,23 @@ extern ipfw_nat_cfg_t *ipfw_nat_cfg_ptr;
 extern ipfw_nat_cfg_t *ipfw_nat_del_ptr;
 extern ipfw_nat_cfg_t *ipfw_nat_get_cfg_ptr;
 extern ipfw_nat_cfg_t *ipfw_nat_get_log_ptr;
+
+/* Helper functions for IP checksum adjustment */
+static __inline uint16_t
+cksum_add(uint16_t sum, uint16_t a)
+{
+	uint16_t res;
+
+	res = sum + a;
+	return (res + (res < a));
+}
+
+static __inline uint16_t
+cksum_adjust(uint16_t oldsum, uint16_t old, uint16_t new)
+{
+
+	return (~cksum_add(cksum_add(~oldsum, ~old), new));
+}
 
 #endif /* _KERNEL */
 #endif /* _IPFW2_PRIVATE_H */

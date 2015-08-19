@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvd/nvd.c 256151 2013-10-08 15:44:04Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/nvd/nvd.c 285767 2015-07-21 20:53:21Z jimharris $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -278,6 +278,7 @@ nvd_new_disk(struct nvme_namespace *ns, void *ctrlr_arg)
 	disk->d_maxsize = nvme_ns_get_max_io_xfer_size(ns);
 	disk->d_sectorsize = nvme_ns_get_sector_size(ns);
 	disk->d_mediasize = (off_t)nvme_ns_get_size(ns);
+	disk->d_delmaxsize = (off_t)nvme_ns_get_size(ns);
 
 	if (TAILQ_EMPTY(&disk_head))
 		disk->d_unit = 0;

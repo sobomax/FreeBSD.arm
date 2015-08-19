@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/liblzma/config.h 281372 2015-04-10 17:21:47Z delphij $ */
+/* $FreeBSD: head/lib/liblzma/config.h 285284 2015-07-08 18:36:37Z luigi $ */
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -150,7 +150,8 @@
 #define HAVE_ICONV 1
 
 /* Define to 1 if you have the <immintrin.h> header file. */
-#if defined(__FreeBSD__) && defined(__amd64__)
+/* FreeBSD - only with clang because the base gcc does not support it */
+#if defined(__clang__) && defined(__FreeBSD__) && defined(__amd64__)
 #define HAVE_IMMINTRIN_H 1
 #endif
 

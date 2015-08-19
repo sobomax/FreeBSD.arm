@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/ggate/ggated/ggated.c 241720 2012-10-19 05:43:38Z ed $
+ * $FreeBSD: head/sbin/ggate/ggated/ggated.c 285529 2015-07-14 09:25:10Z brueffer $
  */
 
 #include <stdio.h>
@@ -906,8 +906,8 @@ handshake(struct sockaddr *from, int sfd)
 
 	ex = exports_find(from, &cinit, conn);
 	if (ex == NULL) {
-		connection_remove(conn);
 		sendfail(sfd, errno, NULL);
+		connection_remove(conn);
 		return (0);
 	}
 	if (conn->c_mediasize == 0) {

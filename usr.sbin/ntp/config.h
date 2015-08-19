@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: head/usr.sbin/ntp/config.h 284864 2015-06-26 03:29:23Z cy $ */
+/* $FreeBSD: head/usr.sbin/ntp/config.h 285701 2015-07-19 19:23:38Z delphij $ */
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
@@ -1418,7 +1418,7 @@
 #define PACKAGE_NAME "ntp"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "ntp 4.2.8p2"
+#define PACKAGE_STRING "ntp 4.2.8p3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "ntp"
@@ -1427,7 +1427,7 @@
 #define PACKAGE_URL "http://www.ntp.org./"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.2.8p2"
+#define PACKAGE_VERSION "4.2.8p3"
 
 /* data dir */
 #define PERLLIBDIR "/usr/local/share/ntp/lib"
@@ -1608,7 +1608,7 @@ typedef unsigned int	uintptr_t;
 /* #undef USE_UDP_SIGPOLL */
 
 /* Version number of package */
-#define VERSION "4.2.8p2"
+#define VERSION "4.2.8p3"
 
 /* vsnprintf expands "%m" to strerror(errno) */
 /* #undef VSNPRINTF_PERCENT_M */
@@ -1782,3 +1782,8 @@ typedef union mpinfou {
 	# endif
 	#endif	/* !defined(_KERNEL) && !defined(PARSESTREAM) */
 	
+/*
+ * FreeBSD specific: Explicitly specify date/time for reproducible build.
+ */
+#define	MKREPRO_DATE "Jul 04 2015"
+#define	MKREPRO_TIME "15:42:16"

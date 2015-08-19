@@ -29,9 +29,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.sbin/ypset/ypset.8 99968 2002-07-14 14:47:15Z charnier $
+.\" $FreeBSD: head/usr.sbin/ypset/ypset.8 286610 2015-08-11 01:33:36Z araujo $
 .\"
-.Dd October 25, 1994
+.Dd August 04, 2015
 .Dt YPSET 8
 .Os
 .Sh NAME
@@ -68,15 +68,15 @@ the local network supplying YP maps.
 .Pp
 The options are as follows:
 .Bl -tag -width indent
-.It Fl h Ar host
-Set the YP binding on
-.Ar host
-instead of the local machine.
 .It Fl d Ar domain
 Use the YP domain
 .Ar domain
 instead of the default domain as returned by
 .Xr domainname 1 .
+.It Fl h Ar host
+Set the YP binding on
+.Ar host
+instead of the local machine.
 .El
 .Sh SEE ALSO
 .Xr domainname 1 ,

@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_trap.c 284214 2015-06-10 10:43:59Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_trap.c 285511 2015-07-13 22:52:11Z mjg $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_ktrace.h"
@@ -172,7 +172,7 @@ userret(struct thread *td, struct trapframe *frame)
 	    (td->td_vnet_lpush != NULL) ? td->td_vnet_lpush : "N/A"));
 #endif
 #ifdef RACCT
-	if (racct_enable) {
+	if (racct_enable && p->p_throttled == 1) {
 		PROC_LOCK(p);
 		while (p->p_throttled == 1)
 			msleep(p->p_racct, &p->p_mtx, 0, "racct", 0);

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_ulpi.c,v 1.1 2002/11/24 19:47:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_ulpi.c 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_ulpi.c 285244 2015-07-07 15:56:51Z takawata $
  */
 
 #include <sys/param.h>
@@ -398,7 +398,7 @@ ng_l2cap_l2ca_con_ind(ng_l2cap_chan_p ch)
 		ip->lcid = ch->scid;
 		ip->psm = ch->psm;
 		ip->ident = ch->ident;
-
+		ip->linktype = ch->con->linktype;
 		NG_SEND_MSG_HOOK(error, l2cap->node, msg, l2cap->l2c, 0);
 	}
 

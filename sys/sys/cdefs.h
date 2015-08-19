@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cdefs.h	8.8 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/cdefs.h 284858 2015-06-25 19:39:07Z tijl $
+ * $FreeBSD: head/sys/sys/cdefs.h 286531 2015-08-09 15:38:32Z pfg $
  */
 
 #ifndef	_SYS_CDEFS_H_
@@ -227,16 +227,7 @@
 #define	__unused
 /* XXX Find out what to do for __packed, __aligned and __section */
 #endif
-#if __GNUC_PREREQ__(2, 7)
-#define	__dead2		__attribute__((__noreturn__))
-#define	__pure2		__attribute__((__const__))
-#define	__unused	__attribute__((__unused__))
-#define	__used		__attribute__((__used__))
-#define	__packed	__attribute__((__packed__))
-#define	__aligned(x)	__attribute__((__aligned__(x)))
-#define	__section(x)	__attribute__((__section__(x)))
-#endif
-#if defined(__INTEL_COMPILER)
+#if __GNUC_PREREQ__(2, 7) || defined(__INTEL_COMPILER)
 #define	__dead2		__attribute__((__noreturn__))
 #define	__pure2		__attribute__((__const__))
 #define	__unused	__attribute__((__unused__))
@@ -469,11 +460,13 @@
 #endif
 
 #if __GNUC_PREREQ__(4, 0)
-#define	__hidden	__attribute__((__visibility__("hidden")))
+#define	__sentinel	__attribute__((__sentinel__))
 #define	__exported	__attribute__((__visibility__("default")))
+#define	__hidden	__attribute__((__visibility__("hidden")))
 #else
-#define	__hidden
+#define	__sentinel
 #define	__exported
+#define	__hidden
 #endif
 
 /*
@@ -542,7 +535,7 @@
  * using these but GCC-compatible compilers tend to support the extensions
  * well enough to use them in limited cases.
  */ 
-#if __GNUC_PREREQ__(4, 1)
+#if defined(__GNUC_GNU_INLINE__) || defined(__GNUC_STDC_INLINE__)
 #if __has_attribute(artificial) || __GNUC_PREREQ__(4, 3)
 #define	__gnu_inline	__attribute__((__gnu_inline__, __artificial__))
 #else
@@ -612,7 +605,7 @@
  * Embed the rcs id of a source file in the resulting library.  Note that in
  * more recent ELF binutils, we use .ident allowing the ID to be stripped.
  * Usage:
- *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 284858 2015-06-25 19:39:07Z tijl $");
+ *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 286531 2015-08-09 15:38:32Z pfg $");
  */
 #ifndef	__FBSDID
 #if !defined(lint) && !defined(STRIP_FBSDID)

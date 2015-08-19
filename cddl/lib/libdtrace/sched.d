@@ -20,16 +20,14 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/cddl/lib/libdtrace/sched.d 179189 2008-05-22 04:26:42Z jb $
+ * $FreeBSD: head/cddl/lib/libdtrace/sched.d 286420 2015-08-07 19:56:22Z markj $
  */
 /*
  * Copyright 2006 Sun Microsystems, Inc.  All rights reserved.
  * Use is subject to license terms.
  */
 
-#pragma ident	"%Z%%M%	%I%	%E% SMI"
-
-#pragma D depends_on module unix
+#pragma D depends_on module kernel
 #pragma D depends_on provider sched
 
 struct cpuinfo {

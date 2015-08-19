@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/if_wtapvar.h 283527 2015-05-25 13:51:13Z glebius $
+ * $FreeBSD: head/sys/dev/wtap/if_wtapvar.h 286437 2015-08-08 01:10:17Z adrian $
  */
 
 #ifndef _DEV_WTAP_WTAPVAR_H
@@ -120,7 +120,7 @@ struct wtap_vap {
 	struct callout		av_swba;	/* software beacon alert */
 	uint32_t		av_bcinterval;	/* beacon interval */
 	void (*av_recv_mgmt)(struct ieee80211_node *,
-	    struct mbuf *, int, int, int);
+	    struct mbuf *, int, const struct ieee80211_rx_stats *, int, int);
 	int (*av_newstate)(struct ieee80211vap *,
 	    enum ieee80211_state, int);
 	void (*av_bmiss)(struct ieee80211vap *);

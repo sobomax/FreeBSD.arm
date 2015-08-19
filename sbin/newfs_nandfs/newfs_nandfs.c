@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/newfs_nandfs/newfs_nandfs.c 262880 2014-03-07 01:01:57Z imp $");
+__FBSDID("$FreeBSD: head/sbin/newfs_nandfs/newfs_nandfs.c 285029 2015-07-02 12:14:48Z brueffer $");
 
 #include <sys/param.h>
 #include <sys/fdcio.h>
@@ -897,7 +897,7 @@ check_parameters(void)
 		    NANDFS_SEG_MIN_BLOCKS);
 
 	/* check reserved segment percentage */
-	if ((rsv_segment_percent < 1) && (rsv_segment_percent > 99))
+	if ((rsv_segment_percent < 1) || (rsv_segment_percent > 99))
 		errx(1, "Bad reserved segment percentage. "
 		    "Must in range 1..99.");
 

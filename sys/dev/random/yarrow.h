@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2000-2013 Mark R V Murray
+ * Copyright (c) 2000-2015 Mark R V Murray
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,22 +23,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/yarrow.h 273872 2014-10-30 21:21:53Z markm $
+ * $FreeBSD: head/sys/dev/random/yarrow.h 284959 2015-06-30 17:00:45Z markm $
  */
 
 #ifndef SYS_DEV_RANDOM_YARROW_H_INCLUDED
-#define SYS_DEV_RANDOM_YARROW_H_INCLUDED
+#define	SYS_DEV_RANDOM_YARROW_H_INCLUDED
 
 #ifdef _KERNEL
 typedef struct mtx mtx_t;
+#define	RANDOM_RESEED_INIT_LOCK(x)		mtx_init(&yarrow_state.ys_mtx, "reseed mutex", NULL, MTX_DEF)
+#define	RANDOM_RESEED_DEINIT_LOCK(x)		mtx_destroy(&yarrow_state.ys_mtx)
+#define	RANDOM_RESEED_LOCK(x)			mtx_lock(&yarrow_state.ys_mtx)
+#define	RANDOM_RESEED_UNLOCK(x)			mtx_unlock(&yarrow_state.ys_mtx)
+#define	RANDOM_RESEED_ASSERT_LOCK_OWNED(x)	mtx_assert(&yarrow_state.ys_mtx, MA_OWNED)
+#else
+#define	RANDOM_RESEED_INIT_LOCK(x)		mtx_init(&yarrow_state.ys_mtx, mtx_plain)
+#define	RANDOM_RESEED_DEINIT_LOCK(x)		mtx_destroy(&yarrow_state.ys_mtx)
+#define	RANDOM_RESEED_LOCK(x)			mtx_lock(&yarrow_state.ys_mtx)
+#define	RANDOM_RESEED_UNLOCK(x)			mtx_unlock(&yarrow_state.ys_mtx)
+#define	RANDOM_RESEED_ASSERT_LOCK_OWNED(x)
 #endif
 
-void random_yarrow_init_alg(void);
-void random_yarrow_deinit_alg(void);
-void random_yarrow_read(uint8_t *, u_int);
-void random_yarrow_write(uint8_t *, u_int);
-void random_yarrow_reseed(void);
-int random_yarrow_seeded(void);
-void random_yarrow_process_event(struct harvest_event *event);
-
-#endif
+#endif /* SYS_DEV_RANDOM_YARROW_H_INCLUDED */

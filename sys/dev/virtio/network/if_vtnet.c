@@ -27,7 +27,7 @@
 /* Driver for VirtIO network devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 284348 2015-06-13 19:39:21Z kp $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 285351 2015-07-10 07:13:14Z luigi $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -304,6 +304,9 @@ DRIVER_MODULE(vtnet, virtio_pci, vtnet_driver, vtnet_devclass,
     vtnet_modevent, 0);
 MODULE_VERSION(vtnet, 1);
 MODULE_DEPEND(vtnet, virtio, 1, 1, 1);
+#ifdef DEV_NETMAP
+MODULE_DEPEND(vtnet, netmap, 1, 1, 1);
+#endif /* DEV_NETMAP */
 
 static int
 vtnet_modevent(module_t mod, int type, void *unused)

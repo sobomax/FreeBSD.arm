@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_private.h#7 $
- * $FreeBSD: head/sys/cam/ctl/ctl_private.h 284640 2015-06-20 12:43:54Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_private.h 286807 2015-08-15 15:42:21Z mav $
  */
 /*
  * CAM Target Layer driver private data structures/definitions.
@@ -46,18 +46,6 @@
 #define	CTL_DIRECT_PRODUCT	"CTLDISK         "
 #define	CTL_PROCESSOR_PRODUCT	"CTLPROCESSOR    "
 #define	CTL_UNKNOWN_PRODUCT	"CTLDEVICE       "
-
-struct ctl_fe_ioctl_startstop_info {
-	struct cv			sem;
-	struct ctl_hard_startstop_info	hs_info;
-};
-
-struct ctl_fe_ioctl_bbrread_info {
-	struct cv			sem;
-	struct ctl_bbrread_info		*bbr_info;
-	int				wakeup_done;
-	struct mtx			*lock;
-};
 
 typedef enum {
 	CTL_IOCTL_INPROG,
@@ -78,18 +66,6 @@ struct ctl_io_pool {
 	uint32_t			id;
 	struct ctl_softc		*ctl_softc;
 	struct uma_zone			*zone;
-};
-
-typedef enum {
-	CTL_IOCTL_FLAG_NONE	= 0x00,
-	CTL_IOCTL_FLAG_ENABLED	= 0x01
-} ctl_ioctl_flags;
-
-struct ctl_ioctl_info {
-	ctl_ioctl_flags		flags;
-	uint32_t		cur_tag_num;
-	struct ctl_port		port;
-	char			port_name[24];
 };
 
 typedef enum {
@@ -141,6 +117,7 @@ typedef enum {
 	CTL_SERIDX_READ,
 	CTL_SERIDX_WRITE,
 	CTL_SERIDX_UNMAP,
+	CTL_SERIDX_SYNC,
 	CTL_SERIDX_MD_SNS,
 	CTL_SERIDX_MD_SEL,
 	CTL_SERIDX_RQ_SNS,
@@ -471,7 +448,6 @@ struct ctl_softc {
 	int inquiry_pq_no_lun;
 	struct sysctl_ctx_list sysctl_ctx;
 	struct sysctl_oid *sysctl_tree;
-	struct ctl_ioctl_info ioctl_info;
 	void *othersc_pool;
 	struct proc *ctl_proc;
 	int targ_online;

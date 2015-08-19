@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 283092 2015-05-18 23:46:11Z jkim $
+# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 285797 2015-07-22 16:25:07Z jkim $
 
 PROG=	iasl
 
@@ -62,9 +62,9 @@ SRCS+=	tbdata.c tbfadt.c tbinstal.c tbprint.c tbutils.c	\
 SRCS+=	utaddress.c utalloc.c utbuffer.c utcache.c utcopy.c	\
 	utdebug.c utdecode.c utdelete.c uterror.c utexcep.c	\
 	utfileio.c utglobal.c uthex.c utinit.c utlock.c		\
-	utmath.c utmisc.c utmutex.c utobject.c utownerid.c	\
-	utpredef.c utprint.c utresrc.c utstate.c utstring.c	\
-	utuuid.c utxface.c utxferror.c
+	utmath.c utmisc.c utmutex.c utnonansi.c utobject.c	\
+	utownerid.c utpredef.c utprint.c utresrc.c utstate.c	\
+	utstring.c utuuid.c utxface.c utxferror.c
 
 # os_specific/service_layers
 SRCS+=	oslibcfs.c osunixxf.c

@@ -25,14 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iovctl/validate.c 279459 2015-03-01 00:52:28Z rstone $");
+__FBSDID("$FreeBSD: head/usr.sbin/iovctl/validate.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
 #include <sys/param.h>
 #include <sys/iov.h>
+#include <sys/dnv.h>
+#include <sys/nv.h>
 
-#include <dnv.h>
 #include <err.h>
-#include <nv.h>
 #include <regex.h>
 #include <stdlib.h>
 

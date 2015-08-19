@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/stack_machdep.c 174195 2007-12-02 20:40:35Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/stack_machdep.c 285643 2015-07-16 19:40:18Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,7 +40,7 @@ __FBSDID("$FreeBSD: head/sys/amd64/amd64/stack_machdep.c 174195 2007-12-02 20:40
 #include <vm/pmap.h>
 
 static void
-stack_capture(struct stack *st, register_t rbp)
+stack_capture(struct thread *td, struct stack *st, register_t rbp)
 {
 	struct amd64_frame *frame;
 	vm_offset_t callpc;
@@ -56,8 +56,8 @@ stack_capture(struct stack *st, register_t rbp)
 		if (stack_put(st, callpc) == -1)
 			break;
 		if (frame->f_frame <= frame ||
-		    (vm_offset_t)frame->f_frame >=
-		    (vm_offset_t)rbp + KSTACK_PAGES * PAGE_SIZE)
+		    (vm_offset_t)frame->f_frame >= td->td_kstack +
+		    td->td_kstack_pages * PAGE_SIZE)
 			break;
 		frame = frame->f_frame;
 	}
@@ -74,7 +74,7 @@ stack_save_td(struct stack *st, struct thread *td)
 		panic("stack_save_td: running");
 
 	rbp = td->td_pcb->pcb_rbp;
-	stack_capture(st, rbp);
+	stack_capture(td, st, rbp);
 }
 
 void
@@ -83,5 +83,5 @@ stack_save(struct stack *st)
 	register_t rbp;
 
 	__asm __volatile("movq %%rbp,%0" : "=r" (rbp));
-	stack_capture(st, rbp);
+	stack_capture(curthread, st, rbp);
 }

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/tcp_timer.h 284245 2015-06-10 20:43:07Z jch $
+ * $FreeBSD: head/sys/netinet/tcp_timer.h 286669 2015-08-12 16:08:37Z hiren $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -76,7 +76,6 @@
 #define	TCPTV_SRTTBASE	0			/* base roundtrip time;
 						   if 0, no idea yet */
 #define	TCPTV_RTOBASE	(  3*hz)		/* assumed RTO if no info */
-#define	TCPTV_SRTTDFLT	(  3*hz)		/* assumed RTT if no info */
 
 #define	TCPTV_PERSMIN	(  5*hz)		/* retransmit persistence */
 #define	TCPTV_PERSMAX	( 60*hz)		/* maximum persist interval */

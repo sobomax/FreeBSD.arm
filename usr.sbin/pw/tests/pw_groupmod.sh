@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/pw/tests/pw_groupmod.sh 284129 2015-06-07 19:33:25Z bapt $
+# $FreeBSD: head/usr.sbin/pw/tests/pw_groupmod.sh 285411 2015-07-11 22:35:07Z bapt $
 
 # Import helper functions
 . $(atf_get_srcdir)/helper_functions.shin
@@ -81,6 +81,32 @@ groupmod_rename_body() {
 		grep "^bar:.*" ${HOME}/group
 }
 
+atf_test_case groupmod_members
+groupmod_members_body() {
+	populate_etc_skel
+
+	for i in user1 user2 user3 user4; do
+		atf_check -s exit:0 ${PW} useradd $i
+	done
+
+	atf_check -s exit:0 ${PW} groupadd foo -M "user1, user2"
+	atf_check -o inline:"foo:*:1005:user1,user2\n" -s exit:0 \
+		${PW} groupshow foo
+	atf_check -s exit:0 ${PW} groupmod foo -m "user3, user4"
+	atf_check -o inline:"foo:*:1005:user1,user2,user3,user4\n" -s exit:0 \
+		${PW} groupshow foo
+	atf_check -s exit:0 ${PW} groupmod foo -M "user1, user4"
+	atf_check -o inline:"foo:*:1005:user1,user4\n" -s exit:0 \
+		${PW} groupshow foo
+	# what about duplicates
+	atf_check -s exit:0 ${PW} groupmod foo -m "user1, user2, user3, user4"
+	atf_check -o inline:"foo:*:1005:user1,user4,user2,user3\n" -s exit:0 \
+		${PW} groupshow foo
+	atf_check -s exit:0 ${PW} groupmod foo -d "user1, user3"
+	atf_check -o inline:"foo:*:1005:user4,user2\n" -s exit:0 \
+		${PW} groupshow foo
+}
+
 atf_init_test_cases() {
 	atf_add_test_case groupmod_user
 	atf_add_test_case groupmod_invalid_user
@@ -88,4 +114,5 @@ atf_init_test_cases() {
 	atf_add_test_case usermod_bug_185666
 	atf_add_test_case do_not_duplicate_group_on_gid_change
 	atf_add_test_case groupmod_rename
+	atf_add_test_case groupmod_members
 }

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.h 282048 2015-04-27 01:12:51Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.h 285770 2015-07-21 21:46:24Z eri $	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-
@@ -337,7 +337,7 @@ extern void ah4_ctlinput(int cmd, struct sockaddr *sa, void *);
 extern int esp4_input(struct mbuf **mp, int *offp, int proto);
 extern void esp4_ctlinput(int cmd, struct sockaddr *sa, void *);
 extern int ipcomp4_input(struct mbuf **mp, int *offp, int proto);
-extern int ipsec4_common_input(struct mbuf *m, ...);
+extern int ipsec_common_input(struct mbuf *m, int, int, int, int); 
 extern int ipsec4_common_input_cb(struct mbuf *m, struct secasvar *sav,
 			int skip, int protoff);
 extern int ipsec4_process_packet(struct mbuf *, struct ipsecrequest *);

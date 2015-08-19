@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/loader/Makefile 284590 2015-06-19 05:42:24Z bapt $
+# $FreeBSD: head/sys/boot/i386/loader/Makefile 286368 2015-08-06 16:07:27Z allanjude $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -110,12 +110,7 @@ FILESMODE_${LOADER}= ${BINMODE} -b
 .include	"${.CURDIR}/../../forth/Makefile.inc"
 FILES+=	pcibios.4th
 
-.if !exists(${DESTDIR}/boot/loader.rc)
-FILES+=	loader.rc
-.endif
-.if !exists(${DESTDIR}/boot/menu.rc)
-FILES+= menu.rc
-.endif
+FILES+=	loader.rc menu.rc
 .endif
 
 # XXX crt0.o needs to be first for pxeboot(8) to work

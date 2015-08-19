@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet6/in6_var.h 280444 2015-03-24 16:45:50Z glebius $
+ * $FreeBSD: head/sys/netinet6/in6_var.h 286001 2015-07-29 08:12:05Z ae $
  */
 
 #ifndef _NETINET6_IN6_VAR_H_
@@ -535,14 +535,14 @@ in6_addrhash(const struct in6_addr *in6)
 	return (fnv_32_buf(&x, sizeof(x), FNV1_32_INIT));
 }
 
-extern struct rwlock in6_ifaddr_lock;
-#define	IN6_IFADDR_LOCK_ASSERT(	)	rw_assert(&in6_ifaddr_lock, RA_LOCKED)
-#define	IN6_IFADDR_RLOCK()		rw_rlock(&in6_ifaddr_lock)
-#define	IN6_IFADDR_RLOCK_ASSERT()	rw_assert(&in6_ifaddr_lock, RA_RLOCKED)
-#define	IN6_IFADDR_RUNLOCK()		rw_runlock(&in6_ifaddr_lock)
-#define	IN6_IFADDR_WLOCK()		rw_wlock(&in6_ifaddr_lock)
-#define	IN6_IFADDR_WLOCK_ASSERT()	rw_assert(&in6_ifaddr_lock, RA_WLOCKED)
-#define	IN6_IFADDR_WUNLOCK()		rw_wunlock(&in6_ifaddr_lock)
+extern struct rmlock in6_ifaddr_lock;
+#define	IN6_IFADDR_LOCK_ASSERT()	rm_assert(&in6_ifaddr_lock, RA_LOCKED)
+#define	IN6_IFADDR_RLOCK(t)		rm_rlock(&in6_ifaddr_lock, (t))
+#define	IN6_IFADDR_RLOCK_ASSERT()	rm_assert(&in6_ifaddr_lock, RA_RLOCKED)
+#define	IN6_IFADDR_RUNLOCK(t)		rm_runlock(&in6_ifaddr_lock, (t))
+#define	IN6_IFADDR_WLOCK()		rm_wlock(&in6_ifaddr_lock)
+#define	IN6_IFADDR_WLOCK_ASSERT()	rm_assert(&in6_ifaddr_lock, RA_WLOCKED)
+#define	IN6_IFADDR_WUNLOCK()		rm_wunlock(&in6_ifaddr_lock)
 
 #define in6_ifstat_inc(ifp, tag) \
 do {								\

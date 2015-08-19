@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/pw/tests/pw_groupdel.sh 275656 2014-12-09 21:43:03Z brd $
+# $FreeBSD: head/usr.sbin/pw/tests/pw_groupdel.sh 286196 2015-08-02 12:47:50Z bapt $
 
 # Import helper functions
 . $(atf_get_srcdir)/helper_functions.shin
@@ -13,7 +13,7 @@ group_do_not_delete_wheel_if_group_unknown_head() {
 group_do_not_delete_wheel_if_group_unknown_body() {
         populate_etc_skel
         atf_check -s exit:0 -o inline:"wheel:*:0:root\n" -x ${PW} groupshow wheel
-        atf_check -e inline:"pw: -g expects a number\n" -s exit:64 -x \
+        atf_check -e inline:"pw: Bad id 'I_do_not_exist': invalid\n" -s exit:64 -x \
 		${PW} groupdel -g I_do_not_exist
         atf_check -s exit:0 -o inline:"wheel:*:0:root\n" -x ${PW} groupshow wheel
 }

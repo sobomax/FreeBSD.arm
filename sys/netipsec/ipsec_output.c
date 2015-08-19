@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netipsec/ipsec_output.c 282139 2015-04-28 11:03:47Z ae $
+ * $FreeBSD: head/sys/netipsec/ipsec_output.c 286095 2015-07-30 20:56:27Z eri $
  */
 
 /*
@@ -158,6 +158,8 @@ ipsec_process_done(struct mbuf *m, struct ipsecrequest *isr)
 	tdbi->spi = sav->spi;
 	m_tag_prepend(m, mtag);
 
+	key_sa_recordxfer(sav, m);		/* record data transfer */
+
 	/*
 	 * If there's another (bundled) SA to apply, do so.
 	 * Note that this puts a burden on the kernel stack size.
@@ -202,7 +204,6 @@ ipsec_process_done(struct mbuf *m, struct ipsecrequest *isr)
 			goto bad;
 		}
 	}
-	key_sa_recordxfer(sav, m);		/* record data transfer */
 
 	/*
 	 * We're done with IPsec processing, transmit the packet using the

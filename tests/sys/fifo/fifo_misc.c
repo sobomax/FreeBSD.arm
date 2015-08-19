@@ -24,12 +24,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tests/sys/fifo/fifo_misc.c 281450 2015-04-12 06:18:24Z ngie $
+ * $FreeBSD: head/tests/sys/fifo/fifo_misc.c 285891 2015-07-26 14:46:42Z rodrigc $
  */
 
 #include <sys/types.h>
 #include <sys/event.h>
 #include <sys/filio.h>
+#include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 
@@ -149,7 +150,7 @@ test_truncate(void)
 }
 
 static int
-test_ioctl_setclearflag(int fd, int flag, const char *testname,
+test_ioctl_setclearflag(int fd, unsigned long flag, const char *testname,
     const char *fdname, const char *flagname)
 {
 	int i;

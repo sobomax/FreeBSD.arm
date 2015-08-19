@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/sys/netpfil/ipfw/test/dn_test.h 204866 2010-03-08 11:27:39Z luigi $
+ * $FreeBSD: head/sys/netpfil/ipfw/test/dn_test.h 285360 2015-07-10 18:10:40Z luigi $
  *
  * userspace compatibility code for dummynet schedulers
  */
@@ -30,8 +30,12 @@ extern int debug;
 
 
 #ifndef offsetof
-#define offsetof(t,m) (int)((&((t *)0L)->m))
+#define offsetof(t,m) (int)(intptr_t)((&((t *)0L)->m))
 #endif
+
+#if defined(__APPLE__) // XXX osx
+typedef unsigned int u_int;
+#endif /* osx */
 
 #include <mylist.h>
 
@@ -85,6 +89,11 @@ struct dn_flow {
 	uint64_t tot_bytes;
 	uint32_t flow_id;
 	struct list_head h;	/* used by the generator */
+
+	/* bytes served by the flow since the last backlog time */
+	uint64_t bytes;
+	/* bytes served by the system at the last backlog time  */
+	uint64_t sch_bytes;
 };
 
 struct dn_link {
@@ -103,7 +112,7 @@ struct mbuf {
 	void *cfg;	/* config args */
 };
 
-#define MALLOC_DECLARE(x)
+#define MALLOC_DECLARE(x)	extern volatile int __dummy__ ## x
 #define KASSERT(x, y)	do { if (!(x)) printf y ; exit(0); } while (0)
 struct ipfw_flow_id {
 };

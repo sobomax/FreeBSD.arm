@@ -25,7 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/stack_machdep.c 200272 2009-12-08 20:18:54Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/stack_machdep.c 285627 2015-07-16 10:46:52Z zbb $");
+
+#include "opt_kstack_pages.h"
 
 #include <sys/param.h>
 #include <sys/proc.h>

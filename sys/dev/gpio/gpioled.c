@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/gpio/gpioled.c 283360 2015-05-24 07:45:42Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/dev/gpio/gpioled.c 286847 2015-08-17 17:09:57Z loos $");
 
 #include "opt_platform.h"
 
@@ -255,3 +255,4 @@ static driver_t gpioled_driver = {
 };
 
 DRIVER_MODULE(gpioled, gpiobus, gpioled_driver, gpioled_devclass, 0, 0);
+MODULE_DEPEND(gpioled, gpiobus, 1, 1, 1);

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)radix.h	8.2 (Berkeley) 10/31/94
- * $FreeBSD: head/sys/net/radix.h 262758 2014-03-04 23:55:04Z gnn $
+ * $FreeBSD: head/sys/net/radix.h 286057 2015-07-30 02:09:03Z loos $
  */
 
 #ifndef _RADIX_H_
@@ -137,7 +137,7 @@ struct radix_node_head {
 #else
 #define R_Malloc(p, t, n) (p = (t) malloc((unsigned long)(n), M_RTABLE, M_NOWAIT))
 #define R_Zalloc(p, t, n) (p = (t) malloc((unsigned long)(n), M_RTABLE, M_NOWAIT | M_ZERO))
-#define Free(p) free((caddr_t)p, M_RTABLE);
+#define R_Free(p) free((caddr_t)p, M_RTABLE);
 
 #define	RADIX_NODE_HEAD_LOCK_INIT(rnh)	\
     rw_init_flags(&(rnh)->rnh_lock, "radix node head", 0)

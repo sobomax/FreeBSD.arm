@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 284640 2015-06-20 12:43:54Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 286806 2015-08-15 13:34:38Z mav $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 284640 2015-06-20 12:43:54Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 286806 2015-08-15 13:34:38Z mav $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -61,7 +61,6 @@ __FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 284640 2015-06-20 12:4
 #include <cam/ctl/ctl_backend.h>
 #include <cam/ctl/ctl_error.h>
 #include <cam/ctl/ctl_frontend.h>
-#include <cam/ctl/ctl_frontend_internal.h>
 #include <cam/ctl/ctl_debug.h>
 #include <cam/ctl/ctl_ha.h>
 #include <cam/ctl/ctl_ioctl.h>

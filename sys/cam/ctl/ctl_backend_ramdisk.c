@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_backend_ramdisk.c 278672 2015-02-13 13:26:23Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_backend_ramdisk.c 286806 2015-08-15 13:34:38Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -62,7 +62,6 @@ __FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_backend_ramdisk.c 278672 2015-02-13 13:
 #include <cam/ctl/ctl.h>
 #include <cam/ctl/ctl_util.h>
 #include <cam/ctl/ctl_backend.h>
-#include <cam/ctl/ctl_frontend_internal.h>
 #include <cam/ctl/ctl_debug.h>
 #include <cam/ctl/ctl_ioctl.h>
 #include <cam/ctl/ctl_error.h>

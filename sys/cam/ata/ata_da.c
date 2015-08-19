@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ata/ata_da.c 280845 2015-03-30 09:05:20Z eadler $");
+__FBSDID("$FreeBSD: head/sys/cam/ata/ata_da.c 286447 2015-08-08 11:22:45Z mav $");
 
 #include "opt_ada.h"
 
@@ -767,10 +767,6 @@ adastrategy(struct bio *bp)
 	 * Place it in the queue of disk activities for this disk
 	 */
 	if (bp->bio_cmd == BIO_DELETE) {
-		KASSERT((softc->flags & ADA_FLAG_CAN_TRIM) ||
-			((softc->flags & ADA_FLAG_CAN_CFA) &&
-			 !(softc->flags & ADA_FLAG_CAN_48BIT)),
-			("BIO_DELETE but no supported TRIM method."));
 		bioq_disksort(&softc->trim_queue, bp);
 	} else {
 		if (ADA_SIO)
@@ -1544,7 +1540,14 @@ adastart(struct cam_periph *periph, union ccb *start_ccb)
 			    !(softc->flags & ADA_FLAG_CAN_48BIT)) {
 				ada_cfaerase(softc, bp, ataio);
 			} else {
-				panic("adastart: BIO_DELETE without method, not possible.");
+				/* This can happen if DMA was disabled. */
+				bioq_remove(&softc->trim_queue, bp);
+				bp->bio_error = EOPNOTSUPP;
+				bp->bio_flags |= BIO_ERROR;
+				biodone(bp);
+				xpt_release_ccb(start_ccb);
+				adaschedule(periph);
+				return;
 			}
 			softc->trim_running = 1;
 			start_ccb->ccb_h.ccb_state = ADA_CCB_TRIM;

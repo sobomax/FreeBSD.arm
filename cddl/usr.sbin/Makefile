@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/Makefile 283147 2015-05-20 12:26:09Z ngie $
+# $FreeBSD: head/cddl/usr.sbin/Makefile 285009 2015-07-01 15:51:11Z br $
 
 .include <src.opts.mk>
 
@@ -30,7 +30,7 @@ _plockstat=	plockstat
 .endif
 .endif
 
-.if ${MACHINE_CPUARCH} == "arm"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
 _dtrace=	dtrace
 _dtruss=	dtruss
 _lockstat=	lockstat

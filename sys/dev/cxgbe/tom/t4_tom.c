@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_tom.c 278374 2015-02-08 09:28:55Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_tom.c 286001 2015-07-29 08:12:05Z ae $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -36,9 +36,11 @@ __FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_tom.c 278374 2015-02-08 09:28:55Z 
 #include <sys/systm.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
+#include <sys/lock.h>
 #include <sys/module.h>
 #include <sys/protosw.h>
 #include <sys/domain.h>
+#include <sys/rmlock.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/taskqueue.h>
@@ -762,6 +764,7 @@ t4_clip_task(void *arg, int count)
 static void
 update_clip_table(struct adapter *sc, struct tom_data *td)
 {
+	struct rm_priotracker in6_ifa_tracker;
 	struct in6_ifaddr *ia;
 	struct in6_addr *lip, tlip;
 	struct clip_head stale;
@@ -770,7 +773,7 @@ update_clip_table(struct adapter *sc, struct tom_data *td)
 
 	ASSERT_SYNCHRONIZED_OP(sc);
 
-	IN6_IFADDR_RLOCK();
+	IN6_IFADDR_RLOCK(&in6_ifa_tracker);
 	mtx_lock(&td->clip_table_lock);
 
 	if (gen == td->clip_gen)
@@ -862,7 +865,7 @@ next:
 	td->clip_gen = gen;
 done:
 	mtx_unlock(&td->clip_table_lock);
-	IN6_IFADDR_RUNLOCK();
+	IN6_IFADDR_RUNLOCK(&in6_ifa_tracker);
 }
 
 static void

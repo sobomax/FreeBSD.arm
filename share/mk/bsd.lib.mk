@@ -1,5 +1,5 @@
 #	from: @(#)bsd.lib.mk	5.26 (Berkeley) 5/2/91
-# $FreeBSD: head/share/mk/bsd.lib.mk 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/share/mk/bsd.lib.mk 286792 2015-08-14 22:55:23Z rpaulo $
 #
 
 .include <bsd.init.mk>
@@ -171,7 +171,7 @@ _LIBS=		lib${LIB_PRIVATE}${LIB}.a
 lib${LIB_PRIVATE}${LIB}.a: ${OBJS} ${STATICOBJS}
 	@${ECHO} building static ${LIB} library
 	@rm -f ${.TARGET}
-	${AR} ${ARFLAGS} ${.TARGET} `NM='${NM}' lorder ${OBJS} ${STATICOBJS} | tsort -q` ${ARADD}
+	${AR} ${ARFLAGS} ${.TARGET} `NM='${NM}' NMFLAGS='${NMFLAGS}' lorder ${OBJS} ${STATICOBJS} | tsort -q` ${ARADD}
 	${RANLIB} ${RANLIBFLAGS} ${.TARGET}
 .endif
 
@@ -185,7 +185,7 @@ NOPATH_FILES+=	${POBJS}
 lib${LIB_PRIVATE}${LIB}_p.a: ${POBJS}
 	@${ECHO} building profiled ${LIB} library
 	@rm -f ${.TARGET}
-	${AR} ${ARFLAGS} ${.TARGET} `NM='${NM}' lorder ${POBJS} | tsort -q` ${ARADD}
+	${AR} ${ARFLAGS} ${.TARGET} `NM='${NM}' NMFLAGS='${NMFLAGS}' lorder ${POBJS} | tsort -q` ${ARADD}
 	${RANLIB} ${RANLIBFLAGS} ${.TARGET}
 .endif
 
@@ -250,7 +250,7 @@ ${SHLIB_NAME_FULL}: ${SOBJS}
 .endif
 	${_LD} ${LDFLAGS} ${SSP_CFLAGS} ${SOLINKOPTS} \
 	    -o ${.TARGET} -Wl,-soname,${SONAME} \
-	    `NM='${NM}' lorder ${SOBJS} | tsort -q` ${LDADD}
+	    `NM='${NM}' NMFLAGS='${NMFLAGS}' lorder ${SOBJS} | tsort -q` ${LDADD}
 .if ${MK_CTF} != "no"
 	${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${SOBJS}
 .endif
@@ -362,7 +362,7 @@ _libinstall:
 .if ${_SHLIBDIR} == ${_LIBDIR}
 	${INSTALL_SYMLINK} ${SHLIB_NAME} ${DESTDIR}${_LIBDIR}/${SHLIB_LINK}
 .else
-	${INSTALL_SYMLINK} ${_SHLIBDIRPREFIX}${_SHLIBDIR}/${SHLIB_NAME} \
+	${INSTALL_RSYMLINK} ${DESTDIR}${_SHLIBDIR}/${SHLIB_NAME} \
 	    ${DESTDIR}${_LIBDIR}/${SHLIB_LINK}
 .if exists(${DESTDIR}${_LIBDIR}/${SHLIB_NAME})
 	-chflags noschg ${DESTDIR}${_LIBDIR}/${SHLIB_NAME}

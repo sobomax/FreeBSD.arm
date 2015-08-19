@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/powerpc/include/param.h 258079 2013-11-13 01:51:40Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/include/param.h 286584 2015-08-10 17:18:21Z kib $
  */
 
 #ifndef _POWERPC_INCLUDE_PARAM_H_
@@ -111,7 +111,7 @@
 #endif
 #endif
 #define	KSTACK_GUARD_PAGES	1	/* pages of kstack guard; 0 disables */
-#define	USPACE		(KSTACK_PAGES * PAGE_SIZE)	/* total size of pcb */
+#define	USPACE		(kstack_pages * PAGE_SIZE)	/* total size of pcb */
 
 /*
  * Mach derived conversion macros

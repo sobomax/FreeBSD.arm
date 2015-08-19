@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme.c 281283 2015-04-08 21:52:06Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme.c 286043 2015-07-29 21:29:50Z jimharris $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -389,6 +389,15 @@ nvme_notify_fail_consumers(struct nvme_controller *ctrlr)
 {
 	struct nvme_consumer	*cons;
 	uint32_t		i;
+
+	/*
+	 * This controller failed during initialization (i.e. IDENTIFY
+	 *  command failed or timed out).  Do not notify any nvme
+	 *  consumers of the failure here, since the consumer does not
+	 *  even know about the controller yet.
+	 */
+	if (!ctrlr->is_initialized)
+		return;
 
 	for (i = 0; i < NVME_MAX_CONSUMERS; i++) {
 		cons = &nvme_consumer[i];

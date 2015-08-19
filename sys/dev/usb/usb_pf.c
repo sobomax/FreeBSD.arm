@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_pf.c 265779 2014-05-09 14:28:11Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_pf.c 286799 2015-08-15 09:00:36Z hselasky $ */
 /*-
  * Copyright (c) 1990, 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -221,7 +221,13 @@ usbpf_clone_destroy(struct if_clone *ifc, struct ifnet *ifp)
 	ubus = ifp->if_softc;
 	unit = ifp->if_dunit;
 
+	/*
+	 * Lock USB before clearing the "ifp" pointer, to avoid
+	 * clearing the pointer in the middle of a TAP operation:
+	 */
+	USB_BUS_LOCK(ubus);
 	ubus->ifp = NULL;
+	USB_BUS_UNLOCK(ubus);
 	bpfdetach(ifp);
 	if_detach(ifp);
 	if_free(ifp);

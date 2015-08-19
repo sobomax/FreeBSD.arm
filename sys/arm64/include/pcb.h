@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/pcb.h 280364 2015-03-23 11:54:56Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pcb.h 285313 2015-07-09 12:51:50Z andrew $
  */
 
 #ifndef	_MACHINE_PCB_H_
@@ -49,7 +49,7 @@ struct pcb {
 	__uint128_t	pcb_vfp[32];
 	uint32_t	pcb_fpcr;
 	uint32_t	pcb_fpsr;
-	u_int		pcb_fpflags;
+	int		pcb_fpflags;
 #define	PCB_FP_STARTED	0x01
 	u_int		pcb_vfpcpu;	/* Last cpu this thread ran VFP code */
 };

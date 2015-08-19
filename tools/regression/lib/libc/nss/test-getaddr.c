@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/libc/nss/test-getaddr.c 251867 2013-06-17 20:27:20Z eadler $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/libc/nss/test-getaddr.c 285543 2015-07-14 15:24:50Z brueffer $");
 
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -448,6 +448,7 @@ main(int argc, char **argv)
 		switch (c) {
 		case '4':
 			hints.ai_family = PF_INET;
+			break;
 		case '6':
 			hints.ai_family = PF_INET6;
 			break;

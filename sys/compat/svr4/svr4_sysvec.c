@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_sysvec.c 283382 2015-05-24 14:51:29Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_sysvec.c 284924 2015-06-29 10:33:04Z kib $");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"
@@ -167,8 +167,8 @@ struct sysentvec svr4_sysvec = {
 	.sv_size	= SVR4_SYS_MAXSYSCALL,
 	.sv_table	= svr4_sysent,
 	.sv_mask	= 0xff,
-	.sv_sigsize	= SVR4_NSIG-1, /* NB: signal trans table indexed with signno-1 */
-	.sv_sigtbl	= bsd_to_svr4_sig+1,
+	.sv_sigsize	= 0,
+	.sv_sigtbl	= NULL,
 	.sv_errsize	= ELAST,  /* ELAST */
 	.sv_errtbl	= bsd_to_svr4_errno,
 	.sv_transtrap	= NULL,

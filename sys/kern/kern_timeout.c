@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_timeout.c 281511 2015-04-14 00:02:39Z rrs $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_timeout.c 286880 2015-08-18 10:15:09Z jch $");
 
 #include "opt_callout_profiling.h"
 #if defined(__arm__)
@@ -1150,7 +1150,7 @@ _callout_stop_safe(struct callout *c, int safe)
 	struct callout_cpu *cc, *old_cc;
 	struct lock_class *class;
 	int direct, sq_locked, use_lock;
-	int not_on_a_list;
+	int not_on_a_list, not_running;
 
 	if (safe)
 		WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, c->c_lock,
@@ -1378,8 +1378,15 @@ again:
 		}
 	}
 	callout_cc_del(c, cc);
+
+	/*
+	 * If we are asked to stop a callout which is currently in progress
+	 * and indeed impossible to stop then return 0.
+	 */
+	not_running = !(cc_exec_curr(cc, direct) == c);
+
 	CC_UNLOCK(cc);
-	return (1);
+	return (not_running);
 }
 
 void

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ctlstat/ctlstat.c 278362 2015-02-07 17:53:47Z mav $");
+__FBSDID("$FreeBSD: head/usr.bin/ctlstat/ctlstat.c 286806 2015-08-15 13:34:38Z mav $");
 
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -62,7 +62,6 @@ __FBSDID("$FreeBSD: head/usr.bin/ctlstat/ctlstat.c 278362 2015-02-07 17:53:47Z m
 #include <cam/ctl/ctl_io.h>
 #include <cam/ctl/ctl_scsi_all.h>
 #include <cam/ctl/ctl_util.h>
-#include <cam/ctl/ctl_frontend_internal.h>
 #include <cam/ctl/ctl_backend.h>
 #include <cam/ctl/ctl_ioctl.h>
 

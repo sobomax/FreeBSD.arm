@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/amd64/dtrace_isa.c 280834 2015-03-30 03:55:51Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/amd64/dtrace_isa.c 285643 2015-07-16 19:40:18Z kib $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -89,8 +89,8 @@ dtrace_getpcstack(pc_t *pcstack, int pcstack_limit, int aframes,
 		}
 
 		if (frame->f_frame <= frame ||
-		    (vm_offset_t)frame->f_frame >=
-		    (vm_offset_t)rbp + KSTACK_PAGES * PAGE_SIZE)
+		    (vm_offset_t)frame->f_frame >= curthread->td_kstack +
+		    curthread->td_kstack_pages * PAGE_SIZE)
 			break;
 		frame = frame->f_frame;
 	}
@@ -469,8 +469,8 @@ dtrace_getstackdepth(int aframes)
 			break;
 		depth++;
 		if (frame->f_frame <= frame ||
-		    (vm_offset_t)frame->f_frame >=
-		    (vm_offset_t)rbp + KSTACK_PAGES * PAGE_SIZE)
+		    (vm_offset_t)frame->f_frame >= curthread->td_kstack +
+		    curthread->td_kstack_pages * PAGE_SIZE)
 			break;
 		frame = frame->f_frame;
 	}

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/camcontrol/camcontrol.c 284192 2015-06-09 21:39:38Z ken $");
+__FBSDID("$FreeBSD: head/sbin/camcontrol/camcontrol.c 285037 2015-07-02 13:57:26Z brueffer $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -8058,7 +8058,7 @@ usage(int printlong)
 
 	fprintf(printlong ? stdout : stderr,
 "usage:  camcontrol <command>  [device id][generic args][command args]\n"
-"        camcontrol devlist    [-v]\n"
+"        camcontrol devlist    [-b] [-v]\n"
 #ifndef MINIMALISTIC
 "        camcontrol periphlist [dev_id][-n dev_name] [-u unit]\n"
 "        camcontrol tur        [dev_id][generic args]\n"

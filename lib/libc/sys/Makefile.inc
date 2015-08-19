@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 10/24/94
-# $FreeBSD: head/lib/libc/sys/Makefile.inc 281714 2015-04-18 21:50:13Z kib $
+# $FreeBSD: head/lib/libc/sys/Makefile.inc 286760 2015-08-14 03:03:13Z pfg $
 
 # sys sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/sys ${LIBC_SRCTOP}/sys
@@ -21,8 +21,6 @@ PSEUDO+= _clock_gettime.o _gettimeofday.o
 
 # Sources common to both syscall interfaces:
 SRCS+=	\
-	stack_protector.c \
-	stack_protector_compat.c \
 	__error.c \
 	interposing_table.c
 
@@ -235,6 +233,7 @@ MAN+=	abort2.2 \
 	nanosleep.2 \
 	nfssvc.2 \
 	ntp_adjtime.2 \
+	numa_getaffinity.2 \
 	open.2 \
 	pathconf.2 \
 	pdfork.2 \
@@ -395,6 +394,7 @@ MLINKS+=mount.2 nmount.2 \
 MLINKS+=mq_receive.2 mq_timedreceive.2
 MLINKS+=mq_send.2 mq_timedsend.2
 MLINKS+=ntp_adjtime.2 ntp_gettime.2
+MLINKS+=numa_getaffinity.2 numa_setaffinity.2
 MLINKS+=open.2 openat.2
 MLINKS+=pathconf.2 fpathconf.2
 MLINKS+=pathconf.2 lpathconf.2

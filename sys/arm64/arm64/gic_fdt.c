@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_fdt.c 284273 2015-06-11 15:45:33Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_fdt.c 285761 2015-07-21 18:08:10Z andrew $");
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -52,6 +52,7 @@ static struct ofw_compat_data compat_data[] = {
 	{"arm,cortex-a7-gic",	true},
 	{"arm,arm11mp-gic",	true},
 	{"brcm,brahma-b15-gic",	true},
+	{"qcom,msm-qgic2",	true},
 	{NULL,			false}
 };
 

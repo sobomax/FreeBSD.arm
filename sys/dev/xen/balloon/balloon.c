@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 286372 2015-08-06 17:07:21Z jhb $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -48,8 +48,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 282274 2015-04-30 15:48:4
 #include <xen/hypervisor.h>
 #include <xen/features.h>
 #include <xen/xenstore/xenstorevar.h>
-
-#include <machine/xen/xenvar.h>
 
 static MALLOC_DEFINE(M_BALLOON, "Balloon", "Xen Balloon Driver");
 

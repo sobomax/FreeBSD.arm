@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl.h#5 $
- * $FreeBSD: head/sys/cam/ctl/ctl.h 278584 2015-02-11 16:10:31Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl.h 286807 2015-08-15 15:42:21Z mav $
  */
 /*
  * Function definitions used both within CTL and potentially in various CTL
@@ -191,7 +191,11 @@ void ctl_data_submit_done(union ctl_io *io);
 void ctl_config_read_done(union ctl_io *io);
 void ctl_config_write_done(union ctl_io *io);
 void ctl_portDB_changed(int portnum);
+#ifdef notyet
 void ctl_init_isc_msg(void);
+#endif
+int ctl_ioctl_io(struct cdev *dev, u_long cmd, caddr_t addr, int flag,
+		 struct thread *td);
 
 /*
  * KPI to manipulate LUN/port options

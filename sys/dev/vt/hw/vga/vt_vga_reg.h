@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vt/hw/vga/vt_vga_reg.h 267622 2014-06-18 22:10:10Z ray $
+ * $FreeBSD: head/sys/dev/vt/hw/vga/vt_vga_reg.h 286723 2015-08-13 14:43:11Z marcel $
  */
 
 #ifndef _DEV_VT_HW_VGA_VGA_REG_H_
@@ -49,6 +49,8 @@
 
 #define	VGA_MEM_BASE	0xA0000
 #define	VGA_MEM_SIZE	0x10000
+#define	VGA_TXT_BASE	0xB8000
+#define	VGA_TXT_SIZE	0x08000
 #define	VGA_REG_BASE	0x3c0
 #define	VGA_REG_SIZE	0x10+0x0c
 

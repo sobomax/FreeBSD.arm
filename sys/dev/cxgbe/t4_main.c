@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_main.c 284445 2015-06-16 12:36:29Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_main.c 286926 2015-08-19 15:40:03Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -585,9 +585,7 @@ t4_attach(device_t dev)
 
 	sc = device_get_softc(dev);
 	sc->dev = dev;
-#ifdef INVARIANTS
-	sc->debug_flags = DF_DUMP_MBOX;
-#endif
+	TUNABLE_INT_FETCH("hw.cxgbe.debug_flags", &sc->debug_flags);
 
 	pci_enable_busmaster(dev);
 	if (pci_find_cap(dev, PCIY_EXPRESS, &i) == 0) {
@@ -1151,6 +1149,7 @@ cxgbe_detach(device_t dev)
 #ifdef INVARIANTS
 	sc->last_op = "t4detach";
 	sc->last_op_thr = curthread;
+	sc->last_op_flags = 0;
 #endif
 	ADAPTER_UNLOCK(sc);
 
@@ -3167,6 +3166,7 @@ begin_synchronized_op(struct adapter *sc, struct port_info *pi, int flags,
 #ifdef INVARIANTS
 	sc->last_op = wmesg;
 	sc->last_op_thr = curthread;
+	sc->last_op_flags = flags;
 #endif
 
 done:
@@ -6342,9 +6342,9 @@ sysctl_mps_tcam(SYSCTL_HANDLER_ARGS)
 				F_FW_CMD_REQUEST | F_FW_CMD_READ |
 				V_FW_LDST_CMD_ADDRSPACE(FW_LDST_ADDRSPC_MPS));
 			ldst_cmd.cycles_to_len16 = htobe32(FW_LEN16(ldst_cmd));
-			ldst_cmd.u.mps.fid_ctl =
+			ldst_cmd.u.mps.rplc.fid_idx =
 			    htobe16(V_FW_LDST_CMD_FID(FW_LDST_MPS_RPLC) |
-				V_FW_LDST_CMD_CTL(i));
+				V_FW_LDST_CMD_IDX(i));
 
 			rc = begin_synchronized_op(sc, NULL, SLEEP_OK | INTR_OK,
 			    "t4mps");
@@ -6360,10 +6360,10 @@ sysctl_mps_tcam(SYSCTL_HANDLER_ARGS)
 				rc = 0;
 			} else {
 				sbuf_printf(sb, " %08x %08x %08x %08x",
-				    be32toh(ldst_cmd.u.mps.rplc127_96),
-				    be32toh(ldst_cmd.u.mps.rplc95_64),
-				    be32toh(ldst_cmd.u.mps.rplc63_32),
-				    be32toh(ldst_cmd.u.mps.rplc31_0));
+				    be32toh(ldst_cmd.u.mps.rplc.rplc127_96),
+				    be32toh(ldst_cmd.u.mps.rplc.rplc95_64),
+				    be32toh(ldst_cmd.u.mps.rplc.rplc63_32),
+				    be32toh(ldst_cmd.u.mps.rplc.rplc31_0));
 			}
 		} else
 			sbuf_printf(sb, "%36s", "");
@@ -8533,10 +8533,17 @@ static devclass_t cxgbe_devclass, cxl_devclass;
 DRIVER_MODULE(t4nex, pci, t4_driver, t4_devclass, mod_event, 0);
 MODULE_VERSION(t4nex, 1);
 MODULE_DEPEND(t4nex, firmware, 1, 1, 1);
+#ifdef DEV_NETMAP
+MODULE_DEPEND(t4nex, netmap, 1, 1, 1);
+#endif /* DEV_NETMAP */
+
 
 DRIVER_MODULE(t5nex, pci, t5_driver, t5_devclass, mod_event, 0);
 MODULE_VERSION(t5nex, 1);
 MODULE_DEPEND(t5nex, firmware, 1, 1, 1);
+#ifdef DEV_NETMAP
+MODULE_DEPEND(t5nex, netmap, 1, 1, 1);
+#endif /* DEV_NETMAP */
 
 DRIVER_MODULE(cxgbe, t4nex, cxgbe_driver, cxgbe_devclass, 0, 0);
 MODULE_VERSION(cxgbe, 1);

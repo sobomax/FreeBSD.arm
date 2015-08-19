@@ -34,7 +34,7 @@
  *      @(#)bpf.h	8.1 (Berkeley) 6/10/93
  *	@(#)bpf.h	1.34 (LBL)     6/16/96
  *
- * $FreeBSD: head/sys/net/bpf.h 281797 2015-04-20 22:08:11Z markj $
+ * $FreeBSD: head/sys/net/bpf.h 286142 2015-07-31 21:43:27Z loos $
  */
 
 #ifndef _NET_BPF_H_
@@ -1436,9 +1436,9 @@ SYSCTL_DECL(_net_bpf);
 
 /*
  * Rotate the packet buffers in descriptor d.  Move the store buffer into the
- * hold slot, and the free buffer ino the store slot.  Zero the length of the
- * new store buffer.  Descriptor lock should be held. Hold buffer must
- * not be marked "in use".
+ * hold slot, and the free buffer into the store slot.  Zero the length of the
+ * new store buffer.  Descriptor lock should be held.  One must be careful to
+ * not rotate the buffers twice, i.e. if fbuf != NULL.
  */
 #define	ROTATE_BUFFERS(d)	do {					\
 	(d)->bd_hbuf = (d)->bd_sbuf;					\

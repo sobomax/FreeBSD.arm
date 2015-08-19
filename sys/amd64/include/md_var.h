@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/md_var.h 284104 2015-06-06 22:03:24Z kib $
+ * $FreeBSD: head/sys/amd64/include/md_var.h 286228 2015-08-03 12:14:42Z kib $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -114,6 +114,7 @@ void	dump_drop_page(vm_paddr_t);
 void	identify_cpu(void);
 void	initializecpu(void);
 void	initializecpucache(void);
+bool	intel_fix_cpuid(void);
 void	fillw(int /*u_short*/ pat, void *base, size_t cnt);
 void	fpstate_drop(struct thread *td);
 int	is_physical_memory(vm_paddr_t addr);

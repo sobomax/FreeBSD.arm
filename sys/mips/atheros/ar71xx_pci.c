@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 257338 2013-10-29 14:07:31Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 285121 2015-07-04 03:05:57Z adrian $");
 
 #include "opt_ar71xx.h"
 
@@ -637,8 +637,8 @@ ar71xx_pci_intr(void *arg)
 				continue;
 			}
 
-			/* Flush DDR FIFO for IP2 */
-			ar71xx_device_ddr_flush_ip2();
+			/* Flush DDR FIFO for PCI/PCIe */
+			ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_PCIE);
 
 			/* TODO: frame instead of NULL? */
 			intr_event_handle(event, NULL);

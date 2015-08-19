@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_smp.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_smp.c 285771 2015-07-21 22:56:46Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -455,8 +455,13 @@ smp_rendezvous_action(void)
 	 * This means that no member of smp_rv_* pseudo-structure will be
 	 * accessed by this target CPU after this point; in particular,
 	 * memory pointed by smp_rv_func_arg.
+	 *
+	 * The release semantic ensures that all accesses performed by
+	 * the current CPU are visible when smp_rendezvous_cpus()
+	 * returns, by synchronizing with the
+	 * atomic_load_acq_int(&smp_rv_waiters[3]).
 	 */
-	atomic_add_int(&smp_rv_waiters[3], 1);
+	atomic_add_rel_int(&smp_rv_waiters[3], 1);
 
 	td->td_critnest--;
 	KASSERT(owepreempt == td->td_owepreempt,
@@ -522,6 +527,11 @@ smp_rendezvous_cpus(cpuset_t map,
 	 * CPUs to finish the rendezvous, so that smp_rv_*
 	 * pseudo-structure and the arg are guaranteed to not
 	 * be in use.
+	 *
+	 * Load acquire synchronizes with the release add in
+	 * smp_rendezvous_action(), which ensures that our caller sees
+	 * all memory actions done by the called functions on other
+	 * CPUs.
 	 */
 	while (atomic_load_acq_int(&smp_rv_waiters[3]) < ncpus)
 		cpu_spinwait();

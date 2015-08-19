@@ -12,7 +12,7 @@
 
     <author><orgname>The &os; Documentation Project</orgname></author>
 
-    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 276573 2015-01-02 21:09:54Z gjb $</pubdate>
+    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 286572 2015-08-10 10:41:40Z brueffer $</pubdate>
 
     <copyright>
       <year>2000</year>
@@ -731,6 +731,8 @@
 
       &hwlist.nsp;
 
+      &hwlist.pms;
+
       &hwlist.pst;
 
       &hwlist.siis;
@@ -994,6 +996,10 @@
       <para>[&arch.i386;, &arch.amd64;] Intel PRO/Wireless
 	2200BG/2915ABG MiniPCI and 2225BG PCI network adapters
 	(&man.iwi.4; driver)</para>
+
+      <para>[&arch.i386;, &arch.amd64;] Intel Dual Band Wireless AC
+	3160/7260/7265 IEEE 802.11ac network adapters (&man.iwm.4;
+	driver)</para>
 
       <para>[&arch.i386;, &arch.amd64;] Intel Wireless WiFi Link
 	4965AGN IEEE 802.11n PCI network adapters

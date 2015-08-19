@@ -18,13 +18,14 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/cddl/lib/libdtrace/ip.d 266082 2014-05-14 19:02:00Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/ip.d 286420 2015-08-07 19:56:22Z markj $
  */
 /*
  * Copyright (c) 2007, 2010, Oracle and/or its affiliates. All rights reserved.
  * Copyright (c) 2013 Mark Johnston <markj@freebsd.org>
  */
 
+#pragma D depends_on module kernel
 #pragma D depends_on provider ip
 
 /*

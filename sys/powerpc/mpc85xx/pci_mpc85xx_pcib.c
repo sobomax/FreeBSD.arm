@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx_pcib.c 282783 2015-05-11 20:58:05Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx_pcib.c 286923 2015-08-19 13:23:07Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,7 +59,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx_pcib.c 282783 2015-05-1
 static int
 fsl_pcib_rc_probe(device_t dev)
 {
-	printf("Probe called\n");
 	if (pci_get_vendor(dev) != 0x1957)
 		return (ENXIO);
 	if (pci_get_progif(dev) != 0)

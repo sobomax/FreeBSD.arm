@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/ggate/ggatec/ggatec.c 241720 2012-10-19 05:43:38Z ed $
+ * $FreeBSD: head/sbin/ggate/ggatec/ggatec.c 285531 2015-07-14 10:49:36Z brueffer $
  */
 
 #include <stdio.h>
@@ -447,6 +447,7 @@ g_gatec_create(void)
 	/*
 	 * Ok, got both sockets, time to create provider.
 	 */
+	memset(&ggioc, 0, sizeof(ggioc));
 	ggioc.gctl_version = G_GATE_VERSION;
 	ggioc.gctl_mediasize = mediasize;
 	ggioc.gctl_sectorsize = sectorsize;

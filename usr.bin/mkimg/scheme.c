@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/scheme.c 279128 2015-02-22 01:20:49Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/scheme.c 284883 2015-06-27 03:28:04Z marcel $");
 
 #include <sys/types.h>
 #include <sys/linker_set.h>
@@ -59,6 +59,7 @@ static struct {
 	{ "freebsd-vinum", ALIAS_FREEBSD_VINUM },
 	{ "freebsd-zfs", ALIAS_FREEBSD_ZFS },
 	{ "mbr", ALIAS_MBR },
+	{ "ntfs", ALIAS_NTFS },
 	{ NULL, ALIAS_NONE }		/* Keep last! */
 };
 

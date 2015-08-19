@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)xinstall.c	8.1 (Berkeley) 7/21/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/xinstall/xinstall.c 272026 2014-09-23 11:41:09Z mjg $");
+__FBSDID("$FreeBSD: head/usr.bin/xinstall/xinstall.c 284881 2015-06-26 23:55:02Z bapt $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -657,6 +657,14 @@ makelink(const char *from_name, const char *to_name,
 
 	if (dolink & LN_RELATIVE) {
 		char *cp, *d, *s;
+
+		if (*from_name != '/') {
+			/* this is already a relative link */
+			do_symlink(from_name, to_name, target_sb);
+			/* XXX: from_name may point outside of destdir. */
+			metadata_log(to_name, "link", NULL, from_name, NULL, 0);
+			return;
+		}
 
 		/* Resolve pathnames. */
 		if (realpath(from_name, src) == NULL)

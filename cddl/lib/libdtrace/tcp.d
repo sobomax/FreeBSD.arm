@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/cddl/lib/libdtrace/tcp.d 273370 2014-10-21 05:19:08Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/tcp.d 286420 2015-08-07 19:56:22Z markj $
  */
 /*
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
@@ -26,6 +26,7 @@
  */
 
 #pragma D depends_on library ip.d
+#pragma D depends_on module kernel
 #pragma D depends_on provider tcp
 
 /*

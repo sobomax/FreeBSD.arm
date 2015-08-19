@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_default.c 276200 2014-12-25 14:44:04Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_default.c 285135 2015-07-04 15:46:39Z mjg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -810,7 +810,7 @@ vop_stdvptocnp(struct vop_vptocnp_args *ap)
 	VREF(vp);
 	locked = VOP_ISLOCKED(vp);
 	VOP_UNLOCK(vp, 0);
-	NDINIT_ATVP(&nd, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE,
+	NDINIT_ATVP(&nd, LOOKUP, FOLLOW | LOCKSHARED | LOCKLEAF, UIO_SYSSPACE,
 	    "..", vp, td);
 	flags = FREAD;
 	error = vn_open_cred(&nd, &flags, 0, VN_OPEN_NOAUDIT, cred, NULL);
@@ -830,7 +830,7 @@ vop_stdvptocnp(struct vop_vptocnp_args *ap)
 		VOP_UNLOCK(mvp, 0);
 		vn_close(mvp, FREAD, cred, td);
 		VREF(*dvp);
-		vn_lock(*dvp, LK_EXCLUSIVE | LK_RETRY);
+		vn_lock(*dvp, LK_SHARED | LK_RETRY);
 		covered = 1;
 	}
 
@@ -859,15 +859,15 @@ vop_stdvptocnp(struct vop_vptocnp_args *ap)
 		    (dp->d_fileno == fileno)) {
 			if (covered) {
 				VOP_UNLOCK(*dvp, 0);
-				vn_lock(mvp, LK_EXCLUSIVE | LK_RETRY);
+				vn_lock(mvp, LK_SHARED | LK_RETRY);
 				if (dirent_exists(mvp, dp->d_name, td)) {
 					error = ENOENT;
 					VOP_UNLOCK(mvp, 0);
-					vn_lock(*dvp, LK_EXCLUSIVE | LK_RETRY);
+					vn_lock(*dvp, LK_SHARED | LK_RETRY);
 					goto out;
 				}
 				VOP_UNLOCK(mvp, 0);
-				vn_lock(*dvp, LK_EXCLUSIVE | LK_RETRY);
+				vn_lock(*dvp, LK_SHARED | LK_RETRY);
 			}
 			i -= dp->d_namlen;
 

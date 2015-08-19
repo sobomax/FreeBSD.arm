@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx_wdogreg.h 250357 2013-05-08 09:42:50Z ray $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx_wdogreg.h 286942 2015-08-19 20:31:35Z ian $
  */
 
 #define	WDOG_CLK_FREQ	32768
@@ -59,7 +59,3 @@
 #define	WDOG_MCR_REG	0x08	/* Miscellaneous Control Register */
 #define		WDOG_MCR_PDE		(1 << 0)
 
-#define	READ(_sc, _r)							\
-		bus_space_read_2((_sc)->sc_bst, (_sc)->sc_bsh, (_r))
-#define	WRITE(_sc, _r, _v)						\
-		bus_space_write_2((_sc)->sc_bst, (_sc)->sc_bsh, (_r), (_v))

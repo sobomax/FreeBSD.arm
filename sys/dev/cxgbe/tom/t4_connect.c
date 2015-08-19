@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_connect.c 272719 2014-10-07 21:26:22Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_connect.c 286227 2015-08-03 12:13:54Z jch $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -189,12 +189,12 @@ act_open_failure_cleanup(struct adapter *sc, u_int atid, u_int status)
 	toep->tid = -1;
 
 	if (status != EAGAIN)
-		INP_INFO_WLOCK(&V_tcbinfo);
+		INP_INFO_RLOCK(&V_tcbinfo);
 	INP_WLOCK(inp);
 	toe_connect_failed(tod, inp, status);
 	final_cpl_received(toep);	/* unlocks inp */
 	if (status != EAGAIN)
-		INP_INFO_WUNLOCK(&V_tcbinfo);
+		INP_INFO_RUNLOCK(&V_tcbinfo);
 }
 
 static int

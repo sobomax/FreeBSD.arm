@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/casperd/casperd.c 282346 2015-05-02 17:45:52Z oshogbo $");
+__FBSDID("$FreeBSD: head/sbin/casperd/casperd.c 285143 2015-07-04 17:38:56Z araujo $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: head/sbin/casperd/casperd.c 282346 2015-05-02 17:45:52Z osho
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/un.h>
+#include <sys/nv.h>
 
 #include <assert.h>
 #include <dirent.h>
@@ -56,7 +57,6 @@ __FBSDID("$FreeBSD: head/sbin/casperd/casperd.c 282346 2015-05-02 17:45:52Z osho
 #include <libcasper.h>
 #include <libcasper_impl.h>
 #include <msgio.h>
-#include <nv.h>
 #include <pjdlog.h>
 
 #include "msgio.h"
@@ -253,7 +253,7 @@ casper_command(const char *cmd, const nvlist_t *limits, nvlist_t *nvlin,
 		return (error);
 	}
 
-	if (zygote_clone(service_external_execute, 0, &chanfd, &procfd) == -1) {
+	if (zygote_clone(service_external_execute, &chanfd, &procfd) == -1) {
 		error = errno;
 		close(execfd);
 		return (error);

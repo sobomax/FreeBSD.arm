@@ -25,16 +25,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iovctl/iovctl.c 282346 2015-05-02 17:45:52Z oshogbo $");
+__FBSDID("$FreeBSD: head/usr.sbin/iovctl/iovctl.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
 #include <sys/param.h>
 #include <sys/iov.h>
+#include <sys/dnv.h>
+#include <sys/nv.h>
 
-#include <dnv.h>
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <nv.h>
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>

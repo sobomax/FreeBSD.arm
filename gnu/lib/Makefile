@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/Makefile 283543 2015-05-25 20:29:35Z bapt $
+# $FreeBSD: head/gnu/lib/Makefile 285684 2015-07-19 00:38:19Z marius $
 
 .include <src.opts.mk>
 
@@ -16,7 +16,7 @@ SUBDIR+= libssp
 SUBDIR+= tests
 .endif
 
-.if ${MK_GDB} != "no"
+.if ${MK_BINUTILS} != "no" && ${MK_GDB} != "no"
 SUBDIR+=	libreadline
 .endif
 

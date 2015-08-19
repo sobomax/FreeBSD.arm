@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/hunt_nic.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/hunt_nic.c 285798 2015-07-22 16:25:18Z arybchik $");
 
 #include "efsys.h"
 #include "efx.h"
@@ -1239,8 +1239,19 @@ hunt_board_cfg(
 	 * the privilege mask to check for sufficient privileges, as that
 	 * can result in time-of-check/time-of-use bugs.
 	 */
-	if ((rc = efx_mcdi_privilege_mask(enp, pf, vf, &mask)) != 0)
-		goto fail13;
+	if ((rc = efx_mcdi_privilege_mask(enp, pf, vf, &mask)) != 0) {
+		if (rc != ENOTSUP)
+			goto fail13;
+
+		/* Fallback for old firmware without privilege mask support */
+		if (EFX_PCI_FUNCTION_IS_PF(encp)) {
+			/* Assume PF has admin privilege */
+			mask = HUNT_LEGACY_PF_PRIVILEGE_MASK;
+		} else {
+			/* VF is always unprivileged by default */
+			mask = HUNT_LEGACY_VF_PRIVILEGE_MASK;
+		}
+	}
 
 	encp->enc_privilege_mask = mask;
 

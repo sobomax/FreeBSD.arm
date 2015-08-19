@@ -1,10 +1,9 @@
-# $FreeBSD: head/sbin/ping6/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/ping6/Makefile 286834 2015-08-16 23:23:58Z delphij $
 
 PROG=	ping6
 MAN=	ping6.8
 
-CFLAGS+=-DIPSEC -DKAME_SCOPEID -DUSE_RFC2292BIS \
-	-DHAVE_ARC4RANDOM
+CFLAGS+=-DIPSEC -DKAME_SCOPEID -DUSE_RFC2292BIS
 WARNS?=	3
 
 BINOWN=	root

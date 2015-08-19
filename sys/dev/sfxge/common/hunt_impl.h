@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/hunt_impl.h 283514 2015-05-25 08:34:55Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/hunt_impl.h 285798 2015-07-22 16:25:18Z arybchik $
  */
 
 #ifndef _SYS_HUNT_IMPL_H
@@ -694,6 +694,21 @@ hunt_tx_qstats_update(
 #define	HUNT_PIOBUF_SIZE	(ER_DZ_TX_PIOBUF_SIZE)
 
 #define	HUNT_MIN_PIO_ALLOC_SIZE	(HUNT_PIOBUF_SIZE / 32)
+
+#define HUNT_LEGACY_PF_PRIVILEGE_MASK					\
+	(MC_CMD_PRIVILEGE_MASK_IN_GRP_ADMIN			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_LINK			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_ONLOAD			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_PTP			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_INSECURE_FILTERS		|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_MAC_SPOOFING		|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_UNICAST			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_MULTICAST			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_BROADCAST			|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_ALL_MULTICAST		|	\
+	MC_CMD_PRIVILEGE_MASK_IN_GRP_PROMISCUOUS)
+
+#define HUNT_LEGACY_VF_PRIVILEGE_MASK	0
 
 typedef uint32_t	efx_piobuf_handle_t;
 

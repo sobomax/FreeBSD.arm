@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_cmd_table.c#4 $
- * $FreeBSD: head/sys/cam/ctl/ctl_cmd_table.c 275842 2014-12-16 21:51:21Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_cmd_table.c 286806 2015-08-15 13:34:38Z mav $
  */
 /*
  * CAM Target Layer command table.
@@ -52,7 +52,6 @@
 #include <cam/ctl/ctl.h>
 #include <cam/ctl/ctl_frontend.h>
 #include <cam/ctl/ctl_backend.h>
-#include <cam/ctl/ctl_frontend_internal.h>
 #include <cam/ctl/ctl_ioctl.h>
 #include <cam/ctl/ctl_ha.h>
 #include <cam/ctl/ctl_private.h>
@@ -785,10 +784,10 @@ const struct ctl_cmd_entry ctl_cmd_table[256] =
 {NULL, CTL_SERIDX_INVLD, CTL_CMD_FLAG_NONE, CTL_LUN_PAT_NONE},
 
 /* 35 SYNCHRONIZE CACHE(10) */
-{ctl_sync_cache, CTL_SERIDX_START, CTL_CMD_FLAG_OK_ON_SLUN |
-				   CTL_FLAG_DATA_NONE,
+{ctl_sync_cache, CTL_SERIDX_SYNC, CTL_CMD_FLAG_OK_ON_SLUN |
+				  CTL_FLAG_DATA_NONE,
  CTL_LUN_PAT_NONE,
- 10, {0, 0xff, 0xff, 0xff, 0xff, 0, 0xff, 0xff, 0x07}},
+ 10, {0x02, 0xff, 0xff, 0xff, 0xff, 0, 0xff, 0xff, 0x07}},
 
 /* 36 LOCK UNLOCK CACHE(10) */
 {NULL, CTL_SERIDX_INVLD, CTL_CMD_FLAG_NONE, CTL_LUN_PAT_NONE},
@@ -1138,10 +1137,10 @@ const struct ctl_cmd_entry ctl_cmd_table[256] =
 {NULL, CTL_SERIDX_INVLD, CTL_CMD_FLAG_NONE, CTL_LUN_PAT_NONE},
 
 /* 91 SYNCHRONIZE CACHE(16) */
-{ctl_sync_cache, CTL_SERIDX_START, CTL_CMD_FLAG_OK_ON_SLUN |
-				   CTL_FLAG_DATA_NONE,
+{ctl_sync_cache, CTL_SERIDX_SYNC, CTL_CMD_FLAG_OK_ON_SLUN |
+				  CTL_FLAG_DATA_NONE,
  CTL_LUN_PAT_NONE,
- 16, {0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+ 16, {0x02, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
       0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0, 0x07}},
 
 /* 92 LOCK UNLOCK CACHE(16) */

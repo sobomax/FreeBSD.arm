@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/net/if_lagg.h 279891 2015-03-11 16:02:24Z hselasky $
+ * $FreeBSD: head/sys/net/if_lagg.h 286700 2015-08-12 20:21:04Z hiren $
  */
 
 #ifndef _NET_LAGG_H
@@ -150,6 +150,7 @@ struct lagg_reqopts {
 #define	LAGG_OPT_LACP_STRICT		0x10		/* LACP strict mode */
 #define	LAGG_OPT_LACP_TXTEST		0x20		/* LACP debug: txtest */
 #define	LAGG_OPT_LACP_RXTEST		0x40		/* LACP debug: rxtest */
+#define	LAGG_OPT_LACP_TIMEOUT		0x80		/* LACP timeout */
 	u_int			ro_count;		/* number of ports */
 	u_int			ro_active;		/* active port count */
 	u_int			ro_flapping;		/* number of flapping */

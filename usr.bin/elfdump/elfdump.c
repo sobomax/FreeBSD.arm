@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/elfdump/elfdump.c 282916 2015-05-14 18:29:05Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/elfdump/elfdump.c 285841 2015-07-24 16:52:21Z emaste $");
 
 #include <sys/types.h>
 
@@ -272,6 +272,7 @@ e_machines(u_int mach)
 	case EM_IA_64:	return "EM_IA_64";
 	case EM_X86_64:	return "EM_X86_64";
 	case EM_AARCH64:return "EM_AARCH64";
+	case EM_RISCV:	return "EM_RISCV";
 	}
 	snprintf(machdesc, sizeof(machdesc),
 	    "(unknown machine) -- type 0x%x", mach);

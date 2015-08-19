@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sbin/setkey/token.l 284816 2015-06-25 18:38:58Z gnn $	*/
+/*	$FreeBSD: head/sbin/setkey/token.l 286143 2015-07-31 23:40:18Z gnn $	*/
 /*	$KAME: token.l,v 1.43 2003/07/25 09:35:28 itojun Exp $	*/
 
 /*
@@ -166,8 +166,9 @@ tcp		{ yylval.num = 0; return(PR_TCP); }
 <S_ENCALG>des-deriv	{ yylval.num = SADB_EALG_DESCBC; BEGIN INITIAL; return(ALG_ENC_DESDERIV); }
 <S_ENCALG>des-32iv	{ yylval.num = SADB_EALG_DESCBC; BEGIN INITIAL; return(ALG_ENC_DES32IV); }
 <S_ENCALG>rijndael-cbc	{ yylval.num = SADB_X_EALG_RIJNDAELCBC; BEGIN INITIAL; return(ALG_ENC); }
-<S_ENCALG>aes-ctr	{ yylval.num = SADB_X_EALG_AESCTR; BEGIN INITIAL; return(ALG_ENC); }
+<S_ENCALG>aes-ctr	{ yylval.num = SADB_X_EALG_AESCTR; BEGIN INITIAL; return(ALG_ENC_SALT); }
 <S_ENCALG>camellia-cbc	{ yylval.num = SADB_X_EALG_CAMELLIACBC; BEGIN INITIAL; return(ALG_ENC); }
+<S_ENCALG>aes-gcm-16	{ yylval.num = SADB_X_EALG_AESGCM16; BEGIN INITIAL; return(ALG_ENC_SALT); }
 
 	/* compression algorithms */
 {hyphen}C	{ return(F_COMP); }

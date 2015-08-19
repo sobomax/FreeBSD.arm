@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2011, Intel Corporation 
+  Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82540.c 228386 2011-12-10 06:55:02Z jfv $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82540.c 286833 2015-08-16 20:13:58Z sbruno $*/
 
 /*
  * 82540EM Gigabit Ethernet Controller

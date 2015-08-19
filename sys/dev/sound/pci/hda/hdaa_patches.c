@@ -42,7 +42,7 @@
 #include <dev/sound/pci/hda/hdaa.h>
 #include <dev/sound/pci/hda/hda_reg.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdaa_patches.c 281544 2015-04-15 05:24:39Z rpaulo $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/hda/hdaa_patches.c 285723 2015-07-20 17:48:00Z mav $");
 
 static const struct {
 	uint32_t model;
@@ -696,6 +696,22 @@ hdaa_patch(struct hdaa_devinfo *devinfo)
 	}
 }
 
+static uint32_t
+hdaa_read_coef(device_t dev, nid_t nid, uint16_t idx)
+{
+
+	hda_command(dev, HDA_CMD_SET_COEFF_INDEX(0, nid, idx));
+	return (hda_command(dev, HDA_CMD_GET_PROCESSING_COEFF(0, nid)));
+}
+
+static uint32_t
+hdaa_write_coef(device_t dev, nid_t nid, uint16_t idx, uint16_t val)
+{
+
+	hda_command(dev, HDA_CMD_SET_COEFF_INDEX(0, nid, idx));
+	return (hda_command(dev, HDA_CMD_SET_PROCESSING_COEFF(0, nid, val)));
+}
+
 void
 hdaa_patch_direct(struct hdaa_devinfo *devinfo)
 {
@@ -737,10 +753,12 @@ hdaa_patch_direct(struct hdaa_devinfo *devinfo)
 			 * That results in silence if downmix it to mono.
 			 * To workaround, make codec to handle signal as mono.
 			 */
-			hda_command(dev, HDA_CMD_SET_COEFF_INDEX(0, 0x20, 0x07));
-			val = hda_command(dev, HDA_CMD_GET_PROCESSING_COEFF(0, 0x20));
-			hda_command(dev, HDA_CMD_SET_COEFF_INDEX(0, 0x20, 0x07));
-			hda_command(dev, HDA_CMD_SET_PROCESSING_COEFF(0, 0x20, val|0x80));
+			val = hdaa_read_coef(dev, 0x20, 0x07);
+			hdaa_write_coef(dev, 0x20, 0x07, val|0x80);
+		}
+		if (subid == 0x15171043) {
+			/* Increase output amp on ASUS UX31A by +5dB. */
+			hdaa_write_coef(dev, 0x20, 0x12, 0x2800);
 		}
 	}
 }

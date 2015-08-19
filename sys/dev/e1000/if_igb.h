@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2013, Intel Corporation 
+  Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_igb.h 271784 2014-09-18 16:20:17Z adrian $*/
+/*$FreeBSD: head/sys/dev/e1000/if_igb.h 286833 2015-08-16 20:13:58Z sbruno $*/
 
 #ifndef _IGB_H_DEFINED_
 #define _IGB_H_DEFINED_

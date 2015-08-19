@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_access.c 253350 2013-07-15 05:09:13Z hrs $");
+__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_access.c 285926 2015-07-28 02:32:40Z araujo $");
 
 #include <stdlib.h>
 #include <rpc/rpc.h>
@@ -57,8 +57,8 @@ __FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_access.c 253350 2013-07-15 05:09:13Z
 
 extern int debug;
 
-			/* NIS v1 */
-const char *yp_procs[] = {
+static const char *yp_procs[] = {
+	/* NIS v1 */
 	"ypoldproc_null",
 	"ypoldproc_domain",
 	"ypoldproc_domain_nonack",
@@ -71,7 +71,7 @@ const char *yp_procs[] = {
 	"badproc1", /* placeholder */
 	"badproc2", /* placeholder */
 	"badproc3", /* placeholder */
-	
+
 	/* NIS v2 */
 	"ypproc_null",
 	"ypproc_domain",
@@ -93,7 +93,7 @@ struct securenet {
 	struct securenet *next;
 };
 
-struct securenet *securenets;
+static struct securenet *securenets;
 
 #define LINEBUFSZ 1024
 

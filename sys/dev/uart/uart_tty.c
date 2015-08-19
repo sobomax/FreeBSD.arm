@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_tty.c 264175 2014-04-05 22:25:10Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_tty.c 286469 2015-08-08 20:11:47Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -403,4 +403,14 @@ uart_tty_detach(struct uart_softc *sc)
 	tty_rel_gone(tp);
 
 	return (0);
+}
+
+struct mtx *
+uart_tty_getlock(struct uart_softc *sc)
+{
+
+	if (sc->sc_u.u_tty.tp != NULL)
+		return (tty_getlock(sc->sc_u.u_tty.tp));
+	else
+		return (NULL);
 }

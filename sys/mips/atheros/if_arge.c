@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/if_arge.c 280798 2015-03-28 23:40:29Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/if_arge.c 285121 2015-07-04 03:05:57Z adrian $");
 
 /*
  * AR71XX gigabit ethernet driver
@@ -248,12 +248,25 @@ MTX_SYSINIT(miibus_mtx, &miibus_mtx, "arge mii lock", MTX_DEF);
 
 /*
  * Flushes all
+ *
+ * XXX this needs to be done at interrupt time! Grr!
  */
 static void
 arge_flush_ddr(struct arge_softc *sc)
 {
-
-	ar71xx_device_flush_ddr_ge(sc->arge_mac_unit);
+	switch (sc->arge_mac_unit) {
+	case 0:
+		ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_GE0);
+		break;
+	case 1:
+		ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_GE1);
+		break;
+	default:
+		device_printf(sc->arge_dev, "%s: unknown unit (%d)\n",
+		    __func__,
+		    sc->arge_mac_unit);
+		break;
+	}
 }
 
 static int
@@ -2358,6 +2371,7 @@ arge_intr(void *arg)
 	}
 
 	ARGE_LOCK(sc);
+	arge_flush_ddr(sc);
 
 	if (status & DMA_INTR_RX_PKT_RCVD)
 		arge_rx_locked(sc);

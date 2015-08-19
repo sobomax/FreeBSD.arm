@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkimg/scheme.h 271881 2014-09-19 23:16:02Z marcel $
+ * $FreeBSD: head/usr.bin/mkimg/scheme.h 284883 2015-06-27 03:28:04Z marcel $
  */
 
 #ifndef _MKIMG_SCHEME_H_
@@ -45,6 +45,7 @@ enum alias {
 	ALIAS_FREEBSD_VINUM,
 	ALIAS_FREEBSD_ZFS,
 	ALIAS_MBR,
+	ALIAS_NTFS,
 	/* end */
 	ALIAS_COUNT		/* Keep last! */
 };

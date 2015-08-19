@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: head/sys/i386/include/smp.h 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/include/smp.h 285787 2015-07-22 09:12:40Z kib $
  *
  */
 
@@ -39,7 +39,6 @@ extern int			cpu_apic_ids[];
 extern int bootAP;
 extern void *dpcpu;
 extern char *bootSTK;
-extern int bootAP;
 extern void *bootstacks[];
 extern volatile u_int cpu_ipi_pending[];
 extern volatile int aps_ready;

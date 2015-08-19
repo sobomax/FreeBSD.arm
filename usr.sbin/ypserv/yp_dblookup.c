@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_dblookup.c 114601 2003-05-03 21:06:42Z obrien $");
+__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_dblookup.c 285926 2015-07-28 02:32:40Z araujo $");
 
 #include <db.h>
 #include <errno.h>
@@ -405,7 +405,7 @@ yp_open_db(const char *domain, const char *map)
 #ifdef DB_CACHE
 again:
 #endif
-	dbp = dbopen(buf,O_RDONLY, PERM_SECURE, DB_HASH, NULL);
+	dbp = dbopen(buf, O_RDONLY, PERM_SECURE, DB_HASH, NULL);
 
 	if (dbp == NULL) {
 		switch (errno) {

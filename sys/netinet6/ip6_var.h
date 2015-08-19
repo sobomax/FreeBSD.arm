@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet6/ip6_var.h 280955 2015-04-01 12:15:01Z kp $
+ * $FreeBSD: head/sys/netinet6/ip6_var.h 286452 2015-08-08 15:58:35Z melifaro $
  */
 
 #ifndef _NETINET6_IP6_VAR_H_
@@ -373,7 +373,7 @@ int	ip6_sysctl(int *, u_int, void *, size_t *, void *, size_t);
 
 void	ip6_forward(struct mbuf *, int);
 
-void	ip6_mloopback(struct ifnet *, struct mbuf *, struct sockaddr_in6 *);
+void	ip6_mloopback(struct ifnet *, const struct mbuf *);
 int	ip6_output(struct mbuf *, struct ip6_pktopts *,
 			struct route_in6 *,
 			int,

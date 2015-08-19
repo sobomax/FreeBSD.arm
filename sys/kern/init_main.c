@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/init_main.c 284214 2015-06-10 10:43:59Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/init_main.c 286122 2015-07-31 10:21:58Z ed $");
 
 #include "opt_ddb.h"
 #include "opt_init_path.h"
@@ -87,6 +87,7 @@ __FBSDID("$FreeBSD: head/sys/kern/init_main.c 284214 2015-06-10 10:43:59Z mjg $"
 #include <vm/vm_param.h>
 #include <vm/pmap.h>
 #include <vm/vm_map.h>
+#include <vm/vm_domain.h>
 #include <sys/copyright.h>
 
 #include <ddb/ddb.h>
@@ -496,6 +497,10 @@ proc0_init(void *dummy __unused)
 	td->td_flags = TDF_INMEM;
 	td->td_pflags = TDP_KTHREAD;
 	td->td_cpuset = cpuset_thread0();
+	vm_domain_policy_init(&td->td_vm_dom_policy);
+	vm_domain_policy_set(&td->td_vm_dom_policy, VM_POLICY_NONE, -1);
+	vm_domain_policy_init(&p->p_vm_dom_policy);
+	vm_domain_policy_set(&p->p_vm_dom_policy, VM_POLICY_NONE, -1);
 	prison0_init();
 	p->p_peers = 0;
 	p->p_leader = p;
@@ -822,10 +827,11 @@ static void
 create_init(const void *udata __unused)
 {
 	struct ucred *newcred, *oldcred;
+	struct thread *td;
 	int error;
 
 	error = fork1(&thread0, RFFDG | RFPROC | RFSTOPPED, 0, &initproc,
-	    NULL, 0);
+	    NULL, 0, NULL);
 	if (error)
 		panic("cannot fork init: %d\n", error);
 	KASSERT(initproc->p_pid == 1, ("create_init: initproc->p_pid != 1"));
@@ -845,7 +851,9 @@ create_init(const void *udata __unused)
 	audit_cred_proc1(newcred);
 #endif
 	proc_set_cred(initproc, newcred);
-	cred_update_thread(FIRST_THREAD_IN_PROC(initproc));
+	td = FIRST_THREAD_IN_PROC(initproc);
+	crfree(td->td_ucred);
+	td->td_ucred = crhold(initproc->p_ucred);
 	PROC_UNLOCK(initproc);
 	sx_xunlock(&proctree_lock);
 	crfree(oldcred);

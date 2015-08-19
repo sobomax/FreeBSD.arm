@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_mount.c 283602 2015-05-27 09:22:50Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_mount.c 285039 2015-07-02 14:31:47Z kib $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -1107,9 +1107,6 @@ vfs_domount(
 		free(pathbuf, M_TEMP);
 	} else
 		error = vfs_domount_update(td, vp, fsflags, optlist);
-
-	ASSERT_VI_UNLOCKED(vp, __func__);
-	ASSERT_VOP_UNLOCKED(vp, __func__);
 
 	return (error);
 }

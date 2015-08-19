@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/csu/aarch64/crt1.c 284707 2015-06-22 19:43:08Z andrew $");
+__FBSDID("$FreeBSD: head/lib/csu/aarch64/crt1.c 285044 2015-07-02 15:02:59Z andrew $");
 
 #ifndef lint
 #ifndef __GNUC__
@@ -50,6 +50,8 @@ extern void monstartup(void *, void *);
 extern int eprol;
 extern int etext;
 #endif
+
+extern long * _end;
 
 void __start(int, char **, char **, void (*)(void));
 
@@ -79,8 +81,17 @@ __start(int argc, char *argv[], char *env[], void (*cleanup)(void))
 
 	if (&_DYNAMIC != NULL)
 		atexit(cleanup);
-	else
+	else {
+		/*
+		 * Hack to resolve _end so we read the correct symbol.
+		 * Without this it will resolve to the copy in the library
+		 * that firsts requests it. We should fix the toolchain,
+		 * however this is is needed until this can take place.
+		 */
+		*(volatile long *)&_end;
+
 		_init_tls();
+	}
 
 #ifdef GCRT
 	atexit(_mcleanup);

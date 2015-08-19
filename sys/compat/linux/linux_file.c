@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_file.c 284446 2015-06-16 13:09:18Z mjg $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_file.c 286021 2015-07-29 17:18:27Z ed $");
 
 #include "opt_compat.h"
 
@@ -1582,7 +1582,7 @@ linux_pipe(struct thread *td, struct linux_pipe_args *args)
 		printf(ARGS(pipe, "*"));
 #endif
 
-	error = kern_pipe2(td, fildes, 0);
+	error = kern_pipe(td, fildes, 0, NULL, NULL);
 	if (error)
 		return (error);
 
@@ -1609,7 +1609,7 @@ linux_pipe2(struct thread *td, struct linux_pipe2_args *args)
 		flags |= O_NONBLOCK;
 	if ((args->flags & LINUX_O_CLOEXEC) != 0)
 		flags |= O_CLOEXEC;
-	error = kern_pipe2(td, fildes, flags);
+	error = kern_pipe(td, fildes, flags, NULL, NULL);
 	if (error)
 		return (error);
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/svn/lib/libapr_util/apu_config.h 262251 2014-02-20 20:09:28Z peter $ */
+/* $FreeBSD: head/usr.bin/svn/lib/libapr_util/apu_config.h 286561 2015-08-10 00:46:24Z peter $ */
 
 /* include/private/apu_config.h.  Generated from apu_config.h.in by configure.  */
 /* include/private/apu_config.h.in.  Generated from configure.in by autoheader.  */
@@ -13,7 +13,7 @@
 /* #undef APU_DSO_LIBDIR */
 
 /* Define if the inbuf parm to iconv() is const char ** */
-#define APU_ICONV_INBUF_CONST 1
+/* #undef APU_ICONV_INBUF_CONST */
 
 /* Define that OpenSSL uses const buffers */
 #define CRYPTO_OPENSSL_CONST_BUFFERS 1

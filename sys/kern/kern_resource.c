@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_resource.c 284783 2015-06-25 00:15:37Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_resource.c 285633 2015-07-16 14:30:11Z mjg $");
 
 #include "opt_compat.h"
 
@@ -1435,18 +1435,4 @@ chgkqcnt(struct uidinfo *uip, int diff, rlim_t max)
 {
 
 	return (chglimit(uip, &uip->ui_kqcnt, diff, max, "kqcnt"));
-}
-
-void
-lim_update_thread(struct thread *td)
-{
-	struct proc *p;
-	struct plimit *lim;
-
-	p = td->td_proc;
-	lim = td->td_limit;
-	PROC_LOCK_ASSERT(p, MA_OWNED);
-	td->td_limit = lim_hold(p->p_limit);
-	if (lim != NULL)
-		lim_free(lim);
 }

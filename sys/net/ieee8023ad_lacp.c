@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/ieee8023ad_lacp.c 281236 2015-04-07 21:31:17Z erj $");
+__FBSDID("$FreeBSD: head/sys/net/ieee8023ad_lacp.c 286700 2015-08-12 20:21:04Z hiren $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -522,7 +522,7 @@ lacp_port_create(struct lagg_port *lgp)
 	int error;
 
 	boolean_t active = TRUE; /* XXX should be configurable */
-	boolean_t fast = FALSE; /* XXX should be configurable */
+	boolean_t fast = FALSE; /* Configurable via ioctl */ 
 
 	link_init_sdl(ifp, (struct sockaddr *)&sdl, IFT_ETHER);
 	sdl.sdl_alen = ETHER_ADDR_LEN;

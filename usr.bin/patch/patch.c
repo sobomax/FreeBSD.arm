@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: patch.c,v 1.54 2014/12/13 10:31:07 tobias Exp $
- * $FreeBSD: head/usr.bin/patch/patch.c 276472 2014-12-31 16:30:33Z pfg $
+ * $FreeBSD: head/usr.bin/patch/patch.c 285772 2015-07-21 22:57:27Z cem $
  *
  */
 
@@ -108,6 +108,8 @@ static bool	remove_empty_files = false;
 
 /* true if -R was specified on command line.  */
 static bool	reverse_flag_specified = false;
+
+static bool	Vflag = false;
 
 /* buffer holding the name of the rejected patch file. */
 static char	rejname[NAME_MAX + 1];
@@ -201,7 +203,7 @@ main(int argc, char *argv[])
 	Argv = argv;
 	get_some_switches();
 
-	if (backup_type == none) {
+	if (!Vflag) {
 		if ((v = getenv("PATCH_VERSION_CONTROL")) == NULL)
 			v = getenv("VERSION_CONTROL");
 		if (v != NULL || !posix)
@@ -595,6 +597,7 @@ get_some_switches(void)
 			break;
 		case 'V':
 			backup_type = get_version(optarg);
+			Vflag = true;
 			break;
 #ifdef DEBUGGING
 		case 'x':
@@ -631,8 +634,8 @@ usage(void)
 	fprintf(stderr,
 "usage: patch [-bCcEeflNnRstuv] [-B backup-prefix] [-D symbol] [-d directory]\n"
 "             [-F max-fuzz] [-i patchfile] [-o out-file] [-p strip-count]\n"
-"             [-r rej-name] [-V t | nil | never] [-x number] [-z backup-ext]\n"
-"             [--posix] [origfile [patchfile]]\n"
+"             [-r rej-name] [-V t | nil | never | none] [-x number]\n"
+"             [-z backup-ext] [--posix] [origfile [patchfile]]\n"
 "       patch <patchfile\n");
 	my_exit(EXIT_FAILURE);
 }

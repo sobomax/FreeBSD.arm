@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/amd64/include/pcb.h 271192 2014-09-06 15:23:28Z jhb $
+ * $FreeBSD: head/sys/amd64/include/pcb.h 284921 2015-06-29 07:53:44Z kib $
  */
 
 #ifndef _AMD64_PCB_H_
@@ -85,8 +85,7 @@ struct pcb {
 	/* copyin/out fault recovery */
 	caddr_t		pcb_onfault;
 
-	/* 32-bit segment descriptor */
-	struct user_segment_descriptor pcb_gs32sd;
+	uint64_t	pcb_pad0;
 
 	/* local tss, with i/o bitmap; NULL for common */
 	struct amd64tss *pcb_tssp;

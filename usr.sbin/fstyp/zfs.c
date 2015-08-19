@@ -2,9 +2,6 @@
  * Copyright (c) 2015 Allan Jude <allanjude@FreeBSD.org>
  * All rights reserved.
  *
- * This software was developed by Edward Tomasz Napierala under sponsorship
- * from the FreeBSD Foundation.
- *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -28,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fstyp/zfs.c 284589 2015-06-19 05:09:02Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.sbin/fstyp/zfs.c 285426 2015-07-12 19:16:19Z allanjude $");
 
 #include <sys/types.h>
 #include <stdint.h>

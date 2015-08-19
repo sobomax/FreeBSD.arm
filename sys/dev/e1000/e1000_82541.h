@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2008, Intel Corporation 
+  Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82541.h 181027 2008-07-30 21:56:53Z jfv $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82541.h 286833 2015-08-16 20:13:58Z sbruno $*/
 
 #ifndef _E1000_82541_H_
 #define _E1000_82541_H_

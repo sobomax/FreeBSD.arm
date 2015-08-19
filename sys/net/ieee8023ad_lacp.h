@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/ieee8023ad_lacp.h 272548 2014-10-05 02:37:01Z hrs $
+ * $FreeBSD: head/sys/net/ieee8023ad_lacp.h 286700 2015-08-12 20:21:04Z hiren $
  */
 
 /*
@@ -251,6 +251,7 @@ struct lacp_softc {
 		u_int32_t	lsc_tx_test;
 	} lsc_debug;
 	u_int32_t		lsc_strict_mode;
+	boolean_t		lsc_fast_timeout; /* if set, fast timeout */
 };
 
 #define	LACP_TYPE_ACTORINFO	1

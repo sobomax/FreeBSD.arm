@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_machdep.c 280798 2015-03-28 23:40:29Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_machdep.c 285524 2015-07-14 05:14:10Z adrian $");
 
 #include "opt_ddb.h"
 #include "opt_ar71xx.h"
@@ -304,6 +304,8 @@ ar71xx_platform_check_mac_hints(void)
 	return (0);
 }
 
+extern char cpu_model[];
+
 void
 platform_start(__register_t a0 __unused, __register_t a1 __unused, 
     __register_t a2 __unused, __register_t a3 __unused)
@@ -416,6 +418,8 @@ platform_start(__register_t a0 __unused, __register_t a1 __unused,
 	printf("  a1 = %08x\n", a1);
 	printf("  a2 = %08x\n", a2);
 	printf("  a3 = %08x\n", a3);
+
+	strcpy(cpu_model, ar71xx_get_system_type());
 
 	/*
 	 * XXX this code is very redboot specific.

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit.h 271539 2014-09-13 18:24:54Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/partedit.h 285679 2015-07-18 18:49:44Z allanjude $
  */
 
 #ifndef _PARTEDIT_PARTEDIT_H
@@ -72,6 +72,8 @@ void gpart_commit(struct gmesh *mesh);
 int gpart_partition(const char *lg_name, const char *scheme);
 void set_default_part_metadata(const char *name, const char *scheme,
     const char *type, const char *mountpoint, const char *newfs);
+void gpart_set_root(const char *lg_name, const char *attribute);
+const char *choose_part_type(const char *def_scheme);
 
 /* machine-dependent bootability checks */
 const char *default_scheme(void);

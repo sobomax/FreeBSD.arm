@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_keycache.c 265115 2014-04-30 02:19:41Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_keycache.c 286835 2015-08-17 02:04:11Z adrian $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -425,7 +425,7 @@ int
 ath_key_alloc(struct ieee80211vap *vap, struct ieee80211_key *k,
 	ieee80211_keyix *keyix, ieee80211_keyix *rxkeyix)
 {
-	struct ath_softc *sc = vap->iv_ic->ic_ifp->if_softc;
+	struct ath_softc *sc = vap->iv_ic->ic_softc;
 
 	/*
 	 * Group key allocation must be handled specially for
@@ -493,7 +493,7 @@ ath_key_alloc(struct ieee80211vap *vap, struct ieee80211_key *k,
 int
 ath_key_delete(struct ieee80211vap *vap, const struct ieee80211_key *k)
 {
-	struct ath_softc *sc = vap->iv_ic->ic_ifp->if_softc;
+	struct ath_softc *sc = vap->iv_ic->ic_softc;
 	struct ath_hal *ah = sc->sc_ah;
 	const struct ieee80211_cipher *cip = k->wk_cipher;
 	u_int keyix = k->wk_keyix;
@@ -538,7 +538,7 @@ int
 ath_key_set(struct ieee80211vap *vap, const struct ieee80211_key *k,
 	const u_int8_t mac[IEEE80211_ADDR_LEN])
 {
-	struct ath_softc *sc = vap->iv_ic->ic_ifp->if_softc;
+	struct ath_softc *sc = vap->iv_ic->ic_softc;
 
 	return ath_keyset(sc, vap, k, vap->iv_bss);
 }

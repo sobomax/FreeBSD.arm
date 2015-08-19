@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/tda19988.c 284562 2015-06-18 16:51:49Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/tda19988.c 285868 2015-07-25 03:19:02Z gonzo $");
 /*
 * NXP TDA19988 HDMI encoder 
 */
@@ -715,8 +715,8 @@ tda19988_start(void *xdev)
 
 	/* Default values for RGB 4:4:4 mapping */
 	tda19988_reg_write(sc, TDA_VIP_CNTRL_0, 0x23);
-	tda19988_reg_write(sc, TDA_VIP_CNTRL_1, 0x45);
-	tda19988_reg_write(sc, TDA_VIP_CNTRL_2, 0x01);
+	tda19988_reg_write(sc, TDA_VIP_CNTRL_1, 0x01);
+	tda19988_reg_write(sc, TDA_VIP_CNTRL_2, 0x45);
 
 done:
 	config_intrhook_disestablish(&sc->enum_hook);

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drmP.h 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drmP.h 286640 2015-08-11 16:51:44Z kwm $");
 
 #ifndef _DRM_P_H_
 #define _DRM_P_H_
@@ -1592,8 +1592,8 @@ extern int drm_pcie_get_speed_cap_mask(struct drm_device *dev, u32 *speed_mask);
 SYSCTL_DECL(_hw_drm);
 
 #define DRM_DEV_MODE	(S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP)
-#define DRM_DEV_UID	0
-#define DRM_DEV_GID	0
+#define DRM_DEV_UID	UID_ROOT
+#define DRM_DEV_GID	GID_VIDEO
 
 #define DRM_WAKEUP(w)		wakeup((void *)w)
 #define DRM_WAKEUP_INT(w)	wakeup(w)

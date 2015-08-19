@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_print.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_print.c 285783 2015-07-22 01:09:02Z jhb $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -56,7 +56,8 @@ db_show_regs(db_expr_t _1, bool _2, db_expr_t _3, char *_4)
 	for (regp = db_regs; regp < db_eregs; regp++) {
 		if (!db_read_variable(regp, &value))
 			continue;
-		db_printf("%-12s%#10lr", regp->name, (unsigned long)value);
+		db_printf("%-12s%#*lr", regp->name,
+		    (int)(sizeof(unsigned long) * 2 + 2), (unsigned long)value);
 		db_find_xtrn_sym_and_offset((db_addr_t)value, &name, &offset);
 		if (name != NULL && offset <= (unsigned long)db_maxoff &&
 		    offset != value) {

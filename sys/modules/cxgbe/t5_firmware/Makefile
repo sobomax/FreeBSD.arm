@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/cxgbe/t5_firmware/Makefile 269364 2014-08-01 01:30:16Z np $
+# $FreeBSD: head/sys/modules/cxgbe/t5_firmware/Makefile 286338 2015-08-05 19:45:11Z np $
 #
 
 T5FW=	${.CURDIR}/../../../dev/cxgbe/firmware
@@ -17,7 +17,7 @@ FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T5FW_VER=	1.11.27.0
+T5FW_VER=	1.14.4.0
 FIRMWS+=	t5fw.fw:t5fw:${T5FW_VER}
 CLEANFILES+=	t5fw.fw
 

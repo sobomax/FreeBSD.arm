@@ -23,13 +23,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/bus_space/bus.h 284228 2015-06-10 16:00:09Z marcel $
+ * $FreeBSD: head/tools/bus_space/bus.h 285903 2015-07-26 21:37:31Z marcel $
  */
 
 #ifndef _TOOLS_BUS_SPACE_H_
 #define	_TOOLS_BUS_SPACE_H_
 
-int bs_map(const char *dev);
+int bs_map(const char *dev, const char *res);
 int bs_read(int rid, off_t ofs, void *buf, ssize_t bufsz);
 int bs_subregion(int rid0, long ofs, long sz);
 int bs_unmap(int rid);

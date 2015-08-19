@@ -4,7 +4,7 @@
  * 
  * Ported to FreeBSD by Jean-Sébastien Pédron <jspedron@club-internet.fr>
  * 
- * $FreeBSD: head/sys/gnu/fs/reiserfs/reiserfs_vfsops.c 242833 2012-11-09 18:02:25Z attilio $
+ * $FreeBSD: head/sys/gnu/fs/reiserfs/reiserfs_vfsops.c 286888 2015-08-18 13:16:23Z avatar $
  */
 
 #include <gnu/fs/reiserfs/reiserfs_fs.h>
@@ -960,8 +960,8 @@ uint32_t find_hash_out(struct reiserfs_mount *rmp)
 		    key.on_disk_key.k_objectid, key.on_disk_key.k_dir_id);
 		retval = search_by_entry_key(sbi, &key, &path, &de);
 		if (retval == IO_ERROR) {
-			pathrelse(&path);
-			return (UNSET_HASH);
+			hash = UNSET_HASH;
+			break;
 		}
 		if (retval == NAME_NOT_FOUND)
 			de.de_entry_num--;

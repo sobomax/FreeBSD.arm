@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/sdt/sdt.c 267706 2014-06-21 19:29:40Z markj $
+ * $FreeBSD: head/sys/cddl/dev/sdt/sdt.c 285703 2015-07-19 22:14:09Z markj $
  *
  */
 
@@ -50,6 +50,7 @@
 #include <sys/linker.h>
 #include <sys/linker_set.h>
 #include <sys/lock.h>
+#include <sys/lockstat.h>
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/mutex.h>
@@ -197,6 +198,8 @@ sdt_enable(void *arg __unused, dtrace_id_t id, void *parg)
 
 	probe->id = id;
 	probe->sdtp_lf->nenabled++;
+	if (strcmp(probe->prov->name, "lockstat") == 0)
+		lockstat_enabled++;
 }
 
 static void
@@ -206,6 +209,8 @@ sdt_disable(void *arg __unused, dtrace_id_t id, void *parg)
 
 	KASSERT(probe->sdtp_lf->nenabled > 0, ("no probes enabled"));
 
+	if (strcmp(probe->prov->name, "lockstat") == 0)
+		lockstat_enabled--;
 	probe->id = 0;
 	probe->sdtp_lf->nenabled--;
 }

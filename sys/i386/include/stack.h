@@ -23,7 +23,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/i386/include/stack.h 174195 2007-12-02 20:40:35Z rwatson $
+ * $FreeBSD: head/sys/i386/include/stack.h 285041 2015-07-02 14:37:21Z kib $
  */
 
 #ifndef _MACHINE_STACK_H_
@@ -32,8 +32,6 @@
 /*
  * Stack trace.
  */
-#define INKERNEL(va)	(((vm_offset_t)(va)) >= USRSTACK && \
-	    ((vm_offset_t)(va)) < VM_MAX_KERNEL_ADDRESS)
 
 struct i386_frame {
 	struct i386_frame	*f_frame;

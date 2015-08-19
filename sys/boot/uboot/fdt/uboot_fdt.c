@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/fdt/uboot_fdt.c 280194 2015-03-17 21:15:24Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/fdt/uboot_fdt.c 286815 2015-08-15 21:47:07Z gonzo $");
 
 #include <sys/param.h>
 #include <stand.h>
@@ -69,10 +69,11 @@ fdt_platform_load_dtb(void)
 	}
 
 	/*
-	 * If the U-boot environment contains a variable giving the name of a
-	 * file, use it if we can load and validate it.
+	 * Try to get FDT filename first from loader env and then from u-boot env
 	 */
-	s = ub_env_get("fdtfile");
+	s = getenv("fdt_file");
+	if (s == NULL)
+		s = ub_env_get("fdtfile");
 	if (s == NULL)
 		s = ub_env_get("fdt_file");
 	if (s != NULL && *s != '\0') {

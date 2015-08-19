@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_cache.c 281829 2015-04-21 13:55:24Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_cache.c 285632 2015-07-16 13:57:05Z mjg $");
 
 #include "opt_ktrace.h"
 
@@ -661,12 +661,12 @@ success:
 		ltype = VOP_ISLOCKED(dvp);
 		VOP_UNLOCK(dvp, 0);
 	}
-	VI_LOCK(*vpp);
+	vhold(*vpp);
 	if (wlocked)
 		CACHE_WUNLOCK();
 	else
 		CACHE_RUNLOCK();
-	error = vget(*vpp, cnp->cn_lkflags | LK_INTERLOCK, cnp->cn_thread);
+	error = vget(*vpp, cnp->cn_lkflags | LK_VNHELD, cnp->cn_thread);
 	if (cnp->cn_flags & ISDOTDOT) {
 		vn_lock(dvp, ltype | LK_RETRY);
 		if (dvp->v_iflag & VI_DOOMED) {
@@ -1366,9 +1366,9 @@ vn_dir_dd_ino(struct vnode *vp)
 		if ((ncp->nc_flag & NCF_ISDOTDOT) != 0)
 			continue;
 		ddvp = ncp->nc_dvp;
-		VI_LOCK(ddvp);
+		vhold(ddvp);
 		CACHE_RUNLOCK();
-		if (vget(ddvp, LK_INTERLOCK | LK_SHARED | LK_NOWAIT, curthread))
+		if (vget(ddvp, LK_SHARED | LK_NOWAIT | LK_VNHELD, curthread))
 			return (NULL);
 		return (ddvp);
 	}

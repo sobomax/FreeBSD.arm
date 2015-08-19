@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_output.h 284515 2015-06-17 15:20:14Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_output.h 285837 2015-07-24 14:09:03Z rrs $");
 
 #ifndef _NETINET_SCTP_OUTPUT_H_
 #define _NETINET_SCTP_OUTPUT_H_
@@ -170,18 +170,21 @@ void sctp_send_cwr(struct sctp_tcb *, struct sctp_nets *, uint32_t, uint8_t);
 
 
 void
-sctp_add_stream_reset_out(struct sctp_tmit_chunk *,
-    int, uint16_t *, uint32_t, uint32_t, uint32_t);
+     sctp_add_stream_reset_result(struct sctp_tmit_chunk *, uint32_t, uint32_t);
 
 void
-     sctp_add_stream_reset_result(struct sctp_tmit_chunk *, uint32_t, uint32_t);
+sctp_send_deferred_reset_response(struct sctp_tcb *,
+    struct sctp_stream_reset_list *,
+    int);
 
 void
 sctp_add_stream_reset_result_tsn(struct sctp_tmit_chunk *,
     uint32_t, uint32_t, uint32_t, uint32_t);
+int
+    sctp_send_stream_reset_out_if_possible(struct sctp_tcb *, int);
 
 int
-sctp_send_str_reset_req(struct sctp_tcb *, uint16_t, uint16_t *, uint8_t,
+sctp_send_str_reset_req(struct sctp_tcb *, uint16_t, uint16_t *,
     uint8_t, uint8_t, uint8_t, uint16_t, uint16_t, uint8_t);
 
 void

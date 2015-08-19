@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_pci.c 284086 2015-06-06 17:04:36Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_pci.c 286480 2015-08-08 21:46:38Z zbb $");
 
 /*
  * PCI:PCI bridge support.
@@ -960,9 +960,10 @@ pcib_attach_common(device_t dev)
      * The i82380FB mobile docking controller is a PCI-PCI bridge,
      * and it is a subtractive bridge.  However, the ProgIf is wrong
      * so the normal setting of PCIB_SUBTRACTIVE bit doesn't
-     * happen.  There's also a Toshiba bridge that behaves this
-     * way.
+     * happen.  There are also Toshiba and Cavium ThunderX bridges
+     * that behave this way.
      */
+    case 0xa002177d:		/* Cavium ThunderX */
     case 0x124b8086:		/* Intel 82380FB Mobile */
     case 0x060513d7:		/* Toshiba ???? */
 	sc->flags |= PCIB_SUBTRACTIVE;

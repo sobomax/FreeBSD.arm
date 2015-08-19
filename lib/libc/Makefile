@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: head/lib/libc/Makefile 284421 2015-06-15 19:28:07Z bapt $
+# $FreeBSD: head/lib/libc/Makefile 286760 2015-08-14 03:03:13Z pfg $
 
 SHLIBDIR?= /lib
 
@@ -95,6 +95,7 @@ NOASM=
 .include "${LIBC_SRCTOP}/stdtime/Makefile.inc"
 .include "${LIBC_SRCTOP}/string/Makefile.inc"
 .include "${LIBC_SRCTOP}/sys/Makefile.inc"
+.include "${LIBC_SRCTOP}/secure/Makefile.inc"
 .include "${LIBC_SRCTOP}/rpc/Makefile.inc"
 .include "${LIBC_SRCTOP}/uuid/Makefile.inc"
 .include "${LIBC_SRCTOP}/xdr/Makefile.inc"

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/module.c 277215 2015-01-15 16:27:20Z royger $");
+__FBSDID("$FreeBSD: head/sys/boot/common/module.c 286234 2015-08-03 16:27:36Z trasz $");
 
 /*
  * file/module function dispatcher, support, etc.
@@ -102,6 +102,7 @@ COMMAND_SET(load, "load", "load a kernel or module", command_load);
 static int
 command_load(int argc, char *argv[])
 {
+    struct preloaded_file *fp;
     char	*typestr;
     int		dofile, dokld, ch, error;
     
@@ -139,6 +140,13 @@ command_load(int argc, char *argv[])
 	    command_errmsg = "invalid load type";
 	    return(CMD_ERROR);
 	}
+
+	fp = file_findfile(argv[1], typestr);
+	if (fp) {
+		sprintf(command_errbuf, "warning: file '%s' already loaded", argv[1]);
+		return (CMD_ERROR);
+	}
+
 	return (file_loadraw(argv[1], typestr, 1) ? CMD_OK : CMD_ERROR);
     }
     /*

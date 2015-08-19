@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/safe/safe.c 284959 2015-06-30 17:00:45Z markm $");
 
 /*
  * SafeNet SafeXcel-1141 hardware crypto accelerator
@@ -211,7 +211,8 @@ safe_partname(struct safe_softc *sc)
 static void
 default_harvest(struct rndtest_state *rsp, void *buf, u_int count)
 {
-	random_harvest(buf, count, count*NBBY/2, RANDOM_PURE_SAFE);
+	/* MarkM: FIX!! Check that this does not swamp the harvester! */
+	random_harvest_queue(buf, count, count*NBBY/2, RANDOM_PURE_SAFE);
 }
 #endif /* SAFE_NO_RNG */
 

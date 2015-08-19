@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * 
  * $Id: dconschat.c,v 1.76 2003/10/23 06:21:13 simokawa Exp $
- * $FreeBSD: head/usr.sbin/dconschat/dconschat.c 233195 2012-03-19 19:17:55Z dim $
+ * $FreeBSD: head/usr.sbin/dconschat/dconschat.c 284913 2015-06-28 20:32:03Z pfg $
  */
 
 #include <sys/param.h>
@@ -229,7 +229,7 @@ dconschat_fork_gdb(struct dcons_state *dc, struct dcons_port *p)
 		snprintf(buf, 256, "\n[fork %s]\n", com);
 		write(p->outfd, buf, strlen(buf));
 
-		execl("/bin/sh", "/bin/sh", "-c", com, 0);
+		execl("/bin/sh", "/bin/sh", "-c", com, NULL);
 
 		snprintf(buf, 256, "\n[fork failed]\n");
 		write(p->outfd, buf, strlen(buf));

@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/group 256365 2013-10-12 06:06:53Z rpaulo $
+# $FreeBSD: head/etc/group 286524 2015-08-09 12:58:56Z kwm $
 #
 wheel:*:0:root
 daemon:*:1:
@@ -17,6 +17,7 @@ sshd:*:22:
 smmsp:*:25:
 mailnull:*:26:
 guest:*:31:
+video:*:44:
 bind:*:53:
 unbound:*:59:
 proxy:*:62:

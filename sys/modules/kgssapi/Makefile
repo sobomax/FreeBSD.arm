@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/kgssapi/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/sys/modules/kgssapi/Makefile 285068 2015-07-03 01:50:26Z imp $
 
 .PATH: ${.CURDIR}/../../kgssapi ${.CURDIR}/../../rpc/rpcsec_gss
 KMOD=	kgssapi
@@ -36,7 +36,6 @@ SRCS+=	rpcsec_gss.c \
 	svc_rpcsec_gss.c
 
 SRCS+=		kgss_if.h kgss_if.c
-MFILES=		kgssapi/kgss_if.m
 
 SRCS+=		gssd.h gssd_xdr.c gssd_clnt.c
 CLEANFILES=	gssd.h gssd_xdr.c gssd_clnt.c

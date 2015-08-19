@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.tests.dist 282339 2015-05-02 12:08:28Z bapt $
+# $FreeBSD: head/etc/mtree/BSD.tests.dist 285890 2015-07-26 11:21:36Z bapt $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -527,6 +527,8 @@
         grep
         ..
         gzip
+        ..
+        ident
         ..
         join
         ..

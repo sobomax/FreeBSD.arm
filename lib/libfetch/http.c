@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/http.c 284346 2015-06-13 19:26:48Z dim $");
+__FBSDID("$FreeBSD: head/lib/libfetch/http.c 285141 2015-07-04 17:22:07Z araujo $");
 
 /*
  * The following copyright applies to the base64 code:
@@ -1330,7 +1330,6 @@ static int
 http_authorize(conn_t *conn, const char *hdr, http_auth_challenges_t *cs,
 	       http_auth_params_t *parms, struct url *url)
 {
-	http_auth_challenge_t *basic = NULL;
 	http_auth_challenge_t *digest = NULL;
 	int i;
 
@@ -1340,10 +1339,8 @@ http_authorize(conn_t *conn, const char *hdr, http_auth_challenges_t *cs,
 		return (-1);
 	}
 
-	/* Look for a Digest and a Basic challenge */
+	/* Look for a Digest */
 	for (i = 0; i < cs->count; i++) {
-		if (cs->challenges[i]->scheme == HTTPAS_BASIC)
-			basic = cs->challenges[i];
 		if (cs->challenges[i]->scheme == HTTPAS_DIGEST)
 			digest = cs->challenges[i];
 	}

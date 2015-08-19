@@ -9,7 +9,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ministat/ministat.c 278928 2015-02-17 23:20:19Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/ministat/ministat.c 285595 2015-07-15 06:14:04Z jmg $");
 
 #include <stdio.h>
 #include <math.h>
@@ -487,7 +487,7 @@ ReadSet(const char *n, int column, const char *delim)
 
 		d = strtod(t, &p);
 		if (p != NULL && *p != '\0')
-			err(2, "Invalid data on line %d in %s\n", line, n);
+			errx(2, "Invalid data on line %d in %s", line, n);
 		if (*buf != '\0')
 			AddPoint(s, d);
 	}

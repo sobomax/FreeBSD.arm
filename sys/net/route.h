@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/net/route.h 274611 2014-11-17 01:05:29Z melifaro $
+ * $FreeBSD: head/sys/net/route.h 286594 2015-08-10 20:50:31Z melifaro $
  */
 
 #ifndef _NET_ROUTE_H_
@@ -379,6 +379,11 @@ int	 rt_expunge(struct radix_node_head *, struct rtentry *);
 void	 rtfree(struct rtentry *);
 int	 rt_check(struct rtentry **, struct rtentry **, struct sockaddr *);
 void	rt_updatemtu(struct ifnet *);
+
+typedef int rt_walktree_f_t(struct rtentry *, void *);
+typedef void rt_setwarg_t(struct radix_node_head *, uint32_t, int, void *);
+void	rt_foreach_fib_walk(int af, rt_setwarg_t *, rt_walktree_f_t *, void *);
+void	rt_flushifroutes(struct ifnet *ifp);
 
 /* XXX MRT COMPAT VERSIONS THAT SET UNIVERSE to 0 */
 /* Thes are used by old code not yet converted to use multiple FIBS */

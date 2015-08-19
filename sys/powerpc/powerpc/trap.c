@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/trap.c 284214 2015-06-10 10:43:59Z mjg $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/trap.c 286821 2015-08-16 01:08:59Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -400,6 +400,7 @@ trap_fatal(struct trapframe *frame)
 static void
 printtrap(u_int vector, struct trapframe *frame, int isfatal, int user)
 {
+	uint16_t ver;
 
 	printf("\n");
 	printf("%s %s trap:\n", isfatal ? "fatal" : "handled",
@@ -412,8 +413,8 @@ printtrap(u_int vector, struct trapframe *frame, int isfatal, int user)
 	case EXC_DTMISS:
 		printf("   virtual address = 0x%" PRIxPTR "\n", frame->dar);
 #ifdef AIM
-		printf("   dsisr           = 0x%" PRIxPTR "\n",
-		    frame->cpu.aim.dsisr);
+		printf("   dsisr           = 0x%lx\n",
+		    (u_long)frame->cpu.aim.dsisr);
 #endif
 		break;
 	case EXC_ISE:
@@ -421,13 +422,23 @@ printtrap(u_int vector, struct trapframe *frame, int isfatal, int user)
 	case EXC_ITMISS:
 		printf("   virtual address = 0x%" PRIxPTR "\n", frame->srr0);
 		break;
+	case EXC_MCHK:
+		ver = mfpvr() >> 16;
+#if defined(AIM)
+		if (MPC745X_P(ver))
+			printf("    msssr0         = 0x%lx\n",
+			    (u_long)mfspr(SPR_MSSSR0));
+#elif defined(BOOKE)
+		printf("    mcsr           = 0x%lx\n", (u_long)mfspr(SPR_MCSR));
+#endif
+		break;
 	}
 #ifdef BOOKE
 	printf("   esr             = 0x%" PRIxPTR "\n",
 	    frame->cpu.booke.esr);
 #endif
 	printf("   srr0            = 0x%" PRIxPTR "\n", frame->srr0);
-	printf("   srr1            = 0x%" PRIxPTR "\n", frame->srr1);
+	printf("   srr1            = 0x%lx\n", (u_long)frame->srr1);
 	printf("   lr              = 0x%" PRIxPTR "\n", frame->lr);
 	printf("   curthread       = %p\n", curthread);
 	if (curthread != NULL)

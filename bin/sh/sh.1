@@ -30,9 +30,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	from: @(#)sh.1	8.6 (Berkeley) 5/4/95
-.\" $FreeBSD: head/bin/sh/sh.1 281718 2015-04-18 23:49:57Z bdrewery $
+.\" $FreeBSD: head/bin/sh/sh.1 285385 2015-07-11 13:07:26Z jilles $
 .\"
-.Dd April 18, 2015
+.Dd July 11, 2015
 .Dt SH 1
 .Os
 .Sh NAME
@@ -2846,6 +2846,4 @@ The
 utility does not recognize multibyte characters other than UTF-8.
 Splitting using
 .Va IFS
-and the line editing library
-.Xr editline 3
-do not recognize multibyte characters.
+does not recognize multibyte characters.

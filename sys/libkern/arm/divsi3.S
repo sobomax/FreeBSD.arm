@@ -15,7 +15,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/libkern/arm/divsi3.S 269390 2014-08-01 18:24:44Z ian $");
+__FBSDID("$FreeBSD: head/sys/libkern/arm/divsi3.S 285338 2015-07-09 21:02:40Z andrew $");
 
 /* 
  * stack is aligned as there's a possibility of branching to L_overflow
@@ -52,10 +52,8 @@ ENTRY_NP(__modsi3)
 END(__modsi3)
 
 ENTRY_NP(__udivsi3)
-#ifdef __ARM_EABI__
 EENTRY_NP(__aeabi_uidiv)
 EENTRY_NP(__aeabi_uidivmod)
-#endif
 .L_udivide:				/* r0 = r0 / r1; r1 = r0 % r1 */
 	eor     r0, r1, r0 
 	eor     r1, r0, r1 
@@ -76,17 +74,13 @@ EENTRY_NP(__aeabi_uidivmod)
 	mov	r0, r1
 	mov	r1, #0
 	RET
-#ifdef __ARM_EABI__
 EEND(__aeabi_uidiv)
 EEND(__aeabi_uidivmod)
-#endif
 END(__udivsi3)
 
 ENTRY_NP(__divsi3)
-#ifdef __ARM_EABI__
 EENTRY_NP(__aeabi_idiv)
 EENTRY_NP(__aeabi_idivmod)
-#endif
 .L_divide:				/* r0 = r0 / r1; r1 = r0 % r1 */
 	eor     r0, r1, r0 
 	eor     r1, r0, r1 
@@ -400,9 +394,7 @@ EENTRY_NP(__aeabi_idivmod)
 	addhs	r3, r3, r2
 	mov	r0, r3
 	RET
-#ifdef __ARM_EABI__
 EEND(__aeabi_idiv)
 EEND(__aeabi_idivmod)
-#endif
 END(__divsi3)
 

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/jail.h 279361 2015-02-27 16:28:55Z ian $
+ * $FreeBSD: head/sys/sys/jail.h 285685 2015-07-19 08:52:35Z araujo $
  */
 
 #ifndef _SYS_JAIL_H_
@@ -230,7 +230,9 @@ struct prison_racct {
 #define	PR_ALLOW_MOUNT_PROCFS		0x0400
 #define	PR_ALLOW_MOUNT_TMPFS		0x0800
 #define	PR_ALLOW_MOUNT_FDESCFS		0x1000
-#define	PR_ALLOW_ALL			0x1fff
+#define	PR_ALLOW_MOUNT_LINPROCFS	0x2000
+#define	PR_ALLOW_MOUNT_LINSYSFS		0x4000
+#define	PR_ALLOW_ALL			0x7fff
 
 /*
  * OSD methods

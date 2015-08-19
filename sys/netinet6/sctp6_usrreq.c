@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 284515 2015-06-17 15:20:14Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 285877 2015-07-25 18:26:09Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #ifdef INET6
@@ -39,9 +39,7 @@ __FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 284515 2015-06-17 15:20:14Z
 #include <netinet/sctp_pcb.h>
 #include <netinet/sctp_header.h>
 #include <netinet/sctp_var.h>
-#ifdef INET6
 #include <netinet6/sctp6_var.h>
-#endif
 #include <netinet/sctp_sysctl.h>
 #include <netinet/sctp_output.h>
 #include <netinet/sctp_uio.h>
@@ -54,13 +52,12 @@ __FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 284515 2015-06-17 15:20:14Z
 #include <netinet/sctp_output.h>
 #include <netinet/sctp_bsd_addr.h>
 #include <netinet/sctp_crc32.h>
+#include <netinet/icmp6.h>
 #include <netinet/udp.h>
 
 #ifdef IPSEC
 #include <netipsec/ipsec.h>
-#ifdef INET6
 #include <netipsec/ipsec6.h>
-#endif				/* INET6 */
 #endif				/* IPSEC */
 
 extern struct protosw inetsw[];

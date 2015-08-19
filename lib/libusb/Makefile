@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libusb/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libusb/Makefile 286812 2015-08-15 19:00:38Z antoine $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
@@ -69,8 +69,6 @@ CFLAGS+=	-DLIBUSB_GLOBAL_INCLUDE_FILE=\"${LIBUSB_GLOBAL_INCLUDE_FILE}\"
 CFLAGS+=	-DUSB_GLOBAL_INCLUDE_FILE=\"${LIBUSB_GLOBAL_INCLUDE_FILE}\"
 CFLAGS+=	-I ../../sys
 .endif
-
-.include <bsd.lib.mk>
 
 # LibUSB v1.0
 MLINKS += libusb.3 libusb_init.3
@@ -259,3 +257,5 @@ MLINKS += libusb20.3 libusb20_me_decode.3
 MLINKS += libusb20.3 libusb20_desc_foreach.3
 MLINKS += libusb20.3 libusb20_strerror.3
 MLINKS += libusb20.3 libusb20_error_name.3
+
+.include <bsd.lib.mk>

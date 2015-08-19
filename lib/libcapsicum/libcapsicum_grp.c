@@ -28,8 +28,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_grp.c 282346 2015-05-02 17:45:52Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_grp.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
+#include <sys/dnv.h>
+#include <sys/nv.h>
 #include <sys/param.h>
 
 #include <assert.h>
@@ -38,9 +40,6 @@ __FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_grp.c 282346 2015-05-02 17:
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <dnv.h>
-#include <nv.h>
 
 #include "libcapsicum.h"
 #include "libcapsicum_grp.h"

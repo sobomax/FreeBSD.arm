@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_lcd.c 284534 2015-06-18 00:57:52Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_lcd.c 285866 2015-07-25 02:59:45Z gonzo $");
 
 #include "opt_syscons.h"
 #include <sys/param.h>
@@ -998,8 +998,11 @@ am335x_lcd_attach(device_t dev)
 	    PWM_PERIOD, PWM_PERIOD) == 0)
 		sc->sc_backlight = 100;
 
-	sc->sc_hdmi_evh = EVENTHANDLER_REGISTER(hdmi_event,
-	    am335x_lcd_hdmi_event, sc, 0);
+	if (panel_node != 0)
+		am335x_lcd_configure(sc);
+	else
+		sc->sc_hdmi_evh = EVENTHANDLER_REGISTER(hdmi_event,
+		    am335x_lcd_hdmi_event, sc, 0);
 
 	return (0);
 }

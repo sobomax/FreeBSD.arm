@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/mbr.c 276893 2015-01-09 19:34:48Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/mbr.c 284883 2015-06-27 03:28:04Z marcel $");
 
 #include <sys/types.h>
 #include <sys/diskmbr.h>
@@ -51,6 +51,7 @@ static struct mkimg_alias mbr_aliases[] = {
     {	ALIAS_EFI, ALIAS_INT2TYPE(DOSPTYP_EFI) },
     {	ALIAS_FAT32, ALIAS_INT2TYPE(DOSPTYP_FAT32) },
     {	ALIAS_FREEBSD, ALIAS_INT2TYPE(DOSPTYP_386BSD) },
+    {	ALIAS_NTFS, ALIAS_INT2TYPE(DOSPTYP_NTFS) },
     {	ALIAS_NONE, 0 }		/* Keep last! */
 };
 

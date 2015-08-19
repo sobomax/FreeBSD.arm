@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm/include/param.h 273783 2014-10-28 15:22:13Z kib $
+ * $FreeBSD: head/sys/arm/include/param.h 286584 2015-08-10 17:18:21Z kib $
  */
 
 #ifndef _ARM_INCLUDE_PARAM_H_
@@ -131,7 +131,7 @@
 #define KSTACK_GUARD_PAGES	1
 #endif /* !KSTACK_GUARD_PAGES */
 
-#define USPACE_SVC_STACK_TOP		(KSTACK_PAGES * PAGE_SIZE)
+#define USPACE_SVC_STACK_TOP		(kstack_pages * PAGE_SIZE)
 
 /*
  * Mach derived conversion macros

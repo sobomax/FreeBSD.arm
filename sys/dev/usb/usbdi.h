@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/usb/usbdi.h 267240 2014-06-08 20:10:29Z hselasky $
+ * $FreeBSD: head/sys/dev/usb/usbdi.h 286773 2015-08-14 12:57:53Z hselasky $
  */
 #ifndef _USB_USBDI_H_
 #define _USB_USBDI_H_
@@ -128,6 +128,8 @@ struct usb_xfer_queue {
 	void    (*command) (struct usb_xfer_queue *pq);
 	uint8_t	recurse_1:1;
 	uint8_t	recurse_2:1;
+	uint8_t	recurse_3:1;
+	uint8_t	reserved:5;
 };
 
 /*

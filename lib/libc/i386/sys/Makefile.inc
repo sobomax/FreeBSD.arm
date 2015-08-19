@@ -1,5 +1,5 @@
 #	from: Makefile.inc,v 1.1 1993/09/03 19:04:23 jtc Exp
-# $FreeBSD: head/lib/libc/i386/sys/Makefile.inc 281714 2015-04-18 21:50:13Z kib $
+# $FreeBSD: head/lib/libc/i386/sys/Makefile.inc 285240 2015-07-07 09:25:51Z trasz $
 
 .if !defined(COMPAT_32BIT)
 SRCS+=	i386_clr_watch.c i386_set_watch.c i386_vm86.c
@@ -9,7 +9,7 @@ SRCS+=	i386_get_fsbase.c i386_get_gsbase.c i386_get_ioperm.c i386_get_ldt.c \
 	__vdso_gettc.c
 
 MDASM=	Ovfork.S brk.S cerror.S exect.S getcontext.S pipe.S ptrace.S \
-	reboot.S sbrk.S setlogin.S sigreturn.S syscall.S
+	sbrk.S setlogin.S sigreturn.S syscall.S
 
 # Don't generate default code for these syscalls:
 NOASM=	break.o exit.o getlogin.o openbsd_poll.o sstk.o vfork.o yield.o

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/mp_x86.c 281940 2015-04-24 16:20:56Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/mp_x86.c 286374 2015-08-06 18:02:54Z kib $");
 
 #ifdef __i386__
 #include "opt_apic.h"
@@ -602,7 +602,7 @@ init_secondary_tail(void)
 	mtx_unlock_spin(&ap_boot_mtx);
 
 	/* Wait until all the AP's are up. */
-	while (smp_started == 0)
+	while (atomic_load_acq_int(&smp_started) == 0)
 		ia32_pause();
 
 	/* Start per-CPU event timers. */

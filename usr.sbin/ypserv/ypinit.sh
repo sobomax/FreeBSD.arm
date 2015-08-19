@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/usr.sbin/ypserv/ypinit.sh 201051 2009-12-27 16:00:17Z marck $
+# $FreeBSD: head/usr.sbin/ypserv/ypinit.sh 286892 2015-08-18 15:33:23Z asomers $
 #
 # ypinit.sh - setup a master or slave server.
 # (Taken from OpenBSD and modified for FreeBSD.)
@@ -14,8 +14,9 @@ MAPLIST="master.passwd.byname master.passwd.byuid passwd.byname passwd.byuid \
 	 group.byname group.bygid hosts.byname hosts.byaddr services.byname \
 	 rpc.byname rpc.bynumber networks.byname networks.byaddr netgroup \
 	 netgroup.byuser netgroup.byhost netid.byname publickey.byname \
-	 bootparams ethers.byname ethers.byaddr amd.host mail.aliases \
-	 ypservers protocols.byname protocols.bynumber netmasks.byaddr"
+	 bootparams ethers.byname ethers.byaddr eui64.byname eui64.byid \
+	 amd.host mail.aliases ypservers protocols.byname protocols.bynumber \
+	 netmasks.byaddr"
 
 ERROR_EXISTS="NO"
 umask 077

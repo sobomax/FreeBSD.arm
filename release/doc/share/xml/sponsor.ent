@@ -1,6 +1,6 @@
 <!-- -*- sgml -*-
 
-     $FreeBSD: head/release/doc/share/xml/sponsor.ent 284829 2015-06-25 18:44:31Z gjb $
+     $FreeBSD: head/release/doc/share/xml/sponsor.ent 285897 2015-07-26 19:47:05Z gjb $
 
      Sponsors of various works.
 
@@ -19,6 +19,7 @@
 
 <!ENTITY darpa		"DARPA">
 <!ENTITY darpa_afrl	"DARPA, AFRL">
+<!ENTITY dell		"Dell, Inc.">
 
 <!ENTITY ff		"The&nbsp;&os;&nbsp;Foundation">
 <!ENTITY ff.url		"https://www.FreeBSDFoundation.org/">
@@ -27,6 +28,7 @@
 
 <!ENTITY juniper	"Juniper Networks, Inc.">
 
+<!ENTITY intelcorp	"Intel Corporation">
 <!ENTITY ix		"iXsystems">
 
 <!ENTITY limelight	"Limelight Networks">
@@ -42,6 +44,7 @@
 
 <!ENTITY sandvine	"Sandvine, Inc.">
 <!ENTITY scaleengine	"ScaleEngine, Inc.">
+<!ENTITY solarflare	"Solarflare Communications, Inc.">
 <!ENTITY spectralogic	"Spectra Logic">
 
 <!ENTITY yandex		"Yandex LLC">

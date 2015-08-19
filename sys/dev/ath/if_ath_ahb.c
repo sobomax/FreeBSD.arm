@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ahb.c 279512 2015-03-02 02:14:44Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ahb.c 285122 2015-07-04 03:07:28Z adrian $");
 
 /*
  * AHB bus front-end for the Atheros Wireless LAN controller driver.
@@ -115,6 +115,14 @@ ath_ahb_probe(device_t dev)
 		return BUS_PROBE_DEFAULT;
 	}
 	return ENXIO;
+}
+
+static void
+ath_ahb_intr(void *arg)
+{
+	/* XXX TODO: check if its ours! */
+	ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_WMAC);
+	ath_intr(arg);
 }
 
 static int
@@ -212,7 +220,7 @@ ath_ahb_attach(device_t dev)
 	}
 	if (bus_setup_intr(dev, psc->sc_irq,
 			   INTR_TYPE_NET | INTR_MPSAFE,
-			   NULL, ath_intr, sc, &psc->sc_ih)) {
+			   NULL, ath_ahb_intr, sc, &psc->sc_ih)) {
 		device_printf(dev, "could not establish interrupt\n");
 		goto bad2;
 	}

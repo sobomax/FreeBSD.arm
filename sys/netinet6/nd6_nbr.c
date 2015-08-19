@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/nd6_nbr.c 282805 2015-05-12 03:31:57Z hrs $");
+__FBSDID("$FreeBSD: head/sys/netinet6/nd6_nbr.c 286624 2015-08-11 09:26:11Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -68,7 +68,6 @@ __FBSDID("$FreeBSD: head/sys/netinet6/nd6_nbr.c 282805 2015-05-12 03:31:57Z hrs 
 #include <netinet/in.h>
 #include <netinet/in_var.h>
 #include <net/if_llatbl.h>
-#define	L3_ADDR_SIN6(le)	((struct sockaddr_in6 *) L3_ADDR(le))
 #include <netinet6/in6_var.h>
 #include <netinet6/in6_ifattach.h>
 #include <netinet/ip6.h>
@@ -898,7 +897,7 @@ nd6_na_input(struct mbuf *m, int off, int icmp6len)
 			struct nd_defrouter *dr;
 			struct in6_addr *in6;
 
-			in6 = &L3_ADDR_SIN6(ln)->sin6_addr;
+			in6 = &ln->r_l3addr.addr6;
 
 			/*
 			 * Lock to protect the default router list.

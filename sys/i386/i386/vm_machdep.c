@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 286051 2015-07-30 00:13:20Z kib $");
 
 #include "opt_isa.h"
 #include "opt_npx.h"
@@ -111,6 +111,8 @@ _Static_assert(OFFSETOF_CURTHREAD == offsetof(struct pcpu, pc_curthread),
     "OFFSETOF_CURTHREAD does not correspond with offset of pc_curthread.");
 _Static_assert(OFFSETOF_CURPCB == offsetof(struct pcpu, pc_curpcb),
     "OFFSETOF_CURPCB does not correspond with offset of pc_curpcb.");
+_Static_assert(__OFFSETOF_MONITORBUF == offsetof(struct pcpu, pc_monitorbuf),
+    "__OFFSETOF_MONINORBUF does not correspond with offset of pc_monitorbuf.");
 
 static void	cpu_reset_real(void);
 #ifdef SMP

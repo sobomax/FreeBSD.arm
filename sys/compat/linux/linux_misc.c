@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_misc.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_misc.c 285670 2015-07-18 09:02:50Z kib $");
 
 #include "opt_compat.h"
 
@@ -1839,7 +1839,7 @@ linux_exit_group(struct thread *td, struct linux_exit_group_args *args)
 	 * SIGNAL_EXIT_GROUP is set. We ignore that (temporarily?)
 	 * as it doesnt occur often.
 	 */
-	exit1(td, W_EXITCODE(args->error_code, 0));
+	exit1(td, args->error_code, 0);
 		/* NOTREACHED */
 }
 

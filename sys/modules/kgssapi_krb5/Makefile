@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/kgssapi_krb5/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/sys/modules/kgssapi_krb5/Makefile 285068 2015-07-03 01:50:26Z imp $
 
 .PATH: ${.CURDIR}/../../kgssapi/krb5
 KMOD=	kgssapi_krb5
@@ -12,7 +12,6 @@ SRCS=	krb5_mech.c \
 	opt_inet6.h
 
 SRCS+=		kgss_if.h gssd.h
-MFILES=		kgssapi/kgss_if.m
 CLEANFILES=	gssd.h
 
 S=		${.CURDIR}/../..

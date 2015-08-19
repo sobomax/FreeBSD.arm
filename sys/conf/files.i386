@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: head/sys/conf/files.i386 284227 2015-06-10 15:53:39Z br $
+# $FreeBSD: head/sys/conf/files.i386 286667 2015-08-12 15:26:32Z marcel $
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and
@@ -586,6 +586,7 @@ x86/isa/nmi.c			standard
 x86/isa/orm.c			optional isa
 x86/pci/pci_bus.c		optional pci
 x86/pci/qpi.c			optional pci
+x86/x86/bus_machdep.c		standard
 x86/x86/busdma_bounce.c		standard
 x86/x86/busdma_machdep.c	standard
 x86/x86/cpu_machdep.c		standard

@@ -30,7 +30,7 @@
 #include "opt_ktrace.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 284214 2015-06-10 10:43:59Z mjg $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 285389 2015-07-11 16:02:06Z andrew $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -542,8 +542,8 @@ nogo:
 		return;
 	}
 
-	ksig.sig = (rv == KERN_PROTECTION_FAILURE) ? SIGBUS : SIGSEGV;
-	ksig.code = 0;
+	ksig.sig = SIGSEGV;
+	ksig.code = (rv == KERN_PROTECTION_FAILURE) ? SEGV_ACCERR : SEGV_MAPERR;
 	ksig.addr = far;
 
 do_trapsignal:

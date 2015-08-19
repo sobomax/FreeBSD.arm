@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_create.c 276630 2015-01-03 18:38:46Z kib $
+ * $FreeBSD: head/lib/libthr/thread/thr_create.c 285278 2015-07-08 16:35:24Z pfg $
  */
 
 #include "namespace.h"
@@ -165,7 +165,7 @@ _pthread_create(pthread_t * thread, const pthread_attr_t * attr,
 		param.flags |= THR_SYSTEM_SCOPE;
 	if (new_thread->attr.sched_inherit == PTHREAD_INHERIT_SCHED)
 		param.rtp = NULL;
-	else { 	 
+	else {
 		sched_param.sched_priority = new_thread->attr.prio;
 		_schedparam_to_rtp(new_thread->attr.sched_policy,
 			&sched_param, &rtp);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/dtrace/Makefile 278529 2015-02-10 19:41:30Z gnn $
+# $FreeBSD: head/sys/modules/dtrace/Makefile 285703 2015-07-19 22:14:09Z markj $
 
 .include "Makefile.inc"
 
@@ -7,7 +7,6 @@ SUBDIR=		dtmalloc	\
 		dtrace		\
 		dtraceall	\
 		dtrace_test	\
-		lockstat	\
 		profile		\
 		prototype	\
 		sdt		\
@@ -22,7 +21,7 @@ SUBDIR+=	fbt fasttrap
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_ARCH} == "powerpc64"
 SUBDIR+=	systrace_freebsd32
 .endif
-.if ${MACHINE_CPUARCH} == "arm"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
 SUBDIR+=	fbt
 .endif
 .include <bsd.subdir.mk>

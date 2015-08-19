@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/sbin/camcontrol/camcontrol.8 284192 2015-06-09 21:39:38Z ken $
+.\" $FreeBSD: head/sbin/camcontrol/camcontrol.8 286660 2015-08-12 10:34:05Z brueffer $
 .\"
 .Dd March 19, 2015
 .Dt CAMCONTROL 8
@@ -2183,7 +2183,6 @@ current initiator will be unregistered from the target.
 The reservation will be moved to relative target port 2 on the target
 device.
 The registration will persist across power losses.
-.Pp
 .Bd -literal -offset indent
 camcontrol attrib sa0 -v -i attr_values -p 1
 .Ed

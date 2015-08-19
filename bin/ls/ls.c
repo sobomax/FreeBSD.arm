@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)ls.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/ls/ls.c 284198 2015-06-10 01:27:38Z marcel $");
+__FBSDID("$FreeBSD: head/bin/ls/ls.c 285734 2015-07-21 05:03:59Z allanjude $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -119,7 +119,7 @@ static int f_nofollow;		/* don't follow symbolic link arguments */
        int f_nonprint;		/* show unprintables as ? */
 static int f_nosort;		/* don't sort output */
        int f_notabs;		/* don't use tab-separated multi-col output */
-static int f_numericonly;	/* don't convert uid/gid to name */
+       int f_numericonly;	/* don't convert uid/gid to name */
        int f_octal;		/* show unprintables as \xxx */
        int f_octal_escape;	/* like f_octal but use C escapes if possible */
 static int f_recursive;		/* ls subdirectories also */
@@ -158,6 +158,7 @@ main(int argc, char *argv[])
 	struct winsize win;
 	int ch, fts_options, notused;
 	char *p;
+	const char *errstr = NULL;
 #ifdef COLORLS
 	char termcapbuf[1024];	/* termcap definition buffer */
 	char tcapbuf[512];	/* capability buffer */
@@ -170,7 +171,7 @@ main(int argc, char *argv[])
 	if (isatty(STDOUT_FILENO)) {
 		termwidth = 80;
 		if ((p = getenv("COLUMNS")) != NULL && *p != '\0')
-			termwidth = atoi(p);
+			termwidth = strtonum(p, 0, INT_MAX, &errstr);
 		else if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) != -1 &&
 		    win.ws_col > 0)
 			termwidth = win.ws_col;
@@ -180,8 +181,11 @@ main(int argc, char *argv[])
 		/* retrieve environment variable, in case of explicit -C */
 		p = getenv("COLUMNS");
 		if (p)
-			termwidth = atoi(p);
+			termwidth = strtonum(p, 0, INT_MAX, &errstr);
 	}
+
+	if (errstr)
+		termwidth = 80;
 
 	fts_options = FTS_PHYSICAL;
 	if (getenv("LS_SAMESORT"))
@@ -191,6 +195,7 @@ main(int argc, char *argv[])
 	if (argc < 0)
 		return (1);
 	xo_set_flags(NULL, XOF_COLUMNS);
+	xo_set_version(LS_XO_VERSION);
 
 	while ((ch = getopt(argc, argv,
 	    "1ABCD:FGHILPRSTUWXZabcdfghiklmnopqrstuwxy,")) != -1) {

@@ -27,11 +27,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/chkgrp/chkgrp.c 275765 2014-12-14 16:17:48Z des $");
+__FBSDID("$FreeBSD: head/usr.sbin/chkgrp/chkgrp.c 286153 2015-08-01 10:40:17Z bapt $");
 
 #include <err.h>
 #include <errno.h>
 #include <ctype.h>
+#include <inttypes.h>
 #include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -105,7 +106,8 @@ main(int argc, char *argv[])
 		/*
 		 * Hack: special case for + line
 		 */
-		if (strncmp(line, "+:::", len) == 0)
+		if (strncmp(line, "+:::", len) == 0 ||
+		    strncmp(line, "+:*::", len) == 0)
 			continue;
 
 		/*

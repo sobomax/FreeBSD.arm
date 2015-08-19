@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ypwhich/ypwhich.c 209342 2010-06-19 16:24:55Z gavin $");
+__FBSDID("$FreeBSD: head/usr.bin/ypwhich/ypwhich.c 286716 2015-08-13 02:36:37Z araujo $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -59,7 +59,7 @@ __FBSDID("$FreeBSD: head/usr.bin/ypwhich/ypwhich.c 209342 2010-06-19 16:24:55Z g
 
 extern bool_t xdr_domainname();
 
-struct ypalias {
+static const struct ypalias {
 	char *alias, *name;
 } ypaliases[] = {
 	{ "passwd", "passwd.byname" },
@@ -151,7 +151,7 @@ main(int argc, char *argv[])
 	while ((c = getopt(argc, argv, "xd:mt")) != -1)
 		switch (c) {
 		case 'x':
-			for (i = 0; i<sizeof ypaliases/sizeof ypaliases[0]; i++)
+			for (i = 0; i < nitems(ypaliases); i++)
 				printf("\"%s\" is an alias for \"%s\"\n",
 					ypaliases[i].alias,
 					ypaliases[i].name);
@@ -169,7 +169,7 @@ main(int argc, char *argv[])
 			usage();
 		}
 
-	if (!domnam)
+	if (domnam == NULL)
 		yp_get_default_domain(&domnam);
 
 	if (mode == 0) {
@@ -206,9 +206,11 @@ main(int argc, char *argv[])
 
 	if (argv[optind]) {
 		map = argv[optind];
-		for (i = 0; (!notrans) && i<sizeof ypaliases/sizeof ypaliases[0]; i++)
-			if (strcmp(map, ypaliases[i].alias) == 0)
-				map = ypaliases[i].name;
+		if (notrans == 0) {
+			for (i = 0; i < nitems(ypaliases); i++)
+				if (strcmp(map, ypaliases[i].alias) == 0)
+					map = ypaliases[i].name;
+		}
 		r = yp_master(domnam, map, &master);
 		switch (r) {
 		case 0:

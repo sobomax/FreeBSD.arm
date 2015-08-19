@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/cam/ctl/README.ctl.txt 263811 2014-03-27 11:10:13Z trasz $ */
+/* $FreeBSD: head/sys/cam/ctl/README.ctl.txt 286806 2015-08-15 13:34:38Z mav $ */
 
 CTL - CAM Target Layer Description
 
@@ -365,16 +365,6 @@ ctl_frontend_cam_sim.c:
 This is a CTL frontend port that is also a CAM SIM.  The idea is that this
 frontend allows for using CTL without any target-capable hardware.  So any
 LUNs you create in CTL are visible via this port.
-
-
-ctl_frontend_internal.c
-ctl_frontend_internal.h:
------------------------
-
-This is a frontend port written for Copan to do some system-specific tasks
-that required sending commands into CTL from inside the kernel.  This isn't
-entirely relevant to FreeBSD in general, but can perhaps be repurposed or
-removed later.
 
 ctl_ha.h:
 --------

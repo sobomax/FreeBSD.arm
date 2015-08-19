@@ -18,7 +18,7 @@
  *
  * From: Version 2.4, Thu Apr 30 17:17:21 MSD 1997
  *
- * $FreeBSD: head/sys/net/if_spppsubr.c 283291 2015-05-22 17:05:21Z jkim $
+ * $FreeBSD: head/sys/net/if_spppsubr.c 286001 2015-07-29 08:12:05Z ae $
  */
 
 #include <sys/param.h>
@@ -28,7 +28,9 @@
 
 #include <sys/systm.h>
 #include <sys/kernel.h>
+#include <sys/lock.h>
 #include <sys/module.h>
+#include <sys/rmlock.h>
 #include <sys/sockio.h>
 #include <sys/socket.h>
 #include <sys/syslog.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ctld/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/ctld/Makefile 285086 2015-07-03 10:08:10Z trasz $
 
 PROG=		ctld
 SRCS=		chap.c ctld.c discovery.c isns.c kernel.c keys.c log.c
@@ -10,7 +10,7 @@ CFLAGS+=	-I${.CURDIR}/../../sys/dev/iscsi
 #CFLAGS+=	-DICL_KERNEL_PROXY
 MAN=		ctld.8 ctl.conf.5
 
-LIBADD=		bsdxml crypto l sbuf util
+LIBADD=		bsdxml l md sbuf util
 
 YFLAGS+=	-v
 CLEANFILES=	y.tab.c y.tab.h y.output

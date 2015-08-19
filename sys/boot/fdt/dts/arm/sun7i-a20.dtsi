@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/sun7i-a20.dtsi 283794 2015-05-30 22:32:48Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/sun7i-a20.dtsi 285245 2015-07-07 18:32:23Z loos $
  */
 
 / {
@@ -122,6 +122,7 @@
 			reg = <0x01c18000 0x1000>;
 			interrupts = <56>;
 			interrupt-parent = <&GIC>;
+			status = "disabled";
 		};
 
 		UART0: serial@01c28000 {
@@ -140,6 +141,20 @@
 			reg = <0x01c0b000 0x1000>;
 			interrupts = <55>;
 			interrupt-parent = <&GIC>;
+			status = "disabled";
+		};
+
+		gmac@01c50000 {
+			compatible = "allwinner,sun7i-a20-gmac";
+			reg = <0x01c50000 0x10000>;
+			interrupts = <85>;
+			interrupt-parent = <&GIC>;
+			snps,pbl = <2>;
+			snps,fixed-burst;
+			snps,force_sf_dma_mode;
+			status = "disabled";
+			#address-cells = <1>;
+			#size-cells = <0>;
 		};
 	};
 };

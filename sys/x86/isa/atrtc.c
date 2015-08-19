@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/isa/atrtc.c 247463 2013-02-28 13:46:03Z mav $
+ * $FreeBSD: head/sys/x86/isa/atrtc.c 284931 2015-06-29 17:02:09Z brueffer $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/atrtc.c 247463 2013-02-28 13:46:03Z mav $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/atrtc.c 284931 2015-06-29 17:02:09Z brueffer $");
 
 #include "opt_isa.h"
 
@@ -354,7 +354,7 @@ atrtc_gettime(device_t dev, struct timespec *ts)
 #ifdef USE_RTC_CENTURY
 	ct.year += readrtc(RTC_CENTURY) * 100;
 #else
-	ct.year += 2000;
+	ct.year += (ct.year < 80 ? 2000 : 1900);
 #endif
 	critical_exit();
 	/* Set dow = -1 because some clocks don't set it correctly. */

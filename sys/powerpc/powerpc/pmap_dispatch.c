@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/pmap_dispatch.c 276772 2015-01-07 01:01:39Z markj $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/pmap_dispatch.c 286296 2015-08-04 19:46:13Z jah $");
 
 /*
  * Dispatch MI pmap calls to the appropriate MMU implementation
@@ -548,6 +548,20 @@ dumpsys_pa_init(void)
 
 	CTR1(KTR_PMAP, "%s()", __func__);
 	return (MMU_SCAN_INIT(mmu_obj));
+}
+
+vm_offset_t
+pmap_quick_enter_page(vm_page_t m)
+{
+	CTR2(KTR_PMAP, "%s(%p)", __func__, m);
+	return (MMU_QUICK_ENTER_PAGE(mmu_obj, m));
+}
+
+void
+pmap_quick_remove_page(vm_offset_t addr)
+{
+	CTR2(KTR_PMAP, "%s(%#x)", __func__, addr);
+	MMU_QUICK_REMOVE_PAGE(mmu_obj, addr);
 }
 
 /*

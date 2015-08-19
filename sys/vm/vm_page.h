@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm_page.h 276056 2014-12-22 09:02:21Z glebius $
+ * $FreeBSD: head/sys/vm/vm_page.h 285282 2015-07-08 17:45:59Z alc $
  */
 
 /*
@@ -227,6 +227,7 @@ struct vm_domain {
 	long vmd_segs;	/* bitmask of the segments */
 	boolean_t vmd_oom;
 	int vmd_pass;	/* local pagedaemon pass */
+	int vmd_last_active_scan;
 	struct vm_page vmd_marker; /* marker for pagedaemon private use */
 };
 

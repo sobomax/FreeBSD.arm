@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/elf_common.h 283110 2015-05-19 14:23:33Z emaste $
+ * $FreeBSD: head/sys/sys/elf_common.h 285841 2015-07-24 16:52:21Z emaste $
  */
 
 #ifndef _SYS_ELF_COMMON_H_
@@ -297,6 +297,7 @@ typedef struct {
 #define	EM_UNICORE	110	/* Microprocessor series from PKU-Unity Ltd.
 				   and MPRC of Peking University */
 #define	EM_AARCH64	183	/* AArch64 (64-bit ARM) */
+#define	EM_RISCV	243	/* RISC-V */
 
 /* Non-standard or deprecated. */
 #define	EM_486		6	/* Intel i486. */

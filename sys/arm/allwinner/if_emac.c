@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/if_emac.c 281675 2015-04-18 00:35:00Z loos $
+ * $FreeBSD: head/sys/arm/allwinner/if_emac.c 285105 2015-07-03 17:54:41Z loos $
  */
 
 /* A10/A20 EMAC driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 281675 2015-04-18 00:35:00Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 285105 2015-07-03 17:54:41Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -142,17 +142,12 @@ static int	sysctl_hw_emac_proc_limit(SYSCTL_HANDLER_ARGS);
 static void
 emac_sys_setup(void)
 {
-	int i;
 
+	/* Activate EMAC clock. */
 	a10_clk_emac_activate();
-
-	/*
-	 * Configure pin mux settings for MII.
-	 * Pins PA0 from PA17.
-	 */
-	for (i = 0; i <= 17; i++)
-		a10_emac_gpio_config(i);
-	/* Map sram */
+	/* Set the pin mux to EMAC (mii). */
+	a10_gpio_ethernet_activate(A10_GPIO_FUNC_MII);
+	/* Map sram. */
 	a10_map_to_emac();
 }
 

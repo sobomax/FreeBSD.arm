@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/conf/NOTES 284227 2015-06-10 15:53:39Z br $
+# $FreeBSD: head/sys/arm/conf/NOTES 285703 2015-07-19 22:14:09Z markj $
 
 machine	arm
 
@@ -98,7 +98,6 @@ options 	KDTRACE_HOOKS
 #device		dtrace
 
 # DTrace modules
-#device		dtrace_lockstat
 #device		dtrace_profile
 #device		dtrace_sdt
 #device		dtrace_fbt

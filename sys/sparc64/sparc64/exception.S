@@ -54,10 +54,11 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/exception.S 225899 2011-10-01 13:11:29Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/exception.S 285627 2015-07-16 10:46:52Z zbb $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
+#include "opt_kstack_pages.h"
 
 #include <machine/asi.h>
 #include <machine/asmacros.h>

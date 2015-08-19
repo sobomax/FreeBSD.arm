@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 285670 2015-07-18 09:02:50Z kib $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -41,7 +41,9 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 284215 2015-06-10 10:48:12Z mjg $"
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/elf.h>
+#include <sys/eventhandler.h>
 #include <sys/exec.h>
+#include <sys/jail.h>
 #include <sys/kernel.h>
 #include <sys/limits.h>
 #include <sys/lock.h>
@@ -68,9 +70,8 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_proc.c 284215 2015-06-10 10:48:12Z mjg $"
 #include <sys/sdt.h>
 #include <sys/sx.h>
 #include <sys/user.h>
-#include <sys/jail.h>
 #include <sys/vnode.h>
-#include <sys/eventhandler.h>
+#include <sys/wait.h>
 
 #ifdef DDB
 #include <ddb/ddb.h>
@@ -920,7 +921,7 @@ fill_kinfo_proc_only(struct proc *p, struct kinfo_proc *kp)
 	    p->p_sysent->sv_name[0] != '\0')
 		strlcpy(kp->ki_emul, p->p_sysent->sv_name, sizeof(kp->ki_emul));
 	kp->ki_siglist = p->p_siglist;
-	kp->ki_xstat = p->p_xstat;
+	kp->ki_xstat = KW_EXITCODE(p->p_xexit, p->p_xsig);
 	kp->ki_acflag = p->p_acflag;
 	kp->ki_lock = p->p_lock;
 	if (p->p_pptr) {

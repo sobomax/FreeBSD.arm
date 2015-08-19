@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/xen_intr.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/xen_intr.c 286372 2015-08-06 17:07:21Z jhb $");
 
 #include "opt_ddb.h"
 
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: head/sys/x86/xen/xen_intr.c 282274 2015-04-30 15:48:48Z jhb 
 
 #include <machine/xen/synch_bitops.h>
 #include <machine/xen/xen-os.h>
-#include <machine/xen/xenvar.h>
 
 #include <xen/hypervisor.h>
 #include <xen/xen_intr.h>

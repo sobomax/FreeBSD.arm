@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libipsec/pfkey_dump.c 171135 2007-07-01 12:08:08Z gnn $");
+__FBSDID("$FreeBSD: head/lib/libipsec/pfkey_dump.c 285108 2015-07-03 20:09:14Z gnn $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -186,6 +186,9 @@ static struct val2str str_alg_enc[] = {
 #endif
 #ifdef SADB_X_EALG_AESCTR
 	{ SADB_X_EALG_AESCTR, "aes-ctr", },
+#endif
+#ifdef SADB_X_EALG_AESGCM16
+	{ SADB_X_EALG_AESGCM16, "aes-gcm-16", },
 #endif
 #ifdef SADB_X_EALG_CAMELLIACBC
 	{ SADB_X_EALG_CAMELLIACBC, "camellia-cbc", },

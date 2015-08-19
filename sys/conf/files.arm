@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/files.arm 284227 2015-06-10 15:53:39Z br $
+# $FreeBSD: head/sys/conf/files.arm 285337 2015-07-09 20:54:38Z andrew $
 arm/arm/autoconf.c		standard
 arm/arm/bcopy_page.S		standard
 arm/arm/bcopyinout.S		standard
@@ -108,6 +108,7 @@ libkern/arm/divsi3.S		standard
 libkern/arm/ffs.S		standard
 libkern/arm/ldivmod.S		standard
 libkern/arm/ldivmod_helper.c	standard
+libkern/arm/memclr.S		standard
 libkern/arm/memcpy.S		standard
 libkern/arm/memset.S		standard
 libkern/arm/muldi3.c		standard

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.man.mk 284685 2015-06-21 22:42:55Z bapt $
+# $FreeBSD: head/share/mk/bsd.man.mk 285295 2015-07-08 22:24:55Z bapt $
 #
 # The include file <bsd.man.mk> handles installing manual pages and
 # their links.
@@ -186,7 +186,7 @@ _maninstall: ${MAN}
 .endif
 .endfor
 .else
-.for _page _sect ${.ALLSRC:C/\.([^.]*)$/.\1 \1/}
+.for _page _sect in ${.ALLSRC:C/\.([^.]*)$/.\1 \1/}
 	@d=${DESTDIR}${MANDIR}${_sect}${MANSUBDIR}; \
 	${ECHO} ${MINSTALL} ${_page} $${d}; \
 	${MINSTALL} $${page} $${d};

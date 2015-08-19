@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/adapter.h 284445 2015-06-16 12:36:29Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/adapter.h 286926 2015-08-19 15:40:03Z np $
  *
  */
 
@@ -233,6 +233,7 @@ struct port_info {
 	uint16_t viid;
 	int16_t  xact_addr_filt;/* index of exact MAC address filter */
 	uint16_t rss_size;	/* size of VI's RSS table slice */
+	uint16_t rss_base;	/* start of VI's RSS table slice */
 	uint8_t  lport;		/* associated offload logical port */
 	int8_t   mdio_addr;
 	uint8_t  port_type;
@@ -807,6 +808,7 @@ struct adapter {
 #ifdef INVARIANTS
 	const char *last_op;
 	const void *last_op_thr;
+	int last_op_flags;
 #endif
 
 	int sc_do_rxcopy;
@@ -1052,7 +1054,7 @@ void t4_update_fl_bufsize(struct ifnet *);
 int parse_pkt(struct mbuf **);
 void *start_wrq_wr(struct sge_wrq *, int, struct wrq_cookie *);
 void commit_wrq_wr(struct sge_wrq *, void *, struct wrq_cookie *);
-int tnl_cong(struct port_info *);
+int tnl_cong(struct port_info *, int);
 
 /* t4_tracer.c */
 struct t4_tracer;

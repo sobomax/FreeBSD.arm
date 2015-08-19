@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: cpu.h,v 1.11 2000/05/26 21:19:53 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/cpu.h 279189 2015-02-22 21:40:27Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/cpu.h 285397 2015-07-11 17:33:50Z jhibbits $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -64,9 +64,6 @@ extern int cpu_features;
 
 #define	TRAPF_USERMODE(frame)	(((frame)->srr1 & PSL_PR) != 0)
 #define	TRAPF_PC(frame)		((frame)->srr0)
-
-#define	cpu_swapout(p)
-#define	cpu_number()		0
 
 /*
  * CTL_MACHDEP definitions.

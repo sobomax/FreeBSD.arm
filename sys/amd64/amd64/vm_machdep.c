@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/vm_machdep.c 283735 2015-05-29 13:24:17Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/vm_machdep.c 284901 2015-06-28 05:04:08Z kib $");
 
 #include "opt_isa.h"
 #include "opt_cpu.h"
@@ -93,6 +93,8 @@ _Static_assert(OFFSETOF_CURTHREAD == offsetof(struct pcpu, pc_curthread),
     "OFFSETOF_CURTHREAD does not correspond with offset of pc_curthread.");
 _Static_assert(OFFSETOF_CURPCB == offsetof(struct pcpu, pc_curpcb),
     "OFFSETOF_CURPCB does not correspond with offset of pc_curpcb.");
+_Static_assert(OFFSETOF_MONITORBUF == offsetof(struct pcpu, pc_monitorbuf),
+    "OFFSETOF_MONINORBUF does not correspond with offset of pc_monitorbuf.");
 
 struct savefpu *
 get_pcb_user_save_td(struct thread *td)

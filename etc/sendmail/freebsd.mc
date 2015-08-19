@@ -42,14 +42,13 @@ divert(-1)
 #  /usr/share/sendmail/cf/README or
 #  /usr/src/contrib/sendmail/cf/README
 # 
-#
 #  NOTE: If you enable RunAsUser, make sure that you adjust the permissions
 #  and owner of the SSL certificates and keys in /etc/mail/certs to be usable
 #  by that user.
 #
 
 divert(0)
-VERSIONID(`$FreeBSD: head/etc/sendmail/freebsd.mc 266529 2014-05-22 04:43:40Z gshapiro $')
+VERSIONID(`$FreeBSD: head/etc/sendmail/freebsd.mc 285230 2015-07-07 03:00:57Z gshapiro $')
 OSTYPE(freebsd6)
 DOMAIN(generic)
 

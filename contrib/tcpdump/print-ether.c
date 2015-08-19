@@ -18,7 +18,7 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/tcpdump/print-ether.c 276788 2015-01-07 19:55:18Z delphij $
+ * $FreeBSD: head/contrib/tcpdump/print-ether.c 285275 2015-07-08 16:19:32Z pkelsey $
  */
 
 #define NETDISSECT_REWORKED
@@ -187,10 +187,7 @@ recurse:
 	        if (ndo->ndo_eflag) {
 	        	uint16_t tag = EXTRACT_16BITS(p);
 
-			ND_PRINT((ndo, "vlan %u, p %u%s, ",
-			    tag & 0xfff,
-			    tag >> 13,
-			    (tag & 0x1000) ? ", CFI" : ""));
+			ND_PRINT((ndo, "%s, ", ieee8021q_tci_string(tag)));
 		}
 
 		ether_type = EXTRACT_16BITS(p + 2);
@@ -328,11 +325,9 @@ ethertype_print(netdissect_options *ndo,
 	        ip_print(ndo, p, length);
 		return (1);
 
-#ifdef INET6
 	case ETHERTYPE_IPV6:
 		ip6_print(ndo, p, length);
 		return (1);
-#endif /*INET6*/
 
 	case ETHERTYPE_ARP:
 	case ETHERTYPE_REVARP:

@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_mmap.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_mmap.c 285180 2015-07-05 22:26:19Z markj $");
 
 #include "opt_compat.h"
 #include "opt_hwpmc_hooks.h"
@@ -312,14 +312,12 @@ sys_mmap(td, uap)
 		 * There should really be a pmap call to determine a reasonable
 		 * location.
 		 */
-		PROC_LOCK(td->td_proc);
 		if (addr == 0 ||
 		    (addr >= round_page((vm_offset_t)vms->vm_taddr) &&
 		    addr < round_page((vm_offset_t)vms->vm_daddr +
-		    lim_max_proc(td->td_proc, RLIMIT_DATA))))
+		    lim_max(td, RLIMIT_DATA))))
 			addr = round_page((vm_offset_t)vms->vm_daddr +
-			    lim_max_proc(td->td_proc, RLIMIT_DATA));
-		PROC_UNLOCK(td->td_proc);
+			    lim_max(td, RLIMIT_DATA));
 	}
 	if (size == 0) {
 		/*
@@ -1416,6 +1414,7 @@ vm_mmap(vm_map_t map, vm_offset_t *addr, vm_size_t size, vm_prot_t prot,
 		return (EINVAL);
 
 	size = round_page(size);
+	object = NULL;
 	writecounted = FALSE;
 
 	/*

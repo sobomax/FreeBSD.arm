@@ -26,10 +26,11 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_nis.c 282687 2015-05-09 19:29:55Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw_nis.c 286201 2015-08-02 13:22:46Z bapt $";
 #endif /* not lint */
 
 #include <sys/types.h>
+
 #include <err.h>
 #include <pwd.h>
 #include <libutil.h>
@@ -43,6 +44,7 @@ pw_nisupdate(const char * path, struct passwd * pwd, char const * user)
 	struct passwd *pw = NULL;
 	struct passwd *old_pw = NULL;
 
+	printf("===> %s\n", path);
 	if (pwd != NULL)
 		pw = pw_dup(pwd);
 

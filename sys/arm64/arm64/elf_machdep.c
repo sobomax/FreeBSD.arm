@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/elf_machdep.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/elf_machdep.c 286073 2015-07-30 14:20:36Z emaste $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -137,7 +137,7 @@ elf_reloc_local(linker_file_t lf, Elf_Addr relocbase, const void *data,
     int type, elf_lookup_fn lookup __unused)
 {
 
-	panic("elf_reloc_local");
+	panic("ARM64TODO: elf_reloc_local");
 }
 
 /* Process one elf relocation with addend. */
@@ -146,7 +146,7 @@ elf_reloc(linker_file_t lf, Elf_Addr relocbase, const void *data, int type,
     elf_lookup_fn lookup)
 {
 
-	panic("elf_reloc");
+	panic("ARM64TODO: elf_reloc");
 }
 
 int

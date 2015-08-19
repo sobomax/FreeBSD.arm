@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/arm/include/pcpu.h 284265 2015-06-11 13:58:40Z andrew $
+ * $FreeBSD: head/sys/arm/include/pcpu.h 286296 2015-08-04 19:46:13Z jah $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -47,10 +47,14 @@ struct vmspace;
 	unsigned int pc_vfpmvfr0;					\
 	unsigned int pc_vfpmvfr1;					\
 	struct pmap *pc_curpmap;					\
-	char __pad[141]
+	vm_offset_t pc_qmap_addr;					\
+	void *pc_qmap_pte;						\
+	char __pad[133]
 #else
 #define PCPU_MD_FIELDS							\
-	char __pad[157]
+	vm_offset_t qmap_addr;						\
+	void *pc_qmap_pte;						\
+	char __pad[149]
 #endif
 
 #ifdef _KERNEL

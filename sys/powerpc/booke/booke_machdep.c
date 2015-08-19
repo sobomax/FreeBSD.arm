@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/booke/booke_machdep.c 282264 2015-04-30 01:24:25Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/booke/booke_machdep.c 286487 2015-08-08 23:13:53Z jhibbits $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -173,7 +173,7 @@ uint32_t *bootinfo;
 
 void print_kernel_section_addr(void);
 void print_kenv(void);
-u_int booke_init(uint32_t, uint32_t);
+uintptr_t booke_init(uint32_t, uint32_t);
 void ivor_setup(void);
 
 extern void *interrupt_vector_base;

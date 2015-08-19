@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.8 (Berkeley) 3/28/97
-# $FreeBSD: head/usr.sbin/sendmail/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/sendmail/Makefile 285225 2015-07-07 02:30:35Z gshapiro $
 
 .include <src.opts.mk>
 
@@ -43,7 +43,7 @@ CFLAGS+= ${DBMDEF} ${NIS} -DTCPWRAPPERS ${MAPS}
 CFLAGS+= -DNETINET6
 .endif
 
-WARNS?=	1
+WARNS?=	0
 
 LIBADD=	util wrap sm smutil
 

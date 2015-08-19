@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_hub.c 279270 2015-02-25 08:35:00Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_hub.c 286773 2015-08-14 12:57:53Z hselasky $ */
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -346,7 +346,7 @@ uhub_tt_buffer_reset_async_locked(struct usb_device *child, struct usb_endpoint 
 	}
 	up->req_reset_tt = req;
 	/* get reset transfer started */
-	usb_proc_msignal(USB_BUS_NON_GIANT_PROC(udev->bus),
+	usb_proc_msignal(USB_BUS_TT_PROC(udev->bus),
 	    &hub->tt_msg[0], &hub->tt_msg[1]);
 }
 #endif
@@ -1579,7 +1579,7 @@ uhub_detach(device_t dev)
 #if USB_HAVE_TT_SUPPORT
 	/* Make sure our TT messages are not queued anywhere */
 	USB_BUS_LOCK(bus);
-	usb_proc_mwait(USB_BUS_NON_GIANT_PROC(bus),
+	usb_proc_mwait(USB_BUS_TT_PROC(bus),
 	    &hub->tt_msg[0], &hub->tt_msg[1]);
 	USB_BUS_UNLOCK(bus);
 #endif

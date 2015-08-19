@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/db_interface.c 284196 2015-06-09 23:54:20Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/db_interface.c 286627 2015-08-11 12:32:17Z andrew $");
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <vm/vm.h>
@@ -119,7 +119,7 @@ db_validate_address(vm_offset_t addr)
 	else
 		pmap = p->p_vmspace->vm_map.pmap;
 
-	return (pmap_extract(pmap, addr) == FALSE);
+	return (pmap_extract(pmap, addr) != 0);
 }
 
 /*

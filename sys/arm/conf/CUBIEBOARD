@@ -17,7 +17,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CUBIEBOARD 283547 2015-05-25 23:27:13Z ian $
+# $FreeBSD: head/sys/arm/conf/CUBIEBOARD 285090 2015-07-03 14:11:01Z loos $
 
 ident		CUBIEBOARD
 
@@ -57,7 +57,7 @@ device		mmc			# mmc/sd bus
 device		mmcsd			# mmc/sd flash cards
 
 # ATA controllers
-#device		ahci			# AHCI-compatible SATA controllers
+device		ahci			# AHCI-compatible SATA controllers
 #device		ata			# Legacy ATA/SATA controllers
 #options 	ATA_STATIC_ID		# Static device numbering
 
@@ -78,7 +78,7 @@ device		gpio
 
 device		scbus			# SCSI bus (required for ATA/SCSI)
 device		da			# Direct Access (disks)
-device		pass
+device		pass			# Passthrough device (direct ATA/SCSI access)
 
 # USB support
 options 	USB_HOST_ALIGN=64	# Align usb buffers to cache line size.

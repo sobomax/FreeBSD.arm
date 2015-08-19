@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)miscbltin.c	8.4 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/miscbltin.c 278820 2015-02-15 21:47:43Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/miscbltin.c 286826 2015-08-16 12:57:17Z jilles $");
 
 /*
  * Miscellaneous builtins.
@@ -191,9 +191,10 @@ readcmd(int argc __unused, char **argv __unused)
 		CHECKSTRSPACE(1, p);
 		if (backslash) {
 			backslash = 0;
-			startword = 0;
-			if (c != '\n')
+			if (c != '\n') {
+				startword = 0;
 				USTPUTC(c, p);
+			}
 			continue;
 		}
 		if (!rflag && c == '\\') {

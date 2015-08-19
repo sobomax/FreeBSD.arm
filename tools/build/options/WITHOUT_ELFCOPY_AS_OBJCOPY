@@ -1,0 +1,4 @@
+.\" $FreeBSD: head/tools/build/options/WITHOUT_ELFCOPY_AS_OBJCOPY 286030 2015-07-29 18:45:38Z emaste $
+Set to build and install
+.Xr objcopy 1
+from GNU Binutils, instead of the one from ELF Tool Chain.

@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/profile/profile.c 283291 2015-05-22 17:05:21Z jkim $
+ * $FreeBSD: head/sys/cddl/dev/profile/profile.c 285009 2015-07-01 15:51:11Z br $
  *
  */
 
@@ -137,6 +137,11 @@ struct profile_probe_percpu;
 /*
  * At least on ARMv7, this appears to work quite well.
  */
+#define	PROF_ARTIFICIAL_FRAMES	10
+#endif
+
+#ifdef __aarch64__
+/* TODO: verify */
 #define	PROF_ARTIFICIAL_FRAMES	10
 #endif
 

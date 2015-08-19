@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)reboot.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: head/lib/libc/sys/reboot.2 165903 2007-01-09 00:28:16Z imp $
+.\" $FreeBSD: head/lib/libc/sys/reboot.2 285846 2015-07-24 18:13:13Z trasz $
 .\"
 .Dd June 4, 1993
 .Dt REBOOT 2
@@ -82,7 +82,7 @@ Dump kernel memory before rebooting; see
 .Xr savecore 8
 for more information.
 .It Dv RB_HALT
-the processor is simply halted; no reboot takes place.
+The processor is simply halted; no reboot takes place.
 This option should be used with caution.
 .It Dv RB_POWEROFF
 After halting, the shutdown code will do what it can to turn

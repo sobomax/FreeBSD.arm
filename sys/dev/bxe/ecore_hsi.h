@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_hsi.h 265411 2014-05-06 02:32:27Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_hsi.h 286733 2015-08-13 18:24:41Z dim $");
 
 #ifndef ECORE_HSI_H
 #define ECORE_HSI_H
@@ -2536,9 +2536,9 @@ struct shmem2_region {
 	#define SHMEM_EEE_SUPPORTED_MASK	   0x000f0000
 	#define SHMEM_EEE_SUPPORTED_SHIFT	   16
 	#define SHMEM_EEE_ADV_STATUS_MASK	   0x00f00000
-		#define SHMEM_EEE_100M_ADV	   (1<<0)
-		#define SHMEM_EEE_1G_ADV	   (1<<1)
-		#define SHMEM_EEE_10G_ADV	   (1<<2)
+		#define SHMEM_EEE_100M_ADV	   (1U<<0)
+		#define SHMEM_EEE_1G_ADV	   (1U<<1)
+		#define SHMEM_EEE_10G_ADV	   (1U<<2)
 	#define SHMEM_EEE_ADV_STATUS_SHIFT	   20
 	#define	SHMEM_EEE_LP_ADV_STATUS_MASK	   0x0f000000
 	#define SHMEM_EEE_LP_ADV_STATUS_SHIFT	   24

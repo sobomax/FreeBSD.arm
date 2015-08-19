@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_alloc.c 284446 2015-06-16 13:09:18Z mjg $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_alloc.c 285390 2015-07-11 16:19:11Z mjg $");
 
 #include "opt_quota.h"
 
@@ -2748,13 +2748,12 @@ sysctl_ffs_fsck(SYSCTL_HANDLER_ARGS)
 	struct thread *td = curthread;
 	struct fsck_cmd cmd;
 	struct ufsmount *ump;
-	struct vnode *vp, *vpold, *dvp, *fdvp;
+	struct vnode *vp, *dvp, *fdvp;
 	struct inode *ip, *dp;
 	struct mount *mp;
 	struct fs *fs;
 	ufs2_daddr_t blkno;
 	long blkcnt, blksize;
-	struct filedesc *fdp;
 	struct file *fp, *vfp;
 	cap_rights_t rights;
 	int filetype, error;
@@ -2968,12 +2967,7 @@ sysctl_ffs_fsck(SYSCTL_HANDLER_ARGS)
 			break;
 		}
 		VOP_UNLOCK(vp, 0);
-		fdp = td->td_proc->p_fd;
-		FILEDESC_XLOCK(fdp);
-		vpold = fdp->fd_cdir;
-		fdp->fd_cdir = vp;
-		FILEDESC_XUNLOCK(fdp);
-		vrele(vpold);
+		pwd_chdir(td, vp);
 		break;
 
 	case FFS_SET_DOTDOT:

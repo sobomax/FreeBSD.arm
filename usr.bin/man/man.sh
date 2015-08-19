@@ -24,7 +24,7 @@
 #  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #  SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.bin/man/man.sh 282980 2015-05-15 15:56:28Z bapt $
+# $FreeBSD: head/usr.bin/man/man.sh 285836 2015-07-24 09:20:02Z bapt $
 
 # Usage: add_to_manpath path
 # Adds a variable to manpath while ensuring we don't have duplicates.
@@ -925,6 +925,8 @@ whatis_usage() {
 
 # Supported commands
 do_apropos() {
+	[ $(stat -f %i /usr/bin/man) -ne $(stat -f %i /usr/bin/apropos) ] && \
+		exec apropos "$@"
 	search_whatis apropos "$@"
 }
 
@@ -960,6 +962,8 @@ do_manpath() {
 }
 
 do_whatis() {
+	[ $(stat -f %i /usr/bin/man) -ne $(stat -f %i /usr/bin/whatis) ] && \
+		exec whatis "$@"
 	search_whatis whatis "$@"
 }
 

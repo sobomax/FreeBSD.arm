@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)kvm_proc.c	8.3 (Berkeley) 9/23/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 273266 2014-10-18 19:36:11Z adrian $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 285670 2015-07-18 09:02:50Z kib $");
 
 /*
  * Proc traversal interface for kvm.  ps and w are (probably) the exclusive
@@ -66,6 +66,8 @@ __FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 273266 2014-10-18 19:36:11Z adria
 #include <sys/tty.h>
 #include <sys/file.h>
 #include <sys/conf.h>
+#define	_WANT_KW_EXITCODE
+#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -389,7 +391,7 @@ nopgrp:
 		kp->ki_siglist = proc.p_siglist;
 		SIGSETOR(kp->ki_siglist, mtd.td_siglist);
 		kp->ki_sigmask = mtd.td_sigmask;
-		kp->ki_xstat = proc.p_xstat;
+		kp->ki_xstat = KW_EXITCODE(proc.p_xexit, proc.p_xsig);
 		kp->ki_acflag = proc.p_acflag;
 		kp->ki_lock = proc.p_lock;
 		if (proc.p_state != PRS_ZOMBIE) {

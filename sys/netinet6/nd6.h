@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: head/sys/netinet6/nd6.h 282805 2015-05-12 03:31:57Z hrs $
+ * $FreeBSD: head/sys/netinet6/nd6.h 286457 2015-08-08 17:48:54Z melifaro $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -89,7 +89,6 @@ struct nd_ifinfo {
 #define ND6_IFF_NO_PREFER_IFACE	0x80 /* XXX: not related to ND. */
 #define ND6_IFF_NO_DAD		0x100
 
-#define	ND6_CREATE		LLE_CREATE
 #define	ND6_EXCLUSIVE		LLE_EXCLUSIVE
 
 #ifdef _KERNEL
@@ -407,7 +406,8 @@ int nd6_is_addr_neighbor(struct sockaddr_in6 *, struct ifnet *);
 void nd6_option_init(void *, int, union nd_opts *);
 struct nd_opt_hdr *nd6_option(union nd_opts *);
 int nd6_options(union nd_opts *);
-struct	llentry *nd6_lookup(struct in6_addr *, int, struct ifnet *);
+struct llentry *nd6_lookup(struct in6_addr *, int, struct ifnet *);
+struct llentry *nd6_create(struct in6_addr *, int, struct ifnet *);
 void nd6_setmtu(struct ifnet *);
 void nd6_llinfo_settimer(struct llentry *, long);
 void nd6_llinfo_settimer_locked(struct llentry *, long);

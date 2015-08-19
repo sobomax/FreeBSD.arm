@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)domain.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/domain.h 274177 2014-11-06 14:39:04Z melifaro $
+ * $FreeBSD: head/sys/sys/domain.h 285522 2015-07-14 02:00:50Z cem $
  */
 
 #ifndef _SYS_DOMAIN_H_
@@ -42,6 +42,7 @@
  */
 struct	mbuf;
 struct	ifnet;
+struct	socket;
 
 struct domain {
 	int	dom_family;		/* AF_xxx */
@@ -53,7 +54,7 @@ struct domain {
 	int	(*dom_externalize)	/* externalize access rights */
 		(struct mbuf *, struct mbuf **, int);
 	void	(*dom_dispose)		/* dispose of internalized rights */
-		(struct mbuf *);
+		(struct socket *);
 	struct	protosw *dom_protosw, *dom_protoswNPROTOSW;
 	struct	domain *dom_next;
 	int	(*dom_rtattach)		/* initialize routing table */

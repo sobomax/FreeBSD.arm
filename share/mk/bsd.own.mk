@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.own.mk 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/share/mk/bsd.own.mk 284898 2015-06-27 23:28:56Z bapt $
 #
 # The include file <src.opts.mk> set common variables for owner,
 # group, mode, and directories. Defaults are in brackets.
@@ -222,9 +222,11 @@ INCLUDEDIR?=	/usr/include
 #
 HRDLINK?=	-l h
 SYMLINK?=	-l s
+RSYMLINK?=	-l rs
 
 INSTALL_LINK?=		${INSTALL} ${HRDLINK}
 INSTALL_SYMLINK?=	${INSTALL} ${SYMLINK}
+INSTALL_RSYMLINK?=	${INSTALL} ${RSYMLINK}
 
 # Common variables
 .if !defined(DEBUG_FLAGS)

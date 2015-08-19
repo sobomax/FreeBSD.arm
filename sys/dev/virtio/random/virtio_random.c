@@ -27,7 +27,7 @@
 /* Driver for VirtIO entropy device. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/random/virtio_random.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/random/virtio_random.c 284959 2015-06-30 17:00:45Z markm $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -215,7 +215,7 @@ vtrnd_harvest(struct vtrnd_softc *sc)
 	virtqueue_notify(vq);
 	virtqueue_poll(vq, NULL);
 
-	random_harvest(&value, sizeof(value), sizeof(value) * NBBY / 2,
+	random_harvest_queue(&value, sizeof(value), sizeof(value) * NBBY / 2,
 	    RANDOM_PURE_VIRTIO);
 }
 

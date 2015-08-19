@@ -1,6 +1,6 @@
 #! /bin/sh -
 #	@(#)makesyscalls.sh	8.1 (Berkeley) 6/10/93
-# $FreeBSD: head/sys/kern/makesyscalls.sh 259438 2013-12-15 23:19:42Z pjd $
+# $FreeBSD: head/sys/kern/makesyscalls.sh 285307 2015-07-09 07:20:15Z ed $
 
 set -e
 
@@ -446,7 +446,8 @@ s/\$//g
 			if (funcname == "nosys" || funcname == "lkmnosys" ||
 			    funcname == "sysarch" || funcname ~ /^freebsd/ || 
 			    funcname ~ /^linux/ || funcname ~ /^svr4/ || 
-			    funcname ~ /^ibcs2/ || funcname ~ /^xenix/) {				
+			    funcname ~ /^ibcs2/ || funcname ~ /^xenix/ ||
+			    funcname ~ /^cloudabi/) {
 				printf("%s\t%s(struct thread *, struct %s *)",
 				    rettype, funcname, argalias) > sysdcl
 			} else {
@@ -466,7 +467,8 @@ s/\$//g
 			if (funcname == "nosys" || funcname == "sysarch" || 
 			    funcname == "lkmnosys" || funcname ~ /^freebsd/ ||
 			    funcname ~ /^linux/ || funcname ~ /^svr4/ ||
-			    funcname ~ /^ibcs2/ || funcname ~ /^xenix/) {
+			    funcname ~ /^ibcs2/ || funcname ~ /^xenix/ ||
+			    funcname ~ /^cloudabi/) {
 				printf("%s, %s, NULL, 0, 0, %s, %s },", funcname, auditev, flags, thr_flag) > sysent
 				column = column + length(funcname) + length(auditev) + length(flags) + 3 
 			} else {

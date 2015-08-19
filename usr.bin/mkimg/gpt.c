@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/gpt.c 271881 2014-09-19 23:16:02Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/gpt.c 284883 2015-06-27 03:28:04Z marcel $");
 
 #include <sys/types.h>
 #include <sys/diskmbr.h>
@@ -57,6 +57,7 @@ static uuid_t gpt_uuid_freebsd_ufs = GPT_ENT_TYPE_FREEBSD_UFS;
 static uuid_t gpt_uuid_freebsd_vinum = GPT_ENT_TYPE_FREEBSD_VINUM;
 static uuid_t gpt_uuid_freebsd_zfs = GPT_ENT_TYPE_FREEBSD_ZFS;
 static uuid_t gpt_uuid_mbr = GPT_ENT_TYPE_MBR;
+static uuid_t gpt_uuid_ms_basic_data = GPT_ENT_TYPE_MS_BASIC_DATA;
 
 static struct mkimg_alias gpt_aliases[] = {
     {	ALIAS_EFI, ALIAS_PTR2TYPE(&gpt_uuid_efi) },
@@ -68,6 +69,7 @@ static struct mkimg_alias gpt_aliases[] = {
     {	ALIAS_FREEBSD_VINUM, ALIAS_PTR2TYPE(&gpt_uuid_freebsd_vinum) },
     {	ALIAS_FREEBSD_ZFS, ALIAS_PTR2TYPE(&gpt_uuid_freebsd_zfs) },
     {	ALIAS_MBR, ALIAS_PTR2TYPE(&gpt_uuid_mbr) },
+    {	ALIAS_NTFS, ALIAS_PTR2TYPE(&gpt_uuid_ms_basic_data) },
     {	ALIAS_NONE, 0 }		/* Keep last! */
 };
 

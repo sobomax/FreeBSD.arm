@@ -39,7 +39,7 @@
 static const char sccsid[] = "@(#)pw_util.c	8.3 (Berkeley) 4/2/94";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/lib/libutil/pw_util.c 244744 2012-12-27 20:24:44Z bapt $";
+  "$FreeBSD: head/lib/libutil/pw_util.c 285050 2015-07-02 17:30:59Z garga $";
 #endif /* not lint */
 
 /*
@@ -226,7 +226,7 @@ pw_tmp(int mfd)
 		errno = ENAMETOOLONG;
 		return (-1);
 	}
-	if ((tfd = mkstemp(tempname)) == -1)
+	if ((tfd = mkostemp(tempname, O_SYNC)) == -1)
 		return (-1);
 	if (mfd != -1) {
 		while ((nr = read(mfd, buf, sizeof(buf))) > 0)

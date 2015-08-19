@@ -29,7 +29,7 @@
 #
 # Common subroutines used to build arm/armv6 images.
 #
-# $FreeBSD: head/release/tools/arm.subr 284010 2015-06-05 02:22:04Z gjb $
+# $FreeBSD: head/release/tools/arm.subr 285427 2015-07-12 19:17:05Z gjb $
 #
 
 cleanup() {
@@ -111,10 +111,6 @@ arm_install_base() {
 	echo "/dev/msdosfs/MSDOSBOOT /boot/msdos msdosfs rw,noatime 0 0" \
 		>> ${CHROOTDIR}/${DESTDIR}/etc/fstab
 	echo "md /tmp mfs rw,noatime,-s30m 0 0" \
-		>> ${CHROOTDIR}/${DESTDIR}/etc/fstab
-	echo "md /var/log mfs rw,noatime,-s15m 0 0" \
-		>> ${CHROOTDIR}/${DESTDIR}/etc/fstab
-	echo "md /var/tmp mfs rw,noatime,-s12m 0 0" \
 		>> ${CHROOTDIR}/${DESTDIR}/etc/fstab
 
 	local hostname

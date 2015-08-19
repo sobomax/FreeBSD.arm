@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resourcevar.h 284784 2015-06-25 01:24:36Z mjg $
+ * $FreeBSD: head/sys/sys/resourcevar.h 285633 2015-07-16 14:30:11Z mjg $
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -158,8 +158,6 @@ void	 uihold(struct uidinfo *uip);
 void	 ui_racct_foreach(void (*callback)(struct racct *racct,
 	    void *arg2, void *arg3), void *arg2, void *arg3);
 #endif
-
-void	lim_update_thread(struct thread *td);
 
 #endif /* _KERNEL */
 #endif /* !_SYS_RESOURCEVAR_H_ */

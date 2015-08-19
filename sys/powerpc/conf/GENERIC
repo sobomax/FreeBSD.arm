@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/powerpc/conf/GENERIC 282901 2015-05-14 14:03:55Z trasz $
+# $FreeBSD: head/sys/powerpc/conf/GENERIC 285530 2015-07-14 10:47:56Z brueffer $
 
 cpu		AIM
 ident		GENERIC
@@ -37,6 +37,7 @@ options 	SCHED_ULE		#ULE scheduler
 options 	PREEMPTION		#Enable kernel thread preemption
 options 	INET			#InterNETworking
 options 	INET6			#IPv6 communications protocols
+options 	IPSEC                   # IP (v4/v6) security
 options 	SCTP			#Stream Control Transmission Protocol
 options 	FFS			#Berkeley Fast Filesystem
 options 	SOFTUPDATES		#Enable FFS soft updates support
@@ -216,3 +217,5 @@ device		snd_ai2s	# Apple I2S audio
 device		snd_davbus	# Apple DAVBUS audio
 device		snd_uaudio	# USB Audio
 
+# The crypto framework is required by IPSEC
+device		crypto			# Required by IPSEC
