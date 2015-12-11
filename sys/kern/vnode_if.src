@@ -27,7 +27,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)vnode_if.src	8.12 (Berkeley) 5/14/95
-# $FreeBSD: head/sys/kern/vnode_if.src 280869 2015-03-30 22:49:26Z glebius $
+# $FreeBSD: head/sys/kern/vnode_if.src 287831 2015-09-15 20:22:30Z cem $
 #
 
 #
@@ -355,6 +355,7 @@ vop_inactive {
 
 
 %% reclaim	vp	E E E
+%! reclaim	post	vop_reclaim_post
 
 vop_reclaim {
 	IN struct vnode *vp;

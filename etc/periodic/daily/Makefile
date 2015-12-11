@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/periodic/daily/Makefile 277216 2015-01-15 19:52:19Z gjb $
+# $FreeBSD: head/etc/periodic/daily/Makefile 290252 2015-11-02 01:05:34Z ngie $
 
 .include <src.opts.mk>
 
@@ -15,6 +15,7 @@ FILES=	100.clean-disks \
 	408.status-gstripe \
 	409.status-gconcat \
 	420.status-network \
+	430.status-uptime \
 	450.status-security \
 	510.status-world-kernel \
 	999.local
@@ -38,8 +39,7 @@ FILES+=	480.status-ntpd
 .endif
 
 .if ${MK_RCMDS} != "no"
-FILES+=	140.clean-rwho \
-	430.status-rwho
+FILES+=	140.clean-rwho
 .endif
 
 .if ${MK_SENDMAIL} != "no"

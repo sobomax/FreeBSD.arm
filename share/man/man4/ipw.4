@@ -23,9 +23,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ipw.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/ipw.4 289399 2015-10-16 00:38:05Z bdrewery $
 .\"
-.Dd April 13, 2008
+.Dd October 15, 2015
 .Dt IPW 4
 .Os
 .Sh NAME
@@ -77,14 +77,14 @@ This driver requires the firmware built with the
 .Nm ipwfw
 module to work.
 For the loaded firmware to be enabled for use the license at
-.Pa /usr/share/doc/legal/intel_ipw/LICENSE
+.Pa /usr/share/doc/legal/intel_ipw.LICENSE
 must be agreed by adding the following line to
 .Xr loader.conf 5 :
 .Pp
 .Dl "legal.intel_ipw.license_ack=1"
 .Sh FILES
-.Bl -tag -width ".Pa /usr/share/doc/legal/intel_ipw/LICENSE" -compact
-.It Pa /usr/share/doc/legal/intel_ipw/LICENSE
+.Bl -tag -width ".Pa /usr/share/doc/legal/intel_ipw.LICENSE" -compact
+.It Pa /usr/share/doc/legal/intel_ipw.LICENSE
 .Nm
 firmware license
 .El

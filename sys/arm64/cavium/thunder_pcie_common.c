@@ -30,7 +30,7 @@
 /* Common PCIe functions for Cavium Thunder SOC */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/cavium/thunder_pcie_common.c 286470 2015-08-08 20:34:55Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm64/cavium/thunder_pcie_common.c 292062 2015-12-10 13:19:30Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,54 +41,6 @@ __FBSDID("$FreeBSD: head/sys/arm64/cavium/thunder_pcie_common.c 286470 2015-08-0
 #include <machine/intr.h>
 
 #include "thunder_pcie_common.h"
-
-
-int
-thunder_common_map_msi(device_t pcib, device_t child, int irq,
-    uint64_t *addr, uint32_t *data)
-{
-	int error;
-
-	error = arm_map_msix(child, irq, addr, data);
-	return (error);
-}
-
-int
-thunder_common_alloc_msix(device_t pcib, device_t child, int *irq)
-{
-	int error;
-
-	error = arm_alloc_msix(child, irq);
-	return (error);
-}
-
-int
-thunder_common_release_msix(device_t pcib, device_t child, int irq)
-{
-	int error;
-
-	error = arm_release_msix(child, irq);
-	return (error);
-}
-
-int
-thunder_common_alloc_msi(device_t pcib, device_t child, int count, int maxcount,
-    int *irqs)
-{
-	int error;
-
-	error = arm_alloc_msi(child, count, irqs);
-	return (error);
-}
-
-int
-thunder_common_release_msi(device_t pcib, device_t child, int count, int *irqs)
-{
-	int error;
-
-	error = arm_release_msi(child, count, irqs);
-	return (error);
-}
 
 uint32_t
 range_addr_is_pci(struct pcie_range *ranges, uint64_t addr, uint64_t size)

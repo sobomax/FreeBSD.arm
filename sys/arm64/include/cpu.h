@@ -35,7 +35,7 @@
  *
  *	from: @(#)cpu.h 5.4 (Berkeley) 5/9/91
  *	from: FreeBSD: src/sys/i386/include/cpu.h,v 1.62 2001/06/29
- * $FreeBSD: head/sys/arm64/include/cpu.h 286919 2015-08-19 10:36:36Z zbb $
+ * $FreeBSD: head/sys/arm64/include/cpu.h 287884 2015-09-16 23:59:45Z zbb $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -148,6 +148,8 @@ void	identify_cpu(void);
 void	swi_vm(void *v);
 
 #define	CPU_AFFINITY(cpu)	__cpu_affinity[(cpu)]
+#define	CPU_CURRENT_SOCKET				\
+    (CPU_AFF2(CPU_AFFINITY(PCPU_GET(cpuid))))
 
 static __inline uint64_t
 get_cyclecount(void)

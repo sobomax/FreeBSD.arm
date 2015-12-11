@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sysv_shm.c 285057 2015-07-02 19:14:30Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/sysv_shm.c 289112 2015-10-10 09:29:47Z trasz $");
 
 #include "opt_compat.h"
 #include "opt_sysvipc.h"
@@ -162,7 +162,7 @@ struct	shminfo shminfo = {
 };
 
 static int shm_use_phys;
-static int shm_allow_removed;
+static int shm_allow_removed = 1;
 
 SYSCTL_ULONG(_kern_ipc, OID_AUTO, shmmax, CTLFLAG_RWTUN, &shminfo.shmmax, 0,
     "Maximum shared memory segment size");

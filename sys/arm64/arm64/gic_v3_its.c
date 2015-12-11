@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_v3_its.c 286919 2015-08-19 10:36:36Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_v3_its.c 292063 2015-12-10 15:51:02Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,6 +59,8 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_v3_its.c 286919 2015-08-19 10:36:36
 #include "gic_v3_reg.h"
 #include "gic_v3_var.h"
 
+#define	GIC_V3_ITS_QUIRK_THUNDERX_PEM_BUS_OFFSET	144
+
 #include "pic_if.h"
 
 /* Device and PIC methods */
@@ -72,10 +74,9 @@ static device_method_t gic_v3_its_methods[] = {
 	 */
 	/* MSI-X */
 	DEVMETHOD(pic_alloc_msix,	gic_v3_its_alloc_msix),
-	DEVMETHOD(pic_map_msix,		gic_v3_its_map_msix),
 	/* MSI */
 	DEVMETHOD(pic_alloc_msi,	gic_v3_its_alloc_msi),
-	DEVMETHOD(pic_map_msi,		gic_v3_its_map_msix),
+	DEVMETHOD(pic_map_msi,		gic_v3_its_map_msi),
 
 	/* End */
 	DEVMETHOD_END
@@ -178,6 +179,19 @@ gic_v3_its_attach(device_t dev)
 	int ret;
 
 	sc = device_get_softc(dev);
+
+	/*
+	 * XXX ARM64TODO: Avoid configuration of more than one ITS
+	 * device. To be removed when multi-PIC support is added
+	 * to FreeBSD (or at least multi-ITS is implemented). Limit
+	 * supported ITS sockets to '0' only.
+	 */
+	if (device_get_unit(dev) != 0) {
+		device_printf(dev,
+		    "Only single instance of ITS is supported, exiting...\n");
+		return (ENXIO);
+	}
+	sc->its_socket = 0;
 
 	/*
 	 * Initialize sleep & spin mutex for ITS
@@ -557,6 +571,10 @@ its_init_cpu(struct gic_v3_its_softc *sc)
 			 */
 			sc = its_sc;
 		} else
+			return (ENXIO);
+
+		/* Skip if running secondary init on a wrong socket */
+		if (sc->its_socket != CPU_CURRENT_SOCKET)
 			return (ENXIO);
 	}
 
@@ -1311,16 +1329,16 @@ its_cmd_wait_completion(struct gic_v3_its_softc *sc, struct its_cmd *cmd_first,
 static int
 its_cmd_send(struct gic_v3_its_softc *sc, struct its_cmd_desc *desc)
 {
-	struct its_cmd *cmd, *cmd_sync;
+	struct its_cmd *cmd, *cmd_sync, *cmd_write;
 	struct its_col col_sync;
 	struct its_cmd_desc desc_sync;
 	uint64_t target, cwriter;
 
 	mtx_lock_spin(&sc->its_spin_mtx);
 	cmd = its_cmd_alloc_locked(sc);
-	mtx_unlock_spin(&sc->its_spin_mtx);
 	if (cmd == NULL) {
 		device_printf(sc->dev, "could not allocate ITS command\n");
+		mtx_unlock_spin(&sc->its_spin_mtx);
 		return (EBUSY);
 	}
 
@@ -1328,9 +1346,7 @@ its_cmd_send(struct gic_v3_its_softc *sc, struct its_cmd_desc *desc)
 	its_cmd_sync(sc, cmd);
 
 	if (target != ITS_TARGET_NONE) {
-		mtx_lock_spin(&sc->its_spin_mtx);
 		cmd_sync = its_cmd_alloc_locked(sc);
-		mtx_unlock_spin(&sc->its_spin_mtx);
 		if (cmd_sync == NULL)
 			goto end;
 		desc_sync.cmd_type = ITS_CMD_SYNC;
@@ -1341,12 +1357,12 @@ its_cmd_send(struct gic_v3_its_softc *sc, struct its_cmd_desc *desc)
 	}
 end:
 	/* Update GITS_CWRITER */
-	mtx_lock_spin(&sc->its_spin_mtx);
 	cwriter = its_cmd_cwriter_offset(sc, sc->its_cmdq_write);
 	gic_its_write(sc, 8, GITS_CWRITER, cwriter);
+	cmd_write = sc->its_cmdq_write;
 	mtx_unlock_spin(&sc->its_spin_mtx);
 
-	its_cmd_wait_completion(sc, cmd, sc->its_cmdq_write);
+	its_cmd_wait_completion(sc, cmd, cmd_write);
 
 	return (0);
 }
@@ -1460,8 +1476,8 @@ its_get_devid_thunder(device_t pci_dev)
 	bsf = PCI_RID(pci_get_bus(pci_dev), pci_get_slot(pci_dev),
 	    pci_get_function(pci_dev));
 
-	/* ECAM is on bus=0 */
-	if (bus == 0) {
+	/* Check if accessing internal PCIe (low bus numbers) */
+	if (bus < GIC_V3_ITS_QUIRK_THUNDERX_PEM_BUS_OFFSET) {
 		return ((pci_get_domain(pci_dev) << PCI_RID_DOMAIN_SHIFT) |
 		    bsf);
 	/* PEM otherwise */
@@ -1641,7 +1657,7 @@ gic_v3_its_alloc_msi(device_t dev, device_t pci_dev, int count, int *irqs)
 }
 
 int
-gic_v3_its_map_msix(device_t dev, device_t pci_dev, int irq, uint64_t *addr,
+gic_v3_its_map_msi(device_t dev, device_t pci_dev, int irq, uint64_t *addr,
     uint32_t *data)
 {
 	struct gic_v3_its_softc *sc;

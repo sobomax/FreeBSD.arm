@@ -1,7 +1,7 @@
-# $FreeBSD: head/lib/libarchive/Makefile 285702 2015-07-19 21:31:52Z bapt $
+# $FreeBSD: head/lib/libarchive/Makefile 291618 2015-12-01 22:04:59Z bdrewery $
 .include <src.opts.mk>
 
-LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
+_LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
 
 LIB=	archive
 
@@ -37,7 +37,7 @@ CFLAGS+=	-DPPMD_32BIT
 .endif
 NO_WCAST_ALIGN.clang=
 
-.PATH: ${LIBARCHIVEDIR}/libarchive
+.PATH: ${_LIBARCHIVEDIR}/libarchive
 
 # Headers to be installed in /usr/include
 INCS=	archive.h archive_entry.h
@@ -398,11 +398,8 @@ MLINKS+=	archive_write_set_options.3 archive_write_set_format_option.3
 MLINKS+=	archive_write_set_options.3 archive_write_set_option.3
 MLINKS+=	libarchive.3 archive.3
 
-.PHONY: check test clean-test
-check test:
-	cd ${.CURDIR}/test && make obj && make test
-
-clean-test:
-	cd ${.CURDIR}/test && make clean
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>

@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)df.c	8.9 (Berkeley) 5/8/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/df/df.c 274213 2014-11-07 03:03:25Z marcel $");
+__FBSDID("$FreeBSD: head/bin/df/df.c 287236 2015-08-28 00:44:58Z delphij $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -311,7 +311,7 @@ main(int argc, char *argv[])
 
 	xo_close_container("storage-system-information");
 	xo_finish();
-	return (rv);
+	exit(rv);
 }
 
 static char *

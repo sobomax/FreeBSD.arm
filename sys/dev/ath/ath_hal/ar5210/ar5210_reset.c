@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5210/ar5210_reset.c 264899 2014-04-24 23:11:18Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5210/ar5210_reset.c 290612 2015-11-09 15:59:42Z adrian $
  */
 #include "opt_ah.h"
 
@@ -69,6 +69,7 @@ static void ar5210SetOperatingMode(struct ath_hal *, int opmode);
 HAL_BOOL
 ar5210Reset(struct ath_hal *ah, HAL_OPMODE opmode,
 	struct ieee80211_channel *chan, HAL_BOOL bChannelChange,
+	HAL_RESET_TYPE resetType,
 	HAL_STATUS *status)
 {
 #define	N(a)	(sizeof (a) /sizeof (a[0]))

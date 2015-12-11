@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_hash.c 285632 2015-07-16 13:57:05Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_hash.c 287497 2015-09-06 05:50:51Z mckusick $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -160,4 +160,41 @@ vfs_hash_rehash(struct vnode *vp, u_int hash)
 	LIST_INSERT_HEAD(vfs_hash_bucket(vp->v_mount, hash), vp, v_hashlist);
 	vp->v_hash = hash;
 	rw_wunlock(&vfs_hash_lock);
+}
+
+void
+vfs_hash_changesize(int newmaxvnodes)
+{
+	struct vfs_hash_head *vfs_hash_newtbl, *vfs_hash_oldtbl;
+	u_long vfs_hash_newmask, vfs_hash_oldmask;
+	struct vnode *vp;
+	int i;
+
+	vfs_hash_newtbl = hashinit(newmaxvnodes, M_VFS_HASH,
+		&vfs_hash_newmask);
+	/* If same hash table size, nothing to do */
+	if (vfs_hash_mask == vfs_hash_newmask) {
+		free(vfs_hash_newtbl, M_VFS_HASH);
+		return;
+	}
+	/*
+	 * Move everything from the old hash table to the new table.
+	 * None of the vnodes in the table can be recycled because to
+	 * do so, they have to be removed from the hash table.
+	 */
+	rw_wlock(&vfs_hash_lock);
+	vfs_hash_oldtbl = vfs_hash_tbl;
+	vfs_hash_oldmask = vfs_hash_mask;
+	vfs_hash_tbl = vfs_hash_newtbl;
+	vfs_hash_mask = vfs_hash_newmask;
+	for (i = 0; i <= vfs_hash_oldmask; i++) {
+		while ((vp = LIST_FIRST(&vfs_hash_oldtbl[i])) != NULL) {
+			LIST_REMOVE(vp, v_hashlist);
+			LIST_INSERT_HEAD(
+			    vfs_hash_bucket(vp->v_mount, vp->v_hash),
+			    vp, v_hashlist);
+		}
+	}
+	rw_wunlock(&vfs_hash_lock);
+	free(vfs_hash_oldtbl, M_VFS_HASH);
 }

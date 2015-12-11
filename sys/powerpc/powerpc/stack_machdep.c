@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/stack_machdep.c 209975 2010-07-13 05:32:19Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/stack_machdep.c 287645 2015-09-11 03:54:37Z markj $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -96,6 +96,13 @@ stack_save_td(struct stack *st, struct thread *td)
 
 	frame = td->td_pcb->pcb_sp;
 	stack_capture(st, frame);
+}
+
+int
+stack_save_td_running(struct stack *st, struct thread *td)
+{
+
+	return (EOPNOTSUPP);
 }
 
 void

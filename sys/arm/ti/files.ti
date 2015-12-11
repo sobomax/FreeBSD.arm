@@ -1,11 +1,6 @@
-#$FreeBSD: head/sys/arm/ti/files.ti 283276 2015-05-22 03:16:18Z gonzo $
+#$FreeBSD: head/sys/arm/ti/files.ti 291133 2015-11-21 15:30:08Z andrew $
 
 kern/kern_clocksource.c				standard
-
-arm/arm/bus_space_base.c			standard
-arm/arm/bus_space_generic.c			standard
-arm/arm/bus_space_asm_generic.S			standard
-arm/arm/pmu.c					optional	hwpmc
 
 arm/ti/ti_common.c				standard
 arm/ti/ti_cpuid.c				standard

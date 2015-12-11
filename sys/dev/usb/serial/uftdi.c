@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uftdi.c 286385 2015-08-06 19:47:04Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uftdi.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*
  * NOTE: all function names beginning like "uftdi_cfg_" can only
@@ -264,11 +264,6 @@ static driver_t uftdi_driver = {
 	.methods = uftdi_methods,
 	.size = sizeof(struct uftdi_softc),
 };
-
-DRIVER_MODULE(uftdi, uhub, uftdi_driver, uftdi_devclass, NULL, NULL);
-MODULE_DEPEND(uftdi, ucom, 1, 1, 1);
-MODULE_DEPEND(uftdi, usb, 1, 1, 1);
-MODULE_VERSION(uftdi, 1);
 
 static const STRUCT_USB_HOST_ID uftdi_devs[] = {
 #define	UFTDI_DEV(v, p, i) \
@@ -913,6 +908,12 @@ static const STRUCT_USB_HOST_ID uftdi_devs[] = {
 	UFTDI_DEV(UNKNOWN4, NF_RIC, 0),
 #undef UFTDI_DEV
 };
+
+DRIVER_MODULE(uftdi, uhub, uftdi_driver, uftdi_devclass, NULL, NULL);
+MODULE_DEPEND(uftdi, ucom, 1, 1, 1);
+MODULE_DEPEND(uftdi, usb, 1, 1, 1);
+MODULE_VERSION(uftdi, 1);
+USB_PNP_HOST_INFO(uftdi_devs);
 
 /*
  * Jtag product name strings table.  Some products have one or more interfaces

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_carp.c 281839 2015-04-21 20:25:12Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_carp.c 290806 2015-11-13 23:14:39Z smh $");
 
 #include "opt_bpf.h"
 #include "opt_inet.h"
@@ -985,7 +985,7 @@ carp_ifa_delroute(struct ifaddr *ifa)
 	case AF_INET6:
 		ifa_del_loopback_route(ifa,
 		    (struct sockaddr *)&ifatoia6(ifa)->ia_addr);
-		nd6_rem_ifa_lle(ifatoia6(ifa));
+		nd6_rem_ifa_lle(ifatoia6(ifa), 1);
 		break;
 #endif
 	}
@@ -1009,10 +1009,14 @@ static void
 carp_send_arp(struct carp_softc *sc)
 {
 	struct ifaddr *ifa;
+	struct in_addr addr;
 
-	CARP_FOREACH_IFA(sc, ifa)
-		if (ifa->ifa_addr->sa_family == AF_INET)
-			arp_ifinit2(sc->sc_carpdev, ifa, LLADDR(&sc->sc_addr));
+	CARP_FOREACH_IFA(sc, ifa) {
+		if (ifa->ifa_addr->sa_family != AF_INET)
+			continue;
+		addr = ((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
+		arp_announce_ifaddr(sc->sc_carpdev, addr, LLADDR(&sc->sc_addr));
+	}
 }
 
 int

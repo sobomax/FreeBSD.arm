@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_drv.h 285988 2015-07-28 21:47:37Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_drv.h 287177 2015-08-26 22:19:53Z bapt $");
 
 #ifndef _I915_DRV_H_
 #define _I915_DRV_H_
@@ -1120,11 +1120,8 @@ extern int i915_driver_device_is_agp(struct drm_device * dev);
 extern long i915_compat_ioctl(struct file *filp, unsigned int cmd,
 			      unsigned long arg);
 extern int i915_emit_box(struct drm_device *dev,
-			 struct drm_clip_rect __user *boxes,
-			 int i, int DR1, int DR4);
-int i915_emit_box_p(struct drm_device *dev, struct drm_clip_rect *box,
-    int DR1, int DR4);
-
+			 struct drm_clip_rect *box,
+			 int DR1, int DR4);
 unsigned long i915_chipset_val(struct drm_i915_private *dev_priv);
 unsigned long i915_mch_val(struct drm_i915_private *dev_priv);
 void i915_update_gfx_val(struct drm_i915_private *dev_priv);

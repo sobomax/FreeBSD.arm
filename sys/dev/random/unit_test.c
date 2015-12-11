@@ -23,13 +23,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/unit_test.c 286839 2015-08-17 07:36:12Z markm $
+ * $FreeBSD: head/sys/dev/random/unit_test.c 287023 2015-08-22 12:59:05Z markm $
  */
 
 /*
  Build this by going:
 
-cc -g -O0 -pthread -DRANDOM_<alg> -DRANDOM_DEBUG -I../.. -lstdthreads -Wall \
+cc -g -O0 -pthread -DRANDOM_<alg> -I../.. -lstdthreads -Wall \
 	unit_test.c \
 	yarrow.c \
 	fortuna.c \

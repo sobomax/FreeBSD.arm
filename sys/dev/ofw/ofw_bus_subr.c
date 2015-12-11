@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_bus_subr.c 285865 2015-07-25 00:58:50Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_bus_subr.c 291648 2015-12-02 14:21:16Z mmel $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -430,6 +430,27 @@ ofw_bus_reg_to_rl(device_t dev, phandle_t node, pcell_t acells, pcell_t scells,
 	return (0);
 }
 
+/*
+ * Get interrupt parent for given node.
+ * Returns 0 if interrupt parent doesn't exist.
+ */
+phandle_t
+ofw_bus_find_iparent(phandle_t node)
+{
+	phandle_t iparent;
+
+	if (OF_searchencprop(node, "interrupt-parent", &iparent,
+		    sizeof(iparent)) == -1) {
+		for (iparent = node; iparent != 0;
+		    iparent = OF_parent(iparent)) {
+			if (OF_hasprop(iparent, "interrupt-controller"))
+				break;
+		}
+		iparent = OF_xref_from_node(iparent);
+	}
+	return (iparent);
+}
+
 int
 ofw_bus_intr_to_rl(device_t dev, phandle_t node,
     struct resource_list *rl, int *rlen)
@@ -442,18 +463,11 @@ ofw_bus_intr_to_rl(device_t dev, phandle_t node,
 	nintr = OF_getencprop_alloc(node, "interrupts",  sizeof(*intr),
 	    (void **)&intr);
 	if (nintr > 0) {
-		if (OF_searchencprop(node, "interrupt-parent", &iparent,
-		    sizeof(iparent)) == -1) {
-			for (iparent = node; iparent != 0;
-			    iparent = OF_parent(iparent)) {
-				if (OF_hasprop(iparent, "interrupt-controller"))
-					break;
-			}
-			if (iparent == 0) {
-				device_printf(dev, "No interrupt-parent found, "
-				    "assuming direct parent\n");
-				iparent = OF_parent(node);
-			}
+		iparent = ofw_bus_find_iparent(node);
+		if (iparent == 0) {
+			device_printf(dev, "No interrupt-parent found, "
+			    "assuming direct parent\n");
+			iparent = OF_parent(node);
 			iparent = OF_xref_from_node(iparent);
 		}
 		if (OF_searchencprop(OF_node_from_xref(iparent), 

@@ -1,6 +1,4 @@
-# $FreeBSD: head/lib/libutil/tests/Makefile 286863 2015-08-17 23:19:36Z emaste $
-
-TESTSDIR=	${TESTSBASE}/lib/libutil
+# $FreeBSD: head/lib/libutil/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_C+=	flopen_test
 TAP_TESTS_C+=	grp_test

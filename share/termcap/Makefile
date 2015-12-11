@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
-# $FreeBSD: head/share/termcap/Makefile 275692 2014-12-10 23:18:11Z ngie $
+# $FreeBSD: head/share/termcap/Makefile 291734 2015-12-04 03:17:14Z bdrewery $
 
 # reorder gives an editor command for most common terminals
 # (in reverse order from n'th to 1'st most commonly used)
@@ -24,6 +24,6 @@ termcap.db: termcap
 	cap_mkdb ${CAP_MKDB_ENDIAN} -f ${.TARGET:R} ${.ALLSRC}
 
 etc-termcap:
-	ln -fs ${BINDIR}/misc/termcap ${DESTDIR}/etc/termcap
+	${INSTALL_SYMLINK} ${BINDIR}/misc/termcap ${DESTDIR}/etc/termcap
 
 .include <bsd.prog.mk>

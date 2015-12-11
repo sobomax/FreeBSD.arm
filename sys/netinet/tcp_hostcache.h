@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/tcp_hostcache.h 271400 2014-09-10 16:26:18Z ae $
+ * $FreeBSD: head/sys/netinet/tcp_hostcache.h 292087 2015-12-11 06:22:58Z hiren $
  */
 
 /*
@@ -57,7 +57,6 @@ struct hc_metrics {
 	u_long	rmx_ssthresh;	/* outbound gateway buffer limit */
 	u_long	rmx_rtt;	/* estimated round trip time */
 	u_long	rmx_rttvar;	/* estimated rtt variance */
-	u_long	rmx_bandwidth;	/* estimated bandwidth */
 	u_long	rmx_cwnd;	/* congestion window */
 	u_long	rmx_sendpipe;	/* outbound delay-bandwidth product */
 	u_long	rmx_recvpipe;	/* inbound delay-bandwidth product */

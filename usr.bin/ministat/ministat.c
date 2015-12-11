@@ -9,7 +9,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ministat/ministat.c 285595 2015-07-15 06:14:04Z jmg $");
+__FBSDID("$FreeBSD: head/usr.bin/ministat/ministat.c 291231 2015-11-24 02:30:59Z araujo $");
 
 #include <stdio.h>
 #include <math.h>
@@ -192,8 +192,10 @@ Avg(struct dataset *ds)
 static double
 Median(struct dataset *ds)
 {
-
-	return (ds->points[ds->n / 2]);
+	if ((ds->n % 2) == 0)
+		return ((ds->points[ds->n / 2] + (ds->points[(ds->n / 2) - 1])) / 2);
+    	else
+		return (ds->points[ds->n / 2]);
 }
 
 static double

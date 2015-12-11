@@ -45,7 +45,7 @@ static char sccsid[] = "@(#)login.c	8.4 (Berkeley) 4/2/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/login/login.c 270111 2014-08-17 19:06:26Z neel $");
+__FBSDID("$FreeBSD: head/usr.bin/login/login.c 287634 2015-09-10 22:25:40Z delphij $");
 
 /*
  * login [ name ]
@@ -63,7 +63,6 @@ __FBSDID("$FreeBSD: head/usr.bin/login/login.c 270111 2014-08-17 19:06:26Z neel 
 #include <err.h>
 #include <errno.h>
 #include <grp.h>
-#include <libutil.h>
 #include <login_cap.h>
 #include <pwd.h>
 #include <setjmp.h>

@@ -22,7 +22,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/drm2/i915/intel_drv.h 277487 2015-01-21 16:10:37Z kib $
+ * $FreeBSD: head/sys/dev/drm2/i915/intel_drv.h 287496 2015-09-05 23:22:59Z bapt $
  */
 
 #ifndef DRM_INTEL_DRV_H
@@ -73,6 +73,10 @@
 #define KHz(x) (1000*x)
 #define MHz(x) KHz(1000*x)
 
+/*
+ * Display related stuff
+ */
+
 /* store information about an Ixxx DVO */
 /* The i830->i865 use multiple DVOs with multiple i2cs */
 /* the i915, i945 have a single sDVO i2c bus - which is different */
@@ -94,6 +98,7 @@
 #define INTEL_OUTPUT_HDMI 6
 #define INTEL_OUTPUT_DISPLAYPORT 7
 #define INTEL_OUTPUT_EDP 8
+#define INTEL_OUTPUT_UNKNOWN 9
 
 /* Intel Pipe Clone Bit */
 #define INTEL_HDMIB_CLONE_BIT 1

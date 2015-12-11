@@ -40,13 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/csu/arm/crt1.c 257233 2013-10-27 23:48:59Z cognet $");
-
-#ifndef lint
-#ifndef __GNUC__
-#error "GCC is needed to compile this file"
-#endif
-#endif /* lint */
+__FBSDID("$FreeBSD: head/lib/csu/arm/crt1.c 292000 2015-12-08 19:32:58Z emaste $");
 
 #include <stdlib.h>
 

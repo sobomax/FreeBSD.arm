@@ -34,7 +34,7 @@
  *
  * From:
  *	$Id: procfs_regs.c,v 3.2 1993/12/15 09:40:17 jsp Exp $
- * $FreeBSD: head/sys/fs/procfs/procfs_fpregs.c 217896 2011-01-26 20:03:58Z dchagin $
+ * $FreeBSD: head/sys/fs/procfs/procfs_fpregs.c 290530 2015-11-08 01:38:56Z markj $
  */
 
 #include "opt_compat.h"
@@ -92,7 +92,7 @@ procfs_doprocfpregs(PFS_FILL_ARGS)
 		return (0);
 
 	PROC_LOCK(p);
-	KASSERT(p->p_lock > 0, ("proc not held"));
+	PROC_ASSERT_HELD(p);
 	if (p_candebug(td, p)) {
 		PROC_UNLOCK(p);
 		return (EPERM);

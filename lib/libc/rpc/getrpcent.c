@@ -32,7 +32,7 @@
 static char *sccsid = "@(#)getrpcent.c 1.14 91/03/11 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcent.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcent.c 288113 2015-09-22 15:40:07Z rodrigc $");
 
 /*
  * Copyright (c) 1984 by Sun Microsystems, Inc.
@@ -989,7 +989,7 @@ getrpcbynumber(int number)
 }
 
 struct rpcent *
-getrpcent()
+getrpcent(void)
 {
 	union key key;
 
@@ -1023,7 +1023,7 @@ setrpcent(int stayopen)
 }
 
 void
-endrpcent()
+endrpcent(void)
 {
 #ifdef NS_CACHING
 	static const nss_cache_info cache_info = NS_MP_CACHE_INFO_INITIALIZER(

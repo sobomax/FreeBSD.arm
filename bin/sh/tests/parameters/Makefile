@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/parameters/Makefile 273802 2014-10-28 22:14:31Z jilles $
+# $FreeBSD: head/bin/sh/tests/parameters/Makefile 291903 2015-12-06 14:09:31Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -20,6 +20,8 @@ FILES+=		positional4.0
 FILES+=		positional5.0
 FILES+=		positional6.0
 FILES+=		positional7.0
+FILES+=		positional8.0
+FILES+=		positional9.0
 FILES+=		pwd1.0
 FILES+=		pwd2.0
 

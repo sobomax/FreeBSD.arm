@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libdtrace/Makefile 285009 2015-07-01 15:51:11Z br $
+# $FreeBSD: head/cddl/lib/libdtrace/Makefile 287971 2015-09-18 21:18:44Z bdrewery $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libdtrace/common
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libgen/common
@@ -55,6 +55,10 @@ DSRCS=		errno.d			\
 		tcp.d			\
 		udp.d			\
 		unistd.d
+
+FILES=		${DSRCS}
+FILESDIR=	/usr/lib/dtrace
+FILESMODE=	${NOBINMODE}
 
 WARNS?=		1
 
@@ -119,12 +123,5 @@ dt_names.c:
 	sh ${OPENSOLARIS_USR_DISTDIR}/lib/libdtrace/common/mknames.sh < ${OPENSOLARIS_SYS_DISTDIR}/uts/common/sys/dtrace.h > dt_names.c
 
 beforedepend:	dt_errtags.c dt_names.c
-
-beforeinstall:
-.if !defined(LIBRARIES_ONLY) && exists(${DESTDIR}/usr/lib/dtrace)
-.for file in ${DSRCS}
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} ${.CURDIR}/${file} ${DESTDIR}/usr/lib/dtrace
-.endfor
-.endif
 
 .include <bsd.lib.mk>

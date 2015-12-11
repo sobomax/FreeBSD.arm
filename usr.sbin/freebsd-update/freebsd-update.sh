@@ -25,7 +25,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# $FreeBSD: head/usr.sbin/freebsd-update/freebsd-update.sh 284425 2015-06-15 20:12:15Z delphij $
+# $FreeBSD: head/usr.sbin/freebsd-update/freebsd-update.sh 289352 2015-10-15 01:48:52Z emaste $
 
 #### Usage function -- called from command-line handling code.
 
@@ -52,6 +52,8 @@ Options:
                   (default: root)
   --not-running-from-cron
                -- Run without a tty, for use by automated tools
+  --currently-running release
+               -- Update as if currently running this release
 Commands:
   fetch        -- Fetch updates from server
   cron         -- Sleep rand(3600) seconds, fetch updates, and send an
@@ -433,6 +435,9 @@ parse_cmdline () {
 			;;
 		--not-running-from-cron)
 			NOTTYOK=1
+			;;
+		--currently-running)
+			shift; export UNAME_r="$1"
 			;;
 
 		# Configuration file equivalents
@@ -2731,7 +2736,7 @@ backup_kernel () {
 	if [ $BACKUPKERNELSYMBOLFILES = yes ]; then
 		FINDFILTER=""
 	else
-		FINDFILTER=-"a ! -name *.symbols"
+		FINDFILTER="-a ! -name *.debug -a ! -name *.symbols"
 	fi
 
 	# Backup all the kernel files using hardlinks.

@@ -27,7 +27,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/common.c 282985 2015-05-15 18:25:48Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/common.c 289547 2015-10-18 20:32:37Z ian $");
+
+#include "opt_platform.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -11,7 +11,7 @@
 # Copyright 2009 Douglas Barton
 # dougb@FreeBSD.org
 
-# $FreeBSD: head/release/scripts/mm-mtree.sh 267864 2014-06-25 12:17:00Z gavin $
+# $FreeBSD: head/release/scripts/mm-mtree.sh 290565 2015-11-08 23:46:05Z sjg $
 
 PATH=/bin:/usr/bin:/usr/sbin
 
@@ -30,7 +30,7 @@ display_usage () {
 
 # Set the default path for the temporary root environment
 #
-TEMPROOT='/var/tmp/temproot'
+TEMPROOT=`TMPDIR=/var/tmp mktemp -d -t temproot`
 
 # Assign the location of the mtree database
 #

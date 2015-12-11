@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/autounmountd 270096 2014-08-17 09:44:42Z trasz $
+# $FreeBSD: head/etc/rc.d/autounmountd 287951 2015-09-18 06:54:52Z trasz $
 #
 
 # PROVIDE: autounmountd
-# REQUIRE: nfsclient
+# REQUIRE: DAEMON
 # KEYWORD: nojail
 
 . /etc/rc.subr

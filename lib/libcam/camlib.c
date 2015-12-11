@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcam/camlib.c 257388 2013-10-30 15:46:50Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/lib/libcam/camlib.c 289450 2015-10-17 09:07:53Z ngie $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -676,8 +676,10 @@ cam_close_spec_device(struct cam_device *dev)
 	if (dev == NULL)
 		return;
 
-	if (dev->fd >= 0)
+	if (dev->fd >= 0) {
 		close(dev->fd);
+		dev->fd = -1;
+	}
 }
 
 char *

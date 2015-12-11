@@ -1,7 +1,7 @@
 #
 # $Id: //depot/aic7xxx/freebsd/dev/aic7xxx/aicasm/Makefile#2 $
 #
-# $FreeBSD: head/sys/dev/aic7xxx/aicasm/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sys/dev/aic7xxx/aicasm/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	aicasm
 
@@ -13,8 +13,7 @@ GENHDRS=	aicasm_gram.h aicasm_macro_gram.h
 
 SRCS=	${GENHDRS} ${CSRCS} ${YSRCS} ${LSRCS}
 CLEANFILES+= ${GENHDRS} ${YSRCS:R:C/(.*)/\1.output/g}
-DPADD=	${LIBL}
-LDADD=	-ll
+LIBADD=	l
 WARNS?=	0
 
 # Correct path for kernel builds

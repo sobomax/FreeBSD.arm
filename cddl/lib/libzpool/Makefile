@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libzpool/Makefile 272484 2014-10-03 20:36:09Z delphij $
+# $FreeBSD: head/cddl/lib/libzpool/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include "${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common/Makefile.files"
 
@@ -56,9 +56,7 @@ CFLAGS+=	-I${.CURDIR}/../../../lib/libpthread/thread
 CFLAGS+=	-I${.CURDIR}/../../../lib/libpthread/sys
 CFLAGS+=	-I${.CURDIR}/../../../lib/libthr/arch/${MACHINE_CPUARCH}/include
 
-DPADD=		${LIBMD} ${LIBPTHREAD} ${LIBZ} ${LIBNVPAIR} \
-		${LIBAVL} ${LIBUMEM}
-LDADD=		-lmd -lpthread -lz -lnvpair -lavl -lumem
+LIBADD=		md pthread z nvpair avl umem
 
 # atomic.S doesn't like profiling.
 MK_PROFILE=	no

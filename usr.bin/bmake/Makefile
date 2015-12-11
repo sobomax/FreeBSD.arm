@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: head/usr.bin/bmake/Makefile 284254 2015-06-11 04:00:22Z sjg $
+# $FreeBSD: head/usr.bin/bmake/Makefile 291978 2015-12-08 01:29:07Z sjg $
 
 .sinclude "Makefile.inc"
 
@@ -14,10 +14,10 @@ CFLAGS+= -I${.CURDIR}
 CLEANDIRS+= FreeBSD
 CLEANFILES+= bootstrap
 
-#	$Id: Makefile,v 1.39 2015/06/07 15:54:37 sjg Exp $
+#	$Id: Makefile,v 1.48 2015/12/02 00:36:42 sjg Exp $
 
 # Base version on src date
-MAKE_VERSION= 20150606
+MAKE_VERSION= 20151201
 
 PROG?=	${.CURDIR:T}
 
@@ -34,6 +34,7 @@ SRCS= \
 	make.c \
 	make_malloc.c \
 	meta.c \
+	metachar.c \
 	parse.c \
 	str.c \
 	strlist.c \

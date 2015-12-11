@@ -23,8 +23,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libc/sparc64/gen/_set_tp.c 163118 2006-10-08 02:50:34Z kmacy $
+ *	$FreeBSD: head/lib/libc/sparc64/gen/_set_tp.c 288019 2015-09-20 04:59:01Z rodrigc $
  */
+#include "libc_private.h"
 
 void
 _set_tp(void *tpval)

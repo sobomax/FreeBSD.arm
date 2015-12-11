@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/acpi.c 282206 2015-04-28 23:44:47Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/acpi.c 287927 2015-09-17 18:11:26Z delphij $
  */
 
 /*
@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/acpi.c 282206 2015-04-28 23:44:47Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/acpi.c 287927 2015-09-17 18:11:26Z delphij $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -790,10 +790,10 @@ basl_open(struct basl_fio *bf, int suffix)
 	err = 0;
 
 	if (suffix) {
-		strncpy(bf->f_name, basl_stemplate, MAXPATHLEN);
+		strlcpy(bf->f_name, basl_stemplate, MAXPATHLEN);
 		bf->fd = mkstemps(bf->f_name, strlen(BHYVE_ASL_SUFFIX));
 	} else {
-		strncpy(bf->f_name, basl_template, MAXPATHLEN);
+		strlcpy(bf->f_name, basl_template, MAXPATHLEN);
 		bf->fd = mkstemp(bf->f_name);
 	}
 

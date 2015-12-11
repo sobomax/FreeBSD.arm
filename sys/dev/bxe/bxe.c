@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe.c 285973 2015-07-28 19:15:44Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe.c 289199 2015-10-12 20:21:17Z davidcs $");
 
 #define BXE_DRIVER_VERSION "1.78.79"
 
@@ -16122,9 +16122,12 @@ bxe_sysctl_state(SYSCTL_HANDLER_ARGS)
     }
 
     if (result == 1) {
+	uint32_t  temp;
         sc = (struct bxe_softc *)arg1;
+
         BLOGI(sc, "... dumping driver state ...\n");
-        /* XXX */
+	temp = SHMEM2_RD(sc, temperature_in_half_celsius);
+	BLOGI(sc, "\t Device Temperature = %d Celsius\n", (temp/2));
     }
 
     return (error);

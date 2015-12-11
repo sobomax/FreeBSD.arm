@@ -1,5 +1,4 @@
 /* $OpenBSD: servconf.h,v 1.112 2014/01/29 06:18:35 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/servconf.h 263712 2014-03-25 11:05:34Z des $ */
 
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
@@ -188,10 +187,6 @@ typedef struct {
 					 * kernels. */
 	u_int	num_auth_methods;
 	char   *auth_methods[MAX_AUTH_METHODS];
-
-#ifdef	NONE_CIPHER_ENABLED
-	int	none_enabled;		/* Enable NONE cipher switch. */
-#endif
 }       ServerOptions;
 
 /* Information about the incoming connection as used by Match */

@@ -48,7 +48,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 282779 2015-05-11 19:20:30Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 291852 2015-12-05 09:32:36Z andrew $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -98,10 +98,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/undefined.c 282779 2015-05-11 19:20:30Z and
 #define	THUMB_COPROC(insn)	(((insn) >> 8) & 0xf)
 
 #define	COPROC_VFP	10
-
-#ifdef KDTRACE_HOOKS
-int (*dtrace_invop_jump_addr)(struct trapframe *);
-#endif
 
 static int gdb_trapper(u_int, u_int, struct trapframe *, int);
 
@@ -206,12 +202,6 @@ undefinedinstruction(struct trapframe *frame)
 
 	PCPU_INC(cnt.v_trap);
 
-#if __ARM_ARCH >= 7
-	if ((frame->tf_spsr & PSR_T) != 0)
-		frame->tf_pc -= THUMB_INSN_SIZE;
-	else
-#endif
-		frame->tf_pc -= INSN_SIZE;
 	fault_pc = frame->tf_pc;
 
 	/*
@@ -350,12 +340,6 @@ undefinedinstruction(struct trapframe *frame)
 #endif
 			return;
 		}
-#ifdef KDTRACE_HOOKS
-		else if (dtrace_invop_jump_addr != 0) {
-			dtrace_invop_jump_addr(frame);
-			return;
-		}
-#endif
 		else
 			panic("Undefined instruction in kernel.\n");
 	}

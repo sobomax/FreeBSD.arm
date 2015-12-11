@@ -54,7 +54,7 @@ static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 static char fromrcsid[] = "From: Id: gethnamaddr.c,v 8.23 1998/04/07 04:59:46 vixie Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/gethostbydns.c 211340 2010-08-15 16:28:08Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/net/gethostbydns.c 288045 2015-09-20 21:21:01Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -107,10 +107,7 @@ int _dns_ttl_;
 
 #ifdef DEBUG
 static void
-dprintf(msg, num, res)
-	char *msg;
-	int num;
-	res_state res;
+dprintf(char *msg, int num, res_state res)
 {
 	if (res->options & RES_DEBUG) {
 		int save = errno;
@@ -769,7 +766,7 @@ _sethostdnsent(int stayopen)
 }
 
 void
-_endhostdnsent()
+_endhostdnsent(void)
 {
 	res_state statp;
 

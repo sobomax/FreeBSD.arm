@@ -12,7 +12,7 @@
 # LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 # A PARTICULAR PURPOSE.
 #
-# $FreeBSD: head/usr.sbin/rtsold/Makefile 281341 2015-04-09 21:52:14Z bapt $
+# $FreeBSD: head/usr.sbin/rtsold/Makefile 288963 2015-10-06 23:42:58Z delphij $
 
 PROG=	rtsold
 MAN=	rtsold.8
@@ -20,6 +20,5 @@ MLINKS=	rtsold.8 rtsol.8
 SRCS=	rtsold.c rtsol.c if.c probe.c dump.c rtsock.c
 
 WARNS?=	3
-CFLAGS+= -DHAVE_ARC4RANDOM -DHAVE_POLL_H
 
 .include <bsd.prog.mk>

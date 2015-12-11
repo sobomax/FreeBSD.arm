@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/i2c.c 235935 2012-05-24 21:09:38Z marcel $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/i2c.c 289093 2015-10-09 22:49:50Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -284,7 +284,7 @@ i2c_start(device_t dev, u_char slave, int timeout)
 		debugf("bus busy");
 		mtx_unlock(&sc->mutex);
 		i2c_stop(dev);
-		return (IIC_EBUSBSY);
+		return (IIC_EBUSERR);
 	}
 
 	/* Set start condition */

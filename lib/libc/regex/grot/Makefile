@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/regex/grot/Makefile 132390 2004-07-19 08:48:17Z tjr $
+# $FreeBSD: head/lib/libc/regex/grot/Makefile 291837 2015-12-05 02:23:44Z ngie $
 # You probably want to take -DREDEBUG out of CFLAGS, and put something like
 # -O in, *after* testing (-DREDEBUG strengthens testing by enabling a lot of
 # internal assertion checking).  Take -Dconst= out for an ANSI compiler.
@@ -62,7 +62,8 @@ regexec.o:	engine.c engine.ih
 regerror.o:	regerror.ih
 regerror.o:	utils.h
 debug.o:	debug.ih
-main.o:	main.ih
+main.o:	debug.ih main.ih split.ih
+split.o:	split.ih
 
 r:	re tests
 	./re <tests

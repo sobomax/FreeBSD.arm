@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 286001 2015-07-29 08:12:05Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_ifattach.c 287608 2015-09-10 06:08:42Z hrs $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -565,12 +565,6 @@ in6_ifattach_loopback(struct ifnet *ifp)
 	/* the loopback  address should NEVER expire. */
 	ifra.ifra_lifetime.ia6t_vltime = ND6_INFINITE_LIFETIME;
 	ifra.ifra_lifetime.ia6t_pltime = ND6_INFINITE_LIFETIME;
-
-	/* we don't need to perform DAD on loopback interfaces. */
-	ifra.ifra_flags |= IN6_IFF_NODAD;
-
-	/* skip registration to the prefix list. XXX should be temporary. */
-	ifra.ifra_flags |= IN6_IFF_NOPFX;
 
 	/*
 	 * We are sure that this is a newly assigned address, so we can set

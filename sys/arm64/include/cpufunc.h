@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/cpufunc.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/cpufunc.h 287960 2015-09-18 16:52:18Z kib $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -106,6 +106,17 @@ get_mpidr(void)
 	mpidr = READ_SPECIALREG(mpidr_el1);
 
 	return (mpidr);
+}
+
+static __inline void
+clrex(void)
+{
+
+	/*
+	 * Ensure compiler barrier, otherwise the monitor clear might
+	 * occur too late for us ?
+	 */
+	__asm __volatile("clrex" : : : "memory");
 }
 
 #define	cpu_nullop()			arm64_nullop()

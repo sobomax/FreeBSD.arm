@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/nxge/if_nxge.c 283291 2015-05-22 17:05:21Z jkim $
+ * $FreeBSD: head/sys/dev/nxge/if_nxge.c 288307 2015-09-27 12:17:03Z bz $
  */
 
 #include <dev/nxge/if_nxge.h>
@@ -1457,7 +1457,7 @@ xge_ioctl_stats(xge_lldev_t *lldev, struct ifreq *ifreqp)
 
 	    case XGE_READ_VERSION:
 	        info = xge_os_malloc(NULL, XGE_BUFFER_SIZE);
-	        if(version != NULL) {
+	        if(info != NULL) {
 	            strcpy(info, XGE_DRIVER_VERSION);
 	            if(copyout(info, ifreqp->ifr_data, XGE_BUFFER_SIZE) == 0)
 	                retValue = 0;

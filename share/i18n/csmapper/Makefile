@@ -1,10 +1,11 @@
-# $FreeBSD: head/share/i18n/csmapper/Makefile 255651 2013-09-17 20:09:25Z jilles $
+# $FreeBSD: head/share/i18n/csmapper/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 # $NetBSD: Makefile,v 1.13 2007/03/13 16:34:37 tnozaki Exp $
 
 FILESDIR= ${CSMAPPERDIR}
 
 SUBDIR=	APPLE AST BIG5 CNS CP EBCDIC GB GEORGIAN ISO646 ISO-8859 JIS \
 	KAZAKH KOI KS MISC TCVN
+SUBDIR_PARALLEL=
 
 mapper.dir: ${SUBDIR}
 	newfile=$$(for i in ${SUBDIR}; do \

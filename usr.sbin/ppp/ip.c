@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/ip.c 134875 2004-09-06 23:54:54Z brian $
+ * $FreeBSD: head/usr.sbin/ppp/ip.c 289677 2015-10-21 05:37:09Z eadler $
  */
 
 #include <sys/param.h>
@@ -473,7 +473,7 @@ FilterCheck(const unsigned char *packet,
                        ncpaddr_ntoa(&srcaddr), sport, dstip, dport);
           }
           return 1;
-        }		/* Explict match.  Deny this packet */
+        }		/* Explicit match.  Deny this packet */
       }
     } else {
       n++;

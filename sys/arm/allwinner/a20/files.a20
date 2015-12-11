@@ -1,3 +1,4 @@
-# $FreeBSD: head/sys/arm/allwinner/a20/files.a20 282715 2015-05-10 09:33:03Z andrew $
+# $FreeBSD: head/sys/arm/allwinner/a20/files.a20 288050 2015-09-21 01:51:37Z loos $
 
 arm/allwinner/a20/a20_mp.c		optional	smp
+arm/allwinner/a20/a20_if_dwc.c		optional	dwc

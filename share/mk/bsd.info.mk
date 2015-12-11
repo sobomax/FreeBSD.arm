@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.info.mk 276592 2015-01-02 22:55:30Z ngie $
+# $FreeBSD: head/share/mk/bsd.info.mk 289391 2015-10-15 22:49:56Z bdrewery $
 #
 # The include file <bsd.info.mk> handles installing GNU (tech)info files.
 # Texinfo is a documentation system that uses a single source
@@ -177,11 +177,11 @@ CLEANFILES+=	${INFO:S/$/.info.*.html/} ${INFO:S/$/.info/}
 install: ${INSTALLINFODIRS}
 .if !empty(IFILES:N*.html)
 	${INSTALL} -o ${INFOOWN} -g ${INFOGRP} -m ${INFOMODE} \
-		${IFILES:N*.html} ${DESTDIR}${INFODIR}
+		${IFILES:N*.html} ${DESTDIR}${INFODIR}/
 .endif
 .if !empty(FORMATS:Mhtml)
 	${INSTALL} -o ${INFOOWN} -g ${INFOGRP} -m ${INFOMODE} \
-		${INFO:S/$/.info.*.html/} ${DESTDIR}${INFODIR}
+		${INFO:S/$/.info.*.html/} ${DESTDIR}${INFODIR}/
 .endif
 .else
 # The indirection in the following is to avoid the null install rule

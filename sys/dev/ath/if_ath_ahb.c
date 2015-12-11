@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ahb.c 285122 2015-07-04 03:07:28Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ahb.c 288349 2015-09-29 03:37:17Z adrian $");
 
 /*
  * AHB bus front-end for the Atheros Wireless LAN controller driver.
@@ -261,7 +261,6 @@ ath_ahb_attach(device_t dev)
 	ATH_PCU_LOCK_INIT(sc);
 	ATH_RX_LOCK_INIT(sc);
 	ATH_TX_LOCK_INIT(sc);
-	ATH_TX_IC_LOCK_INIT(sc);
 	ATH_TXSTATUS_LOCK_INIT(sc);
 
 	error = ath_attach(device_id, sc);
@@ -271,7 +270,6 @@ ath_ahb_attach(device_t dev)
 	ATH_TXSTATUS_LOCK_DESTROY(sc);
 	ATH_RX_LOCK_DESTROY(sc);
 	ATH_TX_LOCK_DESTROY(sc);
-	ATH_TX_IC_LOCK_DESTROY(sc);
 	ATH_PCU_LOCK_DESTROY(sc);
 	ATH_LOCK_DESTROY(sc);
 	bus_dma_tag_destroy(sc->sc_dmat);
@@ -315,7 +313,6 @@ ath_ahb_detach(device_t dev)
 	ATH_TXSTATUS_LOCK_DESTROY(sc);
 	ATH_RX_LOCK_DESTROY(sc);
 	ATH_TX_LOCK_DESTROY(sc);
-	ATH_TX_IC_LOCK_DESTROY(sc);
 	ATH_PCU_LOCK_DESTROY(sc);
 	ATH_LOCK_DESTROY(sc);
 

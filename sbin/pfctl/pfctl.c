@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 285730 2015-07-20 23:24:25Z gnn $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 290236 2015-11-01 17:20:17Z kp $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -1840,6 +1840,7 @@ pfctl_set_debug(struct pfctl *pf, char *d)
 	}
 
 	pf->debug_set = 1;
+	level = pf->debug;
 
 	if ((pf->opts & PF_OPT_NOACTION) == 0)
 		if (ioctl(dev, DIOCSETDEBUG, &level))

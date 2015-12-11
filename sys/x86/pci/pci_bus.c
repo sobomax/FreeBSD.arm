@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/pci/pci_bus.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/x86/pci/pci_bus.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include "opt_cpu.h"
 
@@ -524,7 +524,7 @@ legacy_pcib_attach(device_t dev)
 			device_probe_and_attach(pir);
 	}
 #endif
-	device_add_child(dev, "pci", bus);
+	device_add_child(dev, "pci", -1);
 	return bus_generic_attach(dev);
 }
 

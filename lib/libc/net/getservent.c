@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)getservent.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/getservent.c 254700 2013-08-23 13:59:47Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/net/getservent.c 288045 2015-09-20 21:21:01Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -1241,7 +1241,7 @@ setservent(int stayopen)
 }
 
 void
-endservent()
+endservent(void)
 {
 #ifdef NS_CACHING
 	static const nss_cache_info cache_info = NS_MP_CACHE_INFO_INITIALIZER(
@@ -1362,7 +1362,7 @@ getservbyport(int port, const char *proto)
 }
 
 struct servent *
-getservent()
+getservent(void)
 {
 	struct key key;
 

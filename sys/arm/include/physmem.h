@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/physmem.h 262123 2014-02-17 20:04:57Z ian $
+ * $FreeBSD: head/sys/arm/include/physmem.h 290648 2015-11-10 12:02:41Z mmel $
  */
 
 #ifndef	_MACHINE_PHYSMEM_H_
@@ -65,7 +65,7 @@ void arm_physmem_print_tables(void);
 
 #include <machine/ofw_machdep.h>
 
-static inline void 
+static inline void
 arm_physmem_hardware_regions(struct mem_region * mrptr, int mrcount)
 {
 	while (mrcount--) {
@@ -75,11 +75,11 @@ arm_physmem_hardware_regions(struct mem_region * mrptr, int mrcount)
 }
 
 static inline void
-arm_physmem_exclude_regions(struct mem_region * mrptr, int mrcount, 
+arm_physmem_exclude_regions(struct mem_region * mrptr, int mrcount,
     uint32_t exflags)
 {
 	while (mrcount--) {
-		arm_physmem_exclude_region(mrptr->mr_start, mrptr->mr_size, 
+		arm_physmem_exclude_region(mrptr->mr_start, mrptr->mr_size,
 		    exflags);
 		++mrptr;
 	}

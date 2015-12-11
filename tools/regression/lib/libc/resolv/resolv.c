@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-/* $FreeBSD: head/tools/regression/lib/libc/resolv/resolv.c 243346 2012-11-20 19:23:44Z emaste $ */
+/* $FreeBSD: head/tools/regression/lib/libc/resolv/resolv.c 291362 2015-11-26 07:58:22Z ngie $ */
 #include <sys/cdefs.h>
 __RCSID("$NetBSD: resolv.c,v 1.6 2004/05/23 16:59:11 christos Exp $");
 
@@ -90,8 +90,11 @@ load(const char *fname)
 		char c = line[len];
 		char *ptr;
 		line[len] = '\0';
-		for (ptr = strtok(line, WS); ptr; ptr = strtok(NULL, WS))
+		for (ptr = strtok(line, WS); ptr; ptr = strtok(NULL, WS)) {
+			if (ptr == '\0' || ptr[0] == '#')
+				continue;
 			sl_add(hosts, strdup(ptr));
+		}
 		line[len] = c;
 	}
 

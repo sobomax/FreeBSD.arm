@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_gpio.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_gpio.c 290726 2015-11-12 20:14:25Z gavin $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -77,7 +77,7 @@ am335x_gpio_probe(device_t dev)
 	if (ofw_bus_search_compatible(dev, compat_data)->ocd_data == 0)
 		return (ENXIO);
 
-	device_set_desc(dev, "Ti AM335x General Purpose I/O (GPIO)");
+	device_set_desc(dev, "TI AM335x General Purpose I/O (GPIO)");
 
 	return (0);
 }

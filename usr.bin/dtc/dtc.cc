@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/dtc.cc 267316 2014-06-10 05:58:46Z rpaulo $
+ * $FreeBSD: head/usr.bin/dtc/dtc.cc 289935 2015-10-25 14:52:16Z theraven $
  */
 
 #include <sys/resource.h>
@@ -67,7 +67,7 @@ static void usage(const char* argv0)
 			"[-O output_format]\n"
 		"\t\t[-o output_file] [-R entries] [-S bytes] [-p bytes]"
 			"[-V blob_version]\n"
-		"\t\t-W [no-]checker_name] input_file\n", basename(argv0));
+		"\t\t-W [no-]checker_name] input_file\n", basename((char*)argv0));
 }
 
 /**

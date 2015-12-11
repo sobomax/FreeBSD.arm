@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hyperv/netvsc/hv_netvsc_drv_freebsd.c 285785 2015-07-22 05:05:01Z whu $");
+__FBSDID("$FreeBSD: head/sys/dev/hyperv/netvsc/hv_netvsc_drv_freebsd.c 291156 2015-11-22 05:26:13Z whu $");
 
 #include "opt_inet6.h"
 #include "opt_inet.h"
@@ -128,6 +128,15 @@ __FBSDID("$FreeBSD: head/sys/dev/hyperv/netvsc/hv_netvsc_drv_freebsd.c 285785 20
 #define HV_NV_SC_PTR_OFFSET_IN_BUF         0
 #define HV_NV_PACKET_OFFSET_IN_BUF         16
 
+/*
+ * A unified flag for all outbound check sum flags is useful,
+ * and it helps avoiding unnecessary check sum calculation in
+ * network forwarding scenario.
+ */
+#define HV_CSUM_FOR_OUTBOUND						\
+    (CSUM_IP|CSUM_IP_UDP|CSUM_IP_TCP|CSUM_IP_SCTP|CSUM_IP_TSO|		\
+    CSUM_IP_ISCSI|CSUM_IP6_UDP|CSUM_IP6_TCP|CSUM_IP6_SCTP|		\
+    CSUM_IP6_TSO|CSUM_IP6_ISCSI)
 
 /*
  * Data types
@@ -570,7 +579,8 @@ hn_start_locked(struct ifnet *ifp)
 			    packet->vlan_tci & 0xfff;
 		}
 
-		if (0 == m_head->m_pkthdr.csum_flags) {
+		/* Only check the flags for outbound and ignore the ones for inbound */
+		if (0 == (m_head->m_pkthdr.csum_flags & HV_CSUM_FOR_OUTBOUND)) {
 			goto pre_send;
 		}
 

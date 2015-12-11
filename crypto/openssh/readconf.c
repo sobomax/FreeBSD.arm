@@ -1,5 +1,4 @@
 /* $OpenBSD: readconf.c,v 1.218 2014/02/23 20:11:36 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/readconf.c 263712 2014-03-25 11:05:34Z des $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -14,7 +13,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/readconf.c 263712 2014-03-25 11:05:34Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/readconf.c 291198 2015-11-23 12:48:13Z des $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -155,9 +154,6 @@ typedef enum {
 	oCanonicalizeFallbackLocal, oCanonicalizePermittedCNAMEs,
 	oIgnoredUnknownOption,
 	oHPNDisabled, oHPNBufferSize, oTcpRcvBufPoll, oTcpRcvBuf,
-#ifdef NONE_CIPHER_ENABLED
-	oNoneEnabled, oNoneSwitch,
-#endif
 	oVersionAddendum, oDeprecated, oUnsupported
 } OpCodes;
 
@@ -275,10 +271,6 @@ static struct {
 	{ "hpnbuffersize", oHPNBufferSize },
 	{ "tcprcvbufpoll", oTcpRcvBufPoll },
 	{ "tcprcvbuf", oTcpRcvBuf },
-#ifdef	NONE_CIPHER_ENABLED
-	{ "noneenabled", oNoneEnabled },
-	{ "noneswitch", oNoneSwitch },
-#endif
 	{ "versionaddendum", oVersionAddendum },
 
 	{ NULL, oBadOption }
@@ -1376,31 +1368,6 @@ parse_int:
 		intptr = &options->tcp_rcv_buf;
 		goto parse_int;
 
-#ifdef	NONE_CIPHER_ENABLED
-	case oNoneEnabled:
-		intptr = &options->none_enabled;
-		goto parse_flag;
-
-	/*
-	 * We check to see if the command comes from the command line or not.
-	 * If it does then enable it otherwise fail.  NONE must never be a
-	 * default configuration.
-	 */
-	case oNoneSwitch:
-		if (strcmp(filename,"command-line") == 0) {
-			intptr = &options->none_switch;
-			goto parse_flag;
-		} else {
-			debug("NoneSwitch directive found in %.200s.",
-			    filename);
-			error("NoneSwitch is found in %.200s.\n"
-			    "You may only use this configuration option "
-			    "from the command line", filename);
-			error("Continuing...");
-			return 0;
-		}
-#endif
-
 	case oVersionAddendum:
 		if (s == NULL)
 			fatal("%.200s line %d: Missing argument.", filename,
@@ -1660,10 +1627,6 @@ initialize_options(Options * options)
 	options->hpn_buffer_size = -1;
 	options->tcp_rcv_buf_poll = -1;
 	options->tcp_rcv_buf = -1;
-#ifdef NONE_CIPHER_ENABLED
-	options->none_enabled = -1;
-	options->none_switch = -1;
-#endif
 }
 
 /*
@@ -1884,11 +1847,6 @@ fill_default_options(Options * options)
 		options->tcp_rcv_buf *= 1024;
 	if (options->tcp_rcv_buf_poll == -1)
 		options->tcp_rcv_buf_poll = 1;
-#ifdef	NONE_CIPHER_ENABLED
-	/* options->none_enabled must not be set by default */
-	if (options->none_switch == -1)
-		options->none_switch = 0;
-#endif
 }
 
 /*

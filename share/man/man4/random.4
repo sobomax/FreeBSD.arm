@@ -21,7 +21,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/random.4 286839 2015-08-17 07:36:12Z markm $
+.\" $FreeBSD: head/share/man/man4/random.4 287023 2015-08-22 12:59:05Z markm $
 .\"
 .Dd August 17, 2015
 .Dt RANDOM 4
@@ -32,6 +32,7 @@
 .Sh SYNOPSIS
 .Cd "device random"
 .Cd "options RANDOM_LOADABLE"
+.Cd "options RANDOM_ENABLE_UMA"
 .Sh DESCRIPTION
 The
 .Nm
@@ -177,6 +178,24 @@ must be locked against
 load and unload events,
 and also must be indirect calls
 to allow for removal.
+.Pp
+When
+.Cd "options RANDOM_ENABLE_UMA"
+is used,
+the
+.Pa /dev/random
+device will obtain entropy
+from the zone allocator.
+This is potentially very high rate,
+and if so will be of questionable use.
+If this is the case,
+use of this option
+is not recommended.
+Determining this is not trivial,
+so experimenting and measurement
+using tools such as
+.Xr dtrace 1
+will be required.
 .Sh RANDOMNESS
 The use of randomness in the field of computing
 is a rather subtle issue because randomness means

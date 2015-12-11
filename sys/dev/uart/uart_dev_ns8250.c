@@ -25,9 +25,10 @@
  */
 
 #include "opt_platform.h"
+#include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 283773 2015-05-30 16:30:51Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 291010 2015-11-18 06:24:21Z adrian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,6 +57,16 @@ __FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_ns8250.c 283773 2015-05-30 16:30:
 #include "uart_if.h"
 
 #define	DEFAULT_RCLK	1843200
+
+/*
+ * Set the default baudrate tolerance to 3.0%.
+ *
+ * Some embedded boards have odd reference clocks (eg 25MHz)
+ * and we need to handle higher variances in the target baud rate.
+ */
+#ifndef	UART_DEV_TOLERANCE_PCT
+#define	UART_DEV_TOLERANCE_PCT	30
+#endif	/* UART_DEV_TOLERANCE_PCT */
 
 static int broken_txfifo = 0;
 SYSCTL_INT(_hw, OID_AUTO, broken_txfifo, CTLFLAG_RWTUN,
@@ -123,8 +134,8 @@ ns8250_divisor(int rclk, int baudrate)
 	/* 10 times error in percent: */
 	error = ((actual_baud - baudrate) * 2000 / baudrate + 1) >> 1;
 
-	/* 3.0% maximum error tolerance: */
-	if (error < -30 || error > 30)
+	/* enforce maximum error tolerance: */
+	if (error < -UART_DEV_TOLERANCE_PCT || error > UART_DEV_TOLERANCE_PCT)
 		return (0);
 
 	return (divisor);

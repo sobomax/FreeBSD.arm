@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_exit.c 286698 2015-08-12 20:08:54Z oshogbo $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_exit.c 289026 2015-10-08 11:07:09Z kib $");
 
 #include "opt_compat.h"
 #include "opt_ktrace.h"
@@ -569,7 +569,7 @@ exit1(struct thread *td, int rval, int signo)
 		reason = CLD_DUMPED;
 	else if (WIFSIGNALED(signo))
 		reason = CLD_KILLED;
-	SDT_PROBE(proc, kernel, , exit, reason, 0, 0, 0, 0);
+	SDT_PROBE1(proc, kernel, , exit, reason);
 #endif
 
 	/*
@@ -963,9 +963,7 @@ proc_reap(struct thread *td, struct proc *p, int *status, int options)
 	KASSERT(FIRST_THREAD_IN_PROC(p),
 	    ("proc_reap: no residual thread!"));
 	uma_zfree(proc_zone, p);
-	sx_xlock(&allproc_lock);
-	nprocs--;
-	sx_xunlock(&allproc_lock);
+	atomic_add_int(&nprocs, -1);
 }
 
 static int

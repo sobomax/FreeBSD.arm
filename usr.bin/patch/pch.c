@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: pch.c,v 1.43 2014/11/18 17:03:35 tobias Exp $
- * $FreeBSD: head/usr.bin/patch/pch.c 286795 2015-08-15 00:42:33Z delphij $
+ * $FreeBSD: head/usr.bin/patch/pch.c 289677 2015-10-21 05:37:09Z eadler $
  */
 
 #include <sys/types.h>
@@ -499,7 +499,7 @@ another_hunk(void)
 	LINENUM	fillcnt;			/* #lines of missing ptrn or repl */
 	LINENUM	fillsrc;			/* index of first line to copy */
 	LINENUM	filldst;			/* index of first missing line */
-	bool	ptrn_spaces_eaten;		/* ptrn was slightly misformed */
+	bool	ptrn_spaces_eaten;		/* ptrn was slightly malformed */
 	bool	repl_could_be_missing;		/* no + or ! lines in this hunk */
 	bool	repl_missing;			/* we are now backtracking */
 	off_t	repl_backtrack_position;	/* file pos of first repl line */

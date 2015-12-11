@@ -23,9 +23,9 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/rctl/rctl.8 285555 2015-07-14 19:43:10Z joel $
+.\" $FreeBSD: head/usr.bin/rctl/rctl.8 291447 2015-11-29 12:01:36Z trasz $
 .\"
-.Dd September 11, 2014
+.Dd November 29, 2015
 .Dt RCTL 8
 .Os
 .Sh NAME
@@ -35,22 +35,22 @@
 .Nm
 .Op Fl h
 .Op Fl n
-.Op Ar filter
+.Op Ar filter Ar ...
 .Nm
 .Fl a
-.Op Ar rule
+.Ar rule Ar ...
 .Nm
 .Fl l
 .Op Fl h
 .Op Fl n
-.Op Ar filter
+.Ar filter Ar ...
 .Nm
 .Fl r
-.Op Ar filter
+.Ar filter Ar ...
 .Nm
 .Fl u
 .Op Fl h
-.Op Ar filter
+.Ar filter Ar ...
 .Pp
 .Nm
 requires the kernel to be compiled with:
@@ -193,7 +193,7 @@ resource would be
 .It Sy openfiles Ta "file descriptor table size"
 .It Sy vmemoryuse Ta "address space limit, in bytes"
 .It Sy pseudoterminals Ta "number of PTYs"
-.It Sy swapuse Ta "swap usage, in bytes"
+.It Sy swapuse Ta "swap space that may be reserved or used, in bytes"
 .It Sy nthr Ta "number of threads"
 .It Sy msgqqueued Ta "number of queued SysV messages"
 .It Sy msgqsize Ta "SysV message queue size, in bytes"

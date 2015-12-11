@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/netstart 279093 2015-02-21 06:05:51Z markj $
+# $FreeBSD: head/etc/netstart 290006 2015-10-26 15:14:16Z des $
 #	From: @(#)netstart	5.9 (Berkeley) 3/30/91
 #
 
@@ -34,9 +34,6 @@
 # the network by hand, this script will do it for you).
 #
 
-. /etc/rc.subr
-
-load_rc_config 'XXX'
 _start=quietstart
 
 /etc/rc.d/devd ${_start}

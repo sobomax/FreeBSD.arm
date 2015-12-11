@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/identcpu.c 286228 2015-08-03 12:14:42Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/identcpu.c 291266 2015-11-24 19:55:11Z kib $");
 
 #include "opt_cpu.h"
 
@@ -1882,6 +1882,18 @@ print_INTEL_TLB(u_int data)
 		break;
 	case 0x68:
 		printf("1st-level data cache: 32 KB, 4 way set associative, sectored cache, 64 byte line size\n");
+		break;
+	case 0x6a:
+		printf("uTLB: 4KByte pages, 8-way set associative, 64 entries\n");
+		break;
+	case 0x6b:
+		printf("DTLB: 4KByte pages, 8-way set associative, 256 entries\n");
+		break;
+	case 0x6c:
+		printf("DTLB: 2M/4M pages, 8-way set associative, 128 entries\n");
+		break;
+	case 0x6d:
+		printf("DTLB: 1 GByte pages, fully associative, 16 entries\n");
 		break;
 	case 0x70:
 		printf("Trace cache: 12K-uops, 8-way set associative\n");

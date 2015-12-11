@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/w/w.c 285550 2015-07-14 18:53:24Z markm $");
+__FBSDID("$FreeBSD: head/usr.bin/w/w.c 287590 2015-09-09 05:17:04Z delphij $");
 
 #ifndef lint
 static const char copyright[] =
@@ -135,7 +135,7 @@ main(int argc, char *argv[])
 	struct kinfo_proc *dkp;
 	struct stat *stp;
 	time_t touched;
-	int ch, i, nentries, nusers, wcmd, longidle, longattime, dropgid;
+	int ch, i, nentries, nusers, wcmd, longidle, longattime;
 	const char *memf, *nlistf, *p, *save_p;
 	char *x_suffix;
 	char buf[MAXHOSTNAMELEN], errbuf[_POSIX2_LINE_MAX];
@@ -159,7 +159,6 @@ main(int argc, char *argv[])
 		p = "dhiflM:N:nsuw";
 	}
 
-	dropgid = 0;
 	memf = _PATH_DEVNULL;
 	nlistf = NULL;
 	while ((ch = getopt(argc, argv, p)) != -1)
@@ -176,11 +175,9 @@ main(int argc, char *argv[])
 		case 'M':
 			header = 0;
 			memf = optarg;
-			dropgid = 1;
 			break;
 		case 'N':
 			nlistf = optarg;
-			dropgid = 1;
 			break;
 		case 'n':
 			nflag = 1;
@@ -199,13 +196,6 @@ main(int argc, char *argv[])
 		res_init();
 	_res.retrans = 2;	/* resolver timeout to 2 seconds per try */
 	_res.retry = 1;		/* only try once.. */
-
-	/*
-	 * Discard setgid privileges if not the running kernel so that bad
-	 * guys can't print interesting stuff from kernel memory.
-	 */
-	if (dropgid)
-		setgid(getgid());
 
 	if ((kd = kvm_openfiles(nlistf, memf, NULL, O_RDONLY, errbuf)) == NULL)
 		errx(1, "%s", errbuf);

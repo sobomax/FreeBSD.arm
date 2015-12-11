@@ -7,7 +7,7 @@
 # override the default options (adding devices as needed) and adding
 # hints as needed (for example, the GPIO and LAN PHY.)
 #
-# $FreeBSD: head/sys/mips/conf/AR933X_BASE 284959 2015-06-30 17:00:45Z markm $
+# $FreeBSD: head/sys/mips/conf/AR933X_BASE 289533 2015-10-18 18:40:11Z sbruno $
 #
 
 machine         mips mips
@@ -39,6 +39,9 @@ options 	SCSI_NO_OP_STRINGS
 
 # .. And no sysctl strings
 options 	NO_SYSCTL_DESCR
+
+# For small memory footprints
+options		VM_KMEM_SIZE_SCALE=1
 
 # Limit IO size
 options 	NBUF=128

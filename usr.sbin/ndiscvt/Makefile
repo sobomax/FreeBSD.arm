@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ndiscvt/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/ndiscvt/Makefile 290084 2015-10-27 23:35:08Z bdrewery $
 
 .PATH:	${.CURDIR}/../../sys/compat/ndis
 
@@ -22,8 +22,7 @@ CFLAGS+=-I. -I${.CURDIR} -I${.CURDIR}/../../sys
 CLEANFILES= y.output
 
 FILES= windrv_stub.c
-FILESNAME= windrv_stub.c
-FILESDIR= /usr/share/misc
+FILESDIR= ${SHAREDIR}/misc
 
 SCRIPTS= ndisgen.sh
 

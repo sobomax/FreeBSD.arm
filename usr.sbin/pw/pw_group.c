@@ -26,7 +26,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_group.c 286259 2015-08-03 22:07:50Z ed $";
+  "$FreeBSD: head/usr.sbin/pw/pw_group.c 289600 2015-10-19 18:29:32Z ngie $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -259,7 +259,7 @@ pw_group_next(int argc, char **argv, char *arg1 __unused)
 	struct userconf *cnf;
 	const char *cfg = NULL;
 	int ch;
-	bool quiet;
+	bool quiet = false;
 
 	while ((ch = getopt(argc, argv, "Cq")) != -1) {
 		switch (ch) {

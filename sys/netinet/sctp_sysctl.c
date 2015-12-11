@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_sysctl.c 285237 2015-07-07 06:34:28Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_sysctl.c 287282 2015-08-29 09:14:32Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp.h>
@@ -453,7 +453,7 @@ sctp_sysctl_handle_assoclist(SYSCTL_HANDLER_ARGS)
 			if (stcb->asoc.primary_destination != NULL)
 				xstcb.primary_addr = stcb->asoc.primary_destination->ro._l_addr;
 			xstcb.heartbeat_interval = stcb->asoc.heart_beat_delay;
-			xstcb.state = SCTP_GET_STATE(&stcb->asoc);	/* FIXME */
+			xstcb.state = (uint32_t) sctp_map_assoc_state(stcb->asoc.state);
 			/* 7.0 does not support these */
 			xstcb.assoc_id = sctp_get_associd(stcb);
 			xstcb.peers_rwnd = stcb->asoc.peers_rwnd;

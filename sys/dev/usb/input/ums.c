@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf
@@ -1052,3 +1052,4 @@ static driver_t ums_driver = {
 DRIVER_MODULE(ums, uhub, ums_driver, ums_devclass, NULL, 0);
 MODULE_DEPEND(ums, usb, 1, 1, 1);
 MODULE_VERSION(ums, 1);
+USB_PNP_HOST_INFO(ums_devs);

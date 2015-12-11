@@ -1,8 +1,7 @@
-# $FreeBSD: head/tools/regression/geom/MdLoad/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/geom/MdLoad/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	MdLoad
-DPADD=	${LIBSBUF} ${LIBBSDXML}
-LDADD=	-lsbuf -lbsdxml
+LIBADD=	sbuf bsdxml
 
 MAN=
 

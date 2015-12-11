@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/login.c 286462 2015-08-08 19:04:37Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/login.c 287766 2015-09-13 20:58:22Z mav $");
 
 #include <assert.h>
 #include <stdbool.h>
@@ -602,6 +602,11 @@ login_negotiate_key(struct pdu *request, const char *name,
 		keys_add(response_keys, name, "No");
 	} else if (strcmp(name, "IFMarker") == 0) {
 		keys_add(response_keys, name, "No");
+	} else if (strcmp(name, "iSCSIProtocolLevel") == 0) {
+		tmp = strtoul(value, NULL, 10);
+		if (tmp > 2)
+			tmp = 2;
+		keys_add_int(response_keys, name, tmp);
 	} else {
 		log_debugx("unknown key \"%s\"; responding "
 		    "with NotUnderstood", name);

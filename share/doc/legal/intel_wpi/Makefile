@@ -1,7 +1,8 @@
-# $FreeBSD: head/share/doc/legal/intel_wpi/Makefile 284321 2015-06-12 14:30:27Z sjg $
+# $FreeBSD: head/share/doc/legal/intel_wpi/Makefile 289399 2015-10-16 00:38:05Z bdrewery $
 
 FILES=          ${.CURDIR}/../../../../sys/contrib/dev/wpi/LICENSE
-FILESDIR=       ${SHAREDIR}/doc/legal/intel_wpi
+FILESDIR=       ${SHAREDIR}/doc/legal
+FILESNAME=	intel_wpi.LICENSE
 
 .include <bsd.prog.mk>
 

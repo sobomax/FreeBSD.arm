@@ -31,17 +31,14 @@
 static char sccsid[] = "@(#)assert.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/assert.c 165903 2007-01-09 00:28:16Z imp $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/assert.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 void
-__assert(func, file, line, failedexpr)
-	const char *func, *file;
-	int line;
-	const char *failedexpr;
+__assert(const char *func, const char *file, int line, const char *failedexpr)
 {
 	if (func == NULL)
 		(void)fprintf(stderr,

@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_alloc.c 285390 2015-07-11 16:19:11Z mjg $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_alloc.c 289405 2015-10-16 03:06:02Z imp $");
 
 #include "opt_quota.h"
 
@@ -481,9 +481,19 @@ ffs_reallocblks(ap)
 		struct cluster_save *a_buflist;
 	} */ *ap;
 {
+	struct ufsmount *ump;
 
-	if (doreallocblks == 0)
+	/*
+	 * If the underlying device can do deletes, then skip reallocating
+	 * the blocks of this file into contiguous sequences. Devices that
+	 * benefit from BIO_DELETE also benefit from not moving the data.
+	 * These devices are flash and therefore work less well with this
+	 * optimization. Also skip if reallocblks has been disabled globally.
+	 */
+	ump = VTOI(ap->a_vp)->i_ump;
+	if (ump->um_candelete || doreallocblks == 0)
 		return (ENOSPC);
+
 	/*
 	 * We can't wait in softdep prealloc as it may fsync and recurse
 	 * here.  Instead we simply fail to reallocate blocks if this
@@ -492,7 +502,7 @@ ffs_reallocblks(ap)
 	if (DOINGSOFTDEP(ap->a_vp))
 		if (softdep_prealloc(ap->a_vp, MNT_NOWAIT) != 0)
 			return (ENOSPC);
-	if (VTOI(ap->a_vp)->i_ump->um_fstype == UFS1)
+	if (ump->um_fstype == UFS1)
 		return (ffs_reallocblks_ufs1(ap));
 	return (ffs_reallocblks_ufs2(ap));
 }

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/malta/gt_pci.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/mips/malta/gt_pci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -415,7 +415,7 @@ gt_pci_attach(device_t dev)
 	}
 
 	/* Initialize memory and i/o rmans. */
-	device_add_child(dev, "pci", busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

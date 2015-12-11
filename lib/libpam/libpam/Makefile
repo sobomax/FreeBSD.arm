@@ -33,7 +33,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libpam/libpam/Makefile 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/lib/libpam/libpam/Makefile 288070 2015-09-21 17:26:35Z des $
 
 OPENPAM=	${.CURDIR}/../../../contrib/openpam
 .PATH: ${OPENPAM}/include ${OPENPAM}/lib/libpam ${OPENPAM}/doc/man
@@ -155,7 +155,6 @@ MLINKS=	pam.conf.5 pam.d.5
 CSTD?= c99
 CFLAGS+= -I${.CURDIR} -I${OPENPAM}/include
 CFLAGS+= -DLIB_MAJ=${SHLIB_MAJOR}
-CFLAGS+= -DOPENPAM_MODULES_DIRECTORY='"${PAM_MOD_DIR:C/\/*$//}/"'
 CFLAGS+= -DHAVE_DLFUNC=1
 CFLAGS+= -DHAVE_FDLOPEN=1
 CFLAGS+= -DHAVE_FPURGE=1

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/uefisign/magic.h 279315 2015-02-26 09:15:24Z trasz $
+ * $FreeBSD: head/usr.sbin/uefisign/magic.h 289677 2015-10-21 05:37:09Z eadler $
  *
  */
 
@@ -50,7 +50,7 @@ static const char *magic_fmt =
 "a = FORMAT:HEX,BITSTRING:00\n"
 /*
  * Well, there should be some other struct here, "SPCLink", but it doesn't
- * appear to be neccessary for UEFI, and I have no idea how to synthesize it,
+ * appear to be necessary for UEFI, and I have no idea how to synthesize it,
  * as it uses the CHOICE type.
  */
 "\n"

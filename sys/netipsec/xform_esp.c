@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform_esp.c 286292 2015-08-04 17:47:11Z jmg $	*/
+/*	$FreeBSD: head/sys/netipsec/xform_esp.c 290924 2015-11-16 07:10:42Z ae $	*/
 /*	$OpenBSD: ip_esp.c,v 1.69 2001/06/26 06:18:59 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -200,16 +200,10 @@ esp_init(struct secasvar *sav, struct xformsw *xsp)
 		return EINVAL;
 	}
 
-	/*
-	 * NB: The null xform needs a non-zero blocksize to keep the
-	 *      crypto code happy but if we use it to set ivlen then
-	 *      the ESP header will be processed incorrectly.  The
-	 *      compromise is to force it to zero here.
-	 */
 	if (SAV_ISCTRORGCM(sav))
 		sav->ivlen = 8;	/* RFC4106 3.1 and RFC3686 3.1 */
 	else
-		sav->ivlen = (txform == &enc_xform_null ? 0 : txform->ivsize);
+		sav->ivlen = txform->ivsize;
 
 	/*
 	 * Setup AH-related state.
@@ -874,6 +868,7 @@ esp_output(struct mbuf *m, struct ipsecrequest *isr, struct mbuf **mp,
 	}
 
 	/* Callback parameters */
+	key_addref(isr->sp);
 	tc->tc_isr = isr;
 	KEY_ADDREFSA(sav);
 	tc->tc_sav = sav;

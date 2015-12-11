@@ -29,8 +29,10 @@
  * SUCH DAMAGE.
  */
 
+#include "opt_platform.h"
+
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_common.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_common.c 290465 2015-11-06 20:12:31Z cognet $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -70,7 +72,7 @@ fdt_aintc_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
 #endif
 
 fdt_pic_decode_t fdt_pic_table[] = {
-#ifdef SOC_OMAP4
+#if defined(SOC_OMAP4) && !defined(ARM_INTRNG)
 	&gic_decode_fdt,
 #endif
 #ifdef SOC_TI_AM335X

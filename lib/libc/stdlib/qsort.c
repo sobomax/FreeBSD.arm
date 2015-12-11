@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)qsort.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/qsort.c 279666 2015-03-05 17:17:11Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/qsort.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include <stdlib.h>
 
@@ -64,9 +64,7 @@ static inline void	 swapfunc(char *, char *, int, int, int);
 	es % sizeof(TYPE) ? 2 : es == sizeof(TYPE) ? 0 : 1;
 
 static inline void
-swapfunc(a, b, n, swaptype_long, swaptype_int)
-	char *a, *b;
-	int n, swaptype_long, swaptype_int;
+swapfunc( char *a, char *b, int n, int swaptype_long, int swaptype_int)
 {
 	if (swaptype_long <= 1)
 		swapcode(long, a, b, n)

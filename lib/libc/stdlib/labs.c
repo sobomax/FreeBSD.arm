@@ -31,13 +31,12 @@
 static char sccsid[] = "@(#)labs.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/labs.c 251672 2013-06-13 00:19:30Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/labs.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include <stdlib.h>
 
 long
-labs(j)
-	long j;
+labs(long j)
 {
 	return(j < 0 ? -j : j);
 }

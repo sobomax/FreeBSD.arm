@@ -27,7 +27,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mpsvar.h 286568 2015-08-10 09:02:34Z scottl $
+ * $FreeBSD: head/sys/dev/mps/mpsvar.h 289426 2015-10-16 17:56:43Z scottl $
  */
 
 #ifndef _MPSVAR_H
@@ -283,9 +283,7 @@ struct mps_softc {
 	int				chain_free_lowwater;
 	u_int				enable_ssu;
 	int				spinup_wait_time;
-#if __FreeBSD_version >= 900030
 	uint64_t			chain_alloc_fail;
-#endif
 	struct sysctl_ctx_list		sysctl_ctx;
 	struct sysctl_oid		*sysctl_tree;
 	char                            fw_version[16];
@@ -483,11 +481,8 @@ mps_alloc_chain(struct mps_softc *sc)
 		sc->chain_free--;
 		if (sc->chain_free < sc->chain_free_lowwater)
 			sc->chain_free_lowwater = sc->chain_free;
-	}
-#if __FreeBSD_version >= 900030
-	else
+	} else
 		sc->chain_alloc_fail++;
-#endif
 	return (chain);
 }
 

@@ -62,7 +62,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/idt/idtpci.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/mips/idt/idtpci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -275,7 +275,7 @@ idtpci_attach(device_t dev)
 	        PCI_IRQ_END) != 0)
 		panic("idtpci_attach: failed to set up IRQ rman");
 
-	device_add_child(dev, "pci", busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/machdep.c 286667 2015-08-12 15:26:32Z marcel $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/machdep.c 291948 2015-12-07 17:24:55Z kib $");
 
 #include "opt_atpic.h"
 #include "opt_compat.h"
@@ -798,12 +798,7 @@ struct soft_segment_descriptor gdt_segs[] = {
 };
 
 void
-setidt(idx, func, typ, dpl, ist)
-	int idx;
-	inthand_t *func;
-	int typ;
-	int dpl;
-	int ist;
+setidt(int idx, inthand_t *func, int typ, int dpl, int ist)
 {
 	struct gate_descriptor *ip;
 
@@ -1621,8 +1616,8 @@ hammer_time(u_int64_t modulep, u_int64_t physfree)
 	 * Use vt(4) by default for UEFI boot (during the sc(4)/vt(4)
 	 * transition).
 	 */
-	if (kmdp != NULL && preload_search_info(kmdp,
-	    MODINFO_METADATA | MODINFOMD_EFI_MAP) != NULL)
+	if (preload_search_info(kmdp, MODINFO_METADATA | MODINFOMD_EFI_MAP)
+	    != NULL)
 		vty_set_preferred(VTY_VT);
 
 	identify_cpu();		/* Final stage of CPU initialization */

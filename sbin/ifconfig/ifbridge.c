@@ -35,7 +35,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifbridge.c 173320 2007-11-04 08:32:27Z thompsa $";
+  "$FreeBSD: head/sbin/ifconfig/ifbridge.c 288305 2015-09-27 07:51:18Z ngie $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -749,11 +749,9 @@ static struct afswtch af_bridge = {
 static __constructor void
 bridge_ctor(void)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	int i;
 
-	for (i = 0; i < N(bridge_cmds);  i++)
+	for (i = 0; i < nitems(bridge_cmds);  i++)
 		cmd_register(&bridge_cmds[i]);
 	af_register(&af_bridge);
-#undef N
 }

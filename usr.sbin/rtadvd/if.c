@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/if.c 281143 2015-04-06 09:42:23Z glebius $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/if.c 290173 2015-10-30 00:33:03Z delphij $	*/
 /*	$KAME: if.c,v 1.17 2001/01/21 15:27:30 itojun Exp $	*/
 
 /*
@@ -358,8 +358,7 @@ update_persist_ifinfo(struct ifilist_head_t *ifi_head, const char *ifname)
 
 		ELM_MALLOC(ifi, exit(1));
 		ifi->ifi_ifindex = 0;
-		strncpy(ifi->ifi_ifname, ifname, sizeof(ifi->ifi_ifname)-1);
-		ifi->ifi_ifname[sizeof(ifi->ifi_ifname)-1] = '\0';
+		strlcpy(ifi->ifi_ifname, ifname, sizeof(ifi->ifi_ifname));
 		ifi->ifi_rainfo = NULL;
 		ifi->ifi_state = IFI_STATE_UNCONFIGURED;
 		TAILQ_INSERT_TAIL(ifi_head, ifi, ifi_next);

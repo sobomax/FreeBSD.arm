@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/tools/regression/priv/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/tools/regression/priv/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 #
 
 .include <src.opts.mk>
@@ -48,8 +48,7 @@ SRCS=	main.c				\
 MAN=
 WARNS?=	3
 
-DPADD+= ${LIBIPSEC}
-LDADD+= -lipsec
+LIBADD+=	ipsec
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+= -DINET6

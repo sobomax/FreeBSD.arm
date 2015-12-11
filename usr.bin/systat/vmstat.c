@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/systat/vmstat.c 248647 2013-03-23 13:11:54Z mav $");
+__FBSDID("$FreeBSD: head/usr.bin/systat/vmstat.c 287633 2015-09-10 22:07:52Z delphij $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)vmstat.c	8.2 (Berkeley) 1/12/94";
@@ -205,12 +205,9 @@ initkre(void)
 		return(0);
 	}
 
-	cur.dinfo = (struct devinfo *)malloc(sizeof(struct devinfo));
-	last.dinfo = (struct devinfo *)malloc(sizeof(struct devinfo));
-	run.dinfo = (struct devinfo *)malloc(sizeof(struct devinfo));
-	bzero(cur.dinfo, sizeof(struct devinfo));
-	bzero(last.dinfo, sizeof(struct devinfo));
-	bzero(run.dinfo, sizeof(struct devinfo));
+	cur.dinfo = calloc(1, sizeof(struct devinfo));
+	last.dinfo = calloc(1, sizeof(struct devinfo));
+	run.dinfo = calloc(1, sizeof(struct devinfo));
 
 	if (dsinit(MAXDRIVES, &cur, &last, &run) != 1)
 		return(0);

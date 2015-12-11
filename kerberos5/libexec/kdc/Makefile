@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kdc/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/libexec/kdc/Makefile 287216 2015-08-27 17:16:18Z ume $
 
 PROG=	kdc
 MAN=	kdc.8
@@ -11,6 +11,7 @@ SRCS=	config.c \
 CFLAGS+=-I${KRB5DIR}/lib/krb5 -I${KRB5DIR}/lib/asn1 -I${KRB5DIR}/lib/roken \
 	-I${KRB5DIR}/kdc ${LDAPCFLAGS}
 LIBADD=	kdc hdb krb5 roken crypt vers
+LDFLAGS=${LDAPLDFLAGS}
 
 .include <bsd.prog.mk>
 

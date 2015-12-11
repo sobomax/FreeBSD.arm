@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/contrib/rdma/krping/krping.c 278886 2015-02-17 08:40:27Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/contrib/rdma/krping/krping.c 289749 2015-10-22 09:50:45Z hselasky $");
 
 #include <linux/module.h>
 #include <linux/moduleparam.h>
@@ -61,7 +61,7 @@ MODULE_AUTHOR("Steve Wise");
 MODULE_DESCRIPTION("RDMA ping client/server");
 MODULE_LICENSE("Dual BSD/GPL");
 MODULE_VERSION(krping, 1);
-MODULE_DEPEND(krping, linuxapi, 1, 1, 1);
+MODULE_DEPEND(krping, linuxkpi, 1, 1, 1);
 
 static __inline uint64_t
 get_cycles(void)

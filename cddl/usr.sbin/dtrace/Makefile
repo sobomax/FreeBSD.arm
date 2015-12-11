@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/dtrace/Makefile 286174 2015-08-02 00:37:33Z markj $
+# $FreeBSD: head/cddl/usr.sbin/dtrace/Makefile 291628 2015-12-02 00:49:49Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -22,7 +22,7 @@ CFLAGS+=	-I${.CURDIR}/../../../sys/cddl/compat/opensolaris \
 #CFLAGS+=	-DNEED_ERRLOC
 #YFLAGS+=	-d
 
-LIBADD=	dtrace
+LIBADD=	dtrace ctf elf proc
 
 .if ${MK_DTRACE_TESTS} != "no"
 SUBDIR+=	tests

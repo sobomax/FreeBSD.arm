@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 288943 2015-10-06 17:53:29Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	clangstaticanalyzercheckers
 
@@ -21,7 +21,6 @@ SRCS=	AllocationDiagnostics.cpp \
 	CheckObjCInstMethSignature.cpp \
 	CheckSecuritySyntaxOnly.cpp \
 	CheckSizeofPointer.cpp \
-	CheckerDocumentation.cpp \
 	ChrootChecker.cpp \
 	ClangCheckers.cpp \
 	DeadStoresChecker.cpp \
@@ -72,6 +71,10 @@ SRCS=	AllocationDiagnostics.cpp \
 	UnreachableCodeChecker.cpp \
 	VLASizeChecker.cpp \
 	VirtualCallChecker.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	CheckerDocumentation.cpp
+.endif
 
 TGHDRS=	AttrList \
 	AttrVisitor \

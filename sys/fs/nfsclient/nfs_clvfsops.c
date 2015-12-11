@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvfsops.c 285113 2015-07-03 22:11:07Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvfsops.c 290970 2015-11-17 01:44:26Z rmacklem $");
 
 
 #include "opt_bootp.h"
@@ -216,10 +216,12 @@ newnfs_iosize(struct nfsmount *nmp)
 	 * Calculate the size used for io buffers.  Use the larger
 	 * of the two sizes to minimise nfs requests but make sure
 	 * that it is at least one VM page to avoid wasting buffer
-	 * space.
+	 * space.  It must also be at least NFS_DIRBLKSIZ, since
+	 * that is the buffer size used for directories.
 	 */
 	iosize = imax(nmp->nm_rsize, nmp->nm_wsize);
 	iosize = imax(iosize, PAGE_SIZE);
+	iosize = imax(iosize, NFS_DIRBLKSIZ);
 	nmp->nm_mountp->mnt_stat.f_iosize = iosize;
 	return (iosize);
 }

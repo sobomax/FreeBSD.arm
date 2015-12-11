@@ -29,7 +29,7 @@
  *
  * Ackowledgement to Fen Systems Ltd.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 283514 2015-05-25 08:34:55Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 292009 2015-12-09 06:53:43Z arybchik $
  */
 
 #ifndef	_SYS_EFX_TYPES_H
@@ -1584,7 +1584,7 @@ extern int fix_lint;
 
 #define	EFX_OR_BYTE(_byte1, _byte2)					\
 	do {								\
-		(_byte1).eb_u8[0] &= (_byte2).eb_u8[0];			\
+		(_byte1).eb_u8[0] |= (_byte2).eb_u8[0];			\
 	_NOTE(CONSTANTCONDITION) 					\
 	} while (B_FALSE)
 

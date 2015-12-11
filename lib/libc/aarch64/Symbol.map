@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/aarch64/Symbol.map 285352 2015-07-10 08:36:22Z andrew $
+ * $FreeBSD: head/lib/libc/aarch64/Symbol.map 286959 2015-08-20 13:11:52Z andrew $
  */
 
 /*
@@ -17,6 +17,8 @@ FBSD_1.0 {
 	__flt_rounds;
 	fpgetmask;
 	fpsetmask;
+	__infinity;
+	__nan;
 	setjmp;
 	longjmp;
 	sigsetjmp;

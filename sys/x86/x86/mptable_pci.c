@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/mptable_pci.c 261790 2014-02-12 04:30:37Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/mptable_pci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,7 +69,7 @@ mptable_hostb_attach(device_t dev)
 #ifdef NEW_PCIB
 	mptable_pci_host_res_init(dev);
 #endif
-	device_add_child(dev, "pci", pcib_get_bus(dev));
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 280220 2015-03-18 13:59:04Z andrew $");
+__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 289425 2015-10-16 17:50:36Z jkim $");
 
 #include <sys/wait.h>
 
@@ -386,9 +386,20 @@ is_executable(const char *fname, int fd, int *is_shlib, int *type)
 			return (0);
 		}
 		if (hdr.elf.e_type == ET_DYN) {
-			if (hdr.elf.e_ident[EI_OSABI] == ELFOSABI_FREEBSD) {
+			switch (hdr.elf.e_ident[EI_OSABI]) {
+			case ELFOSABI_FREEBSD:
 				*is_shlib = 1;
 				return (1);
+#ifdef __ARM_EABI__
+			case ELFOSABI_NONE:
+				if (hdr.elf.e_machine != EM_ARM)
+					break;
+				if (EF_ARM_EABI_VERSION(hdr.elf.e_flags) <
+				    EF_ARM_EABI_FREEBSD_MIN)
+					break;
+				*is_shlib = 1;
+				return (1);
+#endif
 			}
 			warnx("%s: not a FreeBSD ELF shared object", fname);
 			return (0);

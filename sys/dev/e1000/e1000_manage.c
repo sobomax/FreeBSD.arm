@@ -30,10 +30,9 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_manage.c 286833 2015-08-16 20:13:58Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_manage.c 287112 2015-08-24 16:32:57Z sbruno $*/
 
 #include "e1000_api.h"
-
 /**
  *  e1000_calculate_checksum - Calculate checksum for buffer
  *  @buffer: pointer to EEPROM

@@ -12,7 +12,7 @@
 
     <author><orgname>The &os; Documentation Project</orgname></author>
 
-    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 286572 2015-08-10 10:41:40Z brueffer $</pubdate>
+    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 288378 2015-09-29 17:04:20Z brueffer $</pubdate>
 
     <copyright>
       <year>2000</year>
@@ -1010,6 +1010,8 @@
 
       <para>Marvell 88W8363 IEEE 802.11n wireless network
 	adapters (&man.mwl.4; driver)</para>
+
+      &hwlist.otus;
 
       &hwlist.ral;
 

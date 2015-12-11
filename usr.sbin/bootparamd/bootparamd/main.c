@@ -9,7 +9,7 @@ use and modify. Please send modifications and/or suggestions + bug fixes to
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/bootparamd/bootparamd/main.c 256506 2013-10-15 07:37:30Z kevlo $";
+  "$FreeBSD: head/usr.sbin/bootparamd/bootparamd/main.c 290645 2015-11-10 11:19:36Z ngie $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -36,13 +36,10 @@ in_addr_t route_addr = -1;
 struct sockaddr_in my_addr;
 char *bootpfile = "/etc/bootparams";
 
-extern  void bootparamprog_1();
 static void usage(void);
 
 int
-main(argc, argv)
-int argc;
-char **argv;
+main(int argc, char **argv)
 {
 	SVCXPRT *transp;
 	struct hostent *he;
@@ -110,7 +107,7 @@ char **argv;
 }
 
 static void
-usage()
+usage(void)
 {
 	fprintf(stderr,
 		"usage: bootparamd [-d] [-s] [-r router] [-f bootparmsfile]\n");

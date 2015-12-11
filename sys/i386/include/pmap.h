@@ -38,7 +38,7 @@
  *
  *	from: hp300: @(#)pmap.h	7.2 (Berkeley) 12/16/90
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/i386/include/pmap.h 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/include/pmap.h 291688 2015-12-03 11:14:14Z kib $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -393,6 +393,8 @@ void	pmap_invalidate_cache(void);
 void	pmap_invalidate_cache_pages(vm_page_t *pages, int count);
 void	pmap_invalidate_cache_range(vm_offset_t sva, vm_offset_t eva,
 	    boolean_t force);
+
+void	invltlb_glob(void);
 
 #endif /* _KERNEL */
 

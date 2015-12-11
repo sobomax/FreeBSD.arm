@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/lib/libc/locale/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/locale/Makefile.inc 291296 2015-11-25 09:12:30Z ngie $
 
 # locale sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/locale ${LIBC_SRCTOP}/locale
@@ -78,6 +78,7 @@ MLINKS+=iswalnum_l.3 iswalpha_l.3 iswalnum_l.3 iswcntrl_l.3 \
 	iswalnum_l.3 iswspecial_l.3 iswalnum_l.3 nextwctype_l.3 \
 	iswalnum_l.3 towctrans_l.3 iswalnum_l.3 wctrans_l.3
 MLINKS+=isxdigit.3 ishexnumber.3
+MLINKS+=localeconv.3 localeconv_l.3
 MLINKS+=mbrtowc.3 mbrtoc16.3 mbrtowc.3 mbrtoc32.3
 MLINKS+=mbsrtowcs.3 mbsnrtowcs.3
 MLINKS+=wcrtomb.3 c16rtomb.3 wcrtomb.3 c32rtomb.3

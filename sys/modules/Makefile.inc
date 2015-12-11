@@ -1,6 +1,7 @@
-# $FreeBSD: head/sys/modules/Makefile.inc 106497 2002-11-06 13:47:00Z nyan $
+# $FreeBSD: head/sys/modules/Makefile.inc 290665 2015-11-10 17:15:36Z bdrewery $
 
 .if ${MACHINE} == "pc98"
 CFLAGS+= -DPC98
 .endif
 
+SUBDIR_PARALLEL=	yes

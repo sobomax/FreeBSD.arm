@@ -1,5 +1,5 @@
 /*	$NetBSD: ifconfig.c,v 1.34 1997/04/21 01:17:58 lukem Exp $	*/
-/* $FreeBSD: head/sbin/ifconfig/ifmedia.c 281236 2015-04-07 21:31:17Z erj $ */
+/* $FreeBSD: head/sbin/ifconfig/ifmedia.c 288305 2015-09-27 07:51:18Z ngie $ */
 
 /*
  * Copyright (c) 1997 Jason R. Thorpe.
@@ -845,11 +845,9 @@ static struct afswtch af_media = {
 static __constructor void
 ifmedia_ctor(void)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	size_t i;
 
-	for (i = 0; i < N(media_cmds);  i++)
+	for (i = 0; i < nitems(media_cmds);  i++)
 		cmd_register(&media_cmds[i]);
 	af_register(&af_media);
-#undef N
 }

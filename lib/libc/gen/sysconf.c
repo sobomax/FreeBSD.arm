@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)sysconf.c	8.2 (Berkeley) 3/20/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 268467 2014-07-09 19:12:18Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -69,8 +69,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 268467 2014-07-09 19:12:18Z kib 
  * less useful than returning up-to-date values, however.
  */
 long
-sysconf(name)
-	int name;
+sysconf(int name)
 {
 	struct rlimit rl;
 	size_t len;

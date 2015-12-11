@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/armreg.h 286675 2015-08-12 17:09:57Z andrew $
+ * $FreeBSD: head/sys/arm64/include/armreg.h 289581 2015-10-19 13:20:23Z andrew $
  */
 
 #ifndef _MACHINE_ARMREG_H_
@@ -231,7 +231,9 @@
 
 #define	TCR_T1SZ_SHIFT	16
 #define	TCR_T0SZ_SHIFT	0
-#define	TCR_TxSZ(x)	(((x) << TCR_T1SZ_SHIFT) | ((x) << TCR_T0SZ_SHIFT))
+#define	TCR_T1SZ(x)	((x) << TCR_T1SZ_SHIFT)
+#define	TCR_T0SZ(x)	((x) << TCR_T0SZ_SHIFT)
+#define	TCR_TxSZ(x)	(TCR_T1SZ(x) | TCR_T0SZ(x))
 
 /* Saved Program Status Register */
 #define	DBG_SPSR_SS	(0x1 << 21)

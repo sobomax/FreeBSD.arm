@@ -2,7 +2,7 @@
 
 #-
 # Copyright (c) June 1996 Wolfram Schneider <wosch@FreeBSD.org>. Berlin.
-# All rights reserved. 
+# All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -28,10 +28,10 @@
 #
 # TEST.sh - check if test(1) or builtin test works
 #
-# $FreeBSD: head/bin/test/tests/legacy_test.sh 259210 2013-12-11 04:09:17Z jmmv $
+# $FreeBSD: head/bin/test/tests/legacy_test.sh 289488 2015-10-18 05:51:44Z ngie $
 
 # force a specified test program, e.g. `env test=/bin/test sh regress.sh'
-: ${test=test}		
+: ${test=test}
 
 t ()
 {
@@ -54,13 +54,13 @@ t ()
 count=0
 echo "1..130"
 
-t 0 'b = b' 
-t 0 'b == b' 
-t 1 'b != b' 
-t 0 '\( b = b \)' 
-t 0 '\( b == b \)' 
-t 1 '! \( b = b \)' 
-t 1 '! \( b == b \)' 
+t 0 'b = b'
+t 0 'b == b'
+t 1 'b != b'
+t 0 '\( b = b \)'
+t 0 '\( b == b \)'
+t 1 '! \( b = b \)'
+t 1 '! \( b == b \)'
 t 1 '! -f /etc/passwd'
 
 t 0 '-h = -h'

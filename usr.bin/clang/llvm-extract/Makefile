@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-extract/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-extract/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -16,13 +16,12 @@ LIBDEPS=llvmirreader \
 	llvmprofiledata \
 	llvmobject \
 	llvmmcparser \
+	llvmmc \
 	llvmbitreader \
 	llvminstcombine \
 	llvmtransformutils \
 	llvmipa \
 	llvmanalysis \
-	llvmtarget \
-	llvmmc \
 	llvmcore \
 	llvmsupport
 

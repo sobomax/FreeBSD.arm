@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcpy_arm.S 275256 2014-11-29 15:56:52Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcpy_arm.S 288373 2015-09-29 16:09:58Z kib $");
 
 .syntax	unified
 
@@ -334,3 +334,5 @@ ENTRY(memcpy)
 	sub	r1, r1, #1
 	b	.Lmemcpy_l4
 END(memcpy)
+
+	.section .note.GNU-stack,"",%progbits

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 285877 2015-07-25 18:26:09Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 291904 2015-12-06 16:17:57Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #ifdef INET6
@@ -946,7 +946,7 @@ sctp6_connect(struct socket *so, struct sockaddr *addr, struct thread *p)
 		return (EALREADY);
 	}
 	/* We are GOOD to go */
-	stcb = sctp_aloc_assoc(inp, addr, &error, 0, vrf_id, p);
+	stcb = sctp_aloc_assoc(inp, addr, &error, 0, vrf_id, inp->sctp_ep.pre_open_stream_count, p);
 	SCTP_ASOC_CREATE_UNLOCK(inp);
 	if (stcb == NULL) {
 		/* Gak! no memory */

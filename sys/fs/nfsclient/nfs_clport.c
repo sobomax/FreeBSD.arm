@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clport.c 286354 2015-08-05 22:27:30Z cem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clport.c 291459 2015-11-29 21:01:02Z mckusick $");
 
 #include "opt_inet6.h"
 
@@ -210,7 +210,7 @@ nfscl_nget(struct mount *mntp, struct vnode *dvp, struct nfsfh *nfhp,
 	}
 	np = uma_zalloc(newnfsnode_zone, M_WAITOK | M_ZERO);
 
-	error = getnewvnode("nfs", mntp, &newnfs_vnodeops, &nvp);
+	error = getnewvnode(nfs_vnode_tag, mntp, &newnfs_vnodeops, &nvp);
 	if (error) {
 		uma_zfree(newnfsnode_zone, np);
 		FREE((caddr_t)nfhp, M_NFSFH);

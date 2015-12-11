@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/disk.c 272557 2014-10-05 06:04:47Z ae $");
+__FBSDID("$FreeBSD: head/sys/boot/common/disk.c 291402 2015-11-27 18:17:53Z zbb $");
 
 #include <sys/disk.h>
 #include <sys/queue.h>
@@ -230,6 +230,42 @@ disk_print(struct disk_devdesc *dev, char *prefix, int verbose)
 	pa.prefix = prefix;
 	pa.verbose = verbose;
 	ptable_iterate(od->table, &pa, ptable_print);
+}
+
+int
+disk_read(struct disk_devdesc *dev, void *buf, off_t offset, u_int blocks)
+{
+	struct open_disk *od;
+	int ret;
+
+	od = (struct open_disk *)dev->d_opendata;
+	ret = dev->d_dev->dv_strategy(dev, F_READ, dev->d_offset + offset,
+	    blocks * od->sectorsize, buf, NULL);
+
+	return (ret);
+}
+
+int
+disk_write(struct disk_devdesc *dev, void *buf, off_t offset, u_int blocks)
+{
+	struct open_disk *od;
+	int ret;
+
+	od = (struct open_disk *)dev->d_opendata;
+	ret = dev->d_dev->dv_strategy(dev, F_WRITE, dev->d_offset + offset,
+	    blocks * od->sectorsize, buf, NULL);
+
+	return (ret);
+}
+
+int
+disk_ioctl(struct disk_devdesc *dev, u_long cmd, void *buf)
+{
+
+	if (dev->d_dev->dv_ioctl)
+		return ((*dev->d_dev->dv_ioctl)(dev->d_opendata, cmd, buf));
+
+	return (ENXIO);
 }
 
 int

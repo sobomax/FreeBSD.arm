@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/crypt_client.c 278039 2015-02-01 23:19:06Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/crypt_client.c 287341 2015-09-01 02:39:07Z rodrigc $");
 
 #include "namespace.h"
 #include <err.h>
@@ -43,10 +43,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/crypt_client.c 278039 2015-02-01 23:19:06Z
 #include "un-namespace.h"
 
 int
-_des_crypt_call(buf, len, dparms)
-	char *buf;
-	int len;
-	struct desparams *dparms;
+_des_crypt_call(char *buf, int len, struct desparams *dparms)
 {
 	CLIENT *clnt;
 	desresp  *result_1;

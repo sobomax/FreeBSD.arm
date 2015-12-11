@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/cam/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/cam/Makefile 291989 2015-12-08 07:39:39Z uqs $
 
 S=	${.CURDIR}/../..
 
@@ -11,6 +11,7 @@ SRCS=	opt_cam.h
 SRCS+=	opt_ada.h
 SRCS+=	opt_scsi.h
 SRCS+=	opt_cd.h
+SRCS+=	opt_kdtrace.h
 SRCS+=	opt_pt.h
 SRCS+=	opt_sa.h
 SRCS+=	opt_ses.h

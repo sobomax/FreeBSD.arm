@@ -1,17 +1,15 @@
-# $FreeBSD: head/lib/msun/tests/Makefile 282146 2015-04-28 14:14:06Z imp $
+# $FreeBSD: head/lib/msun/tests/Makefile 290227 2015-10-31 10:16:44Z andrew $
 
-OBJTOP=		${.OBJDIR:H:H:H}
-SRCTOP=		${.CURDIR:H:H:H}
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libm
-
-TESTSDIR=	${TESTSBASE}/lib/msun
 
 # All architectures on FreeBSD have fenv.h
 CFLAGS+=	-DHAVE_FENV_H
 
 # Not sure why this isn't defined for all architectures, since most
 # have long double.
-.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+.if ${MACHINE_CPUARCH} == "aarch64" || \
+    ${MACHINE_CPUARCH} == "amd64" || \
+    ${MACHINE_CPUARCH} == "i386"
 CFLAGS+=	-D__HAVE_LONG_DOUBLE
 .endif
 

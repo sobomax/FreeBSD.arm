@@ -1,5 +1,5 @@
 /*	$NetBSD: pcmciavar.h,v 1.12 2000/02/08 12:51:31 enami Exp $	*/
-/* $FreeBSD: head/sys/dev/pccard/pccardvar.h 275434 2014-12-03 00:47:05Z imp $ */
+/* $FreeBSD: head/sys/dev/pccard/pccardvar.h 292079 2015-12-11 05:27:56Z imp $ */
 
 /*-
  * Copyright (c) 1997 Marc Horowitz.  All rights reserved.
@@ -84,6 +84,16 @@ struct pccard_product {
 	uint32_t	pp_product;
 	const char	*pp_cis[4];
 };
+
+/**
+ * Note: There's no cis3 or cis4 reported for NOMATCH / pnpinfo events for pccard
+ * It's unclear if we actually need that for automatic loading or not. These stirngs
+ * are informative, according to the standard, but I have a dim memory of using these
+ * strings to match things, though I can't find the example right now.
+ */
+#define PCCARD_PNP_DESCR "D:human;V32:manufacturer;V32:product;Z:cisvendor;Z:cisproduct;"
+#define PCCARD_PNP_INFO(t) \
+	MODULE_PNP_INFO(PCCARD_PNP_DESCR, pccard, t, t, sizeof(t[0]), sizeof(t) / sizeof(t[0])); \
 
 typedef int (*pccard_product_match_fn) (device_t dev,
     const struct pccard_product *ent, int vpfmatch);

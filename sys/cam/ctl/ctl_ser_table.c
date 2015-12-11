@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ser_table.c#1 $
- * $FreeBSD: head/sys/cam/ctl/ctl_ser_table.c 286345 2015-08-05 21:58:32Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_ser_table.c 288224 2015-09-25 18:49:25Z mav $
  */
 
 /*
@@ -61,7 +61,7 @@
 #define	xO	CTL_SER_EXTENTOPT	/* Optional extent check */
 #define	xS	CTL_SER_EXTENTSEQ	/* Sequential extent check */
 
-static ctl_serialize_action
+const static ctl_serialize_action
 ctl_serialize_table[CTL_SERIDX_COUNT][CTL_SERIDX_COUNT] = {
 /**>IDX_ :: 2nd:TUR RD  WRT UNM SYN MDSN MDSL RQSN INQ RDCP RES LSNS FMT STR*/
 /*TUR     */{   pS, pS, pS, pS, pS, bK,  bK,  bK,  pS, pS,  bK, pS,  bK, bK},

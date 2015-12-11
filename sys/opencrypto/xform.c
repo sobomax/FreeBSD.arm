@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/opencrypto/xform.c 286292 2015-08-04 17:47:11Z jmg $");
+__FBSDID("$FreeBSD: head/sys/opencrypto/xform.c 290924 2015-11-16 07:10:42Z ae $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -154,7 +154,7 @@ MALLOC_DEFINE(M_XDATA, "xform", "xform data buffers");
 struct enc_xform enc_xform_null = {
 	CRYPTO_NULL_CBC, "NULL",
 	/* NB: blocksize of 4 is to generate a properly aligned ESP header */
-	NULL_BLOCK_LEN, NULL_BLOCK_LEN, NULL_MIN_KEY, NULL_MAX_KEY, 
+	NULL_BLOCK_LEN, 0, NULL_MIN_KEY, NULL_MAX_KEY, 
 	null_encrypt,
 	null_decrypt,
 	null_setkey,

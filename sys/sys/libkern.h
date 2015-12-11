@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)libkern.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/sys/libkern.h 280279 2015-03-20 10:27:06Z jhb $
+ * $FreeBSD: head/sys/sys/libkern.h 289765 2015-10-22 20:28:37Z cem $
  */
 
 #ifndef _SYS_LIBKERN_H_
@@ -88,6 +88,9 @@ int	 ffs(int);
 #endif
 #ifndef	HAVE_INLINE_FFSL
 int	 ffsl(long);
+#endif
+#ifndef	HAVE_INLINE_FFSLL
+int	 ffsll(long long);
 #endif
 #ifndef	HAVE_INLINE_FLS
 int	 fls(int);

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/elf_utils.c 217154 2011-01-08 17:13:43Z kib $
+ * $FreeBSD: head/lib/libc/gen/elf_utils.c 288028 2015-09-20 20:21:49Z rodrigc $
  */
 
 #include <sys/types.h>
@@ -32,6 +32,9 @@
 #include <sys/sysctl.h>
 #include <link.h>
 #include <stddef.h>
+
+int __elf_phdr_match_addr(struct dl_phdr_info *, void *);
+void __pthread_map_stacks_exec(void);
 
 int
 __elf_phdr_match_addr(struct dl_phdr_info *phdr_info, void *addr)

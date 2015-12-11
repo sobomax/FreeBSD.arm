@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/pl310.c 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/pl310.c 290974 2015-11-17 11:26:35Z andrew $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -90,7 +90,7 @@ static struct ofw_compat_data compat_data[] = {
 	{NULL,			false}
 };
 
-void
+static void
 pl310_print_config(struct pl310_softc *sc)
 {
 	uint32_t aux, prefetch;

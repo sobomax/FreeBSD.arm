@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_reass.c 286537 2015-08-09 19:07:24Z kp $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_reass.c 288301 2015-09-27 05:29:34Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -327,7 +327,6 @@ present:
 		tp->t_segqlen--;
 		q = nq;
 	} while (q && q->tqe_th->th_seq == tp->rcv_nxt);
-	ND6_HINT(tp);
 	sorwakeup_locked(so);
 	return (flags);
 }

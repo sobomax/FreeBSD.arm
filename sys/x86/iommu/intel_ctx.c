@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_ctx.c 284869 2015-06-26 07:01:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_ctx.c 288118 2015-09-22 16:50:59Z bz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,7 +74,6 @@ static void dmar_domain_unload_task(void *arg, int pending);
 static void dmar_unref_domain_locked(struct dmar_unit *dmar,
     struct dmar_domain *domain);
 static void dmar_domain_destroy(struct dmar_domain *domain);
-static void dmar_ctx_dtr(struct dmar_ctx *ctx);
 
 static void
 dmar_ensure_ctx_page(struct dmar_unit *dmar, int bus)

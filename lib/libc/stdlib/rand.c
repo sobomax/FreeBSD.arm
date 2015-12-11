@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)rand.c	8.1 (Berkeley) 6/14/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/rand.c 252698 2013-07-04 12:35:39Z ache $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/rand.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -111,14 +111,13 @@ static u_long next =
 #endif
 
 int
-rand()
+rand(void)
 {
 	return (do_rand(&next));
 }
 
 void
-srand(seed)
-u_int seed;
+srand(u_int seed)
 {
 	next = seed;
 #ifndef USE_WEAK_SEEDING
@@ -136,7 +135,7 @@ u_int seed;
  * data from the kernel.
  */
 void
-sranddev()
+sranddev(void)
 {
 	int mib[2];
 	size_t len;

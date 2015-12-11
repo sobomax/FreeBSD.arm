@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)whois.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/whois/whois.c 282893 2015-05-14 11:37:36Z fanf $");
+__FBSDID("$FreeBSD: head/usr.bin/whois/whois.c 287030 2015-08-23 08:22:00Z delphij $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -454,7 +454,7 @@ done:
 	if (fp == NULL)
 		err(EX_OSERR, "fdopen()");
 	if (strcmp(hostname, GERMNICHOST) == 0) {
-		fprintf(fp, "-T dn,ace -C US-ASCII %s\r\n", query);
+		fprintf(fp, "-T dn,ace -C ISO-8859-1 %s\r\n", query);
 	} else if (strcmp(hostname, "dk" QNICHOST_TAIL) == 0) {
 		fprintf(fp, "--show-handles %s\r\n", query);
 	} else {

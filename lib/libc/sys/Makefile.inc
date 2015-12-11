@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 10/24/94
-# $FreeBSD: head/lib/libc/sys/Makefile.inc 286760 2015-08-14 03:03:13Z pfg $
+# $FreeBSD: head/lib/libc/sys/Makefile.inc 288373 2015-09-29 16:09:58Z kib $
 
 # sys sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/sys ${LIBC_SRCTOP}/sys
@@ -90,8 +90,6 @@ ASM+=$(_asm)
 .endif
 .endfor
 
-OBJS+=	${ASM} ${PSEUDO}
-
 SASM=	${ASM:S/.o/.S/}
 
 SPSEUDO= ${PSEUDO:S/.o/.S/}
@@ -104,7 +102,7 @@ SYM_MAPS+=	${LIBC_SRCTOP}/sys/Symbol.map
 CLEANFILES+=	${SASM} ${SPSEUDO}
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386" || \
-    ${MACHINE_CPUARCH} == "powerpc"
+    ${MACHINE_CPUARCH} == "powerpc" || ${MACHINE_ARCH:Marmv6*}
 NOTE_GNU_STACK='\t.section .note.GNU-stack,"",%%progbits\n'
 .else
 NOTE_GNU_STACK=''

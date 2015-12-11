@@ -1,4 +1,4 @@
-#$FreeBSD: head/sys/arm/ti/am335x/files.am335x 286728 2015-08-13 15:19:30Z ian $
+#$FreeBSD: head/sys/arm/ti/am335x/files.am335x 291136 2015-11-21 16:25:03Z andrew $
 
 arm/ti/aintc.c				standard
 
@@ -17,7 +17,6 @@ arm/ti/am335x/am335x_scm_padconf.c	standard
 arm/ti/am335x/am335x_usbss.c		optional	musb fdt
 arm/ti/am335x/am335x_musb.c		optional	musb fdt
 
-arm/ti/am335x/hdmi_if.m			optional	hdmi
 arm/ti/am335x/tda19988.c		optional	hdmi
 
 arm/ti/ti_edma3.c			standard

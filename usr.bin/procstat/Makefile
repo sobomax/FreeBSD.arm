@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/procstat/Makefile 279842 2015-03-10 09:41:48Z scottl $
+# $FreeBSD: head/usr.bin/procstat/Makefile 287486 2015-09-05 17:02:01Z allanjude $
 
 PROG=	procstat
 MAN=	procstat.1
@@ -17,6 +17,6 @@ SRCS=	procstat.c		\
 	procstat_threads.c	\
 	procstat_vm.c
 
-LIBADD+=	util procstat
+LIBADD+=	procstat xo util sbuf
 
 .include <bsd.prog.mk>

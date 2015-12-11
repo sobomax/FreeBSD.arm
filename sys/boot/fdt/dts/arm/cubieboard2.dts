@@ -23,12 +23,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/cubieboard2.dts 283253 2015-05-21 17:39:42Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/cubieboard2.dts 288056 2015-09-21 03:17:41Z loos $
  */
 
 /dts-v1/;
 
 /include/ "sun7i-a20.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
 
 / {
 	model = "Cubietech Cubieboard2";
@@ -65,8 +67,26 @@
 			status = "okay";
 		};
 
+		gmac@01c50000 {
+			status = "okay";
+		};
+
 		ahci: sata@01c18000 {
 			status = "okay";
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		blue {
+			label = "cubieboard2:blue:usr";
+			gpios = <&pio 7 21 GPIO_ACTIVE_HIGH>;
+		};
+
+		green {
+			label = "cubieboard2:green:usr";
+			gpios = <&pio 7 20 GPIO_ACTIVE_HIGH>;
 		};
 	};
 

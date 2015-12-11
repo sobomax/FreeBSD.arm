@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nsp/nsp_pccard.c 274760 2014-11-20 20:50:05Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/nsp/nsp_pccard.c 292111 2015-12-11 15:24:29Z imp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -233,6 +233,7 @@ static devclass_t nsp_devclass;
 
 MODULE_DEPEND(nsp, scsi_low, 1, 1, 1);
 DRIVER_MODULE(nsp, pccard, nsp_pccard_driver, nsp_devclass, 0, 0);
+PCCARD_PNP_INFO(nsp_products);
 
 static void
 nsp_card_unload(device_t devi)

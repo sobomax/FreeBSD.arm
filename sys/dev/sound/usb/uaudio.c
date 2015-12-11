@@ -1,5 +1,5 @@
 /*	$NetBSD: uaudio.c,v 1.91 2004/11/05 17:46:14 kent Exp $	*/
-/*	$FreeBSD: head/sys/dev/sound/usb/uaudio.c 282652 2015-05-08 17:48:48Z hselasky $ */
+/*	$FreeBSD: head/sys/dev/sound/usb/uaudio.c 292080 2015-12-11 05:28:00Z imp $ */
 
 /*-
  * Copyright (c) 1999 The NetBSD Foundation, Inc.
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sound/usb/uaudio.c 282652 2015-05-08 17:48:48Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/sound/usb/uaudio.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*
  * USB audio specs: http://www.usb.org/developers/devclass_docs/audio10.pdf
@@ -6118,3 +6118,4 @@ DRIVER_MODULE_ORDERED(uaudio, uhub, uaudio_driver, uaudio_devclass, NULL, 0, SI_
 MODULE_DEPEND(uaudio, usb, 1, 1, 1);
 MODULE_DEPEND(uaudio, sound, SOUND_MINVER, SOUND_PREFVER, SOUND_MAXVER);
 MODULE_VERSION(uaudio, 1);
+USB_PNP_HOST_INFO(uaudio_devs);

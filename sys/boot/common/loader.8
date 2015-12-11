@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/sys/boot/common/loader.8 285870 2015-07-25 13:02:41Z trasz $
+.\" $FreeBSD: head/sys/boot/common/loader.8 291012 2015-11-18 09:42:36Z smh $
 .\"
-.Dd July 25, 2015
+.Dd November 18, 2015
 .Dt LOADER 8
 .Os
 .Sh NAME
@@ -471,6 +471,14 @@ userland output (e.g.\& from
 .It Va currdev
 Selects the default device.
 Syntax for devices is odd.
+.It Va dumpdev
+Sets the device for kernel dumps.
+This can be used to ensure that a device is configured before the corresponding
+.Va dumpdev
+directive from
+.Xr rc.conf 5
+has been processed, allowing kernel panics that happen during the early stages
+of boot to be captured.
 .It Va init_chroot
 If set to a valid directory in the root file system, it causes
 .Xr init 8

@@ -1,5 +1,8 @@
-# $FreeBSD: head/usr.bin/svn/Makefile 251886 2013-06-18 02:53:45Z peter $
+# $FreeBSD: head/usr.bin/svn/Makefile 289180 2015-10-12 09:53:55Z peter $
 
-SUBDIR = lib svn svnadmin svndumpfilter svnlook svnserve svnsync svnversion svnmucc svnrdump
+SUBDIR=	lib .WAIT \
+	svn svnadmin svnbench svndumpfilter svnfsfs svnlook svnserve \
+	svnsync svnversion svnmucc svnrdump
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

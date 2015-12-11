@@ -1,12 +1,9 @@
-# $FreeBSD: head/usr.bin/cmp/tests/Makefile 272780 2014-10-09 00:50:33Z ngie $
-
-TESTSRC=	${.CURDIR}/../../../contrib/netbsd-tests/usr.bin/cmp
-.PATH: ${TESTSRC}
+# $FreeBSD: head/usr.bin/cmp/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
 
-TESTSDIR=	${TESTSBASE}/usr.bin/cmp
-ATF_TESTS_SH=	cmp_test
-ATF_TESTS_SH_SRC_cmp_test=	t_cmp.sh
+NETBSD_ATF_TESTS_SH=	cmp_test
+
+.include <netbsd-tests.test.mk>
 
 .include <bsd.test.mk>

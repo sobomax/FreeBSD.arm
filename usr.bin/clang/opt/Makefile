@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/opt/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/opt/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -10,12 +10,12 @@ SRCS=	AnalysisWrappers.cpp \
 	GraphPrinters.cpp \
 	NewPMDriver.cpp \
 	PassPrinters.cpp \
-	Passes.cpp \
 	PrintSCC.cpp \
 	opt.cpp
 
 TGHDRS=	Intrinsics
-LIBDEPS=llvmaarch64disassembler \
+LIBDEPS=llvmpasses \
+	llvmaarch64disassembler \
 	llvmaarch64codegen \
 	llvmaarch64asmparser \
 	llvmaarch64desc \
@@ -52,6 +52,7 @@ LIBDEPS=llvmaarch64disassembler \
 	llvmselectiondag \
 	llvmasmprinter \
 	llvmcodegen \
+	llvmtarget \
 	llvmx86desc \
 	llvmmcdisassembler \
 	llvmx86info \
@@ -68,9 +69,8 @@ LIBDEPS=llvmaarch64disassembler \
 	llvminstrumentation \
 	llvmtransformutils \
 	llvmipa \
-	llvmanalysis \
-	llvmtarget \
 	llvmmc \
+	llvmanalysis \
 	llvmirreader \
 	llvmasmparser \
 	llvmbitwriter \
@@ -78,7 +78,6 @@ LIBDEPS=llvmaarch64disassembler \
 	llvmcore \
 	llvmsupport
 
-.include "../clang.prog.mk"
+LIBADD=	z
 
-DPADD+=	${LIBZ}
-LDADD+=	-lz
+.include "../clang.prog.mk"

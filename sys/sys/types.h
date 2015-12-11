@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/types.h 280279 2015-03-20 10:27:06Z jhb $
+ * $FreeBSD: head/sys/sys/types.h 288258 2015-09-26 07:30:45Z kib $
  */
 
 #ifndef _SYS_TYPES_H_
@@ -290,9 +290,6 @@ typedef	_Bool	bool;
  * The following are all things that really shouldn't exist in this header,
  * since its purpose is to provide typedefs, not miscellaneous doodads.
  */
-#if __BSD_VISIBLE
-
-#include <sys/select.h>
 
 #ifdef __POPCNT__
 #define	__bitcount64(x)	__builtin_popcountll((__uint64_t)(x))
@@ -355,6 +352,10 @@ __bitcount64(__uint64_t _x)
 #endif
 #define	__bitcount(x)	__bitcount32((unsigned int)(x))
 #endif
+
+#if __BSD_VISIBLE
+
+#include <sys/select.h>
 
 /*
  * minor() gives a cookie instead of an index since we don't want to

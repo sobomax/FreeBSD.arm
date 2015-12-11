@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangbasic/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libclangbasic/Makefile 288998 2015-10-08 00:48:29Z rodrigc $
 
 .include <bsd.own.mk>
 
@@ -10,6 +10,7 @@ SRCS=	Attributes.cpp \
 	CharInfo.cpp \
 	Diagnostic.cpp \
 	DiagnosticIDs.cpp \
+	DiagnosticOptions.cpp \
 	FileManager.cpp \
 	FileSystemStatCache.cpp \
 	IdentifierTable.cpp \
@@ -46,3 +47,6 @@ TGHDRS=	AttrHasAttributeImpl \
 	arm_neon
 
 .include "../clang.lib.mk"
+
+# XX: work around GCC bug 67888
+CFLAGS.gcc += -fpermissive

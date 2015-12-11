@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangdriver/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libclangdriver/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -12,6 +12,7 @@ SRCS=	Action.cpp \
 	DriverOptions.cpp \
 	Job.cpp \
 	MSVCToolChain.cpp \
+	MinGWToolChain.cpp \
 	Multilib.cpp \
 	Phases.cpp \
 	SanitizerArgs.cpp \

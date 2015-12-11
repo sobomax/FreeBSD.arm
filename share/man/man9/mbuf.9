@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/mbuf.9 279896 2015-03-12 01:05:54Z markj $
+.\" $FreeBSD: head/share/man/man9/mbuf.9 288298 2015-09-27 04:55:43Z ngie $
 .\"
 .Dd March 11, 2015
 .Dt MBUF 9
@@ -52,8 +52,6 @@
 .Fa "short flags"
 .Fa "int type"
 .Fc
-.Fn MEXTFREE "struct mbuf *mbuf"
-.Fn MFREE "struct mbuf *mbuf" "struct mbuf *successor"
 .\"
 .Ss Mbuf utility macros
 .Fn mtod "struct mbuf *mbuf" "type"

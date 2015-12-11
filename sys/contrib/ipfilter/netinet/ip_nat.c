@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 280971 2015-04-01 22:26:39Z glebius $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 288242 2015-09-25 23:07:17Z bz $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -112,7 +112,7 @@ extern struct ifnet vpnif;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_nat.c	1.11 6/5/96 (C) 1995 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 280971 2015-04-01 22:26:39Z glebius $";
+static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 288242 2015-09-25 23:07:17Z bz $";
 /* static const char rcsid[] = "@(#)$Id: ip_nat.c,v 2.195.2.102 2007/10/16 10:08:10 darrenr Exp $"; */
 #endif
 
@@ -8075,13 +8075,13 @@ ipf_nat_rehash(softc, t, p)
 	 * the outbound lookup table and the hash chain length for each.
 	 */
 	KMALLOCS(newtab[0], nat_t **, newsize * sizeof(nat_t *));
-	if (newtab == NULL) {
+	if (newtab[0] == NULL) {
 		error = 60063;
 		goto badrehash;
 	}
 
 	KMALLOCS(newtab[1], nat_t **, newsize * sizeof(nat_t *));
-	if (newtab == NULL) {
+	if (newtab[1] == NULL) {
 		error = 60064;
 		goto badrehash;
 	}

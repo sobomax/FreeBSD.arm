@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_timer.c 286781 2015-08-14 14:26:13Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_timer.c 291700 2015-12-03 15:19:29Z tuexen $");
 
 #define _IP_VHL
 #include <netinet/sctp_os.h>
@@ -408,7 +408,11 @@ sctp_backoff_on_timeout(struct sctp_tcb *stcb,
     int num_marked, int num_abandoned)
 {
 	if (net->RTO == 0) {
-		net->RTO = stcb->asoc.minrto;
+		if (net->RTO_measured) {
+			net->RTO = stcb->asoc.minrto;
+		} else {
+			net->RTO = stcb->asoc.initial_rto;
+		}
 	}
 	net->RTO <<= 1;
 	if (net->RTO > stcb->asoc.maxrto) {
@@ -437,6 +441,11 @@ sctp_recover_sent_list(struct sctp_tcb *stcb)
 				if (asoc->strmout[chk->rec.data.stream_number].chunks_on_queues > 0) {
 					asoc->strmout[chk->rec.data.stream_number].chunks_on_queues--;
 				}
+			}
+			if ((asoc->strmout[chk->rec.data.stream_number].chunks_on_queues == 0) &&
+			    (asoc->strmout[chk->rec.data.stream_number].state == SCTP_STREAM_RESET_PENDING) &&
+			    TAILQ_EMPTY(&asoc->strmout[chk->rec.data.stream_number].outqueue)) {
+				asoc->trigger_reset = 1;
 			}
 			TAILQ_REMOVE(&asoc->sent_queue, chk, sctp_next);
 			if (PR_SCTP_ENABLED(chk->flags)) {

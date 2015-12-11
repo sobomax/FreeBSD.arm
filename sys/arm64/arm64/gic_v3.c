@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_v3.c 286919 2015-08-19 10:36:36Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_v3.c 291373 2015-11-26 21:05:55Z emaste $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -155,7 +155,7 @@ gic_v3_attach(device_t dev)
 	 * One entry for Distributor and all remaining for Re-Distributor.
 	 */
 	sc->gic_res = malloc(
-	    sizeof(sc->gic_res) * (sc->gic_redists.nregions + 1),
+	    sizeof(*sc->gic_res) * (sc->gic_redists.nregions + 1),
 	    M_GIC_V3, M_WAITOK);
 
 	/* Now allocate corresponding resources */

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/storage/urio.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/storage/urio.c 292080 2015-12-11 05:28:00Z imp $");
 
 
 /*
@@ -195,15 +195,16 @@ static driver_t urio_driver = {
 	.size = sizeof(struct urio_softc),
 };
 
-DRIVER_MODULE(urio, uhub, urio_driver, urio_devclass, NULL, 0);
-MODULE_DEPEND(urio, usb, 1, 1, 1);
-MODULE_VERSION(urio, 1);
-
 static const STRUCT_USB_HOST_ID urio_devs[] = {
 	{USB_VPI(USB_VENDOR_DIAMOND, USB_PRODUCT_DIAMOND_RIO500USB, 0)},
 	{USB_VPI(USB_VENDOR_DIAMOND2, USB_PRODUCT_DIAMOND2_RIO600USB, 0)},
 	{USB_VPI(USB_VENDOR_DIAMOND2, USB_PRODUCT_DIAMOND2_RIO800USB, 0)},
 };
+
+DRIVER_MODULE(urio, uhub, urio_driver, urio_devclass, NULL, 0);
+MODULE_DEPEND(urio, usb, 1, 1, 1);
+MODULE_VERSION(urio, 1);
+USB_PNP_HOST_INFO(urio_devs);
 
 static int
 urio_probe(device_t dev)

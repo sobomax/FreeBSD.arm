@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pw/strtounum.c 286196 2015-08-02 12:47:50Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/pw/strtounum.c 286993 2015-08-21 14:28:14Z bapt $");
 
 #include <errno.h>
 #include <inttypes.h>
@@ -41,6 +41,7 @@ strtounum(const char * __restrict np, uintmax_t minval, uintmax_t maxval,
 	char *endp;
 	uintmax_t ret;
 
+	*errpp = NULL;
 	if (minval > maxval) {
 		errno = EINVAL;
 		if (errpp != NULL)

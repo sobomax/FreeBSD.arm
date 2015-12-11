@@ -1,9 +1,7 @@
-# $FreeBSD: head/sys/modules/drm2/Makefile 280183 2015-03-17 18:50:33Z dumbbell $
+# $FreeBSD: head/sys/modules/drm2/Makefile 290665 2015-11-10 17:15:36Z bdrewery $
 
 SYSDIR?=${.CURDIR}/../..
 .include "${SYSDIR}/conf/kern.opts.mk"
-
-SUBDIR_PARALLEL=
 
 .if ${MACHINE_CPUARCH} == "amd64"
 _i915kms=	i915kms

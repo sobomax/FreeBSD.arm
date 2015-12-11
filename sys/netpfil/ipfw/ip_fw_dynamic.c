@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_dynamic.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_dynamic.c 291001 2015-11-17 20:42:08Z bdrewery $");
 
 #define        DEB(x)
 #define        DDB(x) x
@@ -735,6 +735,9 @@ ipfw_install_state(struct ip_fw_chain *chain, struct ip_fw *rule,
 		id.fib = M_GETFIB(args->m);
 
 		if (IS_IP6_FLOW_ID (&(args->f_id))) {
+			bzero(&id.src_ip6, sizeof(id.src_ip6));
+			bzero(&id.dst_ip6, sizeof(id.dst_ip6));
+
 			if (limit_mask & DYN_SRC_ADDR)
 				id.src_ip6 = args->f_id.src_ip6;
 			if (limit_mask & DYN_DST_ADDR)

@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 283550 2015-05-26 01:30:09Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 290381 2015-11-05 03:46:54Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -145,7 +145,7 @@ bcm_sdhci_attach(device_t dev)
 	sc->sc_dev = dev;
 	sc->sc_req = NULL;
 
-	err = bcm2835_mbox_set_power_state(dev, BCM2835_MBOX_POWER_ID_EMMC,
+	err = bcm2835_mbox_set_power_state(BCM2835_MBOX_POWER_ID_EMMC,
 	    TRUE);
 	if (err != 0) {
 		if (bootverbose)
@@ -154,7 +154,7 @@ bcm_sdhci_attach(device_t dev)
 	}
 
 	default_freq = 0;
-	err = bcm2835_mbox_get_clock_rate(dev, BCM2835_MBOX_CLOCK_ID_EMMC,
+	err = bcm2835_mbox_get_clock_rate(BCM2835_MBOX_CLOCK_ID_EMMC,
 	    &default_freq);
 	if (err == 0) {
 		/* Convert to MHz */

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unistd.h	8.12 (Berkeley) 4/27/95
- * $FreeBSD: head/include/unistd.h 285277 2015-07-08 16:21:10Z pfg $
+ * $FreeBSD: head/include/unistd.h 290394 2015-11-05 14:55:58Z pfg $
  */
 
 #ifndef _UNISTD_H_
@@ -327,9 +327,9 @@ int	 close(int);
 void	 closefrom(int);
 int	 dup(int);
 int	 dup2(int, int);
-int	 execl(const char *, const char *, ...) __sentinel;
+int	 execl(const char *, const char *, ...) __null_sentinel;
 int	 execle(const char *, const char *, ...);
-int	 execlp(const char *, const char *, ...) __sentinel;
+int	 execlp(const char *, const char *, ...) __null_sentinel;
 int	 execv(const char *, char * const *);
 int	 execve(const char *, char * const *, char * const *);
 int	 execvp(const char *, char * const *);

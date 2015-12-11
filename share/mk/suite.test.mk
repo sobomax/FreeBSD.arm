@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/suite.test.mk 285119 2015-07-04 02:37:36Z jmmv $
+# $FreeBSD: head/share/mk/suite.test.mk 291892 2015-12-06 07:00:23Z ngie $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -7,10 +7,6 @@
 .if !target(__<bsd.test.mk>__)
 .error suite.test.mk cannot be included directly.
 .endif
-
-# Directory in which to install tests defined by the current Makefile.
-# Makefiles have to override this to point to a subdirectory of TESTSBASE.
-TESTSDIR?= .
 
 # Name of the test suite these tests belong to.  Should rarely be changed for
 # Makefiles built into the FreeBSD src tree.
@@ -110,8 +106,7 @@ realtest: .PHONY
 	@echo "*** installed in ${TESTSBASE}.  This test run may raise false"
 	@echo "*** positives and/or false negatives."
 	@echo
-	@set -e; \
-	${KYUA} test -k ${DESTDIR}${TESTSDIR}/Kyuafile; \
+	@${KYUA} test -k ${DESTDIR}${TESTSDIR}/Kyuafile; \
 	result=0; \
 	echo; \
 	echo "*** Once again, note that "make test" is unsupported."; \

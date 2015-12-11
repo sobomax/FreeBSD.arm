@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/cc_tools/Makefile 284289 2015-06-11 21:13:05Z sjg $
+# $FreeBSD: head/gnu/usr.bin/cc/cc_tools/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -216,8 +216,6 @@ tconfig.h:
 GENSRCS+=	tconfig.h
 CLEANFILES+=	cs-tconfig.h
 
-.NOPATH: ${GENSRCS} ${CLEANFILES}
-
 # Options
 optionlist: ${OPT_FILES}
 	LC_ALL=C awk -f ${GCCDIR}/opt-gather.awk ${.ALLSRC} > ${.TARGET}
@@ -348,7 +346,7 @@ gstdint.h:
 GENSRCS+=	gstdint.h
 
 # Linked headers
-gthr-default.h: ${GCCDIR}/gthr-posix.h
+gthr-default.h: ${GCCDIR}/gthr-posix.h .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 
 GENSRCS+=	gthr-default.h
@@ -359,7 +357,7 @@ unwind.h: ${GCCDIR}/config/arm/unwind-arm.h
 unwind.h: ${GCCDIR}/unwind-generic.h
 .endif
 
-unwind.h:
+unwind.h: .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 
 GENSRCS+=	unwind.h

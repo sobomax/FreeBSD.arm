@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/stg/tmc18c30_pccard.c 274760 2014-11-20 20:50:05Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/stg/tmc18c30_pccard.c 292111 2015-12-11 15:24:29Z imp $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -136,3 +136,4 @@ static driver_t stg_pccard_driver = {
 
 DRIVER_MODULE(stg, pccard, stg_pccard_driver, stg_devclass, 0, 0);
 MODULE_DEPEND(stg, scsi_low, 1, 1, 1);
+PCCARD_PNP_INFO(stg_products);

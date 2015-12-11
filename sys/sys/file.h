@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)file.h	8.3 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/file.h 283998 2015-06-04 19:41:15Z jhb $
+ * $FreeBSD: head/sys/sys/file.h 288431 2015-09-30 23:06:29Z markj $
  */
 
 #ifndef _SYS_FILE_H_
@@ -160,8 +160,6 @@ struct fadvise_info {
 	int		fa_advice;	/* (f) FADV_* type. */
 	off_t		fa_start;	/* (f) Region start. */
 	off_t		fa_end;		/* (f) Region end. */
-	off_t		fa_prevstart;	/* (f) Previous NOREUSE start. */
-	off_t		fa_prevend;	/* (f) Previous NOREUSE end. */
 };
 
 struct file {

@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/sed/tests/Makefile 263388 2014-03-19 23:29:00Z jmmv $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/sed
+# $FreeBSD: head/usr.bin/sed/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_SH=	legacy_test
 TAP_TESTS_SH+=	multi_test

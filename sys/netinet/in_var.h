@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/netinet/in_var.h 286001 2015-07-29 08:12:05Z ae $
+ * $FreeBSD: head/sys/netinet/in_var.h 290383 2015-11-05 07:26:32Z gnn $
  */
 
 #ifndef _NETINET_IN_VAR_H_
@@ -380,7 +380,7 @@ int	in_scrubprefix(struct in_ifaddr *, u_int);
 void	ip_input(struct mbuf *);
 void	ip_direct_input(struct mbuf *);
 void	in_ifadown(struct ifaddr *ifa, int);
-struct	mbuf	*ip_fastforward(struct mbuf *);
+struct	mbuf	*ip_tryforward(struct mbuf *);
 void	*in_domifattach(struct ifnet *);
 void	in_domifdetach(struct ifnet *, void *);
 
@@ -391,8 +391,6 @@ void	 in_rtalloc(struct route *ro, u_int fibnum);
 struct rtentry *in_rtalloc1(struct sockaddr *, int, u_long, u_int);
 void	 in_rtredirect(struct sockaddr *, struct sockaddr *,
 	    struct sockaddr *, int, struct sockaddr *, u_int);
-int	 in_rtrequest(int, struct sockaddr *,
-	    struct sockaddr *, struct sockaddr *, int, struct rtentry **, u_int);
 #endif /* _KERNEL */
 
 /* INET6 stuff */

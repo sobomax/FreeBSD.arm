@@ -94,7 +94,7 @@ static const char sccsid[] = "@(#)res_debug.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_debug.c,v 1.19 2009/02/26 11:20:20 tbox Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_debug.c 269867 2014-08-12 12:36:06Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_debug.c 288114 2015-09-22 15:57:26Z rodrigc $");
 
 #include "port_before.h"
 
@@ -367,11 +367,8 @@ p_cdname(const u_char *cp, const u_char *msg, FILE *file) {
    length supplied).  */
 
 const u_char *
-p_fqnname(cp, msg, msglen, name, namelen)
-	const u_char *cp, *msg;
-	int msglen;
-	char *name;
-	int namelen;
+p_fqnname(const u_char *cp, const u_char *msg, int msglen, char *name,
+    int namelen)
 {
 	int n, newlen;
 
@@ -758,8 +755,7 @@ static unsigned int poweroften[10] = {1, 10, 100, 1000, 10000, 100000,
 
 /*% takes an XeY precision/size value, returns a string representation. */
 static const char *
-precsize_ntoa(prec)
-	u_int8_t prec;
+precsize_ntoa(u_int8_t prec)
 {
 	char *retbuf = precsize_ntoa_retbuf;
 	unsigned long val;
@@ -912,9 +908,7 @@ latlon2ul(const char **latlonstrptr, int *which) {
  * converts a zone file representation in a string to an RDATA on-the-wire
  * representation. */
 int
-loc_aton(ascii, binary)
-	const char *ascii;
-	u_char *binary;
+loc_aton(const char *ascii, u_char *binary)
 {
 	const char *cp, *maxcp;
 	u_char *bcp;
@@ -1023,9 +1017,7 @@ loc_aton(ascii, binary)
 
 /*% takes an on-the-wire LOC RR and formats it in a human readable format. */
 const char *
-loc_ntoa(binary, ascii)
-	const u_char *binary;
-	char *ascii;
+loc_ntoa(const u_char *binary, char *ascii)
 {
 	static const char *error = "?";
 	static char tmpbuf[sizeof

@@ -34,11 +34,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_lock.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_lock.c 288112 2015-09-22 15:32:27Z bz $");
 
 #include <dev/drm2/drmP.h>
 
+#if defined(__linux__)
 static int drm_notifier(void *priv);
+#endif
 
 static int drm_lock_take(struct drm_lock_data *lock_data, unsigned int context);
 
@@ -284,6 +286,7 @@ int drm_lock_free(struct drm_lock_data *lock_data, unsigned int context)
 	return 0;
 }
 
+#if defined(__linux__)
 /**
  * If we get here, it means that the process has called DRM_IOCTL_LOCK
  * without calling DRM_IOCTL_UNLOCK.
@@ -314,6 +317,7 @@ static int drm_notifier(void *priv)
 	} while (prev != old);
 	return 0;
 }
+#endif
 
 /**
  * This function returns immediately and takes the hw lock

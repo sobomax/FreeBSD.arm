@@ -1,6 +1,5 @@
 
 /* $OpenBSD: servconf.c,v 1.249 2014/01/29 06:18:35 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/servconf.c 263712 2014-03-25 11:05:34Z des $ */
 /*
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
  *                    All rights reserved
@@ -13,7 +12,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/servconf.c 263712 2014-03-25 11:05:34Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/servconf.c 291198 2015-11-23 12:48:13Z des $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -159,9 +158,6 @@ initialize_server_options(ServerOptions *options)
 	options->hpn_disabled = -1;
 	options->hpn_buffer_size = -1;
 	options->tcp_rcv_buf_poll = -1;
-#ifdef	NONE_CIPHER_ENABLED
-	options->none_enabled = -1;
-#endif
 }
 
 void
@@ -390,9 +386,6 @@ typedef enum {
 	sAuthorizedKeysCommand, sAuthorizedKeysCommandUser,
 	sAuthenticationMethods, sHostKeyAgent,
 	sHPNDisabled, sHPNBufferSize, sTcpRcvBufPoll,
-#ifdef NONE_CIPHER_ENABLED
-	sNoneEnabled,
-#endif
 	sDeprecated, sUnsupported
 } ServerOpCodes;
 
@@ -522,9 +515,6 @@ static struct {
 	{ "hpndisabled", sHPNDisabled, SSHCFG_ALL },
 	{ "hpnbuffersize", sHPNBufferSize, SSHCFG_ALL },
 	{ "tcprcvbufpoll", sTcpRcvBufPoll, SSHCFG_ALL },
-#ifdef NONE_CIPHER_ENABLED
-	{ "noneenabled", sNoneEnabled, SSHCFG_ALL },
-#endif
 	{ NULL, sBadOption, 0 }
 };
 
@@ -1682,12 +1672,6 @@ process_server_config_line(ServerOptions *options, char *line,
 	case sTcpRcvBufPoll:
 		intptr = &options->tcp_rcv_buf_poll;
 		goto parse_flag;
-
-#ifdef	NONE_CIPHER_ENABLED
-	case sNoneEnabled:
-		intptr = &options->none_enabled;
-		goto parse_flag;
-#endif
 
 	case sDeprecated:
 		logit("%s line %d: Deprecated option %s",

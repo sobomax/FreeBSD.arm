@@ -28,7 +28,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/sys/__error.c 276681 2015-01-05 01:06:54Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/sys/__error.c 288003 2015-09-20 03:49:08Z rodrigc $");
+
+#include "libc_private.h"
 
 extern int errno;
 

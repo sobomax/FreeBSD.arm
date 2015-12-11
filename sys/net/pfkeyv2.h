@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/net/pfkeyv2.h 286213 2015-08-02 21:33:40Z jmg $	*/
+/*	$FreeBSD: head/sys/net/pfkeyv2.h 290982 2015-11-17 14:39:33Z fabient $	*/
 /*	$KAME: pfkeyv2.h,v 1.37 2003/09/06 05:15:43 itojun Exp $	*/
 
 /*-
@@ -225,7 +225,7 @@ struct sadb_x_policy {
   u_int8_t sadb_x_policy_dir;		/* direction, see ipsec.h */
   u_int8_t sadb_x_policy_reserved;
   u_int32_t sadb_x_policy_id;
-  u_int32_t sadb_x_policy_reserved2;
+  u_int32_t sadb_x_policy_priority;
 };
 _Static_assert(sizeof(struct sadb_x_policy) == 16, "struct size mismatch");
 

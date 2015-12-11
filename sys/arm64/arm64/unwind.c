@@ -28,10 +28,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/unwind.c 284257 2015-06-11 12:47:13Z br $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/unwind.c 287113 2015-08-24 17:28:19Z andrew $");
 #include <sys/param.h>
 
 #include <machine/stack.h>
+#include <machine/vmparam.h>
 
 int
 unwind_frame(struct unwind_state *frame)
@@ -39,7 +40,7 @@ unwind_frame(struct unwind_state *frame)
 	uint64_t fp;
 
 	fp = frame->fp;
-	if (fp == 0)
+	if (!INKERNEL(fp))
 		return (-1);
 
 	frame->sp = fp + 0x10;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs_pccard.c 257324 2013-10-29 11:17:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,6 +56,7 @@ static const struct pccard_product cs_pccard_products[] = {
 	PCMCIA_CARD(IBM, ETHERJET),
 	{ NULL }
 };
+
 static int
 cs_pccard_probe(device_t dev)
 {
@@ -115,3 +116,4 @@ extern devclass_t cs_devclass;
 
 DRIVER_MODULE(cs, pccard, cs_pccard_driver, cs_devclass, 0, 0);
 MODULE_DEPEND(cs, ether, 1, 1, 1);
+PCCARD_PNP_INFO(cs_pccard_products);

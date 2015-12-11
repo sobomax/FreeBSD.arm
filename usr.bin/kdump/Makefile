@@ -1,13 +1,12 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/kdump/Makefile 284407 2015-06-15 06:48:43Z rodrigc $
+# $FreeBSD: head/usr.bin/kdump/Makefile 291330 2015-11-25 20:38:17Z bdrewery $
 
 .include <src.opts.mk>
 
 .PATH: ${.CURDIR}/../ktrace
 
 PROG=		kdump
-SRCS=		kdump_subr.c kdump.c ioctl.c subr.c
-DPSRCS=		kdump_subr.h
+SRCS=		kdump_subr.c kdump_subr.h kdump.c ioctl.c subr.c utrace.c
 CFLAGS+=	-I${.CURDIR}/../ktrace -I${.CURDIR} -I${.CURDIR}/../.. -I.
 
 .if ${MK_CASPER} != "no"

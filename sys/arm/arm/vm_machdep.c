@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 284115 2015-06-07 13:59:02Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 288983 2015-10-07 09:12:49Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,6 +84,8 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 284115 2015-06-07 13:59:02Z an
  */
 CTASSERT(sizeof(struct switchframe) == 48);
 CTASSERT(sizeof(struct trapframe) == 80);
+
+uint32_t initial_fpscr = VFPSCR_DN | VFPSCR_FZ;
 
 /*
  * Finish a fork operation, with process p2 nearly set up.
@@ -134,7 +136,7 @@ cpu_fork(register struct thread *td1, register struct proc *p2,
 	pcb2->pcb_regs.sf_sp = STACKALIGN(td2->td_frame);
 
 	pcb2->pcb_vfpcpu = -1;
-	pcb2->pcb_vfpstate.fpscr = VFPSCR_DN | VFPSCR_FZ;
+	pcb2->pcb_vfpstate.fpscr = initial_fpscr;
 
 	tf = td2->td_frame;
 	tf->tf_spsr &= ~PSR_C;

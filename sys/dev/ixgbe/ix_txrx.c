@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/ix_txrx.c 285591 2015-07-15 01:01:17Z hiren $*/
+/*$FreeBSD: head/sys/dev/ixgbe/ix_txrx.c 289238 2015-10-13 17:34:18Z sbruno $*/
 
 
 #ifndef IXGBE_STANDALONE_BUILD
@@ -986,12 +986,12 @@ ixgbe_tso_setup(struct tx_ring *txr, struct mbuf *mp,
 void
 ixgbe_txeof(struct tx_ring *txr)
 {
-#ifdef DEV_NETMAP
 	struct adapter		*adapter = txr->adapter;
+#ifdef DEV_NETMAP
 	struct ifnet		*ifp = adapter->ifp;
 #endif
 	u32			work, processed = 0;
-	u16			limit = txr->process_limit;
+	u32			limit = adapter->tx_process_limit;
 	struct ixgbe_tx_buf	*buf;
 	union ixgbe_adv_tx_desc *txd;
 
@@ -1747,7 +1747,7 @@ ixgbe_rxeof(struct ix_queue *que)
 	struct lro_entry	*queued;
 	int			i, nextp, processed = 0;
 	u32			staterr = 0;
-	u16			count = rxr->process_limit;
+	u32			count = adapter->rx_process_limit;
 	union ixgbe_adv_rx_desc	*cur;
 	struct ixgbe_rx_buf	*rbuf, *nbuf;
 	u16			pkt_info;

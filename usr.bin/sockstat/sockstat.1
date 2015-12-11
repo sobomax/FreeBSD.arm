@@ -25,9 +25,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/sockstat/sockstat.1 285630 2015-07-16 13:09:21Z des $
+.\" $FreeBSD: head/usr.bin/sockstat/sockstat.1 287182 2015-08-26 23:45:06Z tuexen $
 .\"
-.Dd July 14, 2015
+.Dd August 27, 2015
 .Dt SOCKSTAT 1
 .Os
 .Sh NAME
@@ -85,7 +85,7 @@ as they are defined in
 .Xr protocols 5 .
 .It Fl s
 Display the protocol state, if applicable.
-This is currently only implemented for TCP.
+This is currently only implemented for SCTP and TCP.
 .It Fl u
 Show
 .Dv AF_LOCAL

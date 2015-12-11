@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe_pccard.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -145,6 +145,7 @@ static driver_t fe_pccard_driver = {
 
 DRIVER_MODULE(fe, pccard, fe_pccard_driver, fe_devclass, 0, 0);
 MODULE_DEPEND(fe, pccard, 1, 1, 1);
+PCCARD_PNP_INFO(fe_pccard_products);
 
 static int fe_probe_mbh(device_t, const struct fe_pccard_product *);
 static int fe_probe_tdk(device_t, const struct fe_pccard_product *);

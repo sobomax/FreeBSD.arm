@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_node.h 246497 2013-02-07 21:12:55Z monthadar $
+ * $FreeBSD: head/sys/net80211/ieee80211_node.h 288318 2015-09-28 00:59:07Z adrian $
  */
 #ifndef _NET80211_IEEE80211_NODE_H_
 #define _NET80211_IEEE80211_NODE_H_
@@ -218,6 +218,9 @@ struct ieee80211_node {
 	struct ieee80211_htrateset ni_htrates;	/* negotiated ht rate set */
 	struct ieee80211_tx_ampdu ni_tx_ampdu[WME_NUM_TID];
 	struct ieee80211_rx_ampdu ni_rx_ampdu[WME_NUM_TID];
+
+	/* fast-frames state */
+	struct mbuf *		ni_tx_superg[WME_NUM_TID];
 
 	/* others */
 	short			ni_inact;	/* inactivity mark count */

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/ata-card.c 256304 2013-10-10 22:46:49Z grehan $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/ata-card.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -183,3 +183,4 @@ static driver_t ata_pccard_driver = {
 
 DRIVER_MODULE(ata, pccard, ata_pccard_driver, ata_devclass, NULL, NULL);
 MODULE_DEPEND(ata, ata, 1, 1, 1);
+PCCARD_PNP_INFO(ata_pccard_products);

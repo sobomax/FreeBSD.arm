@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/common.c 280630 2015-03-25 18:56:36Z jkim $");
+__FBSDID("$FreeBSD: head/lib/libfetch/common.c 288217 2015-09-25 14:24:23Z grembo $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -495,7 +495,8 @@ fetch_ssl_get_numeric_addrinfo(const char *hostname, size_t len)
 	hints.ai_protocol = 0;
 	hints.ai_flags = AI_NUMERICHOST;
 	/* port is not relevant for this purpose */
-	getaddrinfo(host, "443", &hints, &res);
+	if (getaddrinfo(host, "443", &hints, &res) != 0)
+		res = NULL;
 	free(host);
 	return res;
 }

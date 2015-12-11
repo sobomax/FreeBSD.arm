@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi.c 285799 2015-07-22 16:26:17Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi.c 288446 2015-10-01 10:52:26Z cperciva $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -2574,8 +2574,11 @@ acpi_ReqSleepState(struct acpi_softc *sc, int state)
     if (!acpi_sleep_states[state])
 	return (EOPNOTSUPP);
 
-    /* If a suspend request is already in progress, just return. */
-    if (sc->acpi_next_sstate != 0) {
+    /*
+     * If a reboot/shutdown/suspend request is already in progress or
+     * suspend is blocked due to an upcoming shutdown, just return.
+     */
+    if (rebooting || sc->acpi_next_sstate != 0 || suspend_blocked) {
 	return (0);
     }
 

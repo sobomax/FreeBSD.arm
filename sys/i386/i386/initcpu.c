@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/initcpu.c 284104 2015-06-06 22:03:24Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/initcpu.c 289894 2015-10-24 21:37:47Z kib $");
 
 #include "opt_cpu.h"
 
@@ -826,14 +826,18 @@ initializecpucache(void)
 	 * CPUID_SS feature even though the native CPU supports it.
 	 */
 	TUNABLE_INT_FETCH("hw.clflush_disable", &hw_clflush_disable);
-	if (vm_guest != VM_GUEST_NO && hw_clflush_disable == -1)
+	if (vm_guest != VM_GUEST_NO && hw_clflush_disable == -1) {
 		cpu_feature &= ~CPUID_CLFSH;
+		cpu_stdext_feature &= ~CPUID_STDEXT_CLFLUSHOPT;
+	}
 	/*
-	 * Allow to disable CLFLUSH feature manually by
-	 * hw.clflush_disable tunable.
+	 * The kernel's use of CLFLUSH{,OPT} can be disabled manually
+	 * by setting the hw.clflush_disable tunable.
 	 */
-	if (hw_clflush_disable == 1)
+	if (hw_clflush_disable == 1) {
 		cpu_feature &= ~CPUID_CLFSH;
+		cpu_stdext_feature &= ~CPUID_STDEXT_CLFLUSHOPT;
+	}
 
 #if defined(PC98) && !defined(CPU_UPGRADE_HW_CACHE)
 	/*

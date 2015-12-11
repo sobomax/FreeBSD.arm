@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 285797 2015-07-22 16:25:07Z jkim $
+# $FreeBSD: head/usr.sbin/acpi/iasl/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 PROG=	iasl
 
@@ -95,7 +95,7 @@ aslcompiler.y: aslparser.y aslrules.y aslsupport.y asltokens.y asltypes.y
 aslcompilerparse.c aslcompilerparse.h: aslcompiler.y
 	${YACC} ${YFLAGS} -pAslCompiler -oaslcompilerparse.c ${.ALLSRC}
 
-aslcompiler.y.h: aslcompilerparse.h
+aslcompiler.y.h: aslcompilerparse.h .NOMETA
 	ln -f ${.ALLSRC} ${.TARGET}
 
 dtparserlex.c: dtparser.l
@@ -105,7 +105,7 @@ dtparserlex.c: dtparser.l
 dtparserparse.c dtparserparse.h: dtparser.y
 	${YACC} ${YFLAGS} -pDtParser -odtparserparse.c ${.ALLSRC}
 
-dtparser.y.h: dtparserparse.h
+dtparser.y.h: dtparserparse.h .NOMETA
 	ln -f ${.ALLSRC} ${.TARGET}
 
 prparserlex.c: prparser.l
@@ -115,7 +115,7 @@ prparserlex.c: prparser.l
 prparserparse.c prparserparse.h: prparser.y
 	${YACC} ${YFLAGS} -pPrParser -oprparserparse.c ${.ALLSRC}
 
-prparser.y.h: prparserparse.h
+prparser.y.h: prparserparse.h .NOMETA
 	ln -f ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

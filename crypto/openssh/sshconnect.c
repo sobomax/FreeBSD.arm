@@ -1,5 +1,4 @@
 /* $OpenBSD: sshconnect.c,v 1.246 2014/02/06 22:21:01 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/sshconnect.c 285975 2015-07-28 19:58:38Z delphij $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -15,7 +14,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/sshconnect.c 285975 2015-07-28 19:58:38Z delphij $");
+__RCSID("$FreeBSD: head/crypto/openssh/sshconnect.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/types.h>
 #include <sys/wait.h>

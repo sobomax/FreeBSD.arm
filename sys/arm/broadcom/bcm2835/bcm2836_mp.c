@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836_mp.c 282828 2015-05-13 01:48:47Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836_mp.c 288447 2015-10-01 12:09:05Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -182,6 +182,8 @@ pic_ipi_read(int i)
 		if (val == 0)
 			return (0);
 		ipi = ffs(val) - 1;
+		BSWR4(MBOX0CLR_CORE(cpu), 1 << ipi);
+		dsb();
 		return (ipi);
 	}
 	return (0x3ff);
@@ -190,12 +192,6 @@ pic_ipi_read(int i)
 void
 pic_ipi_clear(int ipi)
 {
-	int cpu;
-
-	cpu = PCPU_GET(cpuid);
-	dsb();
-	BSWR4(MBOX0CLR_CORE(cpu), 1 << ipi);
-	wmb();
 }
 
 void

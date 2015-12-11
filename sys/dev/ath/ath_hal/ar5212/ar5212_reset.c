@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212_reset.c 280828 2015-03-29 21:50:21Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212_reset.c 290616 2015-11-09 20:22:59Z garga $
  */
 #include "opt_ah.h"
 
@@ -116,7 +116,9 @@ write_common(struct ath_hal *ah, const HAL_INI_ARRAY *ia,
 HAL_BOOL
 ar5212Reset(struct ath_hal *ah, HAL_OPMODE opmode,
 	struct ieee80211_channel *chan,
-	HAL_BOOL bChannelChange, HAL_STATUS *status)
+	HAL_BOOL bChannelChange,
+	HAL_RESET_TYPE resetType,
+	HAL_STATUS *status)
 {
 #define	N(a)	(sizeof (a) / sizeof (a[0]))
 #define	FAIL(_code)	do { ecode = _code; goto bad; } while (0)

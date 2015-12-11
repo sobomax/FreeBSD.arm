@@ -1,6 +1,4 @@
-# $FreeBSD: head/lib/libmp/tests/Makefile 275024 2014-11-25 11:07:26Z bapt $
-
-TESTSDIR=	${TESTSBASE}/lib/libmp
+# $FreeBSD: head/lib/libmp/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_C+=	legacy_test
 

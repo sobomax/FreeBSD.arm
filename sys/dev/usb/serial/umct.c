@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umct.c 239299 2012-08-15 15:42:57Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umct.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*-
  * Copyright (c) 2003 Scott Long
@@ -221,6 +221,7 @@ DRIVER_MODULE(umct, uhub, umct_driver, umct_devclass, NULL, 0);
 MODULE_DEPEND(umct, ucom, 1, 1, 1);
 MODULE_DEPEND(umct, usb, 1, 1, 1);
 MODULE_VERSION(umct, 1);
+USB_PNP_HOST_INFO(umct_devs);
 
 static int
 umct_probe(device_t dev)

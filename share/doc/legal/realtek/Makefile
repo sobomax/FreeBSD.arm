@@ -1,6 +1,7 @@
-# $FreeBSD: head/share/doc/legal/realtek/Makefile 284321 2015-06-12 14:30:27Z sjg $
+# $FreeBSD: head/share/doc/legal/realtek/Makefile 289399 2015-10-16 00:38:05Z bdrewery $
 
 FILES=		${.CURDIR}/../../../../sys/contrib/dev/urtwn/LICENSE
-FILESDIR=	${SHAREDIR}/doc/legal/realtek
+FILESDIR=	${SHAREDIR}/doc/legal
+FILESNAME=	realtek.LICENSE
 
 .include <bsd.prog.mk>

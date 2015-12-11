@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbCore/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/liblldbCore/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -18,6 +18,7 @@ SRCS=	Address.cpp \
 	ConnectionMachPort.cpp \
 	ConnectionSharedMemory.cpp \
 	ConstString.cpp \
+	CxaDemangle.cpp \
 	DataBufferHeap.cpp \
 	DataBufferMemoryMap.cpp \
 	DataEncoder.cpp \
@@ -31,11 +32,13 @@ SRCS=	Address.cpp \
 	FastDemangle.cpp \
 	FileLineResolver.cpp \
 	FileSpecList.cpp \
+	FormatEntity.cpp \
 	History.cpp \
 	IOHandler.cpp \
 	Language.cpp \
 	Listener.cpp \
 	Log.cpp \
+	Logging.cpp \
 	Mangled.cpp \
 	Module.cpp \
 	ModuleChild.cpp \

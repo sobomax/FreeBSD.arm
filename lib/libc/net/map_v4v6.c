@@ -53,7 +53,7 @@
 static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/map_v4v6.c 165903 2007-01-09 00:28:16Z imp $");
+__FBSDID("$FreeBSD: head/lib/libc/net/map_v4v6.c 288015 2015-09-20 04:20:31Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -68,6 +68,7 @@ __FBSDID("$FreeBSD: head/lib/libc/net/map_v4v6.c 165903 2007-01-09 00:28:16Z imp
 #include <resolv.h>
 #include <ctype.h>
 #include <syslog.h>
+#include "netdb_private.h"
 
 typedef union {
 	int32_t al;

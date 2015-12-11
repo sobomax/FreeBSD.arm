@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_emul.c 282335 2015-05-02 03:25:24Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_emul.c 289677 2015-10-21 05:37:09Z eadler $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_emul.c 282335 2015-05-02 03:25:24Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_emul.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -295,7 +295,7 @@ pci_emul_msix_tread(struct pci_devinst *pi, uint64_t offset, int size)
 
 	/*
 	 * The PCI standard only allows 4 and 8 byte accesses to the MSI-X
-	 * table but we also allow 1 byte access to accomodate reads from
+	 * table but we also allow 1 byte access to accommodate reads from
 	 * ddb.
 	 */
 	if (size != 1 && size != 4 && size != 8)

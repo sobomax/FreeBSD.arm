@@ -30,7 +30,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 285633 2015-07-16 14:30:11Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 289661 2015-10-20 20:29:21Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -281,7 +281,7 @@ threadinit(void)
 
 	thread_zone = uma_zcreate("THREAD", sched_sizeof_thread(),
 	    thread_ctor, thread_dtor, thread_init, thread_fini,
-	    16 - 1, 0);
+	    16 - 1, UMA_ZONE_NOFREE);
 	tidhashtbl = hashinit(maxproc / 2, M_TIDHASH, &tidhash);
 	rw_init(&tidhash_lock, "tidhash");
 }

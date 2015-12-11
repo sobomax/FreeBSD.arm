@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clrpcops.c 285066 2015-07-03 01:15:21Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clrpcops.c 291117 2015-11-21 00:15:41Z rmacklem $");
 
 /*
  * Rpc op calls, generally called from the vnode op calls or through the
@@ -3089,6 +3089,25 @@ nfsrpc_readdir(vnode_t vp, struct uio *uiop, nfsuint64 *cookiep,
 			*eofp = eof;
 	}
 
+	/*
+	 * Add extra empty records to any remaining DIRBLKSIZ chunks.
+	 */
+	while (uio_uio_resid(uiop) > 0 && ((size_t)(uio_uio_resid(uiop))) != tresid) {
+		dp = (struct dirent *) CAST_DOWN(caddr_t, uio_iov_base(uiop));
+		dp->d_type = DT_UNKNOWN;
+		dp->d_fileno = 0;
+		dp->d_namlen = 0;
+		dp->d_name[0] = '\0';
+		tl = (u_int32_t *)&dp->d_name[4];
+		*tl++ = cookie.lval[0];
+		*tl = cookie.lval[1];
+		dp->d_reclen = DIRBLKSIZ;
+		uio_iov_base_add(uiop, DIRBLKSIZ);
+		uio_iov_len_add(uiop, -(DIRBLKSIZ));
+		uio_uio_resid_add(uiop, -(DIRBLKSIZ));
+		uiop->uio_offset += DIRBLKSIZ;
+	}
+
 nfsmout:
 	if (nd->nd_mrep != NULL)
 		mbuf_freem(nd->nd_mrep);
@@ -3561,6 +3580,25 @@ nfsrpc_readdirplus(vnode_t vp, struct uio *uiop, nfsuint64 *cookiep,
 			*eofp = 0;
 		else
 			*eofp = eof;
+	}
+
+	/*
+	 * Add extra empty records to any remaining DIRBLKSIZ chunks.
+	 */
+	while (uio_uio_resid(uiop) > 0 && uio_uio_resid(uiop) != tresid) {
+		dp = (struct dirent *)uio_iov_base(uiop);
+		dp->d_type = DT_UNKNOWN;
+		dp->d_fileno = 0;
+		dp->d_namlen = 0;
+		dp->d_name[0] = '\0';
+		tl = (u_int32_t *)&dp->d_name[4];
+		*tl++ = cookie.lval[0];
+		*tl = cookie.lval[1];
+		dp->d_reclen = DIRBLKSIZ;
+		uio_iov_base_add(uiop, DIRBLKSIZ);
+		uio_iov_len_add(uiop, -(DIRBLKSIZ));
+		uio_uio_resid_add(uiop, -(DIRBLKSIZ));
+		uiop->uio_offset += DIRBLKSIZ;
 	}
 
 nfsmout:

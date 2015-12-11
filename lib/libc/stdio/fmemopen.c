@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/fmemopen.c 266971 2014-06-02 13:48:57Z gahr $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/fmemopen.c 289931 2015-10-25 12:09:28Z ache $");
 
 #include <fcntl.h>
 #include <stdbool.h>
@@ -148,6 +148,9 @@ fmemopen(void * __restrict buf, size_t size, const char * __restrict mode)
 		free(ck);
 		return (NULL);
 	}
+
+	if (mode[0] == 'a')
+		f->_flags |= __SAPP;
 
 	/*
 	 * Turn off buffering, so a write past the end of the buffer

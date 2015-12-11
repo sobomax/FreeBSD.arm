@@ -1,6 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/db/Makefile 281967 2015-04-25 04:35:43Z ngie $
-
-TESTSDIR=	${TESTSBASE}/lib/libc/db
+# $FreeBSD: head/lib/libc/tests/db/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 BINDIR=		${TESTSDIR}
 

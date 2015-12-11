@@ -1,5 +1,7 @@
-# $FreeBSD: head/usr.sbin/fifolog/Makefile 178068 2008-04-10 14:02:00Z ru $
+# $FreeBSD: head/usr.sbin/fifolog/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
-SUBDIR=	lib fifolog_create fifolog_writer fifolog_reader
+SUBDIR=	lib .WAIT \
+	fifolog_create fifolog_writer fifolog_reader
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

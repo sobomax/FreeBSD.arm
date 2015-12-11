@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_hhook.c 251787 2013-06-15 10:08:34Z lstewart $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_hhook.c 291291 2015-11-25 07:14:58Z ae $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -101,7 +101,8 @@ hhook_run_hooks(struct hhook_head *hhh, void *ctx_data, struct osd *hosd)
 
 	HHH_RLOCK(hhh, &rmpt);
 	STAILQ_FOREACH(hhk, &hhh->hhh_hooks, hhk_next) {
-		if (hhk->hhk_helper->h_flags & HELPER_NEEDS_OSD) {
+		if (hhk->hhk_helper != NULL &&
+		    hhk->hhk_helper->h_flags & HELPER_NEEDS_OSD) {
 			hdata = osd_get(OSD_KHELP, hosd, hhk->hhk_helper->h_id);
 			if (hdata == NULL)
 				continue;

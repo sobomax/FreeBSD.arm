@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_intel.c 282658 2015-05-08 19:40:00Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_intel.c 291494 2015-11-30 17:35:49Z rrs $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -179,8 +179,19 @@ pmc_intel_initialize(void)
 			cputype = PMC_CPU_INTEL_IVYBRIDGE_XEON;
 			nclasses = 3;
 			break;
+		case 0x4e:
+		case 0x5e:
+			cputype = PMC_CPU_INTEL_SKYLAKE;
+			nclasses = 3;
+			break;
 		case 0x3D:
+		case 0x47:
 			cputype = PMC_CPU_INTEL_BROADWELL;
+			nclasses = 3;
+			break;
+		case 0x4f:
+		case 0x56:
+			cputype = PMC_CPU_INTEL_BROADWELL_XEON;
 			nclasses = 3;
 			break;
 		case 0x3F:	/* Per Intel document 325462-045US 09/2014. */
@@ -232,6 +243,8 @@ pmc_intel_initialize(void)
 	case PMC_CPU_INTEL_ATOM:
 	case PMC_CPU_INTEL_ATOM_SILVERMONT:
 	case PMC_CPU_INTEL_BROADWELL:
+	case PMC_CPU_INTEL_BROADWELL_XEON:
+	case PMC_CPU_INTEL_SKYLAKE:
 	case PMC_CPU_INTEL_CORE:
 	case PMC_CPU_INTEL_CORE2:
 	case PMC_CPU_INTEL_CORE2EXTREME:
@@ -326,6 +339,8 @@ pmc_intel_finalize(struct pmc_mdep *md)
 	case PMC_CPU_INTEL_ATOM:
 	case PMC_CPU_INTEL_ATOM_SILVERMONT:
 	case PMC_CPU_INTEL_BROADWELL:
+	case PMC_CPU_INTEL_BROADWELL_XEON:
+	case PMC_CPU_INTEL_SKYLAKE:
 	case PMC_CPU_INTEL_CORE:
 	case PMC_CPU_INTEL_CORE2:
 	case PMC_CPU_INTEL_CORE2EXTREME:

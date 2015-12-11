@@ -1,9 +1,8 @@
-# $FreeBSD: head/tools/tools/net80211/wesside/wesside/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/net80211/wesside/wesside/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	wesside
 BINDIR=	/usr/local/bin
-DPADD=	${LIBZ}
-LDADD=	-lz
+LIBADD=	z
 CFLAGS=-g
 MAN=
 SRCS=wesside.c aircrack-ptw-lib.c

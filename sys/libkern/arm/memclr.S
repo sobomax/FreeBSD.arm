@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/libkern/arm/memclr.S 285337 2015-07-09 20:54:38Z andrew $");
+__FBSDID("$FreeBSD: head/sys/libkern/arm/memclr.S 288073 2015-09-21 18:35:32Z andrew $");
 
 /*
  * This implements
@@ -35,6 +35,8 @@ __FBSDID("$FreeBSD: head/sys/libkern/arm/memclr.S 285337 2015-07-09 20:54:38Z an
  *  void bzero(dest, len)
  */
 ENTRY_NP(__aeabi_memclr4)
+EENTRY_NP(__aeabi_memclr8)
 	b	bzero
+EEND(__aeabi_memclr8)
 END(__aeabi_memclr4)
 

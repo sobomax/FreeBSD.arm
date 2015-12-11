@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_evnt.c,v 1.6 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/hci/ng_hci_evnt.c 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/hci/ng_hci_evnt.c 290491 2015-11-07 12:15:02Z takawata $
  */
 
 #include <sys/param.h>
@@ -913,23 +913,23 @@ encryption_change(ng_hci_unit_p unit, struct mbuf *event)
 	ng_hci_encryption_change_ep	*ep = NULL;
 	ng_hci_unit_con_p		 con = NULL;
 	int				 error = 0;
+	u_int16_t	h;
 
 	NG_HCI_M_PULLUP(event, sizeof(*ep));
 	if (event == NULL)
 		return (ENOBUFS);
 
 	ep = mtod(event, ng_hci_encryption_change_ep *);
+	h = NG_HCI_CON_HANDLE(le16toh(ep->con_handle));
+	con = ng_hci_con_by_handle(unit, h);
 
 	if (ep->status == 0) {
-		u_int16_t	h = NG_HCI_CON_HANDLE(le16toh(ep->con_handle));
-
-		con = ng_hci_con_by_handle(unit, h);
 		if (con == NULL) {
 			NG_HCI_ALERT(
 "%s: %s - invalid connection handle=%d\n",
 				__func__, NG_NODE_NAME(unit->node), h);
 			error = ENOENT;
-		} else if (con->link_type != NG_HCI_LINK_ACL) {
+		} else if (con->link_type == NG_HCI_LINK_SCO) {
 			NG_HCI_ALERT(
 "%s: %s - invalid link type=%d\n",
 				__func__, NG_NODE_NAME(unit->node), 
@@ -944,6 +944,9 @@ encryption_change(ng_hci_unit_p unit, struct mbuf *event)
 		NG_HCI_ERR(
 "%s: %s - failed to change encryption mode, status=%d\n",
 			__func__, NG_NODE_NAME(unit->node), ep->status);
+
+	/*Anyway, propagete encryption status to upper layer*/
+	ng_hci_lp_enc_change(con, con->encryption_mode);
 
 	NG_FREE_M(event);
 

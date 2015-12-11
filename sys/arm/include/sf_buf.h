@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/sf_buf.h 280712 2015-03-26 21:13:53Z ian $
+ * $FreeBSD: head/sys/arm/include/sf_buf.h 291258 2015-11-24 13:57:41Z skra $
  */
 
 #ifndef _MACHINE_SF_BUF_H_
@@ -44,7 +44,11 @@ static inline int
 sf_buf_unmap(struct sf_buf *sf)
 {
 
+#ifdef ARM_NEW_PMAP
+	pmap_qremove(sf->kva, 1);
+#else
 	pmap_kremove(sf->kva);
+#endif
 	return (1);
 }
 #endif /* !_MACHINE_SF_BUF_H_ */

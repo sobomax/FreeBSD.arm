@@ -28,7 +28,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_intr.c 280558 2015-03-25 10:59:42Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_intr.c 290457 2015-11-06 17:12:33Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -163,7 +163,9 @@ arm_get_next_irq(int last_irq)
 		irq = 0;
 
 #ifdef SOC_BCM2836
-	if ((ret = bcm2836_get_next_irq(irq)) >= 0)
+	if ((ret = bcm2836_get_next_irq(irq)) < 0)
+		return (-1);
+	if (ret != BCM2836_GPU_IRQ)
 		return (ret + BANK3_START);
 #endif
 

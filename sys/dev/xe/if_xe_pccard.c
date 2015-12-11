@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xe/if_xe_pccard.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/xe/if_xe_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 /* xe pccard interface driver */
 
@@ -386,3 +386,4 @@ static driver_t xe_pccard_driver = {
 devclass_t xe_devclass;
 
 DRIVER_MODULE(xe, pccard, xe_pccard_driver, xe_devclass, 0, 0);
+PCCARD_PNP_INFO(xe_pccard_products);

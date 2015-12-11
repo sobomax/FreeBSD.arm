@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/cam_periph.c 285819 2015-07-23 19:13:41Z jeff $");
+__FBSDID("$FreeBSD: head/sys/cam/cam_periph.c 288420 2015-09-30 13:31:37Z mav $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -716,16 +716,19 @@ camperiphfree(struct cam_periph *periph)
  * buffers to map stuff in and out, we're limited to the buffer size.
  */
 int
-cam_periph_mapmem(union ccb *ccb, struct cam_periph_map_info *mapinfo)
+cam_periph_mapmem(union ccb *ccb, struct cam_periph_map_info *mapinfo,
+    u_int maxmap)
 {
 	int numbufs, i, j;
 	int flags[CAM_PERIPH_MAXMAPS];
 	u_int8_t **data_ptrs[CAM_PERIPH_MAXMAPS];
 	u_int32_t lengths[CAM_PERIPH_MAXMAPS];
 	u_int32_t dirs[CAM_PERIPH_MAXMAPS];
-	/* Some controllers may not be able to handle more data. */
-	size_t maxmap = DFLTPHYS;
 
+	if (maxmap == 0)
+		maxmap = DFLTPHYS;	/* traditional default */
+	else if (maxmap > MAXPHYS)
+		maxmap = MAXPHYS;	/* for safety */
 	switch(ccb->ccb_h.func_code) {
 	case XPT_DEV_MATCH:
 		if (ccb->cdm.match_buf_len == 0) {

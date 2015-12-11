@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/bhyverun.c 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/bhyverun.c 289746 2015-10-22 08:37:11Z ngie $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 284539 2015-06-18 06:00:17Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 289746 2015-10-22 08:37:11Z ngie $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -56,6 +56,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 284539 2015-06-18 06:00:17Z n
 #include "acpi.h"
 #include "inout.h"
 #include "dbgport.h"
+#include "fwctl.h"
 #include "ioapic.h"
 #include "mem.h"
 #include "mevent.h"
@@ -260,7 +261,8 @@ fbsdrun_addcpu(struct vmctx *ctx, int fromcpu, int newcpu, uint64_t rip)
 	 * with vm_suspend().
 	 */
 	error = vm_activate_cpu(ctx, newcpu);
-	assert(error == 0);
+	if (error != 0)
+		err(EX_OSERR, "could not activate CPU %d", newcpu);
 
 	CPU_SET_ATOMIC(newcpu, &cpumask);
 
@@ -949,6 +951,9 @@ main(int argc, char *argv[])
 		error = acpi_build(ctx, guest_ncpus);
 		assert(error == 0);
 	}
+
+	if (lpc_bootrom())
+		fwctl_init();
 
 	/*
 	 * Change the proc title to include the VM name.

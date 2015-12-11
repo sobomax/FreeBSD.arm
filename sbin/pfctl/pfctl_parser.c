@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_parser.c 259916 2013-12-26 15:51:14Z bz $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl_parser.c 287222 2015-08-27 21:27:47Z kp $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -990,12 +990,7 @@ print_rule(struct pf_rule *r, const char *anchor_call, int verbose, int numeric)
 		if (r->rule_flag & PFRULE_REASSEMBLE_TCP)
 			printf(" reassemble tcp");
 
-		if (r->rule_flag & PFRULE_FRAGDROP)
-			printf(" fragment drop-ovl");
-		else if (r->rule_flag & PFRULE_FRAGCROP)
-			printf(" fragment crop");
-		else
-			printf(" fragment reassemble");
+		printf(" fragment reassemble");
 	}
 	if (r->label[0])
 		printf(" label \"%s\"", r->label);

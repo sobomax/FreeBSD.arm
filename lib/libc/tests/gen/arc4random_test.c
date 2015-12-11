@@ -25,15 +25,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/tests/gen/arc4random_test.c 274581 2014-11-16 07:55:28Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/tests/gen/arc4random_test.c 290571 2015-11-09 06:16:38Z ngie $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 #include <atf-c.h>
 
 /*
@@ -56,14 +58,9 @@ ATF_TC_BODY(test_arc4random, tc)
 	pid_t pid;
 	char c;
 
-	printf("1..1\n");
-
 	page = mmap(NULL, sizeof(struct shared_page), PROT_READ | PROT_WRITE,
 		    MAP_ANON | MAP_SHARED, -1, 0);
-	if (page == MAP_FAILED) {
-		printf("fail 1 - mmap\n");
-		exit(1);
-	}
+	ATF_REQUIRE_MSG(page != MAP_FAILED, "mmap failed; errno=%d", errno);
 
 	arc4random_buf(&c, 1);
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/dtb.mk 278463 2015-02-09 16:29:44Z imp $
+# $FreeBSD: head/sys/conf/dtb.mk 289442 2015-10-17 05:49:07Z bdrewery $
 #
 # The include file <dtb.mk> handles building and installing dtb files.
 #
@@ -69,7 +69,7 @@ _dtbinstall:
 	test -d ${DESTDIR}${DTBDIR} || ${INSTALL} -d -o ${DTBOWN} -g ${DTBGRP} ${DESTDIR}${DTBDIR}
 .for _dtb in ${DTB}
 	${INSTALL} -o ${DTBOWN} -g ${DTBGRP} -m ${DTBMODE} \
-	    ${_INSTALLFLAGS} ${_dtb} ${DESTDIR}${DTBDIR}
+	    ${_INSTALLFLAGS} ${_dtb} ${DESTDIR}${DTBDIR}/
 .endfor
 .endif # !target(realinstall)
 .endif # !target(install)

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/uma_machdep.c 286130 2015-07-31 14:17:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/uma_machdep.c 286958 2015-08-20 12:49:56Z andrew $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -61,6 +61,8 @@ uma_small_alloc(uma_zone_t zone, vm_size_t bytes, u_int8_t *flags, int wait)
 			break;
 	}
 	pa = m->phys_addr;
+	if ((wait & M_NODUMP) == 0)
+		dump_add_page(pa);
 	va = (void *)PHYS_TO_DMAP(pa);
 	if ((wait & M_ZERO) && (m->flags & PG_ZERO) == 0)
 		bzero(va, PAGE_SIZE);
@@ -74,6 +76,7 @@ uma_small_free(void *mem, vm_size_t size, u_int8_t flags)
 	vm_paddr_t pa;
 
 	pa = DMAP_TO_PHYS((vm_offset_t)mem);
+	dump_drop_page(pa);
 	m = PHYS_TO_VM_PAGE(pa);
 	m->wire_count--;
 	vm_page_free(m);

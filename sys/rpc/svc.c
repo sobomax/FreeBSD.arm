@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc.c 1.44 88/02/08 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc.c	2.4 88/08/11 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc.c 280930 2015-04-01 00:45:47Z wollman $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc.c 291061 2015-11-19 08:04:05Z mav $");
 
 /*
  * svc.c, Server-side remote procedure call interface.
@@ -1303,7 +1303,9 @@ svc_new_thread(SVCGROUP *grp)
 	SVCPOOL *pool = grp->sg_pool;
 	struct thread *td;
 
+	mtx_lock(&grp->sg_lock);
 	grp->sg_threadcount++;
+	mtx_unlock(&grp->sg_lock);
 	kthread_add(svc_thread_start, grp, pool->sp_proc, &td, 0, 0,
 	    "%s: service", pool->sp_name);
 }
@@ -1336,12 +1338,12 @@ svc_run(SVCPOOL *pool)
 	}
 
 	/* Starting threads */
+	pool->sp_groups[0].sg_threadcount++;
 	for (g = 0; g < pool->sp_groupcount; g++) {
 		grp = &pool->sp_groups[g];
 		for (i = ((g == 0) ? 1 : 0); i < grp->sg_minthreads; i++)
 			svc_new_thread(grp);
 	}
-	pool->sp_groups[0].sg_threadcount++;
 	svc_run_internal(&pool->sp_groups[0], TRUE);
 
 	/* Waiting for threads to stop. */

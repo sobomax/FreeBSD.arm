@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform_ah.c 286101 2015-07-31 00:31:52Z jmg $	*/
+/*	$FreeBSD: head/sys/netipsec/xform_ah.c 288418 2015-09-30 08:16:33Z ae $	*/
 /*	$OpenBSD: ip_ah.c,v 1.63 2001/06/26 06:18:58 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -1068,6 +1068,7 @@ ah_output(struct mbuf *m, struct ipsecrequest *isr, struct mbuf **mp,
 	crp->crp_opaque = (caddr_t) tc;
 
 	/* These are passed as-is to the callback. */
+	key_addref(isr->sp);
 	tc->tc_isr = isr;
 	KEY_ADDREFSA(sav);
 	tc->tc_sav = sav;

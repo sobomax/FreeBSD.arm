@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/cpufunc.h 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/include/cpufunc.h 290188 2015-10-30 09:53:33Z kib $
  */
 
 /*
@@ -83,6 +83,13 @@ clflush(u_long addr)
 {
 
 	__asm __volatile("clflush %0" : : "m" (*(char *)addr));
+}
+
+static __inline void
+clflushopt(u_long addr)
+{
+
+	__asm __volatile(".byte 0x66;clflush %0" : : "m" (*(char *)addr));
 }
 
 static __inline void

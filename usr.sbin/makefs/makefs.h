@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/makefs/makefs.h 250407 2013-05-09 14:43:36Z brooks $
+ * $FreeBSD: head/usr.sbin/makefs/makefs.h 289203 2015-10-13 02:32:15Z adrian $
  */
 
 #ifndef	_MAKEFS_H
@@ -130,6 +130,7 @@ typedef struct {
 	int	needswap;	/* non-zero if byte swapping needed */
 	int	sectorsize;	/* sector size */
 	int	sparse;		/* sparse image, don't fill it with zeros */
+	off_t	roundup;	/* round image size up to this value */
 
 	void	*fs_specific;	/* File system specific additions. */
 } fsinfo_t;

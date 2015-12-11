@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/filedesc.h 286020 2015-07-29 17:16:53Z ed $
+ * $FreeBSD: head/sys/sys/filedesc.h 287539 2015-09-07 20:02:56Z mjg $
  */
 
 #ifndef _SYS_FILEDESC_H_
@@ -153,7 +153,8 @@ enum {
 struct thread;
 
 void	filecaps_init(struct filecaps *fcaps);
-void	filecaps_copy(const struct filecaps *src, struct filecaps *dst);
+int	filecaps_copy(const struct filecaps *src, struct filecaps *dst,
+	    bool locked);
 void	filecaps_move(struct filecaps *src, struct filecaps *dst);
 void	filecaps_free(struct filecaps *fcaps);
 

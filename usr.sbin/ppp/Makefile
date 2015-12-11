@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ppp/Makefile 278182 2015-02-04 06:53:45Z ngie $
+# $FreeBSD: head/usr.sbin/ppp/Makefile 289148 2015-10-11 19:25:39Z bapt $
 
 .include <src.opts.mk>
 
@@ -21,6 +21,9 @@ PPP_NO_PAM=
 PPP_NO_RADIUS=
 PPP_NO_SUID=
 .endif
+CONFS=	ppp.conf
+CONFSDIR=	${CONFDIR}/ppp
+CONFSMODE=	600
 
 .if ${MK_ATM} == "no"
 PPP_NO_ATM=

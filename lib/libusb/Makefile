@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libusb/Makefile 286812 2015-08-15 19:00:38Z antoine $
+# $FreeBSD: head/lib/libusb/Makefile 288615 2015-10-03 16:34:21Z bdrewery $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
@@ -37,15 +37,8 @@ SRCS+=		libusb10_io.c
 CFLAGS+=	-DCOMPAT_32BIT
 .endif
 
-.ifndef COMPAT_32BIT
-beforeinstall:
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libusb-0.1.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libusb-1.0.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libusb-2.0.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-.endif
+FILES=		libusb-0.1.pc libusb-1.0.pc libusb-2.0.pc
+FILESDIR=	${LIBDATADIR}/pkgconfig
 
 #
 # Cross platform support

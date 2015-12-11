@@ -1,9 +1,5 @@
-# $FreeBSD: head/sys/arm/allwinner/files.allwinner 285090 2015-07-03 14:11:01Z loos $
+# $FreeBSD: head/sys/arm/allwinner/files.allwinner 291133 2015-11-21 15:30:08Z andrew $
 kern/kern_clocksource.c			standard
-
-arm/arm/bus_space_base.c		standard
-arm/arm/bus_space_asm_generic.S		standard
-arm/arm/bus_space_generic.c		standard
 
 arm/allwinner/a10_ahci.c		optional	ahci
 arm/allwinner/a10_clk.c			standard

@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/xargs/tests/Makefile 286461 2015-08-08 18:37:20Z allanjude $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/xargs
+# $FreeBSD: head/usr.bin/xargs/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_SH=	legacy_test
 

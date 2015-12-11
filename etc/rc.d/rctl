@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/rctl 286329 2015-08-05 17:38:02Z trasz $
+# $FreeBSD: head/etc/rc.d/rctl 291596 2015-12-01 16:42:39Z trasz $
 #
 
 # PROVIDE: rctl
@@ -23,10 +23,10 @@ rctl_start()
 			\#*|'')
 				;;
 			*)
-				rctl -a "${var}"
+				echo "${var}"
 				;;
 			esac
-		done < ${rctl_rules}
+		done < ${rctl_rules} | xargs rctl -a
 	fi
 }
 

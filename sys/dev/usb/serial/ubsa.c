@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ubsa.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ubsa.c 292080 2015-12-11 05:28:00Z imp $");
 /*-
  * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -273,6 +273,7 @@ DRIVER_MODULE(ubsa, uhub, ubsa_driver, ubsa_devclass, NULL, 0);
 MODULE_DEPEND(ubsa, ucom, 1, 1, 1);
 MODULE_DEPEND(ubsa, usb, 1, 1, 1);
 MODULE_VERSION(ubsa, 1);
+USB_PNP_HOST_INFO(ubsa_devs);
 
 static int
 ubsa_probe(device_t dev)

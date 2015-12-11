@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.sbin/pw/tests/Makefile 286173 2015-08-02 00:33:34Z bapt $
-
-TESTSDIR=	${TESTSBASE}/usr.sbin/pw
+# $FreeBSD: head/usr.sbin/pw/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 ATF_TESTS_SH=	pw_etcdir \
 		pw_lock \

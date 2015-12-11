@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/ifconfig/Makefile 276668 2015-01-04 22:25:16Z ngie $
+# $FreeBSD: head/sbin/ifconfig/Makefile 291470 2015-11-30 06:34:16Z adrian $
 
 .include <src.opts.mk>
 
@@ -37,8 +37,8 @@ SRCS+=	ifgif.c			# GIF reversed header workaround
 SRCS+=	sfp.c			# SFP/SFP+ information
 LIBADD+=	m
 
-SRCS+=	ifieee80211.c regdomain.c # SIOC[GS]IEEE80211 support
-LIBADD+=	bsdxml sbuf
+SRCS+=	ifieee80211.c		# SIOC[GS]IEEE80211 support
+LIBADD+=	bsdxml sbuf 80211
 
 SRCS+=	carp.c			# SIOC[GS]VH support
 SRCS+=	ifgroup.c		# ...

@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/mdconfig2 264243 2014-04-07 22:40:29Z dteske $
+# $FreeBSD: head/etc/rc.d/mdconfig2 290163 2015-10-29 21:12:57Z dteske $
 #
 
 # PROVIDE: mdconfig2
@@ -216,6 +216,8 @@ if [ -z "${_mdconfig2_list}" ]; then
 		sort_lite -nk1.12`
 	do
 		_mdconfig2_unit=${_mdconfig2_config#mdconfig_md}
+		[ "${_mdconfig2_unit#*[!0-9]}" = "$_mdconfig2_unit" ] ||
+			continue
 		_mdconfig2_list="$_mdconfig2_list md$_mdconfig2_unit"
 	done
 	_mdconfig2_list="${_mdconfig2_list# }"

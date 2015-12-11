@@ -1,5 +1,4 @@
 /* $OpenBSD: buffer.c,v 1.35 2014/02/02 03:44:31 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/buffer.c 263712 2014-03-25 11:05:34Z des $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -14,7 +13,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/buffer.c 263712 2014-03-25 11:05:34Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/buffer.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/param.h>
 

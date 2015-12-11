@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-intel.c 286448 2015-08-08 11:48:11Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-intel.c 290855 2015-11-15 10:58:01Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -422,7 +422,7 @@ ata_intel_reset(device_t dev)
 		mask |= (1 << smap[1]);
 	pci_write_config(parent, 0x92,
 	    pci_read_config(parent, 0x92, 2) & ~mask, 2);
-	DELAY(10);
+	DELAY(100);
 	pci_write_config(parent, 0x92,
 	    pci_read_config(parent, 0x92, 2) | mask, 2);
 

@@ -1,13 +1,12 @@
 #	$NetBSD: Makefile,v 1.1 2004/05/13 19:17:12 christos Exp $
-# $FreeBSD: head/tools/regression/lib/libc/resolv/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/lib/libc/resolv/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=		resolv
 MAN=
 
 # Note: this test relies on being dynamically linked.  You will get a
 # spurious PASS for a statically linked test.
-DPADD+=		${LIBPTHREAD}
-LDADD+=		-lpthread
+LIBADD+=	pthread
 
 regress: ${PROG}
 	./${PROG} -r ${.CURDIR}/mach

@@ -30,7 +30,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/sfxge.h 283514 2015-05-25 08:34:55Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/sfxge.h 291843 2015-12-05 07:04:11Z arybchik $
  */
 
 #ifndef _SFXGE_H
@@ -281,6 +281,9 @@ struct sfxge_softc {
 	unsigned int			txq_count;
 
 	int				tso_fw_assisted;
+#if EFSYS_OPT_MCDI_LOGGING
+	int				mcdi_logging;
+#endif
 };
 
 #define	SFXGE_LINK_UP(sc) ((sc)->port.link_mode != EFX_LINK_DOWN)

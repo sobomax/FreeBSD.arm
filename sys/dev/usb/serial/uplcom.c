@@ -1,7 +1,7 @@
 /*	$NetBSD: uplcom.c,v 1.21 2001/11/13 06:24:56 lukem Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uplcom.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uplcom.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*-
  * Copyright (c) 2001-2003, 2005 Shunsuke Akiyama <akiyama@jp.FreeBSD.org>.
@@ -326,6 +326,7 @@ DRIVER_MODULE(uplcom, uhub, uplcom_driver, uplcom_devclass, NULL, 0);
 MODULE_DEPEND(uplcom, ucom, 1, 1, 1);
 MODULE_DEPEND(uplcom, usb, 1, 1, 1);
 MODULE_VERSION(uplcom, UPLCOM_MODVER);
+USB_PNP_HOST_INFO(uplcom_devs);
 
 static int
 uplcom_probe(device_t dev)

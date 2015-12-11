@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/usr.sbin/ypserv/ypinit.sh 286892 2015-08-18 15:33:23Z asomers $
+# $FreeBSD: head/usr.sbin/ypserv/ypinit.sh 289677 2015-10-21 05:37:09Z eadler $
 #
 # ypinit.sh - setup a master or slave server.
 # (Taken from OpenBSD and modified for FreeBSD.)
@@ -235,7 +235,7 @@ then
 
 	for MAP in ${YPMAPLIST}
 	do
-		echo "Transfering ${MAP}..."
+		echo "Transferring ${MAP}..."
 		if ! ${YPXFR} -p ${YP_DIR} -h ${MASTER} -c -d ${DOMAIN} ${MAP}; then
 			echo "Can't transfer map ${MAP}." 1>&2
 			ERROR_EXISTS="YES"

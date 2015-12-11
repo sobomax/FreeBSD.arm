@@ -1,4 +1,4 @@
-# $FreeBSD: head/sbin/ipf/ipf/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/ipf/ipf/Makefile 291329 2015-11-25 20:38:07Z bdrewery $
 
 PROG=		ipf
 SRCS=		${GENHDRS} ipf.c ipfcomp.c ipf_y.c ipf_l.c bpf_filter.c
@@ -7,8 +7,6 @@ MLINKS=		ipf.5 ipf.conf.5 ipf.5 ipf6.conf.5
 CFLAGS+=	-I. -DIPFILTER_BPF -DHAS_SYS_MD5_H
 
 GENHDRS=	ipf_l.h ipf_y.h
-DPSRCS+=	${GENHDRS}
-
 CLEANFILES+=	${GENHDRS} ipf_y.c ipf_l.c
 
 ipf_y.c: ipf_y.y

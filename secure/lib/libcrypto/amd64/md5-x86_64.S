@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/amd64/md5-x86_64.S 238405 2012-07-12 19:30:53Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/amd64/md5-x86_64.S 290207 2015-10-30 20:51:33Z jkim $
 .text	
 .align	16
 
@@ -30,7 +30,7 @@ md5_block_asm_data_order:
 
 
 	cmpq	%rdi,%rsi
-	je	.Lend				
+	je	.Lend
 
 
 .Lloop:
@@ -649,7 +649,7 @@ md5_block_asm_data_order:
 
 	addq	$64,%rsi
 	cmpq	%rdi,%rsi
-	jb	.Lloop				
+	jb	.Lloop
 
 
 .Lend:

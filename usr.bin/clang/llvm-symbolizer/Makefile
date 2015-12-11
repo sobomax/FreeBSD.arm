@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-symbolizer/Makefile 276945 2015-01-10 22:22:42Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-symbolizer/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,8 @@ SRCDIR=	tools/llvm-symbolizer
 SRCS=	llvm-symbolizer.cpp \
 	LLVMSymbolize.cpp
 
-LIBDEPS=llvmdebuginfo \
+LIBDEPS=llvmdebuginfopdb \
+	llvmdebuginfodwarf \
 	llvmobject \
 	llvmmcparser \
 	llvmmc \
@@ -16,7 +17,6 @@ LIBDEPS=llvmdebuginfo \
 	llvmcore \
 	llvmsupport
 
-.include "../clang.prog.mk"
+LIBADD=	z
 
-DPADD+= ${LIBZ}
-LDADD+= -lz
+.include "../clang.prog.mk"

@@ -34,7 +34,7 @@
 	.asciz "@(#)setjmp.s	5.1 (Berkeley) 4/23/90"
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/amd64/gen/setjmp.S 258447 2013-11-21 21:25:58Z andreast $");
+__FBSDID("$FreeBSD: head/lib/libc/amd64/gen/setjmp.S 287292 2015-08-29 14:25:01Z kib $");
 
 /*
  * C library -- _setjmp, _longjmp
@@ -55,7 +55,7 @@ ENTRY(setjmp)
 	movq	$0,%rsi			/* (sigset_t*)set  */
 	leaq	72(%rcx),%rdx		/* 9,10; (sigset_t*)oset */
 	/* stack is 16-byte aligned */
-	call	PIC_PLT(CNAME(_sigprocmask))
+	call	__libc_sigprocmask
 	popq	%rdi
 	movq	%rdi,%rcx
 	movq	0(%rsp),%rdx		/* retval */
@@ -82,7 +82,7 @@ ENTRY(__longjmp)
 	leaq	72(%rdx),%rsi		/* (sigset_t*)set  */
 	movq	$0,%rdx			/* (sigset_t*)oset */
 	subq	$0x8,%rsp		/* make the stack 16-byte aligned */
-	call	PIC_PLT(CNAME(_sigprocmask))
+	call	__libc_sigprocmask
 	addq	$0x8,%rsp
 	popq	%rsi
 	popq	%rdi			/* jmpbuf */

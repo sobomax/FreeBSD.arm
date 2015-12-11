@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)gmon.c	8.1 (Berkeley) 6/4/93";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gmon/gmon.c 254301 2013-08-13 21:45:48Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gmon/gmon.c 288009 2015-09-20 03:59:27Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -68,11 +68,10 @@ static int	s_scale;
 
 void	moncontrol(int);
 static int hertz(void);
+void	_mcleanup(void);
 
 void
-monstartup(lowpc, highpc)
-	u_long lowpc;
-	u_long highpc;
+monstartup(u_long lowpc, u_long highpc)
 {
 	int o;
 	char *cp;
@@ -218,8 +217,7 @@ _mcleanup(void)
  *	all the data structures are ready.
  */
 void
-moncontrol(mode)
-	int mode;
+moncontrol(int mode)
 {
 	struct gmonparam *p = &_gmonparam;
 
@@ -239,7 +237,7 @@ moncontrol(mode)
  * if something goes wrong, we return 0, an impossible hertz.
  */
 static int
-hertz()
+hertz(void)
 {
 	struct itimerval tim;
 

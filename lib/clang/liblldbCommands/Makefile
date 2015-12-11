@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbCommands/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/liblldbCommands/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -10,12 +10,14 @@ SRCS=	CommandCompletions.cpp \
 	CommandObjectArgs.cpp \
 	CommandObjectBreakpoint.cpp \
 	CommandObjectBreakpointCommand.cpp \
+	CommandObjectBugreport.cpp \
 	CommandObjectCommands.cpp \
 	CommandObjectDisassemble.cpp \
 	CommandObjectExpression.cpp \
 	CommandObjectFrame.cpp \
 	CommandObjectGUI.cpp \
 	CommandObjectHelp.cpp \
+	CommandObjectLanguage.cpp \
 	CommandObjectLog.cpp \
 	CommandObjectMemory.cpp \
 	CommandObjectMultiword.cpp \

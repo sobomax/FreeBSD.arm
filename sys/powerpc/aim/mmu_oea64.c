@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/aim/mmu_oea64.c 286584 2015-08-10 17:18:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/powerpc/aim/mmu_oea64.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
 
 /*
  * Manages physical address maps.
@@ -493,9 +493,9 @@ moea64_add_ofw_mappings(mmu_t mmup, phandle_t mmu, size_t sz)
 	int		i, j;
 
 	bzero(translations, sz);
-	OF_getprop(OF_finddevice("/"), "#address-cells", &acells,
+	OF_getencprop(OF_finddevice("/"), "#address-cells", &acells,
 	    sizeof(acells));
-	if (OF_getprop(mmu, "translations", trans_cells, sz) == -1)
+	if (OF_getencprop(mmu, "translations", trans_cells, sz) == -1)
 		panic("moea64_bootstrap: can't get ofw translations");
 
 	CTR0(KTR_PMAP, "moea64_add_ofw_mappings: translations");
@@ -856,7 +856,7 @@ moea64_late_bootstrap(mmu_t mmup, vm_offset_t kernelstart, vm_offset_t kernelend
 	 */
 
 	chosen = OF_finddevice("/chosen");
-	if (chosen != -1 && OF_getprop(chosen, "mmu", &mmui, 4) != -1) {
+	if (chosen != -1 && OF_getencprop(chosen, "mmu", &mmui, 4) != -1) {
 		mmu = OF_instance_to_package(mmui);
 		if (mmu == -1 ||
 		    (sz = OF_getproplen(mmu, "translations")) == -1)

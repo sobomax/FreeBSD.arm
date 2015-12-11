@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/mv/armadaxp/armadaxp_mp.c 281092 2015-04-04 23:03:11Z andrew $
+ * $FreeBSD: head/sys/arm/mv/armadaxp/armadaxp_mp.c 290547 2015-11-08 14:26:50Z tijl $
  */
 
 #include <sys/param.h>
@@ -82,14 +82,13 @@ void
 platform_mp_setmaxid(void)
 {
 
-	mp_maxid = 3;
+	mp_ncpus = platform_get_ncpus();
+	mp_maxid = mp_ncpus - 1;
 }
 
 int
 platform_mp_probe(void)
 {
-
-	mp_ncpus = platform_get_ncpus();
 
 	return (mp_ncpus > 1);
 }

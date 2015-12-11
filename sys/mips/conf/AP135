@@ -9,8 +9,10 @@
 # PCIe host controllers - there's two of them, and the existing
 # PCIe code here doesn't support that just yet.
 #
-# $FreeBSD: head/sys/mips/conf/AP135 283097 2015-05-19 05:41:00Z adrian $
+# $FreeBSD: head/sys/mips/conf/AP135 291049 2015-11-19 01:58:12Z imp $
 #
+
+#NO_UNIVERSE
 
 # Include the default QCA955x parameters
 include         "QCA955X_BASE"

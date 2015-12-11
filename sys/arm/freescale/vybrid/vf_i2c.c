@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_i2c.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_i2c.c 289093 2015-10-09 22:49:50Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -232,7 +232,7 @@ i2c_repeated_start(device_t dev, u_char slave, int timeout)
 
 	if ((READ1(sc, I2C_IBSR) & IBSR_IBB) == 0) {
 		mtx_unlock(&sc->mutex);
-		return (IIC_EBUSBSY);
+		return (IIC_EBUSERR);
 	}
 
 	/* Set repeated start condition */
@@ -275,7 +275,7 @@ i2c_start(device_t dev, u_char slave, int timeout)
 	if (READ1(sc, I2C_IBSR) & IBSR_IBB) {
 		mtx_unlock(&sc->mutex);
 		vf_i2c_dbg(sc, "cant i2c start: IIC_EBUSBSY\n");
-		return (IIC_EBUSBSY);
+		return (IIC_EBUSERR);
 	}
 
 	/* Set start condition */

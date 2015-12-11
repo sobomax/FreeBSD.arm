@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ed/if_ed_pccard.c 279500 2015-03-01 21:41:33Z imp $
+ * $FreeBSD: head/sys/dev/ed/if_ed_pccard.c 292079 2015-12-11 05:27:56Z imp $
  */
 
 /*
@@ -1248,3 +1248,4 @@ DRIVER_MODULE(ed, pccard, ed_pccard_driver, ed_devclass, 0, NULL);
 DRIVER_MODULE(miibus, ed, miibus_driver, miibus_devclass, 0, NULL);
 MODULE_DEPEND(ed, miibus, 1, 1, 1);
 MODULE_DEPEND(ed, ether, 1, 1, 1);
+PCCARD_PNP_INFO(ed_pccard_products);

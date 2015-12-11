@@ -26,7 +26,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/booke/trap_subr.S 285195 2015-07-06 05:08:57Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/booke/trap_subr.S 292071 2015-12-11 01:23:18Z jhibbits $
  */
 /*-
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
@@ -393,12 +393,19 @@
 	.globl CNAME(interrupt_vector_base)
 	.align 5
 interrupt_vector_base:
+/*****************************************************************************
+ * Catch-all handler to handle uninstalled IVORs
+ ****************************************************************************/
+INTERRUPT(int_unknown)
+	STANDARD_PROLOG(SPR_SPRG1, PC_TEMPSAVE, SPR_SRR0, SPR_SRR1)
+	FRAME_SETUP(SPR_SPRG1, PC_TEMPSAVE, EXC_RSVD)
+	b	trap_common
 
 /*****************************************************************************
  * Critical input interrupt
  ****************************************************************************/
 INTERRUPT(int_critical_input)
-	STANDARD_PROLOG(SPR_SPRG2, PC_BOOKE_CRITSAVE, SPR_CSRR0, SPR_CSRR1)
+	STANDARD_CRIT_PROLOG(SPR_SPRG2, PC_BOOKE_CRITSAVE, SPR_CSRR0, SPR_CSRR1)
 	FRAME_SETUP(SPR_SPRG2, PC_BOOKE_CRITSAVE, EXC_CRIT)
 	addi	%r3, %r1, 8
 	bl	CNAME(powerpc_interrupt)
@@ -459,6 +466,12 @@ INTERRUPT(int_program)
 	b	trap_common
 
 
+INTERRUPT(int_fpu)
+	STANDARD_PROLOG(SPR_SPRG1, PC_TEMPSAVE, SPR_SRR0, SPR_SRR1)
+	FRAME_SETUP(SPR_SPRG1, PC_TEMPSAVE, EXC_FPU)
+	b	trap_common
+
+
 /*****************************************************************************
  * System call
  ****************************************************************************/
@@ -494,6 +507,24 @@ INTERRUPT(int_fixed_interval_timer)
 INTERRUPT(int_watchdog)
 	STANDARD_PROLOG(SPR_SPRG1, PC_TEMPSAVE, SPR_SRR0, SPR_SRR1)
 	FRAME_SETUP(SPR_SPRG1, PC_TEMPSAVE, EXC_WDOG)
+	b	trap_common
+
+
+/*****************************************************************************
+ * Altivec Unavailable interrupt
+ ****************************************************************************/
+INTERRUPT(int_vec)
+	STANDARD_PROLOG(SPR_SPRG1, PC_TEMPSAVE, SPR_SRR0, SPR_SRR1)
+	FRAME_SETUP(SPR_SPRG1, PC_TEMPSAVE, EXC_VEC)
+	b	trap_common
+
+
+/*****************************************************************************
+ * Watchdog interrupt
+ ****************************************************************************/
+INTERRUPT(int_vecast)
+	STANDARD_PROLOG(SPR_SPRG1, PC_TEMPSAVE, SPR_SRR0, SPR_SRR1)
+	FRAME_SETUP(SPR_SPRG1, PC_TEMPSAVE, EXC_VECAST_E)
 	b	trap_common
 
 
@@ -605,6 +636,9 @@ search_failed:
 	mtspr	SPR_MAS3, %r23
 	isync
 
+	bl	zero_mas7
+	bl	zero_mas8
+
 	tlbwe
 	msync
 	isync
@@ -697,8 +731,10 @@ tlb_fill_entry:
 
 	/* Setup MAS3 value in r23. */
 	lwz	%r23, PTE_RPN(%r25)		/* get pte->rpn */
+	rlwinm	%r22, %r23, 12, 0, 20		/* extract MAS3 portion of RPN */
 
-	rlwimi	%r23, %r21, 24, 26, 31		/* insert protection bits from pte */
+	rlwimi	%r22, %r21, 24, 26, 31		/* insert protection bits from pte */
+	rlwinm	%r23, %r23, 12, 28, 31		/* MAS7 portion of RPN */
 
 	/* Load MAS registers. */
 	mtspr	SPR_MAS0, %r29
@@ -707,8 +743,14 @@ tlb_fill_entry:
 	isync
 	mtspr	SPR_MAS2, %r27
 	isync
-	mtspr	SPR_MAS3, %r23
+	mtspr	SPR_MAS3, %r22
 	isync
+	mtspr	SPR_MAS7, %r23
+	isync
+
+	mflr	%r21
+	bl	zero_mas8
+	mtlr	%r21
 
 	tlbwe
 	isync

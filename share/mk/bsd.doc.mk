@@ -1,5 +1,5 @@
 #	from: @(#)bsd.doc.mk	5.3 (Berkeley) 1/2/91
-# $FreeBSD: head/share/mk/bsd.doc.mk 284620 2015-06-20 00:17:57Z bapt $
+# $FreeBSD: head/share/mk/bsd.doc.mk 290773 2015-11-13 17:27:23Z bdrewery $
 #
 # The include file <bsd.doc.mk> handles installing BSD troff documents.
 #
@@ -133,14 +133,14 @@ CLEANFILES+=	${DOC}.ascii ${DOC}.ascii${DCOMPRESS_EXT} \
 		${DOC}.html ${DOC}-*.html
 
 realinstall:
-.for _dev in ${PRINTERDEVICE:Mhtml}
+.if ${PRINTERDEVICE:Mhtml}
 	cd ${SRCDIR}; \
 	    ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
-	    ${DOC}*.html ${DESTDIR}${BINDIR}/${VOLUME}
-.endfor
+	    ${DOC}*.html ${DESTDIR}${BINDIR}/${VOLUME}/
+.endif
 .for _dev in ${PRINTERDEVICE:Nhtml}
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
-	    ${DFILE.${_dev}} ${DESTDIR}${BINDIR}/${VOLUME}
+	    ${DFILE.${_dev}} ${DESTDIR}${BINDIR}/${VOLUME}/
 .endfor
 
 spell: ${SRCS}
@@ -184,7 +184,6 @@ ${DFILE.html}: ${SRCS}
 .else # unroff(1) requires a macro package as an argument
 	cd ${SRCDIR}; ${UNROFF} -ms ${UNROFFFLAGS} \
 	    document=${DOC} ${SRCS}
-.else
 .endif
 .endif
 .endfor

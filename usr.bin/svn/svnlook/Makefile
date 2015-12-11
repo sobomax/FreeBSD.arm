@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/svnlook/Makefile 275079 2014-11-25 21:43:51Z bapt $
+# $FreeBSD: head/usr.bin/svn/svnlook/Makefile 289180 2015-10-12 09:53:55Z peter $
 
 MAN=
 
@@ -21,6 +21,7 @@ CFLAGS+=-I${SVNDIR}/include -I${SVNDIR} -I${.CURDIR}/.. \
 LDADD=	-L${LIBSVN_REPOSDIR} -lsvn_repos \
 	-L${LIBSVN_FSDIR} -lsvn_fs \
 	-L${LIBSVN_FS_FSDIR} -lsvn_fs_fs \
+	-L${LIBSVN_FS_XDIR} -lsvn_fs_x \
 	-L${LIBSVN_FS_UTILDIR} -lsvn_fs_util \
 	-L${LIBSVN_DELTADIR} -lsvn_delta \
 	-L${LIBSVN_DIFFDIR} -lsvn_diff \

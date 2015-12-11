@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.bin/openssl/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: head/secure/usr.bin/openssl/Makefile 290460 2015-11-06 17:39:17Z jkim $
 
 PROG=	openssl
 
@@ -9,7 +9,7 @@ LIBADD=	ssl crypto
 .endif
 .include "../../lib/libcrypto/Makefile.inc"
 
-CFLAGS+=-DMONOLITH -I${.CURDIR}
+CFLAGS+=	-DMONOLITH
 
 SRCS+=	app_rand.c apps.c asn1pars.c ca.c ciphers.c cms.c crl.c crl2p7.c \
 	dgst.c dh.c dhparam.c dsa.c dsaparam.c ec.c ecparam.c enc.c engine.c \

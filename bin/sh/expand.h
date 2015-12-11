@@ -30,18 +30,14 @@
  * SUCH DAMAGE.
  *
  *	@(#)expand.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: head/bin/sh/expand.h 276037 2014-12-21 22:18:30Z jilles $
+ * $FreeBSD: head/bin/sh/expand.h 290244 2015-11-01 22:07:40Z jilles $
  */
 
-struct strlist {
-	struct strlist *next;
-	char *text;
-};
-
-
 struct arglist {
-	struct strlist *list;
-	struct strlist **lastp;
+	char **args;
+	int count;
+	int capacity;
+	char *smallarg[1];
 };
 
 /*
@@ -55,6 +51,8 @@ struct arglist {
 #define EXP_LIT_QUOTED	0x40	/* for EXP_SPLIT_LIT, start off quoted */
 
 
+void emptyarglist(struct arglist *);
+void appendarglist(struct arglist *, char *);
 union node;
 void expandarg(union node *, struct arglist *, int);
 void rmescapes(char *);

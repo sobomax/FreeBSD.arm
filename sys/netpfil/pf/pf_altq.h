@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: head/sys/netpfil/pf/pf_altq.h 284777 2015-06-24 19:16:41Z eri $
+ *	$FreeBSD: head/sys/netpfil/pf/pf_altq.h 287009 2015-08-21 22:02:22Z loos $
  */
 
 #ifndef	_NET_PF_ALTQ_H_
@@ -43,6 +43,12 @@ struct cbq_opts {
 	int		minidle;
 	u_int		offtime;
 	int		flags;
+};
+
+struct codel_opts {
+	u_int		target;
+	u_int		interval;
+	int		ecn;
 };
 
 struct priq_opts {
@@ -103,6 +109,7 @@ struct pf_altq {
 	uint16_t		 flags;		/* misc flags */
 	union {
 		struct cbq_opts		 cbq_opts;
+		struct codel_opts	 codel_opts;
 		struct priq_opts	 priq_opts;
 		struct hfsc_opts	 hfsc_opts;
 		struct fairq_opts        fairq_opts;

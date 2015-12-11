@@ -1,5 +1,4 @@
 /* $OpenBSD: compat.c,v 1.82 2013/12/30 23:52:27 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/compat.c 264691 2014-04-20 11:34:33Z des $ */
 /*
  * Copyright (c) 1999, 2000, 2001, 2002 Markus Friedl.  All rights reserved.
  *
@@ -25,7 +24,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/compat.c 264691 2014-04-20 11:34:33Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/compat.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/types.h>
 

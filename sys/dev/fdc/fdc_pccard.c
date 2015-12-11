@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_pccard.c 223624 2011-06-28 08:36:48Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -139,3 +139,4 @@ static driver_t fdc_pccard_driver = {
 };
 
 DRIVER_MODULE(fdc, pccard, fdc_pccard_driver, fdc_devclass, 0, 0);
+PCCARD_PNP_INFO(fdc_pccard_products);

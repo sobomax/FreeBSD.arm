@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/calendar/parsedata.c 251647 2013-06-12 07:52:49Z grog $");
+__FBSDID("$FreeBSD: head/usr.bin/calendar/parsedata.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <ctype.h>
 #include <math.h>
@@ -274,7 +274,7 @@ determinestyle(char *date, int *flags,
 
 	/* If both the month and date are specified as numbers */
 	if (isonlydigits(p1, 1) && isonlydigits(p2, 0)) {
-		/* Now who wants to be this ambigious? :-( */
+		/* Now who wants to be this ambiguous? :-( */
 		int m, d;
 
 		if (strchr(p2, '*') != NULL)

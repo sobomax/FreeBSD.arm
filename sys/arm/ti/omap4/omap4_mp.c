@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/omap4/omap4_mp.c 281092 2015-04-04 23:03:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/omap4/omap4_mp.c 290547 2015-11-08 14:26:50Z tijl $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -44,21 +44,21 @@ __FBSDID("$FreeBSD: head/sys/arm/ti/omap4/omap4_mp.c 281092 2015-04-04 23:03:11Z
 void
 platform_mp_init_secondary(void)
 {
-	arm_init_secondary_ic();
+	arm_pic_init_secondary();
 }
 
 void
 platform_mp_setmaxid(void)
 {
 
-        mp_maxid = 1;
+	mp_maxid = 1;
+	mp_ncpus = 2;
 }
 
 int
 platform_mp_probe(void)
 {
 
-	mp_ncpus = 2;
 	return (1);
 }
 

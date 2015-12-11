@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.sbin/iprop-log/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/usr.sbin/iprop-log/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
 
 PROG=	iprop-log
 MAN=	iprop-log.8
@@ -9,13 +9,14 @@ CFLAGS+=	-I${KRB5DIR}/lib/kadm5 \
 		-I${KRB5DIR}/lib/sl \
 		-I.
 LIBADD=	kadm5srv hdb krb5 roken edit sl vers
+LDFLAGS=${LDAPLDFLAGS}
+
+CLEANFILES=	iprop-commands.h iprop-commands.c
 
 iprop-commands.h: iprop-commands.in
 	${SLC} ${.ALLSRC:M*.in}
 
-.for ext in c o
-iprop-commands.${ext}: iprop-commands.h
-.endfor
+iprop-commands.c: iprop-commands.h
 
 .include <bsd.prog.mk>
 

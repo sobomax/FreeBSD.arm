@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)pmap_prot2.c 1.3 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)pmap_prot2.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/pmap_prot2.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/pmap_prot2.c 288113 2015-09-22 15:40:07Z rodrigc $");
 
 /*
  * pmap_prot2.c
@@ -90,9 +90,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/pmap_prot2.c 258578 2013-11-25 19:04:36Z h
  * this sounds like a job for xdr_reference!
  */
 bool_t
-xdr_pmaplist(xdrs, rp)
-	XDR *xdrs;
-	struct pmaplist **rp;
+xdr_pmaplist(XDR *xdrs, struct pmaplist **rp)
 {
 	/*
 	 * more_elements is pre-computed in case the direction is
@@ -134,9 +132,7 @@ xdr_pmaplist(xdrs, rp)
  * functionality to xdr_pmaplist().
  */
 bool_t
-xdr_pmaplist_ptr(xdrs, rp)
-	XDR *xdrs;
-	struct pmaplist *rp;
+xdr_pmaplist_ptr(XDR *xdrs, struct pmaplist *rp)
 {
 	return xdr_pmaplist(xdrs, (struct pmaplist **)(void *)rp);
 }

@@ -27,11 +27,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps.c 286568 2015-08-10 09:02:34Z scottl $
+ * $FreeBSD: head/sys/dev/mps/mps.c 289426 2015-10-16 17:56:43Z scottl $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 286568 2015-08-10 09:02:34Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 289426 2015-10-16 17:56:43Z scottl $");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
@@ -1468,11 +1468,9 @@ mps_setup_sysctl(struct mps_softc *sc)
 	    OID_AUTO, "enable_ssu", CTLFLAG_RW, &sc->enable_ssu, 0,
 	    "enable SSU to SATA SSD/HDD at shutdown");
 
-#if __FreeBSD_version >= 900030
 	SYSCTL_ADD_UQUAD(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),
 	    OID_AUTO, "chain_alloc_fail", CTLFLAG_RD,
 	    &sc->chain_alloc_fail, "chain allocation failures");
-#endif //FreeBSD_version >= 900030
 
 	SYSCTL_ADD_INT(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),
 	    OID_AUTO, "spinup_wait_time", CTLFLAG_RD,

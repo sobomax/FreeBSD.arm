@@ -25,7 +25,7 @@
 static const char rcsid[] = "$Id: res_mkupdate.c,v 1.10 2008/12/11 09:59:00 marka Exp $";
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 269867 2014-08-12 12:36:06Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 288114 2015-09-22 15:57:26Z rodrigc $");
 
 #include "port_before.h"
 
@@ -973,7 +973,7 @@ struct valuelist {
 static struct valuelist *servicelist, *protolist;
 
 static void
-res_buildservicelist() {
+res_buildservicelist(void) {
 	struct servent *sp;
 	struct valuelist *slp;
 

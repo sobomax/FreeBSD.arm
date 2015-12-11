@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: head/release/release.sh 282693 2015-05-09 21:08:12Z gjb $
+# $FreeBSD: head/release/release.sh 289337 2015-10-14 22:33:11Z gjb $
 #
 
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"
@@ -311,6 +311,18 @@ chroot_build_target() {
 # chroot_build_release(): Invoke the 'make release' target.
 chroot_build_release() {
 	load_target_env
+	if [ ! -z "${WITH_VMIMAGES}" ]; then
+		if [ -z "${VMFORMATS}" ]; then
+			VMFORMATS="$(eval chroot ${CHROOTDIR} \
+				make -C /usr/src/release -V VMFORMATS)"
+		fi
+		if [ -z "${VMSIZE}" ]; then
+			VMSIZE="$(eval chroot ${CHROOTDIR} \
+				make -C /usr/src/release -V VMSIZE)"
+		fi
+		RELEASE_RMAKEFLAGS="${RELEASE_RMAKEFLAGS} \
+			VMFORMATS=\"${VMFORMATS}\" VMSIZE=${VMSIZE}"
+	fi
 	eval chroot ${CHROOTDIR} make -C /usr/src/release \
 		${RELEASE_RMAKEFLAGS} release
 	eval chroot ${CHROOTDIR} make -C /usr/src/release \
@@ -350,10 +362,10 @@ chroot_arm_armv6_build_release() {
 	chroot ${CHROOTDIR} cp -p ${OBJDIR}/${OSRELEASE}-${KERNEL}.img \
 		/R/${OSRELEASE}-${KERNEL}.img
 	chroot ${CHROOTDIR} xz -T ${XZ_THREADS} /R/${OSRELEASE}-${KERNEL}.img
+	cd ${CHROOTDIR}/R && sha512 ${OSRELEASE}* \
+		> CHECKSUM.SHA512
 	cd ${CHROOTDIR}/R && sha256 ${OSRELEASE}* \
 		> CHECKSUM.SHA256
-	cd ${CHROOTDIR}/R && md5 ${OSRELEASE}* \
-		> CHECKSUM.MD5
 
 	return 0
 } # chroot_arm_armv6_build_release()

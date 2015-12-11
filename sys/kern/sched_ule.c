@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sched_ule.c 286256 2015-08-03 20:43:36Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/sched_ule.c 287166 2015-08-26 16:36:41Z gnn $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_sched.h"
@@ -1450,6 +1450,21 @@ sched_initticks(void *dummy)
  * a [0, 100] integer.  This is the voluntary sleep time of a process, which
  * differs from the cpu usage because it does not account for time spent
  * waiting on a run-queue.  Would be prettier if we had floating point.
+ *
+ * When a thread's sleep time is greater than its run time the
+ * calculation is:
+ *
+ *                           scaling factor 
+ * interactivity score =  ---------------------
+ *                        sleep time / run time
+ *
+ *
+ * When a thread's run time is greater than its sleep time the
+ * calculation is:
+ *
+ *                           scaling factor 
+ * interactivity score =  ---------------------    + scaling factor
+ *                        run time / sleep time
  */
 static int
 sched_interact_score(struct thread *td)

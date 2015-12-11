@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libc/gen/tls.c 286866 2015-08-18 00:21:25Z jasone $
+ *	$FreeBSD: head/lib/libc/gen/tls.c 288029 2015-09-20 20:23:16Z rodrigc $
  */
 
 /*
@@ -270,7 +270,7 @@ __libc_free_tls(void *tcb __unused, size_t tcbsize __unused,
 extern char **environ;
 
 void
-_init_tls()
+_init_tls(void)
 {
 #ifndef PIC
 	Elf_Addr *sp;

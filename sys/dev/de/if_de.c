@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/de/if_de.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/de/if_de.c 291095 2015-11-20 09:37:04Z skra $");
 
 #define	TULIP_HDR_DATA
 
@@ -3937,8 +3937,8 @@ tulip_txput(tulip_softc_t * const sc, struct mbuf *m)
 	    segcnt++;
 	    m0 = m0->m_next;
     }
-#endif
     CTR2(KTR_TULIP, "tulip_txput: sending packet %p (%d chunks)", m, segcnt);
+#endif
     d_status = 0;
     eop = nextout = ri->ri_nextout;
     segcnt = 0;

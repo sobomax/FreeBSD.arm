@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/powerpc/swtch64.S 279594 2015-03-04 16:45:31Z nwhitehorn $ */
+/* $FreeBSD: head/sys/powerpc/powerpc/swtch64.S 291442 2015-11-29 07:16:08Z nwhitehorn $ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-
@@ -64,6 +64,10 @@
 #include <machine/trap.h>
 #include <machine/param.h>
 #include <machine/asm.h>
+
+#ifdef _CALL_ELF
+.abiversion _CALL_ELF
+#endif
 
 TOC_ENTRY(blocked_lock)
 
@@ -255,6 +259,8 @@ ENTRY(savectx)
 	mfcr	%r4			/* Save the condition register */
 	std	%r4,PCB_CR(%r3)
 	std	%r2,PCB_TOC(%r3)	/* Save the TOC pointer */
+	mflr	%r4			/* Save the link register */
+	std	%r4,PCB_LR(%r3)
 	blr
 
 /*

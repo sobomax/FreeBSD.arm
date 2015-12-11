@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/mkimg/tests/Makefile 272054 2014-09-24 04:17:29Z marcel $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/mkimg
+# $FreeBSD: head/usr.bin/mkimg/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 ATF_TESTS_SH=	mkimg
 

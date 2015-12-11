@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/rpc.yppasswdd/yppasswdd_server.c 231994 2012-02-22 06:27:20Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.sbin/rpc.yppasswdd/yppasswdd_server.c 288482 2015-10-02 08:58:50Z araujo $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -212,12 +212,12 @@ validate(struct passwd *opw, struct x_passwd *npw)
 	 * Don't allow the user to shoot himself in the foot,
 	 * even on purpose.
 	 */
-	if (!ok_shell(npw->pw_shell)) {
+	if (!no_chsh && !ok_shell(npw->pw_shell)) {
 		yp_error("%s is not a valid shell", npw->pw_shell);
 		return(1);
 	}
 
-	if (validchars(npw->pw_shell)) {
+	if (!no_chsh && validchars(npw->pw_shell)) {
 		yp_error("specified shell contains invalid characters");
 		return(1);
 	}

@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/arm/include/pcpu.h 286296 2015-08-04 19:46:13Z jah $
+ * $FreeBSD: head/sys/arm/include/pcpu.h 290648 2015-11-10 12:02:41Z mmel $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -76,7 +76,7 @@ extern struct pcpu *pcpup;
     	(pcpup + (id & CPU_MASK));					\
     })
 #endif
-	
+
 static inline struct thread *
 get_curthread(void)
 {

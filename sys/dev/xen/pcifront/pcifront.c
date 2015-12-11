@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/pcifront/pcifront.c 286372 2015-08-06 17:07:21Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/pcifront/pcifront.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -559,7 +559,7 @@ xpcib_attach(device_t dev)
 
 	DPRINTF("xpcib attach (bus=%d)\n", sc->bus);
 
-	device_add_child(dev, "pci", sc->bus);
+	device_add_child(dev, "pci", -1);
 	return bus_generic_attach(dev);
 }
 

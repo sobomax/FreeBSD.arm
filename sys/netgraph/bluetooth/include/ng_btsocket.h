@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket.h,v 1.8 2003/04/26 22:32:10 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket.h 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_btsocket.h 290038 2015-10-27 03:42:26Z takawata $
  */
 
 #ifndef _NETGRAPH_BTSOCKET_H_
@@ -255,7 +255,7 @@ struct sockaddr_l2cap {
 #define SO_L2CAP_IFLOW		3	/* get incoming flow spec. */
 #define SO_L2CAP_OFLOW		4	/* get/set outgoing flow spec. */
 #define SO_L2CAP_FLUSH		5	/* get/set flush timeout */
-
+#define SO_L2CAP_ENCRYPTED      6      /* get/set whether wait for encryptin on connect */
 /*
  * Raw L2CAP sockets ioctl's
  */

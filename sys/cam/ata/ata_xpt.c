@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ata/ata_xpt.c 270327 2014-08-22 13:15:59Z imp $");
+__FBSDID("$FreeBSD: head/sys/cam/ata/ata_xpt.c 287289 2015-08-29 11:21:20Z mav $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1090,7 +1090,8 @@ notsata:
 
 		periph_qual = SID_QUAL(inq_buf);
 
-		if (periph_qual != SID_QUAL_LU_CONNECTED)
+		if (periph_qual != SID_QUAL_LU_CONNECTED &&
+		    periph_qual != SID_QUAL_LU_OFFLINE)
 			break;
 
 		/*

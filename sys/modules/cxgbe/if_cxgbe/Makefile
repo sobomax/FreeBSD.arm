@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/cxgbe/if_cxgbe/Makefile 278913 2015-02-17 19:27:14Z glebius $
+# $FreeBSD: head/sys/modules/cxgbe/if_cxgbe/Makefile 289401 2015-10-16 01:19:55Z np $
 #
 
 CXGBE=	${.CURDIR}/../../../dev/cxgbe
@@ -11,6 +11,7 @@ SRCS+=	device_if.h
 SRCS+=	opt_inet.h
 SRCS+=	opt_inet6.h
 SRCS+=	opt_ofed.h
+SRCS+=	opt_rss.h
 SRCS+=	pci_if.h
 SRCS+=	t4_hw.c
 SRCS+=	t4_l2t.c

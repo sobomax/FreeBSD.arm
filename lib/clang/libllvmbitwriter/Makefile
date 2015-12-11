@@ -1,13 +1,16 @@
-# $FreeBSD: head/lib/clang/libllvmbitwriter/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libllvmbitwriter/Makefile 288943 2015-10-06 17:53:29Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmbitwriter
 
 SRCDIR=	lib/Bitcode/Writer
-SRCS=	BitWriter.cpp \
-	BitcodeWriter.cpp \
+SRCS=	BitcodeWriter.cpp \
 	BitcodeWriterPass.cpp \
 	ValueEnumerator.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	BitWriter.cpp
+.endif
 
 .include "../clang.lib.mk"

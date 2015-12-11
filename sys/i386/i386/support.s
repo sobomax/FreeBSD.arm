@@ -26,14 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/support.s 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/i386/support.s 288917 2015-10-06 11:29:44Z royger $
  */
 
 #include "opt_npx.h"
 
 #include <machine/asmacros.h>
 #include <machine/cputypes.h>
-#include <machine/intr_machdep.h>
 #include <machine/pmap.h>
 #include <machine/specialreg.h>
 

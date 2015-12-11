@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_evnt.c,v 1.5 2003/09/08 19:11:45 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_evnt.c 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_evnt.c 290038 2015-10-27 03:42:26Z takawata $
  */
 
 #include <sys/param.h>
@@ -475,6 +475,8 @@ ng_l2cap_process_con_req(ng_l2cap_con_p con, u_int8_t ident)
 	con->rx_pkt = NULL;
 	if(dcid == NG_L2CAP_ATT_CID)
 		idtype = NG_L2CAP_L2CA_IDTYPE_ATT;
+	else if(dcid == NG_L2CAP_SMP_CID)
+		idtype = NG_L2CAP_L2CA_IDTYPE_SMP;
 	else if( con->linktype != NG_HCI_LINK_ACL)
 		idtype = NG_L2CAP_L2CA_IDTYPE_LE;
 	else
@@ -602,7 +604,9 @@ ng_l2cap_process_con_rsp(ng_l2cap_con_p con, u_int8_t ident)
 			 */
 
 			cmd->ch->dcid = dcid;
-			cmd->ch->state = (cmd->ch->scid == NG_L2CAP_ATT_CID)?
+			cmd->ch->state = ((cmd->ch->scid == NG_L2CAP_ATT_CID)||
+					  (cmd->ch->scid == NG_L2CAP_SMP_CID))
+					  ?
 			  NG_L2CAP_OPEN : NG_L2CAP_CONFIG;
 		} else
 			/* There was an error, so close the channel */

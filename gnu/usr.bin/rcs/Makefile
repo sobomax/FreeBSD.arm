@@ -1,5 +1,7 @@
-# $FreeBSD: head/gnu/usr.bin/rcs/Makefile 285890 2015-07-26 11:21:36Z bapt $
+# $FreeBSD: head/gnu/usr.bin/rcs/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
-SUBDIR= lib ci co merge rcs rcsclean rcsdiff rcsmerge rlog rcsfreeze
+SUBDIR= lib .WAIT \
+	ci co merge rcs rcsclean rcsdiff rcsmerge rlog rcsfreeze
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

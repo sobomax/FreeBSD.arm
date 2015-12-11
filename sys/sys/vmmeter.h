@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vmmeter.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: head/sys/sys/vmmeter.h 263620 2014-03-22 10:26:09Z bdrewery $
+ * $FreeBSD: head/sys/sys/vmmeter.h 287640 2015-09-11 03:00:20Z markj $
  */
 
 #ifndef _SYS_VMMETER_H_
@@ -97,8 +97,6 @@ struct vmmeter {
 	u_int v_inactive_target; /* (c) pages desired inactive */
 	u_int v_inactive_count;	/* (q) pages inactive */
 	u_int v_cache_count;	/* (f) pages on cache queue */
-	u_int v_cache_min;	/* (c) min pages desired on cache queue */
-	u_int v_cache_max;	/* (c) max pages in cached obj (unused) */
 	u_int v_pageout_free_min;   /* (c) min pages reserved for kernel */
 	u_int v_interrupt_free_min; /* (c) reserved pages for int code */
 	u_int v_free_severe;	/* (c) severe page depletion point */
@@ -113,6 +111,7 @@ struct vmmeter {
 	u_int v_vforkpages;	/* (p) VM pages affected by vfork() */
 	u_int v_rforkpages;	/* (p) VM pages affected by rfork() */
 	u_int v_kthreadpages;	/* (p) VM pages affected by fork() by kernel */
+	u_int v_spare[2];
 };
 #ifdef _KERNEL
 

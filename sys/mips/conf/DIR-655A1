@@ -4,8 +4,10 @@
 # This contains a QCA9558 MIPS74k SoC with on-board 3x3 2GHz wifi,
 # 128MiB RAM, an AR8327 5-port gigabit ethernet switch.
 #
-# $FreeBSD: head/sys/mips/conf/DIR-655A1 280337 2015-03-22 02:15:09Z adrian $
+# $FreeBSD: head/sys/mips/conf/DIR-655A1 291049 2015-11-19 01:58:12Z imp $
 #
+
+#NO_UNIVERSE
 
 # Include the default QCA955x parameters
 include         "QCA955X_BASE"

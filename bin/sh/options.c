@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)options.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/options.c 286788 2015-08-14 21:44:15Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/options.c 287296 2015-08-29 19:41:47Z jilles $");
 
 #include <signal.h>
 #include <unistd.h>
@@ -302,7 +302,7 @@ setoption(int flag, int val)
 {
 	int i;
 
-	for (i = 0; i < NOPTS; i++)
+	for (i = 0; i < NSHORTOPTS; i++)
 		if (optlist[i].letter == flag) {
 			setoptionbyindex(i, val);
 			return;

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 286667 2015-08-12 15:26:32Z marcel $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 291420 2015-11-28 08:49:07Z kib $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -690,10 +690,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 
 	/* Align to 16 bytes. */
 	sfp = (struct sigframe *)((unsigned int)sp & ~0xF);
-
-	/* Translate the signal if appropriate. */
-	if (p->p_sysent->sv_sigtbl && sig <= p->p_sysent->sv_sigsize)
-		sig = p->p_sysent->sv_sigtbl[_SIG_IDX(sig)];
 
 	/* Build the argument list for the signal handler. */
 	sf.sf_signum = sig;
@@ -2097,9 +2093,8 @@ getmemsize(int first)
 	kmdp = preload_search_by_type("elf kernel");
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type("elf32 kernel");
-	if (kmdp != NULL)
-		smapbase = (struct bios_smap *)preload_search_info(kmdp,
-		    MODINFO_METADATA | MODINFOMD_SMAP);
+	smapbase = (struct bios_smap *)preload_search_info(kmdp,
+	    MODINFO_METADATA | MODINFOMD_SMAP);
 	if (smapbase != NULL) {
 		add_smap_entries(smapbase, physmap, &physmap_idx);
 		has_smap = 1;
@@ -2778,8 +2773,6 @@ smap_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	kmdp = preload_search_by_type("elf kernel");
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type("elf32 kernel");
-	if (kmdp == NULL)
-		return (0);
 	smapbase = (struct bios_smap *)preload_search_info(kmdp,
 	    MODINFO_METADATA | MODINFOMD_SMAP);
 	if (smapbase == NULL)

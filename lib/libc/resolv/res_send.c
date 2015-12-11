@@ -69,7 +69,7 @@ static const char sccsid[] = "@(#)res_send.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_send.c,v 1.22 2009/01/22 23:49:23 tbox Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_send.c 269867 2014-08-12 12:36:06Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_send.c 288114 2015-09-22 15:57:26Z rodrigc $");
 
 /*! \file
  * \brief
@@ -574,8 +574,7 @@ res_nsend(res_state statp,
 /* Private */
 
 static int
-get_salen(sa)
-	const struct sockaddr *sa;
+get_salen(const struct sockaddr *sa)
 {
 
 #ifdef HAVE_SA_LEN
@@ -596,9 +595,7 @@ get_salen(sa)
  * pick appropriate nsaddr_list for use.  see res_init() for initialization.
  */
 static struct sockaddr *
-get_nsaddr(statp, n)
-	res_state statp;
-	size_t n;
+get_nsaddr(res_state statp, size_t n)
 {
 
 	if (!statp->nsaddr_list[n].sin_family && EXT(statp).ext) {

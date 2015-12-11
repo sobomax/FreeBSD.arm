@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/gethostnamadr.c 211276 2010-08-13 06:39:54Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/net/gethostnamadr.c 288015 2015-09-20 04:20:31Z rodrigc $");
 
 #include "namespace.h"
 #include "reentrant.h"
@@ -47,13 +47,6 @@ __FBSDID("$FreeBSD: head/lib/libc/net/gethostnamadr.c 211276 2010-08-13 06:39:54
 #ifdef NS_CACHING
 #include "nscache.h"
 #endif
-
-extern int _ht_gethostbyname(void *, void *, va_list);
-extern int _dns_gethostbyname(void *, void *, va_list);
-extern int _nis_gethostbyname(void *, void *, va_list);
-extern int _ht_gethostbyaddr(void *, void *, va_list);
-extern int _dns_gethostbyaddr(void *, void *, va_list);
-extern int _nis_gethostbyaddr(void *, void *, va_list);
 
 static int gethostbyname_internal(const char *, int, struct hostent *, char *,
     size_t, struct hostent **, int *, res_state);

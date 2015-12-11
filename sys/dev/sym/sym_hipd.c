@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sym/sym_hipd.c 274819 2014-11-21 21:01:24Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/sym/sym_hipd.c 289036 2015-10-08 17:32:17Z kib $");
 
 #define SYM_DRIVER_NAME	"sym-1.6.5-20000902"
 
@@ -136,6 +136,8 @@ typedef	u_int32_t u32;
 #define MEMORY_BARRIER()	__asm__ volatile("membar #Sync" : : : "memory")
 #elif	defined	__arm__
 #define MEMORY_BARRIER()	dmb()
+#elif	defined	__aarch64__
+#define MEMORY_BARRIER()	dmb(sy)
 #else
 #error	"Not supported platform"
 #endif

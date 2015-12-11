@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/tools/tools/usbtest/Makefile 275407 2014-12-02 13:58:57Z hselasky $
+# $FreeBSD: head/tools/tools/usbtest/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 #
 # Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
 #
@@ -26,14 +26,14 @@
 #
 PROG=	usbtest
 MAN=
+BINDIR?= /usr/sbin
 SRCS+=	usbtest.c
 SRCS+=	usb_msc_test.c
 SRCS+=	usb_modem_test.c
 SRCS+=	usb_control_ep_test.c
 SYSDIR?= ${.CURDIR}/../../../sys
 
-DPADD+=	${LIBUSB}
-LDADD+=	-lusb
+LIBADD+=	usb
 
 WARNS=	3
 

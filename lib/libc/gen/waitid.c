@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/waitid.c 281712 2015-04-18 21:35:41Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/waitid.c 288028 2015-09-20 20:21:49Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -38,6 +38,8 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/waitid.c 281712 2015-04-18 21:35:41Z kib $
 #include <errno.h>
 #include "un-namespace.h"
 #include "libc_private.h"
+
+int __waitid(idtype_t, id_t, siginfo_t *, int);
 
 int
 __waitid(idtype_t idtype, id_t id, siginfo_t *info, int flags)

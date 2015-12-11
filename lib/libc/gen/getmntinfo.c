@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)getmntinfo.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getmntinfo.c 165903 2007-01-09 00:28:16Z imp $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getmntinfo.c 287793 2015-09-14 18:44:13Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -42,9 +42,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/getmntinfo.c 165903 2007-01-09 00:28:16Z i
  * Return information about mounted filesystems.
  */
 int
-getmntinfo(mntbufp, flags)
-	struct statfs **mntbufp;
-	int flags;
+getmntinfo(struct statfs **mntbufp, int flags)
 {
 	static struct statfs *mntbuf;
 	static int mntsize;

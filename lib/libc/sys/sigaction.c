@@ -31,13 +31,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/sys/sigaction.c 276630 2015-01-03 18:38:46Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/sys/sigaction.c 287292 2015-08-29 14:25:01Z kib $");
 
 #include <sys/types.h>
 #include <signal.h>
 #include "libc_private.h"
 
 __weak_reference(__sys_sigaction, __sigaction);
+__weak_reference(sigaction, __libc_sigaction);
 
 #pragma weak sigaction
 int

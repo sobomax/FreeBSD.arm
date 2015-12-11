@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mount.h	8.21 (Berkeley) 5/20/95
- * $FreeBSD: head/sys/sys/mount.h 285182 2015-07-05 22:37:33Z markj $
+ * $FreeBSD: head/sys/sys/mount.h 291116 2015-11-20 23:52:27Z glebius $
  */
 
 #ifndef _SYS_MOUNT_H_
@@ -590,7 +590,6 @@ struct uio;
 MALLOC_DECLARE(M_MOUNT);
 #endif
 extern int maxvfsconf;		/* highest defined filesystem type */
-extern int nfs_mount_type;	/* vfc_typenum for nfs, or -1 */
 
 TAILQ_HEAD(vfsconfhead, vfsconf);
 extern struct vfsconfhead vfsconf;

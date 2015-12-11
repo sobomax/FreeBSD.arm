@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/bwn/if_bwnvar.h 228399 2011-12-10 21:05:06Z eadler $
+ * $FreeBSD: head/sys/dev/bwn/if_bwnvar.h 287197 2015-08-27 08:56:39Z glebius $
  */
 
 #ifndef _IF_BWNVAR_H
@@ -656,7 +656,6 @@ struct bwn_pio_txqueue {
 	uint16_t			tq_size;
 	uint16_t			tq_used;
 	uint16_t			tq_free;
-	uint8_t				tq_stop;
 	uint8_t				tq_index;
 	struct bwn_pio_txpkt		tq_pkts[BWN_PIO_MAX_TXPACKETS];
 	TAILQ_HEAD(, bwn_pio_txpkt)	tq_pktlist;
@@ -897,17 +896,18 @@ struct bwn_vap {
 struct bwn_softc {
 	device_t			sc_dev;
 	struct mtx			sc_mtx;
-	struct ifnet			*sc_ifp;
+	struct ieee80211com		sc_ic;
+	struct mbufq			sc_snd;
 	unsigned			sc_flags;
 #define	BWN_FLAG_ATTACHED		(1 << 0)
 #define	BWN_FLAG_INVALID		(1 << 1)
 #define	BWN_FLAG_NEED_BEACON_TP		(1 << 2)
+#define	BWN_FLAG_RUNNING		(1 << 3)
 	unsigned			sc_debug;
 
 	struct bwn_mac		*sc_curmac;
 	TAILQ_HEAD(, bwn_mac)	sc_maclist;
 
-	uint8_t				sc_macaddr[IEEE80211_ADDR_LEN];
 	uint8_t				sc_bssid[IEEE80211_ADDR_LEN];
 	unsigned int			sc_filters;
 	uint8_t				sc_beacons[2];

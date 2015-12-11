@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/cxgbe/iw_cxgbe/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/cxgbe/iw_cxgbe/Makefile 290135 2015-10-29 08:28:39Z hselasky $
 
 CXGBE=	${.CURDIR}/../../../dev/cxgbe
 .PATH: ${CXGBE}/iw_cxgbe
@@ -24,5 +24,6 @@ SRCS+=	resource.c
 SRCS+=	vnode_if.h
 
 CFLAGS+= -I${CXGBE} -I${.CURDIR}/../../../ofed/include -DLINUX_TYPES_DEFINED
+CFLAGS+= -I${.CURDIR}/../../../compat/linuxkpi/common/include
 
 .include <bsd.kmod.mk>

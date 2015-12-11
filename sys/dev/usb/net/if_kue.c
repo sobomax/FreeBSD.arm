@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_kue.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_kue.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*
  * Kawasaki LSI KL5KUSB101B USB to ethernet adapter driver.
@@ -219,6 +219,7 @@ MODULE_DEPEND(kue, uether, 1, 1, 1);
 MODULE_DEPEND(kue, usb, 1, 1, 1);
 MODULE_DEPEND(kue, ether, 1, 1, 1);
 MODULE_VERSION(kue, 1);
+USB_PNP_HOST_INFO(kue_devs);
 
 static const struct usb_ether_methods kue_ue_methods = {
 	.ue_attach_post = kue_attach_post,

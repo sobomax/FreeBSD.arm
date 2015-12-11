@@ -12,7 +12,7 @@
 # LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 # A PARTICULAR PURPOSE.
 #
-# $FreeBSD: head/usr.sbin/rtadvd/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/rtadvd/Makefile 288963 2015-10-06 23:42:58Z delphij $
 
 PROG=	rtadvd
 MAN=	rtadvd.conf.5 rtadvd.8
@@ -20,8 +20,6 @@ SRCS=	rtadvd.c rrenum.c advcap.c if.c config.c timer.c timer_subr.c	\
 	control.c control_server.c
 
 LIBADD=	util
-
-CFLAGS+= -DHAVE_ARC4RANDOM
 
 WARNS?=	1
 

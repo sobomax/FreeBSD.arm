@@ -23,17 +23,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx_machdep.h 264977 2014-04-26 16:48:09Z ian $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx_machdep.h 291367 2015-11-26 17:26:52Z ian $
  */
 
 #ifndef	IMX_MACHDEP_H
 #define	IMX_MACHDEP_H
 
 #include <sys/types.h>
+#include <sys/sysctl.h>
+
+SYSCTL_DECL(_hw_imx);
 
 /* Common functions, implemented in imx_machdep.c. */
 
 void imx_wdog_cpu_reset(vm_offset_t _wdcr_phys)  __attribute__((__noreturn__));
+void imx_wdog_init_last_reset(vm_offset_t _wdsr_phys);
 
 /* From here down, routines are implemented in imxNN_machdep.c. */
 

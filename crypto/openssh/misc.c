@@ -1,5 +1,4 @@
 /* $OpenBSD: misc.c,v 1.92 2013/10/14 23:28:23 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/misc.c 263691 2014-03-24 19:15:13Z des $ */
 /*
  * Copyright (c) 2000 Markus Friedl.  All rights reserved.
  * Copyright (c) 2005,2006 Damien Miller.  All rights reserved.
@@ -26,7 +25,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/misc.c 263691 2014-03-24 19:15:13Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/misc.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

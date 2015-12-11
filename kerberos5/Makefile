@@ -1,6 +1,8 @@
-# $FreeBSD: head/kerberos5/Makefile 276551 2015-01-02 18:45:03Z bapt $
+# $FreeBSD: head/kerberos5/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
-SUBDIR=	lib libexec tools usr.bin usr.sbin
+SUBDIR=	lib .WAIT \
+	libexec tools usr.bin usr.sbin
+SUBDIR_PARALLEL=
 
 # These are the programs which depend on Kerberos.
 KPROGS=	lib/libpam \

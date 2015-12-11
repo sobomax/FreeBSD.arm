@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/ctl/Makefile 286807 2015-08-15 15:42:21Z mav $
+# $FreeBSD: head/sys/modules/ctl/Makefile 287621 2015-09-10 12:40:31Z mav $
 
 .PATH: ${.CURDIR}/../../cam/ctl
 
@@ -13,6 +13,7 @@ SRCS+=	ctl_frontend.c
 SRCS+=	ctl_frontend_cam_sim.c
 SRCS+=	ctl_frontend_ioctl.c
 SRCS+=	ctl_frontend_iscsi.c
+SRCS+=	ctl_ha.c
 SRCS+=	ctl_scsi_all.c
 SRCS+=	ctl_tpc.c
 SRCS+=	ctl_tpc_local.c

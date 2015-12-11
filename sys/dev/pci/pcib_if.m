@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/pci/pcib_if.m 279443 2015-03-01 00:39:40Z rstone $
+# $FreeBSD: head/sys/dev/pci/pcib_if.m 289494 2015-10-18 08:13:51Z jmg $
 #
 
 #include <sys/bus.h>
@@ -97,7 +97,7 @@ METHOD void write_config {
 };
 
 #
-# Route an interrupt.  Returns a value suitable for stuffing into 
+# Route an interrupt.  Returns a value suitable for stuffing into
 # a device's interrupt register.
 #
 METHOD int route_interrupt {
@@ -206,4 +206,3 @@ METHOD void decode_rid {
 	int 		*slot;
 	int 		*func;
 } DEFAULT pcib_decode_rid;
-

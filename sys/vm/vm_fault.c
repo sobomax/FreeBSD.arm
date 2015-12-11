@@ -72,7 +72,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_fault.c 286255 2015-08-03 20:30:27Z alc $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_fault.c 291907 2015-12-06 17:46:12Z cem $");
 
 #include "opt_ktrace.h"
 #include "opt_vm.h"
@@ -839,7 +839,7 @@ vnode_locked:
 				 * get rid of the unnecessary page
 				 */
 				vm_page_lock(fs.first_m);
-				vm_page_free(fs.first_m);
+				vm_page_remove(fs.first_m);
 				vm_page_unlock(fs.first_m);
 				/*
 				 * grab the page and put it into the 
@@ -848,9 +848,13 @@ vnode_locked:
 				 */
 				if (vm_page_rename(fs.m, fs.first_object,
 				    fs.first_pindex)) {
+					VM_OBJECT_WUNLOCK(fs.first_object);
 					unlock_and_deallocate(&fs);
 					goto RetryFault;
 				}
+				vm_page_lock(fs.first_m);
+				vm_page_free(fs.first_m);
+				vm_page_unlock(fs.first_m);
 #if VM_NRESERVLEVEL > 0
 				/*
 				 * Rename the reservation.

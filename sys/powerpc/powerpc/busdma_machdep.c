@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/busdma_machdep.c 282120 2015-04-28 06:12:37Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/busdma_machdep.c 291193 2015-11-23 11:19:00Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -514,14 +514,14 @@ bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags,
 
 	/* 
 	 * XXX:
-	 * (dmat->alignment < dmat->maxsize) is just a quick hack; the exact
+	 * (dmat->alignment <= dmat->maxsize) is just a quick hack; the exact
 	 * alignment guarantees of malloc need to be nailed down, and the
 	 * code below should be rewritten to take that into account.
 	 *
 	 * In the meantime, we'll warn the user if malloc gets it wrong.
 	 */
 	if ((dmat->maxsize <= PAGE_SIZE) &&
-	   (dmat->alignment < dmat->maxsize) &&
+	   (dmat->alignment <= dmat->maxsize) &&
 	    dmat->lowaddr >= ptoa((vm_paddr_t)Maxmem) &&
 	    attr == VM_MEMATTR_DEFAULT) {
 		*vaddr = malloc(dmat->maxsize, M_DEVBUF, mflags);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/ncpus/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/ncpus/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	ncpus
 MAN=
@@ -9,7 +9,6 @@ SRCS+=	biosmptable.c
 BINDIR=	/usr/local/bin
 WARNS?=	6
 
-DPADD=	${LIBDEVINFO}
-LDADD=	-ldevinfo
+LIBADD=	devinfo
 
 .include <bsd.prog.mk>

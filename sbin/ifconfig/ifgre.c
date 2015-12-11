@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ifconfig/ifgre.c 274246 2014-11-07 19:13:19Z ae $");
+__FBSDID("$FreeBSD: head/sbin/ifconfig/ifgre.c 288305 2015-09-27 07:51:18Z ngie $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -113,11 +113,9 @@ static struct afswtch af_gre = {
 static __constructor void
 gre_ctor(void)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	size_t i;
 
-	for (i = 0; i < N(gre_cmds);  i++)
+	for (i = 0; i < nitems(gre_cmds);  i++)
 		cmd_register(&gre_cmds[i]);
 	af_register(&af_gre);
-#undef N
 }

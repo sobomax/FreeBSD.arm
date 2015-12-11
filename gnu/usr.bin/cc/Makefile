@@ -1,11 +1,12 @@
-# $FreeBSD: head/gnu/usr.bin/cc/Makefile 286332 2015-08-05 18:30:00Z emaste $
+# $FreeBSD: head/gnu/usr.bin/cc/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 .include <src.opts.mk>
 
 # The order of some of these are rather important.  Some depend on previous
 # subdirs.
 
-SUBDIR= cc_tools libiberty libcpp libdecnumber cc_int cc cc1 include
+SUBDIR= cc_tools .WAIT \
+	libiberty libcpp libdecnumber cc_int cc cc1 include
 
 .if ${MK_CPP} != "no"
 SUBDIR+= cpp
@@ -18,5 +19,14 @@ SUBDIR+= cc1plus c++
 .if ${MK_GCOV} != "no"
 SUBDIR+= gcov
 .endif
+
+SUBDIR_DEPEND_c++:=	libcpp libiberty
+SUBDIR_DEPEND_cc=	libcpp libiberty
+SUBDIR_DEPEND_cpp=	libcpp libiberty
+SUBDIR_DEPEND_cc1plus=	cc_int libcpp libdecnumber libiberty
+SUBDIR_DEPEND_cc1=	cc_int libcpp libdecnumber libiberty
+SUBDIR_DEPEND_gcov=	libiberty
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

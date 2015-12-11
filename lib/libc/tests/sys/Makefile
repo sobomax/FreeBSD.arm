@@ -1,8 +1,8 @@
-# $FreeBSD: head/lib/libc/tests/sys/Makefile 286863 2015-08-17 23:19:36Z emaste $
+# $FreeBSD: head/lib/libc/tests/sys/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
-TESTSDIR=		${TESTSBASE}/lib/libc/sys
+ATF_TESTS_C+=			queue_test
 
 # TODO: clone, lwp_create, lwp_ctl, posix_fadvise, recvmmsg,
 # swapcontext
@@ -25,10 +25,7 @@ NETBSD_ATF_TESTS_C+=		kevent_test
 NETBSD_ATF_TESTS_C+=		kill_test
 NETBSD_ATF_TESTS_C+=		link_test
 NETBSD_ATF_TESTS_C+=		listen_test
-# On arm64 triggers panic ARM64TODO: pmap_mincore (PR202307).
-.if ${MACHINE_CPUARCH} != "aarch64"
 NETBSD_ATF_TESTS_C+=		mincore_test
-.endif
 NETBSD_ATF_TESTS_C+=		mkdir_test
 NETBSD_ATF_TESTS_C+=		mkfifo_test
 NETBSD_ATF_TESTS_C+=		mknod_test
@@ -60,10 +57,8 @@ NETBSD_ATF_TESTS_C+=		umask_test
 NETBSD_ATF_TESTS_C+=		unlink_test
 NETBSD_ATF_TESTS_C+=		write_test
 
-DPADD.getpid_test+=	${LIBPTHREAD}
-LDADD.getpid_test+=	-lpthread
-DPADD.timer_create_test+=	${LIBRT}
-LDADD.timer_create_test+=	-lrt
+LIBADD.getpid_test+=		pthread
+LIBADD.timer_create_test+=	rt
 
 .include "../Makefile.netbsd-tests"
 

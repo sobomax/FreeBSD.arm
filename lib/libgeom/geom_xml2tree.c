@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libgeom/geom_xml2tree.c 286719 2015-08-13 13:19:56Z mav $
+ * $FreeBSD: head/lib/libgeom/geom_xml2tree.c 287247 2015-08-28 06:41:40Z delphij $
  */
 
 #include <stdio.h>
@@ -275,15 +275,17 @@ EndElement(void *userData, const char *name)
 			XML_StopParser(mt->parser, 0);
 			warn("Cannot allocate memory during processing of '%s' "
 			    "element", name);
+			free(p);
 			return;
 		}
 		gc->lg_name = strdup(name);
 		if (gc->lg_name == NULL) {
-			free(gc);
 			mt->error = errno;
 			XML_StopParser(mt->parser, 0);
 			warn("Cannot allocate memory during processing of '%s' "
 			    "element", name);
+			free(gc);
+			free(p);
 			return;
 		}
 		gc->lg_val = p;

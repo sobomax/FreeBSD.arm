@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pkg/config.c 273754 2014-10-27 23:19:51Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/usr.sbin/pkg/config.c 287579 2015-09-08 21:25:36Z bapt $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -131,6 +131,15 @@ static struct config_entry c[] = {
 		false,
 		true,
 	},
+	[PUBKEY] = {
+		PKG_CONFIG_STRING,
+		"PUBKEY",
+		NULL,
+		NULL,
+		NULL,
+		false,
+		false
+	}
 };
 
 static int
@@ -231,6 +240,8 @@ config_parse(const ucl_object_t *obj, pkg_conf_file_t conftype)
 				sbuf_cpy(buf, "SIGNATURE_TYPE");
 			else if (strcasecmp(key, "fingerprints") == 0)
 				sbuf_cpy(buf, "FINGERPRINTS");
+			else if (strcasecmp(key, "pubkey") == 0)
+				sbuf_cpy(buf, "PUBKEY");
 			else if (strcasecmp(key, "enabled") == 0) {
 				if ((cur->type != UCL_BOOLEAN) ||
 				    !ucl_object_toboolean(cur))

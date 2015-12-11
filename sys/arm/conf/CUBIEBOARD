@@ -17,7 +17,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CUBIEBOARD 285090 2015-07-03 14:11:01Z loos $
+# $FreeBSD: head/sys/arm/conf/CUBIEBOARD 289137 2015-10-11 13:01:51Z mav $
 
 ident		CUBIEBOARD
 
@@ -59,7 +59,6 @@ device		mmcsd			# mmc/sd flash cards
 # ATA controllers
 device		ahci			# AHCI-compatible SATA controllers
 #device		ata			# Legacy ATA/SATA controllers
-#options 	ATA_STATIC_ID		# Static device numbering
 
 # Console and misc
 device		uart

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_sig.c 286662 2015-08-12 11:30:31Z ed $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_sig.c 288336 2015-09-28 12:14:16Z avg $");
 
 #include "opt_compat.h"
 #include "opt_gzio.h"
@@ -1308,7 +1308,7 @@ kern_sigtimedwait(struct thread *td, sigset_t waitset, ksiginfo_t *ksi,
 		reschedule_signals(p, new_block, 0);
 
 	if (error == 0) {
-		SDT_PROBE(proc, kernel, , signal__clear, sig, ksi, 0, 0, 0);
+		SDT_PROBE2(proc, kernel, , signal__clear, sig, ksi);
 
 		if (ksi->ksi_code == SI_TIMER)
 			itimer_accept(p, ksi->ksi_timerid, ksi);
@@ -2121,7 +2121,7 @@ tdsendsignal(struct proc *p, struct thread *td, int sig, ksiginfo_t *ksi)
 	} else
 		sigqueue = &td->td_sigqueue;
 
-	SDT_PROBE(proc, kernel, , signal__send, td, p, sig, 0, 0 );
+	SDT_PROBE3(proc, kernel, , signal__send, td, p, sig);
 
 	/*
 	 * If the signal is being ignored,
@@ -2132,7 +2132,7 @@ tdsendsignal(struct proc *p, struct thread *td, int sig, ksiginfo_t *ksi)
 	 */
 	mtx_lock(&ps->ps_mtx);
 	if (SIGISMEMBER(ps->ps_sigignore, sig)) {
-		SDT_PROBE(proc, kernel, , signal__discard, td, p, sig, 0, 0 );
+		SDT_PROBE3(proc, kernel, , signal__discard, td, p, sig);
 
 		mtx_unlock(&ps->ps_mtx);
 		if (ksi && (ksi->ksi_flags & KSI_INS))

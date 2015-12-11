@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_smp.c 285771 2015-07-21 22:56:46Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_smp.c 290547 2015-11-08 14:26:50Z tijl $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -125,7 +125,15 @@ struct mtx smp_ipi_mtx;
 static void
 mp_setmaxid(void *dummy)
 {
+
 	cpu_mp_setmaxid();
+
+	KASSERT(mp_ncpus >= 1, ("%s: CPU count < 1", __func__));
+	KASSERT(mp_ncpus > 1 || mp_maxid == 0,
+	    ("%s: one CPU but mp_maxid is not zero", __func__));
+	KASSERT(mp_maxid >= mp_ncpus - 1,
+	    ("%s: counters out of sync: max %d, count %d", __func__,
+		mp_maxid, mp_ncpus));
 }
 SYSINIT(cpu_mp_setmaxid, SI_SUB_TUNABLES, SI_ORDER_FIRST, mp_setmaxid, NULL);
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ata/ata_pmp.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/cam/ata/ata_pmp.c 290462 2015-11-06 18:50:01Z mav $");
 
 #include <sys/param.h>
 
@@ -154,8 +154,6 @@ static struct periph_driver pmpdriver =
 };
 
 PERIPHDRIVER_DECLARE(pmp, pmpdriver);
-
-static MALLOC_DEFINE(M_ATPMP, "ata_pmp", "ata_pmp buffers");
 
 static void
 pmpinit(void)

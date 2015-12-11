@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/ebr.c 272485 2014-10-03 20:48:11Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/ebr.c 289349 2015-10-15 01:09:14Z emaste $");
 
 #include <sys/types.h>
 #include <sys/diskmbr.h>
@@ -39,11 +39,15 @@ __FBSDID("$FreeBSD: head/usr.bin/mkimg/ebr.c 272485 2014-10-03 20:48:11Z marcel 
 #include "mkimg.h"
 #include "scheme.h"
 
+#ifndef DOSPTYP_FAT16B
+#define	DOSPTYP_FAT16B	0x06
+#endif
 #ifndef DOSPTYP_FAT32
 #define	DOSPTYP_FAT32	0x0b
 #endif
 
 static struct mkimg_alias ebr_aliases[] = {
+    {	ALIAS_FAT16B, ALIAS_INT2TYPE(DOSPTYP_FAT16B) },
     {	ALIAS_FAT32, ALIAS_INT2TYPE(DOSPTYP_FAT32) },
     {	ALIAS_FREEBSD, ALIAS_INT2TYPE(DOSPTYP_386BSD) },
     {	ALIAS_NONE, 0 }

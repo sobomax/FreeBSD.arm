@@ -1,6 +1,5 @@
-#$FreeBSD: head/sys/arm/ti/omap4/files.omap4 283276 2015-05-22 03:16:18Z gonzo $
+#$FreeBSD: head/sys/arm/ti/omap4/files.omap4 291135 2015-11-21 16:23:56Z andrew $
 
-arm/arm/mpcore_timer.c				standard
 arm/ti/ti_smc.S					standard
 
 arm/ti/usb/omap_ehci.c				optional	usb ehci

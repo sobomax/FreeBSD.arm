@@ -28,7 +28,7 @@
  * These notices must be retained in any copies of any part of this software.
  *
  * $KAME: altq_cbq.c,v 1.19 2003/09/17 14:23:25 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq_cbq.c 281642 2015-04-17 06:38:31Z glebius $
+ * $FreeBSD: head/sys/net/altq/altq_cbq.c 287009 2015-08-21 22:02:22Z loos $
  */
 
 #include "opt_altq.h"
@@ -236,6 +236,10 @@ get_class_stats(class_stats_t *statsp, struct rm_class *cl)
 #ifdef ALTQ_RIO
 	if (q_is_rio(cl->q_))
 		rio_getstats((rio_t *)cl->red_, &statsp->red[0]);
+#endif
+#ifdef ALTQ_CODEL
+	if (q_is_codel(cl->q_))
+		codel_getstats(cl->codel_, &statsp->codel);
 #endif
 }
 

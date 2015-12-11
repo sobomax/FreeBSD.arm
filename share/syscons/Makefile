@@ -1,5 +1,6 @@
-# $FreeBSD: head/share/syscons/Makefile 50476 1999-08-28 00:22:10Z peter $
+# $FreeBSD: head/share/syscons/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 SUBDIR= fonts keymaps scrnmaps
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

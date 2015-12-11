@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)err.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/err.c 177893 2008-04-03 20:36:44Z imp $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/err.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include "namespace.h"
 #include <err.h>
@@ -79,10 +79,7 @@ _err(int eval, const char *fmt, ...)
 }
 
 void
-verr(eval, fmt, ap)
-	int eval;
-	const char *fmt;
-	va_list ap;
+verr(int eval, const char *fmt, va_list ap)
 {
 	verrc(eval, errno, fmt, ap);
 }

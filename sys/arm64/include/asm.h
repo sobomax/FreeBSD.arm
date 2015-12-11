@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/asm.h 280364 2015-03-23 11:54:56Z andrew $
+ * $FreeBSD: head/sys/arm64/include/asm.h 290079 2015-10-27 22:24:57Z andrew $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -39,7 +39,7 @@
 #define	_C_LABEL(x)	x
 
 #define	ENTRY(sym)						\
-	.text; .globl sym; .align 2; sym:
+	.text; .globl sym; .align 2; .type sym,#function; sym:
 #define	EENTRY(sym)						\
 	.globl	sym; sym:
 #define	END(sym) .size sym, . - sym

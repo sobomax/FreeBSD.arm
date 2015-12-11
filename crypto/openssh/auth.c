@@ -1,5 +1,4 @@
 /* $OpenBSD: auth.c,v 1.103 2013/05/19 02:42:42 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/auth.c 263691 2014-03-24 19:15:13Z des $ */
 /*
  * Copyright (c) 2000 Markus Friedl.  All rights reserved.
  *
@@ -25,7 +24,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/auth.c 263691 2014-03-24 19:15:13Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/auth.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/types.h>
 #include <sys/stat.h>

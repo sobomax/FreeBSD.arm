@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 286372 2015-08-06 17:07:21Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback.c 289686 2015-10-21 10:44:07Z royger $");
 
 /**
  * \file netback.c
@@ -524,13 +524,15 @@ xnb_dump_gnttab_copy(const struct gnttab_copy *entry)
 	if (entry->flags & GNTCOPY_dest_gref)
 		printf("gnttab dest ref=\t%u\n", entry->dest.u.ref);
 	else
-		printf("gnttab dest gmfn=\t%lu\n", entry->dest.u.gmfn);
+		printf("gnttab dest gmfn=\t%"PRI_xen_pfn"\n",
+		       entry->dest.u.gmfn);
 	printf("gnttab dest offset=\t%hu\n", entry->dest.offset);
 	printf("gnttab dest domid=\t%hu\n", entry->dest.domid);
 	if (entry->flags & GNTCOPY_source_gref)
 		printf("gnttab source ref=\t%u\n", entry->source.u.ref);
 	else
-		printf("gnttab source gmfn=\t%lu\n", entry->source.u.gmfn);
+		printf("gnttab source gmfn=\t%"PRI_xen_pfn"\n",
+		       entry->source.u.gmfn);
 	printf("gnttab source offset=\t%hu\n", entry->source.offset);
 	printf("gnttab source domid=\t%hu\n", entry->source.domid);
 	printf("gnttab len=\t%hu\n", entry->len);

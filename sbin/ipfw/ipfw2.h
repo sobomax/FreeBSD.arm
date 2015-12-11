@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: head/sbin/ipfw/ipfw2.h 282004 2015-04-26 10:53:35Z melifaro $
+ * $FreeBSD: head/sbin/ipfw/ipfw2.h 290330 2015-11-03 10:21:53Z ae $
  */
 
 /*
@@ -227,6 +227,7 @@ enum tokens {
 	TOK_LOCK,
 	TOK_UNLOCK,
 	TOK_VLIST,
+	TOK_OLIST,
 };
 
 /*

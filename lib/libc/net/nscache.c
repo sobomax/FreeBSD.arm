@@ -26,9 +26,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/nscache.c 172730 2007-10-17 23:20:49Z tmclaugh $");
+__FBSDID("$FreeBSD: head/lib/libc/net/nscache.c 288013 2015-09-20 04:17:03Z rodrigc $");
 
 #include "namespace.h"
+#define _NS_PRIVATE
 #include <nsswitch.h>
 #include <stdlib.h>
 #include <string.h>

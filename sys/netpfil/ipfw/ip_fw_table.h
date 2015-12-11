@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netpfil/ipfw/ip_fw_table.h 282070 2015-04-27 08:29:39Z melifaro $
+ * $FreeBSD: head/sys/netpfil/ipfw/ip_fw_table.h 290332 2015-11-03 10:29:46Z ae $
  */
 
 #ifndef _IPFW2_TABLE_H
@@ -187,7 +187,6 @@ void ipfw_unref_rule_tables(struct ip_fw_chain *chain, struct ip_fw *rule);
 struct namedobj_instance *ipfw_get_table_objhash(struct ip_fw_chain *ch);
 
 /* utility functions  */
-int ipfw_check_table_name(char *name);
 int ipfw_move_tables_sets(struct ip_fw_chain *ch, ipfw_range_tlv *rt,
     uint32_t new_set);
 void ipfw_swap_tables_sets(struct ip_fw_chain *ch, uint32_t old_set,

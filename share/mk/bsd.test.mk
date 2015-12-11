@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.test.mk 284408 2015-06-15 07:13:23Z ngie $
+# $FreeBSD: head/share/mk/bsd.test.mk 289158 2015-10-11 21:29:24Z ngie $
 #
 # Generic build infrastructure for test programs.
 #
@@ -10,9 +10,8 @@
 
 __<bsd.test.mk>__:
 
-.ifndef TESTSDIR
-.error "Please define TESTSDIR when including bsd.test.mk"
-.endif
+# Tests install directory
+TESTSDIR?=	${TESTSBASE}/${RELDIR:H}
 
 # List of subdirectories containing tests into which to recurse.  This has the
 # same semantics as SUBDIR at build-time.  However, the directories listed here
@@ -89,10 +88,6 @@ test: beforetest realtest
 .if target(aftertest)
 .ORDER: realtest aftertest
 test: aftertest
-.endif
-
-.if !empty(SUBDIR)
-.include <bsd.subdir.mk>
 .endif
 
 .ifdef PROG

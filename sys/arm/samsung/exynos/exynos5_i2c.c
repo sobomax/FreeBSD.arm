@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 289093 2015-10-09 22:49:50Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -263,8 +263,8 @@ i2c_start(device_t dev, u_char slave, int timeout)
 	error = wait_for_nibb(sc);
 	if (error) {
 		mtx_unlock(&sc->mutex);
-		DPRINTF("cant i2c start: IIC_EBUSBSY\n");
-		return (IIC_EBUSBSY);
+		DPRINTF("cant i2c start: IIC_EBUSERR\n");
+		return (IIC_EBUSERR);
 	}
 
 	reg = READ1(sc, I2CCON);

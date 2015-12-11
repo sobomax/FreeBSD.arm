@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_param.c 286584 2015-08-10 17:18:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_param.c 288068 2015-09-21 15:02:59Z kib $");
 
 #include "opt_param.h"
 #include "opt_msgbuf.h"
@@ -76,7 +76,7 @@ __FBSDID("$FreeBSD: head/sys/kern/subr_param.c 286584 2015-08-10 17:18:21Z kib $
 #define NBUF 0
 #endif
 #ifndef MAXFILES
-#define	MAXFILES (maxproc * 2)
+#define	MAXFILES (40 + 32 * maxusers)
 #endif
 
 static int sysctl_kern_vm_guest(SYSCTL_HANDLER_ARGS);
@@ -253,6 +253,8 @@ init_param2(long physpages)
 	TUNABLE_INT_FETCH("kern.maxproc", &maxproc);
 	if (maxproc > (physpages / 12))
 		maxproc = physpages / 12;
+	if (maxproc > pid_max)
+		maxproc = pid_max;
 	maxprocperuid = (maxproc * 9) / 10;
 
 	/*
@@ -265,7 +267,8 @@ init_param2(long physpages)
 	if (maxfiles > (physpages / 4))
 		maxfiles = physpages / 4;
 	maxfilesperproc = (maxfiles / 10) * 9;
-	
+	TUNABLE_INT_FETCH("kern.maxfilesperproc", &maxfilesperproc);
+
 	/*
 	 * Cannot be changed after boot.
 	 */

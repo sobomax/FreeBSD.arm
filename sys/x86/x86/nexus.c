@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/nexus.c 263379 2014-03-19 21:03:04Z imp $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/nexus.c 287000 2015-08-21 15:57:57Z royger $");
 
 /*
  * This code implements a `root nexus' for Intel Architecture
@@ -690,11 +690,8 @@ ram_attach(device_t dev)
 	kmdp = preload_search_by_type("elf kernel");
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type(ELF_KERN_STR);  
-	if (kmdp != NULL)
-		smapbase = (struct bios_smap *)preload_search_info(kmdp,
-		    MODINFO_METADATA | MODINFOMD_SMAP);
-	else
-		smapbase = NULL;
+	smapbase = (struct bios_smap *)preload_search_info(kmdp,
+	    MODINFO_METADATA | MODINFOMD_SMAP);
 	if (smapbase != NULL) {
 		smapsize = *((u_int32_t *)smapbase - 1);
 		smapend = (struct bios_smap *)((uintptr_t)smapbase + smapsize);

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/apb.c 276684 2015-01-05 02:00:41Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/apb.c 290918 2015-11-16 06:15:01Z adrian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -364,6 +364,8 @@ apb_filter(void *arg)
 			case AR71XX_SOC_AR9341:
 			case AR71XX_SOC_AR9342:
 			case AR71XX_SOC_AR9344:
+			case AR71XX_SOC_QCA9533:
+			case AR71XX_SOC_QCA9533_V2:
 			case AR71XX_SOC_QCA9556:
 			case AR71XX_SOC_QCA9558:
 				/* ACK/clear the given interrupt */

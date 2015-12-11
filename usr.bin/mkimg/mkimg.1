@@ -22,7 +22,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/mkimg/mkimg.1 286660 2015-08-12 10:34:05Z brueffer $
+.\" $FreeBSD: head/usr.bin/mkimg/mkimg.1 289677 2015-10-21 05:37:09Z eadler $
 .\"
 .Dd August 7, 2015
 .Dt MKIMG 1
@@ -289,7 +289,7 @@ utility as follows:
 .Dl % mkimg -s mbr -b /boot/mbr -p freebsd:-'mkimg -s bsd -b /boot/boot \
 -p freebsd-ufs:=root-file-system.ufs -p freebsd-swap::1G' -o mbr-bsd.img
 .Pp
-To accomodate the need to have partitions named or numbered in a certain
+To accommodate the need to have partitions named or numbered in a certain
 way, the
 .Nm
 utility allows for the specification of empty partitions.

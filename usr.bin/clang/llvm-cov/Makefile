@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-cov/Makefile 281049 2015-04-03 19:43:39Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-cov/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,6 @@ SRCDIR=	tools/llvm-cov
 SRCS=	CodeCoverage.cpp \
 	CoverageFilters.cpp \
 	CoverageReport.cpp \
-	CoverageSummary.cpp \
 	CoverageSummaryInfo.cpp \
 	SourceCoverageView.cpp \
 	TestingSupport.cpp \

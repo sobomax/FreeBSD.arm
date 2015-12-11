@@ -1,5 +1,5 @@
 /* $NetBSD: machdep.h,v 1.7 2002/02/21 02:52:21 thorpej Exp $ */
-/* $FreeBSD: head/sys/arm/include/machdep.h 280712 2015-03-26 21:13:53Z ian $ */
+/* $FreeBSD: head/sys/arm/include/machdep.h 290273 2015-11-02 16:56:34Z zbb $ */
 
 #ifndef _MACHDEP_BOOT_MACHDEP_H_
 #define _MACHDEP_BOOT_MACHDEP_H_
@@ -42,5 +42,8 @@ void arm_generic_initclocks(void);
 /* Board-specific attributes */
 void board_set_serial(uint64_t);
 void board_set_revision(uint32_t);
+
+int arm_predict_branch(void *, u_int, register_t, register_t *,
+    u_int (*)(void*, int), u_int (*)(void*, vm_offset_t, u_int*));
 
 #endif /* !_MACHINE_MACHDEP_H_ */

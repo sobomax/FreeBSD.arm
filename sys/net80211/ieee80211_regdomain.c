@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_regdomain.c 283538 2015-05-25 19:18:16Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_regdomain.c 287197 2015-08-27 08:56:39Z glebius $");
 
 /*
  * IEEE 802.11 regdomain support.
@@ -35,7 +35,6 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_regdomain.c 283538 2015-05-25 19
 #include <sys/systm.h> 
 #include <sys/kernel.h>
 #include <sys/malloc.h>
- 
 #include <sys/socket.h>
 
 #include <net/if.h>
@@ -487,7 +486,7 @@ ieee80211_setregdomain(struct ieee80211vap *vap,
 	memset(&ic->ic_channels[ic->ic_nchans], 0,
 	    (IEEE80211_CHAN_MAX - ic->ic_nchans) *
 	       sizeof(struct ieee80211_channel));
-	ieee80211_media_init(ic);
+	ieee80211_chan_init(ic);
 
 	/*
 	 * Invalidate channel-related state.

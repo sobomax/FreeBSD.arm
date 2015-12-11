@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/random/build.sh 285422 2015-07-12 18:14:38Z markm $
+# $FreeBSD: head/sys/dev/random/build.sh 287023 2015-08-22 12:59:05Z markm $
 #
 # Basic script to build crude unit tests.
 #
@@ -35,7 +35,7 @@
 #              <(sed -e 's/fortuna/wombat/g' \
 #                    -e 's/FORTUNA/WOMBAT/g' fortuna.c) | less
 #
-cc -g -O0 -pthread -DRANDOM_DEBUG \
+cc -g -O0 -pthread \
 	-I../.. -lstdthreads -Wall \
 	unit_test.c \
 	yarrow.c \
@@ -46,7 +46,7 @@ cc -g -O0 -pthread -DRANDOM_DEBUG \
 	../../crypto/sha2/sha256c.c \
 	-lz \
 	-o yunit_test
-cc -g -O0 -pthread -DRANDOM_DEBUG \
+cc -g -O0 -pthread \
 	-I../.. -lstdthreads -Wall \
 	unit_test.c \
 	fortuna.c \

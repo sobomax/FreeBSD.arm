@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_bt3c_pccard.c,v 1.5 2003/04/01 18:15:21 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 276750 2015-01-06 12:59:37Z rwatson $
+ * $FreeBSD: head/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 292079 2015-12-11 05:27:56Z imp $
  *
  * XXX XXX XX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
  *
@@ -584,14 +584,14 @@ out:
  * PC Card (PCMCIA) probe routine
  */
 
+static struct pccard_product const	bt3c_pccard_products[] = {
+	PCMCIA_CARD(3COM, 3CRWB609),
+	{ NULL, }
+};
+
 static int
 bt3c_pccard_probe(device_t dev)
 {
-	static struct pccard_product const	bt3c_pccard_products[] = {
-		PCMCIA_CARD(3COM, 3CRWB609),
-		{ NULL, }
-	};
-
 	struct pccard_product const	*pp = NULL;
 
 	pp = pccard_product_lookup(dev, bt3c_pccard_products,
@@ -1222,4 +1222,4 @@ bt3c_modevent(module_t mod, int event, void *data)
 DRIVER_MODULE(bt3c, pccard, bt3c_pccard_driver, bt3c_devclass, bt3c_modevent,0);
 MODULE_VERSION(ng_bt3c, NG_BLUETOOTH_VERSION);
 MODULE_DEPEND(ng_bt3c, netgraph, NG_ABI_VERSION, NG_ABI_VERSION,NG_ABI_VERSION);
-
+PCCARD_PNP_INFO(bt3c_pccard_products);

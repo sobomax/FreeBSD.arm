@@ -1,6 +1,6 @@
 #! /bin/sh -
 #	@(#)makesyscalls.sh	8.1 (Berkeley) 6/10/93
-# $FreeBSD: head/sys/kern/makesyscalls.sh 285307 2015-07-09 07:20:15Z ed $
+# $FreeBSD: head/sys/kern/makesyscalls.sh 289769 2015-10-22 21:28:20Z jhb $
 
 set -e
 
@@ -409,6 +409,10 @@ s/\$//g
 				printf("\t\tcase %d:\n\t\t\tp = \"%s\";\n\t\t\tbreak;\n", i - 1, arg) > systracetmp
 				if (index(arg, "*") > 0 || arg == "caddr_t")
 					printf("\t\tuarg[%d] = (intptr_t) p->%s; /* %s */\n", \
+					     i - 1, \
+					     argname[i], arg) > systrace
+				else if (arg == "union l_semun")
+					printf("\t\tuarg[%d] = p->%s.buf; /* %s */\n", \
 					     i - 1, \
 					     argname[i], arg) > systrace
 				else if (substr(arg, 1, 1) == "u" || arg == "size_t")

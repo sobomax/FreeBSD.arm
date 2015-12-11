@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/linux64/Makefile 283506 2015-05-25 01:07:55Z rodrigc $
+# $FreeBSD: head/sys/modules/linux64/Makefile 291153 2015-11-22 02:01:01Z markj $
 
 .PATH: ${.CURDIR}/../../compat/linux ${.CURDIR}/../../${MACHINE_ARCH}/linux
 
@@ -10,7 +10,7 @@ SRCS=	linux_fork.c linux_dummy.c linux_file.c linux_event.c \
 	linux_machdep.c linux_misc.c linux_signal.c \
 	linux_socket.c linux_stats.c linux_sysctl.c linux_sysent.c \
 	linux_sysvec.c linux_time.c linux_vdso.c linux_timer.c \
-	opt_inet6.h opt_compat.h opt_kdtrace.h opt_posix.h opt_usb.h \
+	opt_inet6.h opt_compat.h opt_posix.h opt_usb.h \
 	vnode_if.h device_if.h bus_if.h assym.s \
 	linux_support.s
 DPSRCS=	linux_genassym.c

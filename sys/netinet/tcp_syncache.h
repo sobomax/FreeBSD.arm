@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_var.h	8.4 (Berkeley) 5/24/95
- * $FreeBSD: head/sys/netinet/tcp_syncache.h 255759 2013-09-21 10:01:51Z bz $
+ * $FreeBSD: head/sys/netinet/tcp_syncache.h 287481 2015-09-05 10:15:19Z glebius $
  */
 
 #ifndef _NETINET_TCP_SYNCACHE_H_
@@ -118,7 +118,7 @@ struct tcp_syncache {
 	u_int	bucket_limit;
 	u_int	cache_limit;
 	u_int	rexmt_limit;
-	u_int	hash_secret;
+	uint32_t hash_secret;
 	struct vnet *vnet;
 	struct syncookie_secret secret;
 };

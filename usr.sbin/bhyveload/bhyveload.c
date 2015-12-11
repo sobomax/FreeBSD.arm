@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 289001 2015-10-08 02:28:22Z marcel $
  */
 
 /*-
@@ -51,11 +51,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 289001 2015-10-08 02:28:22Z marcel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 284539 2015-06-18 06:00:17Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 289001 2015-10-08 02:28:22Z marcel $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -639,6 +639,7 @@ usage(void)
 int
 main(int argc, char** argv)
 {
+	char *loader;
 	void *h;
 	void (*func)(struct loader_callbacks *, void *, int, int);
 	uint64_t mem_size;
@@ -646,13 +647,15 @@ main(int argc, char** argv)
 
 	progname = basename(argv[0]);
 
+	loader = NULL;
+
 	memflags = 0;
 	mem_size = 256 * MB;
 
 	consin_fd = STDIN_FILENO;
 	consout_fd = STDOUT_FILENO;
 
-	while ((opt = getopt(argc, argv, "Sc:d:e:h:m:")) != -1) {
+	while ((opt = getopt(argc, argv, "Sc:d:e:h:l:m:")) != -1) {
 		switch (opt) {
 		case 'c':
 			error = altcons_open(optarg);
@@ -672,6 +675,14 @@ main(int argc, char** argv)
 
 		case 'h':
 			host_base = optarg;
+			break;
+
+		case 'l':
+			if (loader != NULL)
+				errx(EX_USAGE, "-l can only be given once");
+			loader = strdup(optarg);
+			if (loader == NULL)
+				err(EX_OSERR, "malloc");
 			break;
 
 		case 'm':
@@ -726,26 +737,36 @@ main(int argc, char** argv)
 		exit(1);
 	}
 
-	tcgetattr(consout_fd, &term);
-	oldterm = term;
-	cfmakeraw(&term);
-	term.c_cflag |= CLOCAL;
-	
-	tcsetattr(consout_fd, TCSAFLUSH, &term);
-
-	h = dlopen("/boot/userboot.so", RTLD_LOCAL);
+	if (loader == NULL) {
+		loader = strdup("/boot/userboot.so");
+		if (loader == NULL)
+			err(EX_OSERR, "malloc");
+	}
+	h = dlopen(loader, RTLD_LOCAL);
 	if (!h) {
 		printf("%s\n", dlerror());
+		free(loader);
 		return (1);
 	}
 	func = dlsym(h, "loader_main");
 	if (!func) {
 		printf("%s\n", dlerror());
+		free(loader);
 		return (1);
 	}
+
+	tcgetattr(consout_fd, &term);
+	oldterm = term;
+	cfmakeraw(&term);
+	term.c_cflag |= CLOCAL;
+
+	tcsetattr(consout_fd, TCSAFLUSH, &term);
 
 	addenv("smbios.bios.vendor=BHYVE");
 	addenv("boot_serial=1");
 
 	func(&cb, NULL, USERBOOT_VERSION_3, ndisks);
+
+	free(loader);
+	return (0);
 }

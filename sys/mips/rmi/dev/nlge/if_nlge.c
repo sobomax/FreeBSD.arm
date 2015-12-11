@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/nlge/if_nlge.c 271858 2014-09-19 09:19:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/nlge/if_nlge.c 287471 2015-09-04 19:57:28Z sbruno $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -1154,7 +1154,7 @@ nlna_config_pde(struct nlna_softc *sc)
 	cpumask = 0x1;
 #ifdef SMP
 	/*
-         * rge may be called before SMP start in a BOOTP/NFSROOT
+         * nlna may be called before SMP start in a BOOTP/NFSROOT
          * setup. we will distribute packets to other cpus only when
          * the SMP is started.
 	 */

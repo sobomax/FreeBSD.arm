@@ -52,7 +52,7 @@
  * from: Header: /sprite/src/kernel/vm/ds3100.md/RCS/vmPmaxConst.h,
  *	v 9.1 89/09/18 17:33:00 shirriff Exp  SPRITE (DECWRL)
  *
- * $FreeBSD: head/sys/mips/include/cpuregs.h 274752 2014-11-20 17:06:41Z br $
+ * $FreeBSD: head/sys/mips/include/cpuregs.h 292114 2015-12-11 16:51:04Z imp $
  */
 
 #ifndef _MIPS_CPUREGS_H_
@@ -151,7 +151,7 @@
 
 #if defined(CPU_MIPS74KC)
 #define	MIPS_CCA_UNCACHED	0x02
-#define	MIPS_CCA_CACHED		0x00
+#define	MIPS_CCA_CACHED		0x03
 #endif
 
 #ifndef	MIPS_CCA_UNCACHED
@@ -524,7 +524,7 @@
 #define MIPS_CONFIG0_MT_MASK		0x00000380	/* bits 9..7 MMU Type */
 #define MIPS_CONFIG0_MT_SHIFT		7
 #define MIPS_CONFIG0_BE			0x00008000	/* data is big-endian */
-#define MIPS_CONFIG0_VI			0x00000004	/* instruction cache is virtual */
+#define MIPS_CONFIG0_VI			0x00000008	/* instruction cache is virtual */
 
 #define MIPS_CONFIG1_TLBSZ_MASK		0x7E000000	/* bits 30..25 # tlb entries minus one */
 #define MIPS_CONFIG1_TLBSZ_SHIFT	25

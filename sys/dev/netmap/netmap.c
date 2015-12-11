@@ -25,7 +25,7 @@
 
 
 /*
- * $FreeBSD: head/sys/dev/netmap/netmap.c 285699 2015-07-19 18:07:25Z luigi $
+ * $FreeBSD: head/sys/dev/netmap/netmap.c 287543 2015-09-07 23:16:39Z adrian $
  *
  * This module supports memory mapped access to network devices,
  * see netmap(4).
@@ -2841,10 +2841,12 @@ void
 netmap_detach(struct ifnet *ifp)
 {
 	struct netmap_adapter *na = NA(ifp);
+	int skip;
 
 	if (!na)
 		return;
 
+	skip = 0;
 	NMG_LOCK();
 	netmap_disable_all_rings(ifp);
 	na->ifp = NULL;
@@ -2856,10 +2858,11 @@ netmap_detach(struct ifnet *ifp)
 	 * the driver is gone.
 	 */
 	if (na->na_flags & NAF_NATIVE) {
-	        netmap_adapter_put(na);
+		skip = netmap_adapter_put(na);
 	}
 	/* give them a chance to notice */
-	netmap_enable_all_rings(ifp);
+	if (skip == 0)
+		netmap_enable_all_rings(ifp);
 	NMG_UNLOCK();
 }
 

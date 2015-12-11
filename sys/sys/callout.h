@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)callout.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/callout.h 283291 2015-05-22 17:05:21Z jkim $
+ * $FreeBSD: head/sys/sys/callout.h 290664 2015-11-10 14:49:32Z rrs $
  */
 
 #ifndef _SYS_CALLOUT_H_
@@ -81,7 +81,7 @@ struct callout_handle {
  */
 #define	callout_active(c)	((c)->c_flags & CALLOUT_ACTIVE)
 #define	callout_deactivate(c)	((c)->c_flags &= ~CALLOUT_ACTIVE)
-#define	callout_drain(c)	_callout_stop_safe(c, 1)
+#define	callout_drain(c)	_callout_stop_safe(c, 1, NULL)
 void	callout_init(struct callout *, int);
 void	_callout_init_lock(struct callout *, struct lock_object *, int);
 #define	callout_init_mtx(c, mtx, flags)					\
@@ -119,10 +119,11 @@ int	callout_schedule(struct callout *, int);
 int	callout_schedule_on(struct callout *, int, int);
 #define	callout_schedule_curcpu(c, on_tick)				\
     callout_schedule_on((c), (on_tick), PCPU_GET(cpuid))
-#define	callout_stop(c)		_callout_stop_safe(c, 0)
-int	_callout_stop_safe(struct callout *, int);
+#define	callout_stop(c)		_callout_stop_safe(c, 0, NULL)
+int	_callout_stop_safe(struct callout *, int, void (*)(void *));
 void	callout_process(sbintime_t now);
-
+#define callout_async_drain(c, d)					\
+    _callout_stop_safe(c, 0, d)
 #endif
 
 #endif /* _SYS_CALLOUT_H_ */

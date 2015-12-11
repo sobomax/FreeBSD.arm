@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/aim/slb.c 280957 2015-04-01 12:42:26Z rstone $
+ * $FreeBSD: head/sys/powerpc/aim/slb.c 291262 2015-11-24 16:10:21Z nwhitehorn $
  */
 
 #include <sys/param.h>
@@ -140,7 +140,7 @@ make_new_leaf(uint64_t esid, uint64_t slbv, struct slbtnode *parent)
 	 * that a lockless searcher always sees a valid path through
 	 * the tree.
 	 */
-	mb();
+	powerpc_lwsync();
 
 	idx = esid2idx(esid, parent->ua_level);
 	parent->u.ua_child[idx] = child;
@@ -188,7 +188,7 @@ make_intermediate(uint64_t esid, struct slbtnode *parent)
 	idx = esid2idx(child->ua_base, inter->ua_level);
 	inter->u.ua_child[idx] = child;
 	setbit(&inter->ua_alloc, idx);
-	mb();
+	powerpc_lwsync();
 
 	/* Set up parent to point to intermediate node ... */
 	idx = esid2idx(inter->ua_base, parent->ua_level);
@@ -241,6 +241,12 @@ user_va_to_slb_entry(pmap_t pm, vm_offset_t va)
 			return ((ua->u.slb_entries[idx].slbe & SLBE_VALID) ?
 			    &ua->u.slb_entries[idx] : NULL);
 
+		/*
+		 * The following accesses are implicitly ordered under the POWER
+		 * ISA by load dependencies (the store ordering is provided by
+		 * the powerpc_lwsync() calls elsewhere) and so are run without
+		 * barriers.
+		 */
 		ua = ua->u.ua_child[idx];
 		if (ua == NULL ||
 		    esid2base(esid, ua->ua_level) != ua->ua_base)

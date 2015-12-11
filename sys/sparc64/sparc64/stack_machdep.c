@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/stack_machdep.c 285627 2015-07-16 10:46:52Z zbb $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/stack_machdep.c 287645 2015-09-11 03:54:37Z markj $");
 
 #include "opt_kstack_pages.h"
 
@@ -80,6 +80,13 @@ stack_save_td(struct stack *st, struct thread *td)
 		panic("stack_save_td: running");
 
 	stack_capture(st, (struct frame *)(td->td_pcb->pcb_sp + SPOFF));
+}
+
+int
+stack_save_td_running(struct stack *st, struct thread *td)
+{
+
+	return (EOPNOTSUPP);
 }
 
 void

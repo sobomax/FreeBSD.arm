@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmsparccodegen/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmsparccodegen/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -14,7 +14,6 @@ SRCS=	DelaySlotFiller.cpp \
 	SparcMCInstLower.cpp \
 	SparcMachineFunctionInfo.cpp \
 	SparcRegisterInfo.cpp \
-	SparcSelectionDAGInfo.cpp \
 	SparcSubtarget.cpp \
 	SparcTargetMachine.cpp \
 	SparcTargetObjectFile.cpp

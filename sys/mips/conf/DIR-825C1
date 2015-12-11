@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/mips/conf/DIR-825C1 264085 2014-04-03 20:12:39Z sbruno $
+# $FreeBSD: head/sys/mips/conf/DIR-825C1 291049 2015-11-19 01:58:12Z imp $
 #
 # Specific board setup for the D-Link DIR-825C1 router.
 #
@@ -11,6 +11,8 @@
 # + m25p80 based 16MB flash
 # + 128MB RAM
 # + uboot environment
+
+#NO_UNIVERSE
 
 # Include the default AR934x parameters
 include         "AR934X_BASE"

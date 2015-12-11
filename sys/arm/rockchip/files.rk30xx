@@ -1,12 +1,6 @@
-# $FreeBSD: head/sys/arm/rockchip/files.rk30xx 282723 2015-05-10 12:13:27Z andrew $
+# $FreeBSD: head/sys/arm/rockchip/files.rk30xx 291135 2015-11-21 16:23:56Z andrew $
 kern/kern_clocksource.c			standard
 
-arm/arm/bus_space_asm_generic.S		standard
-arm/arm/bus_space_generic.c		standard
-
-arm/arm/mpcore_timer.c			standard
-
-arm/arm/bus_space_base.c		standard
 arm/rockchip/rk30xx_common.c		standard
 arm/rockchip/rk30xx_machdep.c		standard
 arm/rockchip/rk30xx_pmu.c		standard

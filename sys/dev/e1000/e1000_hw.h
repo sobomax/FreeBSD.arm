@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_hw.h 286833 2015-08-16 20:13:58Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_hw.h 287990 2015-09-19 18:22:59Z sbruno $*/
 
 #ifndef _E1000_HW_H_
 #define _E1000_HW_H_
@@ -787,7 +787,7 @@ struct e1000_mac_info {
 	u16 uta_reg_count;
 
 	/* Maximum size of the MTA register table in all supported adapters */
-	#define MAX_MTA_REG 128
+#define MAX_MTA_REG 128
 	u32 mta_shadow[MAX_MTA_REG];
 	u16 rar_entry_count;
 

@@ -22,18 +22,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/cloudabi/cloudabi_syscalldefs.h 285834 2015-07-24 07:46:02Z ed $
+ * $FreeBSD: head/sys/compat/cloudabi/cloudabi_syscalldefs.h 289004 2015-10-08 05:27:45Z ed $
  */
 
 #ifndef _CLOUDABI_SYSCALLDEFS_H_
 #define	_CLOUDABI_SYSCALLDEFS_H_
 
+#ifdef _KERNEL
 #include <sys/types.h>
 #include <sys/stdint.h>
 
 #define	alignas		_Alignas
 #define	alignof		_Alignof
 #define	static_assert	_Static_assert
+#else
+#include <assert.h>
+#include <stdalign.h>
+#include <stddef.h>
+#include <stdint.h>
+#endif
 
 /* Import machine-independent CloudABI definitions. */
 #include <contrib/cloudabi/syscalldefs_mi.h>

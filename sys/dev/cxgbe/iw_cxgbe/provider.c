@@ -30,7 +30,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/provider.c 261907 2014-02-14 23:38:42Z dim $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/provider.c 291665 2015-12-03 00:02:01Z jhb $");
 
 #include "opt_inet.h"
 
@@ -296,7 +296,7 @@ c4iw_query_gid(struct ib_device *ibdev, u8 port, int index, union ib_gid *gid)
 	if (port == 0 || port > sc->params.nports)
 		return (-EINVAL);
 	pi = sc->port[port - 1];
-	memcpy(&gid->raw[0], pi->hw_addr, sizeof(pi->hw_addr));
+	memcpy(&gid->raw[0], pi->vi[0].hw_addr, ETHER_ADDR_LEN);
 	return (0);
 }
 
@@ -309,7 +309,8 @@ c4iw_query_device(struct ib_device *ibdev, struct ib_device_attr *props)
 	CTR3(KTR_IW_CXGBE, "%s ibdev %p, props %p", __func__, ibdev, props);
 
 	memset(props, 0, sizeof *props);
-	memcpy(&props->sys_image_guid, sc->port[0]->hw_addr, 6);
+	memcpy(&props->sys_image_guid, sc->port[0]->vi[0].hw_addr,
+	    ETHER_ADDR_LEN);
 	props->hw_ver = sc->params.chipid;
 	props->fw_ver = sc->params.fw_vers;
 	props->device_cap_flags = dev->device_cap_flags;
@@ -352,7 +353,7 @@ c4iw_query_port(struct ib_device *ibdev, u8 port, struct ib_port_attr *props)
 	if (port > sc->params.nports)
 		return (-EINVAL);
 	pi = sc->port[port - 1];
-	ifp = pi->ifp;
+	ifp = pi->vi[0].ifp;
 
 	memset(props, 0, sizeof(struct ib_port_attr));
 	props->max_mtu = IB_MTU_4096;
@@ -397,7 +398,7 @@ c4iw_register_device(struct c4iw_dev *dev)
 	BUG_ON(!sc->port[0]);
 	strlcpy(ibdev->name, device_get_nameunit(sc->dev), sizeof(ibdev->name));
 	memset(&ibdev->node_guid, 0, sizeof(ibdev->node_guid));
-	memcpy(&ibdev->node_guid, sc->port[0]->hw_addr, 6);
+	memcpy(&ibdev->node_guid, sc->port[0]->vi[0].hw_addr, ETHER_ADDR_LEN);
 	ibdev->owner = THIS_MODULE;
 	dev->device_cap_flags = IB_DEVICE_LOCAL_DMA_LKEY | IB_DEVICE_MEM_WINDOW;
 	if (fastreg_support)

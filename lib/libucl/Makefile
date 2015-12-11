@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libucl/Makefile 282420 2015-05-04 16:28:54Z bapt $
+# $FreeBSD: head/lib/libucl/Makefile 290071 2015-10-27 21:24:09Z bapt $
 
 LIBUCL=	${.CURDIR}/../../contrib/libucl
 
@@ -9,8 +9,10 @@ SRCS=		ucl_emitter_streamline.c \
 		ucl_emitter_utils.c \
 		ucl_emitter.c \
 		ucl_hash.c \
+		ucl_msgpack.c \
 		ucl_parser.c  \
 		ucl_schema.c \
+		ucl_sexp.c \
 		ucl_util.c \
 		xxhash.c
 

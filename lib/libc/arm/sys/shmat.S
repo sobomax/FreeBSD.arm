@@ -1,7 +1,9 @@
 /*	$NetBSD: shmat.S,v 1.1 2000/12/29 20:14:04 bjh21 Exp $	*/
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/shmat.S 129202 2004-05-14 12:04:31Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/shmat.S 288373 2015-09-29 16:09:58Z kib $");
 #include "SYS.h"
 
 RSYSCALL(shmat)
+
+	.section .note.GNU-stack,"",%progbits

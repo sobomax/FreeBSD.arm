@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/exception.S 275833 2014-12-16 18:28:33Z kib $
+ * $FreeBSD: head/sys/amd64/amd64/exception.S 287233 2015-08-28 00:17:21Z markj $
  */
 
 #include "opt_atpic.h"
@@ -225,7 +225,6 @@ alltraps_pushregs_no_rdi:
 	movq	$calltrap,dtrace_invop_calltrap_addr(%rip)
 
 	/* Jump to the code hooked in by DTrace. */
-	movq	dtrace_invop_jump_addr,%rax
 	jmpq	*dtrace_invop_jump_addr
 #endif
 	.globl	calltrap

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/librtld_db/Makefile 225227 2011-08-28 09:26:48Z kib $
+# $FreeBSD: head/lib/librtld_db/Makefile 291313 2015-11-25 19:13:35Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -10,5 +10,7 @@ SRCS=		rtld_db.c
 INCS=		rtld_db.h
 
 CFLAGS+= -I${.CURDIR}
+# Avoid circular dependency, we only need the libproc.h header here.
+CFLAGS+= -I${.CURDIR:H}/libproc
 
 .include <bsd.lib.mk>

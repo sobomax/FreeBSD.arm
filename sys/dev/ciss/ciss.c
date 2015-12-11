@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/ciss/ciss.c 281008 2015-04-02 23:12:18Z peter $
+ *	$FreeBSD: head/sys/dev/ciss/ciss.c 287437 2015-09-03 17:46:57Z sbruno $
  */
 
 /*
@@ -4016,8 +4016,7 @@ static void
 ciss_notify_logical(struct ciss_softc *sc, struct ciss_notify *cn)
 {
     struct ciss_ldrive	*ld;
-    int			bus, target;
-    int			rescan_ld;
+    int			ostatus, bus, target;
 
     debug_called(2);
 
@@ -4040,6 +4039,7 @@ ciss_notify_logical(struct ciss_softc *sc, struct ciss_notify *cn)
 	    /*
 	     * Update our idea of the drive's status.
 	     */
+	    ostatus = ciss_decode_ldrive_status(cn->data.logical_status.previous_state);
 	    ld->cl_status = ciss_decode_ldrive_status(cn->data.logical_status.new_state);
 	    if (ld->cl_lstatus != NULL)
 		ld->cl_lstatus->status = cn->data.logical_status.new_state;
@@ -4047,9 +4047,7 @@ ciss_notify_logical(struct ciss_softc *sc, struct ciss_notify *cn)
 	    /*
 	     * Have CAM rescan the drive if its status has changed.
 	     */
-            rescan_ld = (cn->data.logical_status.previous_state !=
-                         cn->data.logical_status.new_state) ? 1 : 0;
-	    if (rescan_ld) {
+	    if (ostatus != ld->cl_status) {
 		ld->cl_update = 1;
 		ciss_notify_rescan_logical(sc);
 	    }

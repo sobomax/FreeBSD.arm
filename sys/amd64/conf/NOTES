@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/amd64/conf/NOTES 285746 2015-07-21 12:53:47Z ed $
+# $FreeBSD: head/sys/amd64/conf/NOTES 287117 2015-08-24 19:32:03Z cem $
 #
 
 #
@@ -553,6 +553,7 @@ device		tpm
 device		padlock_rng	# VIA Padlock RNG
 device		rdrand_rng	# Intel Bull Mountain RNG
 device		aesni		# AES-NI OpenCrypto module
+device		ioat		# Intel I/OAT DMA engine
 
 #
 # Laptop/Notebook options:

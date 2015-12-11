@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)swapon.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/swapon/swapon.c 286445 2015-08-08 09:57:38Z pjd $");
+__FBSDID("$FreeBSD: head/sbin/swapon/swapon.c 292005 2015-12-09 01:24:34Z ngie $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -642,6 +642,7 @@ run_cmd(int *ofd, const char *cmdline, ...)
 	rv = vasprintf(&cmd, cmdline, ap);
 	if (rv == -1) {
 		warn("%s", __func__);
+		va_end(ap);
 		return (rv);
 	}
 	va_end(ap);

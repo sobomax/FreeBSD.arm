@@ -27,7 +27,9 @@
 #include "opt_global.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_machdep.c 283057 2015-05-18 11:04:07Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_machdep.c 289630 2015-10-20 13:47:36Z ganbold $");
+
+#include "opt_platform.h"
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>

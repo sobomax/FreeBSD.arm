@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/devmap.h 266303 2014-05-17 11:29:44Z andrew $
+ * $FreeBSD: head/sys/arm/include/devmap.h 290648 2015-11-10 12:02:41Z mmel $
  */
 
 #ifndef	_MACHINE_DEVMAP_H_
@@ -70,7 +70,7 @@ void arm_devmap_register_table(const struct arm_devmap_entry * _table);
  * custom initarm() routines in older code.  If the table pointer is NULL, this
  * will use the table installed previously by arm_devmap_register_table().
  */
-void arm_devmap_bootstrap(vm_offset_t _l1pt, 
+void arm_devmap_bootstrap(vm_offset_t _l1pt,
     const struct arm_devmap_entry *_table);
 
 /*

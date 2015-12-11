@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/jail.h 285685 2015-07-19 08:52:35Z araujo $
+ * $FreeBSD: head/sys/sys/jail.h 290861 2015-11-15 12:50:14Z trasz $
  */
 
 #ifndef _SYS_JAIL_H_
@@ -405,7 +405,8 @@ char *prison_name(struct prison *, struct prison *);
 int prison_priv_check(struct ucred *cred, int priv);
 int sysctl_jail_param(SYSCTL_HANDLER_ARGS);
 void prison_racct_foreach(void (*callback)(struct racct *racct,
-    void *arg2, void *arg3), void *arg2, void *arg3);
+    void *arg2, void *arg3), void (*pre)(void), void (*post)(void),
+    void *arg2, void *arg3);
 struct prison_racct *prison_racct_find(const char *name);
 void prison_racct_hold(struct prison_racct *prr);
 void prison_racct_free(struct prison_racct *prr);

@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/ath_rate/sample/sample.h 277823 2015-01-28 04:44:42Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_rate/sample/sample.h 287197 2015-08-27 08:56:39Z glebius $
  */
 
 /*
@@ -134,8 +134,7 @@ static unsigned calc_usecs_unicast_packet(struct ath_softc *sc,
 				int long_retries, int is_ht40)
 {
 	const HAL_RATE_TABLE *rt = sc->sc_currates;
-	struct ifnet *ifp = sc->sc_ifp;
-	struct ieee80211com *ic = ifp->if_l2com;
+	struct ieee80211com *ic = &sc->sc_ic;
 	int rts, cts;
 	
 	unsigned t_slot = 20;

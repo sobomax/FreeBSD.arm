@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_i2c.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_i2c.c 290726 2015-11-12 20:14:25Z gavin $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -495,7 +495,7 @@ ti_i2c_reset(struct ti_i2c_softc *sc, u_char speed)
 		break;
 #endif
 	default:
-		panic("Unknown Ti SoC, unable to reset the i2c");
+		panic("Unknown TI SoC, unable to reset the i2c");
 	}
 
 	/*

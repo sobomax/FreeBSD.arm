@@ -10,7 +10,9 @@
 # + 16MB RAM
 # + uboot environment
 
-# $FreeBSD: head/sys/mips/conf/AP91 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/AP91 291049 2015-11-19 01:58:12Z imp $
+
+#NO_UNIVERSE
 
 include		"AR724X_BASE"
 ident		"AP91"

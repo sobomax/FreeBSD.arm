@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_device.c 286773 2015-08-14 12:57:53Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_device.c 290135 2015-10-29 08:28:39Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -506,8 +506,8 @@ usb_unconfigure(struct usb_device *udev, uint8_t flag)
 
 #if USB_HAVE_COMPAT_LINUX
 	/* free Linux compat device, if any */
-	if (udev->linux_endpoint_start) {
-		usb_linux_free_device(udev);
+	if (udev->linux_endpoint_start != NULL) {
+		usb_linux_free_device_p(udev);
 		udev->linux_endpoint_start = NULL;
 	}
 #endif

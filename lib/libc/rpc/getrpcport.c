@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)getrpcport.c 1.3 87/08/11 SMI";
 static char *sccsid = "@(#)getrpcport.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcport.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcport.c 288113 2015-09-22 15:40:07Z rodrigc $");
 
 /*
  * Copyright (c) 1985 by Sun Microsystems, Inc.
@@ -53,9 +53,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcport.c 258578 2013-11-25 19:04:36Z h
 #include "un-namespace.h"
 
 int
-getrpcport(host, prognum, versnum, proto)
-	char *host;
-	int prognum, versnum, proto;
+getrpcport(char *host, int prognum, int versnum, int proto)
 {
 	struct sockaddr_in addr;
 	struct hostent *hp;

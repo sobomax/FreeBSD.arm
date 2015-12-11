@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vt/vt.h 286867 2015-08-18 00:47:02Z marcel $
+ * $FreeBSD: head/sys/dev/vt/vt.h 286997 2015-08-21 15:21:56Z cem $
  */
 
 #ifndef _DEV_VT_VT_H_
@@ -369,6 +369,7 @@ struct vt_driver {
  * Utility macro to make early vt(4) instances work.
  */
 
+extern struct vt_device vt_consdev;
 extern struct terminal vt_consterm;
 extern const struct terminal_class vt_termclass;
 void vt_upgrade(struct vt_device *vd);

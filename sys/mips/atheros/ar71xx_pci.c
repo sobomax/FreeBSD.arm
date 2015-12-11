@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 285121 2015-07-04 03:05:57Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 287907 2015-09-17 06:07:49Z bz $");
 
 #include "opt_ar71xx.h"
 
@@ -377,7 +377,6 @@ ar71xx_pci_probe(device_t dev)
 static int
 ar71xx_pci_attach(device_t dev)
 {
-	int busno = 0;
 	int rid = 0;
 	struct ar71xx_pci_softc *sc = device_get_softc(dev);
 
@@ -462,7 +461,7 @@ ar71xx_pci_attach(device_t dev)
 	ar71xx_pci_slot_fixup(dev, 0, 18, 0);
 #endif	/* AR71XX_ATH_EEPROM */
 
-	device_add_child(dev, "pci", busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

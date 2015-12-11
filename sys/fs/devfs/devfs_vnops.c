@@ -31,7 +31,7 @@
  *	@(#)kernfs_vnops.c	8.15 (Berkeley) 5/21/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vnops.c 1.43
  *
- * $FreeBSD: head/sys/fs/devfs/devfs_vnops.c 286371 2015-08-06 16:50:37Z jhb $
+ * $FreeBSD: head/sys/fs/devfs/devfs_vnops.c 291653 2015-12-02 18:27:30Z jhb $
  */
 
 /*
@@ -65,6 +65,7 @@
 #include <sys/vnode.h>
 
 static struct vop_vector devfs_vnodeops;
+static struct vop_vector devfs_specops;
 static struct fileops devfs_ops_f;
 
 #include <fs/devfs/devfs.h>
@@ -150,7 +151,7 @@ devfs_get_cdevpriv(void **datap)
 }
 
 int
-devfs_set_cdevpriv(void *priv, cdevpriv_dtr_t priv_dtr)
+devfs_set_cdevpriv(void *priv, d_priv_dtor_t *priv_dtr)
 {
 	struct file *fp;
 	struct cdev_priv *cdp;
@@ -1862,7 +1863,7 @@ static struct vop_vector devfs_vnodeops = {
 	.vop_vptocnp =		devfs_vptocnp,
 };
 
-struct vop_vector devfs_specops = {
+static struct vop_vector devfs_specops = {
 	.vop_default =		&default_vnodeops,
 
 	.vop_access =		devfs_access,

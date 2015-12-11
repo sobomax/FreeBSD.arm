@@ -25,9 +25,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/ntoh.c 164053 2006-11-06 22:07:47Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/net/ntoh.c 288012 2015-09-20 04:15:37Z rodrigc $");
 
 #include <sys/endian.h>
+#define _BYTEORDER_FUNC_DEFINED
+#include <arpa/inet.h>
 
 uint32_t
 htonl(uint32_t hl)

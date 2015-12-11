@@ -1,9 +1,9 @@
-# $FreeBSD: head/usr.bin/colldef/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/colldef/Makefile 291127 2015-11-21 10:52:32Z bapt $
 
 PROG=	colldef
 SRCS=	parse.y scan.l y.tab.h
 LFLAGS=	-8 -i
-CFLAGS+=-I. -I${.CURDIR} -I${.CURDIR}/../../lib/libc/locale
+CFLAGS+=-I. -I${.CURDIR}
 CFLAGS+=-DCOLLATE_DEBUG -DYY_NO_UNPUT -DYY_NO_INPUT
 LIBADD=	l
 

@@ -36,7 +36,7 @@ static char *sccsid2 = "@(#)xdr_float.c 1.12 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)xdr_float.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_float.c 283833 2015-05-31 18:08:58Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_float.c 288040 2015-09-20 20:52:13Z rodrigc $");
 
 /*
  * xdr_float.c, Generic XDR routines implementation.
@@ -102,9 +102,7 @@ static struct sgl_limits {
 #endif /* vax */
 
 bool_t
-xdr_float(xdrs, fp)
-	XDR *xdrs;
-	float *fp;
+xdr_float(XDR *xdrs, float *fp)
 {
 #ifndef IEEEFP
 	struct ieee_single is;

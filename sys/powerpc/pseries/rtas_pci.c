@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/rtas_pci.c 261513 2014-02-05 14:44:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/rtas_pci.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -133,7 +133,7 @@ rtaspci_attach(device_t dev)
 	sc->ex_write_pci_config = rtas_token_lookup("ibm,write-pci-config");
 
 	sc->sc_extended_config = 0;
-	OF_getprop(ofw_bus_get_node(dev), "ibm,pci-config-space-type",
+	OF_getencprop(ofw_bus_get_node(dev), "ibm,pci-config-space-type",
 	    &sc->sc_extended_config, sizeof(sc->sc_extended_config));
 
 	return (ofw_pci_attach(dev));

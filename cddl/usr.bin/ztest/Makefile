@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/ztest/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/cddl/usr.bin/ztest/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .PATH: ${.CURDIR}/../..//contrib/opensolaris/cmd/ztest
 
@@ -18,10 +18,7 @@ CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common
 CFLAGS+= -I${.CURDIR}/../../contrib/opensolaris/head
 CFLAGS+= -I${.CURDIR}/../../lib/libumem
 
-DPADD=	${LIBGEOM} ${LIBM} ${LIBNVPAIR} ${LIBUMEM} ${LIBZPOOL} \
-	${LIBPTHREAD} ${LIBAVL} ${LIBZFS_CORE} ${LIBZFS} ${LIBUUTIL}
-LDADD=	-lgeom -lm -lnvpair -lumem -lzpool -lpthread -lavl -lzfs_core -lzfs \
-	-luutil
+LIBADD=	geom m nvpair umem zpool pthread avl zfs_core zfs uutil
 
 CSTD=	c99
 

@@ -21,7 +21,7 @@
  *
  * Portions Copyright 2012,2013 Justin Hibbits <jhibbits@freebsd.org>
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/powerpc/dtrace_isa.c 271697 2014-09-17 02:43:47Z jhibbits $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/powerpc/dtrace_isa.c 288361 2015-09-29 11:55:26Z avg $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -520,7 +520,6 @@ load:
 	DTRACE_CPUFLAG_CLEAR(CPU_DTRACE_NOFAULT);
 
 	return (val);
-	return (0);
 }
 
 int

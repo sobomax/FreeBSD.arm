@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/kern/bus_if.m 272799 2014-10-09 05:33:25Z adrian $
+# $FreeBSD: head/sys/kern/bus_if.m 290117 2015-10-28 18:53:18Z imp $
 #
 
 #include <sys/types.h>
@@ -209,7 +209,9 @@ METHOD void driver_added {
  * For busses which use use drivers supporting DEVICE_IDENTIFY() to
  * enumerate their devices, this method is used to create new
  * device instances. The new device will be added after the last
- * existing child with the same order.
+ * existing child with the same order. Implementations of bus_add_child
+ * call device_add_child_ordered to add the child and often add
+ * a suitable ivar to the device specific to that bus.
  * 
  * @param _dev		the bus device which will be the parent of the
  *			new child device

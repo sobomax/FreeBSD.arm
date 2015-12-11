@@ -1,13 +1,13 @@
 # Common defines for all of /sys/boot/pc98/
 #
-# $FreeBSD: head/sys/boot/pc98/Makefile.inc 259913 2013-12-26 11:32:39Z dim $
+# $FreeBSD: head/sys/boot/pc98/Makefile.inc 287227 2015-08-27 23:46:42Z imp $
 
 BINDIR?=	/boot
 
 LOADER_ADDRESS?=0x200000
 CFLAGS+=	-march=i386 -ffreestanding
 CFLAGS.gcc+=	-mpreferred-stack-boundary=2
-CFLAGS+=	-mno-mmx -mno-3dnow -mno-sse -mno-sse2 -mno-sse3 -msoft-float
+CFLAGS+=	${CFLAGS_NO_SIMD} -msoft-float
 CFLAGS+=	-Os -DPC98
 LDFLAGS+=	-nostdlib
 

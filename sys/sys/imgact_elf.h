@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact_elf.h 283297 2015-05-22 20:50:35Z imp $
+ * $FreeBSD: head/sys/sys/imgact_elf.h 289706 2015-10-21 16:32:01Z ed $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -37,6 +37,7 @@
 
 #define	AUXARGS_ENTRY(pos, id, val) {suword(pos++, id); suword(pos++, val);}
 
+struct image_params;
 struct thread;
 
 /*

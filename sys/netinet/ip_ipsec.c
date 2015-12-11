@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_ipsec.c 282047 2015-04-27 01:11:09Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_ipsec.c 290165 2015-10-29 21:26:32Z gnn $");
 
 #include "opt_ipsec.h"
 #include "opt_sctp.h"
@@ -158,6 +158,10 @@ int
 ip_ipsec_output(struct mbuf **m, struct inpcb *inp, int *error)
 {
 	struct secpolicy *sp;
+
+	if (!key_havesp(IPSEC_DIR_OUTBOUND))
+		return 0;
+
 	/*
 	 * Check the security policy (SP) for the packet and, if
 	 * required, do IPsec-related processing.  There are two
@@ -199,9 +203,7 @@ ip_ipsec_output(struct mbuf **m, struct inpcb *inp, int *error)
 
 		/* NB: callee frees mbuf */
 		*error = ipsec4_process_packet(*m, sp->req);
-		/* Release SP if an error occured */
-		if (*error != 0)
-			KEY_FREESP(&sp);
+		KEY_FREESP(&sp);
 		if (*error == EJUSTRETURN) {
 			/*
 			 * We had a SP with a level of 'use' and no SA. We

@@ -1,5 +1,4 @@
-# $FreeBSD: head/sys/arm/at91/files.at91 280831 2015-03-29 22:43:39Z andrew $
-arm/arm/bus_space_generic.c	standard
+# $FreeBSD: head/sys/arm/at91/files.at91 291133 2015-11-21 15:30:08Z andrew $
 arm/at91/at91_machdep.c		standard
 arm/at91/at91_aic.c		standard
 arm/at91/at91.c			standard

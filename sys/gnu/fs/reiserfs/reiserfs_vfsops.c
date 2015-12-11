@@ -4,7 +4,7 @@
  * 
  * Ported to FreeBSD by Jean-Sébastien Pédron <jspedron@club-internet.fr>
  * 
- * $FreeBSD: head/sys/gnu/fs/reiserfs/reiserfs_vfsops.c 286888 2015-08-18 13:16:23Z avatar $
+ * $FreeBSD: head/sys/gnu/fs/reiserfs/reiserfs_vfsops.c 287698 2015-09-11 22:43:35Z avatar $
  */
 
 #include <gnu/fs/reiserfs/reiserfs_fs.h>
@@ -1022,6 +1022,7 @@ uint32_t find_hash_out(struct reiserfs_mount *rmp)
 		}
 	} while (0);
 
+	free(ip, M_REISERFSNODE);
 	pathrelse(&path);
 	return (hash);
 }

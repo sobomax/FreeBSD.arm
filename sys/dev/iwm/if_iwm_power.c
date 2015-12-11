@@ -87,7 +87,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_power.c 286475 2015-08-08 21:08:35Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_power.c 287197 2015-08-27 08:56:39Z glebius $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -264,7 +264,7 @@ iwm_mvm_power_build_cmd(struct iwm_softc *sc, struct iwm_node *in,
 	struct ieee80211_node *ni = &in->in_ni;
 	int dtimper, dtimper_msec;
 	int keep_alive;
-	struct ieee80211com *ic = sc->sc_ic;
+	struct ieee80211com *ic = &sc->sc_ic;
 	struct ieee80211vap *vap = TAILQ_FIRST(&ic->ic_vaps);
 
 	cmd->id_and_color = htole32(IWM_FW_CMD_ID_AND_COLOR(IWM_DEFAULT_MACID,

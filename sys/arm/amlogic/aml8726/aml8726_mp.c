@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_mp.c 281092 2015-04-04 23:03:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_mp.c 289522 2015-10-18 16:54:34Z ian $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -351,7 +351,7 @@ platform_mp_init_secondary(void)
 	 * each AP.
 	 */
 
-	 arm_init_secondary_ic();
+	 arm_pic_init_secondary();
 }
 
 

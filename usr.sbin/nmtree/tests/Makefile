@@ -1,9 +1,7 @@
-# $FreeBSD: head/usr.sbin/nmtree/tests/Makefile 272777 2014-10-09 00:32:33Z ngie $
+# $FreeBSD: head/usr.sbin/nmtree/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
-TESTSRC=	${.CURDIR}/../../../contrib/netbsd-tests/usr.sbin/mtree
+TESTSRC=	${SRCTOP}/contrib/netbsd-tests/usr.sbin/mtree
 .PATH: ${TESTSRC}
-
-TESTSDIR=	${TESTSBASE}/usr.sbin/nmtree
 
 ATF_TESTS_SH=	nmtree_test
 ATF_TESTS_SH_SRC_nmtree_test=	t_mtree.sh

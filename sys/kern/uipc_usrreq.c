@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_usrreq.c 285522 2015-07-14 02:00:50Z cem $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_usrreq.c 287539 2015-09-07 20:02:56Z mjg $");
 
 #include "opt_ddb.h"
 
@@ -1972,7 +1972,7 @@ unp_internalize(struct mbuf **controlp, struct thread *td)
 				fdep[i] = fdev;
 				fdep[i]->fde_file = fde->fde_file;
 				filecaps_copy(&fde->fde_caps,
-				    &fdep[i]->fde_caps);
+				    &fdep[i]->fde_caps, true);
 				unp_internalize_fp(fdep[i]->fde_file);
 			}
 			FILEDESC_SUNLOCK(fdesc);

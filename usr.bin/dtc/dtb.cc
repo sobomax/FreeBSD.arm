@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/dtb.cc 245839 2013-01-23 08:54:34Z theraven $
+ * $FreeBSD: head/usr.bin/dtc/dtb.cc 289935 2015-10-25 14:52:16Z theraven $
  */
 
 #include "dtb.hh"
@@ -44,9 +44,9 @@ namespace dtb
 
 void output_writer::write_data(byte_buffer b)
 {
-	for (byte_buffer::iterator i=b.begin(), e=b.end(); i!=e ; i++)
+	for (auto i : b)
 	{
-		write_data(*i);
+		write_data(i);
 	}
 }
 
@@ -277,7 +277,7 @@ header::read_dtb(input_buffer &input)
 uint32_t
 string_table::add_string(string str)
 {
-	std::map<string, uint32_t>::iterator old = string_offsets.find(str);
+	auto old = string_offsets.find(str);
 	if (old == string_offsets.end())
 	{
 		uint32_t start = size;
@@ -298,10 +298,9 @@ string_table::write(dtb::output_writer &writer)
 {
 	writer.write_comment(string("Strings table."));
 	writer.write_label(string("dt_strings_start"));
-	for (std::vector<string>::iterator i=strings.begin(), e=strings.end() ;
-	     i!=e ; ++i)
+	for (auto &i : strings)
 	{
-		writer.write_string(*i);
+		writer.write_string(i);
 	}
 	writer.write_label(string("dt_strings_end"));
 }

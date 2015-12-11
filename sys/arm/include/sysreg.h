@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/sysreg.h 283365 2015-05-24 12:12:01Z andrew $
+ * $FreeBSD: head/sys/arm/include/sysreg.h 290656 2015-11-10 13:20:21Z skra $
  */
 
 /*
@@ -130,7 +130,7 @@
 #define	CP15_BPIALLIS		p15, 0, r0, c7, c1,  6 /* Branch predictor invalidate all IS */
 #endif
 
-#define	CP15_PAR		p15, 0, r0, c7, c4,  0 /* Physical Address Register */
+#define	CP15_PAR(rr)		p15, 0, rr, c7, c4,  0 /* Physical Address Register */
 
 #define	CP15_ICIALLU		p15, 0, r0, c7, c5,  0 /* Instruction cache invalidate all PoU */
 #define	CP15_ICIMVAU(rr)	p15, 0, rr, c7, c5,  1 /* Instruction cache invalidate */

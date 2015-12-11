@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/zic/zic/Makefile 204347 2010-02-26 06:44:00Z edwin $
+# $FreeBSD: head/usr.sbin/zic/zic/Makefile 290083 2015-10-27 23:35:02Z bdrewery $
 
 .PATH: ${.CURDIR}/../../../contrib/tzcode/zic
 
@@ -7,7 +7,7 @@ MAN=	zic.8
 SRCS=	zic.c ialloc.c scheck.c
 
 CFLAGS+= -DTM_GMTOFF=tm_gmtoff -DTM_ZONE=tm_zone -DSTD_INSPIRED -DPCTS
-CFLAGS+= -DHAVE_LONG_DOUBLE -DTZDIR=\"/usr/share/zoneinfo\" -Demkdir=mkdir
+CFLAGS+= -DHAVE_LONG_DOUBLE -DTZDIR=\"${SHAREDIR}/zoneinfo\" -Demkdir=mkdir
 CFLAGS+= -DHAVE_STRERROR -DHAVE_UNISTD_H
 CFLAGS+= -I${.CURDIR}/.. -I${.CURDIR}/../../../contrib/tzcode/stdtime
 

@@ -3,7 +3,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/iflagg.c 286700 2015-08-12 20:21:04Z hiren $";
+  "$FreeBSD: head/sbin/ifconfig/iflagg.c 288305 2015-09-27 07:51:18Z ngie $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -308,11 +308,9 @@ static struct afswtch af_lagg = {
 static __constructor void
 lagg_ctor(void)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	int i;
 
-	for (i = 0; i < N(lagg_cmds);  i++)
+	for (i = 0; i < nitems(lagg_cmds);  i++)
 		cmd_register(&lagg_cmds[i]);
 	af_register(&af_lagg);
-#undef N
 }

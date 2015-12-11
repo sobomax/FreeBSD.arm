@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.port.subdir.mk 272383 2014-10-01 20:52:08Z will $
+# $FreeBSD: head/share/mk/bsd.port.subdir.mk 287436 2015-09-03 17:01:58Z bdrewery $
 
 .if !defined(PORTSDIR)
 # Autodetect if the command is being run in a ports tree that's not rooted
@@ -10,7 +10,11 @@ _PORTSDIR=	${.CURDIR}/${RELPATH}
 .endif
 .endfor
 _PORTSDIR?=	/usr/ports
+.if defined(.PARSEDIR)
+PORTSDIR=	${_PORTSDIR:tA}
+.else # fmake doesn't have :tA
 PORTSDIR!=	realpath ${_PORTSDIR}
+.endif
 .endif
 
 BSDPORTSUBDIRMK?=	${PORTSDIR}/Mk/bsd.port.subdir.mk

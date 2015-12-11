@@ -1,6 +1,6 @@
 # Standard kernel config items for all ARMv6/v7 systems.
 #
-# $FreeBSD: head/sys/arm/conf/std.armv6 285429 2015-07-12 19:58:12Z ian $
+# $FreeBSD: head/sys/arm/conf/std.armv6 287083 2015-08-23 21:10:20Z andrew $
 
 options 	PREEMPTION		# Enable kernel thread preemption
 options 	INET			# InterNETworking
@@ -38,3 +38,8 @@ options 	FREEBSD_BOOT_LOADER	# Process metadata passed from loader(8)
 options 	VFP			# Enable floating point hardware support
 
 options 	ARM_NEW_PMAP		# Use new pmap code.
+
+# DTrace support
+options 	KDTRACE_HOOKS		# Kernel DTrace hooks
+options 	DDB_CTF			# all architectures - kernel ELF linker loads CTF data
+makeoptions	WITH_CTF=1

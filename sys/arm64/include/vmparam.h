@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: head/sys/arm64/include/vmparam.h 286130 2015-07-31 14:17:26Z andrew $
+ * $FreeBSD: head/sys/arm64/include/vmparam.h 291937 2015-12-07 12:20:26Z kib $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -160,11 +160,13 @@
 #define	DMAP_MIN_ADDRESS	(0xffffffc000000000UL)
 #define	DMAP_MAX_ADDRESS	(0xffffffdfffffffffUL)
 
-#define	DMAP_MIN_PHYSADDR	(0x0000000000000000UL)
-#define	DMAP_MAX_PHYSADDR	(DMAP_MAX_ADDRESS - DMAP_MIN_ADDRESS)
+extern vm_paddr_t dmap_phys_base;
+#define	DMAP_MIN_PHYSADDR	(dmap_phys_base)
+#define	DMAP_MAX_PHYSADDR	(dmap_phys_base + (DMAP_MAX_ADDRESS - DMAP_MIN_ADDRESS))
 
 /* True if pa is in the dmap range */
-#define	PHYS_IN_DMAP(pa)	((pa) <= DMAP_MAX_PHYSADDR)
+#define	PHYS_IN_DMAP(pa)	((pa) >= DMAP_MIN_PHYSADDR && \
+    (pa) <= DMAP_MAX_PHYSADDR)
 /* True if va is in the dmap range */
 #define	VIRT_IN_DMAP(va)	((va) >= DMAP_MIN_ADDRESS && \
     (va) <= DMAP_MAX_ADDRESS)
@@ -174,7 +176,7 @@
 	KASSERT(PHYS_IN_DMAP(pa),					\
 	    ("%s: PA out of range, PA: 0x%lx", __func__,		\
 	    (vm_paddr_t)(pa)));						\
-	(pa) | DMAP_MIN_ADDRESS;					\
+	((pa) - dmap_phys_base) | DMAP_MIN_ADDRESS;			\
 })
 
 #define	DMAP_TO_PHYS(va)						\
@@ -182,7 +184,7 @@
 	KASSERT(VIRT_IN_DMAP(va),					\
 	    ("%s: VA out of range, VA: 0x%lx", __func__,		\
 	    (vm_offset_t)(va)));					\
-	(va) & ~DMAP_MIN_ADDRESS;					\
+	((va) & ~DMAP_MIN_ADDRESS) + dmap_phys_base;			\
 })
 
 #define	VM_MIN_USER_ADDRESS	(0x0000000000000000UL)
@@ -192,7 +194,8 @@
 #define	VM_MAXUSER_ADDRESS	(VM_MAX_USER_ADDRESS)
 
 #define	KERNBASE		(VM_MIN_KERNEL_ADDRESS)
-#define	USRSTACK		(VM_MAX_USER_ADDRESS)
+#define	SHAREDPAGE		(VM_MAXUSER_ADDRESS - PAGE_SIZE)
+#define	USRSTACK		SHAREDPAGE
 
 /*
  * How many physical pages per kmem arena virtual page.

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 286443 2015-08-08 08:40:36Z jch $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 291301 2015-11-25 14:45:43Z fabient $");
 
 #include "opt_ddb.h"
 #include "opt_ipsec.h"
@@ -1220,8 +1220,17 @@ in_pcbrele_wlocked(struct inpcb *inp)
 
 	INP_WLOCK_ASSERT(inp);
 
-	if (refcount_release(&inp->inp_refcount) == 0)
+	if (refcount_release(&inp->inp_refcount) == 0) {
+		/*
+		 * If the inpcb has been freed, let the caller know, even if
+		 * this isn't the last reference.
+		 */
+		if (inp->inp_flags2 & INP_FREED) {
+			INP_WUNLOCK(inp);
+			return (1);
+		}
 		return (0);
+	}
 
 	KASSERT(inp->inp_socket == NULL, ("%s: inp_socket != NULL", __func__));
 

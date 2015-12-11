@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/linux32/linux.h 283487 2015-05-24 18:03:14Z dchagin $
+ * $FreeBSD: head/sys/amd64/linux32/linux.h 290143 2015-10-29 15:16:47Z jhb $
  */
 
 #ifndef _AMD64_LINUX_H_
@@ -40,7 +40,7 @@
  * debugging support
  */
 extern u_char linux_debug_map[];
-#define	ldebug(name)	isclr(linux_debug_map, LINUX_SYS_linux_ ## name)
+#define	ldebug(name)	isclr(linux_debug_map, LINUX32_SYS_linux_ ## name)
 #define	ARGS(nm, fmt)	"linux(%ld/%ld): "#nm"("fmt")\n",			\
 			(long)td->td_proc->p_pid, (long)td->td_tid
 #define	LMSG(fmt)	"linux(%ld/%ld): "fmt"\n",				\

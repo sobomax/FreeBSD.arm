@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ar/ar.c 286024 2015-07-29 17:34:26Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/ar/ar.c 287327 2015-08-31 18:07:17Z emaste $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -144,8 +144,11 @@ main(int argc, char **argv)
 		if (*argv == NULL)
 			ranlib_usage();
 
+		/* Enable determinstic mode unless -U is set. */
+		if (Uflag == 0)
+			bsdar->options |= AR_D;
 		bsdar->options |= AR_S;
-		for (;(bsdar->filename = *argv++) != NULL;)
+		while ((bsdar->filename = *argv++) != NULL)
 			ar_mode_s(bsdar);
 
 		exit(EX_OK);

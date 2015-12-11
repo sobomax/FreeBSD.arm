@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.var.dist 271493 2014-09-13 02:15:31Z delphij $
+# $FreeBSD: head/etc/mtree/BSD.var.dist 289421 2015-10-16 14:04:16Z cy $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -45,6 +45,8 @@
         hyperv          mode=0700
         ..
         ipf             mode=0700
+        ..
+        ntp             mode=0700
         ..
         pkg
         ..

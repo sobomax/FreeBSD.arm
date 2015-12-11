@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)route.c	8.6 (Berkeley) 4/28/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/route/route.c 277241 2015-01-16 11:17:30Z melifaro $");
+__FBSDID("$FreeBSD: head/sbin/route/route.c 287920 2015-09-17 16:56:49Z rstone $");
 
 #include <sys/param.h>
 #include <sys/file.h>
@@ -1222,6 +1222,9 @@ getaddr(int idx, char *str, struct hostent **hpp, int nrflags)
 			freeifaddrs(ifap);
 			if (sdl != NULL)
 				return(1);
+			else
+				errx(EX_DATAERR,
+				    "interface '%s' does not exist", str);
 		}
 		break;
 	case RTAX_IFP:

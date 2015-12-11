@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/init_main.c 286122 2015-07-31 10:21:58Z ed $");
+__FBSDID("$FreeBSD: head/sys/kern/init_main.c 291420 2015-11-28 08:49:07Z kib $");
 
 #include "opt_ddb.h"
 #include "opt_init_path.h"
@@ -116,6 +116,10 @@ SYSCTL_INT(_debug, OID_AUTO, boothowto, CTLFLAG_RD, &boothowto, 0,
 int	bootverbose = BOOTVERBOSE;
 SYSCTL_INT(_debug, OID_AUTO, bootverbose, CTLFLAG_RW, &bootverbose, 0,
 	"Control the output of verbose kernel messages");
+
+#ifdef INVARIANTS
+FEATURE(invariants, "Kernel compiled with INVARIANTS, may affect performance");
+#endif
 
 /*
  * This ensures that there is at least one entry so that the sysinit_set
@@ -383,8 +387,6 @@ struct sysentvec null_sysvec = {
 	.sv_size	= 0,
 	.sv_table	= NULL,
 	.sv_mask	= 0,
-	.sv_sigsize	= 0,
-	.sv_sigtbl	= NULL,
 	.sv_errsize	= 0,
 	.sv_errtbl	= NULL,
 	.sv_transtrap	= NULL,
@@ -392,7 +394,6 @@ struct sysentvec null_sysvec = {
 	.sv_sendsig	= NULL,
 	.sv_sigcode	= NULL,
 	.sv_szsigcode	= NULL,
-	.sv_prepsyscall	= NULL,
 	.sv_name	= "null",
 	.sv_coredump	= NULL,
 	.sv_imgact_try	= NULL,

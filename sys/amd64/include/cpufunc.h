@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/cpufunc.h 282684 2015-05-09 19:11:01Z kib $
+ * $FreeBSD: head/sys/amd64/include/cpufunc.h 291688 2015-12-03 11:14:14Z kib $
  */
 
 /*
@@ -104,6 +104,13 @@ clflush(u_long addr)
 {
 
 	__asm __volatile("clflush %0" : : "m" (*(char *)addr));
+}
+
+static __inline void
+clflushopt(u_long addr)
+{
+
+	__asm __volatile(".byte 0x66;clflush %0" : : "m" (*(char *)addr));
 }
 
 static __inline void
@@ -498,7 +505,7 @@ invltlb(void)
  * Operations that Invalidate TLBs and Paging-Structure Caches.
  */
 static __inline void
-invltlb_globpcid(void)
+invltlb_glob(void)
 {
 	uint64_t cr4;
 

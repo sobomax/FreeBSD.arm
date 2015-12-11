@@ -32,7 +32,7 @@
 static char sccsid[] = "@(#)table.c	8.1 (Berkeley) 6/4/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/libexec/talkd/table.c 262136 2014-02-17 22:27:32Z brueffer $";
+  "$FreeBSD: head/libexec/talkd/table.c 287301 2015-08-30 08:38:59Z delphij $";
 #endif /* not lint */
 
 /*
@@ -197,7 +197,6 @@ delete_invite(u_int32_t id_num)
 {
 	TABLE_ENTRY *ptr;
 
-	ptr = table;
 	if (debug)
 		syslog(LOG_DEBUG, "delete_invite(%d)", id_num);
 	for (ptr = table; ptr != NIL; ptr = ptr->next) {

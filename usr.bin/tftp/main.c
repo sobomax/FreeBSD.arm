@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/tftp/main.c 262721 2014-03-04 01:14:37Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/tftp/main.c 287320 2015-08-31 06:11:39Z delphij $");
 
 /* Many bug fixes are from Jim Guyton <guyton@rand-unix> */
 
@@ -223,7 +223,7 @@ urihandling(char *URI)
 	char	line[MAXLINE];
 	int	i;
 
-	strncpy(uri, URI, ARG_MAX);
+	strlcpy(uri, URI, ARG_MAX);
 	host = uri + 7;
 
 	if ((s = strchr(host, '/')) == NULL) {
@@ -320,11 +320,10 @@ setpeer0(char *host, const char *lport)
 		/* res->ai_addr <= sizeof(peeraddr) is guaranteed */
 		memcpy(&peer_sock, res->ai_addr, res->ai_addrlen);
 		if (res->ai_canonname) {
-			(void) strncpy(hostname, res->ai_canonname,
+			(void) strlcpy(hostname, res->ai_canonname,
 				sizeof(hostname));
 		} else
-			(void) strncpy(hostname, host, sizeof(hostname));
-		hostname[sizeof(hostname)-1] = 0;
+			(void) strlcpy(hostname, host, sizeof(hostname));
 		connected = 1;
 	}
 

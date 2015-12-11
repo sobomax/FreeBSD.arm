@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ehci.c 285121 2015-07-04 03:05:57Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ehci.c 290910 2015-11-16 04:28:00Z adrian $");
 
 #include "opt_bus.h"
 
@@ -173,6 +173,8 @@ ar71xx_ehci_attach(device_t self)
 		case AR71XX_SOC_AR9341:
 		case AR71XX_SOC_AR9342:
 		case AR71XX_SOC_AR9344:
+		case AR71XX_SOC_QCA9533:
+		case AR71XX_SOC_QCA9533_V2:
 		case AR71XX_SOC_QCA9556:
 		case AR71XX_SOC_QCA9558:
 			sc->sc_flags |= EHCI_SCFLG_TT | EHCI_SCFLG_NORESTERM;

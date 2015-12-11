@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/_ieee80211.h 237871 2012-07-01 04:25:49Z adrian $
+ * $FreeBSD: head/sys/net80211/_ieee80211.h 288245 2015-09-26 00:53:37Z adrian $
  */
 #ifndef _NET80211__IEEE80211_H_
 #define _NET80211__IEEE80211_H_
@@ -390,15 +390,14 @@ struct ieee80211_regdomain {
  * MIMO antenna/radio state.
  */
 
-#define	IEEE80211_MAX_CHAINS		3
-#define	IEEE80211_MAX_EVM_PILOTS	6
-
 /*
  * XXX This doesn't yet export both ctl/ext chain details
+ * XXX TODO: IEEE80211_MAX_CHAINS is defined in _freebsd.h, not here;
+ * figure out how to pull it in!
  */
 struct ieee80211_mimo_info {
-	int8_t		rssi[IEEE80211_MAX_CHAINS];	/* per-antenna rssi */
-	int8_t		noise[IEEE80211_MAX_CHAINS];	/* per-antenna noise floor */
+	int8_t		rssi[3];	/* per-antenna rssi */
+	int8_t		noise[3];	/* per-antenna noise floor */
 	uint8_t		pad[2];
 	uint32_t	evm[3];		/* EVM data */
 };

@@ -30,7 +30,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/dev/mwl/if_mwl_pci.c 275870 2014-12-17 21:26:25Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/mwl/if_mwl_pci.c 287197 2015-08-27 08:56:39Z glebius $");
 #endif
 
 /*
@@ -43,6 +43,7 @@ __FBSDID("$FreeBSD: head/sys/dev/mwl/if_mwl_pci.c 275870 2014-12-17 21:26:25Z ad
 #include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
+#include <sys/mbuf.h>
 #include <sys/mutex.h>
 #include <sys/errno.h>
 

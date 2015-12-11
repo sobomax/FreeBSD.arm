@@ -24,7 +24,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/uhso.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/uhso.c 292080 2015-12-11 05:28:00Z imp $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -497,6 +497,7 @@ DRIVER_MODULE(uhso, uhub, uhso_driver, uhso_devclass, uhso_driver_loaded, 0);
 MODULE_DEPEND(uhso, ucom, 1, 1, 1);
 MODULE_DEPEND(uhso, usb, 1, 1, 1);
 MODULE_VERSION(uhso, 1);
+USB_PNP_HOST_INFO(uhso_devs);
 
 static struct ucom_callback uhso_ucom_callback = {
 	.ucom_cfg_get_status = &uhso_ucom_cfg_get_status,

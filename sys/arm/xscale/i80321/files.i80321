@@ -1,6 +1,4 @@
-#$FreeBSD: head/sys/arm/xscale/i80321/files.i80321 280831 2015-03-29 22:43:39Z andrew $
-arm/arm/bus_space_base.c		standard
-arm/arm/bus_space_generic.c		standard
+#$FreeBSD: head/sys/arm/xscale/i80321/files.i80321 291133 2015-11-21 15:30:08Z andrew $
 arm/xscale/i80321/i80321.c		standard
 arm/xscale/i80321/i80321_aau.c		optional	aau
 arm/xscale/i80321/i80321_dma.c		optional	dma

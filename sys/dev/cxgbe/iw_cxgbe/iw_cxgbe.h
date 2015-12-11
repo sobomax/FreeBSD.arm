@@ -28,7 +28,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 278886 2015-02-17 08:40:27Z hselasky $
+ * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 289578 2015-10-19 12:26:38Z hselasky $
  */
 #ifndef __IW_CXGB4_H__
 #define __IW_CXGB4_H__
@@ -606,18 +606,16 @@ enum c4iw_mmid_state {
 #define MPA_V2_RDMA_READ_RTR            0x4000
 #define MPA_V2_IRD_ORD_MASK             0x3FFF
 
-/* Fixme: Use atomic_read for kref.count as same as Linux */
 #define c4iw_put_ep(ep) { \
 	CTR4(KTR_IW_CXGBE, "put_ep (%s:%u) ep %p, refcnt %d", \
-	     __func__, __LINE__, ep, (ep)->kref.count); \
-	WARN_ON((ep)->kref.count < 1); \
+	     __func__, __LINE__, ep, atomic_read(&(ep)->kref.refcount)); \
+	WARN_ON(atomic_read(&(ep)->kref.refcount) < 1); \
         kref_put(&((ep)->kref), _c4iw_free_ep); \
 }
 
-/* Fixme: Use atomic_read for kref.count as same as Linux */
 #define c4iw_get_ep(ep) { \
 	CTR4(KTR_IW_CXGBE, "get_ep (%s:%u) ep %p, refcnt %d", \
-	      __func__, __LINE__, ep, (ep)->kref.count); \
+	      __func__, __LINE__, ep, atomic_read(&(ep)->kref.refcount)); \
         kref_get(&((ep)->kref));  \
 }
 

@@ -42,12 +42,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/wi/if_wi_macio.c 285228 2015-07-07 02:42:48Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/wi/if_wi_macio.c 287197 2015-08-27 08:56:39Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/socket.h>
 #include <sys/systm.h>
+#include <sys/mbuf.h>
 #include <sys/module.h>
 #include <sys/bus.h>
 

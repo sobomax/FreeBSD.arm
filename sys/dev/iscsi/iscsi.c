@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi/iscsi.c 286226 2015-08-03 11:57:11Z trasz $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi/iscsi.c 291911 2015-12-07 02:56:08Z smh $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -2365,7 +2365,7 @@ iscsi_load(void)
 	sc->sc_cdev->si_drv1 = sc;
 
 	sc->sc_shutdown_eh = EVENTHANDLER_REGISTER(shutdown_pre_sync,
-	    iscsi_shutdown, sc, SHUTDOWN_PRI_FIRST);
+	    iscsi_shutdown, sc, SHUTDOWN_PRI_DEFAULT-1);
 
 	return (0);
 }

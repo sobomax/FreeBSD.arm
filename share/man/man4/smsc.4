@@ -25,9 +25,9 @@
 .\" ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/smsc.4 272171 2014-09-26 11:13:19Z pluknet $
+.\" $FreeBSD: head/share/man/man4/smsc.4 291238 2015-11-24 08:34:48Z kevlo $
 .\"
-.Dd September 26, 2014
+.Dd November 24, 2015
 .Dt SMSC 4
 .Os
 .Sh NAME
@@ -48,6 +48,7 @@ following lines in your kernel configuration file:
 .Cd "device ohci"
 .Cd "device usb"
 .Cd "device miibus"
+.Cd "device uether"
 .Cd "device smsc"
 .Ed
 .Sh DESCRIPTION

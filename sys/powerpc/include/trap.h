@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * $NetBSD: trap.h,v 1.7 2002/02/22 13:51:40 kleink Exp $
- * $FreeBSD: head/sys/powerpc/include/trap.h 281111 2015-04-05 16:35:13Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/include/trap.h 292071 2015-12-11 01:23:18Z jhibbits $
  */
 
 #ifndef	_POWERPC_TRAP_H_
@@ -86,6 +86,7 @@
 #define	EXC_ITMISS	0x1200		/* Instruction TLB Miss */
 #define	EXC_APU		0x1300		/* Auxiliary Processing Unit */
 #define	EXC_DEBUG	0x2f10		/* Debug trap */
+#define	EXC_VECAST_E	0x2f20		/* Altivec Assist (Book-E) */
 
 #define	EXC_LAST	0x2f00		/* Last possible exception vector */
 

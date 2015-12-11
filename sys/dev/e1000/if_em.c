@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_em.c 286831 2015-08-16 19:43:44Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/if_em.c 287990 2015-09-19 18:22:59Z sbruno $*/
 
 #include "opt_em.h"
 #include "opt_ddb.h"
@@ -3044,7 +3044,7 @@ em_setup_interface(device_t dev, struct adapter *adapter)
 	if_setioctlfn(ifp, em_ioctl);
 	if_setgetcounterfn(ifp, em_get_counter);
 	/* TSO parameters */
-	ifp->if_hw_tsomax = EM_TSO_SIZE;
+	ifp->if_hw_tsomax = IP_MAXPACKET;
 	ifp->if_hw_tsomaxsegcount = EM_MAX_SCATTER;
 	ifp->if_hw_tsomaxsegsize = EM_TSO_SEG_SIZE;
 

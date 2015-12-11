@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_access.c 285926 2015-07-28 02:32:40Z araujo $");
+__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_access.c 290919 2015-11-16 06:17:12Z araujo $");
 
 #include <stdlib.h>
 #include <rpc/rpc.h>
@@ -129,7 +129,7 @@ load_securenets(void)
 
 	if ((fp = fopen(path, "r")) == NULL) {
 		if (errno == ENOENT) {
-			securenets = (struct securenet *)malloc(sizeof(struct securenet));
+			securenets = malloc(sizeof(struct securenet));
 			securenets->net.s_addr = INADDR_ANY;
 			securenets->mask.s_addr = INADDR_ANY;
 			securenets->next = NULL;
@@ -154,7 +154,7 @@ load_securenets(void)
 			continue;
 		}
 
-		tmp = (struct securenet *)malloc(sizeof(struct securenet));
+		tmp = malloc(sizeof(struct securenet));
 
 		if (!inet_aton((char *)&addr1, (struct in_addr *)&tmp->net)) {
 			yp_error("badly formatted securenets entry: %s", addr1);

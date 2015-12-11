@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/sun7i-a20.dtsi 285245 2015-07-07 18:32:23Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/sun7i-a20.dtsi 287316 2015-08-30 23:20:00Z loos $
  */
 
 / {
@@ -86,7 +86,7 @@
 			reg = <0x01c20c90 0x10>;
 		};
 
-		GPIO: gpio@01c20800 {
+		pio: gpio@01c20800 {
 			#gpio-cells = <3>;
 			compatible = "allwinner,sun4i-gpio";
 			gpio-controller;

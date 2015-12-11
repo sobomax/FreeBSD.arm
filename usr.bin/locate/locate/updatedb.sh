@@ -26,7 +26,7 @@
 #
 # updatedb - update locate database for local mounted filesystems
 #
-# $FreeBSD: head/usr.bin/locate/locate/updatedb.sh 214615 2010-11-01 02:20:18Z wollman $
+# $FreeBSD: head/usr.bin/locate/locate/updatedb.sh 290742 2015-11-13 06:16:12Z des $
 
 if [ "$(id -u)" = "0" ]; then
 	echo ">>> WARNING" 1>&2
@@ -51,7 +51,7 @@ PATH=$LIBEXECDIR:/bin:/usr/bin:$PATH; export PATH
 : ${mklocatedb:=locate.mklocatedb}	 # make locate database program
 : ${FCODES:=/var/db/locate.database}	 # the database
 : ${SEARCHPATHS="/"}		# directories to be put in the database
-: ${PRUNEPATHS="/tmp /usr/tmp /var/tmp /var/db/portsnap"} # unwanted directories
+: ${PRUNEPATHS="/tmp /usr/tmp /var/tmp /var/db/portsnap /var/db/freebsd-update"} # unwanted directories
 : ${PRUNEDIRS=".zfs"}	# unwanted directories, in any parent
 : ${FILESYSTEMS="$(lsvfs | tail -n +3 | \
 	egrep -vw "loopback|network|synthetic|read-only|0" | \

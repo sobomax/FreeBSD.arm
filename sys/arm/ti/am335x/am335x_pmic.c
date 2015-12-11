@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_pmic.c 284190 2015-06-09 19:22:13Z sobomax $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_pmic.c 289704 2015-10-21 15:41:16Z ian $");
 /*
 * TI TPS65217 PMIC companion chip for AM335x SoC sitting on I2C bus
 */
@@ -147,7 +147,7 @@ am335x_pmic_probe(device_t dev)
 	sc = device_get_softc(dev);
 	sc->sc_dev = dev;
 	/* Convert to 8-bit addressing */
-	sc->sc_addr = iicbus_get_addr(dev) << 1;
+	sc->sc_addr = iicbus_get_addr(dev);
 
 	device_set_desc(dev, "TI TPS65217 Power Management IC");
 

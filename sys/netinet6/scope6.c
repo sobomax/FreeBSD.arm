@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/scope6.c 274348 2014-11-10 16:12:51Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/scope6.c 291993 2015-12-08 10:50:03Z melifaro $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -484,6 +484,22 @@ in6_getscopezone(const struct ifnet *ifp, int scope)
 	if (scope >= 0 && scope < IPV6_ADDR_SCOPES_COUNT)
 		return (SID(ifp)->s6id_list[scope]);
 	return (0);
+}
+
+/*
+ * Extracts scope from adddress @dst, stores cleared address
+ * inside @dst and zone inside @scopeid
+ */
+void
+in6_splitscope(const struct in6_addr *src, struct in6_addr *dst,
+    uint32_t *scopeid)
+{
+	uint32_t zoneid;
+
+	*dst = *src;
+	zoneid = ntohs(in6_getscope(dst));
+	in6_clearscope(dst);
+	*scopeid = zoneid;
 }
 
 /*

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)udp_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/udp_var.h 272886 2014-10-10 06:08:59Z bryanv $
+ * $FreeBSD: head/sys/netinet/udp_var.h 287211 2015-08-27 15:27:41Z bz $
  */
 
 #ifndef _NETINET_UDP_VAR_H_
@@ -150,13 +150,13 @@ VNET_DECLARE(int, udp_blackhole);
 extern int			udp_log_in_vain;
 
 static __inline struct inpcbinfo *
-get_inpcbinfo(int protocol)
+udp_get_inpcbinfo(int protocol)
 {
 	return (protocol == IPPROTO_UDP) ? &V_udbinfo : &V_ulitecbinfo;
 }
 
 static __inline struct inpcbhead *
-get_pcblist(int protocol)
+udp_get_pcblist(int protocol)
 {
 	return (protocol == IPPROTO_UDP) ? &V_udb : &V_ulitecb;
 }

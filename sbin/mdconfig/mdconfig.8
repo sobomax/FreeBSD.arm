@@ -35,9 +35,9 @@
 .\"     @(#)vnconfig.8	8.1 (Berkeley) 6/5/93
 .\" from: src/usr.sbin/vnconfig/vnconfig.8,v 1.19 2000/12/27 15:30:29
 .\"
-.\" $FreeBSD: head/sbin/mdconfig/mdconfig.8 286361 2015-08-06 07:49:34Z trasz $
+.\" $FreeBSD: head/sbin/mdconfig/mdconfig.8 289113 2015-10-10 09:37:31Z trasz $
 .\"
-.Dd August 6, 2015
+.Dd October 10, 2015
 .Dt MDCONFIG 8
 .Os
 .Sh NAME
@@ -159,11 +159,11 @@ prefix.
 Size of the memory disk.
 .Ar Size
 is the number of 512 byte sectors unless suffixed with a
-.Cm b , k , m , g ,
+.Cm b , k , m , g , t ,
 or
-.Cm t
+.Cm p
 which
-denotes byte, kilobyte, megabyte, gigabyte and terabyte respectively.
+denotes byte, kilobyte, megabyte, gigabyte, terabyte and petabyte respectively.
 When used without the
 .Fl r
 option, the
@@ -300,8 +300,7 @@ mount /dev/md1.nop /mnt
 .Sh SEE ALSO
 .Xr md 4 ,
 .Xr ffs 7 ,
-.Xr bsdlabel 8 ,
-.Xr fdisk 8 ,
+.Xr gpart 8 ,
 .Xr mdmfs 8 ,
 .Xr malloc 9
 .Sh HISTORY

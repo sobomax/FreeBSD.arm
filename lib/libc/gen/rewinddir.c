@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)rewinddir.c	8.1 (Berkeley) 6/8/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/rewinddir.c 282485 2015-05-05 14:52:33Z julian $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/rewinddir.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/rewinddir.c 282485 2015-05-05 14:52:33Z ju
 #include "telldir.h"
 
 void
-rewinddir(dirp)
-	DIR *dirp;
+rewinddir(DIR *dirp)
 {
 
 	if (__isthreaded)

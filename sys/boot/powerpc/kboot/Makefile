@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/powerpc/kboot/Makefile 286368 2015-08-06 16:07:27Z allanjude $
+# $FreeBSD: head/sys/boot/powerpc/kboot/Makefile 291048 2015-11-19 01:57:23Z nwhitehorn $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -101,11 +101,6 @@ CFLAGS+=	-I${.CURDIR}/../../../../lib/libstand/
 
 DPADD=		${LIBFICL} ${LIBOFW} ${LIBFDT} ${LIBSTAND}
 LDADD=		${LIBFICL} ${LIBOFW} ${LIBFDT} ${LIBSTAND}
-
-SC_DFLT_FONT=cp437
-
-font.h:
-	uudecode < /usr/share/syscons/fonts/${SC_DFLT_FONT}-8x16.fnt && file2c 'u_char dflt_font_16[16*256] = {' '};' < ${SC_DFLT_FONT}-8x16 > font.h && uudecode < /usr/share/syscons/fonts/${SC_DFLT_FONT}-8x14.fnt && file2c 'u_char dflt_font_14[14*256] = {' '};' < ${SC_DFLT_FONT}-8x14 >> font.h && uudecode < /usr/share/syscons/fonts/${SC_DFLT_FONT}-8x8.fnt && file2c 'u_char dflt_font_8[8*256] = {' '};' < ${SC_DFLT_FONT}-8x8 >> font.h
 
 vers.c:	${.CURDIR}/../../common/newvers.sh ${.CURDIR}/version
 	sh ${.CURDIR}/../../common/newvers.sh ${.CURDIR}/version ${NEWVERSWHAT}

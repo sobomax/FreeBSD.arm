@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/arm/broadcom/bcm2835/files.bcm2836 282610 2015-05-07 22:11:44Z loos $
-
-arm/arm/generic_timer.c				standard
+# $FreeBSD: head/sys/arm/broadcom/bcm2835/files.bcm2836 291135 2015-11-21 16:23:56Z andrew $
 
 arm/broadcom/bcm2835/bcm2836.c			standard
 arm/broadcom/bcm2835/bcm2836_mp.c		optional smp

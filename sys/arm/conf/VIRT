@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/VIRT 283426 2015-05-24 16:11:30Z andrew $
+# $FreeBSD: head/sys/arm/conf/VIRT 291135 2015-11-21 16:23:56Z andrew $
 
 ident		VIRT
 
@@ -46,6 +46,8 @@ options 	INVARIANT_SUPPORT	# Extra sanity checks of internal structures, require
 
 # Interrupt controller
 device		gic
+# ARM Generic Timer
+device		generic_timer
 
 device		bpf
 device		loop

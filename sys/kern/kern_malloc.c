@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_malloc.c 282690 2015-05-09 20:08:36Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_malloc.c 292117 2015-12-11 20:05:07Z markj $");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"
@@ -475,6 +475,8 @@ malloc(unsigned long size, struct malloc_type *mtp, int flags)
 	if (flags & M_WAITOK)
 		KASSERT(curthread->td_intr_nesting_level == 0,
 		   ("malloc(M_WAITOK) in interrupt context"));
+	KASSERT(curthread->td_critnest == 0 || SCHEDULER_STOPPED(),
+	    ("malloc: called with spinlock or critical section held"));
 
 #ifdef DEBUG_MEMGUARD
 	if (memguard_cmp_mtp(mtp, size)) {
@@ -541,6 +543,8 @@ free(void *addr, struct malloc_type *mtp)
 	u_long size;
 
 	KASSERT(mtp->ks_magic == M_MAGIC, ("free: bad malloc type magic"));
+	KASSERT(curthread->td_critnest == 0 || SCHEDULER_STOPPED(),
+	    ("free: called with spinlock or critical section held"));
 
 	/* free(NULL, ...) does nothing */
 	if (addr == NULL)
@@ -604,6 +608,8 @@ realloc(void *addr, unsigned long size, struct malloc_type *mtp, int flags)
 
 	KASSERT(mtp->ks_magic == M_MAGIC,
 	    ("realloc: bad malloc type magic"));
+	KASSERT(curthread->td_critnest == 0 || SCHEDULER_STOPPED(),
+	    ("realloc: called with spinlock or critical section held"));
 
 	/* realloc(NULL, ...) is equivalent to malloc(...) */
 	if (addr == NULL)

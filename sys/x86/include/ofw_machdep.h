@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/ofw_machdep.h 260327 2014-01-05 18:46:58Z nwhitehorn $
+ * $FreeBSD: head/sys/x86/include/ofw_machdep.h 287260 2015-08-28 15:41:09Z imp $
  */
 
 #ifndef _MACHINE_OFW_MACHDEP_H_
 #define _MACHINE_OFW_MACHDEP_H_
 
-#include <x86/bus.h>
+#include <machine/bus.h>
 #include <vm/vm.h>
 
 typedef	uint32_t	cell_t;

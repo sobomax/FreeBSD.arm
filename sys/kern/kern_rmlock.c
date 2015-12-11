@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_rmlock.c 286166 2015-08-02 00:03:08Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_rmlock.c 287833 2015-09-15 22:16:21Z jhb $");
 
 #include "opt_ddb.h"
 
@@ -407,9 +407,11 @@ _rm_rlock_hard(struct rmlock *rm, struct rm_priotracker *tracker, int trylock)
 				return (0);
 		}
 	} else {
-		if (rm->lock_object.lo_flags & LO_SLEEPABLE)
+		if (rm->lock_object.lo_flags & LO_SLEEPABLE) {
+			THREAD_SLEEPING_OK();
 			sx_xlock(&rm->rm_lock_sx);
-		else
+			THREAD_NO_SLEEPING();
+		} else
 			mtx_lock(&rm->rm_lock_mtx);
 	}
 

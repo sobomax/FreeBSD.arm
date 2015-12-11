@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mmc/mmc.c 285678 2015-07-18 16:56:51Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/mmc/mmc.c 287189 2015-08-27 03:47:56Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1818,6 +1818,7 @@ DRIVER_MODULE(mmc, aml8726_sdxc, mmc_driver, mmc_devclass, NULL, NULL);
 DRIVER_MODULE(mmc, at91_mci, mmc_driver, mmc_devclass, NULL, NULL);
 DRIVER_MODULE(mmc, sdhci_bcm, mmc_driver, mmc_devclass, NULL, NULL);
 DRIVER_MODULE(mmc, sdhci_fdt, mmc_driver, mmc_devclass, NULL, NULL);
+DRIVER_MODULE(mmc, sdhci_fsl, mmc_driver, mmc_devclass, NULL, NULL);
 DRIVER_MODULE(mmc, sdhci_imx, mmc_driver, mmc_devclass, NULL, NULL);
 DRIVER_MODULE(mmc, sdhci_pci, mmc_driver, mmc_devclass, NULL, NULL);
 DRIVER_MODULE(mmc, sdhci_ti, mmc_driver, mmc_devclass, NULL, NULL);

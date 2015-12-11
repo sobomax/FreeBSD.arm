@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-nm/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-nm/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -44,13 +44,14 @@ LIBDEPS=llvmaarch64disassembler \
 	llvmselectiondag \
 	llvmasmprinter \
 	llvmcodegen \
+	llvmtarget \
 	llvmscalaropts \
 	llvmprofiledata \
 	llvminstcombine \
+	llvminstrumentation \
 	llvmtransformutils \
 	llvmipa \
 	llvmanalysis \
-	llvmtarget \
 	llvmx86desc \
 	llvmobject \
 	llvmmcparser \
@@ -63,7 +64,6 @@ LIBDEPS=llvmaarch64disassembler \
 	llvmcore \
 	llvmsupport
 
-.include "../clang.prog.mk"
+LIBADD=	z
 
-DPADD+=	${LIBZ}
-LDADD+=	-lz
+.include "../clang.prog.mk"

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)kvm.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/lib/libkvm/kvm.h 261805 2014-02-12 19:22:48Z glebius $
+ * $FreeBSD: head/lib/libkvm/kvm.h 291406 2015-11-27 18:58:26Z jhb $
  */
 
 #ifndef _KVM_H_
@@ -50,6 +50,14 @@ typedef	__size_t	size_t;
 typedef	__ssize_t	ssize_t;
 #define	_SSIZE_T_DECLARED
 #endif
+
+typedef	uint64_t kvaddr_t;		/* An address in a target image. */
+
+struct kvm_nlist {
+	const char *n_name;
+	unsigned char n_type;
+	kvaddr_t n_value;
+};
 
 typedef struct __kvm kvm_t;
 
@@ -83,13 +91,19 @@ uint64_t  kvm_counter_u64_fetch(kvm_t *, u_long);
 struct kinfo_proc *
 	  kvm_getprocs(kvm_t *, int, int, int *);
 int	  kvm_getswapinfo(kvm_t *, struct kvm_swap *, int, int);
+int	  kvm_native(kvm_t *);
 int	  kvm_nlist(kvm_t *, struct nlist *);
+int	  kvm_nlist2(kvm_t *, struct kvm_nlist *);
 kvm_t	 *kvm_open
 	    (const char *, const char *, const char *, int, const char *);
 kvm_t	 *kvm_openfiles
 	    (const char *, const char *, const char *, int, char *);
+kvm_t	 *kvm_open2
+	    (const char *, const char *, int, char *,
+	    int (*)(const char *, kvaddr_t *));
 ssize_t	  kvm_read(kvm_t *, unsigned long, void *, size_t);
 ssize_t	  kvm_read_zpcpu(kvm_t *, unsigned long, void *, size_t, int);
+ssize_t	  kvm_read2(kvm_t *, kvaddr_t, void *, size_t);
 ssize_t	  kvm_write(kvm_t *, unsigned long, const void *, size_t);
 __END_DECLS
 

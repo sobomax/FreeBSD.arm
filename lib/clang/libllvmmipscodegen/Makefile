@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmmipscodegen/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmmipscodegen/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -34,7 +34,6 @@ SRCS=	Mips16FrameLowering.cpp \
 	MipsSEISelLowering.cpp \
 	MipsSEInstrInfo.cpp \
 	MipsSERegisterInfo.cpp \
-	MipsSelectionDAGInfo.cpp \
 	MipsSubtarget.cpp \
 	MipsTargetMachine.cpp \
 	MipsTargetObjectFile.cpp

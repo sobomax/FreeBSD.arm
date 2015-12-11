@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/powerpc/kboot/ppc64_elf_freebsd.c 277997 2015-01-31 19:42:08Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/boot/powerpc/kboot/ppc64_elf_freebsd.c 291598 2015-12-01 17:01:27Z nwhitehorn $");
 
 #define __ELF_WORD_SIZE 64
 
@@ -78,10 +78,15 @@ ppc64_elf_exec(struct preloaded_file *fp)
 	/* Figure out where to put it */
 	trampolinebase = archsw.arch_loadaddr(LOAD_RAW, NULL, 0);
 	
-	/* Set up interesting values in function descriptor */
+	/* Set up loader trampoline */
 	trampoline = malloc(szkerneltramp);
 	memcpy(trampoline, &kerneltramp, szkerneltramp);
-	archsw.arch_copyout(e->e_entry + elf64_relocation_offset, &entry, 8);
+	/* Parse function descriptor for ELFv1 kernels */
+	if ((e->e_flags & 3) == 2)
+		entry = e->e_entry;
+	else
+		archsw.arch_copyout(e->e_entry + elf64_relocation_offset,
+		    &entry, 8);
 	trampoline[2] = entry + elf64_relocation_offset;
 	trampoline[4] = 0; /* Phys. mem offset */
 	trampoline[5] = 0; /* OF entry point */

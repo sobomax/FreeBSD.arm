@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_pci.c 281092 2015-04-04 23:03:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/versatile/versatile_pci.c 291131 2015-11-21 13:02:34Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -266,7 +266,7 @@ versatile_pci_attach(device_t dev)
 		versatile_pci_conf_write_4((slot << 11) + PCIR_COMMAND, val);
 	}
 
-	device_add_child(dev, "pci", 0);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 
@@ -357,7 +357,7 @@ versatile_pci_activate_resource(device_t bus, device_t child, int type, int rid,
 		vaddr = (vm_offset_t)pmap_mapdev(rman_get_start(r),
 				rman_get_size(r));
 		rman_set_bushandle(r, vaddr);
-		rman_set_bustag(r, arm_base_bs_tag);
+		rman_set_bustag(r, fdtbus_bs_tag);
 		res = rman_activate_resource(r);
 		break;
 	case SYS_RES_IRQ:

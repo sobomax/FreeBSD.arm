@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_ether.h	8.3 (Berkeley) 5/2/95
- * $FreeBSD: head/sys/netinet/if_ether.h 275196 2014-11-27 23:06:25Z melifaro $
+ * $FreeBSD: head/sys/netinet/if_ether.h 290604 2015-11-09 10:35:33Z melifaro $
  */
 
 #ifndef _NETINET_IF_ETHER_H_
@@ -119,8 +119,7 @@ int	arpresolve(struct ifnet *ifp, int is_gw, struct mbuf *m,
 void	arprequest(struct ifnet *, const struct in_addr *,
 	    const struct in_addr *, u_char *);
 void	arp_ifinit(struct ifnet *, struct ifaddr *);
-void	arp_ifinit2(struct ifnet *, struct ifaddr *, u_char *);
-void	arp_ifscrub(struct ifnet *, uint32_t);
+void	arp_announce_ifaddr(struct ifnet *, struct in_addr addr, u_char *);
 #endif
 
 #endif

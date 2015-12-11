@@ -1,5 +1,5 @@
 /*      $NetBSD: usbhidaction.c,v 1.8 2002/06/11 06:06:21 itojun Exp $ */
-/*	$FreeBSD: head/usr.bin/usbhidaction/usbhidaction.c 227195 2011-11-06 08:18:23Z ed $ */
+/*	$FreeBSD: head/usr.bin/usbhidaction/usbhidaction.c 288335 2015-09-28 07:23:05Z hselasky $ */
 
 /*
  * Copyright (c) 2000, 2002 The NetBSD Foundation, Inc.
@@ -166,17 +166,15 @@ main(int argc, char **argv)
 
 	if (demon) {
 		fp = open(pidfile, O_WRONLY|O_CREAT, S_IRUSR|S_IRGRP|S_IROTH);
-		if (fp >= 0) {
-			sz1 = snprintf(buf, sizeof buf, "%ld\n", 
-			    (long)getpid());
-			if (sz1 > sizeof buf)
-				sz1 = sizeof buf;
-			write(fp, buf, sz1);
-			close(fp);
-		} else
+		if (fp < 0)
 			err(1, "%s", pidfile);
 		if (daemon(0, 0) < 0)
 			err(1, "daemon()");
+		snprintf(buf, sizeof(buf), "%ld\n", (long)getpid());
+		sz1 = strlen(buf);
+		if (write(fp, buf, sz1) < 0)
+			err(1, "%s", pidfile);
+		close(fp);
 		isdemon = 1;
 	}
 

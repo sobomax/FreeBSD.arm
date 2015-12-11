@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/cxgb/iw_cxgb/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/cxgb/iw_cxgb/Makefile 290135 2015-10-29 08:28:39Z hselasky $
 
 CXGB = ${.CURDIR}/../../../dev/cxgb
 .PATH: ${CXGB}/ulp/iw_cxgb
@@ -10,5 +10,6 @@ SRCS+=  iw_cxgb_ev.c iw_cxgb_mem.c iw_cxgb_dbg.c iw_cxgb_cq.c
 SRCS+=  bus_if.h device_if.h opt_sched.h pci_if.h pcib_if.h opt_ktr.h
 SRCS+=  opt_inet.h opt_ofed.h vnode_if.h
 CFLAGS+= -I${CXGB} -I${.CURDIR}/../../../ofed/include -DLINUX_TYPES_DEFINED
+CFLAGS+= -I${.CURDIR}/../../../compat/linuxkpi/common/include
 
 .include <bsd.kmod.mk>

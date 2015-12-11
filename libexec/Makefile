@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/libexec/Makefile 278192 2015-02-04 10:19:32Z ngie $
+# $FreeBSD: head/libexec/Makefile 289087 2015-10-09 22:09:44Z bapt $
 
 .include <src.opts.mk>
 
@@ -8,7 +8,6 @@ SUBDIR=	${_atf} \
 	${_casper} \
 	${_comsat} \
 	${_dma} \
-	${_dma-mbox-create} \
 	getty \
 	${_mail.local} \
 	${_mknetid} \
@@ -56,7 +55,6 @@ _comsat=	comsat
 
 .if ${MK_DMAGENT} != "no"
 _dma=		dma
-_dma-mbox-create=	dma-mbox-create
 .endif
 
 .if ${MK_NIS} != "no"

@@ -33,7 +33,7 @@
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 static char *rcsid = 
-  "$FreeBSD: head/lib/libc/net/nslexer.l 251091 2013-05-29 01:54:10Z emaste $";
+  "$FreeBSD: head/lib/libc/net/nslexer.l 288045 2015-09-20 21:21:01Z rodrigc $";
 #endif /* LIBC_SCCS and not lint */
 
 #include "namespace.h"
@@ -97,14 +97,13 @@ STRING		[a-zA-Z][a-zA-Z0-9_]*
 
 #undef _nsyywrap
 int
-_nsyywrap()
+_nsyywrap(void)
 {
 	return 1;
 } /* _nsyywrap */
 
 void
-_nsyyerror(msg)
-	const char *msg;
+_nsyyerror(const char *msg)
 {
 
 	 syslog(LOG_ERR, "NSSWITCH(nslexer): %s line %d: %s at '%s'",

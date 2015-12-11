@@ -1,10 +1,9 @@
 #!/bin/sh
-# $FreeBSD: head/tools/regression/mac/mac_portacl/misc.sh 189832 2009-03-14 21:54:19Z pjd $
+# $FreeBSD: head/tools/regression/mac/mac_portacl/misc.sh 291982 2015-12-08 05:17:22Z ngie $
 
 sysctl security.mac.portacl >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-	echo "1..1"
-	echo "not ok 1 # MAC_PORTACL is unavailable."
+	echo "1..0 # SKIP MAC_PORTACL is unavailable."
 	exit 0
 fi
 

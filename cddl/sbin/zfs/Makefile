@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/sbin/zfs/Makefile 248571 2013-03-21 08:38:03Z mm $
+# $FreeBSD: head/cddl/sbin/zfs/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/zfs
 
@@ -22,8 +22,6 @@ CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common/fs/zfs
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common/sys
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/zfs
 
-DPADD=	${LIBGEOM} ${LIBJAIL} ${LIBNVPAIR} ${LIBUMEM} \
-	${LIBUTIL} ${LIBUUTIL} ${LIBZFS_CORE} ${LIBZFS}
-LDADD=	-lgeom -ljail -lnvpair -lumem -lutil -luutil -lzfs_core -lzfs
+LIBADD=	geom jail nvpair umem util uutil zfs_core zfs
 
 .include <bsd.prog.mk>

@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)pmap_prot.c 1.17 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)pmap_prot.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/pmap_prot.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/pmap_prot.c 288113 2015-09-22 15:40:07Z rodrigc $");
 
 /*
  * pmap_prot.c
@@ -52,9 +52,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/pmap_prot.c 258578 2013-11-25 19:04:36Z hr
 
 
 bool_t
-xdr_pmap(xdrs, regs)
-	XDR *xdrs;
-	struct pmap *regs;
+xdr_pmap(XDR *xdrs, struct pmap *regs)
 {
 
 	assert(xdrs != NULL);

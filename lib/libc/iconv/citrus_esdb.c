@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/citrus_esdb.c 219019 2011-02-25 00:04:39Z gabor $ */
+/* $FreeBSD: head/lib/libc/iconv/citrus_esdb.c 290169 2015-10-29 23:06:33Z bdrewery $ */
 /* $NetBSD: citrus_esdb.c,v 1.5 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-
@@ -328,7 +328,7 @@ _citrus_esdb_get_list(char ***rlist, size_t *rnum, bool sorted)
 			    (int)_region_size(&data),
 			    (const char *)_region_head(&data));
 			if ((p = strchr(buf1, '/')) != NULL)
-				memcpy(buf1, p + 1, strlen(p) - 1);
+				memmove(buf1, p + 1, strlen(p) - 1);
 			if ((p = strstr(buf1, ".esdb")) != NULL)
 				*p = '\0';
 			snprintf(buf, sizeof(buf), "%s/%.*s", buf1,

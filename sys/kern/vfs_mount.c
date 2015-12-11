@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_mount.c 285039 2015-07-02 14:31:47Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_mount.c 287107 2015-08-24 13:18:13Z trasz $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -1359,6 +1359,8 @@ dounmount(struct mount *mp, int flags, struct thread *td)
 		vput(coveredvp);
 	}
 	vfs_event_signal(NULL, VQ_UNMOUNT, 0);
+	if (mp == rootdevmp)
+		rootdevmp = NULL;
 	vfs_mount_destroy(mp);
 	return (0);
 }

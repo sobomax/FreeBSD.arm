@@ -55,7 +55,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifvlan.c 281143 2015-04-06 09:42:23Z glebius $";
+  "$FreeBSD: head/sbin/ifconfig/ifvlan.c 288305 2015-09-27 07:51:18Z ngie $";
 #endif
 
 #define	NOTAG	((u_short) -1)
@@ -194,13 +194,11 @@ static struct afswtch af_vlan = {
 static __constructor void
 vlan_ctor(void)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	size_t i;
 
-	for (i = 0; i < N(vlan_cmds);  i++)
+	for (i = 0; i < nitems(vlan_cmds);  i++)
 		cmd_register(&vlan_cmds[i]);
 	af_register(&af_vlan);
 	callback_register(vlan_cb, NULL);
 	clone_setdefcallback("vlan", vlan_create);
-#undef N
 }

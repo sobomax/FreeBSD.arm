@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/token.l 284542 2015-06-18 10:17:47Z trasz $
+ * $FreeBSD: head/usr.sbin/ctld/token.l 288310 2015-09-27 13:47:28Z mav $
  */
 
 #include <stdio.h>
@@ -54,10 +54,13 @@ backend			{ return BACKEND; }
 blocksize		{ return BLOCKSIZE; }
 chap			{ return CHAP; }
 chap-mutual		{ return CHAP_MUTUAL; }
+ctl-lun			{ return CTL_LUN; }
 debug			{ return DEBUG; }
 device-id		{ return DEVICE_ID; }
+device-type		{ return DEVICE_TYPE; }
 discovery-auth-group	{ return DISCOVERY_AUTH_GROUP; }
 discovery-filter	{ return DISCOVERY_FILTER; }
+foreign			{ return FOREIGN; }
 initiator-name		{ return INITIATOR_NAME; }
 initiator-portal	{ return INITIATOR_PORTAL; }
 listen			{ return LISTEN; }
@@ -76,6 +79,7 @@ portal-group		{ return PORTAL_GROUP; }
 redirect		{ return REDIRECT; }
 serial			{ return SERIAL; }
 size			{ return SIZE; }
+tag			{ return TAG; }
 target			{ return TARGET; }
 timeout			{ return TIMEOUT; }
 \"[^"]+\"		{ yylval.str = strndup(yytext + 1,

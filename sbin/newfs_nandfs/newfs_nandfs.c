@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/newfs_nandfs/newfs_nandfs.c 285029 2015-07-02 12:14:48Z brueffer $");
+__FBSDID("$FreeBSD: head/sbin/newfs_nandfs/newfs_nandfs.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <sys/param.h>
 #include <sys/fdcio.h>
@@ -1088,7 +1088,7 @@ static void
 print_summary(void)
 {
 
-	printf("filesystem created succesfully\n");
+	printf("filesystem was created successfully\n");
 	printf("total segments: %#jx valid segments: %#jx\n", nsegments,
 	    nsegments - bad_segments_count);
 	printf("total space: %ju MB free: %ju MB\n",

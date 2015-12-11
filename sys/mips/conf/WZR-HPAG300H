@@ -10,7 +10,9 @@
 # + 128MB RAM
 # + uboot environment
 
-# $FreeBSD: head/sys/mips/conf/WZR-HPAG300H 275057 2014-11-25 17:33:22Z sbruno $
+# $FreeBSD: head/sys/mips/conf/WZR-HPAG300H 291049 2015-11-19 01:58:12Z imp $
+
+#NO_UNIVERSE
 
 include		"AR71XX_BASE"
 ident		"WZR-HPAG300H"

@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/Makefile 285009 2015-07-01 15:51:11Z br $
+# $FreeBSD: head/cddl/usr.sbin/Makefile 291627 2015-12-02 00:49:45Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -25,9 +25,7 @@ _zhack=	zhack
 _dtrace=	dtrace
 _dtruss=	dtruss
 _lockstat=	lockstat
-.if defined(WITH_PLOCKSTAT)
 _plockstat=	plockstat
-.endif
 .endif
 
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"

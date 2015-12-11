@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/sys_machdep.c 286584 2015-08-10 17:18:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/sys_machdep.c 291947 2015-12-07 16:27:11Z jhb $");
 
 #include "opt_capsicum.h"
 #include "opt_kstack_pages.h"
@@ -275,8 +275,7 @@ i386_extend_pcb(struct thread *td)
 	ext = (struct pcb_ext *)kmem_malloc(kernel_arena, ctob(IOPAGES+1),
 	    M_WAITOK | M_ZERO);
 	/* -16 is so we can convert a trapframe into vm86trapframe inplace */
-	ext->ext_tss.tss_esp0 = td->td_kstack + ctob(td->td_kstack_pages) -
-	    sizeof(struct pcb) - 16;
+	ext->ext_tss.tss_esp0 = (vm_offset_t)td->td_pcb - 16;
 	ext->ext_tss.tss_ss0 = GSEL(GDATA_SEL, SEL_KPL);
 	/*
 	 * The last byte of the i/o map must be followed by an 0xff byte.

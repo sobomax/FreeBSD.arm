@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/pmap_dispatch.c 286296 2015-08-04 19:46:13Z jah $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/pmap_dispatch.c 287418 2015-09-03 01:38:15Z jhibbits $");
 
 /*
  * Dispatch MI pmap calls to the appropriate MMU implementation
@@ -463,7 +463,7 @@ pmap_mapdev(vm_paddr_t pa, vm_size_t size)
 }
 
 void *
-pmap_mapdev_attr(vm_offset_t pa, vm_size_t size, vm_memattr_t attr)
+pmap_mapdev_attr(vm_paddr_t pa, vm_size_t size, vm_memattr_t attr)
 {
 
 	CTR4(KTR_PMAP, "%s(%#x, %#x, %#x)", __func__, pa, size, attr);

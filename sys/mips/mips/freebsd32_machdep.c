@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/mips/freebsd32_machdep.c 283479 2015-05-24 17:56:02Z dchagin $
+ * $FreeBSD: head/sys/mips/mips/freebsd32_machdep.c 291420 2015-11-28 08:49:07Z kib $
  */
 
 /*
@@ -77,8 +77,6 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_size	= SYS_MAXSYSCALL,
 	.sv_table	= freebsd32_sysent,
 	.sv_mask	= 0,
-	.sv_sigsize	= 0,
-	.sv_sigtbl	= NULL,
 	.sv_errsize	= 0,
 	.sv_errtbl	= NULL,
 	.sv_transtrap	= NULL,
@@ -86,7 +84,6 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_sendsig	= freebsd32_sendsig,
 	.sv_sigcode	= sigcode32,
 	.sv_szsigcode	= &szsigcode32,
-	.sv_prepsyscall	= NULL,
 	.sv_name	= "FreeBSD ELF32",
 	.sv_coredump	= __elfN(coredump),
 	.sv_imgact_try	= NULL,

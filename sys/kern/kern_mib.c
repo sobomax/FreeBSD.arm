@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_mib.c 284959 2015-06-30 17:00:45Z markm $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_mib.c 290728 2015-11-12 22:00:59Z jhb $");
 
 #include "opt_compat.h"
 #include "opt_posix.h"
@@ -579,6 +579,11 @@ SYSCTL_INT(_debug_sizeof, OID_AUTO, buf, CTLFLAG_RD,
 #include <sys/user.h>
 SYSCTL_INT(_debug_sizeof, OID_AUTO, kinfo_proc, CTLFLAG_RD,
     SYSCTL_NULL_INT_PTR, sizeof(struct kinfo_proc), "sizeof(struct kinfo_proc)");
+
+/* Used by kernel debuggers. */
+const int pcb_size = sizeof(struct pcb);
+SYSCTL_INT(_debug_sizeof, OID_AUTO, pcb, CTLFLAG_RD,
+    SYSCTL_NULL_INT_PTR, sizeof(struct pcb), "sizeof(struct pcb)");
 
 /* XXX compatibility, remove for 6.0 */
 #include <sys/imgact.h>

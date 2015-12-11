@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/ncurses/ncurses/Makefile 284695 2015-06-22 05:41:13Z antoine $
+# $FreeBSD: head/lib/ncurses/ncurses/Makefile 288246 2015-09-26 01:04:52Z bdrewery $
 
 SHLIBDIR?=	/lib
 
@@ -282,6 +282,7 @@ CFLAGS+=	-DFREEBSD_NATIVE -DTERMIOS
 # Installed
 HEADERS=	curses.h term.h termcap.h unctrl.h
 SRCHDRS=	ncurses_dll.h
+CLEANFILES+=	ncurses_dll.h
 
 .if defined(ENABLE_WIDEC)
 INCS=		${HEADERS} ${SRCHDRS}

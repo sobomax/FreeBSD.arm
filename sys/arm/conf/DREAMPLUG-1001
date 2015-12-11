@@ -18,7 +18,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/DREAMPLUG-1001 283547 2015-05-25 23:27:13Z ian $
+# $FreeBSD: head/sys/arm/conf/DREAMPLUG-1001 289945 2015-10-25 22:00:56Z zbb $
 #
 #NO_UNIVERSE
 
@@ -100,6 +100,7 @@ device		uart
 # Networking
 device		mge			# Marvell Gigabit Ethernet controller
 device		mii
+device		mdio
 device		e1000phy
 
 # USB

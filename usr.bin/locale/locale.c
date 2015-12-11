@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/locale/locale.c 243201 2012-11-17 23:49:20Z grog $
+ * $FreeBSD: head/usr.bin/locale/locale.c 289677 2015-10-21 05:37:09Z eadler $
  */
 
 /*
@@ -466,10 +466,10 @@ showlocale(void)
 				&& strcmp(lang, vval)) {
 			/*
 			 * Appropriate environment variable set, its value
-			 * is valid and not overriden by LC_ALL
+			 * is valid and not overridden by LC_ALL
 			 *
 			 * XXX: possible side effect: if both LANG and
-			 * overriden environment variable are set into same
+			 * overridden environment variable are set into same
 			 * value, then it'll be assumed as 'implied'
 			 */
 			printf("%s=%s\n", lcinfo[i].name, vval);
