@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_prcm.c 284532 2015-06-17 23:26:00Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_prcm.c 286692 2015-08-12 19:25:22Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -456,6 +456,7 @@ static devclass_t am335x_prcm_devclass;
 
 DRIVER_MODULE(am335x_prcm, simplebus, am335x_prcm_driver,
 	am335x_prcm_devclass, 0, 0);
+MODULE_VERSION(am335x_prcm, 1);
 MODULE_DEPEND(am335x_prcm, ti_scm, 1, 1, 1);
 
 static struct am335x_clk_details*

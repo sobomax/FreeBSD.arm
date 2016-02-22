@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_pager.c 284529 2015-06-17 22:44:27Z glebius $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_pager.c 285993 2015-07-29 02:26:57Z jeff $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -85,6 +85,8 @@ __FBSDID("$FreeBSD: head/sys/vm/vm_pager.c 284529 2015-06-17 22:44:27Z glebius $
 #include <vm/vm_extern.h>
 
 int cluster_pbuf_freecnt = -1;	/* unlimited to begin with */
+
+struct buf *swbuf;
 
 static int dead_pager_getpages(vm_object_t, vm_page_t *, int, int);
 static vm_object_t dead_pager_alloc(void *, vm_ooffset_t, vm_prot_t,
@@ -400,12 +402,11 @@ initpbuf(struct buf *bp)
 	bp->b_rcred = NOCRED;
 	bp->b_wcred = NOCRED;
 	bp->b_qindex = 0;	/* On no queue (QUEUE_NONE) */
-	bp->b_saveaddr = (caddr_t) (MAXPHYS * (bp - swbuf)) + swapbkva;
-	bp->b_data = bp->b_saveaddr;
-	bp->b_kvabase = bp->b_saveaddr;
+	bp->b_kvabase = (caddr_t) (MAXPHYS * (bp - swbuf)) + swapbkva;
+	bp->b_data = bp->b_kvabase;
 	bp->b_kvasize = MAXPHYS;
-	bp->b_xflags = 0;
 	bp->b_flags = 0;
+	bp->b_xflags = 0;
 	bp->b_ioflags = 0;
 	bp->b_iodone = NULL;
 	bp->b_error = 0;

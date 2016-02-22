@@ -1,8 +1,7 @@
-#	$FreeBSD: head/sbin/ipf/Makefile 145524 2005-04-25 18:55:52Z darrenr $
+#	$FreeBSD: head/sbin/ipf/Makefile 288249 2015-09-26 01:28:50Z bdrewery $
 
-#.WAIT
-SUBDIR=		libipf
+SUBDIR=		libipf .WAIT
 SUBDIR+=	ipf ipfs ipfstat ipftest ipmon ipnat ippool ipresend
-#SUBDIR+=	ipsend iptest rules
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

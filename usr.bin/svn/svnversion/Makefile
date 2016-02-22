@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/svnversion/Makefile 275079 2014-11-25 21:43:51Z bapt $
+# $FreeBSD: head/usr.bin/svn/svnversion/Makefile 286509 2015-08-09 05:38:31Z peter $
 
 MAN=
 
@@ -27,6 +27,6 @@ LDADD=	-L${LIBSVN_WCDIR} -lsvn_wc \
 LIBADD+=	bsdxml sqlite3 z pthread
 
 DPADD=	${LIBSVN_WC} ${LIBSVN_DELTA} ${LIBSVN_DIFF} ${LIBSVN_SUBR} \
-	${LIBSERF} ${LIBAPR_UTIL}${LIBAPR}
+	${LIBSERF} ${LIBAPR_UTIL} ${LIBAPR}
 
 .include <bsd.prog.mk>

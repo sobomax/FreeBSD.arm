@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/atomic.h,v 1.21.2.3 2005/10/06 18:12:05 jhb
- * $FreeBSD: head/sys/mips/include/atomic.h 252965 2013-07-07 16:12:22Z imp $
+ * $FreeBSD: head/sys/mips/include/atomic.h 285283 2015-07-08 18:12:24Z kib $
  */
 
 #ifndef _MACHINE_ATOMIC_H_
@@ -495,6 +495,34 @@ atomic_fetchadd_64(__volatile uint64_t *p, uint64_t v)
 	return (value);
 }
 #endif
+
+static __inline void
+atomic_thread_fence_acq(void)
+{
+
+	mips_sync();
+}
+
+static __inline void
+atomic_thread_fence_rel(void)
+{
+
+	mips_sync();
+}
+
+static __inline void
+atomic_thread_fence_acq_rel(void)
+{
+
+	mips_sync();
+}
+
+static __inline void
+atomic_thread_fence_seq_cst(void)
+{
+
+	mips_sync();
+}
 
 /* Operations on chars. */
 #define	atomic_set_char		atomic_set_8

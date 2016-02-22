@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/local_apic.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/local_apic.c 291851 2015-12-05 08:52:37Z kib $");
 
 #include "opt_atpic.h"
 #include "opt_hwpmc_hooks.h"
@@ -204,6 +204,7 @@ lapic_write32_nofence(enum LAPIC_REGISTERS reg, uint32_t val)
 	}
 }
 
+#ifdef SMP
 static uint64_t
 lapic_read_icr(void)
 {
@@ -241,6 +242,7 @@ lapic_write_icr(uint32_t vhi, uint32_t vlo)
 		lapic_write32(LAPIC_ICR_LO, vlo);
 	}
 }
+#endif /* SMP */
 
 static void
 native_lapic_enable_x2apic(void)
@@ -292,9 +294,6 @@ static int 	native_lapic_enable_pmc(void);
 static void 	native_lapic_disable_pmc(void);
 static void 	native_lapic_reenable_pmc(void);
 static void 	native_lapic_enable_cmc(void);
-static void 	native_lapic_ipi_raw(register_t icrlo, u_int dest);
-static void 	native_lapic_ipi_vectored(u_int vector, int dest);
-static int 	native_lapic_ipi_wait(int delay);
 static int 	native_lapic_set_lvt_mask(u_int apic_id, u_int lvt,
 		    u_char masked);
 static int 	native_lapic_set_lvt_mode(u_int apic_id, u_int lvt,
@@ -303,8 +302,13 @@ static int 	native_lapic_set_lvt_polarity(u_int apic_id, u_int lvt,
 		    enum intr_polarity pol);
 static int 	native_lapic_set_lvt_triggermode(u_int apic_id, u_int lvt,
 		    enum intr_trigger trigger);
+#ifdef SMP
+static void 	native_lapic_ipi_raw(register_t icrlo, u_int dest);
+static void 	native_lapic_ipi_vectored(u_int vector, int dest);
+static int 	native_lapic_ipi_wait(int delay);
 static int	native_lapic_ipi_alloc(inthand_t *ipifunc);
 static void	native_lapic_ipi_free(int vector);
+#endif /* SMP */
 
 struct apic_ops apic_ops = {
 	.create			= native_lapic_create,
@@ -463,10 +467,20 @@ native_lapic_init(vm_paddr_t addr)
 	 * we by default enable suppression even when system only has
 	 * one IO-APIC, since EOI is broadcasted to all APIC agents,
 	 * including CPUs, otherwise.
+	 *
+	 * It seems that at least some KVM versions report
+	 * EOI_SUPPRESSION bit, but auto-EOI does not work.
 	 */
 	ver = lapic_read32(LAPIC_VERSION);
 	if ((ver & APIC_VER_EOI_SUPPRESSION) != 0) {
 		lapic_eoi_suppression = 1;
+		if (vm_guest == VM_GUEST_VM &&
+		    !strcmp(hv_vendor, "KVMKVMKVM")) {
+			if (bootverbose)
+				printf(
+		       "KVM -- disabling lapic eoi suppression\n");
+			lapic_eoi_suppression = 0;
+		}
 		TUNABLE_INT_FETCH("hw.lapic_eoi_suppression",
 		    &lapic_eoi_suppression);
 	}
@@ -1653,9 +1667,10 @@ native_lapic_ipi_raw(register_t icrlo, u_int dest)
 	    ("%s: reserved bits set in ICR LO register", __func__));
 
 	/* Set destination in ICR HI register if it is being used. */
-	saveintr = intr_disable();
-	if (!x2apic_mode)
+	if (!x2apic_mode) {
+		saveintr = intr_disable();
 		icr = lapic_read_icr();
+	}
 
 	if ((icrlo & APIC_DEST_MASK) == APIC_DEST_DESTFLD) {
 		if (x2apic_mode) {
@@ -1678,7 +1693,8 @@ native_lapic_ipi_raw(register_t icrlo, u_int dest)
 		vlo |= icrlo;
 	}
 	lapic_write_icr(vhi, vlo);
-	intr_restore(saveintr);
+	if (!x2apic_mode)
+		intr_restore(saveintr);
 }
 
 #define	BEFORE_SPIN	50000
@@ -1697,11 +1713,10 @@ native_lapic_ipi_vectored(u_int vector, int dest)
 	icrlo = APIC_DESTMODE_PHY | APIC_TRIGMOD_EDGE | APIC_LEVEL_ASSERT;
 
 	/*
-	 * IPI_STOP_HARD is just a "fake" vector used to send a NMI.
-	 * Use special rules regard NMI if passed, otherwise specify
-	 * the vector.
+	 * NMI IPIs are just fake vectors used to send a NMI.  Use special rules
+	 * regarding NMIs if passed, otherwise specify the vector.
 	 */
-	if (vector == IPI_STOP_HARD)
+	if (vector >= IPI_NMI_FIRST)
 		icrlo |= APIC_DELMODE_NMI;
 	else
 		icrlo |= vector | APIC_DELMODE_FIXED;

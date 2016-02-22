@@ -1,8 +1,10 @@
 #
 # Ubiquiti Routerstation: boot from MFS
 #
-# $FreeBSD: head/sys/mips/conf/ROUTERSTATION_MFS 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/ROUTERSTATION_MFS 291049 2015-11-19 01:58:12Z imp $
 #
+
+#NO_UNIVERSE
 
 include		"AR71XX_BASE"
 ident		"ROUTERSTATION_MFS"

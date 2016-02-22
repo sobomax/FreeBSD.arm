@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libclang_rt/profile/Makefile 276857 2015-01-08 22:40:56Z dim $
+# $FreeBSD: head/lib/libclang_rt/profile/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.init.mk>
 
@@ -13,5 +13,6 @@ SRCS=	GCDAProfiling.c\
 	InstrProfilingPlatformDarwin.c\
 	InstrProfilingPlatformOther.c\
 	InstrProfilingRuntime.cc\
+	InstrProfilingUtil.c
 
 .include <bsd.lib.mk>

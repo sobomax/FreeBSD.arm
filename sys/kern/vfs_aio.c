@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_aio.c 281860 2015-04-22 18:11:34Z mav $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_aio.c 289941 2015-10-25 18:48:09Z pjd $");
 
 #include "opt_compat.h"
 
@@ -583,7 +583,7 @@ aio_init_aioinfo(struct proc *p)
 	struct kaioinfo *ki;
 
 	ki = uma_zalloc(kaio_zone, M_WAITOK);
-	mtx_init(&ki->kaio_mtx, "aiomtx", NULL, MTX_DEF);
+	mtx_init(&ki->kaio_mtx, "aiomtx", NULL, MTX_DEF | MTX_NEW);
 	ki->kaio_flags = 0;
 	ki->kaio_maxactive_count = max_aio_per_proc;
 	ki->kaio_active_count = 0;
@@ -2058,6 +2058,7 @@ sys_aio_cancel(struct thread *td, struct aio_cancel_args *uap)
 	struct aiocblist *cbe, *cbn;
 	struct file *fp;
 	struct socket *so;
+	cap_rights_t rights;
 	int error;
 	int remove;
 	int cancelled = 0;
@@ -2065,7 +2066,7 @@ sys_aio_cancel(struct thread *td, struct aio_cancel_args *uap)
 	struct vnode *vp;
 
 	/* Lookup file object. */
-	error = fget(td, uap->fd, NULL, &fp);
+	error = fget(td, uap->fd, cap_rights_init(&rights), &fp);
 	if (error)
 		return (error);
 
@@ -2493,8 +2494,11 @@ kern_aio_waitcomplete(struct thread *td, struct aiocb **aiocbp,
 
 	ops->store_aiocb(aiocbp, NULL);
 
-	timo = 0;
-	if (ts) {
+	if (ts == NULL) {
+		timo = 0;
+	} else if (ts->tv_sec == 0 && ts->tv_nsec == 0) {
+		timo = -1;
+	} else {
 		if ((ts->tv_nsec < 0) || (ts->tv_nsec >= 1000000000))
 			return (EINVAL);
 
@@ -2512,6 +2516,10 @@ kern_aio_waitcomplete(struct thread *td, struct aiocb **aiocbp,
 	cb = NULL;
 	AIO_LOCK(ki);
 	while ((cb = TAILQ_FIRST(&ki->kaio_done)) == NULL) {
+		if (timo == -1) {
+			error = EWOULDBLOCK;
+			break;
+		}
 		ki->kaio_flags |= KAIO_WAKEUP;
 		error = msleep(&p->p_aioinfo, AIO_MTX(ki), PRIBIO | PCATCH,
 		    "aiowc", timo);

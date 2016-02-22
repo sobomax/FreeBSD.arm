@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_idpgtbl.c 284869 2015-06-26 07:01:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_idpgtbl.c 286777 2015-08-14 13:51:59Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -374,8 +374,9 @@ retry:
 			KASSERT(lvl > 0,
 			    ("lost root page table page %p", domain));
 			/*
-			 * Page table page does not exists, allocate
-			 * it and create pte in the up level.
+			 * Page table page does not exist, allocate
+			 * it and create a pte in the preceeding page level
+			 * to reference the allocated page table page.
 			 */
 			m = dmar_pgalloc(domain->pgtbl_obj, idx, flags |
 			    DMAR_PGF_ZERO);
@@ -386,7 +387,7 @@ retry:
 			 * Prevent potential free while pgtbl_obj is
 			 * unlocked in the recursive call to
 			 * domain_pgtbl_map_pte(), if other thread did
-			 * pte write and clean while the lock if
+			 * pte write and clean while the lock is
 			 * dropped.
 			 */
 			m->wire_count++;

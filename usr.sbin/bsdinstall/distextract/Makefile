@@ -1,6 +1,6 @@
-# $FreeBSD: head/usr.sbin/bsdinstall/distextract/Makefile 275874 2014-12-18 03:51:09Z dteske $
+# $FreeBSD: head/usr.sbin/bsdinstall/distextract/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
-BINDIR= /usr/libexec/bsdinstall
+BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distextract
 LIBADD=	archive dpv figpar ncursesw dialog m
 

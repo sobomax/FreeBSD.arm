@@ -26,7 +26,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/qemu/virt_common.c 281439 2015-04-11 17:52:47Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/qemu/virt_common.c 289547 2015-10-18 20:32:37Z ian $");
+
+#include "opt_platform.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>

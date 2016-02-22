@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/_stdint.h 237517 2012-06-24 04:15:58Z andrew $
+ * $FreeBSD: head/sys/arm/include/_stdint.h 290648 2015-11-10 12:02:41Z mmel $
  */
 
 #ifndef _MACHINE__STDINT_H_
@@ -139,7 +139,7 @@
  * 7.18.3  Limits of other integer types
  */
 /* Limits of ptrdiff_t. */
-#define	PTRDIFF_MIN	INT32_MIN	
+#define	PTRDIFF_MIN	INT32_MIN
 #define	PTRDIFF_MAX	INT32_MAX
 
 /* Limits of sig_atomic_t. */

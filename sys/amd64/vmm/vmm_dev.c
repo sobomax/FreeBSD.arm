@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_dev.c 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_dev.c 285218 2015-07-06 19:41:43Z neel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_dev.c 284539 2015-06-18 06:00:17Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_dev.c 285218 2015-07-06 19:41:43Z neel $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -943,7 +943,7 @@ devmem_create_cdev(const char *vmname, int segid, char *devname)
 	int error;
 
 	error = make_dev_p(MAKEDEV_CHECKNAME, &cdev, &devmemsw, NULL,
-	    UID_ROOT, GID_WHEEL, 0600, "vmm/%s.%s", vmname, devname);
+	    UID_ROOT, GID_WHEEL, 0600, "vmm.io/%s.%s", vmname, devname);
 	if (error)
 		return (error);
 

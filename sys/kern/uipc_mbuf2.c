@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_mbuf2.c 276884 2015-01-09 12:08:51Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_mbuf2.c 286450 2015-08-08 15:50:46Z melifaro $");
 
 /*#define PULLDOWN_DEBUG*/
 
@@ -427,7 +427,7 @@ m_tag_copy(struct m_tag *t, int how)
  * destination mbuf.
  */
 int
-m_tag_copy_chain(struct mbuf *to, struct mbuf *from, int how)
+m_tag_copy_chain(struct mbuf *to, const struct mbuf *from, int how)
 {
 	struct m_tag *p, *t, *tprev = NULL;
 

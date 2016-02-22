@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 280910 2015-03-31 14:41:29Z ae $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 290545 2015-11-08 13:44:21Z melifaro $");
 
 /*
  * Logging support for ipfw
@@ -352,7 +352,7 @@ ipfw_log(struct ip_fw_chain *chain, struct ip_fw *f, u_int hlen,
 			break;
 		case O_SETFIB:
 			snprintf(SNPARGS(action2, 0), "SetFib %d",
-				TARG(cmd->arg1, fib));
+				TARG(cmd->arg1, fib) & 0x7FFF);
 			break;
 		case O_SKIPTO:
 			snprintf(SNPARGS(action2, 0), "SkipTo %d",

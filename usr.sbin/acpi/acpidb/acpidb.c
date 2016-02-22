@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/usr.sbin/acpi/acpidb/acpidb.c 283092 2015-05-18 23:46:11Z jkim $
+ *	$FreeBSD: head/usr.sbin/acpi/acpidb/acpidb.c 287168 2015-08-26 17:13:47Z jkim $
  */
 
 #include <sys/param.h>
@@ -480,7 +480,7 @@ load_dsdt(const char *dsdtfile)
 
 	AcpiDbGetTableFromFile(filetmp, NULL, TRUE);
 
-	AcpiDbInitialize();
+	AcpiInitializeDebugger();
 	AcpiGbl_DebuggerConfiguration = 0;
 	AcpiDbUserCommands(':', NULL);
 

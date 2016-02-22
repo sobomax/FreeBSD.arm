@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/bus_space/busdma.h 284253 2015-06-11 03:02:40Z marcel $
+ * $FreeBSD: head/tools/bus_space/busdma.h 286176 2015-08-02 01:09:30Z marcel $
  */
 
 #ifndef _TOOLS_BUS_DMA_H_
@@ -37,6 +37,11 @@ int	bd_tag_derive(int tid, u_long align, u_long bndry, u_long maxaddr,
 	    u_int flags);
 int	bd_tag_destroy(int tid);
 
+int	bd_md_create(int tid, u_int flags);
+int	bd_md_destroy(int mdid);
+int	bd_md_load(int mdid, void *buf, u_long len, u_int flags);
+int	bd_md_unload(int mdid);
+
 int	bd_mem_alloc(int tid, u_int flags);
 int	bd_mem_free(int mdid);
 
@@ -45,5 +50,7 @@ int	bd_md_next_seg(int mdid, int sid);
 
 int	bd_seg_get_addr(int sid, u_long *);
 int	bd_seg_get_size(int sid, u_long *);
+
+int	bd_sync(int mdid, u_int op, u_long ofs, u_long len);
 
 #endif /* _TOOLS_BUS_DMA_H_ */

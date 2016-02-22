@@ -31,12 +31,14 @@
 static char sccsid[] = "@(#)pause.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/pause.c 277032 2015-01-11 22:16:31Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/pause.c 288008 2015-09-20 03:58:27Z rodrigc $");
 
 #include <signal.h>
 #include <unistd.h>
 
 #include "libc_private.h"
+
+int __pause(void);
 
 /*
  * Backwards compatible pause.

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_if.c 283107 2015-05-19 14:04:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_if.c 287119 2015-08-24 21:41:05Z loos $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -581,7 +581,7 @@ pfi_address_add(struct sockaddr *sa, int af, int net)
 			    __func__, V_pfi_buffer_cnt, PFI_BUFFER_MAX);
 			return;
 		}
-		memcpy(V_pfi_buffer, p, V_pfi_buffer_cnt * sizeof(*V_pfi_buffer));
+		memcpy(p, V_pfi_buffer, V_pfi_buffer_max * sizeof(*V_pfi_buffer));
 		/* no need to zero buffer */
 		free(V_pfi_buffer, PFI_MTYPE);
 		V_pfi_buffer = p;

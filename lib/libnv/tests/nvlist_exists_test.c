@@ -26,13 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libnv/tests/nvlist_exists_test.c 269603 2014-08-05 18:41:27Z ngie $
+ * $FreeBSD: head/lib/libnv/tests/nvlist_exists_test.c 285063 2015-07-02 21:58:10Z oshogbo $
  */
+
+#include <sys/nv.h>
 
 #include <stdio.h>
 #include <unistd.h>
-
-#include <nv.h>
 
 static int ntest = 1;
 

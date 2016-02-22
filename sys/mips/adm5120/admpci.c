@@ -61,7 +61,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/adm5120/admpci.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/mips/adm5120/admpci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -181,7 +181,7 @@ admpci_attach(device_t dev)
 		panic("bus_space_map failed");
 	}
 
-	device_add_child(dev, "pci", busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

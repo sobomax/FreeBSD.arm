@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbPluginProcessGDBRemote/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/liblldbPluginProcessGDBRemote/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,6 +8,9 @@ SRCDIR=	tools/lldb/source/Plugins/Process/gdb-remote
 SRCS=	GDBRemoteCommunication.cpp \
 	GDBRemoteCommunicationClient.cpp \
 	GDBRemoteCommunicationServer.cpp \
+	GDBRemoteCommunicationServerCommon.cpp \
+	GDBRemoteCommunicationServerLLGS.cpp \
+	GDBRemoteCommunicationServerPlatform.cpp \
 	GDBRemoteRegisterContext.cpp \
 	ProcessGDBRemote.cpp \
 	ProcessGDBRemoteLog.cpp \

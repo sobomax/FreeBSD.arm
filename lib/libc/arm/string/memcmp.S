@@ -64,7 +64,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcmp.S 275256 2014-11-29 15:56:52Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcmp.S 288373 2015-09-29 16:09:58Z kib $");
 
 .syntax	unified
 
@@ -181,3 +181,5 @@ ENTRY(memcmp)
 	RET
 #endif
 END(memcmp)
+
+	.section .note.GNU-stack,"",%progbits

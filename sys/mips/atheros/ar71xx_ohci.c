@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ohci.c 276717 2015-01-05 20:22:18Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ohci.c 285121 2015-07-04 03:05:57Z adrian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,6 +49,9 @@ __FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ohci.c 276717 2015-01-05 20:22:
 #include <dev/usb/controller/ohci.h>
 #include <dev/usb/controller/ohcireg.h>
 
+#include <mips/atheros/ar71xxreg.h> /* for stuff in ar71xx_cpudef.h */
+#include <mips/atheros/ar71xx_cpudef.h>
+
 static int ar71xx_ohci_attach(device_t dev);
 static int ar71xx_ohci_detach(device_t dev);
 static int ar71xx_ohci_probe(device_t dev);
@@ -64,6 +67,16 @@ ar71xx_ohci_probe(device_t dev)
 	device_set_desc(dev, "AR71XX integrated OHCI controller");
 	return (BUS_PROBE_DEFAULT);
 }
+
+static void
+ar71xx_ohci_intr(void *arg)
+{
+
+	/* XXX TODO: should really see if this was our interrupt.. */
+	ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_USB);
+	ohci_interrupt(arg);
+}
+
 
 static int
 ar71xx_ohci_attach(device_t dev)
@@ -113,7 +126,7 @@ ar71xx_ohci_attach(device_t dev)
 
 	err = bus_setup_intr(dev, sc->sc_ohci.sc_irq_res, 
 	    INTR_TYPE_BIO | INTR_MPSAFE, NULL, 
-	    (driver_intr_t *)ohci_interrupt, sc, &sc->sc_ohci.sc_intr_hdl);
+	    ar71xx_ohci_intr, sc, &sc->sc_ohci.sc_intr_hdl);
 	if (err) {
 		err = ENXIO;
 		goto error;

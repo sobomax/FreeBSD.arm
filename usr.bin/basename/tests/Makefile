@@ -1,12 +1,7 @@
-# $FreeBSD: head/usr.bin/basename/tests/Makefile 272779 2014-10-09 00:41:42Z ngie $
+# $FreeBSD: head/usr.bin/basename/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
-TESTSRC=	${.CURDIR}/../../../contrib/netbsd-tests/usr.bin/basename
-.PATH: ${TESTSRC}
+NETBSD_ATF_TESTS_SH=	basename_test
 
-.include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/usr.bin/basename
-ATF_TESTS_SH=	basename_test
-ATF_TESTS_SH_SRC_basename_test=	t_basename.sh
+.include <netbsd-tests.test.mk>
 
 .include <bsd.test.mk>

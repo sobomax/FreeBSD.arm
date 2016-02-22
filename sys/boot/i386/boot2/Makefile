@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/boot2/Makefile 280980 2015-04-02 06:58:17Z dim $
+# $FreeBSD: head/sys/boot/i386/boot2/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -107,8 +107,8 @@ boot2.h: boot1.out
 .if ${MACHINE_CPUARCH} == "amd64"
 beforedepend boot2.s: machine
 CLEANFILES+=	machine
-machine:
-	ln -sf ${.CURDIR}/../../../i386/include machine
+machine: ${.CURDIR}/../../../i386/include .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 .endif
 
 .include <bsd.prog.mk>

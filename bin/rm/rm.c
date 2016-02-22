@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)rm.c	8.5 (Berkeley) 4/18/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/rm/rm.c 268376 2014-07-07 23:21:20Z imp $");
+__FBSDID("$FreeBSD: head/bin/rm/rm.c 290480 2015-11-07 02:18:19Z bapt $");
 
 #include <sys/stat.h>
 #include <sys/param.h>
@@ -50,6 +50,7 @@ __FBSDID("$FreeBSD: head/bin/rm/rm.c 268376 2014-07-07 23:21:20Z imp $");
 #include <fcntl.h>
 #include <fts.h>
 #include <grp.h>
+#include <locale.h>
 #include <pwd.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -85,6 +86,8 @@ main(int argc, char *argv[])
 {
 	int ch;
 	char *p;
+
+	(void)setlocale(LC_ALL, "");
 
 	/*
 	 * Test for the special case where the utility is called as
@@ -152,8 +155,7 @@ main(int argc, char *argv[])
 	}
 
 	checkdot(argv);
-	if (getenv("POSIXLY_CORRECT") == NULL)
-		checkslash(argv);
+	checkslash(argv);
 	uid = geteuid();
 
 	(void)signal(SIGINFO, siginfo);

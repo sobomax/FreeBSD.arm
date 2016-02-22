@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/part_wizard.c 271539 2014-09-13 18:24:54Z nwhitehorn $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/part_wizard.c 285679 2015-07-18 18:49:44Z allanjude $
  */
 
 #include <sys/param.h>
@@ -257,8 +257,10 @@ query:
 			goto query;
 
 		gpart_destroy(gpart);
-		gpart_partition(disk, default_scheme());
-		scheme = default_scheme();
+		scheme = choose_part_type(default_scheme());
+		if (scheme == NULL)
+			return NULL;
+		gpart_partition(disk, scheme);
 	}
 
 	if (scheme == NULL || choice == 0) {
@@ -272,8 +274,10 @@ query:
 			gpart_destroy(gpart);
 		}
 
-		gpart_partition(disk, default_scheme());
-		scheme = default_scheme();
+		scheme = choose_part_type(default_scheme());
+		if (scheme == NULL)
+			return NULL;
+		gpart_partition(disk, scheme);
 	}
 
 	if (strcmp(scheme, "PC98") == 0 || strcmp(scheme, "MBR") == 0) {

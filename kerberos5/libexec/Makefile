@@ -1,6 +1,7 @@
-# $FreeBSD: head/kerberos5/libexec/Makefile 233294 2012-03-22 08:48:42Z stas $
+# $FreeBSD: head/kerberos5/libexec/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
 SUBDIR=	digest-service ipropd-master ipropd-slave hprop hpropd kadmind kdc \
 	kdigest kfd kimpersonate kpasswdd kcm
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

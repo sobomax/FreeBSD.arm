@@ -1,9 +1,8 @@
-# $FreeBSD: head/tools/tools/netrate/httpd/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/netrate/httpd/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	httpd
 MAN=
 WARNS?=	3
-DPADD=	${LIBPTHREAD}
-LDADD=	-lpthread
+LIBADD=	pthread
 
 .include <bsd.prog.mk>

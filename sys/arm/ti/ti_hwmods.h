@@ -23,12 +23,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_hwmods.h 283276 2015-05-22 03:16:18Z gonzo $
+ * $FreeBSD: head/sys/arm/ti/ti_hwmods.h 286678 2015-08-12 17:23:15Z ian $
  */
 #ifndef _TI_HWMODS_H_
 #define _TI_HWMODS_H_
 
 clk_ident_t ti_hwmods_get_clock(device_t dev);
 int ti_hwmods_contains(device_t dev, const char *hwmod);
+
+/* Returns the N from "hwmodN" in the ti,hwmods property; 0 on failure. */
+int ti_hwmods_get_unit(device_t dev, const char *hwmod);
 
 #endif /* _TI_HWMODS_H_ */

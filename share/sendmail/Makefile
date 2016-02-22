@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/sendmail/Makefile 284255 2015-06-11 04:22:17Z sjg $
+# $FreeBSD: head/share/sendmail/Makefile 290083 2015-10-27 23:35:02Z bdrewery $
 #
 # Doing a make install builds /usr/share/sendmail/
 
@@ -7,7 +7,7 @@ CFDIR=	cf
 CFDIRS!=	(cd ${SENDMAIL_DIR}; find -L ${CFDIR} \( \( -name CVS -o -name .svn \) -prune \) -o -type d -print)
 CFFILES!=	(cd ${SENDMAIL_DIR}; find -L ${CFDIR} \( \( -name CVS -o -name .svn \) -prune \) -o -type f -print)
 
-DDIR=	${DESTDIR}/usr/share/sendmail
+DDIR=	${DESTDIR}${SHAREDIR}/sendmail
 
 # Define SHARED to indicate whether you want symbolic links to the system
 # source (``symlinks''), or a separate copy (``copies'')

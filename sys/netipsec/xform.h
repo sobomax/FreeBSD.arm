@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform.h 281692 2015-04-18 16:38:45Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/xform.h 286000 2015-07-29 07:15:16Z jmg $	*/
 /*	$OpenBSD: ip_ipsp.h,v 1.119 2002/03/14 01:27:11 millert Exp $	*/
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -105,6 +105,7 @@ struct xformsw {
 #ifdef _KERNEL
 extern void xform_register(struct xformsw*);
 extern int xform_init(struct secasvar *sav, int xftype);
+extern int xform_ah_authsize(struct auth_hash *esph);
 
 struct cryptoini;
 

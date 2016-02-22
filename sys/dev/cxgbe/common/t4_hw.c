@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/common/t4_hw.c 284445 2015-06-16 12:36:29Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/common/t4_hw.c 291665 2015-12-03 00:02:01Z jhb $");
 
 #include "opt_inet.h"
 
@@ -5699,6 +5699,7 @@ int __devinit t4_port_init(struct port_info *p, int mbox, int pf, int vf)
 	struct fw_port_cmd c;
 	u16 rss_size;
 	adapter_t *adap = p->adapter;
+	u32 param, val;
 
 	memset(&c, 0, sizeof(c));
 
@@ -5722,11 +5723,11 @@ int __devinit t4_port_init(struct port_info *p, int mbox, int pf, int vf)
 	if (ret < 0)
 		return ret;
 
-	p->viid = ret;
+	p->vi[0].viid = ret;
 	p->tx_chan = j;
 	p->rx_chan_map = get_mps_bg_map(adap, j);
 	p->lport = j;
-	p->rss_size = rss_size;
+	p->vi[0].rss_size = rss_size;
 	t4_os_set_hw_addr(adap, p->port_id, addr);
 
 	ret = ntohl(c.u.info.lstatus_to_modtype);
@@ -5736,6 +5737,17 @@ int __devinit t4_port_init(struct port_info *p, int mbox, int pf, int vf)
 	p->mod_type = G_FW_PORT_CMD_MODTYPE(ret);
 
 	init_link_config(&p->link_cfg, ntohs(c.u.info.pcap));
+
+	param = V_FW_PARAMS_MNEM(FW_PARAMS_MNEM_DEV) |
+	    V_FW_PARAMS_PARAM_X(FW_PARAMS_PARAM_DEV_RSSINFO) |
+	    V_FW_PARAMS_PARAM_YZ(p->vi[0].viid);
+	ret = t4_query_params(adap, mbox, pf, vf, 1, &param, &val);
+	if (ret)
+		p->vi[0].rss_base = 0xffff;
+	else {
+		/* MPASS((val >> 16) == rss_size); */
+		p->vi[0].rss_base = val & 0xffff;
+	}
 
 	return 0;
 }

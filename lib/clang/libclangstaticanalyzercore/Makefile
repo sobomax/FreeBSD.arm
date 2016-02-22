@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzercore/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzercore/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -50,6 +50,7 @@ TGHDRS=	AttrList \
 	CommentNodes \
 	DeclNodes \
 	DiagnosticCommonKinds \
+	DiagnosticFrontendKinds \
 	StmtNodes
 
 .include "../clang.lib.mk"

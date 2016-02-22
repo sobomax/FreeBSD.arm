@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/cavium/octopci.c 242454 2012-11-01 20:39:39Z jmallett $
+ * $FreeBSD: head/sys/mips/cavium/octopci.c 287882 2015-09-16 23:34:51Z zbb $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/octopci.c 242454 2012-11-01 20:39:39Z jmallett $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/octopci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -205,7 +205,7 @@ octopci_attach(device_t dev)
 	subbus = octopci_init_bus(dev, sc->sc_bus);
 	octopci_write_config(dev, sc->sc_bus, 0, 0, PCIR_SUBBUS_1, subbus, 1);
 
-	device_add_child(dev, "pci", device_get_unit(dev));
+	device_add_child(dev, "pci", -1);
 
 	return (bus_generic_attach(dev));
 }

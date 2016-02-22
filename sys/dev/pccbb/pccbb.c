@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb.c 278936 2015-02-18 05:53:04Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/pccbb/pccbb.c 287008 2015-08-21 21:47:29Z imp $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -330,7 +330,7 @@ cbb_detach(device_t brdev)
 
 	/*
 	 * Wait for the thread to die.  kproc_exit will do a wakeup
-	 * on the event thread's struct thread * so that we know it is
+	 * on the event thread's struct proc * so that we know it is
 	 * safe to proceed.  IF the thread is running, set the please
 	 * die flag and wait for it to comply.  Since the wakeup on
 	 * the event thread happens only in kproc_exit, we don't

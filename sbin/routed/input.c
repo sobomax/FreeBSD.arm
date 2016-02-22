@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/routed/input.c 276602 2015-01-03 01:52:06Z des $
+ * $FreeBSD: head/sbin/routed/input.c 286347 2015-08-05 22:04:56Z delphij $
  */
 
 #include "defs.h"
@@ -34,7 +34,7 @@
 #ifdef __NetBSD__
 __RCSID("$NetBSD$");
 #elif defined(__FreeBSD__)
-__RCSID("$FreeBSD: head/sbin/routed/input.c 276602 2015-01-03 01:52:06Z des $");
+__RCSID("$FreeBSD: head/sbin/routed/input.c 286347 2015-08-05 22:04:56Z delphij $");
 #else
 __RCSID("$Revision: 2.26 $");
 #ident "$Revision: 2.26 $"
@@ -159,6 +159,12 @@ input(struct sockaddr_in *from,		/* received from this IP address */
 		aifp->int_act_time = now.tv_sec;
 
 	trace_rip("Recv", "from", from, sifp, rip, cc);
+
+	if (sifp == 0) {
+		trace_pkt("    discard a request from an indirect router"
+		    " (possibly an attack)");
+		return;
+	}
 
 	if (rip->rip_vers == 0) {
 		msglim(&bad_router, FROM_NADDR,

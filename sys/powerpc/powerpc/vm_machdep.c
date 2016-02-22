@@ -38,7 +38,7 @@
  *
  *	from: @(#)vm_machdep.c	7.3 (Berkeley) 5/13/91
  *	Utah $Hdr: vm_machdep.c 1.16.1.1 89/06/23$
- * $FreeBSD: head/sys/powerpc/powerpc/vm_machdep.c 277334 2015-01-18 18:32:43Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/powerpc/vm_machdep.c 291442 2015-11-29 07:16:08Z nwhitehorn $
  */
 /*-
  * Copyright (c) 1994, 1995, 1996 Carnegie-Mellon University.
@@ -143,7 +143,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 
 	cf = (struct callframe *)tf - 1;
 	memset(cf, 0, sizeof(struct callframe));
-	#ifdef __powerpc64__
+	#if defined(__powerpc64__) && (!defined(_CALL_ELF) || _CALL_ELF == 1)
 	cf->cf_toc = ((register_t *)fork_return)[1];
 	#endif
 	cf->cf_func = (register_t)fork_return;
@@ -152,11 +152,12 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 
 	pcb->pcb_sp = (register_t)cf;
 	KASSERT(pcb->pcb_sp % 16 == 0, ("stack misaligned"));
-	#ifdef __powerpc64__
+	#if defined(__powerpc64__) && (!defined(_CALL_ELF) || _CALL_ELF == 1)
 	pcb->pcb_lr = ((register_t *)fork_trampoline)[0];
 	pcb->pcb_toc = ((register_t *)fork_trampoline)[1];
 	#else
 	pcb->pcb_lr = (register_t)fork_trampoline;
+	pcb->pcb_context[0] = pcb->pcb_lr;
 	#endif
 	#ifdef AIM
 	pcb->pcb_cpu.aim.usr_vsid = 0;

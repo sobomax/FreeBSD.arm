@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/virtio/console/Makefile 273515 2014-10-23 04:47:32Z bryanv $
+# $FreeBSD: head/sys/modules/virtio/console/Makefile 285068 2015-07-03 01:50:26Z imp $
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -29,8 +29,5 @@ KMOD=	virtio_console
 SRCS=	virtio_console.c
 SRCS+=	virtio_bus_if.h virtio_if.h
 SRCS+=	bus_if.h device_if.h
-
-MFILES=	kern/bus_if.m kern/device_if.m \
-	dev/virtio/virtio_bus_if.m dev/virtio/virtio_if.m
 
 .include <bsd.kmod.mk>

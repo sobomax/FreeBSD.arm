@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/libstand32/Makefile 281886 2015-04-23 14:04:33Z emaste $
+# $FreeBSD: head/sys/boot/libstand32/Makefile 287257 2015-08-28 14:50:36Z imp $
 # Originally from	$NetBSD: Makefile,v 1.21 1997/10/26 22:08:38 lukem Exp $
 #
 # Notes:
@@ -19,31 +19,11 @@ LIB=		stand
 INTERNALLIB=
 MK_PROFILE=	no
 NO_PIC=
-
-WARNS?=		0
-
-CFLAGS+= -ffreestanding -Wformat
-CFLAGS+= -I${LIBSTAND_SRC}
-
-.if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
-CFLAGS.gcc+=	-mpreferred-stack-boundary=2
-CFLAGS+=	-mno-mmx -mno-3dnow -mno-sse -mno-sse2 -mno-sse3 -msoft-float
-.endif
-.if ${MACHINE} == "pc98"
-CFLAGS+=	-Os
-.endif
-.if ${MACHINE_CPUARCH} == "powerpc"
-CFLAGS+=	-msoft-float -D_STANDALONE -DNETIF_DEBUG
-.endif
 .if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "powerpc64"
 CFLAGS+=	-m32 -I.
 .endif
-.if ${MACHINE_CPUARCH} == "arm"
-CFLAGS+=	-msoft-float -D_STANDALONE
-.endif
-.if ${MACHINE_CPUARCH} == "mips"
-CFLAGS+=	-G0 -fno-pic -mno-abicalls
-.endif
+
+WARNS?=		0
 
 # standalone components and stuff we have modified locally
 SRCS+=	gzguts.h zutil.h __main.c assert.c bcd.c bswap.c environment.c getopt.c gets.c \
@@ -164,6 +144,7 @@ SRCS+=	pkgfs.c
 SRCS+=	nandfs.c
 .endif
 
+.include <bsd.stand.mk>
 .include <bsd.lib.mk>
 
 .if ${MACHINE_CPUARCH} == "amd64"

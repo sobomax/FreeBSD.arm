@@ -46,7 +46,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/ep80219_machdep.c 280823 2015-03-29 20:37:28Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/ep80219_machdep.c 286584 2015-08-10 17:18:21Z kib $");
+
+#include "opt_kstack_pages.h"
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -223,7 +225,7 @@ initarm(struct arm_boot_params *abp)
 	valloc_pages(irqstack, IRQ_STACK_SIZE);
 	valloc_pages(abtstack, ABT_STACK_SIZE);
 	valloc_pages(undstack, UND_STACK_SIZE);
-	valloc_pages(kernelstack, KSTACK_PAGES);
+	valloc_pages(kernelstack, kstack_pages);
 	alloc_pages(minidataclean.pv_pa, 1);
 	valloc_pages(msgbufpv, round_page(msgbufsize) / PAGE_SIZE);
 	/*

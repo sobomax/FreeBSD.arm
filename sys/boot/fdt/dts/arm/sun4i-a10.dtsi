@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/sun4i-a10.dtsi 283794 2015-05-30 22:32:48Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/sun4i-a10.dtsi 285090 2015-07-03 14:11:01Z loos $
  */
 
 / {
@@ -112,10 +112,11 @@
 		};
 
 		sata@01c18000 {
-			compatible = "allwinner,sun4i-ahci";
+			compatible = "allwinner,sun4i-a10-ahci";
 			reg = <0x01c18000 0x1000>;
 			interrupts = <56>;
 			interrupt-parent = <&AINTC>;
+			status = "disabled";
 		};
 
 		UART0: serial@01c28000 {

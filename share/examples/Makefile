@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/examples/Makefile 279317 2015-02-26 09:31:25Z trasz $
+# $FreeBSD: head/share/examples/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
 #
 # Doing a make install builds /usr/share/examples
 
@@ -187,8 +187,6 @@ XFILES=	BSD_daemon/FreeBSD.pfa \
 
 BINDIR= ${SHAREDIR}/examples
 
-NO_OBJ=
-
 .if ${MK_HAST} != "no"
 LDIRS+=		hast
 XFILES+=	hast/ucarp.sh \
@@ -255,13 +253,12 @@ SUBDIR+=ipfilter
 .if ${MK_PF} != "no"
 SUBDIR+=pf
 .endif
-.if ${MK_DMAGENT} != "no"
-SUBDIR+=dma
-.endif
 .endif
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=tests
 .endif
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

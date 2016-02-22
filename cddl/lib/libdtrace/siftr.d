@@ -18,9 +18,10 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/cddl/lib/libdtrace/siftr.d 283026 2015-05-17 04:09:22Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/siftr.d 286420 2015-08-07 19:56:22Z markj $
  */
 
+#pragma D depends_on module kernel
 #pragma D depends_on module siftr
 #pragma D depends_on provider tcp
 

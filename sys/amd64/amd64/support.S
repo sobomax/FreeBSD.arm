@@ -27,13 +27,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/support.S 281103 2015-04-05 05:18:14Z eadler $
+ * $FreeBSD: head/sys/amd64/amd64/support.S 288917 2015-10-06 11:29:44Z royger $
  */
 
 #include "opt_ddb.h"
 
 #include <machine/asmacros.h>
-#include <machine/intr_machdep.h>
 #include <machine/pmap.h>
 
 #include "assym.s"

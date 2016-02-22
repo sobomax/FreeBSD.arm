@@ -1,5 +1,4 @@
-.\" $FreeBSD: head/tools/build/options/WITHOUT_BINUTILS 266158 2014-05-15 16:51:45Z brooks $
-Set to not build or install binutils (as, c++-filt, gconv,
-ld, nm, objcopy, objdump, readelf, size and strip) as part
+.\" $FreeBSD: head/tools/build/options/WITHOUT_BINUTILS 286332 2015-08-05 18:30:00Z emaste $
+Set to not build or install binutils (as, ld, objcopy, and objdump ) as part
 of the normal system build.
 The resulting system cannot build programs from source.

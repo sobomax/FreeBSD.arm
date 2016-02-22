@@ -15,8 +15,14 @@
 #include <sys/types.h>
 #if defined(HAVE_INTTYPES_H)
 # include <inttypes.h>
-#elif defined(HAVE_STDINT_H)
+#endif
+#if defined(HAVE_STDINT_H)
 # include <stdint.h>
+#endif
+
+/* Bug 2813 */
+#ifdef HAVE_LIMITS_H
+# include <limits.h>
 #endif
 
 #include "ntp_machine.h"

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_debug.c 275326 2014-11-30 12:52:33Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_debug.c 285741 2015-07-21 09:57:13Z pluknet $");
 
 #include "opt_ddb.h"
 
@@ -209,15 +209,15 @@ db_print_sbstate(short sb_state)
 
 	comma = 0;
 	if (sb_state & SBS_CANTSENDMORE) {
-		db_printf("%sSS_CANTSENDMORE", comma ? ", " : "");
+		db_printf("%sSBS_CANTSENDMORE", comma ? ", " : "");
 		comma = 1;
 	}
 	if (sb_state & SBS_CANTRCVMORE) {
-		db_printf("%sSS_CANTRCVMORE", comma ? ", " : "");
+		db_printf("%sSBS_CANTRCVMORE", comma ? ", " : "");
 		comma = 1;
 	}
 	if (sb_state & SBS_RCVATMARK) {
-		db_printf("%sSS_RCVATMARK", comma ? ", " : "");
+		db_printf("%sSBS_RCVATMARK", comma ? ", " : "");
 		comma = 1;
 	}
 }

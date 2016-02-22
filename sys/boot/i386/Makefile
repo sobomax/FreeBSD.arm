@@ -1,8 +1,8 @@
-# $FreeBSD: head/sys/boot/i386/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/boot/i386/Makefile 291113 2015-11-20 21:56:20Z emaste $
 
 .include <src.opts.mk>
 
-SUBDIR=		mbr pmbr boot0 boot0sio btx boot2 cdboot gptboot kgzldr \
+SUBDIR=		mbr pmbr boot0 boot0sio btx boot2 cdboot gptboot \
 		libi386 libfirewire loader
 
 # special boot programs, 'self-extracting boot2+loader'

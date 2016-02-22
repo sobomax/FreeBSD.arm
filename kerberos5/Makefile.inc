@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/Makefile.inc 284289 2015-06-11 21:13:05Z sjg $
+# $FreeBSD: head/kerberos5/Makefile.inc 287216 2015-08-27 17:16:18Z ume $
 
 .include <src.opts.mk>
 
@@ -13,7 +13,7 @@ OPENLDAPBASE?=	/usr/local
 LDAPLDADD=	-lldap -llber
 LDAPDPADD=	${LDAPLDADD:C;^-l(.*)$;${OPENLDAPBASE}/lib/lib\1.a;}
 LDAPCFLAGS=	-I${OPENLDAPBASE}/include -DOPENLDAP=1 -DLDAP_DEPRECATED=1
-LDAPLDFLAGS=	-L${OPENLDAPBASE}/lib -Wl,-rpath,${OPENLDAPBASE}/lib
+LDAPLDFLAGS=	-L${OPENLDAPBASE}/lib -rpath ${OPENLDAPBASE}/lib
 .endif
 
 .if defined(SRCS)

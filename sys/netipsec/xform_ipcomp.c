@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform_ipcomp.c 282046 2015-04-27 00:55:56Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/xform_ipcomp.c 288418 2015-09-30 08:16:33Z ae $	*/
 /* $OpenBSD: ip_ipcomp.c,v 1.1 2001/07/05 12:08:52 jjbg Exp $ */
 
 /*-
@@ -449,6 +449,7 @@ ipcomp_output(struct mbuf *m, struct ipsecrequest *isr, struct mbuf **mp,
 		goto bad;
 	}
 
+	key_addref(isr->sp);
 	tc->tc_isr = isr;
 	KEY_ADDREFSA(sav);
 	tc->tc_sav = sav;

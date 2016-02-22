@@ -1,7 +1,7 @@
 #
 # Custom kernel for the TS-7800 board.
 #
-# $FreeBSD: head/sys/arm/conf/TS7800 282576 2015-05-07 12:38:23Z andrew $
+# $FreeBSD: head/sys/arm/conf/TS7800 289945 2015-10-25 22:00:56Z zbb $
 #
 
 ident		TS7800
@@ -60,6 +60,7 @@ device		uart
 device		ether
 device		mge			# Marvell Gigabit Ethernet controller
 device		mii
+device		mdio
 device		e1000phy
 device		bpf
 options 	HZ=1000

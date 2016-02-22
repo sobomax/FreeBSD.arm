@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq.h,v 1.10 2003/07/10 12:07:47 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq.h 284777 2015-06-24 19:16:41Z eri $
+ * $FreeBSD: head/sys/net/altq/altq.h 287009 2015-08-21 22:02:22Z loos $
  */
 #ifndef _ALTQ_ALTQ_H_
 #define	_ALTQ_ALTQ_H_
@@ -64,7 +64,8 @@
 #define	ALTQT_PRIQ		11	/* priority queue */
 #define	ALTQT_JOBS		12	/* JoBS */
 #define	ALTQT_FAIRQ		13	/* fairq */
-#define	ALTQT_MAX		14	/* should be max discipline type + 1 */
+#define	ALTQT_CODEL		14      /* CoDel */
+#define	ALTQT_MAX		15	/* should be max discipline type + 1 */
 
 #ifdef ALTQ3_COMPAT
 struct	altqreq {

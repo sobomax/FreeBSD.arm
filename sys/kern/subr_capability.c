@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_capability.c 267914 2014-06-26 13:57:44Z pjd $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_capability.c 291553 2015-12-01 02:48:42Z mjg $");
 
 /*
  * Note that this file is compiled into the kernel and into libc.
@@ -157,7 +157,6 @@ __cap_rights_init(int version, cap_rights_t *rights, ...)
 
 	n = version + 2;
 	assert(n >= CAPARSIZE_MIN && n <= CAPARSIZE_MAX);
-	memset(rights->cr_rights, 0, sizeof(rights->cr_rights[0]) * n);
 	CAP_NONE(rights);
 	va_start(ap, rights);
 	cap_rights_vset(rights, ap);

@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: head/lib/libc/gen/Makefile.inc 276630 2015-01-03 18:38:46Z kib $
+# $FreeBSD: head/lib/libc/gen/Makefile.inc 291320 2015-11-25 19:44:43Z bdrewery $
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen
@@ -159,8 +159,8 @@ CANCELPOINTS_SRCS=sem.c sem_new.c
 .for src in ${CANCELPOINTS_SRCS}
 SRCS+=cancelpoints_${src}
 CLEANFILES+=cancelpoints_${src}
-cancelpoints_${src}:
-	ln -sf ${LIBC_SRCTOP}/gen/${src} ${.TARGET}
+cancelpoints_${src}: ${LIBC_SRCTOP}/gen/${src} .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 .endfor
 
 SYM_MAPS+=${LIBC_SRCTOP}/gen/Symbol.map

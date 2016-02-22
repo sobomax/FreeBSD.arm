@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linsysfs/linsysfs.c 283421 2015-05-24 15:51:18Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/linsysfs/linsysfs.c 285685 2015-07-19 08:52:35Z araujo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -275,7 +275,7 @@ linsysfs_uninit(PFS_INIT_ARGS)
 	return (0);
 }
 
-PSEUDOFS(linsysfs, 1, 0);
+PSEUDOFS(linsysfs, 1, PR_ALLOW_MOUNT_LINSYSFS);
 #if defined(__amd64__)
 MODULE_DEPEND(linsysfs, linux_common, 1, 1, 1);
 #else

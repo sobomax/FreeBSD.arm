@@ -1,7 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/lpr/filters/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/usr.sbin/lpr/filters/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
-BINDIR=	/usr/libexec/lpr
+BINDIR=	${LIBEXECDIR}/lpr
 
 PROG=	lpf
 MAN=

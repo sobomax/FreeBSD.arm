@@ -23,17 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/csu/i386/crt1_c.c 245133 2013-01-07 17:58:27Z kib $
+ * $FreeBSD: head/lib/csu/i386/crt1_c.c 292000 2015-12-08 19:32:58Z emaste $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/csu/i386/crt1_c.c 245133 2013-01-07 17:58:27Z kib $");
-
-#ifndef lint
-#ifndef __GNUC__
-#error "GCC is needed to compile this file"
-#endif
-#endif /* lint */
+__FBSDID("$FreeBSD: head/lib/csu/i386/crt1_c.c 292000 2015-12-08 19:32:58Z emaste $");
 
 #include <stdlib.h>
 

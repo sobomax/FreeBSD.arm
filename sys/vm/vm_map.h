@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm_map.h 271244 2014-09-08 02:25:01Z alc $
+ * $FreeBSD: head/sys/vm/vm_map.h 286086 2015-07-30 18:28:34Z kib $
  */
 
 /*
@@ -326,9 +326,9 @@ long vmspace_resident_count(struct vmspace *vmspace);
 /*
  * vm_fault option flags
  */
-#define VM_FAULT_NORMAL 0		/* Nothing special */
-#define VM_FAULT_CHANGE_WIRING 1	/* Change the wiring as appropriate */
-#define	VM_FAULT_DIRTY 2		/* Dirty the page; use w/VM_PROT_COPY */
+#define	VM_FAULT_NORMAL	0		/* Nothing special */
+#define	VM_FAULT_WIRE	1		/* Wire the mapped page */
+#define	VM_FAULT_DIRTY	2		/* Dirty the page; use w/VM_PROT_COPY */
 
 /*
  * Initially, mappings are slightly sequential.  The maximum window size must

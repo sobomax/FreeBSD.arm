@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_pci.c 261351 2014-02-01 17:17:35Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_pci.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -136,10 +136,11 @@ ofw_pci_init(device_t dev)
 	sc = device_get_softc(dev);
 	sc->sc_initialized = 1;
 
-	if (OF_getprop(node, "reg", &sc->sc_pcir, sizeof(sc->sc_pcir)) == -1)
+	if (OF_getencprop(node, "reg", (pcell_t *)&sc->sc_pcir,
+	    sizeof(sc->sc_pcir)) == -1)
 		return (ENXIO);
 
-	if (OF_getprop(node, "bus-range", busrange, sizeof(busrange)) != 8)
+	if (OF_getencprop(node, "bus-range", busrange, sizeof(busrange)) != 8)
 		busrange[0] = 0;
 
 	sc->sc_dev = dev;
@@ -240,7 +241,7 @@ ofw_pci_attach(device_t dev)
 			return (error);
 	}
 
-	device_add_child(dev, "pci", device_get_unit(dev));
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 
@@ -498,11 +499,11 @@ ofw_pci_nranges(phandle_t node)
 	int host_address_cells = 1, pci_address_cells = 3, size_cells = 2;
 	ssize_t nbase_ranges;
 
-	OF_getprop(OF_parent(node), "#address-cells", &host_address_cells,
+	OF_getencprop(OF_parent(node), "#address-cells", &host_address_cells,
 	    sizeof(host_address_cells));
-	OF_getprop(node, "#address-cells", &pci_address_cells,
+	OF_getencprop(node, "#address-cells", &pci_address_cells,
 	    sizeof(pci_address_cells));
-	OF_getprop(node, "#size-cells", &size_cells, sizeof(size_cells));
+	OF_getencprop(node, "#size-cells", &size_cells, sizeof(size_cells));
 
 	nbase_ranges = OF_getproplen(node, "ranges");
 	if (nbase_ranges <= 0)
@@ -521,11 +522,11 @@ ofw_pci_fill_ranges(phandle_t node, struct ofw_pci_range *ranges)
 	int nranges;
 	int i, j, k;
 
-	OF_getprop(OF_parent(node), "#address-cells", &host_address_cells,
+	OF_getencprop(OF_parent(node), "#address-cells", &host_address_cells,
 	    sizeof(host_address_cells));
-	OF_getprop(node, "#address-cells", &pci_address_cells,
+	OF_getencprop(node, "#address-cells", &pci_address_cells,
 	    sizeof(pci_address_cells));
-	OF_getprop(node, "#size-cells", &size_cells, sizeof(size_cells));
+	OF_getencprop(node, "#size-cells", &size_cells, sizeof(size_cells));
 
 	nbase_ranges = OF_getproplen(node, "ranges");
 	if (nbase_ranges <= 0)
@@ -534,7 +535,7 @@ ofw_pci_fill_ranges(phandle_t node, struct ofw_pci_range *ranges)
 	    (pci_address_cells + host_address_cells + size_cells);
 
 	base_ranges = malloc(nbase_ranges, M_DEVBUF, M_WAITOK);
-	OF_getprop(node, "ranges", base_ranges, nbase_ranges);
+	OF_getencprop(node, "ranges", base_ranges, nbase_ranges);
 
 	for (i = 0, j = 0; i < nranges; i++) {
 		ranges[i].pci_hi = base_ranges[j++];

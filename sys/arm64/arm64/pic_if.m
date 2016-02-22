@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 # from: src/sys/kern/bus_if.m,v 1.21 2002/04/21 11:16:10 markm Exp
-# $FreeBSD: head/sys/arm64/arm64/pic_if.m 281494 2015-04-13 14:43:10Z andrew $
+# $FreeBSD: head/sys/arm64/arm64/pic_if.m 292063 2015-12-10 15:51:02Z andrew $
 #
 
 #include <sys/bus.h>
@@ -151,14 +151,6 @@ METHOD int alloc_msix {
 };
 
 METHOD int map_msi {
-	device_t	dev;
-	device_t	pci_dev;
-	int		irq;
-	uint64_t	*addr;
-	uint32_t	*data;
-};
-
-METHOD int map_msix {
 	device_t	dev;
 	device_t	pci_dev;
 	int		irq;

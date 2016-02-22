@@ -28,7 +28,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: head/sys/sys/socketvar.h 281437 2015-04-11 16:00:33Z mjg $
+ * $FreeBSD: head/sys/sys/socketvar.h 286836 2015-08-17 05:53:37Z delphij $
  */
 
 #ifndef _SYS_SOCKETVAR_H_
@@ -78,7 +78,7 @@ struct socket {
 	short	so_state;		/* (b) internal state flags SS_* */
 	int	so_qstate;		/* (e) internal state flags SQ_* */
 	void	*so_pcb;		/* protocol control block */
-	struct	vnet *so_vnet;		/* network stack instance */
+	struct	vnet *so_vnet;		/* (a) network stack instance */
 	struct	protosw *so_proto;	/* (a) protocol handle */
 /*
  * Variables for connection queuing.

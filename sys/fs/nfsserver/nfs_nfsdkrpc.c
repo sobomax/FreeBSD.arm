@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdkrpc.c 283600 2015-05-27 09:20:42Z kib $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdkrpc.c 291150 2015-11-21 23:55:46Z rmacklem $");
 
 #include "opt_inet6.h"
 #include "opt_kgssapi.h"
@@ -544,6 +544,7 @@ nfsrvd_init(int terminating)
 	if (terminating) {
 		nfsd_master_proc = NULL;
 		NFSD_UNLOCK();
+		nfsrv_freeallbackchannel_xprts();
 		svcpool_destroy(nfsrvd_pool);
 		nfsrvd_pool = NULL;
 		NFSD_LOCK();

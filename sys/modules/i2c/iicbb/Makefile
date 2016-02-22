@@ -1,7 +1,8 @@
-# $FreeBSD: head/sys/modules/i2c/iicbb/Makefile 281083 2015-04-04 20:30:20Z andreast $
+# $FreeBSD: head/sys/modules/i2c/iicbb/Makefile 289710 2015-10-21 18:30:42Z emaste $
 
 .PATH:		${.CURDIR}/../../../dev/iicbus
-.if ${MACHINE_CPUARCH} == "arm" || ${MACHINE_CPUARCH} == "powerpc"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm" || \
+    ${MACHINE_CPUARCH} == "powerpc"
 ofw_bus_if=	ofw_bus_if.h
 .endif
 KMOD		= iicbb

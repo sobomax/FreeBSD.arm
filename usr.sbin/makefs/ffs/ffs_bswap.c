@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs/ffs_bswap.c 223169 2011-06-16 23:40:10Z mckusick $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs/ffs_bswap.c 290268 2015-11-02 10:09:09Z ngie $");
 
 #include <sys/param.h>
 #if defined(_KERNEL)
@@ -67,7 +67,7 @@ void ffs_csumtotal_swap(struct csum_total *o, struct csum_total *n);
 void
 ffs_sb_swap(struct fs *o, struct fs *n)
 {
-	int i;
+	size_t i;
 	u_int32_t *o32, *n32;
 
 	/*
@@ -97,7 +97,7 @@ ffs_sb_swap(struct fs *o, struct fs *n)
 	n->fs_csaddr = bswap64(o->fs_csaddr);
 	n->fs_pendingblocks = bswap64(o->fs_pendingblocks);
 	n->fs_pendinginodes = bswap32(o->fs_pendinginodes);
-	
+
 	/* These fields overlap with the second half of the
 	 * historic FS_42POSTBLFMT postbl table
 	 */
@@ -171,9 +171,9 @@ ffs_dinode2_swap(struct ufs2_dinode *o, struct ufs2_dinode *n)
 void
 ffs_csum_swap(struct csum *o, struct csum *n, int size)
 {
-	int i;
+	size_t i;
 	u_int32_t *oint, *nint;
-	
+
 	oint = (u_int32_t*)o;
 	nint = (u_int32_t*)n;
 

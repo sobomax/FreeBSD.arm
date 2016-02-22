@@ -25,7 +25,9 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/support.S 272895 2014-10-10 14:18:33Z bapt $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/support.S 285627 2015-07-16 10:46:52Z zbb $");
+
+#include "opt_kstack_pages.h"
 
 #include <sys/errno.h>
 

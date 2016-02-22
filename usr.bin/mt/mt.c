@@ -71,7 +71,7 @@ static char sccsid[] = "@(#)mt.c	8.2 (Berkeley) 5/4/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mt/mt.c 281330 2015-04-09 21:23:27Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/mt/mt.c 289677 2015-10-21 05:37:09Z eadler $");
 
 /*
  * mt --
@@ -1342,7 +1342,7 @@ mt_param(int argc, char **argv, int mtfd, char *xml_str,
 			break;
 		case 'p':
 			if (param_name != NULL) {
-				warnx("Only one paramter name may be "
+				warnx("Only one parameter name may be "
 				    "specified");
 				retval = 1;
 				goto bailout;
@@ -1354,7 +1354,7 @@ mt_param(int argc, char **argv, int mtfd, char *xml_str,
 			break;
 		case 's':
 			if (param_value != NULL) {
-				warnx("Only one paramter value may be "
+				warnx("Only one parameter value may be "
 				    "specified");
 				retval = 1;
 				goto bailout;

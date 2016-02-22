@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/fdt.h 281106 2015-04-05 09:50:22Z andrew $
+ * $FreeBSD: head/sys/arm/include/fdt.h 289529 2015-10-18 18:26:19Z ian $
  */
 
 #ifndef _MACHINE_FDT_H_
@@ -34,11 +34,15 @@
 
 #include <machine/bus.h>
 
+#ifndef INTRNG
+
 /* Max interrupt number */
 #define FDT_INTR_MAX	NIRQ
 
 /* Map phandle/intpin pair to global IRQ number */
 #define	FDT_MAP_IRQ(node, pin)	(pin)
+
+#endif
 
 /*
  * Bus space tag. XXX endianess info needs to be derived from the blob.

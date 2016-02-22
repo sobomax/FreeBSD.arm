@@ -39,7 +39,7 @@
  * Authors: Archie Cobbs <archie@freebsd.org>
  *	    Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_ether.c 274231 2014-11-07 15:14:10Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_ether.c 290819 2015-11-14 13:34:03Z melifaro $
  */
 
 /*
@@ -534,7 +534,6 @@ ng_ether_rcvmsg(node_p node, item_p item, hook_p lasthook)
 			}
 			error = if_setlladdr(priv->ifp,
 			    (u_char *)msg->data, ETHER_ADDR_LEN);
-			EVENTHANDLER_INVOKE(iflladdr_event, priv->ifp);
 			break;
 		    }
 		case NGM_ETHER_GET_PROMISC:

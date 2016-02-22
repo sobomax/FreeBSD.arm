@@ -24,13 +24,30 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/cpuinfo.h 279811 2015-03-09 14:46:10Z ian $
+ * $FreeBSD: head/sys/arm/include/cpuinfo.h 289602 2015-10-19 19:18:02Z ian $
  */
 
 #ifndef	_MACHINE_CPUINFO_H_
 #define	_MACHINE_CPUINFO_H_
 
 #include <sys/types.h>
+
+#define CPU_IMPLEMENTER_ARM		0x41
+#define CPU_IMPLEMENTER_QCOM		0x51
+#define CPU_IMPLEMENTER_MRVL		0x56
+
+/* ARM */
+#define CPU_ARCH_ARM1176		0xB76
+#define CPU_ARCH_CORTEX_A5		0xC05
+#define CPU_ARCH_CORTEX_A7		0xC07
+#define CPU_ARCH_CORTEX_A8		0xC08
+#define CPU_ARCH_CORTEX_A9		0xC09
+#define CPU_ARCH_CORTEX_A12		0xC0D
+#define CPU_ARCH_CORTEX_A15		0xC0F
+#define CPU_ARCH_CORTEX_A17		0xC11
+
+/* QCOM */
+#define CPU_ARCH_KRAIT_300		0x06F
 
 struct cpuinfo {
 	/* raw id registers */
@@ -93,5 +110,5 @@ struct cpuinfo {
 extern struct cpuinfo cpuinfo;
 
 void cpuinfo_init(void);
-
+void cpuinfo_get_actlr_modifier(uint32_t *actlr_mask, uint32_t *actlr_set);
 #endif	/* _MACHINE_CPUINFO_H_ */

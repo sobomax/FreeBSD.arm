@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/ip_fw.h 282070 2015-04-27 08:29:39Z melifaro $
+ * $FreeBSD: head/sys/netinet/ip_fw.h 290330 2015-11-03 10:21:53Z ae $
  */
 
 #ifndef _IPFW2_H
@@ -107,6 +107,7 @@ typedef struct _ip_fw3_opheader {
 #define	IP_FW_NAT44_XGETLOG	115	/* Get log from NAT44 instance */
 
 #define	IP_FW_DUMP_SOPTCODES	116	/* Dump available sopts/versions */
+#define	IP_FW_DUMP_SRVOBJECTS	117	/* Dump existing named objects */
 
 /*
  * The kernel representation of ipfw rules is made of a list of

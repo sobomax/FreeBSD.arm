@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/Makefile 283147 2015-05-20 12:26:09Z ngie $
+# $FreeBSD: head/cddl/usr.bin/Makefile 288339 2015-09-28 12:38:57Z avg $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,6 @@ SUBDIR= \
 	ctfconvert \
 	ctfdump \
 	ctfmerge \
-	sgsmsg \
 	${_tests} \
 	${_zinject} \
 	${_zlook} \

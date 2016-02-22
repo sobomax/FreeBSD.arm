@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/uio_machdep.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/uio_machdep.c 286073 2015-07-30 14:20:36Z emaste $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -124,7 +124,7 @@ uiomove_fromphys(vm_page_t ma[], vm_offset_t offset, int n, struct uio *uio)
 	}
 out:
 	if (__predict_false(mapped)) {
-		panic("TODO 3");
+		panic("ARM64TODO: uiomove_fromphys");
 		pmap_unmap_io_transient(&ma[offset >> PAGE_SHIFT], &vaddr, 1,
 		    TRUE);
 	}

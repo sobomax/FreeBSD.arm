@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/usb/usbdi.h 267240 2014-06-08 20:10:29Z hselasky $
+ * $FreeBSD: head/sys/dev/usb/usbdi.h 292080 2015-12-11 05:28:00Z imp $
  */
 #ifndef _USB_USBDI_H_
 #define _USB_USBDI_H_
@@ -128,6 +128,8 @@ struct usb_xfer_queue {
 	void    (*command) (struct usb_xfer_queue *pq);
 	uint8_t	recurse_1:1;
 	uint8_t	recurse_2:1;
+	uint8_t	recurse_3:1;
+	uint8_t	reserved:5;
 };
 
 /*
@@ -264,8 +266,38 @@ struct usb_config {
  */
 struct usb_device_id {
 
-	/* Hook for driver specific information */
-	unsigned long driver_info;
+	/* Select which fields to match against */
+#if _BYTE_ORDER == _LITTLE_ENDIAN
+	uint16_t
+		match_flag_vendor:1,
+		match_flag_product:1,
+		match_flag_dev_lo:1,
+		match_flag_dev_hi:1,
+
+		match_flag_dev_class:1,
+		match_flag_dev_subclass:1,
+		match_flag_dev_protocol:1,
+		match_flag_int_class:1,
+
+		match_flag_int_subclass:1,
+		match_flag_int_protocol:1,
+		match_flag_unused:6;
+#else
+	uint16_t
+		match_flag_unused:6,
+		match_flag_int_protocol:1,
+		match_flag_int_subclass:1,
+
+		match_flag_int_class:1,
+		match_flag_dev_protocol:1,
+		match_flag_dev_subclass:1,
+		match_flag_dev_class:1,
+
+		match_flag_dev_hi:1,
+		match_flag_dev_lo:1,
+		match_flag_product:1,
+		match_flag_vendor:1;
+#endif
 
 	/* Used for product specific matches; the BCD range is inclusive */
 	uint16_t idVendor;
@@ -283,21 +315,13 @@ struct usb_device_id {
 	uint8_t	bInterfaceSubClass;
 	uint8_t	bInterfaceProtocol;
 
-	/* Select which fields to match against */
-	uint8_t	match_flag_vendor:1;
-	uint8_t	match_flag_product:1;
-	uint8_t	match_flag_dev_lo:1;
-	uint8_t	match_flag_dev_hi:1;
+	/* Hook for driver specific information */
+	unsigned long driver_info;
 
-	uint8_t	match_flag_dev_class:1;
-	uint8_t	match_flag_dev_subclass:1;
-	uint8_t	match_flag_dev_protocol:1;
-	uint8_t	match_flag_int_class:1;
-
-	uint8_t	match_flag_int_subclass:1;
-	uint8_t	match_flag_int_protocol:1;
-	uint8_t match_flag_unused:6;
-
+/*
+ * XXX can't currently participate in auto driver loading
+ * XXX making it a union with the match_flag_* above messes up init
+ */
 #if USB_HAVE_COMPAT_LINUX
 	/* which fields to match against */
 	uint16_t match_flags;
@@ -313,6 +337,21 @@ struct usb_device_id {
 #define	USB_DEVICE_ID_MATCH_INT_PROTOCOL	0x0200
 #endif
 } __aligned(32);
+
+#define USB_STD_PNP_INFO "M16:mask;U16:vendor;U16:product;L16:product;G16:product;" \
+	"U8:devclass;U8:devsubclass;U8:devprotocol;" \
+	"U8:intclass;U8:intsubclass;U8:intprotocol;"
+#define USB_STD_PNP_HOST_INFO USB_STD_PNP_INFO "T:mode=host;"
+#define USB_STD_PNP_DEVICE_INFO USB_STD_PNP_INFO "T:mode=device;"
+#define USB_PNP_HOST_INFO(table)					\
+	MODULE_PNP_INFO(USB_STD_PNP_HOST_INFO, usb, table, table, sizeof(table[0]), \
+	    sizeof(table) / sizeof(table[0]))
+#define USB_PNP_DEVICE_INFO(table)					\
+	MODULE_PNP_INFO(USB_STD_PNP_DEVICE_INFO, usb, table, table, sizeof(table[0]), \
+	    sizeof(table) / sizeof(table[0]))
+#define USB_PNP_DUAL_INFO(table)					\
+	MODULE_PNP_INFO(USB_STD_PNP_INFO, usb, table, table, sizeof(table[0]), \
+	    sizeof(table) / sizeof(table[0]))
 
 /* check that the size of the structure above is correct */
 extern char usb_device_id_assert[(sizeof(struct usb_device_id) == 32) ? 1 : -1];

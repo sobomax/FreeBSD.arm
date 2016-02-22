@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/i386/bn-586.s 238405 2012-07-12 19:30:53Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/i386/bn-586.s 290207 2015-10-30 20:51:33Z jkim $
 .file	"bn-586.s"
 .text
 .globl	bn_mul_add_words
@@ -1519,4 +1519,4 @@ bn_sub_part_words:
 	popl	%ebp
 	ret
 .size	bn_sub_part_words,.-.L_bn_sub_part_words_begin
-.comm	OPENSSL_ia32cap_P,8,4
+.comm	OPENSSL_ia32cap_P,16,4

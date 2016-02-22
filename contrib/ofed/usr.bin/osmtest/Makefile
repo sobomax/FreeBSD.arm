@@ -1,4 +1,4 @@
-# $FreeBSD: head/contrib/ofed/usr.bin/osmtest/Makefile 276823 2015-01-08 14:45:54Z hselasky $
+# $FreeBSD: head/contrib/ofed/usr.bin/osmtest/Makefile 292037 2015-12-10 00:07:11Z bdrewery $
 
 .include "../Makefile.inc"
 
@@ -16,13 +16,7 @@ SRCS=	main.c \
 	osmt_slvl_vl_arb.c \
 	osmtest.c
 
-LDADD=	-libcommon \
-	-libmad \
-	-libumad \
-	-losmvendor \
-	-losmcomp \
-	-lopensm \
-	-lpthread
+LIBADD= ibcommon ibmad ibumad osmvendor osmcomp opensm pthread
 
 CFLAGS=	-DVENDOR_RMPP_SUPPORT -DDUAL_SIDED_RMPP \
 	-I${OPENSM}/osmtest/include

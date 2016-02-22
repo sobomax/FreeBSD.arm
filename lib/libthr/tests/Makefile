@@ -1,10 +1,6 @@
-# $FreeBSD: head/lib/libthr/tests/Makefile 282091 2015-04-27 13:56:20Z andrew $
+# $FreeBSD: head/lib/libthr/tests/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
-OBJTOP=		${.OBJDIR:H:H:H}
-SRCTOP=		${.CURDIR:H:H:H}
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread
-
-TESTSDIR=	${TESTSBASE}/lib/libthr
 
 # TODO: t_name (missing pthread_getname_np support in FreeBSD)
 NETBSD_ATF_TESTS_C=	barrier_test
@@ -34,12 +30,9 @@ NETBSD_ATF_TESTS_SH+=	cancel_test
 NETBSD_ATF_TESTS_SH+=	exit_test
 NETBSD_ATF_TESTS_SH+=	resolv_test
 
-DPADD+=		${LIBPTHREAD}
-LDADD+=		-lpthread
-DPADD.fpu_test+=	${LIBM}
-LDADD.fpu_test+=	-lm
-DPADD.sem_test+=	${LIBRT}
-LDADD.sem_test+=	-lrt
+LIBADD+=		pthread
+LIBADD.fpu_test+=	m
+LIBADD.sem_test+=	rt
 
 BINDIR=		${TESTSDIR}
 

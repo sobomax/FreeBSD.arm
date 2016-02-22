@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/umtx.h 273604 2014-10-24 20:02:44Z jhb $
+ * $FreeBSD: head/sys/sys/umtx.h 290202 2015-10-30 19:20:40Z kib $
  *
  */
 
@@ -83,7 +83,6 @@
 #define	UMTX_OP_MUTEX_WAKE2	22
 #define	UMTX_OP_SEM2_WAIT	23
 #define	UMTX_OP_SEM2_WAKE	24
-#define	UMTX_OP_MAX		25
 
 /* Flags for UMTX_OP_CV_WAIT */
 #define	CVWAIT_CHECK_UNPARKING	0x01
@@ -153,7 +152,7 @@ umtx_key_match(const struct umtx_key *k1, const struct umtx_key *k2)
 }
 
 int umtx_copyin_timeout(const void *, struct timespec *);
-int umtx_key_get(void *, int, int, struct umtx_key *);
+int umtx_key_get(const void *, int, int, struct umtx_key *);
 void umtx_key_release(struct umtx_key *);
 struct umtx_q *umtxq_alloc(void);
 void umtxq_free(struct umtx_q *);

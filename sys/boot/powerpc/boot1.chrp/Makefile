@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/powerpc/boot1.chrp/Makefile 276356 2014-12-29 09:24:21Z dim $
+# $FreeBSD: head/sys/boot/powerpc/boot1.chrp/Makefile 291667 2015-12-03 00:08:50Z nwhitehorn $
 
 SSP_CFLAGS=
 
@@ -12,7 +12,7 @@ SRCS=		boot1.c ashldi3.c syncicache.c
 
 MAN=
 
-CFLAGS= -ffreestanding -msoft-float -Os \
+CFLAGS= -ffreestanding -msoft-float \
 	-I${.CURDIR}/../../common -I${.CURDIR}/../../../ \
 	-D_STANDALONE
 LDFLAGS=-nostdlib -static -Wl,-N

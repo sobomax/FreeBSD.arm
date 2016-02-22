@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_event.c 284626 2015-06-20 05:40:35Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_event.c 286309 2015-08-05 07:36:50Z ed $");
 
 #include "opt_compat.h"
 
@@ -205,7 +205,7 @@ epoll_create_common(struct thread *td, int flags)
 {
 	int error;
 
-	error = kern_kqueue(td, flags);
+	error = kern_kqueue(td, flags, NULL);
 	if (error)
 		return (error);
 

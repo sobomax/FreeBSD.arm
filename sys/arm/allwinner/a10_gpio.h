@@ -23,12 +23,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/a10_gpio.h 263711 2014-03-25 08:31:47Z ganbold $
+ * $FreeBSD: head/sys/arm/allwinner/a10_gpio.h 285105 2015-07-03 17:54:41Z loos $
  */
 
 #ifndef	_A10_GPIO_H_
 #define	_A10_GPIO_H_
 
-int a10_emac_gpio_config(uint32_t pin);
+#define	A10_GPIO_FUNC_MII	2
+#define	A10_GPIO_FUNC_RGMII	5
+
+int a10_gpio_ethernet_activate(uint32_t);
 
 #endif

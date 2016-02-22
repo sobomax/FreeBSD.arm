@@ -26,12 +26,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/open_wmemstream.c 281887 2015-04-23 14:22:20Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/open_wmemstream.c 292013 2015-12-09 09:14:57Z ngie $");
 
 #include "namespace.h"
 #include <assert.h>
 #include <errno.h>
 #include <limits.h>
+#ifdef DEBUG
+#include <stdint.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

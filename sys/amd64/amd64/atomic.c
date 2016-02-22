@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/atomic.c 118031 2003-07-25 21:19:19Z obrien $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/atomic.c 284901 2015-06-28 05:04:08Z kib $");
 
 /* This file creates publically callable functions to perform various
  * simple arithmetic on memory which is atomic in the presence of
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: head/sys/amd64/amd64/atomic.c 118031 2003-07-25 21:19:19Z ob
 #undef ATOMIC_ASM
 
 /* Make atomic.h generate public functions */
+static __inline void __storeload_barrier(void);
 #define WANT_FUNCTIONS
 #define static
 #undef __inline

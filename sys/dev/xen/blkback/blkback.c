@@ -31,7 +31,7 @@
  *          Ken Merry           (Spectra Logic Corporation)
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/blkback/blkback.c 284296 2015-06-12 07:50:34Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/blkback/blkback.c 289686 2015-10-21 10:44:07Z royger $");
 
 /**
  * \file blkback.c
@@ -1741,7 +1741,7 @@ xbb_dispatch_io(struct xbb_softc *xbb, struct xbb_xen_reqlist *reqlist)
 		if (__predict_false(map->status != 0)) {
 			DPRINTF("invalid buffer -- could not remap "
 			        "it (%d)\n", map->status);
-			DPRINTF("Mapping(%d): Host Addr 0x%lx, flags "
+			DPRINTF("Mapping(%d): Host Addr 0x%"PRIx64", flags "
 			        "0x%x ref 0x%x, dom %d\n", seg_idx,
 				map->host_addr, map->flags, map->ref,
 				map->dom);
@@ -2245,7 +2245,6 @@ xbb_dispatch_file(struct xbb_softc *xbb, struct xbb_xen_reqlist *reqlist,
 	struct xbb_file_data *file_data;
 	u_int                 seg_idx;
 	u_int		      nseg;
-	off_t		      sectors_sent;
 	struct uio            xuio;
 	struct xbb_sg        *xbb_sg;
 	struct iovec         *xiovec;
@@ -2256,7 +2255,6 @@ xbb_dispatch_file(struct xbb_softc *xbb, struct xbb_xen_reqlist *reqlist,
 	int                   error;
 
 	file_data = &xbb->backend.file;
-	sectors_sent = 0;
 	error = 0;
 	bzero(&xuio, sizeof(xuio));
 
@@ -2692,18 +2690,7 @@ xbb_open_backend(struct xbb_softc *xbb)
 	if ((xbb->flags & XBBF_READ_ONLY) == 0)
 		flags |= FWRITE;
 
-	if (!curthread->td_proc->p_fd->fd_cdir) {
-		curthread->td_proc->p_fd->fd_cdir = rootvnode;
-		VREF(rootvnode);
-	}
-	if (!curthread->td_proc->p_fd->fd_rdir) {
-		curthread->td_proc->p_fd->fd_rdir = rootvnode;
-		VREF(rootvnode);
-	}
-	if (!curthread->td_proc->p_fd->fd_jdir) {
-		curthread->td_proc->p_fd->fd_jdir = rootvnode;
-		VREF(rootvnode);
-	}
+	pwd_ensure_dirs();
 
  again:
 	NDINIT(&nd, LOOKUP, FOLLOW, UIO_SYSSPACE, xbb->dev_name, curthread);

@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5416/ar5416_attach.c 272292 2014-09-30 03:19:29Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5416/ar5416_attach.c 289099 2015-10-10 00:13:45Z adrian $
  */
 #include "opt_ah.h"
 
@@ -937,13 +937,7 @@ ar5416FillCapabilityInfo(struct ath_hal *ah)
 
 	pCap->halCompressSupport = AH_FALSE;
 	pCap->halBurstSupport = AH_TRUE;
-	/*
-	 * This is disabled for now; the net80211 layer needs to be
-	 * taught when it is and isn't appropriate to enable FF processing
-	 * with 802.11n NICs (it tries to enable both A-MPDU and
-	 * fast frames, with very tragic crash-y results.)
-	 */
-	pCap->halFastFramesSupport = AH_FALSE;
+	pCap->halFastFramesSupport = AH_TRUE;
 	pCap->halChapTuningSupport = AH_TRUE;
 	pCap->halTurboPrimeSupport = AH_TRUE;
 

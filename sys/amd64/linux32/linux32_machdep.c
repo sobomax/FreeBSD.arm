@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_machdep.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_machdep.c 284921 2015-06-29 07:53:44Z kib $");
 
 #include "opt_compat.h"
 
@@ -426,7 +426,6 @@ linux_set_cloned_tls(struct thread *td, void *desc)
 #endif
 		pcb = td->td_pcb;
 		pcb->pcb_gsbase = (register_t)info.base_addr;
-/* XXXKIB	pcb->pcb_gs32sd = sd; */
 		td->td_frame->tf_gs = GSEL(GUGS32_SEL, SEL_UPL);
 		set_pcb_flags(pcb, PCB_32BIT);
 	}

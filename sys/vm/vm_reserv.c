@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_reserv.c 284147 2015-06-08 04:59:32Z alc $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_reserv.c 291370 2015-11-26 19:12:18Z alc $");
 
 #include "opt_vm.h"
 
@@ -217,6 +217,11 @@ static long vm_reserv_freed;
 SYSCTL_LONG(_vm_reserv, OID_AUTO, freed, CTLFLAG_RD,
     &vm_reserv_freed, 0, "Cumulative number of freed reservations");
 
+static int sysctl_vm_reserv_fullpop(SYSCTL_HANDLER_ARGS);
+
+SYSCTL_PROC(_vm_reserv, OID_AUTO, fullpop, CTLTYPE_INT | CTLFLAG_RD, NULL, 0,
+    sysctl_vm_reserv_fullpop, "I", "Current number of full reservations");
+
 static int sysctl_vm_reserv_partpopq(SYSCTL_HANDLER_ARGS);
 
 SYSCTL_OID(_vm_reserv, OID_AUTO, partpopq, CTLTYPE_STRING | CTLFLAG_RD, NULL, 0,
@@ -233,6 +238,33 @@ static boolean_t	vm_reserv_has_pindex(vm_reserv_t rv,
 			    vm_pindex_t pindex);
 static void		vm_reserv_populate(vm_reserv_t rv, int index);
 static void		vm_reserv_reclaim(vm_reserv_t rv);
+
+/*
+ * Returns the current number of full reservations.
+ *
+ * Since the number of full reservations is computed without acquiring the
+ * free page queue lock, the returned value may be inexact.
+ */
+static int
+sysctl_vm_reserv_fullpop(SYSCTL_HANDLER_ARGS)
+{
+	vm_paddr_t paddr;
+	struct vm_phys_seg *seg;
+	vm_reserv_t rv;
+	int fullpop, segind;
+
+	fullpop = 0;
+	for (segind = 0; segind < vm_phys_nsegs; segind++) {
+		seg = &vm_phys_segs[segind];
+		paddr = roundup2(seg->start, VM_LEVEL_0_SIZE);
+		while (paddr + VM_LEVEL_0_SIZE <= seg->end) {
+			rv = &vm_reserv_array[paddr >> VM_LEVEL_0_SHIFT];
+			fullpop += rv->popcnt == VM_LEVEL_0_NPAGES;
+			paddr += VM_LEVEL_0_SIZE;
+		}
+	}
+	return (sysctl_handle_int(oidp, &fullpop, 0, req));
+}
 
 /*
  * Describes the current state of the partially-populated reservation queue.
@@ -939,7 +971,7 @@ vm_reserv_reclaim_contig(u_long npages, vm_paddr_t low, vm_paddr_t high,
 {
 	vm_paddr_t pa, size;
 	vm_reserv_t rv;
-	int hi, i, lo, next_free;
+	int hi, i, lo, low_index, next_free;
 
 	mtx_assert(&vm_page_queue_free_mtx, MA_OWNED);
 	if (npages > VM_LEVEL_0_NPAGES - 1)
@@ -958,8 +990,9 @@ vm_reserv_reclaim_contig(u_long npages, vm_paddr_t low, vm_paddr_t high,
 		}
 		if (pa < low) {
 			/* Start the search for free pages at "low". */
-			i = (low - pa) / NBPOPMAP;
-			hi = (low - pa) % NBPOPMAP;
+			low_index = (low + PAGE_MASK - pa) >> PAGE_SHIFT;
+			i = low_index / NBPOPMAP;
+			hi = low_index % NBPOPMAP;
 		} else
 			i = hi = 0;
 		do {

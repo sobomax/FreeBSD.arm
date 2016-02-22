@@ -25,9 +25,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/sockstat/sockstat.1 284636 2015-06-20 08:59:50Z hrs $
+.\" $FreeBSD: head/usr.bin/sockstat/sockstat.1 287182 2015-08-26 23:45:06Z tuexen $
 .\"
-.Dd June 20, 2015
+.Dd August 27, 2015
 .Dt SOCKSTAT 1
 .Os
 .Sh NAME
@@ -35,7 +35,7 @@
 .Nd list open sockets
 .Sh SYNOPSIS
 .Nm
-.Op Fl 46cLlu
+.Op Fl 46cLlsu
 .Op Fl j Ar jid
 .Op Fl p Ar ports
 .Op Fl P Ar protocols
@@ -83,6 +83,9 @@ The
 argument is a comma-separated list of protocol names,
 as they are defined in
 .Xr protocols 5 .
+.It Fl s
+Display the protocol state, if applicable.
+This is currently only implemented for SCTP and TCP.
 .It Fl u
 Show
 .Dv AF_LOCAL

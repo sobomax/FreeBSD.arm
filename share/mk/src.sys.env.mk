@@ -1,9 +1,15 @@
-# $FreeBSD: head/share/mk/src.sys.env.mk 284598 2015-06-19 14:56:24Z sjg $
+# $FreeBSD: head/share/mk/src.sys.env.mk 288159 2015-09-23 23:30:57Z bdrewery $
 
 # early setup only see also src.sys.mk
 
 # make sure this is defined in a consistent manner
 SRCTOP:= ${.PARSEDIR:tA:H:H}
+
+.if ${.CURDIR} == ${SRCTOP}
+RELDIR = .
+.elif ${.CURDIR:M${SRCTOP}/*}
+RELDIR := ${.CURDIR:S,${SRCTOP}/,,}
+.endif
 
 # site customizations that do not depend on anything!
 SRC_ENV_CONF?= /etc/src-env.conf

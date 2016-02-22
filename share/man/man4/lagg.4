@@ -14,9 +14,9 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.\" $FreeBSD: head/share/man/man4/lagg.4 276259 2014-12-26 22:30:18Z bapt $
+.\" $FreeBSD: head/share/man/man4/lagg.4 290450 2015-11-06 15:33:27Z smh $
 .\"
-.Dd October 1, 2014
+.Dd November 6, 2015
 .Dt LAGG 4
 .Os
 .Sh NAME
@@ -156,6 +156,7 @@ Gigabit Ethernet interfaces:
 .Bd -literal -offset indent
 # ifconfig bge0 up
 # ifconfig bge1 up
+# ifconfig lagg0 create
 # ifconfig lagg0 laggproto lacp laggport bge0 laggport bge1 \e
 	192.168.1.1 netmask 255.255.255.0
 .Ed
@@ -168,6 +169,7 @@ device will be used:
 # ifconfig em0 up
 # ifconfig ath0 ether 00:11:22:33:44:55
 # ifconfig create wlan0 wlandev ath0 ssid my_net up
+# ifconfig lagg0 create
 # ifconfig lagg0 laggproto failover laggport em0 laggport wlan0 \e
 	192.168.1.1 netmask 255.255.255.0
 .Ed

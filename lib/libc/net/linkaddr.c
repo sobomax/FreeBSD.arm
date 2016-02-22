@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)linkaddr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/linkaddr.c 269695 2014-08-07 22:14:37Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/net/linkaddr.c 288045 2015-09-20 21:21:01Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -50,9 +50,7 @@ __FBSDID("$FreeBSD: head/lib/libc/net/linkaddr.c 269695 2014-08-07 22:14:37Z pfg
 #define LETTER	(4*3)
 
 void
-link_addr(addr, sdl)
-	const char *addr;
-	struct sockaddr_dl *sdl;
+link_addr(const char *addr, struct sockaddr_dl *sdl)
 {
 	char *cp = sdl->sdl_data;
 	char *cplim = sdl->sdl_len + (char *)sdl;
@@ -121,8 +119,7 @@ link_addr(addr, sdl)
 static const char hexlist[] = "0123456789abcdef";
 
 char *
-link_ntoa(sdl)
-	const struct sockaddr_dl *sdl;
+link_ntoa(const struct sockaddr_dl *sdl)
 {
 	static char obuf[64];
 	char *out = obuf;

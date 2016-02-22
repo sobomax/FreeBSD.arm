@@ -33,7 +33,7 @@
  *
  *	from: @(#)asm.h	5.5 (Berkeley) 5/7/91
  *
- * $FreeBSD: head/sys/arm/include/asm.h 283812 2015-05-31 10:51:06Z andrew $
+ * $FreeBSD: head/sys/arm/include/asm.h 290648 2015-11-10 12:02:41Z mmel $
  */
 
 #ifndef _MACHINE_ASM_H_
@@ -53,10 +53,12 @@
 #define	STOP_UNWINDING	.cantunwind
 #define	_FNSTART	.fnstart
 #define	_FNEND		.fnend
+#define	_SAVE(...)	.save __VA_ARGS__
 #else
 #define	STOP_UNWINDING
 #define	_FNSTART
 #define	_FNEND
+#define	_SAVE(...)
 #endif
 
 /*
@@ -165,7 +167,7 @@
 #else
 #define __FBSDID(s)     /* nothing */
 #endif
-	
+
 
 #define	WEAK_ALIAS(alias,sym)						\
 	.weak alias;							\

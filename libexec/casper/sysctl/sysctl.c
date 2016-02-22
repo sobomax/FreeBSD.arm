@@ -28,10 +28,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/casper/sysctl/sysctl.c 258838 2013-12-02 08:21:28Z pjd $");
+__FBSDID("$FreeBSD: head/libexec/casper/sysctl/sysctl.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#include <sys/nv.h>
 
 #include <errno.h>
 #include <stdlib.h>
@@ -40,7 +41,6 @@ __FBSDID("$FreeBSD: head/libexec/casper/sysctl/sysctl.c 258838 2013-12-02 08:21:
 #include <libcapsicum.h>
 #include <libcapsicum_sysctl.h>
 #include <libcasper.h>
-#include <nv.h>
 #include <pjdlog.h>
 
 static int

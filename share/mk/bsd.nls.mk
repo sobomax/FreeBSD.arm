@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.nls.mk 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/share/mk/bsd.nls.mk 288964 2015-10-07 00:24:27Z sjg $
 #
 # This include file <bsd.nls.mk> handles building and installing Native
 # Language Support (NLS) catalogs
@@ -63,7 +63,7 @@ NLSDIR?=	${SHAREDIR}/nls
 #
 .if ${MK_STAGING_PROG} == "yes"
 .if !defined(_SKIP_BUILD)
-staging:   stage_symlinks
+STAGE_TARGETS+= stage_symlinks
 .endif
 STAGE_SYMLINKS.NLS= ${NLSSYMLINKS}
 STAGE_SYMLINKS_DIR.NLS= ${STAGE_OBJTOP}

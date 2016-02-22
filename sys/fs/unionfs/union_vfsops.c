@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)union_vfsops.c	8.20 (Berkeley) 5/20/95
- * $FreeBSD: head/sys/fs/unionfs/union_vfsops.c 284082 2015-06-06 16:36:13Z markj $
+ * $FreeBSD: head/sys/fs/unionfs/union_vfsops.c 285182 2015-07-05 22:37:33Z markj $
  */
 
 #include <sys/param.h>
@@ -294,9 +294,6 @@ unionfs_domount(struct mount *mp)
 	if ((ump->um_lowervp->v_mount->mnt_flag & MNT_LOCAL) &&
 	    (ump->um_uppervp->v_mount->mnt_flag & MNT_LOCAL))
 		mp->mnt_flag |= MNT_LOCAL;
-
-	if ((ump->um_uppervp->v_mount->mnt_kern_flag & MNTK_SUSPENDABLE) != 0)
-		mp->mnt_kern_flag |= MNTK_SUSPENDABLE;
 	MNT_IUNLOCK(mp);
 
 	/*

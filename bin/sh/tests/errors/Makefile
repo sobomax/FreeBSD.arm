@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/errors/Makefile 269902 2014-08-13 04:14:50Z ngie $
+# $FreeBSD: head/bin/sh/tests/errors/Makefile 287081 2015-08-23 20:44:53Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -19,6 +19,8 @@ FILES+=		bad-parm-exp3.2 bad-parm-exp3.2.stderr
 FILES+=		bad-parm-exp4.2 bad-parm-exp4.2.stderr
 FILES+=		bad-parm-exp5.2 bad-parm-exp5.2.stderr
 FILES+=		bad-parm-exp6.2 bad-parm-exp6.2.stderr
+FILES+=		bad-parm-exp7.0
+FILES+=		bad-parm-exp8.0
 FILES+=		option-error.0
 FILES+=		redirection-error.0
 FILES+=		redirection-error2.2

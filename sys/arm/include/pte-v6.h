@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/pte-v6.h 280712 2015-03-26 21:13:53Z ian $
+ * $FreeBSD: head/sys/arm/include/pte-v6.h 291492 2015-11-30 17:09:25Z mmel $
  */
 
 #ifndef _MACHINE_PTE_H_
@@ -196,6 +196,7 @@
 #define	PTE2_ATTR_NOCACHE	TEX2_CLASS_1
 #define	PTE2_ATTR_DEVICE	TEX2_CLASS_2
 #define	PTE2_ATTR_SO		TEX2_CLASS_3
+#define	PTE2_ATTR_WT		TEX2_CLASS_4
 /*
  * Software defined bits for L1	descriptors
  *  - L1_AP0 is	used as	page accessed bit

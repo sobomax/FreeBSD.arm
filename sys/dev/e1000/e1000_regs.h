@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2014, Intel Corporation 
+  Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_regs.h 267935 2014-06-26 21:33:32Z jfv $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_regs.h 287990 2015-09-19 18:22:59Z sbruno $*/
 
 #ifndef _E1000_REGS_H_
 #define _E1000_REGS_H_
@@ -202,7 +202,7 @@
 /* Queues fetch arbitration priority control register */
 #define E1000_I210_TQAVARBCTRL			0x3574
 /* Queues priority masks where _n and _p can be 0-3. */
-#define E1000_TQAVARBCTRL_QUEUE_PRI(_n, _p)	((_p) << (2 * _n))
+#define E1000_TQAVARBCTRL_QUEUE_PRI(_n, _p)	((_p) << (2 * (_n)))
 /* QAV Tx mode control registers where _n can be 0 or 1. */
 #define E1000_I210_TQAVCC(_n)			(0x3004 + 0x40 * (_n))
 
@@ -215,7 +215,7 @@
 #define E1000_PQGPTC(_n)		(0x010014 + (0x100 * (_n)))
 
 /* Queues packet buffer size masks where _n can be 0-3 and _s 0-63 [kB] */
-#define E1000_I210_TXPBS_SIZE(_n, _s)	((_s) << (6 * _n))
+#define E1000_I210_TXPBS_SIZE(_n, _s)	((_s) << (6 * (_n)))
 
 #define E1000_MMDAC			13 /* MMD Access Control */
 #define E1000_MMDAAD			14 /* MMD Access Address/Data */
@@ -552,7 +552,7 @@
 #define E1000_WVBR	0x03554 /* VM Wrong Behavior - RWS */
 #define E1000_RPLOLR	0x05AF0 /* Replication Offload - RW */
 #define E1000_UTA	0x0A000 /* Unicast Table Array - RW */
-#define E1000_IOVTCL	0x05BBC /* IOV Control Register */
+#define E1000_IOVCTL	0x05BBC /* IOV Control Register */
 #define E1000_VMRCTL	0X05D80 /* Virtual Mirror Rule Control */
 #define E1000_VMRVLAN	0x05D90 /* Virtual Mirror Rule VLAN */
 #define E1000_VMRVM	0x05DA0 /* Virtual Mirror Rule VM */

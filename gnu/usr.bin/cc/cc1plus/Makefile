@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/cc1plus/Makefile 275804 2014-12-15 14:25:42Z emaste $
+# $FreeBSD: head/gnu/usr.bin/cc/cc1plus/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 MAN=
 .include <src.opts.mk>
@@ -15,7 +15,7 @@ SRCS+=	main.c cp-lang.c c-opts.c call.c class.c cvt.c cxx-pretty-print.c \
 	search.c semantics.c tree.c typeck.c typeck2.c optimize.c \
 	cp-objcp-common.c cp-gimplify.c tree-mudflap.c
 
-BINDIR=	/usr/libexec
+BINDIR=	${LIBEXECDIR}
 .if ${MK_SHARED_TOOLCHAIN} == "no"
 NO_SHARED?=yes
 .endif

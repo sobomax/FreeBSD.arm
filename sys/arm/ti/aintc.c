@@ -28,7 +28,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/aintc.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/aintc.c 288824 2015-10-05 13:15:21Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -156,7 +156,8 @@ static driver_t ti_aintc_driver = {
 
 static devclass_t ti_aintc_devclass;
 
-DRIVER_MODULE(aintc, simplebus, ti_aintc_driver, ti_aintc_devclass, 0, 0);
+EARLY_DRIVER_MODULE(aintc, simplebus, ti_aintc_driver, ti_aintc_devclass,
+    0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_MIDDLE);
 
 int
 arm_get_next_irq(int last_irq)

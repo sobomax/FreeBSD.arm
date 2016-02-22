@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athstats/athstats.c 281126 2015-04-06 00:34:59Z adrian $
+ * $FreeBSD: head/tools/tools/ath/athstats/athstats.c 287297 2015-08-29 19:47:20Z rodrigc $
  */
 
 #include "opt_ah.h"
@@ -34,20 +34,22 @@
 /*
  * ath statistics class.
  */
-#include <sys/types.h>
+
+#include <sys/param.h>
 #include <sys/file.h>
 #include <sys/sockio.h>
 #include <sys/socket.h>
+
 #include <net/if.h>
 #include <net/if_media.h>
 #include <net/if_var.h>
 
+#include <err.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <string.h>
 #include <unistd.h>
-#include <err.h>
 
 #include "ah.h"
 #include "ah_desc.h"
@@ -1058,12 +1060,12 @@ BSDSTAT_DEFINE_BOUNCE(athstatfoo)
 struct athstatfoo *
 athstats_new(const char *ifname, const char *fmtstring)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	struct athstatfoo_p *wf;
 
 	wf = calloc(1, sizeof(struct athstatfoo_p));
 	if (wf != NULL) {
-		bsdstat_init(&wf->base.base, "athstats", athstats, N(athstats));
+		bsdstat_init(&wf->base.base, "athstats", athstats,
+		    nitems(athstats));
 		/* override base methods */
 		wf->base.base.collect_cur = ath_collect_cur;
 		wf->base.base.collect_tot = ath_collect_tot;
@@ -1089,5 +1091,4 @@ athstats_new(const char *ifname, const char *fmtstring)
 		wf->base.setfmt(&wf->base, fmtstring);
 	}
 	return &wf->base;
-#undef N
 }

@@ -1,8 +1,6 @@
-# $FreeBSD: head/bin/test/tests/Makefile 263161 2014-03-14 08:56:19Z jmmv $
+# $FreeBSD: head/bin/test/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/bin/test
 
 TAP_TESTS_SH=	legacy_test
 # Some tests in here are silently not run when the tests are executed as

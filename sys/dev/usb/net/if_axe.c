@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*
  * ASIX Electronics AX88172/AX88178/AX88778 USB 2.0 ethernet driver.
@@ -278,6 +278,7 @@ MODULE_DEPEND(axe, usb, 1, 1, 1);
 MODULE_DEPEND(axe, ether, 1, 1, 1);
 MODULE_DEPEND(axe, miibus, 1, 1, 1);
 MODULE_VERSION(axe, 1);
+USB_PNP_HOST_INFO(axe_devs);
 
 static const struct usb_ether_methods axe_ue_methods = {
 	.ue_attach_post = axe_attach_post,

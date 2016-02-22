@@ -1,7 +1,9 @@
-# $FreeBSD: head/lib/libc/tests/Makefile.netbsd-tests 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/Makefile.netbsd-tests 290851 2015-11-15 05:21:58Z ngie $
 
-OBJTOP?=	${.OBJDIR:H:H:H:H}
-SRCTOP?=	${.CURDIR:H:H:H:H}
-TESTSRC?=	${SRCTOP}/contrib/netbsd-tests/lib/libc/${.CURDIR:T}
+TESTSRC:=	${SRCTOP}/contrib/netbsd-tests/${RELDIR:C/libc\/tests/libc/}
+
+TESTSDIR:=	${TESTSBASE}/${RELDIR:C/libc\/tests/libc/}
+
+WARNS?=		2
 
 .include <netbsd-tests.test.mk>

@@ -1,8 +1,6 @@
-# $FreeBSD: head/lib/libc/tests/Makefile 276318 2014-12-27 20:48:36Z ngie $
+# $FreeBSD: head/lib/libc/tests/Makefile 290177 2015-10-30 03:28:00Z ngie $
 
 .include <src.opts.mk>
-
-TESTSDIR=	${TESTSBASE}/lib/libc
 
 SUBDIR=		tls_dso
 
@@ -13,6 +11,7 @@ TESTS_SUBDIRS+=	hash
 TESTS_SUBDIRS+=	inet
 TESTS_SUBDIRS+=	net
 TESTS_SUBDIRS+=	regex
+TESTS_SUBDIRS+=	rpc
 TESTS_SUBDIRS+=	stdio
 TESTS_SUBDIRS+=	stdlib
 TESTS_SUBDIRS+=	string

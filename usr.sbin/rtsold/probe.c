@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/rtsold/probe.c 281143 2015-04-06 09:42:23Z glebius $
+ * $FreeBSD: head/usr.sbin/rtsold/probe.c 286566 2015-08-10 07:45:13Z ed $
  */
 
 #include <sys/param.h>
@@ -77,12 +77,6 @@ probe_init(void)
 
 	if ((probesock = socket(AF_INET6, SOCK_RAW, IPPROTO_NONE)) < 0) {
 		warnmsg(LOG_ERR, __func__, "socket: %s", strerror(errno));
-		return (-1);
-	}
-
-	/* make the socket send-only */
-	if (shutdown(probesock, 0)) {
-		warnmsg(LOG_ERR, __func__, "shutdown: %s", strerror(errno));
 		return (-1);
 	}
 

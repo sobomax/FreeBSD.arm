@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_indata.h 252585 2013-07-03 18:48:43Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_indata.h 286206 2015-08-02 16:07:30Z tuexen $");
 
 #ifndef _NETINET_SCTP_INDATA_H_
 #define _NETINET_SCTP_INDATA_H_
@@ -112,12 +112,8 @@ void
 
 int
 sctp_process_data(struct mbuf **, int, int *, int,
-    struct sockaddr *src, struct sockaddr *dst,
-    struct sctphdr *,
     struct sctp_inpcb *, struct sctp_tcb *,
-    struct sctp_nets *, uint32_t *,
-    uint8_t, uint32_t,
-    uint32_t, uint16_t);
+    struct sctp_nets *, uint32_t *);
 
 void sctp_slide_mapping_arrays(struct sctp_tcb *stcb);
 

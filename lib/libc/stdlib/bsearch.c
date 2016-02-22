@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)bsearch.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/bsearch.c 264042 2014-04-02 16:07:48Z theraven $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/bsearch.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -61,20 +61,12 @@ __FBSDID("$FreeBSD: head/lib/libc/stdlib/bsearch.c 264042 2014-04-02 16:07:48Z t
  */
 #ifdef I_AM_BSEARCH_B
 void *
-bsearch_b(key, base0, nmemb, size, compar)
-	const void *key;
-	const void *base0;
-	size_t nmemb;
-	size_t size;
-	DECLARE_BLOCK(int, compar, const void *, const void *);
+bsearch_b(const void *key, const void *base0, size_t nmemb, size_t size,
+    DECLARE_BLOCK(int, compar, const void *, const void *))
 #else
 void *
-bsearch(key, base0, nmemb, size, compar)
-	const void *key;
-	const void *base0;
-	size_t nmemb;
-	size_t size;
-	int (*compar)(const void *, const void *);
+bsearch(const void *key, const void *base0, size_t nmemb, size_t size,
+    int (*compar)(const void *, const void *))
 #endif
 {
 	const char *base = base0;

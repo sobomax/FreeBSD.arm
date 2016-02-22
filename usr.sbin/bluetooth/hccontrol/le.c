@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: hccontrol.c,v 1.5 2003/09/05 00:38:24 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/le.c 281697 2015-04-18 17:41:09Z takawata $
+ * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/le.c 287597 2015-09-09 13:24:39Z takawata $
  */
 
 #include <sys/types.h>
@@ -88,7 +88,7 @@ le_set_scan_param(int s, int argc, char *argv[])
 	
 	if (strcmp(argv[3], "public") == 0)
 		adrtype = 0;
-	else if (strcmp(argv[0], "random") == 0)
+	else if (strcmp(argv[3], "random") == 0)
 		adrtype = 1;
 	else
 		return USAGE;

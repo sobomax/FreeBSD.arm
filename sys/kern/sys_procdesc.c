@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_procdesc.c 271976 2014-09-22 16:20:47Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_procdesc.c 285670 2015-07-18 09:02:50Z kib $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -295,7 +295,7 @@ procdesc_exit(struct proc *p)
 	    ("procdesc_exit: closed && parent not init"));
 
 	pd->pd_flags |= PDF_EXITED;
-	pd->pd_xstat = p->p_xstat;
+	pd->pd_xstat = KW_EXITCODE(p->p_xexit, p->p_xsig);
 
 	/*
 	 * If the process descriptor has been closed, then we have nothing

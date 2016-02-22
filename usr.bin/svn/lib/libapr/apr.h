@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/svn/lib/libapr/apr.h 266736 2014-05-27 07:16:43Z peter $ */
+/* $FreeBSD: head/usr.bin/svn/lib/libapr/apr.h 286503 2015-08-09 05:14:25Z peter $ */
 
 /* Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -219,10 +219,10 @@ extern "C" {
 #define APR_HAVE_SHMEM_BEOS         0
 
 #define APR_USE_SHMEM_MMAP_TMP     0
-#define APR_USE_SHMEM_MMAP_SHM     0
+#define APR_USE_SHMEM_MMAP_SHM     1
 #define APR_USE_SHMEM_MMAP_ZERO    0
 #define APR_USE_SHMEM_SHMGET_ANON  0
-#define APR_USE_SHMEM_SHMGET       1
+#define APR_USE_SHMEM_SHMGET       0
 #define APR_USE_SHMEM_MMAP_ANON    1
 #define APR_USE_SHMEM_BEOS         0
 

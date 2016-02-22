@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/vdso.h 277406 2015-01-20 03:54:30Z neel $
+ * $FreeBSD: head/sys/sys/vdso.h 291171 2015-11-23 07:09:35Z kib $
  */
 
 #ifndef _SYS_VDSO_H
@@ -71,6 +71,12 @@ int __vdso_gettimekeep(struct vdso_timekeep **tk);
 
 struct timecounter;
 
+struct vdso_sv_tk {
+	int		sv_timekeep_off;
+	int		sv_timekeep_curr;
+	uint32_t	sv_timekeep_gen;
+};
+
 void timekeep_push_vdso(void);
 
 uint32_t tc_fill_vdso_timehands(struct vdso_timehands *vdso_th);
@@ -85,6 +91,8 @@ uint32_t tc_fill_vdso_timehands(struct vdso_timehands *vdso_th);
  */
 uint32_t cpu_fill_vdso_timehands(struct vdso_timehands *vdso_th,
     struct timecounter *tc);
+
+struct vdso_sv_tk *alloc_sv_tk(void);
 
 #define	VDSO_TH_NUM	4
 
@@ -115,6 +123,7 @@ struct vdso_timekeep32 {
 uint32_t tc_fill_vdso_timehands32(struct vdso_timehands32 *vdso_th32);
 uint32_t cpu_fill_vdso_timehands32(struct vdso_timehands32 *vdso_th32,
     struct timecounter *tc);
+struct vdso_sv_tk *alloc_sv_tk_compat32(void);
 
 #endif
 #endif

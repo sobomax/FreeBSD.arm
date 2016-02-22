@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_bitset.h 250395 2013-05-09 00:04:59Z attilio $
+ * $FreeBSD: head/sys/sys/_bitset.h 289867 2015-10-24 03:16:40Z markj $
  */
 
 #ifndef _SYS__BITSET_H_
@@ -50,7 +50,7 @@
 #define	BITSET_DEFINE(t, _s)						\
 struct t {								\
         long    __bits[__bitset_words((_s))];				\
-};
+}
 
 #define	BITSET_T_INITIALIZER(x)						\
 	{ .__bits = { x } }

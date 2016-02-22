@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)atexit.c	8.2 (Berkeley) 7/3/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/atexit.c 264143 2014-04-05 08:17:48Z theraven $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/atexit.c 288026 2015-09-20 20:15:44Z rodrigc $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -81,6 +81,9 @@ struct atexit {
 
 static struct atexit *__atexit;		/* points to head of LIFO stack */
 typedef DECLARE_BLOCK(void, atexit_block, void);
+
+int atexit_b(atexit_block);
+int __cxa_atexit(void (*)(void *), void *, void *);
 
 /*
  * Register the function described by 'fptr' to be called at application

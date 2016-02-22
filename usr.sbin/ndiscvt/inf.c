@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ndiscvt/inf.c 186507 2008-12-27 08:03:32Z weongyo $");
+__FBSDID("$FreeBSD: head/usr.sbin/ndiscvt/inf.c 288120 2015-09-22 16:59:41Z amdmi3 $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -887,6 +887,12 @@ regkey_add (const char *r)
 void
 push_word (const char *w)
 {
+
+	if (idx == W_MAX) {
+		fprintf(stderr, "too many words; try bumping W_MAX in inf.h\n");
+		exit(1);
+	}
+
 	if (w && strlen(w))
 		words[idx++] = w;
 	else

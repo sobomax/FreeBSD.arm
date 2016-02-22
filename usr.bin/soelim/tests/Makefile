@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/soelim/tests/Makefile 282425 2015-05-04 18:20:31Z bapt $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/soelim
+# $FreeBSD: head/usr.bin/soelim/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 ATF_TESTS_SH=	soelim
 

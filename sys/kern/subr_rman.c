@@ -58,7 +58,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_rman.c 268780 2014-07-16 22:18:19Z truckman $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_rman.c 290429 2015-11-05 23:12:23Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1051,7 +1051,8 @@ dump_rman(struct rman *rm)
 				devname = "nomatch";
 		} else
 			devname = NULL;
-		db_printf("    0x%lx-0x%lx ", r->r_start, r->r_end);
+		db_printf("    0x%lx-0x%lx (RID=%d) ",
+		    r->r_start, r->r_end, r->r_rid);
 		if (devname != NULL)
 			db_printf("(%s)\n", devname);
 		else

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcasper/libcasper.c 282346 2015-05-02 17:45:52Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libcasper/libcasper.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: head/lib/libcasper/libcasper.c 282346 2015-05-02 17:45:52Z o
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/un.h>
+#include <sys/nv.h>
 
 #include <assert.h>
 #include <dirent.h>
@@ -52,7 +53,6 @@ __FBSDID("$FreeBSD: head/lib/libcasper/libcasper.c 282346 2015-05-02 17:45:52Z o
 #include <libcapsicum.h>
 #include <libcasper.h>
 #include <libcasper_impl.h>
-#include <nv.h>
 #include <pjdlog.h>
 
 /*

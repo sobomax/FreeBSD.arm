@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.opts.mk 280766 2015-03-27 17:36:22Z imp $
+# $FreeBSD: head/sys/conf/kern.opts.mk 291103 2015-11-20 16:18:27Z andrew $
 
 # Options set in the build system that affect the kernel somehow.
 
@@ -45,6 +45,7 @@ __DEFAULT_YES_OPTIONS = \
 
 __DEFAULT_NO_OPTIONS = \
     EISA \
+    FAST_DEPEND \
     NAND \
     OFED
 
@@ -58,7 +59,10 @@ __DEFAULT_NO_OPTIONS = \
 
 # Things that don't work based on the CPU
 .if ${MACHINE_CPUARCH} == "arm"
-BROKEN_OPTIONS+= CDDL ZFS
+BROKEN_OPTIONS+= ZFS
+. if ${MACHINE_ARCH:Marmv6*} == ""
+BROKEN_OPTIONS+= CDDL
+. endif
 .endif
 
 .if ${MACHINE_CPUARCH} == "mips"

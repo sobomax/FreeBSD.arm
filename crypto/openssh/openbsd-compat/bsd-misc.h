@@ -1,5 +1,4 @@
 /* $Id: bsd-misc.h,v 1.25 2013/08/04 11:48:41 dtucker Exp $ */
-/* $FreeBSD: head/crypto/openssh/openbsd-compat/bsd-misc.h 263691 2014-03-24 19:15:13Z des $ */
 
 /*
  * Copyright (c) 1999-2004 Damien Miller <djm@mindrot.org>
@@ -21,7 +20,6 @@
 #define _BSD_MISC_H
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/openbsd-compat/bsd-misc.h 263691 2014-03-24 19:15:13Z des $");
 
 char *ssh_get_progname(char *);
 

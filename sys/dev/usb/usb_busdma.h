@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_busdma.h 266969 2014-06-02 07:08:34Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_busdma.h 290489 2015-11-07 11:40:35Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -159,5 +159,8 @@ void	usb_pc_cpu_flush(struct usb_page_cache *pc);
 void	usb_pc_cpu_invalidate(struct usb_page_cache *pc);
 void	usb_pc_dmamap_destroy(struct usb_page_cache *pc);
 void	usb_pc_free_mem(struct usb_page_cache *pc);
+uint8_t	usb_pc_buffer_is_aligned(struct usb_page_cache *pc,
+	    usb_frlength_t offset, usb_frlength_t len,
+	    usb_frlength_t mask);
 
 #endif					/* _USB_BUSDMA_H_ */

@@ -26,7 +26,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/include/pmap.h 279252 2015-02-24 21:37:20Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/pmap.h 287418 2015-09-03 01:38:15Z jhibbits $
  */
 /*-
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.
@@ -235,7 +235,7 @@ void		pmap_kenter(vm_offset_t va, vm_paddr_t pa);
 void		pmap_kenter_attr(vm_offset_t va, vm_offset_t pa, vm_memattr_t);
 void		pmap_kremove(vm_offset_t);
 void		*pmap_mapdev(vm_paddr_t, vm_size_t);
-void		*pmap_mapdev_attr(vm_offset_t, vm_size_t, vm_memattr_t);
+void		*pmap_mapdev_attr(vm_paddr_t, vm_size_t, vm_memattr_t);
 void		pmap_unmapdev(vm_offset_t, vm_size_t);
 void		pmap_page_set_memattr(vm_page_t, vm_memattr_t);
 void		pmap_deactivate(struct thread *);

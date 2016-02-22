@@ -1,10 +1,8 @@
-# $FreeBSD: head/lib/libc/tests/regex/Makefile 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/regex/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
 BINDIR=		${TESTSDIR}
-
-TESTSDIR=	${TESTSBASE}/lib/libc/regex
 
 IMPLEMENTATION?=      -DREGEX_SPENCER
 
@@ -53,7 +51,6 @@ CFLAGS.$t+=	-I${TESTSRC} ${IMPLEMENTATION}
 
 .include "../Makefile.netbsd-tests"
 
-DPADD.regex_att_test+=	${LIBUTIL}
-LDADD.regex_att_test+=	-lutil
+LIBADD.regex_att_test+=	util
 
 .include <bsd.test.mk>

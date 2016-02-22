@@ -1,6 +1,7 @@
-# $FreeBSD: head/usr.sbin/bsdinstall/Makefile 222998 2011-06-11 21:44:07Z nwhitehorn $
+# $FreeBSD: head/usr.sbin/bsdinstall/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
 SUBDIR= distextract distfetch partedit scripts
+SUBDIR_PARALLEL=
 SCRIPTS= bsdinstall
 MAN= bsdinstall.8
 

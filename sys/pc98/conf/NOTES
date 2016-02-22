@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/pc98/conf/NOTES 265215 2014-05-02 07:14:22Z eadler $
+# $FreeBSD: head/sys/pc98/conf/NOTES 291419 2015-11-28 08:31:32Z kib $
 #
 
 #
@@ -506,7 +506,7 @@ options 	KVA_PAGES=260
 # ABI Emulation
 
 # Enable iBCS2 runtime support for SCO and ISC binaries
-options 	IBCS2
+#options 	IBCS2
 
 # Emulate spx device for client side of SVR3 local X interface
 options 	SPX_HACK

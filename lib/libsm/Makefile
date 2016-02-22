@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libsm/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libsm/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -29,14 +29,14 @@ SRCS+=	assert.c debug.c errstring.c exc.c heap.c match.c rpool.c \
 	smstdio.c snprintf.c sscanf.c stdio.c strio.c ungetc.c \
 	vasprintf.c vfprintf.c vfscanf.c vprintf.c vsnprintf.c \
 	wbuf.c wsetup.c string.c stringf.c \
-	xtrap.c strto.c test.c path.c strcasecmp.c strrevcmp.c \
+	xtrap.c strto.c test.c strcasecmp.c strrevcmp.c \
 	signal.c clock.c config.c sem.c shm.c mbdb.c strexit.c cf.c ldap.c \
 	niprop.c mpeix.c memstat.c util.c inet6_ntop.c
 CLEANFILES+=sm_os.h
 
 INTERNALLIB=
 
-sm_os.h:
-	ln -sf ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h sm_os.h
+sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.lib.mk>

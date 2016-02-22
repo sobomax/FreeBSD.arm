@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/librt/Makefile 282057 2015-04-27 06:49:27Z ngie $
+# $FreeBSD: head/lib/librt/Makefile 291439 2015-11-29 06:14:51Z deischen $
 
 .include <src.opts.mk>
 
@@ -17,7 +17,8 @@ SRCS+= aio.c mq.c sigev_thread.c timer.c
 
 PRECIOUSLIB=
 
-VERSION_MAP=	${.CURDIR}/Version.map
+VERSION_DEF=${.CURDIR}/../libc/Versions.def
+SYMBOL_MAPS=${.CURDIR}/Symbol.map
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=	tests

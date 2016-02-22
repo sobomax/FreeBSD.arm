@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ncv/ncr53c500_pccard.c 274760 2014-11-20 20:50:05Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/ncv/ncr53c500_pccard.c 292111 2015-12-11 15:24:29Z imp $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -293,6 +293,7 @@ static devclass_t ncv_devclass;
 
 MODULE_DEPEND(ncv, scsi_low, 1, 1, 1);
 DRIVER_MODULE(ncv, pccard, ncv_pccard_driver, ncv_devclass, 0, 0);
+PCCARD_PNP_INFO(ncv_products);
 
 static void
 ncv_card_unload(device_t devi)

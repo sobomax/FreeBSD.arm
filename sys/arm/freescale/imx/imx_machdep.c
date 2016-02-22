@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_machdep.c 257678 2013-11-05 05:18:18Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_machdep.c 291367 2015-11-26 17:26:52Z ian $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -44,6 +44,15 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_machdep.c 257678 2013-11-05 0
 
 #include <arm/freescale/imx/imx_machdep.h>
 #include <arm/freescale/imx/imx_wdogreg.h>
+
+SYSCTL_NODE(_hw, OID_AUTO, imx, CTLFLAG_RW, NULL, "i.MX container");
+
+static int last_reset_status;
+SYSCTL_UINT(_hw_imx, OID_AUTO, last_reset_status, CTLFLAG_RD, 
+    &last_reset_status, 0, "Last reset status register");
+
+SYSCTL_STRING(_hw_imx, OID_AUTO, last_reset_reason, CTLFLAG_RD, 
+    "unknown", 0, "Last reset reason");
 
 struct arm32_dma_range *
 bus_dma_get_range(void)
@@ -72,19 +81,34 @@ imx_wdog_cpu_reset(vm_offset_t wdcr_physaddr)
 	volatile uint16_t * pcr;
 
 	/*
-	 * The deceptively simple write of WDOG_CR_WDE enables the watchdog,
-	 * sets the timeout to its minimum value (half a second), and also
-	 * clears the SRS bit which results in the SFTW (software-requested
-	 * reset) bit being set in the watchdog status register after the reset.
-	 * This is how software can distinguish a reset from a wdog timeout.
+	 * Trigger an immediate reset by clearing the SRS bit in the watchdog
+	 * control register.  The reset happens on the next cycle of the wdog
+	 * 32KHz clock, so hang out in a spin loop until the reset takes effect.
 	 */
 	if ((pcr = arm_devmap_ptov(wdcr_physaddr, sizeof(*pcr))) == NULL) {
 		printf("cpu_reset() can't find its control register... locking up now.");
 	} else {
-		*pcr = WDOG_CR_WDE;
+		*pcr &= ~WDOG_CR_SRS;
 	}
 	for (;;)
 		continue;
+}
+
+void
+imx_wdog_init_last_reset(vm_offset_t wdsr_phys)
+{
+	volatile uint16_t * psr;
+
+	if ((psr = arm_devmap_ptov(wdsr_phys, sizeof(*psr))) == NULL)
+		return;
+	last_reset_status = *psr;
+	if (last_reset_status & WDOG_RSR_SFTW) {
+		sysctl___hw_imx_last_reset_reason.oid_arg1 = "SoftwareReset";
+	} else if (last_reset_status & WDOG_RSR_TOUT) {
+		sysctl___hw_imx_last_reset_reason.oid_arg1 = "WatchdogTimeout";
+	} else if (last_reset_status & WDOG_RSR_POR) {
+		sysctl___hw_imx_last_reset_reason.oid_arg1 = "PowerOnReset";
+	}
 }
 
 u_int

@@ -57,7 +57,7 @@
 static char sccsid[] = 	"@(#)rtime.c	2.2 88/08/10 4.0 RPCSRC; from 1.8 88/02/08 SMI";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rtime.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rtime.c 287341 2015-09-01 02:39:07Z rodrigc $");
 
 extern int _rpc_dtablesize( void );
 
@@ -67,10 +67,8 @@ extern int _rpc_dtablesize( void );
 static void do_close( int );
 
 int
-rtime(addrp, timep, timeout)
-	struct sockaddr_in *addrp;
-	struct timeval *timep;
-	struct timeval *timeout;
+rtime(struct sockaddr_in *addrp, struct timeval *timep,
+    struct timeval *timeout)
 {
 	int s;
 	fd_set readfds;
@@ -148,8 +146,7 @@ rtime(addrp, timep, timeout)
 }
 
 static void
-do_close(s)
-	int s;
+do_close(int s)
 {
 	int save;
 

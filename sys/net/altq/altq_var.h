@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_var.h,v 1.16 2003/10/03 05:05:15 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq_var.h 284777 2015-06-24 19:16:41Z eri $
+ * $FreeBSD: head/sys/net/altq/altq_var.h 287009 2015-08-21 22:02:22Z loos $
  */
 #ifndef _ALTQ_ALTQ_VAR_H_
 #define	_ALTQ_ALTQ_VAR_H_
@@ -212,6 +212,11 @@ int	cbq_remove_altq(struct pf_altq *);
 int	cbq_add_queue(struct pf_altq *);
 int	cbq_remove_queue(struct pf_altq *);
 int	cbq_getqstats(struct pf_altq *, void *, int *);
+
+int	codel_pfattach(struct pf_altq *);
+int	codel_add_altq(struct pf_altq *);
+int	codel_remove_altq(struct pf_altq *);
+int	codel_getqstats(struct pf_altq *, void *, int *);
 
 int	priq_pfattach(struct pf_altq *);
 int	priq_add_altq(struct pf_altq *);

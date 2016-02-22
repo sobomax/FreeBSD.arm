@@ -1,11 +1,11 @@
-# $FreeBSD: head/lib/libutil/tests/Makefile 275024 2014-11-25 11:07:26Z bapt $
-
-TESTSDIR=	${TESTSBASE}/lib/libutil
+# $FreeBSD: head/lib/libutil/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_C+=	flopen_test
 TAP_TESTS_C+=	grp_test
 TAP_TESTS_C+=	humanize_number_test
+.if ${MACHINE_CPUARCH} != "aarch64" # PR202304: pidfile_test hangs on arm64
 TAP_TESTS_C+=	pidfile_test
+.endif
 TAP_TESTS_C+=	trimdomain_test
 TAP_TESTS_C+=	trimdomain-nodomain_test
 

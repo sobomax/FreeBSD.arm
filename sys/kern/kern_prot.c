@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_prot.c 284214 2015-06-10 10:43:59Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_prot.c 285633 2015-07-16 14:30:11Z mjg $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -1932,24 +1932,6 @@ cru2x(struct ucred *cr, struct xucred *xcr)
 	xcr->cr_ngroups = ngroups;
 	bcopy(cr->cr_groups, xcr->cr_groups,
 	    ngroups * sizeof(*cr->cr_groups));
-}
-
-/*
- * small routine to swap a thread's current ucred for the correct one taken
- * from the process.
- */
-void
-cred_update_thread(struct thread *td)
-{
-	struct proc *p;
-	struct ucred *cred;
-
-	p = td->td_proc;
-	cred = td->td_ucred;
-	PROC_LOCK_ASSERT(p, MA_OWNED);
-	td->td_ucred = crhold(p->p_ucred);
-	if (cred != NULL)
-		crfree(cred);
 }
 
 /*

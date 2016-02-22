@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/linker.h 275261 2014-11-29 17:29:30Z imp $
+ * $FreeBSD: head/sys/sys/linker.h 288000 2015-09-20 01:27:59Z kib $
  */
 
 #ifndef _SYS_LINKER_H_
@@ -264,7 +264,7 @@ extern int kld_debug;
 
 #endif
 
-typedef Elf_Addr elf_lookup_fn(linker_file_t, Elf_Size, int);
+typedef int elf_lookup_fn(linker_file_t, Elf_Size, int, Elf_Addr *);
 
 /* Support functions */
 int	elf_reloc(linker_file_t _lf, Elf_Addr base, const void *_rel, int _type, elf_lookup_fn _lu);

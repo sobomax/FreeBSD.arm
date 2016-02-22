@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)getchar.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/getchar.c 249808 2013-04-23 13:33:13Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/getchar.c 288033 2015-09-20 20:28:49Z rodrigc $");
 
 /*
  * A subroutine version of the macro getchar.
@@ -49,7 +49,7 @@ __FBSDID("$FreeBSD: head/lib/libc/stdio/getchar.c 249808 2013-04-23 13:33:13Z em
 #undef getchar_unlocked
 
 int
-getchar()
+getchar(void)
 {
 	int retval;
 	FLOCKFILE(stdin);

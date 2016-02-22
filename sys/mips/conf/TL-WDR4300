@@ -1,8 +1,10 @@
 #
 # TPLink TL-WDR4300 - AR9344 based dual-band 2x2 wifi
 #
-# $FreeBSD: head/sys/mips/conf/TL-WDR4300 280318 2015-03-21 06:16:23Z adrian $
+# $FreeBSD: head/sys/mips/conf/TL-WDR4300 291049 2015-11-19 01:58:12Z imp $
 #
+
+#NO_UNIVERSE
 
 # Include the default AR934x parameters
 include         "AR934X_BASE"

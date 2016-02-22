@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm64/include/param.h 281201 2015-04-07 13:17:28Z andrew $
+ * $FreeBSD: head/sys/arm64/include/param.h 286922 2015-08-19 11:59:41Z zbb $
  */
 
 #ifndef _MACHINE_PARAM_H_
@@ -51,7 +51,7 @@
 
 #if defined(SMP) || defined(KLD_MODULE)
 #ifndef MAXCPU
-#define	MAXCPU		2
+#define	MAXCPU		96
 #endif
 #else
 #define	MAXCPU		1
@@ -81,6 +81,10 @@
 #define	PAGE_SHIFT	12
 #define	PAGE_SIZE	(1 << PAGE_SHIFT)	/* Page size */
 #define	PAGE_MASK	(PAGE_SIZE - 1)
+
+#define	PAGE_SHIFT_16K	14
+#define	PAGE_SIZE_16K	(1 << PAGE_SHIFT_16K)
+#define	PAGE_MASK_16K	(PAGE_SIZE_16K - 1)
 
 #define	PAGE_SHIFT_64K	16
 #define	PAGE_SIZE_64K	(1 << PAGE_SHIFT_64K)

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/aim/locore64.S 277499 2015-01-21 19:09:15Z nwhitehorn $ */
+/* $FreeBSD: head/sys/powerpc/aim/locore64.S 291442 2015-11-29 07:16:08Z nwhitehorn $ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-
@@ -64,6 +64,10 @@
 #include <machine/param.h>
 #include <machine/spr.h>
 #include <machine/asm.h>
+
+#ifdef _CALL_ELF
+.abiversion _CALL_ELF
+#endif
 
 /* Locate the per-CPU data structure */
 #define GET_CPUINFO(r)  \

@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_hostap.c 283541 2015-05-25 20:06:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_hostap.c 289164 2015-10-12 04:30:38Z adrian $");
 #endif
 
 /*
@@ -2327,12 +2327,11 @@ ieee80211_recv_pspoll(struct ieee80211_node *ni, struct mbuf *m0)
 
 	/*
 	 * Do the right thing; if it's an encap'ed frame then
-	 * call ieee80211_parent_xmitpkt() (and free the ref) else
+	 * call ieee80211_parent_xmitpkt() else
 	 * call ieee80211_vap_xmitpkt().
 	 */
 	if (m->m_flags & M_ENCAP) {
-		if (ieee80211_parent_xmitpkt(ic, m) != 0)
-			ieee80211_free_node(ni);
+		(void) ieee80211_parent_xmitpkt(ic, m);
 	} else {
 		(void) ieee80211_vap_xmitpkt(vap, m);
 	}

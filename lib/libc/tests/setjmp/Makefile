@@ -1,13 +1,12 @@
-# $FreeBSD: head/lib/libc/tests/setjmp/Makefile 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/setjmp/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
-TESTSDIR=	${TESTSBASE}/lib/libc/setjmp
+NETBSD_ATF_TESTS_C=	setjmp_test
+NETBSD_ATF_TESTS_C+=	threadjmp_test
 
-NETBSD_ATF_TESTS_C=	t_setjmp
-NETBSD_ATF_TESTS_C+=	t_threadjmp
-
-DPADD.t_threadjmp+= ${LIBPTHREAD}
-LDADD.t_threadjmp+= -lpthread
+LIBADD.t_threadjmp+=	pthread
 
 WARNS?=	4
+
+.include "../Makefile.netbsd-tests"
 
 .include <bsd.test.mk>

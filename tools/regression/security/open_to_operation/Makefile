@@ -1,7 +1,7 @@
-# $FreeBSD: head/tools/regression/security/open_to_operation/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/security/open_to_operation/Makefile 290190 2015-10-30 10:09:04Z ngie $
 
 PROG=	open_to_operation
 MAN=
-#WARNS=	3
+WARNS?=	3
 
 .include <bsd.prog.mk>

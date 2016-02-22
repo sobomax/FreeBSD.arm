@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/ix_txrx.c 283883 2015-06-01 17:43:34Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixgbe/ix_txrx.c 289238 2015-10-13 17:34:18Z sbruno $*/
 
 
 #ifndef IXGBE_STANDALONE_BUILD
@@ -210,11 +210,7 @@ ixgbe_mq_start(struct ifnet *ifp, struct mbuf *m)
 	 * If everything is setup correctly, it should be the
 	 * same bucket that the current CPU we're on is.
 	 */
-#if __FreeBSD_version < 1100054
-	if (m->m_flags & M_FLOWID) {
-#else
 	if (M_HASHTYPE_GET(m) != M_HASHTYPE_NONE) {
-#endif
 #ifdef	RSS
 		if (rss_hash2bucket(m->m_pkthdr.flowid,
 		    M_HASHTYPE_GET(m), &bucket_id) == 0)
@@ -990,12 +986,12 @@ ixgbe_tso_setup(struct tx_ring *txr, struct mbuf *mp,
 void
 ixgbe_txeof(struct tx_ring *txr)
 {
-#ifdef DEV_NETMAP
 	struct adapter		*adapter = txr->adapter;
+#ifdef DEV_NETMAP
 	struct ifnet		*ifp = adapter->ifp;
 #endif
 	u32			work, processed = 0;
-	u16			limit = txr->process_limit;
+	u32			limit = adapter->tx_process_limit;
 	struct ixgbe_tx_buf	*buf;
 	union ixgbe_adv_tx_desc *txd;
 
@@ -1751,7 +1747,7 @@ ixgbe_rxeof(struct ix_queue *que)
 	struct lro_entry	*queued;
 	int			i, nextp, processed = 0;
 	u32			staterr = 0;
-	u16			count = rxr->process_limit;
+	u32			count = adapter->rx_process_limit;
 	union ixgbe_adv_rx_desc	*cur;
 	struct ixgbe_rx_buf	*rbuf, *nbuf;
 	u16			pkt_info;
@@ -1910,53 +1906,60 @@ ixgbe_rxeof(struct ix_queue *que)
 			}
 			if ((ifp->if_capenable & IFCAP_RXCSUM) != 0)
 				ixgbe_rx_checksum(staterr, sendmp, ptype);
-#if __FreeBSD_version >= 800000
-#ifdef RSS
-			sendmp->m_pkthdr.flowid =
-			    le32toh(cur->wb.lower.hi_dword.rss);
-#if __FreeBSD_version < 1100054
-			sendmp->m_flags |= M_FLOWID;
-#endif
-			switch (pkt_info & IXGBE_RXDADV_RSSTYPE_MASK) {
-			case IXGBE_RXDADV_RSSTYPE_IPV4_TCP:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_TCP_IPV4);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV4:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_IPV4);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV6_TCP:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_TCP_IPV6);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV6_EX:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_IPV6_EX);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV6:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_IPV6);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV6_TCP_EX:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_TCP_IPV6_EX);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV4_UDP:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_UDP_IPV4);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV6_UDP:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_UDP_IPV6);
-				break;
-			case IXGBE_RXDADV_RSSTYPE_IPV6_UDP_EX:
-				M_HASHTYPE_SET(sendmp, M_HASHTYPE_RSS_UDP_IPV6_EX);
-				break;
-			default:
+
+                        /*
+                         * In case of multiqueue, we have RXCSUM.PCSD bit set
+                         * and never cleared. This means we have RSS hash
+                         * available to be used.   
+                         */
+                        if (adapter->num_queues > 1) {
+                                sendmp->m_pkthdr.flowid =
+                                    le32toh(cur->wb.lower.hi_dword.rss);
+                                switch (pkt_info & IXGBE_RXDADV_RSSTYPE_MASK) {  
+                                    case IXGBE_RXDADV_RSSTYPE_IPV4_TCP:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_TCP_IPV4);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV4:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_IPV4);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV6_TCP:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_TCP_IPV6);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV6_EX:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_IPV6_EX);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV6:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_IPV6);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV6_TCP_EX:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_TCP_IPV6_EX);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV4_UDP:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_UDP_IPV4);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV6_UDP:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_UDP_IPV6);
+                                        break;
+                                    case IXGBE_RXDADV_RSSTYPE_IPV6_UDP_EX:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_RSS_UDP_IPV6_EX);
+                                        break;
+                                    default:
+                                        M_HASHTYPE_SET(sendmp,
+                                            M_HASHTYPE_OPAQUE);
+                                }
+                        } else {
+                                sendmp->m_pkthdr.flowid = que->msix;
 				M_HASHTYPE_SET(sendmp, M_HASHTYPE_OPAQUE);
 			}
-#else /* RSS */
-			sendmp->m_pkthdr.flowid = que->msix;
-#if __FreeBSD_version >= 1100054
-			M_HASHTYPE_SET(sendmp, M_HASHTYPE_OPAQUE);
-#else
-			sendmp->m_flags |= M_FLOWID;
-#endif
-#endif /* RSS */
-#endif /* FreeBSD_version */
 		}
 next_desc:
 		bus_dmamap_sync(rxr->rxdma.dma_tag, rxr->rxdma.dma_map,

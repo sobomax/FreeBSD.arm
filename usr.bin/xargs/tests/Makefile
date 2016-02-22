@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/xargs/tests/Makefile 263227 2014-03-16 08:04:06Z jmmv $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/xargs
+# $FreeBSD: head/usr.bin/xargs/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_SH=	legacy_test
 
@@ -10,13 +8,16 @@ FILES+=		regress.0.out
 FILES+=		regress.0I.out
 FILES+=		regress.0J.out
 FILES+=		regress.0L.out
+FILES+=		regress.0P1.out
 FILES+=		regress.I.out
 FILES+=		regress.J.out
 FILES+=		regress.L.out
+FILES+=		regress.P1.out
 FILES+=		regress.R.out
 FILES+=		regress.in
 FILES+=		regress.n1.out
 FILES+=		regress.n2.out
+FILES+=		regress.n2P0.out
 FILES+=		regress.n3.out
 FILES+=		regress.normal.out
 FILES+=		regress.quotes.in

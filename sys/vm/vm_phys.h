@@ -28,7 +28,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/vm_phys.h 282621 2015-05-08 06:02:23Z adrian $
+ * $FreeBSD: head/sys/vm/vm_phys.h 285387 2015-07-11 15:21:37Z adrian $
  */
 
 /*
@@ -87,6 +87,7 @@ vm_page_t vm_phys_paddr_to_vm_page(vm_paddr_t pa);
 void vm_phys_set_pool(int pool, vm_page_t m, int order);
 boolean_t vm_phys_unfree_page(vm_page_t m);
 boolean_t vm_phys_zero_pages_idle(void);
+int vm_phys_mem_affinity(int f, int t);
 
 /*
  *	vm_phys_domain:

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.mk 282207 2015-04-28 23:54:55Z imp $
+# $FreeBSD: head/sys/conf/kern.mk 289039 2015-10-08 17:42:08Z kib $
 
 #
 # Warning flags for compiling the kernel and components of the kernel:
@@ -30,6 +30,9 @@ NO_WCAST_QUAL=			-Wno-cast-qual
 CWARNEXTRA?=	-Wno-error-tautological-compare -Wno-error-empty-body \
 		-Wno-error-parentheses-equality -Wno-error-unused-function \
 		-Wno-error-pointer-sign
+.if ${COMPILER_VERSION} >= 30700
+CWARNEXTRA+=	-Wno-error-shift-negative-value
+.endif
 
 CLANG_NO_IAS= -no-integrated-as
 .if ${COMPILER_VERSION} < 30500
@@ -92,6 +95,13 @@ INLINE_LIMIT?=	8000
 
 .if ${MACHINE_CPUARCH} == "arm"
 INLINE_LIMIT?=	8000
+.endif
+
+.if ${MACHINE_CPUARCH} == "aarch64"
+# We generally don't want fpu instructions in the kernel.
+CFLAGS += -mgeneral-regs-only
+# Reserve x18 for pcpu data
+CFLAGS += -ffixed-x18
 .endif
 
 #

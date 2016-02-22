@@ -1,6 +1,6 @@
-# $FreeBSD: head/usr.sbin/bsdinstall/distfetch/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/bsdinstall/distfetch/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
-BINDIR= /usr/libexec/bsdinstall
+BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	distfetch
 LIBADD=	fetch ncursesw dialog m
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/aim/trap_subr64.S 279751 2015-03-07 20:27:00Z nwhitehorn $ */
+/* $FreeBSD: head/sys/powerpc/aim/trap_subr64.S 285620 2015-07-16 05:13:08Z jhibbits $ */
 /* $NetBSD: trap_subr.S,v 1.20 2002/04/22 23:20:08 kleink Exp $	*/
 
 /*-
@@ -842,11 +842,7 @@ CNAME(dblow):
         mflr	%r1			/* save LR */
 	mtsprg2 %r1			/* And then in SPRG2 */
 
-	nop				/* Begin branching to generictrap */
-	bl	9f
-	.llong	generictrap
-9:	mflr	%r1
-	ld	%r1,0(%r1)
+	ld	%r1, TRAP_GENTRAP(0)	/* Get branch address */
 	mtlr	%r1
 	li	%r1, 0	 		/* How to get the vector from LR */
 	blrl				/* Branch to generictrap */

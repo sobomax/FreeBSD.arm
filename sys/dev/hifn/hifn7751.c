@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 284959 2015-06-30 17:00:45Z markm $");
 
 /*
  * Driver for various Hifn encryption processors.
@@ -258,7 +258,8 @@ hifn_partname(struct hifn_softc *sc)
 static void
 default_harvest(struct rndtest_state *rsp, void *buf, u_int count)
 {
-	random_harvest(buf, count, count*NBBY/2, RANDOM_PURE_HIFN);
+	/* MarkM: FIX!! Check that this does not swamp the harvester! */
+	random_harvest_queue(buf, count, count*NBBY/2, RANDOM_PURE_HIFN);
 }
 
 static u_int

@@ -34,7 +34,7 @@
  *
  * From:
  *	$Id: procfs_ctl.c,v 1.51 2003/12/07 17:40:00 des Exp $
- * $FreeBSD: head/sys/fs/procfs/procfs_ctl.c 283891 2015-06-01 18:49:31Z delphij $
+ * $FreeBSD: head/sys/fs/procfs/procfs_ctl.c 285670 2015-07-18 09:02:50Z kib $
  */
 
 #include <sys/param.h>
@@ -142,7 +142,7 @@ procfs_control(struct thread *td, struct proc *p, int op)
 		 */
 		p->p_flag |= P_TRACED;
 		faultin(p);
-		p->p_xstat = 0;		/* XXX ? */
+		p->p_xsig = 0;		/* XXX ? */
 		p->p_oppid = p->p_pptr->p_pid;
 		if (p->p_pptr != td->td_proc) {
 			proc_reparent(p, td->td_proc);
@@ -198,7 +198,7 @@ out:
 	 * To continue with a signal, just send
 	 * the signal name to the ctl file
 	 */
-	p->p_xstat = 0;
+	p->p_xsig = 0;
 
 	switch (op) {
 	/*
@@ -340,7 +340,7 @@ procfs_doprocctl(PFS_FILL_ARGS)
 			PROC_LOCK(p);
 
 			if (TRACE_WAIT_P(td->td_proc, p)) {
-				p->p_xstat = nm->nm_val;
+				p->p_xsig = nm->nm_val;
 #ifdef FIX_SSTEP
 				FIX_SSTEP(FIRST_THREAD_IN_PROC(p));
 #endif

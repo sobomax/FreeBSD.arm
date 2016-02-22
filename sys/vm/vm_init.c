@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_init.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_init.c 289279 2015-10-14 02:10:07Z jeff $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -74,6 +74,7 @@ __FBSDID("$FreeBSD: head/sys/vm/vm_init.c 267992 2014-06-28 03:56:17Z hselasky $
 #include <sys/sysctl.h>
 #include <sys/systm.h>
 #include <sys/selinfo.h>
+#include <sys/smp.h>
 #include <sys/pipe.h>
 #include <sys/bio.h>
 #include <sys/buf.h>
@@ -229,12 +230,15 @@ again:
 
 	/*
 	 * Allocate the buffer arena.
+	 *
+	 * Enable the quantum cache if we have more than 4 cpus.  This
+	 * avoids lock contention at the expense of some fragmentation.
 	 */
 	size = (long)nbuf * BKVASIZE;
 	kmi->buffer_sva = firstaddr;
 	kmi->buffer_eva = kmi->buffer_sva + size;
 	vmem_init(buffer_arena, "buffer arena", kmi->buffer_sva, size,
-	    PAGE_SIZE, 0, 0);
+	    PAGE_SIZE, (mp_ncpus > 4) ? BKVASIZE * 8 : 0, 0);
 	firstaddr += size;
 
 	/*

@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/arm/ixp425/boot2/lib.h 186352 2008-12-20 03:26:09Z sam $
+ * $FreeBSD: head/sys/boot/arm/ixp425/boot2/lib.h 285683 2015-07-18 22:47:46Z jmg $
  */
 
 #ifndef ARM_BOOT_LIB_H
@@ -29,6 +29,8 @@
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
+
+int main(void);
 
 void DELAY(int);
 

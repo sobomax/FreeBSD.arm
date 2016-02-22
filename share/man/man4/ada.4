@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ada.4 284607 2015-06-19 21:26:06Z delphij $
+.\" $FreeBSD: head/share/man/man4/ada.4 289137 2015-10-11 13:01:51Z mav $
 .\"
 .Dd June 19, 2015
 .Dt ADA 4
@@ -146,16 +146,6 @@ instead of
 .Pa /etc/sysctl.conf .
 The global default is currently 1.
 The per-device default is to leave it as-is (follow global setting).
-.It Va kern.cam.ada.legacy_aliases
-.Pp
-This variable determines whether
-.Pa /dev/ad Ns Ar Y
-symbolic links are created,
-which tries to mimic old
-.Xr ata 4
-numbering.
-Set to 1 to enable legacy aliases symlinks, 0 to disable.
-The default is currently enabled.
 .El
 .Sh FILES
 .Bl -tag -width ".Pa /dev/ada*" -compact

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ipmi/ipmi_smbios.c 241027 2012-09-28 11:59:32Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/ipmi/ipmi_smbios.c 287303 2015-08-30 08:48:31Z delphij $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,11 +45,6 @@ __FBSDID("$FreeBSD: head/sys/dev/ipmi/ipmi_smbios.c 241027 2012-09-28 11:59:32Z 
 #else
 #include <sys/ipmi.h>
 #include <dev/ipmi/ipmivars.h>
-#endif
-
-#if __FreeBSD_version < 602110
-#define	pmap_mapbios		pmap_mapdev
-#define	pmap_unmapbios		pmap_unmapdev
 #endif
 
 struct ipmi_entry {

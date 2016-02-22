@@ -1,5 +1,8 @@
 \ Loader.rc
-\ $FreeBSD: head/sys/boot/forth/loader.rc 258270 2013-11-17 18:12:17Z dteske $
+\ $FreeBSD: head/sys/boot/forth/loader.rc 286368 2015-08-06 16:07:27Z allanjude $
+\
+\ You should not edit this file! Put any overrides in loader.rc.local
+\ instead as this file can be replaced during system updates.
 \
 \ Includes additional commands
 include /boot/loader.4th

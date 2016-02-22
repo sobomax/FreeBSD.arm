@@ -1,14 +1,8 @@
-# $FreeBSD: head/usr.bin/grep/tests/Makefile 272784 2014-10-09 01:53:23Z ngie $
-
-TESTSRC=	${.CURDIR}/../../../contrib/netbsd-tests/usr.bin/grep
-.PATH: ${TESTSRC}
+# $FreeBSD: head/usr.bin/grep/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
 
-TESTSDIR=	${TESTSBASE}/usr.bin/grep
-
-ATF_TESTS_SH=	grep_test
-ATF_TESTS_SH_SRC_grep_test=	t_grep.sh
+NETBSD_ATF_TESTS_SH=	grep_test
 
 FILESDIR=	${TESTSDIR}
 FILES=		d_basic.out
@@ -37,5 +31,7 @@ FILES+=		d_recurse_symlink.out
 FILES+=		d_whole_line.out
 FILES+=		d_word_regexps.out
 FILES+=		d_zgrep.out
+
+.include <netbsd-tests.test.mk>
 
 .include <bsd.test.mk>

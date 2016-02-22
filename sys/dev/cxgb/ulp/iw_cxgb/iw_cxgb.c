@@ -27,7 +27,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb.c 277402 2015-01-19 21:53:00Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb.c 289749 2015-10-22 09:50:45Z hselasky $");
 
 #include "opt_inet.h"
 
@@ -296,5 +296,5 @@ MODULE_DEPEND(t3_tom, cxgbc, 1, 1, 1);
 MODULE_DEPEND(iw_cxgb, toecore, 1, 1, 1);
 MODULE_DEPEND(iw_cxgb, t3_tom, 1, 1, 1);
 MODULE_DEPEND(iw_cxgb, ibcore, 1, 1, 1);
-MODULE_DEPEND(iw_cxgb, linuxapi, 1, 1, 1);
+MODULE_DEPEND(iw_cxgb, linuxkpi, 1, 1, 1);
 

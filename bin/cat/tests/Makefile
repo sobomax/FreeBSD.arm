@@ -1,10 +1,4 @@
-# $FreeBSD: head/bin/cat/tests/Makefile 276723 2015-01-05 20:38:47Z ngie $
-
-OBJTOP=		${.OBJDIR}/../../..
-SRCTOP=		${.CURDIR}/../../..
-TESTSRC=	${SRCTOP}/contrib/netbsd-tests/bin/cat
-
-TESTSDIR=	${TESTSBASE}/bin/cat
+# $FreeBSD: head/bin/cat/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 NETBSD_ATF_TESTS_SH=		cat_test
 

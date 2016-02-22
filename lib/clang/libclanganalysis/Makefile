@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libclanganalysis/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libclanganalysis/Makefile 288943 2015-10-06 17:53:29Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	clanganalysis
 
@@ -26,9 +26,12 @@ SRCS=	AnalysisDeclContext.cpp \
 	ScanfFormatString.cpp \
 	ThreadSafety.cpp \
 	ThreadSafetyCommon.cpp \
-	ThreadSafetyLogical.cpp \
 	ThreadSafetyTIL.cpp \
 	UninitializedValues.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	ThreadSafetyLogical.cpp
+.endif
 
 TGHDRS=	AttrList \
 	AttrVisitor \

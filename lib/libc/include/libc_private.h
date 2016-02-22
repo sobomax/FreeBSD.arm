@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/include/libc_private.h 281714 2015-04-18 21:50:13Z kib $
+ * $FreeBSD: head/lib/libc/include/libc_private.h 287292 2015-08-29 14:25:01Z kib $
  *
  * Private definitions for libc, libc_r and libpthread.
  *
@@ -359,6 +359,11 @@ __pid_t		__sys_wait6(enum idtype, __id_t, int *, int,
 __ssize_t	__sys_write(int, const void *, __size_t);
 __ssize_t	__sys_writev(int, const struct iovec *, int);
 
+int		__libc_sigaction(int, const struct sigaction *,
+		    struct sigaction *) __hidden;
+int		__libc_sigprocmask(int, const __sigset_t *, __sigset_t *)
+		    __hidden;
+int		__libc_sigsuspend(const __sigset_t *) __hidden;
 int		__libc_sigwait(const __sigset_t * __restrict,
 		    int * restrict sig);
 int		__libc_system(const char *);

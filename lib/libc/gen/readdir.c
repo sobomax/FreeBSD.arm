@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)readdir.c	8.3 (Berkeley) 9/29/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/readdir.c 282485 2015-05-05 14:52:33Z julian $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/readdir.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -49,9 +49,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/readdir.c 282485 2015-05-05 14:52:33Z juli
  * get next entry in a directory.
  */
 struct dirent *
-_readdir_unlocked(dirp, skip)
-	DIR *dirp;
-	int skip;
+_readdir_unlocked(DIR *dirp, int skip)
 {
 	struct dirent *dp;
 	long initial_seek;
@@ -91,8 +89,7 @@ _readdir_unlocked(dirp, skip)
 }
 
 struct dirent *
-readdir(dirp)
-	DIR *dirp;
+readdir(DIR *dirp)
 {
 	struct dirent	*dp;
 
@@ -107,10 +104,7 @@ readdir(dirp)
 }
 
 int
-readdir_r(dirp, entry, result)
-	DIR *dirp;
-	struct dirent *entry;
-	struct dirent **result;
+readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
 {
 	struct dirent *dp;
 	int saved_errno;

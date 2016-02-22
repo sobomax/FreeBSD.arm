@@ -27,7 +27,7 @@
 /* Generic NAND driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nand_generic.c 258200 2013-11-15 23:41:32Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nand_generic.c 285006 2015-07-01 14:54:13Z brueffer $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -392,7 +392,7 @@ onfi_read_parameter(struct nand_chip *chip, struct onfi_chip_params *chip_params
 	chip_params->blocks_per_lun = le32dec(&params.blocks_per_lun);
 	chip_params->pages_per_block = le32dec(&params.pages_per_block);
 	chip_params->bytes_per_page = le32dec(&params.bytes_per_page);
-	chip_params->spare_bytes_per_page = le32dec(&params.spare_bytes_per_page);
+	chip_params->spare_bytes_per_page = le16dec(&params.spare_bytes_per_page);
 	chip_params->t_bers = le16dec(&params.t_bers);
 	chip_params->t_prog = le16dec(&params.t_prog);
 	chip_params->t_r = le16dec(&params.t_r);

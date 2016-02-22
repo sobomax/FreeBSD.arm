@@ -1,13 +1,16 @@
-# $FreeBSD: head/lib/clang/libllvmmcdisassembler/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmmcdisassembler/Makefile 288943 2015-10-06 17:53:29Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmmcdisassembler
 
 SRCDIR=	lib/MC/MCDisassembler
 SRCS=	Disassembler.cpp \
-	MCDisassembler.cpp \
-	MCExternalSymbolizer.cpp \
 	MCRelocationInfo.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no" || ${MK_LLDB} != "no"
+SRCS+=	MCDisassembler.cpp \
+	MCExternalSymbolizer.cpp
+.endif
 
 .include "../clang.lib.mk"

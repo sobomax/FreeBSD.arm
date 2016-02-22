@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/kshim/bsd_global.h 269541 2014-08-04 23:00:13Z brooks $ */
+/* $FreeBSD: head/sys/boot/kshim/bsd_global.h 291405 2015-11-27 18:22:04Z zbb $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *
@@ -28,6 +28,8 @@
 #define	_BSD_GLOBAL_H_
 
 #include <bsd_kernel.h>
+
+#include <sys/gpio.h>
 
 #define	USB_DEBUG_VAR usb_debug
 #include <dev/usb/usb_freebsd_loader.h>
@@ -59,6 +61,8 @@
 #include <dev/usb/usb_generic.h>
 #include <dev/usb/quirk/usb_quirk.h>
 #include <dev/usb/template/usb_template.h>
+#include <dev/usb/controller/ehci.h>
+#include <dev/usb/controller/ehcireg.h>
 
 extern struct usb_process usb_process[USB_PROC_MAX];
 

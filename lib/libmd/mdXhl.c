@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmd/mdXhl.c 282774 2015-05-11 16:45:33Z thomas $");
+__FBSDID("$FreeBSD: head/lib/libmd/mdXhl.c 285324 2015-07-09 16:13:05Z jmg $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -49,7 +49,7 @@ MDXFile(const char *filename, char *buf)
 char *
 MDXFileChunk(const char *filename, char *buf, off_t ofs, off_t len)
 {
-	unsigned char buffer[BUFSIZ];
+	unsigned char buffer[16*1024];
 	MDX_CTX ctx;
 	struct stat stbuf;
 	int f, i, e;

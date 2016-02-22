@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmipo/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/clang/libllvmipo/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <src.opts.mk>
 
@@ -9,6 +9,7 @@ SRCS=	ArgumentPromotion.cpp \
 	BarrierNoopPass.cpp \
 	ConstantMerge.cpp \
 	DeadArgumentElimination.cpp \
+	ElimAvailExtern.cpp \
 	ExtractGV.cpp \
 	FunctionAttrs.cpp \
 	GlobalDCE.cpp \
@@ -19,6 +20,7 @@ SRCS=	ArgumentPromotion.cpp \
 	Inliner.cpp \
 	Internalize.cpp \
 	LoopExtractor.cpp \
+	LowerBitSets.cpp \
 	MergeFunctions.cpp \
 	PartialInlining.cpp \
 	PassManagerBuilder.cpp \

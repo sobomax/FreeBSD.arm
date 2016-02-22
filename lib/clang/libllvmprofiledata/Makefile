@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libllvmprofiledata/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmprofiledata/Makefile 288943 2015-10-06 17:53:29Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmprofiledata
 
@@ -12,7 +12,10 @@ SRCS=	CoverageMapping.cpp \
 	InstrProfReader.cpp \
 	InstrProfWriter.cpp \
 	SampleProf.cpp \
-	SampleProfReader.cpp \
-	SampleProfWriter.cpp
+	SampleProfReader.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	SampleProfWriter.cpp
+.endif
 
 .include "../clang.lib.mk"

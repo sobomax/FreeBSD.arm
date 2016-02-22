@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/vm.h 280712 2015-03-26 21:13:53Z ian $
+ * $FreeBSD: head/sys/arm/include/vm.h 291492 2015-11-30 17:09:25Z mmel $
  */
 
 #ifndef _MACHINE_VM_H_
@@ -32,14 +32,16 @@
 #ifdef ARM_NEW_PMAP
 #include <machine/pte-v6.h>
 
-#define VM_MEMATTR_WB_WA	((vm_memattr_t)PTE2_ATTR_WB_WA)
-#define VM_MEMATTR_NOCACHE	((vm_memattr_t)PTE2_ATTR_NOCACHE)
-#define VM_MEMATTR_DEVICE	((vm_memattr_t)PTE2_ATTR_DEVICE)
-#define VM_MEMATTR_SO		((vm_memattr_t)PTE2_ATTR_SO)
+#define VM_MEMATTR_WB_WA		((vm_memattr_t)PTE2_ATTR_WB_WA)
+#define VM_MEMATTR_NOCACHE		((vm_memattr_t)PTE2_ATTR_NOCACHE)
+#define VM_MEMATTR_DEVICE		((vm_memattr_t)PTE2_ATTR_DEVICE)
+#define VM_MEMATTR_SO			((vm_memattr_t)PTE2_ATTR_SO)
+#define VM_MEMATTR_WT			((vm_memattr_t)PTE2_ATTR_WT)
 
-#define VM_MEMATTR_DEFAULT	VM_MEMATTR_WB_WA
-#define VM_MEMATTR_UNCACHEABLE	VM_MEMATTR_SO /*name is misused by DMA */
-
+#define VM_MEMATTR_DEFAULT		VM_MEMATTR_WB_WA
+#define VM_MEMATTR_UNCACHEABLE		VM_MEMATTR_SO 	/* misused by DMA */
+#define VM_MEMATTR_WRITE_COMBINING 	VM_MEMATTR_WT		/* for DRM */
+#define VM_MEMATTR_WRITE_BACK		VM_MEMATTR_WB_WA	/* for DRM */
 
 #else
 /* Memory attribute configuration. */

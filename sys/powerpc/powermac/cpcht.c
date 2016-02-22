@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/cpcht.c 261513 2014-02-05 14:44:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/cpcht.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -176,7 +176,7 @@ cpcht_attach(device_t dev)
 	node = ofw_bus_get_node(dev);
 	sc = device_get_softc(dev);
 
-	if (OF_getprop(node, "reg", reg, sizeof(reg)) < 12)
+	if (OF_getencprop(node, "reg", reg, sizeof(reg)) < 12)
 		return (ENXIO);
 
 	if (OF_getproplen(node, "ranges") <= 0)
@@ -219,7 +219,7 @@ cpcht_configure_htbridge(device_t dev, phandle_t child)
 	u_int b, f, s;
 
 	sc = device_get_softc(dev);
-	if (OF_getprop(child, "reg", &pcir, sizeof(pcir)) == -1)
+	if (OF_getencprop(child, "reg", (pcell_t *)&pcir, sizeof(pcir)) == -1)
 		return;
 
 	b = OFW_PCI_PHYS_HI_BUS(pcir.phys_hi);

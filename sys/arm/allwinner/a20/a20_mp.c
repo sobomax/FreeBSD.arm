@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_mp.c 281752 2015-04-19 20:20:52Z marius $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_mp.c 289522 2015-10-18 16:54:34Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -61,7 +61,7 @@ void
 platform_mp_init_secondary(void)
 {
 
-	arm_init_secondary_ic();
+	arm_pic_init_secondary();
 }
 
 void

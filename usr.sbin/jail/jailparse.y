@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/jailparse.y 234712 2012-04-26 17:36:05Z jamie $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/jailparse.y 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <stdlib.h>
 #include <string.h>
@@ -103,7 +103,7 @@ param_l	:
 
 /*
  * Parameters have a name and an optional list of value strings,
- * which may have "+=" or "=" preceeding them.
+ * which may have "+=" or "=" preceding them.
  */
 param	: name
 	{

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-invtrig.c 251241 2013-06-02 04:30:03Z das $");
+__FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-invtrig.c 287297 2015-08-29 19:47:20Z rodrigc $");
 
 #include <assert.h>
 #include <fenv.h>
@@ -40,8 +40,6 @@ __FBSDID("$FreeBSD: head/tools/regression/lib/msun/test-invtrig.c 251241 2013-06
 #include <stdio.h>
 
 #include "test-utils.h"
-
-#define	LEN(a)		(sizeof(a) / sizeof((a)[0]))
 
 #pragma STDC FENV_ACCESS ON
 

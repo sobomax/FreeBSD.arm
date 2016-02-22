@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm283x_dwc_fdt.c 280284 2015-03-20 14:23:40Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm283x_dwc_fdt.c 290381 2015-11-05 03:46:54Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -72,8 +72,12 @@ bcm283x_dwc_otg_probe(device_t dev)
 static int
 bcm283x_dwc_otg_attach(device_t dev)
 {
+	int err;
 
-	bcm2835_mbox_set_power_state(dev, BCM2835_MBOX_POWER_ID_USB_HCD, TRUE);
+	err = bcm2835_mbox_set_power_state(BCM2835_MBOX_POWER_ID_USB_HCD, TRUE);
+	if (err)
+		device_printf(dev, "failed to set power state, err=%d\n", err);
+
 	return (dwc_otg_attach(dev));
 }
 

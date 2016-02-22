@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/md_nvidia.c 279278 2015-02-25 10:18:11Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/md_nvidia.c 286615 2015-08-11 03:12:09Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -498,7 +498,7 @@ nofit:
 		if (olddisk == NULL)
 			panic("No disk at position %d!", disk_pos);
 		if (olddisk->d_state != G_RAID_DISK_S_OFFLINE) {
-			G_RAID_DEBUG1(1, sc, "More then one disk for pos %d",
+			G_RAID_DEBUG1(1, sc, "More than one disk for pos %d",
 			    disk_pos);
 			g_raid_change_disk_state(disk, G_RAID_DISK_S_STALE);
 			return (0);

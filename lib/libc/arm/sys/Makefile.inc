@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/libc/arm/sys/Makefile.inc 281714 2015-04-18 21:50:13Z kib $
+# $FreeBSD: head/lib/libc/arm/sys/Makefile.inc 291937 2015-12-07 12:20:26Z kib $
 
-SRCS+=	trivial-vdso_tc.c
+SRCS+=	__vdso_gettc.c
 
 MDASM= Ovfork.S brk.S cerror.S pipe.S ptrace.S sbrk.S shmat.S sigreturn.S syscall.S
 

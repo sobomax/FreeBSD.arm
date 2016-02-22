@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libproc/tests/proc_test.c 277667 2015-01-25 00:34:43Z markj $");
+__FBSDID("$FreeBSD: head/lib/libproc/tests/proc_test.c 287333 2015-08-31 20:30:06Z emaste $");
 
 #include <sys/types.h>
 #include <sys/wait.h>

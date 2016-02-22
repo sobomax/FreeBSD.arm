@@ -38,7 +38,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/config/main.c 281731 2015-04-19 08:30:13Z eadler $";
+  "$FreeBSD: head/usr.sbin/config/main.c 287087 2015-08-24 00:34:09Z imp $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -714,7 +714,7 @@ kernconfdump(const char *file)
 	if (pp == NULL)
 		errx(EXIT_FAILURE, "popen() failed");
 	free(cmd);
-	fread(o, osz, 1, pp);
+	(void)fread(o, osz, 1, pp);
 	pclose(pp);
 	r = sscanf(o, "%d%d%d%d%d", &off, &size, &t1, &t2, &align);
 	free(o);

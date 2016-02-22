@@ -25,13 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/bus_space/bus.c 284228 2015-06-10 16:00:09Z marcel $");
+__FBSDID("$FreeBSD: head/tools/bus_space/bus.c 285903 2015-07-26 21:37:31Z marcel $");
 
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -92,19 +93,25 @@ rid_lookup(int rid)
 }
 
 int
-bs_map(const char *dev)
+bs_map(const char *dev, const char *res)
 {
+	char path[PATH_MAX];
 	struct proto_ioc_region region;
 	struct resource *r;
-	int rid;
+	int len, rid;
 
+	len = snprintf(path, PATH_MAX, "/dev/proto/%s/%s", dev, res);
+	if (len >= PATH_MAX) {
+		errno = EINVAL;
+		return (-1);
+	}
 	rid = rid_alloc();
 	if (rid == -1)
 		return (-1);
 	r = rid_lookup(rid);
 	if (r == NULL)
 		return (-1);
-	r->fd = open(dev, O_RDWR);
+	r->fd = open(path, O_RDWR);
 	if (r->fd == -1)
 		return (-1);
 	r->rid = -1;

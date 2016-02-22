@@ -11,9 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/grant_table/grant_table.c 282634 2015-05-08 14:48:40Z royger $");
-
-#include "opt_pmap.h"
+__FBSDID("$FreeBSD: head/sys/dev/xen/grant_table/grant_table.c 289686 2015-10-21 10:44:07Z royger $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -27,6 +25,7 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/grant_table/grant_table.c 282634 2015-05-08
 #include <sys/limits.h>
 #include <sys/rman.h>
 #include <machine/resource.h>
+#include <machine/cpu.h>
 
 #include <xen/xen-os.h>
 #include <xen/hypervisor.h>
@@ -39,8 +38,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/grant_table/grant_table.c 282634 2015-05-08
 #include <vm/vm_kern.h>
 #include <vm/vm_extern.h>
 #include <vm/pmap.h>
-
-#define cmpxchg(a, b, c) atomic_cmpset_int((volatile u_int *)(a),(b),(c))
 
 /* External tools reserve first few grant table entries. */
 #define NR_RESERVED_ENTRIES 8
@@ -291,13 +288,13 @@ gnttab_end_foreign_transfer_ref(grant_ref_t ref)
 	while (!((flags = shared[ref].flags) & GTF_transfer_committed)) {
 		if ( synch_cmpxchg(&shared[ref].flags, flags, 0) == flags )
 			return (0);
-		cpu_relax();
+		cpu_spinwait();
 	}
 
 	/* If a transfer is in progress then wait until it is completed. */
 	while (!(flags & GTF_transfer_completed)) {
 		flags = shared[ref].flags;
-		cpu_relax();
+		cpu_spinwait();
 	}
 
 	/* Read the frame number /after/ reading completion status. */

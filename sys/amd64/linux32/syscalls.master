@@ -1,8 +1,8 @@
- $FreeBSD: head/sys/amd64/linux32/syscalls.master 283492 2015-05-24 18:08:01Z dchagin $
+ $FreeBSD: head/sys/amd64/linux32/syscalls.master 289769 2015-10-22 21:28:20Z jhb $
 
 ;	@(#)syscalls.master	8.1 (Berkeley) 7/19/93
 ; System call name/number master file (or rather, slave, from LINUX).
-; Processed to create linux_sysent.c, linux_proto.h and linux_syscall.h.
+; Processed to create linux32_sysent.c, linux32_proto.h and linux32_syscall.h.
 
 ; Columns: number audit type nargs name alt{name,tag,rtyp}/comments
 ;	number	system call number, must be in order

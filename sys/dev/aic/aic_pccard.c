@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aic/aic_pccard.c 241591 2012-10-15 16:09:59Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/aic/aic_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -196,3 +196,4 @@ extern devclass_t aic_devclass;
 
 MODULE_DEPEND(aic, cam, 1,1,1);
 DRIVER_MODULE(aic, pccard, aic_pccard_driver, aic_devclass, 0, 0);
+PCCARD_PNP_INFO(aic_pccard_products);

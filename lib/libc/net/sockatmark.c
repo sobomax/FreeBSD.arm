@@ -22,15 +22,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/net/sockatmark.c 107836 2002-12-13 22:22:55Z fenner $
+ * $FreeBSD: head/lib/libc/net/sockatmark.c 288012 2015-09-20 04:15:37Z rodrigc $
  */
+#include "namespace.h"
 #include <sys/ioctl.h>
+#include <sys/socket.h>
+#include "un-namespace.h"
 
 int sockatmark(int s)
 {
 	int atmark;
 
-	if (ioctl(s, SIOCATMARK, &atmark) == -1)
+	if (_ioctl(s, SIOCATMARK, &atmark) == -1)
 		return -1;
 	return atmark;
 }

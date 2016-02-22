@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2013, Intel Corporation 
+  Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_nvm.h 247064 2013-02-21 00:25:45Z jfv $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_nvm.h 286833 2015-08-16 20:13:58Z sbruno $*/
 
 #ifndef _E1000_NVM_H_
 #define _E1000_NVM_H_

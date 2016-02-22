@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836.c 282610 2015-05-07 22:11:44Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836.c 290457 2015-11-06 17:12:33Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836.c 282610 2015-05-07 22
 #define	ARM_LOCAL_INT_TIMER(n)		(0x40 + (n) * 4)
 #define	ARM_LOCAL_INT_MAILBOX(n)	(0x50 + (n) * 4)
 #define	ARM_LOCAL_INT_PENDING(n)	(0x60 + (n) * 4)
-#define	 INT_PENDING_MASK		0x01f
+#define	 INT_PENDING_MASK		0x011f
 #define	MAILBOX0_IRQ			4
 #define	MAILBOX0_IRQEN			(1 << 0)
 

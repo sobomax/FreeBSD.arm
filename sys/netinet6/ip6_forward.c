@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 282046 2015-04-27 00:55:56Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 290867 2015-11-15 16:02:22Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -571,7 +571,7 @@ pass:
 		goto bad;
 	}
 
-	error = nd6_output(rt->rt_ifp, origifp, m, dst, rt);
+	error = nd6_output_ifp(rt->rt_ifp, origifp, m, dst, NULL);
 	if (error) {
 		in6_ifstat_inc(rt->rt_ifp, ifs6_out_discard);
 		IP6STAT_INC(ip6s_cantforward);

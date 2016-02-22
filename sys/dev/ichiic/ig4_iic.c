@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ichiic/ig4_iic.c 284803 2015-06-25 07:52:51Z grembo $");
+__FBSDID("$FreeBSD: head/sys/dev/ichiic/ig4_iic.c 286918 2015-08-19 09:49:29Z grembo $");
 
 /*
  * Intel fourth generation mobile cpus integrated I2C device, smbus driver.
@@ -74,8 +74,8 @@ static void ig4iic_intr(void *cookie);
 static void ig4iic_dump(ig4iic_softc_t *sc);
 
 static int ig4_dump;
-SYSCTL_INT(_debug, OID_AUTO, ig4_dump, CTLTYPE_INT | CTLFLAG_RW,
-	   &ig4_dump, 0, "");
+SYSCTL_INT(_debug, OID_AUTO, ig4_dump, CTLFLAG_RW,
+	   &ig4_dump, 0, "Dump controller registers");
 
 /*
  * Low-level inline support functions

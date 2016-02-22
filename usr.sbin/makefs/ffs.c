@@ -66,7 +66,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs.c 277085 2015-01-12 19:26:31Z brueffer $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs.c 289203 2015-10-13 02:32:15Z adrian $");
 
 #include <sys/param.h>
 
@@ -417,6 +417,10 @@ ffs_validate(const char *dir, fsnode *root, fsinfo_t *fsopts)
 
 		/* round up to the next block */
 	fsopts->size = roundup(fsopts->size, ffs_opts->bsize);
+
+		/* round up to requested block size, if any */
+	if (fsopts->roundup > 0)
+		fsopts->size = roundup(fsopts->size, fsopts->roundup);
 
 		/* calculate density if necessary */
 	if (ffs_opts->density == -1)

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/vt_sysmouse.c 270269 2014-08-21 13:04:34Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/vt_sysmouse.c 284959 2015-06-30 17:00:45Z markm $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -139,7 +139,7 @@ sysmouse_process_event(mouse_info_t *mi)
 	unsigned char buf[MOUSE_SYS_PACKETSIZE];
 	int x, y, iy, z;
 
-	random_harvest(mi, sizeof *mi, 2, RANDOM_MOUSE);
+	random_harvest_queue(mi, sizeof *mi, 2, RANDOM_MOUSE);
 
 	mtx_lock(&sysmouse_lock);
 	switch (mi->operation) {

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/i80321_pci.c 257199 2013-10-27 00:51:46Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/i80321/i80321_pci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -117,7 +117,7 @@ i80321_pci_attach(device_t dev)
 	if (rman_init(&sc->sc_irq_rman) != 0 ||
 	    rman_manage_region(&sc->sc_irq_rman, 26, 32) != 0)
 		panic("i80321_pci_probe: failed to set up IRQ rman");
-	device_add_child(dev, "pci",busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

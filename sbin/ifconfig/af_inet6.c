@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/af_inet6.c 282805 2015-05-12 03:31:57Z hrs $";
+  "$FreeBSD: head/sbin/ifconfig/af_inet6.c 288305 2015-09-27 07:51:18Z ngie $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -521,7 +521,6 @@ static struct option in6_Lopt = {
 static __constructor void
 inet6_ctor(void)
 {
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 	size_t i;
 
 #ifndef RESCUE
@@ -529,9 +528,8 @@ inet6_ctor(void)
 		return;
 #endif
 
-	for (i = 0; i < N(inet6_cmds);  i++)
+	for (i = 0; i < nitems(inet6_cmds);  i++)
 		cmd_register(&inet6_cmds[i]);
 	af_register(&af_inet6);
 	opt_register(&in6_Lopt);
-#undef N
 }

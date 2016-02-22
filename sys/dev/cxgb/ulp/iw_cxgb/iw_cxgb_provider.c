@@ -27,7 +27,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb_provider.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb_provider.c 285340 2015-07-09 22:13:23Z dim $");
 
 #include "opt_inet.h"
 
@@ -303,7 +303,7 @@ iwch_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags)
 	else
 		cq_op = CQ_ARM_AN;
 	if (chp->user_rptr_addr) {
-		if (copyin(&rptr, chp->user_rptr_addr, 4))
+		if (copyin(chp->user_rptr_addr, &rptr, sizeof(rptr)))
 			return (-EFAULT);
 		mtx_lock(&chp->lock);
 		chp->cq.rptr = rptr;

@@ -33,7 +33,7 @@
 
 /* #pragma ident	"@(#)rpc_generic.c	1.17	94/04/24 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/rpc_generic.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/sys/rpc/rpc_generic.c 286894 2015-08-18 18:12:46Z delphij $");
 
 /*
  * rpc_generic.c, Miscl routines for RPC.
@@ -703,7 +703,9 @@ __rpc_sockisbound(struct socket *so)
 	struct sockaddr *sa;
 	int error, bound;
 
+	CURVNET_SET(so->so_vnet);
 	error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+	CURVNET_RESTORE();
 	if (error)
 		return (0);
 
@@ -791,7 +793,9 @@ bindresvport(struct socket *so, struct sockaddr *sa)
 	socklen_t salen;
 
 	if (sa == NULL) {
+		CURVNET_SET(so->so_vnet);
 		error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+		CURVNET_RESTORE();
 		if (error)
 			return (error);
 		freesa = TRUE;

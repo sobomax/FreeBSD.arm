@@ -1,9 +1,8 @@
-# $FreeBSD: head/lib/libnv/tests/Makefile 279430 2015-03-01 00:21:56Z rstone $
-
-TESTSDIR=	${TESTSBASE}/lib/libnv
+# $FreeBSD: head/lib/libnv/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 ATF_TESTS_CXX=	\
 	dnv_tests \
+	nv_array_tests \
 	nv_tests \
 
 TAP_TESTS_C+=	nvlist_add_test

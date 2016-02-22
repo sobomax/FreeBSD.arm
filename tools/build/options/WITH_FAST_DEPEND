@@ -1,0 +1,7 @@
+.\" $FreeBSD: head/tools/build/options/WITH_FAST_DEPEND 290433 2015-11-06 04:45:29Z bdrewery $
+Set to generate
+.Sy .depend
+files in the build during compilation instead of the
+historial
+.Xr mkdep 1
+call during the "make depend" phase.

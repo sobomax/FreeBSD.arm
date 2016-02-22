@@ -29,9 +29,9 @@
 .\"
 .\" * Other names and brands may be claimed as the property of others.
 .\"
-.\" $FreeBSD: head/share/man/man4/em.4 283959 2015-06-03 18:01:09Z sbruno $
+.\" $FreeBSD: head/share/man/man4/em.4 286829 2015-08-16 19:06:23Z sbruno $
 .\"
-.Dd October 11, 2011
+.Dd August 16, 2015
 .Dt EM 4
 .Os
 .Sh NAME
@@ -205,6 +205,11 @@ Tunables can be set at the
 prompt before booting the kernel or stored in
 .Xr loader.conf 5 .
 .Bl -tag -width indent
+.It Va hw.em.disable_crc_stripping
+Disable or enable hardware stripping of CRC field.
+This is mostly useful on BMC/IPMI shared interfaces where stripping the CRC
+causes remote access over IPMI to fail.
+Default 0 (enabled).
 .It Va hw.em.eee_setting
 Disable or enable Energy Efficient Ethernet.
 Default 1 (disabled).
@@ -307,10 +312,4 @@ The
 driver was written by
 .An Intel Corporation Aq Mt freebsd@intel.com .
 .Sh BUGS
-Hardware-assisted VLAN processing is disabled by default.
-You can enable it on an
-.Nm
-interface using
-.Xr ifconfig 8 .
-.Pp
 Activating EM_MULTIQUEUE support requires MSI-X features.

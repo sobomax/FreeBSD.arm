@@ -1,5 +1,4 @@
 /* $OpenBSD: ssh.c,v 1.401 2014/02/26 20:18:37 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/ssh.c 264308 2014-04-09 20:42:00Z des $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -42,7 +41,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/ssh.c 264308 2014-04-09 20:42:00Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/ssh.c 291198 2015-11-23 12:48:13Z des $");
 
 #include <sys/types.h>
 #ifdef HAVE_SYS_STAT_H
@@ -783,15 +782,6 @@ main(int ac, char **av)
 			break;
 		case 'T':
 			options.request_tty = REQUEST_TTY_NO;
-#ifdef	NONE_CIPHER_ENABLED
-			/*
-			 * Ensure that the user does not try to backdoor a
-			 * NONE cipher switch on an interactive session by
-			 * explicitly disabling it if the user asks for a
-			 * session without a tty.
-			 */
-			options.none_switch = 0;
-#endif
 			break;
 		case 'o':
 			line = xstrdup(optarg);
@@ -1000,6 +990,23 @@ main(int ac, char **av)
 	strlcpy(shorthost, thishost, sizeof(shorthost));
 	shorthost[strcspn(thishost, ".")] = '\0';
 	snprintf(portstr, sizeof(portstr), "%d", options.port);
+
+	/* Find canonic host name. */
+	if (strchr(host, '.') == 0) {
+		struct addrinfo hints;
+		struct addrinfo *ai = NULL;
+		int errgai;
+		memset(&hints, 0, sizeof(hints));
+		hints.ai_family = options.address_family;
+		hints.ai_flags = AI_CANONNAME;
+		hints.ai_socktype = SOCK_STREAM;
+		errgai = getaddrinfo(host, NULL, &hints, &ai);
+		if (errgai == 0) {
+			if (ai->ai_canonname != NULL)
+				host = xstrdup(ai->ai_canonname);
+			freeaddrinfo(ai);
+		}
+	}
 
 	if (options.local_command != NULL) {
 		debug3("expanding LocalCommand: %s", options.local_command);

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cmx/cmx_pccard.c 176868 2008-03-06 08:09:45Z rink $");
+__FBSDID("$FreeBSD: head/sys/dev/cmx/cmx_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -112,4 +112,4 @@ static driver_t cmx_pccard_driver = {
 };
 
 DRIVER_MODULE(cmx, pccard, cmx_pccard_driver, cmx_devclass, 0, 0);
-
+PCCARD_PNP_INFO(cmx_pccard_products);

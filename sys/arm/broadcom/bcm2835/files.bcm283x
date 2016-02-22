@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/broadcom/bcm2835/files.bcm283x 280831 2015-03-29 22:43:39Z andrew $
+# $FreeBSD: head/sys/arm/broadcom/bcm2835/files.bcm283x 291133 2015-11-21 15:30:08Z andrew $
 
 arm/broadcom/bcm2835/bcm2835_bsc.c		optional bcm2835_bsc
 arm/broadcom/bcm2835/bcm2835_common.c		optional fdt
@@ -12,12 +12,9 @@ arm/broadcom/bcm2835/bcm2835_machdep.c		standard
 arm/broadcom/bcm2835/bcm2835_mbox.c		standard
 arm/broadcom/bcm2835/bcm2835_sdhci.c		optional sdhci
 arm/broadcom/bcm2835/bcm2835_spi.c		optional bcm2835_spi
+arm/broadcom/bcm2835/bcm2835_vcio.c		standard
 arm/broadcom/bcm2835/bcm2835_wdog.c		standard
 arm/broadcom/bcm2835/bcm283x_dwc_fdt.c		optional dwcotg fdt
-
-arm/arm/bus_space_base.c			standard
-arm/arm/bus_space_generic.c                     standard
-arm/arm/bus_space_asm_generic.S                 standard
 
 kern/kern_clocksource.c                         standard
 

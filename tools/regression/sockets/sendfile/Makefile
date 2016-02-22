@@ -1,11 +1,10 @@
 #
-# $FreeBSD: head/tools/regression/sockets/sendfile/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/sendfile/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 #
 
 PROG=	sendfile
 MAN=
 WARNS?=	6
-DPADD=	${LIBMD}
-LDADD=	-lmd
+LIBADD=	md
 
 .include <bsd.prog.mk>

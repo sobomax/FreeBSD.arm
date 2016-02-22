@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/ixgbe_vf.c 283883 2015-06-01 17:43:34Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixgbe/ixgbe_vf.c 285590 2015-07-15 00:35:50Z pkelsey $*/
 
 
 #include "ixgbe_api.h"
@@ -224,6 +224,8 @@ s32 ixgbe_reset_hw_vf(struct ixgbe_hw *hw)
 			IXGBE_VF_PERMADDR_MSG_LEN, 0);
 	if (ret_val)
 		return ret_val;
+
+	msgbuf[0] &= ~IXGBE_VT_MSGTYPE_CTS;
 
 	if (msgbuf[0] != (IXGBE_VF_RESET | IXGBE_VT_MSGTYPE_ACK) &&
 	    msgbuf[0] != (IXGBE_VF_RESET | IXGBE_VT_MSGTYPE_NACK))

@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/parser/Makefile 273276 2014-10-19 11:59:15Z jilles $
+# $FreeBSD: head/bin/sh/tests/parser/Makefile 287408 2015-09-02 19:49:55Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -36,6 +36,8 @@ FILES+=		dollar-quote8.0
 FILES+=		dollar-quote9.0
 FILES+=		dollar-quote10.0
 FILES+=		dollar-quote11.0
+FILES+=		dollar-quote12.0
+FILES+=		dollar-quote13.0
 FILES+=		empty-braces1.0
 FILES+=		empty-cmd1.0
 FILES+=		for1.0
@@ -55,6 +57,7 @@ FILES+=		heredoc9.0
 FILES+=		heredoc10.0
 FILES+=		heredoc11.0
 FILES+=		heredoc12.0
+FILES+=		heredoc13.0
 FILES+=		line-cont1.0
 FILES+=		line-cont2.0
 FILES+=		line-cont3.0

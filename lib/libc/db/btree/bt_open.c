@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)bt_open.c	8.10 (Berkeley) 8/17/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/btree/bt_open.c 254289 2013-08-13 19:20:50Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/db/btree/bt_open.c 287292 2015-08-29 14:25:01Z kib $");
 
 /*
  * Implementation of btree access method for 4.4BSD.
@@ -57,6 +57,7 @@ __FBSDID("$FreeBSD: head/lib/libc/db/btree/bt_open.c 254289 2013-08-13 19:20:50Z
 #include <string.h>
 #include <unistd.h>
 #include "un-namespace.h"
+#include "libc_private.h"
 
 #include <db.h>
 #include "btree.h"
@@ -401,10 +402,10 @@ tmp(void)
 	}
 
 	(void)sigfillset(&set);
-	(void)_sigprocmask(SIG_BLOCK, &set, &oset);
+	(void)__libc_sigprocmask(SIG_BLOCK, &set, &oset);
 	if ((fd = mkostemp(path, O_CLOEXEC)) != -1)
 		(void)unlink(path);
-	(void)_sigprocmask(SIG_SETMASK, &oset, NULL);
+	(void)__libc_sigprocmask(SIG_SETMASK, &oset, NULL);
 	return(fd);
 }
 

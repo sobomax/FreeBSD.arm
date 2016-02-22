@@ -26,12 +26,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libnv/tests/nvlist_send_recv_test.c 282346 2015-05-02 17:45:52Z oshogbo $
+ * $FreeBSD: head/lib/libnv/tests/nvlist_send_recv_test.c 285063 2015-07-02 21:58:10Z oshogbo $
  */
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/wait.h>
+#include <sys/nv.h>
 
 #include <err.h>
 #include <errno.h>
@@ -39,8 +40,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <nv.h>
 
 static int ntest = 1;
 

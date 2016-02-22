@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_check.h 283514 2015-05-25 08:34:55Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_check.h 291927 2015-12-07 07:20:49Z arybchik $
  */
 
 #ifndef _SYS_EFX_CHECK_H
@@ -145,6 +145,20 @@
 #if EFSYS_OPT_HUNTINGTON && !EFSYS_OPT_MCDI
 # error "HUNTINGTON requires MCDI"
 #endif
+
+/* Support MCDI logging */
+#if EFSYS_OPT_MCDI_LOGGING
+# if !EFSYS_OPT_MCDI
+#  error "MCDI_LOGGING requires MCDI"
+# endif
+#endif /* EFSYS_OPT_MCDI_LOGGING */
+
+/* Support MCDI proxy authorization */
+#if EFSYS_OPT_MCDI_PROXY_AUTH
+# if !EFSYS_OPT_MCDI
+#  error "MCDI_PROXY_AUTH requires MCDI"
+# endif
+#endif /* EFSYS_OPT_MCDI_PROXY_AUTH */
 
 /* Support LM87 monitor */
 #if EFSYS_OPT_MON_LM87

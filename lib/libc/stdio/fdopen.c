@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)fdopen.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/fdopen.c 264737 2014-04-21 17:40:23Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/fdopen.c 290110 2015-10-28 14:40:02Z ache $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -91,7 +91,9 @@ fdopen(int fd, const char *mode)
 	 * O_APPEND bit set, assert __SAPP so that __swrite() caller
 	 * will _sseek() to the end before write.
 	 */
-	if ((oflags & O_APPEND) && !(fdflags & O_APPEND))
+	if (fdflags & O_APPEND)
+		fp->_flags2 |= __S2OAP;
+	else if (oflags & O_APPEND)
 		fp->_flags |= __SAPP;
 	fp->_file = fd;
 	fp->_cookie = fp;

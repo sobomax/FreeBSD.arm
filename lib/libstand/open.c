@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/open.c 269308 2014-07-30 16:08:16Z marcel $");
+__FBSDID("$FreeBSD: head/lib/libstand/open.c 289044 2015-10-08 17:59:05Z marcel $");
 
 #include "stand.h"
 
@@ -114,7 +114,7 @@ open(const char *fname, int mode)
 	error = (fs->fo_open)(fname, f);
 	if (error == 0)
 	    goto ok;
-	goto fail;
+	goto err;
     }
 
     error = devopen(f, fname, &file);

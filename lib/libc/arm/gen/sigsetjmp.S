@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/gen/sigsetjmp.S 270882 2014-08-31 17:21:51Z ian $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/gen/sigsetjmp.S 288373 2015-09-29 16:09:58Z kib $");
 
 #include <machine/setjmp.h>
 
@@ -66,3 +66,5 @@ ENTRY(siglongjmp)
 	beq	PIC_SYM(_C_LABEL(_longjmp), PLT)
 	b	PIC_SYM(_C_LABEL(longjmp), PLT)
 END(siglongjmp)
+
+	.section .note.GNU-stack,"",%progbits

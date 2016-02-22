@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/sigreturn.S 129202 2004-05-14 12:04:31Z cognet $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/sigreturn.S 288373 2015-09-29 16:09:58Z kib $");
 #include "SYS.h"
 
 /*
@@ -40,3 +40,5 @@ __FBSDID("$FreeBSD: head/lib/libc/arm/sys/sigreturn.S 129202 2004-05-14 12:04:31
  */
 
 RSYSCALL(sigreturn)
+
+	.section .note.GNU-stack,"",%progbits

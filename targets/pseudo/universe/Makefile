@@ -1,4 +1,4 @@
-# $FreeBSD: head/targets/pseudo/universe/Makefile 275339 2014-11-30 18:45:46Z sjg $
+# $FreeBSD: head/targets/pseudo/universe/Makefile 291973 2015-12-08 00:22:24Z bdrewery $
 
 # This target is "special".
 #
@@ -36,8 +36,6 @@ UNIVERSE_TARGET_RELDIR?= targets/pseudo/the-lot
 
 # the list of machines
 TARGET_MACHINE_LIST = i386 amd64
-# some machines have more than one arch
-TARGET_ARCHES_arm?=     arm armeb armv6 armv6hf
 
 # avoid ../Makefile.inc defining this
 all:

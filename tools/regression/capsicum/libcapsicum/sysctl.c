@@ -28,11 +28,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/regression/capsicum/libcapsicum/sysctl.c 263234 2014-03-16 11:04:44Z rwatson $");
+__FBSDID("$FreeBSD: head/tools/regression/capsicum/libcapsicum/sysctl.c 285063 2015-07-02 21:58:10Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
 #include <sys/sysctl.h>
+#include <sys/nv.h>
 
 #include <assert.h>
 #include <err.h>
@@ -46,7 +47,6 @@ __FBSDID("$FreeBSD: head/tools/regression/capsicum/libcapsicum/sysctl.c 263234 2
 #include <libcapsicum.h>
 #include <libcapsicum_service.h>
 #include <libcapsicum_sysctl.h>
-#include <nv.h>
 
 /*
  * We need some sysctls to perform the tests on.

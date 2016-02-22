@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_gpt.c 284151 2015-06-08 12:52:41Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_gpt.c 292057 2015-12-10 10:35:07Z ae $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -823,22 +823,23 @@ g_part_gpt_probe(struct g_part_table *table, struct g_consumer *cp)
 		return (error);
 	res = le16dec(buf + DOSMAGICOFFSET);
 	pri = G_PART_PROBE_PRI_LOW;
-	for (index = 0; index < NDOSPART; index++) {
-		if (buf[DOSPARTOFF + DOSPARTSIZE * index + 4] == 0xee)
-			pri = G_PART_PROBE_PRI_HIGH;
-	}
-	g_free(buf);
-	if (res != DOSMAGIC) 
-		return (ENXIO);
+	if (res == DOSMAGIC) {
+		for (index = 0; index < NDOSPART; index++) {
+			if (buf[DOSPARTOFF + DOSPARTSIZE * index + 4] == 0xee)
+				pri = G_PART_PROBE_PRI_HIGH;
+		}
+		g_free(buf);
 
-	/* Check that there's a primary header. */
-	buf = g_read_data(cp, pp->sectorsize, pp->sectorsize, &error);
-	if (buf == NULL)
-		return (error);
-	res = memcmp(buf, GPT_HDR_SIG, 8);
-	g_free(buf);
-	if (res == 0)
-		return (pri);
+		/* Check that there's a primary header. */
+		buf = g_read_data(cp, pp->sectorsize, pp->sectorsize, &error);
+		if (buf == NULL)
+			return (error);
+		res = memcmp(buf, GPT_HDR_SIG, 8);
+		g_free(buf);
+		if (res == 0)
+			return (pri);
+	} else
+		g_free(buf);
 
 	/* No primary? Check that there's a secondary. */
 	buf = g_read_data(cp, pp->mediasize - pp->sectorsize, pp->sectorsize,
@@ -1007,6 +1008,7 @@ g_part_gpt_setunset(struct g_part_table *basetable,
 {
 	struct g_part_gpt_entry *entry;
 	struct g_part_gpt_table *table;
+	struct g_provider *pp;
 	uint8_t *p;
 	uint64_t attr;
 	int i;
@@ -1035,6 +1037,21 @@ g_part_gpt_setunset(struct g_part_table *basetable,
 				p[0] = (p[4] == 0xee) ? ((set) ? 0x80 : 0) : 0;
 			}
 		}
+		return (0);
+	} else if (strcasecmp(attrib, "lenovofix") == 0) {
+		/*
+		 * Write the 0xee GPT entry to slot #1 (2nd slot) in the pMBR.
+		 * This workaround allows Lenovo X220, T420, T520, etc to boot
+		 * from GPT Partitions in BIOS mode.
+		 */
+
+		if (entry != NULL)
+			return (ENXIO);
+
+		pp = LIST_FIRST(&basetable->gpt_gp->consumer)->provider;
+		bzero(table->mbr + DOSPARTOFF, DOSPARTSIZE * NDOSPART);
+		gpt_write_mbr_entry(table->mbr, ((set) ? 1 : 0), 0xee, 1,
+		    MIN(pp->mediasize / pp->sectorsize - 1, UINT32_MAX));
 		return (0);
 	}
 

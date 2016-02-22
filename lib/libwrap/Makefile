@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/lib/libwrap/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libwrap/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 #
 
 .include <src.opts.mk>
@@ -17,7 +17,7 @@ MLINKS=	hosts_access.3 hosts_ctl.3 \
 .PATH:	${.CURDIR}/../../contrib/tcp_wrappers
 
 CFLAGS+=-DFACILITY=LOG_AUTH -DHOSTS_ACCESS -DNETGROUP -DDAEMON_UMASK=022 \
-	-DREAL_DAEMON_DIR=\"/usr/libexec\" -DPROCESS_OPTIONS \
+	-DREAL_DAEMON_DIR=\"${LIBEXECDIR}\" -DPROCESS_OPTIONS \
 	-DSEVERITY=LOG_INFO -DRFC931_TIMEOUT=10 \
 	-DHOSTS_DENY=\"/etc/hosts.deny\" -DHOSTS_ALLOW=\"/etc/hosts.allow\" \
 	-DSYS_ERRLIST_DEFINED -DALWAYS_HOSTNAME -DUSE_STRSEP -DPROCESS_OPTIONS

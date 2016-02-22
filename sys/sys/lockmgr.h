@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: head/sys/sys/lockmgr.h 273966 2014-11-02 13:10:31Z kib $
+ * $FreeBSD: head/sys/sys/lockmgr.h 285632 2015-07-16 13:57:05Z mjg $
  */
 
 #ifndef	_SYS_LOCKMGR_H_
@@ -159,6 +159,7 @@ _lockmgr_args_rw(struct lock *lk, u_int flags, struct rwlock *ilk,
 #define	LK_SLEEPFAIL	0x000800
 #define	LK_TIMELOCK	0x001000
 #define	LK_NODDLKTREAT	0x002000
+#define	LK_VNHELD	0x004000
 
 /*
  * Operations for lockmgr().

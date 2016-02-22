@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/lib/Makefile 283502 2015-05-24 23:19:47Z ngie $
+# $FreeBSD: head/lib/Makefile 291740 2015-12-04 03:18:02Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -48,7 +48,7 @@ SUBDIR=	${SUBDIR_ORDERED} \
 	libdwarf \
 	libedit \
 	${_libelftc} \
-	${_libevent} \
+	libevent \
 	libexecinfo \
 	libexpat \
 	libfetch \
@@ -71,11 +71,12 @@ SUBDIR=	${SUBDIR_ORDERED} \
 	${_libmp} \
 	libmt \
 	${_libnandfs} \
+	lib80211 \
 	libnetbsd \
 	${_libnetgraph} \
 	${_libngatm} \
 	libnv \
-	libohash \
+	libopenbsd \
 	libopie \
 	libpam \
 	libpcap \
@@ -129,7 +130,7 @@ SUBDIR_DEPEND_libarchive= libz libbz2 libexpat liblzma libmd
 SUBDIR_DEPEND_libatm= libmd
 SUBDIR_DEPEND_libauditdm= libbsm
 SUBDIR_DEPEND_libbsnmp= ${_libnetgraph}
-SUBDIR_DEPEND_libc++= libcxxrt
+SUBDIR_DEPEND_libc++:= libcxxrt
 SUBDIR_DEPEND_libc= libcompiler_rt
 SUBDIR_DEPEND_libcam= libsbuf
 SUBDIR_DEPEND_libcapsicum= libnv
@@ -137,7 +138,6 @@ SUBDIR_DEPEND_libcasper= libcapsicum libnv libpjdlog
 SUBDIR_DEPEND_libdevstat= libkvm
 SUBDIR_DEPEND_libdpv= libfigpar ncurses libutil
 SUBDIR_DEPEND_libedit= ncurses
-SUBDIR_DEPEND_libg++= msun
 SUBDIR_DEPEND_libgeom= libexpat libsbuf
 SUBDIR_DEPEND_liblibrpcsec_gss= libgssapi
 SUBDIR_DEPEND_libmagic= libz
@@ -148,7 +148,6 @@ SUBDIR_DEPEND_libpjdlog= libutil
 SUBDIR_DEPEND_libprocstat= libkvm libutil
 SUBDIR_DEPEND_libradius= libmd
 SUBDIR_DEPEND_libsmb= libkiconv
-SUBDIR_DEPEND_libstdc++= msun
 SUBDIR_DEPEND_libtacplus= libmd
 SUBDIR_DEPEND_libulog= libmd
 SUBDIR_DEPEND_libunbound= ${_libldns}
@@ -182,7 +181,7 @@ _clang=		clang
 _cuse=		libcuse
 .endif
 
-.if ${MK_ELFTOOLCHAIN_TOOLS} != "no"
+.if ${MK_TOOLCHAIN} != "no"
 _libelftc=	libelftc
 .endif
 
@@ -215,8 +214,9 @@ _libldns=	libldns
 # sense to build when clang is enabled at all.  Furthermore, they can only be
 # built for certain architectures.
 .if ${MK_CLANG} != "no" && ${COMPILER_TYPE} == "clang" && \
-    (${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64" || \
-    (${MACHINE_CPUARCH} == "arm" && ${MACHINE_ARCH} != "armeb"))
+    (${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "amd64" || \
+    (${MACHINE_CPUARCH} == "arm" && ${MACHINE_ARCH} != "armeb") || \
+    (${MACHINE_CPUARCH} == "i386"))
 _libclang_rt=	libclang_rt
 .endif
 
@@ -239,10 +239,6 @@ _libnetgraph=	libnetgraph
 
 .if ${MK_NIS} != "no"
 _libypclnt=	libypclnt
-.endif
-
-.if ${MK_PF} != "no"
-_libevent=	libevent
 .endif
 
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
@@ -273,7 +269,7 @@ _libsmb=	libsmb
 _libsmb=	libsmb
 .endif
 
-.if ${MACHINE_CPUARCH} == "arm"
+.if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
 _libsmb=	libsmb
 _libproc=	libproc
 _librtld_db=	librtld_db
@@ -316,11 +312,6 @@ _libunbound=	libunbound
 .if ${MK_USB} != "no"
 _libusbhid=	libusbhid
 _libusb=	libusb
-.endif
-
-.if !defined(LIBRARIES_ONLY)
-afterinstall:
-	${INSTALL_SYMLINK} ../include ${DESTDIR}/usr/lib/include
 .endif
 
 .if !make(install)

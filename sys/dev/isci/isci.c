@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/isci.c 256125 2013-10-07 20:48:24Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/isci.c 287563 2015-09-08 15:59:55Z jimharris $");
 
 #include <dev/isci/isci.h>
 
@@ -163,6 +163,7 @@ isci_attach(device_t device)
 
 	g_isci = isci;
 	isci->device = device;
+	pci_enable_busmaster(device);
 
 	isci_allocate_pci_memory(isci);
 
@@ -272,6 +273,7 @@ isci_detach(device_t device)
 
 		pci_release_msi(device);
 	}
+	pci_disable_busmaster(device);
 
 	return (0);
 }

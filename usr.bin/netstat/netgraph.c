@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/netstat/netgraph.c 279122 2015-02-21 23:47:20Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/netstat/netgraph.c 287407 2015-09-02 18:51:36Z hrs $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: head/usr.bin/netstat/netgraph.c 279122 2015-02-21 23:47:20Z 
 #include <netgraph/ng_socket.h>
 #include <netgraph/ng_socketvar.h>
 
-#include <nlist.h>
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>

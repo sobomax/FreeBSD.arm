@@ -23,13 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_sig.c 284385 2015-06-14 19:19:46Z kib $
+ * $FreeBSD: head/lib/libthr/thread/thr_sig.c 286582 2015-08-10 17:02:42Z kib $
  */
 
 #include "namespace.h"
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/signalvar.h>
+#include <sys/syscall.h>
 #include <signal.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -257,7 +258,7 @@ handle_signal(struct sigaction *actp, int sig, siginfo_t *info, ucontext_t *ucp)
 	/* reschedule cancellation */
 	check_cancel(curthread, &uc2);
 	errno = err;
-	__sys_sigreturn(&uc2);
+	syscall(SYS_sigreturn, &uc2);
 }
 
 void

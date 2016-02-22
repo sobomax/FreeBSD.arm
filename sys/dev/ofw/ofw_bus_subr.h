@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 284624 2015-06-20 04:48:48Z imp $
+ * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 291648 2015-12-02 14:21:16Z mmel $
  */
 
 #ifndef	_DEV_OFW_OFW_BUS_SUBR_H_
@@ -82,7 +82,7 @@ const char *ofw_bus_get_status(device_t dev);
 int ofw_bus_status_okay(device_t dev);
 
 /* Helper to get node's interrupt parent */
-void	ofw_bus_find_iparent(phandle_t);
+phandle_t ofw_bus_find_iparent(phandle_t);
 
 /* Helper routine for checking compat prop */
 int ofw_bus_is_compatible(device_t, const char *);

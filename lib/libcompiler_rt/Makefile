@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcompiler_rt/Makefile 281600 2015-04-16 12:54:28Z emaste $
+# $FreeBSD: head/lib/libcompiler_rt/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <src.opts.mk>
 
@@ -48,6 +48,7 @@ SRCF=	absvdi2 \
 	divxc3 \
 	enable_execute_stack \
 	eprintf \
+	extendhfsf2 \
 	ffsdi2 \
 	ffsti2 \
 	fixdfdi \
@@ -121,6 +122,8 @@ SRCF=	absvdi2 \
 	subvsi3 \
 	subvti3 \
 	trampoline_setup \
+	truncdfhf2 \
+	truncsfhf2 \
 	ucmpdi2 \
 	ucmpti2 \
 	udivdi3 \
@@ -230,7 +233,7 @@ SYMLINKS+=libcompiler_rt_p.a ${LIBDIR}/libgcc_p.a
 .endif
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386" || \
-    ${MACHINE_CPUARCH} == "powerpc"
+    ${MACHINE_CPUARCH} == "powerpc" || ${MACHINE_ARCH:Marmv6*}
 AFLAGS+=--noexecstack
 ACFLAGS+=-Wa,--noexecstack
 .endif

@@ -44,7 +44,7 @@
  *      from: @(#)pmap.h        7.4 (Berkeley) 5/12/91
  * 	from: FreeBSD: src/sys/i386/include/pmap.h,v 1.70 2000/11/30
  *
- * $FreeBSD: head/sys/arm/include/pmap.h 281369 2015-04-10 13:26:35Z ian $
+ * $FreeBSD: head/sys/arm/include/pmap.h 290120 2015-10-28 21:17:38Z jah $
  */
 #ifdef ARM_NEW_PMAP
 #include <machine/pmap-v6.h>
@@ -277,7 +277,6 @@ void
 pmap_map_entry(vm_offset_t l1pt, vm_offset_t va, vm_offset_t pa, int prot,
     int cache);
 int pmap_fault_fixup(pmap_t, vm_offset_t, vm_prot_t, int);
-int pmap_dmap_iscurrent(pmap_t pmap);
 
 /*
  * Definitions for MMU domains

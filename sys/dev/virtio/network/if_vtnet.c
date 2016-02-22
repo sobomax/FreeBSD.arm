@@ -27,7 +27,7 @@
 /* Driver for VirtIO network devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 284348 2015-06-13 19:39:21Z kp $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 287423 2015-09-03 06:53:17Z araujo $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -304,6 +304,9 @@ DRIVER_MODULE(vtnet, virtio_pci, vtnet_driver, vtnet_devclass,
     vtnet_modevent, 0);
 MODULE_VERSION(vtnet, 1);
 MODULE_DEPEND(vtnet, virtio, 1, 1, 1);
+#ifdef DEV_NETMAP
+MODULE_DEPEND(vtnet, netmap, 1, 1, 1);
+#endif /* DEV_NETMAP */
 
 static int
 vtnet_modevent(module_t mod, int type, void *unused)
@@ -1639,14 +1642,12 @@ static int
 vtnet_rxq_merged_eof(struct vtnet_rxq *rxq, struct mbuf *m_head, int nbufs)
 {
 	struct vtnet_softc *sc;
-	struct ifnet *ifp;
 	struct virtqueue *vq;
 	struct mbuf *m, *m_tail;
 	int len;
 
 	sc = rxq->vtnrx_sc;
 	vq = rxq->vtnrx_vq;
-	ifp = sc->vtnet_ifp;
 	m_tail = m_head;
 
 	while (--nbufs > 0) {
@@ -3642,10 +3643,8 @@ vtnet_set_rx_process_limit(struct vtnet_softc *sc)
 static void
 vtnet_set_tx_intr_threshold(struct vtnet_softc *sc)
 {
-	device_t dev;
 	int size, thresh;
 
-	dev = sc->vtnet_dev;
 	size = virtqueue_size(sc->vtnet_txqs[0].vtntx_vq);
 
 	/*

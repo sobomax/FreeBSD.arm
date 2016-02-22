@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/doc/papers/Makefile 282219 2015-04-29 13:30:04Z bapt $
+# $FreeBSD: head/share/doc/papers/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 SUBDIR=	beyond4.3 \
 	bufbio \
@@ -14,5 +14,7 @@ SUBDIR=	beyond4.3 \
 	relengr \
 	sysperf \
 	timecounter
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

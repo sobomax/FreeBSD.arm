@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/rtld_start.S 268310 2014-07-06 10:24:06Z andrew $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/rtld_start.S 288373 2015-09-29 16:09:58Z kib $");
 
 	.text
 	.align	0
@@ -97,3 +97,4 @@ _rtld_bind_start:
 	ldmia	sp!,{r0-r5,sl,fp,lr}	/* restore the stack */
 	mov	pc, ip			/* jump to the new address */
 
+	.section .note.GNU-stack,"",%progbits

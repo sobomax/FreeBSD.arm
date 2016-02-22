@@ -1,10 +1,4 @@
-# $FreeBSD: head/bin/expr/tests/Makefile 277358 2015-01-19 06:13:07Z ngie $
-
-OBJTOP=		${.OBJDIR}/../../..
-SRCTOP=		${.CURDIR}/../../..
-TESTSRC=	${SRCTOP}/contrib/netbsd-tests/bin/expr
-
-TESTSDIR=	${TESTSBASE}/bin/expr
+# $FreeBSD: head/bin/expr/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 NETBSD_ATF_TESTS_SH=	expr_test
 

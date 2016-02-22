@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_device.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_device.c 287673 2015-09-11 15:51:20Z avg $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc_helper.h>
@@ -1342,14 +1342,10 @@ int radeon_suspend_kms(struct drm_device *dev)
 
 	radeon_agp_suspend(rdev);
 
-	pci_save_state(device_get_parent(dev->dev));
 #ifdef FREEBSD_WIP
 	if (state.event == PM_EVENT_SUSPEND) {
 		/* Shut down the device */
 		pci_disable_device(dev->pdev);
-#endif /* FREEBSD_WIP */
-		pci_set_powerstate(dev->dev, PCI_POWERSTATE_D3);
-#ifdef FREEBSD_WIP
 	}
 	console_lock();
 #endif /* FREEBSD_WIP */
@@ -1380,10 +1376,6 @@ int radeon_resume_kms(struct drm_device *dev)
 
 #ifdef FREEBSD_WIP
 	console_lock();
-#endif /* FREEBSD_WIP */
-	pci_set_powerstate(device_get_parent(dev->dev), PCI_POWERSTATE_D0);
-	pci_restore_state(device_get_parent(dev->dev));
-#ifdef FREEBSD_WIP
 	if (pci_enable_device(dev->pdev)) {
 		console_unlock();
 		return -1;

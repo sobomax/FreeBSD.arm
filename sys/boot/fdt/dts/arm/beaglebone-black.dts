@@ -23,12 +23,28 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/beaglebone-black.dts 284534 2015-06-18 00:57:52Z gonzo $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/beaglebone-black.dts 287419 2015-09-03 02:28:18Z gonzo $
  */
 
 
 #include "am335x-boneblack.dts"
 #include "beaglebone-common.dtsi"
+
+&am33xx_pinmux {
+	i2c1_pins: pinmux_i2c1_pins {
+		pinctrl-single,pins = <
+			0x158 (PIN_INPUT_PULLUP | MUX_MODE2)	/* spi0_d1.i2c1_sda */
+			0x15c (PIN_INPUT_PULLUP | MUX_MODE2)	/* spi0_cs0.i2c1_scl */
+		>;
+	};
+
+	i2c2_pins: pinmux_i2c2_pins {
+		pinctrl-single,pins = <
+			0x178 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
+			0x17c (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
+		>;
+	};
+};
 
 &i2c0 {
 	tda998x: hdmi-encoder {
@@ -40,6 +56,20 @@
  		pinctrl-1 = <&nxp_hdmi_bonelt_off_pins>;
 		status = "okay";
  	};
+};
+
+&i2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_pins>;
+
+	status = "okay";
+};
+
+&i2c2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_pins>;
+
+	status = "okay";
 };
 
 &lcdc {

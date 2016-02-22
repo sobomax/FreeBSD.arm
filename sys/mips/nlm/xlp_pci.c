@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_pci.c 279387 2015-02-28 00:17:29Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_pci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -314,7 +314,7 @@ xlp_pcib_attach(device_t dev)
 		for (link = 0; link < 4; link++)
 			xlp_pcib_hardware_swap_enable(node, link);
 
-	device_add_child(dev, "pci", 0);
+	device_add_child(dev, "pci", -1);
 	bus_generic_attach(dev);
 	return (0);
 }

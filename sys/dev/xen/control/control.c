@@ -89,7 +89,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 291024 2015-11-18 18:11:19Z royger $");
 
 /**
  * \file control.c
@@ -128,6 +128,8 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:4
 #include <machine/_inttypes.h>
 #include <machine/intr_machdep.h>
 
+#include <x86/apicvar.h>
+
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_kern.h>
@@ -144,9 +146,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:4
 #include <xen/interface/grant_table.h>
 
 #include <xen/xenbus/xenbusvar.h>
-
-#include <machine/xen/xenvar.h>
-#include <machine/xen/xenfunc.h>
 
 /*--------------------------- Forward Declarations --------------------------*/
 /** Function signature for shutdown event handlers. */
@@ -259,6 +258,8 @@ xctrl_suspend()
 	gnttab_resume(NULL);
 
 #ifdef SMP
+	/* Send an IPI_BITMAP in case there are pending bitmap IPIs. */
+	lapic_ipi_vectored(IPI_BITMAP_VECTOR, APIC_IPI_DEST_ALL);
 	if (smp_started && !CPU_EMPTY(&cpu_suspend_map)) {
 		/*
 		 * Now that event channels have been initialized,
@@ -368,7 +369,7 @@ xctrl_probe(device_t dev)
 {
 	device_set_desc(dev, "Xen Control Device");
 
-	return (0);
+	return (BUS_PROBE_NOWILDCARD);
 }
 
 /**

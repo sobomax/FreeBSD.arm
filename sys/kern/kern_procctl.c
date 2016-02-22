@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_procctl.c 278795 2015-02-15 08:44:30Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_procctl.c 286975 2015-08-20 22:44:26Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -187,8 +187,6 @@ reap_status(struct thread *td, struct proc *p,
 		}
 	} else {
 		rs->rs_pid = -1;
-		KASSERT(LIST_EMPTY(&reap->p_reaplist), ("reap children list"));
-		KASSERT(LIST_EMPTY(&reap->p_children), ("children list"));
 	}
 	return (0);
 }

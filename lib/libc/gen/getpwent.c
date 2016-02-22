@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getpwent.c 279712 2015-03-06 22:22:57Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getpwent.c 289925 2015-10-25 07:42:56Z ngie $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -1607,9 +1607,9 @@ compat_redispatch(struct compat_state *st, enum nss_lookup_type how,
 		{ NULL, NULL, NULL }
 	};
 	void		*discard;
-	int		 rv, e, i;
+	int		 e, i, rv;
 
-	for (i = 0; i < sizeof(dtab)/sizeof(dtab[0]) - 1; i++)
+	for (i = 0; i < (int)(nitems(dtab) - 1); i++)
 		dtab[i].mdata = (void *)lookup_how;
 more:
 	pwd_init(pwd);
@@ -1703,8 +1703,7 @@ compat_setpwent(void *retval, void *mdata, va_list ap)
 
 #define set_setent(x, y) do {	 				\
 	int i;							\
-								\
-	for (i = 0; i < (sizeof(x)/sizeof(x[0])) - 1; i++)	\
+	for (i = 0; i < (int)(nitems(x) - 1); i++)		\
 		x[i].mdata = (void *)y;				\
 } while (0)
 

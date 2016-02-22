@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/vfp.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/vfp.h 286225 2015-08-03 11:05:02Z andrew $
  */
 
 #ifndef _MACHINE_VFP_H_
@@ -38,7 +38,7 @@
 void	vfp_init(void);
 void	vfp_discard(struct thread *);
 void	vfp_restore_state(void);
-void	vfp_save_state(struct thread *);
+void	vfp_save_state(struct thread *, struct pcb *);
 #endif
 
 #endif

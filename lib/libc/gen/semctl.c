@@ -27,7 +27,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/semctl.c 194910 2009-06-24 21:10:52Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/semctl.c 288008 2015-09-20 03:58:27Z rodrigc $");
 
 #define _WANT_SEMUN_OLD
 
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/semctl.c 194910 2009-06-24 21:10:52Z jhb $
 
 int	__semctl(int semid, int semnum, int cmd, union semun *arg);
 int	freebsd7___semctl(int semid, int semnum, int cmd, union semun_old *arg);
+int	freebsd7_semctl(int semid, int semnum, int cmd, ...);
 
 int
 semctl(int semid, int semnum, int cmd, ...)

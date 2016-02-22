@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tx_ht.c 250665 2013-05-15 18:33:05Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tx_ht.c 291412 2015-11-28 00:14:37Z adrian $");
 
 #include "opt_inet.h"
 #include "opt_ath.h"
@@ -585,7 +585,7 @@ ath_rateseries_setup(struct ath_softc *sc, struct ieee80211_node *ni,
 	}
 }
 
-#if 0
+#ifdef	ATH_DEBUG
 static void
 ath_rateseries_print(struct ath_softc *sc, HAL_11N_RATE_SERIES *series)
 {
@@ -627,8 +627,9 @@ ath_buf_set_rate(struct ath_softc *sc, struct ieee80211_node *ni,
 
 	ath_rateseries_setup(sc, ni, bf, series);
 
-#if 0
-	ath_rateseries_print(sc, series);
+#ifdef	ATH_DEBUG
+	if (sc->sc_debug & ATH_DEBUG_XMIT)
+		ath_rateseries_print(sc, series);
 #endif
 
 	/* Set rate scenario */

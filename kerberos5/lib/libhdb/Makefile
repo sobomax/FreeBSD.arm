@@ -1,9 +1,10 @@
-# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 287208 2015-08-27 15:03:34Z ume $
 
 LIB=	hdb
-LDFLAGS=	-Wl,--no-undefined
+LDFLAGS=	-Wl,--no-undefined ${LDAPLDFLAGS}
 VERSION_MAP=	${KRB5DIR}/lib/hdb/version-script.map
 LIBADD=	asn1 com_err krb5 roken sqlite3
+LDADD=	${LDAPLDADD}
 DPADD=	${LDAPDPADD}
 
 MAN=	HDB.3 hdb_entry_ex.3

@@ -1,5 +1,4 @@
 /* $OpenBSD: sftp.c,v 1.158 2013/11/20 20:54:10 deraadt Exp $ */
-/* $FreeBSD: head/crypto/openssh/sftp.c 263691 2014-03-24 19:15:13Z des $ */
 /*
  * Copyright (c) 2001-2004 Damien Miller <djm@openbsd.org>
  *
@@ -17,7 +16,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/sftp.c 263691 2014-03-24 19:15:13Z des $");
+__RCSID("$FreeBSD: head/crypto/openssh/sftp.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

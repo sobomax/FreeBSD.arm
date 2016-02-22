@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/unifdef/unifdef.h 279297 2015-02-25 21:10:03Z hselasky $
+ * $FreeBSD: head/usr.bin/unifdef/unifdef.h 291696 2015-12-03 14:21:55Z fanf $
  */
 
 #include <sys/stat.h>
@@ -36,7 +36,7 @@
 #include <string.h>
 #include <unistd.h>
 
-/* portabiity stubs */
+/* portability stubs */
 
 #define fbinmode(fp) (fp)
 

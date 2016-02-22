@@ -1,10 +1,8 @@
-# $FreeBSD: head/share/keys/pkg/trusted/Makefile 257344 2013-10-29 15:07:54Z bdrewery $
-
-NO_OBJ=
+# $FreeBSD: head/share/keys/pkg/trusted/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
 
 FILES=	pkg.freebsd.org.2013102301
 
-FILESDIR=	/usr/share/keys/pkg/trusted
+FILESDIR=	${SHAREDIR}/keys/pkg/trusted
 FILESMODE=	644
 
 .include <bsd.prog.mk>

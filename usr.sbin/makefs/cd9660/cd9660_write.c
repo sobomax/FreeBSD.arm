@@ -36,7 +36,7 @@
 #include "iso9660_rrip.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/cd9660/cd9660_write.c 230795 2012-01-31 00:32:37Z jkim $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/cd9660/cd9660_write.c 289693 2015-10-21 12:54:15Z ngie $");
 
 static int cd9660_write_volume_descriptors(FILE *);
 static int cd9660_write_path_table(FILE *, off_t, int);
@@ -165,7 +165,7 @@ cd9660_write_path_table(FILE *fd, off_t sector, int mode)
 	    diskStructure.pathTableLength);
 	unsigned char *buffer;
 	unsigned char *buffer_head;
-	int len;
+	int len, ret;
 	path_table_entry temp_entry;
 	cd9660node *ptcur;
 
@@ -213,8 +213,10 @@ cd9660_write_path_table(FILE *fd, off_t sector, int mode)
 		ptcur = ptcur->ptnext;
 	}
 
-	return cd9660_write_filedata(fd, sector, buffer_head,
+	ret = cd9660_write_filedata(fd, sector, buffer_head,
 	    path_table_sectors);
+	free(buffer_head);
+	return ret;
 }
 
 

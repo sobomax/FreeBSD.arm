@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_em.h 283959 2015-06-03 18:01:09Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/if_em.h 286831 2015-08-16 19:43:44Z sbruno $*/
 
 
 #ifndef _EM_H_DEFINED_
@@ -266,7 +266,7 @@
 #define HW_DEBUGOUT1(S, A)          if (DEBUG_HW) printf(S "\n", A)
 #define HW_DEBUGOUT2(S, A, B)       if (DEBUG_HW) printf(S "\n", A, B)
 
-#define EM_MAX_SCATTER		32
+#define EM_MAX_SCATTER		64
 #define EM_VFTA_SIZE		128
 #define EM_TSO_SIZE		(65535 + sizeof(struct ether_vlan_header))
 #define EM_TSO_SEG_SIZE		4096	/* Max dma segment size */

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_sa.c 279534 2015-03-02 18:09:49Z ken $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_sa.c 287289 2015-08-29 11:21:20Z mav $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -2255,7 +2255,8 @@ saasync(void *callback_arg, u_int32_t code,
 
 		if (cgd->protocol != PROTO_SCSI)
 			break;
-
+		if (SID_QUAL(&cgd->inq_data) != SID_QUAL_LU_CONNECTED)
+			break;
 		if (SID_TYPE(&cgd->inq_data) != T_SEQUENTIAL)
 			break;
 

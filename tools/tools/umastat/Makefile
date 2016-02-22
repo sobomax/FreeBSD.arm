@@ -1,10 +1,9 @@
-# $FreeBSD: head/tools/tools/umastat/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/umastat/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	umastat
 MAN=
 WARNS?=	3
 
-DPADD=	${LIBKVM}
-LDADD=	-lkvm
+LIBADD=	kvm
 
 .include <bsd.prog.mk>

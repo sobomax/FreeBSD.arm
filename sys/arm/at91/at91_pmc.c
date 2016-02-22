@@ -27,7 +27,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pmc.c 269959 2014-08-14 04:21:25Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pmc.c 290420 2015-11-05 22:03:20Z cognet $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -661,7 +661,10 @@ static int
 at91_pmc_probe(device_t dev)
 {
 #ifdef FDT
-	if (!ofw_bus_is_compatible(dev, "atmel,at91rm9200-pmc"))
+	if (!ofw_bus_is_compatible(dev, "atmel,at91rm9200-pmc") &&
+ 		!ofw_bus_is_compatible(dev, "atmel,at91sam9260-pmc") &&
+		!ofw_bus_is_compatible(dev, "atmel,at91sam9g45-pmc") &&
+		!ofw_bus_is_compatible(dev, "atmel,at91sam9x5-pmc"))
 		return (ENXIO);
 #endif
 	device_set_desc(dev, "PMC");

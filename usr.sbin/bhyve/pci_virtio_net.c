@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_virtio_net.c 282865 2015-05-13 17:38:07Z grehan $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_virtio_net.c 288470 2015-10-02 02:09:50Z grehan $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_net.c 282865 2015-05-13 17:38:07Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_net.c 288470 2015-10-02 02:09:50Z grehan $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -57,7 +57,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_net.c 282865 2015-05-13 17:38
 
 #define VTNET_RINGSZ	1024
 
-#define VTNET_MAXSEGS	32
+#define VTNET_MAXSEGS	256
 
 /*
  * Host capabilities.  Note that we only offer a few of these.
@@ -84,7 +84,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_net.c 282865 2015-05-13 17:38
 
 #define VTNET_S_HOSTCAPS      \
   ( VIRTIO_NET_F_MAC | VIRTIO_NET_F_MRG_RXBUF | VIRTIO_NET_F_STATUS | \
-    VIRTIO_F_NOTIFY_ON_EMPTY)
+    VIRTIO_F_NOTIFY_ON_EMPTY | VIRTIO_RING_F_INDIRECT_DESC)
 
 /*
  * PCI config-space "registers"

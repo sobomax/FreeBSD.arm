@@ -24,7 +24,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/include/tlb.h 257178 2013-10-26 18:18:14Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/tlb.h 287240 2015-08-28 03:03:09Z jhibbits $
  */
 
 #ifndef	_MACHINE_TLB_H_
@@ -34,7 +34,7 @@
 
 /*  PowerPC E500 MAS registers */
 #define MAS0_TLBSEL(x)		((x << 28) & 0x10000000)
-#define MAS0_ESEL(x)		((x << 16) & 0x000F0000)
+#define MAS0_ESEL(x)		((x << 16) & 0x003F0000)
 
 #define MAS0_TLBSEL1		0x10000000
 #define MAS0_TLBSEL0		0x00000000
@@ -106,6 +106,8 @@
 #define MAS6_SPID0_SHIFT	16
 #define MAS6_SAS		0x00000001
 
+#define MAS7_RPN		0x0000000F
+
 #define MAS1_GETTID(mas1)	(((mas1) & MAS1_TID_MASK) >> MAS1_TID_SHIFT)
 
 #define MAS2_TLB0_ENTRY_IDX_MASK	0x0007f000
@@ -132,6 +134,7 @@ typedef struct tlb_entry {
 	uint32_t mas1;
 	uint32_t mas2;
 	uint32_t mas3;
+	uint32_t mas7;
 } tlb_entry_t;
 
 void tlb0_print_tlbentries(void);

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/beri/beri_machdep.c 275936 2014-12-19 12:09:29Z br $");
+__FBSDID("$FreeBSD: head/sys/mips/beri/beri_machdep.c 287000 2015-08-21 15:57:57Z royger $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -251,10 +251,7 @@ platform_start(__register_t a0, __register_t a1,  __register_t a2,
 	 * Find the dtb passed in by the boot loader (currently fictional).
 	 */
 	kmdp = preload_search_by_type("elf kernel");
-	if (kmdp != NULL)
-		dtbp = MD_FETCH(kmdp, MODINFOMD_DTBP, vm_offset_t);
-	else
-		dtbp = (vm_offset_t)NULL;
+	dtbp = MD_FETCH(kmdp, MODINFOMD_DTBP, vm_offset_t);
 
 #if defined(FDT_DTB_STATIC)
 	/*

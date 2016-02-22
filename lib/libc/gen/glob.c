@@ -39,7 +39,7 @@
 static char sccsid[] = "@(#)glob.c	8.3 (Berkeley) 10/13/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/glob.c 249381 2013-04-11 20:15:37Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/glob.c 288098 2015-09-22 07:40:55Z rodrigc $");
 
 /*
  * glob(3) -- a superset of the one defined in POSIX 1003.2.
@@ -650,13 +650,7 @@ glob3(Char *pathbuf, Char *pathend, Char *pathend_last,
 	int err;
 	char buf[MAXPATHLEN];
 
-	/*
-	 * The readdirfunc declaration can't be prototyped, because it is
-	 * assigned, below, to two functions which are prototyped in glob.h
-	 * and dirent.h as taking pointers to differently typed opaque
-	 * structures.
-	 */
-	struct dirent *(*readdirfunc)();
+	struct dirent *(*readdirfunc)(DIR *);
 
 	if (pathend > pathend_last)
 		return (GLOB_ABORTED);
@@ -677,12 +671,14 @@ glob3(Char *pathbuf, Char *pathend, Char *pathend_last,
 
 	err = 0;
 
-	/* Search directory for matching names. */
+	/* pglob->gl_readdir takes a void *, fix this manually */
 	if (pglob->gl_flags & GLOB_ALTDIRFUNC)
-		readdirfunc = pglob->gl_readdir;
+		readdirfunc = (struct dirent *(*)(DIR *))pglob->gl_readdir;
 	else
 		readdirfunc = readdir;
-	while ((dp = (*readdirfunc)(dirp))) {
+
+	/* Search directory for matching names. */
+	while ((dp = (*readdirfunc)(dirp)) != NULL) {
 		char *sc;
 		Char *dc;
 		wchar_t wc;

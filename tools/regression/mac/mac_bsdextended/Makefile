@@ -1,8 +1,7 @@
-# $FreeBSD: head/tools/regression/mac/mac_bsdextended/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/mac/mac_bsdextended/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	test_ugidfw
-DPADD=	${LIBUGIDFW}
-LDADD=	-lugidfw
+LIBADD=	ugidfw
 MAN=
 
 .include <bsd.prog.mk>

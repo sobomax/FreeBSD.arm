@@ -28,7 +28,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/casper/grp/grp.c 282253 2015-04-29 22:33:53Z oshogbo $");
+__FBSDID("$FreeBSD: head/libexec/casper/grp/grp.c 285063 2015-07-02 21:58:10Z oshogbo $");
+
+#include <sys/nv.h>
 
 #include <assert.h>
 #include <errno.h>
@@ -38,7 +40,6 @@ __FBSDID("$FreeBSD: head/libexec/casper/grp/grp.c 282253 2015-04-29 22:33:53Z os
 
 #include <libcapsicum.h>
 #include <libcasper.h>
-#include <nv.h>
 #include <pjdlog.h>
 
 static bool

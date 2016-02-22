@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/userboot/libstand/Makefile 281886 2015-04-23 14:04:33Z emaste $
+# $FreeBSD: head/sys/boot/userboot/libstand/Makefile 287227 2015-08-27 23:46:42Z imp $
 # Originally from	$NetBSD: Makefile,v 1.21 1997/10/26 22:08:38 lukem Exp $
 #
 # Notes:
@@ -21,26 +21,6 @@ MK_PROFILE=	no
 NO_PIC=
 
 WARNS?=		0
-
-CFLAGS+= -ffreestanding -Wformat -fPIC
-CFLAGS+= -I${LIBSTAND_SRC}
-
-.if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
-CFLAGS+=	-mno-mmx -mno-3dnow -mno-sse -mno-sse2
-.endif
-.if ${MACHINE_CPUARCH} == "i386"
-CFLAGS.gcc+=	-mpreferred-stack-boundary=2
-CFLAGS+=	-mno-sse3
-.endif
-.if ${MACHINE} == "pc98"
-CFLAGS+=	-Os
-.endif
-.if ${MACHINE_CPUARCH} == "powerpc"
-CFLAGS+=	-msoft-float -D_STANDALONE -DNETIF_DEBUG
-.endif
-.if ${MACHINE_CPUARCH} == "arm"
-CFLAGS+=	-msoft-float -D_STANDALONE
-.endif
 
 # standalone components and stuff we have modified locally
 SRCS+=	gzguts.h zutil.h __main.c assert.c bcd.c bswap.c environment.c getopt.c gets.c \
@@ -152,4 +132,5 @@ SRCS+=	ufs.c nfs.c cd9660.c tftp.c gzipfs.c bzipfs.c
 SRCS+=	dosfs.c ext2fs.c
 SRCS+=	splitfs.c
 
+.include <bsd.stand.mk>
 .include <bsd.lib.mk>

@@ -1,6 +1,6 @@
 /*	$OpenBSD: if_zydreg.h,v 1.19 2006/11/30 19:28:07 damien Exp $	*/
 /*	$NetBSD: if_zydreg.h,v 1.2 2007/06/16 11:18:45 kiyohara Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_zydreg.h 269127 2014-07-26 16:06:01Z hselasky $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_zydreg.h 289168 2015-10-12 05:21:51Z adrian $	*/
 
 /*-
  * Copyright (c) 2006 by Damien Bergamini <damien.bergamini@free.fr>
@@ -1249,7 +1249,8 @@ enum {
 };
 
 struct zyd_softc {
-	struct ifnet		*sc_ifp;
+	struct ieee80211com	sc_ic;
+	struct mbufq		sc_snd;
 	device_t		sc_dev;
 	struct usb_device	*sc_udev;
 
@@ -1260,13 +1261,13 @@ struct zyd_softc {
 #define	ZYD_FLAG_INITONCE		(1 << 1)
 #define	ZYD_FLAG_INITDONE		(1 << 2)
 #define	ZYD_FLAG_DETACHED		(1 << 3)
+#define	ZYD_FLAG_RUNNING		(1 << 4)
 
 	struct zyd_rf		sc_rf;
 
 	STAILQ_HEAD(, zyd_rq)	sc_rtx;
 	STAILQ_HEAD(, zyd_rq)	sc_rqh;
 
-	uint8_t			sc_bssid[IEEE80211_ADDR_LEN];
 	uint16_t		sc_fwbase;
 	uint8_t			sc_regdomain;
 	uint8_t			sc_macrev;
@@ -1303,9 +1304,7 @@ struct zyd_softc {
 	struct zyd_cmd		sc_ibuf;
 
 	struct zyd_rx_radiotap_header	sc_rxtap;
-	int			sc_rxtap_len;
 	struct zyd_tx_radiotap_header	sc_txtap;
-	int			sc_txtap_len;
 };
 
 #define	ZYD_LOCK(sc)		mtx_lock(&(sc)->sc_mtx)

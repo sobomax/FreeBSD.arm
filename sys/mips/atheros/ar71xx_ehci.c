@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ehci.c 279511 2015-03-02 02:08:43Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ehci.c 290910 2015-11-16 04:28:00Z adrian $");
 
 #include "opt_bus.h"
 
@@ -55,6 +55,8 @@ __FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_ehci.c 279511 2015-03-02 02:08:
 #include <dev/usb/controller/ehcireg.h>
 
 #include <mips/atheros/ar71xx_setup.h>
+#include <mips/atheros/ar71xxreg.h> /* for stuff in ar71xx_cpudef.h */
+#include <mips/atheros/ar71xx_cpudef.h>
 #include <mips/atheros/ar71xx_bus_space_reversed.h>
 
 #define EHCI_HC_DEVSTR		"AR71XX Integrated USB 2.0 controller"
@@ -76,6 +78,15 @@ ar71xx_ehci_probe(device_t self)
 	device_set_desc(self, EHCI_HC_DEVSTR);
 
 	return (BUS_PROBE_NOWILDCARD);
+}
+
+static void
+ar71xx_ehci_intr(void *arg)
+{
+
+	/* XXX TODO: should really see if this was our interrupt.. */
+	ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_USB);
+	ehci_interrupt(arg);
 }
 
 static int
@@ -135,7 +146,7 @@ ar71xx_ehci_attach(device_t self)
 	sprintf(sc->sc_vendor, "Atheros");
 
 	err = bus_setup_intr(self, sc->sc_irq_res, INTR_TYPE_BIO | INTR_MPSAFE,
-	    NULL, (driver_intr_t *)ehci_interrupt, sc, &sc->sc_intr_hdl);
+	    NULL, ar71xx_ehci_intr, sc, &sc->sc_intr_hdl);
 	if (err) {
 		device_printf(self, "Could not setup irq, %d\n", err);
 		sc->sc_intr_hdl = NULL;
@@ -162,6 +173,8 @@ ar71xx_ehci_attach(device_t self)
 		case AR71XX_SOC_AR9341:
 		case AR71XX_SOC_AR9342:
 		case AR71XX_SOC_AR9344:
+		case AR71XX_SOC_QCA9533:
+		case AR71XX_SOC_QCA9533_V2:
 		case AR71XX_SOC_QCA9556:
 		case AR71XX_SOC_QCA9558:
 			sc->sc_flags |= EHCI_SCFLG_TT | EHCI_SCFLG_NORESTERM;

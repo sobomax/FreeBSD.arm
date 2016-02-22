@@ -11,7 +11,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)xinstall.c	8.1 (Berkeley) 7/21/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/xinstall/xinstall.c 272026 2014-09-23 11:41:09Z mjg $");
+__FBSDID("$FreeBSD: head/usr.bin/xinstall/xinstall.c 291091 2015-11-20 08:45:59Z bapt $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -658,6 +658,14 @@ makelink(const char *from_name, const char *to_name,
 	if (dolink & LN_RELATIVE) {
 		char *cp, *d, *s;
 
+		if (*from_name != '/') {
+			/* this is already a relative link */
+			do_symlink(from_name, to_name, target_sb);
+			/* XXX: from_name may point outside of destdir. */
+			metadata_log(to_name, "link", NULL, from_name, NULL, 0);
+			return;
+		}
+
 		/* Resolve pathnames. */
 		if (realpath(from_name, src) == NULL)
 			err(EX_OSERR, "%s: realpath", from_name);
@@ -746,10 +754,7 @@ install(const char *from_name, const char *to_name, u_long fset, u_int flags)
 		devnull = 1;
 	}
 
-	if (!dolink)
-		target = (stat(to_name, &to_sb) == 0);
-	else
-		target = (lstat(to_name, &to_sb) == 0);
+	target = (lstat(to_name, &to_sb) == 0);
 
 	if (dolink) {
 		if (target && !safecopy) {
@@ -764,8 +769,7 @@ install(const char *from_name, const char *to_name, u_long fset, u_int flags)
 		return;
 	}
 
-	/* Only install to regular files. */
-	if (target && !S_ISREG(to_sb.st_mode)) {
+	if (target && !S_ISREG(to_sb.st_mode) && !S_ISLNK(to_sb.st_mode)) {
 		errno = EFTYPE;
 		warn("%s", to_name);
 		return;
@@ -778,7 +782,7 @@ install(const char *from_name, const char *to_name, u_long fset, u_int flags)
 		err(EX_OSERR, "%s", from_name);
 
 	/* If we don't strip, we can compare first. */
-	if (docompare && !dostrip && target) {
+	if (docompare && !dostrip && target && S_ISREG(to_sb.st_mode)) {
 		if ((to_fd = open(to_name, O_RDONLY, 0)) < 0)
 			err(EX_OSERR, "%s", to_name);
 		if (devnull)
@@ -830,7 +834,7 @@ install(const char *from_name, const char *to_name, u_long fset, u_int flags)
 	/*
 	 * Compare the stripped temp file with the target.
 	 */
-	if (docompare && dostrip && target) {
+	if (docompare && dostrip && target && S_ISREG(to_sb.st_mode)) {
 		temp_fd = to_fd;
 
 		/* Re-open to_fd using the real target name. */
@@ -864,9 +868,7 @@ install(const char *from_name, const char *to_name, u_long fset, u_int flags)
 			}
 			(void) close(temp_fd);
 		}
-	}
-
-	if (dostrip && (!docompare || !target))
+	} else if (dostrip)
 		digestresult = digest_file(tempfile);
 
 	/*

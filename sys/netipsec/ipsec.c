@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/ipsec.c 282048 2015-04-27 01:12:51Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/ipsec.c 291292 2015-11-25 07:31:59Z ae $	*/
 /*	$KAME: ipsec.c,v 1.103 2001/05/24 07:14:18 sakane Exp $	*/
 
 /*-
@@ -48,6 +48,7 @@
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
+#include <sys/hhook.h>
 #include <sys/time.h>
 #include <sys/kernel.h>
 #include <sys/syslog.h>
@@ -55,6 +56,7 @@
 #include <sys/proc.h>
 
 #include <net/if.h>
+#include <net/if_enc.h>
 #include <net/if_var.h>
 #include <net/vnet.h>
 
@@ -333,6 +335,12 @@ ipsec_getpolicybysock(struct mbuf *m, u_int dir, struct inpcb *inp, int *error)
 	IPSEC_ASSERT(error != NULL, ("null error"));
 	IPSEC_ASSERT(dir == IPSEC_DIR_INBOUND || dir == IPSEC_DIR_OUTBOUND,
 		("invalid direction %u", dir));
+
+	if (!key_havesp(dir)) {
+		/* No SP found, use system default. */
+		sp = KEY_ALLOCSP_DEFAULT();
+		return (sp);
+	}
 
 	/* Set spidx in pcb. */
 	*error = ipsec_setspidx_inpcb(m, inp);
@@ -799,6 +807,34 @@ ipsec6_setspidx_ipaddr(struct mbuf *m, struct secpolicyindex *spidx)
 	return (0);
 }
 #endif
+
+int
+ipsec_run_hhooks(struct ipsec_ctx_data *ctx, int type)
+{
+	int idx;
+
+	switch (ctx->af) {
+#ifdef INET
+	case AF_INET:
+		idx = HHOOK_IPSEC_INET;
+		break;
+#endif
+#ifdef INET6
+	case AF_INET6:
+		idx = HHOOK_IPSEC_INET6;
+		break;
+#endif
+	default:
+		return (EPFNOSUPPORT);
+	}
+	if (type == HHOOK_TYPE_IPSEC_IN)
+		HHOOKS_RUN_IF(V_ipsec_hhh_in[idx], ctx, NULL);
+	else
+		HHOOKS_RUN_IF(V_ipsec_hhh_out[idx], ctx, NULL);
+	if (*ctx->mp == NULL)
+		return (EACCES);
+	return (0);
+}
 
 static void
 ipsec_delpcbpolicy(struct inpcbpolicy *p)
@@ -1270,6 +1306,9 @@ ipsec46_in_reject(struct mbuf *m, struct inpcb *inp)
 	int error;
 	int result;
 
+	if (!key_havesp(IPSEC_DIR_INBOUND))
+		return 0;
+
 	IPSEC_ASSERT(m != NULL, ("null mbuf"));
 
 	/* Get SP for this packet. */
@@ -1396,6 +1435,9 @@ ipsec_hdrsiz(struct mbuf *m, u_int dir, struct inpcb *inp)
 	struct secpolicy *sp;
 	int error;
 	size_t size;
+
+	if (!key_havesp(dir))
+		return 0;
 
 	IPSEC_ASSERT(m != NULL, ("null mbuf"));
 

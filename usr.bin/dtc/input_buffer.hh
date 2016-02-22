@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/input_buffer.hh 245803 2013-01-22 17:49:51Z theraven $
+ * $FreeBSD: head/usr.bin/dtc/input_buffer.hh 289935 2015-10-25 14:52:16Z theraven $
  */
 
 #ifndef _INPUT_BUFFER_HH_
@@ -80,6 +80,10 @@ class input_buffer
 	 */
 	void skip_spaces();
 	public:
+	/**
+	 * Return whether all input has been consumed.
+	 */
+	bool finished() { return cursor >= size; }
 	/**
 	 * Virtual destructor.  Does nothing, but exists so that subclasses
 	 * that own the memory can run cleanup code for deallocating it.
@@ -181,7 +185,7 @@ class input_buffer
 	 *
 	 * The parsed value is returned via the argument.
 	 */
-	bool consume_integer(long long &outInt);
+	bool consume_integer(unsigned long long &outInt);
 	/**
 	 * Template function that consumes a binary value in big-endian format
 	 * from the input stream.  Returns true and advances the cursor if

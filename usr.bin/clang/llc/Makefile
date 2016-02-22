@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llc/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/llc/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -7,7 +7,9 @@ PROG_CXX=llc
 SRCDIR=	tools/llc
 SRCS=	llc.cpp
 
-LIBDEPS=llvmirreader \
+TGHDRS=	Intrinsics
+LIBDEPS=llvmmirparser \
+	llvmirreader \
 	llvmasmparser \
 	llvmaarch64disassembler \
 	llvmaarch64codegen \
@@ -46,13 +48,14 @@ LIBDEPS=llvmirreader \
 	llvmselectiondag \
 	llvmasmprinter \
 	llvmcodegen \
+	llvmtarget \
 	llvmscalaropts \
 	llvmprofiledata \
 	llvminstcombine \
+	llvminstrumentation \
 	llvmtransformutils \
 	llvmipa \
 	llvmanalysis \
-	llvmtarget \
 	llvmx86desc \
 	llvmobject \
 	llvmmcparser \
@@ -65,7 +68,6 @@ LIBDEPS=llvmirreader \
 	llvmcore \
 	llvmsupport
 
-.include "../clang.prog.mk"
+LIBADD+= z
 
-DPADD+=	${LIBZ}
-LDADD+=	-lz
+.include "../clang.prog.mk"

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_var.h,v 1.2 2003/04/28 21:44:59 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_var.h 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_var.h 290038 2015-10-27 03:42:26Z takawata $
  */
 
 #ifndef _NETGRAPH_L2CAP_VAR_H_
@@ -119,7 +119,8 @@ typedef struct ng_l2cap_con {
 
 	u_int8_t			 ident;      /* last allocated ident */
 	uint8_t				 linktype;
-
+	uint8_t				 encryption;
+	
 	TAILQ_HEAD(, ng_l2cap_cmd)	 cmd_list;   /* pending L2CAP cmds */
 
 	struct mbuf			*tx_pkt;     /* xmitted L2CAP packet */

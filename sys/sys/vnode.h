@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: head/sys/sys/vnode.h 284215 2015-06-10 10:48:12Z mjg $
+ * $FreeBSD: head/sys/sys/vnode.h 291380 2015-11-27 01:45:40Z kib $
  */
 
 #ifndef _SYS_VNODE_H_
@@ -77,6 +77,7 @@ struct vpollinfo {
  *	c - namecache mutex
  *	f - freelist mutex
  *	i - interlock
+ *	I - updated with atomics, 0->1 and 1->0 transitions with interlock held
  *	m - mount point interlock
  *	p - pollinfo lock
  *	u - Only a reference to the vnode is needed to read.
@@ -162,8 +163,8 @@ struct vnode {
 	daddr_t	v_lastw;			/* v last write  */
 	int	v_clen;				/* v length of cur. cluster */
 
-	int	v_holdcnt;			/* i prevents recycling. */
-	int	v_usecount;			/* i ref count of users */
+	u_int	v_holdcnt;			/* I prevents recycling. */
+	u_int	v_usecount;			/* I ref count of users */
 	u_int	v_iflag;			/* i vnode flags (see below) */
 	u_int	v_vflag;			/* v vnode flags */
 	int	v_writecount;			/* v ref count of writers */
@@ -233,7 +234,6 @@ struct xvnode {
  *	are required for writing but the status may be checked with either.
  */
 #define	VI_MOUNT	0x0020	/* Mount in progress */
-#define	VI_AGE		0x0040	/* Insert vnode at head of free list */
 #define	VI_DOOMED	0x0080	/* This vnode is being recycled */
 #define	VI_FREE		0x0100	/* This vnode is on the freelist */
 #define	VI_ACTIVE	0x0200	/* This vnode is on the active list */
@@ -419,6 +419,7 @@ extern int		vttoif_tab[];
  * Global vnode data.
  */
 extern	struct vnode *rootvnode;	/* root (i.e. "/") vnode */
+extern	struct mount *rootdevmp;	/* "/dev" mount */
 extern	int async_io_version;		/* 0 or POSIX version of AIO i'face */
 extern	int desiredvnodes;		/* number of vnodes desired */
 extern	struct uma_zone *namei_zone;
@@ -605,6 +606,7 @@ struct vnode;
 typedef int (*vn_get_ino_t)(struct mount *, void *, int, struct vnode **);
 
 /* cache_* may belong in namei.h. */
+void	cache_changesize(int newhashsize);
 #define	cache_enter(dvp, vp, cnp)					\
 	cache_enter_time(dvp, vp, cnp, NULL, NULL)
 void	cache_enter_time(struct vnode *dvp, struct vnode *vp,
@@ -616,7 +618,6 @@ void	cache_purge(struct vnode *vp);
 void	cache_purge_negative(struct vnode *vp);
 void	cache_purgevfs(struct mount *mp);
 int	change_dir(struct vnode *vp, struct thread *td);
-int	change_root(struct vnode *vp, struct thread *td);
 void	cvtstat(struct stat *st, struct ostat *ost);
 void	cvtnstat(struct stat *sb, struct nstat *nsb);
 int	getnewvnode(const char *tag, struct mount *mp, struct vop_vector *vops,
@@ -652,13 +653,15 @@ int	vaccess_acl_posix1e(enum vtype type, uid_t file_uid,
 	    struct ucred *cred, int *privused);
 void	vattr_null(struct vattr *vap);
 int	vcount(struct vnode *vp);
-void	vdrop(struct vnode *);
-void	vdropl(struct vnode *);
+#define	vdrop(vp)	_vdrop((vp), 0)
+#define	vdropl(vp)	_vdrop((vp), 1)
+void	_vdrop(struct vnode *, bool);
 int	vflush(struct mount *mp, int rootrefs, int flags, struct thread *td);
 int	vget(struct vnode *vp, int lockflag, struct thread *td);
 void	vgone(struct vnode *vp);
-void	vhold(struct vnode *);
-void	vholdl(struct vnode *);
+#define	vhold(vp)	_vhold((vp), 0)
+#define	vholdl(vp)	_vhold((vp), 1)
+void	_vhold(struct vnode *, bool);
 void	vinactive(struct vnode *, struct thread *);
 int	vinvalbuf(struct vnode *vp, int save, int slpflag, int slptimeo);
 int	vtruncbuf(struct vnode *vp, struct ucred *cred, off_t length,
@@ -777,6 +780,7 @@ void	vop_lookup_post(void *a, int rc);
 void	vop_lookup_pre(void *a);
 void	vop_mkdir_post(void *a, int rc);
 void	vop_mknod_post(void *a, int rc);
+void	vop_reclaim_post(void *a, int rc);
 void	vop_remove_post(void *a, int rc);
 void	vop_rename_post(void *a, int rc);
 void	vop_rename_pre(void *a);
@@ -792,7 +796,8 @@ void	vop_rename_fail(struct vop_rename_args *ap);
 
 #define	VOP_WRITE_PRE(ap)						\
 	struct vattr va;						\
-	int error, osize, ooffset, noffset;				\
+	int error;							\
+	off_t osize, ooffset, noffset;					\
 									\
 	osize = ooffset = noffset = 0;					\
 	if (!VN_KNLIST_EMPTY((ap)->a_vp)) {				\
@@ -800,7 +805,7 @@ void	vop_rename_fail(struct vop_rename_args *ap);
 		if (error)						\
 			return (error);					\
 		ooffset = (ap)->a_uio->uio_offset;			\
-		osize = va.va_size;					\
+		osize = (off_t)va.va_size;				\
 	}
 
 #define VOP_WRITE_POST(ap, ret)						\
@@ -825,7 +830,6 @@ void vnode_destroy_vobject(struct vnode *vp);
 extern struct vop_vector fifo_specops;
 extern struct vop_vector dead_vnodeops;
 extern struct vop_vector default_vnodeops;
-extern struct vop_vector devfs_specops;
 
 #define VOP_PANIC	((void*)(uintptr_t)vop_panic)
 #define VOP_NULL	((void*)(uintptr_t)vop_null)
@@ -841,6 +845,7 @@ int	fifo_printinfo(struct vnode *);
 /* vfs_hash.c */
 typedef int vfs_hash_cmp_t(struct vnode *vp, void *arg);
 
+void vfs_hash_changesize(int newhashsize);
 int vfs_hash_get(const struct mount *mp, u_int hash, int flags, struct thread *td, struct vnode **vpp, vfs_hash_cmp_t *fn, void *arg);
 u_int vfs_hash_index(struct vnode *vp);
 int vfs_hash_insert(struct vnode *vp, u_int hash, int flags, struct thread *td, struct vnode **vpp, vfs_hash_cmp_t *fn, void *arg);

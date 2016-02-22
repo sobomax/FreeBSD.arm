@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkimg/image.h 268646 2014-07-15 04:39:23Z marcel $
+ * $FreeBSD: head/usr.bin/mkimg/image.h 286215 2015-08-03 01:24:48Z marcel $
  */
 
 #ifndef _MKIMG_IMAGE_H_
@@ -35,6 +35,7 @@ int image_copyin(lba_t blk, int fd, uint64_t *sizep);
 int image_copyout(int fd);
 int image_copyout_done(int fd);
 int image_copyout_region(int fd, lba_t blk, lba_t size);
+int image_copyout_zeroes(int fd, size_t count);
 int image_data(lba_t blk, lba_t size);
 lba_t image_get_size(void);
 int image_init(void);

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/cpuset.h 284866 2015-06-26 04:14:05Z adrian $
+ * $FreeBSD: head/sys/sys/cpuset.h 285309 2015-07-09 07:31:40Z ed $
  */
 
 #ifndef _SYS_CPUSET_H_
@@ -116,6 +116,7 @@ struct cpuset {
 extern cpuset_t *cpuset_root;
 struct prison;
 struct proc;
+struct thread;
 
 struct cpuset *cpuset_thread0(void);
 struct cpuset *cpuset_ref(struct cpuset *);

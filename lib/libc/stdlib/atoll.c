@@ -33,22 +33,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/atoll.c 251069 2013-05-28 20:57:40Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/atoll.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include <stdlib.h>
 #include <xlocale.h>
 
 long long
-atoll(str)
-	const char *str;
+atoll(const char *str)
 {
 	return strtoll(str, (char **)NULL, 10);
 }
 
 long long
-atoll_l(str, locale)
-	const char *str;
-	locale_t locale;
+atoll_l(const char *str, locale_t locale)
 {
 	return strtoll_l(str, (char **)NULL, 10, locale);
 }

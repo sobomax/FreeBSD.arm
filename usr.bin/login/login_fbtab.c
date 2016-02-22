@@ -59,13 +59,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/login/login_fbtab.c 231651 2012-02-14 10:11:45Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.bin/login/login_fbtab.c 287634 2015-09-10 22:25:40Z delphij $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <glob.h>
-#include <paths.h>
 #include <stdio.h>
 #include <string.h>
 #include <syslog.h>
@@ -120,7 +119,7 @@ login_fbtab(char *tty, uid_t uid, gid_t gid)
 
 /* login_protect - protect one device entry */
 
-void
+static void
 login_protect(const char *table, char *pattern, int mask, uid_t uid, gid_t gid)
 {
     glob_t  gl;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axge.c 281183 2015-04-07 01:47:36Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axge.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*
  * ASIX Electronics AX88178A/AX88179 USB 2.0/3.0 gigabit ethernet driver.
@@ -190,6 +190,7 @@ MODULE_DEPEND(axge, usb, 1, 1, 1);
 MODULE_DEPEND(axge, ether, 1, 1, 1);
 MODULE_DEPEND(axge, miibus, 1, 1, 1);
 MODULE_VERSION(axge, 1);
+USB_PNP_HOST_INFO(axge_devs);
 
 static const struct usb_ether_methods axge_ue_methods = {
 	.ue_attach_post = axge_attach_post,

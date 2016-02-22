@@ -31,7 +31,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_lock.c 277528 2015-01-22 11:12:42Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_lock.c 286166 2015-08-02 00:03:08Z markj $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -69,12 +69,8 @@ CTASSERT(LK_UNLOCKED == (LK_UNLOCKED &
 
 #ifndef INVARIANTS
 #define	_lockmgr_assert(lk, what, file, line)
-#define	TD_LOCKS_INC(td)
-#define	TD_LOCKS_DEC(td)
-#else
-#define	TD_LOCKS_INC(td)	((td)->td_locks++)
-#define	TD_LOCKS_DEC(td)	((td)->td_locks--)
 #endif
+
 #define	TD_SLOCKS_INC(td)	((td)->td_lk_slocks++)
 #define	TD_SLOCKS_DEC(td)	((td)->td_lk_slocks--)
 

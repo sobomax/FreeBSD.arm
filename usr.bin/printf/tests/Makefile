@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/printf/tests/Makefile 266948 2014-06-01 13:33:22Z jilles $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/printf
+# $FreeBSD: head/usr.bin/printf/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_SH=	legacy_test
 

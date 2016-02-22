@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/file.c 240495 2012-09-14 12:15:13Z eadler $");
+__FBSDID("$FreeBSD: head/lib/libfetch/file.c 289420 2015-10-16 12:53:22Z des $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -48,7 +48,7 @@ fetchXGetFile(struct url *u, struct url_stat *us, const char *flags)
 	if (us && fetchStatFile(u, us, flags) == -1)
 		return (NULL);
 
-	f = fopen(u->doc, "r");
+	f = fopen(u->doc, "re");
 
 	if (f == NULL) {
 		fetch_syserr();
@@ -61,7 +61,6 @@ fetchXGetFile(struct url *u, struct url_stat *us, const char *flags)
 		return (NULL);
 	}
 
-	fcntl(fileno(f), F_SETFD, FD_CLOEXEC);
 	return (f);
 }
 
@@ -77,9 +76,9 @@ fetchPutFile(struct url *u, const char *flags)
 	FILE *f;
 
 	if (CHECK_FLAG('a'))
-		f = fopen(u->doc, "a");
+		f = fopen(u->doc, "ae");
 	else
-		f = fopen(u->doc, "w+");
+		f = fopen(u->doc, "w+e");
 
 	if (f == NULL) {
 		fetch_syserr();
@@ -92,7 +91,6 @@ fetchPutFile(struct url *u, const char *flags)
 		return (NULL);
 	}
 
-	fcntl(fileno(f), F_SETFD, FD_CLOEXEC);
 	return (f);
 }
 

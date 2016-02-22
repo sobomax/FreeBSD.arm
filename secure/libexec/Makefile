@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/libexec/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/secure/libexec/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -10,5 +10,7 @@ SUBDIR+=sftp-server ssh-keysign ssh-pkcs11-helper
 .if ${MK_TESTS} != "no"
 SUBDIR+=tests
 .endif
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

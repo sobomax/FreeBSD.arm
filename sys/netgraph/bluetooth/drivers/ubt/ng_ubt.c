@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt.c,v 1.16 2003/10/10 19:15:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/drivers/ubt/ng_ubt.c 276750 2015-01-06 12:59:37Z rwatson $
+ * $FreeBSD: head/sys/netgraph/bluetooth/drivers/ubt/ng_ubt.c 292080 2015-12-11 05:28:00Z imp $
  */
 
 /*
@@ -1872,4 +1872,4 @@ MODULE_VERSION(ng_ubt, NG_BLUETOOTH_VERSION);
 MODULE_DEPEND(ng_ubt, netgraph, NG_ABI_VERSION, NG_ABI_VERSION, NG_ABI_VERSION);
 MODULE_DEPEND(ng_ubt, ng_hci, NG_BLUETOOTH_VERSION, NG_BLUETOOTH_VERSION, NG_BLUETOOTH_VERSION);
 MODULE_DEPEND(ng_ubt, usb, 1, 1, 1);
-
+USB_PNP_HOST_INFO(ubt_devs);

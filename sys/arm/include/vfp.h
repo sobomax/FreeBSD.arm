@@ -23,7 +23,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * $FreeBSD: head/sys/arm/include/vfp.h 263910 2014-03-29 10:11:19Z andrew $
+ * $FreeBSD: head/sys/arm/include/vfp.h 290243 2015-11-01 21:59:56Z gonzo $
  */
 
 
@@ -92,6 +92,7 @@
 /* VFPEXC */
 #define	VFPEXC_EX 		(0x80000000)	/* exception v1 v2 */
 #define	VFPEXC_EN		(0x40000000)	/* vfp enable */
+#define	VFPEXC_DEX		(0x20000000)	/* Synchronous exception */
 #define	VFPEXC_FP2V		(0x10000000)	/* FPINST2 valid */
 #define	VFPEXC_INV		(0x00000080)	/* Input exception */
 #define	VFPEXC_UFC		(0x00000008)	/* Underflow exception */

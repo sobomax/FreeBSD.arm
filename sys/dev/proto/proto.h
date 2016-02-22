@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Marcel Moolenaar
+ * Copyright (c) 2014, 2015 Marcel Moolenaar
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/proto/proto.h 284079 2015-06-06 16:09:25Z marcel $
+ * $FreeBSD: head/sys/dev/proto/proto.h 285707 2015-07-19 23:37:45Z marcel $
  */
 
 #ifndef _DEV_PROTO_H_
@@ -61,6 +61,7 @@ extern char proto_driver_name[];
 
 int proto_add_resource(struct proto_softc *, int, int, struct resource *);
 
+int proto_probe(device_t dev, const char *prefix, char ***devnamesp);
 int proto_attach(device_t dev);
 int proto_detach(device_t dev);
 

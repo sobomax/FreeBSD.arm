@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell DB-78xx boards.
 #
-# $FreeBSD: head/sys/arm/conf/DB-78XXX 282576 2015-05-07 12:38:23Z andrew $
+# $FreeBSD: head/sys/arm/conf/DB-78XXX 289945 2015-10-25 22:00:56Z zbb $
 #
 
 ident		DB-88F78XX
@@ -66,6 +66,7 @@ device		uart
 device		ether
 device		mge			# Marvell Gigabit Ethernet controller
 device		mii
+device		mdio
 device		e1000phy
 device		bpf
 

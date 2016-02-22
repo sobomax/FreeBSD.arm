@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/share/dtrace/nfsattrstats 267924 2014-06-26 17:27:36Z rpaulo $
+ * $FreeBSD: head/share/dtrace/nfsattrstats 287544 2015-09-08 00:30:10Z gnn $
  *
  * This script creates a trace of NFS RPCs, NFS attribute cache
  * activity, and NFS access cache activity, along with the system call
@@ -56,7 +56,7 @@ syscall:::return
         self->syscallname = "";
 }
 
-nfsclient:::
+nfscl:::
 /self->syscallname != 0 && self->syscallname != ""/
 {
 
@@ -64,7 +64,7 @@ nfsclient:::
 	    self->syscallname);
 }
 
-nfsclient:::
+nfscl:::
 /self->syscallname == 0 || self->syscallname == ""/
 {
 

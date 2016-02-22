@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/powerpc/ps3/ppc64_elf_freebsd.c 217044 2011-01-06 04:12:29Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/boot/powerpc/ps3/ppc64_elf_freebsd.c 291598 2015-12-01 17:01:27Z nwhitehorn $");
 
 #define __ELF_WORD_SIZE 64
 
@@ -75,8 +75,11 @@ ppc64_elf_exec(struct preloaded_file *fp)
 	}
 	e = (Elf_Ehdr *)&fmp->md_data;
 	
-	/* Handle function descriptor */
-	entry = (void *)(uintptr_t)(*(uint64_t *)e->e_entry);
+	/* Handle function descriptor for ELFv1 kernels */
+	if ((e->e_flags & 3) == 2)
+		entry = e->e_entry;
+	else
+		entry = (void *)(uintptr_t)(*(uint64_t *)e->e_entry);
 
 	if ((error = md_load64(fp->f_args, &mdp)) != 0)
 		return (error);

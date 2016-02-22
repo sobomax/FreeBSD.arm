@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)gethostname.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getdomainname.c 165903 2007-01-09 00:28:16Z imp $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getdomainname.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -39,9 +39,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/getdomainname.c 165903 2007-01-09 00:28:16
 #include <unistd.h>
 
 int
-getdomainname(name, namelen)
-	char *name;
-	int namelen;
+getdomainname(char *name, int namelen)
 {
 	int mib[2];
 	size_t size;

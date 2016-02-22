@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libsqlite3/Makefile 275025 2014-11-25 11:08:58Z bapt $
+# $FreeBSD: head/lib/libsqlite3/Makefile 286511 2015-08-09 05:54:53Z peter $
 
 PRIVATELIB=	yes
 LIB=	sqlite3
@@ -12,10 +12,10 @@ SQLITE=	${.CURDIR}/../../contrib/sqlite3
 
 WARNS=	3
 CFLAGS+=	-I${SQLITE} \
+		-DUSE_PREAD=1 \
 		-DSTDC_HEADERS=1 \
 		-DHAVE_SYS_TYPES_H=1 \
 		-DHAVE_SYS_STAT_H=1 \
-		-DUSE_PREAD=1 \
 		-DHAVE_STDLIB_H=1 \
 		-DHAVE_STRING_H=1 \
 		-DHAVE_MEMORY_H=1 \

@@ -1,6 +1,4 @@
-# $FreeBSD: head/sbin/growfs/tests/Makefile 263220 2014-03-16 02:07:08Z jmmv $
-
-TESTSDIR=	${TESTSBASE}/sbin/growfs
+# $FreeBSD: head/sbin/growfs/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_PERL=	legacy_test
 

@@ -30,7 +30,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/device.c 278374 2015-02-08 09:28:55Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/device.c 289749 2015-10-22 09:50:45Z hselasky $");
 
 #include "opt_inet.h"
 
@@ -363,5 +363,5 @@ MODULE_VERSION(iw_cxgbe, 1);
 MODULE_DEPEND(iw_cxgbe, t4nex, 1, 1, 1);
 MODULE_DEPEND(iw_cxgbe, t4_tom, 1, 1, 1);
 MODULE_DEPEND(iw_cxgbe, ibcore, 1, 1, 1);
-MODULE_DEPEND(iw_cxgbe, linuxapi, 1, 1, 1);
+MODULE_DEPEND(iw_cxgbe, linuxkpi, 1, 1, 1);
 DECLARE_MODULE(iw_cxgbe, c4iw_mod_data, SI_SUB_EXEC, SI_ORDER_ANY);

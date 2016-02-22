@@ -31,7 +31,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/net/if_tap.c 281363 2015-04-10 09:50:13Z glebius $
+ * $FreeBSD: head/sys/net/if_tap.c 289718 2015-10-21 19:56:16Z emaste $
  * $Id: if_tap.c,v 0.21 2000/07/23 21:46:02 max Exp $
  */
 
@@ -171,7 +171,7 @@ SYSCTL_INT(_net_link_tap, OID_AUTO, user_open, CTLFLAG_RW, &tapuopen, 0,
 SYSCTL_INT(_net_link_tap, OID_AUTO, up_on_open, CTLFLAG_RW, &tapuponopen, 0,
 	"Bring interface up when /dev/tap is opened");
 SYSCTL_INT(_net_link_tap, OID_AUTO, devfs_cloning, CTLFLAG_RWTUN, &tapdclone, 0,
-	"Enably legacy devfs interface creation");
+	"Enable legacy devfs interface creation");
 SYSCTL_INT(_net_link_tap, OID_AUTO, debug, CTLFLAG_RW, &tapdebug, 0, "");
 
 DEV_MODULE(if_tap, tapmodevent, NULL);

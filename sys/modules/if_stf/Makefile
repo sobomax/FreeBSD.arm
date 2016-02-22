@@ -1,8 +1,8 @@
-# $FreeBSD: head/sys/modules/if_stf/Makefile 269540 2014-08-04 22:37:02Z imp $
+# $FreeBSD: head/sys/modules/if_stf/Makefile 286069 2015-07-30 10:26:43Z ae $
 
 .PATH: ${.CURDIR}/../../net
 
 KMOD=	if_stf
-SRCS=	if_stf.c opt_inet.h opt_inet6.h
+SRCS=	if_stf.c
 
 .include <bsd.kmod.mk>

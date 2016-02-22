@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.8 (Berkeley) 3/28/97
-# $FreeBSD: head/usr.sbin/sendmail/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/sendmail/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -7,7 +7,7 @@ SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 SMDIR=	${SENDMAIL_DIR}/src
 .PATH: ${SMDIR}
 
-BINDIR=	/usr/libexec/sendmail
+BINDIR=	${LIBEXECDIR}/sendmail
 
 PROG=	sendmail
 MAN=	mailq.1 newaliases.1 aliases.5 sendmail.8 
@@ -43,7 +43,7 @@ CFLAGS+= ${DBMDEF} ${NIS} -DTCPWRAPPERS ${MAPS}
 CFLAGS+= -DNETINET6
 .endif
 
-WARNS?=	1
+WARNS?=	0
 
 LIBADD=	util wrap sm smutil
 
@@ -62,7 +62,7 @@ DPADD+=${SENDMAIL_DPADD}
 LDADD+=${SENDMAIL_LDADD}
 LDFLAGS+=${SENDMAIL_LDFLAGS}
 
-sm_os.h:
-	ln -sf ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h sm_os.h
+sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

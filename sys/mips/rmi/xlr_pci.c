@@ -28,7 +28,7 @@
  *
  * RMI_BSD */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/xlr_pci.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/xlr_pci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -306,7 +306,7 @@ xlr_pcib_attach(device_t dev)
 		    0xff, 0x7fffffff, 0, NULL, NULL, &sc->sc_pci_dmat) != 0)
 			panic("%s: bus_dma_tag_create failed", __func__);
 	}
-	device_add_child(dev, "pci", 0);
+	device_add_child(dev, "pci", -1);
 	bus_generic_attach(dev);
 	return (0);
 }

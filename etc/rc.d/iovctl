@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/iovctl 279463 2015-03-01 00:58:23Z rstone $
+# $FreeBSD: head/etc/rc.d/iovctl 284891 2015-06-27 18:01:50Z pkelsey $
 #
 
 # PROVIDE: iovctl
@@ -27,7 +27,7 @@ run_iovctl()
 
 iovctl_start()
 {
-	run_iovctl -E
+	run_iovctl -C
 }
 
 iovctl_stop()

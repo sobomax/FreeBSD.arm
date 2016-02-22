@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jls/jls.c 279123 2015-02-22 00:00:10Z jamie $");
+__FBSDID("$FreeBSD: head/usr.sbin/jls/jls.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <sys/param.h>
 #include <sys/jail.h>
@@ -220,7 +220,7 @@ main(int argc, char **argv)
 		putchar('\n');
 	}
 
-	/* Fetch the jail(s) and print the paramters. */
+	/* Fetch the jail(s) and print the parameters. */
 	if (jid != 0 || jname != NULL) {
 		if (print_jail(pflags, jflags) < 0)
 			errx(1, "%s", jail_errmsg);

@@ -21,12 +21,14 @@
  *
  * Portions Copyright 2006 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/cddl/lib/libdtrace/psinfo.d 256571 2013-10-16 01:39:26Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/psinfo.d 286420 2015-08-07 19:56:22Z markj $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
  * Use is subject to license terms.
  */
+
+#pragma D depends_on module kernel
 
 typedef struct psinfo {
 	int	pr_nlwp;	/* number of threads */

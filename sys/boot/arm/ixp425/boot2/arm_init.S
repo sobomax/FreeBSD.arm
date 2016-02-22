@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/arm/ixp425/boot2/arm_init.S 186352 2008-12-20 03:26:09Z sam $
+ * $FreeBSD: head/sys/boot/arm/ixp425/boot2/arm_init.S 285682 2015-07-18 20:21:25Z jmg $
  */
 
 #include <machine/asm.h>
@@ -43,6 +43,7 @@ ASENTRY_NP(start)
 /* main should not return.  If it does, spin forever		*/
 infiniteLoop:
 	b	infiniteLoop
+END(start)
 
 .Lstart:
 	.word	_edata
@@ -52,5 +53,6 @@ infiniteLoop:
 ENTRY(cpu_id)
 	mrc	p15, 0, r0, c0, c0, 0
 	RET
+END(cpu_id)
 
 /* End */

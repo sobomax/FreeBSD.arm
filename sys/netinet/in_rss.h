@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/in_rss.h 277331 2015-01-18 18:06:40Z adrian $
+ * $FreeBSD: head/sys/netinet/in_rss.h 287277 2015-08-29 06:58:30Z adrian $
  */
 
 #ifndef _NETINET_IN_RSS_H_
@@ -51,7 +51,7 @@ int		rss_proto_software_hash_v4(struct in_addr src,
 		    struct in_addr dst, u_short src_port, u_short dst_port,
 		    int proto, uint32_t *hashval,
 		    uint32_t *hashtype);
-struct mbuf *	rss_soft_m2cpuid(struct mbuf *m, uintptr_t source,
+struct mbuf *	rss_soft_m2cpuid_v4(struct mbuf *m, uintptr_t source,
 		    u_int *cpuid);
 
 #endif /* !_NETINET_IN_RSS_H_ */

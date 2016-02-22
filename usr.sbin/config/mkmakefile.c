@@ -32,7 +32,7 @@
 static char sccsid[] = "@(#)mkmakefile.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/config/mkmakefile.c 274936 2014-11-23 23:58:47Z ian $";
+  "$FreeBSD: head/usr.sbin/config/mkmakefile.c 289262 2015-10-13 20:25:03Z rpaulo $";
 #endif /* not lint */
 
 /*
@@ -623,6 +623,7 @@ do_xxfiles(char *tag, FILE *fp)
 	slen = strlen(suff);
 
 	fprintf(fp, "%sFILES=", SUFF);
+	free(SUFF);
 	lpos = 8;
 	STAILQ_FOREACH(tp, &ftab, f_next)
 		if (tp->f_type != NODEPEND) {
@@ -641,6 +642,7 @@ do_xxfiles(char *tag, FILE *fp)
 				fprintf(fp, "%s ", tp->f_fn);
 			lpos += len + 1;
 		}
+	free(suff);
 	if (lpos != 8)
 		putc('\n', fp);
 }

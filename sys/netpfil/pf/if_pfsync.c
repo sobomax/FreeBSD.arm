@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/if_pfsync.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/if_pfsync.c 290805 2015-11-13 22:51:35Z rrs $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -352,7 +352,7 @@ pfsync_clone_destroy(struct ifnet *ifp)
 
 		TAILQ_REMOVE(&sc->sc_deferrals, pd, pd_entry);
 		sc->sc_deferred--;
-		if (callout_stop(&pd->pd_tmo)) {
+		if (callout_stop(&pd->pd_tmo) > 0) {
 			pf_release_state(pd->pd_st);
 			m_freem(pd->pd_m);
 			free(pd, M_PFSYNC);
@@ -1775,7 +1775,7 @@ pfsync_undefer_state(struct pf_state *st, int drop)
 
 	TAILQ_FOREACH(pd, &sc->sc_deferrals, pd_entry) {
 		 if (pd->pd_st == st) {
-			if (callout_stop(&pd->pd_tmo))
+			if (callout_stop(&pd->pd_tmo) > 0)
 				pfsync_undefer(pd, drop);
 			return;
 		}

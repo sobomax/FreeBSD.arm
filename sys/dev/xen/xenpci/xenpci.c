@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/xenpci/xenpci.c 267534 2014-06-16 08:48:42Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/xenpci/xenpci.c 289686 2015-10-21 10:44:07Z royger $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -43,13 +43,12 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/xenpci/xenpci.c 267534 2014-06-16 08:48:42Z
 #include <xen/features.h>
 #include <xen/hypervisor.h>
 #include <xen/hvm.h>
+#include <xen/xen_intr.h>
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
 
 #include <dev/xen/xenpci/xenpcivar.h>
-
-extern void xen_intr_handle_upcall(struct trapframe *trap_frame);
 
 /*
  * This is used to find our platform device instance.

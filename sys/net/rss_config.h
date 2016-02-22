@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/rss_config.h 277331 2015-01-18 18:06:40Z adrian $
+ * $FreeBSD: head/sys/net/rss_config.h 287245 2015-08-28 05:58:16Z adrian $
  */
 
 #ifndef _NET_RSS_CONFIG_H_
@@ -91,6 +91,21 @@
  */
 #define	RSS_HASH_PKT_INGRESS	0
 #define	RSS_HASH_PKT_EGRESS	1
+
+/*
+ * Rate limited debugging routines.
+ */
+#define	RSS_DEBUG(format, ...)	do {					\
+	if (rss_debug) {						\
+		static struct timeval lastfail;				\
+		static int curfail;					\
+		if (ppsratecheck(&lastfail, &curfail, 5))		\
+			printf("RSS (%s:%u): " format, __func__, __LINE__,\
+			    ##__VA_ARGS__);				\
+	}								\
+} while (0)
+
+extern int	rss_debug;
 
 /*
  * Device driver interfaces to query RSS properties that must be programmed

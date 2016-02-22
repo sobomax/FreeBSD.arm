@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: common.h,v 1.26 2006/03/11 19:41:30 otto Exp $
- * $FreeBSD: head/usr.bin/patch/common.h 275612 2014-12-08 15:10:48Z pfg $
+ * $FreeBSD: head/usr.bin/patch/common.h 286795 2015-08-15 00:42:33Z delphij $
  */
 
 #include <sys/types.h>
@@ -41,14 +41,6 @@
 #define	INITLINELEN 4096
 #define	BUFFERSIZE 4096
 #define	LINENUM_MAX LONG_MAX
-
-#define	SCCSPREFIX "s."
-#define	GET "get -e %s"
-#define	SCCSDIFF "get -p %s | diff - %s >/dev/null"
-
-#define	RCSSUFFIX ",v"
-#define	CHECKOUT "co -l %s"
-#define	RCSDIFF "rcsdiff %s > /dev/null"
 
 #define	ORIGEXT ".orig"
 #define	REJEXT ".rej"

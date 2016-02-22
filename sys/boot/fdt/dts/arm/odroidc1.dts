@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/odroidc1.dts 283181 2015-05-21 07:01:08Z ganbold $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/odroidc1.dts 291683 2015-12-03 09:37:20Z ganbold $
  */
 
 /*
@@ -323,7 +323,7 @@
 
 		eth@c9410000 {
 			/* ethernet */
-			compatible = "snps,dwmac";
+			compatible = "amlogic,meson6-dwmac";
 			reg = <0xc9410000 0x2000>;	/* ahbbus 0x410000 */
 			interrupts = <0 8 1>;
 			#address-cells = <1>;

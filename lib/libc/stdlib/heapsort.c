@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)heapsort.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/heapsort.c 264143 2014-04-05 08:17:48Z theraven $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/heapsort.c 288026 2015-09-20 20:15:44Z rodrigc $");
 
 #include <errno.h>
 #include <stddef.h>
@@ -138,6 +138,12 @@ typedef DECLARE_BLOCK(int, heapsort_block, const void *, const void *);
 	} \
 }
 
+#ifdef I_AM_HEAPSORT_B
+int heapsort_b(void *, size_t, size_t, heapsort_block);
+#else
+int heapsort(void *, size_t, size_t,
+    int (*)(const void *, const void *));
+#endif
 /*
  * Heapsort -- Knuth, Vol. 3, page 145.  Runs in O (N lg N), both average
  * and worst.  While heapsort is faster than the worst case of quicksort,
@@ -147,16 +153,11 @@ typedef DECLARE_BLOCK(int, heapsort_block, const void *, const void *);
  */
 #ifdef I_AM_HEAPSORT_B
 int
-heapsort_b(vbase, nmemb, size, compar)
-	void *vbase;
-	size_t nmemb, size;
-	heapsort_block compar;
+heapsort_b(void *vbase, size_t nmemb, size_t size, heapsort_block compar)
 #else
 int
-heapsort(vbase, nmemb, size, compar)
-	void *vbase;
-	size_t nmemb, size;
-	int (*compar)(const void *, const void *);
+heapsort(void *vbase, size_t nmemb, size_t size,
+    int (*compar)(const void *, const void *))
 #endif
 {
 	size_t cnt, i, j, l;

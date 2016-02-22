@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)auth_none.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)auth_none.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/auth_none.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/auth_none.c 287350 2015-09-01 08:34:44Z rodrigc $");
 
 /*
  * auth_none.c
@@ -65,9 +65,9 @@ static bool_t authnone_validate (AUTH *, struct opaque_auth *);
 static bool_t authnone_refresh (AUTH *, void *);
 static void authnone_destroy (AUTH *);
 
-extern bool_t xdr_opaque_auth();
+extern bool_t xdr_opaque_auth(XDR *, struct opaque_auth *);
 
-static struct auth_ops *authnone_ops();
+static struct auth_ops *authnone_ops(void);
 
 static struct authnone_private {
 	AUTH	no_client;
@@ -76,7 +76,7 @@ static struct authnone_private {
 } *authnone_private;
 
 AUTH *
-authnone_create()
+authnone_create(void)
 {
 	struct authnone_private *ap = authnone_private;
 	XDR xdr_stream;
@@ -156,7 +156,7 @@ authnone_destroy(AUTH *client)
 }
 
 static struct auth_ops *
-authnone_ops()
+authnone_ops(void)
 {
 	static struct auth_ops ops;
  

@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 4/17/94
-# $FreeBSD: head/lib/libc/stdio/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/stdio/Makefile.inc 291337 2015-11-25 22:07:18Z ngie $
 
 # stdio sources
 .PATH: ${LIBC_SRCTOP}/stdio
@@ -42,7 +42,7 @@ MAN+=	fclose.3 ferror.3 fflush.3 fgetln.3 fgets.3 fgetwln.3 fgetws.3 \
 	stdio.3 tmpnam.3 \
 	ungetc.3 ungetwc.3 wprintf.3 wscanf.3
 
-MLINKS+=fclose.3 fcloseall.3
+MLINKS+=fclose.3 fcloseall.3 fclose.3 fdclose.3
 MLINKS+=ferror.3 ferror_unlocked.3 \
 	ferror.3 clearerr.3 ferror.3 clearerr_unlocked.3 \
 	ferror.3 feof.3 ferror.3 feof_unlocked.3 \

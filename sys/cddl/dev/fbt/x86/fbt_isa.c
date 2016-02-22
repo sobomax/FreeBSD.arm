@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/x86/fbt_isa.c 270067 2014-08-16 21:42:55Z markj $
+ * $FreeBSD: head/sys/cddl/dev/fbt/x86/fbt_isa.c 286241 2015-08-03 17:39:36Z markj $
  *
  */
 
@@ -66,7 +66,6 @@ fbt_invop(uintptr_t addr, uintptr_t *stack, uintptr_t rval)
 
 	for (; fbt != NULL; fbt = fbt->fbtp_hashnext) {
 		if ((uintptr_t)fbt->fbtp_patchpoint == addr) {
-			fbt->fbtp_invop_cnt++;
 			if (fbt->fbtp_roffset == 0) {
 				int i = 0;
 				/*

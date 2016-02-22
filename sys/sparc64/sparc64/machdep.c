@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/machdep.c 291121 2015-11-21 02:49:33Z marius $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -245,7 +245,7 @@ find_bsp(phandle_t node, uint32_t bspid, u_int cpu_impl)
 {
 	char type[sizeof("cpu")];
 	phandle_t child;
-	uint32_t cpuid;
+	uint32_t portid;
 
 	for (; node != 0; node = OF_peer(node)) {
 		child = OF_child(node);
@@ -259,10 +259,10 @@ find_bsp(phandle_t node, uint32_t bspid, u_int cpu_impl)
 				continue;
 			if (strcmp(type, "cpu") != 0)
 				continue;
-			if (OF_getprop(node, cpu_cpuid_prop(cpu_impl), &cpuid,
-			    sizeof(cpuid)) <= 0)
+			if (OF_getprop(node, cpu_portid_prop(cpu_impl),
+			    &portid, sizeof(portid)) <= 0)
 				continue;
-			if (cpuid == bspid)
+			if (portid == bspid)
 				return (node);
 		}
 	}
@@ -270,7 +270,7 @@ find_bsp(phandle_t node, uint32_t bspid, u_int cpu_impl)
 }
 
 const char *
-cpu_cpuid_prop(u_int cpu_impl)
+cpu_portid_prop(u_int cpu_impl)
 {
 
 	switch (cpu_impl) {
@@ -499,7 +499,7 @@ sparc64_init(caddr_t mdp, u_long o1, u_long o2, u_long o3, ofw_vec_t *vec)
 	}
 
 #ifdef SMP
-	mp_init(cpu_impl);
+	mp_init();
 #endif
 
 	/*

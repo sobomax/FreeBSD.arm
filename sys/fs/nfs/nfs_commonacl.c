@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonacl.c 240720 2012-09-20 02:49:25Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonacl.c 287256 2015-08-28 14:26:17Z trasz $");
 
 #ifndef APPLEKEXT
 #include <fs/nfs/nfsport.h>
@@ -347,6 +347,8 @@ nfsrv_buildace(struct nfsrv_descript *nd, u_char *name, int namelen,
 			acemask |= NFSV4ACE_WRITEACL;
 		if (ace->ae_perm & ACL_WRITE_OWNER)
 			acemask |= NFSV4ACE_WRITEOWNER;
+		if (ace->ae_perm & ACL_SYNCHRONIZE)
+			acemask |= NFSV4ACE_SYNCHRONIZE;
 	} else {
 		if (ace->ae_perm & ACL_READ_DATA)
 			acemask |= NFSV4ACE_READDATA;

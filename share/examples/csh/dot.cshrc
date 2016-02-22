@@ -1,6 +1,6 @@
 # Here are some example (t)csh options and configurations that you may find interesting
 #
-# $FreeBSD: head/share/examples/csh/dot.cshrc 241602 2012-10-16 02:52:30Z eadler $
+# $FreeBSD: head/share/examples/csh/dot.cshrc 284929 2015-06-29 14:41:19Z brueffer $
 #
 
 # Sets SSH_AUTH_SOCK to the user's ssh-agent socket path if running
@@ -9,11 +9,11 @@
 # has multiple ssh-agent(1) processes running, this will very likely
 # set SSH_AUTH_SOCK to point to the wrong file/domain socket.
 if (${?SSH_AUTH_SOCK} != "1") then
-	setenv SSH_AUTH_SOCK `sockstat -u | awk '/^${USER}.+ ssh-agent/ { print $6 }'
+	setenv SSH_AUTH_SOCK `sockstat -u | awk '/^${USER}.+ ssh-agent/ { print $6 }'`
 endif
 
 # Change only root's prompt
-if (`id -g` == 0)
+if (`id -g` == 0) then
 	set prompt="root@%m# "
 endif
 
@@ -70,7 +70,7 @@ complete grep		'c/-*A/x:<#_lines_after>/' \
       		'n/-*f/f/' \
       		'n/*/f/'
 complete ifconfig	'p@1@`ifconfig -l`@' \
-      		'n/*/(range phase link netmask mtu vlandev vlan metric mediaopt down delete broadcast arp debug)/'
+      		'n/*/(range phase link netmask mtu vlandev vlan metric mediaopt down delete broadcast arp debug)/' \
       		'c/%/j/' \
       		'n/*/`ps -ax | awk '"'"'{print $1}'"'"'`/'
 complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -ax | awk '"'"'{print $1}'"'"'`/'

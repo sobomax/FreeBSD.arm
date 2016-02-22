@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/aesni/Makefile 277940 2015-01-30 18:17:17Z dim $
+# $FreeBSD: head/sys/modules/aesni/Makefile 285127 2015-07-04 08:16:32Z jmg $
 
 .PATH: ${.CURDIR}/../../crypto/aesni
 
@@ -20,6 +20,9 @@ aesni_wrap.o: aesni_wrap.c
 	${CC} -c ${CFLAGS:C/^-O2$/-O3/:N-nostdinc} ${WERROR} ${PROF} \
 	     -mmmx -msse -msse4 -maes ${.IMPSRC}
 	${CTFCONVERT_CMD}
+
+aesni_ghash.o: aesni.h
+aesni_wrap.o: aesni.h
 
 .include <bsd.kmod.mk>
 

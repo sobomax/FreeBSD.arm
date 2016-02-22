@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/awk/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/awk/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 AWKSRC=	${.CURDIR}/../../contrib/one-true-awk
 .PATH: ${AWKSRC}
@@ -17,7 +17,7 @@ MLINKS=	awk.1 nawk.1
 
 CLEANFILES= maketab proctab.c ytab.h
 
-ytab.h: awkgram.h
+ytab.h: awkgram.h .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 
 proctab.c: maketab

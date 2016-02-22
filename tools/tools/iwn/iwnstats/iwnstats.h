@@ -26,14 +26,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/iwn/iwnstats/iwnstats.h 262423 2014-02-24 02:38:43Z adrian $
+ * $FreeBSD: head/tools/tools/iwn/iwnstats/iwnstats.h 287313 2015-08-30 21:54:47Z adrian $
  */
 #ifndef	__IWNSTATS_H__
 #define	__IWNSTATS_H__
 
 struct iwnstats {
 	int s;
-	struct ifreq ifr;
 	struct iwn_stats st;
 };
 

@@ -24,7 +24,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/xen/xen-os.h 282634 2015-05-08 14:48:40Z royger $
+ * $FreeBSD: head/sys/xen/xen-os.h 290392 2015-11-05 14:33:46Z royger $
  */
 
 #ifndef _XEN_XEN_OS_H_
@@ -47,14 +47,14 @@
 /* Everything below this point is not included by assembler (.S) files. */
 #ifndef __ASSEMBLY__
 
-/* Force a proper event-channel callback from Xen. */
-void force_evtchn_callback(void);
-
 extern shared_info_t *HYPERVISOR_shared_info;
 extern start_info_t *HYPERVISOR_start_info;
 
 /* XXX: we need to get rid of this and use HYPERVISOR_start_info directly */
 extern char *console_page;
+
+extern int xen_disable_pv_disks;
+extern int xen_disable_pv_nics;
 
 enum xen_domain_type {
 	XEN_NATIVE,             /* running on bare hardware    */
@@ -88,6 +88,37 @@ xen_initial_domain(void)
 	return (xen_domain() && HYPERVISOR_start_info != NULL &&
 	    (HYPERVISOR_start_info->flags & SIF_INITDOMAIN) != 0);
 }
+
+/*
+ * Based on ofed/include/linux/bitops.h
+ *
+ * Those helpers are prefixed by xen_ because xen-os.h is widely included
+ * and we don't want the other drivers using them.
+ *
+ */
+#define NBPL (NBBY * sizeof(long))
+
+static inline bool
+xen_test_bit(int bit, volatile long *addr)
+{
+	unsigned long mask = 1UL << (bit % NBPL);
+
+	return !!(atomic_load_acq_long(&addr[bit / NBPL]) & mask);
+}
+
+static inline void
+xen_set_bit(int bit, volatile long *addr)
+{
+	atomic_set_long(&addr[bit / NBPL], 1UL << (bit % NBPL));
+}
+
+static inline void
+xen_clear_bit(int bit, volatile long *addr)
+{
+	atomic_clear_long(&addr[bit / NBPL], 1UL << (bit % NBPL));
+}
+
+#undef NPBL
 
 /*
  * Functions to allocate/free unused memory in order

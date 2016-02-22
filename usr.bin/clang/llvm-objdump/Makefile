@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-objdump/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-objdump/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 MAN=
 .include <bsd.own.mk>
@@ -11,7 +11,7 @@ SRCS=	llvm-objdump.cpp \
 	ELFDump.cpp \
 	MachODump.cpp
 
-LIBDEPS=llvmdebuginfo \
+LIBDEPS=llvmdebuginfodwarf \
 	llvmaarch64disassembler \
 	llvmaarch64codegen \
 	llvmaarch64asmparser \
@@ -49,13 +49,14 @@ LIBDEPS=llvmdebuginfo \
 	llvmselectiondag \
 	llvmasmprinter \
 	llvmcodegen \
+	llvmtarget \
 	llvmscalaropts \
 	llvmprofiledata \
 	llvminstcombine \
+	llvminstrumentation \
 	llvmtransformutils \
 	llvmipa \
 	llvmanalysis \
-	llvmtarget \
 	llvmx86desc \
 	llvmobject \
 	llvmmcparser \
@@ -68,7 +69,6 @@ LIBDEPS=llvmdebuginfo \
 	llvmcore \
 	llvmsupport
 
-.include "../clang.prog.mk"
+LIBADD=	z
 
-DPADD+=	${LIBZ}
-LDADD+=	-lz
+.include "../clang.prog.mk"

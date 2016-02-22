@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/arm/ixp425/boot2/ixp425_board.c 278579 2015-02-11 12:08:40Z gnn $");
+__FBSDID("$FreeBSD: head/sys/boot/arm/ixp425/boot2/ixp425_board.c 285681 2015-07-18 20:19:51Z jmg $");
 #include <sys/param.h>
 #include <sys/ata.h>
 #include <sys/linker_set.h>
@@ -74,7 +74,7 @@ board_init(void)
 {
 	struct board_config **pbp;
 
-	cputype = cpu_ident() & CPU_ID_CPU_MASK;
+	cputype = cpu_id() & CPU_ID_CPU_MASK;
 
 	SET_FOREACH(pbp, boards)
 		/* XXX pass down redboot board type */

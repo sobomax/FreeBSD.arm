@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/trgt_amd64.c 246893 2013-02-17 02:15:19Z marcel $");
+__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/trgt_amd64.c 288371 2015-09-29 15:47:42Z jhb $");
 
 #include <sys/types.h>
 #include <machine/pcb.h>
@@ -72,7 +72,6 @@ kgdb_trgt_fetch_registers(int regno __unused)
 	supply_register(AMD64_R8_REGNUM + 6, (char *)&pcb.pcb_r14);
 	supply_register(AMD64_R15_REGNUM, (char *)&pcb.pcb_r15);
 	supply_register(AMD64_RIP_REGNUM, (char *)&pcb.pcb_rip);
-	amd64_supply_fxsave(current_regcache, -1, (struct fpusave *)(&pcb + 1));
 }
 
 void

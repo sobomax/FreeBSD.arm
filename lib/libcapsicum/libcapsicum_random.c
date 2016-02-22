@@ -28,13 +28,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_random.c 282346 2015-05-02 17:45:52Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libcapsicum/libcapsicum_random.c 285063 2015-07-02 21:58:10Z oshogbo $");
+
+#include <sys/nv.h>
 
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
-
-#include <nv.h>
 
 #include "libcapsicum.h"
 #include "libcapsicum_random.h"

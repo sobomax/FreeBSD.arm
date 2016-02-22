@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libllvminstrumentation/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvminstrumentation/Makefile 288943 2015-10-06 17:53:29Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvminstrumentation
 
@@ -10,10 +10,14 @@ SRCS=	AddressSanitizer.cpp \
 	DataFlowSanitizer.cpp \
 	GCOVProfiling.cpp \
 	MemorySanitizer.cpp \
-	Instrumentation.cpp \
 	InstrProfiling.cpp \
+	SafeStack.cpp \
 	SanitizerCoverage.cpp \
 	ThreadSanitizer.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	Instrumentation.cpp
+.endif
 
 TGHDRS=	Intrinsics
 

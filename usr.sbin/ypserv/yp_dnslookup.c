@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_dnslookup.c 253350 2013-07-15 05:09:13Z hrs $");
+__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_dnslookup.c 290919 2015-11-16 06:17:12Z araujo $");
 
 /*
  * Do standard and reverse DNS lookups using the resolver library.
@@ -149,7 +149,7 @@ circleq_dnsentry *yp_malloc_dnsent(void)
 {
 	register struct circleq_dnsentry *q;
 
-	q = (struct circleq_dnsentry *)malloc(sizeof(struct circleq_dnsentry));
+	q = malloc(sizeof(struct circleq_dnsentry));
 
 	if (q == NULL) {
 		yp_error("failed to malloc() circleq dns entry");

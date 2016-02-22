@@ -18,13 +18,14 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/cddl/lib/libdtrace/ip.d 266082 2014-05-14 19:02:00Z markj $
+ * $FreeBSD: head/cddl/lib/libdtrace/ip.d 287807 2015-09-15 05:16:26Z markj $
  */
 /*
  * Copyright (c) 2007, 2010, Oracle and/or its affiliates. All rights reserved.
  * Copyright (c) 2013 Mark Johnston <markj@freebsd.org>
  */
 
+#pragma D depends_on module kernel
 #pragma D depends_on provider ip
 
 /*
@@ -109,7 +110,6 @@ typedef struct ipv4info {
  * These values are NULL if the packet is not IPv6.
  */
 typedef struct in6_addr in6_addr_t;
-typedef struct ip6_hdr ip6_t;
 typedef struct ipv6info {
 	uint8_t ipv6_ver;		/* IP version (6) */
 	uint8_t ipv6_tclass;		/* traffic class */
@@ -122,7 +122,7 @@ typedef struct ipv6info {
 	in6_addr_t *ipv6_dst;		/* destination address */
 	string ipv6_saddr;		/* source address, string */
 	string ipv6_daddr;		/* destination address, string */
-	ip6_t *ipv6_hdr;		/* pointer to raw header */
+	struct ip6_hdr *ipv6_hdr;	/* pointer to raw header */
 } ipv6info_t;
 
 #pragma D binding "1.5" IPPROTO_IP
@@ -281,5 +281,5 @@ translator ipv6info_t < struct ip6_hdr *p > {
 	ipv6_dst =	p == NULL ? 0 : (in6_addr_t *)&p->ip6_dst;
 	ipv6_saddr =	p == NULL ? 0 : inet_ntoa6(&p->ip6_src);
 	ipv6_daddr =	p == NULL ? 0 : inet_ntoa6(&p->ip6_dst);
-	ipv6_hdr =	(ip6_t *)p;
+	ipv6_hdr =	p;
 };

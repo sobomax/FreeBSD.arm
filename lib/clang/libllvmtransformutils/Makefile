@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmtransformutils/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmtransformutils/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <src.opts.mk>
 
@@ -27,7 +27,8 @@ SRCS=	ASanStackFrameLayout.cpp \
 	LoopSimplify.cpp \
 	LoopUnroll.cpp \
 	LoopUnrollRuntime.cpp \
-	LowerExpectIntrinsic.cpp \
+	LoopUtils.cpp \
+	LoopVersioning.cpp \
 	LowerInvoke.cpp \
 	LowerSwitch.cpp \
 	Mem2Reg.cpp \

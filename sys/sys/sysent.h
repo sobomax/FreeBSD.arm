@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sysent.h 283382 2015-05-24 14:51:29Z dchagin $
+ * $FreeBSD: head/sys/sys/sysent.h 291420 2015-11-28 08:49:07Z kib $
  */
 
 #ifndef _SYS_SYSENT_H_
@@ -92,8 +92,6 @@ struct sysentvec {
 	int		sv_size;	/* number of entries */
 	struct sysent	*sv_table;	/* pointer to sysent */
 	u_int		sv_mask;	/* optional mask to index */
-	int		sv_sigsize;	/* size of signal translation table */
-	int		*sv_sigtbl;	/* signal translation table */
 	int		sv_errsize;	/* size of errno translation table */
 	int 		*sv_errtbl;	/* errno translation table */
 	int		(*sv_transtrap)(int, int);
@@ -104,8 +102,6 @@ struct sysentvec {
 			    		/* send signal */
 	char 		*sv_sigcode;	/* start of sigtramp code */
 	int 		*sv_szsigcode;	/* size of sigtramp code */
-	void		(*sv_prepsyscall)(struct trapframe *, int *, u_int *,
-			    caddr_t *);
 	char		*sv_name;	/* name of binary type */
 	int		(*sv_coredump)(struct thread *, struct vnode *, off_t, int);
 					/* function to dump core, or NULL */
@@ -127,23 +123,22 @@ struct sysentvec {
 	int		(*sv_fetch_syscall_args)(struct thread *, struct
 			    syscall_args *);
 	const char	**sv_syscallnames;
+	vm_offset_t	sv_timekeep_base;
 	vm_offset_t	sv_shared_page_base;
 	vm_offset_t	sv_shared_page_len;
 	vm_offset_t	sv_sigcode_base;
-	vm_offset_t	sv_timekeep_base;
-	int		sv_timekeep_off;
-	int		sv_timekeep_curr;
-	uint32_t	sv_timekeep_gen;
 	void		*sv_shared_page_obj;
 	void		(*sv_schedtail)(struct thread *);
 	void		(*sv_thread_detach)(struct thread *);
 };
 
-#define	SV_ILP32	0x000100
-#define	SV_LP64		0x000200
-#define	SV_IA32		0x004000
-#define	SV_AOUT		0x008000
-#define	SV_SHP		0x010000
+#define	SV_ILP32	0x000100	/* 32-bit executable. */
+#define	SV_LP64		0x000200	/* 64-bit executable. */
+#define	SV_IA32		0x004000	/* Intel 32-bit executable. */
+#define	SV_AOUT		0x008000	/* a.out executable. */
+#define	SV_SHP		0x010000	/* Shared page. */
+#define	SV_CAPSICUM	0x020000	/* Force cap_enter() on startup. */
+#define	SV_TIMEKEEP	0x040000
 
 #define	SV_ABI_MASK	0xff
 #define	SV_PROC_FLAG(p, x)	((p)->p_sysent->sv_flags & (x))
@@ -153,6 +148,7 @@ struct sysentvec {
 /* same as ELFOSABI_XXX, to prevent header pollution */
 #define	SV_ABI_LINUX	3
 #define	SV_ABI_FREEBSD 	9
+#define	SV_ABI_CLOUDABI	17
 #define	SV_ABI_UNDEF	255
 
 #ifdef _KERNEL
@@ -272,6 +268,7 @@ int shared_page_alloc(int size, int align);
 int shared_page_fill(int size, int align, const void *data);
 void shared_page_write(int base, int size, const void *data);
 void exec_sysvec_init(void *param);
+void exec_inittk(void);
 
 #define INIT_SYSENTVEC(name, sv)					\
     SYSINIT(name, SI_SUB_EXEC, SI_ORDER_ANY,				\

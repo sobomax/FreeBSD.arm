@@ -46,7 +46,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_scm.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_scm.c 286693 2015-08-12 19:26:36Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -96,8 +96,6 @@ ti_scm_probe(device_t dev)
 		return (ENXIO);
 
 	if (ti_scm_sc) {
-		printf("%s: multiple SCM modules in device tree data, ignoring\n",
-		    __func__);
 		return (EEXIST);
 	}
 

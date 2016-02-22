@@ -1,19 +1,10 @@
 # Allwinner A10 common options
-#$FreeBSD: head/sys/arm/allwinner/std.a10 282707 2015-05-10 08:48:00Z andrew $
+#$FreeBSD: head/sys/arm/allwinner/std.a10 291110 2015-11-20 21:49:46Z imp $
 
 cpu		CPU_CORTEXA
 machine 	arm armv6
 makeoptions	CONF_CFLAGS="-march=armv7a"
-makeoption	ARM_LITTLE_ENDIAN
 
-# Physical memory starts at 0x40200000.  We assume images are loaded at
-# 0x40200000, e.g. from u-boot with 'fatload mmc 0 0x40200000 kernel'
-#
-#
-options 	PHYSADDR=0x40000000
-
-makeoptions	KERNPHYSADDR=0x40200000
-options 	KERNPHYSADDR=0x40200000
 makeoptions	KERNVIRTADDR=0xc0200000
 options 	KERNVIRTADDR=0xc0200000
 

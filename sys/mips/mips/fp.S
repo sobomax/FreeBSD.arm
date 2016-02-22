@@ -32,7 +32,7 @@
  *
  *	from: @(#)fp.s	8.1 (Berkeley) 6/10/93
  *	JNPR: fp.S,v 1.1 2006/08/07 05:38:57 katta
- * $FreeBSD: head/sys/mips/mips/fp.S 256497 2013-10-15 04:45:09Z imp $
+ * $FreeBSD: head/sys/mips/mips/fp.S 287116 2015-08-24 19:09:56Z adrian $
  */
 
 /*
@@ -75,6 +75,8 @@
 #define	COND_EQUAL	0x2
 #define	COND_LESS	0x4
 #define	COND_SIGNAL	0x8
+
+.set hardfloat
 
 /*----------------------------------------------------------------------------
  *

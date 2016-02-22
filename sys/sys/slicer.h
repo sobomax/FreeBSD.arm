@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/slicer.h 235778 2012-05-22 08:33:14Z gber $
+ * $FreeBSD: head/sys/sys/slicer.h 287013 2015-08-22 05:50:18Z jhibbits $
  */
 
 #ifndef _FLASH_SLICER_H_
@@ -45,7 +45,8 @@ struct flash_slice {
 };
 
 #ifdef _KERNEL
-int flash_fill_slices(device_t, struct flash_slice *, int *);
+int fdt_flash_fill_slices(device_t, struct flash_slice *, int *) __weak_symbol;
+void flash_register_slicer(int (*)(device_t, struct flash_slice *, int *));
 #endif /* _KERNEL */
 
 #endif /* _FLASH_SLICER_H_ */

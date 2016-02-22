@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 281613 2015-04-16 20:22:40Z glebius $");
+__FBSDID("$FreeBSD: head/sbin/pfctl/pfctl.c 290236 2015-11-01 17:20:17Z kp $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -1840,6 +1840,7 @@ pfctl_set_debug(struct pfctl *pf, char *d)
 	}
 
 	pf->debug_set = 1;
+	level = pf->debug;
 
 	if ((pf->opts & PF_OPT_NOACTION) == 0)
 		if (ioctl(dev, DIOCSETDEBUG, &level))
@@ -1924,7 +1925,7 @@ pfctl_test_altqsupport(int dev, int opts)
 
 	if (ioctl(dev, DIOCGETALTQS, &pa)) {
 		if (errno == ENODEV) {
-			if (!(opts & PF_OPT_QUIET))
+			if (opts & PF_OPT_VERBOSE)
 				fprintf(stderr, "No ALTQ support in kernel\n"
 				    "ALTQ related functions disabled\n");
 			return (0);

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/pcifront/pcifront.c 257341 2013-10-29 14:19:42Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/pcifront/pcifront.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -78,7 +78,7 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/pcifront/pcifront.c 257341 2013-10-29 14:19
 
 #define INVALID_GRANT_REF (0)
 #define INVALID_EVTCHN    (-1)
-#define virt_to_mfn(x) (vtomach(x) >> PAGE_SHIFT)
+#define virt_to_mfn(x) (vtophys(x) >> PAGE_SHIFT)
 
 struct pcifront_device {
 	STAILQ_ENTRY(pcifront_device) next;
@@ -559,7 +559,7 @@ xpcib_attach(device_t dev)
 
 	DPRINTF("xpcib attach (bus=%d)\n", sc->bus);
 
-	device_add_child(dev, "pci", sc->bus);
+	device_add_child(dev, "pci", -1);
 	return bus_generic_attach(dev);
 }
 

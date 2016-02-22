@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/csu/powerpc64/Makefile 278305 2015-02-06 02:35:29Z jhibbits $
+# $FreeBSD: head/lib/csu/powerpc64/Makefile 288076 2015-09-21 21:44:02Z bdrewery $
 
 .PATH: ${.CURDIR}/../common
 
@@ -16,7 +16,13 @@ CFLAGS+=	-I${.CURDIR}/../common \
 CC:=		gcc
 COMPILER_TYPE:=	gcc
 
-all: ${OBJS}
+FILES=		${OBJS}
+FILESMODE=	${LIBMODE}
+FILESOWN=	${LIBOWN}
+FILESGRP=	${LIBGRP}
+FILESDIR=	${LIBDIR}
+# These FILES qualify as libraries for the purpose of LIBRARIES_ONLY.
+.undef LIBRARIES_ONLY
 
 CLEANFILES=	${OBJS}
 CLEANFILES+=	crt1.s gcrt1.s Scrt1.s
@@ -44,9 +50,5 @@ Scrt1.s: crt1.c
 
 Scrt1.o: Scrt1.s
 	${CC} ${ACFLAGS} -c -o ${.TARGET} Scrt1.s
-
-realinstall:
-	${INSTALL} -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-	    ${OBJS} ${DESTDIR}${LIBDIR}
 
 .include <bsd.lib.mk>

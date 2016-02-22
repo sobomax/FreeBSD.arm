@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_balloc.c 262678 2014-03-02 02:52:34Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_balloc.c 290047 2015-10-27 13:44:13Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -429,7 +429,9 @@ retry:
 	brelse(bp);
 	if (flags & BA_CLRBUF) {
 		int seqcount = (flags & BA_SEQMASK) >> BA_SEQSHIFT;
-		if (seqcount && (vp->v_mount->mnt_flag & MNT_NOCLUSTERR) == 0) {
+		if (seqcount != 0 &&
+		    (vp->v_mount->mnt_flag & MNT_NOCLUSTERR) == 0 &&
+		    !(vm_page_count_severe() || buf_dirty_count_severe())) {
 			error = cluster_read(vp, ip->i_size, lbn,
 			    (int)fs->fs_bsize, NOCRED,
 			    MAXBSIZE, seqcount, gbflags, &nbp);
@@ -998,7 +1000,9 @@ retry:
 	 */
 	if (flags & BA_CLRBUF) {
 		int seqcount = (flags & BA_SEQMASK) >> BA_SEQSHIFT;
-		if (seqcount && (vp->v_mount->mnt_flag & MNT_NOCLUSTERR) == 0) {
+		if (seqcount != 0 &&
+		    (vp->v_mount->mnt_flag & MNT_NOCLUSTERR) == 0 &&
+		    !(vm_page_count_severe() || buf_dirty_count_severe())) {
 			error = cluster_read(vp, ip->i_size, lbn,
 			    (int)fs->fs_bsize, NOCRED,
 			    MAXBSIZE, seqcount, gbflags, &nbp);

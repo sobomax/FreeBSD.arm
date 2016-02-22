@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsport.h 281960 2015-04-25 00:52:01Z rmacklem $
+ * $FreeBSD: head/sys/fs/nfs/nfsport.h 291459 2015-11-29 21:01:02Z mckusick $
  */
 
 #ifndef _NFS_NFSPORT_H_
@@ -963,6 +963,13 @@ struct nfsreq {
 #else
 #define	NFSVNO_DELEGOK(v)	(1)
 #endif
+
+/*
+ * Name used by getnewvnode() to describe filesystem, "nfs".
+ * For perfomance reasons it is useful to have the same string
+ * used in both places that call getnewvnode().
+ */
+extern const char nfs_vnode_tag[];
 
 #endif	/* _KERNEL */
 

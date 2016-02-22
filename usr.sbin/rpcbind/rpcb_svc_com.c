@@ -1,5 +1,5 @@
 /*	$NetBSD: rpcb_svc_com.c,v 1.9 2002/11/08 00:16:39 fvdl Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpcbind/rpcb_svc_com.c 258564 2013-11-25 16:44:02Z hrs $ */
+/*	$FreeBSD: head/usr.sbin/rpcbind/rpcb_svc_com.c 288915 2015-10-06 08:43:48Z hrs $ */
 
 /*-
  * Copyright (c) 2009, Sun Microsystems, Inc.
@@ -47,6 +47,7 @@
 #include <rpc/rpc.h>
 #include <rpc/rpcb_prot.h>
 #include <rpc/svc_dg.h>
+#include <assert.h>
 #include <netconfig.h>
 #include <errno.h>
 #include <syslog.h>
@@ -1047,19 +1048,36 @@ netbufcmp(struct netbuf *n1, struct netbuf *n2)
 	return ((n1->len != n2->len) || memcmp(n1->buf, n2->buf, n1->len));
 }
 
+static bool_t
+netbuf_copybuf(struct netbuf *dst, const struct netbuf *src)
+{
+	assert(src->len <= src->maxlen);
+
+	if (dst->maxlen < src->len || dst->buf == NULL) {
+		if (dst->buf != NULL)
+			free(dst->buf);
+		if ((dst->buf = calloc(1, src->maxlen)) == NULL)
+			return (FALSE);
+		dst->maxlen = src->maxlen;
+	}
+
+	dst->len = src->len;
+	memcpy(dst->buf, src->buf, src->len);
+
+	return (TRUE);
+}
+
 static struct netbuf *
 netbufdup(struct netbuf *ap)
 {
 	struct netbuf  *np;
 
-	if ((np = malloc(sizeof(struct netbuf))) == NULL)
+	if ((np = calloc(1, sizeof(struct netbuf))) == NULL)
 		return (NULL);
-	if ((np->buf = malloc(ap->len)) == NULL) {
+	if (netbuf_copybuf(np, ap) == FALSE) {
 		free(np);
 		return (NULL);
 	}
-	np->maxlen = np->len = ap->len;
-	memcpy(np->buf, ap->buf, ap->len);
 	return (np);
 }
 
@@ -1067,6 +1085,7 @@ static void
 netbuffree(struct netbuf *ap)
 {
 	free(ap->buf);
+	ap->buf = NULL;
 	free(ap);
 }
 
@@ -1184,7 +1203,7 @@ xprt_set_caller(SVCXPRT *xprt, struct finfo *fi)
 {
 	u_int32_t *xidp;
 
-	*(svc_getrpccaller(xprt)) = *(fi->caller_addr);
+	netbuf_copybuf(svc_getrpccaller(xprt), fi->caller_addr);
 	xidp = __rpcb_get_dg_xidp(xprt);
 	*xidp = fi->caller_xid;
 }

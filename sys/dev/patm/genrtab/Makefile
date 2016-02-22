@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/dev/patm/genrtab/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sys/dev/patm/genrtab/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 #
 # This program is used to generate the if_patm_rtables.c file
 # for the idt77252 driver. It is not installed.
@@ -7,7 +7,6 @@ PROG=	genrtab
 INTERNALPROG=
 WARNS?=	5
 MAN=
-DPADD=	${LIBM}
-LDADD=	-lm
+LIBADD=	m
 
 .include <bsd.prog.mk>

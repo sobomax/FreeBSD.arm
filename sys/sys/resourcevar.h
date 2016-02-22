@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resourcevar.h 284784 2015-06-25 01:24:36Z mjg $
+ * $FreeBSD: head/sys/sys/resourcevar.h 290861 2015-11-15 12:50:14Z trasz $
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -156,10 +156,9 @@ void	 uihashinit(void);
 void	 uihold(struct uidinfo *uip);
 #ifdef	RACCT
 void	 ui_racct_foreach(void (*callback)(struct racct *racct,
-	    void *arg2, void *arg3), void *arg2, void *arg3);
+	    void *arg2, void *arg3), void (*pre)(void), void (*post)(void),
+	    void *arg2, void *arg3);
 #endif
-
-void	lim_update_thread(struct thread *td);
 
 #endif /* _KERNEL */
 #endif /* !_SYS_RESOURCEVAR_H_ */

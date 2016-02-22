@@ -1,7 +1,7 @@
 /*	$NetBSD: umodem.c,v 1.45 2002/09/23 05:51:23 simonb Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umodem.c 276892 2015-01-09 18:40:12Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umodem.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*-
  * Copyright (c) 2003, M. Warner Losh <imp@FreeBSD.org>.
@@ -298,6 +298,8 @@ DRIVER_MODULE(umodem, uhub, umodem_driver, umodem_devclass, NULL, 0);
 MODULE_DEPEND(umodem, ucom, 1, 1, 1);
 MODULE_DEPEND(umodem, usb, 1, 1, 1);
 MODULE_VERSION(umodem, UMODEM_MODVER);
+USB_PNP_DUAL_INFO(umodem_dual_devs);
+USB_PNP_HOST_INFO(umodem_host_devs);
 
 static int
 umodem_probe(device_t dev)

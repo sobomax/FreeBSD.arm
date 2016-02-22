@@ -24,9 +24,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/printf.9 281785 2015-04-20 20:03:26Z vangyzen $
+.\" $FreeBSD: head/share/man/man9/printf.9 291058 2015-11-19 05:50:22Z markj $
 .\"
-.Dd September 8, 2006
+.Dd November 18, 2015
 .Dt PRINTF 9
 .Os
 .Sh NAME
@@ -41,9 +41,13 @@
 .Fn tprintf "struct proc *p" "int pri" "const char *fmt" ...
 .Ft int
 .Fn uprintf "const char *fmt" ...
+.Ft int
+.Fn vprintf "const char *fmt" "va_list ap"
 .In sys/syslog.h
 .Ft void
 .Fn log "int pri" "const char *fmt" ...
+.Ft void
+.Fn vlog "int pri" "const char *fmt" "va_list ap"
 .Sh DESCRIPTION
 The
 .Xr printf 9

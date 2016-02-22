@@ -2205,12 +2205,18 @@ extern void dtrace_probe(dtrace_id_t, uintptr_t arg0, uintptr_t arg1,
  *
  * 1.2.4  Caller's context
  *
- *   dtms_create_probe() is called from either ioctl() or module load context.
- *   The DTrace framework is locked in such a way that meta providers may not
- *   register or unregister. This means that the meta provider cannot call
- *   dtrace_meta_register() or dtrace_meta_unregister(). However, the context is
- *   such that the provider may (and is expected to) call provider-related
- *   DTrace provider APIs including dtrace_probe_create().
+ *   dtms_create_probe() is called from either ioctl() or module load context
+ *   in the context of a newly-created provider (that is, a provider that
+ *   is a result of a call to dtms_provide_pid()). The DTrace framework is
+ *   locked in such a way that meta providers may not register or unregister,
+ *   such that no other thread can call into a meta provider operation and that
+ *   atomicity is assured with respect to meta provider operations across
+ *   dtms_provide_pid() and subsequent calls to dtms_create_probe().
+ *   The context is thus effectively single-threaded with respect to the meta
+ *   provider, and that the meta provider cannot call dtrace_meta_register()
+ *   or dtrace_meta_unregister(). However, the context is such that the
+ *   provider may (and is expected to) call provider-related DTrace provider
+ *   APIs including dtrace_probe_create().
  *
  * 1.3  void *dtms_provide_pid(void *arg, dtrace_meta_provider_t *mprov,
  *	      pid_t pid)
@@ -2445,6 +2451,34 @@ extern void dtrace_helpers_destroy(proc_t *);
 #define DTRACE_INVOP_POPM	2
 #define DTRACE_INVOP_B		3
 
+#elif defined(__aarch64__)
+
+#define	INSN_SIZE	4
+
+#define	B_MASK		0xff000000
+#define	B_DATA_MASK	0x00ffffff
+#define	B_INSTR		0x14000000
+
+#define	RET_INSTR	0xd65f03c0
+
+#define	LDP_STP_MASK	0xffc00000
+#define	STP_32		0x29800000
+#define	STP_64		0xa9800000
+#define	LDP_32		0x28c00000
+#define	LDP_64		0xa8c00000
+#define	LDP_STP_PREIND	(1 << 24)
+#define	LDP_STP_DIR	(1 << 22) /* Load instruction */
+#define	ARG1_SHIFT	0
+#define	ARG1_MASK	0x1f
+#define	ARG2_SHIFT	10
+#define	ARG2_MASK	0x1f
+#define	OFFSET_SHIFT	15
+#define	OFFSET_SIZE	7
+#define	OFFSET_MASK	((1 << OFFSET_SIZE) - 1)
+
+#define	DTRACE_INVOP_PUSHM	1
+#define	DTRACE_INVOP_RET	2
+#define	DTRACE_INVOP_B		3
 
 #endif
 

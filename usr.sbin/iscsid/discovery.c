@@ -29,14 +29,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iscsid/discovery.c 275864 2014-12-17 15:13:21Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/discovery.c 288959 2015-10-06 22:45:23Z delphij $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
-#include <assert.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <netinet/in.h>
 

@@ -1,5 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: head/bin/dd/Makefile 160218 2006-07-09 21:47:37Z markm $
+# $FreeBSD: head/bin/dd/Makefile 289487 2015-10-18 05:49:58Z ngie $
+
+.include <src.opts.mk>
 
 PROG=	dd
 SRCS=	args.c conv.c conv_tab.c dd.c misc.c position.c
@@ -23,5 +25,9 @@ test: ${PROG} gen
 	    diff -I FreeBSD - ${.CURDIR}/ref.${conv}
 .endfor
 	@rm -f gen
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

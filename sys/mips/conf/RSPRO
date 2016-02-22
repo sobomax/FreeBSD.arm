@@ -1,8 +1,10 @@
 #
 # Routerstation Pro: boot from on-board flash
 #
-# $FreeBSD: head/sys/mips/conf/RSPRO 283098 2015-05-19 06:45:06Z adrian $
+# $FreeBSD: head/sys/mips/conf/RSPRO 291049 2015-11-19 01:58:12Z imp $
 #
+
+#NO_UNIVERSE
 
 include		"AR71XX_BASE"
 ident		"RSPRO"

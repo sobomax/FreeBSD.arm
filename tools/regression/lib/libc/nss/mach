@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/regression/lib/libc/nss/mach 168754 2007-04-15 11:02:31Z bushman $
+# $FreeBSD: head/tools/regression/lib/libc/nss/mach 291358 2015-11-26 07:03:26Z ngie $
 localhost
 above.warped.net
 anoncvs.cirr.com
@@ -11,7 +11,6 @@ antioche.antioche.eu.org
 boulder.tele.dk
 centaurus.4web.cz
 chur.math.ntnu.no
-cnftp.bjpu.edu.cn
 console.netbsd.org
 cvs.fi.netbsd.org
 cvs.mikrolahti.fi

@@ -1,15 +1,21 @@
-# $FreeBSD: head/usr.bin/xo/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/xo/Makefile 289490 2015-10-18 07:30:50Z ngie $
 
-LIBXO=	${.CURDIR:H:H}/contrib/libxo
+.include <src.opts.mk>
 
-.PATH:	${LIBXO}/xo
+LIBXOSRC=	${SRCTOP}/contrib/libxo
+
+.PATH:	${LIBXOSRC}/xo
 
 PROG=	xo
 MAN=	xo.1
 
 # XXX For xoversion.h
-CFLAGS+=-I${LIBXO}/libxo
+CFLAGS+=-I${LIBXOSRC}/libxo
 
 LIBADD=	xo
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

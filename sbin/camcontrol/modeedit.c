@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/camcontrol/modeedit.c 256317 2013-10-11 17:00:09Z mav $");
+__FBSDID("$FreeBSD: head/sbin/camcontrol/modeedit.c 289916 2015-10-25 04:37:00Z ngie $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -246,7 +246,7 @@ editentry_set(char *name, char *newvalue, int editonly)
  *     currently workaround it (even for int64's), so we have to kludge it.
  */
 #define	RESOLUTION_MAX(size) ((resolution * (size) == 32)? 		\
-	(int)0xffffffff: (1 << (resolution * (size))) - 1)
+	INT_MAX: (1 << (resolution * (size))) - 1)
 
 	assert(newvalue != NULL);
 	if (*newvalue == '\0')

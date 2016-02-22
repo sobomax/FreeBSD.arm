@@ -2,7 +2,7 @@
 
 /* #pragma ident	"@(#)mt_misc.c	1.24	93/04/29 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/mt_misc.c 204950 2010-03-10 13:23:25Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/mt_misc.c 290253 2015-11-02 01:22:06Z ngie $");
 
 #include "namespace.h"
 #include "reentrant.h"
@@ -93,7 +93,7 @@ rce_key_init(void)
 }
 
 struct rpc_createerr *
-__rpc_createerr()
+__rpc_createerr(void)
 {
 	struct rpc_createerr *rce_addr = 0;
 
@@ -106,8 +106,7 @@ __rpc_createerr()
 		rce_addr = (struct rpc_createerr *)
 			malloc(sizeof (struct rpc_createerr));
 		if (thr_setspecific(rce_key, (void *) rce_addr) != 0) {
-			if (rce_addr)
-				free(rce_addr);
+			free(rce_addr);
 			return (&rpc_createerr);
 		}
 		memset(rce_addr, 0, sizeof (struct rpc_createerr));

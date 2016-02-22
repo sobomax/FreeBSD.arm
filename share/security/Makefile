@@ -1,7 +1,6 @@
-# $FreeBSD: head/share/security/Makefile 139103 2004-12-21 08:47:35Z ru $
+# $FreeBSD: head/share/security/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
 
 FILES=	lomac-policy.contexts
-NO_OBJ=
 FILESDIR=	${BINDIR}/security
 
 .include "${.CURDIR}/../Makefile.inc"

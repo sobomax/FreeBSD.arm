@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/kdigest/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/libexec/kdigest/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
 
 PROG=	kdigest
 MAN=	kdigest.8
@@ -10,12 +10,12 @@ SRCS=	kdigest.c \
 	kdigest-commands.c \
 	kdigest-commands.h
 
+CLEANFILES=	kdigest-commands.h kdigest-commands.c
+
 kdigest-commands.h: kdigest-commands.in
 	${SLC} ${.ALLSRC:M*.in}
 
-.for ext in c o
-kdigest-commands.${ext}: kdigest-commands.h
-.endfor
+kdigest-commands.c: kdigest-commands.h
 
 .include <bsd.prog.mk>
 

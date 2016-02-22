@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/nandsim/nandsim.c 235537 2012-05-17 10:11:18Z gber $");
+__FBSDID("$FreeBSD: head/usr.sbin/nandsim/nandsim.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <sys/errno.h>
 #include <sys/ioctl.h>
@@ -421,7 +421,7 @@ cmdmod(int gargc __unused, char **gargv)
 	if (gargc >= 4) {
 		if (strcmp(gargv[2], "--loglevel") == 0 || strcmp(gargv[2],
 		    "-l") == 0) {
-			/* Set loglevel (ctrl:chip pair independant) */
+			/* Set loglevel (ctrl:chip pair independent) */
 			mods.field = SIM_MOD_LOG_LEVEL;
 
 			if (convert_arguint(gargv[3], &mods.new_value) != 0)

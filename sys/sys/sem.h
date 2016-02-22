@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/sys/sem.h 275985 2014-12-21 05:07:11Z imp $ */
+/* $FreeBSD: head/sys/sys/sem.h 286088 2015-07-30 18:59:01Z rodrigc $ */
 /*	$NetBSD: sem.h,v 1.5 1994/06/29 06:45:15 cgd Exp $	*/
 
 /*
@@ -137,8 +137,9 @@ struct semid_kernel {
  */
 void	semexit(struct proc *p);
 
-#else /* ! _KERNEL */
+#endif /* _KERNEL */
 
+#if !defined(_KERNEL) || defined(_WANT_SEM_PROTOTYPES)
 __BEGIN_DECLS
 #if __BSD_VISIBLE
 int semsys(int, ...);
@@ -148,6 +149,6 @@ int semget(key_t, int, int);
 int semop(int, struct sembuf *, size_t);
 __END_DECLS
 
-#endif /* !_KERNEL */
+#endif /* !_KERNEL || _WANT_SEM_PROTOTYPES */
 
 #endif /* !_SYS_SEM_H_ */

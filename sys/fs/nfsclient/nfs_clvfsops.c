@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvfsops.c 281960 2015-04-25 00:52:01Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvfsops.c 290970 2015-11-17 01:44:26Z rmacklem $");
 
 
 #include "opt_bootp.h"
@@ -216,10 +216,12 @@ newnfs_iosize(struct nfsmount *nmp)
 	 * Calculate the size used for io buffers.  Use the larger
 	 * of the two sizes to minimise nfs requests but make sure
 	 * that it is at least one VM page to avoid wasting buffer
-	 * space.
+	 * space.  It must also be at least NFS_DIRBLKSIZ, since
+	 * that is the buffer size used for directories.
 	 */
 	iosize = imax(nmp->nm_rsize, nmp->nm_wsize);
 	iosize = imax(iosize, PAGE_SIZE);
+	iosize = imax(iosize, NFS_DIRBLKSIZ);
 	nmp->nm_mountp->mnt_stat.f_iosize = iosize;
 	return (iosize);
 }
@@ -779,7 +781,7 @@ nfs_mount(struct mount *mp)
 	struct thread *td;
 	char hst[MNAMELEN];
 	u_char nfh[NFSX_FHMAX], krbname[100], dirpath[100], srvkrbname[100];
-	char *opt, *name, *secname;
+	char *cp, *opt, *name, *secname;
 	int nametimeo = NFS_DEFAULT_NAMETIMEO;
 	int negnametimeo = NFS_DEFAULT_NEGNAMETIMEO;
 	int minvers = 0;
@@ -1158,8 +1160,12 @@ nfs_mount(struct mount *mp)
 
 	if (vfs_getopt(mp->mnt_optnew, "principal", (void **)&name, NULL) == 0)
 		strlcpy(srvkrbname, name, sizeof (srvkrbname));
-	else
+	else {
 		snprintf(srvkrbname, sizeof (srvkrbname), "nfs@%s", hst);
+		cp = strchr(srvkrbname, ':');
+		if (cp != NULL)
+			*cp = '\0';
+	}
 	srvkrbnamelen = strlen(srvkrbname);
 
 	if (vfs_getopt(mp->mnt_optnew, "gssname", (void **)&name, NULL) == 0)

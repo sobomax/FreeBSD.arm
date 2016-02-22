@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicoc.c 233539 2012-03-27 10:44:32Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicoc.c 289657 2015-10-20 19:52:59Z dumbbell $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -229,6 +229,7 @@ static int
 iicoc_detach(device_t dev)
 {
 	bus_generic_detach(dev);
+	device_delete_children(dev);
 
 	return (0);
 }
@@ -236,7 +237,7 @@ iicoc_detach(device_t dev)
 static int 
 iicoc_start(device_t dev, u_char slave, int timeout)
 {
-	int error = IIC_EBUSBSY;
+	int error = IIC_EBUSERR;
 	struct iicoc_softc *sc;
 
 	sc = device_get_softc(dev);

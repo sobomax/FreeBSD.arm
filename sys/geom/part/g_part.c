@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part.c 280687 2015-03-26 12:17:47Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part.c 285889 2015-07-26 11:16:48Z ae $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -322,8 +322,10 @@ g_part_check_integrity(struct g_part_table *table, struct g_consumer *cp)
 			if (e1->gpe_offset > offset)
 				offset = e1->gpe_offset;
 			if ((offset + pp->stripeoffset) % pp->stripesize) {
-				DPRINTF("partition %d is not aligned on %u "
-				    "bytes\n", e1->gpe_index, pp->stripesize);
+				DPRINTF("partition %d on (%s, %s) is not "
+				    "aligned on %u bytes\n", e1->gpe_index,
+				    pp->name, table->gpt_scheme->name,
+				    pp->stripesize);
 				/* Don't treat this as a critical failure */
 			}
 		}

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx_pcib.c 282783 2015-05-11 20:58:05Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx_pcib.c 291151 2015-11-22 01:16:43Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,7 +59,7 @@ __FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx_pcib.c 282783 2015-05-1
 static int
 fsl_pcib_rc_probe(device_t dev)
 {
-	printf("Probe called\n");
+
 	if (pci_get_vendor(dev) != 0x1957)
 		return (ENXIO);
 	if (pci_get_progif(dev) != 0)
@@ -72,28 +72,8 @@ fsl_pcib_rc_probe(device_t dev)
 	return (BUS_PROBE_DEFAULT);
 }
 
-static int
-fsl_pcib_rc_attach(device_t dev)
-{
-	struct pcib_softc *sc;
-	device_t child;
-
-	pcib_bridge_init(dev);
-	pcib_attach_common(dev);
-
-	sc = device_get_softc(dev);
-	if (sc->bus.sec != 0) {
-		child = device_add_child(dev, "pci", -1);
-		if (child != NULL)
-			return (bus_generic_attach(dev));
-	}
-
-	return (0);
-}
-
 static device_method_t fsl_pcib_rc_methods[] = {
 	DEVMETHOD(device_probe,		fsl_pcib_rc_probe),
-	DEVMETHOD(device_attach,	fsl_pcib_rc_attach),
 	DEVMETHOD_END
 };
 

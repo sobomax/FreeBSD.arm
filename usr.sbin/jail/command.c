@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 278323 2015-02-06 17:54:53Z jamie $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -761,7 +761,7 @@ add_proc(struct cfjail *j, pid_t pid)
 	if (j->timeout.tv_sec == 0)
 		requeue(j, &sleeping);
 	else {
-		/* File the jail in the sleep queue acording to its timeout. */
+		/* File the jail in the sleep queue according to its timeout. */
 		TAILQ_REMOVE(j->queue, j, tq);
 		TAILQ_FOREACH(tj, &sleeping, tq) {
 			if (!tj->timeout.tv_sec ||

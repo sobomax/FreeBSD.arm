@@ -33,7 +33,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/amd64/include/xen/hypercall.h 273476 2014-10-22 17:07:20Z royger $
+ * $FreeBSD: head/sys/amd64/include/xen/hypercall.h 289033 2015-10-08 16:39:43Z royger $
  */
 
 #ifndef __MACHINE_XEN_HYPERCALL_H__
@@ -308,7 +308,7 @@ HYPERVISOR_xen_version(
 
 static inline int __must_check
 HYPERVISOR_console_io(
-	int cmd, unsigned int count, char *str)
+	int cmd, unsigned int count, const char *str)
 {
 	return _hypercall3(int, console_io, cmd, count, str);
 }

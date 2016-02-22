@@ -18,7 +18,7 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/tcpdump/print-ip.c 281938 2015-04-24 16:11:22Z brooks $
+ * $FreeBSD: head/contrib/tcpdump/print-ip.c 285275 2015-07-08 16:19:32Z pkelsey $
  */
 
 #define NETDISSECT_REWORKED
@@ -438,12 +438,10 @@ again:
 		}
 		break;
 
-#ifdef INET6
 	case IPPROTO_IPV6:
 		/* ip6-in-ip encapsulation */
 		ip6_print(ndo, ipds->cp, ipds->len);
 		break;
-#endif /*INET6*/
 
 	case IPPROTO_RSVP:
 		rsvp_print(ndo, ipds->cp, ipds->len);
@@ -539,9 +537,10 @@ ip_print(netdissect_options *ndo,
 	ipds->ip = (const struct ip *)bp;
 	ND_TCHECK(ipds->ip->ip_vhl);
 	if (IP_V(ipds->ip) != 4) { /* print version if != 4 */
-	    ND_PRINT((ndo, "IP%u ", IP_V(ipds->ip)));
 	    if (IP_V(ipds->ip) == 6)
-	      ND_PRINT((ndo, ", wrong link-layer encapsulation"));
+	      ND_PRINT((ndo, "IP6, wrong link-layer encapsulation "));
+	    else
+	      ND_PRINT((ndo, "IP%u ", IP_V(ipds->ip)));
 	}
 	else if (!ndo->ndo_eflag)
 		ND_PRINT((ndo, "IP "));
@@ -696,11 +695,9 @@ ipN_print(netdissect_options *ndo, register const u_char *bp, register u_int len
 	case 4:
 		ip_print (ndo, bp, length);
 		return;
-#ifdef INET6
 	case 6:
 		ip6_print (ndo, bp, length);
 		return;
-#endif
 	default:
 		ND_PRINT((ndo, "unknown ip %d", IP_V(&hdr)));
 		return;

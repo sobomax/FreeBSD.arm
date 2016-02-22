@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/usb/input/uep.c 276701 2015-01-05 15:04:17Z hselasky $
+ * $FreeBSD: head/sys/dev/usb/input/uep.c 292080 2015-12-11 05:28:00Z imp $
  */
 
 /*
@@ -441,3 +441,4 @@ static driver_t uep_driver = {
 DRIVER_MODULE(uep, uhub, uep_driver, uep_devclass, NULL, NULL);
 MODULE_DEPEND(uep, usb, 1, 1, 1);
 MODULE_VERSION(uep, 1);
+USB_PNP_HOST_INFO(uep_devs);

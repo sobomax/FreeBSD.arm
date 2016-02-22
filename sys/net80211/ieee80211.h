@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211.h 283589 2015-05-26 21:50:53Z gavin $
+ * $FreeBSD: head/sys/net80211/ieee80211.h 288084 2015-09-22 02:24:13Z adrian $
  */
 #ifndef _NET80211_IEEE80211_H_
 #define _NET80211_IEEE80211_H_
@@ -815,6 +815,7 @@ struct ieee80211_csa_ie {
 /* rate set entries are in .5 Mb/s units, and potentially marked as basic */
 #define	IEEE80211_RATE_BASIC		0x80
 #define	IEEE80211_RATE_VAL		0x7f
+#define	IEEE80211_RV(v)			((v) & IEEE80211_RATE_VAL)
 
 /* ERP information element flags */
 #define	IEEE80211_ERP_NON_ERP_PRESENT	0x01

@@ -20,7 +20,7 @@
 /* Driver for Microdia's HID based TEMPer Temperature sensor */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/misc/ugold.c 284272 2015-06-11 15:23:47Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/misc/ugold.c 292080 2015-12-11 05:28:00Z imp $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -136,9 +136,14 @@ static driver_t ugold_driver = {
 	.size = sizeof(struct ugold_softc),
 };
 
+static const STRUCT_USB_HOST_ID ugold_devs[] = {
+	{USB_VPI(USB_VENDOR_CHICONY2, USB_PRODUCT_CHICONY2_TEMPER, 0)},
+};
+
 DRIVER_MODULE(ugold, uhub, ugold_driver, ugold_devclass, NULL, NULL);
 MODULE_DEPEND(ugold, usb, 1, 1, 1);
 MODULE_VERSION(ugold, 1);
+USB_PNP_HOST_INFO(ugold_devs);
 
 static const struct usb_config ugold_config[UGOLD_N_TRANSFER] = {
 
@@ -151,10 +156,6 @@ static const struct usb_config ugold_config[UGOLD_N_TRANSFER] = {
 		.callback = &ugold_intr_callback,
 		.if_index = 1,
 	},
-};
-
-static const STRUCT_USB_HOST_ID ugold_devs[] = {
-	{USB_VPI(USB_VENDOR_CHICONY2, USB_PRODUCT_CHICONY2_TEMPER, 0)},
 };
 
 static void

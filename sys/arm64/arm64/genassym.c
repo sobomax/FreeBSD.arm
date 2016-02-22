@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/genassym.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/genassym.c 291581 2015-12-01 12:37:04Z andrew $");
 #include <sys/param.h>
 #include <sys/assym.h>
 #include <sys/pcpu.h>
@@ -38,6 +38,8 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/genassym.c 281494 2015-04-13 14:43:10Z 
 #include <machine/vmparam.h>
 
 ASSYM(KERNBASE, KERNBASE);
+ASSYM(VM_MAXUSER_ADDRESS, VM_MAXUSER_ADDRESS);
+
 ASSYM(TDF_ASTPENDING, TDF_ASTPENDING);
 ASSYM(TDF_NEEDRESCHED, TDF_NEEDRESCHED);
 
@@ -58,4 +60,7 @@ ASSYM(TD_PCB, offsetof(struct thread, td_pcb));
 ASSYM(TD_FLAGS, offsetof(struct thread, td_flags));
 ASSYM(TD_LOCK, offsetof(struct thread, td_lock));
 
+ASSYM(TF_SIZE, sizeof(struct trapframe));
+ASSYM(TF_SP, offsetof(struct trapframe, tf_sp));
+ASSYM(TF_ELR, offsetof(struct trapframe, tf_elr));
 ASSYM(TF_X, offsetof(struct trapframe, tf_x));

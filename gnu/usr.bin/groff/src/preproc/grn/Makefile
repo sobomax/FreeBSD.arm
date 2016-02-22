@@ -1,9 +1,10 @@
-# $FreeBSD: head/gnu/usr.bin/groff/src/preproc/grn/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/groff/src/preproc/grn/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG_CXX=	grn
 SRCS=		hdb.cpp hpoint.cpp hgraph.cpp main.cpp
-DPADD=	 	${LIBGROFF} ${LIBM}
-LDADD=	 	${LIBGROFF} -lm
+DPADD=	 	${LIBGROFF}
+LDADD=	 	${LIBGROFF}
+LIBADD=		m
 CLEANFILES=	${MAN}
 
 .include <bsd.prog.mk>

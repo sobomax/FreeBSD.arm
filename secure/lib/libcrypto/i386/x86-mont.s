@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/i386/x86-mont.s 238405 2012-07-12 19:30:53Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/i386/x86-mont.s 290207 2015-10-30 20:51:33Z jkim $
 .file	"x86-mont.s"
 .text
 .globl	bn_mul_mont
@@ -454,4 +454,4 @@ bn_mul_mont:
 .byte	54,44,32,67,82,89,80,84,79,71,65,77,83,32,98,121
 .byte	32,60,97,112,112,114,111,64,111,112,101,110,115,115,108,46
 .byte	111,114,103,62,0
-.comm	OPENSSL_ia32cap_P,8,4
+.comm	OPENSSL_ia32cap_P,16,4

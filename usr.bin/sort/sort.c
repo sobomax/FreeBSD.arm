@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/sort.c 281182 2015-04-07 01:17:49Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/sort.c 289751 2015-10-22 10:57:15Z gabor $");
 
 #include <sys/stat.h>
 #include <sys/sysctl.h>
@@ -1168,6 +1168,11 @@ main(int argc, char **argv)
 	argc -= optind;
 	argv += optind;
 
+	if (argv_from_file0) {
+		argc = argc_from_file0;
+		argv = argv_from_file0;
+	}
+
 #ifndef WITHOUT_NLS
 	catalog = catopen("sort", NL_CAT_LOCALE);
 #endif
@@ -1203,11 +1208,6 @@ main(int argc, char **argv)
 		}
 
 		ks->sm.func = get_sort_func(&(ks->sm));
-	}
-
-	if (argv_from_file0) {
-		argc = argc_from_file0;
-		argv = argv_from_file0;
 	}
 
 	if (debug_sort) {

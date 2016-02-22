@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/mandoc/Makefile 283945 2015-06-03 13:32:28Z bapt $
+# $FreeBSD: head/usr.bin/mandoc/Makefile 290351 2015-11-04 07:20:55Z rodrigc $
 
 .include <src.opts.mk>
 
@@ -82,8 +82,8 @@ SRCS+=	${DB_SRCS}
 
 WARNS?=	2
 CFLAGS+= -DHAVE_CONFIG_H \
-	 -I${.CURDIR}/../../lib/libohash/ \
+	 -I${.CURDIR}/../../lib/libopenbsd/ \
 	 -I${.CURDIR}/../../contrib/sqlite3
-LIBADD=	ohash sqlite3 z
+LIBADD=	openbsd sqlite3 z
 
 .include <bsd.prog.mk>

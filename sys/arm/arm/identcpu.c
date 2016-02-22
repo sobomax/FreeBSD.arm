@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/identcpu.c 278529 2015-02-10 19:41:30Z gnn $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/identcpu.c 291425 2015-11-28 12:11:44Z mmel $");
 #include <sys/systm.h>
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -185,6 +185,8 @@ const struct cpuidtab cpuids[] = {
 	  generic_steppings },
 	{ CPU_ID_CORTEXA9R3,	CPU_CLASS_CORTEXA,	"Cortex A9-r3",
 	  generic_steppings },
+	{ CPU_ID_CORTEXA9R4,	CPU_CLASS_CORTEXA,	"Cortex A9-r4",
+	  generic_steppings },
 	{ CPU_ID_CORTEXA12R0,	CPU_CLASS_CORTEXA,	"Cortex A12-r0",
 	  generic_steppings },
 	{ CPU_ID_CORTEXA15R0,	CPU_CLASS_CORTEXA,	"Cortex A15-r0",
@@ -195,7 +197,9 @@ const struct cpuidtab cpuids[] = {
 	  generic_steppings },
 	{ CPU_ID_CORTEXA15R3,	CPU_CLASS_CORTEXA,	"Cortex A15-r3",
 	  generic_steppings },
-	{ CPU_ID_KRAIT,		CPU_CLASS_KRAIT,	"Krait",
+	{ CPU_ID_KRAIT300R0,	CPU_CLASS_KRAIT,	"Krait 300-r0",
+	  generic_steppings },
+	{ CPU_ID_KRAIT300R1,	CPU_CLASS_KRAIT,	"Krait 300-r1",
 	  generic_steppings },
 
 	{ CPU_ID_80200,		CPU_CLASS_XSCALE,	"i80200",

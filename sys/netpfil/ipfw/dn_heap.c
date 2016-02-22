@@ -27,13 +27,13 @@
 /*
  * Binary heap and hash tables, used in dummynet
  *
- * $FreeBSD: head/sys/netpfil/ipfw/dn_heap.c 240494 2012-09-14 11:51:49Z glebius $
+ * $FreeBSD: head/sys/netpfil/ipfw/dn_heap.c 285361 2015-07-10 19:18:49Z luigi $
  */
 
 #include <sys/cdefs.h>
 #include <sys/param.h>
 #ifdef _KERNEL
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/dn_heap.c 240494 2012-09-14 11:51:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/dn_heap.c 285361 2015-07-10 19:18:49Z luigi $");
 #include <sys/systm.h>
 #include <sys/malloc.h>
 #include <sys/kernel.h>
@@ -52,7 +52,7 @@ __FBSDID("$FreeBSD: head/sys/netpfil/ipfw/dn_heap.c 240494 2012-09-14 11:51:49Z 
 #include  "dn_heap.h"
 #define log(x, arg...)	fprintf(stderr, ## arg)
 #define panic(x...)	fprintf(stderr, ## x), exit(1)
-#define MALLOC_DEFINE(a, b, c)
+#define MALLOC_DEFINE(a, b, c)	volatile int __dummy__ ## a __attribute__((__unused__))
 static void *my_malloc(int s) {	return malloc(s); }
 static void my_free(void *p) {	free(p); }
 #define malloc(s, t, w)	my_malloc(s)

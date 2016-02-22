@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -34,6 +34,8 @@ SRCS=	Args.cpp \
 	OptionValueFileSpec.cpp \
 	OptionValueFileSpecLIst.cpp \
 	OptionValueFormat.cpp \
+	OptionValueFormatEntity.cpp \
+	OptionValueLanguage.cpp \
 	OptionValuePathMappings.cpp \
 	OptionValueProperties.cpp \
 	OptionValueRegex.cpp \

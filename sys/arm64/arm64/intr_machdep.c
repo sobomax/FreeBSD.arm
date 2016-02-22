@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/intr_machdep.c 283112 2015-05-19 15:25:47Z br $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/intr_machdep.c 292063 2015-12-10 15:51:02Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -48,6 +48,7 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/intr_machdep.c 283112 2015-05-19 15:25:
 #include <sys/cpuset.h>
 #include <sys/interrupt.h>
 #include <sys/queue.h>
+#include <sys/smp.h>
 
 #include <machine/cpufunc.h>
 #include <machine/intr.h>
@@ -216,47 +217,40 @@ arm_register_msi_pic(device_t dev)
 }
 
 int
-arm_alloc_msi(device_t pci_dev, int count, int *irqs)
+arm_alloc_msi(device_t pci, device_t child, int count, int maxcount, int *irqs)
 {
 
-	return PIC_ALLOC_MSI(msi_pic, pci_dev, count, irqs);
+	return (PIC_ALLOC_MSI(msi_pic, child, count, irqs));
 }
 
 int
-arm_release_msi(device_t pci_dev, int count, int *irqs)
+arm_release_msi(device_t pci, device_t child, int count, int *irqs)
 {
 
-	return PIC_RELEASE_MSI(msi_pic, pci_dev, count, irqs);
+	return (PIC_RELEASE_MSI(msi_pic, child, count, irqs));
 }
 
 int
-arm_map_msi(device_t pci_dev, int irq, uint64_t *addr, uint32_t *data)
+arm_map_msi(device_t pci, device_t child, int irq, uint64_t *addr, uint32_t *data)
 {
 
-	return PIC_MAP_MSI(msi_pic, pci_dev, irq, addr, data);
+	return (PIC_MAP_MSI(msi_pic, child, irq, addr, data));
 }
 
 int
-arm_alloc_msix(device_t pci_dev, int *irq)
+arm_alloc_msix(device_t pci, device_t child, int *irq)
 {
 
-	return PIC_ALLOC_MSIX(msi_pic, pci_dev, irq);
+	return (PIC_ALLOC_MSIX(msi_pic, child, irq));
 }
 
 int
-arm_release_msix(device_t pci_dev, int irq)
+arm_release_msix(device_t pci, device_t child, int irq)
 {
 
-	return PIC_RELEASE_MSIX(msi_pic, pci_dev, irq);
+	return (PIC_RELEASE_MSIX(msi_pic, child, irq));
 }
 
-
-int
-arm_map_msix(device_t pci_dev, int irq, uint64_t *addr, uint32_t *data)
-{
-
-	return PIC_MAP_MSIX(msi_pic, pci_dev, irq, addr, data);
-}
 
 /*
  * Finalize interrupts bring-up (should be called from configure_final()).
@@ -450,8 +444,7 @@ void
 arm_setup_ipihandler(driver_filter_t *filt, u_int ipi)
 {
 
-	/* ARM64TODO: The hard coded 16 will be fixed with am_intrng */
-	arm_setup_intr("ipi", filt, NULL, (void *)((uintptr_t)ipi | 1<<16), ipi + 16,
+	arm_setup_intr("ipi", filt, NULL, (void *)((uintptr_t)ipi | 1<<16), ipi,
 	    INTR_TYPE_MISC | INTR_EXCL, NULL);
 	arm_unmask_ipi(ipi);
 }
@@ -459,7 +452,8 @@ arm_setup_ipihandler(driver_filter_t *filt, u_int ipi)
 void
 arm_unmask_ipi(u_int ipi)
 {
-	PIC_UNMASK(root_pic, ipi + 16);
+
+	PIC_UNMASK(root_pic, ipi);
 }
 
 void
@@ -473,9 +467,16 @@ arm_init_secondary(void)
 void
 ipi_all_but_self(u_int ipi)
 {
+	cpuset_t other_cpus;
 
-	/* ARM64TODO: We should support this */
-	panic("ipi_all_but_self");
+	other_cpus = all_cpus;
+	CPU_CLR(PCPU_GET(cpuid), &other_cpus);
+
+	/* ARM64TODO: This will be fixed with arm_intrng */
+	ipi += 16;
+
+	CTR2(KTR_SMP, "%s: ipi: %x", __func__, ipi);
+	PIC_IPI_SEND(root_pic, other_cpus, ipi);
 }
 
 void
@@ -486,9 +487,6 @@ ipi_cpu(int cpu, u_int ipi)
 	CPU_ZERO(&cpus);
 	CPU_SET(cpu, &cpus);
 
-	/* ARM64TODO: This will be fixed with arm_intrng */
-	ipi += 16;
-
 	CTR2(KTR_SMP, "ipi_cpu: cpu: %d, ipi: %x", cpu, ipi);
 	PIC_IPI_SEND(root_pic, cpus, ipi);
 }
@@ -496,9 +494,6 @@ ipi_cpu(int cpu, u_int ipi)
 void
 ipi_selected(cpuset_t cpus, u_int ipi)
 {
-
-	/* ARM64TODO: This will be fixed with arm_intrng */
-	ipi += 16;
 
 	CTR1(KTR_SMP, "ipi_selected: ipi: %x", ipi);
 	PIC_IPI_SEND(root_pic, cpus, ipi);

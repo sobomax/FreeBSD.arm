@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/libc/aarch64/sys/Makefile.inc 281197 2015-04-07 09:52:14Z andrew $
+# $FreeBSD: head/lib/libc/aarch64/sys/Makefile.inc 291937 2015-12-07 12:20:26Z kib $
 
-SRCS+=	trivial-vdso_tc.c
+SRCS+=	__vdso_gettc.c
 
 #MDASM= ptrace.S
 MDASM=	brk.S \

@@ -1,5 +1,4 @@
 /* $OpenBSD: clientloop.c,v 1.258 2014/02/02 03:44:31 djm Exp $ */
-/* $FreeBSD: head/crypto/openssh/clientloop.c 280999 2015-04-02 18:43:25Z bdrewery $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -61,7 +60,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/clientloop.c 280999 2015-04-02 18:43:25Z bdrewery $");
+__RCSID("$FreeBSD: head/crypto/openssh/clientloop.c 290672 2015-11-11 13:26:47Z des $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

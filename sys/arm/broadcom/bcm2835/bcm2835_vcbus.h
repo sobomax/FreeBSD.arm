@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_vcbus.h 282440 2015-05-05 00:19:04Z loos $
+ * $FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_vcbus.h 290171 2015-10-30 00:24:37Z gonzo $
  */
 
 /*
@@ -67,6 +67,6 @@
  * when address is returned by VC over mailbox interface. e.g.
  * framebuffer base
  */
-#define	VCBUS_TO_PHYS(vca)	((vca) - BCM2835_VCBUS_SDRAM_BASE)
+#define	VCBUS_TO_PHYS(vca)	((vca) & ~(BCM2835_VCBUS_SDRAM_BASE))
 
 #endif /* _BCM2835_VCBUS_H_ */

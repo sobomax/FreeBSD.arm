@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_taskqueue.c 283551 2015-05-26 01:40:33Z delphij $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_taskqueue.c 290805 2015-11-13 22:51:35Z rrs $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -496,7 +496,7 @@ taskqueue_cancel_timeout(struct taskqueue *queue,
 	int error;
 
 	TQ_LOCK(queue);
-	pending = !!callout_stop(&timeout_task->c);
+	pending = !!(callout_stop(&timeout_task->c) > 0);
 	error = taskqueue_cancel_locked(queue, &timeout_task->t, &pending1);
 	if ((timeout_task->f & DT_CALLOUT_ARMED) != 0) {
 		timeout_task->f &= ~DT_CALLOUT_ARMED;

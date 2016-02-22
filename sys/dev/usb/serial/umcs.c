@@ -38,7 +38,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/umcs.c 292080 2015-12-11 05:28:00Z imp $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -278,6 +278,7 @@ DRIVER_MODULE(umcs7840, uhub, umcs7840_driver, umcs7840_devclass, 0, 0);
 MODULE_DEPEND(umcs7840, ucom, 1, 1, 1);
 MODULE_DEPEND(umcs7840, usb, 1, 1, 1);
 MODULE_VERSION(umcs7840, UMCS7840_MODVER);
+USB_PNP_HOST_INFO(umcs7840_devs);
 
 static int
 umcs7840_probe(device_t dev)

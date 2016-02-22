@@ -18,7 +18,7 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/tcpdump/print-pim.c 276788 2015-01-07 19:55:18Z delphij $
+ * $FreeBSD: head/contrib/tcpdump/print-pim.c 285275 2015-07-08 16:19:32Z pkelsey $
  */
 
 #define NETDISSECT_REWORKED
@@ -770,11 +770,11 @@ pimv2_print(netdissect_options *ndo,
 		case 4:	/* IPv4 */
 			ip_print(ndo, bp, len);
 			break;
-#ifdef INET6
+
 		case 6:	/* IPv6 */
 			ip6_print(ndo, bp, len);
 			break;
-#endif
+
 		default:
 			ND_PRINT((ndo, "IP ver %d", IP_V(ip)));
 			break;

@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_physio.c 281825 2015-04-21 10:55:53Z mav $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_physio.c 290140 2015-10-29 13:53:37Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,6 +38,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_physio.c 281825 2015-04-21 10:55:53Z mav 
 int
 physio(struct cdev *dev, struct uio *uio, int ioflag)
 {
+	struct cdevsw *csw;
 	struct buf *pbuf;
 	struct bio *bp;
 	struct vm_page **pages;
@@ -45,6 +46,11 @@ physio(struct cdev *dev, struct uio *uio, int ioflag)
 	u_int iolen, poff;
 	int error, i, npages, maxpages;
 	vm_prot_t prot;
+
+	csw = dev->si_devsw;
+	/* check if character device is being destroyed */
+	if (csw == NULL)
+		return (ENXIO);
 
 	/* XXX: sanity check */
 	if(dev->si_iosize_max < PAGE_SIZE) {
@@ -165,7 +171,7 @@ physio(struct cdev *dev, struct uio *uio, int ioflag)
 				}
 			}
 
-			dev->si_devsw->d_strategy(bp);
+			csw->d_strategy(bp);
 			if (uio->uio_rw == UIO_READ)
 				biowait(bp, "physrd");
 			else

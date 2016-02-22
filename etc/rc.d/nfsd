@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/nfsd 281691 2015-04-18 16:08:06Z trasz $
+# $FreeBSD: head/etc/rc.d/nfsd 291536 2015-11-30 22:29:11Z rmacklem $
 #
 
 # PROVIDE: nfsd
@@ -32,9 +32,13 @@ nfsd_precmd()
 		sysctl vfs.nfsd.nfs_privport=0 > /dev/null
 	fi
 
+	if checkyesno nfsv4_server_enable || \
+	    checkyesno nfs_server_managegids; then
+		force_depend nfsuserd || err 1 "Cannot run nfsuserd"
+	fi
+
 	if checkyesno nfsv4_server_enable; then
 		sysctl vfs.nfsd.server_max_nfsvers=4 > /dev/null
-		force_depend nfsuserd || err 1 "Cannot run nfsuserd"
 	else
 		echo 'NFSv4 is disabled'
 		sysctl vfs.nfsd.server_max_nfsvers=3 > /dev/null

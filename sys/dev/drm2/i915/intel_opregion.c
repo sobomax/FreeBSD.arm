@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_opregion.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_opregion.c 288653 2015-10-04 07:45:36Z adrian $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/i915/i915_drm.h>
@@ -533,11 +533,9 @@ void intel_opregion_fini(struct drm_device *dev)
 	opregion->vbt = NULL;
 }
 #else
-int
+void
 intel_opregion_init(struct drm_device *dev)
 {
-
-	return (0);
 }
 
 void

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs/mkfs.c 266930 2014-05-31 20:26:34Z jmg $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/ffs/mkfs.c 289225 2015-10-13 17:00:14Z sbruno $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -248,7 +248,8 @@ ffs_mkfs(const char *fsys, const fsinfo_t *fsopts)
 		exit(21);
 	}
 	sblock.fs_fsbtodb = ilog2(sblock.fs_fsize / sectorsize);
-	sblock.fs_size = fssize = dbtofsb(&sblock, fssize);
+	sblock.fs_size = sblock.fs_providersize = fssize =
+	    dbtofsb(&sblock, fssize);
 
 	if (Oflag <= 1) {
 		sblock.fs_magic = FS_UFS1_MAGIC;

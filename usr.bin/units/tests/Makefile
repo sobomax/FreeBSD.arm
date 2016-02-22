@@ -1,8 +1,6 @@
-# $FreeBSD: head/usr.bin/units/tests/Makefile 269084 2014-07-25 01:29:22Z jmmv $
+# $FreeBSD: head/usr.bin/units/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
-
-TESTSDIR=      ${TESTSBASE}/usr.bin/units
 
 TAP_TESTS_SH=	basics_test
 

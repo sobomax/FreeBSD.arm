@@ -1,4 +1,4 @@
-/* $FreeBSD: head/bin/csh/config_p.h 231990 2012-02-22 03:36:15Z mp $ */
+/* $FreeBSD: head/bin/csh/config_p.h 289677 2015-10-21 05:37:09Z eadler $ */
 /*
  * config.h -- configure various defines for tcsh
  *
@@ -9,7 +9,7 @@
 
 #ifndef _h_config
 #define _h_config
-/****************** System dependant compilation flags ****************/
+/****************** System dependent compilation flags ****************/
 /*
  * POSIX	This system supports IEEE Std 1003.1-1988 (POSIX).
  */

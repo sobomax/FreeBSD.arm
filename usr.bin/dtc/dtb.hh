@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/dtb.hh 245803 2013-01-22 17:49:51Z theraven $
+ * $FreeBSD: head/usr.bin/dtc/dtb.hh 289677 2015-10-21 05:37:09Z eadler $
  */
 
 #ifndef _DTB_HH_
@@ -224,7 +224,7 @@ class asm_writer : public output_writer
 	uint32_t bytes_written;
 
 	/**
-	 * Writes a C string directly to the ouput as-is.  This is mainly used
+	 * Writes a C string directly to the output as-is.  This is mainly used
 	 * for writing directives.
 	 */
 	void write_string(const char *c);

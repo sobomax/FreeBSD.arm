@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/soelim/soelim.1 283199 2015-05-21 08:28:48Z bapt $
+.\" $FreeBSD: head/usr.bin/soelim/soelim.1 290478 2015-11-07 01:58:23Z bapt $
 .\"
-.Dd May 1, 2015
+.Dd November 7, 2015
 .Dt SOELIM 1
 .Os
 .Sh NAME
@@ -34,43 +34,48 @@
 .Nm
 .Op Fl Crtv
 .Op Fl I Ar dir
-.Op Ar files ...
+.Op Ar
 .Sh DESCRIPTION
+The
 .Nm
-reads
-.Ar files
-lines by lines.
+utility
+reads the specified files or the standard input and performs the textual
+inclusion implied by the
+.Xr nroff 1
+directives of the form:
 .Pp
-If a line starts by:
+.Dl \&.so anotherfile
+.Pp
+If a line starts with:
 .Dq .so anotherfile
-it replace the line by processing
+it replaces the line by processing
 .Dq anotherfile .
 Otherwise the line is printed to stdout.
 .Bl -tag -width "-I dir"
 .It Fl C
 Recognise
 .Em .so
-when not followed by a space character.
+when it is not followed by a space character.
 .It Fl r
-Compatibility with GNU groff's
+Compatibility with groff's
 .Xr soelim 1
 (does nothing).
 .It Fl t
-Compatibility with GNU groff's
+Compatibility with groff's
 .Xr soelim 1
 (does nothing).
 .It Fl v
-Compatibility with GNU groff's
+Compatibility with groff's
 .Xr soelim 1
 (does nothing).
 .It Fl I Ar dir
-This option specify directories where
+This option specifies directories where
 .Nm
 searches for files (both those on the command line and those named in
 .Dq .so
 directive.)
-This options may be specified multiple times. The directories will be searched
-in the order specified.
+This option may be specified multiple times.
+The directories will be searched in the order specified.
 .El
 .Pp
 The files are always searched first in the current directory.

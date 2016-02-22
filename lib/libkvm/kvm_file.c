@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_file.c 217744 2011-01-23 11:08:28Z uqs $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_file.c 291372 2015-11-26 19:42:10Z jhb $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -150,7 +150,7 @@ kvm_deadfiles(kvm_t *kd, int op __unused, int arg __unused, long allproc_o,
 fail:
 	free(ofiles);
 	return (0);
-	
+
 }
 
 char *

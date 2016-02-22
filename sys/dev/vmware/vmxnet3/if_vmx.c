@@ -20,7 +20,7 @@
 /* Driver for VMware vmxnet3 virtual ethernet devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vmware/vmxnet3/if_vmx.c 275358 2014-12-01 11:45:24Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/vmware/vmxnet3/if_vmx.c 290948 2015-11-16 21:36:50Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -510,6 +510,13 @@ vmxnet3_check_version(struct vmxnet3_softc *sc)
 	return (0);
 }
 
+static int
+trunc_powerof2(int val)
+{
+
+	return (1U << (fls(val) - 1));
+}
+
 static void
 vmxnet3_initial_config(struct vmxnet3_softc *sc)
 {
@@ -520,14 +527,14 @@ vmxnet3_initial_config(struct vmxnet3_softc *sc)
 		nqueue = VMXNET3_DEF_TX_QUEUES;
 	if (nqueue > mp_ncpus)
 		nqueue = mp_ncpus;
-	sc->vmx_max_ntxqueues = nqueue;
+	sc->vmx_max_ntxqueues = trunc_powerof2(nqueue);
 
 	nqueue = vmxnet3_tunable_int(sc, "rxnqueue", vmxnet3_default_rxnqueue);
 	if (nqueue > VMXNET3_MAX_RX_QUEUES || nqueue < 1)
 		nqueue = VMXNET3_DEF_RX_QUEUES;
 	if (nqueue > mp_ncpus)
 		nqueue = mp_ncpus;
-	sc->vmx_max_nrxqueues = nqueue;
+	sc->vmx_max_nrxqueues = trunc_powerof2(nqueue);
 
 	if (vmxnet3_tunable_int(sc, "mq_disable", vmxnet3_mq_disable)) {
 		sc->vmx_max_nrxqueues = 1;

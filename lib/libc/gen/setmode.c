@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)setmode.c	8.2 (Berkeley) 3/25/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/setmode.c 280713 2015-03-26 21:58:06Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/setmode.c 287292 2015-08-29 14:25:01Z kib $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -53,6 +53,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/setmode.c 280713 2015-03-26 21:58:06Z jill
 #include <stdio.h>
 #endif
 #include "un-namespace.h"
+#include "libc_private.h"
 
 #define	SET_LEN	6		/* initial # of bitcmd struct to malloc */
 #define	SET_LEN_INCR 4		/* # of bitcmd structs to add as needed */
@@ -364,9 +365,9 @@ getumask(void)
 	 * handler, protect them as best we can.
 	 */
 	sigfillset(&sigset);
-	(void)_sigprocmask(SIG_BLOCK, &sigset, &sigoset);
+	(void)__libc_sigprocmask(SIG_BLOCK, &sigset, &sigoset);
 	(void)umask(mask = umask(0));
-	(void)_sigprocmask(SIG_SETMASK, &sigoset, NULL);
+	(void)__libc_sigprocmask(SIG_SETMASK, &sigoset, NULL);
 	return (mask);
 }
 

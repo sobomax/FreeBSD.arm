@@ -1,5 +1,5 @@
 #	$OpenBSD: sshd_config,v 1.93 2014/01/10 05:59:19 djm Exp $
-#	$FreeBSD: head/crypto/openssh/sshd_config 266465 2014-05-20 10:28:19Z smh $
+#	$FreeBSD: head/crypto/openssh/sshd_config 291260 2015-11-24 16:06:15Z des $
 
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
@@ -136,9 +136,6 @@ Subsystem	sftp	/usr/libexec/sftp-server
 
 # TCP receive socket buffer polling for HPN.  Disable on non autotuning kernels.
 #TcpRcvBufPoll yes
-
-# Allow the use of the NONE cipher.
-#NoneEnabled no
 
 # Example of overriding settings on a per-user basis
 #Match User anoncvs

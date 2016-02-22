@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/_flock_stub.c 178287 2008-04-17 22:17:54Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/_flock_stub.c 288031 2015-09-20 20:26:46Z rodrigc $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -54,6 +54,9 @@ __weak_reference(_flockfile, flockfile);
 __weak_reference(_flockfile_debug_stub, _flockfile_debug);
 __weak_reference(_ftrylockfile, ftrylockfile);
 __weak_reference(_funlockfile, funlockfile);
+
+void _flockfile_debug_stub(FILE *, char *, int);
+int _ftrylockfile(FILE *);
 
 void
 _flockfile(FILE *fp)

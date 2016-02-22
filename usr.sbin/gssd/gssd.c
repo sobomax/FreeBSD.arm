@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 278690 2015-02-13 18:32:55Z markj $");
+__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 288272 2015-09-26 16:30:16Z jpaetzel $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -751,8 +751,8 @@ gssd_pname_to_uid_1_svc(pname_to_uid_args *argp, pname_to_uid_res *result, struc
 					buflen_hint = buflen;
 			}
 			if (pw) {
-				int len = NGRPS;
-				int groups[NGRPS];
+				int len = NGROUPS;
+				int groups[NGROUPS];
 				result->gid = pw->pw_gid;
 				getgrouplist(pw->pw_name, pw->pw_gid,
 				    groups, &len);

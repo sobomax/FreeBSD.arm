@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/sys/kern/genassym.sh 175449 2008-01-18 17:02:14Z julian $
+# $FreeBSD: head/sys/kern/genassym.sh 286793 2015-08-14 22:57:13Z rpaulo $
 
 usage()
 {
@@ -10,7 +10,7 @@ usage()
 
 work()
 {
-	${NM:='nm'} "$1" | ${AWK:='awk'} '
+	${NM:='nm'} ${NMFLAGS} "$1" | ${AWK:='awk'} '
 	/ C .*sign$/ {
 		sign = substr($1, length($1) - 3, 4)
 		sub("^0*", "", sign)

@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212.h 281128 2015-04-06 01:12:53Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212.h 290612 2015-11-09 15:59:42Z adrian $
  */
 #ifndef _ATH_AR5212_H_
 #define _ATH_AR5212_H_
@@ -553,7 +553,7 @@ extern	HAL_STATUS ar5212ProcRxDesc(struct ath_hal *ah, struct ath_desc *,
 
 extern	HAL_BOOL ar5212Reset(struct ath_hal *ah, HAL_OPMODE opmode,
 		struct ieee80211_channel *chan, HAL_BOOL bChannelChange,
-		HAL_STATUS *status);
+		HAL_RESET_TYPE, HAL_STATUS *status);
 extern	HAL_BOOL ar5212SetChannel(struct ath_hal *,
 		const struct ieee80211_channel *);
 extern	void ar5212SetOperatingMode(struct ath_hal *ah, int opmode);

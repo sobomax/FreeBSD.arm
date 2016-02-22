@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_lro.c 255010 2013-08-28 23:00:34Z np $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_lro.c 284961 2015-06-30 17:19:58Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -550,7 +550,7 @@ tcp_lro_rx(struct lro_ctrl *lc, struct mbuf *m, uint32_t csum)
 		 * append new segment to existing mbuf chain.
 		 */
 		m_adj(m, m->m_pkthdr.len - tcp_data_len);
-		m->m_flags &= ~M_PKTHDR;
+		m_demote_pkthdr(m);
 
 		le->m_tail->m_next = m;
 		le->m_tail = m_last(m);

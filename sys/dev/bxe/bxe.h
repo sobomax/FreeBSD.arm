@@ -28,7 +28,7 @@
 #define __BXE_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe.h 284335 2015-06-13 01:28:19Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe.h 285973 2015-07-28 19:15:44Z davidcs $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -582,6 +582,7 @@ struct bxe_fastpath {
 #define BXE_FP_TX_LOCK(fp)        mtx_lock(&fp->tx_mtx)
 #define BXE_FP_TX_UNLOCK(fp)      mtx_unlock(&fp->tx_mtx)
 #define BXE_FP_TX_LOCK_ASSERT(fp) mtx_assert(&fp->tx_mtx, MA_OWNED)
+#define BXE_FP_TX_TRYLOCK(fp)     mtx_trylock(&fp->tx_mtx)
 
 #define BXE_FP_RX_LOCK(fp)        mtx_lock(&fp->rx_mtx)
 #define BXE_FP_RX_UNLOCK(fp)      mtx_unlock(&fp->rx_mtx)

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/elf_common.h 283110 2015-05-19 14:23:33Z emaste $
+ * $FreeBSD: head/sys/sys/elf_common.h 291909 2015-12-06 21:16:01Z emaste $
  */
 
 #ifndef _SYS_ELF_COMMON_H_
@@ -297,6 +297,7 @@ typedef struct {
 #define	EM_UNICORE	110	/* Microprocessor series from PKU-Unity Ltd.
 				   and MPRC of Peking University */
 #define	EM_AARCH64	183	/* AArch64 (64-bit ARM) */
+#define	EM_RISCV	243	/* RISC-V */
 
 /* Non-standard or deprecated. */
 #define	EM_486		6	/* Intel i486. */
@@ -451,6 +452,7 @@ typedef struct {
 #define	SHT_MIPS_EH_REGION	0x70000027
 #define	SHT_MIPS_XLATE_OLD	0x70000028
 #define	SHT_MIPS_PDR_EXCEPTION	0x70000029
+#define	SHT_MIPS_ABIFLAGS	0x7000002a
 
 #define	SHT_SPARC_GOTDATA	0x70000000
 
@@ -475,6 +477,12 @@ typedef struct {
 
 /* Flags for section groups. */
 #define	GRP_COMDAT	0x1	/* COMDAT semantics. */
+
+/*
+ * Flags / mask for .gnu.versym sections.
+ */
+#define	VERSYM_VERSION	0x7fff
+#define	VERSYM_HIDDEN	0x8000
 
 /* Values for p_type. */
 #define	PT_NULL		0	/* Unused entry. */
@@ -718,6 +726,11 @@ typedef struct {
 #define	LL_EXPORTS		0x8
 #define	LL_DELAY_LOAD		0x10
 #define	LL_DELTA		0x20
+
+/* Values for n_type used in executables. */
+#define	NT_FREEBSD_ABI_TAG	1
+#define	NT_FREEBSD_NOINIT_TAG	2
+#define	NT_FREEBSD_ARCH_TAG	3
 
 /* Values for n_type.  Used in core files. */
 #define	NT_PRSTATUS	1	/* Process status. */

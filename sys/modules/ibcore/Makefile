@@ -1,6 +1,5 @@
-# $FreeBSD: head/sys/modules/ibcore/Makefile 278913 2015-02-17 19:27:14Z glebius $
+# $FreeBSD: head/sys/modules/ibcore/Makefile 290135 2015-10-29 08:28:39Z hselasky $
 .PATH:  ${.CURDIR}/../../ofed/drivers/infiniband/core
-.PATH:  ${.CURDIR}/../../ofed/include/linux
 
 KMOD=	ibcore
 SRCS=	addr.c iwcm.c sa_query.c ucma.c uverbs_cmd.c \
@@ -12,8 +11,8 @@ SRCS=	addr.c iwcm.c sa_query.c ucma.c uverbs_cmd.c \
 	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${.CURDIR}/../../ofed/drivers/infiniband/core
-CFLAGS+= -I${.CURDIR}/../mlx4ib
-CFLAGS+= -I${.CURDIR}/../../ofed/include/
+CFLAGS+= -I${.CURDIR}/../../ofed/include
+CFLAGS+= -I${.CURDIR}/../../compat/linuxkpi/common/include
 CFLAGS+= -DINET6 -DINET
 
 .include <bsd.kmod.mk>

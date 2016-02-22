@@ -18,7 +18,7 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/tcpdump/print-null.c 276788 2015-01-07 19:55:18Z delphij $
+ * $FreeBSD: head/contrib/tcpdump/print-null.c 285275 2015-07-08 16:19:32Z pkelsey $
  */
 
 #define NETDISSECT_REWORKED
@@ -111,13 +111,11 @@ null_if_print(netdissect_options *ndo, const struct pcap_pkthdr *h, const u_char
 		ip_print(ndo, p, length);
 		break;
 
-#ifdef INET6
 	case BSD_AFNUM_INET6_BSD:
 	case BSD_AFNUM_INET6_FREEBSD:
 	case BSD_AFNUM_INET6_DARWIN:
 		ip6_print(ndo, p, length);
 		break;
-#endif
 
 	case BSD_AFNUM_ISO:
 		isoclns_print(ndo, p, length, caplen);

@@ -1,8 +1,6 @@
-# $FreeBSD: head/lib/libc/tests/time/Makefile 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/time/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/lib/libc/time
 
 NETBSD_ATF_TESTS_C=	mktime_test
 NETBSD_ATF_TESTS_C+=	strptime_test

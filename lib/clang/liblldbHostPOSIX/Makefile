@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbHostPOSIX/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/liblldbHostPOSIX/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -10,6 +10,7 @@ SRCS=	ConnectionFileDescriptorPosix.cpp \
 	HostInfoPosix.cpp \
 	HostProcessPosix.cpp \
 	HostThreadPosix.cpp \
+	LockFilePosix.cpp \
 	PipePosix.cpp \
 	ProcessLauncherPosix.cpp
 

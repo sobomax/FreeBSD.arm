@@ -1,4 +1,5 @@
-# $FreeBSD: head/share/examples/tests/tests/plain/cp_test.sh 258552 2013-11-25 13:30:06Z jmmv $
+#! /bin/sh
+# $FreeBSD: head/share/examples/tests/tests/plain/cp_test.sh 285118 2015-07-04 02:24:47Z jmmv $
 #
 # Copyright 2013 Google Inc.
 # All rights reserved.

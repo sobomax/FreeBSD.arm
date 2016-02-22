@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell DB-88F6xxx boards.
 #
-# $FreeBSD: head/sys/arm/conf/DB-88F6XXX 282714 2015-05-10 09:23:49Z andrew $
+# $FreeBSD: head/sys/arm/conf/DB-88F6XXX 289945 2015-10-25 22:00:56Z zbb $
 #
 
 ident		DB-88F6XXX
@@ -67,6 +67,7 @@ device		uart
 device		ether
 device		mge			# Marvell Gigabit Ethernet controller
 device		mii
+device		mdio
 device		e1000phy
 device		bpf
 

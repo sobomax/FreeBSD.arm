@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/timeout/timeout.c 278810 2015-02-15 20:10:53Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/timeout/timeout.c 289878 2015-10-24 13:47:03Z bapt $");
 
 #include <sys/procctl.h>
 #include <sys/time.h>
@@ -105,7 +105,7 @@ parse_signal(const char *str)
 	int sig, i;
 	const char *errstr;
 
-	sig = strtonum(str, 0, sys_nsig, &errstr);
+	sig = strtonum(str, 1, sys_nsig - 1, &errstr);
 
 	if (errstr == NULL)
 		return (sig);

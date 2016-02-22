@@ -1,11 +1,13 @@
 #
 # DB120 - the AR9344 SoC reference design
 #
-# $FreeBSD: head/sys/mips/conf/DB120 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/DB120 291049 2015-11-19 01:58:12Z imp $
 #
 
 # Include the default AR934x parameters
 include         "AR934X_BASE"
+
+#NO_UNIVERSE
 
 ident           DB120
 

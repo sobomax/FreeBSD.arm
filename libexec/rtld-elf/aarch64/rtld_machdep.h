@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/aarch64/rtld_machdep.h 280903 2015-03-31 09:51:19Z andrew $
+ * $FreeBSD: head/libexec/rtld-elf/aarch64/rtld_machdep.h 287370 2015-09-01 15:57:03Z andrew $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -64,12 +64,12 @@ Elf_Addr reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 #define	round(size, align) \
 	(((size) + (align) - 1) & ~((align) - 1))
 #define	calculate_first_tls_offset(size, align) \
-	round(size, align)
+	round(16, align)
 #define	calculate_tls_offset(prev_offset, prev_size, size, align) \
-	round((prev_offset) + (size), align)
+	round(prev_offset + prev_size, align)
 #define	calculate_tls_end(off, size) 	((off) + (size))
 
-#define	TLS_TCB_SIZE	8
+#define	TLS_TCB_SIZE	16
 typedef struct {
     unsigned long ti_module;
     unsigned long ti_offset;

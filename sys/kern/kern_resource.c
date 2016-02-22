@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_resource.c 284783 2015-06-25 00:15:37Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_resource.c 290857 2015-11-15 12:10:51Z trasz $");
 
 #include "opt_compat.h"
 
@@ -1356,17 +1356,22 @@ uifree(struct uidinfo *uip)
 #ifdef RACCT
 void
 ui_racct_foreach(void (*callback)(struct racct *racct,
-    void *arg2, void *arg3), void *arg2, void *arg3)
+    void *arg2, void *arg3), void (*pre)(void), void (*post)(void),
+    void *arg2, void *arg3)
 {
 	struct uidinfo *uip;
 	struct uihashhead *uih;
 
 	rw_rlock(&uihashtbl_lock);
+	if (pre != NULL)
+		(pre)();
 	for (uih = &uihashtbl[uihash]; uih >= uihashtbl; uih--) {
 		LIST_FOREACH(uip, uih, ui_hash) {
 			(callback)(uip->ui_racct, arg2, arg3);
 		}
 	}
+	if (post != NULL)
+		(post)();
 	rw_runlock(&uihashtbl_lock);
 }
 #endif
@@ -1435,18 +1440,4 @@ chgkqcnt(struct uidinfo *uip, int diff, rlim_t max)
 {
 
 	return (chglimit(uip, &uip->ui_kqcnt, diff, max, "kqcnt"));
-}
-
-void
-lim_update_thread(struct thread *td)
-{
-	struct proc *p;
-	struct plimit *lim;
-
-	p = td->td_proc;
-	lim = td->td_limit;
-	PROC_LOCK_ASSERT(p, MA_OWNED);
-	td->td_limit = lim_hold(p->p_limit);
-	if (lim != NULL)
-		lim_free(lim);
 }

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/i8134x/i81342_pci.c 257199 2013-10-27 00:51:46Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/i8134x/i81342_pci.c 287882 2015-09-16 23:34:51Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -209,7 +209,7 @@ i81342_pci_attach(device_t dev)
 	}
 	bus_space_write_4(sc->sc_st, sc->sc_atu_sh, ATU_ISR,
 	    bus_space_read_4(sc->sc_st, sc->sc_atu_sh, ATU_ISR) & ATUX_ISR_ERRMSK);
-	device_add_child(dev, "pci", busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 

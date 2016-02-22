@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libzfs/Makefile 284409 2015-06-15 10:48:48Z bapt $
+# $FreeBSD: head/cddl/lib/libzfs/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .PATH: ${.CURDIR}/../../../cddl/compat/opensolaris/misc
 .PATH: ${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/zfs
@@ -6,13 +6,7 @@
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzfs/common
 
 LIB=	zfs
-DPADD=	${LIBMD} ${LIBPTHREAD} ${LIBUMEM} ${LIBUTIL} ${LIBM} ${LIBNVPAIR} \
-	${LIBAVL} ${LIBZFS_CORE} ${LIBUUTIL} ${LIBBSDXML} ${LIBGEOM} \
-	${LIBNVPAIR}
-
-LDADD=	-lmd -lpthread -lumem -lutil -luutil -lm -lnvpair -lavl \
-	-lbsdxml -lgeom -lnvpair -lzfs_core
-
+LIBADD=	md pthread umem util uutil m avl bsdxml geom nvpair z zfs_core
 SRCS=	deviceid.c \
 	fsshare.c \
 	mkdirp.c \

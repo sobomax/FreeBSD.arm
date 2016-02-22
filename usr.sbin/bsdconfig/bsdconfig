@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdconfig/bsdconfig 263136 2014-03-14 02:40:52Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/bsdconfig 289677 2015-10-21 05:37:09Z eadler $
 #
 ############################################################ INCLUDES
 
@@ -131,7 +131,7 @@ usage()
 	# determine if we can use more than one column to display commands.
 	#
 	local x=$longest_cmd ncols=1
-	x=$(( $x + 8 )) # Accomodate leading tab character
+	x=$(( $x + 8 )) # Accommodate leading tab character
 	x=$(( $x + 3 + $longest_cmd )) # Preload end of next column
 	while [ $x -lt $max_width ]; do
 		ncols=$(( $ncols + 1 ))

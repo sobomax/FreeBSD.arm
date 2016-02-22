@@ -1,8 +1,6 @@
-# $FreeBSD: head/bin/pkill/tests/Makefile 269977 2014-08-14 14:59:40Z asomers $
+# $FreeBSD: head/bin/pkill/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/bin/pkill
 
 TAP_TESTS_SH=			pgrep-F_test
 TAP_TESTS_SH+=			pgrep-LF_test

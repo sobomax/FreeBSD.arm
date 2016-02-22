@@ -31,7 +31,7 @@
 
 #include <sys/param.h>
 
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_scsi_all.c 273163 2014-10-16 08:42:17Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_scsi_all.c 287620 2015-09-10 10:46:21Z mav $");
 
 #include <sys/types.h>
 #ifdef _KERNEL
@@ -114,7 +114,7 @@ ctl_scsi_path_string(union ctl_io *io, char *path_str, int len)
 {
 
 	snprintf(path_str, len, "(%u:%u:%u/%u): ",
-	    io->io_hdr.nexus.initid.id, io->io_hdr.nexus.targ_port,
+	    io->io_hdr.nexus.initid, io->io_hdr.nexus.targ_port,
 	    io->io_hdr.nexus.targ_lun, io->io_hdr.nexus.targ_mapped_lun);
 }
 

@@ -1,6 +1,5 @@
-# $FreeBSD: head/usr.bin/truncate/tests/Makefile 267265 2014-06-09 10:39:55Z jilles $
+# $FreeBSD: head/usr.bin/truncate/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
-TESTSDIR=	${TESTSBASE}/usr.bin/truncate
-ATF_TESTS_SH=	truncate_test 
+ATF_TESTS_SH=	truncate_test
 
 .include <bsd.test.mk>

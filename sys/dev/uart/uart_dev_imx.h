@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/uart/uart_dev_imx.h 264981 2014-04-26 17:56:39Z ian $
+ * $FreeBSD: head/sys/dev/uart/uart_dev_imx.h 291859 2015-12-05 15:09:19Z kevlo $
  */
 
 #ifndef	_UART_DEV_IMX5XX_H
@@ -123,7 +123,6 @@
 #define		IMXUART_UFCR_TXTL_MASK		(0x3f << 10)
 #define		IMXUART_UFCR_TXTL_SHIFT		10
 #define		IMXUART_UFCR_RFDIV_MASK		(0x07 << 7)
-#define		IMXUART_UFCR_RFDIV_SHIFT	7
 #define		IMXUART_UFCR_RFDIV_SHIFT	7
 #define		IMXUART_UFCR_RFDIV_DIV6		(0 << 7)
 #define		IMXUART_UFCR_RFDIV_DIV5		(1 << 7)

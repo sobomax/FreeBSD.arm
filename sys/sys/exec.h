@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)exec.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/exec.h 269743 2014-08-08 22:30:41Z wblock $
+ * $FreeBSD: head/sys/sys/exec.h 288944 2015-10-06 18:07:00Z cem $
  */
 
 #ifndef _SYS_EXEC_H_
@@ -82,6 +82,9 @@ void exec_unmap_first_page(struct image_params *);
 
 int exec_register(const struct execsw *);
 int exec_unregister(const struct execsw *);
+
+extern int coredump_pack_fileinfo;
+extern int coredump_pack_vmmapinfo;
 
 /*
  * note: name##_mod cannot be const storage because the

@@ -1,12 +1,14 @@
-# $FreeBSD: head/usr.sbin/ypserv/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/ypserv/Makefile 287129 2015-08-25 15:27:32Z araujo $
 
 RPCDIR=	${.CURDIR}/../../include/rpcsvc
-.PATH: ${RPCDIR}
+.PATH: ${RPCDIR} \
+       ${.CURDIR}/common
 
 PROG=	ypserv
 MAN=	ypserv.8 ypinit.8
 SRCS=	yp_svc.c yp_server.c yp_dblookup.c yp_dnslookup.c \
-	ypxfr_clnt.c yp.h yp_main.c yp_error.c yp_access.c yp_svc_udp.c
+	ypxfr_clnt.c yp.h yp_main.c yp_error.c yp_access.c yp_svc_udp.c \
+	yplib_host.c
 
 CFLAGS+= -DDB_CACHE -DTCP_WRAPPER -I.
 

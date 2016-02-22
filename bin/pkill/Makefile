@@ -1,11 +1,11 @@
 #	$NetBSD: Makefile,v 1.1 2002/03/01 11:21:58 ad Exp $
-# $FreeBSD: head/bin/pkill/Makefile 275028 2014-11-25 11:15:40Z bapt $
+# $FreeBSD: head/bin/pkill/Makefile 287012 2015-08-22 05:04:36Z jamie $
 
 .include <src.opts.mk>
 
 PROG=	pkill
 
-LIBADD=	kvm
+LIBADD=	kvm jail
 
 LINKS=	${BINDIR}/pkill ${BINDIR}/pgrep
 MLINKS=	pkill.1 pgrep.1

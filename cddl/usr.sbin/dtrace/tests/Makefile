@@ -1,11 +1,10 @@
-# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/Makefile 280835 2015-03-30 04:01:49Z markj $
+# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
 
-TESTSDIR=	${TESTSBASE}/cddl/usr.sbin/dtrace
 TESTS_SUBDIRS+=	common
 
-.PATH:		${.CURDIR:H:H:H:H}/tests
+.PATH:		${SRCTOP}/tests
 KYUAFILE=	YES
 
 .PATH:		${.CURDIR}/tools

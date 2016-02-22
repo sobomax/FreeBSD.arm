@@ -17,7 +17,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/xen/blkif.h 284296 2015-06-12 07:50:34Z royger $
+ * $FreeBSD: head/sys/xen/blkif.h 289686 2015-10-21 10:44:07Z royger $
  */
 
 #ifndef __XEN_BLKIF_H__
@@ -120,7 +120,7 @@ static void inline blkif_get_x86_32_req(blkif_request_t *dst, blkif_x86_32_reque
 	dst->handle = src->handle;
 	dst->id = src->id;
 	dst->sector_number = src->sector_number;
-	barrier();
+	__compiler_membar();
 	if (n > dst->nr_segments)
 		n = dst->nr_segments;
 	for (i = 0; i < n; i++)
@@ -135,7 +135,7 @@ static void inline blkif_get_x86_64_req(blkif_request_t *dst, blkif_x86_64_reque
 	dst->handle = src->handle;
 	dst->id = src->id;
 	dst->sector_number = src->sector_number;
-	barrier();
+	__compiler_membar();
 	if (n > dst->nr_segments)
 		n = dst->nr_segments;
 	for (i = 0; i < n; i++)

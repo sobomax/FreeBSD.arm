@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/options.powerpc 278495 2015-02-10 06:35:16Z rpaulo $
+# $FreeBSD: head/sys/conf/options.powerpc 291008 2015-11-18 01:54:19Z jhibbits $
 # Options specific to the powerpc platform kernels
 
 AIM			opt_global.h
@@ -21,6 +21,7 @@ GFB_NO_MODE_CHANGE	opt_gfb.h
 MPC85XX			opt_platform.h
 POWERMAC		opt_platform.h
 PS3			opt_platform.h
+QORIQ_DPAA		opt_platform.h
 MAMBO
 PSERIES
 PSIM
@@ -32,3 +33,4 @@ OFWCONS_POLL_HZ		opt_ofw.h
 # AGP debugging support
 AGP_DEBUG		opt_agp.h
 
+MIKROTIK

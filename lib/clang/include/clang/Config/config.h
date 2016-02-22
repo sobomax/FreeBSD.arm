@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/clang/include/clang/Config/config.h 283526 2015-05-25 13:43:03Z dim $ */
+/* $FreeBSD: head/lib/clang/include/clang/Config/config.h 289525 2015-10-18 17:18:19Z dim $ */
 /* tools/clang/include/clang/Config/config.h.  Generated from config.h.in by configure.  */
 /* This generated file is for internal use. Do not include it from headers. */
 
@@ -9,6 +9,9 @@
 
 /* Bug report URL. */
 #define BUG_REPORT_URL "https://bugs.freebsd.org/submit/"
+
+/* Default OpenMP runtime used by -fopenmp. */
+#define CLANG_DEFAULT_OPENMP_RUNTIME "libomp"
 
 /* Multilib suffix for libdir. */
 #define CLANG_LIBDIR_SUFFIX ""
@@ -28,7 +31,7 @@
 /* Define if we have libxml2 */
 /* #undef CLANG_HAVE_LIBXML */
 
-#define PACKAGE_STRING "LLVM 3.6.1"
+#define PACKAGE_STRING "LLVM 3.7.0"
 
 /* The LLVM product name and version */
 #define BACKEND_PACKAGE_STRING PACKAGE_STRING

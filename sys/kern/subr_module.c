@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_module.c 276391 2014-12-30 02:39:47Z imp $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_module.c 287000 2015-08-21 15:57:57Z royger $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -159,6 +159,9 @@ preload_search_info(caddr_t mod, int inf)
     uint32_t	*hdr;
     uint32_t	type = 0;
     int		next;
+
+    if (mod == NULL)
+    	return (NULL);
 
     curp = mod;
     for (;;) {

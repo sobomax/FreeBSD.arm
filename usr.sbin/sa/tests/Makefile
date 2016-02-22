@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.sbin/sa/tests/Makefile 263226 2014-03-16 04:09:22Z jmmv $
-
-TESTSDIR=	${TESTSBASE}/usr.sbin/sa
+# $FreeBSD: head/usr.sbin/sa/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 TAP_TESTS_SH=	legacy_test
 

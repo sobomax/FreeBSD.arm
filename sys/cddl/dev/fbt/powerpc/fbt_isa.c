@@ -21,7 +21,7 @@
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/powerpc/fbt_isa.c 273571 2014-10-24 03:34:21Z jhibbits $
+ * $FreeBSD: head/sys/cddl/dev/fbt/powerpc/fbt_isa.c 286241 2015-08-03 17:39:36Z markj $
  *
  */
 
@@ -60,7 +60,6 @@ fbt_invop(uintptr_t addr, uintptr_t *stack, uintptr_t rval)
 
 	for (; fbt != NULL; fbt = fbt->fbtp_hashnext) {
 		if ((uintptr_t)fbt->fbtp_patchpoint == addr) {
-			fbt->fbtp_invop_cnt++;
 			if (fbt->fbtp_roffset == 0) {
 				cpu->cpu_dtrace_caller = addr;
 

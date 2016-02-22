@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mpic.c 276180 2014-12-24 15:25:18Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mpic.c 288447 2015-10-01 12:09:05Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -378,10 +378,14 @@ int
 pic_ipi_read(int i __unused)
 {
 	uint32_t val;
+	int ipi;
 
 	val = MPIC_CPU_READ(mv_mpic_sc, MPIC_IN_DRBL);
-	if (val)
-		return (ffs(val) - 1);
+	if (val) {
+		ipi = ffs(val) - 1;
+		MPIC_CPU_WRITE(mv_mpic_sc, MPIC_IN_DRBL, ~(1 << ipi));
+		return (ipi);
+	}
 
 	return (0x3ff);
 }
@@ -389,10 +393,6 @@ pic_ipi_read(int i __unused)
 void
 pic_ipi_clear(int ipi)
 {
-	uint32_t val;
-
-	val = ~(1 << ipi);
-	MPIC_CPU_WRITE(mv_mpic_sc, MPIC_IN_DRBL, val);
 }
 
 #endif

@@ -18,7 +18,7 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/tcpdump/print-atm.c 277982 2015-01-31 16:34:39Z pfg $
+ * $FreeBSD: head/contrib/tcpdump/print-atm.c 285275 2015-07-08 16:19:32Z pkelsey $
  */
 
 #define NETDISSECT_REWORKED
@@ -364,8 +364,8 @@ struct oam_fm_ais_rdi_t {
 
 int
 oam_print (netdissect_options *ndo,
-           const u_char *p, u_int length, u_int hec) {
-
+           const u_char *p, u_int length, u_int hec)
+{
     uint32_t cell_header;
     uint16_t vpi, vci, cksum, cksum_shouldbe, idx;
     uint8_t  cell_type, func_type, payload, clp;
