@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/netinet/in_var.h 290383 2015-11-05 07:26:32Z gnn $
+ * $FreeBSD: head/sys/netinet/in_var.h 294706 2016-01-25 06:33:15Z melifaro $
  */
 
 #ifndef _NETINET_IN_VAR_H_
@@ -351,7 +351,6 @@ inm_acquire_locked(struct in_multi *inm)
 struct	rtentry;
 struct	route;
 struct	ip_moptions;
-struct radix_node_head;
 
 struct in_multi *inm_lookup_locked(struct ifnet *, const struct in_addr);
 struct in_multi *inm_lookup(struct ifnet *, const struct in_addr);
@@ -387,8 +386,6 @@ void	in_domifdetach(struct ifnet *, void *);
 
 /* XXX */
 void	 in_rtalloc_ign(struct route *ro, u_long ignflags, u_int fibnum);
-void	 in_rtalloc(struct route *ro, u_int fibnum);
-struct rtentry *in_rtalloc1(struct sockaddr *, int, u_long, u_int);
 void	 in_rtredirect(struct sockaddr *, struct sockaddr *,
 	    struct sockaddr *, int, struct sockaddr *, u_int);
 #endif /* _KERNEL */

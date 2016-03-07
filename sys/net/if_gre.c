@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_gre.c 290116 2015-10-28 17:55:37Z ae $");
+__FBSDID("$FreeBSD: head/sys/net/if_gre.c 292972 2015-12-31 02:01:20Z araujo $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -682,7 +682,10 @@ gre_input(struct mbuf **mp, int *offp, int proto)
 	struct grehdr *gh;
 	struct ifnet *ifp;
 	struct mbuf *m;
-	uint32_t *opts, key;
+	uint32_t *opts;
+#ifdef notyet
+	uint32_t key;
+#endif
 	uint16_t flags;
 	int hlen, isr, af;
 
@@ -715,17 +718,28 @@ gre_input(struct mbuf **mp, int *offp, int proto)
 		opts++;
 	}
 	if (flags & GRE_FLAGS_KP) {
+#ifdef notyet
+        /* 
+         * XXX: The current implementation uses the key only for outgoing
+         * packets. But we can check the key value here, or even in the
+         * encapcheck function.
+         */
 		key = ntohl(*opts);
+#endif
 		hlen += sizeof(uint32_t);
 		opts++;
+    }
+#ifdef notyet
 	} else
 		key = 0;
-	/*
+
 	if (sc->gre_key != 0 && (key != sc->gre_key || key != 0))
 		goto drop;
-	*/
+#endif
 	if (flags & GRE_FLAGS_SP) {
-		/* seq = ntohl(*opts); */
+#ifdef notyet
+		seq = ntohl(*opts);
+#endif
 		hlen += sizeof(uint32_t);
 	}
 	switch (ntohs(gh->gre_proto)) {

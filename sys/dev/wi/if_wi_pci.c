@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/wi/if_wi_pci.c 287197 2015-08-27 08:56:39Z glebius $
+ * $FreeBSD: head/sys/dev/wi/if_wi_pci.c 295126 2016-02-01 17:41:21Z glebius $
  */
 
 /*
@@ -42,6 +42,7 @@
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/socket.h>
 #include <sys/systm.h>
 #include <sys/module.h>

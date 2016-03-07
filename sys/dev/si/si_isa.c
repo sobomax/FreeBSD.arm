@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/si/si_isa.c 166914 2007-02-23 19:34:52Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/si/si_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include "opt_debug_si.h"
 
@@ -58,9 +58,9 @@ si_isa_probe(device_t dev)
 	unit = device_get_unit(dev);
 
 	sc->sc_mem_rid = 0;
-	sc->sc_mem_res = bus_alloc_resource(dev, SYS_RES_MEMORY,
-					    &sc->sc_mem_rid,
-					    0, ~0, SIPROBEALLOC, RF_ACTIVE);
+	sc->sc_mem_res = bus_alloc_resource_anywhere(dev, SYS_RES_MEMORY,
+						     &sc->sc_mem_rid,
+						     SIPROBEALLOC, RF_ACTIVE);
 	if (!sc->sc_mem_res) {
 		device_printf(dev, "cannot allocate memory resource\n");
 		return ENXIO;

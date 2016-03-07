@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.files.mk 290026 2015-10-26 23:28:35Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.files.mk 296121 2016-02-26 22:13:48Z bdrewery $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.files.mk cannot be included directly.
@@ -16,7 +16,9 @@ ${${group}}:= ${${group}:O:u}
 buildfiles: ${${group}}
 .endfor
 
+.if !defined(_SKIP_BUILD)
 all: buildfiles
+.endif
 
 .for group in ${FILESGROUPS}
 .if defined(${group}) && !empty(${group})

@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_proto.c 274331 2014-11-09 21:33:01Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_proto.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -78,6 +78,7 @@ __FBSDID("$FreeBSD: head/sys/netinet6/in6_proto.c 274331 2014-11-09 21:33:01Z me
 #include <sys/protosw.h>
 #include <sys/jail.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/domain.h>
 #include <sys/mbuf.h>
 #include <sys/systm.h>

@@ -4,7 +4,7 @@
 # Author: Jordan K Hubbard
 # Date:   22 June 2001
 #
-# $FreeBSD: head/release/sparc64/mkisoimages.sh 287635 2015-09-10 22:47:26Z dteske $
+# $FreeBSD: head/release/sparc64/mkisoimages.sh 293223 2016-01-05 21:05:17Z gjb $
 #
 # This script is used by release/Makefile to build the (optional) ISO images
 # for a FreeBSD release.  It is considered architecture dependent since each
@@ -38,7 +38,7 @@ BASEBITSDIR="$1"
 publisher="The FreeBSD Project.  http://www.FreeBSD.org/"
 echo "/dev/iso9660/$LABEL / cd9660 ro 0 0" > "$BASEBITSDIR/etc/fstab"
 makefs -t cd9660 -o rockridge -o label="$LABEL" -o publisher="$publisher" "$NAME.tmp" "$@"
-rm "$BASEBITSDIR/etc/fstab"
+rm -f "$BASEBITSDIR/etc/fstab"
 
 if [ "x$BOPT" != "x-b" ]; then
 	mv "$NAME.tmp" "$NAME"

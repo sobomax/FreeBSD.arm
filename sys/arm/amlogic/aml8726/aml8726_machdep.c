@@ -27,7 +27,7 @@
 #include "opt_global.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_machdep.c 289630 2015-10-20 13:47:36Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_machdep.c 295509 2016-02-11 11:49:27Z andrew $");
 
 #include "opt_platform.h"
 
@@ -184,6 +184,7 @@ struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
 
+#ifndef ARM_INTRNG
 #ifndef DEV_GIC
 static int
 fdt_pic_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
@@ -212,3 +213,4 @@ fdt_pic_decode_t fdt_pic_table[] = {
 #endif
 	NULL
 };
+#endif /* ARM_INTRNG */

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/firewire/sbp_targ.c 272214 2014-09-27 16:50:21Z kan $
+ * $FreeBSD: head/sys/dev/firewire/sbp_targ.c 295810 2016-02-19 15:35:20Z pfg $
  */
 
 #include <sys/param.h>
@@ -1324,7 +1324,7 @@ sbp_targ_action1(struct cam_sim *sim, union ccb *ccb)
 				 | PIT_DISCONNECT
 				 | PIT_TERM_IO;
 		cpi->transport = XPORT_SPI; /* FIXME add XPORT_FW type to cam */
-		cpi->hba_misc = PIM_NOBUSRESET | PIM_NOBUSRESET;
+		cpi->hba_misc = PIM_NOBUSRESET | PIM_NO_6_BYTE;
 		cpi->hba_eng_cnt = 0;
 		cpi->max_target = 7; /* XXX */
 		cpi->max_lun = MAX_LUN - 1;

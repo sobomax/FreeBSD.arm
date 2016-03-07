@@ -36,7 +36,7 @@
 /* The actual program logic is in the file procs.c			*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/rpc.statd/statd.c 277352 2015-01-19 00:33:32Z rstone $");
+__FBSDID("$FreeBSD: head/usr.sbin/rpc.statd/statd.c 292864 2015-12-29 11:24:41Z uqs $");
 
 #include <err.h>
 #include <errno.h>
@@ -150,7 +150,7 @@ main(int argc, char **argv)
    * list.
    */
   if (nhosts == 0) {
-	  hosts = malloc(sizeof(char**));
+	  hosts = malloc(sizeof(char *));
 	  if (hosts == NULL)
 		  out_of_mem();
 

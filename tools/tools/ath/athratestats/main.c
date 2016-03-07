@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athratestats/main.c 281143 2015-04-06 09:42:23Z glebius $
+ * $FreeBSD: head/tools/tools/ath/athratestats/main.c 295363 2016-02-07 04:28:03Z adrian $
  */
 
 #include "opt_ah.h"
@@ -310,7 +310,7 @@ main(int argc, char *argv[])
 
 	ifname = getenv("ATH");
 	if (ifname == NULL)
-		ifname = "ath0";
+		ifname = ATH_DEFAULT;
 
 	while ((c = getopt(argc, argv, "ahi:m:s:")) != -1) {
 		switch (c) {

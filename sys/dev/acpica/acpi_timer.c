@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_timer.c 282537 2015-05-06 14:09:54Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_timer.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -122,7 +122,7 @@ static void
 acpi_timer_identify(driver_t *driver, device_t parent)
 {
     device_t dev;
-    u_long rlen, rstart;
+    rman_res_t rlen, rstart;
     int rid, rtype;
 
     ACPI_FUNCTION_TRACE((char *)(uintptr_t)__func__);

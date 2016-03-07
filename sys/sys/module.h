@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/module.h 292077 2015-12-11 05:27:53Z imp $
+ * $FreeBSD: head/sys/sys/module.h 292146 2015-12-13 04:15:10Z imp $
  */
 
 #ifndef _SYS_MODULE_H_
@@ -99,7 +99,7 @@ struct mod_pnp_match_info
 	const char *bus;	/* Name of the bus for this table */
 	const void *table;	/* Pointer to pnp table */
 	int entry_len;		/* Length of each entry in the table (may be */
-				/*   logner than descr descriebs). */
+				/*   longer than descr describes). */
 	int num_entry;		/* Number of entries in the table */
 };
 #ifdef	_KERNEL

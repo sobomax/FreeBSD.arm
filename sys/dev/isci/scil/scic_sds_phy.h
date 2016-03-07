@@ -49,7 +49,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/isci/scil/scic_sds_phy.h 231136 2012-02-07 17:43:58Z jimharris $
+ * $FreeBSD: head/sys/dev/isci/scil/scic_sds_phy.h 292730 2015-12-25 14:51:36Z kevlo $
  */
 #ifndef _SCIC_SDS_PHY_H_
 #define _SCIC_SDS_PHY_H_
@@ -201,7 +201,7 @@ enum SCIC_SDS_PHY_PROTOCOL
  * @struct SCIC_SDS_PHY
  *
  * @brief This structure  contains or references all of the data necessary to
- *        represent the core phy object and SCU harware protocol engine.
+ *        represent the core phy object and SCU hardware protocol engine.
  */
 typedef struct SCIC_SDS_PHY
 {

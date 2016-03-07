@@ -26,21 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/filemon/filemon_lock.c 287155 2015-08-26 03:44:48Z bdrewery $");
-
-static __inline void
-filemon_filemon_lock(struct filemon *filemon)
-{
-
-	sx_xlock(&filemon->lock);
-}
-
-static __inline void
-filemon_filemon_unlock(struct filemon *filemon)
-{
-
-	sx_xunlock(&filemon->lock);
-}
+__FBSDID("$FreeBSD: head/sys/dev/filemon/filemon_lock.c 296286 2016-03-02 00:13:13Z bdrewery $");
 
 static __inline void
 filemon_lock_read(void)

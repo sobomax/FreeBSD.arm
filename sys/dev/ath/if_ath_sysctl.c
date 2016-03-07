@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_sysctl.c 287197 2015-08-27 08:56:39Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_sysctl.c 296272 2016-03-01 17:47:32Z jhb $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -709,7 +709,7 @@ ath_sysctl_forcebstuck(SYSCTL_HANDLER_ARGS)
 	if (val == 0)
 		return 0;
 
-	taskqueue_enqueue_fast(sc->sc_tq, &sc->sc_bstucktask);
+	taskqueue_enqueue(sc->sc_tq, &sc->sc_bstucktask);
 	val = 0;
 	return 0;
 }

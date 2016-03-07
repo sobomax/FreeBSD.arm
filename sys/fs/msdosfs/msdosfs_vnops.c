@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_vnops.c 276887 2015-01-09 14:50:08Z emaste $ */
+/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_vnops.c 295370 2016-02-07 15:36:16Z pfg $ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-
@@ -941,13 +941,9 @@ msdosfs_rename(struct vop_rename_args *ap)
 	int error;
 	u_long cn, pcl;
 	daddr_t bn;
-	struct denode *fddep;	/* from file's parent directory	 */
 	struct msdosfsmount *pmp;
 	struct direntry *dotdotp;
 	struct buf *bp;
-
-	fddep = VTODE(ap->a_fdvp);
-	pmp = fddep->de_pmp;
 
 	pmp = VFSTOMSDOSFS(fdvp->v_mount);
 

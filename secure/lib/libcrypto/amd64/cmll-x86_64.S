@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/amd64/cmll-x86_64.S 290207 2015-10-30 20:51:33Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/amd64/cmll-x86_64.S 296279 2016-03-01 22:08:28Z jkim $
 .text	
 
 
@@ -1625,7 +1625,7 @@ Camellia_cbc_encrypt:
 	leaq	-64-63(%rcx),%r10
 	subq	%rsp,%r10
 	negq	%r10
-	andq	$960,%r10
+	andq	$0x3C0,%r10
 	subq	%r10,%rsp
 
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/targets/pseudo/userland/gnu/Makefile.depend 291563 2015-12-01 05:23:19Z bdrewery $
+# $FreeBSD: head/targets/pseudo/userland/gnu/Makefile.depend 296127 2016-02-26 22:14:15Z bdrewery $
 
 .if !defined(MK_GPL_DTC)
 .include "${SRCTOP}/share/mk/src.opts.mk"
@@ -27,7 +27,6 @@ DIRDEPS = \
 	gnu/usr.bin/binutils/libbinutils \
 	gnu/usr.bin/binutils/libiberty \
 	gnu/usr.bin/binutils/libopcodes \
-	gnu/usr.bin/binutils/objcopy \
 	gnu/usr.bin/binutils/objdump \
 	gnu/usr.bin/binutils/ranlib \
 	gnu/usr.bin/dialog \
@@ -111,6 +110,10 @@ DIRDEPS = \
 	gnu/usr.bin/texinfo/libtxi \
 	gnu/usr.bin/texinfo/makeinfo \
 	gnu/usr.bin/texinfo/texindex \
+
+.if ${MK_ELFCOPY_AS_OBJCOPY} == "no"
+DIRDEPS+=	gnu/usr.bin/binutils/objcopy
+.endif
 
 .if ${MK_GPL_DTC} != "no"
 DIRDEPS+= gnu/usr.bin/dtc

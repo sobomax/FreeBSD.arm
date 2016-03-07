@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmcore/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmcore/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -23,6 +23,7 @@ SRCS=	AsmWriter.cpp \
 	DiagnosticPrinter.cpp \
 	Dominators.cpp \
 	Function.cpp \
+	FunctionInfo.cpp \
 	GCOV.cpp \
 	GVMaterializer.cpp \
 	Globals.cpp \
@@ -38,7 +39,6 @@ SRCS=	AsmWriter.cpp \
 	MDBuilder.cpp \
 	Mangler.cpp \
 	Metadata.cpp \
-	MetadataTracking.cpp \
 	Module.cpp \
 	Operator.cpp \
 	Pass.cpp \
@@ -57,6 +57,8 @@ SRCS=	AsmWriter.cpp \
 SRCS+=	PassManager.cpp
 .endif
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	AttributesCompatFunc \
+	Intrinsics
 
 .include "../clang.lib.mk"

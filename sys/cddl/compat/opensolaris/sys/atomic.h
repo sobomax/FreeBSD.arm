@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/atomic.h 280951 2015-04-01 08:31:56Z andrew $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/atomic.h 295041 2016-01-29 15:12:31Z br $
  */
 
 #ifndef _OPENSOLARIS_SYS_ATOMIC_H_
@@ -51,7 +51,7 @@ extern uint8_t atomic_or_8_nv(volatile uint8_t *target, uint8_t value);
 extern void membar_producer(void);
 
 #if defined(__sparc64__) || defined(__powerpc__) || defined(__arm__) || \
-    defined(__mips__) || defined(__aarch64__)
+    defined(__mips__) || defined(__aarch64__) || defined(__riscv__)
 extern void atomic_or_8(volatile uint8_t *target, uint8_t value);
 #else
 static __inline void

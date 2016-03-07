@@ -17,12 +17,12 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/ZEDBOARD 291135 2015-11-21 16:23:56Z andrew $
+# $FreeBSD: head/sys/arm/conf/ZEDBOARD 295540 2016-02-11 18:01:10Z andrew $
 
 ident		ZEDBOARD
 
 include 	"std.armv6"
-include 	"../xilinx/zedboard/std.zedboard"
+include 	"../xilinx/std.zynq7"
 
 options 	SCHED_ULE		# ULE scheduler
 #options 	NFSSD			# Network Filesystem Server
@@ -52,6 +52,8 @@ options 	ROOTDEVNAME=\"ufs:mmcsd0s2a\"
 
 # Interrupt controller
 device		gic
+options 	ARM_INTRNG
+
 # Cache controller
 device		pl310			# PL310 L2 cache controller
 # ARM MPCore timer

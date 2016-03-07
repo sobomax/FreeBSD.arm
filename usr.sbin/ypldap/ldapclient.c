@@ -1,5 +1,5 @@
 /* $OpenBSD: ldapclient.c,v 1.31 2014/11/16 23:24:44 tedu Exp $ */
-/* $FreeBSD: head/usr.sbin/ypldap/ldapclient.c 290942 2015-11-16 17:28:04Z rodrigc $ */
+/* $FreeBSD: head/usr.sbin/ypldap/ldapclient.c 292273 2015-12-15 15:46:14Z araujo $ */
 
 /*
  * Copyright (c) 2008 Alexander Schrijver <aschrijver@openbsd.org>
@@ -172,7 +172,7 @@ client_dispatch_dns(int fd, short events, void *p)
 		fatalx("unknown event");
 
 	if (events & EV_READ) {
-		if ((n = imsg_read(ibuf)) == -1)
+		if ((n = imsg_read(ibuf)) == -1 && errno != EAGAIN)
 			fatal("imsg_read error");
 		if (n == 0)
 			shut = 1;
@@ -275,7 +275,7 @@ client_dispatch_parent(int fd, short events, void *p)
 		fatalx("unknown event");
 
 	if (events & EV_READ) {
-		if ((n = imsg_read(ibuf)) == -1)
+		if ((n = imsg_read(ibuf)) == -1 && errno != EAGAIN)
 			fatal("imsg_read error");
 		if (n == 0)
 			shut = 1;

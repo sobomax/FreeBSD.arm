@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)hash_buf.c	8.5 (Berkeley) 7/15/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash_buf.c 190493 2009-03-28 06:40:48Z delphij $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash_buf.c 295031 2016-01-29 01:22:12Z brooks $");
 
 /*
  * PACKAGE: hash
@@ -138,7 +138,7 @@ __get_buf(HTAB *hashp, u_int32_t addr,
 			return (NULL);
 		if (!prev_bp)
 			segp[segment_ndx] =
-			    (BUFHEAD *)((ptrdiff_t)bp | is_disk_mask);
+			    (BUFHEAD *)((intptr_t)bp | is_disk_mask);
 	} else {
 		BUF_REMOVE(bp);
 		MRU_INSERT(bp);

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/libefi/efipart.c 285246 2015-07-07 18:44:27Z emaste $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/libefi/efipart.c 293724 2016-01-12 02:17:39Z smh $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -67,7 +67,6 @@ efipart_init(void)
 	EFI_HANDLE *hin, *hout, *aliases, handle;
 	EFI_STATUS status;
 	UINTN sz;
-	CHAR16 *path;
 	u_int n, nin, nout;
 	int err;
 	size_t devpathlen;

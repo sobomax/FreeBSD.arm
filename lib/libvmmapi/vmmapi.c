@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libvmmapi/vmmapi.c 285218 2015-07-06 19:41:43Z neel $
+ * $FreeBSD: head/lib/libvmmapi/vmmapi.c 295881 2016-02-22 09:04:36Z skra $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libvmmapi/vmmapi.c 285218 2015-07-06 19:41:43Z neel $");
+__FBSDID("$FreeBSD: head/lib/libvmmapi/vmmapi.c 295881 2016-02-22 09:04:36Z skra $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -38,7 +38,6 @@ __FBSDID("$FreeBSD: head/lib/libvmmapi/vmmapi.c 285218 2015-07-06 19:41:43Z neel
 
 #include <x86/segments.h>
 #include <machine/specialreg.h>
-#include <machine/param.h>
 
 #include <errno.h>
 #include <stdio.h>

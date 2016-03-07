@@ -28,13 +28,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_mchain.c 243882 2012-12-05 08:04:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_mchain.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/sysctl.h>
 #include <sys/endian.h>
 #include <sys/errno.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/module.h>
 #include <sys/uio.h>

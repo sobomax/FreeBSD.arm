@@ -3,7 +3,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/iflagg.c 288305 2015-09-27 07:51:18Z ngie $";
+  "$FreeBSD: head/sbin/ifconfig/iflagg.c 294615 2016-01-23 04:18:44Z araujo $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -97,6 +97,19 @@ setlaggflowidshift(const char *val, int d, int s, const struct afswtch *afp)
 	
 	if (ioctl(s, SIOCSLAGGOPTS, &ro) != 0)
 		err(1, "SIOCSLAGGOPTS");
+}
+
+static void
+setlaggrr_limit(const char *val, int d, int s, const struct afswtch *afp)
+{
+	struct lagg_reqopts ro;
+	
+	bzero(&ro, sizeof(ro));
+	strlcpy(ro.ro_ifname, name, sizeof(ro.ro_ifname));
+	ro.ro_bkt = (int)strtol(val, NULL, 10);
+
+	if (ioctl(s, SIOCSLAGGOPTS, &ro) != 0)
+		err(1, "SIOCSLAGG");
 }
 
 static void
@@ -252,6 +265,8 @@ lagg_status(int s)
 			printb("\t\tflags", ro.ro_opts, LAGG_OPT_BITS);
 			putchar('\n');
 			printf("\t\tflowid_shift: %d\n", ro.ro_flowid_shift);
+			if (ra.ra_proto == LAGG_PROTO_ROUNDROBIN)
+				printf("\t\trr_limit: %d\n", ro.ro_bkt);
 			printf("\tlagg statistics:\n");
 			printf("\t\tactive ports: %d\n", ro.ro_active);
 			printf("\t\tflapping: %u\n", ro.ro_flapping);
@@ -298,6 +313,7 @@ static struct cmd lagg_cmds[] = {
 	DEF_CMD("lacp_fast_timeout",	LAGG_OPT_LACP_TIMEOUT,	setlaggsetopt),
 	DEF_CMD("-lacp_fast_timeout",	-LAGG_OPT_LACP_TIMEOUT,	setlaggsetopt),
 	DEF_CMD_ARG("flowid_shift",	setlaggflowidshift),
+	DEF_CMD_ARG("rr_limit",		setlaggrr_limit),
 };
 static struct afswtch af_lagg = {
 	.af_name	= "af_lagg",

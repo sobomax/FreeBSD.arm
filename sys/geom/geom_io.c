@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_io.c 291716 2015-12-03 20:54:55Z ken $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_io.c 295712 2016-02-17 18:28:38Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -262,6 +262,13 @@ g_duplicate_bio(struct bio *bp)
 	}
 #endif
 	return(bp2);
+}
+
+void
+g_reset_bio(struct bio *bp)
+{
+
+	bzero(bp, sizeof(*bp));
 }
 
 void

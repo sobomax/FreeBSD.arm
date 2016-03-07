@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/Makefile 291113 2015-11-20 21:56:20Z emaste $
+# $FreeBSD: head/sys/boot/i386/Makefile 295398 2016-02-08 16:59:52Z emaste $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,10 @@ SUBDIR=		mbr pmbr boot0 boot0sio btx boot2 cdboot gptboot \
 
 # special boot programs, 'self-extracting boot2+loader'
 SUBDIR+=	pxeldr
+
+.if ${MACHINE_CPUARCH} == "i386"
+SUBDIR+=	kgzldr
+.endif
 
 .if ${MK_ZFS} != "no"
 SUBDIR+=	zfsboot gptzfsboot zfsloader

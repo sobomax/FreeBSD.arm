@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_sleepqueue.c 267820 2014-06-24 15:16:55Z attilio $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_sleepqueue.c 296320 2016-03-02 18:46:17Z kib $");
 
 #include "opt_sleepqueue_profiling.h"
 #include "opt_ddb.h"
@@ -586,7 +586,8 @@ sleepq_check_timeout(void)
 	 * another CPU, so synchronize with it to avoid having it
 	 * accidentally wake up a subsequent sleep.
 	 */
-	else if (callout_stop(&td->td_slpcallout) == 0) {
+	else if (_callout_stop_safe(&td->td_slpcallout, CS_MIGRBLOCK, NULL)
+	    == 0) {
 		td->td_flags |= TDF_TIMEOUT;
 		TD_SET_SLEEPING(td);
 		mi_switch(SW_INVOL | SWT_SLEEPQTIMO, NULL);

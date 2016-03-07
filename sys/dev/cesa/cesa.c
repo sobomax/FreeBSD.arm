@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cesa/cesa.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/cesa/cesa.c 296257 2016-03-01 09:45:27Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1641,11 +1641,11 @@ decode_win_cesa_setup(struct cesa_softc *sc)
 {
 	struct mem_region availmem_regions[FDT_MEM_REGIONS];
 	int availmem_regions_sz;
-	uint32_t memsize, br, cr, i;
+	uint32_t br, cr, i;
 
 	/* Grab physical memory regions information from DTS */
 	if (fdt_get_mem_regions(availmem_regions, &availmem_regions_sz,
-	    &memsize) != 0)
+	    NULL) != 0)
 		return (ENXIO);
 
 	if (availmem_regions_sz > MV_WIN_CESA_MAX) {

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/vnet.c 261590 2014-02-07 13:47:33Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net/vnet.c 294747 2016-01-25 20:35:15Z zec $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -171,7 +171,6 @@ static MALLOC_DEFINE(M_VNET_DATA, "vnet_data", "VNET data");
  */
 #define	VNET_MODMIN	8192
 #define	VNET_SIZE	roundup2(VNET_BYTES, PAGE_SIZE)
-#define	VNET_MODSIZE	(VNET_SIZE - (VNET_BYTES - VNET_MODMIN))
 
 /*
  * Space to store virtualized global variables from loadable kernel modules,

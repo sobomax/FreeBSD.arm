@@ -21,7 +21,7 @@
 /* Driver for NVIDIA nForce MCP Fast Ethernet and Gigabit Ethernet */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nfe/if_nfe.c 273174 2014-10-16 18:04:43Z davide $");
+__FBSDID("$FreeBSD: head/sys/dev/nfe/if_nfe.c 296272 2016-03-01 17:47:32Z jhb $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -1873,7 +1873,7 @@ nfe_intr(void *arg)
 	if (status == 0 || status == 0xffffffff)
 		return (FILTER_STRAY);
 	nfe_disable_intr(sc);
-	taskqueue_enqueue_fast(sc->nfe_tq, &sc->nfe_int_task);
+	taskqueue_enqueue(sc->nfe_tq, &sc->nfe_int_task);
 
 	return (FILTER_HANDLED);
 }
@@ -1932,7 +1932,7 @@ nfe_int_task(void *arg, int pending)
 	NFE_UNLOCK(sc);
 
 	if (domore || (NFE_READ(sc, sc->nfe_irq_status) != 0)) {
-		taskqueue_enqueue_fast(sc->nfe_tq, &sc->nfe_int_task);
+		taskqueue_enqueue(sc->nfe_tq, &sc->nfe_int_task);
 		return;
 	}
 

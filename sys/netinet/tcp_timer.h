@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/tcp_timer.h 286669 2015-08-12 16:08:37Z hiren $
+ * $FreeBSD: head/sys/netinet/tcp_timer.h 294840 2016-01-26 16:33:38Z hiren $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -77,7 +77,7 @@
 						   if 0, no idea yet */
 #define	TCPTV_RTOBASE	(  3*hz)		/* assumed RTO if no info */
 
-#define	TCPTV_PERSMIN	(  5*hz)		/* retransmit persistence */
+#define	TCPTV_PERSMIN	(  5*hz)		/* minimum persist interval */
 #define	TCPTV_PERSMAX	( 60*hz)		/* maximum persist interval */
 
 #define	TCPTV_KEEP_INIT	( 75*hz)		/* initial connect keepalive */
@@ -173,6 +173,8 @@ struct tcp_timer {
 #define	TP_KEEPCNT(tp)	((tp)->t_keepcnt ? (tp)->t_keepcnt : tcp_keepcnt)
 #define	TP_MAXIDLE(tp)	(TP_KEEPCNT(tp) * TP_KEEPINTVL(tp))
 
+extern int tcp_persmin;			/* minimum persist interval */
+extern int tcp_persmax;			/* maximum persist interval */
 extern int tcp_keepinit;		/* time to establish connection */
 extern int tcp_keepidle;		/* time before keepalive probes begin */
 extern int tcp_keepintvl;		/* time between keepalive probes */

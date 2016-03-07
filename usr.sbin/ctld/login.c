@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/login.c 287766 2015-09-13 20:58:22Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/login.c 295562 2016-02-12 10:58:13Z mav $");
 
 #include <assert.h>
 #include <stdbool.h>
@@ -126,15 +126,16 @@ login_receive(struct connection *conn, bool initial)
 		log_errx(1, "received Login PDU with unsupported "
 		    "Version-min 0x%x", bhslr->bhslr_version_min);
 	}
-	if (ISCSI_SNLT(ntohl(bhslr->bhslr_cmdsn), conn->conn_cmdsn)) {
-		login_send_error(request, 0x02, 0x05);
+	if (initial == false &&
+	    ISCSI_SNLT(ntohl(bhslr->bhslr_cmdsn), conn->conn_cmdsn)) {
+		login_send_error(request, 0x02, 0x00);
 		log_errx(1, "received Login PDU with decreasing CmdSN: "
 		    "was %u, is %u", conn->conn_cmdsn,
 		    ntohl(bhslr->bhslr_cmdsn));
 	}
 	if (initial == false &&
 	    ntohl(bhslr->bhslr_expstatsn) != conn->conn_statsn) {
-		login_send_error(request, 0x02, 0x05);
+		login_send_error(request, 0x02, 0x00);
 		log_errx(1, "received Login PDU with wrong ExpStatSN: "
 		    "is %u, should be %u", ntohl(bhslr->bhslr_expstatsn),
 		    conn->conn_statsn);

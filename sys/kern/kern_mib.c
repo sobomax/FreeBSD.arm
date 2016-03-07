@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_mib.c 290728 2015-11-12 22:00:59Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_mib.c 295941 2016-02-23 23:37:10Z bdrewery $");
 
 #include "opt_compat.h"
 #include "opt_posix.h"
@@ -422,7 +422,7 @@ sysctl_hostid(SYSCTL_HANDLER_ARGS)
 }
 
 SYSCTL_PROC(_kern, KERN_HOSTID, hostid,
-    CTLTYPE_ULONG | CTLFLAG_RW | CTLFLAG_PRISON | CTLFLAG_MPSAFE,
+    CTLTYPE_ULONG | CTLFLAG_RW | CTLFLAG_PRISON | CTLFLAG_MPSAFE | CTLFLAG_CAPRD,
     NULL, 0, sysctl_hostid, "LU", "Host ID");
 
 /*

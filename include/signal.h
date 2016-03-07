@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.3 (Berkeley) 3/30/94
- * $FreeBSD: head/include/signal.h 281130 2015-04-06 01:39:16Z pfg $
+ * $FreeBSD: head/include/signal.h 295602 2016-02-13 17:23:55Z kib $
  */
 
 #ifndef _SIGNAL_H_
@@ -36,6 +36,10 @@
 #include <sys/cdefs.h>
 #include <sys/_types.h>
 #include <sys/signal.h>
+#if __POSIX_VISIBLE >= 200112 || __XSI_VISIBLE
+#include <machine/ucontext.h>
+#include <sys/_ucontext.h>
+#endif
 
 #if __BSD_VISIBLE
 /*
@@ -114,7 +118,6 @@ void	psignal(unsigned int, const char *);
 
 #if __BSD_VISIBLE
 int	sigblock(int);
-struct __ucontext;		/* XXX spec requires a complete declaration. */
 int	sigreturn(const struct __ucontext *);
 int	sigsetmask(int);
 int	sigstack(const struct sigstack *, struct sigstack *);

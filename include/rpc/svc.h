@@ -29,7 +29,7 @@
  *
  *	from: @(#)svc.h 1.35 88/12/17 SMI
  *	from: @(#)svc.h      1.27    94/04/25 SMI
- * $FreeBSD: head/include/rpc/svc.h 258578 2013-11-25 19:04:36Z hrs $
+ * $FreeBSD: head/include/rpc/svc.h 296349 2016-03-03 14:44:30Z pfg $
  */
 
 /*
@@ -89,6 +89,7 @@ enum xprt_stat {
  */
 typedef struct __rpc_svcxprt {
 	int		xp_fd;
+#define	xp_sock		xp_fd
 	u_short		xp_port;	 /* associated port number */
 	const struct xp_ops {
 	    /* receive incoming requests */

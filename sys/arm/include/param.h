@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm/include/param.h 289372 2015-10-15 17:40:39Z kib $
+ * $FreeBSD: head/sys/arm/include/param.h 295043 2016-01-29 16:42:03Z skra $
  */
 
 #ifndef _ARM_INCLUDE_PARAM_H_
@@ -110,7 +110,6 @@
 #define	PAGE_SHIFT	12
 #define	PAGE_SIZE	(1 << PAGE_SHIFT)	/* Page size */
 #define	PAGE_MASK	(PAGE_SIZE - 1)
-#define	NPTEPG		(PAGE_SIZE/(sizeof (pt_entry_t)))
 
 #define PDR_SHIFT	20 /* log2(NBPDR) */
 #define NBPDR		(1 << PDR_SHIFT)

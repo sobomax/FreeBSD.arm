@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resourcevar.h 290861 2015-11-15 12:50:14Z trasz $
+ * $FreeBSD: head/sys/sys/resourcevar.h 296162 2016-02-28 17:52:33Z kib $
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -101,6 +101,7 @@ struct uidinfo {
 	long	ui_proccnt;		/* (b) number of processes */
 	long	ui_ptscnt;		/* (b) number of pseudo-terminals */
 	long	ui_kqcnt;		/* (b) number of kqueues */
+	long	ui_umtxcnt;		/* (b) number of shared umtxs */
 	uid_t	ui_uid;			/* (a) uid */
 	u_int	ui_ref;			/* (b) reference count */
 #ifdef	RACCT
@@ -124,6 +125,7 @@ int	 chgproccnt(struct uidinfo *uip, int diff, rlim_t maxval);
 int	 chgsbsize(struct uidinfo *uip, u_int *hiwat, u_int to,
 	    rlim_t maxval);
 int	 chgptscnt(struct uidinfo *uip, int diff, rlim_t maxval);
+int	 chgumtxcnt(struct uidinfo *uip, int diff, rlim_t maxval);
 int	 fuswintr(void *base);
 int	 kern_proc_setrlimit(struct thread *td, struct proc *p, u_int which,
 	    struct rlimit *limp);

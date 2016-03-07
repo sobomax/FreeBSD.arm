@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/pmc.h 291494 2015-11-30 17:35:49Z rrs $
+ * $FreeBSD: head/sys/sys/pmc.h 295559 2016-02-12 07:20:27Z kib $
  */
 
 #ifndef _SYS_PMC_H_
@@ -1033,7 +1033,7 @@ extern struct pmc_debugflags pmc_debugflags;
 #define	KTR_PMC			KTR_SUBSYS
 
 #define	PMC_DEBUG_STRSIZE		128
-#define	PMC_DEBUG_DEFAULT_FLAGS		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+#define	PMC_DEBUG_DEFAULT_FLAGS		{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 
 #define	PMCDBG0(M, N, L, F) do {					\
 	if (pmc_debugflags.pdb_ ## M & (1 << PMC_DEBUG_MIN_ ## N))	\

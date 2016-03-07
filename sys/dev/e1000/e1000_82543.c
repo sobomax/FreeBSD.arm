@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82543.c 287990 2015-09-19 18:22:59Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82543.c 295323 2016-02-05 17:14:37Z erj $*/
 
 /*
  * 82543GC Gigabit Ethernet Controller (Fiber)
@@ -900,7 +900,7 @@ static s32 e1000_phy_hw_reset_82543(struct e1000_hw *hw)
  **/
 static s32 e1000_reset_hw_82543(struct e1000_hw *hw)
 {
-	u32 ctrl, icr;
+	u32 ctrl;
 	s32 ret_val = E1000_SUCCESS;
 
 	DEBUGFUNC("e1000_reset_hw_82543");
@@ -942,7 +942,7 @@ static s32 e1000_reset_hw_82543(struct e1000_hw *hw)
 
 	/* Masking off and clearing any pending interrupts */
 	E1000_WRITE_REG(hw, E1000_IMC, 0xffffffff);
-	icr = E1000_READ_REG(hw, E1000_ICR);
+	E1000_READ_REG(hw, E1000_ICR);
 
 	return ret_val;
 }

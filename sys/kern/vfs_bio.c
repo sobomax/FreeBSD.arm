@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_bio.c 291998 2015-12-08 18:38:33Z smh $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_bio.c 295372 2016-02-07 16:18:12Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1809,6 +1809,8 @@ breada(struct vnode * vp, daddr_t * rablkno, int * rabsize,
  * must clear BIO_ERROR and B_INVAL prior to initiating I/O.  If B_CACHE
  * is set, the buffer is valid and we do not have to do anything, see
  * getblk(). Also starts asynchronous I/O on read-ahead blocks.
+ *
+ * Always return a NULL buffer pointer (in bpp) when returning an error.
  */
 int
 breadn_flags(struct vnode *vp, daddr_t blkno, int size, daddr_t *rablkno,
@@ -1844,6 +1846,10 @@ breadn_flags(struct vnode *vp, daddr_t blkno, int size, daddr_t *rablkno,
 
 	if (readwait) {
 		rv = bufwait(bp);
+		if (rv != 0) {
+			brelse(bp);
+			*bpp = NULL;
+		}
 	}
 	return (rv);
 }
@@ -2238,6 +2244,12 @@ brelse(struct buf *bp)
 {
 	int qindex;
 
+	/*
+	 * Many functions erroneously call brelse with a NULL bp under rare
+	 * error conditions. Simply return when called with a NULL bp.
+	 */
+	if (bp == NULL)
+		return;
 	CTR3(KTR_BUF, "brelse(%p) vp %p flags %X",
 	    bp, bp->b_vp, bp->b_flags);
 	KASSERT(!(bp->b_flags & (B_CLUSTER|B_PAGING)),
@@ -2909,7 +2921,7 @@ getnewbuf(struct vnode *vp, int slpflag, int slptimeo, int maxsize, int gbflags)
 	} while(buf_scan(false) == 0);
 
 	if (reserved)
-		bufspace_release(maxsize);
+		atomic_subtract_long(&bufspace, maxsize);
 	if (bp != NULL) {
 		bp->b_flags |= B_INVAL;
 		brelse(bp);

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/completion.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/completion.h 294839 2016-01-26 15:26:35Z hselasky $
  */
 #ifndef	_LINUX_COMPLETION_H_
 #define	_LINUX_COMPLETION_H_
@@ -40,7 +40,9 @@ struct completion {
 #define	INIT_COMPLETION(c) \
 	((c).done = 0)
 #define	init_completion(c) \
-	((c)->done = 0)
+	do { (c)->done = 0; } while (0)
+#define	reinit_completion(c) \
+	do { (c)->done = 0; } while (0)
 #define	complete(c)				\
 	linux_complete_common((c), 0)
 #define	complete_all(c)				\

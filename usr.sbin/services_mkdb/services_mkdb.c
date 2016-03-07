@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/services_mkdb/services_mkdb.c 261030 2014-01-22 16:50:18Z jhb $");
+__FBSDID("$FreeBSD: head/usr.sbin/services_mkdb/services_mkdb.c 295465 2016-02-10 09:40:45Z se $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/services_mkdb/services_mkdb.c 261030 2014-01-2
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <libgen.h>
 #include <libutil.h>
 #include <ctype.h>
 #include <errno.h>
@@ -91,6 +92,8 @@ main(int argc, char *argv[])
 	size_t	 cnt = 0;
 	StringList *sl, ***svc;
 	size_t port, proto;
+	char *dbname_dir;
+	int dbname_dir_fd = -1;
 
 	setprogname(argv[0]);
 
@@ -164,8 +167,21 @@ main(int argc, char *argv[])
 	if ((db->close)(db))
 		err(1, "Error closing temporary database `%s'", tname);
 
-	if (rename(tname, dbname) == -1)
+	/*
+	 * Make sure file is safe on disk. To improve performance we will call
+	 * fsync() to the directory where file lies
+	 */
+	if (rename(tname, dbname) == -1 ||
+	    (dbname_dir = dirname(dbname)) == NULL ||
+	    (dbname_dir_fd = open(dbname_dir, O_RDONLY|O_DIRECTORY)) == -1 ||
+	    fsync(dbname_dir_fd) != 0) {
+		if (dbname_dir_fd != -1)
+			close(dbname_dir_fd);
 		err(1, "Cannot rename `%s' to `%s'", tname, dbname);
+	}
+
+	if (dbname_dir_fd != -1)
+		close(dbname_dir_fd);
 
 	return 0;
 }

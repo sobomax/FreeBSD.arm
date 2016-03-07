@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)inode.h	8.9 (Berkeley) 5/14/95
- * $FreeBSD: head/sys/fs/ext2fs/inode.h 262623 2014-02-28 21:25:32Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/inode.h 294655 2016-01-24 04:30:30Z pfg $
  */
 
 #ifndef _FS_EXT2FS_INODE_H_
@@ -157,7 +157,7 @@ struct inode {
  * These are translation flags for some attributes that Ext4
  * passes as inode flags but that we cannot pass directly.
  */
-#define	IN_E4INDEX	0x010000
+#define	IN_E3INDEX	0x010000
 #define	IN_E4EXTENTS	0x020000
 
 #define i_devvp i_ump->um_devvp

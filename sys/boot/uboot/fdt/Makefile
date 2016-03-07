@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/uboot/fdt/Makefile 273934 2014-11-01 17:12:44Z andrew $
+# $FreeBSD: head/sys/boot/uboot/fdt/Makefile 296080 2016-02-26 08:16:44Z sgalabov $
 
 .include <src.opts.mk>
 
@@ -28,6 +28,7 @@ machine:
 
 CLEANFILES+=	machine
 
+.include <bsd.stand.mk>
 .include <bsd.lib.mk>
 
 beforedepend ${OBJS}: machine

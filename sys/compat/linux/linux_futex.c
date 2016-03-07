@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_futex.c 283463 2015-05-24 17:29:18Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_futex.c 293907 2016-01-14 10:13:58Z glebius $");
 #if 0
 __KERNEL_RCSID(1, "$NetBSD: linux_futex.c,v 1.7 2006/07/24 19:01:49 manu Exp $");
 #endif
@@ -1099,6 +1099,12 @@ linux_get_robust_list(struct thread *td, struct linux_get_robust_list_args *args
 			    ESRCH);
 			return (ESRCH);
 		}
+		if (SV_PROC_ABI(td2->td_proc) != SV_ABI_LINUX) {
+			LIN_SDT_PROBE1(futex, linux_get_robust_list, return,
+			    EPERM);
+			PROC_UNLOCK(td2->td_proc);
+			return (EPERM);
+		}
 
 		em = em_find(td2);
 		KASSERT(em != NULL, ("get_robust_list: emuldata notfound.\n"));
@@ -1125,7 +1131,7 @@ linux_get_robust_list(struct thread *td, struct linux_get_robust_list_args *args
 		return (EFAULT);
 	}
 
-	error = copyout(head, args->head, sizeof(struct linux_robust_list_head));
+	error = copyout(&head, args->head, sizeof(head));
 	if (error) {
 		LIN_SDT_PROBE1(futex, linux_get_robust_list, copyout_error,
 		    error);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmasmprinter/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmasmprinter/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -12,8 +12,8 @@ SRCS=	ARMException.cpp \
 	AsmPrinterInlineAsm.cpp \
 	DIE.cpp \
 	DIEHash.cpp \
-	DebugLocStream.cpp \
 	DbgValueHistoryCalculator.cpp \
+	DebugLocStream.cpp \
 	DwarfAccelTable.cpp \
 	DwarfCFIException.cpp \
 	DwarfCompileUnit.cpp \
@@ -28,6 +28,7 @@ SRCS=	ARMException.cpp \
 	WinCodeViewLineTables.cpp \
 	WinException.cpp
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/stg/tmc18c30_subr.c 274760 2014-11-20 20:50:05Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/stg/tmc18c30_subr.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -65,7 +65,7 @@ int
 stg_alloc_resource(device_t dev)
 {
 	struct stg_softc *	sc = device_get_softc(dev);
-	u_long			maddr, msize;
+	rman_res_t		maddr, msize;
 	int			error;
 
 	mtx_init(&sc->sc_sclow.sl_lock, "stg", NULL, MTX_DEF);

@@ -17,7 +17,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/usb/wlan/if_runvar.h 289168 2015-10-12 05:21:51Z adrian $
+ * $FreeBSD: head/sys/dev/usb/wlan/if_runvar.h 296356 2016-03-03 20:06:16Z avos $
  */
 
 #ifndef _IF_RUNVAR_H_
@@ -247,6 +247,8 @@ struct run_softc {
 	uint8_t				rvp_cnt;
 	uint8_t				rvp_bmap;
 	uint8_t				sc_detached;
+
+	uint8_t				sc_bssid[IEEE80211_ADDR_LEN];
 
 	union {
 		struct run_rx_radiotap_header th;

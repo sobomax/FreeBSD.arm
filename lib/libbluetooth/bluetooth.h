@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: bluetooth.h,v 1.5 2003/09/14 23:28:42 max Exp $
- * $FreeBSD: head/lib/libbluetooth/bluetooth.h 213042 2010-09-22 23:41:02Z emax $
+ * $FreeBSD: head/lib/libbluetooth/bluetooth.h 295028 2016-01-29 00:59:48Z brooks $
  */
 
 #ifndef _BLUETOOTH_H_
@@ -178,7 +178,7 @@ int		bt_devfilter_evt_tst(struct bt_devfilter const *filter, uint8_t event);
 int		bt_devinquiry(char const *devname, time_t length, int num_rsp,
 			      struct bt_devinquiry **ii);
 int		bt_devinfo (struct bt_devinfo *di);
-int		bt_devenum (bt_devenum_cb_t *cb, void *arg);
+int		bt_devenum (bt_devenum_cb_t cb, void *arg);
 
 /*
  * bdaddr utility functions (from NetBSD)

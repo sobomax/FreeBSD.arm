@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_cpu_powerpc.c 269131 2014-07-26 17:49:40Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_cpu_powerpc.c 295662 2016-02-16 15:18:12Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -180,7 +180,7 @@ uart_cpu_getdev(int devtype, struct uart_devinfo *di)
 	if (class == NULL)
 		return (ENXIO);
 
-	error = OF_decode_addr(input, 0, &di->bas.bst, &di->bas.bsh);
+	error = OF_decode_addr(input, 0, &di->bas.bst, &di->bas.bsh, NULL);
 	if (error)
 		return (error);
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ed/if_ed_pccard.c 292079 2015-12-11 05:27:56Z imp $
+ * $FreeBSD: head/sys/dev/ed/if_ed_pccard.c 295790 2016-02-19 03:37:56Z jhibbits $
  */
 
 /*
@@ -509,8 +509,8 @@ ed_pccard_attach(device_t dev)
 	}
 	if (rman_get_size(sc->port_res) == ED_NOVELL_IO_PORTS / 2) {
 		port_rid++;
-		sc->port_res2 = bus_alloc_resource(dev, SYS_RES_IOPORT,
-		    &port_rid, 0ul, ~0ul, 1, RF_ACTIVE);
+		sc->port_res2 = bus_alloc_resource_any(dev, SYS_RES_IOPORT,
+		    &port_rid, RF_ACTIVE);
 		if (sc->port_res2 == NULL ||
 		    rman_get_size(sc->port_res2) != ED_NOVELL_IO_PORTS / 2) {
 			error = ENXIO;

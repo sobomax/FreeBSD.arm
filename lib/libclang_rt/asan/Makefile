@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libclang_rt/asan/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/libclang_rt/asan/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.init.mk>
 
@@ -75,7 +75,6 @@ SRCS=	asan_preinit.cc\
 	sanitizer_stoptheworld_linux_libcdep.cc\
 	sanitizer_symbolizer_libcdep.cc\
 	sanitizer_symbolizer_posix_libcdep.cc\
-	sanitizer_symbolizer_process_libcdep.cc\
 	sanitizer_unwind_linux_libcdep.cc\
 	lsan_common.cc\
 	lsan_common_linux.cc\

@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell DB-88F5xxx boards.
 #
-# $FreeBSD: head/sys/arm/conf/DB-88F5XXX 289945 2015-10-25 22:00:56Z zbb $
+# $FreeBSD: head/sys/arm/conf/DB-88F5XXX 295621 2016-02-14 23:42:07Z andrew $
 #
 
 ident		DB-88F5XXX
@@ -74,6 +74,7 @@ options 	HZ=1000
 # I2C (TWSI)
 device		iic
 device		iicbus
+device		twsi
 device		ds133x
 
 # USB
@@ -87,6 +88,9 @@ device		da
 
 # SATA
 device		mvs
+
+# GPIO
+device		gpio
 
 # Flattened Device Tree
 options 	FDT

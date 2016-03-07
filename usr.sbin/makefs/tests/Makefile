@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/makefs/tests/Makefile 289694 2015-10-21 13:13:38Z ngie $
+# $FreeBSD: head/usr.sbin/makefs/tests/Makefile 294891 2016-01-27 06:14:20Z ngie $
 
 ATF_TESTS_SH+=	makefs_cd9660_tests
 ATF_TESTS_SH+=	makefs_ffs_tests
@@ -7,6 +7,8 @@ BINDIR=		${TESTSDIR}
 
 SCRIPTS+=	makefs_tests_common.sh
 SCRIPTSNAME_makefs_tests_common.sh=	makefs_tests_common.sh
+
+TEST_METADATA.makefs_cd9660_tests+=	required_files="/sbin/mount_cd9660"
 
 .for t in ${ATF_TESTS_SH}
 TEST_METADATA.$t+=	required_user="root"

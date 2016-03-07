@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/intr.h 292062 2015-12-10 13:19:30Z andrew $
+ * $FreeBSD: head/sys/arm64/include/intr.h 295515 2016-02-11 11:58:27Z zbb $
  */
 
 #ifndef _MACHINE_INTR_H_
@@ -49,6 +49,7 @@ void	arm_unmask_irq(u_int);
 
 #ifdef SMP
 void	arm_init_secondary(void);
+int	arm_intr_bind(u_int, int);
 void	arm_setup_ipihandler(driver_filter_t *, u_int);
 void	arm_unmask_ipi(u_int);
 #endif

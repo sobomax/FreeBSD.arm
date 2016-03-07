@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sysv_sem.c 282213 2015-04-29 10:23:02Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/sysv_sem.c 295385 2016-02-07 22:12:39Z jilles $");
 
 #include "opt_compat.h"
 #include "opt_sysvipc.h"
@@ -867,6 +867,11 @@ sys_semget(struct thread *td, struct semget_args *uap)
 		}
 		if (semid < seminfo.semmni) {
 			DPRINTF(("found public key\n"));
+			if ((semflg & IPC_CREAT) && (semflg & IPC_EXCL)) {
+				DPRINTF(("not exclusive\n"));
+				error = EEXIST;
+				goto done2;
+			}
 			if ((error = ipcperm(td, &sema[semid].u.sem_perm,
 			    semflg & 0700))) {
 				goto done2;
@@ -874,11 +879,6 @@ sys_semget(struct thread *td, struct semget_args *uap)
 			if (nsems > 0 && sema[semid].u.sem_nsems < nsems) {
 				DPRINTF(("too small\n"));
 				error = EINVAL;
-				goto done2;
-			}
-			if ((semflg & IPC_CREAT) && (semflg & IPC_EXCL)) {
-				DPRINTF(("not exclusive\n"));
-				error = EEXIST;
 				goto done2;
 			}
 #ifdef MAC

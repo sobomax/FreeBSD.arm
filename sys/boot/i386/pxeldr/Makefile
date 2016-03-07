@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/pxeldr/Makefile 235219 2012-05-10 09:47:04Z avg $
+# $FreeBSD: head/sys/boot/i386/pxeldr/Makefile 295757 2016-02-18 14:17:28Z emaste $
 
 # Pick up ../Makefile.inc early.
 .include <bsd.init.mk>
@@ -31,7 +31,7 @@ CLEANFILES+= ${BOOT}.tmp
 
 ${BOOT}: ${LDR} ${LOADER}
 	cat ${LDR} ${LOADER} > ${.TARGET}.tmp
-	dd if=${.TARGET}.tmp of=${.TARGET} obs=2k conv=osync
+	dd if=${.TARGET}.tmp of=${.TARGET} obs=2k conv=osync status=none
 	rm ${.TARGET}.tmp
 
 LDFLAGS+=-e start -Ttext ${ORG} -Wl,-N,-S,--oformat,binary

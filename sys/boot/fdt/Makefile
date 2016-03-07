@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/fdt/Makefile 276711 2015-01-05 16:52:25Z nwhitehorn $
+# $FreeBSD: head/sys/boot/fdt/Makefile 296080 2016-02-26 08:16:44Z sgalabov $
 
 .PATH:		${.CURDIR}/../../contrib/libfdt/
 
@@ -26,4 +26,5 @@ CFLAGS+=	-m32
 
 CFLAGS+=	-Wformat -Wall
 
+.include <bsd.stand.mk>
 .include <bsd.lib.mk>

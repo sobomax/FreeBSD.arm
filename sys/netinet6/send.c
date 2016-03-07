@@ -25,10 +25,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/send.c 259503 2013-12-17 10:53:17Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet6/send.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/module.h>
 #include <sys/priv.h>

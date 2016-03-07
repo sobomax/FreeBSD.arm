@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_isa.c 143618 2005-03-15 08:02:47Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -89,8 +89,8 @@ fdc_isa_alloc_resources(device_t dev, struct fdc_data *fdc)
 	nport = isa_get_logicalid(dev) ? 1 : 6;
 	for (rid = 0; ; rid++) {
 		newrid = rid;
-		res = bus_alloc_resource(dev, SYS_RES_IOPORT, &newrid,
-		    0ul, ~0ul, rid == 0 ? nport : 1, RF_ACTIVE);
+		res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &newrid,
+		    rid == 0 ? nport : 1, RF_ACTIVE);
 		if (res == NULL)
 			break;
 		/*

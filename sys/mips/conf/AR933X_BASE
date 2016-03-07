@@ -7,12 +7,12 @@
 # override the default options (adding devices as needed) and adding
 # hints as needed (for example, the GPIO and LAN PHY.)
 #
-# $FreeBSD: head/sys/mips/conf/AR933X_BASE 289533 2015-10-18 18:40:11Z sbruno $
+# $FreeBSD: head/sys/mips/conf/AR933X_BASE 295151 2016-02-02 16:22:35Z adrian $
 #
 
 machine         mips mips
 ident		AR933X_BASE
-cpu		CPU_MIPS4KC
+cpu		CPU_MIPS24K
 makeoptions	KERNLOADADDR=0x80050000
 options 	HZ=1000
 

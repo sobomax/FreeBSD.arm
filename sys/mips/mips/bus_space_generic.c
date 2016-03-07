@@ -62,10 +62,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/bus.h,v 1.5 1999/08/28 00:38:40 peter
- * $FreeBSD: head/sys/mips/mips/bus_space_generic.c 263289 2014-03-18 01:40:25Z emaste $
+ * $FreeBSD: head/sys/mips/mips/bus_space_generic.c 295504 2016-02-11 06:24:34Z adrian $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/bus_space_generic.c 263289 2014-03-18 01:40:25Z emaste $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/bus_space_generic.c 295504 2016-02-11 06:24:34Z adrian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -228,20 +228,21 @@ bus_space_tag_t mips_bus_space_generic = &generic_space;
 
 int
 generic_bs_map(void *t __unused, bus_addr_t addr,
-	      bus_size_t size __unused, int flags __unused,
+	      bus_size_t size, int flags __unused,
 	      bus_space_handle_t *bshp)
 {
 
-	*bshp = addr;
+	*bshp = (bus_space_handle_t)pmap_mapdev((vm_paddr_t)addr,
+	    (vm_size_t)size);
 	return (0);
 }
 
 void
-generic_bs_unmap(void *t __unused, bus_space_handle_t bh __unused,
-	      bus_size_t size __unused)
+generic_bs_unmap(void *t __unused, bus_space_handle_t bh,
+	      bus_size_t size)
 {
 
-	/* Do nothing */
+	pmap_unmapdev((vm_offset_t)bh, (vm_size_t)size);
 }
 
 int

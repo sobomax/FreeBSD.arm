@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/etcupdate/etcupdate.sh 281887 2015-04-23 14:22:20Z jhb $
+# $FreeBSD: head/usr.sbin/etcupdate/etcupdate.sh 296204 2016-02-29 17:24:34Z trasz $
 
 # This is a tool to manage updating files that are not updated as part
 # of 'make installworld' such as files in /etc.  Unlike other tools,
@@ -515,7 +515,7 @@ post_update()
 			fi
 		else
 			warn "Needs update: /etc/localtime (required" \
-			    "manual update via tzsetup(1))"
+			    "manual update via tzsetup(8))"
 		fi
 	fi
 }

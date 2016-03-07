@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)hash.c	8.9 (Berkeley) 6/16/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash.c 283068 2015-05-18 16:28:13Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash.c 295924 2016-02-23 15:21:13Z dwmalone $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -422,8 +422,10 @@ hdestroy(HTAB *hashp)
 	if (hashp->tmp_buf)
 		free(hashp->tmp_buf);
 
-	if (hashp->fp != -1)
+	if (hashp->fp != -1) {
+		(void)_fsync(hashp->fp);
 		(void)_close(hashp->fp);
+	}
 
 	free(hashp);
 
@@ -457,6 +459,8 @@ hash_sync(const DB *dbp, u_int32_t flags)
 	if (!hashp->save_file)
 		return (0);
 	if (__buf_free(hashp, 0, 1) || flush_meta(hashp))
+		return (ERROR);
+	if (hashp->fp != -1 && _fsync(hashp->fp) != 0)
 		return (ERROR);
 	hashp->new_file = 0;
 	return (0);

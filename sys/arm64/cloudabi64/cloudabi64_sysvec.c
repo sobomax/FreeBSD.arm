@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/cloudabi64/cloudabi64_sysvec.c 289752 2015-10-22 11:09:25Z ed $");
+__FBSDID("$FreeBSD: head/sys/arm64/cloudabi64/cloudabi64_sysvec.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -36,7 +36,6 @@ __FBSDID("$FreeBSD: head/sys/arm64/cloudabi64/cloudabi64_sysvec.c 289752 2015-10
 
 #include <machine/frame.h>
 #include <machine/pcb.h>
-#include <machine/pmap.h>
 #include <machine/vmparam.h>
 
 #include <compat/cloudabi/cloudabi_util.h>

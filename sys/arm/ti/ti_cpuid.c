@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_cpuid.c 273041 2014-10-13 15:35:08Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_cpuid.c 295123 2016-02-01 14:28:58Z mmel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -120,7 +120,7 @@ omap4_get_revision(void)
 	 * the ARM cpuid to get the correct revision.
 	 */
 	if (revision == 0) {
-		id_code = cpufunc_id();
+		id_code = cpu_ident();
 		revision = (id_code & 0xf) - 1;
 	}
 

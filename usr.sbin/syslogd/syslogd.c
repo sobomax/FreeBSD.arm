@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)syslogd.c	8.3 (Berkeley) 4/4/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/syslogd/syslogd.c 291328 2015-11-25 20:01:11Z lidl $");
+__FBSDID("$FreeBSD: head/usr.sbin/syslogd/syslogd.c 294924 2016-01-27 16:17:15Z asomers $");
 
 /*
  *  syslogd -- log system messages
@@ -69,7 +69,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/syslogd/syslogd.c 291328 2015-11-25 20:01:11Z 
  */
 
 #define	MAXLINE		1024		/* maximum line length */
-#define	MAXSVLINE	120		/* maximum saved line length */
+#define	MAXSVLINE	MAXLINE		/* maximum saved line length */
 #define	DEFUPRI		(LOG_USER|LOG_NOTICE)
 #define	DEFSPRI		(LOG_KERN|LOG_CRIT)
 #define	TIMERINTVL	30		/* interval for checking flush, mark */

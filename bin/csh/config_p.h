@@ -1,4 +1,4 @@
-/* $FreeBSD: head/bin/csh/config_p.h 289677 2015-10-21 05:37:09Z eadler $ */
+/* $FreeBSD: head/bin/csh/config_p.h 296416 2016-03-05 19:55:42Z mp $ */
 /*
  * config.h -- configure various defines for tcsh
  *
@@ -80,6 +80,7 @@
 /****************** local defines *********************/
 
 #if defined(__FreeBSD__)
+#define	SAVESIGVEC
 #define NLS_BUGS
 #define BSD_STYLE_COLORLS
 /* Use LC_MESSAGES locale category to open the message catalog */

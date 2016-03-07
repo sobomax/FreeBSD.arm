@@ -24,10 +24,12 @@
  * SUCH DAMAGE.
  */
 
-__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_internal.h 292031 2015-12-09 22:45:51Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_internal.h 295605 2016-02-13 22:51:25Z cem $");
 
 #ifndef __IOAT_INTERNAL_H__
 #define __IOAT_INTERNAL_H__
+
+#include <sys/_task.h>
 
 #define	DEVICE2SOFTC(dev)	((struct ioat_softc *) device_get_softc(dev))
 #define	KTR_IOAT		KTR_SPARE3
@@ -346,6 +348,22 @@ struct ioat_descriptor {
 	bus_addr_t		hw_desc_bus_addr;
 };
 
+/* Unsupported by this driver at this time. */
+#define	IOAT_OP_MOVECRC		0x41
+#define	IOAT_OP_MOVECRC_TEST	0x42
+#define	IOAT_OP_MOVECRC_STORE	0x43
+#define	IOAT_OP_CRC		0x81
+#define	IOAT_OP_CRC_TEST	0x82
+#define	IOAT_OP_CRC_STORE	0x83
+#define	IOAT_OP_MARKER		0x84
+
+/*
+ * Deprecated OPs -- v3 DMA generates an abort if given these.  And this driver
+ * doesn't support anything older than v3.
+ */
+#define	IOAT_OP_OLD_XOR		0x85
+#define	IOAT_OP_OLD_XOR_VAL	0x86
+
 enum ioat_ref_kind {
 	IOAT_DMAENGINE_REF = 0,
 	IOAT_ACTIVE_DESCR_REF,
@@ -373,6 +391,8 @@ struct ioat_softc {
 	struct resource		*pci_resource;
 	uint32_t		max_xfer_size;
 	uint32_t		capabilities;
+	uint16_t		intrdelay_max;
+	uint16_t		cached_intrdelay;
 
 	struct resource		*res;
 	int			rid;
@@ -387,12 +407,14 @@ struct ioat_softc {
 	bus_addr_t		comp_update_bus_addr;
 
 	struct callout		timer;
+	struct task		reset_task;
 
 	boolean_t		quiescing;
 	boolean_t		is_resize_pending;
 	boolean_t		is_completion_pending;
 	boolean_t		is_reset_pending;
 	boolean_t		is_channel_running;
+	boolean_t		intrdelay_supported;
 
 	uint32_t		head;
 	uint32_t		tail;
@@ -407,6 +429,16 @@ struct ioat_softc {
 #ifdef INVARIANTS
 	volatile uint32_t	refkinds[IOAT_NUM_REF_KINDS];
 #endif
+
+	struct {
+		uint64_t	interrupts;
+		uint64_t	descriptors_processed;
+		uint64_t	descriptors_error;
+		uint64_t	descriptors_submitted;
+
+		uint32_t	channel_halts;
+		uint32_t	last_halt_chanerr;
+	} stats;
 };
 
 void ioat_test_attach(void);

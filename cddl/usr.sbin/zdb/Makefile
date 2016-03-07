@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/zdb/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/cddl/usr.sbin/zdb/Makefile 292688 2015-12-24 11:56:37Z bapt $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/cmd/zdb
 
@@ -24,7 +24,7 @@ CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/zfs
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/head
 CFLAGS+= -I${.CURDIR}/../../lib/libumem
 
-LIBADD=	geom m nvpair pthread umem uutil zfs_core zfs zpool
+LIBADD=	nvpair umem uutil zfs zpool
 
 # Since there are many asserts in this program, it makes no sense to compile
 # it without debugging.

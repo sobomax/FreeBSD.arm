@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)rpcb_prot.c 1.9 89/04/21 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_prot.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_prot.c 293715 2016-01-12 00:20:57Z ngie $");
 
 /*
  * rpcb_prot.c
@@ -207,14 +207,14 @@ xdr_rpcb_entry_list_ptr(XDR *xdrs, rpcb_entry_list_ptr *rp)
 		 * the case of freeing we must remember the next object
 		 * before we free the current object ...
 		 */
-		if (freeing)
+		if (freeing && *rp)
 			next = (*rp)->rpcb_entry_next;
 		if (! xdr_reference(xdrs, (caddr_t *)rp,
 		    (u_int)sizeof (rpcb_entry_list),
 				    (xdrproc_t)xdr_rpcb_entry)) {
 			return (FALSE);
 		}
-		if (freeing && *rp) {
+		if (freeing) {
 			next_copy = next;
 			rp = &next_copy;
 			/*

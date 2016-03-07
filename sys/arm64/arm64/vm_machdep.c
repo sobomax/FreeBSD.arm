@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/vm_machdep.c 286225 2015-08-03 11:05:02Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/vm_machdep.c 295451 2016-02-09 20:22:35Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -186,7 +186,7 @@ cpu_set_upcall_kse(struct thread *td, void (*entry)(void *), void *arg,
 {
 	struct trapframe *tf = td->td_frame;
 
-	tf->tf_sp = STACKALIGN(stack->ss_sp + stack->ss_size);
+	tf->tf_sp = STACKALIGN((uintptr_t)stack->ss_sp + stack->ss_size);
 	tf->tf_elr = (register_t)entry;
 	tf->tf_x[0] = (register_t)arg;
 }

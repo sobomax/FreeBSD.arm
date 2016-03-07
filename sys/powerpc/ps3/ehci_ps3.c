@@ -22,11 +22,11 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/ps3/ehci_ps3.c 276717 2015-01-05 20:22:18Z hselasky $
+ * $FreeBSD: head/sys/powerpc/ps3/ehci_ps3.c 294989 2016-01-28 14:11:59Z mmel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ehci_ps3.c 276717 2015-01-05 20:22:18Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ehci_ps3.c 294989 2016-01-28 14:11:59Z mmel $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -68,6 +68,17 @@ struct ps3_ehci_softc {
 	ehci_softc_t            base;
 	struct bus_space         tag;
 };
+
+static void
+ehci_ps3_post_reset(struct ehci_softc *ehci_softc)
+{
+	uint32_t usbmode;
+
+	/* Select big-endian mode */
+	usbmode = EOREAD4(ehci_softc, EHCI_USBMODE_NOLPM);
+	usbmode |= EHCI_UM_ES_BE;
+	EOWRITE4(ehci_softc, EHCI_USBMODE_NOLPM, usbmode);
+}
 
 static int
 ehci_ps3_probe(device_t dev)
@@ -135,7 +146,7 @@ ehci_ps3_attach(device_t dev)
 		goto error;
 	}
 
-	sc->sc_flags |= EHCI_SCFLG_BIGEMMIO;
+	sc->sc_vendor_post_reset = ehci_ps3_post_reset;
 	err = ehci_init(sc);
 	if (err) {
 		device_printf(dev, "USB init failed err=%d\n", err);

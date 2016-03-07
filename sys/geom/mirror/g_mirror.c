@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/mirror/g_mirror.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/geom/mirror/g_mirror.c 295707 2016-02-17 17:16:02Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1372,7 +1372,7 @@ g_mirror_sync_request(struct bio *bp)
 
 		/* Send next synchronization request. */
 		data = bp->bio_data;
-		bzero(bp, sizeof(*bp));
+		g_reset_bio(bp);
 		bp->bio_cmd = BIO_READ;
 		bp->bio_offset = sync->ds_offset;
 		bp->bio_length = MIN(MAXPHYS, sc->sc_mediasize - bp->bio_offset);

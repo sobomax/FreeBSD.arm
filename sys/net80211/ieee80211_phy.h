@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_phy.h 252727 2013-07-04 21:16:49Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_phy.h 292165 2015-12-13 20:48:24Z avos $
  */
 
 #ifndef _NET80211_IEEE80211_PHY_H_
@@ -52,6 +52,10 @@
 #define IEEE80211_DUR_SLOT	20	/* DS/CCK slottime, ERP long slottime */
 #define IEEE80211_DUR_SHSLOT	9	/* ERP short slottime */
 #define IEEE80211_DUR_OFDM_SLOT	9	/* OFDM slottime */
+
+#define IEEE80211_GET_SLOTTIME(ic) \
+	((ic->ic_flags & IEEE80211_F_SHSLOT) ? \
+	    IEEE80211_DUR_SHSLOT : IEEE80211_DUR_SLOT)
 
 /*
  * DIFS (microseconds).

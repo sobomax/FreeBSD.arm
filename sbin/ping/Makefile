@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/ping/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/ping/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
 
 .include <src.opts.mk>
 
@@ -11,8 +11,9 @@ WARNS?=	3
 LIBADD=	m
 
 .if ${MK_CASPER} != "no" && !defined(RESCUE)
-LIBADD+=	capsicum
-CFLAGS+=-DHAVE_LIBCAPSICUM
+LIBADD+=	casper
+LIBADD+=	cap_dns
+CFLAGS+=-DHAVE_LIBCASPER
 .endif
 
 .if !defined(RELEASE_CRUNCH)

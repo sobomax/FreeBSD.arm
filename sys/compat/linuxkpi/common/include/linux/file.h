@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/file.h 291481 2015-11-30 09:24:12Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/file.h 292989 2015-12-31 14:47:45Z hselasky $
  */
 #ifndef	_LINUX_FILE_H_
 #define	_LINUX_FILE_H_
@@ -101,10 +101,11 @@ fd_install(unsigned int fd, struct linux_file *filp)
 
 	if (fget_unlocked(curthread->td_proc->p_fd, fd,
 	    cap_rights_init(&rights), &file, NULL) != 0) {
-		file = NULL;
+		filp->_file = NULL;
+	} else {
+		filp->_file = file;
+		finit(file, filp->f_mode, DTYPE_DEV, filp, &linuxfileops);
 	}
-	filp->_file = file;
-	finit(file, filp->f_mode, DTYPE_DEV, filp, &linuxfileops);
 
 	/* drop the extra reference */
 	fput(filp);

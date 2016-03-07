@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_socket.c 284166 2015-06-08 20:03:15Z jkim $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_socket.c 294233 2016-01-17 19:28:13Z dchagin $");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"
@@ -1164,6 +1164,7 @@ linux_sendmsg_common(struct thread *td, l_int s, struct l_msghdr *msghdr,
 	msg.msg_iov = iov;
 	msg.msg_flags = 0;
 	error = linux_sendit(td, s, &msg, flags, control, UIO_USERSPACE);
+	control = NULL;
 
 bad:
 	m_freem(control);

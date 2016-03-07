@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/netpfil/ipfw/dn_sched_fifo.c 240494 2012-09-14 11:51:49Z glebius $
+ * $FreeBSD: head/sys/netpfil/ipfw/dn_sched_fifo.c 294856 2016-01-26 22:45:45Z luigi $
  */
 
 #ifdef _KERNEL
@@ -61,6 +61,7 @@ fifo_enqueue(struct dn_sch_inst *si, struct dn_queue *q, struct mbuf *m)
 	 * re-enqueue from an existing scheduler, which we should
 	 * handle.
 	 */
+	(void)q;
 	return dn_enqueue((struct dn_queue *)(si+1), m, 0);
 }
 

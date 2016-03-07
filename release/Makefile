@@ -1,4 +1,4 @@
-# $FreeBSD: head/release/Makefile 289337 2015-10-14 22:33:11Z gjb $
+# $FreeBSD: head/release/Makefile 293231 2016-01-06 05:23:25Z gjb $
 #
 # Makefile for building releases and release media.
 #
@@ -176,7 +176,7 @@ disc1: packagesystem
 		MK_DEBUG_FILES=no
 # Copy distfiles
 	mkdir -p ${.TARGET}/usr/freebsd-dist
-	for dist in MANIFEST $$(ls *.txz | grep -v -- '-dbg'); \
+	for dist in MANIFEST $$(ls *.txz | grep -vE -- '(base|lib32)-dbg'); \
 	    do cp $${dist} ${.TARGET}/usr/freebsd-dist; \
 	done
 # Copy documentation, if generated
@@ -225,7 +225,7 @@ dvd: packagesystem
 		MK_TESTS=no MK_DEBUG_FILES=no
 # Copy distfiles
 	mkdir -p ${.TARGET}/usr/freebsd-dist
-	for dist in MANIFEST $$(ls *.txz | grep -v -- '-dbg'); \
+	for dist in MANIFEST $$(ls *.txz | grep -v -- '(base|lib32)-dbg'); \
 	    do cp $${dist} ${.TARGET}/usr/freebsd-dist; \
 	done
 # Copy documentation, if generated
@@ -281,7 +281,11 @@ ftp: packagesystem
 	cp *.txz MANIFEST ftp
 
 release:	real-release vm-release cloudware-release
-	touch ${.TARGET}
+	${MAKE} -C ${.CURDIR} ${.MAKEFLAGS} release-done
+	true
+
+release-done:
+	touch release
 
 real-release:
 	${MAKE} -C ${.CURDIR} ${.MAKEFLAGS} obj

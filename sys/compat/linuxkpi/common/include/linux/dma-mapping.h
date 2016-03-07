@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/dma-mapping.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/dma-mapping.h 295880 2016-02-22 09:02:20Z skra $
  */
 #ifndef	_LINUX_DMA_MAPPING_H_
 #define _LINUX_DMA_MAPPING_H_
@@ -47,7 +47,6 @@
 #include <vm/pmap.h>
 
 #include <machine/bus.h>
-#include <machine/pmap.h>
 
 enum dma_data_direction {
 	DMA_BIDIRECTIONAL = 0,

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/sys/futimens.c 277610 2015-01-23 21:07:08Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/sys/futimens.c 293783 2016-01-12 20:53:57Z jilles $");
 
 #include "namespace.h"
 #include <sys/stat.h>
@@ -42,8 +42,11 @@ futimens(int fd, const struct timespec times[2])
 {
 	struct timeval now, tv[2], *tvp;
 	struct stat sb;
+	int osreldate;
 
-	if (__getosreldate() >= 1100056)
+	osreldate = __getosreldate();
+	if (osreldate >= 1100056 ||
+	    (osreldate >= 1002506 && osreldate < 1100000))
 		return (__sys_futimens(fd, times));
 
 	if (times == NULL || (times[0].tv_nsec == UTIME_NOW &&

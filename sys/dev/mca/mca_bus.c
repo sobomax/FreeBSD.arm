@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mca/mca_bus.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/mca/mca_bus.c 295832 2016-02-20 01:32:58Z jhibbits $");
 
 /*
  * References:
@@ -456,14 +456,14 @@ mca_read_ivar (device_t dev, device_t child, int which, uintptr_t * result)
 
 static struct resource *
 mca_alloc_resource (device_t dev, device_t child, int type, int *rid,
-		    u_long start, u_long end, u_long count, u_int flags)
+		    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct mca_device *		m_dev = device_get_ivars(child);
 	struct resource_list_entry *	rle;
 	int				isdefault;
 	int				passthrough;
 
-	isdefault = (start == 0UL && end == ~0UL);
+	isdefault = RMAN_IS_DEFAULT_RANGE(start, end);
 	passthrough = (device_get_parent(child) != dev);
 
 	if (!passthrough && !isdefault) {

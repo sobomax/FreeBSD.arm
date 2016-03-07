@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/pandaboard-common.dtsi 283276 2015-05-22 03:16:18Z gonzo $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/pandaboard-common.dtsi 295655 2016-02-16 11:38:38Z skra $
  */
 
 &mmc1 {
@@ -40,6 +40,10 @@
 			compatible = "arm,cortex-a9-global-timer";
 			reg = <0x48240200 0x20>;
 			interrupts = <GIC_PPI 11 (GIC_CPU_MASK_RAW(3) | IRQ_TYPE_LEVEL_HIGH)>;
+		};
+
+		elm: elm@48078000 {
+			interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
 		};
 	};
 	chosen {

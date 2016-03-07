@@ -28,7 +28,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_intr.c 290457 2015-11-06 17:12:33Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_intr.c 296100 2016-02-26 16:04:47Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -240,3 +240,10 @@ arm_unmask_irq(uintptr_t nb)
 	else
 		printf("arm_mask_irq: Invalid IRQ number: %d\n", nb);
 }
+
+#ifdef SMP
+void
+intr_pic_init_secondary(void)
+{
+}
+#endif

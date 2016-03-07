@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/alchemy/obio.c 257416 2013-10-31 02:27:16Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/alchemy/obio.c 295832 2016-02-20 01:32:58Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -103,8 +103,8 @@ static int	obio_activate_resource(device_t, device_t, int, int,
 		    struct resource *);
 static device_t	obio_add_child(device_t, u_int, const char *, int);
 static struct resource *
-		obio_alloc_resource(device_t, device_t, int, int *, u_long,
-		    u_long, u_long, u_int);
+		obio_alloc_resource(device_t, device_t, int, int *, rman_res_t,
+		    rman_res_t, rman_res_t, u_int);
 static int	obio_attach(device_t);
 static int	obio_deactivate_resource(device_t, device_t, int, int,
 		    struct resource *);
@@ -223,7 +223,7 @@ obio_attach(device_t dev)
 
 static struct resource *
 obio_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct obio_softc		*sc = device_get_softc(bus);
 	struct obio_ivar		*ivar = device_get_ivars(child);
@@ -232,7 +232,7 @@ obio_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	struct rman			*rm;
 	int				 isdefault, needactivate, passthrough;
 
-	isdefault = (start == 0UL && end == ~0UL && count == 1);
+	isdefault = (RMAN_IS_DEFAULT_RANGE(start, end) && count == 1);
 	needactivate = flags & RF_ACTIVE;
 	passthrough = (device_get_parent(child) != bus);
 	rle = NULL;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/expansion/Makefile 280920 2015-03-31 20:59:37Z jilles $
+# $FreeBSD: head/bin/sh/tests/expansion/Makefile 292758 2015-12-26 22:27:48Z jilles $
 
 TESTSDIR=	${TESTSBASE}/bin/sh/${.CURDIR:T}
 
@@ -90,5 +90,6 @@ FILES+=		trim5.0
 FILES+=		trim6.0
 FILES+=		trim7.0
 FILES+=		trim8.0
+FILES+=		trim9.0
 
 .include <bsd.test.mk>

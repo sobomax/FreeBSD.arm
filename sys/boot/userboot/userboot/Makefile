@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/userboot/userboot/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sys/boot/userboot/userboot/Makefile 296216 2016-02-29 17:54:55Z emaste $
 
 MAN=
 
@@ -6,7 +6,7 @@ MAN=
 MK_SSP=		no
 
 SHLIB_NAME=	userboot.so
-NO_CTF=		yes
+MK_CTF=		no
 STRIP=
 LIBDIR=		/boot
 

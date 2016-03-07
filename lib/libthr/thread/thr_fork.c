@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_fork.c 276630 2015-01-03 18:38:46Z kib $
+ * $FreeBSD: head/lib/libthr/thread/thr_fork.c 292763 2015-12-27 01:14:42Z kib $
  */
 
 /*
@@ -209,7 +209,7 @@ __thr_fork(void)
 		/* reinitalize library. */
 		_libpthread_init(curthread);
 
-		/* atfork is reinitializeded by _libpthread_init()! */
+		/* atfork is reinitialized by _libpthread_init()! */
 		_thr_rwl_rdlock(&_thr_atfork_lock);
 
 		if (was_threaded) {

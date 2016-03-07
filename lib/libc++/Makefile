@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc++/Makefile 291734 2015-12-04 03:17:14Z bdrewery $
+# $FreeBSD: head/lib/libc++/Makefile 294031 2016-01-14 19:00:13Z andrew $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,9 @@ _LIBCXXRTDIR=	${.CURDIR}/../../contrib/libcxxrt
 HDRDIR=		${.CURDIR}/../../contrib/libc++/include
 SRCDIR=		${.CURDIR}/../../contrib/libc++/src
 CXXINCLUDEDIR=	${INCLUDEDIR}/c++/v${SHLIB_MAJOR}
+.if ${MACHINE_CPUARCH} == "arm"
+STATIC_CXXFLAGS+= -mlong-calls
+.endif
 
 .PATH: ${SRCDIR}
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.usr.dist 291455 2015-11-29 16:28:40Z dim $
+# $FreeBSD: head/etc/mtree/BSD.usr.dist 296417 2016-03-05 20:24:31Z dim $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -19,10 +19,10 @@
         aout
         ..
         clang
-            3.7.0
+            3.8.0
                 include
-			sanitizer
-			..
+                    sanitizer
+                    ..
                 ..
                 lib
                     freebsd
@@ -1107,8 +1107,6 @@
             ..
             man9
             ..
-        ..
-        mdocml
         ..
         misc
             fonts

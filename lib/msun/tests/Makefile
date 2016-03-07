@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/msun/tests/Makefile 290227 2015-10-31 10:16:44Z andrew $
+# $FreeBSD: head/lib/msun/tests/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libm
 
@@ -36,10 +36,43 @@ NETBSD_ATF_TESTS_C+=	sqrt_test
 NETBSD_ATF_TESTS_C+=	tan_test
 NETBSD_ATF_TESTS_C+=	tanh_test
 
+TAP_TESTS_C+=	cexp_test
+TAP_TESTS_C+=	conj_test
+.if ${MACHINE_CPUARCH} != "aarch64"
+# Hits an assert in llvm when building for arm64:
+# https://llvm.org/bugs/show_bug.cgi?id=26081
+TAP_TESTS_C+=	csqrt_test
+.endif
+TAP_TESTS_C+=	ctrig_test
+TAP_TESTS_C+=	exponential_test
+TAP_TESTS_C+=	fenv_test
+TAP_TESTS_C+=	fma_test
+TAP_TESTS_C+=	fmaxmin_test
+TAP_TESTS_C+=	ilogb_test
+TAP_TESTS_C+=	invtrig_test
+TAP_TESTS_C+=	invctrig_test
+TAP_TESTS_C+=	logarithm_test
+TAP_TESTS_C+=	lrint_test
+# XXX: the testcase crashes on all platforms, but only on head
+# (bug 205451)
+#TAP_TESTS_C+=	lround_test
+TAP_TESTS_C+=	nan_test
+TAP_TESTS_C+=	nearbyint_test
+TAP_TESTS_C+=	next_test
+TAP_TESTS_C+=	rem_test
+TAP_TESTS_C+=	trig_test
+
+.for t in ${TAP_TESTS_C}
+CFLAGS.$t+=	-O0
+.endfor
+
 CSTD=		c99
 
-LIBADD+=	m
 #COPTS+=	-Wfloat-equal
+
+IGNORE_PRAGMA=
+
+LIBADD+=	m
 
 # Copied from lib/msun/Makefile
 .if ${MACHINE_CPUARCH} == "i386"

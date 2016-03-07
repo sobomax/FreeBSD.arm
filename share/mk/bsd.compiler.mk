@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.compiler.mk 292002 2015-12-08 20:20:40Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.compiler.mk 296282 2016-03-01 22:25:54Z bdrewery $
 
 # Setup variables for the compiler
 #
@@ -83,7 +83,11 @@ CCACHE_NOCPP2=	1
 .export CCACHE_NOCPP2
 .endif
 # Canonicalize CCACHE_DIR for meta mode usage.
-.if defined(CCACHE_DIR) && empty(.MAKE.META.IGNORE_PATHS:M${CCACHE_DIR})
+.if !defined(CCACHE_DIR)
+CCACHE_DIR!=	${CCACHE_BIN} -p | awk '$$2 == "cache_dir" {print $$4}'
+.export CCACHE_DIR
+.endif
+.if !empty(CCACHE_DIR) && empty(.MAKE.META.IGNORE_PATHS:M${CCACHE_DIR})
 CCACHE_DIR:=	${CCACHE_DIR:tA}
 .MAKE.META.IGNORE_PATHS+= ${CCACHE_DIR}
 .export CCACHE_DIR
@@ -138,7 +142,7 @@ COMPILER_TYPE:=	clang
 . endif
 .endif
 .if !defined(COMPILER_VERSION)
-COMPILER_VERSION!=echo ${_v:M[1-9].[0-9]*} | awk -F. '{print $$1 * 10000 + $$2 * 100 + $$3;}'
+COMPILER_VERSION!=echo "${_v:M[1-9].[0-9]*}" | awk -F. '{print $$1 * 10000 + $$2 * 100 + $$3;}'
 .endif
 .undef _v
 .endif

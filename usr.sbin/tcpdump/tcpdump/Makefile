@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/tcpdump/tcpdump/Makefile 285275 2015-07-08 16:19:32Z pkelsey $
+# $FreeBSD: head/usr.sbin/tcpdump/tcpdump/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
 
 .include <src.opts.mk>
 
@@ -177,8 +177,9 @@ CFLAGS+=	-DLBL_ALIGN
 
 LIBADD=	l pcap
 .if ${MK_CASPER} != "no"
-LIBADD+=	capsicum
-CFLAGS+=-DHAVE_CAPSICUM
+LIBADD+=	casper
+LIBADD+=	cap_dns
+CFLAGS+=-DHAVE_CASPER
 .endif
 .if ${MK_OPENSSL} != "no"
 LIBADD+=	crypto

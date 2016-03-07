@@ -34,7 +34,7 @@
  * IN (meaning that the data is passed *into* the system call).
  */
 /*
- * $FreeBSD: head/usr.bin/truss/syscall.h 289004 2015-10-08 05:27:45Z ed $
+ * $FreeBSD: head/usr.bin/truss/syscall.h 295677 2016-02-16 22:00:01Z jhb $
  */
 
 enum Argtype { None = 1, Hex, Octal, Int, UInt, LongHex, Name, Ptr, Stat, Ioctl,
@@ -118,7 +118,6 @@ struct linux_socketcall_args {
 };
 
 void init_syscalls(void);
-void print_syscall(struct trussinfo *, const char *, int, char **);
-void print_syscall_ret(struct trussinfo *, const char *, int, char **, int,
-    long *, struct syscall *);
+void print_syscall(struct trussinfo *);
+void print_syscall_ret(struct trussinfo *, int, long *);
 void print_summary(struct trussinfo *trussinfo);

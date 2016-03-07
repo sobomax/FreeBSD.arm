@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powerpc/elf32_machdep.c 291420 2015-11-28 08:49:07Z kib $
+ * $FreeBSD: head/sys/powerpc/powerpc/elf32_machdep.c 293613 2016-01-09 20:18:53Z dchagin $
  */
 
 #include <sys/param.h>
@@ -106,6 +106,7 @@ struct sysentvec elf32_freebsd_sysvec = {
 	.sv_shared_page_len = PAGE_SIZE,
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 INIT_SYSENTVEC(elf32_sysvec, &elf32_freebsd_sysvec);
 

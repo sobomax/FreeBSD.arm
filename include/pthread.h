@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/include/pthread.h 281130 2015-04-06 01:39:16Z pfg $
+ * $FreeBSD: head/include/pthread.h 296162 2016-02-28 17:52:33Z kib $
  */
 #ifndef _PTHREAD_H_
 #define	_PTHREAD_H_
@@ -69,7 +69,7 @@
 #define	PTHREAD_EXPLICIT_SCHED		0
 
 /*
- * Flags for read/write lock attributes
+ * Values for process shared/private attributes.
  */
 #define	PTHREAD_PROCESS_PRIVATE		0
 #define	PTHREAD_PROCESS_SHARED		1

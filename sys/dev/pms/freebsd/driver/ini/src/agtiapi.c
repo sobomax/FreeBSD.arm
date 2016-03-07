@@ -20,7 +20,7 @@
 *******************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pms/freebsd/driver/ini/src/agtiapi.c 286208 2015-08-02 16:26:41Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/pms/freebsd/driver/ini/src/agtiapi.c 295880 2016-02-22 09:02:20Z skra $");
 #include <dev/pms/config.h>
 
 #define MAJOR_REVISION	    1
@@ -43,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/dev/pms/freebsd/driver/ini/src/agtiapi.c 286208 201
 #include <machine/resource.h>
 #include <vm/vm.h>          // 1. for vtophys
 #include <vm/pmap.h>        // 2. for vtophys
-#include <machine/pmap.h>   // 3. for vtophys (yes, three)
 #include <dev/pci/pcivar.h> // For pci_get macros
 #include <dev/pci/pcireg.h>
 #include <sys/endian.h>

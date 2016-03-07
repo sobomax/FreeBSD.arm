@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include "opt_inet6.h"
 #include "opt_route.h"
@@ -38,11 +38,14 @@ __FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 283291 2015-05-22 17:
 #include <sys/systm.h>
 #include <sys/counter.h>
 #include <sys/kernel.h>
+#include <sys/ktr.h>
 #include <sys/limits.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/syslog.h>
 #include <sys/ctype.h>
+#include <vm/uma.h>
 
 #include <net/if.h>
 #include <net/ethernet.h>

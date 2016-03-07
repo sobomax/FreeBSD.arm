@@ -28,7 +28,7 @@
  * Dummynet portions related to packet handling.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_dn_io.c 285712 2015-07-20 07:26:31Z ae $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_dn_io.c 292254 2015-12-15 09:02:05Z hselasky $");
 
 #include "opt_inet6.h"
 
@@ -711,8 +711,8 @@ dummynet_task(void *context, int pending)
 		dn_drain_queue();
 	}
 
-	DN_BH_WUNLOCK();
 	dn_reschedule();
+	DN_BH_WUNLOCK();
 	if (q.head != NULL)
 		dummynet_send(q.head);
 	CURVNET_RESTORE();

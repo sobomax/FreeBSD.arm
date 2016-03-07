@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mmc/host/dwmmc.c 287367 2015-09-01 15:26:21Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/mmc/host/dwmmc.c 292180 2015-12-14 01:09:25Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1177,4 +1177,4 @@ static devclass_t dwmmc_devclass;
 
 DRIVER_MODULE(dwmmc, simplebus, dwmmc_driver, dwmmc_devclass, 0, 0);
 DRIVER_MODULE(dwmmc, ofwbus, dwmmc_driver, dwmmc_devclass, 0, 0);
-
+DRIVER_MODULE(mmc, dwmmc, mmc_driver, mmc_devclass, NULL, NULL);

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/rl/if_rl.c 271865 2014-09-19 10:33:23Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/rl/if_rl.c 295738 2016-02-18 03:05:08Z yongari $");
 
 /*
  * RealTek 8129/8139 PCI NIC driver
@@ -1938,15 +1938,13 @@ rl_stop(struct rl_softc *sc)
 	 */
 	for (i = 0; i < RL_TX_LIST_CNT; i++) {
 		if (sc->rl_cdata.rl_tx_chain[i] != NULL) {
-			if (sc->rl_cdata.rl_tx_chain[i] != NULL) {
-				bus_dmamap_sync(sc->rl_cdata.rl_tx_tag,
-				    sc->rl_cdata.rl_tx_dmamap[i],
-				    BUS_DMASYNC_POSTWRITE);
-				bus_dmamap_unload(sc->rl_cdata.rl_tx_tag,
-				    sc->rl_cdata.rl_tx_dmamap[i]);
-				m_freem(sc->rl_cdata.rl_tx_chain[i]);
-				sc->rl_cdata.rl_tx_chain[i] = NULL;
-			}
+			bus_dmamap_sync(sc->rl_cdata.rl_tx_tag,
+			    sc->rl_cdata.rl_tx_dmamap[i],
+			    BUS_DMASYNC_POSTWRITE);
+			bus_dmamap_unload(sc->rl_cdata.rl_tx_tag,
+			    sc->rl_cdata.rl_tx_dmamap[i]);
+			m_freem(sc->rl_cdata.rl_tx_chain[i]);
+			sc->rl_cdata.rl_tx_chain[i] = NULL;
 			CSR_WRITE_4(sc, RL_TXADDR0 + (i * sizeof(uint32_t)),
 			    0x0000000);
 		}

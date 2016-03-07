@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_table.c 290345 2015-11-03 22:23:09Z ae $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_table.c 293625 2016-01-10 00:28:44Z melifaro $");
 
 /*
  * Lookup table support for ipfw.
@@ -2097,7 +2097,7 @@ export_table_info(struct ip_fw_chain *ch, struct table_config *tc,
 	i->count = table_get_count(ch, tc);
 	i->limit = tc->limit;
 	i->flags |= (tc->locked != 0) ? IPFW_TGFLAGS_LOCKED : 0;
-	i->size = tc->count * sizeof(ipfw_obj_tentry);
+	i->size = i->count * sizeof(ipfw_obj_tentry);
 	i->size += sizeof(ipfw_obj_header) + sizeof(ipfw_xtable_info);
 	strlcpy(i->tablename, tc->tablename, sizeof(i->tablename));
 	ti = KIDX_TO_TI(ch, tc->no.kidx);

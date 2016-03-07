@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/nlge/if_nlge.c 287471 2015-09-04 19:57:28Z sbruno $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/dev/nlge/if_nlge.c 295881 2016-02-22 09:04:36Z skra $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -94,7 +94,6 @@ __FBSDID("$FreeBSD: head/sys/mips/rmi/dev/nlge/if_nlge.c 287471 2015-09-04 19:57
 #include <machine/mips_opcode.h>
 #include <machine/asm.h>
 #include <machine/cpuregs.h>
-#include <machine/param.h>
 #include <machine/intr_machdep.h>
 #include <machine/clock.h>	/* for DELAY */
 #include <machine/bus.h>

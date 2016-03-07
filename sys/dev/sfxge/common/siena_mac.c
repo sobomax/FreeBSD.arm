@@ -29,9 +29,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_mac.c 291436 2015-11-29 05:42:49Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_mac.c 293814 2016-01-13 07:25:51Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
 #include "efx_impl.h"
 

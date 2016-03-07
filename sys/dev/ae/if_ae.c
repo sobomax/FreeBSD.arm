@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ae/if_ae.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ae/if_ae.c 295721 2016-02-17 21:24:26Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1660,7 +1660,7 @@ ae_stop_rxmac(ae_softc_t *sc)
 	/*
 	 * Wait for IDLE state.
 	 */
-	for (i = 0; i < AE_IDLE_TIMEOUT; i--) {
+	for (i = 0; i < AE_IDLE_TIMEOUT; i++) {
 		val = AE_READ_4(sc, AE_IDLE_REG);
 		if ((val & (AE_IDLE_RXMAC | AE_IDLE_DMAWRITE)) == 0)
 			break;

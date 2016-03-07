@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_freebsd.h 288245 2015-09-26 00:53:37Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_freebsd.h 296171 2016-02-28 23:52:33Z avos $
  */
 #ifndef _NET80211_IEEE80211_FREEBSD_H_
 #define _NET80211_IEEE80211_FREEBSD_H_
@@ -65,7 +65,7 @@ typedef struct {
  * transmission operations throughout the stack.
  */
 typedef struct {
-	char		name[16];		/* e.g. "ath0_com_lock" */
+	char		name[16];		/* e.g. "ath0_tx_lock" */
 	struct mtx	mtx;
 } ieee80211_tx_lock_t;
 #define	IEEE80211_TX_LOCK_INIT(_ic, _name) do {				\
@@ -246,9 +246,11 @@ void	ieee80211_vap_destroy(struct ieee80211vap *);
 	(((_ifp)->if_flags & IFF_UP) && \
 	 ((_ifp)->if_drv_flags & IFF_DRV_RUNNING))
 
+/* XXX TODO: cap these at 1, as hz may not be 1000 */
 #define	msecs_to_ticks(ms)	(((ms)*hz)/1000)
 #define	ticks_to_msecs(t)	(1000*(t) / hz)
 #define	ticks_to_secs(t)	((t) / hz)
+
 #define time_after(a,b) 	((long)(b) - (long)(a) < 0)
 #define time_before(a,b)	time_after(b,a)
 #define time_after_eq(a,b)	((long)(a) - (long)(b) >= 0)

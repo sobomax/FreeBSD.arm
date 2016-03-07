@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/aim/slb.c 291262 2015-11-24 16:10:21Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/aim/slb.c 295880 2016-02-22 09:02:20Z skra $
  */
 
 #include <sys/param.h>
@@ -44,7 +44,6 @@
 
 #include <machine/md_var.h>
 #include <machine/platform.h>
-#include <machine/pmap.h>
 #include <machine/vmparam.h>
 
 uintptr_t moea64_get_unique_vsid(void);

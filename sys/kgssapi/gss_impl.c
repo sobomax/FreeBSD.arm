@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 273707 2014-10-26 19:42:44Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 293043 2016-01-01 17:06:16Z jpaetzel $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -105,14 +105,17 @@ sys_gssd_syscall(struct thread *td, struct gssd_syscall_args *uap)
 	if (error)
 		return (error);
 
-        sun.sun_family = AF_LOCAL;
-        strcpy(sun.sun_path, path);
-        sun.sun_len = SUN_LEN(&sun);
-        
-        nconf = getnetconfigent("local");
-        cl = clnt_reconnect_create(nconf,
-	    (struct sockaddr *) &sun, GSSD, GSSDVERS,
-	    RPC_MAXDATASIZE, RPC_MAXDATASIZE);
+	if (path[0] != '\0') {
+		sun.sun_family = AF_LOCAL;
+		strcpy(sun.sun_path, path);
+		sun.sun_len = SUN_LEN(&sun);
+		
+		nconf = getnetconfigent("local");
+		cl = clnt_reconnect_create(nconf,
+		    (struct sockaddr *) &sun, GSSD, GSSDVERS,
+		    RPC_MAXDATASIZE, RPC_MAXDATASIZE);
+	} else
+		cl = NULL;
 
 	mtx_lock(&kgss_gssd_lock);
 	oldcl = kgss_gssd_handle;

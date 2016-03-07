@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.sys.mk 291087 2015-11-20 00:22:55Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.sys.mk 296124 2016-02-26 22:14:00Z bdrewery $
 #
 # This file contains common settings used for building FreeBSD
 # sources.
@@ -109,6 +109,11 @@ CWARNFLAGS+=	-Werror
 CWARNFLAGS+=	-Wno-format
 .endif # NO_WFORMAT || NO_WFORMAT.${COMPILER_TYPE}
 
+# GCC 5.2.0
+.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 50200
+CWARNFLAGS+=	-Wno-error=unused-function -Wno-error=enum-compare -Wno-error=logical-not-parentheses -Wno-error=bool-compare -Wno-error=uninitialized -Wno-error=array-bounds -Wno-error=clobbered -Wno-error=cast-align -Wno-error=extra -Wno-error=attributes -Wno-error=inline -Wno-error=unused-but-set-variable -Wno-error=unused-value -Wno-error=strict-aliasing -Wno-error=address
+.endif
+
 # How to handle FreeBSD custom printf format specifiers.
 .if ${COMPILER_TYPE} == "clang" && ${COMPILER_VERSION} >= 30600
 FORMAT_EXTENSIONS=	-D__printf__=__freebsd_kprintf__
@@ -159,10 +164,11 @@ SSP_CFLAGS?=	-fstack-protector
 CFLAGS+=	${SSP_CFLAGS}
 .endif # SSP && !ARM && !MIPS
 
-# Allow user-specified additional warning flags, plus compiler specific flag overrides.
-# Unless we've overriden this...
+# Allow user-specified additional warning flags, plus compiler and file
+# specific flag overrides, unless we've overriden this...
 .if ${MK_WARNS} != "no"
 CFLAGS+=	${CWARNFLAGS} ${CWARNFLAGS.${COMPILER_TYPE}}
+CFLAGS+=	${CWARNFLAGS.${.IMPSRC:T}}
 .endif
 
 CFLAGS+=	 ${CFLAGS.${COMPILER_TYPE}}
@@ -170,14 +176,13 @@ CXXFLAGS+=	 ${CXXFLAGS.${COMPILER_TYPE}}
 
 # Tell bmake not to mistake standard targets for things to be searched for
 # or expect to ever be up-to-date.
-PHONY_NOTMAIN = afterdepend afterinstall all beforedepend beforeinstall \
+PHONY_NOTMAIN = analyze afterdepend afterinstall all beforedepend beforeinstall \
 		beforelinking build build-tools buildconfig buildfiles \
-		buildincludes checkdpadd clean cleandepend cleandir cleanobj \
-		configure depend dependall distclean distribute exe \
+		buildincludes check checkdpadd clean cleandepend cleandir \
+		cleanobj configure depend distclean distribute exe \
 		files html includes install installconfig installfiles \
-		installincludes lint obj objlink objs objwarn realall \
-		realdepend realinstall regress subdir-all subdir-depend \
-		subdir-install tags whereobj
+		installincludes lint obj objlink objs objwarn \
+		realinstall tags whereobj
 
 # we don't want ${PROG} to be PHONY
 .PHONY: ${PHONY_NOTMAIN:N${PROG:U}}

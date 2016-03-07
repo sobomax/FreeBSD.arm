@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/amd64/x86_64-gf2m.S 290207 2015-10-30 20:51:33Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/amd64/x86_64-gf2m.S 296279 2016-03-01 22:08:28Z jkim $
 .text	
 
 .type	_mul_1x1,@function
@@ -243,7 +243,7 @@ bn_GF2m_mul_2x2:
 	movq	%rcx,56(%rsp)
 	movq	%r8,64(%rsp)
 
-	movq	$15,%r8
+	movq	$0xf,%r8
 	movq	%rsi,%rax
 	movq	%rcx,%rbp
 	call	_mul_1x1

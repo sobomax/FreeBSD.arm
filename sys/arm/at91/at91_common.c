@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_common.c 281091 2015-04-04 23:00:37Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_common.c 295509 2016-02-11 11:49:27Z andrew $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -48,13 +48,12 @@ __FBSDID("$FreeBSD: head/sys/arm/at91/at91_common.c 281091 2015-04-04 23:00:37Z 
 #include <machine/fdt.h>
 
 extern const struct arm_devmap_entry at91_devmap[];
-extern struct bus_space at91_bs_tag;
-bus_space_tag_t fdtbus_bs_tag = &at91_bs_tag;
 
 struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
 
+#ifndef ARM_INTRNG
 static int
 fdt_aic_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
     int *pol)
@@ -77,6 +76,7 @@ fdt_pic_decode_t fdt_pic_table[] = {
 	&fdt_aic_decode_ic,
 	NULL
 };
+#endif
 
 static void
 at91_eoi(void *unused)

@@ -40,11 +40,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_hash.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_hash.c 293814 2016-01-13 07:25:51Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
-#include "efx_types.h"
 #include "efx_impl.h"
 
 /* Hash initial value */

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_xpt.c 287289 2015-08-29 11:21:20Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_xpt.c 295417 2016-02-08 22:13:08Z ken $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1518,7 +1518,7 @@ out:
 		} else if (cam_periph_error(done_ccb, 0,
 					    SF_RETRY_UA,
 					    &softc->saved_ccb) == ERESTART) {
-			return;
+			goto outr;
 		} else if ((done_ccb->ccb_h.status & CAM_DEV_QFRZN) != 0) {
 			/* Don't wedge the queue */
 			xpt_release_devq(done_ccb->ccb_h.path, /*count*/1,

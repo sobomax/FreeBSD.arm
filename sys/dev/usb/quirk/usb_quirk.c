@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 288180 2015-09-24 17:37:30Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 296342 2016-03-03 08:47:27Z hselasky $ */
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -682,8 +682,6 @@ usb_test_quirk_by_info(const struct usbd_lookup_info *info, uint16_t quirk)
 				return (1);
 			}
 		}
-		/* no quirk found */
-		break;
 	}
 	mtx_unlock(&usb_quirk_mtx);
 done:

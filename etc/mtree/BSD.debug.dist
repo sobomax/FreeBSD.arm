@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.debug.dist 289662 2015-10-20 20:35:34Z jmmv $
+# $FreeBSD: head/etc/mtree/BSD.debug.dist 296417 2016-03-05 20:24:31Z dim $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -13,12 +13,12 @@
             ..
         ..
         lib
+            casper
+            ..
             geom
             ..
         ..
         libexec
-            casper
-            ..
         ..
         sbin
         ..
@@ -27,7 +27,7 @@
             ..
             lib
                 clang
-                    3.7.0
+                    3.8.0
                         lib
                             freebsd
                             ..

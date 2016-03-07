@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.incs.mk 289391 2015-10-15 22:49:56Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.incs.mk 296121 2016-02-26 22:13:48Z bdrewery $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.incs.mk cannot be included directly.
@@ -14,7 +14,9 @@ buildincludes: ${${group}}
 .endfor
 .endif
 
+.if !defined(_SKIP_BUILD)
 all: buildincludes
+.endif
 
 .if !target(installincludes)
 .for group in ${INCSGROUPS}
@@ -80,8 +82,7 @@ _${group}INS: ${_${group}INCS}
 .if defined(INCSLINKS) && !empty(INCSLINKS)
 installincludes:
 .for s t in ${INCSLINKS}
-	@${ECHO} "$t -> $s" ; \
-	${INSTALL_SYMLINK} $s ${DESTDIR}$t
+	${INSTALL_SYMLINK} ${s} ${DESTDIR}${t}
 .endfor
 .endif
 .endif # !target(installincludes)

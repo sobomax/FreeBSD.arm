@@ -24,18 +24,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/aarch64-cloudabi64.c 290186 2015-10-30 08:11:37Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/aarch64-cloudabi64.c 295931 2016-02-23 20:00:55Z jhb $");
 
 #include <sys/param.h>
 #include <sys/ptrace.h>
 
 #include <machine/armreg.h>
 
-#include <errno.h>
 #include <stdio.h>
+#include <sysdecode.h>
 
-#include "cloudabi.h"
-#include "cloudabi64_syscalls.h"
 #include "truss.h"
 
 static int
@@ -74,15 +72,12 @@ aarch64_cloudabi64_fetch_retval(struct trussinfo *trussinfo, long *retval,
 	retval[0] = regs.x[0];
 	retval[1] = regs.x[1];
 	*errorp = (regs.spsr & PSR_C) != 0;
-	if (*errorp)
-		retval[0] = cloudabi_convert_errno(retval[0]);
 	return (0);
 }
 
 static struct procabi aarch64_cloudabi64 = {
 	"CloudABI ELF64",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_CLOUDABI64,
 	aarch64_cloudabi64_fetch_args,
 	aarch64_cloudabi64_fetch_retval
 };

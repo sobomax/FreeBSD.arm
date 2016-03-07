@@ -5,12 +5,12 @@
 # Since the AR724x boards tend to have minimal flash (sometimes 4MB!),
 # the majority of the kernel framework will be built as modules.
 #
-# $FreeBSD: head/sys/mips/conf/AR724X_BASE 284959 2015-06-30 17:00:45Z markm $
+# $FreeBSD: head/sys/mips/conf/AR724X_BASE 295503 2016-02-11 06:23:02Z adrian $
 #
 
 machine		mips mips
 ident		AR724X_BASE
-cpu		CPU_MIPS4KC
+cpu		CPU_MIPS24K
 makeoptions	KERNLOADADDR=0x80050000
 options 	HZ=1000
 options 	HWPMC_HOOKS

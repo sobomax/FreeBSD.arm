@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/periodic/daily/Makefile 290252 2015-11-02 01:05:34Z ngie $
+# $FreeBSD: head/etc/periodic/daily/Makefile 294773 2016-01-26 07:06:44Z cy $
 
 .include <src.opts.mk>
 
@@ -35,7 +35,8 @@ FILES+=	130.clean-msgs
 .endif
 
 .if ${MK_NTP} != "no"
-FILES+=	480.status-ntpd
+FILES+=	480.status-ntpd \
+	480.leapfile-ntpd
 .endif
 
 .if ${MK_RCMDS} != "no"

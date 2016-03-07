@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_pccard.c 292079 2015-12-11 05:27:56Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_pccard.c 295790 2016-02-19 03:37:56Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -56,8 +56,7 @@ fdc_pccard_alloc_resources(device_t dev, struct fdc_data *fdc)
 	int rid, i;
 
 	rid = 0;
-	res = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid, 0ul, ~0ul, 1,
-	    RF_ACTIVE);
+	res = bus_alloc_resource_any(dev, SYS_RES_IOPORT, &rid, RF_ACTIVE);
 	if (res == NULL) {
 		device_printf(dev, "cannot alloc I/O port range\n");
 		return (ENXIO);

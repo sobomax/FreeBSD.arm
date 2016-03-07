@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/rc/rc.c 166901 2007-02-23 12:19:07Z piso $
+ * $FreeBSD: head/sys/dev/rc/rc.c 296137 2016-02-27 03:38:01Z jhibbits $
  */
 
 /*
@@ -242,8 +242,8 @@ rc_attach(device_t dev)
 	error = ENOMEM;
 	for (i = 0; i < IOBASE_ADDRS; i++) {
 		x = i;
-		sc->sc_port[i] = bus_alloc_resource(dev, SYS_RES_IOPORT, &x,
-		    0ul, ~0ul, 0x10, RF_ACTIVE);
+		sc->sc_port[i] = bus_alloc_resource_anywhere(dev,
+		    SYS_RES_IOPORT, &x, 0x10, RF_ACTIVE);
 		if (x != i) {
 			device_printf(dev, "ioport %d was rid %d\n", i, x);
 			goto fail;

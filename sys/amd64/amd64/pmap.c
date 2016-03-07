@@ -79,7 +79,7 @@
 #define	AMD64_NPT_AWARE
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/pmap.c 291906 2015-12-06 17:39:13Z cem $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/pmap.c 293836 2016-01-13 19:19:50Z jkim $");
 
 /*
  *	Manages physical address maps.
@@ -3018,11 +3018,14 @@ reserve_pv_entries(pmap_t pmap, int needed, struct rwlock **lockp)
 retry:
 	avail = 0;
 	TAILQ_FOREACH(pc, &pmap->pm_pvchunk, pc_list) {
+#ifndef __POPCNT__
 		if ((cpu_feature2 & CPUID2_POPCNT) == 0) {
 			free = bitcount64(pc->pc_map[0]);
 			free += bitcount64(pc->pc_map[1]);
 			free += bitcount64(pc->pc_map[2]);
-		} else {
+		} else
+#endif
+		{
 			free = popcnt_pc_map_elem_pq(pc->pc_map[0]);
 			free += popcnt_pc_map_elem_pq(pc->pc_map[1]);
 			free += popcnt_pc_map_elem_pq(pc->pc_map[2]);

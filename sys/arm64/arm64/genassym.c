@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/genassym.c 291581 2015-12-01 12:37:04Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/genassym.c 295142 2016-02-02 10:28:56Z andrew $");
 #include <sys/param.h>
 #include <sys/assym.h>
 #include <sys/pcpu.h>
@@ -49,10 +49,12 @@ ASSYM(PC_CURTHREAD, offsetof(struct pcpu, pc_curthread));
 
 /* Size of pcb, rounded to keep stack alignment */
 ASSYM(PCB_SIZE, roundup2(sizeof(struct pcb), STACKALIGNBYTES + 1));
+ASSYM(PCB_SINGLE_STEP_SHIFT, PCB_SINGLE_STEP_SHIFT);
 ASSYM(PCB_REGS, offsetof(struct pcb, pcb_x));
 ASSYM(PCB_SP, offsetof(struct pcb, pcb_sp));
 ASSYM(PCB_L1ADDR, offsetof(struct pcb, pcb_l1addr));
 ASSYM(PCB_ONFAULT, offsetof(struct pcb, pcb_onfault));
+ASSYM(PCB_FLAGS, offsetof(struct pcb, pcb_flags));
 
 ASSYM(SF_UC, offsetof(struct sigframe, sf_uc));
 

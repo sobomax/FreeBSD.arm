@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llc/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/usr.bin/clang/llc/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,7 +7,9 @@ PROG_CXX=llc
 SRCDIR=	tools/llc
 SRCS=	llc.cpp
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
+
 LIBDEPS=llvmmirparser \
 	llvmirreader \
 	llvmasmparser \
@@ -16,32 +18,32 @@ LIBDEPS=llvmmirparser \
 	llvmaarch64asmparser \
 	llvmaarch64desc \
 	llvmaarch64info \
-	llvmaarch64instprinter \
+	llvmaarch64asmprinter \
 	llvmaarch64utils \
 	llvmarmdisassembler \
 	llvmarmcodegen \
 	llvmarmasmparser \
 	llvmarmdesc \
 	llvmarminfo \
-	llvmarminstprinter \
+	llvmarmasmprinter \
 	llvmmipsdisassembler \
 	llvmmipscodegen \
 	llvmmipsasmparser \
 	llvmmipsdesc \
 	llvmmipsinfo \
-	llvmmipsinstprinter \
+	llvmmipsasmprinter \
 	llvmpowerpcdisassembler \
 	llvmpowerpccodegen \
 	llvmpowerpcasmparser \
 	llvmpowerpcdesc \
 	llvmpowerpcinfo \
-	llvmpowerpcinstprinter \
+	llvmpowerpcasmprinter \
 	llvmsparcdisassembler \
 	llvmsparccodegen \
 	llvmsparcasmparser \
 	llvmsparcdesc \
 	llvmsparcinfo \
-	llvmsparcinstprinter \
+	llvmsparcasmprinter \
 	llvmx86disassembler \
 	llvmx86asmparser \
 	llvmx86codegen \
@@ -50,11 +52,11 @@ LIBDEPS=llvmmirparser \
 	llvmcodegen \
 	llvmtarget \
 	llvmscalaropts \
-	llvmprofiledata \
 	llvminstcombine \
 	llvminstrumentation \
+	llvmprofiledata \
 	llvmtransformutils \
-	llvmipa \
+	llvmbitwriter \
 	llvmanalysis \
 	llvmx86desc \
 	llvmobject \
@@ -62,12 +64,12 @@ LIBDEPS=llvmmirparser \
 	llvmbitreader \
 	llvmmcdisassembler \
 	llvmx86info \
-	llvmx86instprinter \
+	llvmx86asmprinter \
 	llvmmc \
 	llvmx86utils \
 	llvmcore \
 	llvmsupport
 
-LIBADD+= z
+LIBADD+=	z
 
 .include "../clang.prog.mk"

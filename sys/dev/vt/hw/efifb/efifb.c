@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 286809 2015-08-15 16:13:28Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 295883 2016-02-22 09:10:23Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,11 +39,9 @@ __FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 286809 2015-08-15 16:13:28Z
 #include "opt_platform.h"
 
 #include <machine/metadata.h>
-#include <machine/vm.h>
 #include <machine/vmparam.h>
 #include <vm/vm.h>
 #include <vm/pmap.h>
-#include <machine/pmap.h>
 
 #include <dev/vt/vt.h>
 #include <dev/vt/hw/fb/vt_fb.h>

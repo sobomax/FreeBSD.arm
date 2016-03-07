@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_dmtpps.c 286728 2015-08-13 15:19:30Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/am335x/am335x_dmtpps.c 296272 2016-03-01 17:47:32Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -300,7 +300,7 @@ dmtpps_poll(struct timecounter *tc)
 		pps_capture(&sc->pps_state);
 		sc->pps_state.capcount = DMTIMER_READ4(sc, DMT_TCAR1);
 		DMTIMER_WRITE4(sc, DMT_IRQSTATUS, DMT_IRQ_TCAR);
-		taskqueue_enqueue_fast(taskqueue_fast, &sc->pps_task);
+		taskqueue_enqueue(taskqueue_fast, &sc->pps_task);
 	}
 }
 

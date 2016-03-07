@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/umtx.h 290202 2015-10-30 19:20:40Z kib $
+ * $FreeBSD: head/sys/sys/umtx.h 296162 2016-02-28 17:52:33Z kib $
  *
  */
 
@@ -83,6 +83,7 @@
 #define	UMTX_OP_MUTEX_WAKE2	22
 #define	UMTX_OP_SEM2_WAIT	23
 #define	UMTX_OP_SEM2_WAKE	24
+#define	UMTX_OP_SHM		25
 
 /* Flags for UMTX_OP_CV_WAIT */
 #define	CVWAIT_CHECK_UNPARKING	0x01
@@ -92,6 +93,12 @@
 #define	UMTX_ABSTIME		0x01
 
 #define	UMTX_CHECK_UNPARKING	CVWAIT_CHECK_UNPARKING
+
+/* Flags for UMTX_OP_SHM */
+#define	UMTX_SHM_CREAT		0x0001
+#define	UMTX_SHM_LOOKUP		0x0002
+#define	UMTX_SHM_DESTROY	0x0004
+#define	UMTX_SHM_ALIVE		0x0008
 
 #ifndef _KERNEL
 
@@ -113,7 +120,8 @@ enum {
 	TYPE_PI_UMUTEX,
 	TYPE_PP_UMUTEX,
 	TYPE_RWLOCK,
-	TYPE_FUTEX
+	TYPE_FUTEX,
+	TYPE_SHM,
 };
 
 /* Key to represent a unique userland synchronous object */

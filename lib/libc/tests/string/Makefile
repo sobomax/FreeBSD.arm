@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libc/tests/string/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/string/Makefile 296434 2016-03-06 18:41:48Z jilles $
 
+ATF_TESTS_C+=		memcmp_test
 ATF_TESTS_C+=		stpncpy_test
 ATF_TESTS_C+=		strerror2_test
 ATF_TESTS_C+=		wcscasecmp_test

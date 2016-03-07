@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbPluginProcessFreeBSD/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbPluginProcessFreeBSD/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,14 +7,13 @@ LIB=	lldbPluginProcessFreeBSD
 # include_directories(.)
 CFLAGS+=-I${.CURDIR}/../../../contrib/llvm/tools/lldb/source/Plugins/Process/FreeBSD
 CFLAGS+=-I${.CURDIR}/../../../contrib/llvm/tools/lldb/source/Plugins/Process/POSIX
+CFLAGS+=-I${.CURDIR}/../../../contrib/llvm/tools/lldb/source/Plugins/Process/Utility
 
 SRCDIR=	tools/lldb/source/Plugins/Process/FreeBSD
 SRCS=	FreeBSDThread.cpp \
 	ProcessFreeBSD.cpp \
 	ProcessMonitor.cpp \
 	POSIXStopInfo.cpp \
-	POSIXThread.cpp \
-	ProcessPOSIX.cpp \
 	RegisterContextPOSIXProcessMonitor_arm.cpp \
 	RegisterContextPOSIXProcessMonitor_arm64.cpp \
 	RegisterContextPOSIXProcessMonitor_mips64.cpp \

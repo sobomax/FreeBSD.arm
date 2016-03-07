@@ -28,7 +28,7 @@
 #define BXE_STATS_H
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.h 283274 2015-05-22 01:44:07Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.h 292638 2015-12-23 01:31:32Z davidcs $");
 
 #include <sys/types.h>
 
@@ -218,6 +218,8 @@ struct bxe_eth_stats {
     uint32_t rx_calls;
     uint32_t rx_pkts;
     uint32_t rx_tpa_pkts;
+    uint32_t rx_erroneous_jumbo_sge_pkts;
+    uint32_t rx_bxe_service_rxsgl;
     uint32_t rx_jumbo_sge_pkts;
     uint32_t rx_soft_errors;
     uint32_t rx_hw_csum_errors;
@@ -319,6 +321,8 @@ struct bxe_eth_q_stats {
     uint32_t rx_calls;
     uint32_t rx_pkts;
     uint32_t rx_tpa_pkts;
+    uint32_t rx_erroneous_jumbo_sge_pkts;
+    uint32_t rx_bxe_service_rxsgl;
     uint32_t rx_jumbo_sge_pkts;
     uint32_t rx_soft_errors;
     uint32_t rx_hw_csum_errors;
@@ -413,6 +417,8 @@ struct bxe_eth_q_stats_old {
     uint32_t rx_calls_old;
     uint32_t rx_pkts_old;
     uint32_t rx_tpa_pkts_old;
+    uint32_t rx_erroneous_jumbo_sge_pkts_old;
+    uint32_t rx_bxe_service_rxsgl_old;
     uint32_t rx_jumbo_sge_pkts_old;
     uint32_t rx_soft_errors_old;
     uint32_t rx_hw_csum_errors_old;

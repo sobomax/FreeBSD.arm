@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key_debug.c 286292 2015-08-04 17:47:11Z jmg $	*/
+/*	$FreeBSD: head/sys/netipsec/key_debug.c 295126 2016-02-01 17:41:21Z glebius $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-
@@ -36,10 +36,10 @@
 #include "opt_ipsec.h"
 #endif
 
-#include <sys/types.h>
 #include <sys/param.h>
 #ifdef _KERNEL
 #include <sys/systm.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/queue.h>
 #endif

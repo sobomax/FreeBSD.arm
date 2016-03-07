@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/aarch64-freebsd.c 289239 2015-10-13 18:23:51Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/aarch64-freebsd.c 295056 2016-01-30 01:00:54Z jhb $");
 
 /* FreeBSD/arm64-specific system call handling. */
 
@@ -39,10 +39,9 @@ __FBSDID("$FreeBSD: head/usr.bin/truss/aarch64-freebsd.c 289239 2015-10-13 18:23
 #include <machine/ucontext.h>
 
 #include <stdio.h>
+#include <sysdecode.h>
 
 #include "truss.h"
-
-#include "freebsd_syscalls.h"
 
 static int
 aarch64_fetch_args(struct trussinfo *trussinfo, u_int narg)
@@ -100,8 +99,7 @@ aarch64_fetch_retval(struct trussinfo *trussinfo, long *retval, int *errorp)
 
 static struct procabi aarch64_freebsd = {
 	"FreeBSD ELF64",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD,
 	aarch64_fetch_args,
 	aarch64_fetch_retval
 };

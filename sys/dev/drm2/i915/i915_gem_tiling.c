@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem_tiling.c 287174 2015-08-26 21:35:16Z bapt $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/i915_gem_tiling.c 293837 2016-01-13 19:52:25Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>
@@ -453,15 +453,15 @@ i915_gem_get_tiling(struct drm_device *dev, void *data,
  * by the GPU.
  */
 static void
-i915_gem_swizzle_page(vm_page_t m)
+i915_gem_swizzle_page(vm_page_t page)
 {
 	char temp[64];
-	char *vaddr;
 	struct sf_buf *sf;
+	char *vaddr;
 	int i;
 
 	/* XXXKIB sleep */
-	sf = sf_buf_alloc(m, SFB_DEFAULT);
+	sf = sf_buf_alloc(page, SFB_DEFAULT);
 	vaddr = (char *)sf_buf_kva(sf);
 
 	for (i = 0; i < PAGE_SIZE; i += 128) {

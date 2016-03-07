@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -47,10 +47,7 @@ SRCS=	Args.cpp \
 	OptionGroupWatchpoint.cpp \
 	Options.cpp \
 	Property.cpp \
-	PythonDataObjects.cpp \
-	ScriptInterpreter.cpp \
-	ScriptInterpreterNone.cpp \
-	ScriptInterpreterPython.cpp
+	ScriptInterpreter.cpp
 
 TGHDRS=	AttrList \
 	Attrs \

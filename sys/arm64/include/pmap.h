@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/pmap.h 286957 2015-08-20 12:07:44Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pmap.h 295158 2016-02-02 17:59:43Z andrew $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -121,7 +121,7 @@ extern struct pmap	kernel_pmap_store;
 #define	PMAP_TRYLOCK(pmap)	mtx_trylock(&(pmap)->pm_mtx)
 #define	PMAP_UNLOCK(pmap)	mtx_unlock(&(pmap)->pm_mtx)
 
-#define	PHYS_AVAIL_SIZE	10
+#define	PHYS_AVAIL_SIZE	32
 extern vm_paddr_t phys_avail[];
 extern vm_paddr_t dump_avail[];
 extern vm_offset_t virtual_avail;

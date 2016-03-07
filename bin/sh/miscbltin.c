@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)miscbltin.c	8.4 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/miscbltin.c 287308 2015-08-30 17:24:22Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/miscbltin.c 296162 2016-02-28 17:52:33Z kib $");
 
 /*
  * Miscellaneous builtins.
@@ -413,6 +413,9 @@ static const struct limits limits[] = {
 #endif
 #ifdef RLIMIT_KQUEUES
 	{ "kqueues",		(char *)0,	RLIMIT_KQUEUES,	   1, 'k' },
+#endif
+#ifdef RLIMIT_UMTXP
+	{ "umtxp",		(char *)0,	RLIMIT_UMTXP,	   1, 'o' },
 #endif
 	{ (char *) 0,		(char *)0,	0,		   0, '\0' }
 };

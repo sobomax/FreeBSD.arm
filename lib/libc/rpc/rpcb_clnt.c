@@ -35,7 +35,7 @@
 static char sccsid[] = "@(#)rpcb_clnt.c 1.30 89/06/21 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_clnt.c 290253 2015-11-02 01:22:06Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_clnt.c 293705 2016-01-11 22:01:33Z ngie $");
 
 /*
  * rpcb_clnt.c
@@ -661,10 +661,10 @@ __rpcbind_is_up(void)
 		    strcmp(nconf->nc_protofmly, NC_LOOPBACK) == 0)
 			 break;
 	}
+	endnetconfig(localhandle);
+
 	if (nconf == NULL)
 		return (FALSE);
-
-	endnetconfig(localhandle);
 
 	memset(&sun, 0, sizeof sun);
 	sock = _socket(AF_LOCAL, SOCK_STREAM, 0);

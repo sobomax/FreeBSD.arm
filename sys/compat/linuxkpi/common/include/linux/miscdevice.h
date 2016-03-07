@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/miscdevice.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/miscdevice.h 292987 2015-12-31 12:30:19Z hselasky $
  */
 #ifndef	_LINUX_MISCDEVICE_H_
 #define	_LINUX_MISCDEVICE_H_
@@ -46,13 +46,13 @@ struct miscdevice  {
 	umode_t mode;
 };
 
-extern struct class	miscclass;
+extern struct class linux_class_misc;
 
 static inline int
 misc_register(struct miscdevice *misc)
 {
-	misc->this_device = device_create(&miscclass, &linux_rootdev, 0, misc, 
-	    misc->name);
+	misc->this_device = device_create(&linux_class_misc,
+	    &linux_root_device, 0, misc, misc->name);
 	misc->cdev = cdev_alloc();
 	if (misc->cdev == NULL)
 		return -ENOMEM;
@@ -67,7 +67,7 @@ misc_register(struct miscdevice *misc)
 static inline int
 misc_deregister(struct miscdevice *misc)
 {
-	device_destroy(&miscclass, misc->this_device->devt);
+	device_destroy(&linux_class_misc, misc->this_device->devt);
 	cdev_del(misc->cdev);
 
 	return (0);

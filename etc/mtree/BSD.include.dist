@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.include.dist 291465 2015-11-30 04:59:01Z adrian $
+# $FreeBSD: head/etc/mtree/BSD.include.dist 296047 2016-02-25 18:23:40Z oshogbo $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -92,6 +92,8 @@
         ..
         scsi
         ..
+    ..
+    casper
     ..
     crypto
     ..
@@ -270,6 +272,8 @@
         ..
     ..
     netinet
+        cc
+        ..
     ..
     netinet6
     ..

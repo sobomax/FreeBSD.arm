@@ -46,7 +46,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/als4000.c 274035 2014-11-03 11:11:45Z bapt $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/als4000.c 296135 2016-02-27 03:34:01Z jhibbits $");
 
 /* Debugging macro's */
 #undef DEB
@@ -760,8 +760,8 @@ static int
 als_resource_grab(device_t dev, struct sc_info *sc)
 {
 	sc->regid = PCIR_BAR(0);
-	sc->reg = bus_alloc_resource(dev, SYS_RES_IOPORT, &sc->regid, 0, ~0,
-				     ALS_CONFIG_SPACE_BYTES, RF_ACTIVE);
+	sc->reg = bus_alloc_resource_any(dev, SYS_RES_IOPORT, &sc->regid,
+					 RF_ACTIVE);
 	if (sc->reg == 0) {
 		device_printf(dev, "unable to allocate register space\n");
 		goto bad;

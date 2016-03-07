@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/periodic/security/security.functions 254974 2013-08-27 21:20:28Z jlh $
+# $FreeBSD: head/etc/periodic/security/security.functions 295032 2016-01-29 01:54:32Z marius $
 #
 
 # This is a library file, so we only try to do something when sourced.
@@ -51,7 +51,7 @@ check_diff() {
   rc=0
   if [ "$1" = "new_only" ]; then
     shift
-    filter="grep '^[>+]'"
+    filter="grep '^[>+][^+]'"
   else
     filter="cat"
   fi

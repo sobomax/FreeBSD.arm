@@ -1,5 +1,5 @@
 /*-
- * Copyright (C) 2012-2013 Intel Corporation
+ * Copyright (C) 2012-2016 Intel Corporation
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_sysctl.c 292074 2015-12-11 02:06:03Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_sysctl.c 293352 2016-01-07 20:32:04Z jimharris $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -266,6 +266,10 @@ nvme_sysctl_initialize_ctrlr(struct nvme_controller *ctrlr)
 	ctrlr_ctx = device_get_sysctl_ctx(ctrlr->dev);
 	ctrlr_tree = device_get_sysctl_tree(ctrlr->dev);
 	ctrlr_list = SYSCTL_CHILDREN(ctrlr_tree);
+
+	SYSCTL_ADD_UINT(ctrlr_ctx, ctrlr_list, OID_AUTO, "num_cpus_per_ioq",
+	    CTLFLAG_RD, &ctrlr->num_cpus_per_ioq, 0,
+	    "Number of CPUs assigned per I/O queue pair");
 
 	SYSCTL_ADD_PROC(ctrlr_ctx, ctrlr_list, OID_AUTO,
 	    "int_coal_time", CTLTYPE_UINT | CTLFLAG_RW, ctrlr, 0,

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/sibyte/sb_zbbus.c 257338 2013-10-29 14:07:31Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/mips/sibyte/sb_zbbus.c 295832 2016-02-20 01:32:58Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -280,7 +280,7 @@ zbbus_hinted_child(device_t bus, const char *dname, int dunit)
 
 static struct resource *
 zbbus_alloc_resource(device_t bus, device_t child, int type, int *rid,
-		     u_long start, u_long end, u_long count, u_int flags)
+		     rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct resource *res;
 	int intrnum, intsrc, isdefault;
@@ -288,7 +288,7 @@ zbbus_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	struct resource_list_entry *rle;
 	struct zbbus_devinfo *dinfo;
 
-	isdefault = (start == 0UL && end == ~0UL && count == 1);
+	isdefault = (RMAN_IS_DEFAULT_RANGE(start, end) && count == 1);
 
 	/*
 	 * Our direct child is asking for a default resource allocation.

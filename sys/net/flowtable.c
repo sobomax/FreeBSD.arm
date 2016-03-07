@@ -33,7 +33,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/flowtable.c 290276 2015-11-02 21:21:00Z rrs $");
+__FBSDID("$FreeBSD: head/sys/net/flowtable.c 292978 2015-12-31 05:03:27Z melifaro $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -665,6 +665,7 @@ int
 flowtable_lookup(sa_family_t sa, struct mbuf *m, struct route *ro)
 {
 	struct flentry *fle;
+	struct llentry *lle;
 
 	if (V_flowtable_enable == 0)
 		return (ENXIO);
@@ -693,8 +694,15 @@ flowtable_lookup(sa_family_t sa, struct mbuf *m, struct route *ro)
 	}
 
 	ro->ro_rt = fle->f_rt;
-	ro->ro_lle = fle->f_lle;
 	ro->ro_flags |= RT_NORTREF;
+	lle = fle->f_lle;
+	if (lle != NULL && (lle->la_flags & LLE_VALID)) {
+		ro->ro_prepend = lle->r_linkdata;
+		ro->ro_plen = lle->r_hdrlen;
+		ro->ro_flags |= RT_MAY_LOOP;
+		if (lle->la_flags & LLE_IFADDR)
+			ro->ro_flags |= RT_L2_ME;
+	}
 
 	return (0);
 }

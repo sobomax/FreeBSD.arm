@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 294183 2016-01-16 18:13:28Z jamie $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -877,6 +877,7 @@ get_user_info(struct cfjail *j, const char *username,
 {
 	const struct passwd *pwd;
 
+	errno = 0;
 	*pwdp = pwd = username ? getpwnam(username) : getpwuid(getuid());
 	if (pwd == NULL) {
 		if (errno)

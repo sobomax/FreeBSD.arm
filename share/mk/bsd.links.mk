@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.links.mk 280129 2015-03-15 23:40:50Z bapt $
+# $FreeBSD: head/share/mk/bsd.links.mk 295230 2016-02-04 01:08:51Z bdrewery $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.links.mk cannot be included directly.
@@ -8,10 +8,8 @@ afterinstall: _installlinks
 .ORDER: realinstall _installlinks
 _installlinks:
 .for s t in ${LINKS}
-	@${ECHO} "$t -> $s" ;\
-	${INSTALL_LINK} ${DESTDIR}$s ${DESTDIR}$t
+	${INSTALL_LINK} ${DESTDIR}${s} ${DESTDIR}${t}
 .endfor
 .for s t in ${SYMLINKS}
-	@${ECHO} "$t -> $s" ;\
-	${INSTALL_SYMLINK} $s ${DESTDIR}/$t
+	${INSTALL_SYMLINK} ${s} ${DESTDIR}${t}
 .endfor

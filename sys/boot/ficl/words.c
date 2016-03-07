@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: head/sys/boot/ficl/words.c 264261 2014-04-08 17:50:27Z emaste $ */
+/* $FreeBSD: head/sys/boot/ficl/words.c 295410 2016-02-08 20:03:14Z pfg $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>
@@ -4822,7 +4822,7 @@ WORDKIND ficlWordClassify(FICL_WORD *pFW)
 **************************************************************************/
 static void ficlRandom(FICL_VM *pVM)
 {
-    PUSHINT(rand());
+    PUSHUNS(random());
 }
 
 
@@ -4832,7 +4832,7 @@ static void ficlRandom(FICL_VM *pVM)
 **************************************************************************/
 static void ficlSeedRandom(FICL_VM *pVM)
 {
-    srand(POPINT());
+    srandom(POPUNS());
 }
 #endif
 

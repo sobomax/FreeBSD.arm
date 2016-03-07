@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcompiler_rt/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/libcompiler_rt/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -44,6 +44,7 @@ SRCF=	absvdi2 \
 	divmoddi4 \
 	divmodsi4 \
 	divsc3 \
+	divtc3 \
 	divti3 \
 	divxc3 \
 	enable_execute_stack \

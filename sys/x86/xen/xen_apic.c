@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/xen_apic.c 282684 2015-05-09 19:11:01Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/xen_apic.c 292662 2015-12-23 17:43:55Z ngie $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -72,12 +72,6 @@ static driver_filter_t xen_ipi_bitmap_handler;
 static driver_filter_t xen_cpustop_handler;
 static driver_filter_t xen_cpususpend_handler;
 static driver_filter_t xen_cpustophard_handler;
-#endif
-
-/*---------------------------- Extern Declarations ---------------------------*/
-/* Variables used by mp_machdep to perform the MMU related IPIs */
-#ifdef __amd64__
-extern int pmap_pcid_enabled;
 #endif
 
 /*---------------------------------- Macros ----------------------------------*/

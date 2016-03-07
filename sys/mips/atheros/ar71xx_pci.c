@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 287907 2015-09-17 06:07:49Z bz $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include "opt_ar71xx.h"
 
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_pci.c 287907 2015-09-17 06:07:4
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/intr_machdep.h>
-#include <machine/pmap.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -500,7 +499,7 @@ ar71xx_pci_write_ivar(device_t dev, device_t child, int which,
 
 static struct resource *
 ar71xx_pci_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 
 	struct ar71xx_pci_softc *sc = device_get_softc(bus);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmobject/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmobject/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -14,6 +14,7 @@ SRCS=	Archive.cpp \
 	ELFObjectFile.cpp \
 	ELFYAML.cpp \
 	Error.cpp \
+	FunctionIndexObjectFile.cpp \
 	IRObjectFile.cpp \
 	MachOObjectFile.cpp \
 	MachOUniversal.cpp \
@@ -25,5 +26,7 @@ SRCS=	Archive.cpp \
 SRCS+=	Object.cpp \
 	SymbolSize.cpp
 .endif
+
+TGHDRS=	Attributes
 	
 .include "../clang.lib.mk"

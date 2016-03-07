@@ -24,7 +24,7 @@
 # SUCH DAMAGE.
 #
 # from: src/sys/kern/bus_if.m,v 1.21 2002/04/21 11:16:10 markm Exp
-# $FreeBSD: head/sys/arm64/arm64/pic_if.m 292063 2015-12-10 15:51:02Z andrew $
+# $FreeBSD: head/sys/arm64/arm64/pic_if.m 295515 2016-02-11 11:58:27Z zbb $
 #
 
 #include <sys/bus.h>
@@ -34,7 +34,11 @@
 INTERFACE pic;
 
 CODE {
-	static pic_translate_code_t pic_translate_code_default;
+	static int pic_bind_default(device_t dev, u_int irq, u_int cpu)
+	{
+
+		return (EOPNOTSUPP);
+	}
 
 	static void pic_translate_code_default(device_t dev, u_int irq,
 	    int code, enum intr_trigger *trig, enum intr_polarity *pol)
@@ -60,11 +64,11 @@ CODE {
 	}
 };
 
-METHOD void bind {
+METHOD int bind {
 	device_t	dev;
 	u_int		irq;
-	cpuset_t	cpumask;
-};
+	u_int		cpu;
+} DEFAULT pic_bind_default;
 
 METHOD void translate_code {
 	device_t	dev;

@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/amd64/aesni-sha1-x86_64.S 290207 2015-10-30 20:51:33Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/amd64/aesni-sha1-x86_64.S 296279 2016-03-01 22:08:28Z jkim $
 .text	
 
 
@@ -1393,8 +1393,8 @@ aesni_cbc_sha1_enc_shaext:
 	movups	16(%rcx),%xmm0
 	leaq	112(%rcx),%rcx
 
-	pshufd	$27,%xmm8,%xmm8
-	pshufd	$27,%xmm9,%xmm9
+	pshufd	$0b00011011,%xmm8,%xmm8
+	pshufd	$0b00011011,%xmm9,%xmm9
 	jmp	.Loop_shaext
 
 .align	16
@@ -1673,8 +1673,8 @@ aesni_cbc_sha1_enc_shaext:
 	leaq	64(%rdi),%rdi
 	jnz	.Loop_shaext
 
-	pshufd	$27,%xmm8,%xmm8
-	pshufd	$27,%xmm9,%xmm9
+	pshufd	$0b00011011,%xmm8,%xmm8
+	pshufd	$0b00011011,%xmm9,%xmm9
 	movups	%xmm2,(%r8)
 	movdqu	%xmm8,(%r9)
 	movd	%xmm9,16(%r9)

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_rfcomm.c 285244 2015-07-07 15:56:51Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_rfcomm.c 293432 2016-01-08 19:03:20Z glebius $
  */
 
 #include <sys/param.h>
@@ -972,7 +972,7 @@ ng_btsocket_rfcomm_send(struct socket *so, int flags, struct mbuf *m,
 	}
 
 	/* Put the packet on the socket's send queue and wakeup RFCOMM task */
-	sbappend(&pcb->so->so_snd, m);
+	sbappend(&pcb->so->so_snd, m, flags);
 	m = NULL;
 	
 	if (!(pcb->flags & NG_BTSOCKET_RFCOMM_DLC_SENDING)) {
@@ -2396,7 +2396,7 @@ ng_btsocket_rfcomm_receive_uih(ng_btsocket_rfcomm_session_p s, int dlci,
 			error = ENOBUFS;
 		} else {
 			/* Append packet to the socket receive queue */
-			sbappend(&pcb->so->so_rcv, m0);
+			sbappend(&pcb->so->so_rcv, m0, 0);
 			m0 = NULL;
 
 			sorwakeup(pcb->so);

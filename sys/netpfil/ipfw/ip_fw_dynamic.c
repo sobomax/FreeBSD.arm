@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_dynamic.c 291001 2015-11-17 20:42:08Z bdrewery $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_dynamic.c 296348 2016-03-03 13:07:59Z ae $");
 
 #define        DEB(x)
 #define        DDB(x) x
@@ -505,7 +505,7 @@ resize_dynamic_table(struct ip_fw_chain *chain, int nbuckets)
 	    V_curr_dyn_buckets, nbuckets);
 
 	/* Allocate and initialize new hash */
-	dyn_v = malloc(nbuckets * sizeof(ipfw_dyn_rule), M_IPFW,
+	dyn_v = malloc(nbuckets * sizeof(*dyn_v), M_IPFW,
 	    M_WAITOK | M_ZERO);
 
 	for (i = 0 ; i < nbuckets; i++)

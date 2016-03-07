@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 1/4/94
-# $FreeBSD: head/include/Makefile 291740 2015-12-04 03:18:02Z bdrewery $
+# $FreeBSD: head/include/Makefile 294540 2016-01-22 02:07:48Z glebius $
 #
 # Doing a "make install" builds /usr/include.
 
@@ -53,6 +53,7 @@ LSUBDIRS=	cam/ata cam/scsi \
 	geom/raid geom/raid3 geom/shsec geom/stripe geom/virstor \
 	net/altq \
 	netgraph/atm netgraph/netflow \
+	netinet/cc \
 	security/audit \
 	security/mac_biba security/mac_bsdextended security/mac_lomac \
 	security/mac_mls security/mac_partition \

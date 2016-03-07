@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgb/qla_hw.c 261861 2014-02-14 01:02:06Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgb/qla_hw.c 295822 2016-02-19 18:05:02Z pfg $");
 
 #include "qla_os.h"
 #include "qla_reg.h"
@@ -797,7 +797,8 @@ qla_tx_tso(qla_host_t *ha, struct mbuf *mp, q80_tx_cmd_t *tx_cmd, uint8_t *hdr)
 			}
 
 			if ((*tcp_opt != 0x01) || (*(tcp_opt + 1) != 0x01) ||
-				(*(tcp_opt + 2) != 0x08) || (*(tcp_opt + 2) != 10)) {
+				(*(tcp_opt + 2) != 0x08) ||
+				(*(tcp_opt + 3) != 10)) {
 				return -1;
 			}
 		}

@@ -28,11 +28,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_bus_fdt.c 281438 2015-04-11 17:16:23Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_bus_fdt.c 295474 2016-02-10 16:49:20Z andrew $");
 
 #include "opt_platform.h"
 
 #include <sys/param.h>
+#include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
 #include <sys/module.h>

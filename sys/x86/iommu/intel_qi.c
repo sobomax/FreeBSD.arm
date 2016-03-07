@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_qi.c 284869 2015-06-26 07:01:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_qi.c 296272 2016-03-01 17:47:32Z jhb $");
 
 #include "opt_acpi.h"
 
@@ -325,7 +325,7 @@ dmar_qi_intr(void *arg)
 
 	unit = arg;
 	KASSERT(unit->qi_enabled, ("dmar%d: QI is not enabled", unit->unit));
-	taskqueue_enqueue_fast(unit->qi_taskqueue, &unit->qi_task);
+	taskqueue_enqueue(unit->qi_taskqueue, &unit->qi_task);
 	return (FILTER_HANDLED);
 }
 

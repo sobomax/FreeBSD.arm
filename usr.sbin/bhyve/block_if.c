@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/block_if.c 282788 2015-05-12 00:30:39Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/block_if.c 294774 2016-01-26 07:17:21Z araujo $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 282788 2015-05-12 00:30:39Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 294774 2016-01-26 07:17:21Z araujo $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -692,9 +692,7 @@ int
 blockif_close(struct blockif_ctxt *bc)
 {
 	void *jval;
-	int err, i;
-
-	err = 0;
+	int i;
 
 	assert(bc->bc_magic == BLOCKIF_SIG);
 

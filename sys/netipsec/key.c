@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key.c 290982 2015-11-17 14:39:33Z fabient $	*/
+/*	$FreeBSD: head/sys/netipsec/key.c 296303 2016-03-02 05:04:04Z markj $	*/
 /*	$KAME: key.c,v 1.191 2001/06/27 10:46:49 sakane Exp $	*/
 
 /*-
@@ -3490,6 +3490,7 @@ key_setdumpsa(struct secasvar *sav, u_int8_t type, u_int8_t satype,
 	}
 
 	m_cat(result, tres);
+	tres = NULL;
 	if (result->m_len < sizeof(struct sadb_msg)) {
 		result = m_pullup(result, sizeof(struct sadb_msg));
 		if (result == NULL)
@@ -7204,8 +7205,7 @@ key_parse(struct mbuf *m, struct socket *so)
 	orglen = PFKEY_UNUNIT64(msg->sadb_msg_len);
 	target = KEY_SENDUP_ONE;
 
-	if ((m->m_flags & M_PKTHDR) == 0 ||
-	    m->m_pkthdr.len != m->m_pkthdr.len) {
+	if ((m->m_flags & M_PKTHDR) == 0 || m->m_pkthdr.len != orglen) {
 		ipseclog((LOG_DEBUG, "%s: invalid message length.\n",__func__));
 		PFKEYSTAT_INC(out_invlen);
 		error = EINVAL;

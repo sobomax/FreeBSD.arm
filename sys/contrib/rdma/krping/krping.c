@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/contrib/rdma/krping/krping.c 289749 2015-10-22 09:50:45Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/contrib/rdma/krping/krping.c 293186 2016-01-05 01:58:30Z np $");
 
 #include <linux/module.h>
 #include <linux/moduleparam.h>
@@ -640,6 +640,7 @@ static int krping_setup_buffers(struct krping_cb *cb)
 			buf.size = cb->size;
 			iovbase = cb->rdma_dma_addr;
 			cb->rdma_mr = ib_reg_phys_mr(cb->pd, &buf, 1, 
+			    		     IB_ACCESS_LOCAL_WRITE|
 					     IB_ACCESS_REMOTE_READ| 
 					     IB_ACCESS_REMOTE_WRITE, 
 					     &iovbase);
@@ -675,8 +676,10 @@ static int krping_setup_buffers(struct krping_cb *cb)
 		if (cb->mem == MR || cb->mem == MW) {
 			unsigned flags = IB_ACCESS_REMOTE_READ;
 
-			if (cb->wlat || cb->rlat || cb->bw)
-				flags |= IB_ACCESS_REMOTE_WRITE;
+			if (cb->wlat || cb->rlat || cb->bw) {
+				flags |= IB_ACCESS_LOCAL_WRITE |
+				    IB_ACCESS_REMOTE_WRITE;
+			}
 
 			buf.addr = cb->start_dma_addr;
 			buf.size = cb->size;

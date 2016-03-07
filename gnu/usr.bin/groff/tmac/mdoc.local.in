@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/gnu/usr.bin/groff/tmac/mdoc.local.in 288429 2015-09-30 20:47:27Z bdrewery $
+.\" $FreeBSD: head/gnu/usr.bin/groff/tmac/mdoc.local.in 296047 2016-02-25 18:23:40Z oshogbo $
 .\"
 .\"     %beginstrip%
 .
@@ -34,7 +34,7 @@
 .\" FreeBSD .Lb values
 .ds doc-str-Lb-libarchive  Streaming Archive Library (libarchive, \-larchive)
 .ds doc-str-Lb-libbluetooth Bluetooth User Library (libbluetooth, \-lbluetooth)
-.ds doc-str-Lb-libcapsicum Capsicum Library (libcapsicum, \-lcapsicum)
+.ds doc-str-Lb-libcseper   Casper Library (libcapsicum, \-lcasper)
 .ds doc-str-Lb-libcuse     Userland Character Device Library (libcuse, \-lcuse)
 .ds doc-str-Lb-libedit     Line Editor and History Library (libedit, \-ledit)
 .ds doc-str-Lb-libefi      EFI Runtime Services Library (libefi, \-lefi)

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/local.sys.mk 291318 2015-11-25 19:44:31Z bdrewery $
+# $FreeBSD: head/share/mk/local.sys.mk 294349 2016-01-19 22:41:44Z bdrewery $
 
 .if ${MK_DIRDEPS_BUILD} == "yes"
 MAKE_PRINT_VAR_ON_ERROR+= \
@@ -25,7 +25,7 @@ MAKE_PRINT_VAR_ON_ERROR += .MAKE.MAKEFILES .PATH
 
 .include "src.sys.mk"
 
-.if ${.MAKE.MODE:Unormal:Mmeta*} != ""
+.if ${.MAKE.MODE:Mmeta*} != ""
 # we can afford to use cookies to prevent some targets
 # re-running needlessly
 META_COOKIE_TOUCH= touch ${COOKIE.${.TARGET}:U${.OBJDIR}/${.TARGET}}

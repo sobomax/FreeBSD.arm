@@ -26,12 +26,13 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/if_mib.c 274225 2014-11-07 09:39:05Z glebius $
+ * $FreeBSD: head/sys/net/if_mib.c 295126 2016-02-01 17:41:21Z glebius $
  */
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 

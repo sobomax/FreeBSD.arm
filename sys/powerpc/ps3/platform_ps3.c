@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/platform_ps3.c 276680 2015-01-05 01:05:35Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/platform_ps3.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/ps3/platform_ps3.c 276680 2015-01-05 01:05:
 #include <machine/hid.h>
 #include <machine/platform.h>
 #include <machine/platformvar.h>
-#include <machine/pmap.h>
 #include <machine/smp.h>
 #include <machine/spr.h>
 #include <machine/vmparam.h>

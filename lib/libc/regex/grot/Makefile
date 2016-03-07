@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/regex/grot/Makefile 291837 2015-12-05 02:23:44Z ngie $
+# $FreeBSD: head/lib/libc/regex/grot/Makefile 292153 2015-12-13 06:33:52Z ngie $
 # You probably want to take -DREDEBUG out of CFLAGS, and put something like
 # -O in, *after* testing (-DREDEBUG strengthens testing by enabling a lot of
 # internal assertion checking).  Take -Dconst= out for an ANSI compiler.
@@ -8,7 +8,7 @@
 PATHS= ${.CURDIR}/.. ${.CURDIR}/../../locale ${.CURDIR}/../../../../include
 .PATH: ${PATHS}
 
-CFLAGS+= -DPOSIX_MISTAKE -DREDEBUG $(REGCFLAGS)
+CFLAGS+= -static -DPOSIX_MISTAKE -DREDEBUG $(REGCFLAGS)
 .for incpath in ${PATHS}
 CFLAGS+= -I${incpath}
 .endfor

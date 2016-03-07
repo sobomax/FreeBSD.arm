@@ -1,4 +1,4 @@
-/*	$NetBSD: hist.h,v 1.14 2014/05/11 01:05:17 christos Exp $	*/
+/*	$NetBSD: hist.h,v 1.15 2016/01/30 15:05:27 christos Exp $	*/
 
 /*-
  * Copyright (c) 1992, 1993
@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)hist.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: head/lib/libedit/hist.h 276881 2015-01-09 07:40:56Z bapt $
+ * $FreeBSD: head/lib/libedit/hist.h 296435 2016-03-06 21:32:54Z pfg $
  */
 
 /*
@@ -47,10 +47,10 @@ typedef int (*hist_fun_t)(void *, TYPE(HistEvent) *, int, ...);
 
 typedef struct el_history_t {
 	Char		*buf;		/* The history buffer		*/
-	size_t		sz;		/* Size of history buffer	*/
+	size_t		 sz;		/* Size of history buffer	*/
 	Char		*last;		/* The last character		*/
 	int		 eventno;	/* Event we are looking for	*/
-	void *		 ref;		/* Argument for history fcns	*/
+	void		*ref;		/* Argument for history fcns	*/
 	hist_fun_t	 fun;		/* Event access			*/
 	TYPE(HistEvent)	 ev;		/* Event cookie			*/
 } el_history_t;

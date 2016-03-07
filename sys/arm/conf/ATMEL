@@ -2,7 +2,7 @@
 # configuration.  This kernel will not (presently) boot.  Do not copy
 # it to create your own custom config file.
 #
-# $FreeBSD: head/sys/arm/conf/ATMEL 282576 2015-05-07 12:38:23Z andrew $
+# $FreeBSD: head/sys/arm/conf/ATMEL 292591 2015-12-22 09:08:21Z andrew $
 
 ident		ATMEL
 
@@ -13,7 +13,6 @@ include 	"../at91/std.atmel"
 # at91sam9g45 or on some boards with non u-boot boot loaders.
 makeoptions	KERNPHYSADDR=0x20000000
 makeoptions	KERNVIRTADDR=0xc0000000
-options 	KERNPHYSADDR=0x20000000
 options 	KERNVIRTADDR=0xc0000000
 
 makeoptions	MODULES_OVERRIDE="dtb/atmel"

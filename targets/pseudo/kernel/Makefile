@@ -1,4 +1,4 @@
-# $FreeBSD: head/targets/pseudo/kernel/Makefile 248288 2013-03-14 22:04:25Z sjg $
+# $FreeBSD: head/targets/pseudo/kernel/Makefile 295990 2016-02-24 17:20:22Z bdrewery $
 
 # Build the kernel ${KERNCONF}
 KERNCONF?= ${KERNEL:UGENERIC}
@@ -14,7 +14,6 @@ ${KERNCONF}.config: .MAKE .META
 	mkdir -p ${KERN_OBJDIR:H}
 	(cd ${KERN_CONFDIR} && \
 	${CONFIG} ${CONFIGARGS} -d ${KERN_OBJDIR} ${KERNCONF})
-	(cd ${KERN_OBJDIR} && ${.MAKE} depend)
 	@touch $@
 
 # we need to pass curdirOk=yes to meta mode, since we want .meta files

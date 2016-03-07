@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_if_dwc.c 288050 2015-09-21 01:51:37Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_if_dwc.c 296093 2016-02-26 13:53:09Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,8 +40,9 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a20/a20_if_dwc.c 288050 2015-09-21 01
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
+#include <arm/allwinner/allwinner_machdep.h>
 #include <arm/allwinner/a10_clk.h>
-#include <arm/allwinner/a10_gpio.h>
+#include <arm/allwinner/a31/a31_clk.h>
 
 #include "if_dwc_if.h"
 
@@ -61,10 +62,27 @@ a20_if_dwc_probe(device_t dev)
 static int
 a20_if_dwc_init(device_t dev)
 {
+	int clk;
 
 	/* Activate GMAC clock and set the pin mux to rgmii. */
-	if (a10_clk_gmac_activate(ofw_bus_get_node(dev)) != 0 ||
-	    a10_gpio_ethernet_activate(A10_GPIO_FUNC_RGMII)) {
+	switch (allwinner_soc_type()) {
+#if defined(SOC_ALLWINNER_A10) || defined(SOC_ALLWINNER_A20)
+	case ALLWINNERSOC_A10:
+	case ALLWINNERSOC_A10S:
+	case ALLWINNERSOC_A20:
+		clk = a10_clk_gmac_activate(ofw_bus_get_node(dev));
+		break;
+#endif
+#if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
+	case ALLWINNERSOC_A31:
+	case ALLWINNERSOC_A31S:
+		clk = a31_clk_gmac_activate(ofw_bus_get_node(dev));
+		break;
+#endif
+	default:
+		clk = -1;
+	}
+	if (clk != 0) {
 		device_printf(dev, "could not activate gmac module\n");
 		return (ENXIO);
 	}

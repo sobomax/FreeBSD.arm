@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hpt27xx/hpt27xx_osm_bsd.c 284730 2015-06-23 17:26:16Z delphij $
+ * $FreeBSD: head/sys/dev/hpt27xx/hpt27xx_osm_bsd.c 295790 2016-02-19 03:37:56Z jhibbits $
  */
 
 #include <dev/hpt27xx/hpt27xx_config.h>
@@ -1260,8 +1260,8 @@ static void hpt_final_init(void *dummy)
 
 		for (hba = vbus_ext->hba_list; hba; hba = hba->next) {
 			int rid = 0;
-			if ((hba->irq_res = bus_alloc_resource(hba->pcidev,
-				SYS_RES_IRQ, &rid, 0, ~0ul, 1, RF_SHAREABLE | RF_ACTIVE)) == NULL)
+			if ((hba->irq_res = bus_alloc_resource_any(hba->pcidev,
+				SYS_RES_IRQ, &rid, RF_SHAREABLE | RF_ACTIVE)) == NULL)
 			{
 				os_printk("can't allocate interrupt");
 				return ;

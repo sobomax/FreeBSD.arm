@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/slab.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/slab.h 296344 2016-03-03 09:56:04Z hselasky $
  */
 #ifndef	_LINUX_SLAB_H_
 #define	_LINUX_SLAB_H_
@@ -46,6 +46,7 @@ MALLOC_DECLARE(M_KMALLOC);
 #define	kzalloc(size, flags)		kmalloc((size), (flags) | M_ZERO)
 #define	kzalloc_node(size, flags, node)	kzalloc(size, flags)
 #define	kfree(ptr)			free(__DECONST(void *, (ptr)), M_KMALLOC)
+#define	kfree_const(ptr)		kfree(ptr)
 #define	krealloc(ptr, size, flags)	realloc((ptr), (size), M_KMALLOC, (flags))
 #define	kcalloc(n, size, flags)	        kmalloc((n) * (size), flags | M_ZERO)
 #define	vzalloc(size)			kzalloc(size, GFP_KERNEL | __GFP_NOWARN)

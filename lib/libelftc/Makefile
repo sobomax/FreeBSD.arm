@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libelftc/Makefile 275373 2014-12-01 17:49:42Z emaste $
+# $FreeBSD: head/lib/libelftc/Makefile 294608 2016-01-22 21:33:27Z emaste $
 .include <bsd.own.mk>
 
 INTERNALLIB=
@@ -25,6 +25,6 @@ SRCS=	elftc_bfdtarget.c                       \
 INCS=	libelftc.h
 CFLAGS+=-I${ELFTCDIR}/libelftc -I${ELFTCDIR}/common
 
-NO_MAN=	yes
+MAN=
 
 .include <bsd.lib.mk>

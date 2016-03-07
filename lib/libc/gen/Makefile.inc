@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: head/lib/libc/gen/Makefile.inc 291320 2015-11-25 19:44:43Z bdrewery $
+# $FreeBSD: head/lib/libc/gen/Makefile.inc 295039 2016-01-29 14:12:12Z kib $
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen
@@ -99,11 +99,13 @@ SRCS+=	__getosreldate.c \
 	raise.c \
 	readdir.c \
 	readpassphrase.c \
+	recvmmsg.c \
 	rewinddir.c \
 	scandir.c \
 	seed48.c \
 	seekdir.c \
 	semctl.c \
+	sendmmsg.c \
 	setdomainname.c \
 	sethostname.c \
 	setjmperr.c \
@@ -451,10 +453,12 @@ MLINKS+=rand48.3 _rand48.3 \
 	rand48.3 nrand48.3 \
 	rand48.3 seed48.3 \
 	rand48.3 srand48.3
+MLINKS+=recv.2 recvmmsg.2
 MLINKS+=scandir.3 alphasort.3
 MLINKS+=sem_open.3 sem_close.3 \
 	sem_open.3 sem_unlink.3
 MLINKS+=sem_wait.3 sem_trywait.3
+MLINKS+=send.2 sendmmsg.2
 MLINKS+=setjmp.3 _longjmp.3 \
 	setjmp.3 _setjmp.3 \
 	setjmp.3 longjmp.3 \

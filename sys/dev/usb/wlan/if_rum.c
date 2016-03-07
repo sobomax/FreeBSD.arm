@@ -1,9 +1,10 @@
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 292080 2015-12-11 05:28:00Z imp $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 295607 2016-02-14 07:16:36Z hselasky $	*/
 
 /*-
  * Copyright (c) 2005-2007 Damien Bergamini <damien.bergamini@free.fr>
  * Copyright (c) 2006 Niall O'Higgins <niallo@openbsd.org>
  * Copyright (c) 2007-2008 Hans Petter Selasky <hselasky@FreeBSD.org>
+ * Copyright (c) 2015 Andriy Voskoboinyk <avos@FreeBSD.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rum.c 295607 2016-02-14 07:16:36Z hselasky $");
 
 /*-
  * Ralink Technology RT2501USB/RT2601USB chipset driver
@@ -467,8 +468,9 @@ rum_attach(device_t self)
 	struct usb_attach_arg *uaa = device_get_ivars(self);
 	struct rum_softc *sc = device_get_softc(self);
 	struct ieee80211com *ic = &sc->sc_ic;
-	uint8_t iface_index, bands;
 	uint32_t tmp;
+	uint8_t bands[howmany(IEEE80211_MODE_MAX, 8)];
+	uint8_t iface_index;
 	int error, ntries;
 
 	device_set_usb_desc(self);
@@ -536,12 +538,12 @@ rum_attach(device_t self)
 	    IEEE80211_CRYPTO_TKIPMIC |
 	    IEEE80211_CRYPTO_TKIP;
 
-	bands = 0;
-	setbit(&bands, IEEE80211_MODE_11B);
-	setbit(&bands, IEEE80211_MODE_11G);
+	memset(bands, 0, sizeof(bands));
+	setbit(bands, IEEE80211_MODE_11B);
+	setbit(bands, IEEE80211_MODE_11G);
 	if (sc->rf_rev == RT2573_RF_5225 || sc->rf_rev == RT2573_RF_5226)
-		setbit(&bands, IEEE80211_MODE_11A);
-	ieee80211_init_channels(ic, NULL, &bands);
+		setbit(bands, IEEE80211_MODE_11A);
+	ieee80211_init_channels(ic, NULL, bands);
 
 	ieee80211_ifattach(ic);
 	ic->ic_update_promisc = rum_update_promisc;
@@ -2068,7 +2070,7 @@ rum_update_slot_cb(struct rum_softc *sc, union sec_param *data, uint8_t rvp_id)
 	struct ieee80211com *ic = &sc->sc_ic;
 	uint8_t slottime;
 
-	slottime = (ic->ic_flags & IEEE80211_F_SHSLOT) ? 9 : 20;
+	slottime = IEEE80211_GET_SLOTTIME(ic);
 
 	rum_modbits(sc, RT2573_MAC_CSR9, slottime, 0xff);
 
@@ -2730,7 +2732,7 @@ rum_pair_key_del_cb(struct rum_softc *sc, union sec_param *data,
 	DPRINTF("%s: removing key %d\n", __func__, k->wk_keyix);
 	rum_clrbits(sc, (k->wk_keyix < 32) ? RT2573_SEC_CSR2 : RT2573_SEC_CSR3,
 	    1 << (k->wk_keyix % 32));
-	sc->keys_bmap &= ~(1 << k->wk_keyix);
+	sc->keys_bmap &= ~(1ULL << k->wk_keyix);
 	if (--sc->vap_key_count[rvp_id] == 0)
 		rum_clrbits(sc, RT2573_SEC_CSR4, 1 << rvp_id);
 }
@@ -2747,8 +2749,8 @@ rum_key_alloc(struct ieee80211vap *vap, struct ieee80211_key *k,
 		if (!(k->wk_flags & IEEE80211_KEY_SWCRYPT)) {
 			RUM_LOCK(sc);
 			for (i = 0; i < RT2573_ADDR_MAX; i++) {
-				if ((sc->keys_bmap & (1 << i)) == 0) {
-					sc->keys_bmap |= 1 << i;
+				if ((sc->keys_bmap & (1ULL << i)) == 0) {
+					sc->keys_bmap |= (1ULL << i);
 					*keyix = i;
 					break;
 				}

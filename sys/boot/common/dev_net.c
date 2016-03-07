@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/dev_net.c 283062 2015-05-18 15:46:43Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/common/dev_net.c 296186 2016-02-29 09:03:07Z sgalabov $");
 
 /*-
  * This module implements a "raw device" interface suitable for
@@ -111,7 +111,6 @@ net_init(void)
 static int
 net_open(struct open_file *f, ...)
 {
-	char temp[FNAME_SIZE];
 	struct iodesc *d;
 	va_list args;
 	char *devname;		/* Device part of file name (or NULL). */
@@ -164,8 +163,7 @@ net_open(struct open_file *f, ...)
 		 * info from bootp or other sources.
 		 */
 		d = socktodesc(netdev_sock);
-		sprintf(temp, "%6D", d->myea, ":");
-		setenv("boot.netif.hwaddr", temp, 1);
+		setenv("boot.netif.hwaddr", ether_sprintf(d->myea), 1);
 		setenv("boot.netif.ip", inet_ntoa(myip), 1);
 		setenv("boot.netif.netmask", intoa(netmask), 1);
 		setenv("boot.netif.gateway", inet_ntoa(gateip), 1);

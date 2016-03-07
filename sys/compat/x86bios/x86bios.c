@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/x86bios/x86bios.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/compat/x86bios/x86bios.c 295767 2016-02-18 19:37:39Z jkim $");
 
 #include "opt_x86bios.h"
 
@@ -586,7 +586,7 @@ x86bios_call(struct x86regs *regs, uint16_t seg, uint16_t off)
 		X86BIOS_TRACE(Calling 0x%06x, (seg << 4) + off, regs);
 
 	mtx_lock(&x86bios_lock);
-	memcpy(&x86bios_emu.x86, regs, sizeof(*regs));
+	memcpy((struct x86regs *)&x86bios_emu.x86, regs, sizeof(*regs));
 	x86bios_fault = 0;
 	spinlock_enter();
 	x86emu_exec_call(&x86bios_emu, seg, off);
@@ -628,7 +628,7 @@ x86bios_intr(struct x86regs *regs, int intno)
 		X86BIOS_TRACE(Calling INT 0x%02x, intno, regs);
 
 	mtx_lock(&x86bios_lock);
-	memcpy(&x86bios_emu.x86, regs, sizeof(*regs));
+	memcpy((struct x86regs *)&x86bios_emu.x86, regs, sizeof(*regs));
 	x86bios_fault = 0;
 	spinlock_enter();
 	x86emu_exec_intr(&x86bios_emu, intno);

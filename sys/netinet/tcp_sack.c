@@ -71,7 +71,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_sack.c 292003 2015-12-08 21:21:48Z hiren $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_sack.c 292309 2015-12-16 00:56:45Z rrs $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -599,7 +599,7 @@ tcp_sack_partialack(struct tcpcb *tp, struct tcphdr *th)
 	if (tp->snd_cwnd > tp->snd_ssthresh)
 		tp->snd_cwnd = tp->snd_ssthresh;
 	tp->t_flags |= TF_ACKNOW;
-	(void) tcp_output(tp);
+	(void) tp->t_fb->tfb_tcp_output(tp);
 }
 
 #if 0

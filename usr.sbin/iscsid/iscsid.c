@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iscsid/iscsid.c 278236 2015-02-05 07:32:24Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/iscsid.c 294670 2016-01-24 18:11:36Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/iscsid/iscsid.c 278236 2015-02-05 07:32:24Z tr
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <libutil.h>
 #include <netdb.h>
 #include <signal.h>
 #include <stdbool.h>
@@ -50,8 +51,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/iscsid/iscsid.c 278236 2015-02-05 07:32:24Z tr
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <libutil.h>
 
 #include "iscsid.h"
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_e500.c 282676 2015-05-09 09:21:59Z bz $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_e500.c 294197 2016-01-17 00:14:22Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/pmc.h>
@@ -523,6 +523,7 @@ e500_allocate_pmc(int cpu, int ri, struct pmc *pm,
 		pe_cpu_mask = ev->pe_code & PMC_PPC_E500V2;
 		break;
 	case FSL_E500mc:
+	case FSL_E5500:
 		pe_cpu_mask = ev->pe_code & PMC_PPC_E500MC;
 		break;
 	}

@@ -27,11 +27,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps.c 289426 2015-10-16 17:56:43Z scottl $
+ * $FreeBSD: head/sys/dev/mps/mps.c 295286 2016-02-04 23:38:55Z scottl $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 289426 2015-10-16 17:56:43Z scottl $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 295286 2016-02-04 23:38:55Z scottl $");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
@@ -1476,6 +1476,14 @@ mps_setup_sysctl(struct mps_softc *sc)
 	    OID_AUTO, "spinup_wait_time", CTLFLAG_RD,
 	    &sc->spinup_wait_time, DEFAULT_SPINUP_WAIT, "seconds to wait for "
 	    "spinup after SATA ID error");
+
+	SYSCTL_ADD_PROC(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),
+	    OID_AUTO, "mapping_table_dump", CTLTYPE_STRING | CTLFLAG_RD, sc, 0,
+	    mps_mapping_dump, "A", "Mapping Table Dump");
+
+	SYSCTL_ADD_PROC(sysctl_ctx, SYSCTL_CHILDREN(sysctl_tree),
+	    OID_AUTO, "encl_table_dump", CTLTYPE_STRING | CTLFLAG_RD, sc, 0,
+	    mps_mapping_encl_dump, "A", "Enclosure Table Dump");
 }
 
 int

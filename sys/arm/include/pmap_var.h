@@ -24,13 +24,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/pmap_var.h 280712 2015-03-26 21:13:53Z ian $
+ * $FreeBSD: head/sys/arm/include/pmap_var.h 295695 2016-02-17 12:57:05Z skra $
  */
 
 #ifndef _MACHINE_PMAP_VAR_H_
 #define _MACHINE_PMAP_VAR_H_
 
 #include <machine/cpu-v6.h>
+#include <machine/pte-v6.h>
 /*
  *  Various PMAP defines, exports, and inline functions
  *  definitions also usable in other MD code.

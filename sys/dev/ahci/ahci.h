@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ahci/ahci.h 291444 2015-11-29 11:28:04Z mmel $
+ * $FreeBSD: head/sys/dev/ahci/ahci.h 294883 2016-01-27 02:23:54Z jhibbits $
  */
 
 /* ATA register defines */
@@ -626,7 +626,7 @@ int ahci_detach(device_t dev);
 int ahci_setup_interrupt(device_t dev);
 int ahci_print_child(device_t dev, device_t child);
 struct resource *ahci_alloc_resource(device_t dev, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags);
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags);
 int ahci_release_resource(device_t dev, device_t child, int type, int rid,
     struct resource *r);
 int ahci_setup_intr(device_t dev, device_t child, struct resource *irq, 

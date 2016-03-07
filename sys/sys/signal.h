@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: head/sys/sys/signal.h 233519 2012-03-26 19:12:09Z rmh $
+ * $FreeBSD: head/sys/sys/signal.h 295561 2016-02-12 07:38:19Z kib $
  */
 
 #ifndef _SYS_SIGNAL_H_
@@ -354,24 +354,27 @@ typedef	void __siginfohandler_t(int, struct __siginfo *, void *);
 #endif
 
 #if __XSI_VISIBLE
-/*
- * Structure used in sigaltstack call.
- */
 #if __BSD_VISIBLE
-typedef	struct sigaltstack {
-#else
-typedef	struct {
+#define	__stack_t sigaltstack
 #endif
-	char	*ss_sp;			/* signal stack base */
-	__size_t ss_size;		/* signal stack length */
-	int	ss_flags;		/* SS_DISABLE and/or SS_ONSTACK */
-} stack_t;
+typedef	struct __stack_t stack_t;
 
 #define	SS_ONSTACK	0x0001	/* take signal on alternate stack */
 #define	SS_DISABLE	0x0004	/* disable taking signals on alternate stack */
 #define	MINSIGSTKSZ	__MINSIGSTKSZ		/* minimum stack size */
 #define	SIGSTKSZ	(MINSIGSTKSZ + 32768)	/* recommended stack size */
 #endif
+
+/*
+ * Structure used in sigaltstack call.  Its definition is always
+ * needed for __ucontext.  If __BSD_VISIBLE is defined, the structure
+ * tag is actually sigaltstack.
+ */
+struct __stack_t {
+	void	*ss_sp;			/* signal stack base */
+	__size_t ss_size;		/* signal stack length */
+	int	ss_flags;		/* SS_DISABLE and/or SS_ONSTACK */
+};
 
 #if __BSD_VISIBLE
 /*
@@ -406,8 +409,7 @@ struct osigcontext {
  * Structure used in sigstack call.
  */
 struct sigstack {
-	/* XXX ss_sp's type should be `void *'. */
-	char	*ss_sp;			/* signal stack pointer */
+	void	*ss_sp;			/* signal stack pointer */
 	int	ss_onstack;		/* current status */
 };
 #endif

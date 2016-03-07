@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/smbfs/smbfs_subr.h 264494 2014-04-15 09:10:01Z ae $
+ * $FreeBSD: head/sys/fs/smbfs/smbfs_subr.h 293679 2016-01-11 18:11:06Z ae $
  */
 #ifndef _FS_SMBFS_SMBFS_SUBR_H_
 #define _FS_SMBFS_SMBFS_SUBR_H_
@@ -128,7 +128,8 @@ int  smbfs_smb_lock(struct smbnode *np, int op, caddr_t id,
 	off_t start, off_t end,	struct smb_cred *scred);
 int  smbfs_smb_statfs(struct smb_share *ssp, struct statfs *sbp,
 	struct smb_cred *scred);
-int  smbfs_smb_setfsize(struct smbnode *np, int newsize, struct smb_cred *scred);
+int  smbfs_smb_setfsize(struct smbnode *np, int64_t newsize,
+	struct smb_cred *scred);
 
 int  smbfs_smb_query_info(struct smbnode *np, const char *name, int len,
 	struct smbfattr *fap, struct smb_cred *scred);

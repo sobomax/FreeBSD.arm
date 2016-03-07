@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: if_ethersubr.c,v 1.5 1994/12/13 22:31:45 wollman Exp
- * $FreeBSD: head/sys/net/if_fddisubr.c 290383 2015-11-05 07:26:32Z gnn $
+ * $FreeBSD: head/sys/net/if_fddisubr.c 293544 2016-01-09 16:34:37Z melifaro $
  */
 
 #include "opt_inet.h"
@@ -119,9 +119,8 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	getmicrotime(&ifp->if_lastchange);
 
 #if defined(INET) || defined(INET6)
-	if (ro != NULL && ro->ro_rt != NULL &&
-	    (ro->ro_rt->rt_flags & RTF_GATEWAY) != 0)
-		is_gw = 1;
+	if (ro != NULL)
+		is_gw = (ro->ro_flags & RT_HAS_GW) != 0;
 #endif
 
 	switch (dst->sa_family) {

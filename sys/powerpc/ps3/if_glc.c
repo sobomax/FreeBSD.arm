@@ -22,7 +22,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/ps3/if_glc.c 271860 2014-09-19 09:20:34Z glebius $
+ * $FreeBSD: head/sys/powerpc/ps3/if_glc.c 295880 2016-02-22 09:02:20Z skra $
  */
 
 #include <sys/param.h>
@@ -51,7 +51,6 @@
 #include <machine/pio.h>
 #include <machine/bus.h>
 #include <machine/platform.h>
-#include <machine/pmap.h>
 #include <machine/resource.h>
 #include <sys/bus.h>
 #include <sys/rman.h>

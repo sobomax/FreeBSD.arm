@@ -73,15 +73,12 @@
  */
 #include <machine/armreg.h>
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale.S 271398 2014-09-10 15:25:15Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale.S 295267 2016-02-04 17:01:38Z mmel $");
 
 /*
  * Size of the XScale core D-cache.
  */
 #define	DCACHE_SIZE		0x00008000
-
-.Lblock_userspace_access:
-	.word	_C_LABEL(block_userspace_access)
 
 /*
  * CPWAIT -- Canonical method to wait for CP15 update.
@@ -137,11 +134,6 @@ ENTRY(xscale_setttb)
 	mrs	r3, cpsr
 	orr	r1, r3, #(PSR_I | PSR_F)
 	msr	cpsr_fsxc, r1
-#else
-	ldr	r3, .Lblock_userspace_access
-	ldr	r2, [r3]
-	orr	r1, r2, #1
-	str	r1, [r3]
 #endif
 	stmfd	sp!, {r0-r3, lr}
 	bl	_C_LABEL(xscale_cache_cleanID)
@@ -165,8 +157,6 @@ ENTRY(xscale_setttb)
 
 #ifdef CACHE_CLEAN_BLOCK_INTR
 	msr	cpsr_fsxc, r3
-#else
-	str	r2, [r3]
 #endif
 	RET
 END(xscale_setttb)
@@ -273,14 +263,9 @@ _C_LABEL(xscale_minidata_clean_size):
 #define	XSCALE_CACHE_CLEAN_UNBLOCK					\
 	msr	cpsr_fsxc, r3
 #else
-#define	XSCALE_CACHE_CLEAN_BLOCK					\
-	ldr	r3, .Lblock_userspace_access			;	\
-	ldr	ip, [r3]					;	\
-	orr	r0, ip, #1					;	\
-	str	r0, [r3]
+#define	XSCALE_CACHE_CLEAN_BLOCK
 
-#define	XSCALE_CACHE_CLEAN_UNBLOCK					\
-	str	ip, [r3]
+#define	XSCALE_CACHE_CLEAN_UNBLOCK
 #endif /* CACHE_CLEAN_BLOCK_INTR */
 
 #define	XSCALE_CACHE_CLEAN_PROLOGUE					\

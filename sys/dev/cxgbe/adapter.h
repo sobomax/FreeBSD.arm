@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/adapter.h 291665 2015-12-03 00:02:01Z jhb $
+ * $FreeBSD: head/sys/dev/cxgbe/adapter.h 296383 2016-03-04 13:11:13Z np $
  *
  */
 
@@ -758,15 +758,15 @@ struct adapter {
 	struct sge sge;
 	int lro_timeout;
 
-	struct taskqueue *tq[NCHAN];	/* General purpose taskqueues */
+	struct taskqueue *tq[MAX_NCHAN];	/* General purpose taskqueues */
 	struct port_info *port[MAX_NPORTS];
-	uint8_t chan_map[NCHAN];
+	uint8_t chan_map[MAX_NCHAN];
 
 #ifdef TCP_OFFLOAD
 	void *tom_softc;	/* (struct tom_data *) */
 	struct tom_tunables tt;
 	void *iwarp_softc;	/* (struct c4iw_dev *) */
-	void *iscsi_softc;
+	void *iscsi_ulp_softc;	/* (struct cxgbei_data *) */
 #endif
 	struct l2t_data *l2t;	/* L2 table */
 	struct tid_info tids;
@@ -791,6 +791,7 @@ struct adapter {
 	char cfg_file[32];
 	u_int cfcsum;
 	struct adapter_params params;
+	const struct chip_params *chip_params;
 	struct t4_virt_res vres;
 
 	uint16_t linkcaps;
@@ -813,7 +814,7 @@ struct adapter {
 	struct mtx regwin_lock;	/* for indirect reads and memory windows */
 
 	an_handler_t an_handler __aligned(CACHE_LINE_SIZE);
-	fw_msg_handler_t fw_msg_handler[5];	/* NUM_FW6_TYPES */
+	fw_msg_handler_t fw_msg_handler[7];	/* NUM_FW6_TYPES */
 	cpl_handler_t cpl_handler[0xef];	/* NUM_CPL_CMDS */
 
 #ifdef INVARIANTS
@@ -1008,6 +1009,22 @@ is_40G_port(const struct port_info *pi)
 {
 
 	return ((pi->link_cfg.supported & FW_PORT_CAP_SPEED_40G) != 0);
+}
+
+static inline int
+port_top_speed(const struct port_info *pi)
+{
+
+	if (pi->link_cfg.supported & FW_PORT_CAP_SPEED_100G)
+		return (100);
+	if (pi->link_cfg.supported & FW_PORT_CAP_SPEED_40G)
+		return (40);
+	if (pi->link_cfg.supported & FW_PORT_CAP_SPEED_10G)
+		return (10);
+	if (pi->link_cfg.supported & FW_PORT_CAP_SPEED_1G)
+		return (1);
+
+	return (0);
 }
 
 static inline int

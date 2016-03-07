@@ -1,5 +1,5 @@
 #	from: @(#)bsd.doc.mk	5.3 (Berkeley) 1/2/91
-# $FreeBSD: head/share/mk/bsd.doc.mk 290773 2015-11-13 17:27:23Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.doc.mk 296121 2016-02-26 22:13:48Z bdrewery $
 #
 # The include file <bsd.doc.mk> handles installing BSD troff documents.
 #
@@ -107,9 +107,11 @@ COMPAT?=	-C
 
 .PATH: ${.CURDIR} ${SRCDIR}
 
+.if !defined(_SKIP_BUILD)
 .for _dev in ${PRINTERDEVICE}
 all: ${DFILE.${_dev}}
 .endfor
+.endif
 
 .if !target(print)
 .for _dev in ${PRINTERDEVICE}

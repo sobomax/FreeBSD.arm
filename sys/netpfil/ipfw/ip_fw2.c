@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 291993 2015-12-08 10:50:03Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 295969 2016-02-24 13:16:03Z ae $");
 
 /*
  * The FreeBSD IP packet firewall, main file
@@ -1711,7 +1711,7 @@ do {								\
 					break;
 
 				/* DSCP bitmask is stored as low_u32 high_u32 */
-				if (x > 32)
+				if (x >= 32)
 					match = *(p + 1) & (1 << (x - 32));
 				else
 					match = *p & (1 << x);
@@ -2814,11 +2814,10 @@ vnet_ipfw_uninit(const void *unused)
 
 	IPFW_UH_WLOCK(chain);
 	IPFW_UH_WUNLOCK(chain);
-	IPFW_UH_WLOCK(chain);
 
-	IPFW_WLOCK(chain);
 	ipfw_dyn_uninit(0);	/* run the callout_drain */
-	IPFW_WUNLOCK(chain);
+
+	IPFW_UH_WLOCK(chain);
 
 	reap = NULL;
 	IPFW_WLOCK(chain);

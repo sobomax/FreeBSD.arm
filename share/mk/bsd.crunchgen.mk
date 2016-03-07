@@ -27,7 +27,7 @@
 # If CRUNCH_GENERATE_LINKS is set to no, no links will be generated.
 #
 
-# $FreeBSD: head/share/mk/bsd.crunchgen.mk 291223 2015-11-23 23:04:52Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.crunchgen.mk 296121 2016-02-26 22:13:48Z bdrewery $
 
 ##################################################################
 #  The following is pretty nearly a generic crunchgen-handling makefile
@@ -70,7 +70,9 @@ LINKS+= ${BINDIR}/${PROG} ${BINDIR}/${A}
 .endfor
 .endfor
 
+.if !defined(_SKIP_BUILD)
 all: ${PROG}
+.endif
 exe: ${PROG}
 
 ${CONF}: Makefile

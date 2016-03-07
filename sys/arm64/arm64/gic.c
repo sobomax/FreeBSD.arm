@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic.c 292064 2015-12-10 16:40:38Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic.c 295512 2016-02-11 11:55:37Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -303,29 +303,6 @@ gic_ipi_send(device_t dev, cpuset_t cpus, u_int ipi)
 
 	gic_d_write_4(sc, GICD_SGIR(0), val | ipi);
 }
-
-static int
-arm_gic_ipi_read(device_t dev, int i)
-{
-
-	if (i != -1) {
-		/*
-		 * The intr code will automagically give the frame pointer
-		 * if the interrupt argument is 0.
-		 */
-		if ((unsigned int)i > 16)
-			return (0);
-		return (i);
-	}
-
-	return (0x3ff);
-}
-
-static void
-arm_gic_ipi_clear(device_t dev, int ipi)
-{
-	/* no-op */
-}
 #endif
 
 static device_method_t arm_gic_methods[] = {
@@ -354,22 +331,6 @@ DEFINE_CLASS_0(gic, arm_gic_driver, arm_gic_methods,
 #define	 MSI_TYPER_SPI_COUNT(x)	(((x) >> 0) & 0x3ff)
 #define	GICv2M_MSI_SETSPI_NS	0x040
 #define	GICV2M_MSI_IIDR		0xFCC
-
-struct gicv2m_softc {
-	struct resource	*sc_mem;
-	struct mtx	sc_mutex;
-	u_int		sc_spi_start;
-	u_int		sc_spi_count;
-	u_int		sc_spi_offset;
-};
-
-static int
-gicv2m_probe(device_t dev)
-{
-
-	device_set_desc(dev, "ARM Generic Interrupt Controller MSI/MSIX");
-	return (BUS_PROBE_DEFAULT);
-}
 
 static int
 gicv2m_attach(device_t dev)
@@ -432,6 +393,39 @@ gicv2m_alloc_msix(device_t dev, device_t pci_dev, int *pirq)
 }
 
 static int
+gicv2m_alloc_msi(device_t dev, device_t pci_dev, int count, int *irqs)
+{
+	struct arm_gic_softc *psc;
+	struct gicv2m_softc *sc;
+	uint32_t reg;
+	int i, irq;
+
+	psc = device_get_softc(device_get_parent(dev));
+	sc = device_get_softc(dev);
+
+	mtx_lock(&sc->sc_mutex);
+	KASSERT(sc->sc_spi_offset + count <= sc->sc_spi_count,
+	    ("No free SPIs for %d MSI interrupts", count));
+
+	/* Find an unused interrupt */
+	for (i = 0; i < count; i++) {
+		irq = sc->sc_spi_start + sc->sc_spi_offset;
+		sc->sc_spi_offset++;
+
+		/* Interrupts need to be edge triggered, set this */
+		reg = gic_d_read_4(psc, GICD_ICFGR(irq >> 4));
+		reg |= (GICD_ICFGR_TRIG_EDGE | GICD_ICFGR_POL_HIGH) <<
+		    ((irq & 0xf) * 2);
+		gic_d_write_4(psc, GICD_ICFGR(irq >> 4), reg);
+
+		irqs[i] = irq;
+	}
+	mtx_unlock(&sc->sc_mutex);
+
+	return (0);
+}
+
+static int
 gicv2m_map_msi(device_t dev, device_t pci_dev, int irq, uint64_t *addr,
     uint32_t *data)
 {
@@ -445,19 +439,15 @@ gicv2m_map_msi(device_t dev, device_t pci_dev, int irq, uint64_t *addr,
 
 static device_method_t arm_gicv2m_methods[] = {
 	/* Device interface */
-	DEVMETHOD(device_probe,		gicv2m_probe),
 	DEVMETHOD(device_attach,	gicv2m_attach),
 
-	/* MSI-X */
+	/* MSI/MSI-X */
 	DEVMETHOD(pic_alloc_msix,	gicv2m_alloc_msix),
+	DEVMETHOD(pic_alloc_msi,	gicv2m_alloc_msi),
 	DEVMETHOD(pic_map_msi,		gicv2m_map_msi),
 
 	{ 0, 0 }
 };
 
-static devclass_t arm_gicv2m_devclass;
-
 DEFINE_CLASS_0(gicv2m, arm_gicv2m_driver, arm_gicv2m_methods,
     sizeof(struct gicv2m_softc));
-EARLY_DRIVER_MODULE(gicv2m, gic, arm_gicv2m_driver, arm_gicv2m_devclass,
-    0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_MIDDLE);

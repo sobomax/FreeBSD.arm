@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 291115 2015-11-20 23:15:05Z bapt $
+# $FreeBSD: head/usr.bin/Makefile 295945 2016-02-24 00:39:36Z sobomax $
 
 .include <src.opts.mk>
 
@@ -99,7 +99,6 @@ SUBDIR=	alias \
 	mkimg \
 	mklocale \
 	mktemp \
-	mkulzma \
 	mkuzip \
 	mt \
 	ncal \
@@ -268,7 +267,8 @@ SUBDIR.${MK_TOOLCHAIN}+=	ctags
 SUBDIR.${MK_TOOLCHAIN}+=	cxxfilt
 SUBDIR.${MK_TOOLCHAIN}+=	elfcopy
 SUBDIR.${MK_TOOLCHAIN}+=	file2c
-.if ${MACHINE_ARCH} != "aarch64" # ARM64TODO gprof does not build
+.if ${MACHINE_ARCH} != "aarch64" && \ # ARM64TODO gprof does not build
+    ${MACHINE_CPUARCH} != "riscv" # RISCVTODO gprof does not build
 SUBDIR.${MK_TOOLCHAIN}+=	gprof
 .endif
 SUBDIR.${MK_TOOLCHAIN}+=	indent
@@ -290,7 +290,9 @@ SUBDIR.${MK_VT}+=	vtfontcvt
 SUBDIR.${MK_USB}+=	usbhidaction
 SUBDIR.${MK_USB}+=	usbhidctl
 SUBDIR.${MK_UTMPX}+=	last
+.if ${MACHINE_CPUARCH} != "riscv" # RISCVTODO users does not build
 SUBDIR.${MK_UTMPX}+=	users
+.endif
 SUBDIR.${MK_UTMPX}+=	who
 SUBDIR.${MK_SVN}+=	svn
 SUBDIR.${MK_SVNLITE}+=	svn

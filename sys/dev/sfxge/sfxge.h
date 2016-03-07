@@ -30,7 +30,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/sfxge.h 291843 2015-12-05 07:04:11Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/sfxge.h 294996 2016-01-28 16:51:56Z glebius $
  */
 
 #ifndef _SFXGE_H
@@ -273,14 +273,17 @@ struct sfxge_softc {
 	size_t				rx_prefix_size;
 	size_t				rx_buffer_size;
 	size_t				rx_buffer_align;
-	uma_zone_t			rx_buffer_zone;
+	int				rx_cluster_size;
 
 	unsigned int			evq_max;
 	unsigned int			evq_count;
 	unsigned int			rxq_count;
 	unsigned int			txq_count;
 
-	int				tso_fw_assisted;
+	unsigned int			tso_fw_assisted;
+#define	SFXGE_FATSOV1	(1 << 0)
+#define	SFXGE_FATSOV2	(1 << 1)
+
 #if EFSYS_OPT_MCDI_LOGGING
 	int				mcdi_logging;
 #endif

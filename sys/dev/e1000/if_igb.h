@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_igb.h 287465 2015-09-04 16:07:27Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/if_igb.h 295906 2016-02-23 01:19:26Z marius $*/
 
 #ifndef _IF_IGB_H_
 #define _IF_IGB_H_
@@ -278,7 +278,7 @@
 #define HW_DEBUGOUT1(S, A)          if (DEBUG_HW) printf(S "\n", A)
 #define HW_DEBUGOUT2(S, A, B)       if (DEBUG_HW) printf(S "\n", A, B)
 
-#define IGB_MAX_SCATTER		64
+#define IGB_MAX_SCATTER		40
 #define IGB_VFTA_SIZE		128
 #define IGB_BR_SIZE		4096	/* ring buf size */
 #define IGB_TSO_SIZE		(65535 + sizeof(struct ether_vlan_header))
@@ -355,7 +355,6 @@ struct tx_ring {
 	volatile u16		tx_avail;
 	u16			next_avail_desc;
 	u16			next_to_clean;
-	u16			process_limit;
 	u16			num_desc;
 	enum {
 	    IGB_QUEUE_IDLE = 1,
@@ -513,20 +512,19 @@ struct adapter {
 	u8			*mta;
 
 	/* Misc stats maintained by the driver */
-	unsigned long   	dropped_pkts;
-	unsigned long   	mbuf_defrag_failed;
-	unsigned long   	mbuf_header_failed;
-	unsigned long   	mbuf_packet_failed;
-	unsigned long		no_tx_dma_setup;
-	unsigned long   	watchdog_events;
-	unsigned long		link_irq;
-	unsigned long		rx_overruns;
 	unsigned long		device_control;
-	unsigned long		rx_control;
-	unsigned long		int_mask;
+	unsigned long   	dropped_pkts;
 	unsigned long		eint_mask;
+	unsigned long		int_mask;
+	unsigned long		link_irq;
+	unsigned long   	mbuf_defrag_failed;
+	unsigned long		no_tx_dma_setup;
 	unsigned long		packet_buf_alloc_rx;
 	unsigned long		packet_buf_alloc_tx;
+	unsigned long		rx_control;
+	unsigned long		rx_overruns;
+	unsigned long   	watchdog_events;
+
 	/* Used in pf and vf */
 	void			*stats;
 
@@ -534,6 +532,7 @@ struct adapter {
 	int			has_manage;
 	int			wol;
 	int			rx_process_limit;
+	int			tx_process_limit;
 	u16			vf_ifp;  /* a VF interface */
 	bool			in_detach; /* Used only in igb_ioctl */
 

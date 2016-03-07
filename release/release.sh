@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: head/release/release.sh 289337 2015-10-14 22:33:11Z gjb $
+# $FreeBSD: head/release/release.sh 293452 2016-01-09 00:45:38Z gjb $
 #
 
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"
@@ -275,6 +275,7 @@ extra_chroot_setup() {
 			PBUILD_FLAGS="${PBUILD_FLAGS} OSREL=${REVISION}"
 			chroot ${CHROOTDIR} make -C /usr/ports/textproc/docproj \
 				${PBUILD_FLAGS} OPTIONS_UNSET="FOP IGOR" \
+				FORCE_PKG_REGISTER=1 \
 				install clean distclean
 		fi
 	fi

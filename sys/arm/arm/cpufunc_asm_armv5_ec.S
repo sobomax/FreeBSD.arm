@@ -37,7 +37,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv5_ec.S 275417 2014-12-02 18:35:34Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv5_ec.S 295207 2016-02-03 13:47:50Z mmel $");
 
 /*
  * Functions to set the MMU Translation Table Base register
@@ -91,9 +91,7 @@ ENTRY_NP(armv5_ec_icache_sync_range)
 	bpl	1b
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 	RET
-END(armv5_ec_icache_sync_range)
 
-ENTRY_NP(armv5_ec_icache_sync_all)
 .Larmv5_ec_icache_sync_all:
 	/*
 	 * We assume that the code here can never be out of sync with the
@@ -109,7 +107,7 @@ ENTRY_NP(armv5_ec_icache_sync_all)
 	bne	1b			/* More to do? */
 	mcr	p15, 0, r0, c7, c10, 4	/* drain the write buffer */
 	RET
-END(armv5_ec_icache_sync_all)
+END(armv5_ec_icache_sync_range)
 
 .Larmv5_ec_line_size:
 	.word	_C_LABEL(arm_pdcache_line_size)

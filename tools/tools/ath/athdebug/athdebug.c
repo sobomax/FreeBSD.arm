@@ -26,12 +26,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athdebug/athdebug.c 287297 2015-08-29 19:47:20Z rodrigc $
+ * $FreeBSD: head/tools/tools/ath/athdebug/athdebug.c 295363 2016-02-07 04:28:03Z adrian $
  */
 
 /*
  * athdebug [-i interface] flags
- * (default interface is ath0).
+ * (default interface is wlan0).
  */
 
 #include <sys/param.h>
@@ -156,7 +156,7 @@ main(int argc, char *argv[])
 
 	ifname = getenv("ATH");
 	if (ifname == NULL)
-		ifname = "ath0";
+		ifname = ATH_DEFAULT;
 	progname = argv[0];
 	if (argc > 1) {
 		if (strcmp(argv[1], "-i") == 0) {

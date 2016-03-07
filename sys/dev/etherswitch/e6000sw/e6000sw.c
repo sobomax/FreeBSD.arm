@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/etherswitch/e6000sw/e6000sw.c 289947 2015-10-25 22:14:04Z zbb $");
+__FBSDID("$FreeBSD: head/sys/dev/etherswitch/e6000sw/e6000sw.c 292738 2015-12-26 02:31:39Z adrian $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -54,7 +54,7 @@ __FBSDID("$FreeBSD: head/sys/dev/etherswitch/e6000sw/e6000sw.c 289947 2015-10-25
 #include <arm/mv/mvvar.h>
 
 #include <dev/etherswitch/etherswitch.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
 #include <dev/mge/if_mgevar.h>

@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -67,7 +67,6 @@ __FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 283291 2015-05-22 17:05:21Z jkim $")
 #include <dev/cp/cpddk.h>
 #include <machine/cserial.h>
 #include <machine/resource.h>
-#include <machine/pmap.h>
 
 /* If we don't have Cronyx's sppp version, we don't have fr support via sppp */
 #ifndef PP_FR

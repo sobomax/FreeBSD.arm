@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libc/gen/tls.c 288029 2015-09-20 20:23:16Z rodrigc $
+ *	$FreeBSD: head/lib/libc/gen/tls.c 294227 2016-01-17 15:21:23Z br $
  */
 
 /*
@@ -64,15 +64,16 @@ void __libc_free_tls(void *tls, size_t tcbsize, size_t tcbalign);
 
 #if defined(__amd64__)
 #define TLS_TCB_ALIGN 16
-#elif defined(__powerpc__) || defined(__i386__) || defined(__arm__) || \
-    defined(__sparc64__) || defined(__mips__) || defined(__aarch64__)
+#elif defined(__aarch64__) || defined(__arm__) || defined(__i386__) || \
+    defined(__mips__) || defined(__powerpc__) || defined(__riscv__) || \
+    defined(__sparc64__)
 #define TLS_TCB_ALIGN sizeof(void *)
 #else
 #error TLS_TCB_ALIGN undefined for target architecture
 #endif
 
-#if defined(__arm__) || defined(__mips__) || defined(__powerpc__) || \
-    defined(__aarch64__)
+#if defined(__aarch64__) || defined(__arm__) || defined(__mips__) || \
+    defined(__powerpc__) || defined(__riscv__)
 #define TLS_VARIANT_I
 #endif
 #if defined(__i386__) || defined(__amd64__) || defined(__sparc64__)

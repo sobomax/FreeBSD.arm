@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.sbin/etcupdate/etcupdate.8 288380 2015-09-29 17:49:59Z bdrewery $
+.\" $FreeBSD: head/usr.sbin/etcupdate/etcupdate.8 296204 2016-02-29 17:24:34Z trasz $
 .\"
 .Dd September 29, 2015
 .Dt ETCUPDATE 8
@@ -757,7 +757,7 @@ has been removed from the
 tree,
 but it has been locally modified.
 The modified version of the file remains in the destination directory.
-.It "Needs update: /etc/localtime (required manual update via tzsetup(1))"
+.It "Needs update: /etc/localtime (required manual update via tzsetup(8))"
 The
 .Fa /var/db/zoneinfo
 file does not exist,
@@ -768,7 +768,7 @@ was not able to refresh
 from its source file in
 .Fa /usr/share/zoneinfo .
 Running
-.Xr tzsetup 1
+.Xr tzsetup 8
 will both refresh
 .Fa /etc/localtime
 and generate

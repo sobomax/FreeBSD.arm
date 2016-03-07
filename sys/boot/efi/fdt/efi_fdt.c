@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/fdt/efi_fdt.c 281028 2015-04-03 15:47:48Z andrew $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/fdt/efi_fdt.c 293724 2016-01-12 02:17:39Z smh $");
 
 #include <sys/param.h>
 #include <stand.h>
@@ -44,7 +44,6 @@ int
 fdt_platform_load_dtb(void)
 {
 	struct fdt_header *hdr;
-	int err;
 
 	hdr = efi_get_table(&fdtdtb);
 	if (hdr != NULL) {
@@ -54,7 +53,7 @@ fdt_platform_load_dtb(void)
 		}
 	}
 
-	return (err);
+	return (1);
 }
 
 void

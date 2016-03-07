@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/ctld.h 290615 2015-11-09 18:33:36Z mav $
+ * $FreeBSD: head/usr.sbin/ctld/ctld.h 295212 2016-02-03 15:45:13Z jceel $
  */
 
 #ifndef CTLD_H
@@ -297,8 +297,10 @@ int			rchap_receive(struct rchap *rchap,
 char			*rchap_get_response(struct rchap *rchap);
 void			rchap_delete(struct rchap *rchap);
 
+int			parse_conf(struct conf *conf, const char *path);
+int			uclparse_conf(struct conf *conf, const char *path);
+
 struct conf		*conf_new(void);
-struct conf		*conf_new_from_file(const char *path, struct conf *old);
 struct conf		*conf_new_from_kernel(void);
 void			conf_delete(struct conf *conf);
 int			conf_verify(struct conf *conf);

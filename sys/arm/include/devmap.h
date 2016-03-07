@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/devmap.h 290648 2015-11-10 12:02:41Z mmel $
+ * $FreeBSD: head/sys/arm/include/devmap.h 295694 2016-02-17 12:36:24Z skra $
  */
 
 #ifndef	_MACHINE_DEVMAP_H_
@@ -37,8 +37,6 @@ struct arm_devmap_entry {
 	vm_offset_t	pd_va;		/* virtual address */
 	vm_paddr_t	pd_pa;		/* physical address */
 	vm_size_t	pd_size;	/* size of region */
-	vm_prot_t	pd_prot;	/* protection code */
-	int		pd_cache;	/* cache attributes */
 };
 
 /*

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 286001 2015-07-29 08:12:05Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 293470 2016-01-09 09:34:39Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -40,6 +40,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/raw_ip.c 286001 2015-07-29 08:12:05Z ae $")
 #include <sys/param.h>
 #include <sys/jail.h>
 #include <sys/kernel.h>
+#include <sys/eventhandler.h>
 #include <sys/lock.h>
 #include <sys/malloc.h>
 #include <sys/mbuf.h>

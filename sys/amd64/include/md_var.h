@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/md_var.h 291949 2015-12-07 17:41:20Z kib $
+ * $FreeBSD: head/sys/amd64/include/md_var.h 292619 2015-12-22 20:08:32Z ngie $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -34,7 +34,6 @@
 
 #include <x86/x86_var.h>
 
-extern	char	ctx_switch_xsave[];
 extern  uint64_t *vm_page_dump;
 
 /* XXX */

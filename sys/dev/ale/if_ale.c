@@ -28,7 +28,7 @@
 /* Driver for Atheros AR8121/AR8113/AR8114 PCIe Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ale/if_ale.c 272721 2014-10-08 01:03:32Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/ale/if_ale.c 295735 2016-02-18 01:24:10Z yongari $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -603,7 +603,7 @@ ale_attach(device_t dev)
 	/* Create device sysctl node. */
 	ale_sysctl_node(sc);
 
-	if ((error = ale_dma_alloc(sc) != 0))
+	if ((error = ale_dma_alloc(sc)) != 0)
 		goto fail;
 
 	/* Load station address. */

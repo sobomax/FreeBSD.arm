@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm.c 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/vmm.c 296103 2016-02-26 16:18:47Z marcel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm.c 284539 2015-06-18 06:00:17Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm.c 296103 2016-02-26 16:18:47Z marcel $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,12 +53,10 @@ __FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm.c 284539 2015-06-18 06:00:17Z neel $"
 #include <vm/vm_param.h>
 
 #include <machine/cpu.h>
-#include <machine/vm.h>
 #include <machine/pcb.h>
 #include <machine/smp.h>
 #include <x86/psl.h>
 #include <x86/apicreg.h>
-#include <machine/vmparam.h>
 
 #include <machine/vmm.h>
 #include <machine/vmm_dev.h>
@@ -123,7 +121,7 @@ struct mem_seg {
 	bool	sysmem;
 	struct vm_object *object;
 };
-#define	VM_MAX_MEMSEGS	2
+#define	VM_MAX_MEMSEGS	3
 
 struct mem_map {
 	vm_paddr_t	gpa;

@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/tests/sys/kqueue/read.c 200483 2009-12-13 20:27:46Z rwatson $
+ * $FreeBSD: head/tests/sys/kqueue/read.c 295786 2016-02-19 01:49:33Z markj $
  */
 
 #include "common.h"
@@ -124,15 +124,17 @@ test_kevent_socket_disable_and_enable(void)
 
     test_begin(test_id);
 
-    /* Add an event, then disable it. */
-    EV_SET(&kev, sockfd[0], EVFILT_READ, EV_ADD, 0, 0, &sockfd[0]);
-    if (kevent(kqfd, &kev, 1, NULL, 0, NULL) < 0)
-        err(1, "%s", test_id);
-    EV_SET(&kev, sockfd[0], EVFILT_READ, EV_DISABLE, 0, 0, &sockfd[0]);
+    /*
+     * Write to the socket before adding the event. This way we can verify that
+     * enabling a triggered kevent causes the event to be returned immediately.
+     */
+    kevent_socket_fill();
+
+    /* Add a disabled event. */
+    EV_SET(&kev, sockfd[0], EVFILT_READ, EV_ADD | EV_DISABLE, 0, 0, &sockfd[0]);
     if (kevent(kqfd, &kev, 1, NULL, 0, NULL) < 0)
         err(1, "%s", test_id);
 
-    kevent_socket_fill();
     test_no_kevents();
 
     /* Re-enable the knote, then see if an event is generated */

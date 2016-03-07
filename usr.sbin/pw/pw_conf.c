@@ -26,7 +26,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_conf.c 286211 2015-08-02 19:49:24Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw_conf.c 292849 2015-12-29 00:08:32Z bapt $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -313,7 +313,7 @@ read_userconfig(char const * file)
 					? NULL : newstr(q);
 				break;
 			case _UC_EXTRAGROUPS:
-				for (i = 0; q != NULL; q = strtok(NULL, toks)) {
+				while ((q = strtok(NULL, toks)) != NULL) {
 					if (config.groups == NULL)
 						config.groups = sl_init();
 					sl_add(config.groups, newstr(q));

@@ -27,11 +27,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps_sas.c 279695 2015-03-06 16:17:08Z slm $
+ * $FreeBSD: head/sys/dev/mps/mps_sas.c 295113 2016-02-01 02:31:59Z araujo $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_sas.c 279695 2015-03-06 16:17:08Z slm $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_sas.c 295113 2016-02-01 02:31:59Z araujo $");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
@@ -2797,11 +2797,9 @@ mpssas_send_smpcmd(struct mpssas_softc *sassc, union ccb *ccb, uint64_t sasaddr)
 	uint8_t *request, *response;
 	MPI2_SMP_PASSTHROUGH_REQUEST *req;
 	struct mps_softc *sc;
-	struct sglist *sg;
 	int error;
 
 	sc = sassc->sc;
-	sg = NULL;
 	error = 0;
 
 	/*

@@ -1,7 +1,7 @@
 /*	$NecBSD: ct_isa.c,v 1.6 1999/07/26 06:32:01 honda Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ct/ct_isa.c 280347 2015-03-22 16:10:28Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ct/ct_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
 /*	$NetBSD$	*/
 
 /*-
@@ -318,8 +318,8 @@ ct_space_map(device_t dev, struct bshw *hw,
 	*memhp = NULL;
 
 	port_rid = 0;
-	*iohp = bus_alloc_resource(dev, SYS_RES_IOPORT, &port_rid, 0ul, ~0ul,
-				   BSHW_IOSZ, RF_ACTIVE);
+	*iohp = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &port_rid,
+					    BSHW_IOSZ, RF_ACTIVE);
 	if (*iohp == NULL)
 		return ENXIO;
 
@@ -327,8 +327,8 @@ ct_space_map(device_t dev, struct bshw *hw,
 		return 0;
 
 	mem_rid = 0;
-	*memhp = bus_alloc_resource(dev, SYS_RES_MEMORY, &mem_rid, 0ul, ~0ul,
-				    BSHW_MEMSZ, RF_ACTIVE);
+	*memhp = bus_alloc_resource_anywhere(dev, SYS_RES_MEMORY, &mem_rid,
+					     BSHW_MEMSZ, RF_ACTIVE);
 	if (*memhp == NULL) {
 		bus_release_resource(dev, SYS_RES_IOPORT, port_rid, *iohp);
 		return ENXIO;

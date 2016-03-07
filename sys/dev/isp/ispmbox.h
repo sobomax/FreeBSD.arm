@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/ispmbox.h 291654 2015-12-02 20:22:50Z mav $ */
+/* $FreeBSD: head/sys/dev/isp/ispmbox.h 292690 2015-12-24 14:53:29Z mav $ */
 /*-
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -1086,7 +1086,7 @@ typedef struct {
 #define	ICB_DFLT_RDELAY		5
 #define	ICB_DFLT_RCOUNT		3
 
-#define	ICB_LOGIN_TOV		30
+#define	ICB_LOGIN_TOV		10
 #define	ICB_LUN_ENABLE_TOV	15
 
 

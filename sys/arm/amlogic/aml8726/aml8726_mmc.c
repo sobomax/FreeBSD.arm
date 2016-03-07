@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_mmc.c 282129 2015-04-28 08:27:44Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_mmc.c 292180 2015-12-14 01:09:25Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1098,3 +1098,4 @@ static devclass_t aml8726_mmc_devclass;
 DRIVER_MODULE(aml8726_mmc, simplebus, aml8726_mmc_driver,
     aml8726_mmc_devclass, 0, 0);
 MODULE_DEPEND(aml8726_mmc, aml8726_gpio, 1, 1, 1);
+DRIVER_MODULE(mmc, aml8726_mmc, mmc_driver, mmc_devclass, NULL, NULL);

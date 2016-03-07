@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/common/main.c 291876 2015-12-05 23:59:30Z ngie $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/common/main.c 296182 2016-02-29 07:27:49Z sgalabov $");
 #include <sys/param.h>
 
 #include <stand.h>
@@ -132,8 +132,8 @@ meminfo(void)
 	for (i = 0; i < 3; i++) {
 		size = memsize(si, t[i]);
 		if (size > 0)
-			printf("%s: %lldMB\n", ub_mem_type(t[i]),
-			    size / 1024 / 1024);
+			printf("%s: %juMB\n", ub_mem_type(t[i]),
+			    (uintmax_t)(size / 1024 / 1024));
 	}
 }
 
@@ -426,7 +426,7 @@ main(void)
 	 * Set up console.
 	 */
 	cons_probe();
-	printf("Compatible U-Boot API signature found @%x\n", (uint32_t)sig);
+	printf("Compatible U-Boot API signature found @%p\n", sig);
 
 	printf("\n");
 	printf("%s, Revision %s\n", bootprog_name, bootprog_rev);
@@ -511,7 +511,7 @@ static int
 command_heap(int argc, char *argv[])
 {
 
-	printf("heap base at %p, top at %p, used %d\n", end, sbrk(0),
+	printf("heap base at %p, top at %p, used %td\n", end, sbrk(0),
 	    sbrk(0) - end);
 
 	return (CMD_OK);
@@ -573,17 +573,47 @@ enum ubenv_action {
 static void
 handle_uboot_env_var(enum ubenv_action action, const char * var)
 {
-	const char * val;
-	char ubv[128];
+	char ldvar[128];
+	const char *val;
+	char *wrk;
+	int len;
+
+	/*
+	 * On an import with the variable name formatted as ldname=ubname,
+	 * import the uboot variable ubname into the loader variable ldname,
+	 * otherwise the historical behavior is to import to uboot.ubname.
+	 */
+	if (action == UBENV_IMPORT) { 
+		len = strcspn(var, "=");
+		if (len == 0) {
+			printf("name cannot start with '=': '%s'\n", var);
+			return;
+		}
+		if (var[len] == 0) {
+			strcpy(ldvar, "uboot.");
+			strncat(ldvar, var, sizeof(ldvar) - 7);
+		} else {
+			len = MIN(len, sizeof(ldvar) - 1);
+			strncpy(ldvar, var, len);
+			ldvar[len] = 0;
+			var = &var[len + 1];
+		}
+	}
 
 	/*
 	 * If the user prepended "uboot." (which is how they usually see these
 	 * names) strip it off as a convenience.
 	 */
 	if (strncmp(var, "uboot.", 6) == 0) {
-		snprintf(ubv, sizeof(ubv), "%s", &var[6]);
-		var = ubv;
+		var = &var[6];
 	}
+
+	/* If there is no variable name left, punt. */
+	if (var[0] == 0) {
+		printf("empty variable name\n");
+		return;
+	}
+
 	val = ub_env_get(var);
 	if (action == UBENV_SHOW) {
 		if (val == NULL)
@@ -592,8 +622,7 @@ handle_uboot_env_var(enum ubenv_action action, const char * var)
 			printf("uboot.%s=%s\n", var, val);
 	} else if (action == UBENV_IMPORT) {
 		if (val != NULL) {
-			snprintf(ubv, sizeof(ubv), "uboot.%s", var);
-			setenv(ubv, val, 1);
+			setenv(ldvar, val, 1);
 		}
 	}
 }

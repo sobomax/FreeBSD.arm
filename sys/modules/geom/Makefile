@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/geom/Makefile 277678 2015-01-25 04:52:48Z ngie $
+# $FreeBSD: head/sys/modules/geom/Makefile 295945 2016-02-24 00:39:36Z sobomax $
 
 SYSDIR?=${.CURDIR}/../..
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -21,7 +21,6 @@ SUBDIR=	geom_bde \
 	geom_sched \
 	geom_shsec \
 	geom_stripe \
-	geom_uncompress \
 	geom_uzip \
 	geom_vinum \
 	geom_virstor \

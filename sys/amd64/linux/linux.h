@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/linux/linux.h 283487 2015-05-24 18:03:14Z dchagin $
+ * $FreeBSD: head/sys/amd64/linux/linux.h 294620 2016-01-23 08:04:29Z dchagin $
  */
 
 #ifndef _AMD64_LINUX_H_
@@ -530,8 +530,8 @@ struct l_pollfd {
 
 #define LINUX_ARCH_SET_GS		0x1001
 #define LINUX_ARCH_SET_FS		0x1002
-#define LINUX_ARCH_GET_GS		0x1003
-#define LINUX_ARCH_GET_FS		0x1004
+#define LINUX_ARCH_GET_FS		0x1003
+#define LINUX_ARCH_GET_GS		0x1004
 
 #define	linux_copyout_rusage(r, u)	copyout(r, u, sizeof(*r))
 

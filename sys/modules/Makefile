@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/Makefile 291744 2015-12-04 04:27:21Z bdrewery $
+# $FreeBSD: head/sys/modules/Makefile 296277 2016-03-01 18:12:14Z jhb $
 
 SYSDIR?=${.CURDIR}/..
 .include "${SYSDIR}/conf/kern.opts.mk"
@@ -31,7 +31,6 @@ SUBDIR=	\
 	ahci \
 	${_aic} \
 	aic7xxx \
-	aio \
 	alc \
 	ale \
 	alq \
@@ -220,6 +219,7 @@ SUBDIR=	\
 	malo \
 	mcd \
 	md \
+	mdio \
 	mem \
 	mfi \
 	mii \
@@ -310,6 +310,8 @@ SUBDIR=	\
 	re \
 	reiserfs \
 	rl \
+	rtwn \
+	${_rtwnfw} \
 	${_s3} \
 	${_safe} \
 	${_sbni} \
@@ -346,6 +348,7 @@ SUBDIR=	\
 	${_syscons} \
 	sysvipc \
 	${_ti} \
+	tcp/fastpath \
 	tests/framework \
 	tests/callout_test \
 	tl \
@@ -480,6 +483,7 @@ _fxp=		fxp
 _ispfw=		ispfw
 _mwlfw=		mwlfw
 _ralfw=		ralfw
+_rtwnfw=	rtwnfw
 _sf=		sf
 _ti=		ti
 _txp=		txp

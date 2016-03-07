@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  *	$OpenBSD: pfvar.h,v 1.282 2009/01/29 15:12:28 pyr Exp $
- *	$FreeBSD: head/sys/net/pfvar.h 289940 2015-10-25 18:09:03Z kp $
+ *	$FreeBSD: head/sys/net/pfvar.h 295126 2016-02-01 17:41:21Z glebius $
  */
 
 #ifndef _NET_PFVAR_H_
@@ -36,8 +36,10 @@
 #include <sys/param.h>
 #include <sys/queue.h>
 #include <sys/counter.h>
+#include <sys/malloc.h>
 #include <sys/refcount.h>
 #include <sys/tree.h>
+#include <vm/uma.h>
 
 #include <net/radix.h>
 #include <netinet/in.h>

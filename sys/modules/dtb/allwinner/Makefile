@@ -1,8 +1,10 @@
-# $FreeBSD: head/sys/modules/dtb/allwinner/Makefile 285250 2015-07-07 19:01:54Z loos $
+# $FreeBSD: head/sys/modules/dtb/allwinner/Makefile 295464 2016-02-10 09:19:29Z andrew $
 # All the dts files for allwinner systems we support.
 DTS=	\
 	bananapi.dts \
 	cubieboard.dts \
-	cubieboard2.dts
+	cubieboard2.dts \
+	olimex-a20-som-evb.dts \
+	olinuxino-lime.dts
 
 .include <bsd.dtb.mk>

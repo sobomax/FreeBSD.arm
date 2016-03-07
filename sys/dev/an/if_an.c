@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/an/if_an.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/an/if_an.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 /*
  * The Aironet 4500/4800 series cards come in PCMCIA, ISA and PCI form.
@@ -394,8 +394,8 @@ an_alloc_port(device_t dev, int rid, int size)
 	struct an_softc *sc = device_get_softc(dev);
 	struct resource *res;
 
-	res = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-				 0ul, ~0ul, size, RF_ACTIVE);
+	res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+					  size, RF_ACTIVE);
 	if (res) {
 		sc->port_rid = rid;
 		sc->port_res = res;
@@ -413,8 +413,8 @@ int an_alloc_memory(device_t dev, int rid, int size)
 	struct an_softc *sc = device_get_softc(dev);
 	struct resource *res;
 
-	res = bus_alloc_resource(dev, SYS_RES_MEMORY, &rid,
-				 0ul, ~0ul, size, RF_ACTIVE);
+	res = bus_alloc_resource_anywhere(dev, SYS_RES_MEMORY, &rid,
+					  size, RF_ACTIVE);
 	if (res) {
 		sc->mem_rid = rid;
 		sc->mem_res = res;
@@ -433,8 +433,8 @@ int an_alloc_aux_memory(device_t dev, int rid, int size)
 	struct an_softc *sc = device_get_softc(dev);
 	struct resource *res;
 
-	res = bus_alloc_resource(dev, SYS_RES_MEMORY, &rid,
-				 0ul, ~0ul, size, RF_ACTIVE);
+	res = bus_alloc_resource_anywhere(dev, SYS_RES_MEMORY, &rid,
+					  size, RF_ACTIVE);
 	if (res) {
 		sc->mem_aux_rid = rid;
 		sc->mem_aux_res = res;

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/scope6.c 291993 2015-12-08 10:50:03Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/scope6.c 295584 2016-02-12 21:17:00Z markj $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -371,7 +371,7 @@ sa6_recoverscope(struct sockaddr_in6 *sin6)
 			    zoneid != sin6->sin6_scope_id) {
 				log(LOG_NOTICE,
 				    "%s: embedded scope mismatch: %s%%%d. "
-				    "sin6_scope_id was overridden.", __func__,
+				    "sin6_scope_id was overridden\n", __func__,
 				    ip6_sprintf(ip6buf, &sin6->sin6_addr),
 				    sin6->sin6_scope_id);
 			}

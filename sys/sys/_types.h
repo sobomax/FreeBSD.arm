@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_types.h 276660 2015-01-04 15:26:02Z kevlo $
+ * $FreeBSD: head/sys/sys/_types.h 294883 2016-01-27 02:23:54Z jhibbits $
  */
 
 #ifndef _SYS__TYPES_H_
@@ -111,5 +111,7 @@ typedef union {
 	char		__mbstate8[128];
 	__int64_t	_mbstateL;	/* for alignment */
 } __mbstate_t;
+
+typedef unsigned long	__rman_res_t;
 
 #endif /* !_SYS__TYPES_H_ */

@@ -30,7 +30,7 @@
  * FDT 'simple-bus' attachment for Freescale TSEC controller.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec_fdt.c 270945 2014-09-01 18:51:01Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec_fdt.c 295662 2016-02-16 15:18:12Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -167,7 +167,7 @@ tsec_fdt_attach(device_t dev)
 	}
 
 	phy = OF_node_from_xref(phy);
-	OF_decode_addr(OF_parent(phy), 0, &sc->phy_bst, &sc->phy_bsh);
+	OF_decode_addr(OF_parent(phy), 0, &sc->phy_bst, &sc->phy_bsh, NULL);
 	OF_getencprop(phy, "reg", &sc->phyaddr, sizeof(sc->phyaddr));
 
 	/* Init timer */

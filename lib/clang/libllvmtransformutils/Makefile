@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmtransformutils/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmtransformutils/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -40,6 +40,7 @@ SRCS=	ASanStackFrameLayout.cpp \
 	SimplifyIndVar.cpp \
 	SimplifyInstructions.cpp \
 	SimplifyLibCalls.cpp \
+	SplitModule.cpp \
 	SymbolRewriter.cpp \
 	UnifyFunctionExitNodes.cpp \
 	ValueMapper.cpp
@@ -48,6 +49,7 @@ SRCS=	ASanStackFrameLayout.cpp \
 SRCS+=	Utils.cpp
 .endif
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

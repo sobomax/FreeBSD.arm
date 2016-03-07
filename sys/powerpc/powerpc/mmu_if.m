@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/powerpc/powerpc/mmu_if.m 286296 2015-08-04 19:46:13Z jah $
+# $FreeBSD: head/sys/powerpc/powerpc/mmu_if.m 296142 2016-02-27 20:39:36Z jhibbits $
 #
 
 #include <sys/param.h>
@@ -123,6 +123,12 @@ CODE {
 	    vm_memattr_t ma)
 	{
 		return;
+	}
+
+	static int mmu_null_change_attr(mmu_t mmu, vm_offset_t va,
+	    vm_size_t sz, vm_memattr_t mode)
+	{
+		return (0);
 	}
 };
 
@@ -956,3 +962,20 @@ METHOD void quick_remove_page {
 	vm_offset_t	_va;
 };
 
+/**
+ * @brief Change the specified virtual address range's memory type.
+ *
+ * @param _va		The virtual base address to change
+ *
+ * @param _sz		Size of the region to change
+ *
+ * @param _mode		New mode to set on the VA range
+ *
+ * @retval error	0 on success, EINVAL or ENOMEM on error.
+ */
+METHOD int change_attr {
+	mmu_t		_mmu;
+	vm_offset_t	_va;
+	vm_size_t	_sz;
+	vm_memattr_t	_mode;
+} DEFAULT mmu_null_change_attr;

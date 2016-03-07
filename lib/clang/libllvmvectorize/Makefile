@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmvectorize/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmvectorize/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -13,6 +13,7 @@ SRCS=	BBVectorize.cpp \
 SRCS+=	Vectorize.cpp
 .endif
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

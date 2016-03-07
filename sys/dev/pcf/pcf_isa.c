@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pcf/pcf_isa.c 181332 2008-08-05 17:39:37Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/pcf/pcf_isa.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 /*
  * Hardware driver for a Philips PCF8584 I2C bus controller sitting
@@ -100,7 +100,7 @@ pcf_isa_identify(driver_t *driver, device_t parent)
 static int
 pcf_isa_probe(device_t dev)
 {
-	u_long		start, count;
+	rman_res_t	start, count;
 	u_int		rid = 0, port, error;
 
 	/* skip PnP probes */

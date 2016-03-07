@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 291706 2015-12-03 17:22:55Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 291706 2015-12-03 17:22:55Z
 
 #include <machine/bus.h>
 #include <machine/cpufunc.h>
-#include <machine/pmap.h>
 
 #include <netinet/in.h>
 #include <netinet/ip.h>

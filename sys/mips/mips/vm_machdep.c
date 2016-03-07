@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/vm_machdep.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/vm_machdep.c 295451 2016-02-09 20:22:35Z glebius $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -432,7 +432,7 @@ cpu_set_upcall_kse(struct thread *td, void (*entry)(void *), void *arg,
 	 * in ``See MIPS Run'' by D. Sweetman, p. 269
 	 * align stack
 	 */
-	sp = ((register_t)(intptr_t)(stack->ss_sp + stack->ss_size) & ~0x7) -
+	sp = (((intptr_t)stack->ss_sp + stack->ss_size) & ~0x7) -
 	    CALLFRAME_SIZ;
 
 	/*

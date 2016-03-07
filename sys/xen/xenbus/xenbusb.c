@@ -52,7 +52,7 @@
  *                        xnb1
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/xen/xenbus/xenbusb.c 280007 2015-03-14 21:40:24Z ian $");
+__FBSDID("$FreeBSD: head/sys/xen/xenbus/xenbusb.c 292969 2015-12-31 01:54:07Z araujo $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -561,7 +561,6 @@ xenbusb_devices_changed(struct xs_watch *watch, const char **vec,
 	struct xenbusb_softc *xbs;
 	device_t dev;
 	char *node;
-	char *bus;
 	char *type;
 	char *id;
 	char *p;
@@ -580,7 +579,6 @@ xenbusb_devices_changed(struct xs_watch *watch, const char **vec,
 	p = strchr(node, '/');
 	if (p == NULL)
 		goto out;
-	bus = node;
 	*p = 0;
 	type = p + 1;
 

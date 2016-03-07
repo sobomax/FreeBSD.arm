@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/disk.c 263052 2014-03-11 22:02:49Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/disk.c 296182 2016-02-29 07:27:49Z sgalabov $");
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -156,7 +156,8 @@ stor_strategy(void *devdata, int rw, daddr_t blk, size_t size, char *buf,
 	}
 
 	if (size % SI(dev).bsize) {
-		stor_printf("size=%d not multiple of device block size=%d\n",
+		stor_printf("size=%zu not multiple of device "
+		    "block size=%d\n",
 		    size, SI(dev).bsize);
 		return (EIO);
 	}

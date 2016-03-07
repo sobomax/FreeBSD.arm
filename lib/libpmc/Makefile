@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libpmc/Makefile 263446 2014-03-20 20:51:08Z hiren $
+# $FreeBSD: head/lib/libpmc/Makefile 296263 2016-03-01 11:34:44Z trasz $
 
 LIB=	pmc
 
@@ -31,6 +31,7 @@ MAN+=	pmc.corei7.3
 MAN+=	pmc.corei7uc.3
 MAN+=	pmc.haswell.3
 MAN+=	pmc.haswelluc.3
+MAN+=	pmc.haswellxeon.3
 MAN+=	pmc.iaf.3
 MAN+=	pmc.ivybridge.3
 MAN+=	pmc.ivybridgexeon.3

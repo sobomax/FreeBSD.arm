@@ -65,13 +65,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/le/lance.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/le/lance.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/endian.h>
 #include <sys/lock.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/mutex.h>
 #include <sys/socket.h>

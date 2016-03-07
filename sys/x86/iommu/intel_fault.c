@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_fault.c 280260 2015-03-19 13:57:47Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_fault.c 296272 2016-03-01 17:47:32Z jhb $");
 
 #include "opt_acpi.h"
 
@@ -179,7 +179,7 @@ done:
 	}
 
 	if (enqueue) {
-		taskqueue_enqueue_fast(unit->fault_taskqueue,
+		taskqueue_enqueue(unit->fault_taskqueue,
 		    &unit->fault_task);
 	}
 	return (FILTER_HANDLED);

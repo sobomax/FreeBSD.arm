@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 289881 2015-10-24 17:24:19Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 296392 2016-03-04 19:57:11Z mav $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 289881 2015-10-24 17:24:19Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.c 296392 2016-03-04 19:57:11Z mav $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -2441,6 +2441,7 @@ cfiscsi_datamove_in(union ctl_io *io)
 			bhsdi->bhsdi_opcode = ISCSI_BHS_OPCODE_SCSI_DATA_IN;
 			bhsdi->bhsdi_initiator_task_tag =
 			    bhssc->bhssc_initiator_task_tag;
+			bhsdi->bhsdi_target_transfer_tag = 0xffffffff;
 			bhsdi->bhsdi_datasn = htonl(PDU_EXPDATASN(request));
 			PDU_EXPDATASN(request)++;
 			bhsdi->bhsdi_buffer_offset = htonl(buffer_offset);

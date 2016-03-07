@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libclang_rt/Makefile 291455 2015-11-29 16:28:40Z dim $
+# $FreeBSD: head/lib/libclang_rt/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,7 @@
 SUBDIR+= include\
 	 asan\
 	 asan-preinit\
+	 asan_dynamic\
 	 asan_cxx\
 	 safestack\
 	 ubsan_standalone\

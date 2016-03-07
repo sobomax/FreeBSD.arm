@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/thunder_mdio_var.h 289552 2015-10-18 22:10:08Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/thunder_mdio_var.h 294994 2016-01-28 15:44:14Z zbb $
  *
  */
 
@@ -34,6 +34,7 @@
 #define	__THUNDER_MDIO_VAR_H__
 
 #define	THUNDER_MDIO_DEVSTR	"Cavium ThunderX SMI/MDIO driver"
+MALLOC_DECLARE(M_THUNDER_MDIO);
 DECLARE_CLASS(thunder_mdio_driver);
 
 enum thunder_mdio_mode {

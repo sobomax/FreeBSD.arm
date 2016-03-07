@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/mv/files.mv 291133 2015-11-21 15:30:08Z andrew $
+# $FreeBSD: head/sys/arm/mv/files.mv 295626 2016-02-15 15:11:26Z andrew $
 #
 # The Marvell CPU cores
 # - Compliant with V5TE architecture
@@ -12,16 +12,16 @@
 # - JTAG/ICE
 # - Vector Floating Point (VFP) unit
 #
-arm/mv/gpio.c			standard
+arm/mv/gpio.c			optional	gpio
 arm/mv/mv_common.c		standard
 arm/mv/mv_localbus.c		standard
 arm/mv/mv_machdep.c		standard
 arm/mv/mv_pci.c			optional	pci
 arm/mv/mv_ts.c			standard
 arm/mv/timer.c			standard
-arm/mv/twsi.c			optional	iicbus
 
 dev/cesa/cesa.c			optional	cesa
+dev/iicbus/twsi/mv_twsi.c	optional	twsi
 dev/mge/if_mge.c		optional	mge
 dev/nand/nfc_mv.c		optional	nand
 dev/mvs/mvs_soc.c		optional	mvs

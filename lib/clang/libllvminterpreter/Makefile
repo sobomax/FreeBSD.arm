@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvminterpreter/Makefile 246259 2013-02-02 22:28:29Z dim $
+# $FreeBSD: head/lib/clang/libllvminterpreter/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -9,6 +9,7 @@ SRCS=	Execution.cpp \
 	ExternalFunctions.cpp \
 	Interpreter.cpp \
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

@@ -34,7 +34,7 @@
  * tmpfs vnode interface.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_vnops.c 281378 2015-04-10 19:04:39Z will $");
+__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_vnops.c 295574 2016-02-12 20:43:53Z markj $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -1191,8 +1191,11 @@ tmpfs_readdir(struct vop_readdir_args *v)
 	if (error == EJUSTRETURN)
 		error = (uio->uio_resid != startresid) ? 0 : EINVAL;
 
-	if (error != 0 && cookies != NULL)
+	if (error != 0 && cookies != NULL && ncookies != NULL) {
 		free(*cookies, M_TEMP);
+		*cookies = NULL;
+		*ncookies = 0;
+	}
 
 	if (eofflag != NULL)
 		*eofflag =

@@ -26,8 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * P4: //depot/projects/trustedbsd/openbsm/sys/bsm/audit.h#10
- * $FreeBSD: head/sys/bsm/audit.h 195740 2009-07-17 14:02:20Z rwatson $
+ * $FreeBSD: head/sys/bsm/audit.h 292522 2015-12-20 23:22:04Z brueffer $
  */
 
 #ifndef	_BSM_AUDIT_H

@@ -30,7 +30,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/sfxge_tx.h 291584 2015-12-01 14:55:24Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/sfxge_tx.h 294077 2016-01-15 06:25:26Z arybchik $
  */
 
 #ifndef _SFXGE_TX_H
@@ -170,6 +170,7 @@ struct sfxge_txq {
 	struct sfxge_softc		*sc;
 	enum sfxge_txq_state		init_state;
 	enum sfxge_flush_state		flush_state;
+	unsigned int			tso_fw_assisted;
 	enum sfxge_txq_type		type;
 	unsigned int			txq_index;
 	unsigned int			evq_index;

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: head/sys/sys/vnode.h 291380 2015-11-27 01:45:40Z kib $
+ * $FreeBSD: head/sys/sys/vnode.h 295971 2016-02-24 15:15:46Z kib $
  */
 
 #ifndef _SYS_VNODE_H_
@@ -372,6 +372,8 @@ struct vattr {
 MALLOC_DECLARE(M_VNODE);
 #endif
 
+extern u_int ncsizefactor;
+
 /*
  * Convert between vnode types and inode formats (since POSIX.1
  * defines mode word of stat structure in terms of inode formats).
@@ -605,6 +607,8 @@ struct vnode;
 
 typedef int (*vn_get_ino_t)(struct mount *, void *, int, struct vnode **);
 
+int	bnoreuselist(struct bufv *bufv, struct bufobj *bo, daddr_t startn,
+	    daddr_t endn);
 /* cache_* may belong in namei.h. */
 void	cache_changesize(int newhashsize);
 #define	cache_enter(dvp, vp, cnp)					\
@@ -821,6 +825,7 @@ void	vop_rename_fail(struct vop_rename_args *ap);
 void	vput(struct vnode *vp);
 void	vrele(struct vnode *vp);
 void	vref(struct vnode *vp);
+void	vrefl(struct vnode *vp);
 int	vrefcnt(struct vnode *vp);
 void 	v_addpollinfo(struct vnode *vp);
 

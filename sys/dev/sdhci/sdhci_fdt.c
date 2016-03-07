@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci_fdt.c 270885 2014-08-31 17:56:54Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/sdhci/sdhci_fdt.c 292180 2015-12-14 01:09:25Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -307,3 +307,4 @@ static devclass_t sdhci_fdt_devclass;
 DRIVER_MODULE(sdhci_fdt, simplebus, sdhci_fdt_driver, sdhci_fdt_devclass,
     NULL, NULL);
 MODULE_DEPEND(sdhci_fdt, sdhci, 1, 1, 1);
+DRIVER_MODULE(mmc, sdhci_fdt, mmc_driver, mmc_devclass, NULL, NULL);

@@ -28,7 +28,7 @@
 /* Driver for Attansic Technology Corp. L1 Gigabit Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/age/if_age.c 271828 2014-09-18 21:01:41Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/age/if_age.c 295735 2016-02-18 01:24:10Z yongari $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -588,7 +588,7 @@ age_attach(device_t dev)
 	/* Create device sysctl node. */
 	age_sysctl_node(sc);
 
-	if ((error = age_dma_alloc(sc) != 0))
+	if ((error = age_dma_alloc(sc)) != 0)
 		goto fail;
 
 	/* Load station address. */

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/nehemiah.c 284959 2015-06-30 17:00:45Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/nehemiah.c 295718 2016-02-17 21:09:19Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -131,9 +131,10 @@ nehemiah_modevent(module_t mod, int type, void *unused)
 		break;
 
 	case MOD_UNLOAD:
-		if (via_feature_rng & VIA_HAS_RNG)
+		if (via_feature_rng & VIA_HAS_RNG) {
 			random_nehemiah_deinit();
 			random_source_deregister(&random_nehemiah);
+		}
 		break;
 
 	case MOD_SHUTDOWN:

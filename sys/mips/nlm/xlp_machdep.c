@@ -28,7 +28,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 279387 2015-02-28 00:17:29Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 294559 2016-01-22 12:00:56Z andrew $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -310,8 +310,6 @@ xlp_bootargs_init(__register_t arg)
 	if (OF_install(OFW_FDT, 0) == FALSE)
 		while (1);
 	if (OF_init((void *)dtbp) != 0)
-		while (1);
-	if (fdt_immr_addr(xlp_io_base) != 0)
 		while (1);
 	OF_interpret("perform-fixup", 0);
 

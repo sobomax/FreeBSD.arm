@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ddb.c 287197 2015-08-27 08:56:39Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ddb.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include "opt_ddb.h"
 #include "opt_wlan.h"
@@ -36,6 +36,7 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ddb.c 287197 2015-08-27 08:56:39
 #include <sys/param.h>
 #include <sys/systm.h> 
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/socket.h>
 
 #include <net/if.h>

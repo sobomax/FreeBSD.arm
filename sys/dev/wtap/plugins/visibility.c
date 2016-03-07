@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/plugins/visibility.c 243857 2012-12-04 09:32:43Z glebius $
+ * $FreeBSD: head/sys/dev/wtap/plugins/visibility.c 292166 2015-12-13 20:53:51Z avos $
  */
 #include <sys/param.h>
 #include <sys/module.h>
@@ -41,7 +41,6 @@
 #include <sys/ucred.h>
 #include <sys/jail.h>
 
-#include <sys/types.h>
 #include <sys/sockio.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>

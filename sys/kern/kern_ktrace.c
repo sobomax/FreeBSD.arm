@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_ktrace.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_ktrace.c 294934 2016-01-27 19:55:02Z mjg $");
 
 #include "opt_ktrace.h"
 
@@ -757,15 +757,16 @@ ktrstruct(name, data, datalen)
 	size_t datalen;
 {
 	struct ktr_request *req;
-	char *buf = NULL;
-	size_t buflen;
+	char *buf;
+	size_t buflen, namelen;
 
-	if (!data)
+	if (data == NULL)
 		datalen = 0;
-	buflen = strlen(name) + 1 + datalen;
+	namelen = strlen(name) + 1;
+	buflen = namelen + datalen;
 	buf = malloc(buflen, M_KTRACE, M_WAITOK);
 	strcpy(buf, name);
-	bcopy(data, buf + strlen(name) + 1, datalen);
+	bcopy(data, buf + namelen, datalen);
 	if ((req = ktr_getrequest(KTR_STRUCT)) == NULL) {
 		free(buf, M_KTRACE);
 		return;

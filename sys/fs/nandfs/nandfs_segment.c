@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_segment.c 251171 2013-05-31 00:43:41Z jeff $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_segment.c 294200 2016-01-17 01:04:20Z rpokala $");
 
 #include "opt_ddb.h"
 
@@ -479,6 +479,7 @@ nandfs_iterate_dirty_vnodes(struct mount *mp, struct nandfs_seginfo *seginfo)
 	struct nandfs_node *nandfs_node;
 	struct vnode *vp, *mvp;
 	struct thread *td;
+	struct bufobj *bo;
 	int error, update;
 
 	td = curthread;
@@ -499,17 +500,21 @@ nandfs_iterate_dirty_vnodes(struct mount *mp, struct nandfs_seginfo *seginfo)
 			update = 1;
 		}
 
+		bo = &vp->v_bufobj;
+		BO_LOCK(bo);
 		if (vp->v_bufobj.bo_dirty.bv_cnt) {
 			error = nandfs_iterate_dirty_buf(vp, seginfo, 0);
 			if (error) {
 				nandfs_error("%s: cannot iterate vnode:%p "
 				    "err:%d\n", __func__, vp, error);
 				vput(vp);
+				BO_UNLOCK(bo);
 				return (error);
 			}
 			update = 1;
 		} else
 			vput(vp);
+		BO_UNLOCK(bo);
 
 		if (update)
 			nandfs_node_update(nandfs_node);

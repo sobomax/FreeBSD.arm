@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/ath/athratestats/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/tools/tools/ath/athratestats/Makefile 292244 2015-12-15 04:28:31Z adrian $
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/
@@ -7,7 +7,7 @@ PROG=	athratestats
 
 SRCS=	main.c opt_ah.h ah_osdep.h
 
-LIBADD+=	curses
+LIBADD+=	ncurses
 
 CLEANFILES+=	opt_ah.h ah_osdep.h
 

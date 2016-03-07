@@ -173,7 +173,7 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/wl/if_wl.c 274758 2014-11-20 20:09:18Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/wl/if_wl.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 /*
  * NOTE:
@@ -388,7 +388,7 @@ wlprobe(device_t device)
     struct wl_softc	*sc;
     char		*str = "wl%d: board out of range [0..%d]\n";
     u_char		inbuf[100];
-    unsigned long	junk, sirq;
+    rman_res_t		junk, sirq;
     int			error, irq;
 
     error = ISA_PNP_PROBE(device_get_parent(device), device, wl_ids);
@@ -604,8 +604,8 @@ wl_allocate_resources(device_t device)
     struct wl_softc *sc = device_get_softc(device);
     int ports = 16;		/* Number of ports */
 
-    sc->res_ioport = bus_alloc_resource(device, SYS_RES_IOPORT,
-	&sc->rid_ioport, 0ul, ~0ul, ports, RF_ACTIVE);
+    sc->res_ioport = bus_alloc_resource_anywhere(device, SYS_RES_IOPORT,
+	&sc->rid_ioport, ports, RF_ACTIVE);
     if (sc->res_ioport == NULL)
 	goto errexit;
 

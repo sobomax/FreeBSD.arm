@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/platform.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/platform.c 296158 2016-02-28 13:43:58Z andrew $");
 
 /*
  * Dispatch platform calls to the appropriate platform implementation
@@ -177,3 +177,18 @@ platform_late_init(void)
 	PLATFORM_LATE_INIT(plat_obj);
 }
 
+#if defined(SMP) && defined(PLATFORM_SMP)
+void
+platform_mp_setmaxid(void)
+{
+
+	PLATFORM_MP_SETMAXID(plat_obj);
+}
+
+void
+platform_mp_start_ap(void)
+{
+
+	PLATFORM_MP_START_AP(plat_obj);
+}
+#endif

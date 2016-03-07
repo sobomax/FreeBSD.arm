@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/lib/libhx509/Makefile 284578 2015-06-18 21:18:43Z jkim $
+# $FreeBSD: head/kerberos5/lib/libhx509/Makefile 295988 2016-02-24 17:19:18Z bdrewery $
 
 LIB=	hx509
 LDFLAGS=	-Wl,--no-undefined
@@ -289,11 +289,6 @@ ${GEN_CRMF}: crmf.asn1
 
 .hx.h:
 	${CP} ${.IMPSRC} ${.TARGET}
-
-# This makefile generates a lot of its headers
-# so tell bsd.sys.mk not to try and stage them before they are built.
-# Note: this is rare
-NO_BEFOREBUILD_INCLUDES=
 
 .include <bsd.lib.mk>
 

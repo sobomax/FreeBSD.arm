@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc_ebus.c 207354 2010-04-29 06:16:00Z sobomax $");
+__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc_ebus.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_kbd.h"
 
@@ -91,7 +91,7 @@ static int
 atkbdc_ebus_probe(device_t dev)
 {
 	struct resource *port0, *port1;
-	u_long count, start;
+	rman_res_t count, start;
 	int error, rid;
 
 	if (strcmp(ofw_bus_get_name(dev), "8042") != 0)
@@ -176,7 +176,7 @@ atkbdc_ebus_attach(device_t dev)
 	atkbdc_device_t *adi;
 	device_t cdev;
 	phandle_t child;
-	u_long count, intr, start;
+	rman_res_t count, intr, start;
 	int children, error, rid, unit;
 	char *cname, *dname;
 

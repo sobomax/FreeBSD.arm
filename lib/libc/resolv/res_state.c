@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/resolv/res_state.c 289315 2015-10-14 14:26:44Z vangyzen $
+ * $FreeBSD: head/lib/libc/resolv/res_state.c 292216 2015-12-14 17:21:06Z vangyzen $
  */
 
 #include <sys/types.h>
@@ -36,6 +36,8 @@
 #include "namespace.h"
 #include "reentrant.h"
 #include "un-namespace.h"
+
+#include "res_private.h"
 
 #undef _res
 
@@ -66,20 +68,26 @@ res_check_reload(res_state statp)
 {
 	struct timespec now;
 	struct stat sb;
+	struct __res_state_ext *ext;
 
-	if ((statp->options & RES_INIT) == 0 || statp->reload_period == 0) {
+	if ((statp->options & RES_INIT) == 0) {
+		return (statp);
+	}
+
+	ext = statp->_u._ext.ext;
+	if (ext == NULL || ext->reload_period == 0) {
 		return (statp);
 	}
 
 	if (clock_gettime(CLOCK_MONOTONIC_FAST, &now) != 0 ||
-	    (now.tv_sec - statp->conf_stat) < statp->reload_period) {
+	    (now.tv_sec - ext->conf_stat) < ext->reload_period) {
 		return (statp);
 	}
 
-	statp->conf_stat = now.tv_sec;
+	ext->conf_stat = now.tv_sec;
 	if (stat(_PATH_RESCONF, &sb) == 0 &&
-	    (sb.st_mtim.tv_sec  != statp->conf_mtim.tv_sec ||
-	     sb.st_mtim.tv_nsec != statp->conf_mtim.tv_nsec)) {
+	    (sb.st_mtim.tv_sec  != ext->conf_mtim.tv_sec ||
+	     sb.st_mtim.tv_nsec != ext->conf_mtim.tv_nsec)) {
 		statp->options &= ~RES_INIT;
 	}
 

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nsp/nsp_pccard.c 292111 2015-12-11 15:24:29Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/nsp/nsp_pccard.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -115,7 +115,7 @@ static int
 nsp_alloc_resource(device_t dev)
 {
 	struct nsp_softc	*sc = device_get_softc(dev);
-	u_long			ioaddr, iosize, maddr, msize;
+	rman_res_t		ioaddr, iosize, maddr, msize;
 	int			error;
 
 	error = bus_get_resource(dev, SYS_RES_IOPORT, 0, &ioaddr, &iosize);
@@ -124,8 +124,9 @@ nsp_alloc_resource(device_t dev)
 
 	mtx_init(&sc->sc_sclow.sl_lock, "nsp", NULL, MTX_DEF);
 	sc->port_rid = 0;
-	sc->port_res = bus_alloc_resource(dev, SYS_RES_IOPORT, &sc->port_rid,
-					  0, ~0, NSP_IOSIZE, RF_ACTIVE);
+	sc->port_res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT,
+						   &sc->port_rid, NSP_IOSIZE,
+						   RF_ACTIVE);
 	if (sc->port_res == NULL) {
 		nsp_release_resource(dev);
 		return(ENOMEM);

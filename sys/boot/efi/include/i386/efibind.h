@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/i386/efibind.h 279038 2015-02-20 01:40:55Z imp $ */
+/* $FreeBSD: head/sys/boot/efi/include/i386/efibind.h 293268 2016-01-06 20:22:28Z smh $ */
 /*++
 
 Copyright (c)  1999 - 2003 Intel Corporation. All rights reserved
@@ -39,7 +39,7 @@ Revision History
 
     // No ANSI C 1999/2000 stdint.h integer width declarations 
 
-    #if _MSC_EXTENSIONS
+    #ifdef _MSC_EXTENSIONS
 
         // Use Microsoft C compiler integer width declarations 
 
@@ -160,7 +160,7 @@ typedef uint32_t   UINTN;
 //
 
 #ifndef EFIAPI                  // Forces EFI calling conventions reguardless of compiler options 
-    #if _MSC_EXTENSIONS
+    #ifdef _MSC_EXTENSIONS
         #define EFIAPI __cdecl  // Force C calling convention for Microsoft C compiler 
     #else
         #define EFIAPI          // Substitute expresion to force C calling convention 
@@ -261,7 +261,7 @@ typedef uint32_t   UINTN;
 #endif
 #endif	/* __FreeBSD__ */
 
-#if _MSC_EXTENSIONS
+#ifdef _MSC_EXTENSIONS
 #pragma warning ( disable : 4731 )  // Suppress warnings about modification of EBP
 #endif
 

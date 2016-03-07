@@ -23,12 +23,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/cubieboard.dts 285090 2015-07-03 14:11:01Z loos $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/cubieboard.dts 295711 2016-02-17 18:28:03Z andrew $
  */
 
 /dts-v1/;
 
-/include/ "sun4i-a10.dtsi"
+#include "sun4i-a10.dtsi"
 
 / {
 	model = "Cubietech Cubieboard";
@@ -63,6 +63,8 @@
 
 		emac@01c0b000 {
 			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&emac_pins>;
 		};
 
 		ahci: sata@01c18000 {

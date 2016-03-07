@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ismt/ismt.c 266474 2014-05-20 19:55:06Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/ismt/ismt.c 293369 2016-01-07 21:16:44Z jimharris $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,7 @@ __FBSDID("$FreeBSD: head/sys/dev/ismt/ismt.c 266474 2014-05-20 19:55:06Z jimharr
 #define ISMT_DESC_LPR	0x80	/* Large Packet Received */
 
 /* Macros */
-#define ISMT_DESC_ADDR_RW(addr, is_read) ((addr) | (is_read))
+#define ISMT_DESC_ADDR_RW(addr, is_read) ((addr << 1) | (is_read))
 
 /* iSMT General Register address offsets (SMBBAR + <addr>) */
 #define ISMT_GR_GCTRL		0x000	/* General Control */

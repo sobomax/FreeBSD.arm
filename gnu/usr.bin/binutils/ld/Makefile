@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/binutils/ld/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/binutils/ld/Makefile 293285 2016-01-07 00:15:02Z emaste $
 
 ELF_SCR_EXT=	x xbn xc xd xdc xdw xn xr xs xsc xsw xu xw
 .include "../Makefile.inc0"
@@ -6,7 +6,8 @@ ELF_SCR_EXT=	x xbn xc xd xdc xdw xn xr xs xsc xsw xu xw
 
 .PATH: ${SRCDIR}/ld
 
-PROG=	ld
+PROG=	ld.bfd
+MAN=	ld.1
 SCRIPTDIR= /usr/libdata/ldscripts
 SRCS+=	ldcref.c \
 	ldctor.c \
@@ -48,6 +49,7 @@ CLEANFILES+=	ldemul-list.h stringify.sed
 
 FILES=		${LDSCRIPTS:S|^|ldscripts/|}
 FILESDIR=	${SCRIPTDIR}
+LINKS=		${BINDIR}/ld.bfd ${BINDIR}/ld
 
 HOST=		${TARGET_TUPLE}
 LIBSEARCHPATH=	\"=/lib\":\"=/usr/lib\"

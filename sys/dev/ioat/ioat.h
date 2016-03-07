@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.h 292031 2015-12-09 22:45:51Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.h 294062 2016-01-15 01:34:43Z cem $");
 
 #ifndef __IOAT_H__
 #define __IOAT_H__
@@ -46,7 +46,21 @@ __FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.h 292031 2015-12-09 22:45:51Z cem $")
  * descriptor without blocking.
  */
 #define	DMA_NO_WAIT	0x2
-#define	DMA_ALL_FLAGS	(DMA_INT_EN | DMA_NO_WAIT)
+/*
+ * Disallow prefetching the source of the following operation.  Ordinarily, DMA
+ * operations can be pipelined on some hardware.  E.g., operation 2's source
+ * may be prefetched before operation 1 completes.
+ */
+#define	DMA_FENCE	0x4
+#define	DMA_ALL_FLAGS	(DMA_INT_EN | DMA_NO_WAIT | DMA_FENCE)
+
+/*
+ * Hardware revision number.  Different hardware revisions support different
+ * features.  For example, 3.2 cannot read from MMIO space, while 3.3 can.
+ */
+#define	IOAT_VER_3_0			0x30
+#define	IOAT_VER_3_2			0x32
+#define	IOAT_VER_3_3			0x33
 
 typedef void *bus_dmaengine_t;
 struct bus_dmadesc;
@@ -60,13 +74,52 @@ bus_dmaengine_t ioat_get_dmaengine(uint32_t channel_index);
 /* Release the DMA channel */
 void ioat_put_dmaengine(bus_dmaengine_t dmaengine);
 
+/* Check the DMA engine's HW version */
+int ioat_get_hwversion(bus_dmaengine_t dmaengine);
+size_t ioat_get_max_io_size(bus_dmaengine_t dmaengine);
+
+/*
+ * Set interrupt coalescing on a DMA channel.
+ *
+ * The argument is in microseconds.  A zero value disables coalescing.  Any
+ * other value delays interrupt generation for N microseconds to provide
+ * opportunity to coalesce multiple operations into a single interrupt.
+ *
+ * Returns an error status, or zero on success.
+ *
+ * - ERANGE if the given value exceeds the delay supported by the hardware.
+ *   (All current hardware supports a maximum of 0x3fff microseconds delay.)
+ * - ENODEV if the hardware does not support interrupt coalescing.
+ */
+int ioat_set_interrupt_coalesce(bus_dmaengine_t dmaengine, uint16_t delay);
+
+/*
+ * Return the maximum supported coalescing period, for use in
+ * ioat_set_interrupt_coalesce().  If the hardware does not support coalescing,
+ * returns zero.
+ */
+uint16_t ioat_get_max_coalesce_period(bus_dmaengine_t dmaengine);
+
 /*
  * Acquire must be called before issuing an operation to perform. Release is
- * called after. Multiple operations can be issued within the context of one
+ * called after.  Multiple operations can be issued within the context of one
  * acquire and release
  */
 void ioat_acquire(bus_dmaengine_t dmaengine);
 void ioat_release(bus_dmaengine_t dmaengine);
+
+/*
+ * Acquire_reserve can be called to ensure there is room for N descriptors.  If
+ * it succeeds, the next N valid operations will successfully enqueue.
+ *
+ * It may fail with:
+ *   - ENXIO if the channel is in an errored state, or the driver is being
+ *     unloaded
+ *   - EAGAIN if mflags included M_NOWAIT
+ *
+ * On failure, the caller does not hold the dmaengine.
+ */
+int ioat_acquire_reserve(bus_dmaengine_t dmaengine, unsigned n, int mflags);
 
 /*
  * Issue a blockfill operation.  The 64-bit pattern 'fillpattern' is written to

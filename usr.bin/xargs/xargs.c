@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)xargs.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/xargs/xargs.c 286461 2015-08-08 18:37:20Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.bin/xargs/xargs.c 292864 2015-12-29 11:24:41Z uqs $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -234,7 +234,7 @@ main(int argc, char *argv[])
 	 * NULL.
 	 */
 	linelen = 1 + argc + nargs + 1;
-	if ((av = bxp = malloc(linelen * sizeof(char **))) == NULL)
+	if ((av = bxp = malloc(linelen * sizeof(char *))) == NULL)
 		errx(1, "malloc failed");
 
 	/*
@@ -471,7 +471,7 @@ prerun(int argc, char *argv[])
 	 * Allocate memory to hold the argument list, and
 	 * a NULL at the tail.
 	 */
-	tmp = malloc((argc + 1) * sizeof(char**));
+	tmp = malloc((argc + 1) * sizeof(char *));
 	if (tmp == NULL) {
 		warnx("malloc failed");
 		xexit(*argv, 1);

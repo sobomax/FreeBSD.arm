@@ -22,9 +22,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ds3231.4 279718 2015-03-07 01:42:04Z loos $
+.\" $FreeBSD: head/share/man/man4/ds3231.4 295566 2016-02-12 17:03:24Z bjk $
 .\"
-.Dd March 6, 2015
+.Dd February 12, 2016
 .Dt DS3231 4
 .Os
 .Sh NAME
@@ -110,8 +110,11 @@ that the
 .Nm
 is connected to.
 .It Va hint.ds3231.%d.addr
-The i2c address of
+The 8-bit i2c address of
 .Nm .
+The default 8-bit address for
+.Nm
+is 0xd0.
 .El
 .Pp
 On a
@@ -121,11 +124,11 @@ based system the following properties must be set:
 .It Va compatible
 Must always be set to "maxim,ds3231".
 .It Va reg
-The i2c address of
+The 7-bit i2c address of
 .Nm .
-The default address for
+The default 7-bit address for
 .Nm
-is 0xd0.
+is 0x68.
 .El
 .Sh SEE ALSO
 .Xr fdt 4 ,

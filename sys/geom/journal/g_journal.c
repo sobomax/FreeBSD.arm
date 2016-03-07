@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/journal/g_journal.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/geom/journal/g_journal.c 295707 2016-02-17 17:16:02Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1296,7 +1296,7 @@ g_journal_flush(struct g_journal_softc *sc)
 		data = bp->bio_data;
 		if (sc->sc_flags & GJF_DEVICE_CHECKSUM)
 			MD5Update(&ctx, data, ent->je_length);
-		bzero(bp, sizeof(*bp));
+		g_reset_bio(bp);
 		bp->bio_cflags = GJ_BIO_JOURNAL;
 		bp->bio_offset = ent->je_offset;
 		bp->bio_joffset = ent->je_joffset;
@@ -1772,7 +1772,7 @@ g_journal_sync_read(struct g_consumer *cp, struct bio *bp, off_t offset,
 {
 	int error;
 
-	bzero(bp, sizeof(*bp));
+	g_reset_bio(bp);
 	bp->bio_cmd = BIO_READ;
 	bp->bio_done = NULL;
 	bp->bio_offset = offset;

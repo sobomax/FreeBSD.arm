@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 291301 2015-11-25 14:45:43Z fabient $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 293470 2016-01-09 09:34:39Z melifaro $");
 
 #include "opt_ddb.h"
 #include "opt_ipsec.h"
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 291301 2015-11-25 14:45:43Z fabien
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/callout.h>
+#include <sys/eventhandler.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
 #include <sys/rmlock.h>

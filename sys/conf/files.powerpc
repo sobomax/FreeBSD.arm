@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: head/sys/conf/files.powerpc 291462 2015-11-30 02:23:56Z jhibbits $
+# $FreeBSD: head/sys/conf/files.powerpc 292555 2015-12-21 18:07:32Z ian $
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and
@@ -58,6 +58,7 @@ dev/ofw/ofw_disk.c		optional	ofwd aim
 dev/ofw/ofw_iicbus.c		optional	iicbus aim
 dev/ofw/ofwbus.c		optional	aim | fdt
 dev/ofw/ofw_standard.c		optional	aim powerpc
+dev/ofw/ofw_subr.c		optional	aim powerpc
 dev/powermac_nvram/powermac_nvram.c optional	powermac_nvram powermac
 dev/quicc/quicc_bfe_fdt.c	optional	quicc mpc85xx
 dev/scc/scc_bfe_macio.c		optional	scc powermac

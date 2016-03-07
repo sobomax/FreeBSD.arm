@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/powerpc/powerpc/platform_if.m 261309 2014-01-31 03:55:34Z jhibbits $
+# $FreeBSD: head/sys/powerpc/powerpc/platform_if.m 293030 2016-01-01 02:47:40Z jhibbits $
 #
 
 #include <sys/param.h>
@@ -83,6 +83,14 @@ CODE {
 	static void platform_null_smp_ap_init(platform_t plat)
 	{
 		return;
+	}
+	static void platform_null_idle(platform_t plat, int cpu)
+	{
+		return;
+	}
+	static int platform_null_idle_wakeup(platform_t plat, int cpu)
+	{
+		return (0);
 	}
 };
 
@@ -209,6 +217,22 @@ METHOD cpu_group_t smp_topo {
 METHOD void reset {
 	platform_t	_plat;
 };
+
+/**
+ * @brief Idle a CPU
+ */
+METHOD void idle {
+	platform_t	_plat;
+	int		_cpu;
+} DEFAULT platform_null_idle;
+
+/**
+ * @brief Wake up an idle CPU
+ */
+METHOD int idle_wakeup {
+	platform_t	_plat;
+	int		_cpu;
+} DEFAULT platform_null_idle_wakeup;
 
 /**
  * @brief Suspend the CPU

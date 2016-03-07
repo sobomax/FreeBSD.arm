@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: head/sbin/ipfw/ipfw2.c 290330 2015-11-03 10:21:53Z ae $
+ * $FreeBSD: head/sbin/ipfw/ipfw2.c 295969 2016-02-24 13:16:03Z ae $
  */
 
 #include <sys/types.h>
@@ -1029,7 +1029,7 @@ fill_dscp(ipfw_insn *cmd, char *av, int cblen)
 				errx(EX_DATAERR, "Invalid DSCP value");
 		}
 
-		if (code > 32)
+		if (code >= 32)
 			*high |= 1 << (code - 32);
 		else
 			*low |= 1 << code;

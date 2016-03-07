@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/thunder_bgx.c 289551 2015-10-18 22:02:58Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/thunder_bgx.c 294990 2016-01-28 15:30:58Z zbb $
  *
  */
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vnic/thunder_bgx.c 289551 2015-10-18 22:02:58Z zbb $");
+__FBSDID("$FreeBSD: head/sys/dev/vnic/thunder_bgx.c 294990 2016-01-28 15:30:58Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -68,7 +68,7 @@ __FBSDID("$FreeBSD: head/sys/dev/vnic/thunder_bgx.c 289551 2015-10-18 22:02:58Z 
 
 #define	THUNDER_BGX_DEVSTR	"ThunderX BGX Ethernet I/O Interface"
 
-static MALLOC_DEFINE(M_BGX, "thunder_bgx", "ThunderX BGX dynamic memory");
+MALLOC_DEFINE(M_BGX, "thunder_bgx", "ThunderX BGX dynamic memory");
 
 #define BGX_NODE_ID_MASK	0x1
 #define BGX_NODE_ID_SHIFT	24

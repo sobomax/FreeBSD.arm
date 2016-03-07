@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/network.subr 287197 2015-08-27 08:56:39Z glebius $
+# $FreeBSD: head/etc/network.subr 296226 2016-02-29 20:21:54Z avos $
 #
 IFCONFIG_CMD="/sbin/ifconfig"
 : ${netif_ipexpand_max:=2048}
@@ -214,16 +214,14 @@ ifconfig_up()
 	ifalias $1 link alias
 	ifalias $1 ether alias
 
-	if [ ${_cfg} -eq 0 ]; then
-		${IFCONFIG_CMD} $1 up
-	fi
-
 	if wpaif $1; then
 		/etc/rc.d/wpa_supplicant start $1
 		_cfg=0		# XXX: not sure this should count
 	elif hostapif $1; then
 		/etc/rc.d/hostapd start $1
 		_cfg=0
+	elif [ ${_cfg} -eq 0 ]; then
+		${IFCONFIG_CMD} $1 up
 	fi
 
 	if dhcpif $1; then

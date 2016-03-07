@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libnv/Makefile 285139 2015-07-04 16:33:37Z oshogbo $
+# $FreeBSD: head/lib/libnv/Makefile 296129 2016-02-26 22:14:23Z bdrewery $
 
 SHLIBDIR?= /lib
 
@@ -14,8 +14,6 @@ SRCS=	dnvlist.c
 SRCS+=	msgio.c
 SRCS+=	nvlist.c
 SRCS+=	nvpair.c
-
-WARNS?=	6
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=	tests

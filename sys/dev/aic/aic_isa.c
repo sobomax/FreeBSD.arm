@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aic/aic_isa.c 241591 2012-10-15 16:09:59Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/aic/aic_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -75,8 +75,8 @@ aic_isa_alloc_resources(device_t dev)
 	sc->sc_port = sc->sc_irq = sc->sc_drq = NULL;
 
 	rid = 0;
-	sc->sc_port = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-					0ul, ~0ul, AIC_ISA_PORTSIZE, RF_ACTIVE);
+	sc->sc_port = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+						AIC_ISA_PORTSIZE, RF_ACTIVE);
 	if (!sc->sc_port) {
 		device_printf(dev, "I/O port allocation failed\n");
 		return (ENOMEM);

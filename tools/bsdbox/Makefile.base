@@ -2,7 +2,7 @@
 # This builds a variety of "base" tools, useful for an embedded
 # system.
 #
-# $FreeBSD: head/tools/bsdbox/Makefile.base 289763 2015-10-22 18:05:11Z bdrewery $
+# $FreeBSD: head/tools/bsdbox/Makefile.base 292164 2015-12-13 20:31:36Z adrian $
 #
 CRUNCH_PROGS_sbin+=	dmesg sysctl init reboot
 CRUNCH_PROGS_bin+=	ls cat dd df cp hostname kill mkdir sleep ps
@@ -14,7 +14,7 @@ CRUNCH_ALIAS_tset=	reset
 
 CRUNCH_PROGS_usr.bin+=	vmstat
 #CRUNCH_PROGS_user.bin+=	systat
-CRUNCH_LIBS+=		-ldevstat -lncursesw -lncurses -lmemstat -lkvm
+CRUNCH_LIBS+=		-ldevstat -lncursesw -lncurses -lmemstat -lkvm -lelf
 
 # CRUNCH_PROGS_usr.bin+=	tar
 CRUNCH_PROGS_usr.bin+=	cpio

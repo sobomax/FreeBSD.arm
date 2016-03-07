@@ -25,7 +25,7 @@
 static const char rcsid[] = "$Id: res_mkupdate.c,v 1.10 2008/12/11 09:59:00 marka Exp $";
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 288114 2015-09-22 15:57:26Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 292250 2015-12-15 05:37:09Z ngie $");
 
 #include "port_before.h"
 
@@ -54,7 +54,9 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 288114 2015-09-22 15:57:
 #include "port_after.h"
 
 /* Options.  Leave them on. */
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 #define MAXPORT 1024
 
 static int getnum_str(u_char **, u_char *);

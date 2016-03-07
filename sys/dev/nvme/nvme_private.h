@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/nvme/nvme_private.h 281283 2015-04-08 21:52:06Z jimharris $
+ * $FreeBSD: head/sys/dev/nvme/nvme_private.h 293328 2016-01-07 16:18:32Z jimharris $
  */
 
 #ifndef __NVME_PRIVATE_H__
@@ -265,7 +265,7 @@ struct nvme_controller {
 	uint32_t		enable_aborts;
 
 	uint32_t		num_io_queues;
-	boolean_t		per_cpu_io_queues;
+	uint32_t		num_cpus_per_ioq;
 
 	/* Fields for tracking progress during controller initialization. */
 	struct intr_config_hook	config_hook;
@@ -275,8 +275,6 @@ struct nvme_controller {
 	struct task		reset_task;
 	struct task		fail_req_task;
 	struct taskqueue	*taskqueue;
-
-	struct resource		*msi_res[MAXCPU + 1];
 
 	/* For shared legacy interrupt. */
 	int			rid;

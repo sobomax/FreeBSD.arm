@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_da.c 291716 2015-12-03 20:54:55Z ken $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_da.c 295759 2016-02-18 15:12:52Z imp $");
 
 #include <sys/param.h>
 
@@ -3228,7 +3228,8 @@ dadone(struct cam_periph *periph, union ccb *done_ccb)
 					softc->state = DA_STATE_PROBE_RC;
 					xpt_schedule(periph, priority);
 					return;
-				} else
+				}
+
 				/*
 				 * Attach to anything that claims to be a
 				 * direct access or optical disk device,

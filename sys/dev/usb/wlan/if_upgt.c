@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_upgt.c,v 1.35 2008/04/16 18:32:15 damien Exp $ */
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_upgt.c 292080 2015-12-11 05:28:00Z imp $ */
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_upgt.c 293339 2016-01-07 18:41:03Z avos $ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>
@@ -243,7 +243,8 @@ upgt_attach(device_t dev)
 	struct upgt_softc *sc = device_get_softc(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
-	uint8_t bands, iface_index = UPGT_IFACE_INDEX;
+	uint8_t bands[howmany(IEEE80211_MODE_MAX, 8)];
+	uint8_t iface_index = UPGT_IFACE_INDEX;
 	int error;
 
 	sc->sc_dev = dev;
@@ -337,10 +338,10 @@ upgt_attach(device_t dev)
 	        | IEEE80211_C_WPA		/* 802.11i */
 		;
 
-	bands = 0;
-	setbit(&bands, IEEE80211_MODE_11B);
-	setbit(&bands, IEEE80211_MODE_11G);
-	ieee80211_init_channels(ic, NULL, &bands);
+	memset(bands, 0, sizeof(bands));
+	setbit(bands, IEEE80211_MODE_11B);
+	setbit(bands, IEEE80211_MODE_11G);
+	ieee80211_init_channels(ic, NULL, bands);
 
 	ieee80211_ifattach(ic);
 	ic->ic_raw_xmit = upgt_raw_xmit;

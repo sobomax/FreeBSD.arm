@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/linux/linux_machdep.c 284217 2015-06-10 12:39:01Z mjg $");
+__FBSDID("$FreeBSD: head/sys/amd64/linux/linux_machdep.c 294621 2016-01-23 08:08:06Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -383,7 +383,6 @@ linux_sigaltstack(struct thread *td, struct linux_sigaltstack_args *uap)
 	return (error);
 }
 
-/* XXX do all */
 int
 linux_arch_prctl(struct thread *td, struct linux_arch_prctl_args *args)
 {

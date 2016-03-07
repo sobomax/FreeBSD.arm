@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/smbfs/smbfs_vnops.c 254627 2013-08-21 23:04:48Z ken $
+ * $FreeBSD: head/sys/fs/smbfs/smbfs_vnops.c 293679 2016-01-11 18:11:06Z ae $
  */
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -358,7 +358,8 @@ smbfs_setattr(ap)
 				doclose = 1;
 		}
 		if (error == 0)
-			error = smbfs_smb_setfsize(np, vap->va_size, scred);
+			error = smbfs_smb_setfsize(np,
+			    (int64_t)vap->va_size, scred);
 		if (doclose)
 			smbfs_smb_close(ssp, np->n_fid, NULL, scred);
 		if (error) {

@@ -1,6 +1,6 @@
 if [ ! "$_PACKAGES_PACKAGES_SUBR" ]; then _PACKAGES_PACKAGES_SUBR=1
 #
-# Copyright (c) 2013 Devin Teske
+# Copyright (c) 2013-2016 Devin Teske
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,7 @@ if [ ! "$_PACKAGES_PACKAGES_SUBR" ]; then _PACKAGES_PACKAGES_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdconfig/share/packages/packages.subr 270283 2014-08-21 17:15:09Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/share/packages/packages.subr 294866 2016-01-27 00:12:58Z dteske $
 #
 ############################################################ INCLUDES
 
@@ -667,6 +667,8 @@ f_package_config()
 		# Creates following variables (indirectly via f_index_read())
 		#   CATEGORY_MENU_LIST _categories_{varpkg} _rundeps_{varpkg}
 		#   PACKAGE_CATEGORIES _npkgs
+
+	f_show_info "$msg_building_package_main_menu"
 
 	# Detect installed packages (updates marks/SELECTED_PACKAGES)
 	f_package_detect_installed

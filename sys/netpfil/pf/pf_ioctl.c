@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_ioctl.c 289316 2015-10-14 16:21:41Z kp $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_ioctl.c 296025 2016-02-25 07:33:59Z kp $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -2718,13 +2718,14 @@ DIOCCHANGEADDR_error:
 	case DIOCRSETADDRS: {
 		struct pfioc_table *io = (struct pfioc_table *)addr;
 		struct pfr_addr *pfras;
-		size_t totlen;
+		size_t totlen, count;
 
 		if (io->pfrio_esize != sizeof(struct pfr_addr)) {
 			error = ENODEV;
 			break;
 		}
-		totlen = io->pfrio_size * sizeof(struct pfr_addr);
+		count = max(io->pfrio_size, io->pfrio_size2);
+		totlen = count * sizeof(struct pfr_addr);
 		pfras = malloc(totlen, M_TEMP, M_WAITOK);
 		error = copyin(io->pfrio_buffer, pfras, totlen);
 		if (error) {

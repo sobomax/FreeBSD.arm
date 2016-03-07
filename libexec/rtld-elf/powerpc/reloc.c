@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/powerpc/reloc.c 276733 2015-01-06 03:49:22Z jhibbits $
+ * $FreeBSD: head/libexec/rtld-elf/powerpc/reloc.c 294373 2016-01-20 07:21:33Z kib $
  */
 
 #include <sys/param.h>
@@ -94,8 +94,8 @@ do_copy_relocations(Obj_Entry *dstobj)
 		req.ventry = fetch_ventry(dstobj, ELF_R_SYM(rela->r_info));
 		req.flags = SYMLOOK_EARLY;
 
-		for (srcobj = dstobj->next;  srcobj != NULL;
-		     srcobj = srcobj->next) {
+		for (srcobj = globallist_next(dstobj); srcobj != NULL;
+		     srcobj = globallist_next(srcobj)) {
 			res = symlook_obj(&req, srcobj);
 			if (res == 0) {
 				srcsym = req.sym_out;

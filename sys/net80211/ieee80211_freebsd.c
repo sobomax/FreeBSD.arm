@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_freebsd.c 289164 2015-10-12 04:30:38Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_freebsd.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * IEEE 802.11 support (FreeBSD-specific code)
@@ -32,9 +32,11 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_freebsd.c 289164 2015-10-12 04:3
 #include "opt_wlan.h"
 
 #include <sys/param.h>
-#include <sys/kernel.h>
 #include <sys/systm.h> 
+#include <sys/eventhandler.h>
+#include <sys/kernel.h>
 #include <sys/linker.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>   
 #include <sys/module.h>
 #include <sys/proc.h>

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/taskqueue.h 279300 2015-02-25 21:59:03Z adrian $
+ * $FreeBSD: head/sys/sys/taskqueue.h 296272 2016-03-01 17:47:32Z jhb $
  */
 
 #ifndef _SYS_TASKQUEUE_H_
@@ -198,7 +198,6 @@ TASKQUEUE_DECLARE(thread);
  * from a fast interrupt handler context.
  */
 TASKQUEUE_DECLARE(fast);
-int	taskqueue_enqueue_fast(struct taskqueue *queue, struct task *task);
 struct taskqueue *taskqueue_create_fast(const char *name, int mflags,
 				    taskqueue_enqueue_fn enqueue,
 				    void *context);

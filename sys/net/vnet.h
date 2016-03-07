@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/vnet.h 274225 2014-11-07 09:39:05Z glebius $
+ * $FreeBSD: head/sys/net/vnet.h 294867 2016-01-27 00:20:07Z glebius $
  */
 
 /*-
@@ -100,6 +100,9 @@ struct vnet {
 
 #define	VNET_PCPUSTAT_ADD(type, name, f, v)	\
     counter_u64_add(VNET(name)[offsetof(type, f) / sizeof(uint64_t)], (v))
+
+#define	VNET_PCPUSTAT_FETCH(type, name, f)	\
+    counter_u64_fetch(VNET(name)[offsetof(type, f) / sizeof(uint64_t)])
 
 #define	VNET_PCPUSTAT_SYSINIT(name)	\
 static void				\

@@ -27,7 +27,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)vnode_if.src	8.12 (Berkeley) 5/14/95
-# $FreeBSD: head/sys/kern/vnode_if.src 287831 2015-09-15 20:22:30Z cem $
+# $FreeBSD: head/sys/kern/vnode_if.src 292373 2015-12-16 21:30:45Z glebius $
 #
 
 #
@@ -473,7 +473,8 @@ vop_getpages {
 	IN struct vnode *vp;
 	IN vm_page_t *m;
 	IN int count;
-	IN int reqpage;
+	IN int *rbehind;
+	IN int *rahead;
 };
 
 
@@ -483,7 +484,8 @@ vop_getpages_async {
 	IN struct vnode *vp;
 	IN vm_page_t *m;
 	IN int count;
-	IN int reqpage;
+	IN int *rbehind;
+	IN int *rahead;
 	IN vop_getpages_iodone_t *iodone;
 	IN void *arg;
 };

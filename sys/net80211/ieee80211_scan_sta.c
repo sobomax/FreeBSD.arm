@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_scan_sta.c 288086 2015-09-22 02:25:52Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_scan_sta.c 296239 2016-02-29 21:17:39Z avos $");
 
 /*
  * IEEE 802.11 station scanning support.
@@ -34,6 +34,7 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_scan_sta.c 288086 2015-09-22 02:
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/module.h>
 
 #include <sys/socket.h>
@@ -1713,7 +1714,6 @@ ap_start(struct ieee80211_scan_state *ss, struct ieee80211vap *vap)
 	st->st_scangen++;
 	st->st_newscan = 1;
 
-	ieee80211_promisc(vap, true);
 	return 0;
 }
 
@@ -1723,7 +1723,6 @@ ap_start(struct ieee80211_scan_state *ss, struct ieee80211vap *vap)
 static int
 ap_cancel(struct ieee80211_scan_state *ss, struct ieee80211vap *vap)
 {
-	ieee80211_promisc(vap, false);
 	return 0;
 }
 
@@ -1797,7 +1796,6 @@ ap_end(struct ieee80211_scan_state *ss, struct ieee80211vap *vap)
 			return 0;
 		}
 	}
-	ieee80211_promisc(vap, false);
 	if (ss->ss_flags & (IEEE80211_SCAN_NOPICK | IEEE80211_SCAN_NOJOIN)) {
 		/*
 		 * Manual/background scan, don't select+join the

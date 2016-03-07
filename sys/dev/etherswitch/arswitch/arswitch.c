@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch.c 279797 2015-03-08 23:02:15Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch.c 292738 2015-12-26 02:31:39Z adrian $
  */
 
 #include <sys/param.h>
@@ -52,7 +52,7 @@
 #include <dev/iicbus/iicbus.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/etherswitch/etherswitch.h>
 

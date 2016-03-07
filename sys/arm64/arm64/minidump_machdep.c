@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/minidump_machdep.c 286958 2015-08-20 12:49:56Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/minidump_machdep.c 295882 2016-02-22 09:08:04Z skra $");
 
 #include "opt_watchdog.h"
 
@@ -52,9 +52,7 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/minidump_machdep.c 286958 2015-08-20 12
 #include <vm/pmap.h>
 
 #include <machine/md_var.h>
-#include <machine/pmap.h>
 #include <machine/pte.h>
-#include <machine/vmparam.h>
 #include <machine/minidump.h>
 
 CTASSERT(sizeof(struct kerneldumpheader) == 512);

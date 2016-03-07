@@ -32,7 +32,7 @@
 static char *sccsid = "@(#)getrpcent.c 1.14 91/03/11 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcent.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcent.c 296133 2016-02-26 23:25:21Z pfg $");
 
 /*
  * Copyright (c) 1984 by Sun Microsystems, Inc.
@@ -969,7 +969,7 @@ getrpc(int (*fn)(union key, struct rpcent *, char *, size_t, struct rpcent **),
 }
 
 struct rpcent *
-getrpcbyname(char *name)
+getrpcbyname(const char *name)
 {
 	union key key;
 

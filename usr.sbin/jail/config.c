@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/config.c 285279 2015-07-08 16:37:48Z hrs $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/config.c 294196 2016-01-16 22:32:57Z jamie $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -454,7 +454,7 @@ check_intparams(struct cfjail *j)
 	struct addrinfo hints;
 	struct addrinfo *ai0, *ai;
 	const char *hostname;
-	int gicode, defif, prefix;
+	int gicode, defif;
 #endif
 #ifdef INET
 	struct in_addr addr4;
@@ -597,15 +597,7 @@ check_intparams(struct cfjail *j)
 				strcpy(s->s, cs + 1);
 				s->len -= cs + 1 - s->s;
 			}
-			if ((cs = strchr(s->s, '/'))) {
-				prefix = strtol(cs + 1, &ep, 10);
-				if (*ep == '.'
-				    ? inet_pton(AF_INET, cs + 1, &addr4) != 1
-				    : *ep || prefix < 0 || prefix > 32) {
-					jail_warnx(j,
-					    "ip4.addr: bad netmask \"%s\"", cs);
-					error = -1;	
-				}
+			if ((cs = strchr(s->s, '/')) != NULL) {
 				*cs = '\0';
 				s->len = cs - s->s;
 			}
@@ -626,14 +618,7 @@ check_intparams(struct cfjail *j)
 				strcpy(s->s, cs + 1);
 				s->len -= cs + 1 - s->s;
 			}
-			if ((cs = strchr(s->s, '/'))) {
-				prefix = strtol(cs + 1, &ep, 10);
-				if (*ep || prefix < 0 || prefix > 128) {
-					jail_warnx(j,
-					    "ip6.addr: bad prefixlen \"%s\"",
-					    cs);
-					error = -1;	
-				}
+			if ((cs = strchr(s->s, '/')) != NULL) {
 				*cs = '\0';
 				s->len = cs - s->s;
 			}

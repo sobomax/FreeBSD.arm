@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/g_raid.c 289137 2015-10-11 13:01:51Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/g_raid.c 295707 2016-02-17 17:16:02Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1011,7 +1011,7 @@ g_raid_tr_kerneldump_common(struct g_raid_tr_object *tr,
 	vol = tr->tro_volume;
 	sc = vol->v_softc;
 
-	bzero(&bp, sizeof(bp));
+	g_reset_bio(&bp);
 	bp.bio_cmd = BIO_WRITE;
 	bp.bio_done = g_raid_tr_kerneldump_common_done;
 	bp.bio_attribute = NULL;

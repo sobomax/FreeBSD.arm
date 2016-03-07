@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 286368 2015-08-06 16:07:27Z allanjude $
+# $FreeBSD: head/sys/boot/mips/beri/loader/Makefile 296079 2016-02-26 08:06:25Z sgalabov $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -72,7 +72,7 @@ CFLAGS+=	-DLOADER_BZIP2_SUPPORT
 # Enable BootForth
 BOOT_FORTH=	yes
 CFLAGS+=	-DBOOT_FORTH -I${.CURDIR}/../../../ficl
-CFLAGS+=	-I${.CURDIR}/../../../ficl/mips
+CFLAGS+=	-I${.CURDIR}/../../../ficl/mips64
 LIBFICL=	${.OBJDIR}/../../../ficl/libficl.a
 .endif
 

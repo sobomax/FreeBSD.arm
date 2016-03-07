@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/types.h 288258 2015-09-26 07:30:45Z kib $
+ * $FreeBSD: head/sys/sys/types.h 294883 2016-01-27 02:23:54Z jhibbits $
  */
 
 #ifndef _SYS_TYPES_H_
@@ -249,6 +249,8 @@ typedef	__vm_ooffset_t	vm_ooffset_t;
 typedef	__vm_paddr_t	vm_paddr_t;
 typedef	__vm_pindex_t	vm_pindex_t;
 typedef	__vm_size_t	vm_size_t;
+
+typedef __rman_res_t    rman_res_t;
 
 #ifdef _KERNEL
 typedef	int		boolean_t;

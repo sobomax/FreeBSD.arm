@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: head/usr.sbin/mpsutil/mps_cmd.c 291002 2015-11-17 20:42:59Z bapt $");
+__RCSID("$FreeBSD: head/usr.sbin/mpsutil/mps_cmd.c 292864 2015-12-29 11:24:41Z uqs $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -486,7 +486,7 @@ mps_firmware_get(int fd, unsigned char **firmware, bool bios)
 	}
 
 	size = reply.ActualImageSize;
-	*firmware = calloc(1, sizeof(char) * size);
+	*firmware = calloc(1, sizeof(unsigned char) * size);
 	if (*firmware == NULL) {
 		warn("calloc");
 		return (-1);

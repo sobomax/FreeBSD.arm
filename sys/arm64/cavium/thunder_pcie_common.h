@@ -23,29 +23,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/cavium/thunder_pcie_common.h 286470 2015-08-08 20:34:55Z zbb $
+ * $FreeBSD: head/sys/arm64/cavium/thunder_pcie_common.h 296307 2016-03-02 08:39:59Z wma $
  */
 
 #ifndef _CAVIUM_THUNDER_PCIE_COMMON_H_
 #define	_CAVIUM_THUNDER_PCIE_COMMON_H_
 
-#define	MAX_RANGES_TUPLES	5
-#define	MIN_RANGES_TUPLES	2
+DECLARE_CLASS(thunder_pcie_driver);
+DECLARE_CLASS(thunder_pem_driver);
 
-struct pcie_range {
-	uint64_t	pci_base;
-	uint64_t	phys_base;
-	uint64_t	size;
-	uint64_t	flags;
-};
+MALLOC_DECLARE(M_THUNDER_PCIE);
 
 uint32_t range_addr_is_pci(struct pcie_range *, uint64_t, uint64_t);
 uint32_t range_addr_is_phys(struct pcie_range *, uint64_t, uint64_t);
+uint64_t range_addr_phys_to_pci(struct pcie_range *, uint64_t);
 uint64_t range_addr_pci_to_phys(struct pcie_range *, uint64_t);
-int thunder_common_alloc_msi(device_t, device_t, int, int, int *);
-int thunder_common_alloc_msix(device_t, device_t, int *);
-int thunder_common_map_msi(device_t, device_t, int, uint64_t *, uint32_t *);
-int thunder_common_release_msi(device_t, device_t, int, int *);
-int thunder_common_release_msix(device_t, device_t, int);
+
+int thunder_pcie_identify_ecam(device_t, int *);
+#ifdef THUNDERX_PASS_1_1_ERRATA
+struct resource *thunder_pcie_alloc_resource(device_t,
+    device_t, int, int *, rman_res_t, rman_res_t, rman_res_t, u_int);
+#endif
 
 #endif /* _CAVIUM_THUNDER_PCIE_COMMON_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmmipsdisassembler/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libllvmmipsdisassembler/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,9 @@ SRCDIR=	lib/Target/Mips/Disassembler
 INCDIR=	lib/Target/Mips
 SRCS=	MipsDisassembler.cpp
 
-TGHDRS=	MipsGenDisassemblerTables \
+TGHDRS=	Attributes \
+	Intrinsics \
+	MipsGenDisassemblerTables \
 	MipsGenInstrInfo \
 	MipsGenRegisterInfo \
 	MipsGenSubtargetInfo

@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe_isa.c 278165 2015-02-03 18:59:52Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe_isa.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -203,7 +203,7 @@ fe_probe_fmv(device_t dev)
 {
 	struct fe_softc *sc = device_get_softc(dev);
 	int n;
-	u_long iobase, irq;
+	rman_res_t iobase, irq;
 
 	static u_short const irqmap [ 4 ] = { 3, 7, 10, 15 };
 
@@ -698,7 +698,7 @@ fe_probe_jli(device_t dev)
 {
 	struct fe_softc *sc = device_get_softc(dev);
 	int i, n, error, xirq;
-	u_long iobase, irq;
+	rman_res_t iobase, irq;
 	u_char eeprom [JLI_EEPROM_SIZE];
 	u_short const * irqmap;
 
@@ -816,7 +816,7 @@ static int
 fe_probe_ssi(device_t dev)
 {
 	struct fe_softc *sc = device_get_softc(dev);
-	u_long iobase, irq;
+	rman_res_t iobase, irq;
 
 	u_char eeprom [SSI_EEPROM_SIZE];
 	static struct fe_simple_probe_struct probe_table [] = {
@@ -878,7 +878,7 @@ static int
 fe_probe_lnx(device_t dev)
 {
 	struct fe_softc *sc = device_get_softc(dev);
-	u_long iobase, irq;
+	rman_res_t iobase, irq;
 
 	u_char eeprom [LNX_EEPROM_SIZE];
 	static struct fe_simple_probe_struct probe_table [] = {
@@ -946,7 +946,7 @@ static int
 fe_probe_gwy(device_t dev)
 {
 	struct fe_softc *sc = device_get_softc(dev);
-	u_long iobase, irq;
+	rman_res_t iobase, irq;
 
 	static struct fe_simple_probe_struct probe_table [] = {
 	    /*	{ FE_DLCR2, 0x70, 0x00 }, */
@@ -999,7 +999,7 @@ static int
 fe_probe_ubn(device_t dev)
 {
 	struct fe_softc *sc = device_get_softc(dev);
-	u_long iobase, irq;
+	rman_res_t iobase, irq;
 #if 0
 	u_char sum;
 #endif

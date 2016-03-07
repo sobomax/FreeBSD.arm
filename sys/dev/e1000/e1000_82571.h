@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82571.h 287990 2015-09-19 18:22:59Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82571.h 295323 2016-02-05 17:14:37Z erj $*/
 
 #ifndef _E1000_82571_H_
 #define _E1000_82571_H_
@@ -50,9 +50,10 @@
 #define E1000_EIAC_82574	0x000DC /* Ext. Interrupt Auto Clear - RW */
 #define E1000_EIAC_MASK_82574	0x01F00000
 
-#define E1000_NVM_INIT_CTRL2_MNGM 0x6000 /* Manageability Operation Mode mask */
+#define E1000_IVAR_INT_ALLOC_VALID	0x8
 
-#define E1000_RXCFGL    0x0B634 /* TimeSync Rx EtherType & Msg Type Reg - RW */
+/* Manageability Operation Mode mask */
+#define E1000_NVM_INIT_CTRL2_MNGM	0x6000
 
 #define E1000_BASE1000T_STATUS		10
 #define E1000_IDLE_ERROR_COUNT_MASK	0xFF

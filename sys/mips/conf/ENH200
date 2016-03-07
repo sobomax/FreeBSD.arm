@@ -10,7 +10,7 @@
 # + 32MB RAM
 # + uboot environment
 
-# $FreeBSD: head/sys/mips/conf/ENH200 291049 2015-11-19 01:58:12Z imp $
+# $FreeBSD: head/sys/mips/conf/ENH200 295945 2016-02-24 00:39:36Z sobomax $
 
 #NO_UNIVERSE
 
@@ -26,9 +26,9 @@ options 	AR71XX_ENV_UBOOT
 options 	MSDOSFS
 
 # uncompress - to boot read-only lzma natively from flash
-device		geom_uncompress
-options 	GEOM_UNCOMPRESS
-options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uncompress\"
+device		geom_uzip
+options 	GEOM_UZIP
+options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uzip\"
 
 # Used for the static uboot partition map
 device          geom_map

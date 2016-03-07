@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 271818 2014-09-18 20:35:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * 3Com 3c90x Etherlink XL PCI NIC driver
@@ -106,8 +106,9 @@ __FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 271818 2014-09-18 20:35:22Z glebius 
 #include <sys/systm.h>
 #include <sys/sockio.h>
 #include <sys/endian.h>
-#include <sys/mbuf.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
+#include <sys/mbuf.h>
 #include <sys/module.h>
 #include <sys/socket.h>
 #include <sys/taskqueue.h>

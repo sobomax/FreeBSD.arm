@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/ndis/ntoskrnl_var.h 216242 2010-12-06 20:54:53Z bschmidt $
+ * $FreeBSD: head/sys/compat/ndis/ntoskrnl_var.h 295435 2016-02-09 16:30:16Z kib $
  */
 
 #ifndef _NTOSKRNL_VAR_H_
@@ -337,7 +337,7 @@ typedef struct nt_dispatch_header nt_dispatch_header;
 #define	SYNC_LEVEL_MP		(IPI_LEVEL - 1)
 
 #define	AT_PASSIVE_LEVEL(td)		\
-	((td)->td_proc->p_flag & P_KTHREAD == FALSE)
+	((td)->td_proc->p_flag & P_KPROC == FALSE)
 
 #define	AT_DISPATCH_LEVEL(td)		\
 	((td)->td_base_pri == PI_REALTIME)

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 274668 2014-11-18 17:06:56Z imp $
+ * $FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 295509 2016-02-11 11:49:27Z andrew $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 274668 2014-11-18 17:06:56Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_machdep.c 295509 2016-02-11 11:49:27Z andrew $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -98,6 +98,7 @@ struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
 
+#ifndef ARM_INTRNG
 static int
 fdt_gic_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
     int *pol)
@@ -117,7 +118,7 @@ fdt_pic_decode_t fdt_pic_table[] = {
 	&fdt_gic_decode_ic,
 	NULL
 };
-
+#endif
 
 struct arm32_dma_range *
 bus_dma_get_range(void)

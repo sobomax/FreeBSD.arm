@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 291648 2015-12-02 14:21:16Z mmel $
+ * $FreeBSD: head/sys/dev/ofw/ofw_bus_subr.h 295424 2016-02-09 03:35:40Z adrian $
  */
 
 #ifndef	_DEV_OFW_OFW_BUS_SUBR_H_
@@ -51,6 +51,10 @@ struct ofw_compat_data {
 	const char	*ocd_str;
 	uintptr_t	 ocd_data;
 };
+
+#define SIMPLEBUS_PNP_DESCR "Z:compat;P:private;"
+#define SIMPLEBUS_PNP_INFO(t) \
+	MODULE_PNP_INFO(SIMPLEBUS_PNP_DESCR, simplebus, t, t, sizeof(t[0]), sizeof(t) / sizeof(t[0]));
 
 /* Generic implementation of ofw_bus_if.m methods and helper routines */
 int	ofw_bus_gen_setup_devinfo(struct ofw_bus_devinfo *, phandle_t);
@@ -109,5 +113,16 @@ phandle_t ofw_bus_find_child(phandle_t, const char *);
 
 /* Helper routine to find a device_t child matchig a given phandle_t */
 device_t ofw_bus_find_child_device_by_phandle(device_t bus, phandle_t node);
+
+/* Helper routines for parsing lists  */
+int ofw_bus_parse_xref_list_alloc(phandle_t node, const char *list_name,
+    const char *cells_name, int idx, phandle_t *producer, int *ncells,
+    pcell_t **cells);
+int ofw_bus_parse_xref_list_get_length(phandle_t node, const char *list_name,
+    const char *cells_name, int *count);
+int ofw_bus_find_string_index(phandle_t node, const char *list_name,
+    const char *name, int *idx);
+int ofw_bus_string_list_to_array(phandle_t node, const char *list_name,
+    const char ***array);
 
 #endif /* !_DEV_OFW_OFW_BUS_SUBR_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/broadcom/bcm2835/files.bcm283x 291133 2015-11-21 15:30:08Z andrew $
+# $FreeBSD: head/sys/arm/broadcom/bcm2835/files.bcm283x 296155 2016-02-28 09:35:37Z andrew $
 
 arm/broadcom/bcm2835/bcm2835_bsc.c		optional bcm2835_bsc
 arm/broadcom/bcm2835/bcm2835_common.c		optional fdt
@@ -19,7 +19,6 @@ arm/broadcom/bcm2835/bcm283x_dwc_fdt.c		optional dwcotg fdt
 kern/kern_clocksource.c                         standard
 
 dev/mbox/mbox_if.m				standard
-dev/ofw/ofw_cpu.c				standard
 
 arm/broadcom/bcm2835/bcm2835_audio.c		optional sound vchiq \
 	compile-with "${NORMAL_C} -DUSE_VCHIQ_ARM -D__VCCOREVER__=0x04000000 -I$S/contrib/vchiq"

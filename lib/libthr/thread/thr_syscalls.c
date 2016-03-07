@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_syscalls.c 281714 2015-04-18 21:50:13Z kib $");
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_syscalls.c 295407 2016-02-08 19:24:13Z kib $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -652,6 +652,7 @@ __thr_interpose_libc(void)
 	SLOT(kevent);
 	SLOT(wait6);
 	SLOT(ppoll);
+	SLOT(map_stacks_exec);
 #undef SLOT
 	*(__libc_interposing_slot(
 	    INTERPOS__pthread_mutex_init_calloc_cb)) =

@@ -29,9 +29,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_nic.c 291923 2015-12-07 06:01:14Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/siena_nic.c 293891 2016-01-14 09:05:51Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
 #include "efx_impl.h"
 #include "mcdi_mon.h"
@@ -170,6 +169,7 @@ siena_board_cfg(
 
 	encp->enc_hw_tx_insert_vlan_enabled = B_FALSE;
 	encp->enc_fw_assisted_tso_enabled = B_FALSE;
+	encp->enc_fw_assisted_tso_v2_enabled = B_FALSE;
 	encp->enc_allow_set_mac_with_installed_filters = B_TRUE;
 
 	return (0);

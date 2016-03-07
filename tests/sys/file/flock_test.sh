@@ -28,7 +28,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/tests/sys/file/flock_test.sh 285184 2015-07-05 22:49:26Z markj $
+# $FreeBSD: head/tests/sys/file/flock_test.sh 292582 2015-12-22 02:10:31Z ngie $
 
 # Testcase # 11 is racy; uses an undocumented kernel interface for testing
 #            locking
@@ -43,10 +43,11 @@ for n in `seq 1 $last_testcase`; do
 		todomsg=" # TODO: racy testcase"
 	fi
 
-	$(dirname $0)/flock_helper . $n | grep -q SUCCEED
-	if [ $? -eq 0 ]; then
+	output=$($(dirname $0)/flock_helper . $n)
+	if echo "$output" | grep -q SUCCEED; then
 		echo "ok $n$todomsg"
 	else
 		echo "not ok $n$todomsg"
+		echo "$output" >&2
 	fi
 done

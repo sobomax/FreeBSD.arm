@@ -1,3 +1,5 @@
-# $FreeBSD: head/sys/arm/allwinner/files.a10 281679 2015-04-18 03:07:01Z loos $
+# $FreeBSD: head/sys/arm/allwinner/files.a10 295711 2016-02-17 18:28:03Z andrew $
 
+arm/allwinner/a10_padconf.c		standard
 arm/allwinner/aintc.c			standard
+arm/allwinner/timer.c			standard

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 /*
  *
@@ -258,7 +258,7 @@ cs_cs89x0_probe(device_t dev)
 {
 	int i;
 	int error;
-	u_long irq, junk;
+	rman_res_t irq, junk;
 	struct cs_softc *sc = device_get_softc(dev);
 	unsigned rev_type = 0;
 	uint16_t id;
@@ -406,8 +406,8 @@ cs_alloc_port(device_t dev, int rid, int size)
 	struct cs_softc *sc = device_get_softc(dev);
 	struct resource *res;
 
-	res = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-	    0ul, ~0ul, size, RF_ACTIVE);
+	res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+	    size, RF_ACTIVE);
 	if (res == NULL)
 		return (ENOENT);
 	sc->port_rid = rid;

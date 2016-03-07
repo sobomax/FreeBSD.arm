@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_sockopt.c 291222 2015-11-23 22:06:55Z ae $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_sockopt.c 295766 2016-02-18 19:05:30Z glebius $");
 
 /*
  * Control socket and rule management routines for ipfw.
@@ -2890,7 +2890,7 @@ compare_sh(const void *_a, const void *_b)
 
 	if ((uintptr_t)a->handler < (uintptr_t)b->handler)
 		return (-1);
-	else if ((uintptr_t)b->handler > (uintptr_t)b->handler)
+	else if ((uintptr_t)a->handler > (uintptr_t)b->handler)
 		return (1);
 
 	return (0);

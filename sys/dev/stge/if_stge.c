@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/stge/if_stge.c 271837 2014-09-18 21:16:05Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/stge/if_stge.c 295735 2016-02-18 01:24:10Z yongari $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -508,7 +508,7 @@ stge_attach(device_t dev)
 		}
 	}
 
-	if ((error = stge_dma_alloc(sc) != 0))
+	if ((error = stge_dma_alloc(sc)) != 0)
 		goto fail;
 
 	/*

@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/advansys/adv_isa.c 241492 2012-10-12 21:31:44Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/advansys/adv_isa.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h> 
@@ -109,7 +109,7 @@ adv_isa_probe(device_t dev)
 {
 	int	port_index;
 	int	max_port_index;
-	u_long	iobase, iocount, irq;
+	rman_res_t	iobase, iocount, irq;
 	int	user_iobase = 0;
 	int	rid = 0;
 	void	*ih;

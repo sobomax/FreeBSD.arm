@@ -3,7 +3,7 @@
  * Public domain.
  *
  *	$NetBSD: search.h,v 1.16 2005/02/03 04:39:32 perry Exp $
- * $FreeBSD: head/include/search.h 268943 2014-07-21 15:22:48Z pfg $
+ * $FreeBSD: head/include/search.h 292767 2015-12-27 07:50:11Z ed $
  */
 
 #ifndef _SEARCH_H_
@@ -35,8 +35,9 @@ typedef	enum {
 
 #ifdef _SEARCH_PRIVATE
 typedef	struct node {
-	char         *key;
+	void         *key;
 	struct node  *llink, *rlink;
+	signed char   balance;
 } node_t;
 
 struct que_elem {
@@ -46,11 +47,8 @@ struct que_elem {
 #endif
 
 #if __BSD_VISIBLE
-struct _ENTRY;
 struct hsearch_data {
-	struct _ENTRY *table;
-	size_t size;
-	size_t filled;
+	struct __hsearch *__hsearch;
 };
 #endif
 

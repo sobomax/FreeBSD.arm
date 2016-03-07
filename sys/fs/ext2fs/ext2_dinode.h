@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/ext2fs/ext2_dinode.h 262623 2014-02-28 21:25:32Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_dinode.h 294654 2016-01-24 02:44:00Z pfg $
  */
 
 #ifndef _FS_EXT2FS_EXT2_DINODE_H_
@@ -51,8 +51,8 @@
 /*
  * Inode flags
  * The system supports EXT2_IMMUTABLE, EXT2_APPEND and EXT2_NODUMP flags.
- * The current implementation also uses EXT4_INDEX, EXT4_EXTENTS and
- * EXT4_HUGE_FILE with some restrictions, imposed the lack of write
+ * The current implementation also uses EXT3_INDEX, EXT4_EXTENTS and
+ * EXT4_HUGE_FILE with some restrictions imposed by the lack of write
  * support.
  */
 #define	EXT2_SECRM		0x00000001	/* Secure deletion */
@@ -63,7 +63,7 @@
 #define	EXT2_APPEND		0x00000020 /* Writes to file may only append */
 #define	EXT2_NODUMP		0x00000040	/* Do not dump file */
 #define	EXT2_NOATIME		0x00000080	/* Do not update atime */
-#define	EXT4_INDEX		0x00001000	/* Hash-indexed directory */
+#define	EXT3_INDEX		0x00001000	/* Hash-indexed directory */
 #define	EXT4_IMAGIC		0x00002000	/* AFS directory */
 #define	EXT4_JOURNAL_DATA	0x00004000 /* File data should be journaled */
 #define	EXT4_NOTAIL		0x00008000 /* File tail should not be merged */

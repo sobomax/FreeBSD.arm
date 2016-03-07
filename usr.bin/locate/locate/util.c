@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/locate/locate/util.c 274847 2014-11-22 12:13:05Z dim $
+ * $FreeBSD: head/usr.bin/locate/locate/util.c 292864 2015-12-29 11:24:41Z uqs $
  */
 
 
@@ -93,7 +93,7 @@ colon(dbv, path, dot)
 	char **pv;
 
 	if (dbv == NULL) {
-		if ((dbv = malloc(sizeof(char **))) == NULL)
+		if ((dbv = malloc(sizeof(char *))) == NULL)
 			err(1, "malloc");
 		*dbv = NULL;
 	}
@@ -123,7 +123,7 @@ colon(dbv, path, dot)
 				*(p + slen) = '\0';
 			}
 			/* increase dbv with element p */
-			if ((dbv = realloc(dbv, sizeof(char **) * (vlen + 2)))
+			if ((dbv = realloc(dbv, sizeof(char *) * (vlen + 2)))
 			    == NULL)
 				err(1, "realloc");
 			*(dbv + vlen) = p;

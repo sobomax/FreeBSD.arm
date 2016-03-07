@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drmP.h 288653 2015-10-04 07:45:36Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drmP.h 295881 2016-02-22 09:04:36Z skra $");
 
 #ifndef _DRM_P_H_
 #define _DRM_P_H_
@@ -76,8 +76,6 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/drmP.h 288653 2015-10-04 07:45:36Z adrian 
 #include <vm/vm_pager.h>
 #include <vm/vm_param.h>
 #include <vm/vm_phys.h>
-#include <machine/param.h>
-#include <machine/pmap.h>
 #include <machine/bus.h>
 #include <machine/resource.h>
 #if defined(__i386__) || defined(__amd64__)

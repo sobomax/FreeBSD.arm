@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_package.c 282678 2015-05-09 12:28:48Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_package.c 295777 2016-02-18 23:32:11Z jkim $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -80,7 +80,6 @@ acpi_PkgStr(ACPI_OBJECT *res, int idx, void *dst, size_t size)
     obj = &res->Package.Elements[idx];
     if (obj == NULL)
 	return (EINVAL);
-    bzero(dst, sizeof(dst));
 
     switch (obj->Type) {
     case ACPI_TYPE_STRING:

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_pci.c 281499 2015-04-13 19:13:51Z neel $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_pci.c 295463 2016-02-10 08:03:10Z hselasky $");
 
 /*
  * USB Enhanced Host Controller Driver, a.k.a. USB 2.0 controller.
@@ -172,7 +172,7 @@ ehci_pci_match(device_t self)
 		return ("Intel Lynx Point LP USB 2.0 controller USB");
 
 	case 0x00e01033:
-		return ("NEC uPD 720100 USB 2.0 controller");
+		return ("NEC uPD 72010x USB 2.0 controller");
 
 	case 0x006810de:
 		return "NVIDIA nForce2 USB 2.0 controller";

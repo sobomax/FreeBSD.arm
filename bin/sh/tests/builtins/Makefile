@@ -1,4 +1,4 @@
-# $FreeBSD: head/bin/sh/tests/builtins/Makefile 287308 2015-08-30 17:24:22Z jilles $
+# $FreeBSD: head/bin/sh/tests/builtins/Makefile 294593 2016-01-22 20:10:08Z jilles $
 
 .include <src.opts.mk>
 
@@ -48,6 +48,7 @@ FILES+=		cd5.0
 FILES+=		cd6.0
 FILES+=		cd7.0
 FILES+=		cd8.0
+FILES+=		cd9.0 cd9.0.stdout
 FILES+=		command1.0
 FILES+=		command2.0
 FILES+=		command3.0
@@ -94,6 +95,8 @@ FILES+=		getopts5.0
 FILES+=		getopts6.0
 FILES+=		getopts7.0
 FILES+=		getopts8.0 getopts8.0.stdout
+FILES+=		getopts9.0 getopts9.0.stdout
+FILES+=		getopts10.0
 FILES+=		hash1.0 hash1.0.stdout
 FILES+=		hash2.0 hash2.0.stdout
 FILES+=		hash3.0 hash3.0.stdout
@@ -108,6 +111,9 @@ FILES+=		local1.0
 FILES+=		local2.0
 FILES+=		local3.0
 FILES+=		local4.0
+FILES+=		local5.0
+FILES+=		local6.0
+FILES+=		local7.0
 .if ${MK_NLS} != "no"
 FILES+=		locale1.0
 .endif

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mpic.c 288447 2015-10-01 12:09:05Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mpic.c 296100 2016-02-26 16:04:47Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -360,6 +360,11 @@ mv_msi_data(int irq, uint64_t *addr, uint32_t *data)
 }
 
 #if defined(SMP)
+void
+intr_pic_init_secondary(void)
+{
+}
+
 void
 pic_ipi_send(cpuset_t cpus, u_int ipi)
 {

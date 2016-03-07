@@ -1,16 +1,18 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: head/sbin/md5/Makefile 280767 2015-03-27 18:23:06Z delphij $
+# $FreeBSD: head/sbin/md5/Makefile 292782 2015-12-27 17:33:59Z allanjude $
 
 PROG=	md5
 
 LINKS=	${BINDIR}/md5 ${BINDIR}/rmd160 \
 	${BINDIR}/md5 ${BINDIR}/sha1 \
 	${BINDIR}/md5 ${BINDIR}/sha256 \
+	${BINDIR}/md5 ${BINDIR}/sha384 \
 	${BINDIR}/md5 ${BINDIR}/sha512
 
 MLINKS=	md5.1 rmd160.1 \
 	md5.1 sha1.1 \
 	md5.1 sha256.1 \
+	md5.1 sha384.1 \
 	md5.1 sha512.1
 
 LIBADD=	md

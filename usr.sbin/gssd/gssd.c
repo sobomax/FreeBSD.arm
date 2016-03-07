@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 288272 2015-09-26 16:30:16Z jpaetzel $");
+__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 293043 2016-01-01 17:06:16Z jpaetzel $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -254,6 +254,7 @@ main(int argc, char **argv)
 
 	gssd_syscall(_PATH_GSSDSOCK);
 	svc_run();
+	gssd_syscall("");
 
 	return (0);
 }
@@ -1285,6 +1286,7 @@ void gssd_terminate(int sig __unused)
 	if (hostbased_initiator_cred != 0)
 		unlink(GSSD_CREDENTIAL_CACHE_FILE);
 #endif
+	gssd_syscall("");
 	exit(0);
 }
 

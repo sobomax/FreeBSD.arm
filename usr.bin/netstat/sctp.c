@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)sctp.c	0.1 (Berkeley) 4/18/2007";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/netstat/sctp.c 287649 2015-09-11 04:37:01Z markj $");
+__FBSDID("$FreeBSD: head/usr.bin/netstat/sctp.c 295136 2016-02-02 05:57:59Z alfred $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -467,9 +467,10 @@ sctp_process_inpcb(struct xsctp_inpcb *xinpcb,
 		tname = "????";
 
 	if (Lflag) {
-		char buf1[9];
+		char buf1[22];
 
-		snprintf(buf1, 9, "%hu/%hu", xinpcb->qlen, xinpcb->maxqlen);
+		snprintf(buf1, sizeof buf1, "%u/%u", 
+		    xinpcb->qlen, xinpcb->maxqlen);
 		xo_emit("{:protocol/%-6.6s/%s} {:type/%-5.5s/%s} ",
 		    pname, tname);
 		xo_emit("{d:queues/%-8.8s}{e:queue-len/%hu}"

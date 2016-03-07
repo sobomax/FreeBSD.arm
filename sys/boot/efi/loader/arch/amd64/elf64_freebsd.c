@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/loader/arch/amd64/elf64_freebsd.c 280950 2015-04-01 08:30:40Z andrew $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/loader/arch/amd64/elf64_freebsd.c 293724 2016-01-12 02:17:39Z smh $");
 
 #define __ELF_WORD_SIZE 64
 #include <sys/param.h>
@@ -100,7 +100,6 @@ elf64_exec(struct preloaded_file *fp)
 	ACPI_TABLE_RSDP		*rsdp;
 	char			buf[24];
 	int			revision;
-	EFI_STATUS		status;
 
 	rsdp = efi_get_table(&acpi20_guid);
 	if (rsdp == NULL) {
@@ -173,13 +172,6 @@ elf64_exec(struct preloaded_file *fp)
 	err = bi_load(fp->f_args, &modulep, &kernend);
 	if (err != 0)
 		return(err);
-
-	status = BS->ExitBootServices(IH, efi_mapkey);
-	if (EFI_ERROR(status)) {
-		printf("%s: ExitBootServices() returned 0x%lx\n", __func__,
-		    (long)status);
-		return (EINVAL);
-	}
 
 	dev_cleanup();
 

@@ -84,7 +84,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/aim/mmu_oea.c 286584 2015-08-10 17:18:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/powerpc/aim/mmu_oea.c 296245 2016-03-01 00:50:39Z jhibbits $");
 
 /*
  * Manages physical address maps.
@@ -384,6 +384,8 @@ moea_calc_wimg(vm_paddr_t pa, vm_memattr_t ma)
 		switch (ma) {
 		case VM_MEMATTR_UNCACHEABLE:
 			return (PTE_I | PTE_G);
+		case VM_MEMATTR_CACHEABLE:
+			return (PTE_M);
 		case VM_MEMATTR_WRITE_COMBINING:
 		case VM_MEMATTR_WRITE_BACK:
 		case VM_MEMATTR_PREFETCHABLE:

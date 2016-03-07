@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmaarch64codegen/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmaarch64codegen/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -41,6 +41,7 @@ TGHDRS=	AArch64GenCallingConv \
 	AArch64GenMCPseudoLowering \
 	AArch64GenRegisterInfo \
 	AArch64GenSubtargetInfo \
+	Attributes \
 	Intrinsics
 
 .include "../clang.lib.mk"

@@ -25,7 +25,7 @@
 
 
 /*
- * $FreeBSD: head/sys/dev/netmap/netmap.c 287543 2015-09-07 23:16:39Z adrian $
+ * $FreeBSD: head/sys/dev/netmap/netmap.c 292730 2015-12-25 14:51:36Z kevlo $
  *
  * This module supports memory mapped access to network devices,
  * see netmap(4).
@@ -589,7 +589,7 @@ netmap_set_all_rings(struct netmap_adapter *na, int stopped)
 /*
  * Convenience function used in drivers.  Waits for current txsync()s/rxsync()s
  * to finish and prevents any new one from starting.  Call this before turning
- * netmap mode off, or before removing the harware rings (e.g., on module
+ * netmap mode off, or before removing the hardware rings (e.g., on module
  * onload).  As a rule of thumb for linux drivers, this should be placed near
  * each napi_disable().
  */

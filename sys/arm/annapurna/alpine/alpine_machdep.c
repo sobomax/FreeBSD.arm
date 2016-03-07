@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 282985 2015-05-15 18:25:48Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 295880 2016-02-22 09:02:20Z skra $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 282985 2015-0
 #include <machine/bus.h>
 #include <machine/frame.h> /* For trapframe_t, used in <machine/machdep.h> */
 #include <machine/machdep.h>
-#include <machine/pmap.h>
 #include <machine/devmap.h>
 #include <machine/platform.h>
 #include <machine/fdt.h>
@@ -123,7 +122,7 @@ platform_late_init(void)
 }
 
 /*
- * Construct pmap_devmap[] with DT-derived config data.
+ * Construct devmap table with DT-derived config data.
  */
 int
 platform_devmap_init(void)

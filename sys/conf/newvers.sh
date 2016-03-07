@@ -28,7 +28,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: head/sys/conf/newvers.sh 291691 2015-12-03 12:17:09Z emaste $
+# $FreeBSD: head/sys/conf/newvers.sh 292997 2015-12-31 19:25:35Z emaste $
 
 TYPE="FreeBSD"
 REVISION="11.0"
@@ -97,7 +97,10 @@ then
 fi
 
 touch version
-v=`cat version` u=${USER:-root} d=`pwd` h=${HOSTNAME:-`hostname`}
+v=`cat version`
+u=${USER:-root}
+d=`pwd`
+h=${HOSTNAME:-`hostname`}
 if [ -n "$SOURCE_DATE_EPOCH" ]; then
 	if ! t=`date -r $SOURCE_DATE_EPOCH 2>/dev/null`; then
 		echo "Invalid SOURCE_DATE_EPOCH" >&2

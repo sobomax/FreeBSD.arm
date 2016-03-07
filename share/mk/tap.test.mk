@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/tap.test.mk 274077 2014-11-04 01:57:31Z ngie $
+# $FreeBSD: head/share/mk/tap.test.mk 292507 2015-12-20 06:26:15Z ngie $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -26,7 +26,7 @@ TAP_TESTS_PERL?=
 TAP_TESTS_SH?=
 
 # Perl interpreter to use for test programs written in this language.
-TAP_PERL_INTERPRETER?= /usr/local/bin/perl
+TAP_PERL_INTERPRETER?=	${LOCALBASE}/bin/perl
 
 .if !empty(TAP_TESTS_C)
 PROGS+= ${TAP_TESTS_C}

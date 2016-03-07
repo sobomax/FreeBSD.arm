@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 Chelsio, Inc. All rights reserved.
+ * Copyright (c) 2009-2013, 2016 Chelsio, Inc. All rights reserved.
  *
  * This software is available to you under a choice of one of two
  * licenses.  You may choose to be licensed under the terms of the GNU
@@ -30,7 +30,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/provider.c 291665 2015-12-03 00:02:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/provider.c 294610 2016-01-22 23:33:34Z np $");
 
 #include "opt_inet.h"
 
@@ -474,8 +474,9 @@ c4iw_register_device(struct c4iw_dev *dev)
 	iwcm->connect = c4iw_connect;
 	iwcm->accept = c4iw_accept_cr;
 	iwcm->reject = c4iw_reject_cr;
-	iwcm->create_listen = c4iw_create_listen;
-	iwcm->destroy_listen = c4iw_destroy_listen;
+	iwcm->create_listen_ep = c4iw_create_listen_ep;
+	iwcm->destroy_listen_ep = c4iw_destroy_listen_ep;
+	iwcm->newconn = process_newconn;
 	iwcm->add_ref = c4iw_qp_add_ref;
 	iwcm->rem_ref = c4iw_qp_rem_ref;
 	iwcm->get_qp = c4iw_get_qp;

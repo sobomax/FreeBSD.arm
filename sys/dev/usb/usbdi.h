@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/usb/usbdi.h 292080 2015-12-11 05:28:00Z imp $
+ * $FreeBSD: head/sys/dev/usb/usbdi.h 292865 2015-12-29 11:53:13Z hselasky $
  */
 #ifndef _USB_USBDI_H_
 #define _USB_USBDI_H_
@@ -267,7 +267,7 @@ struct usb_config {
 struct usb_device_id {
 
 	/* Select which fields to match against */
-#if _BYTE_ORDER == _LITTLE_ENDIAN
+#if BYTE_ORDER == LITTLE_ENDIAN
 	uint16_t
 		match_flag_vendor:1,
 		match_flag_product:1,
@@ -315,13 +315,6 @@ struct usb_device_id {
 	uint8_t	bInterfaceSubClass;
 	uint8_t	bInterfaceProtocol;
 
-	/* Hook for driver specific information */
-	unsigned long driver_info;
-
-/*
- * XXX can't currently participate in auto driver loading
- * XXX making it a union with the match_flag_* above messes up init
- */
 #if USB_HAVE_COMPAT_LINUX
 	/* which fields to match against */
 	uint16_t match_flags;
@@ -336,6 +329,9 @@ struct usb_device_id {
 #define	USB_DEVICE_ID_MATCH_INT_SUBCLASS	0x0100
 #define	USB_DEVICE_ID_MATCH_INT_PROTOCOL	0x0200
 #endif
+
+	/* Hook for driver specific information */
+	unsigned long driver_info;
 } __aligned(32);
 
 #define USB_STD_PNP_INFO "M16:mask;U16:vendor;U16:product;L16:product;G16:product;" \

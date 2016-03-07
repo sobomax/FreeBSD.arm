@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libdevinfo/devinfo.h 278299 2015-02-05 22:42:44Z jhb $
+ *	$FreeBSD: head/lib/libdevinfo/devinfo.h 294883 2016-01-27 02:23:54Z jhibbits $
  */
 
 #ifndef _DEVINFO_H_INCLUDED
@@ -56,8 +56,8 @@ struct devinfo_dev {
 struct devinfo_rman {
 	devinfo_handle_t	dm_handle;	/* resource manager handle */
 
-	unsigned long		dm_start;	/* resource start */
-	unsigned long		dm_size;	/* resource size */
+	rman_res_t		dm_start;	/* resource start */
+	rman_res_t		dm_size;	/* resource size */
     
 	char			*dm_desc;	/* resource description */
 };
@@ -67,8 +67,8 @@ struct devinfo_res {
 	devinfo_handle_t	dr_rman;	/* resource manager handle */
 	devinfo_handle_t	dr_device;	/* owning device */
 
-	unsigned long		dr_start;	/* region start */
-	unsigned long		dr_size;	/* region size */
+	rman_res_t		dr_start;	/* region start */
+	rman_res_t		dr_size;	/* region size */
 	/* XXX add flags */
 };
 

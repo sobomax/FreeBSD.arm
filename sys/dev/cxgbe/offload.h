@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/offload.h 278374 2015-02-08 09:28:55Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/offload.h 292736 2015-12-26 00:26:02Z np $
  *
  */
 
@@ -156,7 +156,7 @@ int t4_register_uld(struct uld_info *);
 int t4_unregister_uld(struct uld_info *);
 int t4_activate_uld(struct adapter *, int);
 int t4_deactivate_uld(struct adapter *, int);
-void t4_iscsi_init(struct ifnet *, unsigned int, const unsigned int *);
+void t4_iscsi_init(struct adapter *, u_int, const u_int *);
 int uld_active(struct adapter *, int);
 #endif
 #endif

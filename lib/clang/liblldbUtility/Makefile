@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbUtility/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbUtility/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -20,6 +20,7 @@ SRCS=	ARM64_DWARF_Registers.cpp \
 	StringExtractor.cpp \
 	StringExtractorGDBRemote.cpp \
 	StringLexer.cpp \
+	TaskPool.cpp \
 	TimeSpecTimeout.cpp \
 	UriParser.cpp
 

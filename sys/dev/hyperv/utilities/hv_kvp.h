@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/utilities/hv_kvp.h 271493 2014-09-13 02:15:31Z delphij $
+ * $FreeBSD: head/sys/dev/hyperv/utilities/hv_kvp.h 295958 2016-02-24 05:01:18Z sephe $
  */
 
 #ifndef _KVP_H
@@ -237,18 +237,5 @@ struct hv_kvp_ip_msg {
 	uint8_t pool;
 	struct hv_kvp_ipaddr_value      kvp_ip_val;
 } __attribute__((packed));
-
-
-#define HV_SHUT_DOWN                0
-#define HV_TIME_SYNCH               1
-#define HV_HEART_BEAT               2
-#define HV_KVP                      3
-#define HV_MAX_UTIL_SERVICES        4
-
-#define HV_WLTIMEDELTA              116444736000000000L     /* in 100ns unit */
-#define HV_ICTIMESYNCFLAG_PROBE     0
-#define HV_ICTIMESYNCFLAG_SYNC      1
-#define HV_ICTIMESYNCFLAG_SAMPLE    2
-#define HV_NANO_SEC_PER_SEC         1000000000
 
 #endif /* _KVP_H */

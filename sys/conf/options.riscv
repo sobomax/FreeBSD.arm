@@ -1,0 +1,4 @@
+# $FreeBSD: head/sys/conf/options.riscv 295041 2016-01-29 15:12:31Z br $
+
+RISCV				opt_global.h
+VFP				opt_global.h

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/pkill/pkill.c 287012 2015-08-22 05:04:36Z jamie $");
+__FBSDID("$FreeBSD: head/bin/pkill/pkill.c 295435 2016-02-09 16:30:16Z kib $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -71,7 +71,7 @@ __FBSDID("$FreeBSD: head/bin/pkill/pkill.c 287012 2015-08-22 05:04:36Z jamie $")
 
 /* Ignore system-processes (if '-S' flag is not specified) and myself. */
 #define	PSKIP(kp)	((kp)->ki_pid == mypid ||			\
-			 (!kthreads && ((kp)->ki_flag & P_KTHREAD) != 0))
+			 (!kthreads && ((kp)->ki_flag & P_KPROC) != 0))
 
 enum listtype {
 	LT_GENERIC,

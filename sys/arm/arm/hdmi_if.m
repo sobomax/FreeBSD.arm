@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/arm/arm/hdmi_if.m 290831 2015-11-14 21:01:35Z gonzo $
+# $FreeBSD: head/sys/arm/arm/hdmi_if.m 296064 2016-02-25 20:17:18Z jmcneill $
 #
 
 #include <sys/bus.h>
@@ -56,4 +56,12 @@ METHOD int get_edid {
 METHOD int set_videomode {
 	device_t dev;
 	const struct videomode *videomode;
+};
+
+#
+# Enable/disable output
+#
+METHOD int enable {
+	device_t dev;
+	int onoff;
 };

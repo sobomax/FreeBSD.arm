@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/tcp_pcap.c 289350 2015-10-15 01:44:32Z bz $
+ * $FreeBSD: head/sys/netinet/tcp_pcap.c 295482 2016-02-10 18:54:18Z glebius $
  */
 
 #include <sys/queue.h>
@@ -341,7 +341,7 @@ tcp_pcap_add(struct tcphdr *th, struct mbuf *m, struct mbufq *queue)
 
 			n = mhead;
 			tcp_pcap_m_freem(n->m_next);
-			m_init(n, NULL, 0, M_NOWAIT, MT_DATA, 0);
+			m_init(n, M_NOWAIT, MT_DATA, 0);
 		}
 	}
 

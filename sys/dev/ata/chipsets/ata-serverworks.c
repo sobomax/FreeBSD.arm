@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-serverworks.c 280393 2015-03-23 19:47:52Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-serverworks.c 295719 2016-02-17 21:13:33Z glebius $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -162,9 +162,8 @@ ata_serverworks_chipinit(device_t dev)
 	}
     }
     else {
-	pci_write_config(dev, 0x5a,
-			 (pci_read_config(dev, 0x5a, 1) & ~0x40) |
-			 (ctlr->chip->cfg1 == SWKS_100) ? 0x03 : 0x02, 1);
+	pci_write_config(dev, 0x5a, (pci_read_config(dev, 0x5a, 1) & ~0x40) |
+	    ((ctlr->chip->cfg1 == SWKS_100) ? 0x03 : 0x02), 1);
     }
     ctlr->setmode = ata_serverworks_setmode;
     return 0;

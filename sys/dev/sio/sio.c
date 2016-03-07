@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sio/sio.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/sio/sio.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include "opt_compat.h"
 #include "opt_gdb.h"
@@ -444,8 +444,8 @@ sioprobe(dev, xrid, rclk, noprobe)
 	struct resource *port;
 
 	rid = xrid;
-	port = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-				  0, ~0, IO_COMSIZE, RF_ACTIVE);
+	port = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+					   IO_COMSIZE, RF_ACTIVE);
 	if (!port)
 		return (ENXIO);
 
@@ -884,8 +884,8 @@ sioattach(dev, xrid, rclk)
 	struct tty	*tp;
 
 	rid = xrid;
-	port = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-				  0, ~0, IO_COMSIZE, RF_ACTIVE);
+	port = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+					   IO_COMSIZE, RF_ACTIVE);
 	if (!port)
 		return (ENXIO);
 

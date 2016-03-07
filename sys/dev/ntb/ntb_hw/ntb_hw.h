@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_hw.h 291280 2015-11-25 01:59:08Z cem $
+ * $FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_hw.h 295618 2016-02-14 22:37:28Z cem $
  */
 
 #ifndef _NTB_HW_H_
@@ -86,6 +86,7 @@ int ntb_mw_get_wc(struct ntb_softc *, unsigned mw_idx, vm_memattr_t *mode);
 int ntb_mw_set_wc(struct ntb_softc *, unsigned mw_idx, vm_memattr_t mode);
 
 uint8_t ntb_get_max_spads(struct ntb_softc *ntb);
+void ntb_spad_clear(struct ntb_softc *ntb);
 int ntb_spad_write(struct ntb_softc *ntb, unsigned int idx, uint32_t val);
 int ntb_spad_read(struct ntb_softc *ntb, unsigned int idx, uint32_t *val);
 int ntb_peer_spad_write(struct ntb_softc *ntb, unsigned int idx,

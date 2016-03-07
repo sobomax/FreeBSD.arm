@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_sysctl.c 290505 2015-11-07 18:26:32Z cem $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_sysctl.c 294757 2016-01-26 01:15:18Z markj $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -165,6 +165,8 @@ sysctl_root_handler_locked(struct sysctl_oid *oid, void *arg1, intmax_t arg2,
 	error = oid->oid_handler(oid, arg1, arg2, req);
 	if (!(oid->oid_kind & CTLFLAG_MPSAFE))
 		mtx_unlock(&Giant);
+
+	KFAIL_POINT_ERROR(_debug_fail_point, sysctl_running, error);
 
 	if (tracker != NULL)
 		SYSCTL_RLOCK(tracker);
@@ -1837,8 +1839,6 @@ sysctl_root(SYSCTL_HANDLER_ARGS)
 		arg1 = (void *)(curvnet->vnet_data_base + (uintptr_t)arg1);
 #endif
 	error = sysctl_root_handler_locked(oid, arg1, arg2, req, &tracker);
-
-	KFAIL_POINT_ERROR(_debug_fail_point, sysctl_running, error);
 
 out:
 	SYSCTL_RUNLOCK(&tracker);

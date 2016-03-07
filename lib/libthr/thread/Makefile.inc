@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libthr/thread/Makefile.inc 277490 2015-01-21 16:41:05Z andrew $
+# $FreeBSD: head/lib/libthr/thread/Makefile.inc 296162 2016-02-28 17:52:33Z kib $
 
 # thr sources
 .PATH: ${.CURDIR}/thread
@@ -36,6 +36,7 @@ SRCS+= \
 	thr_mutexattr.c \
 	thr_once.c \
 	thr_printf.c \
+	thr_pshared.c \
 	thr_pspinlock.c \
 	thr_resume_np.c \
 	thr_rtld.c \

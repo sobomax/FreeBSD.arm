@@ -28,7 +28,7 @@
  *
  *	@(#)def.h	8.4 (Berkeley) 4/20/95
  *
- * $FreeBSD: head/usr.bin/mail/def.h 216370 2010-12-11 08:32:16Z joel $
+ * $FreeBSD: head/usr.bin/mail/def.h 295675 2016-02-16 21:39:19Z pfg $
  */
 
 /*
@@ -270,5 +270,5 @@ struct ignoretab {
  */
 #define trunc(stream) {							\
 	(void)fflush(stream); 						\
-	(void)ftruncate(fileno(stream), (off_t)ftell(stream));		\
+	(void)ftruncate(fileno(stream), ftello(stream));		\
 }

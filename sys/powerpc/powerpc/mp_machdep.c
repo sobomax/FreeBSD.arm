@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mp_machdep.c 265900 2014-05-12 02:56:27Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mp_machdep.c 293636 2016-01-10 16:42:14Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -67,7 +67,6 @@ volatile static u_quad_t ap_timebase;
 static u_int ipi_msg_cnt[32];
 static struct mtx ap_boot_mtx;
 struct pcb stoppcbs[MAXCPU];
-int longfault(faultbuf, int);
 
 void
 machdep_ap_bootstrap(void)

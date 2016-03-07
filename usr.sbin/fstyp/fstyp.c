@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fstyp/fstyp.c 284728 2015-06-23 16:34:43Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.sbin/fstyp/fstyp.c 292829 2015-12-28 08:53:31Z delphij $");
 
 #include <sys/capsicum.h>
 #include <sys/disk.h>
@@ -39,7 +39,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/fstyp/fstyp.c 284728 2015-06-23 16:34:43Z alla
 #include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

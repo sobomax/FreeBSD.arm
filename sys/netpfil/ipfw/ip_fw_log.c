@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 290545 2015-11-08 13:44:21Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * Logging support for ipfw
@@ -39,8 +39,9 @@ __FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_log.c 290545 2015-11-08 13:44:21
 
 #include <sys/param.h>
 #include <sys/systm.h>
-#include <sys/mbuf.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
+#include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 #include <sys/syslog.h>

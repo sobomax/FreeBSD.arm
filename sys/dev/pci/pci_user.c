@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_user.c 279448 2015-03-01 00:40:19Z rstone $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_user.c 295816 2016-02-19 16:53:21Z se $");
 
 #include "opt_bus.h"	/* XXX trim includes */
 #include "opt_compat.h"
@@ -709,9 +709,9 @@ pci_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag, struct thread *t
 		 * that match the user's criteria.
 		 */
 		for (cio->num_matches = 0, error = 0, i = 0,
-		     dinfo = STAILQ_FIRST(devlist_head);
-		     (dinfo != NULL) && (cio->num_matches < ionum)
-		     && (error == 0) && (i < pci_numdevs) && (dinfo != NULL);
+				 dinfo = STAILQ_FIRST(devlist_head);
+		     (dinfo != NULL) && (cio->num_matches < ionum) &&
+				 (error == 0) && (i < pci_numdevs);
 		     dinfo = STAILQ_NEXT(dinfo, pci_links), i++) {
 
 			if (i < cio->offset)

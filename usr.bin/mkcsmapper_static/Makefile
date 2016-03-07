@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/mkcsmapper_static/Makefile 284374 2015-06-14 03:34:09Z sjg $
+# $FreeBSD: head/usr.bin/mkcsmapper_static/Makefile 295977 2016-02-24 17:18:31Z bdrewery $
 
 .PATH: ${.CURDIR}/../../lib/libc/iconv ${.CURDIR}/../mkcsmapper
 
@@ -7,9 +7,7 @@ SRCS=	citrus_bcs.c citrus_db_factory.c citrus_db_hash.c \
 	citrus_lookup_factory.c citrus_pivot_factory.c
 MAN=
 NO_SHARED= yes
-.if ${MACHINE} == "host"
-NO_WARNS= yes
-.endif
+NO_WMISSING_VARIABLE_DECLARATIONS=
 
 build-tools: mkcsmapper_static
 

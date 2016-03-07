@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/arm-freebsd.c 289239 2015-10-13 18:23:51Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/arm-freebsd.c 295056 2016-01-30 01:00:54Z jhb $");
 
 /* FreeBSD/arm-specific system call handling. */
 
@@ -42,10 +42,9 @@ __FBSDID("$FreeBSD: head/usr.bin/truss/arm-freebsd.c 289239 2015-10-13 18:23:51Z
 #include <machine/ucontext.h>
 
 #include <stdio.h>
+#include <sysdecode.h>
 
 #include "truss.h"
-
-#include "freebsd_syscalls.h"
 
 static int
 arm_fetch_args(struct trussinfo *trussinfo, u_int narg)
@@ -129,8 +128,7 @@ arm_fetch_retval(struct trussinfo *trussinfo, long *retval, int *errorp)
 
 static struct procabi arm_freebsd = {
 	"FreeBSD ELF32",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD,
 	arm_fetch_args,
 	arm_fetch_retval
 };

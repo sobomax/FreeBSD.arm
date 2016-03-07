@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/event.h 286307 2015-08-05 07:34:29Z ed $
+ * $FreeBSD: head/sys/sys/event.h 295331 2016-02-05 20:38:09Z jhb $
  */
 
 #ifndef _SYS_EVENT_H_
@@ -80,6 +80,7 @@ struct kevent {
 #define EV_SYSFLAGS	0xF000		/* reserved by system */
 #define	EV_DROP		0x1000		/* note should be dropped */
 #define EV_FLAG1	0x2000		/* filter-specific flag */
+#define EV_FLAG2	0x4000		/* filter-specific flag */
 
 /* returned values */
 #define EV_EOF		0x8000		/* EOF detected */
@@ -221,7 +222,7 @@ struct knote {
 	union {
 		struct		file *p_fp;	/* file data pointer */
 		struct		proc *p_proc;	/* proc pointer */
-		struct		aiocblist *p_aio;	/* AIO job pointer */
+		struct		kaiocb *p_aio;	/* AIO job pointer */
 		struct		aioliojob *p_lio;	/* LIO job pointer */
 		sbintime_t	*p_nexttime;	/* next timer event fires at */
 		void		*p_v;		/* generic other pointer */

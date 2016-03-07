@@ -28,7 +28,7 @@
 /* Driver for DM&P Electronics, Inc, Vortex86 RDC R6040 FastEthernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vte/if_vte.c 272065 2014-09-24 11:31:46Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vte/if_vte.c 295735 2016-02-18 01:24:10Z yongari $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -428,7 +428,7 @@ vte_attach(device_t dev)
 	/* Reset the ethernet controller. */
 	vte_reset(sc);
 
-	if ((error = vte_dma_alloc(sc) != 0))
+	if ((error = vte_dma_alloc(sc)) != 0)
 		goto fail;
 
 	/* Create device sysctl node. */

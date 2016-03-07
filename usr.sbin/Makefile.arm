@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/Makefile.arm 232908 2012-03-13 00:45:27Z jmallett $
+# $FreeBSD: head/usr.sbin/Makefile.arm 292553 2015-12-21 17:41:08Z ian $
 
-SUBDIR+=	ofwdump
 SUBDIR+=	kgmon
+SUBDIR+=	ofwdump

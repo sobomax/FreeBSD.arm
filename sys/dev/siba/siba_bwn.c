@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/siba/siba_bwn.c 257241 2013-10-28 07:29:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/siba/siba_bwn.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 /*
  * Sonics Silicon Backplane front-end for bwn(4).
@@ -242,7 +242,7 @@ siba_bwn_resume(device_t dev)
 /* proxying to the parent */
 static struct resource *
 siba_bwn_alloc_resource(device_t dev, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 
 	return (BUS_ALLOC_RESOURCE(device_get_parent(dev), dev,

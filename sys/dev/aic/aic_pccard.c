@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aic/aic_pccard.c 292079 2015-12-11 05:27:56Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/aic/aic_pccard.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -77,8 +77,8 @@ aic_pccard_alloc_resources(device_t dev)
 	sc->sc_port = sc->sc_irq = NULL;
 
 	rid = 0;
-	sc->sc_port = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-	    0ul, ~0ul, AIC_PCCARD_PORTSIZE, RF_ACTIVE);
+	sc->sc_port = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+	    AIC_PCCARD_PORTSIZE, RF_ACTIVE);
 	if (!sc->sc_port)
 		return (ENOMEM);
 

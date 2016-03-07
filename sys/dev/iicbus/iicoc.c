@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicoc.c 289657 2015-10-20 19:52:59Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicoc.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -207,8 +207,8 @@ iicoc_attach(device_t dev)
 	sc->dev = dev;
 	mtx_init(&sc->sc_mtx, "iicoc", "iicoc", MTX_DEF);
 	sc->mem_rid = 0;
-	sc->mem_res = bus_alloc_resource(dev,
-	    SYS_RES_MEMORY, &sc->mem_rid, 0ul, ~0ul, 0x100, RF_ACTIVE);
+	sc->mem_res = bus_alloc_resource_anywhere(dev,
+	    SYS_RES_MEMORY, &sc->mem_rid, 0x100, RF_ACTIVE);
 
 	if (sc->mem_res == NULL) {
 		device_printf(dev, "Could not allocate bus resource.\n");

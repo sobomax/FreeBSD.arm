@@ -23,12 +23,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/thunder_bgx_var.h 289551 2015-10-18 22:02:58Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/thunder_bgx_var.h 294990 2016-01-28 15:30:58Z zbb $
  *
  */
 
 #ifndef __THUNDER_BGX_VAR_H__
 #define	__THUNDER_BGX_VAR_H__
+
+MALLOC_DECLARE(M_BGX);
 
 struct lmac {
 	struct bgx		*bgx;

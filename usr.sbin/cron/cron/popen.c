@@ -28,7 +28,7 @@
 static char sccsid[] = "@(#)popen.c	5.7 (Berkeley) 2/14/89";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/cron/cron/popen.c 159527 2006-06-11 21:13:49Z maxim $";
+  "$FreeBSD: head/usr.sbin/cron/cron/popen.c 292605 2015-12-22 15:20:08Z pfg $";
 #endif /* not lint */
 
 #include "cron.h"
@@ -82,9 +82,8 @@ cron_popen(program, type, e)
 	if (!pids) {
 		if ((fds = getdtablesize()) <= 0)
 			return(NULL);
-		if (!(pids = (PID_T *)malloc((u_int)(fds * sizeof(PID_T)))))
+		if (!(pids = calloc(fds, sizeof(PID_T))))
 			return(NULL);
-		bzero((char *)pids, fds * sizeof(PID_T));
 	}
 	if (pipe(pdes) < 0)
 		return(NULL);

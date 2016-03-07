@@ -1,9 +1,9 @@
-# $FreeBSD: head/kerberos5/lib/libheimntlm/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/lib/libheimntlm/Makefile 295988 2016-02-24 17:19:18Z bdrewery $
 
 LIB=	heimntlm
 LDFLAGS=	-Wl,--no-undefined
 LIBADD=	crypto com_err krb5 roken
-SRCS=	ntlm.c ntlm_err.c
+SRCS=	ntlm.c ntlm_err.c ntlm_err.h
 INCS=	heimntlm.h heimntlm-protos.h ntlm_err.h
 CFLAGS+=-I${KRB5DIR}/lib/ntlm -I${KRB5DIR}/lib/roken
 VERSION_MAP= ${KRB5DIR}/lib/ntlm/version-script.map

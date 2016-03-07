@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fxp/if_fxp.c 276169 2014-12-24 03:49:33Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/fxp/if_fxp.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * Intel EtherExpress Pro/100B PCI Fast Ethernet driver
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD: head/sys/dev/fxp/if_fxp.c 276169 2014-12-24 03:49:33Z imp $"
 #include <sys/kernel.h>
 #include <sys/mbuf.h>
 #include <sys/lock.h>
+#include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/mutex.h>
 #include <sys/rman.h>

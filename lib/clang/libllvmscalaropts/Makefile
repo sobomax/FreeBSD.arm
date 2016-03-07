@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmscalaropts/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmscalaropts/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -26,6 +26,7 @@ SRCS=	ADCE.cpp \
 	LoopDistribute.cpp \
 	LoopIdiomRecognize.cpp \
 	LoopInterchange.cpp \
+	LoopLoadElimination.cpp \
 	LoopRerollPass.cpp \
 	LoopRotation.cpp \
 	LoopStrengthReduce.cpp \
@@ -43,7 +44,6 @@ SRCS=	ADCE.cpp \
 	RewriteStatepointsForGC.cpp \
 	SCCP.cpp \
 	SROA.cpp \
-	SampleProfile.cpp \
 	ScalarReplAggregates.cpp \
 	Scalarizer.cpp \
 	SeparateConstOffsetFromGEP.cpp \
@@ -59,6 +59,7 @@ SRCS+=	LoopInstSimplify.cpp \
 	Scalar.cpp
 .endif
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

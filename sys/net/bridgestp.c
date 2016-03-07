@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/bridgestp.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net/bridgestp.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,6 +43,7 @@ __FBSDID("$FreeBSD: head/sys/net/bridgestp.c 257176 2013-10-26 17:58:36Z glebius
 #include <sys/socket.h>
 #include <sys/sockio.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/callout.h>
 #include <sys/module.h>
 #include <sys/proc.h>

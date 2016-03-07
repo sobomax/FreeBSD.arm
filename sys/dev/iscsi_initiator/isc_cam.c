@@ -28,7 +28,7 @@
  | $Id: isc_cam.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_cam.c 272308 2014-09-30 16:17:12Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_cam.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include "opt_iscsi_initiator.h"
 
@@ -46,6 +46,7 @@ __FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_cam.c 272308 2014-09-30 16:
 #include <sys/uio.h>
 #include <sys/sysctl.h>
 #include <sys/sx.h>
+#include <vm/uma.h>
 
 #include <cam/cam.h>
 #include <cam/cam_ccb.h>

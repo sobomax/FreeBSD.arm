@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/freebsd32/freebsd32_misc.c 282708 2015-05-10 09:00:40Z kib $");
+__FBSDID("$FreeBSD: head/sys/compat/freebsd32/freebsd32_misc.c 296060 2016-02-25 19:58:23Z markj $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -2965,21 +2965,22 @@ int
 freebsd32_posix_fallocate(struct thread *td,
     struct freebsd32_posix_fallocate_args *uap)
 {
+	int error;
 
-	td->td_retval[0] = kern_posix_fallocate(td, uap->fd,
+	error = kern_posix_fallocate(td, uap->fd,
 	    PAIR32TO64(off_t, uap->offset), PAIR32TO64(off_t, uap->len));
-	return (0);
+	return (kern_posix_error(td, error));
 }
 
 int
 freebsd32_posix_fadvise(struct thread *td,
     struct freebsd32_posix_fadvise_args *uap)
 {
+	int error;
 
-	td->td_retval[0] = kern_posix_fadvise(td, uap->fd,
-	    PAIR32TO64(off_t, uap->offset), PAIR32TO64(off_t, uap->len),
-	    uap->advice);
-	return (0);
+	error = kern_posix_fadvise(td, uap->fd, PAIR32TO64(off_t, uap->offset),
+	    PAIR32TO64(off_t, uap->len), uap->advice);
+	return (kern_posix_error(td, error));
 }
 
 int

@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_prot.c 285633 2015-07-16 14:30:11Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_prot.c 293909 2016-01-14 10:16:25Z glebius $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -88,7 +88,6 @@ static MALLOC_DEFINE(M_CRED, "cred", "credentials");
 
 SYSCTL_NODE(_security, OID_AUTO, bsd, CTLFLAG_RW, 0, "BSD security policy");
 
-static void crextend(struct ucred *cr, int n);
 static void crsetgroups_locked(struct ucred *cr, int ngrp,
     gid_t *groups);
 
@@ -1997,7 +1996,7 @@ crcopysafe(struct proc *p, struct ucred *cr)
 /*
  * Extend the passed in credential to hold n items.
  */
-static void
+void
 crextend(struct ucred *cr, int n)
 {
 	int cnt;

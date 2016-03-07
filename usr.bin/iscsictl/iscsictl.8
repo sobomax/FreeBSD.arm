@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/iscsictl/iscsictl.8 291607 2015-12-01 19:18:53Z rodrigc $
+.\" $FreeBSD: head/usr.bin/iscsictl/iscsictl.8 294290 2016-01-18 20:21:38Z joel $
 .\"
 .Dd December 1, 2015
 .Dt ISCSICTL 8
@@ -187,11 +187,11 @@ Attach to target iqn.2012-06.com.example:target0, served by 192.168.1.1:
 Disconnect all iSCSI sessions:
 .Dl Nm Fl Ra
 .Sh SEE ALSO
+.Xr libxo 3 ,
+.Xr xo_parse_args 3 ,
 .Xr iscsi 4 ,
 .Xr iscsi.conf 5 ,
-.Xr iscsid 8 ,
-.Xr libxo 3 ,
-.Xr xo_parse_args 3
+.Xr iscsid 8
 .Sh HISTORY
 The
 .Nm

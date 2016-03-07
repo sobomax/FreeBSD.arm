@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/sparc64/boot1/boot1.c 244307 2012-12-16 20:43:29Z marius $");
+__FBSDID("$FreeBSD: head/sys/boot/sparc64/boot1/boot1.c 294765 2016-01-26 06:26:19Z imp $");
 
 #include <sys/param.h>
 #include <sys/dirent.h>
@@ -24,8 +24,8 @@ __FBSDID("$FreeBSD: head/sys/boot/sparc64/boot1/boot1.c 244307 2012-12-16 20:43:
 #include <machine/elf.h>
 #include <machine/stdarg.h>
 
-#define	_PATH_LOADER	"/boot/loader"
-#define	_PATH_KERNEL	"/boot/kernel/kernel"
+#include "paths.h"
+
 #define	READ_BUF_SIZE	8192
 
 typedef int putc_func_t(char c, void *arg);
@@ -324,7 +324,7 @@ main(int ac, char **av)
 	const char *path;
 	int i;
 
-	path = _PATH_LOADER;
+	path = PATH_LOADER;
 	for (i = 0; i < ac; i++) {
 		switch (av[i][0]) {
 		case '-':

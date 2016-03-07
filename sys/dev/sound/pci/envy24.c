@@ -39,7 +39,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/envy24.c 277214 2015-01-15 16:09:35Z bapt $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/envy24.c 295790 2016-02-19 03:37:56Z jhibbits $");
 
 static MALLOC_DEFINE(M_ENVY24, "envy24", "envy24 audio");
 
@@ -2482,17 +2482,17 @@ envy24_alloc_resource(struct sc_info *sc)
 {
 	/* allocate I/O port resource */
 	sc->csid = PCIR_CCS;
-	sc->cs = bus_alloc_resource(sc->dev, SYS_RES_IOPORT,
-	    &sc->csid, 0, ~0, 1, RF_ACTIVE);
+	sc->cs = bus_alloc_resource_any(sc->dev, SYS_RES_IOPORT,
+	    &sc->csid, RF_ACTIVE);
 	sc->ddmaid = PCIR_DDMA;
-	sc->ddma = bus_alloc_resource(sc->dev, SYS_RES_IOPORT,
-	    &sc->ddmaid, 0, ~0, 1, RF_ACTIVE);
+	sc->ddma = bus_alloc_resource_any(sc->dev, SYS_RES_IOPORT,
+	    &sc->ddmaid, RF_ACTIVE);
 	sc->dsid = PCIR_DS;
-	sc->ds = bus_alloc_resource(sc->dev, SYS_RES_IOPORT,
-	    &sc->dsid, 0, ~0, 1, RF_ACTIVE);
+	sc->ds = bus_alloc_resource_any(sc->dev, SYS_RES_IOPORT,
+	    &sc->dsid, RF_ACTIVE);
 	sc->mtid = PCIR_MT;
-	sc->mt = bus_alloc_resource(sc->dev, SYS_RES_IOPORT,
-	    &sc->mtid, 0, ~0, 1, RF_ACTIVE);
+	sc->mt = bus_alloc_resource_any(sc->dev, SYS_RES_IOPORT,
+	    &sc->mtid, RF_ACTIVE);
 	if (!sc->cs || !sc->ddma || !sc->ds || !sc->mt) {
 		device_printf(sc->dev, "unable to map IO port space\n");
 		return ENXIO;
@@ -2516,8 +2516,8 @@ envy24_alloc_resource(struct sc_info *sc)
 
 	/* allocate interrupt resource */
 	sc->irqid = 0;
-	sc->irq = bus_alloc_resource(sc->dev, SYS_RES_IRQ, &sc->irqid,
-				 0, ~0, 1, RF_ACTIVE | RF_SHAREABLE);
+	sc->irq = bus_alloc_resource_any(sc->dev, SYS_RES_IRQ, &sc->irqid,
+				 RF_ACTIVE | RF_SHAREABLE);
 	if (!sc->irq ||
 	    snd_setup_intr(sc->dev, sc->irq, INTR_MPSAFE, envy24_intr, sc, &sc->ih)) {
 		device_printf(sc->dev, "unable to map interrupt\n");

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/freescale/imx/files.imx6 291135 2015-11-21 16:23:56Z andrew $
+# $FreeBSD: head/sys/arm/freescale/imx/files.imx6 292574 2015-12-21 22:25:35Z gonzo $
 
 #
 # Standard ARM support.
@@ -23,6 +23,11 @@ arm/freescale/imx/imx_i2c.c		optional fsliic
 arm/freescale/imx/imx6_sdma.c		optional sdma
 arm/freescale/imx/imx6_audmux.c		optional sound
 arm/freescale/imx/imx6_ssi.c		optional sound
+
+arm/arm/hdmi_if.m			optional hdmi
+arm/freescale/imx/imx6_hdmi.c		optional hdmi
+
+arm/freescale/imx/imx6_ipu.c		optional	vt
 
 #
 # Optional devices.

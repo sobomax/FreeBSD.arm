@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/sendfile/sendfile.c 281394 2015-04-11 03:18:14Z ngie $
+ * $FreeBSD: head/tools/regression/sockets/sendfile/sendfile.c 294126 2016-01-16 02:15:13Z ngie $
  */
 
 #include <sys/types.h>
@@ -459,11 +459,8 @@ cleanup(void)
 int
 main(int argc, char *argv[])
 {
-	int pagesize;
 
 	path[0] = '\0';
-
-	pagesize = getpagesize();
 
 	if (argc == 1) {
 		snprintf(path, sizeof(path), "sendfile.XXXXXXXXXXXX");

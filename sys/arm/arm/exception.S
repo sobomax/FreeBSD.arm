@@ -54,7 +54,7 @@
 #include <machine/asmacros.h>
 #include <machine/trap.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 291852 2015-12-05 09:32:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 292426 2015-12-18 05:43:59Z adrian $");
 
 #ifdef KDTRACE_HOOKS
 	.bss
@@ -410,7 +410,7 @@ ASENTRY_NP(irq_entry)
 	PUSHFRAMEINSVC			/* mode stack, build trapframe there. */
 	adr	lr, exception_exit	/* Return from handler via standard */
 	mov	r0, sp			/* exception exit routine.  Pass the */
-	b	_C_LABEL(arm_irq_handler)/* trapframe to the handler. */
+	b	_C_LABEL(intr_irq_handler)/* trapframe to the handler. */
 END(irq_entry)
 
 /*

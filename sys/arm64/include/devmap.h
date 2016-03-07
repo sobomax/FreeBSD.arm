@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/devmap.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/devmap.h 295694 2016-02-17 12:36:24Z skra $
  */
 
 #ifndef	_MACHINE_DEVMAP_H_
@@ -37,8 +37,6 @@ struct arm_devmap_entry {
 	vm_offset_t	pd_va;		/* virtual address */
 	vm_paddr_t	pd_pa;		/* physical address */
 	vm_size_t	pd_size;	/* size of region */
-	vm_prot_t	pd_prot;	/* protection code */
-	int		pd_cache;	/* cache attributes */
 };
 
 /*
@@ -70,7 +68,7 @@ void arm_devmap_register_table(const struct arm_devmap_entry * _table);
  * custom initarm() routines in older code.  If the table pointer is NULL, this
  * will use the table installed previously by arm_devmap_register_table().
  */
-void arm_devmap_bootstrap(vm_offset_t _l1pt, 
+void arm_devmap_bootstrap(vm_offset_t _l1pt,
     const struct arm_devmap_entry *_table);
 
 /*

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/avila_ata.c 277460 2015-01-21 01:06:08Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/avila_ata.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 /*
  * Compact Flash Support for the Avila Gateworks XScale boards.
@@ -282,7 +282,7 @@ ata_avila_intr(void *xsc)
 
 static struct resource *
 ata_avila_alloc_resource(device_t dev, device_t child, int type, int *rid,
-		       u_long start, u_long end, u_long count, u_int flags)
+		   rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct ata_avila_softc *sc = device_get_softc(dev);
 

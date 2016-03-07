@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/if_wtap_module.c 231828 2012-02-16 16:48:12Z adrian $
+ * $FreeBSD: head/sys/dev/wtap/if_wtap_module.c 292166 2015-12-13 20:53:51Z avos $
  */
 #include <sys/param.h>
 #include <sys/module.h>
@@ -41,7 +41,6 @@
 #include <sys/ucred.h>
 #include <sys/jail.h>
 
-#include <sys/types.h>
 #include <sys/sockio.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>

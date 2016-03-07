@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbHostCommon/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbHostCommon/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -10,6 +10,7 @@ SRCS=	Condition.cpp \
 	File.cpp \
 	FileSpec.cpp \
 	FileSystem.cpp \
+	GetOptInc.cpp \
 	Host.cpp \
 	HostInfoBase.cpp \
 	HostNativeThreadBase.cpp \
@@ -28,11 +29,13 @@ SRCS=	Condition.cpp \
 	SoftwareBreakpoint.cpp \
 	StringConvert.cpp \
 	Symbols.cpp \
+	TCPSocket.cpp \
 	Terminal.cpp \
 	ThisThread.cpp \
 	ThreadLauncher.cpp \
 	TimeValue.cpp \
-	XML.cpp
+	XML.cpp \
+	UDPSocket.cpp
 
 TGHDRS=	AttrList \
 	Attrs \

@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/bus_adjust_resource.9 281887 2015-04-23 14:22:20Z jhb $
+.\" $FreeBSD: head/share/man/man9/bus_adjust_resource.9 294883 2016-01-27 02:23:54Z jhibbits $
 .\"
 .Dd April 29, 2011
 .Dt BUS_ADJUST_RESOURCE 9
@@ -41,7 +41,8 @@
 .In sys/rman.h
 .In machine/resource.h
 .Ft int
-.Fn bus_adjust_resource "device_t dev" "int type" "struct resource *r" "u_long start" "u_long end"
+.Fo bus_adjust_resource
+.Fa "device_t dev" "int type" "struct resource *r" "rman_res_t start" "rman_res_t end"
 .Sh DESCRIPTION
 This function is used to ask the parent bus to adjust the resource range
 assigned to an allocated resource.

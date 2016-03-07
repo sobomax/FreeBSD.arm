@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_3c503.c 260050 2013-12-29 19:21:59Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_3c503.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_ed.h"
 
@@ -74,7 +74,7 @@ ed_probe_3Com(device_t dev, int port_rid, int flags)
 	int     i;
 	u_int   memsize;
 	u_char  isa16bit;
-	u_long	conf_maddr, conf_msize, irq, junk, pmem;
+	rman_res_t	conf_maddr, conf_msize, irq, junk, pmem;
 
 	error = ed_alloc_port(dev, 0, ED_3COM_IO_PORTS);
 	if (error)

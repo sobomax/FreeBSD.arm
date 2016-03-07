@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/minidump_machdep.c 272766 2014-10-08 20:25:21Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/minidump_machdep.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,7 +39,6 @@ __FBSDID("$FreeBSD: head/sys/mips/mips/minidump_machdep.c 272766 2014-10-08 20:2
 #include <sys/msgbuf.h>
 #include <vm/vm.h>
 #include <vm/pmap.h>
-#include <machine/pmap.h>
 #include <machine/atomic.h>
 #include <machine/elf.h>
 #include <machine/md_var.h>

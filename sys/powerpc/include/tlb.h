@@ -24,7 +24,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/include/tlb.h 287240 2015-08-28 03:03:09Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/include/tlb.h 296177 2016-02-29 03:38:00Z jhibbits $
  */
 
 #ifndef	_MACHINE_TLB_H_
@@ -74,6 +74,7 @@
 #define	MAS2_M			0x00000004
 #define	MAS2_G			0x00000002
 #define	MAS2_E			0x00000001
+#define	MAS2_WIMGE_MASK		0x0000001F
 
 #define	MAS3_RPN		0xFFFFF000
 #define	MAS3_RPN_SHIFT		12
@@ -120,11 +121,7 @@
 #define KERNEL_REGION_MAX_TLB_ENTRIES   4
 
 #define _TLB_ENTRY_IO	(MAS2_I | MAS2_G)
-#ifdef SMP
 #define _TLB_ENTRY_MEM	(MAS2_M)
-#else
-#define _TLB_ENTRY_MEM	(0)
-#endif
 
 #if !defined(LOCORE)
 typedef struct tlb_entry {
@@ -214,6 +211,7 @@ struct pmap;
 
 void tlb_lock(uint32_t *);
 void tlb_unlock(uint32_t *);
+int  tlb1_set_entry(vm_offset_t, vm_paddr_t, vm_size_t, uint32_t);
 
 #endif /* !LOCORE */
 

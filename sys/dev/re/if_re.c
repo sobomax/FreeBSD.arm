@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 290946 2015-11-16 21:13:57Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 296272 2016-03-01 17:47:32Z jhb $");
 
 /*
  * RealTek 8139C+/8169/8169S/8110S/8168/8111/8101E PCI NIC driver
@@ -2553,7 +2553,7 @@ re_intr(void *arg)
                 return (FILTER_STRAY);
 	CSR_WRITE_2(sc, RL_IMR, 0);
 
-	taskqueue_enqueue_fast(taskqueue_fast, &sc->rl_inttask);
+	taskqueue_enqueue(taskqueue_fast, &sc->rl_inttask);
 
 	return (FILTER_HANDLED);
 }
@@ -2621,7 +2621,7 @@ re_int_task(void *arg, int npending)
 	RL_UNLOCK(sc);
 
         if ((CSR_READ_2(sc, RL_ISR) & RL_INTRS_CPLUS) || rval) {
-		taskqueue_enqueue_fast(taskqueue_fast, &sc->rl_inttask);
+		taskqueue_enqueue(taskqueue_fast, &sc->rl_inttask);
 		return;
 	}
 

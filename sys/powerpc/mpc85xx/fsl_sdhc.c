@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/fsl_sdhc.c 287189 2015-08-27 03:47:56Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/fsl_sdhc.c 292180 2015-12-14 01:09:25Z ian $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -125,6 +125,7 @@ static driver_t fsl_sdhc_driver = {
 static devclass_t fsl_sdhc_devclass;
 
 DRIVER_MODULE(sdhci_fsl, simplebus, fsl_sdhc_driver, fsl_sdhc_devclass, 0, 0);
+DRIVER_MODULE(mmc, sdhci_fsl, mmc_driver, mmc_devclass, NULL, NULL);
 
 
 /*****************************************************************************

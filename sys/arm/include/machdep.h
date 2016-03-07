@@ -1,11 +1,13 @@
 /* $NetBSD: machdep.h,v 1.7 2002/02/21 02:52:21 thorpej Exp $ */
-/* $FreeBSD: head/sys/arm/include/machdep.h 290273 2015-11-02 16:56:34Z zbb $ */
+/* $FreeBSD: head/sys/arm/include/machdep.h 295036 2016-01-29 10:31:54Z mmel $ */
 
 #ifndef _MACHDEP_BOOT_MACHDEP_H_
 #define _MACHDEP_BOOT_MACHDEP_H_
 
+#include <machine/acle-compat.h>
+
 /* Structs that need to be initialised by initarm */
-#ifdef ARM_NEW_PMAP
+#if __ARM_ARCH >= 6
 extern vm_offset_t irqstack;
 extern vm_offset_t undstack;
 extern vm_offset_t abtstack;

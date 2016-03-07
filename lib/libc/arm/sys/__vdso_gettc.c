@@ -27,15 +27,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/__vdso_gettc.c 291937 2015-12-07 12:20:26Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/__vdso_gettc.c 292709 2015-12-24 22:13:52Z kib $");
 
 #include <sys/types.h>
 #include <sys/elf.h>
 #include <sys/time.h>
 #include <sys/vdso.h>
 #include <machine/cpufunc.h>
+#include <machine/acle-compat.h>
 #include "libc_private.h"
 
+#if __ARM_ARCH >= 6
 static inline uint64_t
 cp15_cntvct_get(void)
 {
@@ -53,6 +55,7 @@ cp15_cntpct_get(void)
 	__asm __volatile("mrrc\tp15, 0, %Q0, %R0, c14" : "=r" (reg));
 	return (reg);
 }
+#endif
 
 #pragma weak __vdso_gettc
 u_int
@@ -60,6 +63,7 @@ __vdso_gettc(const struct vdso_timehands *th)
 {
 	uint64_t val;
 
+#if __ARM_ARCH >= 6
 	/*
 	 * Userspace gettimeofday() is only enabled on ARMv7 CPUs, but
 	 * libc is compiled for ARMv6.  Due to clang issues, .arch
@@ -67,6 +71,9 @@ __vdso_gettc(const struct vdso_timehands *th)
 	 */
 	__asm __volatile(".word\t0xf57ff06f" : : : "memory"); /* isb */
 	val = th->th_physical == 0 ? cp15_cntvct_get() : cp15_cntpct_get();
+#else
+	val = 0;
+#endif
 	return (val);
 }
 

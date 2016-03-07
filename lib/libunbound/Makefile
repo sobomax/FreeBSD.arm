@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libunbound/Makefile 287917 2015-09-17 16:10:11Z des $
+# $FreeBSD: head/lib/libunbound/Makefile 295535 2016-02-11 17:37:02Z des $
 
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../contrib/ldns
@@ -12,7 +12,7 @@ PRIVATELIB=
 
 CFLAGS= -I${UNBOUNDDIR} -I${LDNSDIR} -I${.OBJDIR}
 
-SRCS=	alloc.c autotrust.c config_file.c configlexer.l configparser.y \
+SRCS=	alloc.c as112.c autotrust.c config_file.c configlexer.l configparser.y \
 	context.c dname.c dns.c dns64.c dnstree.c fptr_wlist.c infra.c \
 	iter_delegpt.c iter_donotq.c iter_fwd.c iter_hints.c iter_priv.c \
 	iter_resptype.c iter_scrub.c iter_utils.c iterator.c keyraw.c \

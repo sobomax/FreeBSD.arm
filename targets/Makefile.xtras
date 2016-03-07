@@ -1,4 +1,4 @@
-# $FreeBSD: head/targets/Makefile.xtras 283688 2015-05-29 06:44:09Z sjg $
+# $FreeBSD: head/targets/Makefile.xtras 296120 2016-02-26 22:13:45Z bdrewery $
 #
 # Makefile.xtras - non-build targets
 
@@ -29,6 +29,9 @@ no-default:
 .if make(show-valid-targets)
 OTHER_TARGETS = \
 	destroy \
+	destroy-arch \
+	destroy-host \
+	destroy-stage \
 
 BUILD_TARGETS != cd ${_here} && \
 	find . \( -name Makefile.depend -o -name ${.MAKE.DEPENDFILE:T} \) | \
@@ -51,6 +54,9 @@ show-help:
 not-valid-target:
 	@echo "ERROR: '${_TARGETS}' is not a valid target for ${MACHINE}."
 
+.if make(destroy*)
+.include <bsd.obj.mk>
+.endif
 
 .for t in ${_TARGETS:Nlove}
 .if !target($t)

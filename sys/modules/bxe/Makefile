@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/bxe/Makefile 271726 2014-09-17 22:24:51Z davidcs $
+# $FreeBSD: head/sys/modules/bxe/Makefile 296071 2016-02-25 22:44:00Z davidcs $
 
 SYSDIR	?= ${.CURDIR}/../..
 
@@ -17,5 +17,6 @@ SRCS	+= bxe.c               \
            57712_init_values.c
 
 CFLAGS += -I${BXE}
+CFLAGS += -Wno-shift-negative-value
 
 .include <bsd.kmod.mk>

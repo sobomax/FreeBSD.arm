@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/uart/uart_bus.h 286591 2015-08-10 20:08:09Z ian $
+ * $FreeBSD: head/sys/dev/uart/uart_bus.h 293781 2016-01-12 18:42:00Z ian $
  */
 
 #ifndef _DEV_UART_BUS_H_
@@ -113,6 +113,7 @@ struct uart_softc {
 	/* Pulse capturing support (PPS). */
 	struct pps_state sc_pps;
 	int		 sc_pps_mode;
+	sbintime_t	 sc_pps_captime;
 
 	/* Upper layer data. */
 	void		*sc_softih;

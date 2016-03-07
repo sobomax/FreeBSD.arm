@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/i18n/esdb/Makefile.part 219019 2011-02-25 00:04:39Z gabor $
+# $FreeBSD: head/share/i18n/esdb/Makefile.part 296068 2016-02-25 21:05:04Z bdrewery $
 # $NetBSD: Makefile.part,v 1.6 2008/10/25 22:35:36 apb Exp $
 
 MKESDB?= ${.OBJDIR}/../../../../usr.bin/mkesdb_static/mkesdb_static
@@ -60,8 +60,7 @@ esdb.alias.${ESUBDIR}: ${PARTFILE} ${ALIASFILE}
 .endfor
 	echo >>${.TARGET}
 
-all: realall
-realall: esdb.dir.${ESUBDIR} esdb.alias.${ESUBDIR} codesets
+all: esdb.dir.${ESUBDIR} esdb.alias.${ESUBDIR} codesets
 codesets: ${ESDB}
 
 .if !defined(NO_PREPROC)

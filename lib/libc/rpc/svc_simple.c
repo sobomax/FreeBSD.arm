@@ -33,7 +33,7 @@
 
 /* #pragma ident	"@(#)svc_simple.c	1.18	94/04/24 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_simple.c 290253 2015-11-02 01:22:06Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_simple.c 296095 2016-02-26 14:39:39Z pfg $");
 
 /*
  * svc_simple.c
@@ -272,7 +272,7 @@ universal(struct svc_req *rqstp, SVCXPRT *transp)
 			/* decode arguments into a CLEAN buffer */
 			xdrbuf = pl->p_xdrbuf;
 			/* Zero the arguments: reqd ! */
-			(void) memset(xdrbuf, 0, sizeof (pl->p_recvsz));
+			(void) memset(xdrbuf, 0, (size_t)pl->p_recvsz);
 			/*
 			 * Assuming that sizeof (xdrbuf) would be enough
 			 * for the arguments; if not then the program

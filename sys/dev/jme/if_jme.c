@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/jme/if_jme.c 272066 2014-09-24 11:33:43Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/jme/if_jme.c 295735 2016-02-18 01:24:10Z yongari $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -804,7 +804,7 @@ jme_attach(device_t dev)
 	}
 	/* Create coalescing sysctl node. */
 	jme_sysctl_node(sc);
-	if ((error = jme_dma_alloc(sc) != 0))
+	if ((error = jme_dma_alloc(sc)) != 0)
 		goto fail;
 
 	ifp = sc->jme_ifp = if_alloc(IFT_ETHER);

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/share/examples/tests/tests/atf/printf_test.c 258299 2013-11-18 12:57:46Z jmmv $
+/* $FreeBSD: head/share/examples/tests/tests/atf/printf_test.c 292485 2015-12-20 02:36:30Z ngie $
  *
  * Copyright 2013 Google Inc.
  * All rights reserved.
@@ -152,4 +152,6 @@ ATF_TP_ADD_TCS(tp)
 	ATF_TP_ADD_TC(tp, snprintf__two_formatters);
 	ATF_TP_ADD_TC(tp, snprintf__overflow);
 	ATF_TP_ADD_TC(tp, fprintf__simple_string);
+
+	return (atf_no_error());
 }

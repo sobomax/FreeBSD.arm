@@ -18,7 +18,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/DREAMPLUG-1001 289945 2015-10-25 22:00:56Z zbb $
+# $FreeBSD: head/sys/arm/conf/DREAMPLUG-1001 295621 2016-02-14 23:42:07Z andrew $
 #
 #NO_UNIVERSE
 
@@ -121,6 +121,10 @@ device		u3g  			# USB-based 3G modems (Option, Huawei, Sierra)
 # I2C (TWSI)
 device		iic
 device		iicbus
+device		twsi
+
+# GPIO
+device		gpio
 
 # SATA
 device		mvs

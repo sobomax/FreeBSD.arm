@@ -24,7 +24,7 @@ if [ ! "$_DIALOG_SUBR" ]; then _DIALOG_SUBR=1
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdconfig/share/dialog.subr 278493 2015-02-10 03:34:42Z dteske $
+# $FreeBSD: head/usr.sbin/bsdconfig/share/dialog.subr 293617 2016-01-09 23:13:43Z dteske $
 #
 ############################################################ INCLUDES
 
@@ -1605,7 +1605,6 @@ f_dialog_pause()
 			$height $width
 	else
 		[ $duration -gt 0 ] && duration=$(( $duration - 1 ))
-		[ $duration -gt 1 ] && duration=$(( $duration - 1 ))
 		height=$(( $height + 3 )) # Add height for progress bar
 		$DIALOG \
 			--title "$DIALOG_TITLE"         \

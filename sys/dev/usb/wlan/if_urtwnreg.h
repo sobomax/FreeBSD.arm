@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: head/sys/dev/usb/wlan/if_urtwnreg.h 292014 2015-12-09 09:29:38Z avos $
+ * $FreeBSD: head/sys/dev/usb/wlan/if_urtwnreg.h 295874 2016-02-22 01:15:02Z avos $
  */
 
 #define URTWN_CONFIG_INDEX	0
@@ -70,6 +70,10 @@
 #define R92C_GPIO_IO_SEL		0x042
 #define R92C_MAC_PINMUX_CFG		0x043
 #define R92C_GPIO_PIN_CTRL		0x044
+#define R92C_GPIO_IN			0x044
+#define R92C_GPIO_OUT			0x045
+#define R92C_GPIO_IOSEL			0x046
+#define R92C_GPIO_MOD			0x047
 #define R92C_GPIO_INTM			0x048
 #define R92C_LEDCFG0			0x04c
 #define R92C_LEDCFG1			0x04d
@@ -79,6 +83,7 @@
 #define R92C_FSISR			0x054
 #define R92C_HSIMR			0x058
 #define R92C_HSISR			0x05c
+#define R88E_BB_PAD_CTRL		0x064
 #define R92C_MCUFWDL			0x080
 #define R92C_HMEBOX_EXT(idx)		(0x088 + (idx) * 2)
 #define R88E_HIMR			0x0b0
@@ -117,6 +122,7 @@
 #define R92C_MBIST_START		0x174
 #define R92C_MBIST_DONE			0x178
 #define R92C_MBIST_FAIL			0x17c
+#define R88E_32K_CTRL			0x194
 #define R92C_C2HEVT_MSG_NORMAL		0x1a0
 #define R92C_C2HEVT_MSG_TEST		0x1b8
 #define R92C_C2HEVT_CLEAR		0x1bf
@@ -158,6 +164,9 @@
 #define R92C_INIRTS_RATE_SEL		0x480
 #define R92C_INIDATA_RATE_SEL(macid)	(0x484 + (macid))
 #define R92C_MAX_AGGR_NUM		0x4ca
+#define R88E_TX_RPT_CTRL		0x4ec
+#define R88E_TX_RPT_MACID_MAX		0x4ed
+#define R88E_TX_RPT_TIME		0x4f0
 /* EDCA Configuration. */
 #define R92C_EDCA_VO_PARAM		0x500
 #define R92C_EDCA_VI_PARAM		0x504
@@ -201,6 +210,7 @@
 #define R92C_BE_ADMTIME			0x5c8
 #define R92C_EDCA_RANDOM_GEN		0x5cc
 #define R92C_SCH_TXCMD			0x5d0
+#define R88E_SCH_TXCMD			0x5f8
 /* WMAC Configuration. */
 #define R92C_APSD_CTRL			0x600
 #define R92C_BWOPMODE			0x603
@@ -300,12 +310,29 @@
 #define R92C_RF_CTRL_RSTB	0x02
 #define R92C_RF_CTRL_SDMRSTB	0x04
 
+/* Bits for R92C_LDOA15_CTRL. */
+#define R92C_LDOA15_CTRL_EN		0x01
+#define R92C_LDOA15_CTRL_STBY		0x02
+#define R92C_LDOA15_CTRL_OBUF		0x04
+#define R92C_LDOA15_CTRL_REG_VOS	0x08
+
 /* Bits for R92C_LDOV12D_CTRL. */
 #define R92C_LDOV12D_CTRL_LDV12_EN	0x01
+
+/* Bits for R92C_LPLDO_CTRL. */
+#define R92C_LPLDO_CTRL_SLEEP		0x10
 
 /* Bits for R92C_AFE_XTAL_CTRL. */
 #define R92C_AFE_XTAL_CTRL_ADDR_M	0x007ff800
 #define R92C_AFE_XTAL_CTRL_ADDR_S	11
+
+/* Bits for R92C_AFE_PLL_CTRL. */
+#define R92C_AFE_PLL_CTRL_EN		0x0001
+#define R92C_AFE_PLL_CTRL_320_EN	0x0002
+#define R92C_AFE_PLL_CTRL_FREF_SEL	0x0004
+#define R92C_AFE_PLL_CTRL_EDGE_SEL	0x0008
+#define R92C_AFE_PLL_CTRL_WDOGB		0x0010
+#define R92C_AFE_PLL_CTRL_LPFEN		0x0020
 
 /* Bits for R92C_EFUSE_CTRL. */
 #define R92C_EFUSE_CTRL_DATA_M	0x000000ff
@@ -455,6 +482,7 @@
 /* Bits for R92C_TDECTRL. */
 #define R92C_TDECTRL_BLK_DESC_NUM_M	0x000000f0
 #define R92C_TDECTRL_BLK_DESC_NUM_S	4
+#define R92C_TDECTRL_BCN_VALID		0x00010000
 
 /* Bits for R92C_FWHW_TXQ_CTRL. */
 #define R92C_FWHW_TXQ_CTRL_AMPDU_RTY_NEW	0x80
@@ -479,6 +507,10 @@
 #define R92C_RRSR_RSC_UPSUBCHNL		0x00400000
 #define R92C_RRSR_SHORT			0x00800000
 
+/* Bits for R88E_TX_RPT_CTRL. */
+#define R88E_TX_RPT1_ENA		0x01
+#define R88E_TX_RPT2_ENA		0x02
+
 /* Bits for R92C_EDCA_XX_PARAM. */
 #define R92C_EDCA_PARAM_AIFS_M		0x000000ff
 #define R92C_EDCA_PARAM_AIFS_S		0
@@ -488,6 +520,24 @@
 #define R92C_EDCA_PARAM_ECWMAX_S	12
 #define R92C_EDCA_PARAM_TXOP_M		0xffff0000
 #define R92C_EDCA_PARAM_TXOP_S		16
+
+/* Bits for R92C_HWSEQ_CTRL / R92C_TXPAUSE. */
+#define R92C_TX_QUEUE_VO		0x01
+#define R92C_TX_QUEUE_VI		0x02
+#define R92C_TX_QUEUE_BE		0x04
+#define R92C_TX_QUEUE_BK		0x08
+#define R92C_TX_QUEUE_MGT		0x10
+#define R92C_TX_QUEUE_HIGH		0x20
+#define R92C_TX_QUEUE_BCN		0x40
+
+/* Shortcuts. */
+#define R92C_TX_QUEUE_AC			\
+	(R92C_TX_QUEUE_VO | R92C_TX_QUEUE_VI |	\
+	 R92C_TX_QUEUE_BE | R92C_TX_QUEUE_BK)
+
+#define R92C_TX_QUEUE_ALL			\
+	(R92C_TX_QUEUE_AC | R92C_TX_QUEUE_MGT |	\
+	 R92C_TX_QUEUE_HIGH | R92C_TX_QUEUE_BCN | 0x80)	/* XXX */
 
 /* Bits for R92C_BCN_CTRL. */
 #define R92C_BCN_CTRL_EN_MBSSID		0x02
@@ -549,6 +599,16 @@
 #define R92C_CAMCMD_WRITE	0x00010000
 #define R92C_CAMCMD_CLR		0x40000000
 #define R92C_CAMCMD_POLLING	0x80000000
+
+/* Bits for R92C_SECCFG. */
+#define R92C_SECCFG_TXUCKEY_DEF	0x0001
+#define R92C_SECCFG_RXUCKEY_DEF	0x0002
+#define R92C_SECCFG_TXENC_ENA	0x0004
+#define R92C_SECCFG_RXDEC_ENA	0x0008
+#define R92C_SECCFG_CMP_A2	0x0010
+#define R92C_SECCFG_TXBCKEY_DEF	0x0040
+#define R92C_SECCFG_RXBCKEY_DEF	0x0080
+#define R88E_SECCFG_CHK_KEYID	0x0100
 
 /* Bits for R92C_RXFLTMAP*. */
 #define R92C_RXFLTMAP_SUBTYPE(subtype)	\
@@ -712,6 +772,7 @@
 /*
  * USB registers.
  */
+#define R92C_USB_SUSPEND		0xfe10
 #define R92C_USB_INFO			0xfe17
 #define R92C_USB_SPECIAL_OPTION		0xfe55
 #define R92C_USB_HCPWM			0xfe57
@@ -777,6 +838,7 @@
 #define R92C_RF_SYN_G(i)	(0x25 + (i))
 #define R92C_RF_RCK_OS		0x30
 #define R92C_RF_TXPA_G(i)	(0x31 + (i))
+#define R88E_RF_T_METER		0x42
 
 /* Bits for R92C_RF_AC. */
 #define R92C_RF_AC_MODE_M	0x70000
@@ -789,6 +851,16 @@
 #define R92C_RF_CHNLBW_BW20	0x00400
 #define R88E_RF_CHNLBW_BW20	0x00c00
 #define R92C_RF_CHNLBW_LCSTART	0x08000
+
+/* Bits for R92C_RF_T_METER. */
+#define R92C_RF_T_METER_START	0x60
+#define R92C_RF_T_METER_VAL_M	0x1f
+#define R92C_RF_T_METER_VAL_S	0
+
+/* Bits for R88E_RF_T_METER. */
+#define R88E_RF_T_METER_VAL_M	0x0fc00
+#define R88E_RF_T_METER_VAL_S	10
+#define R88E_RF_T_METER_START	0x30000
 
 
 /*
@@ -895,6 +967,11 @@ struct r92c_fw_cmd_macid_cfg {
 	uint8_t		macid;
 #define URTWN_MACID_BSS		0
 #define URTWN_MACID_BC		4	/* Broadcast. */
+#define R92C_MACID_MAX		31
+#define R88E_MACID_MAX		63
+#define URTWN_MACID_MAX(sc)	(((sc)->chip & URTWN_CHIP_88E) ? \
+				    R88E_MACID_MAX : R92C_MACID_MAX)
+#define URTWN_MACID_UNDEFINED	(uint8_t)-1
 #define URTWN_MACID_VALID	0x80
 } __packed;
 
@@ -913,7 +990,7 @@ struct r92c_rom {
 	uint16_t	reserved3;
 	uint8_t		usb_phy;
 	uint8_t		reserved4[3];
-	uint8_t		macaddr[6];
+	uint8_t		macaddr[IEEE80211_ADDR_LEN];
 	uint8_t		string[61];	/* "Realtek" */
 	uint8_t		subcustomer_id;
 	uint8_t		cck_tx_pwr[R92C_MAX_CHAINS][3];
@@ -942,7 +1019,37 @@ struct r92c_rom {
 	uint8_t		rf_opt4;
 	uint8_t		channel_plan;
 	uint8_t		version;
-	uint8_t		curstomer_id;
+	uint8_t		customer_id;
+} __packed;
+
+/*
+ * RTL8188EU ROM image.
+ */
+struct r88e_rom {
+	uint8_t		reserved1[16];
+	uint8_t		cck_tx_pwr[6];
+	uint8_t		ht40_tx_pwr[5];
+	uint8_t		tx_pwr_diff;
+	uint8_t		reserved2[156];
+	uint8_t		channel_plan;
+	uint8_t		crystalcap;
+	uint8_t		reserved3[7];
+	uint8_t		rf_board_opt;
+	uint8_t		rf_feature_opt;
+	uint8_t		rf_bt_opt;
+	uint8_t		version;
+	uint8_t		customer_id;
+	uint8_t		reserved4[3];
+	uint8_t		rf_ant_opt;
+	uint8_t		reserved5[6];
+	uint16_t	vid;
+	uint16_t	pid;
+	uint8_t		usb_opt;
+	uint8_t		reserved6[2];
+	uint8_t		macaddr[IEEE80211_ADDR_LEN];
+	uint8_t		reserved7[2];
+	uint8_t		string[33];	/* "realtek 802.11n NIC" */
+	uint8_t		reserved8[256];
 } __packed;
 
 #define	URTWN_EFUSE_MAX_LEN		512
@@ -956,6 +1063,8 @@ struct r92c_rx_stat {
 #define R92C_RXDW0_ICVERR	0x00008000
 #define R92C_RXDW0_INFOSZ_M	0x000f0000
 #define R92C_RXDW0_INFOSZ_S	16
+#define R92C_RXDW0_CIPHER_M	0x00700000
+#define R92C_RXDW0_CIPHER_S	20
 #define R92C_RXDW0_QOS		0x00800000
 #define R92C_RXDW0_SHIFT_M	0x03000000
 #define R92C_RXDW0_SHIFT_S	24
@@ -972,6 +1081,11 @@ struct r92c_rx_stat {
 #define R92C_RXDW3_RATE_S	0
 #define R92C_RXDW3_HT		0x00000040
 #define R92C_RXDW3_HTC		0x00000400
+#define R88E_RXDW3_RPT_M	0x0000c000
+#define R88E_RXDW3_RPT_S	14
+#define R88E_RXDW3_RPT_RX	0
+#define R88E_RXDW3_RPT_TX1	1
+#define R88E_RXDW3_RPT_TX2	2
 
 	uint32_t	rxdw4;
 	uint32_t	rxdw5;
@@ -1059,6 +1173,7 @@ struct r92c_tx_desc {
 
 	uint32_t	txdw2;
 #define R88E_TXDW2_AGGBK	0x00010000
+#define R88E_TXDW2_CCX_RPT	0x00080000
 
 	uint16_t	txdw3;
 	uint16_t	txdseq;
@@ -1090,6 +1205,30 @@ struct r92c_tx_desc {
 	uint16_t	txdsum;
 	uint16_t	pad;
 } __packed __attribute__((aligned(4)));
+
+struct r88e_tx_rpt_ccx {
+	uint8_t		rptb0;
+	uint8_t		rptb1;
+#define R88E_RPTB1_MACID_M	0x3f
+#define R88E_RPTB1_MACID_S	0
+#define R88E_RPTB1_PKT_OK	0x40
+#define R88E_RPTB1_BMC		0x80
+
+	uint8_t		rptb2;
+#define R88E_RPTB2_RETRY_CNT_M	0x3f
+#define R88E_RPTB2_RETRY_CNT_S	0
+#define R88E_RPTB2_LIFE_EXPIRE	0x40
+#define R88E_RPTB2_RETRY_OVER	0x80
+
+	uint8_t		rptb3;
+	uint8_t		rptb4;
+	uint8_t		rptb5;
+	uint8_t		rptb6;
+#define R88E_RPTB6_QSEL_M	0xf0
+#define R88E_RPTB6_QSEL_S	4
+
+	uint8_t		rptb7;
+} __packed;
 
 
 static const uint8_t ridx2rate[] =

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_rumreg.h 288642 2015-10-03 22:35:37Z adrian $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_rumreg.h 295611 2016-02-14 16:18:39Z hselasky $	*/
 
 /*-
  * Copyright (c) 2005, 2006 Damien Bergamini <damien.bergamini@free.fr>
@@ -47,7 +47,7 @@
  * H/w encryption/decryption support
  */
 #define KEY_SIZE		(IEEE80211_KEYBUF_SIZE + IEEE80211_MICBUF_SIZE)
-#define RT2573_ADDR_MAX         64
+#define RT2573_ADDR_MAX		64
 #define RT2573_SKEY_MAX		4
 
 #define RT2573_SKEY(vap, kidx)	(0x1000 + ((vap) * RT2573_SKEY_MAX + \

@@ -69,7 +69,7 @@ static const char sccsid[] = "@(#)res_query.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_query.c,v 1.11 2008/11/14 02:36:51 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_query.c 269867 2014-08-12 12:36:06Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_query.c 292250 2015-12-15 05:37:09Z ngie $");
 
 #include "port_before.h"
 #include <sys/types.h>
@@ -88,7 +88,9 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_query.c 269867 2014-08-12 12:36:06Z
 #include "port_after.h"
 
 /* Options.  Leave them on. */
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 
 #if PACKETSZ > 1024
 #define MAXPACKET	PACKETSZ

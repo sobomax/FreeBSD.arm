@@ -1,4 +1,4 @@
-# $FreeBSD: head/tests/sys/pjdfstest/tests/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: head/tests/sys/pjdfstest/tests/Makefile 295643 2016-02-16 02:13:59Z bdrewery $
 
 PJDFSTEST_SRCDIR=	${SRCTOP}/contrib/pjdfstest
 
@@ -35,7 +35,5 @@ TESTS_SUBDIRS+=	rmdir
 TESTS_SUBDIRS+=	symlink
 TESTS_SUBDIRS+=	truncate
 TESTS_SUBDIRS+=	unlink
-
-SUBDIR_PARALLEL=
 
 .include <bsd.test.mk>

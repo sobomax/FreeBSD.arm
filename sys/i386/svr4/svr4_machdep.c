@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 273991 2014-11-02 21:40:32Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 294930 2016-01-27 17:55:01Z jhb $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -441,7 +441,7 @@ svr4_sendsig(catcher, ksi, mask)
 	 */
 	if ((td->td_pflags & TDP_ALTSTACK) && !oonstack &&
 	    SIGISMEMBER(psp->ps_sigonstack, sig)) {
-		fp = (struct svr4_sigframe *)(td->td_sigstk.ss_sp +
+		fp = (struct svr4_sigframe *)((uintptr_t)td->td_sigstk.ss_sp +
 		    td->td_sigstk.ss_size - sizeof(struct svr4_sigframe));
 		td->td_sigstk.ss_flags |= SS_ONSTACK;
 	} else {

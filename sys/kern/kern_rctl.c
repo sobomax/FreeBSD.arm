@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/kern_rctl.c 290857 2015-11-15 12:10:51Z trasz $
+ * $FreeBSD: head/sys/kern/kern_rctl.c 294792 2016-01-26 11:28:55Z trasz $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_rctl.c 290857 2015-11-15 12:10:51Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_rctl.c 294792 2016-01-26 11:28:55Z trasz $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -282,7 +282,7 @@ rctl_would_exceed(const struct proc *p, const struct rctl_rule *rule,
 }
 
 /*
- * Special version of rctl_available() function for the %cpu resource.
+ * Special version of rctl_get_available() for the %CPU resource.
  * We slightly cheat here and return less than we normally would.
  */
 int64_t
@@ -1745,6 +1745,7 @@ again:
 	for (i = 0; i < rulecnt; i++) {
 		newlink = uma_zalloc(rctl_rule_link_zone, M_WAITOK);
 		newlink->rrl_rule = NULL;
+		newlink->rrl_exceeded = 0;
 		LIST_INSERT_HEAD(&newrules, newlink, rrl_next);
 	}
 
@@ -1761,6 +1762,7 @@ again:
 				goto goaround;
 			rctl_rule_acquire(link->rrl_rule);
 			newlink->rrl_rule = link->rrl_rule;
+			newlink->rrl_exceeded = link->rrl_exceeded;
 			newlink = LIST_NEXT(newlink, rrl_next);
 			rulecnt--;
 		}
@@ -1771,6 +1773,7 @@ again:
 			goto goaround;
 		rctl_rule_acquire(link->rrl_rule);
 		newlink->rrl_rule = link->rrl_rule;
+		newlink->rrl_exceeded = link->rrl_exceeded;
 		newlink = LIST_NEXT(newlink, rrl_next);
 		rulecnt--;
 	}
@@ -1780,6 +1783,7 @@ again:
 			goto goaround;
 		rctl_rule_acquire(link->rrl_rule);
 		newlink->rrl_rule = link->rrl_rule;
+		newlink->rrl_exceeded = link->rrl_exceeded;
 		newlink = LIST_NEXT(newlink, rrl_next);
 		rulecnt--;
 	}
@@ -1789,6 +1793,7 @@ again:
 			goto goaround;
 		rctl_rule_acquire(link->rrl_rule);
 		newlink->rrl_rule = link->rrl_rule;
+		newlink->rrl_exceeded = link->rrl_exceeded;
 		newlink = LIST_NEXT(newlink, rrl_next);
 		rulecnt--;
 	}

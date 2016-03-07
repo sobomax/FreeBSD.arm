@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * $NetBSD: signal.h,v 1.4 1998/09/14 02:48:34 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/ucontext.h 279937 2015-03-12 21:15:38Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/ucontext.h 295561 2016-02-12 07:38:19Z kib $
  */
 
 #ifndef	_MACHINE_UCONTEXT_H_
@@ -42,11 +42,11 @@ typedef struct __mcontext {
 #define _MC_AV_VALID	0x02
 	int		mc_onstack;	  	/* saved onstack flag */
 	int		mc_len;			/* sizeof(__mcontext) */
-	uint64_t	mc_avec[32*2];		/* vector register file */
-	uint32_t	mc_av[2];
-	register_t	mc_frame[42];
-	uint64_t	mc_fpreg[33];
-	uint64_t	mc_vsxfpreg[32];	/* low-order half of VSR0-31 */
+	__uint64_t	mc_avec[32*2];		/* vector register file */
+	__uint32_t	mc_av[2];
+	__register_t	mc_frame[42];
+	__uint64_t	mc_fpreg[33];
+	__uint64_t	mc_vsxfpreg[32];	/* low-order half of VSR0-31 */
 } mcontext_t __aligned(16);
 
 #if defined(_KERNEL) && defined(__powerpc64__)

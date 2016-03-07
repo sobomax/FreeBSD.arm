@@ -1,9 +1,12 @@
 #! /bin/sh
 # ex:ts=8
 
-# $FreeBSD: head/usr.bin/less/lesspipe.sh 207842 2010-05-10 06:59:50Z mm $
+# $FreeBSD: head/usr.bin/less/lesspipe.sh 294111 2016-01-15 23:13:01Z ak $
 
 case "$1" in
+	*.zip)
+		exec unzip -c "$1" 2>/dev/null
+		;;
 	*.Z)
 		exec uncompress -c "$1"	2>/dev/null
 		;;

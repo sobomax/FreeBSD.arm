@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libkvm/kvm_i386.h 291406 2015-11-27 18:58:26Z jhb $
+ * $FreeBSD: head/lib/libkvm/kvm_i386.h 293979 2016-01-14 15:51:13Z jhb $
  */
 
 #ifndef __KVM_I386_H__
@@ -70,7 +70,7 @@ _Static_assert(NBPDR == I386_NBPDR, "NBPDR mismatch");
 
 _Static_assert(PG_V == I386_PG_V, "PG_V mismatch");
 _Static_assert(PG_PS == I386_PG_PS, "PG_PS mismatch");
-_Static_assert(PG_FRAME == I386_PG_FRAME, "PG_FRAME mismatch");
+_Static_assert((u_int)PG_FRAME == I386_PG_FRAME, "PG_FRAME mismatch");
 _Static_assert(PG_PS_FRAME == I386_PG_PS_FRAME, "PG_PS_FRAME mismatch");
 #endif
 

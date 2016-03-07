@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.c,v 1.16 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_l2cap.c 290491 2015-11-07 12:15:02Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_l2cap.c 292660 2015-12-23 16:32:04Z emax $
  */
 
 #include <sys/param.h>
@@ -708,8 +708,15 @@ static int ng_btsocket_l2cap_process_l2ca_enc_change(struct ng_mesg *msg, ng_bts
 
 	op = (ng_l2cap_l2ca_enc_chg_op *)(msg->data);
 
+	mtx_lock(&ng_btsocket_l2cap_sockets_mtx);
+
 	pcb = ng_btsocket_l2cap_pcb_by_cid(&rt->src, op->lcid,
 					   op->idtype);
+	if (pcb == NULL) {
+		mtx_unlock(&ng_btsocket_l2cap_sockets_mtx);
+		return (ENOENT);
+	}
+
 	mtx_lock(&pcb->pcb_mtx);
 	pcb->encryption = op->result;
 	
@@ -729,6 +736,7 @@ static int ng_btsocket_l2cap_process_l2ca_enc_change(struct ng_mesg *msg, ng_bts
 		}
 	}
 	mtx_unlock(&pcb->pcb_mtx);
+	mtx_unlock(&ng_btsocket_l2cap_sockets_mtx);
 
 	return 0;
 }

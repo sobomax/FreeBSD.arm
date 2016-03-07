@@ -77,7 +77,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ti/if_ti.c 284724 2015-06-23 06:59:46Z dim $");
+__FBSDID("$FreeBSD: head/sys/dev/ti/if_ti.c 293439 2016-01-08 20:34:57Z glebius $");
 
 #include "opt_ti.h"
 
@@ -1634,7 +1634,7 @@ ti_newbuf_jumbo(struct ti_softc *sc, int idx, struct mbuf *m_old)
 			m[i]->m_data = (void *)sf_buf_kva(sf[i]);
 			m[i]->m_len = PAGE_SIZE;
 			MEXTADD(m[i], sf_buf_kva(sf[i]), PAGE_SIZE,
-			    sf_buf_mext, (void*)sf_buf_kva(sf[i]), sf[i],
+			    sf_mext_free, (void*)sf_buf_kva(sf[i]), sf[i],
 			    0, EXT_DISPOSABLE);
 			m[i]->m_next = m[i+1];
 		}
@@ -1699,7 +1699,7 @@ nobufs:
 		if (m[i])
 			m_freem(m[i]);
 		if (sf[i])
-			sf_buf_mext((void *)sf_buf_kva(sf[i]), sf[i]);
+			sf_mext_free((void *)sf_buf_kva(sf[i]), sf[i]);
 	}
 	return (ENOBUFS);
 }

@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)swapon.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/swapon/swapon.c 292005 2015-12-09 01:24:34Z ngie $");
+__FBSDID("$FreeBSD: head/sbin/swapon/swapon.c 295121 2016-02-01 08:06:17Z ngie $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -315,7 +315,7 @@ swap_on_geli_args(const char *mntops)
 	const char *aalgo, *ealgo, *keylen_str, *sectorsize_str;
 	const char *aflag, *eflag, *lflag, *Tflag, *sflag;
 	char *p, *args, *token, *string, *ops;
-	int argsize, pagesize;
+	int pagesize;
 	size_t pagesize_len;
 	u_long ul;
 
@@ -389,7 +389,7 @@ swap_on_geli_args(const char *mntops)
 		sectorsize_str = p;
 	}
 
-	argsize = asprintf(&args, "%s%s%s%s%s%s%s%s%s -d",
+	(void)asprintf(&args, "%s%s%s%s%s%s%s%s%s -d",
 	    aflag, aalgo, eflag, ealgo, lflag, keylen_str, Tflag,
 	    sflag, sectorsize_str);
 

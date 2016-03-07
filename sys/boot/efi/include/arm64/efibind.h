@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/arm64/efibind.h 281526 2015-04-14 13:55:01Z andrew $ */
+/* $FreeBSD: head/sys/boot/efi/include/arm64/efibind.h 293724 2016-01-12 02:17:39Z smh $ */
 /*++
 
 Copyright (c)  1999 - 2003 Intel Corporation. All rights reserved
@@ -39,7 +39,7 @@ Revision History
 
     // No ANSI C 1999/2000 stdint.h integer width declarations 
 
-    #if _MSC_EXTENSIONS
+    #ifdef _MSC_EXTENSIONS
 
         // Use Microsoft C compiler integer width declarations 
 
@@ -127,7 +127,6 @@ typedef uint64_t   UINTN;
 #define BAD_POINTER         0xFBFBFBFBFBFBFBFB
 #define MAX_ADDRESS         0xFFFFFFFFFFFFFFFF
 
-#pragma intrinsic (__break)  
 #define BREAKPOINT()  __break(0)
 
 //
@@ -159,7 +158,7 @@ typedef uint64_t   UINTN;
 //
 
 #ifndef EFIAPI                  // Forces EFI calling conventions reguardless of compiler options 
-    #if _MSC_EXTENSIONS
+    #ifdef _MSC_EXTENSIONS
         #define EFIAPI __cdecl  // Force C calling convention for Microsoft C compiler 
     #else
         #define EFIAPI          // Substitute expresion to force C calling convention 
@@ -180,7 +179,6 @@ typedef uint64_t   UINTN;
 // BugBug: Need to find out if this is portable accross compliers.
 //
 void __mfa (void);                       
-#pragma intrinsic (__mfa)  
 #define MEMORY_FENCE()    __mfa()
 
 #ifdef EFI_NO_INTERFACE_DECL

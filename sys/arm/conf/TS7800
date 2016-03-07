@@ -1,7 +1,7 @@
 #
 # Custom kernel for the TS-7800 board.
 #
-# $FreeBSD: head/sys/arm/conf/TS7800 289945 2015-10-25 22:00:56Z zbb $
+# $FreeBSD: head/sys/arm/conf/TS7800 294413 2016-01-20 11:57:11Z zbb $
 #
 
 ident		TS7800
@@ -75,6 +75,9 @@ device		da
 
 # SATA
 device		ata
+
+# GPIO
+device		gpio
 
 # Flattened Device Tree
 options 	FDT

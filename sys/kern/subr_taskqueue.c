@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_taskqueue.c 290805 2015-11-13 22:51:35Z rrs $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_taskqueue.c 296272 2016-03-01 17:47:32Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -735,13 +735,6 @@ taskqueue_create_fast(const char *name, int mflags,
 {
 	return _taskqueue_create(name, mflags, enqueue, context,
 			MTX_SPIN, "fast_taskqueue");
-}
-
-/* NB: for backwards compatibility */
-int
-taskqueue_enqueue_fast(struct taskqueue *queue, struct task *task)
-{
-	return taskqueue_enqueue(queue, task);
 }
 
 static void	*taskqueue_fast_ih;

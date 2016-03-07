@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libthr/thread/thr_stack.c 269909 2014-08-13 05:53:41Z kib $
+ * $FreeBSD: head/lib/libthr/thread/thr_stack.c 295407 2016-02-08 19:24:13Z kib $
  */
 
 #include <sys/types.h>
@@ -161,9 +161,8 @@ singlethread_map_stacks_exec(void)
 	    rlim.rlim_cur, _rtld_get_stack_prot());
 }
 
-void __pthread_map_stacks_exec(void);
 void
-__pthread_map_stacks_exec(void)
+__thr_map_stacks_exec(void)
 {
 	struct pthread *curthread, *thrd;
 	struct stack *st;

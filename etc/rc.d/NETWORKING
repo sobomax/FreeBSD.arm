@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/NETWORKING 278704 2015-02-13 20:49:43Z ngie $
+# $FreeBSD: head/etc/rc.d/NETWORKING 292752 2015-12-26 18:21:32Z ian $
 #
 
 # PROVIDE: NETWORKING NETWORK
-# REQUIRE: netif netoptions routing ppp ipfw stf
+# REQUIRE: netif netwait netoptions routing ppp ipfw stf
 # REQUIRE: defaultroute routed route6d mroute6d resolv bridge
 # REQUIRE: static_arp static_ndp
 

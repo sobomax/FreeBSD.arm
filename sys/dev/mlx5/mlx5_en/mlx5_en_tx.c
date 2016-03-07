@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mlx5/mlx5_en/mlx5_en_tx.c 291938 2015-12-07 12:38:51Z hselasky $
+ * $FreeBSD: head/sys/dev/mlx5/mlx5_en/mlx5_en_tx.c 292838 2015-12-28 18:50:18Z hselasky $
  */
 
 #include "en.h"
@@ -382,6 +382,8 @@ mlx5e_poll_tx_cq(struct mlx5e_sq *sq, int budget)
 		cqe = mlx5e_get_cqe(&sq->cq);
 		if (!cqe)
 			break;
+
+		mlx5_cqwq_pop(&sq->cq.wq);
 
 		ci = sqcc & sq->wq.sz_m1;
 		mb = sq->mbuf[ci].mbuf;

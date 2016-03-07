@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3_syscons.c 279752 2015-03-07 20:45:15Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3_syscons.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,7 +40,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3_syscons.c 279752 2015-03-07 20:45:1
 #include <vm/pmap.h>
 
 #include <machine/platform.h>
-#include <machine/pmap.h>
 
 #include <dev/ofw/openfirm.h>
 #include <dev/vt/vt.h>

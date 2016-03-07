@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/if_emac.c 285105 2015-07-03 17:54:41Z loos $
+ * $FreeBSD: head/sys/arm/allwinner/if_emac.c 295711 2016-02-17 18:28:03Z andrew $
  */
 
 /* A10/A20 EMAC driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 285105 2015-07-03 17:54:41Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 295711 2016-02-17 18:28:03Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,7 +84,6 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 285105 2015-07-03 17:54:41Z
 
 #include "a10_clk.h"
 #include "a10_sramc.h"
-#include "a10_gpio.h"
 
 struct emac_softc {
 	struct ifnet		*emac_ifp;
@@ -145,8 +144,6 @@ emac_sys_setup(void)
 
 	/* Activate EMAC clock. */
 	a10_clk_emac_activate();
-	/* Set the pin mux to EMAC (mii). */
-	a10_gpio_ethernet_activate(A10_GPIO_FUNC_MII);
 	/* Map sram. */
 	a10_map_to_emac();
 }
@@ -756,7 +753,7 @@ static int
 emac_probe(device_t dev)
 {
 
-	if (!ofw_bus_is_compatible(dev, "allwinner,sun4i-emac"))
+	if (!ofw_bus_is_compatible(dev, "allwinner,sun4i-a10-emac"))
 		return (ENXIO);
 
 	device_set_desc(dev, "A10/A20 EMAC ethernet controller");

@@ -29,7 +29,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: vmparam.h,v 1.11 2000/02/11 19:25:16 thorpej Exp $
- * $FreeBSD: head/sys/powerpc/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
+ * $FreeBSD: head/sys/powerpc/include/vmparam.h 294195 2016-01-16 21:24:12Z jhibbits $
  */
 
 #ifndef _MACHINE_VMPARAM_H_
@@ -111,7 +111,7 @@
 #define	KERNBASE		0xc0000000	/* start of kernel virtual */
 
 #define	VM_MIN_KERNEL_ADDRESS	KERNBASE
-#define	VM_MAX_KERNEL_ADDRESS	0xf8000000
+#define	VM_MAX_KERNEL_ADDRESS	0xf7ffffff
 #define	VM_MAX_SAFE_KERNEL_ADDRESS	VM_MAX_KERNEL_ADDRESS
 
 #endif /* AIM/E500 */

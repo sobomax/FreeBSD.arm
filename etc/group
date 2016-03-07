@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/group 286524 2015-08-09 12:58:56Z kwm $
+# $FreeBSD: head/etc/group 294896 2016-01-27 06:28:56Z araujo $
 #
 wheel:*:0:root
 daemon:*:1:
@@ -29,6 +29,7 @@ dialer:*:68:
 network:*:69:
 audit:*:77:
 www:*:80:
+_ypldap:*:160:
 hast:*:845:
 nogroup:*:65533:
 nobody:*:65534:

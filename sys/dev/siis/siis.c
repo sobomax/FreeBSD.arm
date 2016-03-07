@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/siis/siis.c 280393 2015-03-23 19:47:52Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/siis/siis.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -314,7 +314,7 @@ siis_intr(void *data)
 
 static struct resource *
 siis_alloc_resource(device_t dev, device_t child, int type, int *rid,
-		       u_long start, u_long end, u_long count, u_int flags)
+		    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct siis_controller *ctlr = device_get_softc(dev);
 	int unit = ((struct siis_channel *)device_get_softc(child))->unit;

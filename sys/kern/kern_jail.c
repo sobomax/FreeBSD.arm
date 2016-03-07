@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_jail.c 290857 2015-11-15 12:10:51Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_jail.c 292277 2015-12-15 17:25:00Z jamie $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -1580,11 +1580,14 @@ kern_jail_set(struct thread *td, struct uio *optuio, int flags)
 #endif
 	onamelen = namelen = 0;
 	if (name != NULL) {
-		/* Give a default name of the jid. */
+		/* Give a default name of the jid.  Also allow the name to be
+		 * explicitly the jid - but not any other number, and only in
+		 * normal form (no leading zero/etc).
+		 */
 		if (name[0] == '\0')
 			snprintf(name = numbuf, sizeof(numbuf), "%d", jid);
-		else if (*namelc == '0' || (strtoul(namelc, &p, 10) != jid &&
-		    *p == '\0')) {
+		else if ((strtoul(namelc, &p, 10) != jid ||
+			  namelc[0] < '1' || namelc[0] > '9') && *p == '\0') {
 			error = EINVAL;
 			vfs_opterror(opts,
 			    "name cannot be numeric (unless it is the jid)");

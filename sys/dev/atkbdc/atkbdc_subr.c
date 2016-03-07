@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc_subr.c 147271 2005-06-10 20:56:38Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc_subr.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_kbd.h"
 
@@ -51,7 +51,7 @@ int
 atkbdc_print_child(device_t bus, device_t dev)
 {
 	atkbdc_device_t *kbdcdev;
-	u_long irq;
+	rman_res_t irq;
 	int flags;
 	int retval = 0;
 

@@ -34,7 +34,7 @@
  * Authors: Julian Elischer <julian@freebsd.org>
  *          Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_base.c 278640 2015-02-12 22:20:34Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_base.c 295126 2016-02-01 17:41:21Z glebius $
  * $Whistle: ng_base.c,v 1.39 1999/01/28 23:54:53 julian Exp $
  */
 
@@ -63,6 +63,7 @@
 #include <sys/syslog.h>
 #include <sys/unistd.h>
 #include <machine/cpu.h>
+#include <vm/uma.h>
 
 #include <net/netisr.h>
 #include <net/vnet.h>

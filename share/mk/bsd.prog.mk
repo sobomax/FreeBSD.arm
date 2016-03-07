@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 290526 2015-11-08 00:50:18Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.prog.mk 296353 2016-03-03 18:08:58Z bdrewery $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -63,6 +63,8 @@ PROG_FULL=${PROG}.full
 DEBUGFILEDIR=	${DEBUGDIR}${BINDIR}
 .else
 DEBUGFILEDIR?=	${BINDIR}/.debug
+.endif
+.if !exists(${DESTDIR}${DEBUGFILEDIR})
 DEBUGMKDIR=
 .endif
 .else
@@ -148,10 +150,9 @@ MAN1=	${MAN}
 .if defined(_SKIP_BUILD)
 all:
 .else
-all: beforebuild .WAIT ${PROG} ${SCRIPTS}
-beforebuild: objwarn
+all: ${PROG} ${SCRIPTS}
 .if ${MK_MAN} != "no"
-all: _manpages
+all: all-man
 .endif
 .endif
 
@@ -259,8 +260,8 @@ NLSNAME?=	${PROG}
 .include <bsd.links.mk>
 
 .if ${MK_MAN} != "no"
-realinstall: _maninstall
-.ORDER: beforeinstall _maninstall
+realinstall: maninstall
+.ORDER: beforeinstall maninstall
 .endif
 
 .endif	# !target(install)
@@ -276,12 +277,18 @@ lint: ${SRCS:M*.c}
 .include <bsd.man.mk>
 .endif
 
-.include <bsd.dep.mk>
-
-.if defined(PROG) && !exists(${.OBJDIR}/${DEPENDFILE})
-${OBJS}: ${SRCS:M*.h}
+.if defined(PROG)
+OBJS_DEPEND_GUESS+= ${SRCS:M*.h}
 .endif
 
-.include <bsd.obj.mk>
+.include <bsd.dep.mk>
 
+.if defined(PROG)
+.if ${MK_FAST_DEPEND} == "no" && !exists(${.OBJDIR}/${DEPENDFILE})
+${OBJS}: ${OBJS_DEPEND_GUESS}
+.endif
+.endif
+
+.include <bsd.clang-analyze.mk>
+.include <bsd.obj.mk>
 .include <bsd.sys.mk>

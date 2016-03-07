@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.confs.mk 290086 2015-10-27 23:49:32Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.confs.mk 296121 2016-02-26 22:13:48Z bdrewery $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.conf.mk cannot be included directly.
@@ -12,7 +12,9 @@ buildconfig: ${${group}}
 .endfor
 .endif
 
+.if !defined(_SKIP_BUILD)
 all: buildconfig
+.endif
 
 .if !target(installconfig)
 .for group in ${CONFGROUPS}

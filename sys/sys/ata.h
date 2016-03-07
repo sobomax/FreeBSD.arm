@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/ata.h 286837 2015-08-17 05:56:41Z grehan $
+ * $FreeBSD: head/sys/sys/ata.h 295276 2016-02-04 19:53:54Z rpokala $
  */
 
 #ifndef _SYS_ATA_H_
@@ -368,6 +368,9 @@ struct ata_params {
 #define ATA_WRITE_LOG_EXT               0x3f
 #define ATA_READ_VERIFY                 0x40
 #define ATA_READ_VERIFY48               0x42
+#define ATA_WRITE_UNCORRECTABLE48       0x45    /* write uncorrectable 48bit LBA */
+#define         ATA_WU_PSEUDO           0x55    /* pseudo-uncorrectable error */
+#define         ATA_WU_FLAGGED          0xaa    /* flagged-uncorrectable error */
 #define ATA_READ_LOG_DMA_EXT            0x47    /* read log DMA ext - PIO Data-In */
 #define ATA_READ_FPDMA_QUEUED           0x60    /* read DMA NCQ */
 #define ATA_WRITE_FPDMA_QUEUED          0x61    /* write DMA NCQ */

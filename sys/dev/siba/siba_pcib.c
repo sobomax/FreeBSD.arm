@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/siba/siba_pcib.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/siba/siba_pcib.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/sys/dev/siba/siba_pcib.c 227843 2011-11-22 21:28:20Z ma
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/pcb.h>
-#include <machine/pmap.h>
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
@@ -92,7 +91,7 @@ static int	siba_pcib_activate_resource(device_t, device_t, int,
 		    int, struct resource *);
 static struct resource *
 		siba_pcib_alloc_resource(device_t, device_t, int, int *,
-		    u_long , u_long, u_long, u_int);
+		    rman_res_t , rman_res_t, rman_res_t, u_int);
 static int	siba_pcib_attach(device_t);
 static int	siba_pcib_deactivate_resource(device_t, device_t, int,
 		    int, struct resource *);
@@ -249,7 +248,7 @@ siba_pcib_teardown_intr(device_t dev, device_t child, struct resource *vec,
 
 static struct resource *
 siba_pcib_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 #if 1
 

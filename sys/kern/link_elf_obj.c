@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/link_elf_obj.c 288000 2015-09-20 01:27:59Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/link_elf_obj.c 296419 2016-03-06 00:31:11Z kib $");
 
 #include "opt_ddb.h"
 
@@ -257,6 +257,9 @@ link_elf_link_preload(linker_class_t cls, const char *filename,
 		switch (shdr[i].sh_type) {
 		case SHT_PROGBITS:
 		case SHT_NOBITS:
+#ifdef __amd64__
+		case SHT_AMD64_UNWIND:
+#endif
 			ef->nprogtab++;
 			break;
 		case SHT_SYMTAB:
@@ -327,9 +330,16 @@ link_elf_link_preload(linker_class_t cls, const char *filename,
 		switch (shdr[i].sh_type) {
 		case SHT_PROGBITS:
 		case SHT_NOBITS:
+#ifdef __amd64__
+		case SHT_AMD64_UNWIND:
+#endif
 			ef->progtab[pb].addr = (void *)shdr[i].sh_addr;
 			if (shdr[i].sh_type == SHT_PROGBITS)
 				ef->progtab[pb].name = "<<PROGBITS>>";
+#ifdef __amd64__
+			else if (shdr[i].sh_type == SHT_AMD64_UNWIND)
+				ef->progtab[pb].name = "<<UNWIND>>";
+#endif
 			else
 				ef->progtab[pb].name = "<<NOBITS>>";
 			ef->progtab[pb].size = shdr[i].sh_size;
@@ -575,6 +585,9 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 		switch (shdr[i].sh_type) {
 		case SHT_PROGBITS:
 		case SHT_NOBITS:
+#ifdef __amd64__
+		case SHT_AMD64_UNWIND:
+#endif
 			ef->nprogtab++;
 			break;
 		case SHT_SYMTAB:
@@ -681,6 +694,9 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 		switch (shdr[i].sh_type) {
 		case SHT_PROGBITS:
 		case SHT_NOBITS:
+#ifdef __amd64__
+		case SHT_AMD64_UNWIND:
+#endif
 			alignmask = shdr[i].sh_addralign - 1;
 			mapsize += alignmask;
 			mapsize &= ~alignmask;
@@ -748,6 +764,9 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 		switch (shdr[i].sh_type) {
 		case SHT_PROGBITS:
 		case SHT_NOBITS:
+#ifdef __amd64__
+		case SHT_AMD64_UNWIND:
+#endif
 			alignmask = shdr[i].sh_addralign - 1;
 			mapbase += alignmask;
 			mapbase &= ~alignmask;
@@ -760,6 +779,10 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 				}
 			} else if (shdr[i].sh_type == SHT_PROGBITS)
 				ef->progtab[pb].name = "<<PROGBITS>>";
+#ifdef __amd64__
+			else if (shdr[i].sh_type == SHT_AMD64_UNWIND)
+				ef->progtab[pb].name = "<<UNWIND>>";
+#endif
 			else
 				ef->progtab[pb].name = "<<NOBITS>>";
 			if (ef->progtab[pb].name != NULL && 
@@ -781,7 +804,11 @@ link_elf_load_file(linker_class_t cls, const char *filename,
 			}
 			ef->progtab[pb].size = shdr[i].sh_size;
 			ef->progtab[pb].sec = i;
-			if (shdr[i].sh_type == SHT_PROGBITS) {
+			if (shdr[i].sh_type == SHT_PROGBITS
+#ifdef __amd64__
+			    || shdr[i].sh_type == SHT_AMD64_UNWIND
+#endif
+			    ) {
 				error = vn_rdwr(UIO_READ, nd.ni_vp,
 				    ef->progtab[pb].addr,
 				    shdr[i].sh_size, shdr[i].sh_offset,
@@ -898,8 +925,7 @@ out:
 	vn_close(nd.ni_vp, FREAD, td->td_ucred, td);
 	if (error && lf)
 		linker_file_unload(lf, LINKER_UNLOAD_FORCE);
-	if (hdr)
-		free(hdr, M_LINKER);
+	free(hdr, M_LINKER);
 
 	return error;
 }
@@ -930,18 +956,12 @@ link_elf_unload_file(linker_file_t file)
 		}
 	}
 	if (ef->preloaded) {
-		if (ef->reltab)
-			free(ef->reltab, M_LINKER);
-		if (ef->relatab)
-			free(ef->relatab, M_LINKER);
-		if (ef->progtab)
-			free(ef->progtab, M_LINKER);
-		if (ef->ctftab)
-			free(ef->ctftab, M_LINKER);
-		if (ef->ctfoff)
-			free(ef->ctfoff, M_LINKER);
-		if (ef->typoff)
-			free(ef->typoff, M_LINKER);
+		free(ef->reltab, M_LINKER);
+		free(ef->relatab, M_LINKER);
+		free(ef->progtab, M_LINKER);
+		free(ef->ctftab, M_LINKER);
+		free(ef->ctfoff, M_LINKER);
+		free(ef->typoff, M_LINKER);
 		if (file->filename != NULL)
 			preload_delete_name(file->filename);
 		/* XXX reclaim module memory? */
@@ -949,37 +969,25 @@ link_elf_unload_file(linker_file_t file)
 	}
 
 	for (i = 0; i < ef->nreltab; i++)
-		if (ef->reltab[i].rel)
-			free(ef->reltab[i].rel, M_LINKER);
+		free(ef->reltab[i].rel, M_LINKER);
 	for (i = 0; i < ef->nrelatab; i++)
-		if (ef->relatab[i].rela)
-			free(ef->relatab[i].rela, M_LINKER);
-	if (ef->reltab)
-		free(ef->reltab, M_LINKER);
-	if (ef->relatab)
-		free(ef->relatab, M_LINKER);
-	if (ef->progtab)
-		free(ef->progtab, M_LINKER);
+		free(ef->relatab[i].rela, M_LINKER);
+	free(ef->reltab, M_LINKER);
+	free(ef->relatab, M_LINKER);
+	free(ef->progtab, M_LINKER);
 
 	if (ef->object) {
 		vm_map_remove(kernel_map, (vm_offset_t) ef->address,
 		    (vm_offset_t) ef->address +
 		    (ef->object->size << PAGE_SHIFT));
 	}
-	if (ef->e_shdr)
-		free(ef->e_shdr, M_LINKER);
-	if (ef->ddbsymtab)
-		free(ef->ddbsymtab, M_LINKER);
-	if (ef->ddbstrtab)
-		free(ef->ddbstrtab, M_LINKER);
-	if (ef->shstrtab)
-		free(ef->shstrtab, M_LINKER);
-	if (ef->ctftab)
-		free(ef->ctftab, M_LINKER);
-	if (ef->ctfoff)
-		free(ef->ctfoff, M_LINKER);
-	if (ef->typoff)
-		free(ef->typoff, M_LINKER);
+	free(ef->e_shdr, M_LINKER);
+	free(ef->ddbsymtab, M_LINKER);
+	free(ef->ddbstrtab, M_LINKER);
+	free(ef->shstrtab, M_LINKER);
+	free(ef->ctftab, M_LINKER);
+	free(ef->ctfoff, M_LINKER);
+	free(ef->typoff, M_LINKER);
 }
 
 static const char *

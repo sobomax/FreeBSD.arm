@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/asm/atomic-long.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/asm/atomic-long.h 294520 2016-01-21 17:52:55Z hselasky $
  */
 #ifndef	_ATOMIC_LONG_H_
 #define	_ATOMIC_LONG_H_
@@ -36,7 +36,7 @@
 #include <machine/atomic.h>
 
 typedef struct {
-	volatile u_long counter;
+	volatile long counter;
 } atomic_long_t;
 
 #define	atomic_long_add(i, v)		atomic_long_add_return((i), (v))

@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_alloc.c	8.8 (Berkeley) 2/21/94
- * $FreeBSD: head/sys/fs/ext2fs/ext2_alloc.c 277340 2015-01-18 20:26:27Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_alloc.c 294652 2016-01-24 02:25:41Z pfg $
  */
 
 #include <sys/param.h>
@@ -393,6 +393,7 @@ ext2_valloc(struct vnode *pvp, int mode, struct ucred *cred, struct vnode **vpp)
 	 * Linux doesn't read the old inode in when it is allocating a
 	 * new one. I will set at least i_size and i_blocks to zero.
 	 */
+	ip->i_flag = 0;
 	ip->i_size = 0;
 	ip->i_blocks = 0;
 	ip->i_mode = 0;

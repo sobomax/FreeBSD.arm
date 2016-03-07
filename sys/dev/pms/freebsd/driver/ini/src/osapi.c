@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: head/sys/dev/pms/freebsd/driver/ini/src/osapi.c 285242 2015-07-07 13:17:02Z achim $
+* $FreeBSD: head/sys/dev/pms/freebsd/driver/ini/src/osapi.c 295861 2016-02-21 16:45:22Z pfg $
 *
 *******************************************************************************/
 /******************************************************************************
@@ -313,7 +313,7 @@ ostiInitiatorIOCompleted(tiRoot_t      *ptiRoot,
       }
       sense_len = MIN( pSenseData->senseLen,
                        pccb->senseLen - csio->sense_resid );
-      bzero(&csio->sense_data, sizeof(&csio->sense_data));
+      bzero(&csio->sense_data, sizeof(csio->sense_data));
       AGTIAPI_PRINTK("ostiInitiatorIOCompleted: check condition copying\n");
       memcpy( (void *)pccb->pSenseData,
               pSenseData->senseData,

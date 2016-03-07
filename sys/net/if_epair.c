@@ -48,10 +48,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_epair.c 287402 2015-09-02 16:30:45Z hrs $");
+__FBSDID("$FreeBSD: head/sys/net/if_epair.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/module.h>
 #include <sys/refcount.h>

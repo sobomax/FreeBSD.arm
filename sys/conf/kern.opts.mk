@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.opts.mk 291103 2015-11-20 16:18:27Z andrew $
+# $FreeBSD: head/sys/conf/kern.opts.mk 295987 2016-02-24 17:19:13Z bdrewery $
 
 # Options set in the build system that affect the kernel somehow.
 
@@ -48,6 +48,12 @@ __DEFAULT_NO_OPTIONS = \
     FAST_DEPEND \
     NAND \
     OFED
+
+# Enable FAST_DEPEND by default for the meta build.
+.if !empty(.MAKE.MODE:Unormal:Mmeta)
+__DEFAULT_YES_OPTIONS+=	FAST_DEPEND
+__DEFAULT_NO_OPTIONS:=	${__DEFAULT_NO_OPTIONS:NFAST_DEPEND}
+.endif
 
 # Some options are totally broken on some architectures. We disable
 # them. If you need to enable them on an experimental basis, you

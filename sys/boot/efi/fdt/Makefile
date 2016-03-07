@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/efi/fdt/Makefile 281525 2015-04-14 10:41:57Z andrew $
+# $FreeBSD: head/sys/boot/efi/fdt/Makefile 294028 2016-01-14 18:46:57Z smh $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,7 @@
 
 LIB=		efi_fdt
 INTERNALLIB=
+WARNS?=		6
 
 SRCS=		efi_fdt.c
 

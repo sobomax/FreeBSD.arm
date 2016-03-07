@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.obj.mk 291349 2015-11-26 01:47:56Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.obj.mk 295641 2016-02-16 02:09:48Z bdrewery $
 #
 # The include file <bsd.obj.mk> handles creating the 'obj' directory
 # and cleaning up object files, etc.
@@ -89,6 +89,7 @@ objwarn:
 		canonical ${CANONICALOBJDIR}"
 .endif
 .endif
+beforebuild: objwarn
 
 .if !defined(NO_OBJ)
 .if !target(obj)

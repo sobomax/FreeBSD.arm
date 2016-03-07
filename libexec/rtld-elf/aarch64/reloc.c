@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/reloc.c 287370 2015-09-01 15:57:03Z andrew $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/reloc.c 294373 2016-01-20 07:21:33Z kib $");
 
 #include <sys/types.h>
 
@@ -99,8 +99,8 @@ do_copy_relocations(Obj_Entry *dstobj)
 		req.ventry = fetch_ventry(dstobj, ELF_R_SYM(rela->r_info));
 		req.flags = SYMLOOK_EARLY;
 
-		for (srcobj = dstobj->next; srcobj != NULL;
-		     srcobj = srcobj->next) {
+		for (srcobj = globallist_next(dstobj); srcobj != NULL;
+		     srcobj = globallist_next(srcobj)) {
 			res = symlook_obj(&req, srcobj);
 			if (res == 0) {
 				srcsym = req.sym_out;

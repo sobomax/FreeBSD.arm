@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 285355 2015-07-10 09:20:13Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/isa/npx.c 294313 2016-01-19 08:09:09Z kib $");
 
 #include "opt_cpu.h"
 #include "opt_isa.h"
@@ -494,11 +494,12 @@ npxinitstate(void *arg __unused)
 
 		/*
 		 * The fninit instruction does not modify XMM
-		 * registers.  The fpusave call dumped the garbage
-		 * contained in the registers after reset to the
-		 * initial state saved.  Clear XMM registers file
-		 * image to make the startup program state and signal
-		 * handler XMM register content predictable.
+		 * registers or x87 registers (MM/ST).  The fpusave
+		 * call dumped the garbage contained in the registers
+		 * after reset to the initial state saved.  Clear XMM
+		 * and x87 registers file image to make the startup
+		 * program state and signal handler XMM/x87 register
+		 * content predictable.
 		 */
 		bzero(npx_initialstate->sv_xmm.sv_fp,
 		    sizeof(npx_initialstate->sv_xmm.sv_fp));

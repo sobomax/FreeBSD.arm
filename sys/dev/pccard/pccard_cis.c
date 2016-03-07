@@ -1,5 +1,5 @@
 /* $NetBSD: pcmcia_cis.c,v 1.17 2000/02/10 09:01:52 chopps Exp $ */
-/* $FreeBSD: head/sys/dev/pccard/pccard_cis.c 189682 2009-03-11 08:14:44Z imp $ */
+/* $FreeBSD: head/sys/dev/pccard/pccard_cis.c 296137 2016-02-27 03:38:01Z jhibbits $ */
 
 /*-
  * Copyright (c) 1997 Marc Horowitz.  All rights reserved.
@@ -140,7 +140,7 @@ pccard_scan_cis(device_t bus, device_t dev, pccard_scan_t fct, void *arg)
 	 * would make cards work better, but it is easy enough to test.
 	 */
 	rid = 0;
-	res = bus_alloc_resource(dev, SYS_RES_MEMORY, &rid, 0, ~0,
+	res = bus_alloc_resource_anywhere(dev, SYS_RES_MEMORY, &rid,
 	    PCCARD_CIS_SIZE, RF_ACTIVE | rman_make_alignment_flags(64*1024));
 	if (res == NULL) {
 		device_printf(dev, "can't alloc memory to read attributes\n");

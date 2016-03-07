@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/pccbb/pccbbvar.h 277234 2015-01-16 06:19:39Z imp $
+ * $FreeBSD: head/sys/dev/pccbb/pccbbvar.h 294883 2016-01-27 02:23:54Z jhibbits $
  */
 
 /*
@@ -113,7 +113,7 @@ extern devclass_t cbb_devclass;
 int	cbb_activate_resource(device_t brdev, device_t child,
 	    int type, int rid, struct resource *r);
 struct resource	*cbb_alloc_resource(device_t brdev, device_t child,
-	    int type, int *rid, u_long start, u_long end, u_long count,
+	    int type, int *rid, rman_res_t start, rman_res_t end, rman_res_t count,
 	    u_int flags);
 void	cbb_child_detached(device_t brdev, device_t child);
 int	cbb_child_present(device_t parent, device_t child);

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_crt.c 289936 2015-10-25 14:57:53Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_crt.c 293837 2016-01-13 19:52:25Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>
@@ -598,8 +598,7 @@ void intel_crt_init(struct drm_device *dev)
 
 	crt = malloc(sizeof(struct intel_crt), DRM_MEM_KMS, M_WAITOK | M_ZERO);
 
-	intel_connector = malloc(sizeof(struct intel_connector), DRM_MEM_KMS,
-	    M_WAITOK | M_ZERO);
+	intel_connector = malloc(sizeof(struct intel_connector), DRM_MEM_KMS, M_WAITOK | M_ZERO);
 
 	connector = &intel_connector->base;
 	drm_connector_init(dev, &intel_connector->base,

@@ -31,7 +31,7 @@
 .\"
 .\" Author: Jim Harris <jimharris@FreeBSD.org>
 .\"
-.\" $FreeBSD: head/sbin/nvmecontrol/nvmecontrol.8 267667 2014-06-20 09:40:43Z bapt $
+.\" $FreeBSD: head/sbin/nvmecontrol/nvmecontrol.8 295087 2016-01-30 22:48:06Z imp $
 .\"
 .Dd March 26, 2013
 .Dt NVMECONTROL 8
@@ -70,6 +70,11 @@
 .Op Fl f Ar path_to_firmware
 .Op Fl a
 .Aq device id
+.Nm
+.Ic power
+.Op Fl l
+.Op Fl p power_state
+.Op fl w workload_hint
 .Sh DESCRIPTION
 NVM Express (NVMe) is a storage protocol standard, for SSDs and other
 high-speed storage devices over PCI Express.
@@ -120,6 +125,18 @@ Activate the firmware in slot 4 of the nvme0 controller on the next reset.
 .Pp
 Download the firmware image contained in "/tmp/nvme_firmware" to slot 7 of the
 nvme0 controller and activate it on the next reset.
+.Pp
+.Dl nvmecontrol power -l nvme0
+.Pp
+List all the current power modes.
+.Pp
+.Dl nvmecontrol power -p 3 nvme0
+.Pp
+Set the current power mode.
+.Pp
+.Dl nvmecontrol power nvme0
+.Pp
+Get the current power mode.
 .Sh AUTHORS
 .An -nosplit
 .Nm

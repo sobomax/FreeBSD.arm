@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/kdb.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/kdb.h 295321 2016-02-05 15:38:28Z andrew $
  */
 
 #ifndef _MACHINE_KDB_H_
@@ -43,6 +43,8 @@ void kdb_cpu_set_singlestep(void);
 static __inline void
 kdb_cpu_sync_icache(unsigned char *addr, size_t size)
 {
+
+	cpu_icache_sync_range((vm_offset_t)addr, size);
 }
 
 static __inline void

@@ -1,5 +1,5 @@
 /*	$NetBSD: if_arcsubr.c,v 1.36 2001/06/14 05:44:23 itojun Exp $	*/
-/*	$FreeBSD: head/sys/net/if_arcsubr.c 290383 2015-11-05 07:26:32Z gnn $ */
+/*	$FreeBSD: head/sys/net/if_arcsubr.c 293544 2016-01-09 16:34:37Z melifaro $ */
 
 /*-
  * Copyright (c) 1994, 1995 Ignatios Souvatzis
@@ -113,9 +113,8 @@ arc_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 
 	error = 0;
 #if defined(INET) || defined(INET6)
-	if (ro != NULL && ro->ro_rt != NULL &&
-	    (ro->ro_rt->rt_flags & RTF_GATEWAY) != 0)
-		is_gw = 1;
+	if (ro != NULL)
+		is_gw = (ro->ro_flags & RT_HAS_GW) != 0;
 #endif
 
 	switch (dst->sa_family) {

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/common.c 289547 2015-10-18 20:32:37Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/common.c 295509 2016-02-11 11:49:27Z andrew $");
 
 #include "opt_platform.h"
 
@@ -136,6 +136,7 @@ infinite:
 	while (1) {}
 }
 
+#ifndef ARM_INTRNG
 static int
 alpine_pic_decode_fdt(uint32_t iparent, uint32_t *intr, int *interrupt,
     int *trig, int *pol)
@@ -158,3 +159,4 @@ fdt_pic_decode_t fdt_pic_table[] = {
 	&alpine_pic_decode_fdt,
 	NULL
 };
+#endif

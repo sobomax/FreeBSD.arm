@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/isa/atrtc.c 284931 2015-06-29 17:02:09Z brueffer $
+ * $FreeBSD: head/sys/x86/isa/atrtc.c 294883 2016-01-27 02:23:54Z jhibbits $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/atrtc.c 284931 2015-06-29 17:02:09Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/atrtc.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_isa.h"
 
@@ -241,7 +241,7 @@ static int
 atrtc_attach(device_t dev)
 {
 	struct atrtc_softc *sc;
-	u_long s;
+	rman_res_t s;
 	int i;
 
 	sc = device_get_softc(dev);

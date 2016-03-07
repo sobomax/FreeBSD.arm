@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/blkfront/blkfront.c 290611 2015-11-09 12:22:44Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/blkfront/blkfront.c 295609 2016-02-14 13:42:16Z cperciva $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -170,6 +170,11 @@ xbd_mksegarray(bus_dma_segment_t *segs, int nsegs,
 	int ref;
 
 	while (sg < last_block_sg) {
+		KASSERT(segs->ds_addr % (1 << XBD_SECTOR_SHFT) == 0,
+		    ("XEN disk driver I/O must be sector aligned"));
+		KASSERT(segs->ds_len % (1 << XBD_SECTOR_SHFT) == 0,
+		    ("XEN disk driver I/Os must be a multiple of "
+		    "the sector length"));
 		buffer_ma = segs->ds_addr;
 		fsect = (buffer_ma & PAGE_MASK) >> XBD_SECTOR_SHFT;
 		lsect = fsect + (segs->ds_len  >> XBD_SECTOR_SHFT) - 1;
@@ -669,7 +674,7 @@ xbd_open(struct disk *dp)
 	struct xbd_softc *sc = dp->d_drv1;
 
 	if (sc == NULL) {
-		printf("xb%d: not found", sc->xbd_unit);
+		printf("xbd%d: not found", dp->d_unit);
 		return (ENXIO);
 	}
 

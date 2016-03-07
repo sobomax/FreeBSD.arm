@@ -29,7 +29,7 @@
  *
  * Ackowledgement to Fen Systems Ltd.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 292009 2015-12-09 06:53:43Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 293818 2016-01-13 07:55:47Z arybchik $
  */
 
 #ifndef	_SYS_EFX_TYPES_H
@@ -536,7 +536,7 @@ extern int fix_lint;
 	    (_oword).eo_u32[3]) == ~((uint32_t)0))
 
 #define	EFX_QWORD_IS_SET64(_qword)					\
-	(((_qword).eq_u64[0]) == ~((uint32_t)0))
+	(((_qword).eq_u64[0]) == ~((uint64_t)0))
 
 #define	EFX_QWORD_IS_SET32(_qword)					\
 	(((_qword).eq_u32[0] &						\

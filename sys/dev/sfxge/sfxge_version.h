@@ -30,12 +30,12 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/sfxge_version.h 283679 2015-05-29 05:44:56Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/sfxge_version.h 294372 2016-01-20 06:56:18Z arybchik $
  */
 
 #ifndef _SFXGE_VERSION_H
 #define	_SFXGE_VERSION_H
 
-#define	SFXGE_VERSION_STRING	"v4.5.2.1000"
+#define	SFXGE_VERSION_STRING	"v4.8.0.1019"
 
 #endif	/* _SFXGE_DRIVER_VERSION_H */

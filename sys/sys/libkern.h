@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)libkern.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/sys/libkern.h 289765 2015-10-22 20:28:37Z cem $
+ * $FreeBSD: head/sys/sys/libkern.h 292680 2015-12-24 04:30:15Z jhibbits $
  */
 
 #ifndef _SYS_LIBKERN_H_
@@ -61,6 +61,8 @@ static __inline u_int max(u_int a, u_int b) { return (a > b ? a : b); }
 static __inline u_int min(u_int a, u_int b) { return (a < b ? a : b); }
 static __inline quad_t qmax(quad_t a, quad_t b) { return (a > b ? a : b); }
 static __inline quad_t qmin(quad_t a, quad_t b) { return (a < b ? a : b); }
+static __inline u_quad_t uqmax(u_quad_t a, u_quad_t b) { return (a > b ? a : b); }
+static __inline u_quad_t uqmin(u_quad_t a, u_quad_t b) { return (a < b ? a : b); }
 static __inline u_long ulmax(u_long a, u_long b) { return (a > b ? a : b); }
 static __inline u_long ulmin(u_long a, u_long b) { return (a < b ? a : b); }
 static __inline off_t omax(off_t a, off_t b) { return (a > b ? a : b); }

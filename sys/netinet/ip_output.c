@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_output.c 286452 2015-08-08 15:58:35Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_output.c 293544 2016-01-09 16:34:37Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_ipfw.h"
@@ -376,6 +376,7 @@ again:
 		ia = ifatoia(rte->rt_ifa);
 		ifp = rte->rt_ifp;
 		counter_u64_add(rte->rt_pksent, 1);
+		rt_update_ro_flags(ro);
 		if (rte->rt_flags & RTF_GATEWAY)
 			gw = (struct sockaddr_in *)rte->rt_gateway;
 		if (rte->rt_flags & RTF_HOST)
@@ -567,7 +568,7 @@ sendit:
 			RO_RTFREE(ro);
 			if (have_ia_ref)
 				ifa_free(&ia->ia_ifa);
-			ro->ro_lle = NULL;
+			ro->ro_prepend = NULL;
 			rte = NULL;
 			gw = dst;
 			ip = mtod(m, struct ip *);

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm64/include/param.h 286922 2015-08-19 11:59:41Z zbb $
+ * $FreeBSD: head/sys/arm64/include/param.h 296315 2016-03-02 15:20:42Z bz $
  */
 
 #ifndef _MACHINE_PARAM_H_
@@ -41,6 +41,8 @@
 
 #define	STACKALIGNBYTES	(16 - 1)
 #define	STACKALIGN(p)	((uint64_t)(p) & ~STACKALIGNBYTES)
+
+#define	__PCI_REROUTE_INTERRUPT
 
 #ifndef MACHINE
 #define	MACHINE		"arm64"

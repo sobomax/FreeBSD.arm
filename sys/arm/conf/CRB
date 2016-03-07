@@ -15,13 +15,12 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CRB 289137 2015-10-11 13:01:51Z mav $
+# $FreeBSD: head/sys/arm/conf/CRB 292591 2015-12-22 09:08:21Z andrew $
 
 ident		CRB
 
 include 	"std.arm"
 options 	PHYSADDR=0x00000000
-options 	KERNPHYSADDR=0x00200000
 options 	KERNVIRTADDR=0xc0200000	# Used in ldscript.arm
 
 options 	COUNTS_PER_SEC=400000000

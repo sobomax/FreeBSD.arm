@@ -34,13 +34,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_if.c 287119 2015-08-24 21:41:05Z loos $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_if.c 293470 2016-01-09 09:34:39Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/eventhandler.h>
 #include <sys/lock.h>
 #include <sys/mbuf.h>
 #include <sys/rwlock.h>

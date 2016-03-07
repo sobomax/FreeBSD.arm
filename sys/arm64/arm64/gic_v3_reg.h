@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/arm64/gic_v3_reg.h 286919 2015-08-19 10:36:36Z zbb $
+ * $FreeBSD: head/sys/arm64/arm64/gic_v3_reg.h 295512 2016-02-11 11:55:37Z zbb $
  */
 
 #ifndef _GIC_V3_REG_H_
@@ -356,12 +356,6 @@
 /*
  * CPU interface
  */
-#define		GICI_SGI_TLIST_MASK	(0xffffUL)
-#define		GICI_SGI_AFF1_SHIFT	(16UL)
-#define		GICI_SGI_AFF2_SHIFT	(32UL)
-#define		GICI_SGI_AFF3_SHIFT	(48UL)
-#define		GICI_SGI_IPI_MASK	(0xfUL)
-#define		GICI_SGI_IPI_SHIFT	(24UL)
 
 /*
  * Registers list (ICC_xyz_EL1):

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/hostb_pci.c 232472 2012-03-03 18:08:57Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/hostb_pci.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -102,7 +102,7 @@ pci_hostb_write_ivar(device_t dev, device_t child, int which, uintptr_t value)
 
 static struct resource *
 pci_hostb_alloc_resource(device_t dev, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 
 	return (bus_alloc_resource(dev, type, rid, start, end, count, flags));

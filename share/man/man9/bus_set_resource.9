@@ -26,7 +26,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/bus_set_resource.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/bus_set_resource.9 294883 2016-01-27 02:23:54Z jhibbits $
 .\"
 .Dd March 29, 2003
 .Dt BUS_SET_RESOURCE 9
@@ -43,7 +43,7 @@
 .In machine/resource.h
 .Ft int
 .Fo bus_set_resource
-.Fa "device_t dev" "int type" "int rid" "u_long start" "u_long count"
+.Fa "device_t dev" "int type" "int rid" "rman_res_t start" "rman_res_t count"
 .Fc
 .Sh DESCRIPTION
 The

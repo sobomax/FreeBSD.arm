@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.snmpmod.mk 175156 2008-01-08 12:55:56Z harti $
+# $FreeBSD: head/share/mk/bsd.snmpmod.mk 292230 2015-12-14 22:42:05Z bdrewery $
 
 INCSDIR=	${INCLUDEDIR}/bsnmp
 
@@ -16,12 +16,12 @@ ${MOD}_tree.c ${MOD}_tree.h: ${MOD}_tree.def ${EXTRAMIBDEFS}
 
 .if defined(DEFS)
 FILESGROUPS+=	DEFS
-DEFSDIR=	${SHAREDIR}/snmp/defs
+DEFSDIR?=	${SHAREDIR}/snmp/defs
 .endif
 
 .if defined(BMIBS)
 FILESGROUPS+=	BMIBS
-BMIBSDIR=	${SHAREDIR}/snmp/mibs
+BMIBSDIR?=	${SHAREDIR}/snmp/mibs
 .endif
 
 .include <bsd.lib.mk>

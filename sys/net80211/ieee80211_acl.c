@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_acl.c 283538 2015-05-25 19:18:16Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_acl.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * IEEE 802.11 MAC ACL support.
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_acl.c 283538 2015-05-25 19:18:16
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/systm.h> 
+#include <sys/malloc.h>   
 #include <sys/mbuf.h>   
 #include <sys/module.h>
 #include <sys/queue.h>

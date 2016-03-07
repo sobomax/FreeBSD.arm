@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_resource.c 281396 2015-04-11 03:23:41Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_resource.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -671,7 +671,7 @@ acpi_sysres_attach(device_t dev)
     struct resource_list_entry *bus_rle, *dev_rle;
     struct resource_list *bus_rl, *dev_rl;
     int done, type;
-    u_long start, end, count;
+    rman_res_t start, end, count;
 
     /*
      * Loop through all current resources to see if the new one overlaps

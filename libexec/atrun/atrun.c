@@ -25,7 +25,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/libexec/atrun/atrun.c 264617 2014-04-17 16:00:26Z ghelmer $";
+  "$FreeBSD: head/libexec/atrun/atrun.c 295079 2016-01-30 17:54:18Z ngie $";
 #endif /* not lint */
 
 /* System Headers */
@@ -459,8 +459,9 @@ main(int argc, char *argv[])
     int c;
     int run_batch;
 #ifdef __FreeBSD__
-    size_t ncpu, ncpusz;
+    size_t ncpusz;
     double load_avg = -1;
+    int ncpu;
 #else
     double load_avg = LOADAVG_MX;
 #endif

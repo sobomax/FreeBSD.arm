@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/i386-freebsd.c 289239 2015-10-13 18:23:51Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/i386-freebsd.c 295056 2016-01-30 01:00:54Z jhb $");
 
 /* FreeBSD/i386-specific system call handling. */
 
@@ -41,10 +41,9 @@ __FBSDID("$FreeBSD: head/usr.bin/truss/i386-freebsd.c 289239 2015-10-13 18:23:51
 #include <machine/psl.h>
 
 #include <stdio.h>
+#include <sysdecode.h>
 
 #include "truss.h"
-
-#include "freebsd_syscalls.h"
 
 static int
 i386_fetch_args(struct trussinfo *trussinfo, u_int narg)
@@ -111,8 +110,7 @@ i386_fetch_retval(struct trussinfo *trussinfo, long *retval, int *errorp)
 
 static struct procabi i386_freebsd = {
 	"FreeBSD ELF32",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD,
 	i386_fetch_args,
 	i386_fetch_retval
 };
@@ -121,8 +119,7 @@ PROCABI(i386_freebsd);
 
 static struct procabi i386_freebsd_aout = {
 	"FreeBSD a.out",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD,
 	i386_fetch_args,
 	i386_fetch_retval
 };

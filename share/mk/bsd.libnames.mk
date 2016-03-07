@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.libnames.mk 292037 2015-12-10 00:07:11Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.libnames.mk 296337 2016-03-03 06:22:51Z bdrewery $
 
 # The include file <bsd.libnames.mk> define library names.
 # Other include files (e.g. bsd.prog.mk, bsd.lib.mk) include this
@@ -30,7 +30,11 @@ LIBBZ2?=	${DESTDIR}${LIBDIR}/libbz2.a
 LIBC?=		${DESTDIR}${LIBDIR}/libc.a
 LIBCALENDAR?=	${DESTDIR}${LIBDIR}/libcalendar.a
 LIBCAM?=	${DESTDIR}${LIBDIR}/libcam.a
-LIBCAPSICUM?=	${DESTDIR}${LIBDIR}/libcapsicum.a
+LIBCAP_DNS?=	${DESTDIR}${LIBDIR}/libcap_dns.a
+LIBCAP_GRP?=	${DESTDIR}${LIBDIR}/libcap_grp.a
+LIBCAP_PWD?=	${DESTDIR}${LIBDIR}/libcap_pwd.a
+LIBCAP_RANDOM?=	${DESTDIR}${LIBDIR}/libcap_random.a
+LIBCAP_SYSCTL?=	${DESTDIR}${LIBDIR}/libcap_sysctl.a
 LIBCASPER?=	${DESTDIR}${LIBDIR}/libcasper.a
 LIBCOMPAT?=	${DESTDIR}${LIBDIR}/libcompat.a
 LIBCOMPILER_RT?=${DESTDIR}${LIBDIR}/libcompiler_rt.a
@@ -134,6 +138,7 @@ LIBSSP_NONSHARED?=	${DESTDIR}${LIBDIR}/libssp_nonshared.a
 LIBSTAND?=	${DESTDIR}${LIBDIR}/libstand.a
 LIBSTDCPLUSPLUS?= ${DESTDIR}${LIBDIR}/libstdc++.a
 LIBSTDTHREADS?=	${DESTDIR}${LIBDIR}/libstdthreads.a
+LIBSYSDECODE?=	${DESTDIR}${LIBDIR}/libsysdecode.a
 LIBTACPLUS?=	${DESTDIR}${LIBDIR}/libtacplus.a
 LIBTERMCAP?=	${DESTDIR}${LIBDIR}/libtermcap.a
 LIBTERMCAPW?=	${DESTDIR}${LIBDIR}/libtermcapw.a

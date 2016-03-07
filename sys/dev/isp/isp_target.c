@@ -41,7 +41,7 @@
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isp/isp_target.c 291265 2015-11-24 19:20:49Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/isp/isp_target.c 292725 2015-12-25 13:03:18Z mav $");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__
@@ -1094,7 +1094,7 @@ isp_handle_ctio2(ispsoftc_t *isp, ct2_entry_t *ct)
 	char *fmsg = NULL;
 
 	if (ct->ct_syshandle) {
-		xs = isp_find_xs_tgt(isp, ct->ct_syshandle);
+		xs = isp_find_xs(isp, ct->ct_syshandle);
 		if (xs == NULL) {
 			pl = ISP_LOGALL;
 		}
@@ -1249,7 +1249,7 @@ isp_handle_ctio7(ispsoftc_t *isp, ct7_entry_t *ct)
 	char *fmsg = NULL;
 
 	if (ct->ct_syshandle) {
-		xs = isp_find_xs_tgt(isp, ct->ct_syshandle);
+		xs = isp_find_xs(isp, ct->ct_syshandle);
 		if (xs == NULL) {
 			pl = ISP_LOGALL;
 		}

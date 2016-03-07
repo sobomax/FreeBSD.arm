@@ -1,14 +1,18 @@
-# $FreeBSD: head/lib/clang/libllvmbitreader/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libllvmbitreader/Makefile 296417 2016-03-05 20:24:31Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmbitreader
 
 SRCDIR=	lib/Bitcode/Reader
-SRCS=	BitReader.cpp \
-	BitcodeReader.cpp \
+SRCS=	BitcodeReader.cpp \
 	BitstreamReader.cpp
 
-TGHDRS=	Intrinsics
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	BitReader.cpp
+.endif
+
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

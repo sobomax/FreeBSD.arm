@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/rc.d/Makefile 279463 2015-03-01 00:58:23Z rstone $
+# $FreeBSD: head/etc/rc.d/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
 
 .include <src.opts.mk>
 
@@ -21,7 +21,6 @@ FILES=	DAEMON \
 	${_bluetooth} \
 	bridge \
 	${_bthidd} \
-	${_casperd} \
 	cleanvar \
 	cleartmp \
 	cron \
@@ -174,10 +173,6 @@ FILES+=		bootparams
 
 .if ${MK_BSNMP} != "no"
 FILES+=		bsnmpd
-.endif
-
-.if ${MK_CASPER} != "no"
-_casperd=	casperd
 .endif
 
 .if ${MK_CCD} != "no"

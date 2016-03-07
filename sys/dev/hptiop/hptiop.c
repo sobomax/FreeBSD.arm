@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hptiop/hptiop.c 269612 2014-08-05 23:35:19Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hptiop/hptiop.c 295790 2016-02-19 03:37:56Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -2052,8 +2052,8 @@ static int hptiop_attach(device_t dev)
 	xpt_action((union ccb *)&ccb);
 
 	rid = 0;
-	if ((hba->irq_res = bus_alloc_resource(hba->pcidev, SYS_RES_IRQ,
-			&rid, 0, ~0ul, 1, RF_SHAREABLE | RF_ACTIVE)) == NULL) {
+	if ((hba->irq_res = bus_alloc_resource_any(hba->pcidev, SYS_RES_IRQ,
+			&rid, RF_SHAREABLE | RF_ACTIVE)) == NULL) {
 		device_printf(dev, "allocate irq failed!\n");
 		goto free_hba_path;
 	}

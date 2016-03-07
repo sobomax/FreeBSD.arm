@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/libi386/biosmem.c 279222 2015-02-23 22:58:51Z grembo $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/libi386/biosmem.c 292486 2015-12-20 02:46:51Z ngie $");
 
 /*
  * Obtain memory configuration information from the BIOS
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: head/sys/boot/i386/libi386/biosmem.c 279222 2015-02-23 22:58
 #include "bootstrap.h"
 #include "libi386.h"
 #include "btxv86.h"
+#include "smbios.h"
 
 vm_offset_t	memtop, memtop_copyin, high_heap_base;
 uint32_t	bios_basemem, bios_extmem, high_heap_size;

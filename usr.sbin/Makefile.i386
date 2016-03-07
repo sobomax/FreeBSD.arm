@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/Makefile.i386 273249 2014-10-18 08:07:17Z nyan $
+# $FreeBSD: head/usr.sbin/Makefile.i386 292553 2015-12-21 17:41:08Z ian $
 
 .if ${MK_APM} != "no"
 SUBDIR+=	apm
@@ -12,7 +12,6 @@ SUBDIR+=	cpucontrol
 SUBDIR+=	kgmon
 SUBDIR+=	kgzip
 SUBDIR+=	lptcontrol
-SUBDIR+=	mount_smbfs
 SUBDIR+=	mptable
 .if ${MK_NDIS} != "no"
 SUBDIR+=	ndiscvt

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmpowerpcinfo/Makefile 246259 2013-02-02 22:28:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmpowerpcinfo/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,8 @@ SRCDIR=	lib/Target/PowerPC/TargetInfo
 INCDIR=	lib/Target/PowerPC
 SRCS=	PowerPCTargetInfo.cpp
 
-TGHDRS=	PPCGenInstrInfo \
+TGHDRS=	Attributes \
+	PPCGenInstrInfo \
 	PPCGenRegisterInfo \
 	PPCGenSubtargetInfo
 

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_generic.c 277470 2015-01-21 03:24:18Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_generic.c 295694 2016-02-17 12:36:24Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -71,8 +71,8 @@ generic_bs_map(bus_space_tag_t t, bus_addr_t bpa, bus_size_t size, int flags,
 
 	/*
 	 * We don't even examine the passed-in flags.  For ARM, the CACHEABLE
-	 * flag doesn't make sense (we create PTE_DEVICE mappings), and the
-	 * LINEAR flag is just implied because we use kva_alloc(size).
+	 * flag doesn't make sense (we create VM_MEMATTR_DEVICE mappings), and
+	 * the LINEAR flag is just implied because we use kva_alloc(size).
 	 */
 	if ((va = pmap_mapdev(bpa, size)) == NULL)
 		return (ENOMEM);

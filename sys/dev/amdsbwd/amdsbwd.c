@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/amdsbwd/amdsbwd.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: head/sys/dev/amdsbwd/amdsbwd.c 296135 2016-02-27 03:34:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -395,8 +395,8 @@ amdsbwd_probe(device_t dev)
 		return (ENXIO);
 	}
 	rid = 0;
-	res = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid, 0ul, ~0ul,
-	    AMDSB_PMIO_WIDTH, RF_ACTIVE | RF_SHAREABLE);
+	res = bus_alloc_resource_any(dev, SYS_RES_IOPORT, &rid,
+	    RF_ACTIVE | RF_SHAREABLE);
 	if (res == NULL) {
 		device_printf(dev, "bus_alloc_resource for IO failed\n");
 		return (ENXIO);

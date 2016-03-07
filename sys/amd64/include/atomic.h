@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/atomic.h 286078 2015-07-30 15:47:53Z kib $
+ * $FreeBSD: head/sys/amd64/include/atomic.h 294526 2016-01-21 18:22:50Z hselasky $
  */
 #ifndef _MACHINE_ATOMIC_H_
 #define	_MACHINE_ATOMIC_H_
@@ -558,6 +558,7 @@ u_long	atomic_swap_long(volatile u_long *p, u_long v);
 #define	atomic_cmpset_rel_64	atomic_cmpset_rel_long
 #define	atomic_swap_64		atomic_swap_long
 #define	atomic_readandclear_64	atomic_readandclear_long
+#define	atomic_fetchadd_64	atomic_fetchadd_long
 #define	atomic_testandset_64	atomic_testandset_long
 
 /* Operations on pointers. */

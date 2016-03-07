@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/dtrace_io.4 285186 2015-07-05 23:23:12Z markj $
+.\" $FreeBSD: head/share/man/man4/dtrace_io.4 292265 2015-12-15 13:29:05Z brueffer $
 .\"
 .Dd April 18, 2015
 .Dt DTRACE_IO 4
@@ -91,8 +91,8 @@ io:::start
 
 END
 {
-        printf("%10s %20s %10s %15s\n", "DEVICE", "APP", "PID", "BYTES");
-        printa("%10s %20s %10d %15@d\n", @);
+        printf("%10s %20s %10s %15s\\n", "DEVICE", "APP", "PID", "BYTES");
+        printa("%10s %20s %10d %15@d\\n", @);
 }
 .Ed
 .Sh COMPATIBILITY

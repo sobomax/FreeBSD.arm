@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/dev/netmap/netmap_offloadings.c 270063 2014-08-16 15:00:01Z luigi $ */
+/* $FreeBSD: head/sys/dev/netmap/netmap_offloadings.c 295126 2016-02-01 17:41:21Z glebius $ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <sys/errno.h>
 #include <sys/param.h>	/* defines used in kernel.h */
+#include <sys/malloc.h>	/* types used in module initialization */
 #include <sys/kernel.h>	/* types used in module initialization */
 #include <sys/sockio.h>
 #include <sys/socketvar.h>	/* struct socket */

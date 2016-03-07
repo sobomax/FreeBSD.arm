@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/netisr.c 281984 2015-04-25 16:12:06Z hiren $");
+__FBSDID("$FreeBSD: head/sys/net/netisr.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * netisr is a packet dispatch service, allowing synchronous (directly
@@ -70,6 +70,7 @@ __FBSDID("$FreeBSD: head/sys/net/netisr.c 281984 2015-04-25 16:12:06Z hiren $");
 #include <sys/bus.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
+#include <sys/malloc.h>
 #include <sys/interrupt.h>
 #include <sys/lock.h>
 #include <sys/mbuf.h>

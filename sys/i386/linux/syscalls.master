@@ -1,4 +1,4 @@
- $FreeBSD: head/sys/i386/linux/syscalls.master 283492 2015-05-24 18:08:01Z dchagin $
+ $FreeBSD: head/sys/i386/linux/syscalls.master 293907 2016-01-14 10:13:58Z glebius $
 
 ;	@(#)syscalls.master	8.1 (Berkeley) 7/19/93
 ; System call name/number master file (or rather, slave, from LINUX).
@@ -528,8 +528,8 @@
 ; linux 2.6.17:
 311	AUE_NULL	STD	{ int linux_set_robust_list(struct linux_robust_list_head *head, \
 					l_size_t len); }
-312	AUE_NULL	STD	{ int linux_get_robust_list(l_int pid, struct linux_robust_list_head **head, \
-					l_size_t *len); }
+312	AUE_NULL	STD	{ int linux_get_robust_list(l_int pid, \
+				    struct linux_robust_list_head **head, l_size_t *len); }
 313	AUE_NULL	STD	{ int linux_splice(void); }
 314	AUE_NULL	STD	{ int linux_sync_file_range(void); }
 315	AUE_NULL	STD	{ int linux_tee(void); }

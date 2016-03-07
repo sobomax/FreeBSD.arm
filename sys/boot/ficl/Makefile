@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/ficl/Makefile 287227 2015-08-27 23:46:42Z imp $
+# $FreeBSD: head/sys/boot/ficl/Makefile 296079 2016-02-26 08:06:25Z sgalabov $
 #
 
 FICLDIR?=	${.CURDIR}
@@ -55,6 +55,8 @@ CFLAGS+=	-m32 -mcpu=powerpc -I.
 
 .if ${MACHINE_CPUARCH} == "amd64" && defined(FICL32)
 FICL_CPUARCH=	i386
+.elif ${MACHINE_ARCH} == "mips64" || ${MACHINE_ARCH} == "mips64el"
+FICL_CPUARCH=	mips64
 .else
 FICL_CPUARCH=	${MACHINE_CPUARCH}
 .endif

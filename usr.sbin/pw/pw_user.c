@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_user.c 291658 2015-12-02 22:35:25Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw_user.c 296300 2016-03-02 04:56:36Z markj $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -1654,7 +1654,7 @@ pw_user_mod(int argc, char **argv, char *arg1)
 		}
 	}
 
-	if (id > 0 && pwd->pw_uid != id) {
+	if (id >= 0 && pwd->pw_uid != id) {
 		pwd->pw_uid = id;
 		edited = true;
 		if (pwd->pw_uid != 0 && strcmp(pwd->pw_name, "root") == 0)

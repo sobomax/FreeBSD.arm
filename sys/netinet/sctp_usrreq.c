@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_usrreq.c 291904 2015-12-06 16:17:57Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_usrreq.c 293913 2016-01-14 11:25:28Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <sys/proc.h>
@@ -1883,8 +1883,15 @@ flags_out:
 			uint32_t *value, cnt;
 
 			SCTP_CHECK_AND_CAST(value, optval, uint32_t, *optsize);
-			cnt = 0;
 			SCTP_INP_RLOCK(inp);
+			if ((inp->sctp_flags & SCTP_PCB_FLAGS_TCPTYPE) ||
+			    (inp->sctp_flags & SCTP_PCB_FLAGS_IN_TCPPOOL)) {
+				/* Can't do this for a 1-1 socket */
+				error = EINVAL;
+				SCTP_INP_RUNLOCK(inp);
+				break;
+			}
+			cnt = 0;
 			LIST_FOREACH(stcb, &inp->sctp_asoc_list, sctp_tcblist) {
 				cnt++;
 			}
@@ -1899,9 +1906,16 @@ flags_out:
 			unsigned int at, limit;
 
 			SCTP_CHECK_AND_CAST(ids, optval, struct sctp_assoc_ids, *optsize);
+			SCTP_INP_RLOCK(inp);
+			if ((inp->sctp_flags & SCTP_PCB_FLAGS_TCPTYPE) ||
+			    (inp->sctp_flags & SCTP_PCB_FLAGS_IN_TCPPOOL)) {
+				/* Can't do this for a 1-1 socket */
+				error = EINVAL;
+				SCTP_INP_RUNLOCK(inp);
+				break;
+			}
 			at = 0;
 			limit = (*optsize - sizeof(uint32_t)) / sizeof(sctp_assoc_t);
-			SCTP_INP_RLOCK(inp);
 			LIST_FOREACH(stcb, &inp->sctp_asoc_list, sctp_tcblist) {
 				if (at < limit) {
 					ids->gaids_assoc_id[at++] = sctp_get_associd(stcb);

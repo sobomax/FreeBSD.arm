@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/arm/mv/armadaxp/std.armadaxp 291102 2015-11-20 16:12:22Z andrew $
+# $FreeBSD: head/sys/arm/mv/armadaxp/std.armadaxp 295885 2016-02-22 11:47:28Z skra $
 
 makeoptions	KERNVIRTADDR=0xc0200000
 options		KERNVIRTADDR=0xc0200000
-
-options		ARM_L2_PIPT

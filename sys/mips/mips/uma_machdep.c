@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/uma_machdep.c 280957 2015-04-01 12:42:26Z rstone $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/uma_machdep.c 295451 2016-02-09 20:22:35Z glebius $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -53,11 +53,16 @@ uma_small_alloc(uma_zone_t zone, vm_size_t bytes, u_int8_t *flags, int wait)
 
 	for (;;) {
 		m = vm_page_alloc_freelist(VM_FREELIST_DIRECT, pflags);
+#ifndef __mips_n64
+		if (m == NULL && vm_page_reclaim_contig(pflags, 1,
+		    0, MIPS_KSEG0_LARGEST_PHYS, PAGE_SIZE, 0))
+			continue;
+#endif
 		if (m == NULL) {
 			if (wait & M_NOWAIT)
 				return (NULL);
 			else
-				pmap_grow_direct_page_cache();
+				VM_WAIT;
 		} else
 			break;
 	}

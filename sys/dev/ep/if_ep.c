@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ep/if_ep.c 271806 2014-09-18 20:11:28Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ep/if_ep.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  *	Modified from the FreeBSD 1.1.5.1 version by:
@@ -63,6 +63,7 @@ __FBSDID("$FreeBSD: head/sys/dev/ep/if_ep.c 271806 2014-09-18 20:11:28Z glebius 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>

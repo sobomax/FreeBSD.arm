@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_arm.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_arm.c 295752 2016-02-18 09:30:04Z skra $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -183,7 +183,7 @@ _arm_initvtop(kvm_t *kd)
 #define	l1pte_section_p(pde)	(((pde) & ARM_L1_TYPE_MASK) == ARM_L1_TYPE_S)
 #define	l1pte_valid(pde)	((pde) != 0)
 #define	l2pte_valid(pte)	((pte) != 0)
-#define l2pte_index(v)		(((v) & ARM_L2_ADDR_BITS) >> ARM_L2_S_SHIFT)
+#define l2pte_index(v)		(((v) & ARM_L1_S_OFFSET) >> ARM_L2_S_SHIFT)
 
 
 static int

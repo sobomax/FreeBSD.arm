@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_input.c 288245 2015-09-26 00:53:37Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_input.c 296302 2016-03-02 05:01:58Z markj $");
 
 #include "opt_wlan.h"
 
@@ -249,9 +249,7 @@ ieee80211_defrag(struct ieee80211_node *ni, struct mbuf *m, int hdrspace)
 		mfrag = m;
 	} else {				/* concatenate */
 		m_adj(m, hdrspace);		/* strip header */
-		m_cat(mfrag, m);
-		/* NB: m_cat doesn't update the packet header */
-		mfrag->m_pkthdr.len += m->m_pkthdr.len;
+		m_catpkt(mfrag, m);
 		/* track last seqnum and fragno */
 		lwh = mtod(mfrag, struct ieee80211_frame *);
 		*(uint16_t *) lwh->i_seq = *(uint16_t *) wh->i_seq;

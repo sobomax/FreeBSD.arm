@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmtarget/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmtarget/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -16,6 +16,7 @@ SRCS=	Target.cpp \
 SRCS+=	TargetIntrinsicInfo.cpp
 .endif
 	
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

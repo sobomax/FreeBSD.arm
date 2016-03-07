@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pinctrl.c 271548 2014-09-13 19:59:16Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_pinctrl.c 295832 2016-02-20 01:32:58Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -280,7 +280,7 @@ pinctrl_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	 * Request for the default allocation with a given rid: use resource
 	 * list stored in the local device info.
 	 */
-	if ((start == 0UL) && (end == ~0UL)) {
+	if (RMAN_IS_DEFAULT_RANGE(start, end)) {
 		if ((di = device_get_ivars(child)) == NULL)
 			return (NULL);
 

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/truss/truss.h 288997 2015-10-08 00:31:11Z bdrewery $
+ * $FreeBSD: head/usr.bin/truss/truss.h 295930 2016-02-23 19:56:29Z jhb $
  */
 
 #include <sys/linker_set.h>
@@ -35,14 +35,14 @@
 #define	EXECVEARGS		0x00000010
 #define	EXECVEENVS		0x00000020
 #define	COUNTONLY		0x00000040
+#define	DISPLAYTIDS		0x00000080
 
 struct procinfo;
 struct trussinfo;
 
 struct procabi {
 	const char *type;
-	const char **syscallnames;
-	int nsyscalls;
+	enum sysdecode_abi abi;
 	int (*fetch_args)(struct trussinfo *, u_int);
 	int (*fetch_retval)(struct trussinfo *, long *, int *);
 };

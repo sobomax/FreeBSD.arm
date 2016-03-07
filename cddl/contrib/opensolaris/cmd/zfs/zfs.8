@@ -29,7 +29,7 @@
 .\" Copyright (c) 2014, Xin LI <delphij@FreeBSD.org>
 .\" Copyright (c) 2014-2015, The FreeBSD Foundation, All Rights Reserved.
 .\"
-.\" $FreeBSD: head/cddl/contrib/opensolaris/cmd/zfs/zfs.8 291071 2015-11-19 12:03:11Z smh $
+.\" $FreeBSD: head/cddl/contrib/opensolaris/cmd/zfs/zfs.8 294815 2016-01-26 13:14:39Z mav $
 .\"
 .Dd October 24, 2015
 .Dt ZFS 8
@@ -2841,8 +2841,11 @@ Do not actually receive the stream. This can be useful in conjunction with the
 option to verify the name the receive operation would use.
 .It Fl o Sy origin Ns = Ns Ar snapshot
 Forces the stream to be received as a clone of the given snapshot.
-This is only valid if the stream is an incremental stream whose source
-is the same as the provided origin.
+If the stream is a full send stream, this will create the filesystem
+described by the stream as a clone of the specified snapshot. Which
+snapshot was specified will not affect the success or failure of the
+receive, as long as the snapshot does exist.  If the stream is an
+incremental send stream, all the normal verification will be performed.
 .It Fl F
 Force a rollback of the file system to the most recent snapshot before
 performing the receive operation. If receiving an incremental replication

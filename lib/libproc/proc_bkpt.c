@@ -28,7 +28,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libproc/proc_bkpt.c 287106 2015-08-24 12:17:15Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libproc/proc_bkpt.c 294662 2016-01-24 12:10:29Z br $");
 
 #include <sys/types.h>
 #include <sys/ptrace.h>
@@ -60,6 +60,9 @@ __FBSDID("$FreeBSD: head/lib/libproc/proc_bkpt.c 287106 2015-08-24 12:17:15Z and
 #define	BREAKPOINT_INSTR_SZ	4
 #elif defined(__powerpc__)
 #define	BREAKPOINT_INSTR	0x7fe00008	/* trap */
+#define	BREAKPOINT_INSTR_SZ	4
+#elif defined(__riscv__)
+#define	BREAKPOINT_INSTR	0x00100073	/* sbreak */
 #define	BREAKPOINT_INSTR_SZ	4
 #else
 #error "Add support for your architecture"

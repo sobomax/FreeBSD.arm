@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_gif.c 288575 2015-10-03 09:15:23Z hrs $");
+__FBSDID("$FreeBSD: head/sys/net/if_gif.c 292980 2015-12-31 07:03:41Z araujo $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -529,7 +529,6 @@ gif_input(struct mbuf *m, struct ifnet *ifp, int proto, uint8_t ecn)
 	struct gif_softc *sc;
 	struct ether_header *eh;
 	struct ifnet *oldifp;
-	uint32_t gif_options;
 	int isr, n, af;
 
 	if (ifp == NULL) {
@@ -538,7 +537,6 @@ gif_input(struct mbuf *m, struct ifnet *ifp, int proto, uint8_t ecn)
 		return;
 	}
 	sc = ifp->if_softc;
-	gif_options = sc->gif_options;
 	m->m_pkthdr.rcvif = ifp;
 	m_clrprotoflags(m);
 	switch (proto) {

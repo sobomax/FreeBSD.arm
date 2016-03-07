@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425.c 271398 2014-09-10 15:25:15Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_ddb.h"
 
@@ -496,7 +496,7 @@ getvbase(uint32_t hwbase, uint32_t size, uint32_t *vbase)
 
 static struct resource *
 ixp425_alloc_resource(device_t dev, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct ixp425_softc *sc = device_get_softc(dev);
 	const struct hwvtrans *vtrans;

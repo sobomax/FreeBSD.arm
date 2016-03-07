@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_sysvec.c 291420 2015-11-28 08:49:07Z kib $");
+__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_sysvec.c 293613 2016-01-09 20:18:53Z dchagin $");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"
@@ -194,6 +194,7 @@ struct sysentvec svr4_sysvec = {
 	.sv_syscallnames = NULL,
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 
 const char      svr4_emul_path[] = "/compat/svr4";

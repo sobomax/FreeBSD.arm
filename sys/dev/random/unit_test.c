@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/unit_test.c 287023 2015-08-22 12:59:05Z markm $
+ * $FreeBSD: head/sys/dev/random/unit_test.c 292782 2015-12-27 17:33:59Z allanjude $
  */
 
 /*
@@ -36,7 +36,7 @@ cc -g -O0 -pthread -DRANDOM_<alg> -I../.. -lstdthreads -Wall \
 	hash.c \
 	../../crypto/rijndael/rijndael-api-fst.c \
 	../../crypto/rijndael/rijndael-alg-fst.c \
-	../../crypto/sha2/sha2.c \
+	../../crypto/sha2/sha256c.c \
         -lz \
 	-o unit_test
 ./unit_test

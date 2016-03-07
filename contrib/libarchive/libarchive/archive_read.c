@@ -32,7 +32,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read.c 282932 2015-05-14 22:35:26Z delphij $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read.c 295914 2016-02-23 07:13:22Z delphij $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -545,13 +545,13 @@ archive_read_open1(struct archive *_a)
 static int
 choose_filters(struct archive_read *a)
 {
-	int number_bidders, i, bid, best_bid;
+	int number_bidders, i, bid, best_bid, n;
 	struct archive_read_filter_bidder *bidder, *best_bidder;
 	struct archive_read_filter *filter;
 	ssize_t avail;
 	int r;
 
-	for (;;) {
+	for (n = 0; n < 25; ++n) {
 		number_bidders = sizeof(a->bidders) / sizeof(a->bidders[0]);
 
 		best_bid = 0;
@@ -597,6 +597,9 @@ choose_filters(struct archive_read *a)
 			return (ARCHIVE_FATAL);
 		}
 	}
+	archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
+	    "Input requires too many filters for decoding");
+	return (ARCHIVE_FATAL);
 }
 
 /*

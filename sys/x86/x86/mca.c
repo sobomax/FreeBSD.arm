@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/mca.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/mca.c 296272 2016-03-01 17:47:32Z jhb $");
 
 #ifdef __amd64__
 #define	DEV_APIC
@@ -508,7 +508,7 @@ mca_record_entry(enum scan_mode mode, const struct mca_record *record)
 	mca_count++;
 	mtx_unlock_spin(&mca_lock);
 	if (mode == CMCI)
-		taskqueue_enqueue_fast(mca_tq, &mca_refill_task);
+		taskqueue_enqueue(mca_tq, &mca_refill_task);
 }
 
 #ifdef DEV_APIC
@@ -686,7 +686,7 @@ static void
 mca_periodic_scan(void *arg)
 {
 
-	taskqueue_enqueue_fast(mca_tq, &mca_scan_task);
+	taskqueue_enqueue(mca_tq, &mca_scan_task);
 	callout_reset(&mca_timer, mca_ticks * hz, mca_periodic_scan, NULL);
 }
 
@@ -700,7 +700,7 @@ sysctl_mca_scan(SYSCTL_HANDLER_ARGS)
 	if (error)
 		return (error);
 	if (i)
-		taskqueue_enqueue_fast(mca_tq, &mca_scan_task);
+		taskqueue_enqueue(mca_tq, &mca_scan_task);
 	return (0);
 }
 

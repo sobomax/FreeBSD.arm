@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/elfcopy/Makefile 286030 2015-07-29 18:45:38Z emaste $
+# $FreeBSD: head/usr.bin/elfcopy/Makefile 295582 2016-02-12 21:15:31Z emaste $
 
 .include <src.opts.mk>
 
@@ -17,13 +17,14 @@ CLEANFILES+= objcopy.1
 PROG=	elfcopy
 .endif
 
-SRCS=	archive.c ascii.c binary.c main.c sections.c segments.c symbols.c
+SRCS=	archive.c ascii.c binary.c main.c pe.c sections.c segments.c symbols.c
 
 WARNS?=	5
 
-LIBADD=	archive elftc elf
+LIBADD=	archive elftc elf pe
 
-CFLAGS+=-I${ELFTCDIR}/libelftc -I${ELFTCDIR}/common
+CFLAGS+=-I${ELFTCDIR}/libelftc -I${ELFTCDIR}/libpe -I${ELFTCDIR}/common
+CFLAGS+=-DWITH_PE=1
 
 MAN=	${PROG}.1 strip.1
 

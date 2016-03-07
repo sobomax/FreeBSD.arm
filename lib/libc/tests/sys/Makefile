@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/sys/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/sys/Makefile 295757 2016-02-18 14:17:28Z emaste $
 
 .include <bsd.own.mk>
 
@@ -78,6 +78,6 @@ truncate_test_FILESGRP= wheel
 
 CLEANFILES=	truncate_test.root_owned
 truncate_test.root_owned:
-	dd if=/dev/null bs=1 count=1 of=${.TARGET}
+	dd if=/dev/null bs=1 count=1 of=${.TARGET} status=none
 
 .include <bsd.test.mk>

@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_hw.c 267839 2014-06-24 20:11:22Z delphij $ */
+/* $FreeBSD: head/sys/dev/oce/oce_hw.c 296137 2016-02-27 03:38:01Z jhibbits $ */
 
 
 #include "oce_if.h"
@@ -268,9 +268,8 @@ oce_hw_pci_alloc(POCE_SOFTC sc)
 				SYS_RES_MEMORY, &rr,
 				RF_ACTIVE|RF_SHAREABLE);
 	else
-		sc->devcfg_res = bus_alloc_resource(sc->dev,
-				SYS_RES_MEMORY, &rr,
-				0ul, ~0ul, 32768,
+		sc->devcfg_res = bus_alloc_resource_anywhere(sc->dev,
+				SYS_RES_MEMORY, &rr, 32768,
 				RF_ACTIVE|RF_SHAREABLE);
 
 	if (!sc->devcfg_res)

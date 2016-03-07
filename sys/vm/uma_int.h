@@ -24,9 +24,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/uma_int.h 281942 2015-04-24 17:03:53Z scottl $
+ * $FreeBSD: head/sys/vm/uma_int.h 296243 2016-03-01 00:33:32Z glebius $
  *
  */
+
+#include <sys/_task.h>
 
 /* 
  * This file includes definitions, structures, prototypes, and inlines that
@@ -248,17 +250,7 @@ struct uma_slab {
 #define	us_link	us_type._us_link
 #define	us_size	us_type._us_size
 
-/*
- * The slab structure for UMA_ZONE_REFCNT zones for whose items we
- * maintain reference counters in the slab for.
- */
-struct uma_slab_refcnt {
-	struct uma_slab		us_head;	/* slab header data */
-	uint32_t		us_refcnt[0];	/* Actually larger. */
-};
-
 typedef struct uma_slab * uma_slab_t;
-typedef struct uma_slab_refcnt * uma_slabrefcnt_t;
 typedef uma_slab_t (*uma_slaballoc)(uma_zone_t, uma_keg_t, int);
 
 struct uma_klink {
@@ -303,9 +295,11 @@ struct uma_zone {
 	uint16_t	uz_count;	/* Amount of items in full bucket */
 	uint16_t	uz_count_min;	/* Minimal amount of items there */
 
-	/* The next three fields are used to print a rate-limited warnings. */
+	/* The next two fields are used to print a rate-limited warnings. */
 	const char	*uz_warning;	/* Warning to print on failure */
 	struct timeval	uz_ratecheck;	/* Warnings rate-limiting */
+
+	struct task	uz_maxaction;	/* Task to run when at limit */
 
 	/*
 	 * This HAS to be the last item because we adjust the zone size

@@ -34,7 +34,7 @@
  * Efficient memory file system supporting functions.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_subr.c 285885 2015-07-26 08:33:46Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_subr.c 292373 2015-12-16 21:30:45Z glebius $");
 
 #include <sys/param.h>
 #include <sys/fnv_hash.h>
@@ -1370,7 +1370,8 @@ retry:
 					VM_OBJECT_WLOCK(uobj);
 					goto retry;
 				} else if (m->valid != VM_PAGE_BITS_ALL)
-					rv = vm_pager_get_pages(uobj, &m, 1, 0);
+					rv = vm_pager_get_pages(uobj, &m, 1,
+					    NULL, NULL);
 				else
 					/* A cached page was reactivated. */
 					rv = VM_PAGER_OK;

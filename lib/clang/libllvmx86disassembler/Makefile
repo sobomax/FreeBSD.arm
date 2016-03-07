@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmx86disassembler/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libllvmx86disassembler/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -6,11 +6,8 @@ LIB=	llvmx86disassembler
 
 SRCDIR=	lib/Target/X86/Disassembler
 INCDIR=	lib/Target/X86
-SRCS=	X86Disassembler.cpp
-
-.if ${MK_CLANG_EXTRAS} != "no" || ${MK_LLDB} != "no"
-SRCS+=	X86DisassemblerDecoder.cpp
-.endif
+SRCS=	X86Disassembler.cpp \
+	X86DisassemblerDecoder.cpp
 
 TGHDRS=	X86GenDisassemblerTables \
 	X86GenInstrInfo \

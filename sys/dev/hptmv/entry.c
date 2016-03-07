@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hptmv/entry.c 269617 2014-08-05 23:58:49Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hptmv/entry.c 296135 2016-02-27 03:34:01Z jhibbits $");
  
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1304,8 +1304,8 @@ init_adapter(IAL_ADAPTER_T *pAdapter)
 
 	/* also map EPROM address */
 	rid = 0x10;
-	if (!(pAdapter->mem_res = bus_alloc_resource(pAdapter->hpt_dev, SYS_RES_MEMORY, &rid,
-			0, ~0, MV_SATA_PCI_BAR0_SPACE_SIZE+0x40000, RF_ACTIVE))
+	if (!(pAdapter->mem_res = bus_alloc_resource_any(pAdapter->hpt_dev,
+			SYS_RES_MEMORY, &rid, RF_ACTIVE))
 		||
 		!(pMvSataAdapter->adapterIoBaseAddress = rman_get_virtual(pAdapter->mem_res)))
 	{
@@ -1990,7 +1990,7 @@ hpt_attach(device_t dev)
 		return rid;
 
 	rid = 0;
-	if ((pAdapter->hpt_irq = bus_alloc_resource(pAdapter->hpt_dev, SYS_RES_IRQ, &rid, 0, ~0ul, 1, RF_SHAREABLE | RF_ACTIVE)) == NULL)
+	if ((pAdapter->hpt_irq = bus_alloc_resource_any(pAdapter->hpt_dev, SYS_RES_IRQ, &rid, RF_SHAREABLE | RF_ACTIVE)) == NULL)
 	{
 		hpt_printk(("can't allocate interrupt\n"));
 		return(ENXIO);

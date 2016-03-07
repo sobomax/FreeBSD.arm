@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/mutex.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/mutex.h 294518 2016-01-21 17:36:06Z hselasky $
  */
 #ifndef	_LINUX_MUTEX_H_
 #define	_LINUX_MUTEX_H_
@@ -59,6 +59,6 @@ linux_mutex_init(mutex_t *m)
 	sx_init_flags(&m->sx, "lnxmtx",  SX_NOWITNESS);
 }
 
-#define	mutex_init	linux_mutex_init
+#define	mutex_init(m)	linux_mutex_init(m)
 
 #endif	/* _LINUX_MUTEX_H_ */

@@ -29,11 +29,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_crc32.c 291925 2015-12-07 06:05:23Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_crc32.c 293814 2016-01-13 07:25:51Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
-#include "efx_types.h"
 #include "efx_impl.h"
 
 /*

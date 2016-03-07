@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 289425 2015-10-16 17:50:36Z jkim $");
+__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 294665 2016-01-24 15:15:57Z br $");
 
 #include <sys/wait.h>
 
@@ -48,8 +48,8 @@ __FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 289425 2015-10-16 17:50:36Z jkim $");
 
 #include "extern.h"
 
-/* We don't support a.out executables on arm64 */
-#ifndef __aarch64__
+/* We don't support a.out executables on arm64 and riscv */
+#if !defined(__aarch64__) && !defined(__riscv__)
 #include <a.out.h>
 #define	AOUT_SUPPORTED
 #endif

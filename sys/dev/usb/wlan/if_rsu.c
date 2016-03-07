@@ -16,7 +16,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rsu.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rsu.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * Driver for Realtek RTL8188SU/RTL8191SU/RTL8192SU.
@@ -33,6 +33,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_rsu.c 292080 2015-12-11 05:28:00Z i
 #include <sys/param.h>
 #include <sys/endian.h>
 #include <sys/sockio.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/kernel.h>
 #include <sys/socket.h>
@@ -403,7 +404,8 @@ rsu_attach(device_t self)
 	struct rsu_softc *sc = device_get_softc(self);
 	struct ieee80211com *ic = &sc->sc_ic;
 	int error;
-	uint8_t iface_index, bands;
+	uint8_t bands[howmany(IEEE80211_MODE_MAX, 8)];
+	uint8_t iface_index;
 	struct usb_interface *iface;
 	const char *rft;
 
@@ -531,12 +533,12 @@ rsu_attach(device_t self)
 	}
 
 	/* Set supported .11b and .11g rates. */
-	bands = 0;
-	setbit(&bands, IEEE80211_MODE_11B);
-	setbit(&bands, IEEE80211_MODE_11G);
+	memset(bands, 0, sizeof(bands));
+	setbit(bands, IEEE80211_MODE_11B);
+	setbit(bands, IEEE80211_MODE_11G);
 	if (sc->sc_ht)
-		setbit(&bands, IEEE80211_MODE_11NG);
-	ieee80211_init_channels(ic, NULL, &bands);
+		setbit(bands, IEEE80211_MODE_11NG);
+	ieee80211_init_channels(ic, NULL, bands);
 
 	ieee80211_ifattach(ic);
 	ic->ic_raw_xmit = rsu_raw_xmit;

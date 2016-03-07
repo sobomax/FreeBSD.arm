@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/compiler.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/compiler.h 292537 2015-12-21 10:56:38Z hselasky $
  */
 #ifndef	_LINUX_COMPILER_H_
 #define	_LINUX_COMPILER_H_
@@ -72,4 +72,20 @@
 
 #define	barrier()			__asm__ __volatile__("": : :"memory")
 
+#define	ACCESS_ONCE(x)			(*(volatile __typeof(x) *)&(x))
+  
+#define	WRITE_ONCE(x,v) do {		\
+	barrier();			\
+	ACCESS_ONCE(x) = (v);		\
+	barrier();			\
+} while (0)
+
+#define	READ_ONCE(x) ({			\
+	__typeof(x) __var;		\
+	barrier();			\
+	__var = ACCESS_ONCE(x);		\
+	barrier();			\
+	__var;				\
+})
+  
 #endif	/* _LINUX_COMPILER_H_ */

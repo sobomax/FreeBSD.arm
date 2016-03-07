@@ -1,10 +1,10 @@
-# $FreeBSD: head/sbin/gbde/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/gbde/Makefile 292782 2015-12-27 17:33:59Z allanjude $
 
 PROG=	gbde
 SRCS=	gbde.c template.c
 SRCS+=	rijndael-alg-fst.c
 SRCS+=	rijndael-api-fst.c
-SRCS+=	sha2.c
+SRCS+=	sha512c.c
 SRCS+=	g_bde_lock.c
 
 # rijndael-fst.c does evil casting things which can results in warnings,

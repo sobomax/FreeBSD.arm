@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_sock.c 286632 2015-08-11 14:07:04Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_sock.c 295965 2016-02-24 10:54:26Z ed $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -208,7 +208,7 @@ cloudabi_sys_sock_stat_get(struct thread *td,
 	int error;
 
 	error = getsock_cap(td, uap->fd, cap_rights_init(&rights,
-	    CAP_GETSOCKOPT | CAP_GETPEERNAME | CAP_GETSOCKNAME), &fp, NULL);
+	    CAP_GETSOCKOPT, CAP_GETPEERNAME, CAP_GETSOCKNAME), &fp, NULL);
 	if (error != 0)
 		return (error);
 	so = fp->f_data;

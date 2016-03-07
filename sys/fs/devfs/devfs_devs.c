@@ -25,7 +25,7 @@
  *
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vfsops.c 1.36
  *
- * $FreeBSD: head/sys/fs/devfs/devfs_devs.c 280308 2015-03-21 01:14:11Z delphij $
+ * $FreeBSD: head/sys/fs/devfs/devfs_devs.c 294595 2016-01-22 20:30:51Z kib $
  */
 
 #include <sys/param.h>
@@ -304,6 +304,13 @@ devfs_vmkdir(struct devfs_mount *dmp, char *name, int namelen, struct devfs_dire
 void
 devfs_dirent_free(struct devfs_dirent *de)
 {
+	struct vnode *vp;
+
+	vp = de->de_vnode;
+	mtx_lock(&devfs_de_interlock);
+	if (vp != NULL && vp->v_data == de)
+		vp->v_data = NULL;
+	mtx_unlock(&devfs_de_interlock);
 	free(de, M_DEVFS3);
 }
 

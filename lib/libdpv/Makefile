@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libdpv/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libdpv/Makefile 296129 2016-02-26 22:14:23Z bdrewery $
 
 LIB=		dpv
 SHLIB_MAJOR=	1
@@ -11,7 +11,5 @@ LIBADD=	dialog figpar util ncursesw
 SRCS=		dialog_util.c dialogrc.c dprompt.c dpv.c status.c util.c
 
 CFLAGS+=	-I${.CURDIR}
-
-WARNS?=		6
 
 .include <bsd.lib.mk>

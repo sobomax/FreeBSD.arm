@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/Makefile 291733 2015-12-04 03:17:10Z bdrewery $
+# $FreeBSD: head/share/mk/Makefile 296124 2016-02-26 22:14:00Z bdrewery $
 #	@(#)Makefile	8.1 (Berkeley) 6/8/93
 
 # Only parse this if executing make in this directory, not in other places
@@ -17,6 +17,7 @@ FILES=	\
 	auto.obj.mk \
 	bsd.README \
 	bsd.arch.inc.mk \
+	bsd.clang-analyze.mk \
 	bsd.compiler.mk \
 	bsd.confs.mk \
 	bsd.cpu.mk \

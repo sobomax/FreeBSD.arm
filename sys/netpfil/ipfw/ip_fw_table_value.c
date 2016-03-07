@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_table_value.c 282825 2015-05-12 20:42:42Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_table_value.c 294525 2016-01-21 18:20:40Z melifaro $");
 
 /*
  * Multi-field value support for ipfw tables.
@@ -158,6 +158,7 @@ update_tvalue(struct namedobj_instance *ni, struct named_object *no, void *arg)
 
 	pval = da->pval;
 	ptv->pval = &pval[ptv->no.kidx];
+	ptv->no.name = (char *)&pval[ptv->no.kidx];
 
 }
 

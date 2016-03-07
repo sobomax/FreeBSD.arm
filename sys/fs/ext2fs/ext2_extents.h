@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/ext2fs/ext2_extents.h 262623 2014-02-28 21:25:32Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_extents.h 295523 2016-02-11 15:27:14Z pfg $
  */
 #ifndef _FS_EXT2FS_EXT2_EXTENTS_H_
 #define	_FS_EXT2FS_EXT2_EXTENTS_H_
@@ -84,7 +84,11 @@ struct ext4_extent_cache {
 struct ext4_extent_path {
 	uint16_t ep_depth;
 	struct buf *ep_bp;
-	struct ext4_extent *ep_ext;
+	bool ep_is_sparse;
+	union {
+		struct ext4_extent ep_sparse_ext;
+		struct ext4_extent *ep_ext;
+	};
 	struct ext4_extent_index *ep_index;
 	struct ext4_extent_header *ep_header;
 };

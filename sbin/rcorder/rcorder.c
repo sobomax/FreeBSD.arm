@@ -36,7 +36,7 @@
  */
 
 #include <sys/types.h>
-__FBSDID("$FreeBSD: head/sbin/rcorder/rcorder.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: head/sbin/rcorder/rcorder.c 295119 2016-02-01 07:15:31Z ngie $");
 
 #include <sys/stat.h>
 
@@ -701,7 +701,7 @@ keep_ok(filenode *fnode)
 static void
 do_file(filenode *fnode)
 {
-	f_reqnode *r, *r_tmp;
+	f_reqnode *r;
 	f_provnode *p, *p_tmp;
 	provnode *pnode;
 	int was_set;	
@@ -728,13 +728,8 @@ do_file(filenode *fnode)
 	 */
 	r = fnode->req_list;
 	while (r != NULL) {
-		r_tmp = r;
 		satisfy_req(r, fnode->filename);
 		r = r->next;
-#if 0
-		if (was_set == 0)
-			free(r_tmp);
-#endif
 	}
 	fnode->req_list = NULL;
 

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resource.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resource.h 256849 2013-10-21 16:44:53Z kib $
+ * $FreeBSD: head/sys/sys/resource.h 296162 2016-02-28 17:52:33Z kib $
  */
 
 #ifndef _SYS_RESOURCE_H_
@@ -104,8 +104,9 @@ struct __wrusage {
 #define	RLIMIT_NPTS	11		/* pseudo-terminals */
 #define	RLIMIT_SWAP	12		/* swap used */
 #define	RLIMIT_KQUEUES	13		/* kqueues allocated */
+#define	RLIMIT_UMTXP	14		/* process-shared umtx */
 
-#define	RLIM_NLIMITS	14		/* number of resource limits */
+#define	RLIM_NLIMITS	15		/* number of resource limits */
 
 #define	RLIM_INFINITY	((rlim_t)(((uint64_t)1 << 63) - 1))
 /* XXX Missing: RLIM_SAVED_MAX, RLIM_SAVED_CUR */
@@ -131,6 +132,7 @@ static const char *rlimit_ident[RLIM_NLIMITS] = {
 	"npts",
 	"swap",
 	"kqueues",
+	"umtx",
 };
 #endif
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libproc/tests/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libproc/tests/Makefile 296129 2016-02-26 22:14:23Z bdrewery $
 
 ATF_TESTS_C+=	proc_test
 
@@ -11,7 +11,5 @@ LIBADD=	elf proc rtld_db util
 # Ensure that symbols aren't stripped from the test program, as they're needed
 # for testing symbol lookup.
 STRIP=
-
-WARNS?=	6
 
 .include <bsd.test.mk>

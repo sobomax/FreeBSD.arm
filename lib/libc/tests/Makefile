@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/Makefile 290177 2015-10-30 03:28:00Z ngie $
+# $FreeBSD: head/lib/libc/tests/Makefile 295713 2016-02-17 18:41:55Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -10,7 +10,9 @@ TESTS_SUBDIRS+=	gen
 TESTS_SUBDIRS+=	hash
 TESTS_SUBDIRS+=	inet
 TESTS_SUBDIRS+=	net
+TESTS_SUBDIRS+=	nss
 TESTS_SUBDIRS+=	regex
+TESTS_SUBDIRS+=	resolv
 TESTS_SUBDIRS+=	rpc
 TESTS_SUBDIRS+=	stdio
 TESTS_SUBDIRS+=	stdlib
@@ -19,6 +21,8 @@ TESTS_SUBDIRS+=	sys
 TESTS_SUBDIRS+=	termios
 TESTS_SUBDIRS+=	tls
 TESTS_SUBDIRS+=	ttyio
+
+SUBDIR_DEPEND_tls= tls_dso
 
 .if ${MK_LOCALES} != "no"
 TESTS_SUBDIRS+=	locale

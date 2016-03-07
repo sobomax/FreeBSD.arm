@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/pcb.h 285313 2015-07-09 12:51:50Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pcb.h 295142 2016-02-02 10:28:56Z andrew $
  */
 
 #ifndef	_MACHINE_PCB_H_
@@ -44,6 +44,10 @@ struct pcb {
 
 	/* Fault handler, the error value is passed in x0 */
 	vm_offset_t	pcb_onfault;
+
+	u_int		pcb_flags;
+#define	PCB_SINGLE_STEP_SHIFT	0
+#define	PCB_SINGLE_STEP		(1 << PCB_SINGLE_STEP_SHIFT)
 
 	/* Place last to simplify the asm to access the rest if the struct */
 	__uint128_t	pcb_vfp[32];

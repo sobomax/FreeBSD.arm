@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/tlb.c 223346 2011-06-20 21:31:01Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/tlb.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include "opt_pmap.h"
 
@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: head/sys/sparc64/sparc64/tlb.c 223346 2011-06-20 21:31:01Z m
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
-#include <machine/pmap.h>
 #include <machine/smp.h>
 #include <machine/tlb.h>
 #include <machine/vmparam.h>

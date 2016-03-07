@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iic.c 281828 2015-04-21 11:50:31Z jah $
+ * $FreeBSD: head/sys/dev/iicbus/iic.c 295080 2016-01-30 18:33:23Z ngie $
  *
  */
 #include <sys/param.h>
@@ -293,7 +293,8 @@ iicrdwr(struct iic_cdevpriv *priv, struct iic_rdwr_data *d, int flags)
 	struct iic_msg *buf, *m;
 	void **usrbufs;
 	device_t iicdev, parent;
-	int error, i;
+	int error;
+	uint32_t i;
 
 	iicdev = priv->sc->sc_dev;
 	parent = device_get_parent(iicdev);

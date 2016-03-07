@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/release/Makefile.ec2 285005 2015-07-01 14:51:26Z gjb $
+# $FreeBSD: head/release/Makefile.ec2 293739 2016-01-12 09:42:21Z cperciva $
 #
 #
 # Makefile for creating an EC2 AMI from a disk image.
@@ -51,7 +51,7 @@ ec2ami: cw-ec2 ${CW_EC2_PORTINSTALL}
 	@echo "--------------------------------------------------------------"
 	@false
 .endif
-	/usr/local/bin/bsdec2-image-upload ${PUBLISH} \
+	/usr/local/bin/bsdec2-image-upload ${PUBLISH} --sriov \
 	    ${.OBJDIR}/ec2.raw \
 	    "${TYPE} ${REVISION}-${BRANCH}-${TARGET}${AMINAMESUFFIX}" \
 	    "${TYPE} ${REVISION}-${BRANCH}-${TARGET}" \

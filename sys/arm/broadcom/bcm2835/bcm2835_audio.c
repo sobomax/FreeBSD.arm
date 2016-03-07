@@ -38,7 +38,7 @@
 
 #include "vc_vchi_audioserv_defs.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_audio.c 290536 2015-11-08 04:15:52Z gonzo $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_audio.c 296163 2016-02-28 19:39:00Z gonzo $");
 
 #define	DEST_AUTO		0
 #define	DEST_HEADPHONES		1
@@ -757,7 +757,7 @@ static int
 bcm2835_audio_probe(device_t dev)
 {
 
-	device_set_desc(dev, "VCHQI audio");
+	device_set_desc(dev, "VCHIQ audio");
 	return (BUS_PROBE_DEFAULT);
 }
 

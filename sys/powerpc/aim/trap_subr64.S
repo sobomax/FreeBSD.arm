@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/aim/trap_subr64.S 285620 2015-07-16 05:13:08Z jhibbits $ */
+/* $FreeBSD: head/sys/powerpc/aim/trap_subr64.S 293641 2016-01-10 18:00:01Z nwhitehorn $ */
 /* $NetBSD: trap_subr.S,v 1.20 2002/04/22 23:20:08 kleink Exp $	*/
 
 /*-
@@ -39,9 +39,12 @@
  *	#include <powerpc/aim/trap_subr.S>
  */
 
-/*
- * Save/restore segment registers
- */
+/* Locate the per-CPU data structure */
+#define GET_CPUINFO(r)  \
+        mfsprg0  r
+#define GET_TOCBASE(r)  \
+	li	r,TRAP_TOCBASE;	/* Magic address for TOC */ \
+	ld	r,0(r)
 
 /*
  * Restore SRs for a pmap

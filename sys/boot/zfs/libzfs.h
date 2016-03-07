@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/zfs/libzfs.h 241293 2012-10-06 19:47:24Z avg $
+ * $FreeBSD: head/sys/boot/zfs/libzfs.h 294072 2016-01-15 05:45:10Z allanjude $
  */
 
 #ifndef _BOOT_LIBZFS_H_
@@ -62,6 +62,10 @@ int	zfs_parsedev(struct zfs_devdesc *dev, const char *devspec,
 char	*zfs_fmtdev(void *vdev);
 int	zfs_probe_dev(const char *devname, uint64_t *pool_guid);
 int	zfs_list(const char *name);
+void	init_zfs_bootenv(char *currdev);
+int	zfs_bootenv(const char *name);
+int	zfs_belist_add(const char *name);
+int	zfs_set_env(void);
 
 extern struct devsw zfs_dev;
 extern struct fs_ops zfs_fsops;

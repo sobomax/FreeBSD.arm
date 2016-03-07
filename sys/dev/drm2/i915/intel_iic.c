@@ -54,7 +54,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_iic.c 289456 2015-10-17 14:48:39Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/i915/intel_iic.c 292409 2015-12-17 20:33:20Z jhb $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm.h>
@@ -456,7 +456,7 @@ timeout:
 
 	/* Hardware may not support GMBUS over these pins? Try GPIO bitbanging instead. */
 	sc->force_bit_dev = true;
-	error = -IICBUS_TRANSFER(adapter, msgs, num);
+	error = -IICBUS_TRANSFER(dev_priv->bbbus[unit], msgs, num);
 
 out:
 	sx_xunlock(&dev_priv->gmbus_sx);

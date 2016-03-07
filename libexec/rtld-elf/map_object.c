@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/map_object.c 289324 2015-10-14 18:29:21Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/map_object.c 296319 2016-03-02 16:36:24Z kib $
  */
 
 #include <sys/param.h>
@@ -38,8 +38,7 @@
 #include "debug.h"
 #include "rtld.h"
 
-static Elf_Ehdr *get_elf_header(int, const char *);
-static int convert_prot(int);	/* Elf flags -> mmap protection */
+static Elf_Ehdr *get_elf_header(int, const char *, const struct stat *);
 static int convert_flags(int); /* Elf flags -> mmap flags */
 
 /*
@@ -91,7 +90,7 @@ map_object(int fd, const char *path, const struct stat *sb)
     char *note_map;
     size_t note_map_len;
 
-    hdr = get_elf_header(fd, path);
+    hdr = get_elf_header(fd, path, sb);
     if (hdr == NULL)
 	return (NULL);
 
@@ -324,9 +323,15 @@ error:
 }
 
 static Elf_Ehdr *
-get_elf_header(int fd, const char *path)
+get_elf_header(int fd, const char *path, const struct stat *sbp)
 {
 	Elf_Ehdr *hdr;
+
+	/* Make sure file has enough data for the ELF header */
+	if (sbp != NULL && sbp->st_size < sizeof(Elf_Ehdr)) {
+		_rtld_error("%s: invalid file format", path);
+		return (NULL);
+	}
 
 	hdr = mmap(NULL, PAGE_SIZE, PROT_READ, MAP_PRIVATE | MAP_PREFAULT_READ,
 	    fd, 0);
@@ -439,7 +444,7 @@ obj_new(void)
  * Given a set of ELF protection flags, return the corresponding protection
  * flags for MMAP.
  */
-static int
+int
 convert_prot(int elfflags)
 {
     int prot = 0;

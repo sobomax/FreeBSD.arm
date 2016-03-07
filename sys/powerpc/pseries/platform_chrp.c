@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/platform_chrp.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/platform_chrp.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/pseries/platform_chrp.c 290989 2015-11-17 1
 #include <machine/cpu.h>
 #include <machine/hid.h>
 #include <machine/platformvar.h>
-#include <machine/pmap.h>
 #include <machine/rtas.h>
 #include <machine/smp.h>
 #include <machine/spr.h>

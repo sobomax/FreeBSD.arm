@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/mpc85xx/qoriq_gpio.c 291462 2015-11-30 02:23:56Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/mpc85xx/qoriq_gpio.c 296251 2016-03-01 03:41:48Z jhibbits $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/qoriq_gpio.c 291462 2015-11-30 02:23:56Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/qoriq_gpio.c 296251 2016-03-01 03:41:48Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -219,7 +219,8 @@ static int
 qoriq_gpio_probe(device_t dev)
 {
 
-	if (!ofw_bus_is_compatible(dev, "fsl,qoriq-gpio"))
+	if (!ofw_bus_is_compatible(dev, "fsl,qoriq-gpio") &&
+	    !ofw_bus_is_compatible(dev, "fsl,mpc8572-gpio"))
 		return (ENXIO);
 
 	device_set_desc(dev, "Freescale QorIQ GPIO driver");

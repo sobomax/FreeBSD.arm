@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_run.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_run.c 296356 2016-03-03 20:06:16Z avos $");
 
 /*-
  * Ralink Technology RT2700U/RT2800U/RT3000U/RT3900E chipset driver.
@@ -704,8 +704,9 @@ run_attach(device_t self)
 	struct usb_attach_arg *uaa = device_get_ivars(self);
 	struct ieee80211com *ic = &sc->sc_ic;
 	uint32_t ver;
+	uint8_t bands[howmany(IEEE80211_MODE_MAX, 8)];
+	uint8_t iface_index;
 	int ntries, error;
-	uint8_t iface_index, bands;
 
 	device_set_usb_desc(self);
 	sc->sc_udev = uaa->device;
@@ -785,14 +786,14 @@ run_attach(device_t self)
 	ic->ic_flags |= IEEE80211_F_DATAPAD;
 	ic->ic_flags_ext |= IEEE80211_FEXT_SWBMISS;
 
-	bands = 0;
-	setbit(&bands, IEEE80211_MODE_11B);
-	setbit(&bands, IEEE80211_MODE_11G);
+	memset(bands, 0, sizeof(bands));
+	setbit(bands, IEEE80211_MODE_11B);
+	setbit(bands, IEEE80211_MODE_11G);
 	if (sc->rf_rev == RT2860_RF_2750 || sc->rf_rev == RT2860_RF_2850 ||
 	    sc->rf_rev == RT3070_RF_3052 || sc->rf_rev == RT3593_RF_3053 ||
 	    sc->rf_rev == RT5592_RF_5592)
-		setbit(&bands, IEEE80211_MODE_11A);
-	ieee80211_init_channels(ic, NULL, &bands);
+		setbit(bands, IEEE80211_MODE_11A);
+	ieee80211_init_channels(ic, NULL, bands);
 
 	ieee80211_ifattach(ic);
 
@@ -2140,8 +2141,8 @@ run_newstate(struct ieee80211vap *vap, enum ieee80211_state nstate, int arg)
 			run_set_txpreamble(sc);
 			run_set_basicrates(sc);
 			ni = ieee80211_ref_node(vap->iv_bss);
-			IEEE80211_ADDR_COPY(ic->ic_macaddr, ni->ni_bssid);
-			run_set_bssid(sc, ni->ni_bssid);
+			IEEE80211_ADDR_COPY(sc->sc_bssid, ni->ni_bssid);
+			run_set_bssid(sc, sc->sc_bssid);
 			ieee80211_free_node(ni);
 			run_enable_tsf_sync(sc);
 
@@ -4810,8 +4811,7 @@ run_scan_end(struct ieee80211com *ic)
 	RUN_LOCK(sc);
 
 	run_enable_tsf_sync(sc);
-	/* XXX keep local copy */
-	run_set_bssid(sc, ic->ic_macaddr);
+	run_set_bssid(sc, sc->sc_bssid);
 
 	RUN_UNLOCK(sc);
 
@@ -5186,7 +5186,7 @@ run_updateslot_cb(void *arg)
 
 	run_read(sc, RT2860_BKOFF_SLOT_CFG, &tmp);
 	tmp &= ~0xff;
-	tmp |= (ic->ic_flags & IEEE80211_F_SHSLOT) ? 9 : 20;
+	tmp |= IEEE80211_GET_SLOTTIME(ic);
 	run_write(sc, RT2860_BKOFF_SLOT_CFG, tmp);
 }
 

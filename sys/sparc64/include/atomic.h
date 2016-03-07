@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/atomic.h,v 1.20 2001/02/11
- * $FreeBSD: head/sys/sparc64/include/atomic.h 285283 2015-07-08 18:12:24Z kib $
+ * $FreeBSD: head/sys/sparc64/include/atomic.h 294539 2016-01-22 00:29:11Z jhb $
  */
 
 #ifndef	_MACHINE_ATOMIC_H_
@@ -319,6 +319,7 @@ ATOMIC_GEN(ptr, uintptr_t *, uintptr_t, uintptr_t, 64);
 #define	atomic_fetchadd_int	atomic_add_int
 #define	atomic_fetchadd_32	atomic_add_32
 #define	atomic_fetchadd_long	atomic_add_long
+#define	atomic_fetchadd_64	atomic_add_64
 
 #undef ATOMIC_GEN
 #undef atomic_cas

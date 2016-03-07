@@ -1,0 +1,3 @@
+# $FreeBSD: head/sys/powerpc/conf/dpaa/files.p3041 296177 2016-02-29 03:38:00Z jhibbits $
+
+contrib/ncsw/integrations/P3041/module_strings.c	optional dpaa

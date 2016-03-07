@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/igmp.c 291579 2015-12-01 11:24:30Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/igmp.c 294514 2016-01-21 17:25:41Z bz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -659,16 +659,12 @@ igmp_ifdetach(struct ifnet *ifp)
 void
 igmp_domifdetach(struct ifnet *ifp)
 {
-	struct igmp_ifsoftc *igi;
 
 	CTR3(KTR_IGMPV3, "%s: called for ifp %p(%s)",
 	    __func__, ifp, ifp->if_xname);
 
 	IGMP_LOCK();
-
-	igi = ((struct in_ifinfo *)ifp->if_afdata[AF_INET])->ii_igmp;
 	igi_delete_locked(ifp);
-
 	IGMP_UNLOCK();
 }
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.init.mk 284366 2015-06-14 03:27:22Z sjg $
+# $FreeBSD: head/share/mk/bsd.init.mk 295641 2016-02-16 02:09:48Z bdrewery $
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the
@@ -15,6 +15,10 @@ __<bsd.init.mk>__:
 .endif
 .include <bsd.own.mk>
 .MAIN: all
+beforebuild: .PHONY .NOTMAIN
+.if !defined(_SKIP_BUILD)
+all: beforebuild .WAIT
+.endif
 
 .if ${.MAKE.LEVEL:U1} == 0 && ${BUILD_AT_LEVEL0:Uyes:tl} == "no" && !make(clean*)
 # this tells lib.mk and prog.mk to not actually build anything

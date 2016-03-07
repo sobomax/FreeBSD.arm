@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/ibcs2/ibcs2_sysvec.c 283382 2015-05-24 14:51:29Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/i386/ibcs2/ibcs2_sysvec.c 293613 2016-01-09 20:18:53Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -90,6 +90,7 @@ struct sysentvec ibcs2_svr3_sysvec = {
 	.sv_syscallnames = NULL,
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 
 static int

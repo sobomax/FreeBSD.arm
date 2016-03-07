@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/pci/ofw_pci.c 287726 2015-09-12 22:49:32Z marius $");
+__FBSDID("$FreeBSD: head/sys/sparc64/pci/ofw_pci.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_ofw_pci.h"
 
@@ -287,7 +287,7 @@ ofw_pci_read_ivar(device_t dev, device_t child __unused, int which,
 
 struct resource *
 ofw_pci_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct ofw_pci_softc *sc;
 	struct resource *rv;
@@ -362,7 +362,7 @@ ofw_pci_activate_resource(device_t bus, device_t child, int type, int rid,
 
 int
 ofw_pci_adjust_resource(device_t bus, device_t child, int type,
-    struct resource *r, u_long start, u_long end)
+    struct resource *r, rman_res_t start, rman_res_t end)
 {
 	struct ofw_pci_softc *sc;
 	struct rman *rm;

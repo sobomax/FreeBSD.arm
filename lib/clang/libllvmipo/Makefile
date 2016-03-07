@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmipo/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmipo/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -8,13 +8,17 @@ SRCDIR=	lib/Transforms/IPO
 SRCS=	ArgumentPromotion.cpp \
 	BarrierNoopPass.cpp \
 	ConstantMerge.cpp \
+	CrossDSOCFI.cpp \
 	DeadArgumentElimination.cpp \
 	ElimAvailExtern.cpp \
 	ExtractGV.cpp \
+	ForceFunctionAttrs.cpp \
 	FunctionAttrs.cpp \
+	FunctionImport.cpp \
 	GlobalDCE.cpp \
 	GlobalOpt.cpp \
 	IPConstantPropagation.cpp \
+	InferFunctionAttrs.cpp \
 	InlineAlways.cpp \
 	InlineSimple.cpp \
 	Inliner.cpp \
@@ -25,6 +29,7 @@ SRCS=	ArgumentPromotion.cpp \
 	PartialInlining.cpp \
 	PassManagerBuilder.cpp \
 	PruneEH.cpp \
+	SampleProfile.cpp \
 	StripDeadPrototypes.cpp \
 	StripSymbols.cpp
 
@@ -32,6 +37,7 @@ SRCS=	ArgumentPromotion.cpp \
 SRCS+=	IPO.cpp
 .endif
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

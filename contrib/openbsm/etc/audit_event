@@ -1,6 +1,5 @@
 #
-# $P4: //depot/projects/trustedbsd/openbsm/etc/audit_event#43 $
-# $FreeBSD: head/contrib/openbsm/etc/audit_event 248599 2013-03-21 22:59:01Z pjd $
+# $FreeBSD: head/contrib/openbsm/etc/audit_event 292432 2015-12-18 09:48:01Z brueffer $
 #
 # The mapping between event identifiers and values is also hard-coded in
 # audit_kevents.h and audit_uevents.h, so changes must occur in both places,

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/zfsboot/Makefile 280980 2015-04-02 06:58:17Z dim $
+# $FreeBSD: head/sys/boot/i386/zfsboot/Makefile 295757 2016-02-18 14:17:28Z emaste $
 
 .PATH:		${.CURDIR}/../boot2 ${.CURDIR}/../common ${.CURDIR}/../../common
 
@@ -65,7 +65,7 @@ BOOT2SIZE=	65536
 zfsboot2: zfsboot.ld
 	@set -- `ls -l zfsboot.ld`; x=$$((${BOOT2SIZE}-$$5)); \
 	    echo "$$x bytes available"; test $$x -ge 0
-	dd if=zfsboot.ld of=${.TARGET} obs=${BOOT2SIZE} conv=osync
+	dd if=zfsboot.ld of=${.TARGET} obs=${BOOT2SIZE} conv=osync status=none
 
 zfsboot.ld: zfsboot.ldr zfsboot.bin ${BTXKERN}
 	btxld -v -E ${ORG2} -f bin -b ${BTXKERN} -l zfsboot.ldr \

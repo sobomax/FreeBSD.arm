@@ -1,4 +1,4 @@
-	# $FreeBSD: head/secure/lib/libcrypto/amd64/sha1-x86_64.S 290207 2015-10-30 20:51:33Z jkim $
+	# $FreeBSD: head/secure/lib/libcrypto/amd64/sha1-x86_64.S 296279 2016-03-01 22:08:28Z jkim $
 .text	
 
 
@@ -1241,9 +1241,9 @@ _shaext_shortcut:
 	movdqa	K_XX_XX+160(%rip),%xmm3
 
 	movdqu	(%rsi),%xmm4
-	pshufd	$27,%xmm0,%xmm0
+	pshufd	$0b00011011,%xmm0,%xmm0
 	movdqu	16(%rsi),%xmm5
-	pshufd	$27,%xmm1,%xmm1
+	pshufd	$0b00011011,%xmm1,%xmm1
 	movdqu	32(%rsi),%xmm6
 .byte	102,15,56,0,227
 	movdqu	48(%rsi),%xmm7
@@ -1393,8 +1393,8 @@ _shaext_shortcut:
 
 	jnz	.Loop_shaext
 
-	pshufd	$27,%xmm0,%xmm0
-	pshufd	$27,%xmm1,%xmm1
+	pshufd	$0b00011011,%xmm0,%xmm0
+	pshufd	$0b00011011,%xmm1,%xmm1
 	movdqu	%xmm0,(%rdi)
 	movd	%xmm1,16(%rdi)
 	.byte	0xf3,0xc3

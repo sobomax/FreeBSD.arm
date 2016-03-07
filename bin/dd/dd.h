@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dd.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: head/bin/dd/dd.h 265698 2014-05-08 19:10:04Z asomers $
+ * $FreeBSD: head/bin/dd/dd.h 295749 2016-02-18 08:44:16Z thomas $
  */
 
 /* Input/output stream state. */
@@ -54,6 +54,7 @@ typedef struct {
 	const char	*name;		/* name */
 	int		fd;		/* file descriptor */
 	off_t		offset;		/* # of blocks to skip */
+	off_t		seek_offset;	/* offset of last seek past output hole */
 } IO;
 
 typedef struct {

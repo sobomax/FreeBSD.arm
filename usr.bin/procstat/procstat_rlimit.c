@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/procstat/procstat_rlimit.c 287486 2015-09-05 17:02:01Z allanjude $
+ * $FreeBSD: head/usr.bin/procstat/procstat_rlimit.c 296162 2016-02-28 17:52:33Z kib $
  */
 
 #include <sys/param.h>
@@ -47,7 +47,7 @@
 static struct {
 	const char *name;
 	const char *suffix;
-} rlimit_param[14] = {
+} rlimit_param[15] = {
 	{"cputime",          "sec"},
 	{"filesize",         "B  "},
 	{"datasize",         "B  "},
@@ -62,9 +62,10 @@ static struct {
 	{"pseudo-terminals", "   "},
 	{"swapuse",          "B  "},
 	{"kqueues",          "   "},
+	{"umtxp",            "   "},
 };
 
-#if RLIM_NLIMITS > 14
+#if RLIM_NLIMITS > 15
 #error "Resource limits have grown. Add new entries to rlimit_param[]."
 #endif
 

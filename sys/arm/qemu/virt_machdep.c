@@ -28,7 +28,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/qemu/virt_machdep.c 281439 2015-04-11 17:52:47Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/qemu/virt_machdep.c 296158 2016-02-28 13:43:58Z andrew $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -40,6 +40,8 @@ __FBSDID("$FreeBSD: head/sys/arm/qemu/virt_machdep.c 281439 2015-04-11 17:52:47Z
 #include <machine/devmap.h>
 #include <machine/platform.h>
 #include <machine/platformvar.h>
+
+#include <arm/qemu/virt_mp.h>
 
 #include "platform_if.h"
 
@@ -85,6 +87,11 @@ virt_devmap_init(platform_t plat)
 static platform_method_t virt_methods[] = {
 	PLATFORMMETHOD(platform_devmap_init,	virt_devmap_init),
 	PLATFORMMETHOD(platform_lastaddr,	virt_lastaddr),
+
+#ifdef SMP
+	PLATFORMMETHOD(platform_mp_start_ap,	virt_mp_start_ap),
+	PLATFORMMETHOD(platform_mp_setmaxid,	virt_mp_setmaxid),
+#endif
 
 	PLATFORMMETHOD_END,
 };

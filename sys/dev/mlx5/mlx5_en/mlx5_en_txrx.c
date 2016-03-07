@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mlx5/mlx5_en/mlx5_en_txrx.c 290650 2015-11-10 12:20:22Z hselasky $
+ * $FreeBSD: head/sys/dev/mlx5/mlx5_en/mlx5_en_txrx.c 292838 2015-12-28 18:50:18Z hselasky $
  */
 
 #include "en.h"
@@ -36,8 +36,6 @@ mlx5e_get_cqe(struct mlx5e_cq *cq)
 
 	if ((cqe->op_own ^ mlx5_cqwq_get_wrap_cnt(&cq->wq)) & MLX5_CQE_OWNER_MASK)
 		return (NULL);
-
-	mlx5_cqwq_pop(&cq->wq);
 
 	/* ensure cqe content is read after cqe ownership bit */
 	rmb();

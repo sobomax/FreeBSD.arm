@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tx/if_tx.c 271804 2014-09-18 20:06:10Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/tx/if_tx.c 295126 2016-02-01 17:41:21Z glebius $");
 
 /*
  * EtherPower II 10/100 Fast Ethernet (SMC 9432 serie)
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: head/sys/dev/tx/if_tx.c 271804 2014-09-18 20:06:10Z glebius 
 #include <sys/sockio.h>
 #include <sys/mbuf.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/socket.h>
 #include <sys/queue.h>

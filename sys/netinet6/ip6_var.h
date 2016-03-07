@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet6/ip6_var.h 290471 2015-11-06 23:07:43Z adrian $
+ * $FreeBSD: head/sys/netinet6/ip6_var.h 296242 2016-03-01 00:17:14Z glebius $
  */
 
 #ifndef _NETINET6_IP6_VAR_H_
@@ -382,7 +382,7 @@ int	ip6_sysctl(int *, u_int, void *, size_t *, void *, size_t);
 
 void	ip6_forward(struct mbuf *, int);
 
-void	ip6_mloopback(struct ifnet *, const struct mbuf *);
+void	ip6_mloopback(struct ifnet *, struct mbuf *);
 int	ip6_output(struct mbuf *, struct ip6_pktopts *,
 			struct route_in6 *,
 			int,
@@ -418,9 +418,10 @@ int	rip6_usrreq(struct socket *,
 int	dest6_input(struct mbuf **, int *, int);
 int	none_input(struct mbuf **, int *, int);
 
-int	in6_selectsrc(struct sockaddr_in6 *, struct ip6_pktopts *,
-	struct inpcb *inp, struct route_in6 *, struct ucred *cred,
-	struct ifnet **, struct in6_addr *);
+int	in6_selectsrc_socket(struct sockaddr_in6 *, struct ip6_pktopts *,
+    struct inpcb *, struct ucred *, int, struct in6_addr *, int *);
+int	in6_selectsrc_addr(uint32_t, const struct in6_addr *,
+    uint32_t, struct ifnet *, struct in6_addr *, int *);
 int in6_selectroute(struct sockaddr_in6 *, struct ip6_pktopts *,
 	struct ip6_moptions *, struct route_in6 *, struct ifnet **,
 	struct rtentry **);

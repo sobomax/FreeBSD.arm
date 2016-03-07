@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/isci.c 287563 2015-09-08 15:59:55Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/isci.c 295790 2016-02-19 03:37:56Z jhibbits $");
 
 #include <dev/isci/isci.h>
 
@@ -138,8 +138,8 @@ isci_allocate_pci_memory(struct isci_softc *isci)
 		struct ISCI_PCI_BAR *pci_bar = &isci->pci_bar[i];
 
 		pci_bar->resource_id = PCIR_BAR(i*2);
-		pci_bar->resource = bus_alloc_resource(isci->device,
-		    SYS_RES_MEMORY, &pci_bar->resource_id, 0, ~0, 1,
+		pci_bar->resource = bus_alloc_resource_any(isci->device,
+		    SYS_RES_MEMORY, &pci_bar->resource_id,
 		    RF_ACTIVE);
 
 		if(pci_bar->resource == NULL)

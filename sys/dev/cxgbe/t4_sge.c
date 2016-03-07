@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_sge.c 291665 2015-12-03 00:02:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_sge.c 296383 2016-03-04 13:11:13Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1570,7 +1570,7 @@ get_scatter_segment(struct adapter *sc, struct sge_fl *fl, int fr_offset,
 		MPASS(clm != NULL);
 		m = (struct mbuf *)(sd->cl + sd->nmbuf * MSIZE);
 		/* No bzero required */
-		if (m_init(m, NULL, 0, M_NOWAIT, MT_DATA,
+		if (m_init(m, M_NOWAIT, MT_DATA,
 		    fr_offset == 0 ? M_PKTHDR | M_NOFREE : M_NOFREE))
 			return (NULL);
 		fl->mbuf_inlined++;
@@ -2467,7 +2467,6 @@ static inline void
 init_eq(struct sge_eq *eq, int eqtype, int qsize, uint8_t tx_chan,
     uint16_t iqid, char *name)
 {
-	KASSERT(tx_chan < NCHAN, ("%s: bad tx channel %d", __func__, tx_chan));
 	KASSERT(eqtype <= EQ_TYPEMASK, ("%s: bad qtype %d", __func__, eqtype));
 
 	eq->flags = eqtype & EQ_TYPEMASK;
@@ -2681,9 +2680,7 @@ alloc_iq_fl(struct vi_info *vi, struct sge_iq *iq, struct sge_fl *fl,
 			}
 			fl->udb = (volatile void *)udb;
 		}
-		fl->dbval = F_DBPRIO | V_QID(qid);
-		if (is_t5(sc))
-			fl->dbval |= F_DBTYPE;
+		fl->dbval = V_QID(qid) | sc->chip_params->sge_fl_db;
 
 		FL_LOCK(fl);
 		/* Enough to make sure the SGE doesn't think it's starved */
@@ -2939,9 +2936,9 @@ alloc_rxq(struct vi_info *vi, struct sge_rxq *rxq, int intr_idx, int idx,
 	    CTLTYPE_INT | CTLFLAG_RD, &rxq->iq.cidx, 0, sysctl_uint16, "I",
 	    "consumer index");
 #if defined(INET) || defined(INET6)
-	SYSCTL_ADD_INT(&vi->ctx, children, OID_AUTO, "lro_queued", CTLFLAG_RD,
+	SYSCTL_ADD_U64(&vi->ctx, children, OID_AUTO, "lro_queued", CTLFLAG_RD,
 	    &rxq->lro.lro_queued, 0, NULL);
-	SYSCTL_ADD_INT(&vi->ctx, children, OID_AUTO, "lro_flushed", CTLFLAG_RD,
+	SYSCTL_ADD_U64(&vi->ctx, children, OID_AUTO, "lro_flushed", CTLFLAG_RD,
 	    &rxq->lro.lro_flushed, 0, NULL);
 #endif
 	SYSCTL_ADD_UQUAD(&vi->ctx, children, OID_AUTO, "rxcsum", CTLFLAG_RD,

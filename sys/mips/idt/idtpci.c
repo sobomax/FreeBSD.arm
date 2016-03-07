@@ -62,7 +62,7 @@
  */ 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/idt/idtpci.c 287882 2015-09-16 23:34:51Z zbb $");
+__FBSDID("$FreeBSD: head/sys/mips/idt/idtpci.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,7 +80,6 @@ __FBSDID("$FreeBSD: head/sys/mips/idt/idtpci.c 287882 2015-09-16 23:34:51Z zbb $
 
 #include <machine/bus.h>
 #include <machine/cpu.h>
-#include <machine/pmap.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -465,7 +464,7 @@ idtpci_write_ivar(device_t dev, device_t child, int which, uintptr_t result)
 
 static struct resource *
 idtpci_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 
 	struct idtpci_softc *sc = device_get_softc(bus);	

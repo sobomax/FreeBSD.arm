@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/arm64/libarm64/cache.c 281526 2015-04-14 13:55:01Z andrew $");
+__FBSDID("$FreeBSD: head/sys/boot/arm64/libarm64/cache.c 293724 2016-01-12 02:17:39Z smh $");
 
 #include <sys/param.h>
 
@@ -67,7 +67,7 @@ cpu_flush_dcache(const void *ptr, size_t len)
 	cl_size = get_dcache_line_size();
 
 	/* Calculate end address to clean */
-	end = (vm_offset_t)(ptr + len);
+	end = (vm_offset_t)ptr + (vm_offset_t)len;
 	/* Align start address to cache line */
 	addr = (vm_offset_t)ptr;
 	addr = rounddown2(addr, cl_size);

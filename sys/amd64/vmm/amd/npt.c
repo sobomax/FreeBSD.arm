@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/npt.c 273375 2014-10-21 07:10:43Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/npt.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -35,8 +35,6 @@ __FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/npt.c 273375 2014-10-21 07:10:43Z nee
 #include <vm/vm.h>
 #include <vm/pmap.h>
 #include <vm/vm_extern.h>
-
-#include <machine/pmap.h>
 
 #include "npt.h"
 

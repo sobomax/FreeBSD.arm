@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)vmstat.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/vmstat/vmstat.c 291595 2015-12-01 16:31:07Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.bin/vmstat/vmstat.c 292646 2015-12-23 07:28:48Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -886,9 +886,9 @@ printhdr(int maxid, u_long cpumask)
 
 	num_shown = (num_selected < maxshowdevs) ? num_selected : maxshowdevs;
 	if (hflag) {
-		xo_emit("{T:procs}  {T:memory}       ${T:/page%*s}", 19, "");
+		xo_emit("{T:procs}  {T:memory}       {T:/page%*s}", 19, "");
 	} else {
-		xo_emit("{T:procs}     {T:memory}        ${T:/page%*s}", 19, "");
+		xo_emit("{T:procs}     {T:memory}        {T:/page%*s}", 19, "");
 	}
 	if (num_shown > 1)
 		xo_emit(" {T:/disks %*s}", num_shown * 4 - 7, ""); 

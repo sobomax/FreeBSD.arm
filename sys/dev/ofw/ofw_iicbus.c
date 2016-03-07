@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_iicbus.c 290557 2015-11-08 21:06:51Z andreast $");
+__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_iicbus.c 292157 2015-12-13 08:23:45Z mmel $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -190,6 +190,8 @@ ofw_iicbus_attach(device_t dev)
 		device_set_ivars(childdev, dinfo);
 	}
 
+	/* Register bus */
+	OF_device_register_xref(OF_xref_from_node(node), dev);
 	return (bus_generic_attach(dev));
 }
 

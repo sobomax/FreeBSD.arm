@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aacraid/aacraid.c 280347 2015-03-22 16:10:28Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/aacraid/aacraid.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 /*
  * Driver for the Adaptec by PMC Series 6,7,8,... families of RAID controllers
@@ -1663,9 +1663,9 @@ aac_check_firmware(struct aac_softc *sc)
 		bus_release_resource(
 			sc->aac_dev, SYS_RES_MEMORY,
 			sc->aac_regs_rid0, sc->aac_regs_res0);
-		sc->aac_regs_res0 = bus_alloc_resource(
+		sc->aac_regs_res0 = bus_alloc_resource_anywhere(
 			sc->aac_dev, SYS_RES_MEMORY, &sc->aac_regs_rid0,
-			0ul, ~0ul, atu_size, RF_ACTIVE);
+			atu_size, RF_ACTIVE);
 		if (sc->aac_regs_res0 == NULL) {
 			sc->aac_regs_res0 = bus_alloc_resource_any(
 				sc->aac_dev, SYS_RES_MEMORY,

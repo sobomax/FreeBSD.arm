@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/local.dirdeps.mk 291731 2015-12-04 03:17:04Z bdrewery $
+# $FreeBSD: head/share/mk/local.dirdeps.mk 296400 2016-03-04 22:37:21Z bdrewery $
 .if !target(_DIRDEP_USE)
 # we are the 1st makefile
 
@@ -97,15 +97,26 @@ _have_depfile=
 .endif
 .endfor
 .if !defined(_have_depfile)
+# KMOD does not use any stdlibs.
+.if !defined(KMOD)
 # Has C files. The C_DIRDEPS are shared with C++ files as well.
 C_DIRDEPS= \
 	gnu/lib/csu \
 	gnu/lib/libgcc \
 	include \
+	include/arpa \
+	include/protocols \
+	include/rpc  \
+	include/rpcsvc \
 	include/xlocale \
 	lib/${CSU_DIR} \
 	lib/libc \
 	lib/libcompiler_rt \
+
+
+.if ${MK_GSSAPI} != "no"
+C_DIRDEPS+=  include/gssapi
+.endif
 
 .if !empty(SRCS:M*.c)
 DIRDEPS+= ${C_DIRDEPS}
@@ -121,25 +132,43 @@ DIRDEPS+= gnu/lib/libstdc++ gnu/lib/libsupc++
 .endif
 # XXX: Clang and GCC always adds -lm currently, even when not needed.
 DIRDEPS+= lib/msun
-.endif
+.endif	# CXX
+.endif	# !defined(KMOD)
 # Has yacc files.
 .if !empty(SRCS:M*.y)
 DIRDEPS+=	usr.bin/yacc.host
 .endif
+# Gather PROGS dependencies
+.if !empty(PROGS)
+_PROGS_LIBADD=
+_PROGS_DPADD=
+.for _prog in ${PROGS}
+.if !empty(LIBADD.${_prog})
+_PROGS_LIBADD+=	${LIBADD.${_prog}}
+.endif
+.if !empty(DPADD.${_prog})
+_PROGS_DPADD+=	${DPADD.${_prog}}
+.endif
+.endfor
+.endif	# !empty(PROGS)
 .if !empty(DPADD)
 # Taken from meta.autodep.mk (where it only does something with
 # BUILD_AT_LEVEL0, which we don't use).
 # This only works for DPADD with full OBJ/SRC paths, which is mostly just
 # _INTERNALLIBS.
-_DP_DIRDEPS+= \
-	${DPADD:M${OBJTOP}*:H:tA:C,${OBJTOP}[^/]*/,,:N.:O:u} \
-	${DPADD:M${OBJROOT}*:N${OBJTOP}*:N${STAGE_ROOT}/*:H:S,${OBJROOT},,:C,^([^/]+)/(.*),\2.\1,:S,${HOST_TARGET}$,host,:N.*:O:u}
+_DPADD= ${DPADD} ${_PROGS_DPADD}
+_DP_DIRDEPS= \
+	${_DPADD:O:u:M${OBJTOP}*:H:N.:tA:C,${OBJTOP}[^/]*/,,:N.:O:u} \
+	${_DPADD:O:u:M${OBJROOT}*:N${OBJTOP}*:N${STAGE_ROOT}/*:H:S,${OBJROOT},,:C,^([^/]+)/(.*),\2.\1,:S,${HOST_TARGET}$,host,:N.*:O:u}
 # Resolve the paths to RELDIRs
+.if !empty(_DP_DIRDEPS)
 DIRDEPS+= ${_DP_DIRDEPS:C,^,${SRCTOP}/,:tA:C,^${SRCTOP}/,,}
 .endif
+.endif	# !empty(DPADD)
 .if !empty(LIBADD)
 # Also handle LIBADD for non-internal libraries.
-.for _lib in ${LIBADD}
+_ALL_LIBADD= ${LIBADD} ${_PROGS_LIBADD}
+.for _lib in ${_ALL_LIBADD:O:u}
 _lib${_lib}reldir= ${LIB${_lib:tu}DIR:C,${OBJTOP}/,,}
 .if defined(LIB${_lib:tu}DIR) && ${DIRDEPS:M${_lib${_lib}reldir}} == "" && \
     exists(${SRCTOP}/${_lib${_lib}reldir})

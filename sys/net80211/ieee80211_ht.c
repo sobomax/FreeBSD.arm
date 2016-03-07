@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ht.c 291303 2015-11-25 18:16:42Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ht.c 295126 2016-02-01 17:41:21Z glebius $");
 #endif
 
 /*
@@ -37,6 +37,7 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_ht.c 291303 2015-11-25 18:16:42Z
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/systm.h> 
 #include <sys/endian.h>
  

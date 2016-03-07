@@ -34,7 +34,7 @@
  *
  * from: FreeBSD: //depot/projects/arm/src/sys/arm/xscale/pxa2x0/pxa2x0var.h, rev 1
  *
- * $FreeBSD: head/sys/arm/mv/mvvar.h 281087 2015-04-04 22:05:43Z andrew $
+ * $FreeBSD: head/sys/arm/mv/mvvar.h 295883 2016-02-22 09:10:23Z skra $
  */
 
 #ifndef _MVVAR_H_
@@ -44,7 +44,6 @@
 #include <machine/bus.h>
 #include <vm/vm.h>
 #include <vm/pmap.h>
-#include <machine/vm.h>
 
 #include <dev/ofw/openfirm.h>
 
@@ -109,7 +108,7 @@ uint32_t get_l2clk(void);
 uint32_t read_cpu_ctrl(uint32_t);
 void write_cpu_ctrl(uint32_t, uint32_t);
 
-#if defined(SOC_MV_ARMADAXP)
+#if defined(SOC_MV_ARMADAXP) || defined(SOC_MV_ARMADA38X)
 uint32_t read_cpu_mp_clocks(uint32_t reg);
 void write_cpu_mp_clocks(uint32_t reg, uint32_t val);
 uint32_t read_cpu_misc(uint32_t reg);

@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 293886 2016-01-14 08:54:44Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"
@@ -77,6 +77,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 283291 2015-05-22 17:05:21Z jki
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/stddef.h>
+#include <sys/eventhandler.h>
 #include <sys/lock.h>
 #include <sys/ktr.h>
 #include <sys/malloc.h>
@@ -537,7 +538,7 @@ X_mrt_ioctl(u_long cmd, caddr_t data, int fibnum __unused)
     int error = 0;
 
     /*
-     * Currently the only function calling this ioctl routine is rtioctl().
+     * Currently the only function calling this ioctl routine is rtioctl_fib().
      * Typically, only root can create the raw socket in order to execute
      * this ioctl method, however the request might be coming from a prison
      */

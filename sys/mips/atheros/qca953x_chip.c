@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/qca953x_chip.c 290910 2015-11-16 04:28:00Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/qca953x_chip.c 292247 2015-12-15 04:45:00Z adrian $");
 
 #include "opt_ddb.h"
 
@@ -196,7 +196,7 @@ qca953x_chip_set_pll_ge(int unit, int speed, uint32_t pll)
 		ATH_WRITE_REG(QCA953X_PLL_ETH_XMII_CONTROL_REG, pll);
 		break;
 	case 1:
-		ATH_WRITE_REG(QCA953X_PLL_ETH_SGMII_CONTROL_REG, pll);
+		/* nothing */
 		break;
 	default:
 		printf("%s: invalid PLL set for arge unit: %d\n",

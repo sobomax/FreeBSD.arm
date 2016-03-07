@@ -26,7 +26,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 
-$FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 278364 2015-02-07 21:29:17Z ngie $
+$FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 294839 2016-01-26 15:26:35Z hselasky $
 
 ***************************************************************************/
 
@@ -231,7 +231,9 @@ static const int debug_flags = DBG_RX;
 #define le16_to_cpu(x) le16toh(x)
 #define cpu_to_le32(x) htole32(x)
 #define swab32(x) bswap32(x)
-#define simple_strtoul strtoul
+#ifndef simple_strtoul
+#define simple_strtoul(...) strtoul(__VA_ARGS__)
+#endif
 
 
 #ifndef LINUX_TYPES_DEFINED

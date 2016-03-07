@@ -46,7 +46,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_scm.c 286693 2015-08-12 19:26:36Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_scm.c 295660 2016-02-16 13:40:23Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -170,4 +170,5 @@ static driver_t ti_scm_driver = {
 
 static devclass_t ti_scm_devclass;
 
-DRIVER_MODULE(ti_scm, simplebus, ti_scm_driver, ti_scm_devclass, 0, 0);
+EARLY_DRIVER_MODULE(ti_scm, simplebus, ti_scm_driver, ti_scm_devclass, 0, 0,
+    BUS_PASS_BUS + BUS_PASS_ORDER_MIDDLE);

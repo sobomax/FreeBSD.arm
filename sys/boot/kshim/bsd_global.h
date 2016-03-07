@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/kshim/bsd_global.h 291405 2015-11-27 18:22:04Z zbb $ */
+/* $FreeBSD: head/sys/boot/kshim/bsd_global.h 294546 2016-01-22 06:05:31Z wma $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *
@@ -55,7 +55,6 @@
 #include <dev/usb/usb_pf.h>
 #include <dev/usb/usb_request.h>
 #include <dev/usb/usb_util.h>
-#include <dev/usb/usb_compat_linux.h>
 #include <dev/usb/usbhid.h>
 #include <dev/usb/usb_ioctl.h>
 #include <dev/usb/usb_generic.h>

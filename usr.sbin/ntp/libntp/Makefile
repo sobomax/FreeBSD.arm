@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/libntp/Makefile 285169 2015-07-05 15:42:16Z cy $
+# $FreeBSD: head/usr.sbin/ntp/libntp/Makefile 294554 2016-01-22 07:32:39Z delphij $
 
 .PATH: ${.CURDIR}/../../../contrib/ntp/libntp \
 	${.CURDIR}/../../../contrib/ntp/lib/isc \
@@ -16,6 +16,7 @@ NTP_SRCS= systime.c	a_md5encrypt.c	adjtime.c	atoint.c \
 	clocktypes.c	decodenetnum.c	dofptoa.c	dolfptoa.c \
 	emalloc.c	findconfig.c	getopt.c	hextoint.c \
 	hextolfp.c	humandate.c	icom.c		iosignal.c \
+	is_ip_address.c \
 	lib_strbuf.c	machines.c	mktime.c	modetoa.c \
 	mstolfp.c	msyslog.c	netof.c		ntp_calendar.c \
 	ntp_crypto_rnd.c		ntp_intres.c	ntp_libopts.c \

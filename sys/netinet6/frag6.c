@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/frag6.c 290471 2015-11-06 23:07:43Z adrian $");
+__FBSDID("$FreeBSD: head/sys/netinet6/frag6.c 293470 2016-01-09 09:34:39Z melifaro $");
 
 #include "opt_rss.h"
 
@@ -39,6 +39,7 @@ __FBSDID("$FreeBSD: head/sys/netinet6/frag6.c 290471 2015-11-06 23:07:43Z adrian
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/domain.h>
+#include <sys/eventhandler.h>
 #include <sys/protosw.h>
 #include <sys/socket.h>
 #include <sys/errno.h>

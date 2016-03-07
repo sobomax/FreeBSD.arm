@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_node.c 283538 2015-05-25 19:18:16Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_node.c 295932 2016-02-23 21:11:42Z avos $");
 
 #include "opt_wlan.h"
 
@@ -2683,7 +2683,6 @@ ieee80211_node_leave(struct ieee80211_node *ni)
 
 	IEEE80211_LOCK(ic);
 	IEEE80211_AID_CLR(vap, ni->ni_associd);
-	ni->ni_associd = 0;
 	vap->iv_sta_assoc--;
 	ic->ic_sta_assoc--;
 

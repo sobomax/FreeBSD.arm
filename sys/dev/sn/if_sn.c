@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 /*
  * This is a driver for SMC's 9000 series of Ethernet adapters.
@@ -84,6 +84,7 @@ __FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 276750 2015-01-06 12:59:37Z rwatson 
 #include <sys/errno.h>
 #include <sys/kernel.h>
 #include <sys/sockio.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/syslog.h>
@@ -1215,8 +1216,8 @@ sn_activate(device_t dev)
 	struct sn_softc *sc = device_get_softc(dev);
 
 	sc->port_rid = 0;
-	sc->port_res = bus_alloc_resource(dev, SYS_RES_IOPORT, &sc->port_rid,
-	    0, ~0, SMC_IO_EXTENT, RF_ACTIVE);
+	sc->port_res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT,
+	    &sc->port_rid, SMC_IO_EXTENT, RF_ACTIVE);
 	if (!sc->port_res) {
 		if (bootverbose)
 			device_printf(dev, "Cannot allocate ioport\n");
