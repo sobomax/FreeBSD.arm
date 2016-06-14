@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/bde/g_bde_crypt.c 292782 2015-12-27 17:33:59Z allanjude $
+ * $FreeBSD: head/sys/geom/bde/g_bde_crypt.c 298433 2016-04-21 19:57:40Z pfg $
  */
 /* This source file contains the functions responsible for the crypto, keying
  * and mapping operations on the I/O requests.
@@ -311,7 +311,7 @@ g_bde_map_sector(struct g_bde_work *wp)
 	/* Compensate for lock sectors */
 	for (u = 0; u < G_BDE_MAXKEYS; u++) {
 		/* Find the start of this lock sector */
-		ko = kp->lsector[u] & ~((uint64_t)kp->sectorsize - 1);
+		ko = rounddown2(kp->lsector[u], (uint64_t)kp->sectorsize);
 
 		if (wp->kso >= ko)
 			wp->kso += kp->sectorsize;

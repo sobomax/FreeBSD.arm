@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libproc/Makefile 291313 2015-11-25 19:13:35Z bdrewery $
+# $FreeBSD: head/lib/libproc/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	proc
 
 SRCS=	proc_bkpt.c		\

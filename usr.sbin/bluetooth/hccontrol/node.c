@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: node.c,v 1.6 2003/07/22 21:14:02 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/node.c 281210 2015-04-07 16:48:23Z takawata $
+ * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/node.c 298883 2016-05-01 16:36:14Z pfg $
  */
 
 #include <sys/ioctl.h>
@@ -592,7 +592,7 @@ struct hci_command	node_commands[] = {
 "Write the value of the Role Switch parameter for the HCI node. By default,\n" \
 "if Role Switch is supported, local device will try to perform Role Switch\n" \
 "and become Master on incoming connection. Some devices do not support Role\n" \
-"Switch and thus incomming connections from such devices will fail. Setting\n" \
+"Switch and thus incoming connections from such devices will fail. Setting\n" \
 "this parameter to zero will prevent Role Switch and thus accepting device\n" \
 "will remain Slave",
 &hci_write_node_role_switch

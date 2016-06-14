@@ -25,7 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/pc98/boot0.5/putssjis.s 168457 2007-04-07 08:37:04Z kato $
+# $FreeBSD: head/sys/boot/pc98/boot0.5/putssjis.s 298826 2016-04-30 00:26:38Z pfg $
 #
 
 	.code16
@@ -33,7 +33,7 @@
 
 	#
 	# Display string with Shift-JIS support
-	# %si: addres of string, %di: T-VRAM address, %cx: count
+	# %si: address of string, %di: T-VRAM address, %cx: count
 	#
 
 	# Absolute address of putssjis_entry must be 0x1243.

@@ -32,7 +32,7 @@
 static char sccsid[] = "@(#)traverse.c	8.7 (Berkeley) 6/15/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/dump/traverse.c 271411 2014-09-10 22:37:20Z hrs $";
+  "$FreeBSD: head/sbin/dump/traverse.c 298235 2016-04-19 01:01:22Z araujo $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -928,7 +928,7 @@ loop:
 		if (cnt == size)
 			return;
 	} else {
-		if (tmpbuf == NULL && (tmpbuf = malloc(secsize)) == 0)
+		if (tmpbuf == NULL && (tmpbuf = malloc(secsize)) == NULL)
 			quit("buffer malloc failed\n");
 		xfer = 0;
 		bytes = size;

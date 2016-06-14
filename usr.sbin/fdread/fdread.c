@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/fdread/fdread.c 227253 2011-11-06 19:01:54Z ed $
+ * $FreeBSD: head/usr.sbin/fdread/fdread.c 297962 2016-04-14 12:46:46Z araujo $
  */
 
 #include <sys/types.h>
@@ -170,7 +170,7 @@ doread(int fd, FILE *of, const char *_devname)
 	secsize = 128 << fdt.secsize;
 	tracksize = fdt.sectrac * secsize;
 	mediasize = tracksize * fdt.tracks * fdt.heads;
-	if ((trackbuf = malloc(tracksize)) == 0)
+	if ((trackbuf = malloc(tracksize)) == NULL)
 		errx(EX_TEMPFAIL, "out of memory");
 
 	if (!quiet)

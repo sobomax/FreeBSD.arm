@@ -25,7 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/pc98/boot0.5/disk.s 167657 2007-03-17 05:30:03Z kato $
+# $FreeBSD: head/sys/boot/pc98/boot0.5/disk.s 298826 2016-04-30 00:26:38Z pfg $
 #
 
 	.code16
@@ -249,7 +249,7 @@ scsi_loop:
 	movb	%ah, %bl
 	shlw	%bx
 	shlw	%bx
-	addw	$0x460, %bx		# SCSI paramter block
+	addw	$0x460, %bx		# SCSI parameter block
 	call	read_biosparam
 	orb	%dl, %dl
 	jz	no_scsi_unit

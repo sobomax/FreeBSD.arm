@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/nandsim/nandsim_cfgparse.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: head/usr.sbin/nandsim/nandsim_cfgparse.c 298886 2016-05-01 16:41:25Z pfg $");
 
 #include <sys/errno.h>
 #include <sys/ioctl.h>
@@ -528,7 +528,7 @@ parse_config(char *cfgfname, const char *devfname)
 				error("Controller#%d already created\n",
 				    ctrls[i].num);
 			else if (err == EINVAL)
-				error("Incorrect controler number (%d)\n",
+				error("Incorrect controller number (%d)\n",
 				    ctrls[i].num);
 			else
 				error("Could not created controller#%d\n",

@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libsmutil/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
+# $FreeBSD: head/lib/libsmutil/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/libsmutil
 

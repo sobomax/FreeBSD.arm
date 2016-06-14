@@ -1,6 +1,4 @@
-# $FreeBSD: head/bin/date/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/bin/date/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 ATF_TESTS_SH=	format_string_test
 

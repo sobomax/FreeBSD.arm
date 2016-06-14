@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/lm75.c 279852 2015-03-10 14:55:05Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/lm75.c 300421 2016-05-22 13:58:32Z loos $");
 
 #include "opt_platform.h"
 
@@ -72,7 +72,7 @@ __FBSDID("$FreeBSD: head/sys/dev/iicbus/lm75.c 279852 2015-03-10 14:55:05Z loos 
 #define	LM75_0125C		0x20
 #define	LM75_MSB		0x8000
 #define	LM75_NEG_BIT		LM75_MSB
-#define	TZ_ZEROC		2732
+#define	TZ_ZEROC		2731
 
 /* LM75 supported models. */
 #define	HWTYPE_LM75		1

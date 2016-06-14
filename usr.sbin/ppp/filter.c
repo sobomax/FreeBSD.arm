@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/filter.c 134789 2004-09-05 01:46:52Z brian $
+ * $FreeBSD: head/usr.sbin/ppp/filter.c 298032 2016-04-15 03:50:33Z araujo $
  */
 
 #include <sys/param.h>
@@ -80,7 +80,7 @@ ParsePort(const char *service, const char *proto)
   int port;
 
   servent = getservbyname(service, proto);
-  if (servent != 0)
+  if (servent != NULL)
     return ntohs(servent->s_port);
 
   port = strtol(service, &cp, 0);

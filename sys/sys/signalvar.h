@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signalvar.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/signalvar.h 277321 2015-01-18 15:03:26Z kib $
+ * $FreeBSD: head/sys/sys/signalvar.h 296572 2016-03-09 19:05:11Z jhb $
  */
 
 #ifndef _SYS_SIGNALVAR_H_
@@ -199,6 +199,7 @@ __sigseteq(sigset_t *set1, sigset_t *set2)
 	return (1);
 }
 
+#ifdef COMPAT_FREEBSD6
 struct osigevent {
 	int	sigev_notify;		/* Notification type */
 	union {
@@ -207,6 +208,7 @@ struct osigevent {
 	} __sigev_u;
 	union sigval sigev_value;	/* Signal value */
 };
+#endif
 
 typedef struct ksiginfo {
 	TAILQ_ENTRY(ksiginfo)	ksi_link;

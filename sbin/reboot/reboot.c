@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)reboot.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/reboot/reboot.c 292947 2015-12-30 14:57:42Z smh $");
+__FBSDID("$FreeBSD: head/sbin/reboot/reboot.c 299196 2016-05-06 20:49:14Z garga $");
 
 #include <sys/reboot.h>
 #include <sys/time.h>
@@ -248,8 +248,8 @@ usage(void)
 {
 
 	(void)fprintf(stderr, dohalt ?
-	    "usage: halt [-lnpq] [-k kernel]\n" :
-	    "usage: reboot [-dlnpq] [-k kernel]\n");
+	    "usage: halt [-lNnpq] [-k kernel]\n" :
+	    "usage: reboot [-dlNnpqr] [-k kernel]\n");
 	exit(1);
 }
 

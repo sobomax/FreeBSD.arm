@@ -67,7 +67,7 @@
 
 #include <dev/sound/pci/atiixp.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/atiixp.c 283291 2015-05-22 17:05:21Z jkim $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/atiixp.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #define ATI_IXP_DMA_RETRY_MAX	100
 
@@ -1097,7 +1097,7 @@ atiixp_chip_post_init(void *arg)
 	    "polling", CTLTYPE_INT | CTLFLAG_RW, sc->dev, sizeof(sc->dev),
 	    sysctl_atiixp_polling, "I", "Enable polling mode");
 
-	snprintf(status, SND_STATUSLEN, "at memory 0x%lx irq %ld %s",
+	snprintf(status, SND_STATUSLEN, "at memory 0x%jx irq %jd %s",
 	    rman_get_start(sc->reg), rman_get_start(sc->irq),
 	    PCM_KLDSTRING(snd_atiixp));
 

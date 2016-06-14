@@ -1,7 +1,8 @@
-# $FreeBSD: head/bin/expr/Makefile 280357 2015-03-22 22:40:32Z dim $
+# $FreeBSD: head/bin/expr/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	expr
 SRCS=	expr.y
 YFLAGS=

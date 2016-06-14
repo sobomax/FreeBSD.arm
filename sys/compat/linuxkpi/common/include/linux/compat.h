@@ -26,9 +26,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/compat.h 291690 2015-12-03 11:45:12Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/compat.h 300590 2016-05-24 07:46:20Z hselasky $
  */
 #ifndef	_LINUX_COMPAT_H_
 #define	_LINUX_COMPAT_H_
+
+struct thread;
+struct task_struct;
+
+void linux_set_current(struct thread *td, struct task_struct *t);
+void linux_clear_current(struct thread *td);
 
 #endif	/* _LINUX_COMPAT_H_ */

@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/pc98/conf/NOTES 291419 2015-11-28 08:31:32Z kib $
+# $FreeBSD: head/sys/pc98/conf/NOTES 298824 2016-04-29 23:53:55Z jhb $
 #
 
 #
@@ -280,11 +280,6 @@ options 	MAXMEM=(128*1024)
 #options 	BROKEN_KEYBOARD_RESET
 options 	EPSON_BOUNCEDMA
 options 	EPSON_MEMWIN
-
-#
-# PCI bus & PCI options:
-#
-device		pci
 
 #
 # AGP GART support

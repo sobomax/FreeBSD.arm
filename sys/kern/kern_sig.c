@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_sig.c 292894 2015-12-29 23:25:26Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_sig.c 301757 2016-06-09 20:23:30Z oshogbo $");
 
 #include "opt_compat.h"
 #include "opt_gzio.h"
@@ -3123,6 +3123,7 @@ static int compress_user_cores = 0;
 #define	corefilename_lock	allproc_lock
 
 static char corefilename[MAXPATHLEN] = {"%N.core"};
+TUNABLE_STR("kern.corefile", corefilename, sizeof(corefilename));
 
 static int
 sysctl_kern_corefile(SYSCTL_HANDLER_ARGS)
@@ -3136,7 +3137,7 @@ sysctl_kern_corefile(SYSCTL_HANDLER_ARGS)
 
 	return (error);
 }
-SYSCTL_PROC(_kern, OID_AUTO, corefile, CTLTYPE_STRING | CTLFLAG_RWTUN |
+SYSCTL_PROC(_kern, OID_AUTO, corefile, CTLTYPE_STRING | CTLFLAG_RW |
     CTLFLAG_MPSAFE, 0, 0, sysctl_kern_corefile, "A",
     "Process corefile name format string");
 

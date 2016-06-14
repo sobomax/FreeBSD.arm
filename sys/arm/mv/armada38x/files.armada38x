@@ -1,4 +1,5 @@
-# $FreeBSD: head/sys/arm/mv/armada38x/files.armada38x 294441 2016-01-20 14:49:16Z zbb $
+# $FreeBSD: head/sys/arm/mv/armada38x/files.armada38x 296825 2016-03-14 07:05:41Z wma $
+arm/mv/mpic.c			standard
 
 arm/mv/armada38x/armada38x.c	standard
 arm/mv/armada38x/armada38x_mp.c	optional smp

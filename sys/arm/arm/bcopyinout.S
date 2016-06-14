@@ -38,7 +38,6 @@
 
 #include "assym.s"
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <sys/errno.h>
 
@@ -47,7 +46,7 @@
 .L_min_memcpy_size:
 	.word	_C_LABEL(_min_memcpy_size)
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 289372 2015-10-15 17:40:39Z kib $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 300694 2016-05-25 19:44:26Z ian $");
 #ifdef _ARM_ARCH_5E
 #include <arm/arm/bcopyinout_xscale.S>
 #else

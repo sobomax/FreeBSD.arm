@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/nexus.c 296250 2016-03-01 02:59:06Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/nexus.c 300173 2016-05-18 23:39:31Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -559,7 +559,7 @@ nexus_setup_dinfo(device_t dev, phandle_t node)
 			resource_list_add(&ndi->ndi_rl, SYS_RES_MEMORY, i,
 			    phys, phys + size - 1, size);
 	}
-	free(reg, M_OFWPROP);
+	OF_prop_free(reg);
 
 	nintr = OF_getprop_alloc(node, "interrupts",  sizeof(*intr),
 	    (void **)&intr);
@@ -568,7 +568,7 @@ nexus_setup_dinfo(device_t dev, phandle_t node)
 		    "upa-portid" : "portid", &ign, sizeof(ign)) <= 0) {
 			device_printf(dev, "<%s>: could not determine portid\n",
 			    ndi->ndi_obdinfo.obd_name);
-			free(intr, M_OFWPROP);
+			OF_prop_free(intr);
 			goto fail;
 		}
 
@@ -579,7 +579,7 @@ nexus_setup_dinfo(device_t dev, phandle_t node)
 			resource_list_add(&ndi->ndi_rl, SYS_RES_IRQ, i, intr[i],
 			    intr[i], 1);
 		}
-		free(intr, M_OFWPROP);
+		OF_prop_free(intr);
 	}
 
 	return (ndi);
@@ -605,8 +605,8 @@ nexus_print_res(struct nexus_devinfo *ndi)
 
 	rv = 0;
 	rv += resource_list_print_type(&ndi->ndi_rl, "mem", SYS_RES_MEMORY,
-	    "%#lx");
+	    "%#jx");
 	rv += resource_list_print_type(&ndi->ndi_rl, "irq", SYS_RES_IRQ,
-	    "%ld");
+	    "%jd");
 	return (rv);
 }

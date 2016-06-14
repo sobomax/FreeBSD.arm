@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/boot1/boot1.c 295320 2016-02-05 15:35:33Z smh $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/boot1/boot1.c 298826 2016-04-30 00:26:38Z pfg $");
 
 #include <sys/param.h>
 #include <machine/elf.h>
@@ -103,8 +103,8 @@ nodes_match(EFI_DEVICE_PATH *imgpath, EFI_DEVICE_PATH *devpath)
 
 /*
  * device_paths_match returns TRUE if the imgpath isn't NULL and all nodes
- * in imgpath and devpath match up to their respect occurances of a media
- * node, FALSE otherwise.
+ * in imgpath and devpath match up to their respective occurrences of a
+ * media node, FALSE otherwise.
  */
 static BOOLEAN
 device_paths_match(EFI_DEVICE_PATH *imgpath, EFI_DEVICE_PATH *devpath)
@@ -405,7 +405,7 @@ try_boot()
 	if ((status = bs->LoadImage(TRUE, image, devpath_last(dev->devpath),
 	    loaderbuf, loadersize, &loaderhandle)) != EFI_SUCCESS) {
 		printf("Failed to load image provided by %s, size: %zu, (%lu)\n",
-		     mod->name, bufsize, EFI_ERROR_CODE(status));
+		     mod->name, loadersize, EFI_ERROR_CODE(status));
 		goto errout;
 	}
 

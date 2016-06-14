@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009-2012 Microsoft Corp.
+ * Copyright (c) 2009-2012,2016 Microsoft Corp.
  * Copyright (c) 2012 NetApp Inc.
  * Copyright (c) 2012 Citrix Inc.
  * All rights reserved.
@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/utilities/hv_util.h 295958 2016-02-24 05:01:18Z sephe $
+ * $FreeBSD: head/sys/dev/hyperv/utilities/hv_util.h 298446 2016-04-22 05:01:43Z sephe $
  */
 
 #ifndef _HVUTIL_H_

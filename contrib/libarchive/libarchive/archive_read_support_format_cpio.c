@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_cpio.c 282932 2015-05-14 22:35:26Z delphij $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_cpio.c 299896 2016-05-16 05:01:44Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -243,7 +243,9 @@ archive_read_support_format_cpio(struct archive *_a)
 	    archive_read_format_cpio_read_data,
 	    archive_read_format_cpio_skip,
 	    NULL,
-	    archive_read_format_cpio_cleanup);
+	    archive_read_format_cpio_cleanup,
+	    NULL,
+	    NULL);
 
 	if (r != ARCHIVE_OK)
 		free(cpio);
@@ -399,6 +401,11 @@ archive_read_format_cpio_read_header(struct archive_read *a,
 
 	/* If this is a symlink, read the link contents. */
 	if (archive_entry_filetype(entry) == AE_IFLNK) {
+		if (cpio->entry_bytes_remaining > 1024 * 1024) {
+			archive_set_error(&a->archive, ENOMEM,
+			    "Rejecting malformed cpio archive: symlink contents exceed 1 megabyte");
+			return (ARCHIVE_FATAL);
+		}
 		h = __archive_read_ahead(a,
 			(size_t)cpio->entry_bytes_remaining, NULL);
 		if (h == NULL)

@@ -23,14 +23,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkuzip/mkuz_blockcache.h 295943 2016-02-23 23:59:08Z sobomax $
+ * $FreeBSD: head/usr.bin/mkuzip/mkuz_blockcache.h 298504 2016-04-23 07:23:43Z sobomax $
  */
 
-struct mkuz_blkcache_hit {
-    uint64_t offset;
-    ssize_t len;
-    uint32_t blkno;
-};
+struct mkuz_blk;
 
-struct mkuz_blkcache_hit *mkuz_blkcache_regblock(int, uint32_t, off_t, ssize_t,
-  void *);
+struct mkuz_blk_info *mkuz_blkcache_regblock(int, const struct mkuz_blk *);

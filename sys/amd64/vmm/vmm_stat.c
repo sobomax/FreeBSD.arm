@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_stat.c 283657 2015-05-28 17:37:01Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_stat.c 299009 2016-05-03 22:07:18Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_stat.c 283657 2015-05-28 17:37:01Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_stat.c 299009 2016-05-03 22:07:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -69,7 +69,7 @@ vmm_stat_register(void *arg)
 		return;
 
 	if (vst_num_elems + vst->nelems >= MAX_VMM_STAT_ELEMS) {
-		printf("Cannot accomodate vmm stat type \"%s\"!\n", vst->desc);
+		printf("Cannot accommodate vmm stat type \"%s\"!\n", vst->desc);
 		return;
 	}
 

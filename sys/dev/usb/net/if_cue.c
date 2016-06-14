@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_cue.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_cue.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /*
  * CATC USB-EL1210A USB to ethernet driver. Used in the CATC Netmate
@@ -47,7 +47,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/net/if_cue.c 292080 2015-12-11 05:28:00Z im
  * RX filter uses a 512-bit multicast hash table, single perfect entry
  * for the station address, and promiscuous mode. Unlike the ADMtek
  * and KLSI chips, the CATC ASIC supports read and write combining
- * mode where multiple packets can be transfered using a single bulk
+ * mode where multiple packets can be transferred using a single bulk
  * transaction, which helps performance a great deal.
  */
 

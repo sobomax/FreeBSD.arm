@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/sparc64/boot1/boot1.c 294765 2016-01-26 06:26:19Z imp $");
+__FBSDID("$FreeBSD: head/sys/boot/sparc64/boot1/boot1.c 298645 2016-04-26 14:51:58Z pfg $");
 
 #include <sys/param.h>
 #include <sys/dirent.h>
@@ -390,7 +390,7 @@ zbread(char *buf, off_t off, size_t bytes)
 
 	p = buf;
 	soff = VDEV_BOOT_OFFSET + off;
-	lb = (soff + bytes + DEV_BSIZE - 1) / DEV_BSIZE;
+	lb = howmany(soff + bytes, DEV_BSIZE);
 	poff = soff;
 	while (poff < soff + bytes) {
 		nb = lb - poff / DEV_BSIZE;

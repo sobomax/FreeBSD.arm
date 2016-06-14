@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/local_unbound 291582 2015-12-01 13:20:21Z des $
+# $FreeBSD: head/etc/rc.d/local_unbound 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: local_unbound
@@ -11,7 +11,7 @@
 . /etc/rc.subr
 
 name="local_unbound"
-desc="local caching forwarding resolver"
+desc="Local caching forwarding resolver"
 rcvar="local_unbound_enable"
 
 command="/usr/sbin/unbound"

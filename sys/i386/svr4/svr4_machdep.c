@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 294930 2016-01-27 17:55:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/svr4/svr4_machdep.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -159,7 +159,7 @@ svr4_getcontext(td, uc, mask, oonstack)
 #if defined(DONE_MORE_SIGALTSTACK_WORK)
 	bsd_to_svr4_sigaltstack(sf, s);
 #else
-	s->ss_sp = (void *)(((u_long) tf->tf_esp) & ~(16384 - 1));
+	s->ss_sp = (void *)rounddown2((u_long)tf->tf_esp, 16384);
 	s->ss_size = 16384;
 	s->ss_flags = 0;
 #endif

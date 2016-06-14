@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.bin/ssh/Makefile 291941 2015-12-07 16:08:09Z bdrewery $
+# $FreeBSD: head/secure/usr.bin/ssh/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
@@ -6,10 +6,10 @@ PROG=	ssh
 LINKS=	${BINDIR}/ssh ${BINDIR}/slogin
 MAN=	ssh.1 ssh_config.5
 MLINKS=	ssh.1 slogin.1
+PACKAGE=	ssh
 
 SRCS=	ssh.c readconf.c clientloop.c sshtty.c \
-	sshconnect.c sshconnect1.c sshconnect2.c mux.c \
-	roaming_common.c roaming_client.c
+	sshconnect.c sshconnect1.c sshconnect2.c mux.c
 
 # gss-genr.c really belongs in libssh; see src/secure/lib/libssh/Makefile
 SRCS+=	gss-genr.c

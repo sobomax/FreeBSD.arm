@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libypclnt/Makefile 231118 2012-02-07 09:27:07Z dim $
+# $FreeBSD: head/lib/libypclnt/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	ypclnt
 SHLIB_MAJOR= 4
 SRCS=	ypclnt_connect.c \

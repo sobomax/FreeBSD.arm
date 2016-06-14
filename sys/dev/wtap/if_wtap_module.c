@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/if_wtap_module.c 292166 2015-12-13 20:53:51Z avos $
+ * $FreeBSD: head/sys/dev/wtap/if_wtap_module.c 298931 2016-05-02 16:47:28Z pfg $
  */
 #include <sys/param.h>
 #include <sys/module.h>
@@ -88,7 +88,7 @@
 MALLOC_DEFINE(M_WTAP, "wtap", "wtap wireless simulator");
 MALLOC_DEFINE(M_WTAP_PACKET, "wtap packet", "wtap wireless simulator packet");
 MALLOC_DEFINE(M_WTAP_RXBUF, "wtap rxbuf",
-    "wtap wireless simulator recieve buffer");
+    "wtap wireless simulator receive buffer");
 MALLOC_DEFINE(M_WTAP_PLUGIN, "wtap plugin", "wtap wireless simulator plugin");
 
 static struct wtap_hal		*hal;
@@ -122,7 +122,7 @@ wtap_ioctl(struct cdev *dev, u_long cmd, caddr_t data,
 			error = EINVAL;
 		break;
 	default:
-		DWTAP_PRINTF("Unkown WTAP IOCTL\n");
+		DWTAP_PRINTF("Unknown WTAP IOCTL\n");
 		error = EINVAL;
 	}
 

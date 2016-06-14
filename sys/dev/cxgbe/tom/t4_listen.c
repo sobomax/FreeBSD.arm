@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_listen.c 294889 2016-01-27 05:15:53Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_listen.c 299206 2016-05-06 23:49:10Z jhb $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1305,6 +1305,7 @@ found:
 		REJECT_PASS_ACCEPT();
 	}
 	so = inp->inp_socket;
+	CURVNET_SET(so->so_vnet);
 
 	mtu_idx = find_best_mtu_idx(sc, &inc, be16toh(cpl->tcpopt.mss));
 	rscale = cpl->tcpopt.wsf && V_tcp_do_rfc1323 ? select_rcv_wscale() : 0;
@@ -1351,6 +1352,7 @@ found:
 	 */
 	toe_syncache_add(&inc, &to, &th, inp, tod, synqe);
 	INP_UNLOCK_ASSERT(inp);	/* ok to assert, we have a ref on the inp */
+	CURVNET_RESTORE();
 
 	/*
 	 * If we replied during syncache_add (synqe->wr has been consumed),

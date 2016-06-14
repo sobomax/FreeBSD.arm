@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powerpc/elf32_machdep.c 293613 2016-01-09 20:18:53Z dchagin $
+ * $FreeBSD: head/sys/powerpc/powerpc/elf32_machdep.c 298052 2016-04-15 14:25:13Z pfg $
  */
 
 #include <sys/param.h>
@@ -257,7 +257,7 @@ elf_reloc_internal(linker_file_t lf, Elf_Addr relocbase, const void *data,
 void
 elf_reloc_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 {
-	Elf_Rela *rela = 0, *relalim;
+	Elf_Rela *rela = NULL, *relalim;
 	Elf_Addr relasz = 0;
 	Elf_Addr *where;
 

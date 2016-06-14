@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpi_support/acpi_hp.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/acpi_support/acpi_hp.c 298848 2016-04-30 14:41:18Z pfg $");
 
 /*
  * Driver for extra ACPI-controlled features found on HP laptops
@@ -1033,7 +1033,8 @@ acpi_hp_hex_decode(char* buffer)
 	UINT8	*uin;
 	UINT8	uout;
 
-	if (((int)length/2)*2 == length || length < 10) return;
+	if (rounddown((int)length, 2) == length || length < 10)
+		return;
 
 	for (i = 0; i<length; ++i) {
 		if (!((i+1)%3)) {

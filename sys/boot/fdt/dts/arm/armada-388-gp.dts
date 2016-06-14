@@ -38,7 +38,7 @@
  *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  *     OTHER DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/armada-388-gp.dts 294432 2016-01-20 14:14:30Z zbb $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/armada-388-gp.dts 301225 2016-06-02 18:41:33Z zbb $
  */
 
 /dts-v1/;
@@ -59,9 +59,16 @@
 	};
 
 	soc {
-		ranges = <0 0 0xf1000000 0x100000>;
+		ranges = <MBUS_ID(0xf0, 0x01) 0 0xf1000000 0x100000>;
 
 		internal-regs {
+			crypto@90000 {
+				status = "okay";
+			};
+			crypto@92000 {
+				status = "okay";
+			};
+
 			spi@10600 {
 				pinctrl-names = "default";
 				pinctrl-0 = <&spi0_pins>;

@@ -1,4 +1,6 @@
-# $FreeBSD: head/libexec/dma/dmagent/Makefile 289148 2015-10-11 19:25:39Z bapt $
+# $FreeBSD: head/libexec/dma/dmagent/Makefile 301166 2016-06-01 20:44:28Z gjb $
+
+.include <src.opts.mk>
 
 LIBADD=	ssl crypto
 
@@ -22,6 +24,11 @@ YFLAGS+=	-i
 CLEANFILES=	aliases_parse.i
 FILES=	mailer.conf
 FILESDIR=	${SHAREDIR}/examples/dma
+.if ${MK_SENDMAIL} == no
+CONFGROUPS=	CONFS MAILER
+MAILERDIR=	/etc/mail
+MAILER=		mailer.conf
+.endif
 
 BINMODE=	2555
 

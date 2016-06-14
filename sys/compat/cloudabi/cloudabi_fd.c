@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_fd.c 287209 2015-08-27 15:16:41Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_fd.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -38,8 +38,9 @@ __FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_fd.c 287209 2015-08-27 15:
 #include <sys/unistd.h>
 #include <sys/vnode.h>
 
+#include <contrib/cloudabi/cloudabi_types_common.h>
+
 #include <compat/cloudabi/cloudabi_proto.h>
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
 #include <compat/cloudabi/cloudabi_util.h>
 
 /* Translation between CloudABI and Capsicum rights. */

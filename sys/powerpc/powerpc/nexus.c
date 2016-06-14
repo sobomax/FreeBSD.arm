@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/nexus.c 295755 2016-02-18 13:00:04Z zbb $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/nexus.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -203,7 +203,7 @@ nexus_activate_resource(device_t bus __unused, device_t child __unused,
 
 		start = (vm_paddr_t) rman_get_start(r);
 		if (bootverbose)
-			printf("nexus mapdev: start %jx, len %ld\n",
+			printf("nexus mapdev: start %jx, len %jd\n",
 			    (uintmax_t)start, rman_get_size(r));
 
 		p = pmap_mapdev(start, (vm_size_t) rman_get_size(r));

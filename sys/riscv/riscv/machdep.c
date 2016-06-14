@@ -36,7 +36,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/riscv/riscv/machdep.c 296257 2016-03-01 09:45:27Z andrew $");
+__FBSDID("$FreeBSD: head/sys/riscv/riscv/machdep.c 298580 2016-04-25 14:47:51Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -93,7 +93,6 @@ __FBSDID("$FreeBSD: head/sys/riscv/riscv/machdep.c 296257 2016-03-01 09:45:27Z a
 #endif
 
 struct pcpu __pcpu[MAXCPU];
-extern uint64_t pagetable_l0;
 
 static struct trapframe proc0_tf;
 
@@ -390,12 +389,6 @@ cpu_est_clockrate(int cpu_id, uint64_t *rate)
 void
 cpu_pcpu_init(struct pcpu *pcpu, int cpuid, size_t size)
 {
-	uint64_t addr;
-
-	addr = (uint64_t)&pagetable_l0;
-	addr += (cpuid * PAGE_SIZE);
-
-	pcpu->pc_sptbr = addr;
 }
 
 void

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonacl.c 287256 2015-08-28 14:26:17Z trasz $");
+__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonacl.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #ifndef APPLEKEXT
 #include <fs/nfs/nfsport.h>
@@ -436,7 +436,7 @@ nfsrv_buildacl(struct nfsrv_descript *nd, NFSACL_T *aclp, enum vtype type,
 			break;
 		default:
 			continue;
-		};
+		}
 		retlen += nfsrv_buildace(nd, name, namelen, type, isgroup,
 		    isowner, &aclp->acl_entry[i]);
 		entrycnt++;
@@ -505,7 +505,7 @@ nfsrv_compareacl(NFSACL_T *aclp1, NFSACL_T *aclp2)
 		case ACL_OTHER:
 			if (acep1->ae_perm != acep2->ae_perm)
 				return (1);
-		};
+		}
 		acep1++;
 		acep2++;
 	}

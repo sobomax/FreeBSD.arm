@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/icmp6.c 293633 2016-01-10 13:40:29Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/icmp6.c 299829 2016-05-15 03:22:13Z markj $");
 
 #define	MBUF_PRIVATE	/* XXXRW: Optimisation tries to avoid M_EXT mbufs */
 
@@ -667,7 +667,9 @@ icmp6_input(struct mbuf **mp, int *offp, int proto)
 			 * XXX: this combination of flags is pointless,
 			 * but should we keep this for compatibility?
 			 */
-			if ((V_icmp6_nodeinfo & 5) != 5)
+			if ((V_icmp6_nodeinfo & (ICMP6_NODEINFO_FQDNOK |
+			    ICMP6_NODEINFO_TMPADDROK)) !=
+			    (ICMP6_NODEINFO_FQDNOK | ICMP6_NODEINFO_TMPADDROK))
 				break;
 
 			if (code != 0)

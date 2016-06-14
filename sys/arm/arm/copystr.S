@@ -39,10 +39,9 @@
  */
 
 #include "assym.s"
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/armreg.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 289372 2015-10-15 17:40:39Z kib $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/errno.h>
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/Makefile 295713 2016-02-17 18:41:55Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/Makefile 299704 2016-05-14 00:35:35Z vangyzen $
 
 .include <src.opts.mk>
 
@@ -8,12 +8,14 @@ TESTS_SUBDIRS=	c063
 TESTS_SUBDIRS+=	db
 TESTS_SUBDIRS+=	gen
 TESTS_SUBDIRS+=	hash
+TESTS_SUBDIRS+=	iconv
 TESTS_SUBDIRS+=	inet
 TESTS_SUBDIRS+=	net
 TESTS_SUBDIRS+=	nss
 TESTS_SUBDIRS+=	regex
 TESTS_SUBDIRS+=	resolv
 TESTS_SUBDIRS+=	rpc
+TESTS_SUBDIRS+=	setjmp
 TESTS_SUBDIRS+=	stdio
 TESTS_SUBDIRS+=	stdlib
 TESTS_SUBDIRS+=	string

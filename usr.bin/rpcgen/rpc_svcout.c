@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)rpc_svcout.c 1.29 89/03/30 (C) 1987 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_svcout.c 241737 2012-10-19 14:49:42Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_svcout.c 298089 2016-04-15 22:31:22Z pfg $");
 
 /*
  * rpc_svcout.c, Server-skeleton outputter for the RPC protocol compiler
@@ -551,7 +551,7 @@ write_program(definition *def, const char *storage)
 			(void) sprintf(_errbuf, "unable to free results");
 			print_err_message("\t\t");
 			f_print(fout, "\n");
-		};
+		}
 		print_return("\t");
 		f_print(fout, "}\n");
 	}

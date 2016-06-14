@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_write_disk_set_standard_lookup.c 238856 2012-07-28 06:38:44Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_write_disk_set_standard_lookup.c 299529 2016-05-12 10:16:16Z mm $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -67,7 +67,7 @@ static void	cleanup(void *);
  * a simple cache to accelerate such lookups---into the archive_write_disk
  * object.  This is in a separate file because getpwnam()/getgrnam()
  * can pull in a LOT of library code (including NIS/LDAP functions, which
- * pull in DNS resolveers, etc).  This can easily top 500kB, which makes
+ * pull in DNS resolvers, etc).  This can easily top 500kB, which makes
  * it inappropriate for some space-constrained applications.
  *
  * Applications that are size-sensitive may want to just use the
@@ -86,6 +86,11 @@ archive_write_disk_set_standard_lookup(struct archive *a)
 {
 	struct bucket *ucache = malloc(cache_size * sizeof(struct bucket));
 	struct bucket *gcache = malloc(cache_size * sizeof(struct bucket));
+	if (ucache == NULL || gcache == NULL) {
+		free(ucache);
+		free(gcache);
+		return (ARCHIVE_FATAL);
+	}
 	memset(ucache, 0, cache_size * sizeof(struct bucket));
 	memset(gcache, 0, cache_size * sizeof(struct bucket));
 	archive_write_disk_set_group_lookup(a, gcache, lookup_gid, cleanup);

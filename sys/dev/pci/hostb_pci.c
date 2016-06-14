@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/hostb_pci.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/hostb_pci.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -51,7 +51,7 @@ pci_hostb_probe(device_t dev)
 
 	switch (id) {
 
-	/* VIA VT82C596 Power Managment Function */
+	/* VIA VT82C596 Power Management Function */
 	case 0x30501106:
 		return (ENXIO);
 

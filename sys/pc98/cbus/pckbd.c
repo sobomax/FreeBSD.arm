@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/pc98/cbus/pckbd.c 272123 2014-09-25 18:53:27Z jhb $
+ * $FreeBSD: head/sys/pc98/cbus/pckbd.c 298352 2016-04-20 15:45:55Z pfg $
  */
 
 #include "opt_compat.h"
@@ -446,8 +446,7 @@ pckbd_init(int unit, keyboard_t **kbdp, void *arg, int flags)
 		keymap = &default_keymap;
 		accmap = &default_accentmap;
 		fkeymap = default_fkeytab;
-		fkeymap_size =
-			sizeof(default_fkeytab)/sizeof(default_fkeytab[0]);
+		fkeymap_size = nitems(default_fkeytab);
 
 		state->kbdc = kbdc_open(data[0]);
 		if (state->kbdc == NULL)

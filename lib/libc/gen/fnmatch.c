@@ -39,7 +39,7 @@
 static char sccsid[] = "@(#)fnmatch.c	8.2 (Berkeley) 4/16/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/fnmatch.c 288309 2015-09-27 12:52:18Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/fnmatch.c 301461 2016-06-05 19:12:52Z pfg $");
 
 /*
  * Function fnmatch() as specified in POSIX 1003.2-1992, section B.6.
@@ -296,8 +296,8 @@ rangematch(const char *pattern, wchar_t test, int flags, char **newp,
 
 			if (table->__collate_load_error ?
 			    c <= test && test <= c2 :
-			       __collate_range_cmp(table, c, test) <= 0
-			    && __collate_range_cmp(table, test, c2) <= 0
+			       __wcollate_range_cmp(table, c, test) <= 0
+			    && __wcollate_range_cmp(table, test, c2) <= 0
 			   )
 				ok = 1;
 		} else if (c == test)

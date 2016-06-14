@@ -38,7 +38,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_lookup.c	8.6 (Berkeley) 4/1/94
- * $FreeBSD: head/sys/fs/ext2fs/ext2_lookup.c 294653 2016-01-24 02:41:49Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_lookup.c 298433 2016-04-21 19:57:40Z pfg $
  */
 
 #include <sys/param.h>
@@ -540,7 +540,7 @@ found:
 	 * in the cache as to where the entry was found.
 	 */
 	if ((flags & ISLASTCN) && nameiop == LOOKUP)
-		dp->i_diroff = i_offset &~ (DIRBLKSIZ - 1);
+		dp->i_diroff = rounddown2(i_offset, DIRBLKSIZ);
 	/*
 	 * If deleting, and at end of pathname, return
 	 * parameters which can be used to remove file.

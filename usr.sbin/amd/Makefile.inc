@@ -1,6 +1,6 @@
 # ex:ts=8
 #
-# $FreeBSD: head/usr.sbin/amd/Makefile.inc 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/amd/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 #
 # Makefile for amd
 # 	This file is under a "BSD" copyright (c) by David O'Brien 1998.
@@ -10,6 +10,8 @@
 #	$NetBSD: Makefile,v 1.8 1998/08/08 22:33:37 christos Exp $
 
 .include <src.opts.mk>
+
+PACKAGE= amd
 
 CFLAGS+= -I. -I${.CURDIR} 
 CFLAGS+= -I${.CURDIR}/../include

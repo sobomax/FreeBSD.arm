@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)auth_none.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)auth_none.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/auth_none.c 287350 2015-09-01 08:34:44Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/auth_none.c 297790 2016-04-10 19:33:58Z pfg $");
 
 /*
  * auth_none.c
@@ -83,9 +83,9 @@ authnone_create(void)
 	XDR *xdrs;
 
 	mutex_lock(&authnone_lock);
-	if (ap == 0) {
-		ap = (struct authnone_private *)calloc(1, sizeof (*ap));
-		if (ap == 0) {
+	if (ap == NULL) {
+		ap = calloc(1, sizeof (*ap));
+		if (ap == NULL) {
 			mutex_unlock(&authnone_lock);
 			return (0);
 		}

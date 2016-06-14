@@ -1,9 +1,13 @@
-# $FreeBSD: head/tools/tools/ioat/Makefile 289733 2015-10-22 04:38:05Z cem $
+# $FreeBSD: head/tools/tools/ioat/Makefile 300862 2016-05-27 18:40:38Z ngie $
 
 PROG=	ioatcontrol
 MAN=	ioatcontrol.8
-CFLAGS+=	-I${.CURDIR:H:H:H}/sys/dev/ioat
-WARNS?=	6
+BINDIR?=	/usr/bin
+
+CFLAGS+=	-I${SRCTOP}/sys/dev/ioat
+
 LIBADD=	util
+
+WARNS?=	6
 
 .include <bsd.prog.mk>

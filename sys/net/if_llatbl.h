@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_llatbl.h 292978 2015-12-31 05:03:27Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/net/if_llatbl.h 301217 2016-06-02 17:51:29Z gnn $");
 
 #ifndef	_NET_IF_LLATBL_H_
 #define	_NET_IF_LLATBL_H_
@@ -137,7 +137,6 @@ struct llentry {
 	LLE_WLOCK(lle);						\
 	LLE_FREE_LOCKED(lle);					\
 } while (0)
-
 
 typedef	struct llentry *(llt_lookup_t)(struct lltable *, u_int flags,
     const struct sockaddr *l3addr);

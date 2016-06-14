@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/firewire/if_fwe.c 272214 2014-09-27 16:50:21Z kan $
+ * $FreeBSD: head/sys/dev/firewire/if_fwe.c 299351 2016-05-10 10:21:03Z trasz $
  */
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
@@ -307,10 +307,6 @@ fwe_init(void *arg)
 		xferq->bulkxfer = (struct fw_bulkxfer *) malloc(
 			sizeof(struct fw_bulkxfer) * xferq->bnchunk,
 							M_FWE, M_WAITOK);
-		if (xferq->bulkxfer == NULL) {
-			printf("if_fwe: malloc failed\n");
-			return;
-		}
 		STAILQ_INIT(&xferq->stvalid);
 		STAILQ_INIT(&xferq->stfree);
 		STAILQ_INIT(&xferq->stdma);

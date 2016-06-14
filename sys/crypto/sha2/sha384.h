@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/crypto/sha2/sha384.h 292782 2015-12-27 17:33:59Z allanjude $
+ * $FreeBSD: head/sys/crypto/sha2/sha384.h 300773 2016-05-26 19:29:29Z cem $
  */
 
 #ifndef _SHA384_H_
@@ -74,7 +74,7 @@ __BEGIN_DECLS
 
 void	SHA384_Init(SHA384_CTX *);
 void	SHA384_Update(SHA384_CTX *, const void *, size_t);
-void	SHA384_Final(unsigned char [SHA384_DIGEST_LENGTH], SHA384_CTX *);
+void	SHA384_Final(unsigned char [static SHA384_DIGEST_LENGTH], SHA384_CTX *);
 #ifndef _KERNEL
 char   *SHA384_End(SHA384_CTX *, char *);
 char   *SHA384_Data(const void *, unsigned int, char *);

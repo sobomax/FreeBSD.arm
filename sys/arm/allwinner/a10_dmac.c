@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_dmac.c 296019 2016-02-25 01:24:02Z jmcneill $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_dmac.c 297627 2016-04-06 23:11:03Z jmcneill $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -46,7 +46,7 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_dmac.c 296019 2016-02-25 01:24:02
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <arm/allwinner/a10_dmac.h>
-#include <arm/allwinner/a10_clk.h>
+#include <dev/extres/clk/clk.h>
 
 #include "sunxi_dma_if.h"
 
@@ -111,6 +111,7 @@ a10dmac_attach(device_t dev)
 {
 	struct a10dmac_softc *sc;
 	unsigned int index;
+	clk_t clk;
 	int error;
 
 	sc = device_get_softc(dev);
@@ -123,7 +124,16 @@ a10dmac_attach(device_t dev)
 	mtx_init(&sc->sc_mtx, "a10 dmac", NULL, MTX_SPIN);
 
 	/* Activate DMA controller clock */
-	a10_clk_dmac_activate();
+	error = clk_get_by_ofw_index(dev, 0, &clk);
+	if (error != 0) {
+		device_printf(dev, "cannot get clock\n");
+		return (error);
+	}
+	error = clk_enable(clk);
+	if (error != 0) {
+		device_printf(dev, "cannot enable clock\n");
+		return (error);
+	}
 
 	/* Disable all interrupts and clear pending status */
 	DMA_WRITE(sc, AWIN_DMA_IRQ_EN_REG, 0);

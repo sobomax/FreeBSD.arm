@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/dev_net.c 296186 2016-02-29 09:03:07Z sgalabov $");
+__FBSDID("$FreeBSD: head/sys/boot/common/dev_net.c 297151 2016-03-21 15:06:50Z ian $");
 
 /*-
  * This module implements a "raw device" interface suitable for
@@ -169,6 +169,12 @@ net_open(struct open_file *f, ...)
 		setenv("boot.netif.gateway", inet_ntoa(gateip), 1);
 		setenv("boot.nfsroot.server", inet_ntoa(rootip), 1);
 		setenv("boot.nfsroot.path", rootpath, 1);
+		if (intf_mtu != 0) {
+			char mtu[16];
+			sprintf(mtu, "%u", intf_mtu);
+			setenv("boot.netif.mtu", mtu, 1);
+		}
+
 	}
 	netdev_opens++;
 	f->f_devdata = &netdev_sock;

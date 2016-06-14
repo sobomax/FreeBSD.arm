@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/dhclient/conflex.c 149481 2005-08-26 01:25:59Z brooks $");
+__FBSDID("$FreeBSD: head/sbin/dhclient/conflex.c 301235 2016-06-03 03:40:39Z pfg $");
 
 #include <ctype.h>
 
@@ -97,8 +97,8 @@ get_char(FILE *cfile)
 				cur_line = line2;
 				prev_line = line1;
 			} else {
-				cur_line = line2;
-				prev_line = line1;
+				cur_line = line1;
+				prev_line = line2;
 			}
 			line++;
 			lpos = 1;

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/userboot/test/test.c 294047 2016-01-14 22:07:35Z jmallett $
+ * $FreeBSD: head/sys/boot/userboot/test/test.c 297793 2016-04-10 23:07:00Z pfg $
  */
 
 #include <sys/types.h>
@@ -273,7 +273,7 @@ test_diskioctl(void *arg, int unit, u_long cmd, void *data)
 		break;
 	default:
 		return (ENOTTY);
-	};
+	}
 	return (0);
 }
 

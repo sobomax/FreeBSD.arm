@@ -23,18 +23,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: head/sys/boot/fdt/dts/arm/olinuxino-lime.dts 295464 2016-02-10 09:19:29Z andrew $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/olinuxino-lime.dts 300777 2016-05-26 21:09:07Z manu $
  */
 
 #include "sun4i-a10-olinuxino-lime.dts"
-
-/ {
-	soc@01c00000 {
-		ccm@01c20000 {
-			compatible = "allwinner,sun4i-ccm";
-			#address-cells = <1>;
-			#size-cells = <1>;
-			reg = < 0x01c20000 0x400 >;
-		};
-	};
-};
+#include "xpowers-axp209.dtsi"

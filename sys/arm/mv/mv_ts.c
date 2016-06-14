@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mv_ts.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mv_ts.c 300421 2016-05-22 13:58:32Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,7 +80,7 @@ ts_probe(device_t dev)
 #define	MV_TEMP_SENS_OFFS	10
 #define	MV_TEMP_SENS_MASK	0x1ff
 #define	MV_TEMP_SENS_READ_MAX	16
-#define	TZ_ZEROC		2732
+#define	TZ_ZEROC		2731
 #define	MV_TEMP_CONVERT(x)	((((322 - x) * 100000) / 13625) + TZ_ZEROC)
 
 /*

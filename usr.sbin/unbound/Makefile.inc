@@ -1,5 +1,6 @@
-# $FreeBSD: head/usr.sbin/unbound/Makefile.inc 255602 2013-09-15 16:27:25Z des $
+# $FreeBSD: head/usr.sbin/unbound/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
 NO_WERROR= true
+PACKAGE=	unbound
 
 .include "../Makefile.inc"

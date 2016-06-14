@@ -49,7 +49,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/isci/scil/scic_phy.h 231136 2012-02-07 17:43:58Z jimharris $
+ * $FreeBSD: head/sys/dev/isci/scil/scic_phy.h 298931 2016-05-02 16:47:28Z pfg $
  */
 #ifndef _SCIC_PHY_H_
 #define _SCIC_PHY_H_
@@ -308,7 +308,7 @@ SCI_STATUS scic_sas_phy_get_properties(
 
 /**
  * @brief This method will enable the user to retrieve information
- *        specific to a SATA phy, such as: the recieved signature
+ *        specific to a SATA phy, such as: the received signature
  *        FIS, if a port selector is present, etc.
  *
  * @param[in]  phy this parameter specifies the phy for which to

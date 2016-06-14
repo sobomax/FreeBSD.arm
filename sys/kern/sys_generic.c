@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_generic.c 296060 2016-02-25 19:58:23Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_generic.c 297493 2016-04-01 18:29:38Z jhb $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -89,12 +89,14 @@ __FBSDID("$FreeBSD: head/sys/kern/sys_generic.c 296060 2016-02-25 19:58:23Z mark
 #define	SYS_IOCTL_SMALL_SIZE	128	/* bytes */
 #define	SYS_IOCTL_SMALL_ALIGN	8	/* bytes */
 
-int iosize_max_clamp = 0;
+#ifdef __LP64__
+static int iosize_max_clamp = 0;
 SYSCTL_INT(_debug, OID_AUTO, iosize_max_clamp, CTLFLAG_RW,
     &iosize_max_clamp, 0, "Clamp max i/o size to INT_MAX");
-int devfs_iosize_max_clamp = 1;
+static int devfs_iosize_max_clamp = 1;
 SYSCTL_INT(_debug, OID_AUTO, devfs_iosize_max_clamp, CTLFLAG_RW,
     &devfs_iosize_max_clamp, 0, "Clamp max i/o size to INT_MAX for devices");
+#endif
 
 /*
  * Assert that the return value of read(2) and write(2) syscalls fits
@@ -158,6 +160,24 @@ struct selfd {
 
 static uma_zone_t selfd_zone;
 static struct mtx_pool *mtxpool_select;
+
+#ifdef __LP64__
+size_t
+devfs_iosize_max(void)
+{
+
+	return (devfs_iosize_max_clamp || SV_CURPROC_FLAG(SV_ILP32) ?
+	    INT_MAX : SSIZE_MAX);
+}
+
+size_t
+iosize_max(void)
+{
+
+	return (iosize_max_clamp || SV_CURPROC_FLAG(SV_ILP32) ?
+	    INT_MAX : SSIZE_MAX);
+}
+#endif
 
 #ifndef _SYS_SYSPROTO_H_
 struct read_args {

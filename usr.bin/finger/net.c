@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)net.c	8.4 (Berkeley) 4/28/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/finger/net.c 294293 2016-01-18 20:47:04Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/finger/net.c 298209 2016-04-18 14:44:01Z araujo $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -68,7 +68,7 @@ netfinger(char *name)
 	static struct addrinfo hint;
 
 	host = strrchr(name, '@');
-	if (host == 0)
+	if (host == NULL)
 		return;
 	*host++ = '\0';
 	signal(SIGALRM, cleanup);
@@ -92,7 +92,7 @@ netfinger(char *name)
 	else
 		printf("[%s]\n", ai0->ai_canonname);
 
-	for (ai = ai0; ai != 0; ai = ai->ai_next) {
+	for (ai = ai0; ai != NULL; ai = ai->ai_next) {
 		if (multi)
 			trying(ai);
 

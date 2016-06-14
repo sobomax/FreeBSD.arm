@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_hid.c 295923 2016-02-23 14:58:20Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_hid.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*	$NetBSD: hid.c,v 1.17 2001/11/13 06:24:53 lukem Exp $	*/
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
@@ -576,7 +576,7 @@ hid_report_size(const void *buf, usb_size_t len, enum hid_kind k, uint8_t *id)
 
 	for (d = hid_start_parse(buf, len, 1 << k); hid_get_item(d, &h);) {
 		if (h.kind == k) {
-			/* check for ID-byte presense */
+			/* check for ID-byte presence */
 			if ((h.report_ID != 0) && !any_id) {
 				if (id != NULL)
 					*id = h.report_ID;

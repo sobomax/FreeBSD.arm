@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)hash_buf.c	8.5 (Berkeley) 7/15/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash_buf.c 295031 2016-01-29 01:22:12Z brooks $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash_buf.c 297790 2016-04-10 19:33:58Z pfg $");
 
 /*
  * PACKAGE: hash
@@ -245,7 +245,7 @@ newbuf(HTAB *hashp, u_int32_t addr, BUFHEAD *prev_bp)
 			 */
 			for (xbp = bp; xbp->ovfl;) {
 				next_xbp = xbp->ovfl;
-				xbp->ovfl = 0;
+				xbp->ovfl = NULL;
 				xbp = next_xbp;
 
 				/* Check that ovfl pointer is up date. */
@@ -350,7 +350,7 @@ __buf_free(HTAB *hashp, int do_free, int to_disk)
 void
 __reclaim_buf(HTAB *hashp, BUFHEAD *bp)
 {
-	bp->ovfl = 0;
+	bp->ovfl = NULL;
 	bp->addr = 0;
 	bp->flags = 0;
 	BUF_REMOVE(bp);

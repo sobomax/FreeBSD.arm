@@ -73,7 +73,7 @@
  */
 #include <machine/armreg.h>
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale.S 295267 2016-02-04 17:01:38Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_xscale.S 300534 2016-05-23 20:12:38Z ian $");
 
 /*
  * Size of the XScale core D-cache.
@@ -111,13 +111,13 @@ END(xscale_cpwait)
  * changes in the control register.
  */
 ENTRY(xscale_control)
-	mrc	p15, 0, r3, c1, c0, 0	/* Read the control register */
+	mrc	CP15_SCTLR(r3)		/* Read the control register */
 	bic	r2, r3, r0		/* Clear bits */
 	eor	r2, r2, r1		/* XOR bits */
 
 	teq	r2, r3			/* Only write if there was a change */
 	mcrne	p15, 0, r0, c7, c5, 6	/* Invalidate the BTB */
-	mcrne	p15, 0, r2, c1, c0, 0	/* Write new control register */
+	mcrne	CP15_SCTLR(r2)		/* Write new control register */
 	mov	r0, r3			/* Return old value */
 
 	CPWAIT_AND_RETURN(r1)

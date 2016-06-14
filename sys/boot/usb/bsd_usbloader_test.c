@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/usb/bsd_usbloader_test.c 266894 2014-05-30 16:49:12Z hselasky $ */
+/* $FreeBSD: head/sys/boot/usb/bsd_usbloader_test.c 298647 2016-04-26 15:33:53Z hselasky $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *
@@ -53,6 +53,12 @@ usb_free(void *ptr)
 
 void
 DELAY(unsigned int delay)
+{
+	usleep(delay);
+}
+
+void
+delay(unsigned int delay)
 {
 	usleep(delay);
 }

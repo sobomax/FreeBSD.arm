@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/meta.sys.mk 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/share/mk/meta.sys.mk 296637 2016-03-11 01:35:39Z sjg $
 # $Id: meta.sys.mk,v 1.19 2014/08/02 23:16:02 sjg Exp $
 
 #
@@ -111,7 +111,7 @@ _metaError: .NOMETA .NOTMAIN
 .endif
 
 # Are we, after all, in meta mode?
-.if ${.MAKE.MODE:Mmeta*} != ""
+.if ${.MAKE.MODE:Uno:Mmeta*} != ""
 MKDEP_MK = meta.autodep.mk
 
 # if we think we are updating dependencies, 

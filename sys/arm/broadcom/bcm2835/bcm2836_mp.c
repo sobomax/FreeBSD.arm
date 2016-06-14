@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836_mp.c 296100 2016-02-26 16:04:47Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836_mp.c 298068 2016-04-15 16:05:41Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -139,6 +139,7 @@ platform_mp_start_ap(void)
 	}
 }
 
+#ifndef INTRNG
 void
 pic_ipi_send(cpuset_t cpus, u_int ipi)
 {
@@ -176,3 +177,4 @@ void
 pic_ipi_clear(int ipi)
 {
 }
+#endif

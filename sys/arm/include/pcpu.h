@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/arm/include/pcpu.h 294987 2016-01-28 12:43:58Z zbb $
+ * $FreeBSD: head/sys/arm/include/pcpu.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -32,7 +32,6 @@
 
 #ifdef _KERNEL
 
-#include <machine/acle-compat.h>
 #include <machine/cpuconf.h>
 
 #define	ALT_STACK_SIZE	128

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/crypto/sha2/sha256.h 292782 2015-12-27 17:33:59Z allanjude $
+ * $FreeBSD: head/sys/crypto/sha2/sha256.h 300773 2016-05-26 19:29:29Z cem $
  */
 
 #ifndef _SHA256_H_
@@ -78,7 +78,7 @@ __BEGIN_DECLS
 
 void	SHA256_Init(SHA256_CTX *);
 void	SHA256_Update(SHA256_CTX *, const void *, size_t);
-void	SHA256_Final(unsigned char [SHA256_DIGEST_LENGTH], SHA256_CTX *);
+void	SHA256_Final(unsigned char [static SHA256_DIGEST_LENGTH], SHA256_CTX *);
 #ifndef _KERNEL
 char   *SHA256_End(SHA256_CTX *, char *);
 char   *SHA256_Data(const void *, unsigned int, char *);

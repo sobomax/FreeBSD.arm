@@ -23,13 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/sf_buf.h 295036 2016-01-29 10:31:54Z mmel $
+ * $FreeBSD: head/sys/arm/include/sf_buf.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef _MACHINE_SF_BUF_H_
 #define _MACHINE_SF_BUF_H_
-
-#include <machine/acle-compat.h>
 
 static inline void
 sf_buf_map(struct sf_buf *sf, int flags)

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/compat/linuxkpi/common/src/linux_usb.c 290135 2015-10-29 08:28:39Z hselasky $ */
+/* $FreeBSD: head/sys/compat/linuxkpi/common/src/linux_usb.c 298829 2016-04-30 00:53:10Z pfg $ */
 /*-
  * Copyright (c) 2007 Luigi Rizzo - Universita` di Pisa. All rights reserved.
  * Copyright (c) 2007 Hans Petter Selasky. All rights reserved.
@@ -649,7 +649,7 @@ done:
  * Return values:
  *   0: Success
  * < 0: Failure
- * > 0: Acutal length
+ * > 0: Actual length
  *------------------------------------------------------------------------*/
 int
 usb_control_msg(struct usb_device *dev, struct usb_host_endpoint *uhe,

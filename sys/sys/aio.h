@@ -13,7 +13,7 @@
  * bad that happens because of using this software isn't the responsibility
  * of the author.  This software is distributed AS-IS.
  *
- * $FreeBSD: head/sys/sys/aio.h 296277 2016-03-01 18:12:14Z jhb $
+ * $FreeBSD: head/sys/sys/aio.h 300991 2016-05-30 09:18:12Z ed $
  */
 
 #ifndef _SYS_AIO_H_
@@ -205,7 +205,8 @@ int	aio_write(struct aiocb *);
  *	"acb_list" is an array of "nacb_listent" I/O control blocks.
  *	when all I/Os are complete, the optional signal "sig" is sent.
  */
-int	lio_listio(int, struct aiocb * const [], int, struct sigevent *);
+int	lio_listio(int, struct aiocb *__restrict const *__restrict, int,
+    struct sigevent *);
 
 /*
  * Get completion status
@@ -238,7 +239,7 @@ int	aio_suspend(const struct aiocb * const[], int, const struct timespec *);
 int	aio_mlock(struct aiocb *);
 
 #ifdef __BSD_VISIBLE
-int	aio_waitcomplete(struct aiocb **, struct timespec *);
+ssize_t	aio_waitcomplete(struct aiocb **, struct timespec *);
 #endif
 
 int	aio_fsync(int op, struct aiocb *aiocbp);

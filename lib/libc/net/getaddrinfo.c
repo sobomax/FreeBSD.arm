@@ -52,10 +52,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/getaddrinfo.c 292539 2015-12-21 11:24:14Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/net/getaddrinfo.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include "namespace.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <net/if.h>
@@ -398,7 +397,7 @@ getaddrinfo(const char *hostname, const char *servname,
 	struct addrinfo *pai;
 	const struct afd *afd;
 	const struct explore *ex;
-	struct addrinfo *afailist[sizeof(afdl)/sizeof(afdl[0])];
+	struct addrinfo *afailist[nitems(afdl)];
 	struct addrinfo *afai_unspec;
 	int found;
 	int numeric = 0;
@@ -473,7 +472,7 @@ getaddrinfo(const char *hostname, const char *servname,
 	/*
 	 * RFC 3493: AI_ALL and AI_V4MAPPED are effective only against
 	 * AF_INET6 query.  They need to be ignored if specified in other
-	 * occassions.
+	 * occasions.
 	 */
 	switch (pai->ai_flags & (AI_ALL | AI_V4MAPPED)) {
 	case AI_V4MAPPED:
@@ -736,13 +735,13 @@ get_addrselectpolicy(struct policyhead *head)
 	char *buf;
 	struct in6_addrpolicy *pol, *ep;
 
-	if (sysctl(mib, sizeof(mib) / sizeof(mib[0]), NULL, &l, NULL, 0) < 0)
+	if (sysctl(mib, nitems(mib), NULL, &l, NULL, 0) < 0)
 		return (0);
 	if (l == 0)
 		return (0);
 	if ((buf = malloc(l)) == NULL)
 		return (0);
-	if (sysctl(mib, sizeof(mib) / sizeof(mib[0]), buf, &l, NULL, 0) < 0) {
+	if (sysctl(mib, nitems(mib), buf, &l, NULL, 0) < 0) {
 		free(buf);
 		return (0);
 	}

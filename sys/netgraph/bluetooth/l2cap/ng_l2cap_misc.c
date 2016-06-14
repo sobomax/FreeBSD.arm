@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_misc.c,v 1.5 2003/09/08 19:11:45 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_misc.c 290038 2015-10-27 03:42:26Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_misc.c 301558 2016-06-07 16:57:13Z takawata $
  */
 
 #include <sys/param.h>
@@ -325,7 +325,7 @@ ng_l2cap_con_by_handle(ng_l2cap_p l2cap, u_int16_t con_handle)
 } /* ng_l2cap_con_by_handle */
 
 /*
- * Allocate new L2CAP channel descriptor on "con" conection with "psm".
+ * Allocate new L2CAP channel descriptor on "con" connection with "psm".
  * Will link the channel to the l2cap node
  */
 
@@ -346,7 +346,8 @@ ng_l2cap_new_chan(ng_l2cap_p l2cap, ng_l2cap_con_p con, u_int16_t psm, int idtyp
 		ch->scid = ng_l2cap_get_cid(l2cap,
 					    (con->linktype!= NG_HCI_LINK_ACL));
 	}
-
+	
+	ch->idtype = idtype;
 	if (ch->scid != NG_L2CAP_NULL_CID) {
 		/* Initialize channel */
 		ch->psm = psm;

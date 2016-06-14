@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/cd9660/cd9660_vnops.c 248282 2013-03-14 20:28:26Z kib $");
+__FBSDID("$FreeBSD: head/sys/fs/cd9660/cd9660_vnops.c 297401 2016-03-29 19:59:44Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -341,11 +341,9 @@ cd9660_read(ap)
 			} else
 				error = bread(vp, lbn, size, NOCRED, &bp);
 		}
-		n = MIN(n, size - bp->b_resid);
-		if (error) {
-			brelse(bp);
+		if (error != 0)
 			return (error);
-		}
+		n = MIN(n, size - bp->b_resid);
 
 		error = uiomove(bp->b_data + on, (int)n, uio);
 		brelse(bp);

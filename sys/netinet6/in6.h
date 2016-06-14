@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: head/sys/netinet6/in6.h 293098 2016-01-03 09:54:03Z melifaro $
+ * $FreeBSD: head/sys/netinet6/in6.h 301217 2016-06-02 17:51:29Z gnn $
  */
 
 #ifndef __KAME_NETINET_IN_H_INCLUDED_
@@ -375,6 +375,11 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
 #if __BSD_VISIBLE
 struct route_in6 {
 	struct	rtentry *ro_rt;
+	struct	llentry *ro_lle;
+	/*
+	 * ro_prepend and ro_plen are only used for bpf to pass in a
+	 * preformed header.  They are not cacheable.
+	 */
 	char		*ro_prepend;
 	uint16_t	ro_plen;
 	uint16_t	ro_flags;

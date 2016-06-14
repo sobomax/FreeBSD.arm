@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/if_wtap.c 289757 2015-10-22 15:20:33Z avos $
+ * $FreeBSD: head/sys/dev/wtap/if_wtap.c 298931 2016-05-02 16:47:28Z pfg $
  */
 #include "if_wtapvar.h"
 #include <sys/uio.h>    /* uio struct */
@@ -131,7 +131,7 @@ wtap_node_ioctl(struct cdev *dev, u_long cmd, caddr_t data,
 
 	switch(cmd) {
 	default:
-		DWTAP_PRINTF("Unkown WTAP IOCTL\n");
+		DWTAP_PRINTF("Unknown WTAP IOCTL\n");
 		error = EINVAL;
 	}
 	return error;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/yacc/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/usr.bin/yacc/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.own.mk>
 
@@ -17,7 +17,9 @@ SCRIPTSDIR=	${TESTSDIR}
 
 CLEANFILES=	run_test
 
-FILESGROUPS=	FILES FILEStest FILEStest_yacc
+FILESGROUPS+=	FILEStest FILEStest_yacc
+FILEStestPACKAGE=${PACKAGE}
+FILEStest_yaccPACKAGE=${PACKAGE}
 
 FILEStestDIR=	${TESTSDIR}
 

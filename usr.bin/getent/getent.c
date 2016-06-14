@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/getent/getent.c 250942 2013-05-23 20:52:30Z ghelmer $");
+__FBSDID("$FreeBSD: head/usr.bin/getent/getent.c 301413 2016-06-04 21:34:06Z markj $");
 
 #include <sys/socket.h>
 #include <sys/param.h>
@@ -84,13 +84,13 @@ static struct getentdb {
 	{	"ethers",	ethers,		},
 	{	"group",	group,		},
 	{	"hosts",	hosts,		},
+	{	"netgroup",	netgroup,	},
 	{	"networks",	networks,	},
 	{	"passwd",	passwd,		},
 	{	"protocols",	protocols,	},
 	{	"rpc",		rpc,		},
 	{	"services",	services,	},
 	{	"shells",	shells,		},
-	{	"netgroup",	netgroup,	},
 	{	"utmpx",	utmpx,		},
 
 	{	NULL,		NULL,		},

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/regex/engine.c 279104 2015-02-21 15:02:27Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/regex/engine.c 300683 2016-05-25 15:35:23Z pfg $");
 
 /*
  * The matching engine and friends.  This file is #included by regexec.c
@@ -154,7 +154,7 @@ matcher(struct re_guts *g,
 	int eflags)
 {
 	const char *endp;
-	int i;
+	size_t i;
 	struct match mv;
 	struct match *m = &mv;
 	const char *dp = NULL;
@@ -606,9 +606,9 @@ backref(struct match *m,
 				return(NULL);
 			break;
 		case OBOL:
-			if ( (sp == m->beginp && !(m->eflags&REG_NOTBOL)) ||
-					(sp < m->endp && *(sp-1) == '\n' &&
-						(m->g->cflags&REG_NEWLINE)) )
+			if ((sp == m->beginp && !(m->eflags&REG_NOTBOL)) ||
+			    (sp > m->offp && sp < m->endp &&
+			    *(sp-1) == '\n' && (m->g->cflags&REG_NEWLINE)))
 				{ /* yes */ }
 			else
 				return(NULL);
@@ -622,12 +622,9 @@ backref(struct match *m,
 				return(NULL);
 			break;
 		case OBOW:
-			if (( (sp == m->beginp && !(m->eflags&REG_NOTBOL)) ||
-					(sp < m->endp && *(sp-1) == '\n' &&
-						(m->g->cflags&REG_NEWLINE)) ||
-					(sp > m->beginp &&
-							!ISWORD(*(sp-1))) ) &&
-					(sp < m->endp && ISWORD(*sp)) )
+			if (sp < m->endp && ISWORD(*sp) &&
+			    ((sp == m->beginp && !(m->eflags&REG_NOTBOL)) ||
+			    (sp > m->offp && !ISWORD(*(sp-1)))))
 				{ /* yes */ }
 			else
 				return(NULL);
@@ -789,7 +786,7 @@ fast(	struct match *m,
 	ASSIGN(fresh, st);
 	SP("start", st, *p);
 	coldp = NULL;
-	if (start == m->beginp)
+	if (start == m->offp || (start == m->beginp && !(m->eflags&REG_NOTBOL)))
 		c = OUT;
 	else {
 		/*
@@ -894,7 +891,7 @@ slow(	struct match *m,
 	SP("sstart", st, *p);
 	st = step(m->g, startst, stopst, st, NOTHING, st);
 	matchp = NULL;
-	if (start == m->beginp)
+	if (start == m->offp || (start == m->beginp && !(m->eflags&REG_NOTBOL)))
 		c = OUT;
 	else {
 		/*
@@ -1108,7 +1105,7 @@ print(struct match *m,
 	FILE *d)
 {
 	struct re_guts *g = m->g;
-	int i;
+	sopno i;
 	int first = 1;
 
 	if (!(m->eflags&REG_TRACE))

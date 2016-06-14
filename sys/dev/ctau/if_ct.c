@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ctau/if_ct.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/ctau/if_ct.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -459,7 +459,7 @@ static int ct_probe (device_t dev)
 	}
 		
 	if (!ct_probe_board (iobase, -1, -1)) {
-		printf ("ct%d: probing for Tau-ISA at %lx faild\n", unit, iobase);
+		printf ("ct%d: probing for Tau-ISA at %jx faild\n", unit, iobase);
 		return ENXIO;
 	}
 	
@@ -632,7 +632,7 @@ static int ct_attach (device_t dev)
 	ct_ln[2] = '0' + unit;
 	mtx_init (&bd->ct_mtx, ct_ln, MTX_NETWORK_LOCK, MTX_DEF|MTX_RECURSE);
 	if (! probe_irq (b, irq)) {
-		printf ("ct%d: irq %ld not functional\n", unit, irq);
+		printf ("ct%d: irq %jd not functional\n", unit, irq);
 		bd->board = 0;
 		adapter [unit] = 0;
 		free (b, M_DEVBUF);
@@ -651,7 +651,7 @@ static int ct_attach (device_t dev)
 	if (bus_setup_intr (dev, bd->irq_res,
 			   INTR_TYPE_NET|INTR_MPSAFE,
 			   NULL, ct_intr, bd, &bd->intrhand)) {
-		printf ("ct%d: Can't setup irq %ld\n", unit, irq);
+		printf ("ct%d: Can't setup irq %jd\n", unit, irq);
 		bd->board = 0;
 		adapter [unit] = 0;
 		free (b, M_DEVBUF);

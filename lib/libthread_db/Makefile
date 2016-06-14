@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libthread_db/Makefile 232263 2012-02-28 18:30:18Z dim $
+# $FreeBSD: head/lib/libthread_db/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .PATH:	${.CURDIR}/arch/${MACHINE_CPUARCH}
 
+PACKAGE=lib${LIB}
 LIB=	thread_db
 SHLIB_MAJOR= 3
 SRCS=	thread_db.c

@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/contrib/libarchive/cpio/cpio.h 248616 2013-03-22 13:36:03Z mm $
+ * $FreeBSD: head/contrib/libarchive/cpio/cpio.h 299529 2016-05-12 10:16:16Z mm $
  */
 
 #ifndef CPIO_H_INCLUDED
@@ -71,6 +71,7 @@ struct cpio {
 	int		  gid_override;
 	char		 *gname_override;
 	int		  day_first; /* true if locale prefers day/mon */
+	const char	 *passphrase;
 
 	/* If >= 0, then close this when done. */
 	int		  fd;
@@ -90,6 +91,7 @@ struct cpio {
 	struct archive   *matching;
 	char		 *buff;
 	size_t		  buff_size;
+	char		 *ppbuff;
 };
 
 const char *owner_parse(const char *, int *, int *);
@@ -101,8 +103,10 @@ enum {
 	OPTION_GRZIP,
 	OPTION_INSECURE,
 	OPTION_LRZIP,
+	OPTION_LZ4,
 	OPTION_LZMA,
 	OPTION_LZOP,
+	OPTION_PASSPHRASE,
 	OPTION_NO_PRESERVE_OWNER,
 	OPTION_PRESERVE_OWNER,
 	OPTION_QUIET,

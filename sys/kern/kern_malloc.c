@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_malloc.c 292117 2015-12-11 20:05:07Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_malloc.c 300262 2016-05-20 04:45:08Z markj $");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"
@@ -109,9 +109,6 @@ dtrace_malloc_probe_func_t	dtrace_malloc_probe;
 MALLOC_DEFINE(M_CACHE, "cache", "Various Dynamically allocated caches");
 MALLOC_DEFINE(M_DEVBUF, "devbuf", "device driver memory");
 MALLOC_DEFINE(M_TEMP, "temp", "misc temporary data buffers");
-
-MALLOC_DEFINE(M_IP6OPT, "ip6opt", "IPv6 options");
-MALLOC_DEFINE(M_IP6NDP, "ip6ndp", "IPv6 Neighbor Discovery");
 
 static struct malloc_type *kmemstatistics;
 static int kmemcount;

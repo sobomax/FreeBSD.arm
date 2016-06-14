@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/extres/hwreset/hwreset.c 294661 2016-01-24 11:03:35Z mmel $
+ * $FreeBSD: head/sys/dev/extres/hwreset/hwreset.c 299714 2016-05-14 04:59:36Z gonzo $
  */
 #include "opt_platform.h"
 #include <sys/cdefs.h>
@@ -132,12 +132,12 @@ hwreset_get_by_ofw_idx(device_t consumer_dev, int idx, hwreset_t *rst)
 	/* Tranlate provider to device */
 	rstdev = OF_device_from_xref(xnode);
 	if (rstdev == NULL) {
-		free(cells, M_OFWPROP);
+		OF_prop_free(cells);
 		return (ENODEV);
 	}
 	/* Map reset to number */
 	rv = HWRESET_MAP(rstdev, xnode, ncells, cells, &id);
-	free(cells, M_OFWPROP);
+	OF_prop_free(cells);
 	if (rv != 0)
 		return (rv);
 

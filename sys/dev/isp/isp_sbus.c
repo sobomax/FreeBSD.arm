@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isp/isp_sbus.c 292764 2015-12-27 06:16:02Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/isp/isp_sbus.c 299849 2016-05-15 08:36:12Z trasz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -448,19 +448,8 @@ isp_sbus_mbxdma(ispsoftc_t *isp)
 	len = sizeof (struct isp_pcmd) * isp->isp_maxcmds;
 	isp->isp_osinfo.pcmd_pool = (struct isp_pcmd *)
 	    malloc(len, M_DEVBUF, M_WAITOK | M_ZERO);
-	if (isp->isp_osinfo.pcmd_pool == NULL) {
-		isp_prt(isp, ISP_LOGERR, "cannot alloc pcmd pool");
-		ISP_LOCK(isp);
-		return (1);
-	}
-
 	len = sizeof (isp_hdl_t *) * isp->isp_maxcmds;
 	isp->isp_xflist = (isp_hdl_t *) malloc(len, M_DEVBUF, M_WAITOK | M_ZERO);
-	if (isp->isp_xflist == NULL) {
-		isp_prt(isp, ISP_LOGERR, "cannot alloc xflist array");
-		ISP_LOCK(isp);
-		return (1);
-	}
 	for (len = 0; len < isp->isp_maxcmds - 1; len++) {
 		isp->isp_xflist[len].cmd = &isp->isp_xflist[len+1];
 	}

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_output.c 273006 2014-10-12 18:01:52Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_output.c 298848 2016-04-30 14:41:18Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -71,8 +71,7 @@ struct dbputchar_arg {
 static int	db_output_position = 0;		/* output column */
 static int	db_last_non_space = 0;		/* last non-space character */
 db_expr_t	db_tab_stop_width = 8;		/* how wide are tab stops? */
-#define	NEXT_TAB(i) \
-	((((i) + db_tab_stop_width) / db_tab_stop_width) * db_tab_stop_width)
+#define	NEXT_TAB(i) rounddown((i) + db_tab_stop_width, db_tab_stop_width)
 db_expr_t	db_max_width = 79;		/* output line width */
 db_expr_t	db_lines_per_page = 20;		/* lines per page */
 volatile int	db_pager_quit;			/* user requested quit */

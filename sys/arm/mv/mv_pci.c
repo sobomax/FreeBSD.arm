@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mv_pci.c 295832 2016-02-20 01:32:58Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mv_pci.c 298627 2016-04-26 11:53:37Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,6 +52,7 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/mv_pci.c 295832 2016-02-20 01:32:58Z jhibbit
 #include <sys/bus.h>
 #include <sys/rman.h>
 #include <sys/endian.h>
+#include <sys/devmap.h>
 
 #include <machine/fdt.h>
 #include <machine/intr.h>
@@ -70,7 +71,6 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/mv_pci.c 295832 2016-02-20 01:32:58Z jhibbit
 #include "ofw_bus_if.h"
 #include "pcib_if.h"
 
-#include <machine/devmap.h>
 #include <machine/resource.h>
 #include <machine/bus.h>
 
@@ -221,7 +221,7 @@ mv_pci_ranges(phandle_t node, struct mv_pci_range *io_space,
 }
 
 int
-mv_pci_devmap(phandle_t node, struct arm_devmap_entry *devmap, vm_offset_t io_va,
+mv_pci_devmap(phandle_t node, struct devmap_entry *devmap, vm_offset_t io_va,
     vm_offset_t mem_va)
 {
 	struct mv_pci_range io_space, mem_space;
@@ -842,7 +842,7 @@ mv_pcib_alloc_resource(device_t dev, device_t child, int type, int *rid,
 	default:
 		return (BUS_ALLOC_RESOURCE(device_get_parent(dev), dev,
 		    type, rid, start, end, count, flags));
-	};
+	}
 
 	if (RMAN_IS_DEFAULT_RANGE(start, end)) {
 		start = sc->sc_mem_base;

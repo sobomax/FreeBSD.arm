@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/loader/arch/arm/exec.c 293724 2016-01-12 02:17:39Z smh $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/loader/arch/arm/exec.c 301306 2016-06-04 08:47:45Z andrew $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -73,8 +73,11 @@ __elfN(arm_exec)(struct preloaded_file *fp)
 
 	e = (Elf_Ehdr *)&fmp->md_data;
 
-	if ((error = bi_load(fp->f_args, &modulep, &kernend)) != 0)
+	efi_time_fini();
+	if ((error = bi_load(fp->f_args, &modulep, &kernend)) != 0) {
+		efi_time_init();
 		return (error);
+	}
 
 	entry = efi_translate(e->e_entry);
 	printf("Kernel entry at 0x%x...\n", (unsigned)entry);

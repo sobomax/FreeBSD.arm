@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ie/if_ie_isa.c 257324 2013-10-29 11:17:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ie/if_ie_isa.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -881,7 +881,7 @@ ie_modevent (mod, what, arg)
 		break;
 	default:
 		break;
-	};
+	}
 
 	return (0);
 }

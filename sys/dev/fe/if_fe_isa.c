@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe_isa.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/fe/if_fe_isa.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -364,7 +364,7 @@ fe_probe_fmv(device_t dev)
  *	u_short const * func (struct fe_softc * sc, u_char const * eeprom);
  *
  * where eeprom is a pointer to an array of 32 byte data read from the
- * config EEPROM on the board.  It retuns an IRQ mapping table for the
+ * config EEPROM on the board.  It returns an IRQ mapping table for the
  * board, when the corresponding implementation is detected.  It
  * returns a NULL otherwise.
  * 

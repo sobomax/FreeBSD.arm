@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/uclparse.c 295212 2016-02-03 15:45:13Z jceel $
+ * $FreeBSD: head/usr.sbin/ctld/uclparse.c 296808 2016-03-13 19:50:17Z jceel $
  */
 
 #include <sys/queue.h>
@@ -886,9 +886,8 @@ uclparse_conf(struct conf *newconf, const char *path)
 
 	conf = newconf;
 	parser = ucl_parser_new(0);
-	ucl_parser_add_file(parser, path);
 
-	if (ucl_parser_get_error(parser)) {
+	if (!ucl_parser_add_file(parser, path)) {
 		log_warn("unable to parse configuration file %s: %s", path,
 		    ucl_parser_get_error(parser));
 		return (1);

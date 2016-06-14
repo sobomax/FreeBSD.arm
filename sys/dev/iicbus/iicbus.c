@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicbus.c 289657 2015-10-20 19:52:59Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicbus.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 /*
  * Autoconfiguration and support routines for the Philips serial I2C bus
@@ -149,7 +149,7 @@ iicbus_print_child(device_t dev, device_t child)
 	retval += bus_print_child_header(dev, child);
 	if (devi->addr != 0)
 		retval += printf(" at addr %#x", devi->addr);
-	resource_list_print_type(&devi->rl, "irq", SYS_RES_IRQ, "%ld");
+	resource_list_print_type(&devi->rl, "irq", SYS_RES_IRQ, "%jd");
 	retval += bus_print_child_footer(dev, child);
 
 	return (retval);

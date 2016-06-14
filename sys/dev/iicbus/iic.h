@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iic.h 281828 2015-04-21 11:50:31Z jah $
+ * $FreeBSD: head/sys/dev/iicbus/iic.h 300258 2016-05-20 03:03:04Z jah $
  *
  */
 #ifndef __IIC_H
@@ -55,6 +55,8 @@ struct iic_rdwr_data {
 	struct iic_msg *msgs;
 	uint32_t nmsgs;
 };
+
+#define IIC_RDRW_MAX_MSGS	42
 
 #define I2CSTART	_IOW('i', 1, struct iiccmd)	/* start condition */
 #define I2CSTOP		_IO('i', 2)			/* stop condition */

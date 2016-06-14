@@ -23,9 +23,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sbin/kldconfig/Makefile 202532 2010-01-17 21:56:27Z ed $
+# $FreeBSD: head/sbin/kldconfig/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=runtime
 PROG=		kldconfig
 MAN=		kldconfig.8
 

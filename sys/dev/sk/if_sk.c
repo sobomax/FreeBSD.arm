@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sk/if_sk.c 295873 2016-02-22 00:58:04Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/sk/if_sk.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * SysKonnect SK-NET gigabit ethernet driver for FreeBSD. Supports
@@ -3275,7 +3275,7 @@ sk_init_xmac(sc_if)
 	 * that jumbo frames larger than 8192 bytes will be
 	 * truncated. Disabling all bad frame filtering causes
 	 * the RX FIFO to operate in streaming mode, in which
-	 * case the XMAC will start transfering frames out of the
+	 * case the XMAC will start transferring frames out of the
 	 * RX FIFO as soon as the FIFO threshold is reached.
 	 */
 	if (ifp->if_mtu > SK_MAX_FRAMELEN) {

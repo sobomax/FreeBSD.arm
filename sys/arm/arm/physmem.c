@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2014 Ian Lepore <ian@freebsd.org>
- * All rights excluded.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/physmem.c 294754 2016-01-25 23:04:40Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/physmem.c 297682 2016-04-07 18:19:09Z ian $");
 
 #include "opt_ddb.h"
 

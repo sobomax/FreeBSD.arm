@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iic.c 295080 2016-01-30 18:33:23Z ngie $
+ * $FreeBSD: head/sys/dev/iicbus/iic.c 300258 2016-05-20 03:03:04Z jah $
  *
  */
 #include <sys/param.h>
@@ -300,9 +300,16 @@ iicrdwr(struct iic_cdevpriv *priv, struct iic_rdwr_data *d, int flags)
 	parent = device_get_parent(iicdev);
 	error = 0;
 
+	if (d->nmsgs > IIC_RDRW_MAX_MSGS)
+		return (EINVAL);
+
 	buf = malloc(sizeof(*d->msgs) * d->nmsgs, M_IIC, M_WAITOK);
 
 	error = copyin(d->msgs, buf, sizeof(*d->msgs) * d->nmsgs);
+	if (error != 0) {
+		free(buf, M_IIC);
+		return (error);
+	}
 
 	/* Alloc kernel buffers for userland data, copyin write data */
 	usrbufs = malloc(sizeof(void *) * d->nmsgs, M_IIC, M_WAITOK | M_ZERO);
@@ -318,6 +325,8 @@ iicrdwr(struct iic_cdevpriv *priv, struct iic_rdwr_data *d, int flags)
 		m->buf = NULL;
 		if (error != 0)
 			continue;
+
+		/* m->len is uint16_t, so allocation size is capped at 64K. */
 		m->buf = malloc(m->len, M_IIC, M_WAITOK);
 		if (!(m->flags & IIC_M_RD))
 			error = copyin(usrbufs[i], m->buf, m->len);

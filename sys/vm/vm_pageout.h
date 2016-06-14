@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm_pageout.h 292469 2015-12-19 18:42:50Z alc $
+ * $FreeBSD: head/sys/vm/vm_pageout.h 300865 2016-05-27 19:15:45Z alc $
  */
 
 #ifndef _VM_VM_PAGEOUT_H_
@@ -72,9 +72,10 @@
  */
 
 extern int vm_page_max_wired;
-extern int vm_pages_needed;	/* should be some "event" structure */
 extern int vm_pageout_deficit;
 extern int vm_pageout_page_count;
+extern bool vm_pageout_wanted;
+extern bool vm_pages_needed;
 
 /*
  * Swap out requests

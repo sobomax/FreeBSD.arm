@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/ivy.c 284959 2015-06-30 17:00:45Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/ivy.c 298102 2016-04-16 06:10:47Z kib $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -129,4 +129,4 @@ rdrand_modevent(module_t mod, int type, void *unused)
 
 DEV_MODULE(rdrand, rdrand_modevent, NULL);
 MODULE_VERSION(rdrand, 1);
-MODULE_DEPEND(rdrand, randomdev, 1, 1, 1);
+MODULE_DEPEND(rdrand, random_device, 1, 1, 1);

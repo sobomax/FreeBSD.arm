@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/ciss/cissvar.h 276754 2015-01-06 15:48:20Z jhb $
+ *	$FreeBSD: head/sys/dev/ciss/cissvar.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -58,7 +58,7 @@ typedef STAILQ_HEAD(, ciss_request)	cr_qhead_t;
 
 /*
  * Interrupt reduction can be controlled by tuning the interrupt
- * coalesce delay and count paramters.  The delay (in microseconds)
+ * coalesce delay and count parameters.  The delay (in microseconds)
  * defers delivery of interrupts to increase the chance of there being
  * more than one completed command ready when the interrupt is
  * delivered.  The count expedites the delivery of the interrupt when

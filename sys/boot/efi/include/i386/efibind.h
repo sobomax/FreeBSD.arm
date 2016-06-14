@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/i386/efibind.h 293268 2016-01-06 20:22:28Z smh $ */
+/* $FreeBSD: head/sys/boot/efi/include/i386/efibind.h 298826 2016-04-30 00:26:38Z pfg $ */
 /*++
 
 Copyright (c)  1999 - 2003 Intel Corporation. All rights reserved
@@ -234,7 +234,7 @@ typedef uint32_t   UINTN;
 #else // EFI_NT_EMULATOR 
 
 //
-// When build similiar to FW, then link everything together as
+// When build similar to FW, then link everything together as
 // one big module.
 //
 

@@ -29,7 +29,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fbd.c 292483 2015-12-20 00:58:22Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_fbd.c 298383 2016-04-20 22:38:00Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -79,6 +79,10 @@ bcm_fb_init(struct bcmsc_softc *sc, struct bcm2835_fb_config *fb)
 	if (bcm2835_mbox_fb_get_w_h(fb) != 0)
 		return (ENXIO);
 	fb->bpp = FB_DEPTH;
+
+	fb->vxres = fb->xres;
+	fb->vyres = fb->yres;
+	fb->xoffset = fb->yoffset = 0;
 
 	if ((err = bcm2835_mbox_fb_init(fb)) != 0) {
 		device_printf(sc->dev, "bcm2835_mbox_fb_init failed, err=%d\n", err);

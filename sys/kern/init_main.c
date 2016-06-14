@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/init_main.c 295435 2016-02-09 16:30:16Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/init_main.c 301456 2016-06-05 17:04:03Z kib $");
 
 #include "opt_ddb.h"
 #include "opt_init_path.h"
@@ -99,7 +99,7 @@ void mi_startup(void);				/* Should be elsewhere */
 static struct session session0;
 static struct pgrp pgrp0;
 struct	proc proc0;
-struct	thread thread0 __aligned(16);
+struct thread0_storage thread0_st __aligned(16);
 struct	vmspace vmspace0;
 struct	proc *initproc;
 
@@ -787,7 +787,7 @@ start_init(void *dummy)
 		/*
 		 * Move out the arg pointers.
 		 */
-		uap = (char **)((intptr_t)ucp & ~(sizeof(intptr_t)-1));
+		uap = (char **)rounddown2((intptr_t)ucp, sizeof(intptr_t));
 		(void)suword((caddr_t)--uap, (long)0);	/* terminator */
 		(void)suword((caddr_t)--uap, (long)(intptr_t)arg1);
 		(void)suword((caddr_t)--uap, (long)(intptr_t)arg0);

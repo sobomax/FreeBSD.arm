@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/coll.c 281132 2015-04-06 02:35:55Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/coll.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/types.h>
 
@@ -688,7 +688,7 @@ static void setsuffix(wchar_t c, unsigned char *si)
 		break;
 	default:
 		*si = 0;
-	};
+	}
 }
 
 /*

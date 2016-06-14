@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/boot2/Makefile 295757 2016-02-18 14:17:28Z emaste $
+# $FreeBSD: head/sys/boot/i386/boot2/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -115,4 +115,3 @@ machine: ${.CURDIR}/../../../i386/include .NOMETA
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.boot1.S=		${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

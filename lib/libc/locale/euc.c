@@ -42,7 +42,7 @@
 static char sccsid[] = "@(#)euc.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/param.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/euc.c 290494 2015-11-07 12:43:35Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/euc.c 297532 2016-04-04 02:43:35Z ache $");
 
 #include <errno.h>
 #include <limits.h>
@@ -132,7 +132,7 @@ _EUC_CN_init(struct xlocale_ctype *l, _RuneLocale *rl)
 
 	l->runes = rl;
 	l->__mb_cur_max = 4;
-	l->__mb_sb_limit = 256;
+	l->__mb_sb_limit = 128;
 	return (0);
 }
 
@@ -226,7 +226,7 @@ _EUC_JP_init(struct xlocale_ctype *l, _RuneLocale *rl)
 
 	l->runes = rl;
 	l->__mb_cur_max = 3;
-	l->__mb_sb_limit = 196;
+	l->__mb_sb_limit = 128;
 	return (0);
 }
 
@@ -273,7 +273,7 @@ _EUC_TW_init(struct xlocale_ctype *l, _RuneLocale *rl)
 
 	l->runes = rl;
 	l->__mb_cur_max = 4;
-	l->__mb_sb_limit = 256;
+	l->__mb_sb_limit = 128;
 	return (0);
 }
 

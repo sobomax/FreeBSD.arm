@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdSchedule.c 272360 2014-10-01 14:35:52Z will $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/Osd/OsdSchedule.c 298714 2016-04-27 19:09:21Z jkim $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -218,7 +218,8 @@ AcpiOsExecute(ACPI_EXECUTE_TYPE Type, ACPI_OSD_EXEC_CALLBACK Function,
     case OSL_EC_BURST_HANDLER:
 	pri = 5;
 	break;
-    case OSL_DEBUGGER_THREAD:
+    case OSL_DEBUGGER_MAIN_THREAD:
+    case OSL_DEBUGGER_EXEC_THREAD:
 	pri = 0;
 	break;
     default:

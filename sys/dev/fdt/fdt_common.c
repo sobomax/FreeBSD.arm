@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdt/fdt_common.c 296265 2016-03-01 11:39:07Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/fdt/fdt_common.c 299477 2016-05-11 18:20:02Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -348,7 +348,7 @@ fdt_is_enabled(phandle_t node)
 	if (strncmp((char *)stat, "okay", len) == 0)
 		ena = 1;
 
-	free(stat, M_OFWPROP);
+	OF_prop_free(stat);
 	return (ena);
 }
 
@@ -519,7 +519,7 @@ fdt_reg_to_rl(phandle_t node, struct resource_list *rl)
 	rv = 0;
 
 out:
-	free(regptr, M_OFWPROP);
+	OF_prop_free(regptr);
 	return (rv);
 }
 
@@ -721,4 +721,17 @@ fdt_get_unit(device_t dev)
 	name = strchr(name, '@') + 1;
 
 	return (strtol(name,NULL,0));
+}
+
+int
+fdt_get_chosen_bootargs(char *bootargs, size_t max_size)
+{
+	phandle_t chosen;
+
+	chosen = OF_finddevice("/chosen");
+	if (chosen == -1)
+		return (ENXIO);
+	if (OF_getprop(chosen, "bootargs", bootargs, max_size) == -1)
+		return (ENXIO);
+	return (0);
 }

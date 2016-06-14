@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/sys/dev/lmc/if_lmc.c 295790 2016-02-19 03:37:56Z jhibbits $
+ * $FreeBSD: head/sys/dev/lmc/if_lmc.c 298955 2016-05-03 03:41:25Z pfg $
  *
  * Copyright (c) 2002-2004 David Boggs. <boggs@boggs.palo-alto.ca.us>
  * All rights reserved.
@@ -1268,7 +1268,7 @@ t3_send_dbl_feac(softc_t *sc, int feac1, int feac2)
   /* Flush received FEACS; don't respond to our own loop cmd! */
   while (read_framer(sc, T3CSR_FEAC_STK) & FEAC_STK_VALID) DELAY(1); /* XXX HANG */
   /* Restore previous state of the FEAC transmitter. */
-  /* If it was sending a continous FEAC, it will resume. */
+  /* If it was sending a continuous FEAC, it will resume. */
   write_framer(sc, T3CSR_TX_FEAC, tx_feac);
   }
 

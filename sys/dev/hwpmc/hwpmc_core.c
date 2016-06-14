@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_core.c 295560 2016-02-12 07:27:24Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_core.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1894,8 +1894,6 @@ static struct iap_event_descr iap_events[] = {
     IAPDESCR(FDH_40H, 0xFD, 0x40, IAP_F_FM | IAP_F_WM | IAP_F_I7),
 };
 
-static const int niap_events = sizeof(iap_events) / sizeof(iap_events[0]);
-
 static pmc_value_t
 iap_perfctr_value_to_reload_count(pmc_value_t v)
 {
@@ -2251,11 +2249,11 @@ iap_allocate_pmc(int cpu, int ri, struct pmc *pm,
 		break;
 	}
 
-	for (n = 0, ie = iap_events; n < niap_events; n++, ie++)
+	for (n = 0, ie = iap_events; n < nitems(iap_events); n++, ie++)
 		if (ie->iap_ev == ev && ie->iap_flags & cpuflag)
 			break;
 
-	if (n == niap_events)
+	if (n == nitems(iap_events))
 		return (EINVAL);
 
 	/*

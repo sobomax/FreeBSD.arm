@@ -1,5 +1,6 @@
-# $FreeBSD: head/share/examples/ipfilter/Makefile 156190 2006-03-01 22:59:00Z ru $
+# $FreeBSD: head/share/examples/ipfilter/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
+PACKAGE=examples
 FILES=	README
 
 # dist sample files

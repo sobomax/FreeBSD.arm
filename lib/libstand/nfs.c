@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/nfs.c 276079 2014-12-22 20:42:36Z ian $");
+__FBSDID("$FreeBSD: head/lib/libstand/nfs.c 298210 2016-04-18 14:45:56Z pfg $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -511,7 +511,7 @@ nfs_open(const char *upath, struct open_file *f)
 
 #ifndef NFS_NOSYMLINK
 	bcopy(&nfs_root_node, currfd, sizeof(*currfd));
-	newfd = 0;
+	newfd = NULL;
 
 	cp = path = strdup(upath);
 	if (path == NULL) {
@@ -593,14 +593,14 @@ nfs_open(const char *upath, struct open_file *f)
 				bcopy(&nfs_root_node, currfd, sizeof(*currfd));
 
 			free(newfd);
-			newfd = 0;
+			newfd = NULL;
 
 			continue;
 		}
 
 		free(currfd);
 		currfd = newfd;
-		newfd = 0;
+		newfd = NULL;
 	}
 
 	error = 0;
@@ -1155,7 +1155,7 @@ nfs_open(const char *upath, struct open_file *f)
 	}
 #ifndef NFS_NOSYMLINK
 	bcopy(&nfs_root_node, currfd, sizeof(*currfd));
-	newfd = 0;
+	newfd = NULL;
 
 	cp = path = strdup(upath);
 	if (path == NULL) {
@@ -1241,14 +1241,14 @@ nfs_open(const char *upath, struct open_file *f)
 				bcopy(&nfs_root_node, currfd, sizeof(*currfd));
 
 			free(newfd);
-			newfd = 0;
+			newfd = NULL;
 
 			continue;
 		}
 
 		free(currfd);
 		currfd = newfd;
-		newfd = 0;
+		newfd = NULL;
 	}
 
 	error = 0;

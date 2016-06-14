@@ -1,4 +1,4 @@
-$FreeBSD: head/MAINTAINERS 292839 2015-12-28 19:29:05Z dteske $
+$FreeBSD: head/MAINTAINERS 298107 2016-04-16 07:45:30Z gjb $
 
 Please note that the content of this file is strictly advisory.
 No locks listed here are valid.  The only strict review requirements
@@ -102,3 +102,6 @@ usr.sbin/dpv	dteske	Pre-commit review requested. Keep in sync with libdpv.
 usr.sbin/pkg	pkg@	Please coordinate behavior or flag changes with pkg team.
 usr.sbin/sysrc	dteske	Pre-commit phabricator review requested. Keep in sync with bsdconfig(8) sysrc.subr.
 vmm(4)		neel,grehan	Pre-commit review requested.
+autofs(5)	trasz	Pre-commit review recommended.
+iscsi(4)	trasz	Pre-commit review recommended.
+rctl(8)		trasz	Pre-commit review recommended.

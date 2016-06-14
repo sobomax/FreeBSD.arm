@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vhpet.c 282287 2015-04-30 22:23:22Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/io/vhpet.c 300050 2016-05-17 12:52:31Z eadler $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vhpet.c 282287 2015-04-30 22:23:22Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vhpet.c 300050 2016-05-17 12:52:31Z eadler $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -163,7 +163,7 @@ vhpet_counter(struct vhpet *vhpet, sbintime_t *nowptr)
 		/*
 		 * The sbinuptime corresponding to the 'countbase' is
 		 * meaningless when the counter is disabled. Make sure
-		 * that the the caller doesn't want to use it.
+		 * that the caller doesn't want to use it.
 		 */
 		KASSERT(nowptr == NULL, ("vhpet_counter: nowptr must be NULL"));
 	}

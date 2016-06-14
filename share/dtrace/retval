@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/share/dtrace/retval 291344 2015-11-26 00:53:39Z gnn $
+ * $FreeBSD: head/share/dtrace/retval 298386 2016-04-21 03:17:53Z gnn $
  *
  * retval - show the return value of any probe named by the user
  *
@@ -37,6 +37,6 @@
 #pragma D option quiet
 
 fbt::$1:return {
-	printf("%s %d\n", probefunc, arg1);
+	printf("%s+0x%x returned %d\n", probefunc, arg0, arg1);
 }
 

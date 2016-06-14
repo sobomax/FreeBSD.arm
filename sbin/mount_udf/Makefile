@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/mount_udf/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/mount_udf/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	mount_udf
 SRCS=	mount_udf.c getmntopts.c
 MAN=	mount_udf.8

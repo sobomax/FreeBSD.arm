@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hwpmc/pmc_events.h 291494 2015-11-30 17:35:49Z rrs $
+ * $FreeBSD: head/sys/dev/hwpmc/pmc_events.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef _DEV_HWPMC_PMC_EVENTS_H_
@@ -4552,7 +4552,7 @@ __PMC_EV_ALIAS("SQ_MISC.SPLIT_LOCK", IAP_EVENT_F4H_10H)
 #define	PMC_EV_TSC_LAST		PMC_EV_TSC_TSC
 
 /*
- * Software events are dynamicaly defined.
+ * Software events are dynamically defined.
  */
 
 #define	PMC_EV_DYN_COUNT	0x1000

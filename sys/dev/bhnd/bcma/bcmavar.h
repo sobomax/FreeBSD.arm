@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: head/sys/dev/bhnd/bcma/bcmavar.h 296077 2016-02-26 03:34:08Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/bcma/bcmavar.h 299235 2016-05-08 17:52:12Z adrian $
  */
 
 #ifndef _BCMA_BCMAVAR_H_
@@ -144,6 +144,7 @@ struct bcma_devinfo {
 /** BMCA per-instance state */
 struct bcma_softc {
 	struct bhnd_softc	bhnd_sc;	/**< bhnd state */
+	device_t		hostb_dev;	/**< host bridge core, or NULL */
 };
 
 #endif /* _BCMA_BCMAVAR_H_ */

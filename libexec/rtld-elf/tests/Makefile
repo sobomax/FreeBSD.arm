@@ -1,6 +1,4 @@
-# $FreeBSD: head/libexec/rtld-elf/tests/Makefile 295683 2016-02-17 00:30:28Z bdrewery $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/libexec/rtld-elf/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 SUBDIR+=	libpythagoras target
 

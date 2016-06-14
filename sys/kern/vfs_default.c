@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_default.c 293197 2016-01-05 14:48:40Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_default.c 296572 2016-03-09 19:05:11Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -472,6 +472,9 @@ vop_stdpathconf(ap)
 {
 
 	switch (ap->a_name) {
+		case _PC_ASYNC_IO:
+			*ap->a_retval = _POSIX_ASYNCHRONOUS_IO;
+			return (0);
 		case _PC_NAME_MAX:
 			*ap->a_retval = NAME_MAX;
 			return (0);

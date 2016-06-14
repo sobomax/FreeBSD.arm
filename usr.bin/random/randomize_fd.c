@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/random/randomize_fd.c 241847 2012-10-22 03:06:59Z eadler $");
+__FBSDID("$FreeBSD: head/usr.bin/random/randomize_fd.c 301574 2016-06-08 02:14:05Z truckman $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -174,7 +174,7 @@ randomize_fd(int fd, int type, int unique, double denom)
 			if ((type == RANDOM_TYPE_LINES && buf[i] == '\n') ||
 			    (type == RANDOM_TYPE_WORDS && isspace(buf[i])) ||
 			    (eof && i == buflen - 1)) {
-			make_token:
+make_token:
 				if (numnode == RANDOM_MAX_PLUS1) {
 					errno = EFBIG;
 					err(1, "too many delimiters");
@@ -199,13 +199,13 @@ randomize_fd(int fd, int type, int unique, double denom)
 		}
 	}
 
-	(void)close(fd);
-
 	/* Necessary evil to compensate for files that don't end with a newline */
 	if (bufc != i) {
 		i--;
 		goto make_token;
 	}
+
+	(void)close(fd);
 
 	free(buf);
 

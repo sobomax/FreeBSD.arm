@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/phys_pager.c 292373 2015-12-16 21:30:45Z glebius $");
+__FBSDID("$FreeBSD: head/sys/vm/phys_pager.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -187,7 +187,7 @@ phys_pager_haspage(vm_object_t object, vm_pindex_t pindex, int *before,
 {
 	vm_pindex_t base, end;
 
-	base = pindex & (~(PHYSCLUSTER - 1));
+	base = rounddown2(pindex, PHYSCLUSTER);
 	end = base + (PHYSCLUSTER - 1);
 	if (before != NULL)
 		*before = pindex - base;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_pccard.c 295790 2016-02-19 03:37:56Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_pccard.c 298426 2016-04-21 18:37:36Z jhb $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -108,7 +108,9 @@ fdc_pccard_attach(device_t dev)
 		device_set_flags(child, 0x24);
 		error = bus_generic_attach(dev);
 	}
-	if (error)
+	if (error == 0)
+		fdc_start_worker(dev);
+	else
 		fdc_release_resources(fdc);
 	return (error);
 }

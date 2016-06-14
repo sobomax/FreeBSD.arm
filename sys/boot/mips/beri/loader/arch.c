@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/mips/beri/loader/arch.c 262197 2014-02-18 23:18:32Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/boot/mips/beri/loader/arch.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include <sys/param.h>
 
@@ -86,7 +86,7 @@ beri_arch_loadaddr(u_int type, void *data, uint64_t addr)
 
 	/* Align ELF objects at page boundaries; others at cache lines. */
 	align = (type == LOAD_ELF) ? PAGE_SIZE : CACHE_LINE_SIZE;
-	return ((addr + align - 1) & ~(align - 1));
+	return (roundup2(addr, align));
 }
 
 static ssize_t

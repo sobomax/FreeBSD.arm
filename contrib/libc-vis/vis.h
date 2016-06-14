@@ -1,5 +1,5 @@
-/*	$NetBSD: vis.h,v 1.21 2013/02/20 17:01:15 christos Exp $	*/
-/*	$FreeBSD: head/contrib/libc-vis/vis.h 248302 2013-03-14 23:51:47Z brooks $	*/
+/*	$NetBSD: vis.h,v 1.24 2016/01/14 20:42:14 christos Exp $	*/
+/*	$FreeBSD: head/contrib/libc-vis/vis.h 301679 2016-06-08 18:21:27Z brooks $	*/
 
 /*-
  * Copyright (c) 1990, 1993
@@ -64,6 +64,9 @@
 #define	VIS_HTTP1866	0x0400	/* http-style &#num; or &string; */
 #define	VIS_NOESCAPE	0x0800	/* don't decode `\' */
 #define	_VIS_END	0x1000	/* for unvis */
+#define	VIS_SHELL	0x2000	/* encode shell special characters [not glob] */
+#define	VIS_META	(VIS_WHITE | VIS_GLOB | VIS_SHELL)
+#define	VIS_NOLOCALE	0x4000	/* encode using the C locale */
 
 /*
  * unvis return codes
@@ -89,6 +92,7 @@ char	*svis(char *, int, int, int, const char *);
 char	*snvis(char *, size_t, int, int, int, const char *);
 
 int	strvis(char *, const char *, int);
+int	stravis(char **, const char *, int);
 int	strnvis(char *, size_t, const char *, int);
 
 int	strsvis(char *, const char *, int, const char *);

@@ -103,7 +103,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_mac_ctxt.c 293099 2016-01-03 10:06:10Z avos $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_mac_ctxt.c 300248 2016-05-19 23:31:00Z avos $");
+
+#include "opt_wlan.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>

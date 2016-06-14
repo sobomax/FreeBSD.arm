@@ -30,7 +30,9 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/provider.c 294610 2016-01-22 23:33:34Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/provider.c 300676 2016-05-25 12:03:21Z hselasky $");
+
+#define	LINUXKPI_PARAM_PREFIX iw_cxgbe_
 
 #include "opt_inet.h"
 

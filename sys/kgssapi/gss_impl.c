@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 293043 2016-01-01 17:06:16Z jpaetzel $");
+__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 298338 2016-04-20 05:02:13Z cem $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -104,10 +104,12 @@ sys_gssd_syscall(struct thread *td, struct gssd_syscall_args *uap)
 	error = copyinstr(uap->path, path, sizeof(path), NULL);
 	if (error)
 		return (error);
+	if (strlen(path) + 1 > sizeof(sun.sun_path))
+		return (EINVAL);
 
 	if (path[0] != '\0') {
 		sun.sun_family = AF_LOCAL;
-		strcpy(sun.sun_path, path);
+		strlcpy(sun.sun_path, path, sizeof(sun.sun_path));
 		sun.sun_len = SUN_LEN(&sun);
 		
 		nconf = getnetconfigent("local");
@@ -323,7 +325,7 @@ kgssapi_modevent(module_t mod, int type, void *data)
 		/* FALLTHROUGH */
 	default:
 		error = EOPNOTSUPP;
-	};
+	}
 	return (error);
 }
 static moduledata_t kgssapi_mod = {

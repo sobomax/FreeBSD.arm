@@ -30,7 +30,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/device.c 289749 2015-10-22 09:50:45Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/device.c 296478 2016-03-08 00:23:56Z np $");
 
 #include "opt_inet.h"
 
@@ -44,8 +44,6 @@ __FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/device.c 289749 2015-10-22 09:50
 
 #ifdef TCP_OFFLOAD
 #include "iw_cxgbe.h"
-
-int spg_creds = 2; /* Default status page size is 2 credits = 128B */
 
 void
 c4iw_release_dev_ucontext(struct c4iw_rdev *rdev,
@@ -89,27 +87,24 @@ static int
 c4iw_rdev_open(struct c4iw_rdev *rdev)
 {
 	struct adapter *sc = rdev->adap;
+	struct sge_params *sp = &sc->params.sge;
 	int rc;
 
 	c4iw_init_dev_ucontext(rdev, &rdev->uctx);
 
-	/* Save the status page size set by if_cxgbe */
-	spg_creds = (t4_read_reg(sc, A_SGE_CONTROL) & F_EGRSTATUSPAGESIZE) ?
-	    2 : 1;
-
 	/* XXX: we can probably make this work */
-	if (sc->sge.eq_s_qpp > PAGE_SHIFT || sc->sge.iq_s_qpp > PAGE_SHIFT) {
+	if (sp->eq_s_qpp > PAGE_SHIFT || sp->iq_s_qpp > PAGE_SHIFT) {
 		device_printf(sc->dev,
 		    "doorbell density too high (eq %d, iq %d, pg %d).\n",
-		    sc->sge.eq_s_qpp, sc->sge.eq_s_qpp, PAGE_SHIFT);
+		    sp->eq_s_qpp, sp->eq_s_qpp, PAGE_SHIFT);
 		rc = -EINVAL;
 		goto err1;
 	}
 
-	rdev->qpshift = PAGE_SHIFT - sc->sge.eq_s_qpp;
-	rdev->qpmask = (1 << sc->sge.eq_s_qpp) - 1;
-	rdev->cqshift = PAGE_SHIFT - sc->sge.iq_s_qpp;
-	rdev->cqmask = (1 << sc->sge.iq_s_qpp) - 1;
+	rdev->qpshift = PAGE_SHIFT - sp->eq_s_qpp;
+	rdev->qpmask = (1 << sp->eq_s_qpp) - 1;
+	rdev->cqshift = PAGE_SHIFT - sp->iq_s_qpp;
+	rdev->cqmask = (1 << sp->iq_s_qpp) - 1;
 
 	if (c4iw_num_stags(rdev) == 0) {
 		rc = -EINVAL;

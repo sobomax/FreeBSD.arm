@@ -1,7 +1,9 @@
 # Makefile to build LCD control software for ppi(4) interface.
 #
-# $FreeBSD: head/share/examples/ppi/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/share/examples/ppi/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/ppi
 PROG=	ppilcd
 MAN=
 

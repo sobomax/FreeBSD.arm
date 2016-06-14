@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/bios/smapi.c 241073 2012-09-30 15:42:20Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/i386/bios/smapi.c 298890 2016-05-01 17:46:56Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,7 +80,7 @@ static struct cdevsw smapi_cdevsw = {
 	.d_version =	D_VERSION,
 	.d_ioctl =	smapi_ioctl,
 	.d_name =	"smapi",
-	.d_flags =	D_MEM | D_NEEDGIANT,
+	.d_flags =	D_NEEDGIANT,
 };
 
 static void	smapi_identify(driver_t *, device_t);

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ipfilter 277854 2015-01-28 21:01:55Z cy $
+# $FreeBSD: head/etc/rc.d/ipfilter 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: ipfilter
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="ipfilter"
+desc="IP packet filter"
 rcvar="ipfilter_enable"
 load_rc_config $name
 stop_precmd="test -f ${ipfilter_rules} -o -f ${ipv6_ipfilter_rules}"

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/mp_machdep.c 291688 2015-12-03 11:14:14Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/mp_machdep.c 297857 2016-04-12 13:30:39Z avg $");
 
 #include "opt_cpu.h"
 #include "opt_ddb.h"
@@ -247,7 +247,7 @@ init_secondary(void)
 	wrmsr(MSR_FSBASE, 0);		/* User value */
 	wrmsr(MSR_GSBASE, (u_int64_t)pc);
 	wrmsr(MSR_KGSBASE, (u_int64_t)pc);	/* XXX User value while we're in the kernel */
-	intel_fix_cpuid();
+	fix_cpuid();
 
 	lidt(&r_idt);
 

@@ -32,7 +32,7 @@
 static char sccsid[] = "@(#)readmsg.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/timed/timed/readmsg.c 246209 2013-02-01 14:26:54Z charnier $";
+  "$FreeBSD: head/usr.sbin/timed/timed/readmsg.c 299707 2016-05-14 00:46:38Z pfg $";
 #endif /* not lint */
 
 #define	TSPTYPES
@@ -85,9 +85,9 @@ readmsg(int type, char *machfrom, struct timeval *intvl, struct netinfo *netfrom
 		fprintf(fd, "readmsg: looking for %s from %s, %s\n",
 			tsptype[type], machfrom == NULL ? "ANY" : machfrom,
 			netfrom == NULL ? "ANYNET" : inet_ntoa(netfrom->net));
-		if (head->p != 0) {
+		if (head->p != NULL) {
 			length = 1;
-			for (ptr = head->p; ptr != 0; ptr = ptr->p) {
+			for (ptr = head->p; ptr != NULL; ptr = ptr->p) {
 				/* do not repeat the hundreds of messages */
 				if (++length > 3) {
 					if (ptr == tail) {

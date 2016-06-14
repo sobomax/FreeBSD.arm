@@ -28,21 +28,23 @@
  * SUCH DAMAGE.
  *
  * $Id: bluetooth.h,v 1.5 2003/09/14 23:28:42 max Exp $
- * $FreeBSD: head/lib/libbluetooth/bluetooth.h 295028 2016-01-29 00:59:48Z brooks $
+ * $FreeBSD: head/lib/libbluetooth/bluetooth.h 299090 2016-05-04 22:34:11Z asomers $
  */
 
 #ifndef _BLUETOOTH_H_
 #define _BLUETOOTH_H_
 
 #include <sys/types.h>
-#include <sys/bitstring.h>
 #include <sys/endian.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/uio.h>
 #include <sys/un.h>
+
 #include <errno.h>
 #include <netdb.h>
+#include <bitstring.h>
+
 #include <netgraph/ng_message.h>
 #include <netgraph/bluetooth/include/ng_hci.h>
 #include <netgraph/bluetooth/include/ng_l2cap.h>

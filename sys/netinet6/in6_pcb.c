@@ -65,7 +65,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_pcb.c 293633 2016-01-10 13:40:29Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_pcb.c 301217 2016-06-02 17:51:29Z gnn $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -92,6 +92,7 @@ __FBSDID("$FreeBSD: head/sys/netinet6/in6_pcb.c 293633 2016-01-10 13:40:29Z meli
 
 #include <net/if.h>
 #include <net/if_var.h>
+#include <net/if_llatbl.h>
 #include <net/if_types.h>
 #include <net/route.h>
 
@@ -827,9 +828,12 @@ void
 in6_losing(struct inpcb *in6p)
 {
 
-	/*
-	 * We don't store route pointers in the routing table anymore
-	 */
+	if (in6p->inp_route6.ro_rt) {
+		RTFREE(in6p->inp_route6.ro_rt);
+		in6p->inp_route6.ro_rt = (struct rtentry *)NULL;
+	}
+	if (in6p->inp_route.ro_lle)
+		LLE_FREE(in6p->inp_route.ro_lle);	/* zeros ro_lle */
 	return;
 }
 
@@ -840,9 +844,13 @@ in6_losing(struct inpcb *in6p)
 struct inpcb *
 in6_rtchange(struct inpcb *inp, int errno)
 {
-	/*
-	 * We don't store route pointers in the routing table anymore
-	 */
+
+	if (inp->inp_route6.ro_rt) {
+		RTFREE(inp->inp_route6.ro_rt);
+		inp->inp_route6.ro_rt = (struct rtentry *)NULL;
+	}
+	if (inp->inp_route.ro_lle)
+		LLE_FREE(inp->inp_route.ro_lle);	/* zeros ro_lle */
 	return inp;
 }
 

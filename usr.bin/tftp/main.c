@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/tftp/main.c 287320 2015-08-31 06:11:39Z delphij $");
+__FBSDID("$FreeBSD: head/usr.bin/tftp/main.c 298685 2016-04-27 02:34:25Z araujo $");
 
 /* Many bug fixes are from Jim Guyton <guyton@rand-unix> */
 
@@ -727,7 +727,7 @@ command(void)
 		if (vrbose) {
                         if ((bp = el_gets(el, &num)) == NULL || num == 0)
                                 exit(0);
-                        len = (num > MAXLINE) ? MAXLINE : num;
+                        len = MIN(MAXLINE, num);
                         memcpy(line, bp, len);
                         line[len] = '\0';
                         history(hist, &he, H_ENTER, bp);
@@ -753,7 +753,7 @@ command(void)
 			printf("?Ambiguous command\n");
 			continue;
 		}
-		if (c == 0) {
+		if (c == NULL) {
 			printf("?Invalid command\n");
 			continue;
 		}

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/ehci.c 294989 2016-01-28 14:11:59Z mmel $ */
+/* $FreeBSD: head/sys/dev/usb/controller/ehci.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  * Copyright (c) 2004 The NetBSD Foundation, Inc. All rights reserved.
@@ -1659,8 +1659,7 @@ restart:
 
 				/* update data toggle */
 
-				if (((average + temp->max_frame_size - 1) /
-				    temp->max_frame_size) & 1) {
+				if (howmany(average, temp->max_frame_size) & 1) {
 					temp->qtd_status ^=
 					    htohc32(temp->sc, EHCI_QTD_TOGGLE_MASK);
 				}
@@ -2996,7 +2995,7 @@ struct usb_device_descriptor ehci_devd =
 	UDPROTO_HSHUBSTT,		/* protocol */
 	64,				/* max packet */
 	{0}, {0}, {0x00, 0x01},		/* device id */
-	1, 2, 0,			/* string indicies */
+	1, 2, 0,			/* string indexes */
 	1				/* # of configurations */
 };
 

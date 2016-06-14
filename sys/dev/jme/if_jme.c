@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/jme/if_jme.c 295735 2016-02-18 01:24:10Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/jme/if_jme.c 298646 2016-04-26 15:03:15Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -337,8 +337,7 @@ jme_probe(device_t dev)
 	vendor = pci_get_vendor(dev);
 	devid = pci_get_device(dev);
 	sp = jme_devs;
-	for (i = 0; i < sizeof(jme_devs) / sizeof(jme_devs[0]);
-	    i++, sp++) {
+	for (i = 0; i < nitems(jme_devs); i++, sp++) {
 		if (vendor == sp->jme_vendorid &&
 		    devid == sp->jme_deviceid) {
 			device_set_desc(dev, sp->jme_name);
@@ -2665,7 +2664,7 @@ jme_rxintr(struct jme_softc *sc, int count)
 		 * sure whether this check is needed.
 		 */
 		pktlen = JME_RX_BYTES(le32toh(desc->buflen));
-		if (nsegs != ((pktlen + (MCLBYTES - 1)) / MCLBYTES))
+		if (nsegs != howmany(pktlen, MCLBYTES))
 			break;
 		prog++;
 		/* Received a frame. */

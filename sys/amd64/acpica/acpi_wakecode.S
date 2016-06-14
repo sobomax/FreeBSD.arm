@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/acpica/acpi_wakecode.S 269017 2014-07-23 15:53:29Z royger $
+ * $FreeBSD: head/sys/amd64/acpica/acpi_wakecode.S 299010 2016-05-03 22:13:04Z pfg $
  */
 
 #include <machine/asmacros.h>
@@ -179,7 +179,7 @@ wakeup_32:
 	 * Finally, switch to long bit mode by enabling paging.  We have
 	 * to be very careful here because all the segmentation disappears
 	 * out from underneath us.  The spec says we can depend on the
-	 * subsequent pipelined branch to execute, but *only if* everthing
+	 * subsequent pipelined branch to execute, but *only if* everything
 	 * is still identity mapped.  If any mappings change, the pipeline
 	 * will flush.
 	 */
@@ -188,7 +188,7 @@ wakeup_32:
 	mov	%eax, %cr0
 
 	/*
-	 * At this point paging is enabled, and we are in "compatability" mode.
+	 * At this point paging is enabled, and we are in "compatibility" mode.
 	 * We do another far jump to reload %cs with the 64 bit selector.
 	 * %cr3 points to a 4-level page table page.
 	 * We cannot yet jump all the way to the kernel because we can only

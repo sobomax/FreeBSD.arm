@@ -22,9 +22,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_rwlock.c 296162 2016-02-28 17:52:33Z kib $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_rwlock.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include <errno.h>
 #include <limits.h>
@@ -34,6 +35,9 @@
 #include <pthread.h>
 #include "un-namespace.h"
 #include "thr_private.h"
+
+_Static_assert(sizeof(struct pthread_rwlock) <= PAGE_SIZE,
+    "pthread_rwlock is too large for off-page");
 
 __weak_reference(_pthread_rwlock_destroy, pthread_rwlock_destroy);
 __weak_reference(_pthread_rwlock_init, pthread_rwlock_init);

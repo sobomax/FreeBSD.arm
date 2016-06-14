@@ -1,7 +1,8 @@
 #
-# $FreeBSD: head/lib/libbsm/Makefile 292434 2015-12-18 09:50:24Z brueffer $
+# $FreeBSD: head/lib/libbsm/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=	lib${LIB}
 OPENBSMDIR=		${.CURDIR}/../../contrib/openbsm
 _LIBBSMDIR=		${OPENBSMDIR}/libbsm
 

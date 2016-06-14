@@ -22,7 +22,7 @@
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  * Portions Copyright 2013 Howard Su howardsu@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/arm/fbt_isa.c 295348 2016-02-06 11:16:15Z mmel $
+ * $FreeBSD: head/sys/cddl/dev/fbt/arm/fbt_isa.c 298171 2016-04-17 23:08:47Z markj $
  *
  */
 
@@ -49,9 +49,8 @@
 #define	FBT_RETURN	"return"
 
 int
-fbt_invop(uintptr_t addr, uintptr_t *stack, uintptr_t rval)
+fbt_invop(uintptr_t addr, struct trapframe *frame, uintptr_t rval)
 {
-	struct trapframe *frame = (struct trapframe *)stack;
 	solaris_cpu_t *cpu = &solaris_cpu[curcpu];
 	fbt_probe_t *fbt = fbt_probetab[FBT_ADDR2NDX(addr)];
 	register_t fifthparam;

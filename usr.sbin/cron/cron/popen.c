@@ -28,7 +28,7 @@
 static char sccsid[] = "@(#)popen.c	5.7 (Berkeley) 2/14/89";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/cron/cron/popen.c 292605 2015-12-22 15:20:08Z pfg $";
+  "$FreeBSD: head/usr.sbin/cron/cron/popen.c 298886 2016-05-01 16:41:25Z pfg $";
 #endif /* not lint */
 
 #include "cron.h"
@@ -47,7 +47,7 @@ static const char rcsid[] =
 #define WANT_GLOBBING 0
 
 /*
- * Special version of popen which avoids call to shell.  This insures noone
+ * Special version of popen which avoids call to shell.  This insures no one
  * may create a pipe to a hidden program as a side effect of a list or dir
  * command.
  */

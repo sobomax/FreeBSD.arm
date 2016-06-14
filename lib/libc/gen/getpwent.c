@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getpwent.c 289925 2015-10-25 07:42:56Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getpwent.c 298120 2016-04-16 17:52:00Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -748,7 +748,7 @@ pwdbopen(int *version)
 	else
 		*version = 3;
 	if (*version < 3 ||
-	    *version >= sizeof(pwdb_versions)/sizeof(pwdb_versions[0])) {
+	    *version >= nitems(pwdb_versions)) {
 		syslog(LOG_CRIT, "Unsupported password database version %d",
 		    *version);
 		res->close(res);

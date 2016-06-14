@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpt/mpt_raid.c 260058 2013-12-29 20:41:32Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/mpt/mpt_raid.c 297862 2016-04-12 17:23:03Z pfg $");
 
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_raid.h>
@@ -595,7 +595,7 @@ mpt_issue_raid_req(struct mpt_softc *mpt, struct mpt_raid_volume *vol,
 	rap->Function = MPI_FUNCTION_RAID_ACTION;
 	rap->VolumeID = vol->config_page->VolumeID;
 	rap->VolumeBus = vol->config_page->VolumeBus;
-	if (disk != 0)
+	if (disk != NULL)
 		rap->PhysDiskNum = disk->config_page.PhysDiskNum;
 	else
 		rap->PhysDiskNum = 0xFF;

@@ -1,7 +1,8 @@
-# $FreeBSD: head/sbin/mksnap_ffs/Makefile 270289 2014-08-21 19:04:15Z neel $
+# $FreeBSD: head/sbin/mksnap_ffs/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .PATH:	${.CURDIR}/../mount
 
+PACKAGE=runtime
 PROG=	mksnap_ffs
 SRCS=	mksnap_ffs.c getmntopts.c
 MAN=	mksnap_ffs.8

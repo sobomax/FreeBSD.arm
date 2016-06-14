@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/powerpc/powerpc/db_disasm.c 283248 2015-05-21 15:16:18Z pfg $	*/
+/*	$FreeBSD: head/sys/powerpc/powerpc/db_disasm.c 298052 2016-04-15 14:25:13Z pfg $	*/
 /*	$NetBSD: db_disasm.c,v 1.12 2002/01/05 22:07:26 jhawk Exp $	*/
 /*	$OpenBSD: db_disasm.c,v 1.2 1996/12/28 06:21:48 rahnds Exp $	*/
 
@@ -836,9 +836,9 @@ disasm_fields(const struct opcode *popcode, instr_t instr, vm_offset_t loc,
 			reg = "tbu";
 			break;
 		default:
-			reg = 0;
+			reg = NULL;
 		}
-		if (reg == 0)
+		if (reg == NULL)
 			pstr += sprintf(pstr, ", [unknown tbr %d ]", tbr);
 		else
 			pstr += sprintf(pstr, ", %s", reg);

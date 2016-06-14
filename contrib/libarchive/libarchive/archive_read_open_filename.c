@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_open_filename.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_open_filename.c 299529 2016-05-12 10:16:16Z mm $");
 
 #ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>
@@ -103,7 +103,9 @@ int
 archive_read_open_filename(struct archive *a, const char *filename,
     size_t block_size)
 {
-	const char *filenames[2] = { filename, NULL };
+	const char *filenames[2];
+	filenames[0] = filename;
+	filenames[1] = NULL;
 	return archive_read_open_filenames(a, filenames, block_size);
 }
 
@@ -176,7 +178,7 @@ archive_read_open_filename_w(struct archive *a, const wchar_t *wfilename,
 #else
 		/*
 		 * POSIX system does not support a wchar_t interface for
-		 * open() system call, so we have to translate a whcar_t
+		 * open() system call, so we have to translate a wchar_t
 		 * filename to multi-byte one and use it.
 		 */
 		struct archive_string fn;

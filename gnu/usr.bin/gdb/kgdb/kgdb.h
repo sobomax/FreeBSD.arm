@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/gnu/usr.bin/gdb/kgdb/kgdb.h 274391 2014-11-11 18:54:57Z dim $
+ * $FreeBSD: head/gnu/usr.bin/gdb/kgdb/kgdb.h 298358 2016-04-20 17:58:13Z wma $
  */
 
 #ifndef _KGDB_H_
@@ -74,5 +74,8 @@ CORE_ADDR kgdb_parse_1(const char *, int);
 
 #define	kgdb_parse(exp)		kgdb_parse_1((exp), 0)
 #define	kgdb_parse_quiet(exp)	kgdb_parse_1((exp), 1)
+
+extern int (*arm_tdep_pc_fixup)(CORE_ADDR *pc);
+int kgdb_trgt_pc_fixup(CORE_ADDR *pc);
 
 #endif /* _KGDB_H_ */

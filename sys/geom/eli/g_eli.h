@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/eli/g_eli.h 293306 2016-01-07 05:47:34Z allanjude $
+ * $FreeBSD: head/sys/geom/eli/g_eli.h 297691 2016-04-08 01:25:25Z allanjude $
  */
 
 #ifndef	_G_ELI_H_
@@ -97,6 +97,8 @@
 #define	G_ELI_FLAG_RO			0x00000020
 /* Don't pass through BIO_DELETE requests. */
 #define	G_ELI_FLAG_NODELETE		0x00000040
+/* This GELI supports GELIBoot */
+#define	G_ELI_FLAG_GELIBOOT		0x00000080
 /* RUNTIME FLAGS. */
 /* Provider was open for writing. */
 #define	G_ELI_FLAG_WOPEN		0x00010000

@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)fio.c	8.2 (Berkeley) 4/20/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mail/fio.c 216564 2010-12-19 16:25:23Z charnier $");
+__FBSDID("$FreeBSD: head/usr.bin/mail/fio.c 299591 2016-05-13 06:15:05Z truckman $");
 
 #include "rcv.h"
 #include <sys/file.h>
@@ -367,10 +367,10 @@ expand(char *name)
 		name = savestr(xname);
 	}
 	if (!strpbrk(name, "~{[*?$`'\"\\"))
-		return (name);
+		return (savestr(name));
 	if (pipe(pivec) < 0) {
 		warn("pipe");
-		return (name);
+		return (NULL);
 	}
 	(void)snprintf(cmdbuf, sizeof(cmdbuf), "echo %s", name);
 	if ((sh = value("SHELL")) == NULL)

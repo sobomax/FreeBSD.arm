@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.c 296071 2016-02-25 22:44:00Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/bxe_stats.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "bxe.h"
 #include "bxe_stats.h"
@@ -234,6 +234,10 @@ bxe_stats_comp(struct bxe_softc *sc)
     while (*stats_comp != DMAE_COMP_VAL) {
         if (!cnt) {
             BLOGE(sc, "Timeout waiting for stats finished\n");
+            if(sc->trigger_grcdump) {
+                /* taking grcdump */
+                bxe_grc_dump(sc);
+            }
             break;
         }
 
@@ -1310,8 +1314,12 @@ bxe_stats_update(struct bxe_softc *sc)
         if (bxe_storm_stats_update(sc)) {
             if (sc->stats_pending++ == 3) {
 		if (if_getdrvflags(sc->ifp) & IFF_DRV_RUNNING) {
-			atomic_store_rel_long(&sc->chip_tq_flags, CHIP_TQ_REINIT);
-			taskqueue_enqueue(sc->chip_tq, &sc->chip_tq_task);
+                    if(sc->trigger_grcdump) {
+                        /* taking grcdump */
+                        bxe_grc_dump(sc);
+                    }
+                    atomic_store_rel_long(&sc->chip_tq_flags, CHIP_TQ_REINIT);
+                    taskqueue_enqueue(sc->chip_tq, &sc->chip_tq_task);
 		}
             }
             return;
@@ -1662,7 +1670,7 @@ bxe_stats_init(struct bxe_softc *sc)
         bxe_port_stats_base_init(sc);
     }
 
-    /* mark the end of statistics initializiation */
+    /* mark the end of statistics initialization */
     sc->stats_init = FALSE;
 }
 

@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ofw/openfirm.c 294729 2016-01-25 14:42:44Z zbb $");
+__FBSDID("$FreeBSD: head/sys/dev/ofw/openfirm.c 299477 2016-05-11 18:20:02Z gonzo $");
 
 #include "opt_platform.h"
 
@@ -475,6 +475,13 @@ OF_getencprop_alloc(phandle_t package, const char *name, int elsz, void **buf)
 		cell[i] = be32toh(cell[i]);
 
 	return (retval);
+}
+
+/* Free buffer allocated by OF_getencprop_alloc or OF_getprop_alloc */
+void OF_prop_free(void *buf)
+{
+
+	free(buf, M_OFWPROP);
 }
 
 /* Get the next property of a package. */

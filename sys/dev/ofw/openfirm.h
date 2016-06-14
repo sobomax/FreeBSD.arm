@@ -54,7 +54,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ofw/openfirm.h 295662 2016-02-16 15:18:12Z andrew $
+ * $FreeBSD: head/sys/dev/ofw/openfirm.h 299477 2016-05-11 18:20:02Z gonzo $
  */
 
 #ifndef _DEV_OPENFIRM_H_
@@ -117,6 +117,7 @@ ssize_t		OF_getprop_alloc(phandle_t node, const char *propname,
 		    int elsz, void **buf);
 ssize_t		OF_getencprop_alloc(phandle_t node, const char *propname,
 		    int elsz, void **buf);
+void		OF_prop_free(void *buf);
 int		OF_nextprop(phandle_t node, const char *propname, char *buf,
 		    size_t len);
 int		OF_setprop(phandle_t node, const char *name, const void *buf,

@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/lib/libssh/Makefile 294464 2016-01-20 22:57:10Z des $
+# $FreeBSD: head/secure/lib/libssh/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
@@ -22,7 +22,9 @@ SRCS+=	authfd.c authfile.c bufaux.c bufbn.c bufec.c buffer.c \
 	sc25519.c ge25519.c fe25519.c ed25519.c verify.c hash.c blocks.c \
 	kex.c kexdh.c kexgex.c kexecdh.c kexc25519.c \
 	kexdhc.c kexgexc.c kexecdhc.c kexc25519c.c \
-	kexdhs.c kexgexs.c kexecdhs.c kexc25519s.c
+	kexdhs.c kexgexs.c kexecdhs.c kexc25519s.c \
+	platform-pledge.c
+PACKAGE=	ssh
 
 # gss-genr.c should be in $SRCS but causes linking problems, so it is
 # compiled directly into sshd instead.

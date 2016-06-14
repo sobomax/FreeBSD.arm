@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 295435 2016-02-09 16:30:16Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 298069 2016-04-15 16:10:11Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -445,7 +445,7 @@ kproc_kthread_add(void (*func)(void *), void *arg,
 	char buf[100];
 	struct thread *td;
 
-	if (*procptr == 0) {
+	if (*procptr == NULL) {
 		error = kproc_create(func, arg,
 		    	procptr, flags, pages, "%s", procname);
 		if (error)

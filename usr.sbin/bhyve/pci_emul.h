@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_emul.h 269700 2014-08-08 03:49:01Z neel $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_emul.h 297932 2016-04-13 18:39:33Z jhb $
  */
 
 #ifndef _PCI_EMUL_H_
@@ -142,6 +142,8 @@ struct pci_devinst {
 		int	pba_size;
 		int	function_mask; 	
 		struct msix_table_entry *table;	/* allocated at runtime */
+		void	*pba_page;
+		int	pba_page_offset;
 	} pi_msix;
 
 	void      *pi_arg;		/* devemu-private data */

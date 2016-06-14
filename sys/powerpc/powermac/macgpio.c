@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powermac/macgpio.c 295880 2016-02-22 09:02:20Z skra $
+ * $FreeBSD: head/sys/powerpc/powermac/macgpio.c 297199 2016-03-22 22:25:08Z jhibbits $
  */
 
 /*
@@ -236,7 +236,7 @@ macgpio_print_child(device_t dev, device_t child)
 		printf(" addr 0x%02x", dinfo->gpio_num); /* should not happen */
 
 	resource_list_print_type(&dinfo->mdi_resources, "irq", SYS_RES_IRQ, 
-	    "%ld");
+	    "%jd");
         retval += bus_print_child_footer(dev, child);
 
         return (retval);
@@ -258,7 +258,7 @@ macgpio_probe_nomatch(device_t dev, device_t child)
 		if (dinfo->gpio_num >= 0)
 			printf(" gpio %d",dinfo->gpio_num);
 		resource_list_print_type(&dinfo->mdi_resources, "irq", 
-		    SYS_RES_IRQ, "%ld");
+		    SYS_RES_IRQ, "%jd");
 		printf(" (no driver attached)\n");
 	}
 }

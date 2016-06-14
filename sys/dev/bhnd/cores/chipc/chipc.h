@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipc.h 296077 2016-02-26 03:34:08Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipc.h 301411 2016-06-04 19:58:01Z landonf $
  */
 
 #ifndef _BHND_CORES_CHIPC_CHIPC_H_
@@ -36,16 +36,5 @@
 #include <dev/bhnd/nvram/bhnd_nvram.h>
 
 #include "bhnd_chipc_if.h"
-
-/**
- * Query a ChipCommon device and return the preferred NVRAM data source.
- *
- * @param dev A bhnd(4) ChipCommon device.
- */
-static inline bhnd_nvram_src_t
-bhnd_chipc_nvram_src(device_t dev)
-{
-	return (BHND_CHIPC_NVRAM_SRC(dev));
-}
 
 #endif /* _BHND_CORES_CHIPC_CHIPC_H_ */

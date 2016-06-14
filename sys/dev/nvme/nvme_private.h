@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/nvme/nvme_private.h 293328 2016-01-07 16:18:32Z jimharris $
+ * $FreeBSD: head/sys/dev/nvme/nvme_private.h 301778 2016-06-10 06:04:53Z imp $
  */
 
 #ifndef __NVME_PRIVATE_H__
@@ -244,6 +244,10 @@ struct nvme_controller {
 	device_t		dev;
 
 	struct mtx		lock;
+
+	struct cam_sim		*sim;
+	struct cam_path		*path;
+	int			cam_ref;
 
 	uint32_t		ready_timeout_in_ms;
 
@@ -527,5 +531,7 @@ void	nvme_notify_async_consumers(struct nvme_controller *ctrlr,
 				    uint32_t log_page_size);
 void	nvme_notify_fail_consumers(struct nvme_controller *ctrlr);
 void	nvme_notify_new_controller(struct nvme_controller *ctrlr);
+
+void	nvme_ctrlr_intx_handler(void *arg);
 
 #endif /* __NVME_PRIVATE_H__ */

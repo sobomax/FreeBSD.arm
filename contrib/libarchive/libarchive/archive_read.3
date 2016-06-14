@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/contrib/libarchive/libarchive/archive_read.3 238856 2012-07-28 06:38:44Z mm $
+.\" $FreeBSD: head/contrib/libarchive/libarchive/archive_read.3 299529 2016-05-12 10:16:16Z mm $
 .\"
 .Dd February 2, 2012
 .Dt ARCHIVE_READ 3
@@ -130,7 +130,7 @@ which provides a slightly more efficient interface.
 You may prefer to use the higher-level
 .Fn archive_read_data_skip ,
 which reads and discards the data for this entry,
-.Fn archive_read_data_to_file ,
+.Fn archive_read_data_into_fd ,
 which copies the data to the provided file descriptor, or
 .Fn archive_read_extract ,
 which recreates the specified entry on disk and copies data
@@ -186,7 +186,7 @@ list_archive(const char *name)
   free(mydata);
 }
 
-ssize_t
+la_ssize_t
 myread(struct archive *a, void *client_data, const void **buff)
 {
   struct mydata *mydata = client_data;

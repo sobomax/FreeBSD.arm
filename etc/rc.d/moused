@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/moused 240336 2012-09-11 05:04:59Z obrien $
+# $FreeBSD: head/etc/rc.d/moused 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: moused
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="moused"
+desc="Mouse daemon"
 rcvar="moused_enable"
 command="/usr/sbin/${name}"
 start_cmd="moused_start"

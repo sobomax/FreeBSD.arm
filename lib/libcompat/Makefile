@@ -1,6 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/lib/libcompat/Makefile 210958 2010-08-06 20:13:36Z ed $
+# $FreeBSD: head/lib/libcompat/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	compat
 CFLAGS+=-DLIBC_SCCS -DSYSLIBC_SCCS -I${.CURDIR}/../libc/locale
 NO_PIC=

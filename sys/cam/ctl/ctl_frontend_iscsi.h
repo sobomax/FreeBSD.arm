@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.h 278397 2015-02-08 19:15:14Z trasz $
+ * $FreeBSD: head/sys/cam/ctl/ctl_frontend_iscsi.h 301437 2016-06-05 08:48:37Z trasz $
  */
 
 #ifndef CTL_FRONTEND_ISCSI_H
@@ -86,6 +86,7 @@ struct cfiscsi_session {
 	bool				cs_tasks_aborted;
 	size_t				cs_max_data_segment_length;
 	size_t				cs_max_burst_length;
+	size_t				cs_first_burst_length;
 	bool				cs_immediate_data;
 	char				cs_initiator_name[CTL_ISCSI_NAME_LEN];
 	char				cs_initiator_addr[CTL_ISCSI_ADDR_LEN];

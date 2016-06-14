@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_uath.c 293339 2016-01-07 18:41:03Z avos $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_uath.c 298818 2016-04-29 22:14:11Z avos $");
 
 /*-
  * Driver for Atheros AR5523 USB parts.
@@ -328,7 +328,7 @@ uath_attach(device_t dev)
 	struct uath_softc *sc = device_get_softc(dev);
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
-	uint8_t bands[howmany(IEEE80211_MODE_MAX, 8)];
+	uint8_t bands[IEEE80211_MODE_BYTES];
 	uint8_t iface_index = UATH_IFACE_INDEX;		/* XXX */
 	usb_error_t error;
 

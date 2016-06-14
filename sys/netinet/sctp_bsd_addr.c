@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_bsd_addr.c 295670 2016-02-16 20:33:18Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_bsd_addr.c 298942 2016-05-02 20:56:11Z pfg $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -298,7 +298,7 @@ sctp_addr_change(struct ifaddr *ifa, int cmd)
 	}
 	/*
 	 * BSD only has one VRF, if this changes we will need to hook in the
-	 * right things here to get the id to pass to the address managment
+	 * right things here to get the id to pass to the address management
 	 * routine.
 	 */
 	if (SCTP_BASE_VAR(first_time) == 0) {

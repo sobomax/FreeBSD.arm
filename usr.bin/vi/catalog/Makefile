@@ -1,12 +1,17 @@
 #	$Id: Makefile,v 9.0 2012/10/19 15:13:11 zy Exp $
-# $FreeBSD: head/usr.bin/vi/catalog/Makefile 290083 2015-10-27 23:35:02Z bdrewery $
+# $FreeBSD: head/usr.bin/vi/catalog/Makefile 299289 2016-05-09 22:21:09Z bdrewery $
 
 .include <bsd.own.mk>
 
+PACKAGE=vi
 V=	${.CURDIR}/../../../contrib/nvi
 
+FILESGROUPS+=VICAT
 CAT=	dutch english french german polish ru_RU.KOI8-R spanish swedish \
 	uk_UA.KOI8-U zh_CN.GB2312
+VICAT=		${CAT}
+VICATDIR=	${FILESDIR}
+VICATPACKAGE=	${PACKAGE}
 
 SCAN=	${V}/cl/*.c ${V}/common/*.c ${V}/ex/*.c ${V}/vi/*.c
 
@@ -93,14 +98,14 @@ ${c}.check: ${c}.base
 .endfor
 
 english.base: dump ${SCAN} #Makefile
-	./dump ${SCAN} |\
+	${BTOOLSPATH:U.}/dump ${SCAN} |\
 	sed -e '/|/!d' \
 	    -e 's/|/ "/' \
 	    -e 's/^"//' |\
 	sort -nu > $@
 
 
-dump: dump.c
+dump: dump.c ${BUILD_TOOLS_META}
 	${CC} -o ${.TARGET} ${.ALLSRC}
 
 CLEANFILES+= dump ${CAT} english.base *.check __ck1 __ck2

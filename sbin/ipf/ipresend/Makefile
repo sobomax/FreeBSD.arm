@@ -1,5 +1,6 @@
-#	$FreeBSD: head/sbin/ipf/ipresend/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipresend/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	ipf
 PROG=		ipresend
 SRCS=		ipresend.c ip.c resend.c sbpf.c sock.c 44arp.c
 MAN=		ipresend.1

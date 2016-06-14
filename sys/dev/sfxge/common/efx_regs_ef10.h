@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2007-2015 Solarflare Communications Inc.
+ * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_regs_ef10.h 294259 2016-01-18 06:59:00Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_regs_ef10.h 300607 2016-05-24 12:16:57Z arybchik $
  */
 
 #ifndef	_SYS_EFX_EF10_REGS_H

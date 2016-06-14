@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/fdt/fdt_static_dtb.S 208747 2010-06-02 17:17:45Z raj $
+ * $FreeBSD: head/sys/dev/fdt/fdt_static_dtb.S 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #include "fdt_static_dtb.h"
@@ -38,7 +38,7 @@
 /*
  * The device tree blob must be aligned at 8-bytes boundary. Use
  * gas-specific 'balign' extension to ensure the same alignment behaviour on
- * all archs (the .align directive meaning can vary accross gas arch
+ * all archs (the .align directive meaning can vary across gas arch
  * variations).
  */
 .balign 8

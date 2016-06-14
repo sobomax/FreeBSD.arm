@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)hash.c	8.9 (Berkeley) 6/16/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash.c 295924 2016-02-23 15:21:13Z dwmalone $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash.c 298600 2016-04-26 01:17:05Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -160,8 +160,7 @@ __hash_open(const char *file, int flags, int mode,
 		 * maximum bucket number, so the number of buckets is
 		 * max_bucket + 1.
 		 */
-		nsegs = (hashp->MAX_BUCKET + 1 + hashp->SGSIZE - 1) /
-			 hashp->SGSIZE;
+		nsegs = howmany(hashp->MAX_BUCKET + 1, hashp->SGSIZE);
 		if (alloc_segs(hashp, nsegs))
 			/*
 			 * If alloc_segs fails, table will have been destroyed
@@ -423,7 +422,8 @@ hdestroy(HTAB *hashp)
 		free(hashp->tmp_buf);
 
 	if (hashp->fp != -1) {
-		(void)_fsync(hashp->fp);
+		if (hashp->save_file)
+			(void)_fsync(hashp->fp);
 		(void)_close(hashp->fp);
 	}
 
@@ -770,7 +770,7 @@ next_bucket:
 		if (__big_keydata(hashp, bufp, key, data, 1))
 			return (ERROR);
 	} else {
-		if (hashp->cpage == 0)
+		if (hashp->cpage == NULL)
 			return (ERROR);
 		key->data = (u_char *)hashp->cpage->page + bp[ndx];
 		key->size = (ndx > 1 ? bp[ndx - 1] : hashp->BSIZE) - bp[ndx];

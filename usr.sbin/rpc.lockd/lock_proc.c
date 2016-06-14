@@ -1,5 +1,5 @@
 /*	$NetBSD: lock_proc.c,v 1.7 2000/10/11 20:23:56 is Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpc.lockd/lock_proc.c 260250 2014-01-04 01:08:10Z delphij $ */
+/*	$FreeBSD: head/usr.sbin/rpc.lockd/lock_proc.c 299986 2016-05-16 23:00:48Z truckman $ */
 /*
  * Copyright (c) 1995
  *	A.R. Gordon (andrew.gordon@net-tel.co.uk).  All rights reserved.
@@ -112,7 +112,7 @@ log_netobj(netobj *obj)
 	}
 	/* Prevent the security hazard from the buffer overflow */
 	maxlen = (obj->n_len < MAX_NETOBJ_SZ ? obj->n_len : MAX_NETOBJ_SZ);
-	for (i=0, tmp1 = objvalbuffer, tmp2 = objascbuffer; i < obj->n_len;
+	for (i=0, tmp1 = objvalbuffer, tmp2 = objascbuffer; i < maxlen;
 	    i++, tmp1 +=2, tmp2 +=1) {
 		sprintf(tmp1,"%02X",*(obj->n_bytes+i));
 		sprintf(tmp2,"%c",*(obj->n_bytes+i));

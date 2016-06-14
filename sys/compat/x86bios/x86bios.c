@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/x86bios/x86bios.c 295767 2016-02-18 19:37:39Z jkim $");
+__FBSDID("$FreeBSD: head/sys/compat/x86bios/x86bios.c 298801 2016-04-29 20:22:10Z pfg $");
 
 #include "opt_x86bios.h"
 
@@ -119,7 +119,7 @@ void *
 x86bios_alloc(uint32_t *offset, size_t size, int flags)
 {
 	void *vaddr;
-	int i;
+	u_int i;
 
 	if (offset == NULL || size == 0)
 		return (NULL);

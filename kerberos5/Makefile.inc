@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/Makefile.inc 287216 2015-08-27 17:16:18Z ume $
+# $FreeBSD: head/kerberos5/Makefile.inc 301883 2016-06-14 16:19:59Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -35,7 +35,8 @@ ETSRCS=	\
 .for _ET in ${ET:T:R}
 .if ${SRCS:M${_ET}.[ch]} != ""
 .ORDER: ${_ET}.h ${_ET}.c
-${_ET}.c ${_ET}.h: ${ET}
+${_ET}.c: .NOMETA
+${_ET}.h ${_ET}.c: ${ET}
 	compile_et ${.ALLSRC}
 CLEANFILES+=	${_ET}.h ${_ET}.c
 .endif

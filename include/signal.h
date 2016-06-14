@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.3 (Berkeley) 3/30/94
- * $FreeBSD: head/include/signal.h 295602 2016-02-13 17:23:55Z kib $
+ * $FreeBSD: head/include/signal.h 300997 2016-05-30 13:51:27Z ed $
  */
 
 #ifndef _SIGNAL_H_
@@ -113,7 +113,7 @@ int	siginterrupt(int, int);
 #endif
 
 #if __POSIX_VISIBLE >= 200809
-void	psignal(unsigned int, const char *);
+void	psignal(int, const char *);
 #endif
 
 #if __BSD_VISIBLE

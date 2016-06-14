@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_event.c 266444 2014-05-19 16:05:42Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_event.c 300287 2016-05-20 08:22:20Z kib $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -83,7 +83,6 @@ g_waitidle(void)
 {
 
 	g_topology_assert_not();
-	mtx_assert(&Giant, MA_NOTOWNED);
 
 	mtx_lock(&g_eventlock);
 	while (!TAILQ_EMPTY(&g_events))

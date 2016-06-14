@@ -25,9 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/atomic.c 284901 2015-06-28 05:04:08Z kib $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/atomic.c 299010 2016-05-03 22:13:04Z pfg $");
 
-/* This file creates publically callable functions to perform various
+/* This file creates publicly callable functions to perform various
  * simple arithmetic on memory which is atomic in the presence of
  * interrupts and multiple processors.
  */

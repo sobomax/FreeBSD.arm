@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ahb/ahb.c 280347 2015-03-22 16:10:28Z mav $
+ * $FreeBSD: head/sys/dev/ahb/ahb.c 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #include <sys/param.h>
@@ -885,7 +885,7 @@ ahbintr_locked(struct ahb_softc *ahb)
 				xpt_async(AC_BUS_RESET, ahb->path, NULL);
 				break;
 			}
-			printf("Unsupported initiator selection AEN occured\n");
+			printf("Unsupported initiator selection AEN occurred\n");
 			break;
 		case INTSTAT_IMMED_OK:
 		case INTSTAT_IMMED_ERR:
@@ -1235,7 +1235,7 @@ ahbtimeout(void *arg)
 	 * means that the driver attempts to clear only one error
 	 * condition at a time.  In general, timeouts that occur
 	 * close together are related anyway, so there is no benefit
-	 * in attempting to handle errors in parrallel.  Timeouts will
+	 * in attempting to handle errors in parallel.  Timeouts will
 	 * be reinstated when the recovery process ends.
 	 */
 	if ((ecb->state & ECB_DEVICE_RESET) == 0) {

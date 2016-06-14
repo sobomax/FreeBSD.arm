@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_pager.c 292373 2015-12-16 21:30:45Z glebius $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_pager.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -165,8 +165,6 @@ struct pagerops *pagertab[] = {
 	&mgtdevicepagerops,	/* OBJT_MGTDEVICE */
 };
 
-static const int npagers = sizeof(pagertab) / sizeof(pagertab[0]);
-
 /*
  * Kernel address space for mapping pages.
  * Used by pagers where KVAs are needed for IO.
@@ -189,7 +187,7 @@ vm_pager_init()
 	/*
 	 * Initialize known pagers
 	 */
-	for (pgops = pagertab; pgops < &pagertab[npagers]; pgops++)
+	for (pgops = pagertab; pgops < &pagertab[nitems(pagertab)]; pgops++)
 		if ((*pgops)->pgo_init != NULL)
 			(*(*pgops)->pgo_init) ();
 }

@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_vnops.c 294596 2016-01-22 20:35:20Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_vnops.c 300142 2016-05-18 12:03:57Z kib $");
 
 #include "opt_hwpmc_hooks.h"
 
@@ -1314,6 +1314,8 @@ vn_truncate(struct file *fp, off_t length, struct ucred *active_cred,
 	if (error == 0) {
 		VATTR_NULL(&vattr);
 		vattr.va_size = length;
+		if ((fp->f_flag & O_FSYNC) != 0)
+			vattr.va_vaflags |= VA_SYNC;
 		error = VOP_SETATTR(vp, &vattr, fp->f_cred);
 	}
 out:
@@ -1420,7 +1422,7 @@ vn_stat(vp, sb, active_cred, file_cred, td)
 		break;
 	default:
 		return (EBADF);
-	};
+	}
 	sb->st_mode = mode;
 	sb->st_nlink = vap->va_nlink;
 	sb->st_uid = vap->va_uid;
@@ -1537,7 +1539,7 @@ _vn_lock(struct vnode *vp, int flags, char *file, int line)
 		error = VOP_LOCK1(vp, flags, file, line);
 		flags &= ~LK_INTERLOCK;	/* Interlock is always dropped. */
 		KASSERT((flags & LK_RETRY) == 0 || error == 0,
-		    ("LK_RETRY set with incompatible flags (0x%x) or an error occured (%d)",
+		    ("LK_RETRY set with incompatible flags (0x%x) or an error occurred (%d)",
 		    flags, error));
 		/*
 		 * Callers specify LK_RETRY if they wish to get dead vnodes.

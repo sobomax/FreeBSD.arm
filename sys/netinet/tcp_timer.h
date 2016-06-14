@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp_timer.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/tcp_timer.h 294840 2016-01-26 16:33:38Z hiren $
+ * $FreeBSD: head/sys/netinet/tcp_timer.h 298743 2016-04-28 13:27:12Z rrs $
  */
 
 #ifndef _NETINET_TCP_TIMER_H_
@@ -146,7 +146,7 @@ struct tcp_timer {
 	struct	callout tt_2msl;	/* 2*msl TIME_WAIT timer */
 	struct	callout tt_delack;	/* delayed ACK timer */
 	uint32_t	tt_flags;	/* Timers flags */
-	uint32_t	tt_spare;	/* TDB */
+	uint32_t	tt_draincnt;	/* Count being drained */
 };
 
 /*
@@ -193,17 +193,13 @@ extern int tcp_fast_finwait2_recycle;
 
 void	tcp_timer_init(void);
 void	tcp_timer_2msl(void *xtp);
+void	tcp_timer_discard(void *);
 struct tcptw *
 	tcp_tw_2msl_scan(int reuse);	/* XXX temporary? */
 void	tcp_timer_keep(void *xtp);
 void	tcp_timer_persist(void *xtp);
 void	tcp_timer_rexmt(void *xtp);
 void	tcp_timer_delack(void *xtp);
-void	tcp_timer_2msl_discard(void *xtp);
-void	tcp_timer_keep_discard(void *xtp);
-void	tcp_timer_persist_discard(void *xtp);
-void	tcp_timer_rexmt_discard(void *xtp);
-void	tcp_timer_delack_discard(void *xtp);
 void	tcp_timer_to_xtimer(struct tcpcb *tp, struct tcp_timer *timer,
 	struct xtcp_timer *xtimer);
 

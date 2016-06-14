@@ -23,13 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/if_emac.c 295711 2016-02-17 18:28:03Z andrew $
+ * $FreeBSD: head/sys/arm/allwinner/if_emac.c 297627 2016-04-06 23:11:03Z jmcneill $
  */
 
 /* A10/A20 EMAC driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 295711 2016-02-17 18:28:03Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 297627 2016-04-06 23:11:03Z jmcneill $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -78,11 +78,12 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/if_emac.c 295711 2016-02-17 18:28:03Z
 
 #include <arm/allwinner/if_emacreg.h>
 
+#include <dev/extres/clk/clk.h>
+
 #include "miibus_if.h"
 
 #include "gpio_if.h"
 
-#include "a10_clk.h"
 #include "a10_sramc.h"
 
 struct emac_softc {
@@ -94,6 +95,7 @@ struct emac_softc {
 	struct resource		*emac_res;
 	struct resource		*emac_irq;
 	void			*emac_intrhand;
+	clk_t			emac_clk;
 	int			emac_if_flags;
 	struct mtx		emac_mtx;
 	struct callout		emac_tick_ch;
@@ -110,7 +112,7 @@ static int	emac_shutdown(device_t);
 static int	emac_suspend(device_t);
 static int	emac_resume(device_t);
 
-static void	emac_sys_setup(void);
+static int	emac_sys_setup(struct emac_softc *);
 static void	emac_reset(struct emac_softc *);
 
 static void	emac_init_locked(struct emac_softc *);
@@ -138,14 +140,27 @@ static int	sysctl_hw_emac_proc_limit(SYSCTL_HANDLER_ARGS);
 #define	EMAC_WRITE_REG(sc, reg, val)	\
     bus_space_write_4(sc->emac_tag, sc->emac_handle, reg, val)
 
-static void
-emac_sys_setup(void)
+static int
+emac_sys_setup(struct emac_softc *sc)
 {
+	int error;
 
 	/* Activate EMAC clock. */
-	a10_clk_emac_activate();
+	error = clk_get_by_ofw_index(sc->emac_dev, 0, &sc->emac_clk);
+	if (error != 0) {
+		device_printf(sc->emac_dev, "cannot get clock\n");
+		return (error);
+	}
+	error = clk_enable(sc->emac_clk);
+	if (error != 0) {
+		device_printf(sc->emac_dev, "cannot enable clock\n");
+		return (error);
+	}
+
 	/* Map sram. */
 	a10_map_to_emac();
+
+	return (0);
 }
 
 static void
@@ -784,6 +799,9 @@ emac_detach(device_t dev)
 		bus_generic_detach(sc->emac_dev);
 	}
 
+	if (sc->emac_clk != NULL)
+		clk_disable(sc->emac_clk);
+
 	if (sc->emac_res != NULL)
 		bus_release_resource(dev, SYS_RES_MEMORY, 0, sc->emac_res);
 
@@ -897,7 +915,10 @@ emac_attach(device_t dev)
 		}
 	}
 	/* Setup EMAC */
-	emac_sys_setup();
+	error = emac_sys_setup(sc);
+	if (error != 0)
+		goto fail;
+
 	emac_reset(sc);
 
 	ifp = sc->emac_ifp = if_alloc(IFT_ETHER);

@@ -1,4 +1,6 @@
-# $FreeBSD: head/lib/libc/tests/hash/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/hash/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 .include <src.opts.mk>
 
@@ -14,13 +16,16 @@ BINDIR=		${TESTSDIR}
 
 PROGS+=		h_hash
 
-FILESDIR=	${TESTSDIR}/data
+FILESGROUPS+=	${PACKAGE}DATA_FILES
+${PACKAGE}DATA_FILESPACKAGE=	tests
 
-FILES+=		data/md5test-in
-FILES+=		data/md5test-out
-FILES+=		data/sha1test-in
-FILES+=		data/sha1test-out
-FILES+=		data/sha1test2-out
+${PACKAGE}DATA_FILESDIR=	${TESTSDIR}/data
+
+${PACKAGE}DATA_FILES+=	data/md5test-in
+${PACKAGE}DATA_FILES+=	data/md5test-out
+${PACKAGE}DATA_FILES+=	data/sha1test-in
+${PACKAGE}DATA_FILES+=	data/sha1test-out
+${PACKAGE}DATA_FILES+=	data/sha1test2-out
 
 LIBADD+=		md
 LIBADD.sha2_test+=	crypto

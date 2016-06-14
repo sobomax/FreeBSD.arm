@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 298627 2016-04-26 11:53:37Z br $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 295880 2016-0
 #include <sys/bus.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
+#include <sys/devmap.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>
@@ -42,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/arm/annapurna/alpine/alpine_machdep.c 295880 2016-0
 #include <machine/bus.h>
 #include <machine/frame.h> /* For trapframe_t, used in <machine/machdep.h> */
 #include <machine/machdep.h>
-#include <machine/devmap.h>
 #include <machine/platform.h>
 #include <machine/fdt.h>
 
@@ -128,7 +128,7 @@ int
 platform_devmap_init(void)
 {
 	alpine_get_devmap_base(&al_devmap_pa, &al_devmap_size);
-	arm_devmap_add_entry(al_devmap_pa, al_devmap_size);
+	devmap_add_entry(al_devmap_pa, al_devmap_size);
 	return (0);
 }
 

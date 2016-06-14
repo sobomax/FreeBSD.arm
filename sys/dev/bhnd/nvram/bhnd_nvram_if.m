@@ -22,7 +22,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/bhnd/nvram/bhnd_nvram_if.m 296077 2016-02-26 03:34:08Z adrian $
+# $FreeBSD: head/sys/dev/bhnd/nvram/bhnd_nvram_if.m 299241 2016-05-08 19:14:05Z adrian $
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -46,13 +46,16 @@ INTERFACE bhnd_nvram;
  * @param[out]		buf	On success, the requested value will be written
  *				to this buffer. This argment may be NULL if
  *				the value is not desired.
- * @param[in,out]	size	The capacity of @p buf. On success, will be set
- *				to the actual size of the requested value.
+ * @param[in,out]	len	The maximum capacity of @p buf. On success,
+ *				will be set to the actual size of the requested
+ *				value.
  *
  * @retval 0		success
  * @retval ENOENT	The requested variable was not found.
- * @retval ENOMEM	If @p buf is non-NULL and a buffer of @p size is too
+ * @retval ENOMEM	If @p buf is non-NULL and a buffer of @p len is too
  *			small to hold the requested value.
+ * @retval ENODEV	If no supported NVRAM hardware is accessible via this
+ *			device.
  * @retval non-zero	If reading @p name otherwise fails, a regular unix
  *			error code will be returned.
  */
@@ -60,5 +63,30 @@ METHOD int getvar {
 	device_t	 dev;
 	const char	*name;
 	void		*buf;
-	size_t		*size;
+	size_t		*len;
+};
+
+/**
+ * Set an NVRAM variable's local value.
+ *
+ * No changes should be written to non-volatile storage.
+ *
+ * @param	dev	The NVRAM device.
+ * @param	name	The NVRAM variable name.
+ * @param	buf	The new value.
+ * @param	len	The size of @p buf.
+ *
+ * @retval 0		success
+ * @retval ENOENT	The specified variable name is not recognized.
+ * @retval EINVAL	If @p len does not match the expected variable size.
+ * @retval ENODEV	If no supported NVRAM hardware is accessible via this
+ *			device.
+ * @retval non-zero	If reading @p name otherwise fails, a regular unix
+ *			error code will be returned.
+ */
+METHOD int setvar {
+	device_t	 dev;
+	const char	*name;
+	const void	*buf;
+	size_t		 len;
 };

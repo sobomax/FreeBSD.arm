@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 294665 2016-01-24 15:15:57Z br $");
+__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 299952 2016-05-16 16:01:46Z truckman $");
 
 #include <sys/wait.h>
 
@@ -88,7 +88,7 @@ static void	usage(void);
 static int
 execldd32(char *file, char *fmt1, char *fmt2, int aflag, int vflag)
 {
-	char *argv[8];
+	char *argv[9];
 	int i, rval, status;
 
 	LDD_UNSETENV("TRACE_LOADED_OBJECTS");

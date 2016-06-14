@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/trap.c 293613 2016-01-09 20:18:53Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/trap.c 300863 2016-05-27 18:45:11Z kib $");
 
 /*
  * AMD64 Trap and System call handling
@@ -959,6 +959,10 @@ amd64_syscall(struct thread *td, int traced)
 	KASSERT(td->td_pcb->pcb_save == get_pcb_user_save_td(td),
 	    ("System call %s returning with mangled pcb_save",
 	     syscallname(td->td_proc, sa.code)));
+	KASSERT(td->td_md.md_invl_gen.gen == 0,
+	    ("System call %s returning with leaked invl_gen %lu",
+	    syscallname(td->td_proc, sa.code), td->td_md.md_invl_gen.gen));
+
 
 	syscallret(td, error, &sa);
 

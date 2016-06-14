@@ -30,9 +30,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/lib/libc/sys/pdfork.2 267774 2014-06-23 08:25:03Z bapt $
+.\" $FreeBSD: head/lib/libc/sys/pdfork.2 301573 2016-06-08 02:09:14Z oshogbo $
 .\"
-.Dd April 7, 2014
+.Dd June 8, 2016
 .Dt PDFORK 2
 .Os
 .Sh NAME
@@ -79,6 +79,10 @@ This option is not permitted in
 .Xr capsicum 4
 capability mode (see
 .Xr cap_enter 2 ) .
+.El
+.Bl -tag -width ".Dv PD_DAEMON"
+.It Dv PD_CLOEXEC
+Set close-on-exec on process descriptor.
 .El
 .Pp
 .Fn pdgetpid

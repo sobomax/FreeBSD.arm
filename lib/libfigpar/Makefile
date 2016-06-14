@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libfigpar/Makefile 296129 2016-02-26 22:14:23Z bdrewery $
+# $FreeBSD: head/lib/libfigpar/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=		figpar
 SHLIB_MAJOR=	0
 INCS=		figpar.h string_m.h

@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/vnet.h 294867 2016-01-27 00:20:07Z glebius $
+ * $FreeBSD: head/sys/net/vnet.h 300155 2016-05-18 15:50:52Z bz $
  */
 
 /*-
@@ -70,6 +70,7 @@ struct vnet {
 	u_int			 vnet_magic_n;
 	u_int			 vnet_ifcnt;
 	u_int			 vnet_sockcnt;
+	u_int			 vnet_state;	/* SI_SUB_* */
 	void			*vnet_data_mem;
 	uintptr_t		 vnet_data_base;
 };

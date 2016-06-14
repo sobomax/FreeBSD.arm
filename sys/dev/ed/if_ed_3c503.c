@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_3c503.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_3c503.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include "opt_ed.h"
 
@@ -324,7 +324,7 @@ ed_probe_3Com(device_t dev, int port_rid, int flags)
 		ed_asic_outb(sc, ED_3COM_IDCFR, ED_3COM_IDCFR_IRQ5);
 		break;
 	default:
-		device_printf(dev, "Invalid irq configuration (%ld) must be 3-5,9 for 3c503\n",
+		device_printf(dev, "Invalid irq configuration (%jd) must be 3-5,9 for 3c503\n",
 			      irq);
 		return (ENXIO);
 	}

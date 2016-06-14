@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/allwinner_machdep.h 295808 2016-02-19 14:15:31Z andrew $
+ * $FreeBSD: head/sys/arm/allwinner/allwinner_machdep.h 299688 2016-05-13 18:20:54Z manu $
  *
  */
 
@@ -34,13 +34,16 @@
 #define	ALLWINNERSOC_A13	0x13000000
 #define	ALLWINNERSOC_A10S	0x10000001
 #define	ALLWINNERSOC_A20	0x20000000
+#define	ALLWINNERSOC_H3		0x30000000
 #define	ALLWINNERSOC_A31	0x31000000
 #define	ALLWINNERSOC_A31S	0x31000001
+#define	ALLWINNERSOC_A83T	0x83000000
 
 #define	ALLWINNERSOC_SUN4I	0x40000000
 #define	ALLWINNERSOC_SUN5I	0x50000000
 #define	ALLWINNERSOC_SUN6I	0x60000000
 #define	ALLWINNERSOC_SUN7I	0x70000000
+#define	ALLWINNERSOC_SUN8I	0x80000000
 
 u_int allwinner_soc_type(void);
 u_int allwinner_soc_family(void);

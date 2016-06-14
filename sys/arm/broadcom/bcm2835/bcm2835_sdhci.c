@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 295659 2016-02-16 12:19:06Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_sdhci.c 297127 2016-03-21 00:52:24Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -672,3 +672,4 @@ static driver_t bcm_sdhci_driver = {
 DRIVER_MODULE(sdhci_bcm, simplebus, bcm_sdhci_driver, bcm_sdhci_devclass, 0, 0);
 MODULE_DEPEND(sdhci_bcm, sdhci, 1, 1, 1);
 DRIVER_MODULE(mmc, sdhci_bcm, mmc_driver, mmc_devclass, NULL, NULL);
+MODULE_DEPEND(sdhci_bcm, mmc, 1, 1, 1);

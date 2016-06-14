@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_time.c 292777 2015-12-27 15:37:07Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_time.c 298649 2016-04-26 15:38:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -453,7 +453,7 @@ kern_clock_getres(struct thread *td, clockid_t clock_id, struct timespec *ts)
 	case CLOCK_VIRTUAL:
 	case CLOCK_PROF:
 		/* Accurately round up here because we can do so cheaply. */
-		ts->tv_nsec = (1000000000 + hz - 1) / hz;
+		ts->tv_nsec = howmany(1000000000, hz);
 		break;
 	case CLOCK_SECOND:
 		ts->tv_sec = 1;

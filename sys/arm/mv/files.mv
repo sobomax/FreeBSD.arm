@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/arm/mv/files.mv 295626 2016-02-15 15:11:26Z andrew $
+# $FreeBSD: head/sys/arm/mv/files.mv 297496 2016-04-01 20:26:45Z jmcneill $
 #
 # The Marvell CPU cores
 # - Compliant with V5TE architecture
@@ -26,6 +26,8 @@ dev/mge/if_mge.c		optional	mge
 dev/nand/nfc_mv.c		optional	nand
 dev/mvs/mvs_soc.c		optional	mvs
 dev/uart/uart_dev_ns8250.c	optional	uart
+dev/uart/uart_dev_snps.c	optional	uart
 dev/usb/controller/ehci_mv.c	optional	ehci
+dev/usb/controller/xhci_mv.c	optional	xhci
 
 kern/kern_clocksource.c		standard

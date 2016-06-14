@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/cavium/thunder_pcie_pem.h 295962 2016-02-24 06:05:30Z wma $
+ * $FreeBSD: head/sys/arm64/cavium/thunder_pcie_pem.h 301031 2016-05-31 09:15:21Z andrew $
  *
  */
 
@@ -39,6 +39,7 @@ struct thunder_pem_softc {
 	struct resource		*reg;
 	bus_space_tag_t		reg_bst;
 	bus_space_handle_t	reg_bsh;
+	bus_dma_tag_t		dmat;
 	struct pcie_range	ranges[MAX_RANGES_TUPLES];
 	struct rman		mem_rman;
 	struct rman		io_rman;

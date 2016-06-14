@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/mkesdb_static/Makefile 295977 2016-02-24 17:18:31Z bdrewery $
+# $FreeBSD: head/usr.bin/mkesdb_static/Makefile 297997 2016-04-14 21:06:10Z bdrewery $
 
 .PATH: ${.CURDIR}/../../lib/libc/iconv ${.CURDIR}/../mkesdb
 
@@ -13,3 +13,5 @@ build-tools: mkesdb_static
 
 .include "${.CURDIR}/../mkesdb/Makefile.inc"
 .include <bsd.prog.mk>
+
+${PROG}: ${BUILD_TOOLS_META}

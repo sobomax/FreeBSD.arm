@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/trgt_i386.c 274391 2014-11-11 18:54:57Z dim $");
+__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/trgt_i386.c 298363 2016-04-20 20:22:48Z wma $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -384,4 +384,17 @@ kgdb_trgt_trapframe_sniffer(struct frame_info *next_frame)
 		return (&kgdb_trgt_trapframe_unwind);
 	/* printf("%s: %llx =%s\n", __func__, pc, pname); */
 	return (NULL);
+}
+
+/*
+ * This function ensures, that the PC is inside the
+ * function section which is understood by GDB.
+ *
+ * Return 0 when fixup is necessary, -1 otherwise.
+ */
+int
+kgdb_trgt_pc_fixup(CORE_ADDR *pc __unused)
+{
+
+	return (-1);
 }

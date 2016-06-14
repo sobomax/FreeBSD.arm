@@ -27,26 +27,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/uaccess.h 294825 2016-01-26 14:21:30Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/uaccess.h 299530 2016-05-12 11:38:28Z hselasky $
  */
 #ifndef	_LINUX_UACCESS_H_
 #define	_LINUX_UACCESS_H_
 
 #include <linux/compiler.h>
 
-#define	__get_user(_x, _p) ({				\
-	int __err;					\
-	__typeof(*(_p)) __x;				\
-	__err = -copyin((_p), &(__x), sizeof(*(_p)));	\
-	(_x) = __x;					\
-	__err;						\
+#define	__get_user(_x, _p) ({					\
+	int __err;						\
+	__typeof(*(_p)) __x;					\
+	__err = linux_copyin((_p), &(__x), sizeof(*(_p)));	\
+	(_x) = __x;						\
+	__err;							\
 })
-#define	__put_user(_x, _p) ({			\
-	__typeof(*(_p)) __x = (_x);		\
-	-copyout(&(__x), (_p), sizeof(*(_p)));	\
+
+#define	__put_user(_x, _p) ({				\
+	__typeof(*(_p)) __x = (_x);			\
+	linux_copyout(&(__x), (_p), sizeof(*(_p)));	\
 })
-#define	get_user(_x, _p)	-copyin((_p), &(_x), sizeof(*(_p)))
-#define	put_user(_x, _p)	-copyout(&(_x), (_p), sizeof(*(_p)))
+#define	get_user(_x, _p)	linux_copyin((_p), &(_x), sizeof(*(_p)))
+#define	put_user(_x, _p)	linux_copyout(&(_x), (_p), sizeof(*(_p)))
+
+extern int linux_copyin(const void *uaddr, void *kaddr, size_t len);
+extern int linux_copyout(const void *kaddr, void *uaddr, size_t len);
 
 /*
  * NOTE: The returned value from pagefault_disable() must be stored

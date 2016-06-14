@@ -1,5 +1,5 @@
 #       @(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: head/bin/pax/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/bin/pax/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
@@ -27,6 +27,7 @@
 # 		regex routines and must define NET2_REGEX.
 # 		Pax may not compile if this not (un)defined properly.
 
+PACKAGE=runtime
 PROG=   pax
 SRCS=	ar_io.c ar_subs.c buf_subs.c cache.c cpio.c file_subs.c ftree.c \
 	gen_subs.c getoldopt.c options.c pat_rep.c pax.c sel_subs.c \

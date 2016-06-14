@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netnatm/natm_proto.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netnatm/natm_proto.c 298310 2016-04-19 23:48:27Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,7 +87,7 @@ static struct domain natmdomain = {
 	.dom_name =		"natm",
 	.dom_init =		natm_init,
 	.dom_protosw =		natmsw,
-	.dom_protoswNPROTOSW =	&natmsw[sizeof(natmsw)/sizeof(natmsw[0])],
+	.dom_protoswNPROTOSW =	&natmsw[nitems(natmsw)],
 };
 
 static struct netisr_handler natm_nh = {

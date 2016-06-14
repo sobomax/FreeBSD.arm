@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pmccontrol/pmccontrol.c 279156 2015-02-22 14:45:00Z pfg $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmccontrol/pmccontrol.c 298447 2016-04-22 05:07:59Z araujo $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -141,7 +141,7 @@ pmcc_do_enable_disable(struct pmcc_op_list *op_list)
 			err(EX_OSERR,
 			    "Unable to determine the number of PMCs in CPU %d",
 			    c);
-		npmc = t > npmc ? t : npmc;
+		npmc = MAX(t, npmc);
 	}
 
 	if (npmc == 0)

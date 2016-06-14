@@ -24,8 +24,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sbin/reboot/nextboot.sh 231129 2012-02-07 14:06:30Z emaste $
+# $FreeBSD: head/sbin/reboot/nextboot.sh 297980 2016-04-14 18:03:55Z markj $
 
+append="NO"
 delete="NO"
 kenv=
 force="NO"
@@ -48,12 +49,17 @@ add_kenv()
 }
 
 display_usage() {
-	echo "Usage: nextboot [-e variable=value] [-f] [-k kernel] [-o options]"
-	echo "       nextboot -D"
+	cat <<-EOF
+	Usage: nextboot [-af] [-e variable=value] [-k kernel] [-o options]
+	       nextboot -D
+	EOF
 }
 
-while getopts "De:fk:o:" argument ; do
+while getopts "aDe:fk:o:" argument ; do
 	case "${argument}" in
+	a)
+		append="YES"
+		;;
 	D)
 		delete="YES"
 		;;
@@ -106,7 +112,19 @@ df -Tn "/boot/" 2>/dev/null | while read _fs _type _other ; do
 	EOF
 done
 
-cat > ${nextboot_file} << EOF
+set -e
+
+nextboot_tmp=$(mktemp $(dirname ${nextboot_file})/nextboot.XXXXXX)
+
+if [ ${append} = "YES" -a -f ${nextboot_file} ]; then
+	cp -f ${nextboot_file} ${nextboot_tmp}
+fi
+
+cat >> ${nextboot_tmp} << EOF
 nextboot_enable="YES"
 $kenv
 EOF
+
+fsync ${nextboot_tmp}
+
+mv ${nextboot_tmp} ${nextboot_file}

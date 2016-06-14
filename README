@@ -1,6 +1,6 @@
 This is the top level of the FreeBSD source directory.  This file
 was last revised on:
-$FreeBSD: head/README 281727 2015-04-19 07:16:44Z eadler $
+$FreeBSD: head/README 300137 2016-05-18 10:43:13Z avos $
 
 For copyright information, please see the file COPYRIGHT in this
 directory (additional copyright information also exists for some
@@ -44,8 +44,6 @@ contrib		Packages contributed by 3rd parties.
 crypto		Cryptography stuff (see crypto/README).
 
 etc		Template files for /etc.
-
-games		Amusements.
 
 gnu		Various commands and libraries under the GNU Public License.
 		Please see gnu/COPYING* for more information.

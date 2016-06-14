@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/tools/tools/shlib-compat/shlib-compat.py 291041 2015-11-19 00:01:52Z rodrigc $
+# $FreeBSD: head/tools/tools/shlib-compat/shlib-compat.py 298881 2016-05-01 16:20:14Z pfg $
 
 from __future__ import print_function
 import os
@@ -936,7 +936,7 @@ class DwarfdumpParser(Parser):
                 tag.tag in DwarfdumpParser.external_tags)):
             if offset in self.offsetmap:
                 raise ValueError("Dwarf dump parse error: " +
-                        "symbol is aleady defined at offset 0x%x" % offset)
+                        "symbol is already defined at offset 0x%x" % offset)
             self.offsetmap[offset] = tag
         if len(self.stack) > 0:
             prev = self.stack.pop()

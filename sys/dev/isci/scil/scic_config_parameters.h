@@ -49,7 +49,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/isci/scil/scic_config_parameters.h 231136 2012-02-07 17:43:58Z jimharris $
+ * $FreeBSD: head/sys/dev/isci/scil/scic_config_parameters.h 298955 2016-05-03 03:41:25Z pfg $
  */
 #ifndef _SCIC_SDS_USER_PARAMETERS_H_
 #define _SCIC_SDS_USER_PARAMETERS_H_
@@ -323,7 +323,7 @@ SCI_STATUS scic_oem_parameters_set(
 );
 
 /**
- * @brief This method allows the user to retreive the OEM
+ * @brief This method allows the user to retrieve the OEM
  *        parameters utilized by the controller.
  *
  * @param[in]  controller This parameter specifies the controller on which

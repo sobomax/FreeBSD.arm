@@ -1,8 +1,9 @@
-# $FreeBSD: head/lib/libldns/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libldns/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 # Vendor sources and generated files
 LDNSDIR = ${.CURDIR}/../../contrib/ldns
 
+PACKAGE=lib${LIB}
 .PATH: ${LDNSDIR} ${LDNSDIR}/compat
 
 LIB=	ldns

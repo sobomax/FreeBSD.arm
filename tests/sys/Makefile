@@ -1,6 +1,4 @@
-# $FreeBSD: head/tests/sys/Makefile 295643 2016-02-16 02:13:59Z bdrewery $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/tests/sys/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 TESTSDIR= ${TESTSBASE}/sys
 
@@ -16,6 +14,7 @@ TESTS_SUBDIRS+=		mqueue
 TESTS_SUBDIRS+=		netinet
 TESTS_SUBDIRS+=		opencrypto
 TESTS_SUBDIRS+=		posixshm
+TESTS_SUBDIRS+=		sys
 TESTS_SUBDIRS+=		vfs
 TESTS_SUBDIRS+=		vm
 

@@ -33,11 +33,10 @@
  *
  */
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include "assym.s"
-__FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 295267 2016-02-04 17:01:38Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/fusu.S 300694 2016-05-25 19:44:26Z ian $");
 
 	.syntax	unified
 

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2010-2015 Solarflare Communications Inc.
+ * Copyright (c) 2010-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * This software was developed in part by Philip Paeps under contract for
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_port.c 283599 2015-05-27 08:57:48Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_port.c 301724 2016-06-09 12:29:03Z arybchik $");
 
 #include <sys/types.h>
 #include <sys/limits.h>
@@ -62,7 +62,7 @@ sfxge_mac_stat_update(struct sfxge_softc *sc)
 	}
 
 	now = ticks;
-	if (now - port->mac_stats.update_time < hz) {
+	if ((unsigned int)(now - port->mac_stats.update_time) < (unsigned int)hz) {
 		rc = 0;
 		goto out;
 	}
@@ -570,7 +570,7 @@ sfxge_phy_stat_update(struct sfxge_softc *sc)
 	}
 
 	now = ticks;
-	if (now - port->phy_stats.update_time < hz) {
+	if ((unsigned int)(now - port->phy_stats.update_time) < (unsigned int)hz) {
 		rc = 0;
 		goto out;
 	}

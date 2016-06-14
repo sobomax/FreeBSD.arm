@@ -1,4 +1,6 @@
-# $FreeBSD: head/lib/libc/tests/net/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/net/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 ATF_TESTS_C+=	ether_test
 ATF_TESTS_C+=	eui64_aton_test
@@ -33,7 +35,7 @@ aton_ether_subr.c: gen_ether_subr ${SRCTOP}/sys/net/if_ethersubr.c
 
 # TODO: the testcases needs to be ported to FreeBSD
 #TESTS_SUBDIRS=	getaddrinfo
-FILES+=	hosts
-FILES+=	resolv.conf
+${PACKAGE}FILES+=	hosts
+${PACKAGE}FILES+=	resolv.conf
 
 .include <bsd.test.mk>

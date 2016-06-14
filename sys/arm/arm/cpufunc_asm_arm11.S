@@ -30,12 +30,12 @@
  *
  * ARM11 assembly functions for CPU / MMU / TLB specific operations
  *
- * XXX We make no attempt at present to take advantage of the v6 memroy
+ * XXX We make no attempt at present to take advantage of the v6 memory
  * architecture or physically tagged cache.
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11.S 295122 2016-02-01 13:13:53Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11.S 299069 2016-05-04 15:48:59Z pfg $");
 
 /*
  * TLB functions

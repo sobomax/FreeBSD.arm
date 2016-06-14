@@ -25,7 +25,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libedit/chartype.h 283084 2015-05-18 22:03:05Z bapt $
+ * $FreeBSD: head/lib/libedit/chartype.h 298896 2016-05-01 19:37:33Z pfg $
  */
 
 #ifndef _h_chartype_f
@@ -204,11 +204,11 @@ protected size_t ct_enc_width(Char);
 #endif
 
 #ifndef NARROWCHAR
-/* Encode a characted into the destination buffer, provided there is sufficent
+/* Encode a characted into the destination buffer, provided there is sufficient
  * buffer space available. Returns the number of bytes used up (zero if the
  * character cannot be encoded, -1 if there was not enough space available). */
 
-/* The maximum buffer size to hold the most unwieldly visual representation,
+/* The maximum buffer size to hold the most unwieldy visual representation,
  * in this case \U+nnnnn. */
 #define VISUAL_WIDTH_MAX ((size_t)8)
 

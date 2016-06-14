@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/fsl_ocotp.c 270955 2014-09-02 02:54:55Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/fsl_ocotp.c 298627 2016-04-26 11:53:37Z br $");
 
 /*
  * Access to the Freescale i.MX6 On-Chip One-Time-Programmable Memory
@@ -59,7 +59,7 @@ __FBSDID("$FreeBSD: head/sys/arm/freescale/fsl_ocotp.c 270955 2014-09-02 02:54:5
 #include <vm/vm.h>
 #include <vm/pmap.h>
 #include <dev/fdt/fdt_common.h>
-#include <machine/devmap.h>
+#include <sys/devmap.h>
 
 static uint32_t   *ocotp_regs;
 static vm_size_t   ocotp_size;

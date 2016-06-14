@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/ldconfig/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/ldconfig/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	ldconfig
 SRCS=	elfhints.c ldconfig.c shlib.c support.c
 LDDIR?= ${.CURDIR}/../../libexec/rtld-aout

@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/newfs_msdos/mkfs_msdos.c 291908 2015-12-06 21:07:33Z ngie $";
+  "$FreeBSD: head/sbin/newfs_msdos/mkfs_msdos.c 298250 2016-04-19 04:57:57Z araujo $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -760,7 +760,7 @@ getstdfmt(const char *fmt, struct bpb *bpb)
 {
     u_int x, i;
 
-    x = sizeof(stdfmt) / sizeof(stdfmt[0]);
+    x = nitems(stdfmt);
     for (i = 0; i < x && strcmp(fmt, stdfmt[i].name); i++);
     if (i == x) {
 	warnx("%s: unknown standard format", fmt);

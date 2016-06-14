@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/intel/vtd.c 269962 2014-08-14 05:00:45Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/intel/vtd.c 299009 2016-05-03 22:07:18Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vtd.c 269962 2014-08-14 05:00:45Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/intel/vtd.c 299009 2016-05-03 22:07:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -463,7 +463,7 @@ vtd_update_mapping(void *arg, vm_paddr_t gpa, vm_paddr_t hpa, uint64_t len,
 		panic("vtd_create_mapping: unaligned len 0x%0lx", len);
 
 	/*
-	 * Compute the size of the mapping that we can accomodate.
+	 * Compute the size of the mapping that we can accommodate.
 	 *
 	 * This is based on three factors:
 	 * - supported super page size

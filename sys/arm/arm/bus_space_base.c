@@ -30,12 +30,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_base.c 291131 2015-11-21 13:02:34Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_base.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <machine/bus.h>
-#include <machine/acle-compat.h>
 
 #include "opt_platform.h"
 

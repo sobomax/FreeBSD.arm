@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libstand/uuid_from_string.c 292473 2015-12-19 19:13:38Z imp $
+ * $FreeBSD: head/lib/libstand/uuid_from_string.c 300264 2016-05-20 05:33:26Z imp $
  */
 
 /*
@@ -57,7 +57,7 @@ fromhex(const char *s, int len, int *ok)
 	if (!*ok)
 		return 0;
 	v = 0;
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < len; i++) {
 		h = hex2int(s[i]);
 		if (h == 16) {
 			*ok = 0;

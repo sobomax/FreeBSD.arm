@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2010-2015 Solarflare Communications Inc.
+ * Copyright (c) 2010-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * This software was developed in part by Philip Paeps under contract for
@@ -30,7 +30,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/sfxge_tx.h 294077 2016-01-15 06:25:26Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/sfxge_tx.h 300607 2016-05-24 12:16:57Z arybchik $
  */
 
 #ifndef _SFXGE_TX_H

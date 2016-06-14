@@ -1,4 +1,5 @@
-	# $FreeBSD: head/secure/lib/libcrypto/amd64/wp-x86_64.S 290207 2015-10-30 20:51:33Z jkim $
+# $FreeBSD: head/secure/lib/libcrypto/amd64/wp-x86_64.S 299481 2016-05-11 20:11:21Z jkim $
+# Do not modify. This file is auto-generated from wp-x86_64.pl.
 .text	
 
 .globl	whirlpool_block

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)conf.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/conf.h 293827 2016-01-13 14:03:06Z kib $
+ * $FreeBSD: head/sys/sys/conf.h 298890 2016-05-01 17:46:56Z kib $
  */
 
 #ifndef _SYS_CONF_H_
@@ -138,7 +138,7 @@ typedef int dumper_t(
 #define	D_TAPE	0x0001
 #define	D_DISK	0x0002
 #define	D_TTY	0x0004
-#define	D_MEM	0x0008
+#define	D_MEM	0x0008	/* /dev/(k)mem */
 
 #ifdef _KERNEL
 
@@ -328,15 +328,18 @@ EVENTHANDLER_DECLARE(dev_clone, dev_clone_fn);
 
 struct dumperinfo {
 	dumper_t *dumper;	/* Dumping function. */
-	void    *priv;		/* Private parts. */
-	u_int   blocksize;	/* Size of block in bytes. */
+	void	*priv;		/* Private parts. */
+	u_int	blocksize;	/* Size of block in bytes. */
 	u_int	maxiosize;	/* Max size allowed for an individual I/O */
-	off_t   mediaoffset;	/* Initial offset in bytes. */
-	off_t   mediasize;	/* Space available in bytes. */
+	off_t	mediaoffset;	/* Initial offset in bytes. */
+	off_t	mediasize;	/* Space available in bytes. */
+	void	*blockbuf;	/* Buffer for padding shorter dump blocks */
 };
 
 int set_dumper(struct dumperinfo *, const char *_devname, struct thread *td);
 int dump_write(struct dumperinfo *, void *, vm_offset_t, off_t, size_t);
+int dump_write_pad(struct dumperinfo *, void *, vm_offset_t, off_t, size_t,
+    size_t *);
 int doadump(boolean_t);
 extern int dumping;		/* system is dumping */
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hptmv/entry.c 296135 2016-02-27 03:34:01Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/hptmv/entry.c 298955 2016-05-03 03:41:25Z pfg $");
  
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -164,7 +164,7 @@ char DRIVER_VERSION[] = "v1.16";
  *
  *	Description:	free allocated queues for the given channel
  *
- *	Parameters:    	pMvSataAdapter - pointer to the RR18xx controler this 
+ *	Parameters:    	pMvSataAdapter - pointer to the RR18xx controller this 
  * 					channel connected to. 
  *			channelNum - channel number. 
  *     
@@ -309,7 +309,7 @@ hptmv_init_channel(IAL_ADAPTER_T *pAdapter, MV_U8 channelNum)
  *
  *	Description:	this functions parses the identify command results, checks
  *					that the connected deives can be accesed by RR18xx EDMA,
- *					and updates the channel stucture accordingly.
+ *					and updates the channel structure accordingly.
  *
  *	Parameters:     pMvSataChannel, pointer to the channel data structure.
  *

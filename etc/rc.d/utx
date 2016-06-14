@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/utx 278706 2015-02-13 20:52:23Z ngie $
+# $FreeBSD: head/etc/rc.d/utx 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: utx
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="utx"
+desc="Manage the user accounting database"
 start_cmd="utx boot"
 stop_cmd="utx shutdown"
 

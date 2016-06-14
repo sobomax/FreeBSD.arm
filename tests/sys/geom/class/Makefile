@@ -1,4 +1,6 @@
-# $FreeBSD: head/tests/sys/geom/class/Makefile 293821 2016-01-13 09:14:27Z ngie $
+# $FreeBSD: head/tests/sys/geom/class/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/geom/class
 
@@ -14,8 +16,6 @@ TESTS_SUBDIRS+=	shsec
 TESTS_SUBDIRS+=	stripe
 TESTS_SUBDIRS+=	uzip
 
-BINDIR=		${TESTSDIR}
-
-FILES+=		geom_subr.sh
+${PACKAGE}FILES+=	geom_subr.sh
 
 .include <bsd.test.mk>

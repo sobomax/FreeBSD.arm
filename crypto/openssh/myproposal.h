@@ -1,5 +1,5 @@
-/* $OpenBSD: myproposal.h,v 1.47 2015/07/10 06:21:53 markus Exp $ */
-/* $FreeBSD: head/crypto/openssh/myproposal.h 294495 2016-01-21 11:10:14Z des $ */
+/* $OpenBSD: myproposal.h,v 1.50 2016/02/09 05:30:04 djm Exp $ */
+/* $FreeBSD: head/crypto/openssh/myproposal.h 296634 2016-03-11 00:23:10Z des $ */
 
 /*
  * Copyright (c) 2000 Markus Friedl.  All rights reserved.
@@ -103,6 +103,8 @@
 	"ssh-dss-cert-v01@openssh.com," \
 	HOSTKEY_ECDSA_METHODS \
 	"ssh-ed25519," \
+	"rsa-sha2-512," \
+	"rsa-sha2-256," \
 	"ssh-rsa," \
 	"ssh-dss"
 
@@ -111,12 +113,11 @@
 #define KEX_SERVER_ENCRYPT \
 	"chacha20-poly1305@openssh.com," \
 	"aes128-ctr,aes192-ctr,aes256-ctr" \
-	AESGCM_CIPHER_MODES
+	AESGCM_CIPHER_MODES \
+	",aes128-cbc,aes192-cbc,aes256-cbc"
 
 #define KEX_CLIENT_ENCRYPT KEX_SERVER_ENCRYPT "," \
-	"arcfour256,arcfour128," \
-	"aes128-cbc,3des-cbc,blowfish-cbc,cast128-cbc," \
-	"aes192-cbc,aes256-cbc,arcfour,rijndael-cbc@lysator.liu.se"
+	"3des-cbc"
 
 #define KEX_SERVER_MAC \
 	"umac-64-etm@openssh.com," \
@@ -130,18 +131,9 @@
 	"hmac-sha2-512," \
 	"hmac-sha1"
 
-#define KEX_CLIENT_MAC KEX_SERVER_MAC "," \
-	"hmac-md5-etm@openssh.com," \
-	"hmac-ripemd160-etm@openssh.com," \
-	"hmac-sha1-96-etm@openssh.com," \
-	"hmac-md5-96-etm@openssh.com," \
-	"hmac-md5," \
-	"hmac-ripemd160," \
-	"hmac-ripemd160@openssh.com," \
-	"hmac-sha1-96," \
-	"hmac-md5-96"
+#define KEX_CLIENT_MAC KEX_SERVER_MAC
 
-#else
+#else /* WITH_OPENSSL */
 
 #define KEX_SERVER_KEX		\
 	"curve25519-sha256@libssh.org"

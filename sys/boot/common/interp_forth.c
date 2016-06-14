@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/interp_forth.c 293835 2016-01-13 18:33:12Z smh $");
+__FBSDID("$FreeBSD: head/sys/boot/common/interp_forth.c 299499 2016-05-12 01:19:11Z pfg $");
 
 #include <sys/param.h>		/* to pick up __FreeBSD_version */
 #include <string.h>
@@ -38,9 +38,9 @@ extern char bootprog_rev[];
 /* #define BFORTH_DEBUG */
 
 #ifdef BFORTH_DEBUG
-# define DEBUG(fmt, args...)	printf("%s: " fmt "\n" , __func__ , ## args)
+#define	DEBUG(fmt, args...)	printf("%s: " fmt "\n" , __func__ , ## args)
 #else
-# define DEBUG(fmt, args...)
+#define	DEBUG(fmt, args...)
 #endif
 
 /*

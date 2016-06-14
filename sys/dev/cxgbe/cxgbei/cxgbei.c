@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/cxgbei.c 292740 2015-12-26 06:05:21Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/cxgbei.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -214,7 +214,7 @@ t4_ddp_set_map(struct cxgbei_data *ci, void *iccp,
 
 	/*
 	 * on T4, if we use a mix of IMMD and DSGL with ULP_MEM_WRITE,
-	 * the order would not be garanteed, so we will stick with IMMD
+	 * the order would not be guaranteed, so we will stick with IMMD
 	 */
 	gl->tid = toep->tid;
 	gl->port_id = toep->vi->pi->port_id;

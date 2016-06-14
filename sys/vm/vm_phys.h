@@ -28,7 +28,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/vm_phys.h 292469 2015-12-19 18:42:50Z alc $
+ * $FreeBSD: head/sys/vm/vm_phys.h 297748 2016-04-09 13:58:04Z jhb $
  */
 
 /*
@@ -99,7 +99,7 @@ int vm_phys_mem_affinity(int f, int t);
 static inline struct vm_domain *
 vm_phys_domain(vm_page_t m)
 {
-#if MAXMEMDOM > 1
+#ifdef VM_NUMA_ALLOC
 	int domn, segind;
 
 	/* XXXKIB try to assert that the page is managed */

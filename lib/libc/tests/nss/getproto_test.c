@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/tests/nss/getproto_test.c 292323 2015-12-16 08:09:03Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/tests/nss/getproto_test.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include <arpa/inet.h>
 #include <assert.h>
@@ -315,8 +315,8 @@ errfin:
 }
 
 /* protoent_check_ambiguity() is needed when one port+proto is associated with
- * more than one peice (these cases are usually marked as PROBLEM in
- * /etc/peices. This functions is needed also when one peice+proto is
+ * more than one piece (these cases are usually marked as PROBLEM in
+ * /etc/peices. This functions is needed also when one piece+proto is
  * associated with several ports. We have to check all the protoent structures
  * to make sure that pe really exists and correct */
 static int

@@ -1,14 +1,16 @@
-# $FreeBSD: head/tests/sys/acl/Makefile 295345 2016-02-06 04:13:20Z ngie $
+# $FreeBSD: head/tests/sys/acl/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/acl
 
 BINDIR=		${TESTSDIR}
 
-FILES+=		tools-crossfs.test
-FILES+=		tools-nfs4.test
-FILES+=		tools-nfs4-psarc.test
-FILES+=		tools-nfs4-trivial.test
-FILES+=		tools-posix.test
+${PACKAGE}FILES+=	tools-crossfs.test
+${PACKAGE}FILES+=	tools-nfs4.test
+${PACKAGE}FILES+=	tools-nfs4-psarc.test
+${PACKAGE}FILES+=	tools-nfs4-trivial.test
+${PACKAGE}FILES+=	tools-posix.test
 
 SCRIPTS+=	run
 

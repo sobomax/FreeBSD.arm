@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/zfs/libzfs.h 294072 2016-01-15 05:45:10Z allanjude $
+ * $FreeBSD: head/sys/boot/zfs/libzfs.h 296963 2016-03-16 23:12:19Z allanjude $
  */
 
 #ifndef _BOOT_LIBZFS_H_
@@ -55,6 +55,7 @@ struct zfs_boot_args
     uint64_t		root;
     uint64_t		primary_pool;
     uint64_t		primary_vdev;
+    char		gelipw[256];
 };
 
 int	zfs_parsedev(struct zfs_devdesc *dev, const char *devspec,

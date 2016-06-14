@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_ioctl.c 296025 2016-02-25 07:33:59Z kp $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_ioctl.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -3539,7 +3539,7 @@ shutdown_pf(void)
 		pf_clear_srcnodes(NULL);
 
 		/* status does not use malloced mem so no need to cleanup */
-		/* fingerprints and interfaces have thier own cleanup code */
+		/* fingerprints and interfaces have their own cleanup code */
 	} while(0);
 
 	return (error);

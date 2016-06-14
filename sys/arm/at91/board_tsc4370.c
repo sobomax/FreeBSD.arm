@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/board_tsc4370.c 294097 2016-01-15 18:27:34Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/board_tsc4370.c 297284 2016-03-26 06:55:55Z mmel $");
 #include <sys/param.h>
 #include <sys/systm.h>
 
@@ -601,7 +601,7 @@ parse_boot_param(struct arm_boot_params *abp)
 		inkernel_bootinfo = *(struct tsc_bootinfo *)(abp->abp_r1);
 	}
 
-	return fake_preload_metadata(abp);
+	return fake_preload_metadata(abp, NULL, 0);
 }
 
 ARM_BOARD(NONE, "TSC4370 Controller Board");

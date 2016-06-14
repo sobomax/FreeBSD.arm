@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkuzip/mkuz_zlib.h 295943 2016-02-23 23:59:08Z sobomax $
+ * $FreeBSD: head/usr.bin/mkuzip/mkuz_zlib.h 298504 2016-04-23 07:23:43Z sobomax $
  */
 
 #define DEFAULT_SUFX_ZLIB       ".uzip"
@@ -33,4 +33,4 @@
     "mount_cd9660 /dev/`mdconfig -af $0`.uzip $1\nexit $?\n"
 
 void *mkuz_zlib_init(uint32_t);
-void mkuz_zlib_compress(const char *, uint32_t *);
+struct mkuz_blk *mkuz_zlib_compress(void *, const struct mkuz_blk *);

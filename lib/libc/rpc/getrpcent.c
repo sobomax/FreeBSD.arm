@@ -32,14 +32,13 @@
 static char *sccsid = "@(#)getrpcent.c 1.14 91/03/11 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcent.c 296133 2016-02-26 23:25:21Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/getrpcent.c 300389 2016-05-22 03:05:27Z ngie $");
 
 /*
  * Copyright (c) 1984 by Sun Microsystems, Inc.
  */
 
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <assert.h>
@@ -512,6 +511,7 @@ nis_rpcent(void *retval, void *mdata, va_list ap)
 		    sizeof(char *)) {
 			*errnop = ERANGE;
 			rv = NS_RETURN;
+			free(resultbuf);
 			break;
 		}
 
@@ -521,6 +521,7 @@ nis_rpcent(void *retval, void *mdata, va_list ap)
 		if (aliases_size < 1) {
 			*errnop = ERANGE;
 			rv = NS_RETURN;
+			free(resultbuf);
 			break;
 		}
 

@@ -71,7 +71,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_sack.c 292309 2015-12-16 00:56:45Z rrs $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_sack.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -401,8 +401,8 @@ tcp_sack_doack(struct tcpcb *tp, struct tcpopt *to, tcp_seq th_ack)
 
 	/*
 	 * Sort the SACK blocks so we can update the scoreboard with just one
-	 * pass. The overhead of sorting upto 4+1 elements is less than
-	 * making upto 4+1 passes over the scoreboard.
+	 * pass. The overhead of sorting up to 4+1 elements is less than
+	 * making up to 4+1 passes over the scoreboard.
 	 */
 	for (i = 0; i < num_sack_blks; i++) {
 		for (j = i + 1; j < num_sack_blks; j++) {

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/ext2fs/ext2_htree.c 294653 2016-01-24 02:41:49Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_htree.c 298518 2016-04-23 18:28:59Z pfg $
  */
 
 #include <sys/param.h>
@@ -191,7 +191,7 @@ ext2_htree_set_limit(struct ext2fs_htree_entry *ep, uint16_t limit)
 static void
 ext2_htree_release(struct ext2fs_htree_lookup_info *info)
 {
-	int i;
+	u_int i;
 
 	for (i = 0; i < info->h_levels_num; i++) {
 		struct buf *bp = info->h_levels[i].h_bp;

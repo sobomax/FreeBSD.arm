@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/libbsnmp/Makefile.inc 204585 2010-03-02 16:58:04Z uqs $
+# $FreeBSD: head/lib/libbsnmp/Makefile.inc 299699 2016-05-13 21:17:49Z ngie $
 
-NO_WERROR=
 INCSDIR=	${INCLUDEDIR}/bsnmp
+PACKAGE=	bsnmp
 
 .include "../Makefile.inc"

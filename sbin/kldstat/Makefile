@@ -23,9 +23,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sbin/kldstat/Makefile 294624 2016-01-23 12:10:16Z trasz $
+# $FreeBSD: head/sbin/kldstat/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=runtime
 PROG=	kldstat
 MAN=	kldstat.8
 

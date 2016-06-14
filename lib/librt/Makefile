@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/librt/Makefile 291439 2015-11-29 06:14:51Z deischen $
+# $FreeBSD: head/lib/librt/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=rt
 SHLIB_MAJOR= 1
 CFLAGS+=-I${.CURDIR}/../libc/include -I${.CURDIR}

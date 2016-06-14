@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/toecore.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/toecore.c 301217 2016-06-02 17:51:29Z gnn $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -451,12 +451,12 @@ toe_l2_resolve(struct toedev *tod, struct ifnet *ifp, struct sockaddr *sa,
 	switch (sa->sa_family) {
 #ifdef INET
 	case AF_INET:
-		rc = arpresolve(ifp, 0, NULL, sa, lladdr, NULL);
+		rc = arpresolve(ifp, 0, NULL, sa, lladdr, NULL, NULL);
 		break;
 #endif
 #ifdef INET6
 	case AF_INET6:
-		rc = nd6_resolve(ifp, 0, NULL, sa, lladdr, NULL);
+		rc = nd6_resolve(ifp, 0, NULL, sa, lladdr, NULL, NULL);
 		break;
 #endif
 	default:

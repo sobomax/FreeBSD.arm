@@ -1,8 +1,4 @@
-# $FreeBSD: head/lib/atf/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
-
-.include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/lib/atf
+# $FreeBSD: head/lib/atf/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .PATH:		${SRCTOP}/tests
 KYUAFILE=	yes

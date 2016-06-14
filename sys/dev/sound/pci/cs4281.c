@@ -43,7 +43,7 @@
 
 #include <dev/sound/pci/cs4281.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/cs4281.c 296135 2016-02-27 03:34:01Z jhibbits $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/cs4281.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #define CS4281_DEFAULT_BUFSZ 16384
 
@@ -849,7 +849,7 @@ cs4281_pci_attach(device_t dev)
     pcm_addchan(dev, PCMDIR_PLAY, &cs4281chan_class, sc);
     pcm_addchan(dev, PCMDIR_REC, &cs4281chan_class, sc);
 
-    snprintf(status, SND_STATUSLEN, "at %s 0x%lx irq %ld %s",
+    snprintf(status, SND_STATUSLEN, "at %s 0x%jx irq %jd %s",
 	     (sc->regtype == SYS_RES_IOPORT)? "io" : "memory",
 	     rman_get_start(sc->reg), rman_get_start(sc->irq),PCM_KLDSTRING(snd_cs4281));
     pcm_setstatus(dev, status);

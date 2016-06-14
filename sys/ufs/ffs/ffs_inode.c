@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_inode.c 295950 2016-02-24 01:58:40Z mckusick $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_inode.c 300083 2016-05-17 21:30:58Z kib $");
 
 #include "opt_quota.h"
 
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_inode.c 295950 2016-02-24 01:58:40Z mck
 #include <sys/malloc.h>
 #include <sys/mount.h>
 #include <sys/proc.h>
+#include <sys/racct.h>
 #include <sys/random.h>
 #include <sys/resourcevar.h>
 #include <sys/rwlock.h>
@@ -609,7 +610,7 @@ extclean:
 		softdep_journal_freeblocks(ip, cred, length, IO_EXT);
 	else
 		softdep_setup_freeblocks(ip, length, IO_EXT);
-	return (ffs_update(vp, !DOINGASYNC(vp)));
+	return (ffs_update(vp, (flags & IO_SYNC) != 0 || !DOINGASYNC(vp)));
 }
 
 /*
@@ -659,6 +660,13 @@ ffs_indirtrunc(ip, lbn, dbn, lastbn, level, countp)
 	vp = ITOV(ip);
 	bp = getblk(vp, lbn, (int)fs->fs_bsize, 0, 0, 0);
 	if ((bp->b_flags & B_CACHE) == 0) {
+#ifdef RACCT
+		if (racct_enable) {
+			PROC_LOCK(curproc);
+			racct_add_buf(curproc, bp, 0);
+			PROC_UNLOCK(curproc);
+		}
+#endif /* RACCT */
 		curthread->td_ru.ru_inblock++;	/* pay for read */
 		bp->b_iocmd = BIO_READ;
 		bp->b_flags &= ~B_INVAL;

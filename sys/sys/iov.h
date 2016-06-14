@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013-2015 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2013-2015 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/iov.h 279453 2015-03-01 00:40:57Z rstone $
+ * $FreeBSD: head/sys/sys/iov.h 296865 2016-03-14 17:41:17Z rstone $
  */
 
 #ifndef _SYS_IOV_H_

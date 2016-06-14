@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/recoverdisk/Makefile 198236 2009-10-19 16:00:24Z ru $
+# $FreeBSD: head/sbin/recoverdisk/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	recoverdisk
 
 .include <bsd.prog.mk>

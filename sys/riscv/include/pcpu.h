@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/riscv/include/pcpu.h 295972 2016-02-24 16:50:34Z br $
+ * $FreeBSD: head/sys/riscv/include/pcpu.h 298580 2016-04-25 14:47:51Z br $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -46,9 +46,8 @@
 
 #define	PCPU_MD_FIELDS							\
 	uint32_t pc_pending_ipis;	/* IPIs pending to this CPU */	\
-	uint64_t pc_sptbr;		/* L0 page table base (VA) */	\
 	uint64_t pc_reg;		/* CPU MMIO base (PA) */	\
-	char __pad[109]
+	char __pad[117]
 
 #ifdef _KERNEL
 

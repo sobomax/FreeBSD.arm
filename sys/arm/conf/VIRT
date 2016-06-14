@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/VIRT 296158 2016-02-28 13:43:58Z andrew $
+# $FreeBSD: head/sys/arm/conf/VIRT 298854 2016-04-30 17:27:33Z andrew $
 
 ident		VIRT
 
@@ -28,6 +28,7 @@ options 	SCHED_ULE		# 4BSD scheduler
 options 	PLATFORM
 options 	PLATFORM_SMP
 options 	SMP			# Enable multiple cores
+options 	MULTIDELAY
 
 # Debugging for use in -current
 makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
@@ -47,7 +48,7 @@ options 	INVARIANT_SUPPORT	# Extra sanity checks of internal structures, require
 
 # Interrupt controller
 device		gic
-options 	ARM_INTRNG
+options 	INTRNG
 
 # ARM Generic Timer
 device		generic_timer

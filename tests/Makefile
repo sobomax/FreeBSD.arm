@@ -1,16 +1,17 @@
-# $FreeBSD: head/tests/Makefile 291089 2015-11-20 03:24:04Z rodrigc $
+# $FreeBSD: head/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-.include <bsd.own.mk>
+PACKAGE= tests
+
+TESTSDIR= ${TESTSBASE}
+
+${PACKAGE}FILES+=		README
+
+KYUAFILE= yes
 
 SUBDIR+= etc
 SUBDIR+= sys
+
 SUBDIR_PARALLEL=
-
-TESTSDIR= ${TESTSBASE}
-KYUAFILE= yes
-
-FILES+= README
-FILESDIR_README= ${TESTSDIR}
 
 afterinstall: install-tests-local
 install-tests-local: .PHONY

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drm.h 268351 2014-07-07 00:27:09Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drm.h 298955 2016-05-03 03:41:25Z pfg $");
 
 /**
  * \mainpage
@@ -812,7 +812,7 @@ struct drm_fence_arg {
  */
 #define DRM_BO_HINT_WAIT_LAZY   0x00000008
 /*
- * The client has compute relocations refering to this buffer using the
+ * The client has compute relocations referring to this buffer using the
  * offset in the presumed_offset field. If that offset ends up matching
  * where this buffer lands, the kernel is free to skip executing those
  * relocations

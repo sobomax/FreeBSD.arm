@@ -99,7 +99,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/msk/if_msk.c 295873 2016-02-22 00:58:04Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/msk/if_msk.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -3493,7 +3493,7 @@ msk_intr_hwerr(struct msk_softc *sc)
 		CSR_WRITE_1(sc, GMAC_TI_ST_CTRL, GMT_ST_CLR_IRQ);
 	if ((status & Y2_IS_PCI_NEXP) != 0) {
 		/*
-		 * PCI Express Error occured which is not described in PEX
+		 * PCI Express Error occurred which is not described in PEX
 		 * spec.
 		 * This error is also mapped either to Master Abort(
 		 * Y2_IS_MST_ERR) or Target Abort (Y2_IS_IRQ_STAT) bit and

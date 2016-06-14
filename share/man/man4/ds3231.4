@@ -22,7 +22,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ds3231.4 295566 2016-02-12 17:03:24Z bjk $
+.\" $FreeBSD: head/share/man/man4/ds3231.4 298904 2016-05-01 22:00:41Z wblock $
 .\"
 .Dd February 12, 2016
 .Dt DS3231 4
@@ -65,9 +65,9 @@ dev.ds3231.0.32khz_enable: 1
 .It Va dev.ds3231.%d.temperature
 The read-only value of the current temperature read by the RTC.
 .It Va dev.ds3231.%d.temp_conv
-Start a new temperature convertion.
+Start a new temperature conversion.
 When read as 1, a temperature conversion is in progress.
-When read as 0 and then set to 1, a temperature convertion is started.
+When read as 0 and then set to 1, a temperature conversion is started.
 The temperature conversion runs automatically on power up and once every 64
 seconds afterward.
 .It Va dev.ds3231.%d.bbsqw

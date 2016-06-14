@@ -20,7 +20,7 @@ static const char rcsid[] = "$Id: res_findzonecut.c,v 1.10 2005/10/11 00:10:16 m
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_findzonecut.c 269867 2014-08-12 12:36:06Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_findzonecut.c 298830 2016-04-30 01:24:24Z pfg $");
 
 /* Import. */
 
@@ -119,7 +119,7 @@ static void	res_dprintf(const char *, ...) ISC_FORMAT_PRINTF(1, 2);
  * notes:
  *\li	this function calls res_nsend() which means it depends on correctly
  *	functioning recursive nameservers (usually defined in /etc/resolv.conf
- *	or its local equivilent).
+ *	or its local equivalent).
  *
  *\li	we start by asking for an SOA<dname,class>.  if we get one as an
  *	answer, that just means <dname,class> is a zone top, which is fine.

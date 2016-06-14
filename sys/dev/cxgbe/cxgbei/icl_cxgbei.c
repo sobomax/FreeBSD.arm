@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/icl_cxgbei.c 292740 2015-12-26 06:05:21Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/icl_cxgbei.c 301119 2016-06-01 12:04:04Z trasz $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -429,6 +429,7 @@ icl_cxgbei_new_conn(const char *name, struct mtx *lock)
 	ic->ic_max_data_segment_length = CXGBEI_MAX_DSL;
 	ic->ic_name = name;
 	ic->ic_offload = "cxgbei";
+	ic->ic_unmapped = false;
 
 	CTR2(KTR_CXGBE, "%s: icc %p", __func__, icc);
 
@@ -777,8 +778,8 @@ icl_cxgbei_conn_close(struct icl_conn *ic)
 }
 
 int
-icl_cxgbei_conn_task_setup(struct icl_conn *ic, struct ccb_scsiio *csio,
-    uint32_t *task_tagp, void **prvp)
+icl_cxgbei_conn_task_setup(struct icl_conn *ic, struct icl_pdu *ip,
+    struct ccb_scsiio *csio, uint32_t *task_tagp, void **prvp)
 {
 	void *prv;
 
@@ -849,7 +850,7 @@ icl_cxgbei_load(void)
 
 	refcount_init(&icl_cxgbei_ncons, 0);
 
-	error = icl_register("cxgbei", 100, icl_cxgbei_limits,
+	error = icl_register("cxgbei", false, -100, icl_cxgbei_limits,
 	    icl_cxgbei_new_conn);
 	KASSERT(error == 0, ("failed to register"));
 
@@ -863,7 +864,7 @@ icl_cxgbei_unload(void)
 	if (icl_cxgbei_ncons != 0)
 		return (EBUSY);
 
-	icl_unregister("cxgbei");
+	icl_unregister("cxgbei", false);
 
 	uma_zdestroy(icl_transfer_zone);
 

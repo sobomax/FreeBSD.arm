@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.3 (Berkeley) 1/7/94
-# $FreeBSD: head/usr.bin/Makefile 295945 2016-02-24 00:39:36Z sobomax $
+# $FreeBSD: head/usr.bin/Makefile 299529 2016-05-12 10:16:16Z mm $
 
 .include <src.opts.mk>
 
@@ -16,6 +16,7 @@ SUBDIR=	alias \
 	banner \
 	basename \
 	brandelf \
+	bsdcat \
 	bsdiff \
 	bzip2 \
 	bzip2recover \
@@ -125,6 +126,7 @@ SUBDIR=	alias \
 	protect \
 	rctl \
 	renice \
+	resizewin \
 	rev \
 	revoke \
 	rpcinfo \
@@ -133,6 +135,7 @@ SUBDIR=	alias \
 	rusers \
 	rwall \
 	script \
+	sdiff \
 	sed \
 	send-pr \
 	seq \

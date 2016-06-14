@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/cleanvar 240336 2012-09-11 05:04:59Z obrien $
+# $FreeBSD: head/etc/rc.d/cleanvar 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: cleanvar
@@ -9,6 +9,7 @@
 . /etc/rc.subr
 
 name="cleanvar"
+desc="Purge /var directory"
 rcvar="cleanvar_enable"
 
 start_precmd="${name}_prestart"

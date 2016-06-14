@@ -34,7 +34,7 @@
 __RCSID("$NetBSD: filecomplete.c,v 1.34 2014/10/18 15:07:02 riz Exp $");
 #endif /* not lint && not SCCSID */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libedit/filecomplete.c 276881 2015-01-09 07:40:56Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libedit/filecomplete.c 297757 2016-04-09 18:52:09Z pfg $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -471,7 +471,7 @@ fn_complete(EditLine *el,
 
 	/* these can be used by function called in completion_matches() */
 	/* or (*attempted_completion_function)() */
-	if (point != 0)
+	if (point != NULL)
 		*point = (int)(li->cursor - li->buffer);
 	if (end != NULL)
 		*end = (int)(li->lastchar - li->buffer);
@@ -483,7 +483,7 @@ fn_complete(EditLine *el,
 		        &el->el_scratch),
 		    cur_off - (int)len, cur_off);
 	} else
-		matches = 0;
+		matches = NULL;
 	if (!attempted_completion_function || 
 	    (over != NULL && !*over && !matches))
 		matches = completion_matches(

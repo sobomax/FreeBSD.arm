@@ -26,7 +26,7 @@
 
 #include "opt_platform.h"
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/dpaa/portals_common.c 296177 2016-02-29 03:38:00Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/dpaa/portals_common.c 300637 2016-05-25 01:23:19Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -75,12 +75,13 @@ dpaa_portal_alloc_res(device_t dev, struct dpaa_portals_devinfo *di, int cpu)
 		sc->sc_rres[0] = bus_alloc_resource(dev,
 		    SYS_RES_MEMORY, &sc->sc_rrid[0], rle->start + sc->sc_dp_pa,
 		    rle->end + sc->sc_dp_pa, rle->count, RF_ACTIVE);
-		pmap_change_attr((vm_offset_t)rman_get_bushandle(sc->sc_rres[0]),
-		    rle->count, VM_MEMATTR_CACHEABLE);
 		if (sc->sc_rres[0] == NULL) {
-			device_printf(dev, "Could not allocate memory.\n");
+			device_printf(dev,
+			    "Could not allocate cache enabled memory.\n");
 			return (ENXIO);
 		}
+		tlb1_set_entry(rman_get_bushandle(sc->sc_rres[0]),
+		    rle->start + sc->sc_dp_pa, rle->count, _TLB_ENTRY_MEM);
 		/* Cache inhibited area */
 		rle = resource_list_find(res, SYS_RES_MEMORY, 1);
 		sc->sc_rrid[1] = 1;
@@ -88,12 +89,15 @@ dpaa_portal_alloc_res(device_t dev, struct dpaa_portals_devinfo *di, int cpu)
 		    SYS_RES_MEMORY, &sc->sc_rrid[1], rle->start + sc->sc_dp_pa,
 		    rle->end + sc->sc_dp_pa, rle->count, RF_ACTIVE);
 		if (sc->sc_rres[1] == NULL) {
-			device_printf(dev, "Could not allocate memory.\n");
+			device_printf(dev,
+			    "Could not allocate cache inhibited memory.\n");
 			bus_release_resource(dev, SYS_RES_MEMORY,
 			    sc->sc_rrid[0], sc->sc_rres[0]);
 			return (ENXIO);
 		}
-		sc->sc_dp[PCPU_GET(cpuid)].dp_regs_mapped = 1;
+		tlb1_set_entry(rman_get_bushandle(sc->sc_rres[1]),
+		    rle->start + sc->sc_dp_pa, rle->count, _TLB_ENTRY_IO);
+		sc->sc_dp[cpu].dp_regs_mapped = 1;
 	}
 	/* Acquire portal's CE_PA and CI_PA */
 	rle = resource_list_find(res, SYS_RES_MEMORY, 0);

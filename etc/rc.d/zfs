@@ -1,14 +1,16 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/zfs 253076 2013-07-09 08:59:39Z avg $
+# $FreeBSD: head/etc/rc.d/zfs 299839 2016-05-15 04:38:50Z ngie $
 #
 
 # PROVIDE: zfs
 # REQUIRE: mountcritlocal
+# BEFORE: FILESYSTEMS var
 
 . /etc/rc.subr
 
 name="zfs"
+desc="Mount and share ZFS datasets"
 rcvar="zfs_enable"
 start_cmd="zfs_start"
 stop_cmd="zfs_stop"

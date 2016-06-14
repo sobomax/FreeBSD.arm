@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/test/test_read_format_xar.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/test/test_read_format_xar.c 299529 2016-05-12 10:16:16Z mm $");
 
 #define UID	1001
 #define UNAME	"cue"
@@ -663,6 +663,8 @@ static void verify(unsigned char *d, size_t s,
 	assertA(0 == archive_read_next_header(a, &ae));
 	assertEqualInt(archive_filter_code(a, 0), ARCHIVE_FILTER_NONE);
 	assertEqualInt(archive_format(a), ARCHIVE_FORMAT_XAR);
+	assertEqualInt(archive_entry_is_encrypted(ae), 0);
+	assertEqualIntA(a, archive_read_has_encrypted_entries(a), ARCHIVE_READ_FORMAT_ENCRYPTION_UNSUPPORTED);
 	/* Verify the only entry. */
 	f1(a, ae);
 	if (f2) {

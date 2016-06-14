@@ -69,10 +69,9 @@ static const char sccsid[] = "@(#)res_mkquery.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_mkquery.c,v 1.10 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkquery.c 292250 2015-12-15 05:37:09Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkquery.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <netinet/in.h>
 #include <arpa/nameser.h>
@@ -133,7 +132,7 @@ res_nmkquery(res_state statp,
 	dpp = dnptrs;
 	*dpp++ = buf;
 	*dpp++ = NULL;
-	lastdnptr = dnptrs + sizeof dnptrs / sizeof dnptrs[0];
+	lastdnptr = dnptrs + nitems(dnptrs);
 	/*
 	 * perform opcode specific processing
 	 */

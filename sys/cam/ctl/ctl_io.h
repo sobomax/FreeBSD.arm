@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_io.h#5 $
- * $FreeBSD: head/sys/cam/ctl/ctl_io.h 288348 2015-09-28 20:54:18Z mav $
+ * $FreeBSD: head/sys/cam/ctl/ctl_io.h 298810 2016-04-29 21:05:48Z pfg $
  */
 /*
  * CAM Target Layer data movement structures/interface.
@@ -80,7 +80,7 @@ typedef enum {
 
 /*
  * WARNING:  Keep the data in/out/none flags where they are.  They're used
- * in conjuction with ctl_cmd_flags.  See comment above ctl_cmd_flags
+ * in conjunction with ctl_cmd_flags.  See comment above ctl_cmd_flags
  * definition in ctl_private.h.
  */
 typedef enum {

@@ -21,7 +21,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/usb/usbdi.h 292865 2015-12-29 11:53:13Z hselasky $
+ * $FreeBSD: head/sys/dev/usb/usbdi.h 298932 2016-05-02 17:44:03Z pfg $
  */
 #ifndef _USB_USBDI_H_
 #define _USB_USBDI_H_
@@ -241,7 +241,7 @@ struct usb_config {
 /*
  * Use these macro when defining USB device ID arrays if you want to
  * have your driver module automatically loaded in host, device or
- * both modes respectivly:
+ * both modes respectively:
  */
 #if USB_HAVE_ID_SECTION
 #define	STRUCT_USB_HOST_ID \

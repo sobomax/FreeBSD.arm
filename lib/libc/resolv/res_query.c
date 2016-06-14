@@ -69,10 +69,9 @@ static const char sccsid[] = "@(#)res_query.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_query.c,v 1.11 2008/11/14 02:36:51 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_query.c 292250 2015-12-15 05:37:09Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_query.c 299880 2016-05-16 01:38:24Z truckman $");
 
 #include "port_before.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -136,8 +135,8 @@ again:
 	if (n > 0 && (statp->_flags & RES_F_EDNS0ERR) == 0 &&
 	    (statp->options & (RES_USE_EDNS0|RES_USE_DNSSEC|RES_NSID))) {
 		n = res_nopt(statp, n, buf, sizeof(buf), anslen);
-		rdata = &buf[n];
 		if (n > 0 && (statp->options & RES_NSID) != 0U) {
+			rdata = &buf[n];
 			n = res_nopt_rdata(statp, n, buf, sizeof(buf), rdata,
 					   NS_OPT_NSID, 0, NULL);
 		}

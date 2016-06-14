@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcasper/services/cap_pwd/cap_pwd.c 296047 2016-02-25 18:23:40Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libcasper/services/cap_pwd/cap_pwd.c 301572 2016-06-08 02:03:53Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/nv.h>
@@ -780,4 +780,4 @@ pwd_command(const char *cmd, const nvlist_t *limits, nvlist_t *nvlin,
 	return (error);
 }
 
-CREATE_SERVICE("system.pwd", pwd_limit, pwd_command);
+CREATE_SERVICE("system.pwd", pwd_limit, pwd_command, 0);

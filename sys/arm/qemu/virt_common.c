@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/qemu/virt_common.c 295473 2016-02-10 16:44:20Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/qemu/virt_common.c 298068 2016-04-15 16:05:41Z andrew $");
 
 #include "opt_platform.h"
 
@@ -41,7 +41,7 @@ struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
 
-#ifndef ARM_INTRNG
+#ifndef INTRNG
 fdt_pic_decode_t fdt_pic_table[] = {
 	&gic_decode_fdt,
 	NULL

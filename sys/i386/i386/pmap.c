@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/pmap.c 291906 2015-12-06 17:39:13Z cem $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/pmap.c 297974 2016-04-14 17:04:06Z pfg $");
 
 /*
  *	Manages physical address maps.
@@ -269,15 +269,15 @@ pt_entry_t *CMAP3;
 static pd_entry_t *KPTD;
 caddr_t ptvmmap = 0;
 caddr_t CADDR3;
-struct msgbuf *msgbufp = 0;
+struct msgbuf *msgbufp = NULL;
 
 /*
  * Crashdump maps.
  */
 static caddr_t crashdumpmap;
 
-static pt_entry_t *PMAP1 = 0, *PMAP2;
-static pt_entry_t *PADDR1 = 0, *PADDR2;
+static pt_entry_t *PMAP1 = NULL, *PMAP2;
+static pt_entry_t *PADDR1 = NULL, *PADDR2;
 #ifdef SMP
 static int PMAP1cpu;
 static int PMAP1changedcpu;

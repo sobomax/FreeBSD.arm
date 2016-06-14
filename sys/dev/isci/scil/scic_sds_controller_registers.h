@@ -49,7 +49,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/isci/scil/scic_sds_controller_registers.h 231136 2012-02-07 17:43:58Z jimharris $
+ * $FreeBSD: head/sys/dev/isci/scil/scic_sds_controller_registers.h 297609 2016-04-06 04:50:28Z rpokala $
  */
 #ifndef _SCIC_SDS_CONTROLLER_REGISTERS_H_
 #define _SCIC_SDS_CONTROLLER_REGISTERS_H_
@@ -586,7 +586,7 @@ extern "C" {
 
 #define SCU_PTSGRTC_READ(controller) \
     scu_ptsg_register_read( \
-       contoller, \
+       controller, \
        real_time_clock \
     )
 /*@}*/

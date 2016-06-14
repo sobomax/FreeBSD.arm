@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_id.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_id.c 298995 2016-05-03 18:05:43Z pfg $");
 
 /*
  * seed = random (bits - 1) bit
@@ -108,7 +108,7 @@ __FBSDID("$FreeBSD: head/sys/netinet6/ip6_id.c 257179 2013-10-26 18:18:50Z glebi
 
 struct randomtab {
 	const int	ru_bits; /* resulting bits */
-	const long	ru_out;	/* Time after wich will be reseeded */
+	const long	ru_out;	/* Time after which will be reseeded */
 	const u_int32_t ru_max;	/* Uniq cycle, avoid blackjack prediction */
 	const u_int32_t ru_gen;	/* Starting generator */
 	const u_int32_t ru_n;	/* ru_n: prime, ru_n - 1: product of pfacts[] */
@@ -128,7 +128,7 @@ struct randomtab {
 
 static struct randomtab randomtab_32 = {
 	32,			/* resulting bits */
-	180,			/* Time after wich will be reseeded */
+	180,			/* Time after which will be reseeded */
 	1000000000,		/* Uniq cycle, avoid blackjack prediction */
 	2,			/* Starting generator */
 	2147483629,		/* RU_N-1 = 2^2*3^2*59652323 */
@@ -139,7 +139,7 @@ static struct randomtab randomtab_32 = {
 
 static struct randomtab randomtab_20 = {
 	20,			/* resulting bits */
-	180,			/* Time after wich will be reseeded */
+	180,			/* Time after which will be reseeded */
 	200000,			/* Uniq cycle, avoid blackjack prediction */
 	2,			/* Starting generator */
 	524269,			/* RU_N-1 = 2^2*3^2*14563 */

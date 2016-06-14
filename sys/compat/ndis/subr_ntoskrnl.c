@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_ntoskrnl.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_ntoskrnl.c 300422 2016-05-22 14:13:20Z pfg $");
 
 #include <sys/ctype.h>
 #include <sys/unistd.h>
@@ -722,7 +722,7 @@ IoGetDriverObjectExtension(drv, clid)
 
 	/*
 	 * Sanity check. Our dummy bus drivers don't have
-	 * any driver extentions.
+	 * any driver extensions.
 	 */
 
 	if (drv->dro_driverext == NULL)
@@ -3188,17 +3188,14 @@ atol(str)
 static int
 rand(void)
 {
-	struct timeval		tv;
 
-	microtime(&tv);
-	srandom(tv.tv_usec);
-	return ((int)random());
+	return (random());
 }
 
 static void
-srand(seed)
-	unsigned int		seed;
+srand(unsigned int seed)
 {
+
 	srandom(seed);
 }
 
@@ -4207,7 +4204,7 @@ KeQueryInterruptTime(void)
 
 	ticks = tvtohz(&tv);
 
-	return ticks * ((10000000 + hz - 1) / hz);
+	return ticks * howmany(10000000, hz);
 }
 
 static struct thread *

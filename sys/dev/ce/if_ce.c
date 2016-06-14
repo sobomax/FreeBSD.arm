@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ce/if_ce.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/dev/ce/if_ce.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 
@@ -2448,7 +2448,7 @@ static int ng_ce_rmnode (node_p node)
 		NG_NODE_UNREF (node);
 	}
 #if __FreeBSD_version >= 502120
-	NG_NODE_REVIVE(node);		/* Persistant node */
+	NG_NODE_REVIVE(node);		/* Persistent node */
 #else
 	node->nd_flags &= ~NG_INVALID;
 #endif

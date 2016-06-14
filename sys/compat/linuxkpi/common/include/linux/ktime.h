@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/ktime.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/ktime.h 300498 2016-05-23 12:10:28Z hselasky $
  */
 #ifndef _LINUX_KTIME_H
 #define _LINUX_KTIME_H
@@ -49,6 +49,24 @@ static inline int64_t
 ktime_to_ns(ktime_t kt)
 {
 	return kt.tv64;
+}
+
+static inline int64_t
+ktime_divns(const ktime_t kt, int64_t div)
+{
+	return kt.tv64 / div;
+}
+
+static inline int64_t
+ktime_to_us(ktime_t kt)
+{
+        return ktime_divns(kt, NSEC_PER_USEC);
+}
+
+static inline int64_t
+ktime_to_ms(ktime_t kt)
+{
+        return ktime_divns(kt, NSEC_PER_MSEC);
 }
 
 static inline struct timeval
@@ -87,6 +105,20 @@ ktime_sub(ktime_t lhs, ktime_t rhs)
 {
 	lhs.tv64 -= rhs.tv64;
 	return (lhs);
+}
+
+static inline int64_t
+ktime_us_delta(ktime_t later, ktime_t earlier)
+{
+        ktime_t diff = ktime_sub(later, earlier);
+        return ktime_to_us(diff);
+}
+
+static inline int64_t
+ktime_ms_delta(ktime_t later, ktime_t earlier)
+{
+        ktime_t diff = ktime_sub(later, earlier);
+        return ktime_to_ms(diff);
 }
 
 static inline ktime_t

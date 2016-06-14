@@ -31,7 +31,7 @@
  *	@(#)kernfs_vnops.c	8.15 (Berkeley) 5/21/95
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vnops.c 1.43
  *
- * $FreeBSD: head/sys/fs/devfs/devfs_vnops.c 294204 2016-01-17 08:34:35Z kib $
+ * $FreeBSD: head/sys/fs/devfs/devfs_vnops.c 298732 2016-04-28 02:39:43Z pfg $
  */
 
 /*
@@ -1444,7 +1444,7 @@ devfs_revoke(struct vop_revoke_args *ap)
 	struct cdev *dev;
 	struct cdev_priv *cdp;
 	struct devfs_dirent *de;
-	int i;
+	u_int i;
 
 	KASSERT((ap->a_flags & REVOKEALL) != 0, ("devfs_revoke !REVOKEALL"));
 

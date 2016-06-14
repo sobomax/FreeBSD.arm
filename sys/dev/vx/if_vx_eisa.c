@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vx/if_vx_eisa.c 257324 2013-10-29 11:17:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vx/if_vx_eisa.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -149,7 +149,7 @@ vx_eisa_attach(device_t dev)
 	}
 	sc->vx_irq = irq;
 
-	/* Now the registers are availible through the lower ioport */
+	/* Now the registers are available through the lower ioport */
 
 	if (vx_attach(dev) == 0)
 		goto bad;

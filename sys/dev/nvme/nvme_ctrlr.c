@@ -25,7 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ctrlr.c 295944 2016-02-24 00:01:10Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ctrlr.c 301778 2016-06-10 06:04:53Z imp $");
+
+#include "opt_cam.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -801,7 +803,7 @@ nvme_ctrlr_reset_task(void *arg, int pending)
 	atomic_cmpset_32(&ctrlr->is_resetting, 1, 0);
 }
 
-static void
+void
 nvme_ctrlr_intx_handler(void *arg)
 {
 	struct nvme_controller *ctrlr = arg;

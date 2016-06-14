@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/libfirewire/Makefile 211677 2010-08-23 01:42:09Z imp $
+# $FreeBSD: head/sys/boot/i386/libfirewire/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 LIB=		firewire
 INTERNALLIB=
@@ -18,7 +18,7 @@ CFLAGS+=	-Wformat -Wall
 
 .if ${MACHINE_CPUARCH} == "amd64"
 CLEANFILES+=    machine
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../i386/include machine
 .endif
 

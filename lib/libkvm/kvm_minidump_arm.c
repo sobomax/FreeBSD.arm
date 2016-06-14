@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_minidump_arm.c 294098 2016-01-15 18:53:06Z skra $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_minidump_arm.c 298485 2016-04-22 18:05:34Z ngie $");
 
 /*
  * ARM machine dependent routines for kvm and minidumps.
@@ -84,7 +84,7 @@ _arm_minidump_initvtop(kvm_t *kd)
 	off_t off;
 
 	vmst = _kvm_malloc(kd, sizeof(*vmst));
-	if (vmst == 0) {
+	if (vmst == NULL) {
 		_kvm_err(kd, kd->program, "cannot allocate vm");
 		return (-1);
 	}

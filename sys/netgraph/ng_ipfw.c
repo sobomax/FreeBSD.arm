@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netgraph/ng_ipfw.c 272840 2014-10-09 19:32:35Z melifaro $
+ * $FreeBSD: head/sys/netgraph/ng_ipfw.c 297793 2016-04-10 23:07:00Z pfg $
  */
 
 #include "opt_inet.h"
@@ -117,7 +117,7 @@ ng_ipfw_mod_event(module_t mod, int event, void *data)
 		    != 0) {
 			log(LOG_ERR, "%s: can't create ng_ipfw node", __func__);
                 	break;
-		};
+		}
 
 		/* Try to name node */
 		if (ng_name_node(fw_node, "ipfw") != 0)
@@ -240,7 +240,7 @@ ng_ipfw_rcvdata(hook_p hook, item_p item)
 	if (tag == NULL) {
 		NG_FREE_M(m);
 		return (EINVAL);	/* XXX: find smth better */
-	};
+	}
 
 	if (m->m_len < sizeof(struct ip) &&
 	    (m = m_pullup(m, sizeof(struct ip))) == NULL)

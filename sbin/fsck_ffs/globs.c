@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/14/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck_ffs/globs.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: head/sbin/fsck_ffs/globs.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/param.h>
 #include <ufs/ufs/dinode.h>
@@ -118,7 +118,7 @@ fsckinit(void)
 	bzero(totalreadcnt, sizeof(long) * BT_NUMBUFTYPES);
 	bzero(readtime, sizeof(struct timespec) * BT_NUMBUFTYPES);
 	bzero(totalreadtime, sizeof(struct timespec) * BT_NUMBUFTYPES);
-	bzero(&startprog, sizeof(struct timespec));;
+	bzero(&startprog, sizeof(struct timespec));
 	bzero(&sblk, sizeof(struct bufarea));
 	pdirbp = NULL;
 	pbp = NULL;

@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libxo/Makefile 289490 2015-10-18 07:30:50Z ngie $
+# $FreeBSD: head/lib/libxo/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 SHLIBDIR?=      /lib
 
 .include <src.opts.mk>
@@ -13,7 +14,7 @@ SHLIB_MAJOR=0
 
 SRCS=	libxo.c xo_encoder.c xo_syslog.c
 
-CFLAGS+=-I${LIBXOSRC}/libxo
+CFLAGS+=-I${LIBXOSRC}/libxo -I${.CURDIR}
 CFLAGS+=-DXO_ENCODERDIR=\"/usr/lib/libxo/encoder\"
 
 INCS=	xo.h xo_encoder.h

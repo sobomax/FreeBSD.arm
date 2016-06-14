@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/command.c 277857 2015-01-28 21:33:49Z dim $
+ * $FreeBSD: head/usr.sbin/ppp/command.c 298032 2016-04-15 03:50:33Z araujo $
  */
 
 #include <sys/param.h>
@@ -651,7 +651,7 @@ ShellCommand(struct cmdargs const *arg, int bg)
   if ((shpid = fork()) == 0) {
     int i, fd;
 
-    if ((shell = getenv("SHELL")) == 0)
+    if ((shell = getenv("SHELL")) == NULL)
       shell = _PATH_BSHELL;
 
     timer_TermService();

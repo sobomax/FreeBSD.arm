@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/md_promise.c 279278 2015-02-25 10:18:11Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/md_promise.c 298698 2016-04-27 15:10:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -290,7 +290,7 @@ promise_meta_unused_range(struct promise_raid_conf **metaarr, int nsd,
 		     metaarr[i]->disk_sectors;
 		csize = sectors - coff;
 		i++;
-	};
+	}
 	return ((*size > 0) ? 1 : 0);
 }
 
@@ -893,7 +893,7 @@ g_raid_md_promise_start(struct g_raid_volume *vol)
 	struct g_raid_md_promise_perdisk *pd;
 	struct g_raid_md_promise_pervolume *pv;
 	struct promise_raid_conf *meta;
-	int i;
+	u_int i;
 
 	sc = vol->v_softc;
 	md = sc->sc_md;

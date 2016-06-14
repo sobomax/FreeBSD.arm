@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/rtadvd 256878 2013-10-22 07:44:26Z des $
+# $FreeBSD: head/etc/rc.d/rtadvd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: rtadvd
@@ -12,6 +12,7 @@
 . /etc/network.subr
 
 name="rtadvd"
+desc="Router advertisement daemon"
 rcvar="rtadvd_enable"
 command="/usr/sbin/${name}"
 extra_commands="reload"

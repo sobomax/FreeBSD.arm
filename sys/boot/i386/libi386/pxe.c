@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/libi386/pxe.c 292345 2015-12-16 17:45:03Z bapt $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/libi386/pxe.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 #include <stand.h>
 #include <string.h>
@@ -72,7 +72,7 @@ static void	bangpxe_call(int func);
 
 static int	pxe_init(void);
 static int	pxe_strategy(void *devdata, int flag, daddr_t dblk,
-			     size_t size, char *buf, size_t *rsize);
+			     size_t offset, size_t size, char *buf, size_t *rsize);
 static int	pxe_open(struct open_file *f, ...);
 static int	pxe_close(struct open_file *f);
 static void	pxe_print(int verbose);
@@ -247,7 +247,7 @@ pxe_init(void)
 
 
 static int
-pxe_strategy(void *devdata, int flag, daddr_t dblk, size_t size,
+pxe_strategy(void *devdata, int flag, daddr_t dblk, size_t offset, size_t size,
 		char *buf, size_t *rsize)
 {
 	return (EIO);
@@ -309,6 +309,11 @@ pxe_open(struct open_file *f, ...)
 		if (bootplayer.Hardware == ETHER_TYPE) {
 		    sprintf(temp, "%6D", bootplayer.CAddr, ":");
 		    setenv("boot.netif.hwaddr", temp, 1);
+		}
+		if (intf_mtu != 0) {
+			char mtu[16];
+			sprintf(mtu, "%u", intf_mtu);
+			setenv("boot.netif.mtu", mtu, 1);
 		}
 #ifdef LOADER_NFS_SUPPORT
 		printf("pxe_open: server addr: %s\n", inet_ntoa(rootip));

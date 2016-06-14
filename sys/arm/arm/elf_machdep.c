@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/elf_machdep.c 295207 2016-02-03 13:47:50Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/elf_machdep.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -43,7 +43,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/elf_machdep.c 295207 2016-02-03 13:47:50Z m
 #include <vm/pmap.h>
 #include <vm/vm_param.h>
 
-#include <machine/acle-compat.h>
 #include <machine/elf.h>
 #include <machine/md_var.h>
 

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/crypto/sha2/sha512.h 292782 2015-12-27 17:33:59Z allanjude $
+ * $FreeBSD: head/sys/crypto/sha2/sha512.h 300773 2016-05-26 19:29:29Z cem $
  */
 
 #ifndef _SHA512_H_
@@ -77,7 +77,7 @@ __BEGIN_DECLS
 
 void	SHA512_Init(SHA512_CTX *);
 void	SHA512_Update(SHA512_CTX *, const void *, size_t);
-void	SHA512_Final(unsigned char [SHA512_DIGEST_LENGTH], SHA512_CTX *);
+void	SHA512_Final(unsigned char [static SHA512_DIGEST_LENGTH], SHA512_CTX *);
 #ifndef _KERNEL
 char   *SHA512_End(SHA512_CTX *, char *);
 char   *SHA512_Data(const void *, unsigned int, char *);

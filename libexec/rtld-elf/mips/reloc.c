@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/mips/reloc.c 281107 2015-04-05 14:06:11Z emaste $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/mips/reloc.c 298285 2016-04-19 19:03:55Z pfg $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -141,7 +141,7 @@ store_ptr(void *where, Elf_Sxword val, size_t len)
 void
 _rtld_relocate_nonplt_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 {
-	const Elf_Rel *rel = 0, *rellim;
+	const Elf_Rel *rel = NULL, *rellim;
 	Elf_Addr relsz = 0;
 	const Elf_Sym *symtab = NULL, *sym;
 	Elf_Addr *where;

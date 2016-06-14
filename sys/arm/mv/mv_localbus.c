@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/mv_localbus.c 295832 2016-02-20 01:32:58Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/mv_localbus.c 299702 2016-05-13 22:05:16Z gonzo $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -36,10 +36,10 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/mv_localbus.c 295832 2016-02-20 01:32:58Z jh
 #include <sys/bus.h>
 #include <sys/rman.h>
 #include <sys/malloc.h>
+#include <sys/devmap.h>
 
 #include <vm/vm.h>
 
-#include <machine/devmap.h>
 #include <machine/fdt.h>
 
 #include <dev/ofw/ofw_bus.h>
@@ -234,7 +234,7 @@ fdt_localbus_reg_decode(phandle_t node, struct localbus_softc *sc,
 	}
 	rv = 0;
 out:
-	free(reg, M_OFWPROP);
+	OF_prop_free(reg);
 	return (rv);
 }
 
@@ -323,8 +323,8 @@ localbus_print_child(device_t dev, device_t child)
 
 	rv = 0;
 	rv += bus_print_child_header(dev, child);
-	rv += resource_list_print_type(rl, "mem", SYS_RES_MEMORY, "%#lx");
-	rv += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%ld");
+	rv += resource_list_print_type(rl, "mem", SYS_RES_MEMORY, "%#jx");
+	rv += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%jd");
 	rv += bus_print_child_footer(dev, child);
 
 	return (rv);
@@ -384,7 +384,7 @@ localbus_get_devinfo(device_t bus, device_t child)
 }
 
 int
-fdt_localbus_devmap(phandle_t dt_node, struct arm_devmap_entry *fdt_devmap,
+fdt_localbus_devmap(phandle_t dt_node, struct devmap_entry *fdt_devmap,
     int banks_max_num, int *banks_added)
 {
 	pcell_t ranges[MV_LOCALBUS_MAX_BANKS * MV_LOCALBUS_MAX_BANK_CELLS];

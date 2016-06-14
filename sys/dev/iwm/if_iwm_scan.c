@@ -103,7 +103,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_scan.c 287197 2015-08-27 08:56:39Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_scan.c 301190 2016-06-02 04:54:56Z adrian $");
+
+#include "opt_wlan.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -441,7 +443,6 @@ iwm_mvm_scan_request(struct iwm_softc *sc, int flags,
 		 * to allocate the time events. Warn on it, but maybe we
 		 * should try to send the command again with different params.
 		 */
-		sc->sc_scanband = 0;
 		ret = EIO;
 	}
 	return ret;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_table.c 272756 2014-10-08 16:22:26Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_table.c 299265 2016-05-09 16:16:00Z slm $");
 
 /* Debugging tables for MPT2 */
 
@@ -342,9 +342,8 @@ mpr_print_evt_sas(struct mpr_softc *sc, MPI2_EVENT_NOTIFICATION_REPLY *event)
 			    "PHY[%d].LinkRate: %s (0x%x)\n", phynum,
 			    mpr_describe_table(mpr_linkrate_names,
 			    (phy->LinkRate >> 4) & 0xf), phy->LinkRate);
-			mpr_dprint_field(sc,MPR_EVENT,"PHY[%d].PhyStatus: "
-			    "%s\n", phynum,
-			    mpr_describe_table(mpr_phystatus_names,
+			mpr_dprint_field(sc,MPR_EVENT,"PHY[%d].PhyStatus: %s\n",
+			    phynum, mpr_describe_table(mpr_phystatus_names,
 			    phy->PhyStatus));
 		}
 		break;

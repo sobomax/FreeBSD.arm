@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/linux_dummy.c 283492 2015-05-24 18:08:01Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/linux_dummy.c 297061 2016-03-20 13:21:20Z dchagin $");
 
 #include "opt_compat.h"
 
@@ -71,7 +71,6 @@ DUMMY(pivot_root);
 DUMMY(mincore);
 DUMMY(lookup_dcookie);
 DUMMY(remap_file_pages);
-DUMMY(fstatfs64);
 DUMMY(mbind);
 DUMMY(get_mempolicy);
 DUMMY(set_mempolicy);

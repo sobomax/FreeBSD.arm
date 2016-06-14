@@ -25,7 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/boot/pc98/boot0.5/support.s 64123 2000-08-02 08:46:08Z kato $
+# $FreeBSD: head/sys/boot/pc98/boot0.5/support.s 298826 2016-04-30 00:26:38Z pfg $
 #
 
 	.code16
@@ -55,7 +55,7 @@ read_biosparam:
 	ret
 
 #
-# Write one byte to BIOS paramter block
+# Write one byte to BIOS parameter block
 #	%bx	offset
 #	%dl	value
 #

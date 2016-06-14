@@ -1,7 +1,7 @@
 /*	$NetBSD: mdreloc.c,v 1.23 2003/07/26 15:04:38 mrg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/reloc.c 294373 2016-01-20 07:21:33Z kib $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/arm/reloc.c 298285 2016-04-19 19:03:55Z pfg $");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -133,7 +133,7 @@ int _open();
 void
 _rtld_relocate_nonplt_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 {
-	const Elf_Rel *rel = 0, *rellim;
+	const Elf_Rel *rel = NULL, *rellim;
 	Elf_Addr relsz = 0;
 	Elf_Addr *where;
 	uint32_t size;

@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/twsi/twsi.c 295630 2016-02-15 17:14:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/twsi/twsi.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -141,7 +141,7 @@ twsi_clear_iflg(struct twsi_softc *sc)
 /*
  * timeout given in us
  * returns
- *   0 on sucessfull mask change
+ *   0 on successful mask change
  *   non-zero on timeout
  */
 static int

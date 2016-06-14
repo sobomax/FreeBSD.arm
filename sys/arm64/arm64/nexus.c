@@ -39,8 +39,11 @@
  * and I/O memory address space.
  */
 
+#include "opt_acpi.h"
+#include "opt_platform.h"
+
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/nexus.c 296250 2016-03-01 02:59:06Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/nexus.c 301453 2016-06-05 16:20:12Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,9 +62,6 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/nexus.c 296250 2016-03-01 02:59:06Z jhi
 
 #include <machine/resource.h>
 #include <machine/intr.h>
-
-#include "opt_acpi.h"
-#include "opt_platform.h"
 
 #ifdef FDT
 #include <dev/ofw/openfirm.h>
@@ -250,7 +250,7 @@ nexus_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	}
 
 	rv = rman_reserve_resource(rm, start, end, count, flags, child);
-	if (rv == 0)
+	if (rv == NULL)
 		return (NULL);
 
 	rman_set_rid(rv, *rid);
@@ -271,7 +271,13 @@ nexus_config_intr(device_t dev, int irq, enum intr_trigger trig,
     enum intr_polarity pol)
 {
 
-	return (arm_config_intr(irq, trig, pol));
+#ifdef INTRNG
+	/* TODO: This is wrong, it's needed for ACPI */
+	device_printf(dev, "bus_config_intr is obsolete and not supported!\n");
+	return (EOPNOTSUPP);
+#else
+	return (intr_irq_config(irq, trig, pol));
+#endif
 }
 
 static int
@@ -288,8 +294,12 @@ nexus_setup_intr(device_t dev, device_t child, struct resource *res, int flags,
 	if (error)
 		return (error);
 
+#ifdef INTRNG
+	error = intr_setup_irq(child, res, filt, intr, arg, flags, cookiep);
+#else
 	error = arm_setup_intr(device_get_nameunit(child), filt, intr,
 	    arg, rman_get_start(res), flags, cookiep);
+#endif
 
 	return (error);
 }
@@ -298,7 +308,11 @@ static int
 nexus_teardown_intr(device_t dev, device_t child, struct resource *r, void *ih)
 {
 
-	return (arm_teardown_intr(ih));
+#ifdef INTRNG
+	return (intr_teardown_irq(child, r, ih));
+#else
+	return (intr_irq_remove_handler(child, rman_get_start(r), ih));
+#endif
 }
 
 #ifdef SMP
@@ -306,7 +320,11 @@ static int
 nexus_bind_intr(device_t dev, device_t child, struct resource *irq, int cpu)
 {
 
-	return (arm_intr_bind(rman_get_start(irq), cpu));
+#ifdef INTRNG
+	return (intr_bind_irq(child, irq, cpu));
+#else
+	return (intr_irq_bind(rman_get_start(irq), cpu));
+#endif
 }
 #endif
 
@@ -429,6 +447,9 @@ static int
 nexus_ofw_map_intr(device_t dev, device_t child, phandle_t iparent, int icells,
     pcell_t *intr)
 {
+#ifdef INTRNG
+	return (INTR_IRQ_INVALID);
+#else
 	int irq;
 
 	if (icells == 3) {
@@ -441,6 +462,7 @@ nexus_ofw_map_intr(device_t dev, device_t child, phandle_t iparent, int icells,
 		irq = intr[0];
 
 	return (irq);
+#endif
 }
 #endif
 

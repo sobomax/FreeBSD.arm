@@ -25,29 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_sysctl.c 293352 2016-01-07 20:32:04Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_sysctl.c 296617 2016-03-10 17:13:10Z mav $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
 #include <sys/sysctl.h>
 
 #include "nvme_private.h"
-
-SYSCTL_NODE(_kern, OID_AUTO, nvme, CTLFLAG_RD, 0, "NVM Express");
-/*
- * Intel NVMe controllers have a slow path for I/Os that span a 128KB
- * stripe boundary but ZFS limits ashift, which is derived from
- * d_stripesize, to 13 (8KB) so we limit the stripesize reported to
- * geom(8) to 4KB by default.
- *
- * This may result in a small number of additional I/Os to require
- * splitting in nvme(4), however the NVMe I/O path is very efficient
- * so these additional I/Os will cause very minimal (if any) difference
- * in performance or CPU utilisation.
- */
-int nvme_max_optimal_sectorsize = 1<<12;
-SYSCTL_INT(_kern_nvme, OID_AUTO, max_optimal_sectorsize, CTLFLAG_RWTUN,
-    &nvme_max_optimal_sectorsize, 0, "The maximum optimal sectorsize reported");
 
 /*
  * CTLTYPE_S64 and sysctl_handle_64 were added in r217616.  Define these

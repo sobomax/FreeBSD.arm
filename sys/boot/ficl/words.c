@@ -41,7 +41,7 @@
 ** SUCH DAMAGE.
 */
 
-/* $FreeBSD: head/sys/boot/ficl/words.c 295410 2016-02-08 20:03:14Z pfg $ */
+/* $FreeBSD: head/sys/boot/ficl/words.c 300055 2016-05-17 14:10:44Z imp $ */
 
 #ifdef TESTMAIN
 #include <stdlib.h>
@@ -5198,12 +5198,11 @@ void ficlCompileCore(FICL_SYSTEM *pSys)
     /*
     ** Set up system's outer interpreter loop - maybe this should be in initSystem?
     */
-	pSys->pInterp[0] = pSys->pInterpret;
-	pSys->pInterp[1] = pSys->pBranchParen;
-	pSys->pInterp[2] = (FICL_WORD *)(void *)(-2);
+    pSys->pInterp[0] = pSys->pInterpret;
+    pSys->pInterp[1] = pSys->pBranchParen;
+    pSys->pInterp[2] = (FICL_WORD *)(void *)(-2);
 
     assert(dictCellsAvail(dp) > 0);
 
     return;
 }
-

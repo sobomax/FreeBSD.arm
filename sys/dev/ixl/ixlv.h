@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/ixlv.h 284049 2015-06-05 22:52:42Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/ixlv.h 299554 2016-05-12 18:21:52Z erj $*/
 
 
 #ifndef _IXLV_H_
@@ -38,7 +38,7 @@
 
 #include "ixlv_vc_mgr.h"
 
-#define IXLV_AQ_MAX_ERR		1000
+#define IXLV_AQ_MAX_ERR		200
 #define IXLV_MAX_FILTERS	128
 #define IXLV_MAX_QUEUES		16
 #define IXLV_AQ_TIMEOUT		(1 * hz)

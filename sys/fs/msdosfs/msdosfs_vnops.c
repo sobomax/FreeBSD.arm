@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_vnops.c 295370 2016-02-07 15:36:16Z pfg $ */
+/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_vnops.c 298806 2016-04-29 20:51:24Z pfg $ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-
@@ -116,7 +116,7 @@ static vop_vptofh_t	msdosfs_vptofh;
  * that when a directory is actually read/written (via read, write, or
  * readdir, or seek) we must use the vnode for the filesystem instead of
  * the vnode for the directory as would happen in ufs. This is to insure we
- * retreive the correct block from the buffer cache since the hash value is
+ * retrieve the correct block from the buffer cache since the hash value is
  * based upon the vnode address and the desired block number.
  */
 

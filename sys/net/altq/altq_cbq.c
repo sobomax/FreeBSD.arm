@@ -28,7 +28,7 @@
  * These notices must be retained in any copies of any part of this software.
  *
  * $KAME: altq_cbq.c,v 1.19 2003/09/17 14:23:25 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq_cbq.c 287009 2015-08-21 22:02:22Z loos $
+ * $FreeBSD: head/sys/net/altq/altq_cbq.c 300050 2016-05-17 12:52:31Z eadler $
  */
 
 #include "opt_altq.h"
@@ -701,8 +701,8 @@ cbq_modify_class(acp)
  *		struct rm_class *parent, struct rm_class *borrow)
  *
  * This function create a new traffic class in the CBQ class hierarchy of
- * given paramters.  The class that created is either the root, default,
- * or a new dynamic class.  If CBQ is not initilaized, the the root class
+ * given parameters.  The class that created is either the root, default,
+ * or a new dynamic class.  If CBQ is not initilaized, the root class
  * will be created.
  */
 static int

@@ -28,7 +28,7 @@
 /* Driver for Attansic Technology Corp. L1 Gigabit Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/age/if_age.c 295735 2016-02-18 01:24:10Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/age/if_age.c 298646 2016-04-26 15:03:15Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -323,8 +323,7 @@ age_probe(device_t dev)
 	vendor = pci_get_vendor(dev);
 	devid = pci_get_device(dev);
 	sp = age_devs;
-	for (i = 0; i < sizeof(age_devs) / sizeof(age_devs[0]);
-	    i++, sp++) {
+	for (i = 0; i < nitems(age_devs); i++, sp++) {
 		if (vendor == sp->age_vendorid &&
 		    devid == sp->age_deviceid) {
 			device_set_desc(dev, sp->age_name);
@@ -2487,7 +2486,7 @@ age_rxintr(struct age_softc *sc, int rr_prod, int count)
 		 * I'm not sure whether this check is really needed.
 		 */
 		pktlen = AGE_RX_BYTES(le32toh(rxrd->len));
-		if (nsegs != (pktlen + (AGE_RX_BUF_SIZE - 1)) / AGE_RX_BUF_SIZE)
+		if (nsegs != howmany(pktlen, AGE_RX_BUF_SIZE))
 			break;
 
 		/* Received a frame. */

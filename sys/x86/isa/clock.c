@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/clock.c 295942 2016-02-23 23:57:24Z jkim $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/clock.c 299746 2016-05-14 18:22:52Z jhb $");
 
 /*
  * Routines to handle clock hardware.
@@ -475,8 +475,27 @@ startrtclock()
 void
 cpu_initclocks(void)
 {
+#ifdef EARLY_AP_STARTUP
+	struct thread *td;
+	int i;
 
+	td = curthread;
 	cpu_initclocks_bsp();
+	CPU_FOREACH(i) {
+		if (i == 0)
+			continue;
+		thread_lock(td);
+		sched_bind(td, i);
+		thread_unlock(td);
+		cpu_initclocks_ap();
+	}
+	thread_lock(td);
+	if (sched_is_bound(td))
+		sched_unbind(td);
+	thread_unlock(td);
+#else
+	cpu_initclocks_bsp();
+#endif
 }
 
 static int

@@ -20,7 +20,7 @@
  *          Wolfram Schneider <wosch@FreeBSD.org>
  *          Thomas Moestl <tmoestl@gmx.net>
  *
- * $FreeBSD: head/usr.bin/top/machine.c 295445 2016-02-09 18:35:37Z kib $
+ * $FreeBSD: head/usr.bin/top/machine.c 298686 2016-04-27 02:44:10Z araujo $
  */
 
 #include <sys/param.h>
@@ -1023,7 +1023,7 @@ format_next_process(caddr_t handle, char *(*get_userid)(int), int flags)
 					continue;
 				len = (argbuflen - (dst - argbuf) - 1) / 4;
 				strvisx(dst, src,
-				    strlen(src) < len ? strlen(src) : len,
+				    MIN(strlen(src), len),
 				    VIS_NL | VIS_CSTYLE);
 				while (*dst != '\0')
 					dst++;

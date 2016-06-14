@@ -37,7 +37,7 @@ static const char sccsid[] = "@(#)function.c	8.10 (Berkeley) 5/4/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/find/function.c 272762 2014-10-08 17:40:58Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/find/function.c 298189 2016-04-18 07:05:18Z araujo $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -224,7 +224,7 @@ nextarg(OPTION *option, char ***argvp)
 {
 	char *arg;
 
-	if ((arg = **argvp) == 0)
+	if ((arg = **argvp) == NULL)
 		errx(1, "%s: requires additional arguments", option->name);
 	(*argvp)++;
 	return arg;

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dirent.h	8.2 (Berkeley) 7/28/94
- * $FreeBSD: head/include/dirent.h 268531 2014-07-11 16:16:26Z jhb $
+ * $FreeBSD: head/include/dirent.h 300986 2016-05-30 07:50:57Z ed $
  */
 
 #ifndef _DIRENT_H_
@@ -38,15 +38,23 @@
  * the getdirentries(2) system call.
  */
 #include <sys/cdefs.h>
+#include <sys/_types.h>
 #include <sys/dirent.h>
 
 #if __XSI_VISIBLE
+
+#ifndef _INO_T_DECLARED
+typedef	__ino_t		ino_t;
+#define	_INO_T_DECLARED
+#endif
+
 /*
  * XXX this is probably illegal in the __XSI_VISIBLE case, but brings us closer
  * to the specification.
  */
 #define	d_ino		d_fileno	/* backward and XSI compatibility */
-#endif
+
+#endif /* __XSI_VISIBLE */
 
 #if __BSD_VISIBLE
 

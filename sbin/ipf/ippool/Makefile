@@ -1,5 +1,6 @@
-#	$FreeBSD: head/sbin/ipf/ippool/Makefile 291329 2015-11-25 20:38:07Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ippool/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	ipf
 PROG=		ippool
 SRCS=		${GENHDRS} ippool_y.c ippool_l.c kmem.c ippool.c
 MAN=		ippool.5 ippool.8

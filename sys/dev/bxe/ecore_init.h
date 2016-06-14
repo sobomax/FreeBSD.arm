@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_init.h 296071 2016-02-25 22:44:00Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_init.h 298955 2016-05-03 03:41:25Z pfg $");
 
 #ifndef ECORE_INIT_H
 #define ECORE_INIT_H
@@ -321,7 +321,7 @@ static inline void ecore_dcb_config_qm(struct bxe_softc *sc, enum cos_mode mode,
 
 
 /*
- * congestion managment port init api description
+ * congestion management port init api description
  * the api works as follows:
  * the driver should pass the cmng_init_input struct, the port_init function
  * will prepare the required internal ram structure which will be passed back

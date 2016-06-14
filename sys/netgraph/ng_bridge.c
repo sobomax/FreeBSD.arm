@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_bridge.c 273960 2014-11-02 05:51:31Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_bridge.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 /*
@@ -327,7 +327,7 @@ ng_bridge_constructor(node_p node)
 	/*
 	 * This node has all kinds of stuff that could be screwed by SMP.
 	 * Until it gets it's own internal protection, we go through in 
-	 * single file. This could hurt a machine bridging beteen two 
+	 * single file. This could hurt a machine bridging between two 
 	 * GB ethernets so it should be fixed. 
 	 * When it's fixed the process SHOULD NOT SLEEP, spinlocks please!
 	 * (and atomic ops )

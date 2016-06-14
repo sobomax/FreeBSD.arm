@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iscsi/icl_wrappers.h 281088 2015-04-04 22:11:38Z trasz $
+ * $FreeBSD: head/sys/dev/iscsi/icl_wrappers.h 300044 2016-05-17 11:10:44Z trasz $
  */
 
 /*
@@ -106,11 +106,11 @@ icl_conn_close(struct icl_conn *ic)
 }
 
 static inline int
-icl_conn_task_setup(struct icl_conn *ic, struct ccb_scsiio *csio,
-    uint32_t *task_tagp, void **prvp)
+icl_conn_task_setup(struct icl_conn *ic, struct icl_pdu *ip,
+    struct ccb_scsiio *csio, uint32_t *task_tagp, void **prvp)
 {
 
-	return (ICL_CONN_TASK_SETUP(ic, csio, task_tagp, prvp));
+	return (ICL_CONN_TASK_SETUP(ic, ip, csio, task_tagp, prvp));
 }
 
 static inline void
@@ -133,6 +133,18 @@ icl_conn_transfer_done(struct icl_conn *ic, void *prv)
 {
 
 	ICL_CONN_TRANSFER_DONE(ic, prv);
+}
+
+/*
+ * The function below is only used with ICL_KERNEL_PROXY.
+ */
+static inline int
+icl_conn_connect(struct icl_conn *ic, int domain, int socktype,
+    int protocol, struct sockaddr *from_sa, struct sockaddr *to_sa)
+{
+
+	return (ICL_CONN_CONNECT(ic, domain, socktype, protocol,
+	    from_sa, to_sa));
 }
 
 #endif /* !ICL_WRAPPERS_H */

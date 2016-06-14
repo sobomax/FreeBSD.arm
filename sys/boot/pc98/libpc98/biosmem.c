@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/pc98/libpc98/biosmem.c 200255 2009-12-08 13:06:35Z nyan $");
+__FBSDID("$FreeBSD: head/sys/boot/pc98/libpc98/biosmem.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 /*
  * Obtain memory configuration information from the BIOS
@@ -40,7 +40,7 @@ uint32_t	bios_basemem, bios_extmem, high_heap_size;
 /*
  * The minimum amount of memory to reserve in bios_extmem for the heap.
  */
-#define	HEAP_MIN	(3 * 1024 * 1024)
+#define	HEAP_MIN	(64 * 1024 * 1024)
 
 void
 bios_getmem(void)

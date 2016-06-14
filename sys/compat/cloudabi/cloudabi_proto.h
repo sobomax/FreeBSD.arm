@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/cloudabi/cloudabi_proto.h 285307 2015-07-09 07:20:15Z ed $
+ * $FreeBSD: head/sys/compat/cloudabi/cloudabi_proto.h 297247 2016-03-24 21:47:15Z ed $
  */
 
 /*
@@ -30,5 +30,7 @@
  * calls. Unfortunately, we don't have a separate system call table for
  * those, so rely on the system call table from COMPAT_CLOUDABI64.
  */
-#include <compat/cloudabi64/cloudabi64_syscalldefs.h>
+
+#include <contrib/cloudabi/cloudabi64_types.h>
+
 #include <compat/cloudabi64/cloudabi64_proto.h>

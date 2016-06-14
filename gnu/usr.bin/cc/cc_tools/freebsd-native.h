@@ -1,4 +1,4 @@
-/* $FreeBSD: head/gnu/usr.bin/cc/cc_tools/freebsd-native.h 258445 2013-11-21 21:05:11Z andreast $ */
+/* $FreeBSD: head/gnu/usr.bin/cc/cc_tools/freebsd-native.h 300822 2016-05-27 03:40:52Z cem $ */
 
 /* FREEBSD_NATIVE is defined when gcc is integrated into the FreeBSD
    source tree so it can be configured appropriately without using
@@ -8,7 +8,7 @@
 
 /* Fake out gcc/config/freebsd<version>.h.  */
 #define	FBSD_MAJOR	11
-#define	FBSD_CC_VER	1100001		/* form like __FreeBSD_version */
+#define	FBSD_CC_VER	1100002		/* form like __FreeBSD_version */
 
 #undef SYSTEM_INCLUDE_DIR		/* We don't need one for now. */
 #undef TOOL_INCLUDE_DIR			/* We don't need one for now. */

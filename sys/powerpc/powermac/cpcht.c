@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/cpcht.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/cpcht.c 297392 2016-03-29 15:19:56Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,7 +51,7 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/cpcht.c 290989 2015-11-17 16:07:43
 
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
-#include <powerpc/ofw/ofw_pci.h>
+#include <dev/ofw/ofwpci.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>

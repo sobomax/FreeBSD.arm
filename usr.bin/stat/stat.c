@@ -35,7 +35,7 @@ __RCSID("$NetBSD: stat.c,v 1.33 2011/01/15 22:54:10 njoly Exp $"
 #endif
 #endif
 
-__FBSDID("$FreeBSD: head/usr.bin/stat/stat.c 265893 2014-05-11 18:49:18Z thomas $");
+__FBSDID("$FreeBSD: head/usr.bin/stat/stat.c 298599 2016-04-26 00:29:00Z araujo $");
 
 #if HAVE_CONFIG_H
 #include "config.h" 
@@ -1025,7 +1025,7 @@ format1(const struct stat *st,
 		 *
 		 * Nanoseconds: long.
 		 */
-		(void)snprintf(tmp, sizeof(tmp), "%dld", prec > 9 ? 9 : prec);
+		(void)snprintf(tmp, sizeof(tmp), "%dld", MIN(prec, 9));
 		(void)strcat(lfmt, tmp);
 
 		/*

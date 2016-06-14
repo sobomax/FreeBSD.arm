@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/ukbd.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/ukbd.c 298300 2016-04-19 22:07:36Z pfg $");
 
 
 /*-
@@ -2087,7 +2087,7 @@ ukbd_key2scan(struct ukbd_softc *sc, int code, int shift, int up)
 		0x72,   /* Apple Keyboard JIS (Eisu) */
 	};
 
-	if ((code >= 89) && (code < (int)(89 + (sizeof(scan) / sizeof(scan[0]))))) {
+	if ((code >= 89) && (code < (int)(89 + nitems(scan)))) {
 		code = scan[code - 89];
 	}
 	/* Pause/Break */

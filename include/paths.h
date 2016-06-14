@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)paths.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/include/paths.h 293204 2016-01-05 16:21:20Z jilles $
+ * $FreeBSD: head/include/paths.h 297205 2016-03-23 04:18:57Z imp $
  */
 
 #ifndef _PATHS_H_
@@ -56,6 +56,7 @@
 #define	_PATH_DRUM	"/dev/drum"
 #define	_PATH_ESDB	"/usr/share/i18n/esdb"
 #define	_PATH_ETC	"/etc"
+#define	_PATH_FIRMWARE	"/usr/share/firmware"
 #define	_PATH_FTPUSERS	"/etc/ftpusers"
 #define	_PATH_FWMEM	"/dev/fwmem"
 #define	_PATH_GBDE	"/sbin/gbde"

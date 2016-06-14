@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_action.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_action.c 300232 2016-05-19 21:08:33Z avos $");
 #endif
 
 /*
@@ -103,7 +103,6 @@ ieee80211_send_action_register(int cat, int act, ieee80211_send_action_func *f)
 			break;
 		meshaction_send_action[act] = f;
 		return 0;
-		break;
 	case IEEE80211_ACTION_CAT_VENDOR:
 		if (act >= nitems(vendor_send_action))
 			break;

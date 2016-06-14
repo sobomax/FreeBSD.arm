@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/file.c 289420 2015-10-16 12:53:22Z des $");
+__FBSDID("$FreeBSD: head/lib/libfetch/file.c 300666 2016-05-25 07:43:32Z truckman $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -149,5 +149,6 @@ fetchListFile(struct url *u, const char *flags __unused)
 		fetch_add_entry(&ue, &size, &len, de->d_name, &us);
 	}
 
+	closedir(dir);
 	return (ue);
 }

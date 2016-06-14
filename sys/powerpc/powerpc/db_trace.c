@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/powerpc/powerpc/db_trace.c 279601 2015-03-04 21:06:57Z nwhitehorn $ */
+/*	$FreeBSD: head/sys/powerpc/powerpc/db_trace.c 298352 2016-04-20 15:45:55Z pfg $ */
 /*	$NetBSD: db_trace.c,v 1.20 2002/05/13 20:30:09 matt Exp $	*/
 /*	$OpenBSD: db_trace.c,v 1.3 1997/03/21 02:10:48 niklas Exp $	*/
 
@@ -106,7 +106,7 @@ struct db_variable db_regs[] = {
 	{ "esr", DB_OFFSET(cpu.booke.esr),	db_frame },
 #endif
 };
-struct db_variable *db_eregs = db_regs + sizeof (db_regs)/sizeof (db_regs[0]);
+struct db_variable *db_eregs = db_regs + nitems(db_regs);
 
 /*
  * register variable handling

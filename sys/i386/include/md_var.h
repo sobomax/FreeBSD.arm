@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/md_var.h 291949 2015-12-07 17:41:20Z kib $
+ * $FreeBSD: head/sys/i386/include/md_var.h 297399 2016-03-29 19:56:48Z kib $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -46,7 +46,6 @@ extern	int	szosigcode;
 #endif
 extern	uint32_t *vm_page_dump;
 
-typedef void alias_for_inthand_t(u_int cs, u_int ef, u_int esp, u_int ss);
 struct	segment_descriptor;
 union savefpu;
 

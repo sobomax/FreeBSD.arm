@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_sdma.c 284077 2015-06-06 14:26:40Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_sdma.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -444,7 +444,7 @@ boot_firmware(struct sdma_softc *sc)
 		if (timeout-- <= 0)
 			break;
 		DELAY(10);
-	};
+	}
 
 	if (ret == 0) {
 		device_printf(sc->dev, "SDMA failed to boot\n");

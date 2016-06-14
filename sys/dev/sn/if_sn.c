@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 296137 2016-02-27 03:38:01Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/sn/if_sn.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * This is a driver for SMC's 9000 series of Ethernet adapters.
@@ -283,7 +283,7 @@ sninit_locked(void *xsc)
 	CSR_WRITE_2(sc, TXMIT_CONTROL_REG_W, 0x0000);
 
 	/*
-	 * Set the control register to automatically release succesfully
+	 * Set the control register to automatically release successfully
 	 * transmitted packets (making the best use out of our limited
 	 * memory) and to enable the EPH interrupt on certain TX errors.
 	 */

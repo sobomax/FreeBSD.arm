@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/nfscbd/nfscbd.c 241737 2012-10-19 14:49:42Z ed $");
+__FBSDID("$FreeBSD: head/usr.sbin/nfscbd/nfscbd.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -177,7 +177,7 @@ main(int argc, char *argv[])
 		default:
 		case '?':
 			usage();
-		};
+		}
 	argv += optind;
 	argc -= optind;
 

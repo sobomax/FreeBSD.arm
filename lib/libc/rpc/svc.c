@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc.c 1.44 88/02/08 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc.c	2.4 88/08/11 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/svc.c 290253 2015-11-02 01:22:06Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/svc.c 298830 2016-04-30 01:24:24Z pfg $");
 
 /*
  * svc.c, Server-side remote procedure call interface.
@@ -74,7 +74,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/svc.c 290253 2015-11-02 01:22:06Z ngie $")
  * The services list
  * Each entry represents a set of procedures (an rpc program).
  * The dispatch routine takes request structs and runs the
- * apropriate procedure.
+ * appropriate procedure.
  */
 static struct svc_callout {
 	struct svc_callout *sc_next;

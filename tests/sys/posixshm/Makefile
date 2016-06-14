@@ -1,4 +1,6 @@
-# $FreeBSD: head/tests/sys/posixshm/Makefile 289441 2015-10-17 04:32:21Z ngie $
+# $FreeBSD: head/tests/sys/posixshm/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/posixshm
 

@@ -1,4 +1,3 @@
-
 	    FreeBSD maintainer's guide to OpenSSH-portable
 	    ==============================================
 
@@ -166,6 +165,13 @@
    ignore HPN-related configuration options to avoid breaking existing
    configurations.
 
+A) AES-CBC
+
+   The AES-CBC ciphers were removed from the server-side proposal list
+   in 6.7p1 due to theoretical weaknesses and the availability of
+   superior ciphers (including AES-CTR and AES-GCM).  We have re-added
+   them for compatibility with third-party clients.
+
 
 
 This port was brought to you by (in no particular order) DARPA, NAI
@@ -174,4 +180,4 @@ Suzanne Vega, and a Sanford's #69 Deluxe Marker.
 
 					-- des@FreeBSD.org
 
-$FreeBSD: head/crypto/openssh/FREEBSD-upgrade 294909 2016-01-27 13:40:44Z des $
+$FreeBSD: head/crypto/openssh/FREEBSD-upgrade 296634 2016-03-11 00:23:10Z des $

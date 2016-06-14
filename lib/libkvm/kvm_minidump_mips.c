@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_minidump_mips.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_minidump_mips.c 298485 2016-04-22 18:05:34Z ngie $");
 
 /*
  * MIPS machine dependent routines for kvm and minidumps.
@@ -89,7 +89,7 @@ _mips_minidump_initvtop(kvm_t *kd)
 	off_t off;
 
 	vmst = _kvm_malloc(kd, sizeof(*vmst));
-	if (vmst == 0) {
+	if (vmst == NULL) {
 		_kvm_err(kd, kd->program, "cannot allocate vm");
 		return (-1);
 	}

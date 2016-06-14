@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_cbus.c 272129 2014-09-25 20:40:24Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/fdc/fdc_cbus.c 298426 2016-04-21 18:37:36Z jhb $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -150,7 +150,9 @@ fdc_cbus_attach(device_t dev)
 		error = fdc_attach(dev);
 	if (error == 0)
 		error = fdc_hints_probe(dev);
-	if (error)
+	if (error == 0)
+		fdc_start_worker(dev);
+	else
 		fdc_release_resources(fdc);
 	return (error);
 }

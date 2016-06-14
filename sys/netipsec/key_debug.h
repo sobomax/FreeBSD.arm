@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key_debug.h 275438 2014-12-03 04:08:41Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/key_debug.h 298398 2016-04-21 10:58:07Z ae $	*/
 /*	$KAME: key_debug.h,v 1.10 2001/08/05 08:37:52 itojun Exp $	*/
 
 /*-
@@ -76,8 +76,8 @@ extern void kdebug_secpolicy(struct secpolicy *);
 extern void kdebug_secpolicyindex(struct secpolicyindex *);
 extern void kdebug_secasindex(struct secasindex *);
 extern void kdebug_secasv(struct secasvar *);
-extern void kdebug_mbufhdr(struct mbuf *);
-extern void kdebug_mbuf(struct mbuf *);
+extern void kdebug_mbufhdr(const struct mbuf *);
+extern void kdebug_mbuf(const struct mbuf *);
 #endif /*_KERNEL*/
 
 struct sockaddr;

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/types.h 294883 2016-01-27 02:23:54Z jhibbits $
+ * $FreeBSD: head/sys/sys/types.h 299571 2016-05-12 21:18:17Z cem $
  */
 
 #ifndef _SYS_TYPES_H_
@@ -172,6 +172,11 @@ typedef	__nlink_t	nlink_t;	/* link count */
 #ifndef _OFF_T_DECLARED
 typedef	__off_t		off_t;		/* file offset */
 #define	_OFF_T_DECLARED
+#endif
+
+#ifndef _OFF64_T_DECLARED
+typedef	__off64_t	off64_t;	/* file offset (alias) */
+#define	_OFF64_T_DECLARED
 #endif
 
 #ifndef _PID_T_DECLARED

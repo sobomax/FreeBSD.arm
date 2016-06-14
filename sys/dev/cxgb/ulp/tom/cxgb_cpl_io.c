@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/tom/cxgb_cpl_io.c 294887 2016-01-27 04:59:28Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/tom/cxgb_cpl_io.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_inet.h"
 
@@ -286,7 +286,7 @@ release_tid(struct toedev *tod, unsigned int tid, int qset)
 	struct tid_info *t = &td->tid_maps;
 #endif
 
-	KASSERT(tid >= 0 && tid < t->ntids,
+	KASSERT(tid < t->ntids,
 	    ("%s: tid=%d, ntids=%d", __func__, tid, t->ntids));
 
 	m = M_GETHDR_OFLD(qset, CPL_PRIORITY_CONTROL, cpl);
@@ -861,7 +861,7 @@ calc_opt0l(struct socket *so, int rcv_bufsize)
 	KASSERT(rcv_bufsize <= M_RCV_BUFSIZ,
 	    ("%s: rcv_bufsize (%d) is too high", __func__, rcv_bufsize));
 
-	if (so != NULL)		/* optional because noone cares about IP TOS */
+	if (so != NULL)		/* optional because no one cares about IP TOS */
 		opt0l |= V_TOS(INP_TOS(sotoinpcb(so)));
 
 	return (htobe32(opt0l));

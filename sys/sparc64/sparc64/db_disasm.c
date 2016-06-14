@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/db_disasm.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/db_disasm.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -867,7 +867,7 @@ db_disasm(db_addr_t loc, bool altfmt)
 			break;
 		}
 		i_ptr++;
-	};
+	}
 
 	if (!matchp) {
 		db_printf("undefined\n");
@@ -1023,7 +1023,7 @@ db_disasm(db_addr_t loc, bool altfmt)
 		}
 		if (*(++f_ptr))
 			db_printf(", ");
-	};
+	}
 
 	db_printf("\n");
 

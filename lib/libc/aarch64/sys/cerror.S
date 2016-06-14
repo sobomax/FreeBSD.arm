@@ -26,9 +26,10 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/aarch64/sys/cerror.S 281197 2015-04-07 09:52:14Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/aarch64/sys/cerror.S 297973 2016-04-14 16:32:27Z emaste $");
 
 ENTRY(cerror)
+	.hidden	cerror
 	sub	sp, sp, #16
 	stp	x0, lr, [sp]
 	bl	_C_LABEL(__error)

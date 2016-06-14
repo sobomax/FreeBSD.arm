@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_rwlock.c 286166 2015-08-02 00:03:08Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_rwlock.c 301157 2016-06-01 18:32:20Z mjg $");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"
@@ -771,7 +771,9 @@ __rw_wlock_hard(volatile uintptr_t *c, uintptr_t tid, const char *file,
 	all_time -= lockstat_nsecs(&rw->lock_object);
 	state = rw->rw_lock;
 #endif
-	while (!_rw_write_lock(rw, tid)) {
+	for (;;) {
+		if (rw->rw_lock == RW_UNLOCKED && _rw_write_lock(rw, tid))
+			break;
 #ifdef KDTRACE_HOOKS
 		spin_cnt++;
 #endif

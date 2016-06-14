@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.init.mk 295641 2016-02-16 02:09:48Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.init.mk 301888 2016-06-14 16:20:19Z bdrewery $
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the
@@ -27,5 +27,15 @@ _SKIP_BUILD = not building at level 0
 .if ${.MAKE.LEVEL} > 0 && !empty(_SKIP_BUILD)
 .warning ${_SKIP_BUILD}
 .endif
+
+.if ${MK_META_MODE} == "yes"
+.if !exists(/dev/filemon) && \
+    ${UPDATE_DEPENDFILE:Uyes:tl} != "no" && !defined(NO_FILEMON) && \
+    !make(showconfig)
+.warning The filemon module (/dev/filemon) is not loaded.
+.warning META_MODE is less useful for incremental builds without filemon.
+.warning 'kldload filemon' or pass -DNO_FILEMON to suppress this warning.
+.endif
+.endif	# ${MK_META_MODE} == "yes"
 
 .endif	# !target(__<bsd.init.mk>__)

@@ -25,7 +25,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/usr.sbin/bluetooth/btpand/btpand.c 281210 2015-04-07 16:48:23Z takawata $ */
+/* $FreeBSD: head/usr.sbin/bluetooth/btpand/btpand.c 301482 2016-06-06 04:18:56Z araujo $ */
 
 #include <sys/cdefs.h>
 __COPYRIGHT("@(#) Copyright (c) 2008 Iain Hibbert. All rights reserved.");
@@ -66,7 +66,7 @@ static const struct {
 	const char *	desc;
 } services[] = {
 	{ "PANU", SDP_SERVICE_CLASS_PANU, "Personal Area Networking User" },
-	{ "NAP",  SDP_SERVICE_CLASS_NAP,  "Network Acess Point"		  },
+	{ "NAP",  SDP_SERVICE_CLASS_NAP,  "Network Access Point"		  },
 	{ "GN",	  SDP_SERVICE_CLASS_GN,   "Group Network"		  },
 };
 
@@ -171,7 +171,7 @@ main(int argc, char *argv[])
 		usage();
 
 	if (!bdaddr_any(&remote_bdaddr) && (server_limit != 0 ||
-	    control_path != 0 || (service_name != NULL && l2cap_psm != 0)))
+	    control_path != NULL || (service_name != NULL && l2cap_psm != 0)))
 		usage();
 
 	/* default options */

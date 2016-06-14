@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
- * Copyright (c) 2013-2015 Avago Technologies
+ * Copyright (c) 2013-2016 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mpr/mpr_sas.h 283661 2015-05-28 18:24:22Z slm $
+ * $FreeBSD: head/sys/dev/mpr/mpr_sas.h 299265 2016-05-09 16:16:00Z slm $
  */
 
 struct mpr_fw_event_work;

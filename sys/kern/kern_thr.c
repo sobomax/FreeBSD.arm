@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_thr.c 292894 2015-12-29 23:25:26Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_thr.c 300043 2016-05-17 09:56:22Z kib $");
 
 #include "opt_compat.h"
 #include "opt_posix.h"
@@ -308,6 +308,8 @@ sys_thr_exit(struct thread *td, struct thr_exit_args *uap)
     /* long *state */
 {
 
+	umtx_thread_exit(td);
+
 	/* Signal userland that it can free the stack. */
 	if ((void *)uap->state != NULL) {
 		suword_lwpid(uap->state, 1);
@@ -367,7 +369,6 @@ kern_thr_exit(struct thread *td)
 	KASSERT(p->p_numthreads > 1, ("too few threads"));
 	racct_sub(p, RACCT_NTHR, 1);
 	tdsigcleanup(td);
-	umtx_thread_exit(td);
 	PROC_SLOCK(p);
 	thread_stopped(p);
 	thread_exit();

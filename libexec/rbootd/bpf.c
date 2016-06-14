@@ -45,7 +45,7 @@
 static const char sccsid[] = "@(#)bpf.c	8.1 (Berkeley) 6/4/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/libexec/rbootd/bpf.c 262136 2014-02-17 22:27:32Z brueffer $";
+  "$FreeBSD: head/libexec/rbootd/bpf.c 298213 2016-04-18 15:05:48Z pfg $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -241,7 +241,7 @@ BpfGetIntfName(char **errmsg)
 	ifrp = ibuf;
 	ifend = (struct ifreq *)((char *)ibuf + ifc.ifc_len);
 
-	mp = 0;
+	mp = NULL;
 	minunit = 666;
 	for (; ifrp < ifend; ++ifrp) {
 		if (ioctl(fd, SIOCGIFFLAGS, (char *)ifrp) < 0) {
@@ -271,7 +271,7 @@ BpfGetIntfName(char **errmsg)
 	}
 
 	(void) close(fd);
-	if (mp == 0) {
+	if (mp == NULL) {
 		(void) strcpy(errbuf, "bpf: no interfaces found");
 		return(NULL);
 	}

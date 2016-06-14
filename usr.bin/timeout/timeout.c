@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/timeout/timeout.c 289878 2015-10-24 13:47:03Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/timeout/timeout.c 298879 2016-05-01 16:13:05Z pfg $");
 
 #include <sys/procctl.h>
 #include <sys/time.h>
@@ -227,7 +227,7 @@ main(int argc, char **argv)
 	argv++;
 
 	if (!foreground) {
-		/* Aquire a reaper */
+		/* Acquire a reaper */
 		if (procctl(P_PID, getpid(), PROC_REAP_ACQUIRE, NULL) == -1)
 			err(EX_OSERR, "Fail to acquire the reaper");
 	}

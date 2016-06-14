@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/collate.c 290494 2015-11-07 12:43:35Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/collate.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include "namespace.h"
 
@@ -322,7 +322,7 @@ _collate_lookup(struct xlocale_collate *table, const wchar_t *t, int *len,
 	*len = 1;
 
 	/*
-	 * Check for composites such as dipthongs that collate as a
+	 * Check for composites such as diphthongs that collate as a
 	 * single element (aka chains or collating-elements).
 	 */
 	if (((p2 = chainsearch(table, t, &l)) != NULL) &&

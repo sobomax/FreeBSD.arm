@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mp_machdep.c 293636 2016-01-10 16:42:14Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mp_machdep.c 298237 2016-04-19 01:48:18Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -212,6 +212,9 @@ cpu_mp_unleash(void *dummy)
 
 	cpus = 0;
 	smp_cpus = 0;
+#ifdef BOOKE
+	tlb1_ap_prep();
+#endif
 	STAILQ_FOREACH(pc, &cpuhead, pc_allcpu) {
 		cpus++;
 		if (!pc->pc_bsp) {

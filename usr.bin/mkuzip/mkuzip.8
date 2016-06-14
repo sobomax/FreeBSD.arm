@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/usr.bin/mkuzip/mkuzip.8 295943 2016-02-23 23:59:08Z sobomax $
+.\" $FreeBSD: head/usr.bin/mkuzip/mkuzip.8 298504 2016-04-23 07:23:43Z sobomax $
 .\"
 .Dd March 17, 2006
 .Dt MKUZIP 8
@@ -38,6 +38,7 @@ class
 .Op Fl v
 .Op Fl o Ar outfile
 .Op Fl s Ar cluster_size
+.Op Fl j Ar compression_jobs
 .Ar infile
 .Sh DESCRIPTION
 The
@@ -118,6 +119,18 @@ detects identical blocks in the input and replaces each subsequent occurence
 of such block with pointer to the very first one in the output.
 Setting this option results is moderate decrease of compressed image size,
 typically around 3-5% of a final size of the compressed image.
+.It Fl S
+Print summary about the compression ratio as well as output
+file size after file has been processed.
+.It Fl j Ar compression_jobs
+Specify the number of compression jobs that
+.Nm
+runs in parallel to speed up compression.
+When option is not specified the number of jobs set to be equal
+to the value of
+.Va hw.ncpu
+.Xr sysctl 8
+variable.
 .El
 .Sh NOTES
 The compression ratio largely depends on the cluster size used.

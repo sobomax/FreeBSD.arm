@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/pv.c 293045 2016-01-02 02:53:48Z ian $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/pv.c 299353 2016-05-10 10:26:07Z trasz $");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -226,8 +226,6 @@ start_xen_ap(int cpu)
 	bootAP = cpu;
 
 	ctxt = malloc(sizeof(*ctxt), M_TEMP, M_WAITOK | M_ZERO);
-	if (ctxt == NULL)
-		panic("unable to allocate memory");
 
 	ctxt->flags = VGCF_IN_KERNEL;
 	ctxt->user_regs.rip = (unsigned long) init_secondary;

@@ -33,7 +33,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/atomic-v4.h 291426 2015-11-28 12:12:28Z mmel $
+ * $FreeBSD: head/sys/arm/include/atomic-v4.h 300144 2016-05-18 13:09:52Z andrew $
  */
 
 #ifndef _MACHINE_ATOMIC_V4_H_
@@ -372,6 +372,8 @@ atomic_swap_32(volatile u_int32_t *p, u_int32_t v)
 
 #define atomic_cmpset_rel_32	atomic_cmpset_32
 #define atomic_cmpset_acq_32	atomic_cmpset_32
+#define atomic_cmpset_rel_64	atomic_cmpset_64
+#define atomic_cmpset_acq_64	atomic_cmpset_64
 #define atomic_set_rel_32	atomic_set_32
 #define atomic_set_acq_32	atomic_set_32
 #define atomic_clear_rel_32	atomic_clear_32

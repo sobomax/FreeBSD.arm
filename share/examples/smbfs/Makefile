@@ -1,5 +1,6 @@
-# $FreeBSD: head/share/examples/smbfs/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
+# $FreeBSD: head/share/examples/smbfs/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
+PACKAGE=examples
 FILESDIR= ${SHAREDIR}/examples/smbfs
 FILES=	dot.nsmbrc
 

@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/user.h 256694 2013-10-17 18:37:25Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/user.h 297124 2016-03-21 00:29:45Z np $
  */
 #ifndef __C4IW_USER_H__
 #define __C4IW_USER_H__
@@ -50,6 +50,7 @@ struct c4iw_create_cq_resp {
 	__u32 cqid;
 	__u32 size;
 	__u32 qid_mask;
+	__u32 reserved; /* explicit padding (optional for i386) */
 };
 
 struct c4iw_create_qp_resp {

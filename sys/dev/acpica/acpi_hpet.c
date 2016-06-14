@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_hpet.c 295841 2016-02-20 13:37:04Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_hpet.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include "opt_acpi.h"
 #if defined(__amd64__)
@@ -453,7 +453,7 @@ hpet_attach(device_t dev)
 
 	/* Validate that we can access the whole region. */
 	if (rman_get_size(sc->mem_res) < HPET_MEM_WIDTH) {
-		device_printf(dev, "memory region width %ld too small\n",
+		device_printf(dev, "memory region width %jd too small\n",
 		    rman_get_size(sc->mem_res));
 		bus_free_resource(dev, SYS_RES_MEMORY, sc->mem_res);
 		return (ENXIO);

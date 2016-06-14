@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/at91dci.c 276701 2015-01-05 15:04:17Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/at91dci.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*-
  * Copyright (c) 2007-2008 Hans Petter Selasky. All rights reserved.
  *
@@ -1330,7 +1330,7 @@ at91dci_clear_stall_sub(struct at91dci_softc *sc, uint8_t ep_no,
 
 	/*
 	 * NOTE: One would assume that a FIFO reset would release the
-	 * FIFO banks aswell, but it doesn't! We have to do this
+	 * FIFO banks as well, but it doesn't! We have to do this
 	 * manually!
 	 */
 

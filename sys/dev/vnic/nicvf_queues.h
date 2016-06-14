@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/nicvf_queues.h 296039 2016-02-25 14:29:57Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/nicvf_queues.h 299443 2016-05-11 13:20:29Z zbb $
  *
  */
 
@@ -296,6 +296,7 @@ struct cmp_queue {
 
 	struct task		cmp_task;
 	struct taskqueue	*cmp_taskq;
+	u_int			cmp_cpuid; /* CPU to which bind the CQ task */
 
 	void			*desc;
 	struct q_desc_mem	dmem;
@@ -388,7 +389,7 @@ void nicvf_disable_intr(struct nicvf *, int, int);
 void nicvf_clear_intr(struct nicvf *, int, int);
 int nicvf_is_intr_enabled(struct nicvf *, int, int);
 
-int nicvf_tx_mbuf_locked(struct snd_queue *, struct mbuf *);
+int nicvf_xmit_locked(struct snd_queue *sq);
 
 /* Register access APIs */
 void nicvf_reg_write(struct nicvf *, uint64_t, uint64_t);

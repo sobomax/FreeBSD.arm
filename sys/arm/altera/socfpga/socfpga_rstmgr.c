@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/altera/socfpga/socfpga_rstmgr.c 271431 2014-09-11 18:12:28Z br $");
+__FBSDID("$FreeBSD: head/sys/arm/altera/socfpga/socfpga_rstmgr.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -145,7 +145,7 @@ rstmgr_sysctl(SYSCTL_HANDLER_ARGS)
 		break;
 	default:
 		return (1);
-	};
+	}
 
 	reg = READ4(sc, RSTMGR_BRGMODRST);
 	enable = reg & bit ? 0 : 1;

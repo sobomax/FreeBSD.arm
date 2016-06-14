@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptmv/gui_lib.c 190809 2009-04-07 16:38:25Z delphij $
+ * $FreeBSD: head/sys/dev/hptmv/gui_lib.c 298433 2016-04-21 19:57:40Z pfg $
  */
 /*
  * gui_lib.c
@@ -783,8 +783,8 @@ simple:
 			for(i = 0; i < pArray->u.array.bArnMember; i++)
 				if(pArray->u.array.pMember[i]->VDeviceCapacity < capacity)
 					capacity = pArray->u.array.pMember[i]->VDeviceCapacity;
-			pArray->VDeviceCapacity = (capacity & ~(pArray->u.array.bStripeWitch - 1))
-				* (pArray->u.array.bArnMember - 1);
+			pArray->VDeviceCapacity = rounddown2(capacity, pArray->u.array.bStripeWitch) *
+			    (pArray->u.array.bArnMember - 1);
 			break;
 
 		default:

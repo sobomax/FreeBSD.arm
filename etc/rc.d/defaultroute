@@ -2,7 +2,7 @@
 #
 # Wait for the default route to be up if DHCP is in use
 #
-# $FreeBSD: head/etc/rc.d/defaultroute 274331 2014-11-09 21:33:01Z melifaro $
+# $FreeBSD: head/etc/rc.d/defaultroute 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: defaultroute
@@ -13,6 +13,7 @@
 . /etc/network.subr
 
 name="defaultroute"
+desc="Setup default router"
 start_cmd="defaultroute_start"
 stop_cmd=":"
 

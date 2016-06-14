@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmsupport/Makefile 296417 2016-03-05 20:24:31Z dim $
+# $FreeBSD: head/lib/clang/libllvmsupport/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -113,4 +113,3 @@ SRCS+=	StringPool.cpp
 # Ugly hack to work around CLOCK_PROCESS_CPUTIME_ID not being properly defined
 # between r239347 and r245428.
 CXXFLAGS.Process.cpp=	-DCLOCK_PROCESS_CPUTIME_ID=15
-CXXFLAGS+=		${CXXFLAGS.${.IMPSRC:T}}

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback_unit_tests.c 257515 2013-11-01 18:42:03Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/netback/netback_unit_tests.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /**
  * \file netback_unit_tests.c
@@ -98,7 +98,7 @@ struct test_fixture {
 	/** Will be run if setup succeeds */
 	testcase_t *test;
 
-	/** Cleans up test data whether or not the setup suceeded*/
+	/** Cleans up test data whether or not the setup succeeded */
 	teardown_t *teardown;
 };
 

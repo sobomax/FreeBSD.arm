@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_smedia.c 259858 2013-12-25 02:06:57Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_smedia.c 298995 2016-05-03 18:05:43Z pfg $");
 
 /*
    Alias_smedia.c is meant to contain the aliasing code for streaming media
@@ -518,7 +518,7 @@ AliasHandleRtspOut(struct libalias *la, struct ip *pip, struct alias_link *lnk, 
 
 		/*
 		 * When aliasing a server, check for the 200 reply
-		 * Accomodate varying number of blanks between 200 & OK
+		 * Accommodate varying number of blanks between 200 & OK
 		 */
 
 		if (dlen >= (int)strlen(str200)) {

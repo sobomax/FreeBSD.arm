@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ar/ar.c 287327 2015-08-31 18:07:17Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/ar/ar.c 300227 2016-05-19 20:03:01Z ed $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -272,10 +272,10 @@ main(int argc, char **argv)
 		    "only one of -s and -S options allowed");
 
 	if (bsdar->options & (AR_A | AR_B)) {
-		if ((bsdar->posarg = *argv) == NULL)
+		if (*argv == NULL)
 			bsdar_errc(bsdar, EX_USAGE, 0,
 			    "no position operand specified");
-		if ((bsdar->posarg = basename(bsdar->posarg)) == NULL)
+		if ((bsdar->posarg = basename(*argv)) == NULL)
 			bsdar_errc(bsdar, EX_SOFTWARE, errno,
 			    "basename failed");
 		argc--;

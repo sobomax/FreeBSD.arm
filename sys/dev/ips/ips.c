@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ips/ips.c 274488 2014-11-13 22:06:57Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/ips/ips.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <dev/ips/ipsreg.h>
 #include <dev/ips/ips.h>
@@ -107,7 +107,7 @@ static void ips_cmd_dmaload(void *cmdptr, bus_dma_segment_t *segments,int segnum
 
 }
 
-/* is locking needed? what locking guarentees are there on removal? */
+/* is locking needed? what locking guarantees are there on removal? */
 static int ips_cmdqueue_free(ips_softc_t *sc)
 {
 	int i, error = -1;

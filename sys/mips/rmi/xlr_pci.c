@@ -28,7 +28,7 @@
  *
  * RMI_BSD */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/xlr_pci.c 296331 2016-03-03 01:12:13Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/xlr_pci.c 298053 2016-04-15 14:26:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -464,7 +464,7 @@ mips_platform_pci_setup_intr(device_t dev, device_t child,
 	if (error)
 		return error;
 	if (rman_get_start(irq) != rman_get_end(irq)) {
-		device_printf(dev, "Interrupt allocation %lu != %lu\n",
+		device_printf(dev, "Interrupt allocation %ju != %ju\n",
 		    rman_get_start(irq), rman_get_end(irq));
 		return (EINVAL);
 	}
@@ -537,7 +537,7 @@ xlr_pci_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	}
 
 	rv = rman_reserve_resource(rm, start, end, count, flags, child);
-	if (rv == 0)
+	if (rv == NULL)
 		return (0);
 
 	rman_set_rid(rv, *rid);

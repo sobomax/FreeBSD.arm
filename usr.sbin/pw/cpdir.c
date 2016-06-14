@@ -26,7 +26,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/cpdir.c 286201 2015-08-02 13:22:46Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/cpdir.c 297290 2016-03-26 11:41:35Z bapt $";
 #endif /* not lint */
 
 #include <dirent.h>
@@ -37,7 +37,6 @@ static const char rcsid[] =
 #include <unistd.h>
 
 #include "pw.h"
-#include "pwupd.h"
 
 void
 copymkdir(int rootfd, char const * dir, int skelfd, mode_t mode, uid_t uid,

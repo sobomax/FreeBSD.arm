@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.test.mk 296122 2016-02-26 22:13:52Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.test.mk 299094 2016-05-04 23:20:53Z ngie $
 #
 # Generic build infrastructure for test programs.
 #
@@ -15,6 +15,12 @@ LOCALBASE?=	/usr/local
 
 # Tests install directory
 TESTSDIR?=	${TESTSBASE}/${RELDIR:H}
+
+PACKAGE?=	tests
+
+FILESGROUPS+=	${PACKAGE}FILES
+${PACKAGE}FILESPACKAGE=	${PACKAGE}
+${PACKAGE}FILESDIR=	${TESTSDIR}
 
 # List of subdirectories containing tests into which to recurse.  This has the
 # same semantics as SUBDIR at build-time.  However, the directories listed here
@@ -75,10 +81,6 @@ SUBDIR_PARALLEL= t
 .if !defined(MAN)
 MAN=
 .endif
-
-# tell progs.mk we might want to install things
-PROG_VARS+= BINDIR
-PROGS_TARGETS+= install
 
 .if !defined(NOT_FOR_TEST_SUITE)
 .include <suite.test.mk>

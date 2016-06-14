@@ -32,12 +32,11 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/arm/include/sysarch.h 294138 2016-01-16 10:12:50Z andrew $ */
+/* $FreeBSD: head/sys/arm/include/sysarch.h 300694 2016-05-25 19:44:26Z ian $ */
 
 #ifndef _ARM_SYSARCH_H_
 #define _ARM_SYSARCH_H_
 
-#include <machine/acle-compat.h>
 #include <machine/armreg.h>
 
 /*

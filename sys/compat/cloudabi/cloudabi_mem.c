@@ -24,14 +24,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_mem.c 295917 2016-02-23 09:22:00Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_mem.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/mman.h>
 #include <sys/sysproto.h>
 
+#include <contrib/cloudabi/cloudabi_types_common.h>
+
 #include <compat/cloudabi/cloudabi_proto.h>
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
 
 /* Converts CloudABI's memory protection flags to FreeBSD's. */
 static int

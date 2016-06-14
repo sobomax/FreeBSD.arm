@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/orm.c 273446 2014-10-22 01:37:32Z marcel $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/orm.c 299392 2016-05-10 22:28:06Z bz $");
 
 /*
  * Driver to take care of holes in ISA I/O memory occupied
@@ -90,6 +90,9 @@ orm_identify(driver_t* driver, device_t parent)
 	u_int32_t		rom_size;
 	struct orm_softc	*sc;
 	u_int8_t		buf[3];
+
+	if (resource_disabled("orm", 0))
+		return;
 
 	child = BUS_ADD_CHILD(parent, ISA_ORDER_SENSITIVE, "orm", -1);
 	device_set_driver(child, driver);

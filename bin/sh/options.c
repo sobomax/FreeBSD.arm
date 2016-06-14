@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)options.c	8.2 (Berkeley) 5/4/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/sh/options.c 294348 2016-01-19 22:41:26Z jilles $");
+__FBSDID("$FreeBSD: head/bin/sh/options.c 296577 2016-03-09 21:00:57Z jilles $");
 
 #include <signal.h>
 #include <unistd.h>
@@ -285,7 +285,7 @@ minus_o(char *name, int val)
 static void
 setoptionbyindex(int idx, int val)
 {
-	if (optletter[idx] == 'p' && !val && privileged) {
+	if (&optval[idx] == &privileged && !val && privileged) {
 		if (setgid(getgid()) == -1)
 			error("setgid");
 		if (setuid(getuid()) == -1)
@@ -294,9 +294,9 @@ setoptionbyindex(int idx, int val)
 	optval[idx] = val;
 	if (val) {
 		/* #%$ hack for ksh semantics */
-		if (optletter[idx] == 'V')
+		if (&optval[idx] == &Vflag)
 			Eflag = 0;
-		else if (optletter[idx] == 'E')
+		else if (&optval[idx] == &Eflag)
 			Vflag = 0;
 	}
 }

@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2014, Intel Corporation 
+  Copyright (c) 2013-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_lan_hmc.h 269198 2014-07-28 21:57:09Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_lan_hmc.h 299545 2016-05-12 18:18:55Z erj $*/
 
 #ifndef _I40E_LAN_HMC_H_
 #define _I40E_LAN_HMC_H_

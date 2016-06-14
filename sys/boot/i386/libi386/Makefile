@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/libi386/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/sys/boot/i386/libi386/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 #
 LIB=			i386
 INTERNALLIB=
@@ -28,6 +28,12 @@ CFLAGS+=	-DCOMSPEED=${BOOT_COMCONSOLE_SPEED}
 .ifdef(BOOT_BIOSDISK_DEBUG)
 # Make the disk code more talkative
 CFLAGS+= -DDISK_DEBUG
+.endif
+
+.if !defined(LOADER_NO_GELI_SUPPORT)
+# Decrypt encrypted drives
+CFLAGS+= -DLOADER_GELI_SUPPORT
+CFLAGS+= -I${.CURDIR}/../../geli
 .endif
 
 .if !defined(BOOT_HIDE_SERIAL_NUMBERS)
@@ -60,7 +66,7 @@ CFLAGS+= ${FORMAT_EXTENSIONS}
 
 .if ${MACHINE_CPUARCH} == "amd64"
 CLEANFILES+=	machine
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../i386/include machine
 .endif
 
@@ -69,7 +75,6 @@ machine:
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.amd64_tramp.S=	${CLANG_NO_IAS}
 CFLAGS.multiboot_tramp.S=	${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}
 
 .if ${MACHINE_CPUARCH} == "amd64"
 beforedepend ${OBJS}: machine

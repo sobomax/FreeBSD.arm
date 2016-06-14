@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libunbound/Makefile 295535 2016-02-11 17:37:02Z des $
+# $FreeBSD: head/lib/libunbound/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../contrib/ldns
 UNBOUNDDIR= ${.CURDIR}/../../contrib/unbound
@@ -9,8 +10,9 @@ UNBOUNDDIR= ${.CURDIR}/../../contrib/unbound
 
 LIB=	unbound
 PRIVATELIB=
+PACKAGE=	unbound
 
-CFLAGS= -I${UNBOUNDDIR} -I${LDNSDIR} -I${.OBJDIR}
+CFLAGS+= -I${UNBOUNDDIR} -I${LDNSDIR} -I${.OBJDIR}
 
 SRCS=	alloc.c as112.c autotrust.c config_file.c configlexer.l configparser.y \
 	context.c dname.c dns.c dns64.c dnstree.c fptr_wlist.c infra.c \

@@ -30,7 +30,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore.c 289686 2015-10-21 10:44:07Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -79,7 +79,7 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore.c 289686 2015-10-21 10:44
  *
  * The XenStore is ASCII string based, and has a structure and semantics
  * similar to a filesystem.  There are files and directories, the directories
- * able to contain files or other directories.  The depth of the hierachy
+ * able to contain files or other directories.  The depth of the hierarchy
  * is only limited by the XenStore's maximum path length.
  *
  * The communication channel between the XenStore service and other
@@ -1110,7 +1110,7 @@ xs_identify(driver_t *driver, device_t parent)
 }
 
 /**
- * Probe for the existance of the XenStore.
+ * Probe for the existence of the XenStore.
  *
  * \param dev
  */

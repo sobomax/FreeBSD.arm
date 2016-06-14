@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/pxeldr/Makefile 295757 2016-02-18 14:17:28Z emaste $
+# $FreeBSD: head/sys/boot/i386/pxeldr/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 # Pick up ../Makefile.inc early.
 .include <bsd.init.mk>
@@ -46,4 +46,3 @@ ${LOADER}: ${LOADERBIN} ${BTXLDR} ${BTXKERN}
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.pxeldr.S=	${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

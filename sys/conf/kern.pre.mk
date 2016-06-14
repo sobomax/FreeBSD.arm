@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/kern.pre.mk 295137 2016-02-02 07:02:51Z adrian $
+# $FreeBSD: head/sys/conf/kern.pre.mk 301284 2016-06-03 19:25:36Z bdrewery $
 
 # Part of a unified Makefile for building kernels.  This part contains all
 # of the definitions that need to be before %BEFORE_DEPEND.
@@ -18,6 +18,11 @@ _srcconf_included_:
 .include <bsd.own.mk>
 .include <bsd.compiler.mk>
 .include "kern.opts.mk"
+
+# The kernel build always occurs in the object directory which is .CURDIR.
+.if ${.MAKE.MODE:Unormal:Mmeta}
+.MAKE.MODE+=	curdirOk=yes
+.endif
 
 # Can be overridden by makeoptions or /etc/make.conf
 KERNEL_KO?=	kernel
@@ -63,29 +68,6 @@ COPTFLAGS+= ${_CPUCFLAGS}
 NOSTDINC= -nostdinc
 
 INCLUDES= ${NOSTDINC} ${INCLMAGIC} -I. -I$S
-
-.if ${MK_FAST_DEPEND} == "no" && (make(depend) || make(kernel-depend))
-
-# This hack lets us use the ipfilter code without spamming a new
-# include path into contrib'ed source files.
-INCLUDES+= -I$S/contrib/ipfilter
-
-# ... and the same for ath
-INCLUDES+= -I$S/dev/ath -I$S/dev/ath/ath_hal -I$S/contrib/dev/ath/ath_hal
-
-# ... and the same for the NgATM stuff
-INCLUDES+= -I$S/contrib/ngatm
-
-# ... and the same for vchiq
-INCLUDES+= -I$S/contrib/vchiq
-
-# ... and the same for twa
-INCLUDES+= -I$S/dev/twa
-
-# ... and the same for cxgb and cxgbe
-INCLUDES+= -I$S/dev/cxgb -I$S/dev/cxgbe
-
-.endif
 
 CFLAGS=	${COPTFLAGS} ${DEBUG}
 CFLAGS+= ${INCLUDES} -D_KERNEL -DHAVE_KERNEL_OPTION_HEADERS -include opt_global.h

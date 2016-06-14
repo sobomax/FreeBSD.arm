@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/riscv/riscv/nexus.c 296250 2016-03-01 02:59:06Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/riscv/riscv/nexus.c 297979 2016-04-14 17:25:50Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -242,7 +242,7 @@ nexus_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	}
 
 	rv = rman_reserve_resource(rm, start, end, count, flags, child);
-	if (rv == 0)
+	if (rv == NULL)
 		return (NULL);
 
 	rman_set_rid(rv, *rid);

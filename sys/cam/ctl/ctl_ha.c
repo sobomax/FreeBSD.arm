@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_ha.c 294558 2016-01-22 09:32:19Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_ha.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -356,7 +356,7 @@ ctl_ha_send(struct ha_softc *softc)
 			printf("%s: sosend() error %d\n", __func__, error);
 			return;
 		}
-	};
+	}
 }
 
 static void

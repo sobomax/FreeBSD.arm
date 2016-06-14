@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009-2015 Solarflare Communications Inc.
+ * Copyright (c) 2009-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_mcdi.h 295467 2016-02-10 12:14:56Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_mcdi.h 300607 2016-05-24 12:16:57Z arybchik $
  */
 
 #ifndef _SYS_EFX_MCDI_H

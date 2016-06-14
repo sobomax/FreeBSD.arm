@@ -33,7 +33,7 @@
  * for localedef for processing by the higher level grammar processor.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/localedef/scanner.c 286432 2015-08-07 23:53:31Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/localedef/scanner.c 298878 2016-05-01 16:10:56Z pfg $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -181,7 +181,7 @@ static struct token {
 
 	/*
 	 * These are keywords used in the charmap file.  Note that
-	 * Solaris orginally used angle brackets to wrap some of them,
+	 * Solaris originally used angle brackets to wrap some of them,
 	 * but we removed that to simplify our parser.  The first of these
 	 * items are "global items."
 	 */

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/lge/if_lge.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/lge/if_lge.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * Level 1 LXT1001 gigabit ethernet driver for FreeBSD. Public
@@ -1074,7 +1074,7 @@ lge_intr(arg)
 	ifp = sc->lge_ifp;
 	LGE_LOCK(sc);
 
-	/* Supress unwanted interrupts */
+	/* Suppress unwanted interrupts */
 	if (!(ifp->if_flags & IFF_UP)) {
 		lge_stop(sc);
 		LGE_UNLOCK(sc);

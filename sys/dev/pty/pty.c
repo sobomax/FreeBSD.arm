@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pty/pty.c 294594 2016-01-22 20:28:24Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/pty/pty.c 298337 2016-04-20 04:50:33Z cem $");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -67,7 +67,7 @@ ptydev_fdopen(struct cdev *dev, int fflags, struct thread *td, struct file *fp)
 		return (EBUSY);
 
 	/* Generate device name and create PTY. */
-	strcpy(name, devtoname(dev));
+	strlcpy(name, devtoname(dev), sizeof(name));
 	name[0] = 't';
 
 	error = pts_alloc_external(fflags & (FREAD|FWRITE), td, fp, dev, name);

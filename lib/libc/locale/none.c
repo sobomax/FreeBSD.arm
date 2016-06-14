@@ -42,7 +42,7 @@
 static char sccsid[] = "@(#)none.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/none.c 290494 2015-11-07 12:43:35Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/none.c 301069 2016-05-31 18:44:33Z ache $");
 
 #include <errno.h>
 #include <limits.h>
@@ -174,6 +174,7 @@ _none_wcsnrtombs(char * __restrict dst, const wchar_t ** __restrict src,
 	nchr = 0;
 	while (len-- > 0 && nwc-- > 0) {
 		if (*s < 0 || *s > UCHAR_MAX) {
+			*src = s;
 			errno = EILSEQ;
 			return ((size_t)-1);
 		}

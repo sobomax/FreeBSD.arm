@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_athioctl.h 250665 2013-05-15 18:33:05Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_athioctl.h 298760 2016-04-29 01:51:27Z adrian $
  */
 
 /*
@@ -166,7 +166,9 @@ struct ath_stats {
 	u_int32_t	ast_tx_node_psq_overflow;
 	u_int32_t	ast_rx_stbc;		/* RX STBC frame */
 	u_int32_t	ast_tx_nodeq_overflow;	/* node sw queue overflow */
-	u_int32_t	ast_pad[12];
+	u_int32_t	ast_tx_ldpc;		/* TX LDPC frame */
+	u_int32_t	ast_tx_stbc;		/* TX STBC frame */
+	u_int32_t	ast_pad[10];
 };
 
 #define	SIOCGATHSTATS	_IOWR('i', 137, struct ifreq)

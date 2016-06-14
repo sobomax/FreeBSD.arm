@@ -35,7 +35,7 @@
 
 #ifdef __FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/firewire/fwdma.c 272214 2014-09-27 16:50:21Z kan $");
+__FBSDID("$FreeBSD: head/sys/dev/firewire/fwdma.c 299351 2016-05-10 10:21:03Z trasz $");
 #endif
 
 #include <sys/param.h>
@@ -160,10 +160,6 @@ fwdma_malloc_multiseg(struct firewire_comm *fc, int alignment,
 	}
 	am = (struct fwdma_alloc_multi *)malloc(sizeof(struct fwdma_alloc_multi)
 			+ sizeof(struct fwdma_seg)*nseg, M_FW, M_WAITOK);
-	if (am == NULL) {
-		printf("fwdma_malloc_multiseg: malloc failed\n");
-		return (NULL);
-	}
 	am->ssize = ssize;
 	am->esize = esize;
 	am->nseg = 0;

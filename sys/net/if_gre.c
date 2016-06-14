@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_gre.c 292972 2015-12-31 02:01:20Z araujo $");
+__FBSDID("$FreeBSD: head/sys/net/if_gre.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -353,7 +353,7 @@ gre_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 			if (error != 0)
 				goto end;
 #endif
-		};
+		}
 		error = gre_set_tunnel(ifp, src, dst);
 		break;
 	case SIOCDIFPHYADDR:
@@ -960,7 +960,7 @@ gre_transmit(struct ifnet *ifp, struct mbuf *m)
 	default:
 		m_freem(m);
 		error = ENETDOWN;
-	};
+	}
 drop:
 	if (error)
 		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);

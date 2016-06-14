@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/crypto/aesni/aesni.c 285297 2015-07-08 22:48:41Z jmg $");
+__FBSDID("$FreeBSD: head/sys/crypto/aesni/aesni.c 298332 2016-04-20 03:05:32Z cem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -534,6 +534,7 @@ aesni_cipher_process(struct aesni_session *ses, struct cryptodesc *enccrd,
 	if (buf == NULL)
 		return (ENOMEM);
 
+	error = 0;
 	authbuf = NULL;
 	authallocated = 0;
 	if (authcrd != NULL) {

@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/pcm.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/pcm.4 297355 2016-03-28 16:48:28Z trasz $
 .\"
 .Dd March 22, 2012
 .Dt SOUND 4
@@ -233,7 +233,7 @@ Most bridge device drivers are still missing multichannel matrixing
 support, but in most cases this should be trivial to implement.
 Use the
 .Va dev.pcm.%d.[play|rec].vchanformat
-.Xr sysctl(8)
+.Xr sysctl 8
 to adjust the number of channels used.
 The current multichannel interleaved structure and arrangement was
 implemented by inspecting various popular UNIX applications.

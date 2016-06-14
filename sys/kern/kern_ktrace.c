@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_ktrace.c 294934 2016-01-27 19:55:02Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_ktrace.c 298310 2016-04-19 23:48:27Z pfg $");
 
 #include "opt_ktrace.h"
 
@@ -1163,8 +1163,7 @@ ktr_writerequest(struct thread *td, struct ktr_request *req)
 	mtx_unlock(&ktrace_mtx);
 
 	kth = &req->ktr_header;
-	KASSERT(((u_short)kth->ktr_type & ~KTR_DROP) <
-	    sizeof(data_lengths) / sizeof(data_lengths[0]),
+	KASSERT(((u_short)kth->ktr_type & ~KTR_DROP) < nitems(data_lengths),
 	    ("data_lengths array overflow"));
 	datalen = data_lengths[(u_short)kth->ktr_type & ~KTR_DROP];
 	buflen = kth->ktr_len;

@@ -1,7 +1,7 @@
 /*
  * Fundamental constants relating to ethernet.
  *
- * $FreeBSD: head/sys/net/ethernet.h 274374 2014-11-11 10:22:33Z glebius $
+ * $FreeBSD: head/sys/net/ethernet.h 297358 2016-03-28 18:25:54Z gnn $
  *
  */
 
@@ -333,6 +333,7 @@ struct ether_vlan_header {
 #define	ETHERTYPE_SLOW		0x8809	/* 802.3ad link aggregation (LACP) */
 #define	ETHERTYPE_PPP		0x880B	/* PPP (obsolete by PPPoE) */
 #define	ETHERTYPE_HITACHI	0x8820	/* Hitachi Cable (Optoelectronic Systems Laboratory) */
+#define ETHERTYPE_TEST		0x8822  /* Network Conformance Testing */
 #define	ETHERTYPE_MPLS		0x8847	/* MPLS Unicast */
 #define	ETHERTYPE_MPLS_MCAST	0x8848	/* MPLS Multicast */
 #define	ETHERTYPE_AXIS		0x8856	/* Axis Communications AB proprietary bootstrap/config */

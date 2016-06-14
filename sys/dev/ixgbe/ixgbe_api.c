@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/ixgbe_api.c 292674 2015-12-23 22:45:17Z sbruno $*/
+/*$FreeBSD: head/sys/dev/ixgbe/ixgbe_api.c 299200 2016-05-06 22:54:56Z pfg $*/
 
 #include "ixgbe_api.h"
 #include "ixgbe_common.h"
@@ -879,7 +879,7 @@ s32 ixgbe_update_eeprom_checksum(struct ixgbe_hw *hw)
  *  @vmdq: VMDq pool to assign
  *
  *  Puts an ethernet address into a receive address register, or
- *  finds the rar that it is aleady in; adds to the pool list
+ *  finds the rar that it is already in; adds to the pool list
  **/
 s32 ixgbe_insert_mac_addr(struct ixgbe_hw *hw, u8 *addr, u32 vmdq)
 {

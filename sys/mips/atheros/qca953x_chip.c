@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/qca953x_chip.c 292247 2015-12-15 04:45:00Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/qca953x_chip.c 298848 2016-04-30 14:41:18Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -360,7 +360,7 @@ qca953x_chip_gpio_output_configure(int gpio, uint8_t func)
 	if (gpio > QCA953X_GPIO_COUNT)
 		return;
 
-	reg = QCA953X_GPIO_REG_OUT_FUNC0 + 4 * (gpio / 4);
+	reg = QCA953X_GPIO_REG_OUT_FUNC0 + rounddown(gpio, 4);
 	s = 8 * (gpio % 4);
 
 	/* read-modify-write */

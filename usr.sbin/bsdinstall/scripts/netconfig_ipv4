@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdinstall/scripts/netconfig_ipv4 287690 2015-09-11 21:08:46Z dteske $
+# $FreeBSD: head/usr.sbin/bsdinstall/scripts/netconfig_ipv4 300735 2016-05-26 11:58:36Z avos $
 #
 ############################################################ INCLUDES
 
@@ -84,7 +84,11 @@ retval=$?
 
 if [ "$BSDINSTALL_CONFIGCURRENT" ]; then
 	. $BSDINSTALL_TMPETC/._rc.conf.net
-	ifconfig $INTERFACE `eval echo \\\$ifconfig_$INTERFACE`
+	if [ -n "$2" ]; then
+		ifconfig $INTERFACE `eval echo \\\$ifconfig_$INTERFACE | sed "s|$2||"`
+	else
+		ifconfig $INTERFACE `eval echo \\\$ifconfig_$INTERFACE`
+	fi
 	if [ "$defaultrouter" ]; then
 		route delete -inet default
 		route add -inet default $defaultrouter

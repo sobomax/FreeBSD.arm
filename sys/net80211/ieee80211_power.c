@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_power.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_power.c 297405 2016-03-30 00:44:10Z adrian $");
 
 /*
  * IEEE 802.11 power save support.
@@ -623,7 +623,7 @@ ieee80211_sta_ps_timer_check(struct ieee80211vap *vap)
 
 	/* If we've done any data within our idle interval, bail */
 	/* XXX hard-coded to one second for now, ew! */
-	if (time_after(ic->ic_lastdata + 500, ticks))
+	if (ieee80211_time_after(ic->ic_lastdata + 500, ticks))
 		goto out;
 
 	/*

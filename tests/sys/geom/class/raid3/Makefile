@@ -1,4 +1,6 @@
-# $FreeBSD: head/tests/sys/geom/class/raid3/Makefile 293821 2016-01-13 09:14:27Z ngie $
+# $FreeBSD: head/tests/sys/geom/class/raid3/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/geom/class/${.CURDIR:T}
 
@@ -15,9 +17,7 @@ TAP_TESTS_SH+=	10_test
 TAP_TESTS_SH+=	11_test
 TAP_TESTS_SH+=	12_test
 
-FILES+=		conf.sh
-FILESNAME_conf.sh=	conf.sh
-FILESDIR=	${TESTSDIR}
+${PACKAGE}FILES+=		conf.sh
 
 .for t in ${TAP_TESTS_SH}
 TEST_METADATA.$t+=	required_user="root"

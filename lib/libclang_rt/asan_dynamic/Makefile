@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libclang_rt/asan_dynamic/Makefile 295349 2016-02-06 13:39:20Z dim $
+# $FreeBSD: head/lib/libclang_rt/asan_dynamic/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 .include <bsd.init.mk>
 
@@ -101,4 +101,3 @@ CXXFLAGS.ubsan_handlers_cxx.cc=		-frtti
 CXXFLAGS.ubsan_type_hash.cc=		-frtti
 CXXFLAGS.ubsan_type_hash_itanium.cc=	-frtti
 CXXFLAGS.ubsan_type_hash_win.cc=	-frtti
-CXXFLAGS+=				${CXXFLAGS.${.IMPSRC:T}}

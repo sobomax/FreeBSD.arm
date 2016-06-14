@@ -1,9 +1,10 @@
-# $FreeBSD: head/lib/libc/tests/resolv/Makefile 292665 2015-12-23 18:48:32Z ngie $
+# $FreeBSD: head/lib/libc/tests/resolv/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/lib/libc/resolv
-BINDIR=		${TESTSDIR}
 
-FILES+=		mach
+${PACKAGE}FILES+=		mach
 
 ATF_TESTS_C+=	resolv_test
 

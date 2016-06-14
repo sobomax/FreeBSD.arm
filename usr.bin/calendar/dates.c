@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/calendar/dates.c 251647 2013-06-12 07:52:49Z grog $");
+__FBSDID("$FreeBSD: head/usr.bin/calendar/dates.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -381,7 +381,7 @@ walkthrough_dates(struct event **e)
 		d = m->days;
 		*e = d->events;
 		return (1);
-	};
+	}
 	if (d->nextday != NULL) {
 		d = d->nextday;
 		*e = d->events;

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/test/test_basic.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/test/test_basic.c 299529 2016-05-12 10:16:16Z mm $");
 
 static void
 verify_files(const char *msg)
@@ -72,7 +72,7 @@ basic_cpio(const char *target,
 	    return;
 
 	/* Use the cpio program to create an archive. */
-	r = systemf("%s -o %s < filelist >%s/archive 2>%s/pack.err",
+	r = systemf("%s -R 1000:1000 -o %s < filelist >%s/archive 2>%s/pack.err",
 	    testprog, pack_options, target, target);
 	failure("Error invoking %s -o %s", testprog, pack_options);
 	assertEqualInt(r, 0);

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/pci/ofw_pci.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/sparc64/pci/ofw_pci.c 300173 2016-05-18 23:39:31Z gonzo $");
 
 #include "opt_ofw_pci.h"
 
@@ -100,12 +100,12 @@ ofw_pci_attach_common(device_t dev, bus_dma_tag_t dmat, u_long iosize,
 		if (sc->sc_pci_bh[j] != 0) {
 			device_printf(dev, "duplicate range for space %d\n",
 			    j);
-			free(range, M_OFWPROP);
+			OF_prop_free(range);
 			return (EINVAL);
 		}
 		sc->sc_pci_bh[j] = OFW_PCI_RANGE_PHYS(&range[i]);
 	}
-	free(range, M_OFWPROP);
+	OF_prop_free(range);
 
 	/*
 	 * Make sure that the expected ranges are actually present.

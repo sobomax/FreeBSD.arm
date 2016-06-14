@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/riscv/include/pmap.h 292407 2015-12-17 18:44:30Z br $
+ * $FreeBSD: head/sys/riscv/include/pmap.h 298641 2016-04-26 14:38:18Z br $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -74,12 +74,12 @@ struct pv_addr {
 	vm_paddr_t	pv_pa;
 };
 
-
 struct pmap {
 	struct mtx		pm_mtx;
 	struct pmap_statistics	pm_stats;	/* pmap statictics */
 	pd_entry_t		*pm_l1;
 	TAILQ_HEAD(,pv_chunk)	pm_pvchunk;	/* list of mappings in pmap */
+	LIST_ENTRY(pmap)	pm_list;	/* List of all pmaps */
 };
 
 typedef struct pv_entry {

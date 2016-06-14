@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc.c 1.44 88/02/08 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc.c	2.4 88/08/11 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc.c 291061 2015-11-19 08:04:05Z mav $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc.c 300625 2016-05-24 20:06:41Z ngie $");
 
 /*
  * svc.c, Server-side remote procedure call interface.
@@ -440,7 +440,7 @@ xprt_inactive(SVCXPRT *xprt)
 
 /*
  * Variant of xprt_inactive() for use only when sure that port is
- * assigned to thread. For example, withing receive handlers.
+ * assigned to thread. For example, within receive handlers.
  */
 void
 xprt_inactive_self(SVCXPRT *xprt)
@@ -560,7 +560,7 @@ svc_loss_reg(SVCXPRT *xprt, void (*dispatch)(SVCXPRT *))
 		mtx_unlock(&pool->sp_lock);
 		return (TRUE);
 	}
-	s = malloc(sizeof (struct svc_callout), M_RPC, M_NOWAIT);
+	s = malloc(sizeof(struct svc_loss_callout), M_RPC, M_NOWAIT);
 	if (s == NULL) {
 		mtx_unlock(&pool->sp_lock);
 		return (FALSE);
@@ -847,9 +847,7 @@ svc_xprt_alloc()
 	SVCXPRT_EXT *ext;
 
 	xprt = mem_alloc(sizeof(SVCXPRT));
-	memset(xprt, 0, sizeof(SVCXPRT));
 	ext = mem_alloc(sizeof(SVCXPRT_EXT));
-	memset(ext, 0, sizeof(SVCXPRT_EXT));
 	xprt->xp_p3 = ext;
 	refcount_init(&xprt->xp_refs, 1);
 

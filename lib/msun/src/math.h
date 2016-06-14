@@ -11,7 +11,7 @@
 
 /*
  * from: @(#)fdlibm.h 5.1 93/09/24
- * $FreeBSD: head/lib/msun/src/math.h 271651 2014-09-15 23:21:57Z kargl $
+ * $FreeBSD: head/lib/msun/src/math.h 301761 2016-06-09 20:49:26Z trasz $
  */
 
 #ifndef _MATH_H_
@@ -461,7 +461,7 @@ long double	fmal(long double, long double, long double);
 long double	fmaxl(long double, long double) __pure2;
 long double	fminl(long double, long double) __pure2;
 long double	fmodl(long double, long double);
-long double	frexpl(long double value, int *); /* fundamentally !__pure2 */
+long double	frexpl(long double, int *); /* fundamentally !__pure2 */
 long double	hypotl(long double, long double);
 int		ilogbl(long double) __pure2;
 long double	ldexpl(long double, int);

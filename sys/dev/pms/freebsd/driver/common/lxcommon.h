@@ -18,7 +18,7 @@
 *LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
 *SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 *
-* $FreeBSD: head/sys/dev/pms/freebsd/driver/common/lxcommon.h 285242 2015-07-07 13:17:02Z achim $
+* $FreeBSD: head/sys/dev/pms/freebsd/driver/common/lxcommon.h 299081 2016-05-04 17:52:53Z pfg $
 *
 *******************************************************************************/
 /******************************************************************************
@@ -452,7 +452,7 @@ typedef struct _ag_card_info {
  
 /*
 ** Optional Adjustable Parameters Structures.
-** Not using pointer stucture for easy read and access tree structure.
+** Not using pointer structure for easy read and access tree structure.
 ** In the future if more layer of key tree involved, it might be a good
 ** idea to change the structure and program. 
 */
@@ -637,7 +637,7 @@ typedef struct _LINK_LIST
 {
   PLINK_NODE pHead;
   bit32   Count;
-  LINK_NODE  Head __cacheline_aligned; // allways one link to speed up insert&rm
+  LINK_NODE  Head __cacheline_aligned; // always one link to speed up insert&rm
 } LINK_LIST, * PLINK_LIST __cacheline_aligned;
 
 

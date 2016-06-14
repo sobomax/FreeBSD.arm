@@ -39,7 +39,7 @@ static char sccsid[] = "From: @(#)swapon.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/dumpon/dumpon.c 291207 2015-11-23 14:06:21Z smh $");
+__FBSDID("$FreeBSD: head/sbin/dumpon/dumpon.c 298244 2016-04-19 04:28:25Z araujo $");
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -72,7 +72,7 @@ static void
 check_size(int fd, const char *fn)
 {
 	int name[] = { CTL_HW, HW_PHYSMEM };
-	size_t namelen = sizeof(name) / sizeof(*name);
+	size_t namelen = nitems(name);
 	unsigned long physmem;
 	size_t len;
 	off_t mediasize;

@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)kdump.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/kdump/kdump.c 296047 2016-02-25 18:23:40Z oshogbo $");
+__FBSDID("$FreeBSD: head/usr.bin/kdump/kdump.c 300428 2016-05-22 18:20:45Z ngie $");
 
 #define _KERNEL
 extern int errno;
@@ -298,8 +298,9 @@ main(int argc, char *argv[])
 	m = malloc(size = 1025);
 	if (m == NULL)
 		errx(1, "%s", strerror(ENOMEM));
-	if (!freopen(tracefile, "r", stdin))
-		err(1, "%s", tracefile);
+	if (strcmp(tracefile, "-") != 0)
+		if (!freopen(tracefile, "r", stdin))
+			err(1, "%s", tracefile);
 
 	strerror_init();
 	localtime_init();
@@ -529,12 +530,11 @@ abidump(struct ktr_header *kth)
 		break;
 	}
 
-	if (flags != 0) {
-		if (flags & SV_LP64)
-			arch = "64";
-		else
-			arch = "32";
-	} else
+	if (flags & SV_LP64)
+		arch = "64";
+	else if (flags & SV_ILP32)
+		arch = "32";
+	else
 		arch = "00";
 
 	printf("%s%s  ", abi, arch);
@@ -807,6 +807,7 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 			case SYS_chmod:
 			case SYS_fchmod:
 			case SYS_lchmod:
+			case SYS_fchmodat:
 				print_number(ip, narg, c);
 				putchar(',');
 				modename(*ip);
@@ -1687,7 +1688,7 @@ ktrstat(struct stat *statp)
 		printf(".%09ld, ", statp->st_atim.tv_nsec);
 	else
 		printf(", ");
-	printf("stime=");
+	printf("mtime=");
 	if (resolv == 0)
 		printf("%jd", (intmax_t)statp->st_mtim.tv_sec);
 	else {

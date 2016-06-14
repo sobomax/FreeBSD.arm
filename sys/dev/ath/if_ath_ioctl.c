@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ioctl.c 291233 2015-11-24 03:42:58Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ioctl.c 298939 2016-05-02 19:56:48Z pfg $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -163,7 +163,7 @@ bad:
  * Diagnostic interface to the HAL.  This is used by various
  * tools to do things like retrieve register contents for
  * debugging.  The mechanism is intentionally opaque so that
- * it can change frequently w/o concern for compatiblity.
+ * it can change frequently w/o concern for compatibility.
  */
 static int
 ath_ioctl_diag(struct ath_softc *sc, struct ath_diag *ad)

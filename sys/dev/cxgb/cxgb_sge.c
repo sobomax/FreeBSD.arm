@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/cxgb_sge.c 295482 2016-02-10 18:54:18Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/cxgb_sge.c 301538 2016-06-07 04:51:50Z sephe $");
 
 #include "opt_inet6.h"
 #include "opt_inet.h"
@@ -2900,7 +2900,8 @@ process_responses(adapter_t *adap, struct sge_qset *qs, int budget)
 			eop = get_packet(adap, drop_thresh, qs, mh, r);
 			if (eop) {
 				if (r->rss_hdr.hash_type && !adap->timestamp) {
-					M_HASHTYPE_SET(mh->mh_head, M_HASHTYPE_OPAQUE);
+					M_HASHTYPE_SET(mh->mh_head,
+					    M_HASHTYPE_OPAQUE_HASH);
 					mh->mh_head->m_pkthdr.flowid = rss_hash;
 				}
 			}
@@ -2976,11 +2977,7 @@ process_responses(adapter_t *adap, struct sge_qset *qs, int budget)
 
 #if defined(INET6) || defined(INET)
 	/* Flush LRO */
-	while (!SLIST_EMPTY(&lro_ctrl->lro_active)) {
-		struct lro_entry *queued = SLIST_FIRST(&lro_ctrl->lro_active);
-		SLIST_REMOVE_HEAD(&lro_ctrl->lro_active, next);
-		tcp_lro_flush(lro_ctrl, queued);
-	}
+	tcp_lro_flush_all(lro_ctrl);
 #endif
 
 	if (sleeping)

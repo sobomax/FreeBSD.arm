@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/sys/net/rss_config.c 287270 2015-08-29 04:33:31Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net/rss_config.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_inet6.h"
 #include "opt_pcbgroup.h"
@@ -168,7 +168,7 @@ static uint8_t rss_key[RSS_KEYSIZE] = {
 
 /*
  * RSS hash->CPU table, which maps hashed packet headers to particular CPUs.
- * Drivers may supplement this table with a seperate CPU<->queue table when
+ * Drivers may supplement this table with a separate CPU<->queue table when
  * programming devices.
  */
 struct rss_table_entry {

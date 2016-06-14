@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/arm/include/smp.h 296100 2016-02-26 16:04:47Z andrew $ */
+/* $FreeBSD: head/sys/arm/include/smp.h 298068 2016-04-15 16:05:41Z andrew $ */
 
 #ifndef _MACHINE_SMP_H_
 #define _MACHINE_SMP_H_
@@ -6,7 +6,7 @@
 #include <sys/_cpuset.h>
 #include <machine/pcb.h>
 
-#ifdef ARM_INTRNG
+#ifdef INTRNG
 enum {
 	IPI_AST,
 	IPI_PREEMPT,
@@ -37,8 +37,8 @@ void	ipi_cpu(int cpu, u_int ipi);
 void	ipi_selected(cpuset_t cpus, u_int ipi);
 
 /* PIC interface */
+#ifndef INTRNG
 void	pic_ipi_send(cpuset_t cpus, u_int ipi);
-#ifndef ARM_INTRNG
 void	pic_ipi_clear(int ipi);
 int	pic_ipi_read(int arg);
 #endif

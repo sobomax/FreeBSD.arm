@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/etherswitch/e6000sw/e6000sw.c 292738 2015-12-26 02:31:39Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/etherswitch/e6000sw/e6000sw.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -805,7 +805,7 @@ e6000sw_setup(device_t dev, e6000sw_softc_t *sc)
 	e6000sw_writereg(sc, REG_GLOBAL2, MGMT_EN_2x, MGMT_EN_ALL);
 	e6000sw_writereg(sc, REG_GLOBAL2, MGMT_EN_0x, MGMT_EN_ALL);
 
-	/* Disable Remote Managment */
+	/* Disable Remote Management */
 	e6000sw_writereg(sc, REG_GLOBAL, SWITCH_GLOBAL_CONTROL2, 0);
 
 	/* Disable loopback filter and flow control messages */

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 296272 2016-03-01 17:47:32Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/re/if_re.c 298307 2016-04-19 23:37:24Z pfg $");
 
 /*
  * RealTek 8139C+/8169/8169S/8110S/8168/8111/8101E PCI NIC driver
@@ -953,7 +953,7 @@ re_probe(device_t dev)
 	}
 
 	t = re_devs;
-	for (i = 0; i < sizeof(re_devs) / sizeof(re_devs[0]); i++, t++) {
+	for (i = 0; i < nitems(re_devs); i++, t++) {
 		if (vendor == t->rl_vid && devid == t->rl_did) {
 			device_set_desc(dev, t->rl_name);
 			return (BUS_PROBE_DEFAULT);

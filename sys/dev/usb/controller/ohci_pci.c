@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_pci.c 276717 2015-01-05 20:22:18Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ohci_pci.c 297387 2016-03-29 12:50:42Z mav $");
 
 /*
  * USB Open Host Controller driver.
@@ -124,9 +124,10 @@ ohci_pci_match(device_t self)
 
 	case 0x740c1022:
 		return ("AMD-756 USB Controller");
-
 	case 0x74141022:
 		return ("AMD-766 USB Controller");
+	case 0x78071022:
+		return ("AMD FCH USB Controller");
 
 	case 0x43741002:
 		return "ATI SB400 USB Controller";

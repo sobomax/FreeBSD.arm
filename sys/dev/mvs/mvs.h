@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mvs/mvs.h 279963 2015-03-13 20:08:35Z mav $
+ * $FreeBSD: head/sys/dev/mvs/mvs.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #include "mvs_if.h"
@@ -566,7 +566,7 @@ struct mvs_channel {
 	int			numtslotspd[16];/* Number of NCQ slots per dev */
 	int			numhslots;	/* Number of held slots */
 	int			recoverycmd;	/* Our READ LOG active */
-	int			fatalerr;	/* Fatal error happend */
+	int			fatalerr;	/* Fatal error happened */
 	int			lastslot;	/* Last used slot */
 	int			taggedtarget;	/* Last tagged target */
 	int			resetting;	/* Hard-reset in progress. */

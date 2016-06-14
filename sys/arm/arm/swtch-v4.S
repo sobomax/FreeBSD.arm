@@ -81,13 +81,12 @@
 #include "assym.s"
 #include "opt_sched.h"
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/asmacros.h>
 #include <machine/armreg.h>
 #include <machine/vfp.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/swtch-v4.S 295090 2016-01-31 08:53:53Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/swtch-v4.S 300694 2016-05-25 19:44:26Z ian $");
 
 
 #define GET_PCPU(tmp, tmp2) \
@@ -296,7 +295,7 @@ ENTRY(cpu_switch)
 	beq	.Lcs_context_switched	/* yes! */
 
 	/*
-	 * Definately need to flush the cache.
+	 * Definitely need to flush the cache.
 	 */
 
 	ldr	r1, .Lcpufuncs

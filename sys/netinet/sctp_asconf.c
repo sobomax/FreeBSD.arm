@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_asconf.c 295670 2016-02-16 20:33:18Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_asconf.c 298847 2016-04-30 14:25:00Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -244,7 +244,8 @@ sctp_process_asconf_add_ip(struct sockaddr *src, struct sctp_asconf_paramhdr *ap
 		m_reply = sctp_asconf_error_response(aph->correlation_id,
 		    SCTP_CAUSE_INVALID_PARAM, (uint8_t *) aph,
 		    aparam_length);
-	} else if (sctp_add_remote_addr(stcb, sa, &net, SCTP_DONOT_SETSCOPE,
+	} else if (sctp_add_remote_addr(stcb, sa, &net, stcb->asoc.port,
+		    SCTP_DONOT_SETSCOPE,
 	    SCTP_ADDR_DYNAMIC_ADDED) != 0) {
 		SCTPDBG(SCTP_DEBUG_ASCONF1,
 		    "process_asconf_add_ip: error adding address\n");

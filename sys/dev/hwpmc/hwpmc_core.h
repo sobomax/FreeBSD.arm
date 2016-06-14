@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hwpmc/hwpmc_core.h 295560 2016-02-12 07:27:24Z kib $
+ * $FreeBSD: head/sys/dev/hwpmc/hwpmc_core.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef _DEV_HWPMC_CORE_H_
@@ -141,7 +141,7 @@ struct pmc_md_iap_op_pmcallocate {
 #define	IA_GLOBAL_CTRL				0x38F
 
 /*
- * IA_GLOBAL_CTRL is layed out in the following way.
+ * IA_GLOBAL_CTRL is laid out in the following way.
  * 
  * Bit Position    Use
  * 63-35           Reserved (do not touch)

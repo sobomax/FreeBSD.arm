@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_proc.c 295233 2016-02-04 04:25:30Z mjg $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_proc.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -38,8 +38,9 @@ __FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_proc.c 295233 2016-02-04 0
 #include <sys/syscallsubr.h>
 #include <sys/unistd.h>
 
+#include <contrib/cloudabi/cloudabi_types_common.h>
+
 #include <compat/cloudabi/cloudabi_proto.h>
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
 
 int
 cloudabi_sys_proc_exec(struct thread *td,

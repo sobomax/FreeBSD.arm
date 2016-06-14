@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_pci.c 288349 2015-09-29 03:37:17Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_pci.c 298939 2016-05-02 19:56:48Z pfg $");
 
 /*
  * PCI/Cardbus front-end for the Atheros Wireless LAN controller driver.
@@ -82,7 +82,7 @@ struct ath_pci_softc {
 
 /*
  * XXX eventually this should be some system level definition
- * so modules will hvae probe/attach information like USB.
+ * so modules will have probe/attach information like USB.
  * But for now..
  */
 struct pci_device_id {

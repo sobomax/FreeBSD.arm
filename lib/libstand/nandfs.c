@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/nandfs.c 276079 2014-12-22 20:42:36Z ian $");
+__FBSDID("$FreeBSD: head/lib/libstand/nandfs.c 298601 2016-04-26 01:19:36Z pfg $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -1017,14 +1017,14 @@ ioread(struct open_file *f, off_t pos, void *buf, u_int length)
 
 	off = pos % bsize;
 	pos /= bsize;
-	nsec = (length + (bsize - 1)) / bsize;
+	nsec = howmany(length, bsize);
 
 	NANDFS_DEBUG("pos=%lld length=%d off=%d nsec=%d\n", pos, length,
 	    off, nsec);
 
 	buffer = malloc(nsec * bsize);
 
-	err = (f->f_dev->dv_strategy)(f->f_devdata, F_READ, pos,
+	err = (f->f_dev->dv_strategy)(f->f_devdata, F_READ, pos, 0,
 	    nsec * bsize, buffer, NULL);
 
 	memcpy(buf, (void *)((uintptr_t)buffer + off), length);
@@ -1045,7 +1045,7 @@ nandfs_probe_sectorsize(struct open_file *f)
 
 	for (i = 512; i < (16 * 1024); i <<= 1) {
 		NANDFS_DEBUG("%d ", i);
-		err = (f->f_dev->dv_strategy)(f->f_devdata, F_READ, 0, i,
+		err = (f->f_dev->dv_strategy)(f->f_devdata, F_READ, 0, 0, i,
 		    buffer, NULL);
 
 		if (err == 0) {

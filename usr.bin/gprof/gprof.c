@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)gprof.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/gprof/gprof.c 246783 2013-02-14 08:16:03Z charnier $");
+__FBSDID("$FreeBSD: head/usr.bin/gprof/gprof.c 299877 2016-05-16 01:11:02Z araujo $");
 
 #include <err.h>
 #include <limits.h>
@@ -407,7 +407,7 @@ readsamples(FILE *pfile)
 
     if (samples == 0) {
 	samples = (double *) calloc(nsamples, sizeof(double));
-	if (samples == 0)
+	if (samples == NULL)
 	    errx(0, "no room for %d sample pc's", nsamples);
     }
     for (i = 0; i < nsamples; i++) {

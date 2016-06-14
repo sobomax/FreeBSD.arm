@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/db_disasm.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/db_disasm.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <vm/vm_param.h>
@@ -226,7 +226,7 @@ md_printins(int ins, int mdbdot)
 		default:
 			db_printf("\t%s,%s,%s", reg_name[i.RType.rd],
 			    reg_name[i.RType.rs], reg_name[i.RType.rt]);
-		};
+		}
 		break;
 
 	case OP_BCOND:
@@ -288,7 +288,7 @@ md_printins(int ins, int mdbdot)
 
 		default:
 			db_printf("%s", c0_opname[i.FRType.func]);
-		};
+		}
 		break;
 
 	case OP_COP1:
@@ -323,7 +323,7 @@ md_printins(int ins, int mdbdot)
 			db_printf("%s.%s\tf%d,f%d,f%d",
 			    cop1_name[i.FRType.func], fmt_name[i.FRType.fmt],
 			    i.FRType.fd, i.FRType.fs, i.FRType.ft);
-		};
+		}
 		break;
 
 	case OP_J:

@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_i2c.c 290726 2015-11-12 20:14:25Z gavin $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_i2c.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -236,7 +236,7 @@ ti_i2c_transfer_intr(struct ti_i2c_softc* sc, uint16_t status)
 		if (status & I2C_STAT_RDR) {
 			/*
 			 * Receive draining interrupt - last data received.
-			 * The set FIFO threshold wont be reached to trigger
+			 * The set FIFO threshold won't be reached to trigger
 			 * RRDY.
 			 */
 			ti_i2c_dbg(sc, "Receive draining interrupt\n");
@@ -272,7 +272,7 @@ ti_i2c_transfer_intr(struct ti_i2c_softc* sc, uint16_t status)
 			/*
 			 * Transmit draining interrupt - FIFO level is below
 			 * the set threshold and the amount of data still to
-			 * be transferred wont reach the set FIFO threshold.
+			 * be transferred won't reach the set FIFO threshold.
 			 */
 			ti_i2c_dbg(sc, "Transmit draining interrupt\n");
 

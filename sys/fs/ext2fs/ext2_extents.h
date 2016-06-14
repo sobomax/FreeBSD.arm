@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/ext2fs/ext2_extents.h 295523 2016-02-11 15:27:14Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_extents.h 301559 2016-06-07 17:08:34Z pfg $
  */
 #ifndef _FS_EXT2FS_EXT2_EXTENTS_H_
 #define	_FS_EXT2FS_EXT2_EXTENTS_H_
@@ -40,8 +40,8 @@
  * Ext4 file system extent on disk.
  */
 struct ext4_extent {
-	uint32_t e_blk;	/* first logical block */
-	uint16_t e_len;	/* number of blocks */
+	uint32_t e_blk;		/* first logical block */
+	uint16_t e_len;		/* number of blocks */
 	uint16_t e_start_hi;	/* high 16 bits of physical block */
 	uint32_t e_start_lo;	/* low 32 bits of physical block */
 };

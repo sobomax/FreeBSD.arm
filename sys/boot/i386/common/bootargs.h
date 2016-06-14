@@ -12,7 +12,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD: head/sys/boot/i386/common/bootargs.h 235154 2012-05-09 08:04:29Z avg $
+ * $FreeBSD: head/sys/boot/i386/common/bootargs.h 296963 2016-03-16 23:12:19Z allanjude $
  */
 
 #ifndef _BOOT_I386_ARGS_H_
@@ -62,6 +62,12 @@ struct bootargs
 	 * are followed by a uint32_t field that specifies a size of the
 	 * extended arguments (including the size field).
 	 */
+};
+
+struct geli_boot_args
+{
+    uint32_t		size;
+    char		gelipw[256];
 };
 
 #endif /*__ASSEMBLER__*/

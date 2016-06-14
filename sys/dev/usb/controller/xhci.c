@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/xhci.c 295928 2016-02-23 18:17:01Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/xhci.c 298646 2016-04-26 15:03:15Z pfg $ */
 /*-
  * Copyright (c) 2010 Hans Petter Selasky. All rights reserved.
  *
@@ -1830,8 +1830,8 @@ restart:
 			}
 
 			/* set up npkt */
-			npkt = (len_old - npkt_off + temp->max_packet_size - 1) /
-			    temp->max_packet_size;
+			npkt = howmany(len_old - npkt_off,
+				       temp->max_packet_size);
 
 			if (npkt == 0)
 				npkt = 1;
@@ -2185,10 +2185,9 @@ xhci_setup_generic_chain(struct usb_xfer *xfer)
 				temp.len = xfer->max_frame_size;
 
 			/* compute TD packet count */
-			tdpc = (temp.len + xfer->max_packet_size - 1) /
-			    xfer->max_packet_size;
+			tdpc = howmany(temp.len, xfer->max_packet_size);
 
-			temp.tbc = ((tdpc + mult - 1) / mult) - 1;
+			temp.tbc = howmany(tdpc, mult) - 1;
 			temp.tlbpc = (tdpc % mult);
 
 			if (temp.tlbpc == 0)

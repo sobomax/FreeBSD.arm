@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rt305x/rt305x_machdep.c 292703 2015-12-24 18:40:10Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/rt305x/rt305x_machdep.c 296569 2016-03-09 18:38:03Z sobomax $");
 
 #include "opt_ddb.h"
 
@@ -203,5 +203,5 @@ platform_start(__register_t a0 __unused, __register_t a1 __unused,
 
 
 	mips_init();
-	mips_timer_init_params(platform_counter_freq, 2);
+	mips_timer_init_params(platform_counter_freq, 1);
 }

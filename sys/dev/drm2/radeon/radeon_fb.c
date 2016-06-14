@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_fb.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_fb.c 298931 2016-05-02 16:47:28Z pfg $");
 
 #include <machine/_inttypes.h>
 
@@ -228,7 +228,7 @@ static int radeonfb_create(struct radeon_fbdev *rfbdev,
 
 	ret = radeon_framebuffer_init(rdev->ddev, &rfbdev->rfb, &mode_cmd, gobj);
 	if (ret) {
-		DRM_ERROR("failed to initalise framebuffer %d\n", ret);
+		DRM_ERROR("failed to initialise framebuffer %d\n", ret);
 		goto out_unref;
 	}
 

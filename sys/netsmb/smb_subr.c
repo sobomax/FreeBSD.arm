@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netsmb/smb_subr.c 227650 2011-11-18 03:05:20Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/netsmb/smb_subr.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -209,7 +209,7 @@ m_dumpm(struct mbuf *m) {
 			printf("%02x ",((int)*(p++)) & 0xff);
 		}
 		m=m->m_next;
-	};
+	}
 	printf("\n");
 }
 #endif

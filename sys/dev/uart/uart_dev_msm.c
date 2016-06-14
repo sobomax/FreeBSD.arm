@@ -27,7 +27,7 @@
 /* Qualcomm MSM7K/8K uart driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_msm.c 281438 2015-04-11 17:16:23Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_dev_msm.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -123,7 +123,7 @@ msm_uart_param(struct uart_bas *bas, int baudrate, int databits,
 	}
 	uart_setreg(bas, UART_DM_MR2, ulcon);
 
-	/* Set 115200 for both TX and RX. */;
+	/* Set 115200 for both TX and RX. */
 	uart_setreg(bas, UART_DM_CSR, UART_DM_CSR_115200);
 	uart_barrier(bas);
 

@@ -1,6 +1,5 @@
-# $FreeBSD: head/lib/libthr/tests/dlopen/dso/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libthr/tests/dlopen/dso/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-OBJTOP=		${.OBJDIR:H:H:H:H:H}
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread/dlopen/dso
 
 SHLIB=		h_pthread_dlopen

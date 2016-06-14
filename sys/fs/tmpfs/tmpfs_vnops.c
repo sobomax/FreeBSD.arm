@@ -34,7 +34,7 @@
  * tmpfs vnode interface.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_vnops.c 295574 2016-02-12 20:43:53Z markj $");
+__FBSDID("$FreeBSD: head/sys/fs/tmpfs/tmpfs_vnops.c 298806 2016-04-29 20:51:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -840,7 +840,7 @@ tmpfs_rename(struct vop_rename_args *v)
 	/* If re-naming a directory to another preexisting directory
 	 * ensure that the target directory is empty so that its
 	 * removal causes no side effects.
-	 * Kern_rename gurantees the destination to be a directory
+	 * Kern_rename guarantees the destination to be a directory
 	 * if the source is one. */
 	if (tvp != NULL) {
 		MPASS(tnode != NULL);

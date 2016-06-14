@@ -24,11 +24,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/arm/cpu_asm-v6.S 295920 2016-02-23 10:12:50Z skra $
+ * $FreeBSD: head/sys/arm/arm/cpu_asm-v6.S 300694 2016-05-25 19:44:26Z ian $
  */
 #include "assym.s"
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/asmacros.h>
 #include <machine/armreg.h>

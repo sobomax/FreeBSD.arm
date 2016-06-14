@@ -30,11 +30,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 294411 2016-01-20 11:25:30Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_forward.c 301717 2016-06-09 05:48:34Z ae $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
-#include "opt_ipfw.h"
 #include "opt_ipsec.h"
 #include "opt_ipstealth.h"
 
@@ -282,7 +281,7 @@ ip6_forward(struct mbuf *m, int srcrt)
 	 * ipsec6_proces_packet will send the packet using ip6_output
 	 */
 	error = ipsec6_process_packet(m, sp->req);
-	/* Release SP if an error occured */
+	/* Release SP if an error occurred */
 	if (error != 0)
 		KEY_FREESP(&sp);
 	if (error == EJUSTRETURN) {

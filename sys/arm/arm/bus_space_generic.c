@@ -36,13 +36,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_generic.c 295694 2016-02-17 12:36:24Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_generic.c 298627 2016-04-26 11:53:37Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
+#include <sys/devmap.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>
@@ -51,7 +52,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_generic.c 295694 2016-02-17 12:36
 
 #include <machine/bus.h>
 #include <machine/cpufunc.h>
-#include <machine/devmap.h>
 
 void
 generic_bs_unimplemented(void)

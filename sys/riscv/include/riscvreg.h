@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/riscv/include/riscvreg.h 295972 2016-02-24 16:50:34Z br $
+ * $FreeBSD: head/sys/riscv/include/riscvreg.h 301621 2016-06-08 13:57:18Z br $
  */
 
 #ifndef _MACHINE_RISCVREG_H_
@@ -47,7 +47,8 @@
 #define	ECALL_SEND_IPI		0x07
 #define	ECALL_CLEAR_IPI		0x08
 #define	ECALL_HTIF_LOWPUTC	0x09
-#define	ECALL_MIE_SET		0x10
+#define	ECALL_MIE_SET		0x0a
+#define	ECALL_IO_IRQ_MASK	0x0b
 
 #define	EXCP_SHIFT			0
 #define	EXCP_MASK			(0xf << EXCP_SHIFT)
@@ -117,9 +118,15 @@
 #define	SIP_SSIP	(1 << 1)
 #define	SIP_STIP	(1 << 5)
 
-#define	NCSRS	4096
-#define	CSR_IPI	0x783
-#define	XLEN	8
+#define	NCSRS		4096
+#define	CSR_IPI		0x783
+#define	CSR_IO_IRQ	0x7c0	/* lowRISC only? */
+#define	XLEN		8
+#define	INSN_SIZE	4
+
+#define	RISCV_INSN_NOP		0x00000013
+#define	RISCV_INSN_BREAK	0x00100073
+#define	RISCV_INSN_RET		0x00008067
 
 #define	CSR_ZIMM(val)							\
 	(__builtin_constant_p(val) && ((u_long)(val) < 32))

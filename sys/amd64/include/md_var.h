@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/md_var.h 292619 2015-12-22 20:08:32Z ngie $
+ * $FreeBSD: head/sys/amd64/include/md_var.h 297399 2016-03-29 19:56:48Z kib $
  */
 
 #ifndef _MACHINE_MD_VAR_H_
@@ -35,9 +35,6 @@
 #include <x86/x86_var.h>
 
 extern  uint64_t *vm_page_dump;
-
-/* XXX */
-typedef void alias_for_inthand_t(u_int cs, u_int ef, u_int esp, u_int ss);
 
 struct	savefpu;
 

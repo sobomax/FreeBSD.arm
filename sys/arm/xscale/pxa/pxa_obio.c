@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_obio.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_obio.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -159,9 +159,9 @@ pxa_print_child(device_t dev, device_t child)
 	retval += bus_print_child_header(dev, child);
 
 	retval += resource_list_print_type(&od->od_resources, "at mem",
-	    SYS_RES_MEMORY, "0x%08lx");
+	    SYS_RES_MEMORY, "0x%08jx");
 	retval += resource_list_print_type(&od->od_resources, "irq",
-	    SYS_RES_IRQ, "%ld");
+	    SYS_RES_IRQ, "%jd");
 
 	retval += bus_print_child_footer(dev, child);
 
@@ -390,7 +390,7 @@ pxa_alloc_gpio_irq(device_t dev, device_t child, int type, int *rid,
 	}
 
 	if (bootverbose)
-		device_printf(dev, "lazy allocation of irq %ld for %s\n",
+		device_printf(dev, "lazy allocation of irq %jd for %s\n",
 		    start, device_get_nameunit(child));
 
 	return (rv);

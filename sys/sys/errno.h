@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)errno.h	8.5 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/errno.h 250250 2013-05-04 19:07:22Z pluknet $
+ * $FreeBSD: head/sys/sys/errno.h 296715 2016-03-12 07:54:42Z trasz $
  */
 
 #ifndef _SYS_ERRNO_H_
@@ -190,6 +190,7 @@ __END_DECLS
 #define	EJUSTRETURN	(-2)		/* don't modify regs, just return */
 #define	ENOIOCTL	(-3)		/* ioctl not handled by this layer */
 #define	EDIRIOCTL	(-4)		/* do direct ioctl in GEOM */
+#define	ERELOOKUP	(-5)		/* retry the directory lookup */
 #endif
 
 #endif

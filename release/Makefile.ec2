@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/release/Makefile.ec2 293739 2016-01-12 09:42:21Z cperciva $
+# $FreeBSD: head/release/Makefile.ec2 301716 2016-06-09 03:54:25Z cperciva $
 #
 #
 # Makefile for creating an EC2 AMI from a disk image.
@@ -23,7 +23,7 @@ CW_EC2_PORTINSTALL=
 
 cw-ec2-portinstall:
 .if exists(${PORTSDIR}/net/bsdec2-image-upload/Makefile)
-	make -C ${PORTSDIR}/net/bsdec2-image-upload BATCH=1 all install clean
+	env - PATH=$$PATH make -C ${PORTSDIR}/net/bsdec2-image-upload BATCH=1 all install clean
 .else
 . if !exists(/usr/local/sbin/pkg-static)
 	env ASSUME_ALWAYS_YES=yes pkg bootstrap -y

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2007-2015 Solarflare Communications Inc.
+ * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
  *
  * Ackowledgement to Fen Systems Ltd.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 293818 2016-01-13 07:55:47Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 300607 2016-05-24 12:16:57Z arybchik $
  */
 
 #ifndef	_SYS_EFX_TYPES_H

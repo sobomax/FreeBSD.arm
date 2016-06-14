@@ -17,7 +17,7 @@
 .\" 5. Modifications may be freely made to this file providing the above
 .\"    conditions are met.
 .\"
-.\" $FreeBSD: head/lib/libutil/login.conf.5 257205 2013-10-27 04:59:18Z eadler $
+.\" $FreeBSD: head/lib/libutil/login.conf.5 296723 2016-03-12 14:54:34Z kib $
 .\"
 .Dd July 8, 2011
 .Dt LOGIN.CONF 5
@@ -199,6 +199,7 @@ notation may be used.
 .It "stacksize	size		Maximum stack size limit."
 .It "pseudoterminals	number		Maximum number of pseudo-terminals."
 .It "swapuse	size		Maximum swap space size limit."
+.It "umtxp	number		Maximum number of process-shared pthread locks."
 .El
 .Pp
 These resource limit entries actually specify both the maximum

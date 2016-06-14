@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/4/95";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/restore/main.c 164911 2006-12-05 11:18:51Z dwmalone $");
+__FBSDID("$FreeBSD: head/sbin/restore/main.c 298868 2016-04-30 22:51:09Z pfg $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -366,7 +366,8 @@ obsolete(int *argcp, char **argvp[])
 	if (flags) {
 		*p = '\0';
 		*nargv++ = flagsp;
-	}
+	} else
+		free(flagsp);
 
 	/* Copy remaining arguments. */
 	while ((*nargv++ = *argv++));

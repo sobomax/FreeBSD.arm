@@ -29,7 +29,7 @@ SUCH DAMAGE.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/tests/stdio/fmemopen2_test.c 290860 2015-11-15 12:48:42Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/tests/stdio/fmemopen2_test.c 298311 2016-04-19 23:59:10Z ngie $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -250,12 +250,14 @@ ATF_TC_BODY(test_append_binary_pos, tc)
 	FILE *fp;
 
 	fp = fmemopen(NULL, 16, "ab+");
+	ATF_REQUIRE(fp != NULL);
 	ATF_REQUIRE(ftell(fp) == 0L);
 	fclose(fp);
 
 	/* Make sure that a pre-allocated buffer behaves correctly. */
 	char buf[] = "Hello";
 	fp = fmemopen(buf, sizeof(buf), "ab+");
+	ATF_REQUIRE(fp != NULL);
 	ATF_REQUIRE(ftell(fp) == strlen(buf));
 	fclose(fp);
 }

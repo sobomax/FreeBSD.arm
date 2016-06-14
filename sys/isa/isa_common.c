@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/isa/isa_common.c 296336 2016-03-03 05:07:35Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/isa/isa_common.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 #include "opt_isa.h"
 
@@ -629,10 +629,10 @@ isa_print_all_resources(device_t dev)
 	if (STAILQ_FIRST(rl) || device_get_flags(dev))
 		retval += printf(" at");
 	
-	retval += resource_list_print_type(rl, "port", SYS_RES_IOPORT, "%#lx");
-	retval += resource_list_print_type(rl, "iomem", SYS_RES_MEMORY, "%#lx");
-	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%ld");
-	retval += resource_list_print_type(rl, "drq", SYS_RES_DRQ, "%ld");
+	retval += resource_list_print_type(rl, "port", SYS_RES_IOPORT, "%#jx");
+	retval += resource_list_print_type(rl, "iomem", SYS_RES_MEMORY, "%#jx");
+	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%jd");
+	retval += resource_list_print_type(rl, "drq", SYS_RES_DRQ, "%jd");
 	if (device_get_flags(dev))
 		retval += printf(" flags %#x", device_get_flags(dev));
 #ifdef ISAPNP

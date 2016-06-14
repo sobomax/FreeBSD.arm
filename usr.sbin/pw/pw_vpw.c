@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_vpw.c 292847 2015-12-29 00:02:08Z bapt $";
+  "$FreeBSD: head/usr.sbin/pw/pw_vpw.c 297290 2016-03-26 11:41:35Z bapt $";
 #endif /* not lint */
 
 #include <pwd.h>
@@ -37,7 +37,6 @@ static const char rcsid[] =
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/param.h>
 #include <err.h>
 
 #include "pwupd.h"

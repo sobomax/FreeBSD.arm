@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ns.c 292074 2015-12-11 02:06:03Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ns.c 296617 2016-03-10 17:13:10Z mav $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -44,8 +44,6 @@ __FBSDID("$FreeBSD: head/sys/dev/nvme/nvme_ns.c 292074 2015-12-11 02:06:03Z smh 
 #include <geom/geom.h>
 
 #include "nvme_private.h"
-
-extern int		nvme_max_optimal_sectorsize;
 
 static void		nvme_bio_child_inbed(struct bio *parent, int bio_error);
 static void		nvme_bio_child_done(void *arg,
@@ -217,22 +215,6 @@ nvme_ns_get_stripesize(struct nvme_namespace *ns)
 {
 
 	return (ns->stripesize);
-}
-
-uint32_t
-nvme_ns_get_optimal_sector_size(struct nvme_namespace *ns)
-{
-	uint32_t stripesize;
-
-	stripesize = nvme_ns_get_stripesize(ns);
-
-	if (stripesize == 0)
-		return nvme_ns_get_sector_size(ns);
-		
-	if (nvme_max_optimal_sectorsize == 0) 
-		return (stripesize);
-
-	return (MIN(stripesize, nvme_max_optimal_sectorsize));
 }
 
 static void

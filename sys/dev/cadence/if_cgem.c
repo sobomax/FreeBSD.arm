@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cadence/if_cgem.c 279828 2015-03-09 22:39:58Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/cadence/if_cgem.c 298674 2016-04-26 23:09:47Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1629,6 +1629,9 @@ cgem_add_sysctls(device_t dev)
 static int
 cgem_probe(device_t dev)
 {
+
+	if (!ofw_bus_status_okay(dev))
+		return (ENXIO);
 
 	if (!ofw_bus_is_compatible(dev, "cadence,gem"))
 		return (ENXIO);

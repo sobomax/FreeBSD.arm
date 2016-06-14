@@ -30,7 +30,7 @@
 static char sccsid[] = "@(#)netnamer.c 1.13 91/03/11 Copyr 1986 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/netnamer.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/netnamer.c 300387 2016-05-22 02:24:38Z ngie $");
 
 /*
  * netname utility routines convert from unix names to network names and
@@ -243,6 +243,9 @@ getnetid(char *key, char *ret)
 	char           *lookup;
 	int             len;
 #endif
+	int rv;
+
+	rv = 0;
 
 	fd = fopen(NETIDFILE, "r");
 	if (fd == NULL) {
@@ -253,13 +256,11 @@ getnetid(char *key, char *ret)
 		return (0);
 #endif
 	}
-	for (;;) {
-		if (fd == NULL)
-			return (0);	/* getnetidyp brings us here */
+	while (fd != NULL) {
 		res = fgets(buf, sizeof(buf), fd);
 		if (res == NULL) {
-			fclose(fd);
-			return (0);
+			rv = 0;
+			goto done;
 		}
 		if (res[0] == '#')
 			continue;
@@ -282,9 +283,8 @@ getnetid(char *key, char *ret)
 			lookup[len] = 0;
 			strcpy(ret, lookup);
 			free(lookup);
-			if (fd != NULL)
-				fclose(fd);
-			return (2);
+			rv = 2;
+			goto done;
 #else	/* YP */
 #ifdef DEBUG
 			fprintf(stderr,
@@ -310,10 +310,14 @@ getnetid(char *key, char *ret)
 			}
 			if (strcmp(mkey, key) == 0) {
 				strcpy(ret, mval);
-				fclose(fd);
-				return (1);
-
+				rv = 1;
+				goto done;
 			}
 		}
 	}
+
+done:
+	if (fd != NULL)
+		fclose(fd);
+	return (rv);
 }

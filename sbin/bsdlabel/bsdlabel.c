@@ -53,7 +53,7 @@ static char sccsid[] = "@(#)disklabel.c	8.2 (Berkeley) 1/7/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/bsdlabel/bsdlabel.c 268351 2014-07-07 00:27:09Z marcel $");
+__FBSDID("$FreeBSD: head/sbin/bsdlabel/bsdlabel.c 298193 2016-04-18 07:40:36Z araujo $");
 
 #include <sys/param.h>
 #include <stdint.h>
@@ -781,7 +781,7 @@ getasciilabel(FILE *f, struct disklabel *lp)
 	lp->d_sbsize = 0;				/* XXX */
 	while (fgets(line, sizeof(line) - 1, f)) {
 		lineno++;
-		if ((cp = strchr(line,'\n')) != 0)
+		if ((cp = strchr(line,'\n')) != NULL)
 			*cp = '\0';
 		cp = skip(line);
 		if (cp == NULL)

@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/CNS11XXNAS 292591 2015-12-22 09:08:21Z andrew $
+# $FreeBSD: head/sys/arm/conf/CNS11XXNAS 296938 2016-03-16 15:31:09Z andrew $
 
 ident		CNS11XXNAS
 
@@ -44,11 +44,6 @@ options 	DDB			# Enable the kernel debugger
 #options 	WITNESS			# Enable checks to detect deadlocks and cycles
 ##options 	WITNESS_SKIPSPIN	# Don't run witness on spinlocks for speed
 #options 	DIAGNOSTIC
-
-
-#options 	COMPAT_FREEBSD5
-#options 	COMPAT_FREEBSD6
-#options 	COMPAT_FREEBSD7n
 
 
 options 	SCHED_ULE		# ULE scheduler

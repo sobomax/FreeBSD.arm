@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_hpp.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_hpp.c 298435 2016-04-21 20:30:38Z pfg $");
 
 #include "opt_ed.h"
 
@@ -214,7 +214,7 @@ ed_probe_HP_pclanp(device_t dev, int port_rid, int flags)
  	 * Check for impossible IRQ.
 	 */
 
-	if (irq >= (sizeof(ed_hpp_intr_val) / sizeof(ed_hpp_intr_val[0])))
+	if (irq >= nitems(ed_hpp_intr_val))
 		return (ENXIO);
 
 	/* 

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/firewire/sbp_targ.c 295810 2016-02-19 15:35:20Z pfg $
+ * $FreeBSD: head/sys/dev/firewire/sbp_targ.c 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #include <sys/param.h>
@@ -1031,7 +1031,7 @@ sbp_targ_pt_done(struct fw_xfer *xfer)
 	}
 	orbi->refcount++;
 /*
- * Set endianess here so we don't have 
+ * Set endianness here so we don't have 
  * to deal with is later
  */
 	for (i = 0, pt = orbi->page_table; i < orbi->orb4.data_size; i++, pt++) {

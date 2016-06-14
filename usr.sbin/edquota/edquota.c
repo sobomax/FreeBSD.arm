@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)edquota.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/edquota/edquota.c 257226 2013-10-27 21:06:17Z jilles $");
+__FBSDID("$FreeBSD: head/usr.sbin/edquota/edquota.c 299579 2016-05-13 00:02:03Z truckman $");
 
 /*
  * Disk quota editor.
@@ -390,7 +390,7 @@ getprivs(long id, int quotatype, char *fspath)
 		if ((qup = (struct quotause *)calloc(1, sizeof(*qup))) == NULL)
 			errx(2, "out of memory");
 		qup->qf = qf;
-		strncpy(qup->fsname, fs->fs_file, sizeof(qup->fsname));
+		strlcpy(qup->fsname, fs->fs_file, sizeof(qup->fsname));
 		if (quota_read(qf, &qup->dqblk, id) == -1) {
 			warn("cannot read quotas on %s", fs->fs_file);
 			freeprivs(qup);

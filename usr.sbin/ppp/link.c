@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/link.c 134789 2004-09-05 01:46:52Z brian $
+ * $FreeBSD: head/usr.sbin/ppp/link.c 299991 2016-05-16 23:47:08Z truckman $
  *
  */
 
@@ -209,7 +209,7 @@ static struct protostatheader {
   { PROTO_LQR, "LQR" },
   { PROTO_CHAP, "CHAP" },
   { PROTO_MP, "MULTILINK" },
-  { 0, "Others" }
+  { 0, "Others" }	/* must be last */
 };
 
 void
@@ -218,13 +218,13 @@ link_ProtocolRecord(struct link *l, u_short proto, int type)
   int i;
 
   for (i = 0; i < NPROTOSTAT; i++)
-    if (ProtocolStat[i].number == proto)
+    if (ProtocolStat[i].number == proto || ProtocolStat[i].number == 0) {
+      if (type == PROTO_IN)
+        l->proto_in[i]++;
+      else
+        l->proto_out[i]++;
       break;
-
-  if (type == PROTO_IN)
-    l->proto_in[i]++;
-  else
-    l->proto_out[i]++;
+    }
 }
 
 void

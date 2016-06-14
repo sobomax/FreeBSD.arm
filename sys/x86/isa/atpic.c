@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 277311 2015-01-18 03:43:47Z imp $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/atpic.c 298308 2016-04-19 23:41:46Z pfg $");
 
 #include "opt_auto_eoi.h"
 #include "opt_isa.h"
@@ -155,7 +155,7 @@ static struct atpic_intsrc atintrs[] = {
 	INTSRC(15),
 };
 
-CTASSERT(sizeof(atintrs) / sizeof(atintrs[0]) == NUM_ISA_IRQS);
+CTASSERT(nitems(atintrs) == NUM_ISA_IRQS);
 
 static __inline void
 _atpic_eoi_master(struct intsrc *isrc)

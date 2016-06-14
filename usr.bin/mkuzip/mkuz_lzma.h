@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkuzip/mkuz_lzma.h 295943 2016-02-23 23:59:08Z sobomax $
+ * $FreeBSD: head/usr.bin/mkuzip/mkuz_lzma.h 298504 2016-04-23 07:23:43Z sobomax $
  */
 
 /* Format L3.0, since we move to XZ API */
@@ -39,4 +39,4 @@
 #define DEFAULT_SUFX_LZMA   ".ulzma"
 
 void *mkuz_lzma_init(uint32_t);
-void mkuz_lzma_compress(const char *, uint32_t *);
+struct mkuz_blk *mkuz_lzma_compress(void *, const struct mkuz_blk *);

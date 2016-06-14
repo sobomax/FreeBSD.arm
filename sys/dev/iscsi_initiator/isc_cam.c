@@ -28,7 +28,7 @@
  | $Id: isc_cam.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_cam.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_cam.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_iscsi_initiator.h"
 
@@ -227,7 +227,7 @@ ic_action(struct cam_sim *sim, union ccb *ccb)
 	  if(ccg->block_size == 0 ||
 	     (ccg->volume_size < ccg->block_size)) {
 	       // print error message  ...
-	       /* XXX: what error is appropiate? */
+	       /* XXX: what error is appropriate? */
 	       break;
 	  } 
 	  else {

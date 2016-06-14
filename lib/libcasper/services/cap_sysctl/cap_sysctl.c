@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcasper/services/cap_sysctl/cap_sysctl.c 296047 2016-02-25 18:23:40Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libcasper/services/cap_sysctl/cap_sysctl.c 301572 2016-06-08 02:03:53Z oshogbo $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -290,4 +290,4 @@ sysctl_command(const char *cmd, const nvlist_t *limits, nvlist_t *nvlin,
 	return (0);
 }
 
-CREATE_SERVICE("system.sysctl", sysctl_limit, sysctl_command);
+CREATE_SERVICE("system.sysctl", sysctl_limit, sysctl_command, 0);

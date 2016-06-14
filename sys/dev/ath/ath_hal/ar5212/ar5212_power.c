@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212_power.c 265112 2014-04-30 02:03:13Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212_power.c 298939 2016-05-02 19:56:48Z pfg $
  */
 #include "opt_ah.h"
 
@@ -51,7 +51,7 @@ ar5212SetPowerModeAwake(struct ath_hal *ah, int setChip)
 		 * which when blindly written back with OS_REG_RMW_FIELD 
 		 * enables the MIB interrupt for the sleep performance
 		 * counters.  This can result in an interrupt storm when
-		 * ANI is in operation as noone knows to turn off the MIB
+		 * ANI is in operation as no one knows to turn off the MIB
 		 * interrupt cause.
 		 */
 		scr = OS_REG_READ(ah, AR_SCR);

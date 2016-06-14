@@ -12,7 +12,7 @@
  * documentation and/or software. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 292782 2015-12-27 17:33:59Z allanjude $");
+__FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 300903 2016-05-28 16:06:07Z allanjude $");
 
 #include <sys/types.h>
 
@@ -24,6 +24,7 @@ __FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 292782 2015-12-27 17:33:59Z allan
 #include "sha256.h"
 #include "sha384.h"
 #include "sha512.h"
+#include "sha512t.h"
 
 /* The following makes SHA default to SHA-1 if it has not already been
  * defined with C compiler flags. */
@@ -43,6 +44,9 @@ __FBSDID("$FreeBSD: head/lib/libmd/shadriver.c 292782 2015-12-27 17:33:59Z allan
 #elif SHA == 512
 #undef SHA_Data
 #define SHA_Data SHA512_Data
+#elif SHA == 512256
+#undef SHA_Data
+#define SHA_Data SHA512_256_Data
 #endif
 
 /* Digests a string and prints the result. */

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_edid.c 280187 2015-03-17 19:13:11Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_edid.c 298334 2016-04-20 03:45:45Z cem $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_edid.h>
@@ -353,8 +353,10 @@ drm_do_get_edid(struct drm_connector *connector, device_t adapter)
 
 	new = reallocf(block, (block[0x7e] + 1) * EDID_LENGTH, DRM_MEM_KMS,
 	    M_NOWAIT);
-	if (!new)
+	if (!new) {
+		block = NULL;
 		goto out;
+	}
 	block = new;
 
 	for (j = 1; j <= block[0x7e]; j++) {

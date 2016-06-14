@@ -1,5 +1,5 @@
 /*	$NetBSD: check_bound.c,v 1.2 2000/06/22 08:09:26 fvdl Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpcbind/check_bound.c 293833 2016-01-13 17:33:50Z asomers $ */
+/*	$FreeBSD: head/usr.sbin/rpcbind/check_bound.c 300942 2016-05-29 06:01:18Z ngie $ */
 
 /*-
  * Copyright (c) 2009, Sun Microsystems, Inc.
@@ -219,8 +219,7 @@ mergeaddr(SVCXPRT *xprt, char *netid, char *uaddr, char *saddr)
 		fprintf(stderr, "mergeaddr: uaddr = %s, merged uaddr = %s\n",
 				uaddr, m_uaddr);
 #endif
-	if (allocated_uaddr != NULL)
-		free(allocated_uaddr);
+	free(allocated_uaddr);
 	return (m_uaddr);
 }
 

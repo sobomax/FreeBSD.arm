@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/include/libc_private.h 295416 2016-02-08 22:02:56Z markj $
+ * $FreeBSD: head/lib/libc/include/libc_private.h 300043 2016-05-17 09:56:22Z kib $
  *
  * Private definitions for libc, libc_r and libpthread.
  *
@@ -168,6 +168,9 @@ typedef enum {
 	PJT_CLEANUP_PUSH_IMP,
 	PJT_CANCEL_ENTER,
 	PJT_CANCEL_LEAVE,
+	PJT_MUTEX_CONSISTENT,
+	PJT_MUTEXATTR_GETROBUST,
+	PJT_MUTEXATTR_SETROBUST,
 	PJT_MAX
 } pjt_index_t;
 

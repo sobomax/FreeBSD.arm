@@ -36,12 +36,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/fiq.c 295696 2016-02-17 13:29:17Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/fiq.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 
-#include <machine/acle-compat.h>
 #include <machine/armreg.h>
 #include <machine/cpufunc.h>
 #include <machine/fiq.h>

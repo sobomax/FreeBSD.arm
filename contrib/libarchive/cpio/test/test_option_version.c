@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/test/test_option_version.c 228763 2011-12-21 11:13:29Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/test/test_option_version.c 299529 2016-05-12 10:16:16Z mm $");
 
 /*
  * Test that --version option works and generates reasonable output.
@@ -74,6 +74,11 @@ verify(const char *p, size_t s)
 	/* Skip a single trailing a,b,c, or d. */
 	if (*q == 'a' || *q == 'b' || *q == 'c' || *q == 'd')
 		++q;
+	/* Skip arbitrary third-party version numbers. */
+	while (s > 0 && (*q == ' ' || *q == '/' || *q == '.' || isalnum(*q))) {
+		++q;
+		--s;
+	}
 	/* All terminated by end-of-line: \r, \r\n, or \n */
 	assert(s >= 1);
 	failure("Version: %s", p);

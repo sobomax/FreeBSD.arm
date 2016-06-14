@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_mbpool.c 268529 2014-07-11 13:58:48Z glebius $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_mbpool.c 298819 2016-04-29 22:15:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -210,16 +210,13 @@ mbp_alloc_page(struct mbpool *p)
 	pg = &p->pages[p->npages];
 
 	error = bus_dmamem_alloc(p->dmat, &pg->va, BUS_DMA_NOWAIT, &pg->map);
-	if (error != 0) {
-		free(pg, M_MBPOOL);
+	if (error != 0)
 		return;
-	}
 
 	error = bus_dmamap_load(p->dmat, pg->map, pg->va, p->page_size,
 	    mbp_callback, &pg->phy, 0);
 	if (error != 0) {
 		bus_dmamem_free(p->dmat, pg->va, pg->map);
-		free(pg, M_MBPOOL);
 		return;
 	}
 
@@ -291,7 +288,7 @@ mbp_ext_free(struct mbuf *m, void *buf, void *arg)
 }
 
 /*
- * Free all buffers that are marked as beeing on the card
+ * Free all buffers that are marked as being on the card
  */
 void
 mbp_card_free(struct mbpool *p)

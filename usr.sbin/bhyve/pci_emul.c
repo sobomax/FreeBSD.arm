@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_emul.c 292970 2015-12-31 01:55:51Z araujo $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_emul.c 299676 2016-05-13 14:59:02Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_emul.c 292970 2015-12-31 01:55:51Z araujo $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_emul.c 299676 2016-05-13 14:59:02Z pfg $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -2034,7 +2034,7 @@ pci_emul_diow(struct vmctx *ctx, int vcpu, struct pci_devinst *pi, int baridx,
 		 */
 	}
 
-	if (baridx > 2) {
+	if (baridx > 2 || baridx < 0) {
 		printf("diow: unknown bar idx %d\n", baridx);
 	}
 }
@@ -2054,6 +2054,7 @@ pci_emul_dior(struct vmctx *ctx, int vcpu, struct pci_devinst *pi, int baridx,
 			return (0);
 		}
 	
+		value = 0;
 		if (size == 1) {
 			value = sc->ioregs[offset];
 		} else if (size == 2) {
@@ -2088,7 +2089,7 @@ pci_emul_dior(struct vmctx *ctx, int vcpu, struct pci_devinst *pi, int baridx,
 	}
 
 
-	if (baridx > 2) {
+	if (baridx > 2 || baridx < 0) {
 		printf("dior: unknown bar idx %d\n", baridx);
 		return (0);
 	}

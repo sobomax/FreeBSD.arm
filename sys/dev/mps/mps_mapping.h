@@ -26,14 +26,14 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps_mapping.h 279253 2015-02-24 22:07:42Z slm $
+ * $FreeBSD: head/sys/dev/mps/mps_mapping.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef _MPS_MAPPING_H
 #define _MPS_MAPPING_H
 
 /**
- * struct _map_phy_change - PHY entries recieved in Topology change list
+ * struct _map_phy_change - PHY entries received in Topology change list
  * @physical_id: SAS address of the device attached with the associate PHY
  * @device_info: bitfield provides detailed info about the device
  * @dev_handle: device handle for the device pointed by this entry

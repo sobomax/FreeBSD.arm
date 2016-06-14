@@ -41,7 +41,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/growfs/debug.c 257029 2013-10-24 00:33:29Z pfg $";
+  "$FreeBSD: head/sbin/growfs/debug.c 298871 2016-05-01 02:19:49Z pfg $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -518,7 +518,8 @@ dbg_dump_frmap(struct fs *sb, const char *comment, struct cg *cgr)
 
 	cp = (unsigned char *)cg_blksfree(cgr);
 	if (sb->fs_old_nspf)
-		e = howmany((sb->fs_old_cpg * sb->fs_old_spc / sb->fs_old_nspf), CHAR_BIT);
+		e = howmany(sb->fs_old_cpg * sb->fs_old_spc / sb->fs_old_nspf,
+		    CHAR_BIT);
 	else
 		e = 0;
 	for (j = 0; j < e; j += 32) {

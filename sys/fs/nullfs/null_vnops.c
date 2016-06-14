@@ -36,7 +36,7 @@
  *	...and...
  *	@(#)null_vnodeops.c 1.20 92/07/07 UCLA Ficus project
  *
- * $FreeBSD: head/sys/fs/nullfs/null_vnops.c 295717 2016-02-17 19:43:03Z kib $
+ * $FreeBSD: head/sys/fs/nullfs/null_vnops.c 298806 2016-04-29 20:51:24Z pfg $
  */
 
 /*
@@ -117,7 +117,7 @@
  * are created as a result of vnode operations on
  * this or other null vnode stacks.
  *
- * New vnode stacks come into existance as a result of
+ * New vnode stacks come into existence as a result of
  * an operation which returns a vnode.
  * The bypass routine stacks a null-node above the new
  * vnode before returning it to the caller.

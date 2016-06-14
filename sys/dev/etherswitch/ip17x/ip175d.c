@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/ip17x/ip175d.c 265767 2014-05-09 13:07:39Z loos $
+ * $FreeBSD: head/sys/dev/etherswitch/ip17x/ip175d.c 297793 2016-04-10 23:07:00Z pfg $
  */
 
 #include <sys/param.h>
@@ -167,7 +167,7 @@ ip175d_set_vlan_mode(struct ip17x_softc *sc, uint32_t mode)
 		ip17x_updatephy(sc->sc_dev, 22, 0, 0xbfff, 0x8000);
 		sc->vlan_mode = 0;
 		break;
-	};
+	}
 
 	if (sc->vlan_mode != 0) {
 		/*

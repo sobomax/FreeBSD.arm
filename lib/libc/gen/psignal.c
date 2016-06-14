@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)psignal.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/psignal.c 288029 2015-09-20 20:23:16Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/psignal.c 300997 2016-05-30 13:51:27Z ed $");
 
 /*
  * Print the name of the signal indicated
@@ -44,11 +44,11 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/psignal.c 288029 2015-09-20 20:23:16Z rodr
 #include "un-namespace.h"
 
 void
-psignal(unsigned int sig, const char *s)
+psignal(int sig, const char *s)
 {
 	const char *c;
 
-	if (sig < NSIG)
+	if (sig >= 0 && sig < NSIG)
 		c = sys_siglist[sig];
 	else
 		c = "Unknown signal";

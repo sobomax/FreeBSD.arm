@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/svn/svn_private_config.h 289180 2015-10-12 09:53:55Z peter $ */
+/* $FreeBSD: head/usr.bin/svn/svn_private_config.h 298845 2016-04-30 10:35:42Z dim $ */
 
 /* subversion/svn_private_config.h.tmp.  Generated from svn_private_config.h.in by configure.  */
 /* subversion/svn_private_config.h.in.  Generated from configure.ac by autoheader.  */
@@ -17,7 +17,7 @@
 /* #undef ENABLE_NLS */
 
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
-#define HAVE_BIND_TEXTDOMAIN_CODESET 1
+/* #undef HAVE_BIND_TEXTDOMAIN_CODESET */
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
@@ -110,7 +110,7 @@
 #define PACKAGE_NAME "subversion"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "subversion 1.9.2"
+#define PACKAGE_STRING "subversion 1.9.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "subversion"
@@ -119,7 +119,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.8.14"
+#define PACKAGE_VERSION "1.9.4"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

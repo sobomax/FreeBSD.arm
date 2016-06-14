@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/avila_ata.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/avila_ata.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 /*
  * Compact Flash Support for the Avila Gateworks XScale boards.
@@ -287,7 +287,7 @@ ata_avila_alloc_resource(device_t dev, device_t child, int type, int *rid,
 	struct ata_avila_softc *sc = device_get_softc(dev);
 
 	KASSERT(type == SYS_RES_IRQ && *rid == ATA_IRQ_RID,
-	    ("type %u rid %u start %lu end %lu count %lu flags %u",
+	    ("type %u rid %u start %ju end %ju count %ju flags %u",
 	     type, *rid, start, end, count, flags));
 
 	/* doesn't matter what we return so reuse the real thing */

@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libufs/Makefile 283243 2015-05-21 14:36:11Z imp $
+# $FreeBSD: head/lib/libufs/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	ufs
 SHLIBDIR?= /lib
 SHLIB_MAJOR=	6

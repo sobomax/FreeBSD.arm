@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_usb_phy.c 269702 2014-08-08 06:29:30Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_usb_phy.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -161,7 +161,7 @@ vbus_on(struct usb_phy_softc *sc)
 
 	gpio_dev = devclass_get_device(devclass_find("gpio"), 0);
 	if (gpio_dev == NULL) {
-		device_printf(sc->dev, "cant find gpio_dev\n");
+		device_printf(sc->dev, "can't find gpio_dev\n");
 		return (1);
 	}
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/main.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/gnu/usr.bin/gdb/kgdb/main.c 298363 2016-04-20 20:22:48Z wma $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -474,7 +474,7 @@ main(int argc, char *argv[])
 	add_arg(&args, NULL);
 
 	init_ui_hook = kgdb_init;
-
+	frame_tdep_pc_fixup = kgdb_trgt_pc_fixup;
 	kgdb_sniffer_kluge = kgdb_trgt_trapframe_sniffer;
 
 	return (gdb_main(&args));

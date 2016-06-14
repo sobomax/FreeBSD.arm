@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs.c 296137 2016-02-27 03:38:01Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/cs/if_cs.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  *
@@ -180,7 +180,7 @@ wait_eeprom_ready(struct cs_softc *sc)
 	 *
 	 * Before we issue the command, we should be !busy, so that will
 	 * be fast.  The datasheet suggests that clock out from the part
-	 * per word will be on the order of 25us, which is consistant with
+	 * per word will be on the order of 25us, which is consistent with
 	 * the 1MHz serial clock and 16bits...  We should never hit 100,
 	 * let alone 15,000 here.  The original code did an unconditional
 	 * 30ms DELAY here.  Bad Kharma.  cs_readreg takes ~2us.

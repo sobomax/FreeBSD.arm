@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_ec_spi.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_ec_spi.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -143,7 +143,7 @@ ec_command(uint8_t cmd, uint8_t *dout, uint8_t dout_len,
 
 	for (i = 0; i < dout_len; i++) {
 		msg_dout[i + 3] = dout[i];
-	};
+	}
 
 	fill_checksum(msg_dout, dout_len + 3);
 
@@ -177,7 +177,7 @@ ec_command(uint8_t cmd, uint8_t *dout, uint8_t dout_len,
 
 	for (i = 0; i < dinp_len; i++) {
 		dinp[i] = msg_dinp[i + 2];
-	};
+	}
 
 	free(msg_dout, M_DEVBUF);
 	free(msg_dinp, M_DEVBUF);

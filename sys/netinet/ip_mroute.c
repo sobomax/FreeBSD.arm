@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 293886 2016-01-14 08:54:44Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_mroute.c 298066 2016-04-15 15:46:41Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_mrouting.h"
@@ -2601,7 +2601,7 @@ pim_input(struct mbuf **mp, int *offp, int proto)
      * Get the IP and PIM headers in contiguous memory, and
      * possibly the PIM REGISTER header.
      */
-    if (m->m_len < minlen && (m = m_pullup(m, minlen)) == 0) {
+    if (m->m_len < minlen && (m = m_pullup(m, minlen)) == NULL) {
 	CTR1(KTR_IPMF, "%s: m_pullup() failed", __func__);
 	return (IPPROTO_DONE);
     }

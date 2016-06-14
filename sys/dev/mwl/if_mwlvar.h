@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/mwl/if_mwlvar.h 287197 2015-08-27 08:56:39Z glebius $
+ * $FreeBSD: head/sys/dev/mwl/if_mwlvar.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -37,6 +37,7 @@
 #define _DEV_MWL_MVVAR_H
 
 #include <sys/endian.h>
+#include <sys/bus.h>
 #include <net80211/ieee80211_radiotap.h>
 #include <dev/mwl/mwlhal.h>
 #include <dev/mwl/mwlreg.h>
@@ -64,7 +65,7 @@
 #define	MWL_TXDESC	1		/* max tx descriptors/segments */
 #endif
 #ifndef MWL_AGGR_SIZE
-#define MWL_AGGR_SIZE	3839		/* max tx agregation size */
+#define	MWL_AGGR_SIZE	3839		/* max tx aggregation size */
 #endif
 #define	MWL_AGEINTERVAL	1		/* poke f/w every sec to age q's */ 
 #define	MWL_MAXSTAID	64		/* max of 64 stations */

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/security/audit/bsm_socket_type.c 292522 2015-12-20 23:22:04Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/security/audit/bsm_socket_type.c 298431 2016-04-21 19:40:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -52,8 +52,7 @@ static const struct bsm_socket_type bsm_socket_types[] = {
 	{ BSM_SOCK_RDM, SOCK_RDM },
 	{ BSM_SOCK_SEQPACKET, SOCK_SEQPACKET },
 };
-static const int bsm_socket_types_count = sizeof(bsm_socket_types) /
-	    sizeof(bsm_socket_types[0]);
+static const int bsm_socket_types_count = nitems(bsm_socket_types);
 
 static const struct bsm_socket_type *
 bsm_lookup_local_socket_type(int local_socket_type)

@@ -1,5 +1,5 @@
 #  @(#)Makefile 5.1beta 93/09/24
-# $FreeBSD: head/lib/msun/Makefile 291620 2015-12-01 22:20:04Z bdrewery $
+# $FreeBSD: head/lib/msun/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 #  ====================================================
 #  Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -12,6 +12,7 @@
 #
 #
 
+PACKAGE=	clibs
 .if ${MACHINE_CPUARCH} == "i386"
 ARCH_SUBDIR= i387
 .else

@@ -33,7 +33,7 @@
 
 /* #pragma ident	"@(#)svc_simple.c	1.18	94/04/24 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_simple.c 296095 2016-02-26 14:39:39Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_simple.c 298830 2016-04-30 01:24:24Z pfg $");
 
 /*
  * svc_simple.c
@@ -42,7 +42,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/svc_simple.c 296095 2016-02-26 14:39:39Z p
 
 /*
  * This interface creates a virtual listener for all the services
- * started thru rpc_reg(). It listens on the same endpoint for
+ * started through rpc_reg(). It listens on the same endpoint for
  * all the services and then executes the corresponding service
  * for the given prognum and procnum.
  */
@@ -229,7 +229,7 @@ rpc_reg(rpcprog_t prognum, rpcvers_t versnum, rpcproc_t procnum,
 	mutex_unlock(&proglst_lock);
 
 	if (done == FALSE) {
-		warnx("%s cant find suitable transport for %s",
+		warnx("%s can't find suitable transport for %s",
 			rpc_reg_msg, nettype);
 		return (-1);
 	}

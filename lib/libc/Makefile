@@ -1,9 +1,13 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: head/lib/libc/Makefile 294868 2016-01-27 00:24:24Z bdrewery $
+# $FreeBSD: head/lib/libc/Makefile 300119 2016-05-18 06:01:18Z imp $
 
+PACKAGE=	clibs
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
+
+# Force building of libc_pic.a
+MK_TOOLCHAIN=	yes
 
 LIBC_SRCTOP?= ${.CURDIR}
 
@@ -101,7 +105,8 @@ NOASM=
 .include "${LIBC_SRCTOP}/rpc/Makefile.inc"
 .include "${LIBC_SRCTOP}/uuid/Makefile.inc"
 .include "${LIBC_SRCTOP}/xdr/Makefile.inc"
-.if (${LIBC_ARCH} == "arm" && ${MACHINE_ARCH} != "armv6hf") ||\
+.if (${LIBC_ARCH} == "arm" && \
+	(${MACHINE_ARCH:Marmv6*} == "" || (defined(CPUTYPE) && ${CPUTYPE:M*soft*}))) || \
      ${LIBC_ARCH} == "mips"
 .include "${LIBC_SRCTOP}/softfloat/Makefile.inc"
 .endif

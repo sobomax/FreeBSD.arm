@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/an/if_an.c 296137 2016-02-27 03:38:01Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/an/if_an.c 300612 2016-05-24 13:57:23Z sbruno $");
 
 /*
  * The Aironet 4500/4800 series cards come in PCMCIA, ISA and PCI form.
@@ -304,23 +304,6 @@ SYSCTL_PROC(_hw_an, OID_AUTO, an_cache_mode, CTLTYPE_STRING | CTLFLAG_RW,
 	    0, sizeof(an_conf_cache), sysctl_an_cache_mode, "A", "");
 
 /*
- * Setup the lock for PCI attachment since it skips the an_probe
- * function.  We need to setup the lock in an_probe since some
- * operations need the lock.  So we might as well create the
- * lock in the probe.
- */
-int
-an_pci_probe(device_t dev)
-{
-	struct an_softc *sc = device_get_softc(dev);
-
-	mtx_init(&sc->an_mtx, device_get_nameunit(dev), MTX_NETWORK_LOCK,
-	    MTX_DEF);
-
-	return(0);
-}
-
-/*
  * We probe for an Aironet 4500/4800 card by attempting to
  * read the default SSID list. On reset, the first entry in
  * the SSID list will contain the name "tsunami." If we don't
@@ -426,7 +409,7 @@ int an_alloc_memory(device_t dev, int rid, int size)
 }
 
 /*
- * Allocate a auxilary memory resource with the given resource id.
+ * Allocate a auxiliary memory resource with the given resource id.
  */
 int an_alloc_aux_memory(device_t dev, int rid, int size)
 {
@@ -3766,6 +3749,9 @@ flashcard(struct ifnet *ifp, struct aironet_ioctl *l_ioctl)
 			return ENOBUFS;
 		break;
 	case AIROFLSHGCHR:	/* Get char from aux */
+		if (l_ioctl->len > sizeof(sc->areq)) {
+			return -EINVAL;
+		}
 		AN_UNLOCK(sc);
 		status = copyin(l_ioctl->data, &sc->areq, l_ioctl->len);
 		AN_LOCK(sc);
@@ -3777,6 +3763,9 @@ flashcard(struct ifnet *ifp, struct aironet_ioctl *l_ioctl)
 		else
 			return -1;
 	case AIROFLSHPCHR:	/* Send char to card. */
+		if (l_ioctl->len > sizeof(sc->areq)) {
+			return -EINVAL;
+		}
 		AN_UNLOCK(sc);
 		status = copyin(l_ioctl->data, &sc->areq, l_ioctl->len);
 		AN_LOCK(sc);

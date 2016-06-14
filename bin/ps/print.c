@@ -34,7 +34,7 @@ static char sccsid[] = "@(#)print.c	8.6 (Berkeley) 4/16/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/ps/print.c 283304 2015-05-22 23:07:55Z marcel $");
+__FBSDID("$FreeBSD: head/bin/ps/print.c 301160 2016-06-01 19:54:05Z cem $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -211,7 +211,7 @@ logname(KINFO *k, VARENT *ve __unused)
 char *
 state(KINFO *k, VARENT *ve __unused)
 {
-	int flag, tdflags;
+	long flag, tdflags;
 	char *cp, *buf;
 
 	buf = malloc(16);

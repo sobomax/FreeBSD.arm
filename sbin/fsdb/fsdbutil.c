@@ -30,7 +30,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/fsdb/fsdbutil.c 247234 2013-02-24 19:32:43Z pluknet $";
+  "$FreeBSD: head/sbin/fsdb/fsdbutil.c 298195 2016-04-18 07:47:26Z araujo $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -310,7 +310,7 @@ printblocks(ino_t inum, union dinode *dp)
 	return;
 
     bufp = malloc((unsigned int)sblock.fs_bsize);
-    if (bufp == 0)
+    if (bufp == NULL)
 	errx(EEXIT, "cannot allocate indirect block buffer");
     printf("Indirect blocks:\n");
     for (i = 0; i < NIADDR; i++)

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/mv/mvreg.h 294441 2016-01-20 14:49:16Z zbb $
+ * $FreeBSD: head/sys/arm/mv/mvreg.h 296825 2016-03-14 07:05:41Z wma $
  */
 
 #ifndef _MVREG_H_
@@ -67,7 +67,10 @@
 #elif defined (SOC_MV_ARMADAXP)
 #define IRQ_CAUSE		0x18
 #define IRQ_MASK		0x30
-#else /* !SOC_MV_DISCOVERY && !SOC_MV_LOKIPLUS */
+#elif defined (SOC_MV_ARMADA38X)
+#define	MSI_IRQ			0x3ff
+#define	ERR_IRQ			0x3ff
+#else
 #define IRQ_CAUSE		0x0
 #define IRQ_MASK		0x4
 #define FIQ_MASK		0x8

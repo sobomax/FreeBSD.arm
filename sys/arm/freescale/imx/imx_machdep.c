@@ -27,19 +27,19 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_machdep.c 291367 2015-11-26 17:26:52Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_machdep.c 298627 2016-04-26 11:53:37Z br $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/reboot.h>
+#include <sys/devmap.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
 #include <machine/armreg.h>
 #include <machine/bus.h>
-#include <machine/devmap.h>
 #include <machine/machdep.h>
 
 #include <arm/freescale/imx/imx_machdep.h>
@@ -85,7 +85,7 @@ imx_wdog_cpu_reset(vm_offset_t wdcr_physaddr)
 	 * control register.  The reset happens on the next cycle of the wdog
 	 * 32KHz clock, so hang out in a spin loop until the reset takes effect.
 	 */
-	if ((pcr = arm_devmap_ptov(wdcr_physaddr, sizeof(*pcr))) == NULL) {
+	if ((pcr = devmap_ptov(wdcr_physaddr, sizeof(*pcr))) == NULL) {
 		printf("cpu_reset() can't find its control register... locking up now.");
 	} else {
 		*pcr &= ~WDOG_CR_SRS;
@@ -99,7 +99,7 @@ imx_wdog_init_last_reset(vm_offset_t wdsr_phys)
 {
 	volatile uint16_t * psr;
 
-	if ((psr = arm_devmap_ptov(wdsr_phys, sizeof(*psr))) == NULL)
+	if ((psr = devmap_ptov(wdsr_phys, sizeof(*psr))) == NULL)
 		return;
 	last_reset_status = *psr;
 	if (last_reset_status & WDOG_RSR_SFTW) {

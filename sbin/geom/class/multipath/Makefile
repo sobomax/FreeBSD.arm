@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/geom/class/multipath/Makefile 216468 2010-12-15 23:24:34Z obrien $
+# $FreeBSD: head/sbin/geom/class/multipath/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 .PATH: ${.CURDIR}/../../misc
 
 GEOM_CLASS=	multipath

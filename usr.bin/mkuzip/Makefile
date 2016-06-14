@@ -1,9 +1,12 @@
-# $FreeBSD: head/usr.bin/mkuzip/Makefile 295943 2016-02-23 23:59:08Z sobomax $
+# $FreeBSD: head/usr.bin/mkuzip/Makefile 298504 2016-04-23 07:23:43Z sobomax $
 
 PROG=	mkuzip
 MAN=	mkuzip.8
-SRCS=	mkuzip.c mkuz_blockcache.c mkuz_lzma.c mkuz_zlib.c
+SRCS=	mkuzip.c mkuz_blockcache.c mkuz_lzma.c mkuz_zlib.c mkuz_conveyor.c \
+	    mkuz_blk.c mkuz_fqueue.c mkuz_time.c
 
-LIBADD=	z md lzma
+#CFLAGS+=	-DMKUZ_DEBUG
+
+LIBADD=	z md lzma pthread
 
 .include <bsd.prog.mk>

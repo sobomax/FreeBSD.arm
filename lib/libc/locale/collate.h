@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/locale/collate.h 290494 2015-11-07 12:43:35Z bapt $
+ * $FreeBSD: head/lib/libc/locale/collate.h 301461 2016-06-05 19:12:52Z pfg $
  */
 
 #ifndef _COLLATE_H_
@@ -128,7 +128,8 @@ int	__collate_load_tables(const char *);
 int	__collate_equiv_value(locale_t, const wchar_t *, size_t);
 void	_collate_lookup(struct xlocale_collate *,const wchar_t *, int *, int *,
 	int, const int **);
-int	__collate_range_cmp(struct xlocale_collate *, wchar_t, wchar_t);
+int	__collate_range_cmp(struct xlocale_collate *, char, char);
+int	__wcollate_range_cmp(struct xlocale_collate *, wchar_t, wchar_t);
 size_t	_collate_wxfrm(struct xlocale_collate *, const wchar_t *, wchar_t *,
 	size_t);
 size_t	_collate_sxfrm(struct xlocale_collate *, const wchar_t *, char *,

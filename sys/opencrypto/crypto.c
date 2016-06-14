@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/opencrypto/crypto.c 284616 2015-06-19 22:42:26Z jmg $");
+__FBSDID("$FreeBSD: head/sys/opencrypto/crypto.c 299202 2016-05-06 23:37:19Z pfg $");
 
 /*
  * Cryptographic Subsystem.
@@ -911,7 +911,7 @@ again:
 }
 
 /*
- * Dispatch an assymetric crypto request.
+ * Dispatch an asymmetric crypto request.
  */
 static int
 crypto_kinvoke(struct cryptkop *krp, int crid)

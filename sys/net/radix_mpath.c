@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/radix_mpath.c 294706 2016-01-25 06:33:15Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/net/radix_mpath.c 298663 2016-04-26 20:27:17Z cem $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -223,7 +223,7 @@ rt_mpath_selectrte(struct rtentry *rte, uint32_t hash)
 	hash %= total_weight;
 	for (weight = abs((int32_t)hash);
 	     rt != NULL && weight >= rt->rt_weight; 
-	     weight -= rt->rt_weight) {
+	     weight -= (rt == NULL) ? 0 : rt->rt_weight) {
 		
 		/* stay within the multipath routes */
 		if (rn->rn_dupedkey && rn->rn_mask != rn->rn_dupedkey->rn_mask)

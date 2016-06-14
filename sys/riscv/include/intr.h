@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/riscv/include/intr.h 295972 2016-02-24 16:50:34Z br $
+ * $FreeBSD: head/sys/riscv/include/intr.h 298636 2016-04-26 12:56:44Z br $
  */
 
 #ifndef	_MACHINE_INTR_MACHDEP_H_
@@ -60,6 +60,8 @@ enum {
 	IRQ_SOFTWARE,
 	IRQ_TIMER,
 	IRQ_HTIF,
+	IRQ_COP,	/* lowRISC only */
+	IRQ_UART,	/* lowRISC only */
 	NIRQS
 };
 

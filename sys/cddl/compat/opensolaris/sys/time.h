@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/time.h 277449 2015-01-20 22:29:27Z will $
+ * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/time.h 296530 2016-03-08 18:28:24Z mav $
  */
 
 #ifndef _OPENSOLARIS_SYS_TIME_H_
@@ -39,6 +39,9 @@
 
 #define	MSEC2NSEC(m)	((hrtime_t)(m) * (NANOSEC / MILLISEC))
 #define	NSEC2MSEC(n)	((n) / (NANOSEC / MILLISEC))
+
+#define	NSEC2SEC(n)	((n) / (NANOSEC / SEC))
+#define	SEC2NSEC(m)	((hrtime_t)(m) * (NANOSEC / SEC))
 
 typedef longlong_t	hrtime_t;
 

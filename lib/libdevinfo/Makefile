@@ -1,9 +1,12 @@
-# $FreeBSD: head/lib/libdevinfo/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/libdevinfo/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	devinfo
 SRCS=	devinfo.c
 INCS=	devinfo.h
 MAN=	devinfo.3
+
+SHLIB_MAJOR=	6
 
 WARNS?=	3
 

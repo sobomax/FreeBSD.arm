@@ -7,7 +7,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/speaker/spkr.c 228443 2011-12-12 18:43:24Z mdf $");
+__FBSDID("$FreeBSD: head/sys/dev/speaker/spkr.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -327,15 +327,13 @@ playstring(char *cp, size_t slen)
 				slen--;
 			} else {
 				GETNUM(cp, octave);
-				if (octave >= sizeof(pitchtab) / sizeof(pitchtab[0]) /
-					OCTAVE_NOTES)
+				if (octave >= nitems(pitchtab) / OCTAVE_NOTES)
 					octave = DFLT_OCTAVE;
 				octprefix = TRUE;
 			}
 			break;
 		case '>':
-			if (octave < sizeof(pitchtab) / sizeof(pitchtab[0]) / 
-				OCTAVE_NOTES - 1)
+			if (octave < nitems(pitchtab) / OCTAVE_NOTES - 1)
 				octave++;
 			octprefix = TRUE;
 			break;

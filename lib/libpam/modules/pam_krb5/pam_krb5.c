@@ -48,7 +48,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libpam/modules/pam_krb5/pam_krb5.c 241844 2012-10-22 03:00:37Z eadler $");
+__FBSDID("$FreeBSD: head/lib/libpam/modules/pam_krb5/pam_krb5.c 297755 2016-04-09 18:09:10Z pfg $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -860,7 +860,7 @@ verify_krb_v5_tgt(krb5_context context, krb5_ccache ccache,
 	services[0] = "host";
 	services[1] = pam_service;
 	services[2] = NULL;
-	keyblock = 0;
+	keyblock = NULL;
 	retval = -1;
 	for (service = &services[0]; *service != NULL; service++) {
 		retval = krb5_sname_to_principal(context, NULL, *service,

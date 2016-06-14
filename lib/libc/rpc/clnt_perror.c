@@ -34,7 +34,7 @@ static char *sccsid2 = "@(#)clnt_perror.c 1.15 87/10/07 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)clnt_perror.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_perror.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_perror.c 297790 2016-04-10 19:33:58Z pfg $");
 
 /*
  * clnt_perror.c
@@ -64,8 +64,8 @@ static char *
 _buf(void)
 {
 
-	if (buf == 0)
-		buf = (char *)malloc(CLNT_PERROR_BUFLEN);
+	if (buf == NULL)
+		buf = malloc(CLNT_PERROR_BUFLEN);
 	return (buf);
 }
 
@@ -85,7 +85,7 @@ clnt_sperror(CLIENT *rpch, const char *s)
 	assert(s != NULL);
 
 	str = _buf(); /* side effect: sets CLNT_PERROR_BUFLEN */
-	if (str == 0)
+	if (str == NULL)
 		return (0);
 	len = CLNT_PERROR_BUFLEN;
 	strstart = str;
@@ -240,7 +240,7 @@ clnt_spcreateerror(const char *s)
 	assert(s != NULL);
 
 	str = _buf(); /* side effect: sets CLNT_PERROR_BUFLEN */
-	if (str == 0)
+	if (str == NULL)
 		return(0);
 	len = CLNT_PERROR_BUFLEN;
 	i = snprintf(str, len, "%s: ", s);

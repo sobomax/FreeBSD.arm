@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rt305x/rt305x_gpio.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/mips/rt305x/rt305x_gpio.c 298053 2016-04-15 14:26:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -562,7 +562,7 @@ rt305x_gpio_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	}
 
 	rv = rman_reserve_resource(rm, start, end, count, flags, child);
-	if (rv == 0) {
+	if (rv == NULL) {
 		printf("%s: could not reserve resource\n", __func__);
 		return (0);
 	}

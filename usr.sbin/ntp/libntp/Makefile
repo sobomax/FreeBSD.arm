@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/libntp/Makefile 294554 2016-01-22 07:32:39Z delphij $
+# $FreeBSD: head/usr.sbin/ntp/libntp/Makefile 298695 2016-04-27 07:46:38Z delphij $
 
 .PATH: ${.CURDIR}/../../../contrib/ntp/libntp \
 	${.CURDIR}/../../../contrib/ntp/lib/isc \
@@ -41,7 +41,8 @@ ISC_UNIX_SRCS= dir.c \
 	stdio.c \
 	stdtime.c \
 	strerror.c \
-	time.c
+	time.c \
+	tsmemcmp.c
 
 ISC_NLS_SRCS= msgcat.c
 

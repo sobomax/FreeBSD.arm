@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/common/cons.c 226746 2011-10-25 19:45:12Z jhb $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/common/cons.c 296963 2016-03-16 23:12:19Z allanjude $");
 
 #include <sys/param.h>
 
@@ -94,6 +94,13 @@ xgetc(int fn)
 			return (0);
 	}
 	/* NOTREACHED */
+}
+
+int
+getchar(void)
+{
+
+	return (xgetc(0));
 }
 
 int

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/uboot/lib/Makefile 296080 2016-02-26 08:16:44Z sgalabov $
+# $FreeBSD: head/sys/boot/uboot/lib/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -41,7 +41,7 @@ CFLAGS+=	-I${.CURDIR}/../../common -I${.CURDIR}/../../.. -I.
 CFLAGS+= -DDISK_DEBUG
 .endif
 
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../${MACHINE_CPUARCH}/include machine
 
 CLEANFILES+=	machine

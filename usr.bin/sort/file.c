@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/file.c 281182 2015-04-07 01:17:49Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/file.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -1258,7 +1258,7 @@ sort_list_to_file(struct sort_list *list, const char *outfile)
 			break;
 		default:
 			errx(2, "%s", getstr(10));
-		};
+		}
 	}
 
 	if (sort_opts_vals.sort_method == SORT_DEFAULT)

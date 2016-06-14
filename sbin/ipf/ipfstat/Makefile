@@ -1,7 +1,8 @@
-#	$FreeBSD: head/sbin/ipf/ipfstat/Makefile 275030 2014-11-25 11:23:12Z bapt $
+#	$FreeBSD: head/sbin/ipf/ipfstat/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 NOGCCERROR=	# defined
 
+PACKAGE=	ipf
 PROG=		ipfstat
 SRCS=		ipfstat.c
 MAN=		ipfstat.8

@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/mips/Symbol.map 226606 2011-10-21 06:40:36Z das $
+ * $FreeBSD: head/lib/libc/mips/Symbol.map 297418 2016-03-30 14:42:09Z emaste $
  */
 
 /*
@@ -28,7 +28,6 @@ FBSD_1.0 {
 	ntohs;
 	vfork;
 	brk;
-	cerror;		/* XXX - Should this be .cerror (see sys/cerror.S)? */
 	sbrk;
 };
 
@@ -52,8 +51,6 @@ FBSDprivate_1.0 {
 	__sys_vfork;
 	_vfork;
 	_end;
-	__curbrk;
-	minbrk;
 	_brk;
 	_sbrk;
 

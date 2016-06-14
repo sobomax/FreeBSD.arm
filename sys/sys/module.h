@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/module.h 292146 2015-12-13 04:15:10Z imp $
+ * $FreeBSD: head/sys/sys/module.h 298023 2016-04-15 02:36:14Z ngie $
  */
 
 #ifndef _SYS_MODULE_H_
@@ -166,7 +166,7 @@ struct mod_pnp_match_info
 
 /**
  * Generic macros to create pnp info hints that modules may export
- * to allow external tools to parse their intenral device tables
+ * to allow external tools to parse their internal device tables
  * to make an informed guess about what driver(s) to load.
  */
 #define	MODULE_PNP_INFO(d, b, unique, t, l, n)				\

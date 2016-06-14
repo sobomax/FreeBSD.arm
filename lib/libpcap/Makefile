@@ -1,10 +1,11 @@
 # Makefile for libpcap
-# $FreeBSD: head/lib/libpcap/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
+# $FreeBSD: head/lib/libpcap/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	pcap
 SRCS=	grammar.y tokdefs.h version.h pcap-bpf.c \
 	pcap-netmap.c \

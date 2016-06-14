@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aha/aha_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/aha/aha_isa.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -310,8 +310,7 @@ aha_isa_identify(driver_t *driver, device_t parent)
 	device_t child;
 
 	/* Attempt to find an adapter */
-	for (i = 0; i < sizeof(aha_board_ports) / sizeof(aha_board_ports[0]);
-	    i++) {
+	for (i = 0; i < nitems(aha_board_ports); i++) {
 		bzero(&aha, sizeof(aha));
 		ioport = aha_board_ports[i];
 		/*

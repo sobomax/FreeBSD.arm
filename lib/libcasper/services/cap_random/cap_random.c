@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libcasper/services/cap_random/cap_random.c 296047 2016-02-25 18:23:40Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libcasper/services/cap_random/cap_random.c 301572 2016-06-08 02:03:53Z oshogbo $");
 
 #include <sys/nv.h>
 
@@ -114,4 +114,4 @@ random_command(const char *cmd, const nvlist_t *limits __unused,
 	return (0);
 }
 
-CREATE_SERVICE("system.random", NULL, random_command);
+CREATE_SERVICE("system.random", NULL, random_command, 0);

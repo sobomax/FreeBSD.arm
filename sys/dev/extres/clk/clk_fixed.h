@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/extres/clk/clk_fixed.h 294660 2016-01-24 11:00:38Z mmel $
+ * $FreeBSD: head/sys/dev/extres/clk/clk_fixed.h 296903 2016-03-15 15:25:26Z mmel $
  */
 
 #ifndef _DEV_EXTRES_CLK_FIXED_H_
@@ -47,7 +47,6 @@ struct clk_fixed_def {
 	int			fixed_flags;
 };
 
-int clknode_fixed_register(struct clkdom *clkdom, struct clk_fixed_def *clkdef,
-    struct mtx *dev_mtx);
+int clknode_fixed_register(struct clkdom *clkdom, struct clk_fixed_def *clkdef);
 
 #endif /*_DEV_EXTRES_CLK_FIXED_H_*/

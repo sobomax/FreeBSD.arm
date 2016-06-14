@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/rpc.yppasswdd/yppasswdd_server.c 288482 2015-10-02 08:58:50Z araujo $");
+__FBSDID("$FreeBSD: head/usr.sbin/rpc.yppasswdd/yppasswdd_server.c 300430 2016-05-22 19:06:38Z ngie $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -103,7 +103,10 @@ copy_yp_pass(char *p, int x, int m)
 	}
 
 	t = buf;
-#define EXPAND(e)       e = t; while ((*t++ = *p++));
+#define EXPAND(e) do { \
+	e = t; \
+	while ((*t++ = *p++)); \
+} while (0)
         EXPAND(yp_password.pw_name);
 	yp_password.pw_fields |= _PWF_NAME;
         EXPAND(yp_password.pw_passwd);

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/pci/pcib_if.m 289494 2015-10-18 08:13:51Z jmg $
+# $FreeBSD: head/sys/dev/pci/pcib_if.m 299929 2016-05-16 09:15:50Z andrew $
 #
 
 #include <sys/bus.h>
@@ -46,6 +46,10 @@ CODE {
 
 		return (0);
 	}
+};
+
+HEADER {
+	#include "pci_if.h"
 };
 
 #
@@ -175,10 +179,12 @@ METHOD int power_for_sleep {
 #
 # Return the PCI Routing Identifier (RID) for the device.
 #
-METHOD uint16_t get_rid {
+METHOD int get_id {
 	device_t	pcib;
 	device_t	dev;
-} DEFAULT pcib_get_rid;
+	enum pci_id_type type;
+	uintptr_t	*id;
+} DEFAULT pcib_get_id;
 
 #
 # Enable Alternative RID Interpretation if both the downstream port (pcib)

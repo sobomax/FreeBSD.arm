@@ -1,9 +1,10 @@
 #
-# $FreeBSD: head/lib/libwrap/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
+# $FreeBSD: head/lib/libwrap/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	wrap
 SHLIB_MAJOR= 6
 INCS=	tcpd.h

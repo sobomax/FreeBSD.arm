@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/g_raid.c 295707 2016-02-17 17:16:02Z imp $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/g_raid.c 300288 2016-05-20 08:25:37Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -2462,7 +2462,6 @@ g_raid_shutdown_post_sync(void *arg, int howto)
 	struct g_raid_volume *vol;
 
 	mp = arg;
-	DROP_GIANT();
 	g_topology_lock();
 	g_raid_shutdown = 1;
 	LIST_FOREACH_SAFE(gp, &mp->geom, geom, gp2) {
@@ -2477,7 +2476,6 @@ g_raid_shutdown_post_sync(void *arg, int howto)
 		g_topology_lock();
 	}
 	g_topology_unlock();
-	PICKUP_GIANT();
 }
 
 static void

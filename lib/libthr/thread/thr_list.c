@@ -23,9 +23,10 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_list.c 231503 2012-02-11 04:12:12Z davidxu $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_list.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include <sys/types.h>
 #include <sys/queue.h>

@@ -28,7 +28,7 @@
  | $Id: isc_soc.c 998 2009-12-20 10:32:45Z danny $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_soc.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_soc.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_iscsi_initiator.h"
 
@@ -222,7 +222,7 @@ isc_sendPDU(isc_session_t *sp, pduq_t *pq)
      if(pq->pdu.ds_addr &&  pp->ds_len) {
 	  iv->iov_base = pp->ds_addr;
 	  iv->iov_len = pp->ds_len;
-	  while(iv->iov_len & 03) // the specs say it must be int alligned
+	  while(iv->iov_len & 03) // the specs say it must be int aligned
 	       iv->iov_len++;
 	  uio->uio_resid += iv->iov_len ;
 	  iv++;

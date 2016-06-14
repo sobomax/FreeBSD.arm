@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/pc98/pc98/canbus.c 294883 2016-01-27 02:23:54Z jhibbits $
+ * $FreeBSD: head/sys/pc98/pc98/canbus.c 297199 2016-03-22 22:25:08Z jhibbits $
  */
 
 #include <sys/param.h>
@@ -433,9 +433,9 @@ print_all_resources(device_t dev)
 	if (STAILQ_FIRST(rl))
 		retval += printf(" at");
 
-	retval += resource_list_print_type(rl, "port", SYS_RES_IOPORT, "%#lx");
-	retval += resource_list_print_type(rl, "iomem", SYS_RES_MEMORY, "%#lx");
-	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%ld");
+	retval += resource_list_print_type(rl, "port", SYS_RES_IOPORT, "%#jx");
+	retval += resource_list_print_type(rl, "iomem", SYS_RES_MEMORY, "%#jx");
+	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%jd");
 
 	return retval;
 }

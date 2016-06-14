@@ -30,7 +30,7 @@
  * FDT 'simple-bus' attachment for Freescale TSEC controller.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec_fdt.c 295662 2016-02-16 15:18:12Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec_fdt.c 300176 2016-05-19 00:04:58Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -115,7 +115,8 @@ tsec_fdt_probe(device_t dev)
 	    strcmp(ofw_bus_get_type(dev), "network") != 0)
 		return (ENXIO);
 
-	if (!ofw_bus_is_compatible(dev, "gianfar"))
+	if (!ofw_bus_is_compatible(dev, "gianfar") &&
+	    !ofw_bus_is_compatible(dev, "fsl,etsec2"))
 		return (ENXIO);
 
 	sc = device_get_softc(dev);

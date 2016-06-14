@@ -8,7 +8,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/globals.c 84221 2001-09-30 22:28:01Z dillon $");
+__FBSDID("$FreeBSD: head/lib/libstand/globals.c 297191 2016-03-22 14:08:00Z bz $");
 
 #include <sys/param.h>
 #include <netinet/in.h>
@@ -30,7 +30,8 @@ struct	in_addr myip;			/* my ip address */
 struct	in_addr nameip;			/* DNS server ip address */
 struct	in_addr rootip;			/* root ip address */
 struct	in_addr swapip;			/* swap ip address */
-struct	in_addr gateip;			/* swap ip address */
+struct	in_addr gateip;			/* gateway ip address */
 n_long	netmask = 0xffffff00;		/* subnet or net mask */
+u_int	intf_mtu;			/* interface mtu from bootp/dhcp */
 int	errno;				/* our old friend */
 

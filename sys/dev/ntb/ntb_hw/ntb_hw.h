@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_hw.h 295618 2016-02-14 22:37:28Z cem $
+ * $FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_hw.h 300100 2016-05-18 02:10:05Z cem $
  */
 
 #ifndef _NTB_HW_H_
@@ -70,6 +70,7 @@ bool ntb_link_is_up(struct ntb_softc *, enum ntb_speed *, enum ntb_width *);
 void ntb_link_event(struct ntb_softc *);
 int ntb_link_enable(struct ntb_softc *, enum ntb_speed, enum ntb_width);
 int ntb_link_disable(struct ntb_softc *);
+bool ntb_link_enabled(struct ntb_softc *);
 
 int ntb_set_ctx(struct ntb_softc *, void *, const struct ntb_ctx_ops *);
 void *ntb_get_ctx(struct ntb_softc *, const struct ntb_ctx_ops **);

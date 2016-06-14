@@ -1,4 +1,6 @@
-# $FreeBSD: head/tests/sys/opencrypto/Makefile 275732 2014-12-12 19:56:36Z jmg $
+# $FreeBSD: head/tests/sys/opencrypto/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/opencrypto
 BINDIR=		${TESTSDIR}
@@ -8,7 +10,6 @@ PLAIN_TESTS_SH=	runtests
 TEST_METADATA.foo+=required_programs="python"
 PYMODULES=	cryptodev.py cryptodevh.py cryptotest.py dpkt.py
 
-FILESDIR=	${TESTSDIR}
-FILES=		${PYMODULES}
+${PACKAGE}FILES+=	${PYMODULES}
 
 .include <bsd.test.mk>

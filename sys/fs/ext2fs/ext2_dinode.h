@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/ext2fs/ext2_dinode.h 294654 2016-01-24 02:44:00Z pfg $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_dinode.h 297335 2016-03-28 07:44:55Z kevlo $
  */
 
 #ifndef _FS_EXT2FS_EXT2_DINODE_H_
@@ -131,6 +131,7 @@ struct ext2fs_dinode {
 	uint32_t	e2di_crtime;	/* 144: Creation (birth)time */
 	uint32_t	e2di_crtime_extra; /* 148: Extra creation (birth)time */
 	uint32_t	e2di_version_hi;  /* 152: High bits of inode version */
+	uint32_t	e2di_projid;	/* 156: Project ID */
 };
 
 #endif /* !_FS_EXT2FS_EXT2_DINODE_H_ */

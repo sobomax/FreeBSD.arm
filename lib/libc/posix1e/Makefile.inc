@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/posix1e/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/posix1e/Makefile.inc 296915 2016-03-15 19:26:32Z emaste $
 
 .PATH: ${LIBC_SRCTOP}/posix1e
 
@@ -11,7 +11,6 @@ subr_acl_nfs4.c: ${LIBC_SRCTOP}/../../sys/kern/subr_acl_nfs4.c
 SRCS+=	acl_branding.c			\
 	acl_calc_mask.c			\
 	acl_copy.c			\
-	acl_compat.c			\
 	acl_delete.c			\
 	acl_delete_entry.c		\
 	acl_entry.c			\
@@ -36,6 +35,9 @@ SRCS+=	acl_branding.c			\
 	mac_get.c			\
 	mac_set.c			\
 	subr_acl_nfs4.c
+.if ${MK_SYMVER} == yes
+SRCS+=	acl_compat.c
+.endif
 
 SYM_MAPS+=${LIBC_SRCTOP}/posix1e/Symbol.map
 

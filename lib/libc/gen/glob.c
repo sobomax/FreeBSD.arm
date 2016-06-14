@@ -39,7 +39,7 @@
 static char sccsid[] = "@(#)glob.c	8.3 (Berkeley) 10/13/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/glob.c 288098 2015-09-22 07:40:55Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/glob.c 301461 2016-06-05 19:12:52Z pfg $");
 
 /*
  * glob(3) -- a superset of the one defined in POSIX 1003.2.
@@ -832,8 +832,8 @@ match(Char *name, Char *pat, Char *patend)
 				if ((*pat & M_MASK) == M_RNG) {
 					if (table->__collate_load_error ?
 					    CHAR(c) <= CHAR(k) && CHAR(k) <= CHAR(pat[1]) :
-					       __collate_range_cmp(table, CHAR(c), CHAR(k)) <= 0
-					    && __collate_range_cmp(table, CHAR(k), CHAR(pat[1])) <= 0
+					       __wcollate_range_cmp(table, CHAR(c), CHAR(k)) <= 0
+					    && __wcollate_range_cmp(table, CHAR(k), CHAR(pat[1])) <= 0
 					   )
 						ok = 1;
 					pat += 2;

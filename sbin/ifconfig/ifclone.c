@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifclone.c 295836 2016-02-20 11:36:35Z kp $";
+  "$FreeBSD: head/sbin/ifconfig/ifclone.c 299873 2016-05-16 00:25:24Z truckman $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -162,7 +162,7 @@ DECL_CMD_FUNC(clone_create, arg, d)
 static
 DECL_CMD_FUNC(clone_destroy, arg, d)
 {
-	(void) strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	(void) strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	if (ioctl(s, SIOCIFDESTROY, &ifr) < 0)
 		err(1, "SIOCIFDESTROY");
 }

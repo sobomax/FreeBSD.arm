@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/freebsd32/freebsd32_misc.c 296060 2016-02-25 19:58:23Z markj $");
+__FBSDID("$FreeBSD: head/sys/compat/freebsd32/freebsd32_misc.c 297400 2016-03-29 19:57:11Z glebius $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -1653,6 +1653,19 @@ freebsd32_do_sendfile(struct thread *td,
 			    hdtr32.hdr_cnt, &hdr_uio);
 			if (error)
 				goto out;
+#ifdef COMPAT_FREEBSD4
+			/*
+			 * In FreeBSD < 5.0 the nbytes to send also included
+			 * the header.  If compat is specified subtract the
+			 * header size from nbytes.
+			 */
+			if (compat) {
+				if (uap->nbytes > hdr_uio->uio_resid)
+					uap->nbytes -= hdr_uio->uio_resid;
+				else
+					uap->nbytes = 0;
+			}
+#endif
 		}
 		if (hdtr.trailers != NULL) {
 			iov32 = PTRIN(hdtr32.trailers);
@@ -1670,7 +1683,7 @@ freebsd32_do_sendfile(struct thread *td,
 		goto out;
 
 	error = fo_sendfile(fp, uap->s, hdr_uio, trl_uio, offset,
-	    uap->nbytes, &sbytes, uap->flags, compat ? SFK_COMPAT : 0, td);
+	    uap->nbytes, &sbytes, uap->flags, td);
 	fdrop(fp, td);
 
 	if (uap->sbytes != NULL)

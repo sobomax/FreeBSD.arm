@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/isci_timer.c 274819 2014-11-21 21:01:24Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/isci_timer.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <dev/isci/isci.h>
 
@@ -144,7 +144,7 @@ scif_cb_timer_create(SCI_CONTROLLER_HANDLE_T scif_controller,
 }
 
 /**
- * @brief This callback method asks the user to destory the supplied timer.
+ * @brief This callback method asks the user to destroy the supplied timer.
  *
  * @param[in]  controller This parameter specifies the controller with
  *             which this timer is to associated.

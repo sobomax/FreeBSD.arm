@@ -1,6 +1,6 @@
-# $FreeBSD: head/usr.bin/readelf/Makefile 291326 2015-11-25 19:48:09Z bdrewery $
+# $FreeBSD: head/usr.bin/readelf/Makefile 298401 2016-04-21 12:58:29Z emaste $
 
-ELFTCDIR=	${.CURDIR}/../../contrib/elftoolchain
+ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 READELFDIR=	${ELFTCDIR}/readelf
 
 .PATH: ${READELFDIR}

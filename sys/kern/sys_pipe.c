@@ -90,7 +90,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_pipe.c 286021 2015-07-29 17:18:27Z ed $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_pipe.c 298649 2016-04-26 15:38:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1542,7 +1542,7 @@ pipe_stat(fp, ub, active_cred, td)
 		ub->st_size = pipe->pipe_map.cnt;
 	else
 		ub->st_size = pipe->pipe_buffer.cnt;
-	ub->st_blocks = (ub->st_size + ub->st_blksize - 1) / ub->st_blksize;
+	ub->st_blocks = howmany(ub->st_size, ub->st_blksize);
 	ub->st_atim = pipe->pipe_atime;
 	ub->st_mtim = pipe->pipe_mtime;
 	ub->st_ctim = pipe->pipe_ctime;

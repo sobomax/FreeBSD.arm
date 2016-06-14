@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/glue.c 296182 2016-02-29 07:27:49Z sgalabov $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/glue.c 296564 2016-03-09 11:45:48Z sgalabov $");
 
 #include <sys/types.h>
 
@@ -65,6 +65,41 @@ valid_sig(struct api_signature *sig)
 		return (0);
 
 	return (1);
+}
+
+/*
+ * Checks to see if API signature's address was given to us as a command line
+ * argument by U-Boot.
+ *
+ * returns 1/0 depending on found/not found result
+ */
+int
+api_parse_cmdline_sig(int argc, char **argv, struct api_signature **sig)
+{
+	unsigned long api_address;
+	int c;
+
+	api_address = 0;
+	opterr = 0;
+	optreset = 1;
+	optind = 1;
+
+	while ((c = getopt (argc, argv, "a:")) != -1)
+		switch (c) {
+		case 'a':
+			api_address = strtoul(optarg, NULL, 16);
+			break;
+		default:
+			break;
+		}
+
+	if (api_address != 0) {
+		*sig = (struct api_signature *)api_address;
+		if (valid_sig(*sig))
+			return (1);
+	}
+
+	return (0);
 }
 
 /*

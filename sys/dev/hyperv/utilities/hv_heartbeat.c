@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Microsoft Corp.
+ * Copyright (c) 2014,2016 Microsoft Corp.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/utilities/hv_heartbeat.c 295958 2016-02-24 05:01:18Z sephe $
+ * $FreeBSD: head/sys/dev/hyperv/utilities/hv_heartbeat.c 298446 2016-04-22 05:01:43Z sephe $
  */
 
 #include <sys/param.h>
@@ -59,7 +59,7 @@ hv_heartbeat_cb(void *context)
 	hv_util_sc			*softc;
 
 	softc = (hv_util_sc*)context;
-	buf = softc->receive_buffer;;
+	buf = softc->receive_buffer;
 	channel = softc->hv_dev->channel;
 
 	ret = hv_vmbus_channel_recv_packet(channel, buf, PAGE_SIZE, &recvlen,
@@ -94,6 +94,10 @@ static int
 hv_heartbeat_probe(device_t dev)
 {
 	const char *p = vmbus_get_type(dev);
+
+	if (resource_disabled("hvheartbeat", 0))
+		return ENXIO;
+
 	if (!memcmp(p, &service_guid, sizeof(hv_guid))) {
 		device_set_desc(dev, "Hyper-V Heartbeat Service");
 		return BUS_PROBE_DEFAULT;

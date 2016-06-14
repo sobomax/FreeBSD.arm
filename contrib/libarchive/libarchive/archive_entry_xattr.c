@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_entry_xattr.c 228763 2011-12-21 11:13:29Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_entry_xattr.c 299529 2016-05-12 10:16:16Z mm $");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -98,7 +98,10 @@ archive_entry_xattr_add_entry(struct archive_entry *entry,
 		/* XXX Error XXX */
 		return;
 
-	xp->name = strdup(name);
+	if ((xp->name = strdup(name)) == NULL)
+		/* XXX Error XXX */
+		return;
+
 	if ((xp->value = malloc(size)) != NULL) {
 		memcpy(xp->value, value, size);
 		xp->size = size;

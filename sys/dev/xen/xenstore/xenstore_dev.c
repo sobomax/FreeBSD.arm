@@ -31,7 +31,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore_dev.c 278844 2015-02-16 09:53:43Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore_dev.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/types.h>
 #include <sys/cdefs.h>
@@ -241,7 +241,7 @@ xs_dev_identify(driver_t *driver __unused, device_t parent)
 }
 
 /**
- * \brief Probe for the existance of the Xenstore device
+ * \brief Probe for the existence of the Xenstore device
  *
  * \param dev  NewBus device_t for this instance.
  *

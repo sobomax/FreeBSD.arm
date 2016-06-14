@@ -1,15 +1,16 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ldconfig 294295 2016-01-18 21:40:18Z imp $
+# $FreeBSD: head/etc/rc.d/ldconfig 301004 2016-05-30 19:59:51Z ngie $
 #
 
 # PROVIDE: ldconfig
-# REQUIRE: mountcritremote FILESYSTEMS
+# REQUIRE: FILESYSTEMS
 # BEFORE:  DAEMON
 
 . /etc/rc.subr
 
 name="ldconfig"
+desc="Configure the shared library cache"
 ldconfig_command="/sbin/ldconfig"
 start_cmd="ldconfig_start"
 stop_cmd=":"

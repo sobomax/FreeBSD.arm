@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_sas_lsi.c 292218 2015-12-14 19:40:47Z asomers $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_sas_lsi.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
@@ -647,7 +647,7 @@ mpssas_add_device(struct mps_softc *sc, u16 handle, u8 linkrate){
 			parent_devinfo = le32toh(parent_config_page.DeviceInfo);
 		}
 	}
-	/* TODO Check proper endianess */
+	/* TODO Check proper endianness */
 	sas_address = config_page.SASAddress.High;
 	sas_address = (sas_address << 32) | config_page.SASAddress.Low;
 

@@ -25,9 +25,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_spec.c 282948 2015-05-15 08:40:17Z kib $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_spec.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include "namespace.h"
 #include <sys/mman.h>

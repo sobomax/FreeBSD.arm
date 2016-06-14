@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm_rx.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm_rx.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -178,7 +178,7 @@ hatm_rx(struct hatm_softc *sc, u_int cid, u_int flags, struct mbuf *m0,
 	if (vcc->param.aal == ATMIO_AAL_5) {
 		/*
 		 * Need to remove padding and the trailer. The trailer
-		 * may be split accross buffers according to 2.10.1.2
+		 * may be split across buffers according to 2.10.1.2
 		 * Assume that mbufs sizes are even (buffer sizes and cell
 		 * payload sizes are) and that there are no empty mbufs.
 		 */

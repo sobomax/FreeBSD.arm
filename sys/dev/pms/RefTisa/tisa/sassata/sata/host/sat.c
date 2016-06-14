@@ -28,7 +28,7 @@
  */
 /*****************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pms/RefTisa/tisa/sassata/sata/host/sat.c 285242 2015-07-07 13:17:02Z achim $");
+__FBSDID("$FreeBSD: head/sys/dev/pms/RefTisa/tisa/sassata/sata/host/sat.c 300050 2016-05-17 12:52:31Z eadler $");
 #include <dev/pms/config.h>
 
 #include <dev/pms/freebsd/driver/common/osenv.h>
@@ -5975,7 +5975,7 @@ GLOBAL bit32  satReadCapacity10(
     /*
      * Setting RETURNED LOGICAL BLOCK ADDRESS in READ CAPACITY(10) response data:
      * SBC-2 specifies that if the capacity exceeded the 4-byte RETURNED LOGICAL
-     * BLOCK ADDRESS in READ CAPACITY(10) parameter data, the the RETURNED LOGICAL
+     * BLOCK ADDRESS in READ CAPACITY(10) parameter data, the RETURNED LOGICAL
      * BLOCK ADDRESS should be set to 0xFFFFFFFF so the application client would
      * then issue a READ CAPACITY(16) command.
      */

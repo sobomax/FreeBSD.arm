@@ -1,8 +1,10 @@
 #
-# $FreeBSD: head/tests/sys/geom/class/uzip/Makefile 293821 2016-01-13 09:14:27Z ngie $
+# $FreeBSD: head/tests/sys/geom/class/uzip/Makefile 299094 2016-05-04 23:20:53Z ngie $
 #
 # Regression test for geom_uzip.
 #
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/geom/class/${.CURDIR:T}
 
@@ -23,15 +25,13 @@ ${UZIMAGE}: ${IMAGE} ${ZIMAGE}
 	printf "FreeBSD$$\n#\n\n" >> ${.TARGET}
 	uuencode ${ZIMAGE} ${ZIMAGE} >>${.TARGET}
 
-FILES+=		conf.sh
-FILESNAME_conf.sh=	conf.sh
+${PACKAGE}FILES+=		conf.sh \
+				${UZIMAGE}
 
-FILES+=		${UZIMAGE}
-FILESDIR=	${TESTSDIR}
-
-FILESGROUPS=	FILES etalon
+FILESGROUPS+=	etalon
 etalon+=	etalon/etalon.txt
 etalonDIR=	${TESTSDIR}/etalon
+etalonPACKAGE=	${PACKAGE}
 
 TAP_TESTS_SH+=	1_test
 

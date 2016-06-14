@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwm.c,v 1.39 2015/03/23 00:35:19 jsg Exp $	*/
-/*	$FreeBSD: head/sys/dev/iwm/if_iwm_time_event.h 286441 2015-08-08 06:06:48Z rpaulo $ */
+/*	$FreeBSD: head/sys/dev/iwm/if_iwm_time_event.h 298582 2016-04-25 16:13:04Z adrian $ */
 
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>
@@ -108,6 +108,6 @@
 #define	__IF_IWM_TIME_EVENT_H__
 
 extern	void iwm_mvm_protect_session(struct iwm_softc *sc, struct iwm_node *in,
-	    uint32_t duration, uint32_t min_duration, uint32_t max_delay);
+	    uint32_t duration, uint32_t max_delay);
 
 #endif	/* __IF_IWM_TIME_EVENT_H__ */

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/load_elf_obj.c 296428 2016-03-06 15:57:43Z dim $");
+__FBSDID("$FreeBSD: head/sys/boot/common/load_elf_obj.c 297702 2016-04-08 10:23:48Z kib $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -222,7 +222,7 @@ __elfN(obj_loadimage)(struct preloaded_file *fp, elf_file_t ef, u_int64_t off)
 		case SHT_PROGBITS:
 		case SHT_NOBITS:
 #if defined(__i386__) || defined(__amd64__)
-		case SHT_AMD64_UNWIND:
+		case SHT_X86_64_UNWIND:
 #endif
 			lastaddr = roundup(lastaddr, shdr[i].sh_addralign);
 			shdr[i].sh_addr = (Elf_Addr)lastaddr;

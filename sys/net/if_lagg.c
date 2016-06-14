@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_lagg.c 295796 2016-02-19 06:35:53Z araujo $");
+__FBSDID("$FreeBSD: head/sys/net/if_lagg.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -2031,7 +2031,7 @@ lagg_fail_input(struct lagg_softc *sc, struct lagg_port *lp, struct mbuf *m)
 	if (!LAGG_PORTACTIVE(sc->sc_primary)) {
 		tmp_tp = lagg_link_active(sc, sc->sc_primary);
 		/*
-		 * If tmp_tp is null, we've recieved a packet when all
+		 * If tmp_tp is null, we've received a packet when all
 		 * our links are down. Weird, but process it anyways.
 		 */
 		if ((tmp_tp == NULL || tmp_tp == lp)) {

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwi/if_iwi.c 293339 2016-01-07 18:41:03Z avos $");
+__FBSDID("$FreeBSD: head/sys/dev/iwi/if_iwi.c 298818 2016-04-29 22:14:11Z avos $");
 
 /*-
  * Intel(R) PRO/Wireless 2200BG/2225BG/2915ABG driver
@@ -271,7 +271,7 @@ iwi_attach(device_t dev)
 	struct iwi_softc *sc = device_get_softc(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
 	uint16_t val;
-	uint8_t bands[howmany(IEEE80211_MODE_MAX, 8)];
+	uint8_t bands[IEEE80211_MODE_BYTES];
 	int i, error;
 
 	sc->sc_dev = dev;

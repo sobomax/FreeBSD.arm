@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)lexi.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/indent/lexi.c 206687 2010-04-15 21:41:07Z avg $");
+__FBSDID("$FreeBSD: head/usr.bin/indent/lexi.c 301513 2016-06-06 16:10:52Z pfg $");
 
 /*
  * Here we have the token scanner for indent.  It scans off one token and puts
@@ -79,7 +79,7 @@ struct templ specials[1000] =
     {"double", 4},
     {"long", 4},
     {"short", 4},
-    {"typdef", 4},
+    {"typedef", 4},
     {"unsigned", 4},
     {"register", 4},
     {"static", 4},

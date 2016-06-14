@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libsysdecode/errno.c 295931 2016-02-23 20:00:55Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libsysdecode/errno.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <errno.h>
@@ -56,7 +56,7 @@ static int bsd_to_linux_errno[ELAST + 1] = {
 #endif
 
 #if defined(__aarch64__) || defined(__amd64__)
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
+#include <contrib/cloudabi/cloudabi_types_common.h>
 
 static const int cloudabi_errno_table[] = {
 	[CLOUDABI_E2BIG]		= E2BIG,

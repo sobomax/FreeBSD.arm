@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ah.c 296176 2016-02-29 02:40:58Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ah.c 298939 2016-05-02 19:56:48Z pfg $
  */
 #include "opt_ah.h"
 
@@ -362,7 +362,7 @@ ath_hal_computetxtime(struct ath_hal *ah,
 
 	kbps = rates->info[rateix].rateKbps;
 	/*
-	 * index can be invalid duting dynamic Turbo transitions. 
+	 * index can be invalid during dynamic Turbo transitions. 
 	 * XXX
 	 */
 	if (kbps == 0)

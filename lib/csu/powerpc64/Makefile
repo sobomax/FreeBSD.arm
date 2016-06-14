@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/csu/powerpc64/Makefile 288076 2015-09-21 21:44:02Z bdrewery $
+# $FreeBSD: head/lib/csu/powerpc64/Makefile 297249 2016-03-24 21:48:10Z bdrewery $
 
 .PATH: ${.CURDIR}/../common
 
@@ -13,8 +13,11 @@ CFLAGS+=	-I${.CURDIR}/../common \
 # clang doesn't support -mlongcall, and testing shows a clang linked with a
 # clang-built csu segfaults, this must currently be compiled with gcc.  Once
 # clang supports -mlongcall, or we get a fixed ld, this can be revisited.
+.include <bsd.compiler.mk>
+.if ${COMPILER_TYPE} != "gcc"
 CC:=		gcc
 COMPILER_TYPE:=	gcc
+.endif
 
 FILES=		${OBJS}
 FILESMODE=	${LIBMODE}

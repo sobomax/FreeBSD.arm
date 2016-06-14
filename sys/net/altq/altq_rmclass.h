@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_rmclass.h,v 1.10 2003/08/20 23:30:23 itojun Exp $
- * $FreeBSD: head/sys/net/altq/altq_rmclass.h 287009 2015-08-21 22:02:22Z loos $
+ * $FreeBSD: head/sys/net/altq/altq_rmclass.h 298995 2016-05-03 18:05:43Z pfg $
  */
 
 #ifndef _ALTQ_ALTQ_RMCLASS_H_
@@ -188,7 +188,7 @@ struct rm_class {
  */
 struct rm_ifdat {
 	int		queued_;	/* # pkts queued downstream */
-	int		efficient_;	/* Link Efficency bit */
+	int		efficient_;	/* Link Efficiency bit */
 	int		wrr_;		/* Enable Weighted Round-Robin */
 	u_long		ns_per_byte_;	/* Link byte speed. */
 	int		maxqueued_;	/* Max packets to queue */

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/linker.h 292429 2015-12-18 06:13:18Z imp $
+ * $FreeBSD: head/sys/sys/linker.h 298981 2016-05-03 15:14:17Z pfg $
  */
 
 #ifndef _SYS_LINKER_H_
@@ -160,7 +160,7 @@ int linker_file_function_listall(linker_file_t,
 				 linker_function_nameval_callback_t, void *);
 
 /*
- * Functions soley for use by the linker class handlers.
+ * Functions solely for use by the linker class handlers.
  */
 int linker_add_class(linker_class_t _cls);
 int linker_file_unload(linker_file_t _file, int flags);

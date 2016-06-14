@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/kshim/bsd_kernel.h 294547 2016-01-22 06:26:11Z wma $ */
+/* $FreeBSD: head/sys/boot/kshim/bsd_kernel.h 298650 2016-04-26 15:41:31Z hselasky $ */
 /*-
  * Copyright (c) 2011 Hans Petter Selasky. All rights reserved.
  *
@@ -35,6 +35,8 @@
 #include <sys/queue.h>
 #include <sys/errno.h>
 
+#define	howmany(x, y)	(((x)+((y)-1))/(y))
+#define	nitems(x)	(sizeof((x)) / sizeof((x)[0]))
 #define	isalpha(x) (((x) >= 'a' && (x) <= 'z') || ((x) >= 'A' && (x) <= 'Z'))
 #define	isdigit(x) ((x) >= '0' && (x) <= '9')
 #define	panic(...) do { printf("USB PANIC: " __VA_ARGS__); while (1) ; } while (0)

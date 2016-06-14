@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/powerpc/reloc.c 294373 2016-01-20 07:21:33Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/powerpc/reloc.c 298285 2016-04-19 19:03:55Z pfg $
  */
 
 #include <sys/param.h>
@@ -126,7 +126,7 @@ do_copy_relocations(Obj_Entry *dstobj)
 void
 reloc_non_plt_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 {
-	const Elf_Rela *rela = 0, *relalim;
+	const Elf_Rela *rela = NULL, *relalim;
 	Elf_Addr relasz = 0;
 	Elf_Addr *where;
 

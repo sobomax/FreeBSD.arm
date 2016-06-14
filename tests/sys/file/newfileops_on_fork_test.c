@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * This software was developed at the University of Cambridge Computer
- * Laboratory with support from a grant from Google, Inc. 
+ * Laboratory with support from a grant from Google, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tests/sys/file/newfileops_on_fork_test.c 281432 2015-04-11 10:14:59Z ngie $
+ * $FreeBSD: head/tests/sys/file/newfileops_on_fork_test.c 298196 2016-04-18 07:48:27Z ngie $
  */
 
 /*
@@ -115,7 +115,7 @@ main(__unused int argc, __unused char *argv[])
 		err(-1, "listen");
 	if (pthread_create(&accept_thread, NULL, do_accept, NULL) != 0)
 		err(-1, "pthread_create");
-	sleep(1);	/* Easier than using a CV. */;
+	sleep(1);	/* Easier than using a CV. */
 	do_fork();
 	exit(0);
 }

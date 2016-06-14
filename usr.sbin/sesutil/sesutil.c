@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/sesutil/sesutil.c 292262 2015-12-15 13:01:14Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/sesutil/sesutil.c 298382 2016-04-20 21:37:32Z bapt $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/sesutil/sesutil.c 292262 2015-12-15 13:01:14Z 
 #include <string.h>
 #include <unistd.h>
 
-#include <cam/scsi/scsi_all.h>
 #include <cam/scsi/scsi_enc.h>
 
 #include "eltsub.h"
@@ -273,6 +272,7 @@ sesled(int argc, char **argv, bool setfault)
 				}
 			}
 		}
+		free(objp);
 		close(fd);
 	}
 	globfree(&g);
@@ -425,6 +425,7 @@ objmap(int argc, char **argv __unused)
 			sbuf_delete(extra);
 			free(e_devname.elm_devnames);
 		}
+		free(e_ptr);
 		close(fd);
 	}
 	globfree(&g);

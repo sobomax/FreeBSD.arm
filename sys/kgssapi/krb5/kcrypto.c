@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kgssapi/krb5/kcrypto.c 184588 2008-11-03 10:38:00Z dfr $");
+__FBSDID("$FreeBSD: head/sys/kgssapi/krb5/kcrypto.c 298649 2016-04-26 15:38:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -202,8 +202,7 @@ krb5_derive_key(struct krb5_key_state *inkey,
 	 * Generate enough bytes for keybits rounded up to a multiple
 	 * of blocklen.
 	 */
-	randomlen = ((ec->ec_keybits/8 + ec->ec_blocklen - 1) / ec->ec_blocklen)
-		* ec->ec_blocklen;
+	randomlen = roundup(ec->ec_keybits / 8, ec->ec_blocklen);
 	bytes = malloc(randomlen, M_GSSAPI, M_WAITOK);
 	MGET(m, M_WAITOK, MT_DATA);
 	m->m_len = ec->ec_blocklen;

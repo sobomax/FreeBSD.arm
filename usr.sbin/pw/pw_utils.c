@@ -25,15 +25,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pw/pw_utils.c 286201 2015-08-02 13:22:46Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/pw/pw_utils.c 297290 2016-03-26 11:41:35Z bapt $");
 
-#include <sys/types.h>
 #include <sys/wait.h>
 
 #include <err.h>
-#include <inttypes.h>
 #include <sysexits.h>
-#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>

@@ -24,13 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/pmap.h 295799 2016-02-19 08:41:47Z skra $
+ * $FreeBSD: head/sys/arm/include/pmap.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef _MACHINE_PMAP_H_
 #define _MACHINE_PMAP_H_
-
-#include <machine/acle-compat.h>
 
 #if __ARM_ARCH >= 6
 #include <machine/pmap-v6.h>

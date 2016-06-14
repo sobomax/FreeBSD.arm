@@ -35,7 +35,7 @@
  * this approach means that we need a method for each and every encoding.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/localedef/wide.c 290559 2015-11-08 21:22:24Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/localedef/wide.c 298746 2016-04-28 15:20:08Z pfg $");
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -92,7 +92,7 @@ static struct {
 	{ "EUC-CN",	"EUC-CN",	16, towide_euccn, tomb_mbs },
 	{ "eucCN",	"EUC-CN",	16, towide_euccn, tomb_mbs },
 	/*
-	 * Becuase the 3-byte form of EUC-JP use the same leading byte,
+	 * Because the 3-byte form of EUC-JP use the same leading byte,
 	 * only 17 bits required to provide unique priorities.  (The low
 	 * bit of that first byte is set.)  By setting this value low,
 	 * we can get by with only 3 bytes in the strxfrm expansion.

@@ -1,4 +1,4 @@
-.\" $FreeBSD: head/tools/build/options/WITH_CCACHE_BUILD 290526 2015-11-08 00:50:18Z bdrewery $
+.\" $FreeBSD: head/tools/build/options/WITH_CCACHE_BUILD 297436 2016-03-30 23:53:12Z bdrewery $
 Set to use
 .Xr ccache 1
 for the build.
@@ -24,9 +24,6 @@ when using an external compiler.
 The
 .Sy CCACHE_CPP2
 option is used for Clang but not GCC.
-ccache works best when combined with the
-.Sy WITH_FAST_DEPEND
-option.
 .Pp
 Sharing a cache between multiple work directories requires using a layout
 similar to

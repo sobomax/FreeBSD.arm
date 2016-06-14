@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2015 Ian Lepore <ian@freebsd.org>
- * All rights excluded.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/ofw_machdep.c 295662 2016-02-16 15:18:12Z andrew $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/ofw_machdep.c 297682 2016-04-07 18:19:09Z ian $");
 
 #include <sys/param.h>
 #include <sys/bus.h>

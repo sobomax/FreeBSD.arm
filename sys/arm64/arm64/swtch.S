@@ -35,7 +35,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/swtch.S 295563 2016-02-12 12:38:04Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/swtch.S 297446 2016-03-31 11:07:24Z andrew $");
 
 .macro clear_step_flag pcbflags, tmp
 	tbz	\pcbflags, #PCB_SINGLE_STEP_SHIFT, 999f
@@ -86,7 +86,7 @@ ENTRY(cpu_throw)
 	 */
 
 	/* Switch to the new pmap */
-	ldr	x5, [x4, #PCB_L1ADDR]
+	ldr	x5, [x4, #PCB_L0ADDR]
 	msr	ttbr0_el1, x5
 	isb
 
@@ -183,7 +183,7 @@ ENTRY(cpu_switch)
 	 */
 
 	/* Switch to the new pmap */
-	ldr	x5, [x4, #PCB_L1ADDR]
+	ldr	x5, [x4, #PCB_L0ADDR]
 	msr	ttbr0_el1, x5
 	isb
 

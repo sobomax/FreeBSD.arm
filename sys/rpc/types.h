@@ -29,7 +29,7 @@
  *
  *	from: @(#)types.h 1.18 87/07/24 SMI
  *	from: @(#)types.h	2.3 88/08/15 4.0 RPCSRC
- * $FreeBSD: head/sys/rpc/types.h 258578 2013-11-25 19:04:36Z hrs $
+ * $FreeBSD: head/sys/rpc/types.h 299150 2016-05-06 01:49:46Z pfg $
  */
 
 /*
@@ -94,7 +94,7 @@ struct netbuf {
 };
 
 /*
- * The format of the addres and options arguments of the XTI t_bind call.
+ * The format of the address and options arguments of the XTI t_bind call.
  * Only provided for compatibility, it should not be used.
  */
 

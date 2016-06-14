@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.own.mk 296062 2016-02-25 20:02:42Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.own.mk 300763 2016-05-26 18:28:10Z jhb $
 #
 # The include file <bsd.own.mk> set common variables for owner,
 # group, mode, and directories. Defaults are in brackets.
@@ -49,7 +49,7 @@
 #
 #
 # KMODDIR	Base path for loadable kernel modules
-#		(see kld(4)). [/boot/kernel]
+#		(see kld(4)). [/boot/module]
 #
 # KMODOWN	Kernel and KLD owner. [${BINOWN}]
 #
@@ -165,11 +165,7 @@ BINGRP?=	wheel
 BINMODE?=	555
 NOBINMODE?=	444
 
-.if defined(MODULES_WITH_WORLD)
 KMODDIR?=	/boot/modules
-.else
-KMODDIR?=	/boot/kernel
-.endif
 KMODOWN?=	${BINOWN}
 KMODGRP?=	${BINGRP}
 KMODMODE?=	${BINMODE}

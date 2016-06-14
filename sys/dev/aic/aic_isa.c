@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/aic/aic_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/aic/aic_isa.c 298432 2016-04-21 19:48:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/callout.h>
@@ -57,7 +57,8 @@ static int aic_isa_probe(device_t);
 static int aic_isa_attach(device_t);
 
 static u_int aic_isa_ports[] = { 0x340, 0x140 };
-#define	AIC_ISA_NUMPORTS (sizeof(aic_isa_ports) / sizeof(aic_isa_ports[0]))
+
+#define	AIC_ISA_NUMPORTS nitems(aic_isa_ports)
 #define	AIC_ISA_PORTSIZE 0x20
 
 static struct isa_pnp_id aic_ids[] = {

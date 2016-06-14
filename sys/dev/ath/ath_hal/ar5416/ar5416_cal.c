@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5416/ar5416_cal.c 277290 2015-01-17 07:33:02Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5416/ar5416_cal.c 298939 2016-05-02 19:56:48Z pfg $
  */
 #include "opt_ah.h"
 
@@ -772,7 +772,7 @@ ar5416SanitizeNF(struct ath_hal *ah, int16_t *nf)
 
 
 /*
- * Read the NF and check it against the noise floor threshhold
+ * Read the NF and check it against the noise floor threshold
  *
  * Return 0 if the NF calibration hadn't finished, 0 if it was
  * invalid, or > 0 for a valid NF reading.

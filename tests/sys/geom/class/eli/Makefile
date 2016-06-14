@@ -1,4 +1,6 @@
-# $FreeBSD: head/tests/sys/geom/class/eli/Makefile 293821 2016-01-13 09:14:27Z ngie $
+# $FreeBSD: head/tests/sys/geom/class/eli/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/geom/class/${.CURDIR:T}
 
@@ -31,9 +33,7 @@ TEST_METADATA.integrity_hmac_test+=	timeout="600"
 TEST_METADATA.onetime_a_test+=	timeout="600"
 TEST_METADATA.onetime_test+=	timeout="600"
 
-FILES+=		conf.sh
-FILESNAME_conf.sh=	conf.sh
-FILESDIR=	${TESTSDIR}
+${PACKAGE}FILES+=		conf.sh
 
 .for t in ${TAP_TESTS_SH}
 TEST_METADATA.$t+=	required_user="root"

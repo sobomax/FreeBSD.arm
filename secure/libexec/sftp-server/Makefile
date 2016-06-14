@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/libexec/sftp-server/Makefile 291941 2015-12-07 16:08:09Z bdrewery $
+# $FreeBSD: head/secure/libexec/sftp-server/Makefile 296633 2016-03-11 00:15:29Z des $
 
 .include <src.opts.mk>
 
@@ -7,11 +7,6 @@ SRCS=   sftp-server.c sftp-common.c sftp-server-main.c
 MAN=	sftp-server.8
 CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
 SRCS+=	ssh_namespace.h
-
-.if !defined(NO_SHARED)
-# required when linking with a dynamic libssh
-SRCS+=	roaming_dummy.c
-.endif
 
 LIBADD=	ssh
 

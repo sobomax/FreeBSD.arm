@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)rpcinfo.c 1.16 89/04/05 Copyr 1986 Sun Micro";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rpcinfo/rpcinfo.c 256506 2013-10-15 07:37:30Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.bin/rpcinfo/rpcinfo.c 299582 2016-05-13 00:50:53Z truckman $");
 
 /*
  * rpcinfo: ping a particular rpc program
@@ -609,12 +609,13 @@ reply_proc(void *res, struct netbuf *who, struct netconfig *nconf)
 	} else {
 		hostname = hostbuf;
 	}
-	if (!(uaddr = taddr2uaddr(nconf, who))) {
-		uaddr = UNKNOWN;
-	}
-	printf("%s\t%s\n", uaddr, hostname);
-	if (strcmp(uaddr, UNKNOWN))
+	uaddr = taddr2uaddr(nconf, who);
+	if (uaddr == NULL) {
+		printf("%s\t%s\n", UNKNOWN, hostname);
+	} else {
+		printf("%s\t%s\n", uaddr, hostname);
 		free((char *)uaddr);
+	}
 	return (FALSE);
 }
 

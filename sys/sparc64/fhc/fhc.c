@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/fhc/fhc.c 295832 2016-02-20 01:32:58Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/sparc64/fhc/fhc.c 300173 2016-05-18 23:39:31Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -205,7 +205,7 @@ fhc_attach(device_t dev)
 	device_printf(dev, "board %d, ", board);
 	if (OF_getprop_alloc(node, "board-model", 1, (void **)&name) != -1) {
 		printf("model %s\n", name);
-		free(name, M_OFWPROP);
+		OF_prop_free(name);
 	} else
 		printf("model unknown\n");
 
@@ -297,7 +297,7 @@ fhc_attach(device_t dev)
 			resource_list_add(&fdi->fdi_rl, SYS_RES_MEMORY, j,
 			    reg[j].sbr_offset, reg[j].sbr_offset +
 			    reg[j].sbr_size, reg[j].sbr_size);
-		free(reg, M_OFWPROP);
+		OF_prop_free(reg);
 		if (central == 1) {
 			i = OF_getprop_alloc(child, "interrupts",
 			    sizeof(*intr), (void **)&intr);
@@ -307,7 +307,7 @@ fhc_attach(device_t dev)
 					resource_list_add(&fdi->fdi_rl,
 					    SYS_RES_IRQ, j, iv, iv, 1);
 				}
-				free(intr, M_OFWPROP);
+				OF_prop_free(intr);
 			}
 		}
 		cdev = device_add_child(dev, NULL, -1);
@@ -529,7 +529,7 @@ fhc_print_res(struct fhc_devinfo *fdi)
 
 	rv = 0;
 	rv += resource_list_print_type(&fdi->fdi_rl, "mem", SYS_RES_MEMORY,
-	    "%#lx");
-	rv += resource_list_print_type(&fdi->fdi_rl, "irq", SYS_RES_IRQ, "%ld");
+	    "%#jx");
+	rv += resource_list_print_type(&fdi->fdi_rl, "irq", SYS_RES_IRQ, "%jd");
 	return (rv);
 }

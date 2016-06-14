@@ -2,7 +2,7 @@
 # Copyright 1990 W. Jolitz
 #	from: @(#)Makefile.i386	7.1 5/10/91
 #	from FreeBSD: src/sys/conf/Makefile.i386,v 1.255 2002/02/20 23:35:49
-# $FreeBSD: head/sys/conf/Makefile.riscv 295041 2016-01-29 15:12:31Z br $
+# $FreeBSD: head/sys/conf/Makefile.riscv 300617 2016-05-24 16:30:05Z br $
 #
 # Makefile for FreeBSD
 #
@@ -29,8 +29,11 @@ S=	../../..
 INCLUDES+= -I$S/contrib/libfdt
 
 .if !empty(DDB_ENABLED)
-CFLAGS += -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer
+CFLAGS += -fno-omit-frame-pointer -fno-optimize-sibling-calls
 .endif
+
+# hack because genassym.c includes sys/bus.h which includes these.
+genassym.o: bus_if.h device_if.h
 
 %BEFORE_DEPEND
 

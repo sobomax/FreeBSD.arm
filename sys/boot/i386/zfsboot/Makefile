@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/zfsboot/Makefile 295757 2016-02-18 14:17:28Z emaste $
+# $FreeBSD: head/sys/boot/i386/zfsboot/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 .PATH:		${.CURDIR}/../boot2 ${.CURDIR}/../common ${.CURDIR}/../../common
 
@@ -85,7 +85,7 @@ SRCS=	zfsboot.c
 .if ${MACHINE_CPUARCH} == "amd64"
 beforedepend zfsboot.o: machine
 CLEANFILES+=	machine
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../i386/include machine
 .endif
 
@@ -93,4 +93,3 @@ machine:
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.zfsldr.S=	${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

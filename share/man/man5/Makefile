@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-#	$FreeBSD: head/share/man/man5/Makefile 290659 2015-11-10 13:28:41Z ngie $
+#	$FreeBSD: head/share/man/man5/Makefile 300071 2016-05-17 18:42:38Z jhb $
 
 .include <src.opts.mk>
+
+PACKAGE=runtime-manuals
 
 #MISSING: dump.5 plot.5
 MAN=	acct.5 \
@@ -55,7 +57,6 @@ MAN=	acct.5 \
 	rc.conf.5 \
 	rctl.conf.5 \
 	regdomain.5 \
-	reiserfs.5 \
 	remote.5 \
 	resolver.5 \
 	services.5 \

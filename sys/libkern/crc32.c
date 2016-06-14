@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/libkern/crc32.c 233517 2012-03-26 18:22:04Z marius $");
+__FBSDID("$FreeBSD: head/sys/libkern/crc32.c 298848 2016-04-30 14:41:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -684,7 +684,7 @@ crc32c_sb8_64_bit(uint32_t crc,
 	uint32_t running_length;
 	uint32_t end_bytes;
 
-	running_length = ((length - init_bytes) / 8) * 8;
+	running_length = rounddown(length - init_bytes, 8);
 	end_bytes = length - init_bytes - running_length;
 
 	for (li = 0; li < init_bytes; li++)

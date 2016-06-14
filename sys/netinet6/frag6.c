@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/frag6.c 293470 2016-01-09 09:34:39Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/frag6.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_rss.h"
 
@@ -135,7 +135,7 @@ frag6_init(void)
  *	fragment's Fragment header.
  *		-> should grab it from the first fragment only
  *
- * The following note also contradicts with fragment rule - noone is going to
+ * The following note also contradicts with fragment rule - no one is going to
  * send different fragment with different next header field.
  *
  * additional note (p22):

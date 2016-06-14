@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/pci/pcivar.h 296308 2016-03-02 09:54:58Z wma $
+ * $FreeBSD: head/sys/dev/pci/pcivar.h 299929 2016-05-16 09:15:50Z andrew $
  *
  */
 
@@ -209,7 +209,6 @@ typedef struct pcicfg {
     uint8_t	func;		/* config space function number */
 
     uint32_t	flags;		/* flags defined above */
-    size_t	devinfo_size;	/* Size of devinfo for this bus type. */
 
     struct pcicfg_bridge bridge; /* Bridges */
     struct pcicfg_pp pp;	/* Power management */
@@ -543,10 +542,26 @@ pci_msix_table_bar(device_t dev)
     return (PCI_MSIX_TABLE_BAR(device_get_parent(dev), dev));
 }
 
+static __inline int
+pci_get_id(device_t dev, enum pci_id_type type, uintptr_t *id)
+{
+    return (PCI_GET_ID(device_get_parent(dev), dev, type, id));
+}
+
+/*
+ * This is the deprecated interface, there is no way to tell the difference
+ * between a failure and a valid value that happens to be the same as the
+ * failure value.
+ */
 static __inline uint16_t
 pci_get_rid(device_t dev)
 {
-	return (PCI_GET_RID(device_get_parent(dev), dev));
+    uintptr_t rid;
+
+    if (pci_get_id(dev, PCI_ID_RID, &rid) != 0)
+        return (0);
+
+    return (rid);
 }
 
 static __inline void

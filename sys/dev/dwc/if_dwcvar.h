@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/dwc/if_dwcvar.h 288023 2015-09-20 14:13:29Z loos $
+ * $FreeBSD: head/sys/dev/dwc/if_dwcvar.h 298816 2016-04-29 21:46:43Z jmcneill $
  */
 
 /*
@@ -90,7 +90,7 @@ struct dwc_softc {
 	struct dwc_hwdesc	*txdesc_ring;
 	bus_addr_t		txdesc_ring_paddr;
 	bus_dma_tag_t		txbuf_tag;
-	struct dwc_bufmap	txbuf_map[RX_DESC_COUNT];
+	struct dwc_bufmap	txbuf_map[TX_DESC_COUNT];
 	uint32_t		tx_idx_head;
 	uint32_t		tx_idx_tail;
 	int			txcount;

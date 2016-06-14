@@ -1,15 +1,16 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/hostid_save 281565 2015-04-15 21:48:06Z delphij $
+# $FreeBSD: head/etc/rc.d/hostid_save 299844 2016-05-15 06:00:13Z ngie $
 #
 
 # PROVIDE: hostid_save
-# REQUIRE: root
+# REQUIRE: hostid root
 # KEYWORD: nojail
 
 . /etc/rc.subr
 
 name="hostid_save"
+desc="Save unique host ID to disk"
 start_cmd="hostid_save"
 stop_cmd=":"
 rcvar="hostid_enable"

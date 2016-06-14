@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_id.c 280989 2015-04-02 14:22:59Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_id.c 301504 2016-06-06 13:04:22Z bz $");
 
 /*
  * IP ID generation is a fascinating topic.
@@ -287,11 +287,11 @@ static void
 ipid_sysuninit(void)
 {
 
-	mtx_destroy(&V_ip_id_mtx);
 	if (V_id_array != NULL) {
 		free(V_id_array, M_IPID);
 		free(V_id_bits, M_IPID);
 	}
 	counter_u64_free(V_ip_id);
+	mtx_destroy(&V_ip_id_mtx);
 }
 VNET_SYSUNINIT(ip_id, SI_SUB_PROTO_DOMAIN, SI_ORDER_ANY, ipid_sysuninit, NULL);

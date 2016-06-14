@@ -1,5 +1,5 @@
 /* $NetBSD: pcmcia_cis.c,v 1.17 2000/02/10 09:01:52 chopps Exp $ */
-/* $FreeBSD: head/sys/dev/pccard/pccard_cis.c 296137 2016-02-27 03:38:01Z jhibbits $ */
+/* $FreeBSD: head/sys/dev/pccard/pccard_cis.c 297000 2016-03-18 01:28:41Z jhibbits $ */
 
 /*-
  * Copyright (c) 1997 Marc Horowitz.  All rights reserved.
@@ -151,7 +151,7 @@ pccard_scan_cis(device_t bus, device_t dev, pccard_scan_t fct, void *arg)
 	tuple.memh = rman_get_bushandle(res);
 	tuple.ptr = 0;
 
-	DPRINTF(("cis mem map %#x (resource: %#lx)\n",
+	DPRINTF(("cis mem map %#x (resource: %#jx)\n",
 	    (unsigned int) tuple.memh, rman_get_start(res)));
 
 	tuple.mult = 2;
@@ -576,9 +576,9 @@ pccard_print_cis(device_t dev)
 				printf("; iomask %#lx, iospace", cfe->iomask);
 
 				for (i = 0; i < cfe->num_iospace; i++) {
-					printf(" %#lx", cfe->iospace[i].start);
+					printf(" %#jx", cfe->iospace[i].start);
 					if (cfe->iospace[i].length)
-						printf("-%#lx",
+						printf("-%#jx",
 						    cfe->iospace[i].start +
 						    cfe->iospace[i].length - 1);
 				}
@@ -587,14 +587,14 @@ pccard_print_cis(device_t dev)
 				printf("; memspace");
 
 				for (i = 0; i < cfe->num_memspace; i++) {
-					printf(" %#lx",
+					printf(" %#jx",
 					    cfe->memspace[i].cardaddr);
 					if (cfe->memspace[i].length)
-						printf("-%#lx",
+						printf("-%#jx",
 						    cfe->memspace[i].cardaddr +
 						    cfe->memspace[i].length - 1);
 					if (cfe->memspace[i].hostaddr)
-						printf("@%#lx",
+						printf("@%#jx",
 						    cfe->memspace[i].hostaddr);
 				}
 			}

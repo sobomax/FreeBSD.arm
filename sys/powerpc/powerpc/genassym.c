@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)genassym.c	5.11 (Berkeley) 5/10/91
- * $FreeBSD: head/sys/powerpc/powerpc/genassym.c 295880 2016-02-22 09:02:20Z skra $
+ * $FreeBSD: head/sys/powerpc/powerpc/genassym.c 298237 2016-04-19 01:48:18Z jhibbits $
  */
 
 #include <sys/param.h>
@@ -125,7 +125,7 @@ ASSYM(PM_PDIR, offsetof(struct pmap, pm_pdir));
 ASSYM(PTE_RPN, 0);
 ASSYM(PTE_FLAGS, sizeof(uint32_t));
 #if defined(BOOKE_E500)
-ASSYM(TLB0_ENTRY_SIZE, sizeof(struct tlb_entry));
+ASSYM(TLB_ENTRY_SIZE, sizeof(struct tlb_entry));
 #endif
 #endif
 

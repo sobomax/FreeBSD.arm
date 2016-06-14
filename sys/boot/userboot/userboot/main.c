@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/main.c 296097 2016-02-26 15:52:55Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/main.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 #include <stand.h>
 #include <string.h>
@@ -130,6 +130,10 @@ loader_main(struct loader_callbacks *cb, void *arg, int version, int ndisks)
 	archsw.arch_zfs_probe = userboot_zfs_probe;
 #endif
 
+	/*
+	 * Initialise the block cache. Set the upper limit.
+	 */
+	bcache_init(32768, 512);
 	/*
 	 * March through the device switch probing for things.
 	 */

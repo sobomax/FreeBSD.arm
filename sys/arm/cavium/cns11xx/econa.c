@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa.c 295832 2016-02-20 01:32:58Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm/cavium/cns11xx/econa.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -526,9 +526,9 @@ econa_print_child(device_t dev, device_t child)
 
 	retval += bus_print_child_header(dev, child);
 
-	retval += resource_list_print_type(rl, "port", SYS_RES_IOPORT, "%#lx");
-	retval += resource_list_print_type(rl, "mem", SYS_RES_MEMORY, "%#lx");
-	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%ld");
+	retval += resource_list_print_type(rl, "port", SYS_RES_IOPORT, "%#jx");
+	retval += resource_list_print_type(rl, "mem", SYS_RES_MEMORY, "%#jx");
+	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%jd");
 	if (device_get_flags(dev))
 		retval += printf(" flags %#x", device_get_flags(dev));
 

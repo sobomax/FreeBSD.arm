@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/grant_table/grant_table.c 289686 2015-10-21 10:44:07Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/grant_table/grant_table.c 298646 2016-04-26 15:03:15Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -573,8 +573,7 @@ gnttab_expand(unsigned int req_entries)
 	unsigned int cur, extra;
 
 	cur = nr_grant_frames;
-	extra = ((req_entries + (GREFS_PER_GRANT_FRAME-1)) /
-		 GREFS_PER_GRANT_FRAME);
+	extra = howmany(req_entries, GREFS_PER_GRANT_FRAME);
 	if (cur + extra > max_nr_grant_frames())
 		return (ENOSPC);
 

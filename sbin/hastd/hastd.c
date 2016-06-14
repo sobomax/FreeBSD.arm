@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/hastd/hastd.c 259196 2013-12-10 20:09:49Z trociny $");
+__FBSDID("$FreeBSD: head/sbin/hastd/hastd.c 298393 2016-04-21 06:21:33Z araujo $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -1090,7 +1090,7 @@ main_loop(void)
 			fd = proto_descriptor(lst->hl_conn);
 			PJDLOG_ASSERT(fd >= 0);
 			FD_SET(fd, &rfds);
-			maxfd = fd > maxfd ? fd : maxfd;
+			maxfd = MAX(fd, maxfd);
 		}
 		TAILQ_FOREACH(res, &cfg->hc_resources, hr_next) {
 			if (res->hr_event == NULL)
@@ -1098,14 +1098,14 @@ main_loop(void)
 			fd = proto_descriptor(res->hr_event);
 			PJDLOG_ASSERT(fd >= 0);
 			FD_SET(fd, &rfds);
-			maxfd = fd > maxfd ? fd : maxfd;
+			maxfd = MAX(fd, maxfd);
 			if (res->hr_role == HAST_ROLE_PRIMARY) {
 				/* Only primary workers asks for connections. */
 				PJDLOG_ASSERT(res->hr_conn != NULL);
 				fd = proto_descriptor(res->hr_conn);
 				PJDLOG_ASSERT(fd >= 0);
 				FD_SET(fd, &rfds);
-				maxfd = fd > maxfd ? fd : maxfd;
+				maxfd = MAX(fd, maxfd);
 			} else {
 				PJDLOG_ASSERT(res->hr_conn == NULL);
 			}

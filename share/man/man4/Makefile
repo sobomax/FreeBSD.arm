@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/18/93
-# $FreeBSD: head/share/man/man4/Makefile 295945 2016-02-24 00:39:36Z sobomax $
+# $FreeBSD: head/share/man/man4/Makefile 301585 2016-06-08 07:33:17Z trasz $
 
 .include <src.opts.mk>
+
+PACKAGE=runtime-manuals
 
 MAN=	aac.4 \
 	aacraid.4 \
@@ -69,9 +71,12 @@ MAN=	aac.4 \
 	axe.4 \
 	axge.4 \
 	bce.4 \
+	bcma.4 \
 	bfe.4 \
 	bge.4 \
 	${_bhyve.4} \
+	bhnd.4 \
+	bhndb.4 \
 	bktr.4 \
 	blackhole.4 \
 	bpf.4 \
@@ -658,6 +663,8 @@ MLINKS+=lp.4 plip.4
 MLINKS+=malo.4 if_malo.4
 MLINKS+=md.4 vn.4
 MLINKS+=mem.4 kmem.4
+MLINKS+=mfi.4 mfi_linux.4 \
+	mfi.4 mfip.4
 MLINKS+=mlx5en.4 mce.4
 MLINKS+=mn.4 if_mn.4
 MLINKS+=mos.4 if_mos.4
@@ -856,7 +863,7 @@ _dtrace_udp.4=	dtrace_udp.4
 .if ${MK_ISCSI} != "no"
 MAN+=		iscsi.4
 MAN+=		iscsi_initiator.4
-
+MAN+=		iser.4
 .endif
 
 .if ${MK_TESTS} != "no"

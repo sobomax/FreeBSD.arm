@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_timer.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_timer.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -152,7 +152,7 @@ acpi_timer_identify(driver_t *driver, device_t parent)
     rlen = AcpiGbl_FADT.PmTimerLength;
     rstart = AcpiGbl_FADT.XPmTimerBlock.Address;
     if (bus_set_resource(dev, rtype, rid, rstart, rlen))
-	device_printf(dev, "couldn't set resource (%s 0x%lx+0x%lx)\n",
+	device_printf(dev, "couldn't set resource (%s 0x%jx+0x%jx)\n",
 	    (rtype == SYS_RES_IOPORT) ? "port" : "mem", rstart, rlen);
     return_VOID;
 }

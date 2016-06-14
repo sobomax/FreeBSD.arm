@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/include/pthread.h 296162 2016-02-28 17:52:33Z kib $
+ * $FreeBSD: head/include/pthread.h 300043 2016-05-17 09:56:22Z kib $
  */
 #ifndef _PTHREAD_H_
 #define	_PTHREAD_H_
@@ -135,6 +135,9 @@ enum pthread_mutextype {
 
 #define	PTHREAD_MUTEX_DEFAULT		PTHREAD_MUTEX_ERRORCHECK
 
+#define	PTHREAD_MUTEX_STALLED		0
+#define	PTHREAD_MUTEX_ROBUST		1
+
 struct _pthread_cleanup_info {
 	__uintptr_t	pthread_cleanup_pad[8];
 };
@@ -229,6 +232,8 @@ int		pthread_mutexattr_settype(pthread_mutexattr_t *, int)
 			__nonnull(1);
 int		pthread_mutexattr_setpshared(pthread_mutexattr_t *, int)
 			__nonnull(1);
+int		pthread_mutex_consistent(pthread_mutex_t *__mutex)
+			__nonnull(1) __requires_exclusive(*__mutex);
 int		pthread_mutex_destroy(pthread_mutex_t *__mutex)
 			__nonnull(1) __requires_unlocked(*__mutex);
 int		pthread_mutex_init(pthread_mutex_t *__mutex,
@@ -309,6 +314,11 @@ int		pthread_mutex_setprioceiling(pthread_mutex_t *, int, int *);
 
 int		pthread_mutexattr_getprotocol(pthread_mutexattr_t *, int *);
 int		pthread_mutexattr_setprotocol(pthread_mutexattr_t *, int);
+
+int		pthread_mutexattr_getrobust(pthread_mutexattr_t *__restrict,
+			int *__restrict) __nonnull_all;
+int		pthread_mutexattr_setrobust(pthread_mutexattr_t *, int)
+			__nonnull(1);
 
 int		pthread_attr_getinheritsched(const pthread_attr_t *, int *);
 int		pthread_attr_getschedparam(const pthread_attr_t *,

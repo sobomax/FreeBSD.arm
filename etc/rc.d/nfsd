@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/nfsd 291536 2015-11-30 22:29:11Z rmacklem $
+# $FreeBSD: head/etc/rc.d/nfsd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: nfsd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="nfsd"
+desc="Remote NFS server"
 rcvar="nfs_server_enable"
 command="/usr/sbin/${name}"
 

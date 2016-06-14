@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91sam9260.c 269960 2014-08-14 04:21:31Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91sam9260.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -188,7 +188,7 @@ at91_clock_init(void)
 	 * PMC alogrithm choose the divisor that causes the input clock
 	 * to be near the optimal 2 MHz per datasheet.  We know
 	 * we are going to be using this for the USB clock at 96 MHz.
-	 * Causes no extra frequency deviation for all recomended crystal
+	 * Causes no extra frequency deviation for all recommended crystal
 	 * values.  See Note 1, table 40-16 SAM9260 doc.
 	 */
 	clk = at91_pmc_clock_ref("pllb");

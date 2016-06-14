@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_mp_ring.c 277226 2015-01-16 01:32:40Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/t4_mp_ring.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -282,7 +282,7 @@ mp_ring_enqueue(struct mp_ring *r, void **items, int n, int budget)
 	/*
 	 * Wait for other producers who got in ahead of us to enqueue their
 	 * items, one producer at a time.  It is our turn when the ring's
-	 * pidx_tail reaches the begining of our reservation (pidx_start).
+	 * pidx_tail reaches the beginning of our reservation (pidx_start).
 	 */
 	while (ns.pidx_tail != pidx_start) {
 		cpu_spinwait();

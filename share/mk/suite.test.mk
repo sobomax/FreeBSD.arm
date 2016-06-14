@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/suite.test.mk 295380 2016-02-07 18:40:04Z ngie $
+# $FreeBSD: head/share/mk/suite.test.mk 299094 2016-05-04 23:20:53Z ngie $
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -46,8 +46,8 @@ KYUAFILE?= auto
 #TEST_METADATA.<test-program>+= key="value"
 
 .if ${KYUAFILE:tl} != "no"
-FILES+=	Kyuafile
-FILESDIR_Kyuafile= ${TESTSDIR}
+${PACKAGE}FILES+=	Kyuafile
+${PACKAGE}FILESDIR_Kyuafile=	${TESTSDIR}
 .endif
 
 .for _T in ${_TESTS}

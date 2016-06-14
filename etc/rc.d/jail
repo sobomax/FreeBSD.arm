@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/jail 295555 2016-02-12 02:50:36Z dteske $
+# $FreeBSD: head/etc/rc.d/jail 298516 2016-04-23 16:23:01Z jamie $
 #
 
 # PROVIDE: jail
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="jail"
+desc="Manage system jails"
 rcvar="jail_enable"
 
 start_cmd="jail_start"
@@ -488,7 +489,6 @@ jail_start()
 			if _jid=$($jail_jls -j $_j jid); then
 				echo "$_jid" > /var/run/jail_${_j}.id
 			else
-				rm -f /var/run/jail_${_j}.id
 				echo " cannot start jail " \
 				    "\"${_hostname:-${_j}}\": "
 			fi
@@ -512,7 +512,6 @@ jail_start()
 				_jid=$($jail_jls -j $_j jid)
 				echo $_jid > /var/run/jail_${_j}.id
 			else
-				rm -f /var/run/jail_${_j}.id
 				echo " cannot start jail " \
 				    "\"${_hostname:-${_j}}\": "
 				cat $_tmp

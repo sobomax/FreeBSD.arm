@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/i18n/esdb/Makefile.part 296068 2016-02-25 21:05:04Z bdrewery $
+# $FreeBSD: head/share/i18n/esdb/Makefile.part 296702 2016-03-11 23:45:36Z bdrewery $
 # $NetBSD: Makefile.part,v 1.6 2008/10/25 22:35:36 apb Exp $
 
 MKESDB?= ${.OBJDIR}/../../../../usr.bin/mkesdb_static/mkesdb_static
@@ -60,16 +60,16 @@ esdb.alias.${ESUBDIR}: ${PARTFILE} ${ALIASFILE}
 .endfor
 	echo >>${.TARGET}
 
+.if !defined(_SKIP_BUILD)
 all: esdb.dir.${ESUBDIR} esdb.alias.${ESUBDIR} codesets
+.endif
 codesets: ${ESDB}
 
 .if !defined(NO_PREPROC)
 .for i in ${PART}
-.if !exists(${EPREFIX}${i:S/:/@/}.src)
 ${EPREFIX}${i:S/:/@/}.src: ${CODE}.src
-	sed ${SED_EXP:S@%%PART%%@${i}@} ${.CURDIR}/${CODE}.src > ${EPREFIX}${i:S/:/@/}.src
-	@echo ${EPREFIX}${i:S/:/@/}.src >>.tmpfiles
-.endif
+	sed ${SED_EXP:S@%%PART%%@${i}@} ${.ALLSRC} > ${.TARGET}
+	@echo ${.TARGET} >>.tmpfiles
 .endfor
 .endif
 

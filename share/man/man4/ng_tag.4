@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ng_tag.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/ng_tag.4 301719 2016-06-09 06:55:00Z trasz $
 .\"
 .Dd June 10, 2006
 .Dt NG_TAG 4
@@ -230,7 +230,7 @@ node which will check for the specified string and return non-matching
 packets to
 .Xr ipfw 8 .
 Matching packets are passed to
-.Xr ng_tag 4
+.Nm
 node, which will set a tag and pass them back to
 .Xr ng_bpf 4
 node on a hook programmed to accept all packets and pass them back to
@@ -246,7 +246,7 @@ expressions must be altered accordingly.
 Thus, there will be expression
 .Dq Li "ether[40:2]=0x244c && ether[42:4]=0x6f636b20"
 on incoming hook and empty expression to match all packets from
-.Xr ng_tag 4 .
+.Nm .
 .Pp
 So, this is
 .Xr ngctl 8

@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/dev/cp/if_cp.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -2171,7 +2171,7 @@ static int ng_cp_rmnode (node_p node)
 		NG_NODE_SET_PRIVATE (node, NULL);
 		NG_NODE_UNREF (node);
 	}
-	NG_NODE_REVIVE(node);		/* Persistant node */
+	NG_NODE_REVIVE(node);		/* Persistent node */
 #endif
 	return 0;
 }

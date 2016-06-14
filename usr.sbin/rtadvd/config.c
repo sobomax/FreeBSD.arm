@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/config.c 289750 2015-10-22 09:55:40Z hrs $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/config.c 299867 2016-05-15 22:06:21Z truckman $	*/
 /*	$KAME: config.c,v 1.84 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*
@@ -234,7 +234,6 @@ rm_ifinfo(struct ifinfo *ifi)
 		TAILQ_REMOVE(&ifilist, ifi, ifi_next);
 		syslog(LOG_DEBUG, "<%s>: ifinfo (idx=%d) removed.",
 		    __func__, ifi->ifi_ifindex);
-		free(ifi);
 	} else {
 		/* recreate an empty entry */
 		update_persist_ifinfo(&ifilist, ifi->ifi_ifname);
@@ -278,6 +277,8 @@ rm_ifinfo(struct ifinfo *ifi)
 	}
 
 	syslog(LOG_DEBUG, "<%s> leave (%s).", __func__, ifi->ifi_ifname);
+	if (!ifi->ifi_persist)
+		free(ifi);
 	return (0);
 }
 
@@ -639,7 +640,7 @@ getconfig_free_pfx:
 			exit(1);
 		}
 		memset(&ndi, 0, sizeof(ndi));
-		strncpy(ndi.ifname, ifi->ifi_ifname, sizeof(ndi.ifname));
+		strlcpy(ndi.ifname, ifi->ifi_ifname, sizeof(ndi.ifname));
 		if (ioctl(s, SIOCGIFINFO_IN6, (caddr_t)&ndi) < 0)
 			syslog(LOG_INFO, "<%s> ioctl:SIOCGIFINFO_IN6 at %s: %s",
 			    __func__, ifi->ifi_ifname, strerror(errno));

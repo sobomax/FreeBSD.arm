@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: head/sys/dev/bhnd/cores/pci/bhnd_pcibvar.h 296077 2016-02-26 03:34:08Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/cores/pci/bhnd_pcibvar.h 298479 2016-04-22 16:26:53Z adrian $
  */
 
 #ifndef _BHND_CORES_PCI_BHND_PCIBVAR_H_
@@ -35,16 +35,8 @@
 #include "bhnd_pcivar.h"
 
 /* PCI bridge driver-specific state */
-#define	BHND_PCIB_MAX_RES	2
-#define	BHND_PCIB_MAX_RSPEC	(BHND_PCIB_MAX_RES+1)
 struct bhnd_pcib_softc {
-	device_t		 dev;		/**< pci device */
-	struct bhnd_resource	*core;		/**< core registers. */
-	bhnd_pci_regfmt_t	 regfmt;	/**< device register format */
-
-	struct resource_spec	 rspec[BHND_PCIB_MAX_RSPEC];
-	struct bhnd_resource	*res[BHND_PCIB_MAX_RES];
-
+	struct bhnd_pci_softc	sc_common;
 };
 
 #endif /* _BHND_CORES_PCI_BHND_PCIBVAR_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/xo/Makefile 289490 2015-10-18 07:30:50Z ngie $
+# $FreeBSD: head/usr.bin/xo/Makefile 296979 2016-03-17 04:21:57Z sjg $
 
 .include <src.opts.mk>
 
@@ -12,7 +12,10 @@ MAN=	xo.1
 # XXX For xoversion.h
 CFLAGS+=-I${LIBXOSRC}/libxo
 
-LIBADD=	xo
+# XXX For xo_config.h
+CFLAGS+=-I${SRCTOP}/lib/libxo
+
+LIBADD=	xo util
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=	tests

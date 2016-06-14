@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /* Driver for arbitrary double bulk pipe devices.
  * The driver assumes that there will be the same driver on the other side.
@@ -744,7 +744,7 @@ ng_udbp_rcvdata(hook_p hook, item_p item)
 
 /*
  * Do local shutdown processing..
- * We are a persistant device, we refuse to go away, and
+ * We are a persistent device, we refuse to go away, and
  * only remove our links and reset ourself.
  */
 static int

@@ -25,13 +25,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/stdatomic.c 288125 2015-09-22 19:57:31Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/stdatomic.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/stdatomic.h>
 #include <sys/types.h>
 
-#include <machine/acle-compat.h>
 #include <machine/atomic.h>
 #include <machine/cpufunc.h>
 #include <machine/sysarch.h>

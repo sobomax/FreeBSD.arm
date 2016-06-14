@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/geom/core/geom.c 274631 2014-11-17 15:19:57Z feld $");
+__FBSDID("$FreeBSD: head/sbin/geom/core/geom.c 296653 2016-03-11 12:59:07Z mav $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -635,8 +635,7 @@ get_class(int *argc, char ***argv)
 	} else if (!strcasecmp(class_name, "label")) {
 		version = &glabel_version;
 		class_commands = glabel_class_commands;
-	} else
-		errx(EXIT_FAILURE, "Invalid class name.");
+	}
 #endif /* !STATIC_GEOM_CLASSES */
 
 	set_class_name();

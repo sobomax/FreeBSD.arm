@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Microsoft Corp.
+ * Copyright (c) 2014,2016 Microsoft Corp.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/utilities/hv_timesync.c 295958 2016-02-24 05:01:18Z sephe $
+ * $FreeBSD: head/sys/dev/hyperv/utilities/hv_timesync.c 298446 2016-04-22 05:01:43Z sephe $
  */
 
 /*
@@ -171,6 +171,10 @@ static int
 hv_timesync_probe(device_t dev)
 {
 	const char *p = vmbus_get_type(dev);
+
+	if (resource_disabled("hvtimesync", 0))
+		return ENXIO;
+
 	if (!memcmp(p, &service_guid, sizeof(hv_guid))) {
 		device_set_desc(dev, "Hyper-V Time Synch Service");
 		return BUS_PROBE_DEFAULT;

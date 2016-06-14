@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/ifconfig/ifmac.c 288305 2015-09-27 07:51:18Z ngie $
+ * $FreeBSD: head/sbin/ifconfig/ifmac.c 299873 2016-05-16 00:25:24Z truckman $
  */
 
 #include <sys/param.h>
@@ -57,7 +57,7 @@ maclabel_status(int s)
 	char *label_text;
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 
 	if (mac_prepare_ifnet_label(&label) == -1)
 		return;
@@ -90,7 +90,7 @@ setifmaclabel(const char *val, int d, int s, const struct afswtch *rafp)
 	}
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	ifr.ifr_ifru.ifru_data = (void *)label;
 
 	error = ioctl(s, SIOCSIFMAC, &ifr);

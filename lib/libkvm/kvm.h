@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)kvm.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/lib/libkvm/kvm.h 291406 2015-11-27 18:58:26Z jhb $
+ * $FreeBSD: head/lib/libkvm/kvm.h 298840 2016-04-30 09:21:13Z ngie $
  */
 
 #ifndef _KVM_H_
@@ -82,7 +82,6 @@ char	**kvm_getargv(kvm_t *, const struct kinfo_proc *, int);
 int	  kvm_getcptime(kvm_t *, long *);
 char	**kvm_getenvv(kvm_t *, const struct kinfo_proc *, int);
 char	 *kvm_geterr(kvm_t *);
-char	 *kvm_getfiles(kvm_t *, int, int, int *);
 int	  kvm_getloadavg(kvm_t *, double [], int);
 int	  kvm_getmaxcpu(kvm_t *);
 int	  kvm_getncpus(kvm_t *);

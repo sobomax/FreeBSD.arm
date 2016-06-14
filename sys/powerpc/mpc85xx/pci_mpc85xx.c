@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx.c 295837 2016-02-20 12:28:20Z zbb $");
+__FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx.c 297392 2016-03-29 15:19:56Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,11 +58,10 @@ __FBSDID("$FreeBSD: head/sys/powerpc/mpc85xx/pci_mpc85xx.c 295837 2016-02-20 12:
 #include <dev/ofw/ofw_pci.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
+#include <dev/ofw/ofwpci.h>
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcib_private.h>
-
-#include <powerpc/ofw/ofw_pci.h>
 
 #include "ofw_bus_if.h"
 #include "pcib_if.h"

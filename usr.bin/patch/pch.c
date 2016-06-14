@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: pch.c,v 1.43 2014/11/18 17:03:35 tobias Exp $
- * $FreeBSD: head/usr.bin/patch/pch.c 289677 2015-10-21 05:37:09Z eadler $
+ * $FreeBSD: head/usr.bin/patch/pch.c 298530 2016-04-24 04:08:36Z pfg $
  */
 
 #include <sys/types.h>
@@ -1142,7 +1142,7 @@ hunk_done:
 			say("Not enough memory to swap next hunk!\n");
 #ifdef DEBUGGING
 	if (debug & 2) {
-		int	i;
+		LINENUM	i;
 		char	special;
 
 		for (i = 0; i <= p_end; i++) {
@@ -1150,7 +1150,7 @@ hunk_done:
 				special = '^';
 			else
 				special = ' ';
-			fprintf(stderr, "%3d %c %c %s", i, p_char[i],
+			fprintf(stderr, "%3ld %c %c %s", i, p_char[i],
 			    special, p_line[i]);
 			fflush(stderr);
 		}

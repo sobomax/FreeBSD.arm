@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_ure.c 291557 2015-12-01 05:12:13Z kevlo $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_ure.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -419,7 +419,7 @@ ure_probe(device_t dev)
 {
 	struct usb_attach_arg *uaa;
 
-	uaa = device_get_ivars(dev);;
+	uaa = device_get_ivars(dev);
 	if (uaa->usb_mode != USB_MODE_HOST)
 		return (ENXIO);
 	if (uaa->info.bConfigIndex != URE_CONFIG_IDX)

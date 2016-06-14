@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/fwctl.c 288524 2015-10-02 22:05:51Z grehan $
+ * $FreeBSD: head/usr.sbin/bhyve/fwctl.c 298454 2016-04-22 06:25:32Z araujo $
  */
 
 /*
@@ -31,7 +31,7 @@
  * but with a request/response messaging protocol.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/fwctl.c 288524 2015-10-02 22:05:51Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/fwctl.c 298454 2016-04-22 06:25:32Z araujo $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -348,7 +348,7 @@ fwctl_request_data(uint32_t value)
 
 	/* Make sure remaining size is >= 0 */
 	rinfo.req_size -= sizeof(uint32_t);
-	remlen = (rinfo.req_size > 0) ? rinfo.req_size: 0;
+	remlen = MAX(rinfo.req_size, 0);
 
 	(*rinfo.req_op->op_data)(value, remlen);
 

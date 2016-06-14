@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.opts.mk 296096 2016-02-26 15:46:14Z emaste $
+# $FreeBSD: head/share/mk/src.opts.mk 301468 2016-06-05 23:05:04Z bdrewery $
 #
 # Option file for FreeBSD /usr/src builds.
 #
@@ -56,6 +56,7 @@ __DEFAULT_YES_OPTIONS = \
     BHYVE \
     BINUTILS \
     BINUTILS_BOOTSTRAP \
+    BLACKLIST \
     BLUETOOTH \
     BOOT \
     BOOTPARAMD \
@@ -187,7 +188,9 @@ __DEFAULT_NO_OPTIONS = \
     OPENLDAP \
     SHARED_TOOLCHAIN \
     SORT_THREADS \
-    SVN
+    SVN \
+    SYSTEM_COMPILER \
+
 
 #
 # Default behaviour of some options depends on the architecture.  Unfortunately
@@ -349,12 +352,17 @@ MK_ELFTOOLCHAIN_BOOTSTRAP:= no
 MK_GCC_BOOTSTRAP:= no
 .endif
 
+.if ${MK_META_MODE} == "yes"
+MK_SYSTEM_COMPILER:= no
+.endif
+
 .if ${MK_TOOLCHAIN} == "no"
 MK_BINUTILS:=	no
 MK_CLANG:=	no
 MK_GCC:=	no
 MK_GDB:=	no
 MK_INCLUDES:=	no
+MK_LLDB:=	no
 .endif
 
 .if ${MK_CLANG} == "no"
@@ -371,6 +379,7 @@ MK_CLANG_FULL:= no
 # MK_* variable is set to "no".
 #
 .for var in \
+    BLACKLIST \
     BZIP2 \
     GNU \
     INET \

@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)clnt_dg.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_dg.c 287341 2015-09-01 02:39:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_dg.c 298830 2016-04-30 01:24:24Z pfg $");
 
 /*
  * Implements a connectionless client side RPC.
@@ -582,7 +582,7 @@ get_reply:
 			}
 		}		/* end successful completion */
 		/*
-		 * If unsuccesful AND error is an authentication error
+		 * If unsuccessful AND error is an authentication error
 		 * then refresh credentials and try again, else break
 		 */
 		else if (cu->cu_error.re_status == RPC_AUTHERROR)
@@ -742,7 +742,7 @@ clnt_dg_control(CLIENT *cl, u_int request, void *info)
 		/*
 		 * This RELIES on the information that, in the call body,
 		 * the version number field is the fifth field from the
-		 * begining of the RPC header. MUST be changed if the
+		 * beginning of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
 		*(u_int32_t *)info =
@@ -759,7 +759,7 @@ clnt_dg_control(CLIENT *cl, u_int request, void *info)
 		/*
 		 * This RELIES on the information that, in the call body,
 		 * the program number field is the fourth field from the
-		 * begining of the RPC header. MUST be changed if the
+		 * beginning of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
 		*(u_int32_t *)info =

@@ -1,13 +1,9 @@
-# $FreeBSD: head/sys/modules/streams/Makefile 160063 2006-07-01 10:51:55Z markm $ 
+# $FreeBSD: head/sys/modules/streams/Makefile 298519 2016-04-23 20:29:55Z dchagin $ 
 
 .PATH: ${.CURDIR}/../../dev/streams
 
 KMOD=	streams
 SRCS=	streams.c
-
-EXPORT_SYMS=	svr4_str_initialized	\
-		svr4_stream_get		\
-		svr4_delete_socket
 
 .if defined(DEBUG)
 CFLAGS+= -DDEBUG_SVR4

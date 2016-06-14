@@ -16,10 +16,13 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/riscv/conf/SPIKE 295521 2016-02-11 13:28:52Z br $
+# $FreeBSD: head/sys/riscv/conf/SPIKE 298638 2016-04-26 13:22:08Z br $
 
 include		GENERIC
 ident		SPIKE
+
+device		htif
+options 	ROOTDEVNAME=\"ufs:/dev/htif_blk0\"
 
 # RISCVTODO: This needs to be done via loader (when it's available).
 options 	FDT_DTB_STATIC

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_module.c 289747 2015-10-22 09:07:53Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_module.c 297613 2016-04-06 11:11:31Z ed $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -36,7 +36,8 @@ __FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_module.c 289747 2015-1
 #include <sys/sysent.h>
 #include <sys/systm.h>
 
-#include <compat/cloudabi64/cloudabi64_syscalldefs.h>
+#include <contrib/cloudabi/cloudabi64_types.h>
+
 #include <compat/cloudabi64/cloudabi64_util.h>
 
 register_t *
@@ -98,6 +99,7 @@ cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
 #define	PTR(type, ptr)	{ .a_type = (type), .a_ptr = (uintptr_t)(ptr) }
 		PTR(CLOUDABI_AT_ARGDATA, argdata),
 		VAL(CLOUDABI_AT_ARGDATALEN, argdatalen),
+		VAL(CLOUDABI_AT_BASE, args->base),
 		PTR(CLOUDABI_AT_CANARY, canary),
 		VAL(CLOUDABI_AT_CANARYLEN, sizeof(canarybuf)),
 		VAL(CLOUDABI_AT_NCPUS, mp_ncpus),
@@ -110,7 +112,13 @@ cloudabi64_fixup(register_t **stack_base, struct image_params *imgp)
 		{ .a_type = CLOUDABI_AT_NULL },
 	};
 	*stack_base -= howmany(sizeof(auxv), sizeof(register_t));
-	return (copyout(auxv, *stack_base, sizeof(auxv)));
+	error = copyout(auxv, *stack_base, sizeof(auxv));
+	if (error != 0)
+		return (error);
+
+	/* Reserve space for storing the TCB. */
+	*stack_base -= howmany(sizeof(cloudabi64_tcb_t), sizeof(register_t));
+	return (0);
 }
 
 static int

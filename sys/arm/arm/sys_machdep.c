@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/sys_machdep.c 295319 2016-02-05 14:57:41Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/sys_machdep.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include "opt_capsicum.h"
 
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/sys_machdep.c 295319 2016-02-05 14:57:41Z m
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 
-#include <machine/acle-compat.h>
 #include <machine/cpu.h>
 #include <machine/sysarch.h>
 #include <machine/vmparam.h>

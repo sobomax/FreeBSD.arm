@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/liby/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/liby/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	y
 SRCS=	main.c yyerror.c
 NO_PIC=

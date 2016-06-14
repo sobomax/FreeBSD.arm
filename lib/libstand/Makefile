@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libstand/Makefile 296417 2016-03-05 20:24:31Z dim $
+# $FreeBSD: head/lib/libstand/Makefile 298107 2016-04-16 07:45:30Z gjb $
 # Originally from	$NetBSD: Makefile,v 1.21 1997/10/26 22:08:38 lukem Exp $
 #
 # Notes:
@@ -6,6 +6,7 @@
 #   quite large.
 #
 
+PACKAGE=lib${LIB}
 MK_PROFILE=	no
 MK_SSP=		no
 
@@ -25,7 +26,7 @@ WARNS?=		0
 CFLAGS+= -I${LIBSTAND_SRC}
 
 # standalone components and stuff we have modified locally
-SRCS+=	gzguts.h zutil.h __main.c assert.c bcd.c bswap.c environment.c getopt.c gets.c \
+SRCS+=	gzguts.h zutil.h __main.c assert.c bcd.c environment.c getopt.c gets.c \
 	globals.c pager.c printf.c strdup.c strerror.c strtol.c strtoul.c random.c \
 	sbrk.c twiddle.c zalloc.c zalloc_malloc.c
 

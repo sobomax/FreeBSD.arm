@@ -1,9 +1,10 @@
-# $FreeBSD: head/tests/sys/mac/portacl/Makefile 292570 2015-12-21 21:24:03Z ngie $
+# $FreeBSD: head/tests/sys/mac/portacl/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/mac/portacl
-BINDIR=		${TESTSDIR}
 
-FILES+=		misc.sh
+${PACKAGE}FILES+=	misc.sh
 
 TAP_TESTS_SH+=	nobody_test
 TAP_TESTS_SH+=	root_test

@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2014, Intel Corporation 
+  Copyright (c) 2013-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/ixlv_vc_mgr.h 274218 2014-11-07 04:47:46Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/ixlv_vc_mgr.h 299545 2016-05-12 18:18:55Z erj $*/
 
 #ifndef _IXLV_VC_MGR_H_
 #define _IXLV_VC_MGR_H_

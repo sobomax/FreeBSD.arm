@@ -1,6 +1,8 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.bin/ruptime/Makefile 226419 2011-10-16 07:36:27Z ed $
+# $FreeBSD: head/usr.bin/ruptime/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 PROG=	ruptime
+
+PACKAGE=rcmds
 
 .include <bsd.prog.mk>

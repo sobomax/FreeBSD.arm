@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libcasper/services/cap_sysctl/Makefile 296126 2016-02-26 22:14:08Z bdrewery $
+# $FreeBSD: head/lib/libcasper/services/cap_sysctl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=libcasper
 LIB=	cap_sysctl
 
 SHLIB_MAJOR=	0

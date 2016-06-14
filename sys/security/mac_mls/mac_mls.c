@@ -38,7 +38,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/security/mac_mls/mac_mls.c 267992 2014-06-28 03:56:17Z hselasky $
+ * $FreeBSD: head/sys/security/mac_mls/mac_mls.c 299187 2016-05-06 16:59:04Z pfg $
  */
 
 /*
@@ -1276,7 +1276,7 @@ mls_netinet_firewall_send(struct mbuf *m, struct label *mlabel)
 
 	dest = SLOT(mlabel);
 
-	/* XXX: where is the label for the firewall really comming from? */
+	/* XXX: where is the label for the firewall really coming from? */
 	mls_set_effective(dest, MAC_MLS_TYPE_EQUAL, 0, NULL);
 }
 

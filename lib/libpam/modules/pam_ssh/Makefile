@@ -1,16 +1,14 @@
 # PAM module for SSH
-# $FreeBSD: head/lib/libpam/modules/pam_ssh/Makefile 291941 2015-12-07 16:08:09Z bdrewery $
+# $FreeBSD: head/lib/libpam/modules/pam_ssh/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 SSHDIR=	${.CURDIR}/../../../../crypto/openssh
 
 LIB=	pam_ssh
 MAN=	pam_ssh.8
 SRCS=	pam_ssh.c
+PACKAGE=	ssh
 
-# required when linking with a dynamic libssh
-SRCS+=	roaming_dummy.c
-
-WARNS?=	3
+WARNS?=	5
 CFLAGS+= -I${SSHDIR} -include ssh_namespace.h
 SRCS+=	 ssh_namespace.h
 

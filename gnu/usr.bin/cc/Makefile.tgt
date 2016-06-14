@@ -1,10 +1,10 @@
-# $FreeBSD: head/gnu/usr.bin/cc/Makefile.tgt 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: head/gnu/usr.bin/cc/Makefile.tgt 300119 2016-05-18 06:01:18Z imp $
 
 # These assignments duplicate much of the functionality of
 # MACHINE_CPUARCH, but there's no easy way to export make functions...
 
 .if defined(TARGET_ARCH)
-TARGET_CPUARCH=${TARGET_ARCH:C/mips(n32|64)?(el)?/mips/:C/arm(v6)?(eb|hf)?/arm/:C/powerpc64/powerpc/}
+TARGET_CPUARCH=${TARGET_ARCH:C/mips(n32|64)?(el)?/mips/:C/arm(v6)?(eb)?/arm/:C/powerpc64/powerpc/}
 .else
 TARGET_CPUARCH=${MACHINE_CPUARCH}
 .endif

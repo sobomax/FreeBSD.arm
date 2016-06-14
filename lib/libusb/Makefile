@@ -1,9 +1,10 @@
 #
-# $FreeBSD: head/lib/libusb/Makefile 288615 2015-10-03 16:34:21Z bdrewery $
+# $FreeBSD: head/lib/libusb/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
 
+PACKAGE=lib${LIB}
 LIB=		usb
 SHLIB_MAJOR=	3
 SHLIB_MINOR=	0

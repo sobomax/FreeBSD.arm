@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)pass2.c	8.9 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck_ffs/pass2.c 241012 2012-09-27 23:30:58Z mdf $");
+__FBSDID("$FreeBSD: head/sbin/fsck_ffs/pass2.c 298907 2016-05-02 01:28:21Z araujo $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -182,9 +182,7 @@ pass2(void)
 		memset(dp, 0, sizeof(struct ufs2_dinode));
 		DIP_SET(dp, di_mode, IFDIR);
 		DIP_SET(dp, di_size, inp->i_isize);
-		for (i = 0;
-		     i < (inp->i_numblks<NDADDR ? inp->i_numblks : NDADDR);
-		     i++)
+		for (i = 0; i < MIN(inp->i_numblks, NDADDR); i++)
 			DIP_SET(dp, di_db[i], inp->i_blks[i]);
 		if (inp->i_numblks > NDADDR)
 			for (i = 0; i < NIADDR; i++)

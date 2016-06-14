@@ -1,8 +1,9 @@
 #	$NetBSD: Makefile,v 1.1 2002/03/01 11:21:58 ad Exp $
-# $FreeBSD: head/bin/pkill/Makefile 287012 2015-08-22 05:04:36Z jamie $
+# $FreeBSD: head/bin/pkill/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	pkill
 
 LIBADD=	kvm jail

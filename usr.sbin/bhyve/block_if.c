@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/block_if.c 294774 2016-01-26 07:17:21Z araujo $
+ * $FreeBSD: head/usr.sbin/bhyve/block_if.c 300843 2016-05-27 11:46:54Z bapt $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 294774 2016-01-26 07:17:21Z araujo $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 300843 2016-05-27 11:46:54Z bapt $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -37,6 +37,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyve/block_if.c 294774 2016-01-26 07:17:21Z a
 #include <sys/disk.h>
 
 #include <assert.h>
+#include <err.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -447,12 +448,12 @@ blockif_open(const char *optstr, const char *ident)
 	}
 
 	if (fd < 0) {
-		perror("Could not open backing file");
+		warn("Could not open backing file: %s", nopt);
 		goto err;
 	}
 
         if (fstat(fd, &sbuf) < 0) {
-                perror("Could not stat backing file");
+		warn("Could not stat backing file %s", nopt);
 		goto err;
         }
 

@@ -1,10 +1,11 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/libexec/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
+# $FreeBSD: head/libexec/Makefile 301553 2016-06-07 16:31:03Z lidl $
 
 .include <src.opts.mk>
 
 SUBDIR=	${_atf} \
 	${_atrun} \
+	${_blacklistd-helper} \
 	${_comsat} \
 	${_dma} \
 	getty \
@@ -31,6 +32,10 @@ SUBDIR=	${_atf} \
 
 .if ${MK_AT} != "no"
 _atrun=		atrun
+.endif
+
+.if ${MK_BLACKLIST} != "no"
+_blacklistd-helper+=	blacklistd-helper
 .endif
 
 .if ${MK_BOOTPD} != "no"

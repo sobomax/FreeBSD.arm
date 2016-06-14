@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/truss/Makefile 295931 2016-02-23 20:00:55Z jhb $
+# $FreeBSD: head/usr.bin/truss/Makefile 301715 2016-06-09 02:21:07Z jhb $
 
 NO_WERROR=
 PROG=	truss
@@ -18,6 +18,7 @@ ABIS+=		cloudabi64
 ABIS+=		i386-linux
 .endif
 .if ${MACHINE_CPUARCH} == "amd64"
+ABIS+=		amd64-linux
 ABIS+=		amd64-linux32
 ABIS+=		freebsd32
 ABIS+=		cloudabi64

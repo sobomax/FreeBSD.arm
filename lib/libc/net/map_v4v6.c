@@ -53,9 +53,8 @@
 static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/map_v4v6.c 292595 2015-12-22 12:01:06Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/net/map_v4v6.c 298226 2016-04-18 21:05:15Z avos $");
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

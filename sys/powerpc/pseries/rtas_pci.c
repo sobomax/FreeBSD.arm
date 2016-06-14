@@ -25,18 +25,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/rtas_pci.c 295837 2016-02-20 12:28:20Z zbb $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/rtas_pci.c 297392 2016-03-29 15:19:56Z zbb $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/module.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/kernel.h>
+#include <sys/rman.h>
 
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_pci.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
+#include <dev/ofw/ofwpci.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -48,12 +50,9 @@ __FBSDID("$FreeBSD: head/sys/powerpc/pseries/rtas_pci.c 295837 2016-02-20 12:28:
 #include <machine/resource.h>
 #include <machine/rtas.h>
 
-#include <sys/rman.h>
-
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
-#include <powerpc/ofw/ofw_pci.h>
 #include <powerpc/pseries/plpar_iommu.h>
 
 #include "pcib_if.h"

@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libucl/Makefile 290071 2015-10-27 21:24:09Z bapt $
+# $FreeBSD: head/lib/libucl/Makefile 301339 2016-06-04 14:57:25Z bapt $
 
 LIBUCL=	${.CURDIR}/../../contrib/libucl
 
+PACKAGE=lib${LIB}
 LIB=		ucl
 PRIVATELIB=	true
 SHLIB_MAJOR=	1
@@ -13,8 +14,7 @@ SRCS=		ucl_emitter_streamline.c \
 		ucl_parser.c  \
 		ucl_schema.c \
 		ucl_sexp.c \
-		ucl_util.c \
-		xxhash.c
+		ucl_util.c
 
 .PATH:		${LIBUCL}/src \
 		${LIBUCL}/include

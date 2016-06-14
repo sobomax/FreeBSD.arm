@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/string/wcscoll.c 290494 2015-11-07 12:43:35Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/string/wcscoll.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include <errno.h>
 #include <stdlib.h>
@@ -65,7 +65,7 @@ wcscoll_l(const wchar_t *ws1, const wchar_t *ws2, locale_t locale)
 	 * safely.  You absolutely have to run this pass by pass,
 	 * because some passes will be ignored for a given character,
 	 * while others will not.  Simpler locales will benefit from
-	 * having fewer passes, and most comparisions should resolve
+	 * having fewer passes, and most comparisons should resolve
 	 * during the primary pass anyway.
 	 *
 	 * Note that we do one final extra pass at the end to pick

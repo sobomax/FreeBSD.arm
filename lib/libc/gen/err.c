@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)err.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/err.c 288029 2015-09-20 20:23:16Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/err.c 297790 2016-04-10 19:33:58Z pfg $");
 
 #include "namespace.h"
 #include <err.h>
@@ -96,7 +96,7 @@ errc(int eval, int code, const char *fmt, ...)
 void
 verrc(int eval, int code, const char *fmt, va_list ap)
 {
-	if (err_file == 0)
+	if (err_file == NULL)
 		err_set_file((FILE *)0);
 	fprintf(err_file, "%s: ", _getprogname());
 	if (fmt != NULL) {
@@ -121,7 +121,7 @@ errx(int eval, const char *fmt, ...)
 void
 verrx(int eval, const char *fmt, va_list ap)
 {
-	if (err_file == 0)
+	if (err_file == NULL)
 		err_set_file((FILE *)0);
 	fprintf(err_file, "%s: ", _getprogname());
 	if (fmt != NULL)
@@ -161,7 +161,7 @@ warnc(int code, const char *fmt, ...)
 void
 vwarnc(int code, const char *fmt, va_list ap)
 {
-	if (err_file == 0)
+	if (err_file == NULL)
 		err_set_file((FILE *)0);
 	fprintf(err_file, "%s: ", _getprogname());
 	if (fmt != NULL) {
@@ -183,7 +183,7 @@ warnx(const char *fmt, ...)
 void
 vwarnx(const char *fmt, va_list ap)
 {
-	if (err_file == 0)
+	if (err_file == NULL)
 		err_set_file((FILE *)0);
 	fprintf(err_file, "%s: ", _getprogname());
 	if (fmt != NULL)

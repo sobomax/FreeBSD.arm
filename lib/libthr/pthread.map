@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libthr/pthread.map 295407 2016-02-08 19:24:13Z kib $
+ * $FreeBSD: head/lib/libthr/pthread.map 300043 2016-05-17 09:56:22Z kib $
  */
 
 /*
@@ -314,4 +314,10 @@ FBSD_1.1 {
 
 FBSD_1.2 {
 	pthread_getthreadid_np;
+};
+
+FBSD_1.4 {
+	 pthread_mutex_consistent;
+	 pthread_mutexattr_getrobust;
+	 pthread_mutexattr_setrobust;
 };

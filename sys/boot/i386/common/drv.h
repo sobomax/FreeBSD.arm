@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/i386/common/drv.h 213136 2010-09-24 19:49:12Z pjd $
+ * $FreeBSD: head/sys/boot/i386/common/drv.h 296963 2016-03-16 23:12:19Z allanjude $
  */
 
 #ifndef _DRV_H_
@@ -42,7 +42,7 @@ struct dsk {
 int drvread(struct dsk *dskp, void *buf, daddr_t lba, unsigned nblk);
 #ifdef GPT
 int drvwrite(struct dsk *dskp, void *buf, daddr_t lba, unsigned nblk);
-uint64_t drvsize(struct dsk *dskp);
 #endif	/* GPT */
+uint64_t drvsize(struct dsk *dskp);
 
 #endif	/* !_DRV_H_ */

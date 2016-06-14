@@ -46,7 +46,7 @@ __RCSID("$NetBSD: vi.c,v 1.47 2015/10/21 21:45:30 christos Exp $");
 #endif
 #endif /* not lint && not SCCSID */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libedit/vi.c 290065 2015-10-27 21:16:29Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libedit/vi.c 297757 2016-04-09 18:52:09Z pfg $");
 
 /*
  * vi.c: Vi mode commands.
@@ -1088,7 +1088,7 @@ vi_history_word(EditLine *el, Int c __attribute__((__unused__)))
 	if (wp == NULL)
 		return CC_ERROR;
 
-	wep = wsp = 0;
+	wep = wsp = NULL;
 	do {
 		while (Isspace(*wp))
 			wp++;
@@ -1101,7 +1101,7 @@ vi_history_word(EditLine *el, Int c __attribute__((__unused__)))
 	} while ((!el->el_state.doingarg || --el->el_state.argument > 0)
 	    && *wp != 0);
 
-	if (wsp == 0 || (el->el_state.doingarg && el->el_state.argument != 0))
+	if (wsp == NULL || (el->el_state.doingarg && el->el_state.argument != 0))
 		return CC_ERROR;
 
 	cv_undo(el);

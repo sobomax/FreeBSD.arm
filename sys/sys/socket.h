@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)socket.h	8.4 (Berkeley) 2/21/94
- * $FreeBSD: head/sys/sys/socket.h 295039 2016-01-29 14:12:12Z kib $
+ * $FreeBSD: head/sys/sys/socket.h 301038 2016-05-31 13:32:33Z ed $
  */
 
 #ifndef _SYS_SOCKET_H_
@@ -500,7 +500,7 @@ struct sockcred {
 
 /* given pointer to struct cmsghdr, return pointer to next cmsghdr */
 #define	CMSG_NXTHDR(mhdr, cmsg)	\
-	((char *)(cmsg) == NULL ? CMSG_FIRSTHDR(mhdr) : \
+	((char *)(cmsg) == (char *)0 ? CMSG_FIRSTHDR(mhdr) : \
 	    ((char *)(cmsg) + _ALIGN(((struct cmsghdr *)(cmsg))->cmsg_len) + \
 	  _ALIGN(sizeof(struct cmsghdr)) > \
 	    (char *)(mhdr)->msg_control + (mhdr)->msg_controllen) ? \
@@ -515,7 +515,7 @@ struct sockcred {
 #define	CMSG_FIRSTHDR(mhdr) \
 	((mhdr)->msg_controllen >= sizeof(struct cmsghdr) ? \
 	 (struct cmsghdr *)(mhdr)->msg_control : \
-	 (struct cmsghdr *)NULL)
+	 (struct cmsghdr *)0)
 
 #if __BSD_VISIBLE
 /* RFC 2292 additions */
@@ -594,7 +594,6 @@ struct sf_hdtr {
 #define	SF_FLAGS(rh, flags)	(((rh) << 16) | (flags))
 
 #ifdef _KERNEL
-#define	SFK_COMPAT	0x00000001
 #define	SF_READAHEAD(flags)	((flags) >> 16)
 #endif /* _KERNEL */
 

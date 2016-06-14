@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/firewire/firewire.c 277510 2015-01-21 20:06:25Z will $");
+__FBSDID("$FreeBSD: head/sys/dev/firewire/firewire.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1584,7 +1584,7 @@ fw_explore_node(struct fw_device *dfwdev)
 		 * speed map value.
 		 * 1394a-2000 compliant devices only use
 		 * the Bus Info Block link spd value, so
-		 * ignore the speed map alltogether. SWB
+		 * ignore the speed map altogether. SWB
 		 */
 		if (binfo->link_spd == FWSPD_S100 /* 0 */) {
 			device_printf(fc->bdev, "%s: "

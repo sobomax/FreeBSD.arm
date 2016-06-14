@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/initcpu.c 292668 2015-12-23 21:41:42Z jhb $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/initcpu.c 298737 2016-04-28 09:40:24Z avg $");
 
 #include "opt_cpu.h"
 
@@ -58,6 +58,7 @@ static int	hw_clflush_disable = -1;
 static void
 init_amd(void)
 {
+	uint64_t msr;
 
 	/*
 	 * Work around Erratum 721 for Family 10h and 12h processors.
@@ -79,6 +80,19 @@ init_amd(void)
 		if ((cpu_feature2 & CPUID2_HV) == 0)
 			wrmsr(0xc0011029, rdmsr(0xc0011029) | 1);
 		break;
+	}
+
+	/*
+	 * BIOS may fail to set InitApicIdCpuIdLo to 1 as it should per BKDG.
+	 * So, do it here or otherwise some tools could be confused by
+	 * Initial Local APIC ID reported with CPUID Function 1 in EBX.
+	 */
+	if (CPUID_TO_FAMILY(cpu_id) == 0x10) {
+		if ((cpu_feature2 & CPUID2_HV) == 0) {
+			msr = rdmsr(MSR_NB_CFG1);
+			msr |= (uint64_t)1 << 54;
+			wrmsr(MSR_NB_CFG1, msr);
+		}
 	}
 }
 

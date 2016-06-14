@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_event.c 295786 2016-02-19 01:49:33Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_event.c 300627 2016-05-24 21:13:33Z kib $");
 
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"
@@ -91,7 +91,7 @@ MTX_SYSINIT(kq_global, &kq_global, "kqueue order", MTX_DEF);
 	haslck = 0;				\
 } while (0)
 
-TASKQUEUE_DEFINE_THREAD(kqueue);
+TASKQUEUE_DEFINE_THREAD(kqueue_ctx);
 
 static int	kevent_copyout(void *arg, struct kevent *kevp, int count);
 static int	kevent_copyin(void *arg, struct kevent *kevp, int count);
@@ -564,34 +564,59 @@ knote_fork(struct knlist *list, int pid)
 #define NOTE_TIMER_PRECMASK	(NOTE_SECONDS|NOTE_MSECONDS|NOTE_USECONDS| \
 				NOTE_NSECONDS)
 
-static __inline sbintime_t
+static sbintime_t
 timer2sbintime(intptr_t data, int flags)
 {
-	sbintime_t modifier;
 
+        /*
+         * Macros for converting to the fractional second portion of an
+         * sbintime_t using 64bit multiplication to improve precision.
+         */
+#define NS_TO_SBT(ns) (((ns) * (((uint64_t)1 << 63) / 500000000)) >> 32)
+#define US_TO_SBT(us) (((us) * (((uint64_t)1 << 63) / 500000)) >> 32)
+#define MS_TO_SBT(ms) (((ms) * (((uint64_t)1 << 63) / 500)) >> 32)
 	switch (flags & NOTE_TIMER_PRECMASK) {
 	case NOTE_SECONDS:
-		modifier = SBT_1S;
-		break;
+#ifdef __LP64__
+		if (data > (SBT_MAX / SBT_1S))
+			return SBT_MAX;
+#endif
+		return ((sbintime_t)data << 32);
 	case NOTE_MSECONDS: /* FALLTHROUGH */
 	case 0:
-		modifier = SBT_1MS;
-		break;
-	case NOTE_USECONDS:
-		modifier = SBT_1US;
-		break;
-	case NOTE_NSECONDS:
-		modifier = SBT_1NS;
-		break;
-	default:
-		return (-1);
-	}
-
+		if (data >= 1000) {
+			int64_t secs = data / 1000;
 #ifdef __LP64__
-	if (data > SBT_MAX / modifier)
-		return (SBT_MAX);
+			if (secs > (SBT_MAX / SBT_1S))
+				return SBT_MAX;
 #endif
-	return (modifier * data);
+			return (secs << 32 | MS_TO_SBT(data % 1000));
+		}
+		return MS_TO_SBT(data);
+	case NOTE_USECONDS:
+		if (data >= 1000000) {
+			int64_t secs = data / 1000000;
+#ifdef __LP64__
+			if (secs > (SBT_MAX / SBT_1S))
+				return SBT_MAX;
+#endif
+			return (secs << 32 | US_TO_SBT(data % 1000000));
+		}
+		return US_TO_SBT(data);
+	case NOTE_NSECONDS:
+		if (data >= 1000000000) {
+			int64_t secs = data / 1000000000;
+#ifdef __LP64__
+			if (secs > (SBT_MAX / SBT_1S))
+				return SBT_MAX;
+#endif
+			return (secs << 32 | US_TO_SBT(data % 1000000000));
+		}
+		return NS_TO_SBT(data);
+	default:
+		break;
+	}
+	return (-1);
 }
 
 static void
@@ -1401,7 +1426,7 @@ kqueue_schedtask(struct kqueue *kq)
 	    ("scheduling kqueue task while draining"));
 
 	if ((kq->kq_state & KQ_TASKSCHED) != KQ_TASKSCHED) {
-		taskqueue_enqueue(taskqueue_kqueue, &kq->kq_task);
+		taskqueue_enqueue(taskqueue_kqueue_ctx, &kq->kq_task);
 		kq->kq_state |= KQ_TASKSCHED;
 	}
 }

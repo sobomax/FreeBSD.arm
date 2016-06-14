@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iicbus/iiconf.h 289726 2015-10-22 00:54:59Z ian $
+ * $FreeBSD: head/sys/dev/iicbus/iiconf.h 298955 2016-05-03 03:41:25Z pfg $
  */
 #ifndef __IICONF_H
 #define __IICONF_H
@@ -82,7 +82,7 @@
 /*
  * adapter layer errors
  */
-#define IIC_NOERR	0x0	/* no error occured */
+#define	IIC_NOERR	0x0	/* no error occurred */
 #define IIC_EBUSERR	0x1	/* bus error (hardware not in expected state) */
 #define IIC_ENOACK	0x2	/* ack not received until timeout */
 #define IIC_ETIMEOUT	0x3	/* timeout */

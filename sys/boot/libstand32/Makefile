@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/libstand32/Makefile 293341 2016-01-07 19:19:23Z bdrewery $
+# $FreeBSD: head/sys/boot/libstand32/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -23,6 +23,6 @@ CFLAGS+=	-m32 -I.
 .if ${MACHINE_CPUARCH} == "amd64"
 CLEANFILES+= machine
 beforedepend ${OBJS}: machine
-machine:
+machine: .NOMETA
 	ln -fs ${.CURDIR}/../../i386/include machine
 .endif

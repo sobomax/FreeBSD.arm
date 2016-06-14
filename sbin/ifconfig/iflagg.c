@@ -3,7 +3,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/iflagg.c 294615 2016-01-23 04:18:44Z araujo $";
+  "$FreeBSD: head/sbin/ifconfig/iflagg.c 298246 2016-04-19 04:42:34Z araujo $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -291,7 +291,7 @@ lagg_status(int s)
 
 		if (0 /* XXX */) {
 			printf("\tsupported aggregation protocols:\n");
-			for (i = 0; i < (sizeof(lpr) / sizeof(lpr[0])); i++)
+			for (i = 0; i < nitems(lpr); i++)
 				printf("\t\tlaggproto %s\n", lpr[i].lpr_name);
 		}
 	}

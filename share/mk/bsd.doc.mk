@@ -1,5 +1,5 @@
 #	from: @(#)bsd.doc.mk	5.3 (Berkeley) 1/2/91
-# $FreeBSD: head/share/mk/bsd.doc.mk 296121 2016-02-26 22:13:48Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.doc.mk 298107 2016-04-16 07:45:30Z gjb $
 #
 # The include file <bsd.doc.mk> handles installing BSD troff documents.
 #
@@ -81,6 +81,13 @@ TRFLAGS+=	-I${.CURDIR}
 TRFLAGS+=	-t
 .endif
 
+.if defined(NO_ROOT)
+.if !defined(TAGS) || ! ${TAGS:Mpackage=*}
+TAGS+=		package=${PACKAGE:Uruntime}
+.endif
+TAG_ARGS=	-T ${TAGS:[*]:S/ /,/g}
+.endif
+
 DCOMPRESS_EXT?=	${COMPRESS_EXT}
 DCOMPRESS_CMD?=	${COMPRESS_CMD}
 .for _dev in ${PRINTERDEVICE:Mhtml}
@@ -137,11 +144,11 @@ CLEANFILES+=	${DOC}.ascii ${DOC}.ascii${DCOMPRESS_EXT} \
 realinstall:
 .if ${PRINTERDEVICE:Mhtml}
 	cd ${SRCDIR}; \
-	    ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
+	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},docs} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
 	    ${DOC}*.html ${DESTDIR}${BINDIR}/${VOLUME}/
 .endif
 .for _dev in ${PRINTERDEVICE:Nhtml}
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
+	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},docs} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
 	    ${DFILE.${_dev}} ${DESTDIR}${BINDIR}/${VOLUME}/
 .endfor
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3bus.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3bus.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -480,9 +480,9 @@ ps3bus_print_child(device_t dev, device_t child)
 
 	retval += bus_print_child_header(dev, child);
 	retval += resource_list_print_type(&dinfo->resources, "mem",
-	    SYS_RES_MEMORY, "%#lx");
+	    SYS_RES_MEMORY, "%#jx");
 	retval += resource_list_print_type(&dinfo->resources, "irq",
-	    SYS_RES_IRQ, "%ld");
+	    SYS_RES_IRQ, "%jd");
 
 	retval += bus_print_child_footer(dev, child);
 

@@ -47,7 +47,7 @@
  *
  *	from: @(#)locore.s	8.5 (Berkeley) 1/4/94
  *	JNPR: locore.S,v 1.6.2.1 2007/08/29 12:24:49 girish
- * $FreeBSD: head/sys/mips/mips/locore.S 232615 2012-03-06 19:01:32Z jmallett $
+ * $FreeBSD: head/sys/mips/mips/locore.S 301456 2016-06-05 17:04:03Z kib $
  */
 
 /*
@@ -173,7 +173,7 @@ VECTOR(_locore, unknown)
 	jal	_C_LABEL(platform_start)
 	nop
 
-	PTR_LA	sp, _C_LABEL(thread0)
+	PTR_LA	sp, _C_LABEL(thread0_st)
 	PTR_L	a0, TD_PCB(sp)
 	REG_LI	t0, ~7
 	and	a0, a0, t0

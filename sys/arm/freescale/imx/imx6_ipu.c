@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_ipu.c 292574 2015-12-21 22:25:35Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_ipu.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -872,7 +872,7 @@ ipu_init_buffer(struct ipu_softc *sc)
 
 	stride = sc->sc_mode->hdisplay * MODE_BPP / 8;
 
-	/* init channel paramters */
+	/* init channel parameters */
 	CH_PARAM_RESET(&param);
 	/* XXX: interlaced modes are not supported yet */
 	CH_PARAM_SET_FW(&param, sc->sc_mode->hdisplay - 1);

@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwm.c,v 1.39 2015/03/23 00:35:19 jsg Exp $	*/
-/*	$FreeBSD: head/sys/dev/iwm/if_iwm_binding.h 286441 2015-08-08 06:06:48Z rpaulo $ */
+/*	$FreeBSD: head/sys/dev/iwm/if_iwm_binding.h 298582 2016-04-25 16:13:04Z adrian $ */
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>
  * Copyright (c) 2014 Fixup Software Ltd.
@@ -107,8 +107,7 @@
 
 extern	int iwm_mvm_binding_cmd(struct iwm_softc *sc, struct iwm_node *in,
 	    uint32_t action);
-extern	int iwm_mvm_binding_update(struct iwm_softc *sc, struct iwm_node *in,
-	    int add);
+extern	int iwm_mvm_binding_update(struct iwm_softc *sc, struct iwm_node *in);
 extern	int iwm_mvm_binding_add_vif(struct iwm_softc *sc, struct iwm_node *in);
 
 #endif	/* __IF_IWM_BINDING_H__ */

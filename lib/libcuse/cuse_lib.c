@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libcuse/cuse_lib.c 292594 2015-12-22 09:55:44Z hselasky $ */
+/* $FreeBSD: head/lib/libcuse/cuse_lib.c 298602 2016-04-26 01:20:16Z pfg $ */
 /*-
  * Copyright (c) 2010-2012 Hans Petter Selasky. All rights reserved.
  *
@@ -184,7 +184,7 @@ cuse_vmalloc(int size)
 	if (size < 1)
 		return (NULL);
 
-	info.page_count = (size + PAGE_SIZE - 1) / PAGE_SIZE;
+	info.page_count = howmany(size, PAGE_SIZE);
 
 	CUSE_LOCK();
 	for (n = 0; n != CUSE_ALLOC_UNIT_MAX; n++) {

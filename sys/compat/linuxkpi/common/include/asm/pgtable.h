@@ -26,11 +26,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/asm/pgtable.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/asm/pgtable.h 299673 2016-05-13 12:41:21Z hselasky $
  */
 #ifndef _ASM_PGTABLE_H_
 #define	_ASM_PGTABLE_H_
 
-typedef int	pgprot_t;
+#include <linux/page.h>
 
 #endif	/* _ASM_PGTABLE_H_ */

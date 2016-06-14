@@ -36,9 +36,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout_xscale.S 289372 2015-10-15 17:40:39Z kib $");
-
-#include <machine/acle-compat.h>
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout_xscale.S 300694 2016-05-25 19:44:26Z ian $");
 
 	.syntax	unified
 	.text

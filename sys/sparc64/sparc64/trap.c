@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/trap.c 287625 2015-09-10 17:46:48Z kib $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/trap.c 298352 2016-04-20 15:45:55Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_ktr.h"
@@ -215,8 +215,8 @@ static const int trap_sig[] = {
 	-1,			/* kernel stack fault */
 };
 
-CTASSERT(sizeof(trap_msg) / sizeof(*trap_msg) == T_MAX);
-CTASSERT(sizeof(trap_sig) / sizeof(*trap_sig) == T_MAX);
+CTASSERT(nitems(trap_msg) == T_MAX);
+CTASSERT(nitems(trap_sig) == T_MAX);
 
 CTASSERT(sizeof(struct trapframe) == 256);
 

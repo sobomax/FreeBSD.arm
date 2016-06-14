@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/mips/beri/boot2/boot2.c 294925 2016-01-27 16:36:18Z imp $");
+__FBSDID("$FreeBSD: head/sys/boot/mips/beri/boot2/boot2.c 298309 2016-04-19 23:44:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/disklabel.h>
@@ -116,7 +116,7 @@ static const unsigned char flags[NOPT] = {
 
 /* These must match BOOTINFO_DEV_TYPE constants. */
 static const char *const dev_nm[] = {"dram", "cfi", "sdcard"};
-static const u_int dev_nm_count = sizeof(dev_nm) / sizeof(dev_nm[0]);
+static const u_int dev_nm_count = nitems(dev_nm);
 
 static struct dmadat __dmadat;
 

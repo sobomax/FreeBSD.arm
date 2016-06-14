@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/ispmbox.h 292690 2015-12-24 14:53:29Z mav $ */
+/* $FreeBSD: head/sys/dev/isp/ispmbox.h 297751 2016-04-09 14:50:47Z mav $ */
 /*-
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -1548,7 +1548,9 @@ typedef struct {
 #define	SNS_GFF_ID	0x11F
 #define	SNS_GID_FT	0x171
 #define	SNS_RFT_ID	0x217
+#define	SNS_RSPN_ID	0x218
 #define	SNS_RFF_ID	0x21F
+#define	SNS_RSNN_NN	0x239
 typedef struct {
 	uint16_t	snscb_rblen;	/* response buffer length (words) */
 	uint16_t	snscb_reserved0;

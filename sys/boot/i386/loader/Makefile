@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/loader/Makefile 286368 2015-08-06 16:07:27Z allanjude $
+# $FreeBSD: head/sys/boot/i386/loader/Makefile 296963 2016-03-16 23:12:19Z allanjude $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -58,6 +58,13 @@ CFLAGS+=	-DLOADER_GZIP_SUPPORT
 .if defined(LOADER_NANDFS_SUPPORT)
 CFLAGS+=	-DLOADER_NANDFS_SUPPORT
 .endif
+.if !defined(LOADER_NO_GELI_SUPPORT)
+CFLAGS+=	-DLOADER_GELI_SUPPORT
+LIBGELIBOOT=	${.OBJDIR}/../../geli/libgeliboot.a
+.PATH:		${.CURDIR}/../../../opencrypto
+SRCS+=		xform_aes_xts.c
+CFLAGS+=	-I${.CURDIR}/../../.. -D_STAND
+.endif
 
 # Always add MI sources
 .PATH:		${.CURDIR}/../../common
@@ -116,8 +123,8 @@ FILES+=	loader.rc menu.rc
 # XXX crt0.o needs to be first for pxeboot(8) to work
 OBJS=	${BTXCRT}
 
-DPADD=	${LIBFICL} ${LIBFIREWIRE} ${LIBZFSBOOT} ${LIBI386} ${LIBSTAND}
-LDADD=	${LIBFICL} ${LIBFIREWIRE} ${LIBZFSBOOT} ${LIBI386} ${LIBSTAND}
+DPADD=	${LIBFICL} ${LIBFIREWIRE} ${LIBZFSBOOT} ${LIBI386} ${LIBSTAND} ${LIBGELIBOOT}
+LDADD=	${LIBFICL} ${LIBFIREWIRE} ${LIBZFSBOOT} ${LIBI386} ${LIBSTAND} ${LIBGELIBOOT}
 
 .include <bsd.prog.mk>
 
@@ -125,6 +132,6 @@ LDADD=	${LIBFICL} ${LIBFIREWIRE} ${LIBZFSBOOT} ${LIBI386} ${LIBSTAND}
 beforedepend ${OBJS}: machine
 CLEANFILES+=	machine
 CFLAGS+=	-DLOADER_PREFER_AMD64
-machine: .NOPATH
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../i386/include machine
 .endif

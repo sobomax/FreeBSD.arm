@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/wi/if_wivar.h 288095 2015-09-22 06:34:07Z adrian $
+ * $FreeBSD: head/sys/dev/wi/if_wivar.h 300238 2016-05-19 22:14:35Z avos $
  */
 
 /*
@@ -114,6 +114,7 @@ struct wi_softc	{
 	u_int16_t		sc_portnum;
 	u_int16_t		sc_encryption;
 	u_int16_t		sc_monitor_port;
+	u_int16_t		sc_chanmask;
 
 	/* RSSI interpretation */
 	u_int16_t		sc_min_rssi;	/* clamp sc_min_rssi < RSSI */

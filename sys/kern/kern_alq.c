@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_alq.c 264151 2014-04-05 16:54:47Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_alq.c 296688 2016-03-11 23:18:06Z jhb $");
 
 #include "opt_mac.h"
 
@@ -969,5 +969,5 @@ static moduledata_t alq_mod =
 	NULL
 };
 
-DECLARE_MODULE(alq, alq_mod, SI_SUB_SMP, SI_ORDER_ANY);
+DECLARE_MODULE(alq, alq_mod, SI_SUB_LAST, SI_ORDER_ANY);
 MODULE_VERSION(alq, 1);

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/mountd 281691 2015-04-18 16:08:06Z trasz $
+# $FreeBSD: head/etc/rc.d/mountd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: mountd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="mountd"
+desc="Service remote NFS mount requests"
 rcvar="mountd_enable"
 command="/usr/sbin/${name}"
 pidfile="/var/run/${name}.pid"

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.opts.mk 296217 2016-02-29 17:57:11Z emaste $
+# $FreeBSD: head/share/mk/bsd.opts.mk 297434 2016-03-30 23:50:23Z bdrewery $
 #
 # Option file for src builds.
 #
@@ -68,7 +68,6 @@ __DEFAULT_YES_OPTIONS = \
 
 __DEFAULT_NO_OPTIONS = \
     CCACHE_BUILD \
-    FAST_DEPEND \
     CTF \
     INSTALL_AS_USER \
     STALE_STAGED
@@ -78,12 +77,6 @@ __DEFAULT_DEPENDENT_OPTIONS = \
     STAGING_MAN/STAGING \
     STAGING_PROG/STAGING \
 
-
-# Enable FAST_DEPEND by default for the meta build.
-.if !empty(.MAKE.MODE:Mmeta)
-__DEFAULT_YES_OPTIONS+=	FAST_DEPEND
-__DEFAULT_NO_OPTIONS:=	${__DEFAULT_NO_OPTIONS:NFAST_DEPEND}
-.endif
 
 .include <bsd.mkopt.mk>
 

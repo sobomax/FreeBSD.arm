@@ -23,7 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/mkuzip/mkuzip.h 295943 2016-02-23 23:59:08Z sobomax $
+ * $FreeBSD: head/usr.bin/mkuzip/mkuzip.h 298504 2016-04-23 07:23:43Z sobomax $
  */
 
+#define DEFINE_RAW_METHOD(func, rval, args...) typedef rval (*func##_t)(args)
+
 void *mkuz_safe_malloc(size_t);
+void *mkuz_safe_zmalloc(size_t);
+int mkuz_memvcmp(const void *, unsigned char, size_t);

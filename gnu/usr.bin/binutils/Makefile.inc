@@ -1,5 +1,6 @@
-# $FreeBSD: head/gnu/usr.bin/binutils/Makefile.inc 203412 2010-02-03 02:39:08Z imp $
+# $FreeBSD: head/gnu/usr.bin/binutils/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
 WARNS?=	3
+PACKAGE=	binutils
 
 .include "../Makefile.inc"

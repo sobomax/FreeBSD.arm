@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2010-2015 Solarflare Communications, Inc.
+ * Copyright (c) 2010-2016 Solarflare Communications, Inc.
  * All rights reserved.
  *
  * This software was developed in part by OKTET Labs Ltd. under contract for
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_nvram.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_nvram.c 300607 2016-05-24 12:16:57Z arybchik $");
 
 
 #include <sys/types.h>
@@ -75,10 +75,6 @@ sfxge_nvram_rw(struct sfxge_softc *sc, sfxge_ioc_t *ip, efx_nvram_type_t type,
 		goto fail1;
 
 	buf = malloc(chunk_size, M_TEMP, M_WAITOK);
-	if (buf == NULL) {
-		rc = ENOMEM;
-		goto fail2;
-	}
 
 	off = 0;
 	while (total_size) {
@@ -108,7 +104,6 @@ sfxge_nvram_rw(struct sfxge_softc *sc, sfxge_ioc_t *ip, efx_nvram_type_t type,
 
 fail3:
 	free(buf, M_TEMP);
-fail2:
 	efx_nvram_rw_finish(enp, type);
 fail1:
 	return (rc);

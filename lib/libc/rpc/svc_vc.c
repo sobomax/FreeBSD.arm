@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_vc.c 292047 2015-12-10 05:17:04Z stas $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/svc_vc.c 298830 2016-04-30 01:24:24Z pfg $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -45,7 +45,6 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/svc_vc.c 292047 2015-12-10 05:17:04Z stas 
 
 #include "namespace.h"
 #include "reentrant.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/poll.h>
 #include <sys/socket.h>
@@ -263,7 +262,7 @@ makefd_xprt(int fd, u_int sendsize, u_int recvsize)
 	    xprt, read_vc, write_vc);
 	xprt->xp_p1 = cd;
 	xprt->xp_verf.oa_base = cd->verf_body;
-	svc_vc_ops(xprt);  /* truely deals with calls */
+	svc_vc_ops(xprt);  /* truly deals with calls */
 	xprt->xp_port = 0;  /* this is a connection, not a rendezvouser */
 	xprt->xp_fd = fd;
         if (__rpc_fd2sockinfo(fd, &si) && __rpc_sockinfo2netid(&si, &netid))

@@ -1,5 +1,5 @@
 #	from: @(#)bsd.subdir.mk	5.9 (Berkeley) 2/1/91
-# $FreeBSD: head/share/mk/bsd.subdir.mk 296124 2016-02-26 22:14:00Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.subdir.mk 301166 2016-06-01 20:44:28Z gjb $
 #
 # The include file <bsd.subdir.mk> contains the default targets
 # for building subdirectories.
@@ -16,7 +16,7 @@
 #
 # SUBDIR	A list of subdirectories that should be built as well.
 #		Each of the targets will execute the same target in the
-#		subdirectories. SUBDIR.yes is automatically appeneded
+#		subdirectories. SUBDIR.yes is automatically appended
 #		to this list.
 #
 # +++ targets +++
@@ -72,10 +72,9 @@ DISTRIBUTION?=	base
 distribute: .MAKE
 .for dist in ${DISTRIBUTION}
 	${_+_}cd ${.CURDIR}; \
-	    ${MAKE} install -DNO_SUBDIR DESTDIR=${DISTDIR}/${dist} SHARED=copies
+	    ${MAKE} install installconfig -DNO_SUBDIR DESTDIR=${DISTDIR}/${dist} SHARED=copies
 .endfor
 .endif
-
 # Convenience targets to run 'build${target}' and 'install${target}' when
 # calling 'make ${target}'.
 .for __target in files includes
@@ -131,7 +130,8 @@ ${SUBDIR:N.WAIT}: .PHONY .MAKE
 # such as 'install' becoming {before,real,after}install, just recurse
 # 'install'.  Despite that, 'realinstall' is special due to ordering issues
 # with 'afterinstall'.
-.if make(${__target}) || (${__target} == realinstall && make(install))
+.if !defined(NO_SUBDIR) && (make(${__target}) || \
+    (${__target} == realinstall && make(install)))
 # Can ordering be skipped for this and SUBDIR_PARALLEL forced?
 .if ${STANDALONE_SUBDIR_TARGETS:M${__target}}
 _is_standalone_target=	1
@@ -153,11 +153,9 @@ __deps+= ${__target}_subdir_${DIRPRFX}${__dep}
 .endfor
 .endif
 ${__target}_subdir_${DIRPRFX}${__dir}: .PHONY .MAKE .SILENT ${__deps}
-.if !defined(NO_SUBDIR)
 	@${_+_}target=${__target:realinstall=install}; \
 	    dir=${__dir}; \
 	    ${_SUBDIR_SH};
-.endif
 .endif
 .endfor	# __dir in ${SUBDIR}
 ${__target}: ${__subdir_targets}

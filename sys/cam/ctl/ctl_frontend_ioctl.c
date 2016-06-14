@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_ioctl.c 288261 2015-09-26 11:56:28Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_ioctl.c 298810 2016-04-29 21:05:48Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -339,7 +339,7 @@ cfi_submit_wait(union ctl_io *io)
 		mtx_lock(&params.ioctl_mtx);
 		/*
 		 * Check the state here, and don't sleep if the state has
-		 * already changed (i.e. wakeup has already occured, but we
+		 * already changed (i.e. wakeup has already occurred, but we
 		 * weren't waiting yet).
 		 */
 		if (params.state == last_state) {

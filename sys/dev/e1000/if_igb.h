@@ -30,10 +30,14 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_igb.h 295906 2016-02-23 01:19:26Z marius $*/
+/*$FreeBSD: head/sys/dev/e1000/if_igb.h 299182 2016-05-06 15:41:38Z sbruno $*/
 
 #ifndef _IF_IGB_H_
 #define _IF_IGB_H_
+
+#ifdef ALTQ
+#define IGB_LEGACY_TX
+#endif
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -291,7 +295,11 @@
 #define ETH_ADDR_LEN		6
 
 /* Offload bits in mbuf flag */
-#if __FreeBSD_version >= 800000
+#if __FreeBSD_version >= 1000000
+#define CSUM_OFFLOAD_IPV4       (CSUM_IP|CSUM_IP_TCP|CSUM_IP_UDP|CSUM_IP_SCTP)
+#define CSUM_OFFLOAD_IPV6       (CSUM_IP6_TCP|CSUM_IP6_UDP|CSUM_IP6_SCTP)
+#define CSUM_OFFLOAD            (CSUM_OFFLOAD_IPV4|CSUM_OFFLOAD_IPV6)
+#elif __FreeBSD_version >= 800000
 #define CSUM_OFFLOAD		(CSUM_IP|CSUM_TCP|CSUM_UDP|CSUM_SCTP)
 #else
 #define CSUM_OFFLOAD		(CSUM_IP|CSUM_TCP|CSUM_UDP)

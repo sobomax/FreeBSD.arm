@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	from: if_ethersubr.c,v 1.5 1994/12/13 22:31:45 wollman Exp
- * $FreeBSD: head/sys/net/if_fddisubr.c 293544 2016-01-09 16:34:37Z melifaro $
+ * $FreeBSD: head/sys/net/if_fddisubr.c 301217 2016-06-02 17:51:29Z gnn $
  */
 
 #include "opt_inet.h"
@@ -126,7 +126,7 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	switch (dst->sa_family) {
 #ifdef INET
 	case AF_INET: {
-		error = arpresolve(ifp, is_gw, m, dst, edst, NULL);
+		error = arpresolve(ifp, is_gw, m, dst, edst, NULL, NULL);
 		if (error)
 			return (error == EWOULDBLOCK ? 0 : error);
 		type = htons(ETHERTYPE_IP);
@@ -162,7 +162,7 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 #endif /* INET */
 #ifdef INET6
 	case AF_INET6:
-		error = nd6_resolve(ifp, is_gw, m, dst, edst, NULL);
+		error = nd6_resolve(ifp, is_gw, m, dst, edst, NULL, NULL);
 		if (error)
 			return (error == EWOULDBLOCK ? 0 : error);
 		type = htons(ETHERTYPE_IPV6);
@@ -235,7 +235,7 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	if (type != 0) {
 		struct llc *l;
 		M_PREPEND(m, LLC_SNAPFRAMELEN, M_NOWAIT);
-		if (m == 0)
+		if (m == NULL)
 			senderr(ENOBUFS);
 		l = mtod(m, struct llc *);
 		l->llc_control = LLC_UI;
@@ -251,7 +251,7 @@ fddi_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	 * allocate another.
 	 */
 	M_PREPEND(m, FDDI_HDR_LEN, M_NOWAIT);
-	if (m == 0)
+	if (m == NULL)
 		senderr(ENOBUFS);
 	fh = mtod(m, struct fddi_header *);
 	fh->fddi_fc = FDDIFC_LLC_ASYNC|FDDIFC_LLC_PRIO4;
@@ -607,7 +607,7 @@ fddi_resolvemulti(ifp, llsa, sa)
 		e_addr = LLADDR(sdl);
 		if ((e_addr[0] & 1) != 1)
 			return (EADDRNOTAVAIL);
-		*llsa = 0;
+		*llsa = NULL;
 		return (0);
 
 #ifdef INET
@@ -634,7 +634,7 @@ fddi_resolvemulti(ifp, llsa, sa)
 			 * (This is used for multicast routers.)
 			 */
 			ifp->if_flags |= IFF_ALLMULTI;
-			*llsa = 0;
+			*llsa = NULL;
 			return (0);
 		}
 		if (!IN6_IS_ADDR_MULTICAST(&sin6->sin6_addr))

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_common.c 295464 2016-02-10 09:19:29Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a10_common.c 298068 2016-04-15 16:05:41Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -42,7 +42,7 @@ struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
 
-#ifndef ARM_INTRNG
+#ifndef INTRNG
 
 static int
 fdt_aintc_decode_ic(phandle_t node, pcell_t *intr, int *interrupt, int *trig,
@@ -69,4 +69,4 @@ fdt_pic_decode_t fdt_pic_table[] = {
 	NULL
 };
 
-#endif /* ARM_INTRNG */
+#endif /* INTRNG */

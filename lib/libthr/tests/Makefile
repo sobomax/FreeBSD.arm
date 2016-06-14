@@ -1,4 +1,6 @@
-# $FreeBSD: head/lib/libthr/tests/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libthr/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libpthread
 
@@ -41,8 +43,7 @@ PROGS+=		h_cancel
 PROGS+=		h_exit
 PROGS+=		h_resolv
 
-FILESDIR=	${TESTSDIR}
-FILES=		d_mach
+${PACKAGE}FILES+=		d_mach
 
 TESTS_SUBDIRS=		dlopen
 

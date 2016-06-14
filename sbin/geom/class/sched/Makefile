@@ -1,6 +1,7 @@
 # GEOM_LIBRARY_PATH
-# $FreeBSD: head/sbin/geom/class/sched/Makefile 222772 2011-06-06 20:24:17Z ed $
+# $FreeBSD: head/sbin/geom/class/sched/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 .PATH: ${.CURDIR}/../../misc
 
 GEOM_CLASS=	sched

@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libsysdecode/Makefile 295931 2016-02-23 20:00:55Z jhb $
+# $FreeBSD: head/lib/libsysdecode/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	sysdecode
 
 SRCS=	errno.c ioctl.c syscallnames.c utrace.c

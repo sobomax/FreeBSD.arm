@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/truss/truss.h 295930 2016-02-23 19:56:29Z jhb $
+ * $FreeBSD: head/usr.bin/truss/truss.h 296571 2016-03-09 18:45:41Z jhb $
  */
 
 #include <sys/linker_set.h>
@@ -73,7 +73,7 @@ struct current_syscall {
 
 struct threadinfo
 {
-	SLIST_ENTRY(threadinfo) entries;
+	LIST_ENTRY(threadinfo) entries;
 	struct procinfo *proc;
 	lwpid_t tid;
 	int in_syscall;
@@ -87,7 +87,7 @@ struct procinfo {
 	pid_t pid;
 	struct procabi *abi;
 
-	SLIST_HEAD(, threadinfo) threadlist;
+	LIST_HEAD(, threadinfo) threadlist;
 };
 
 struct trussinfo

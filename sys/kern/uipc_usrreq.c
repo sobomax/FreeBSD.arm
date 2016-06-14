@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_usrreq.c 296092 2016-02-26 12:46:34Z ed $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_usrreq.c 298310 2016-04-19 23:48:27Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -337,7 +337,7 @@ static struct domain localdomain = {
 	.dom_externalize =	unp_externalize,
 	.dom_dispose =		unp_dispose_so,
 	.dom_protosw =		localsw,
-	.dom_protoswNPROTOSW =	&localsw[sizeof(localsw)/sizeof(localsw[0])]
+	.dom_protoswNPROTOSW =	&localsw[nitems(localsw)]
 };
 DOMAIN_SET(local);
 

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_rmlock.c 287833 2015-09-15 22:16:21Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_rmlock.c 298819 2016-04-29 22:15:33Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -375,7 +375,7 @@ _rm_rlock_hard(struct rmlock *rm, struct rm_priotracker *tracker, int trylock)
 	}
 
 	/*
-	 * We allow readers to aquire a lock even if a writer is blocked if
+	 * We allow readers to acquire a lock even if a writer is blocked if
 	 * the lock is recursive and the reader already holds the lock.
 	 */
 	if ((rm->lock_object.lo_flags & LO_RECURSABLE) != 0) {

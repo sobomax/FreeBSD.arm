@@ -9,7 +9,7 @@
 # do this as part of the normal build. If makefs(8) grows workable FAT
 # support, this should be revisited.
 
-# $FreeBSD: head/sys/boot/efi/boot1/generate-fat.sh 293429 2016-01-08 17:33:34Z emaste $
+# $FreeBSD: head/sys/boot/efi/boot1/generate-fat.sh 297871 2016-04-12 20:52:28Z emaste $
 
 FAT_SIZE=1600 			#Size in 512-byte blocks of the produced image
 
@@ -44,6 +44,8 @@ mkdir -p stub/efi/boot
 
 # Make a dummy file for boot1
 echo 'Boot1 START' | dd of=stub/efi/boot/$FILENAME cbs=$BOOT1_SIZE count=1 conv=block
+# Provide a fallback startup.nsh
+echo $FILENAME > stub/efi/boot/startup.nsh
 
 umount stub
 mdconfig -d -u $DEVICE

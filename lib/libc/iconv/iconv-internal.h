@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/iconv/iconv-internal.h 281550 2015-04-15 09:09:20Z tijl $
+ * $FreeBSD: head/lib/libc/iconv/iconv-internal.h 298830 2016-04-30 01:24:24Z pfg $
  */
 
 /*
- * Interal prototypes for our back-end functions.
+ * Internal prototypes for our back-end functions.
  */
 size_t	__bsd___iconv(iconv_t, char **, size_t *, char **,
 		size_t *, __uint32_t, size_t *);

@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/systat/netstat.c 294869 2016-01-27 00:45:46Z glebius $");
+__FBSDID("$FreeBSD: head/usr.bin/systat/netstat.c 298324 2016-04-20 01:26:03Z araujo $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)netstat.c	8.1 (Berkeley) 6/6/93";
@@ -605,7 +605,7 @@ inetname(struct sockaddr *sa)
 			if (np)
 				cp = np->n_name;
 		}
-		if (cp == 0) {
+		if (cp == NULL) {
 			hp = gethostbyaddr((char *)&in, sizeof (in), AF_INET);
 			if (hp)
 				cp = hp->h_name;

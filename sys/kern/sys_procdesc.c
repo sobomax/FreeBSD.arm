@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_procdesc.c 285670 2015-07-18 09:02:50Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_procdesc.c 301573 2016-06-08 02:09:14Z oshogbo $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -240,6 +240,22 @@ procdesc_new(struct proc *p, int flags)
 	 * struct file, and the other from their struct proc.
 	 */
 	refcount_init(&pd->pd_refcount, 2);
+}
+
+/*
+ * Create a new process decriptor for the process that refers to it.
+ */
+int
+procdesc_falloc(struct thread *td, struct file **resultfp, int *resultfd,
+    int flags, struct filecaps *fcaps)
+{
+	int fflags;
+
+	fflags = 0;
+	if (flags & PD_CLOEXEC)
+		fflags = O_CLOEXEC;
+
+	return (falloc_caps(td, resultfp, resultfd, fflags, fcaps));
 }
 
 /*

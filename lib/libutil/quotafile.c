@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libutil/quotafile.c 255007 2013-08-28 21:10:37Z jilles $
+ * $FreeBSD: head/lib/libutil/quotafile.c 299581 2016-05-13 00:26:14Z truckman $
  */
 
 #include <sys/types.h>
@@ -124,7 +124,7 @@ quota_open(struct fstab *fs, int quotatype, int openflags)
 		return (NULL);
 	qf->fd = -1;
 	qf->quotatype = quotatype;
-	strncpy(qf->fsname, fs->fs_file, sizeof(qf->fsname));
+	strlcpy(qf->fsname, fs->fs_file, sizeof(qf->fsname));
 	if (stat(qf->fsname, &st) != 0)
 		goto error;
 	qf->dev = st.st_dev;

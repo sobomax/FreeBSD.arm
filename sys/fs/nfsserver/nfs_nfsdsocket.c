@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdsocket.c 283753 2015-05-29 20:22:53Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdsocket.c 299226 2016-05-07 22:45:08Z rmacklem $");
 
 /*
  * Socket operations for use by the nfs server.
@@ -771,7 +771,12 @@ nfsrvd_compound(struct nfsrv_descript *nd, int isdgram, u_char *tag,
 		}
 		if (nfsv4_opflag[op].savereply)
 			nd->nd_flag |= ND_SAVEREPLY;
-		NFSINCRGLOBAL(newnfsstats.srvrpccnt[nd->nd_procnum]);
+		/*
+		 * For now, newnfsstats.srvrpccnt[] doesn't have entries
+		 * for the NFSv4.1 operations.
+		 */
+		if (nd->nd_procnum < NFSV4OP_NOPS)
+			NFSINCRGLOBAL(newnfsstats.srvrpccnt[nd->nd_procnum]);
 		switch (op) {
 		case NFSV4OP_PUTFH:
 			error = nfsrv_mtofh(nd, &fh);
@@ -992,7 +997,7 @@ nfsrvd_compound(struct nfsrv_descript *nd, int isdgram, u_char *tag,
 				    NULL, p, &vpnes);
 			}
 		    }
-		};
+		}
 		if (error) {
 			if (error == EBADRPC || error == NFSERR_BADXDR) {
 				nd->nd_repstat = NFSERR_BADXDR;

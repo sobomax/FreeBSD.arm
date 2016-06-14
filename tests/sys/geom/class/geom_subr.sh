@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: head/tests/sys/geom/class/geom_subr.sh 293821 2016-01-13 09:14:27Z ngie $
+# $FreeBSD: head/tests/sys/geom/class/geom_subr.sh 297183 2016-03-22 08:12:45Z ngie $
 
 devwait()
 {
@@ -35,16 +35,14 @@ geom_test_cleanup()
 }
 
 if [ $(id -u) -ne 0 ]; then
-	echo 'Tests must be run as root'
-	echo 'Bail out!'
-	exit 1
+	echo '1..0 # SKIP tests must be run as root'
+	exit 0
 fi
 # If the geom class isn't already loaded, try loading it.
 if ! kldstat -q -m g_${class}; then
 	if ! geom ${class} load; then
-		echo "Could not load module for geom class=${class}"
-		echo 'Bail out!'
-		exit 1
+		echo "1..0 # SKIP could not load module for geom class=${class}"
+		exit 0
 	fi
 fi
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/ctld.c 295212 2016-02-03 15:45:13Z jceel $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/ctld.c 297860 2016-04-12 16:07:41Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -66,7 +66,7 @@ static void
 usage(void)
 {
 
-	fprintf(stderr, "usage: ctld [-d][-f config-file]\n");
+	fprintf(stderr, "usage: ctld [-d][-u][-f config-file]\n");
 	exit(1);
 }
 

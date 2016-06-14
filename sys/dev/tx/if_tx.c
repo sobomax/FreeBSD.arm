@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tx/if_tx.c 295126 2016-02-01 17:41:21Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/tx/if_tx.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * EtherPower II 10/100 Fast Ethernet (SMC 9432 serie)
@@ -796,7 +796,7 @@ epic_rx_done(epic_softc_t *sc)
 		(*ifp->if_input)(ifp, m);
 		EPIC_LOCK(sc);
 
-		/* Successfuly received frame */
+		/* Successfully received frame */
 		if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
         }
 	bus_dmamap_sync(sc->rtag, sc->rmap,
@@ -897,7 +897,7 @@ epic_intr(void *arg)
 		      INTSTAT_APE|INTSTAT_DPE|INTSTAT_TXU|INTSTAT_RXE)) {
     	    if (status & (INTSTAT_FATAL|INTSTAT_PMA|INTSTAT_PTA|
 			  INTSTAT_APE|INTSTAT_DPE)) {
-		device_printf(sc->dev, "PCI fatal errors occured: %s%s%s%s\n",
+		device_printf(sc->dev, "PCI fatal errors occurred: %s%s%s%s\n",
 		    (status & INTSTAT_PMA) ? "PMA " : "",
 		    (status & INTSTAT_PTA) ? "PTA " : "",
 		    (status & INTSTAT_APE) ? "APE " : "",

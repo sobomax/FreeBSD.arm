@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/buf_ring.h 296178 2016-02-29 03:54:51Z sephe $
+ * $FreeBSD: head/sys/sys/buf_ring.h 298981 2016-05-03 15:14:17Z pfg $
  *
  */
 
@@ -98,7 +98,7 @@ buf_ring_enqueue(struct buf_ring *br, void *buf)
 
 	/*
 	 * If there are other enqueues in progress
-	 * that preceeded us, we need to wait for them
+	 * that preceded us, we need to wait for them
 	 * to complete 
 	 */   
 	while (br->br_prod_tail != prod_head)
@@ -135,7 +135,7 @@ buf_ring_dequeue_mc(struct buf_ring *br)
 #endif
 	/*
 	 * If there are other dequeues in progress
-	 * that preceeded us, we need to wait for them
+	 * that preceded us, we need to wait for them
 	 * to complete 
 	 */   
 	while (br->br_cons_tail != cons_head)

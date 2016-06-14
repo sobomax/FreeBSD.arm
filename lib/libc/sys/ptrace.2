@@ -1,4 +1,4 @@
-.\" $FreeBSD: head/lib/libc/sys/ptrace.2 292896 2015-12-30 00:04:57Z jhb $
+.\" $FreeBSD: head/lib/libc/sys/ptrace.2 297355 2016-03-28 16:48:28Z trasz $
 .\"	$NetBSD: ptrace.2,v 1.2 1995/02/27 12:35:37 cgd Exp $
 .\"
 .\" This file is in the public domain.
@@ -103,7 +103,7 @@ be ignored.
 If the child was created by
 .Xr vfork 2
 system call or
-.Xr rfork(2)
+.Xr rfork 2
 call with the
 .Dv RFMEM
 flag specified, the debugging events are reported to the parent

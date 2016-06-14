@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/amd64_mem.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/amd64_mem.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -117,7 +117,7 @@ static int amd64_mtrrtomrt[] = {
 	MDF_WRITEBACK
 };
 
-#define	MTRRTOMRTLEN (sizeof(amd64_mtrrtomrt) / sizeof(amd64_mtrrtomrt[0]))
+#define	MTRRTOMRTLEN nitems(amd64_mtrrtomrt)
 
 static int
 amd64_mtrr2mrt(int val)
@@ -383,7 +383,7 @@ amd64_mrstoreone(void *arg)
 		/* mask/active register */
 		if (mrd->mr_flags & MDF_ACTIVE) {
 			msrv = MTRR_PHYSMASK_VALID |
-			    (~(mrd->mr_len - 1) & mtrr_physmask);
+			    rounddown2(mtrr_physmask, mrd->mr_len);
 		} else {
 			msrv = 0;
 		}

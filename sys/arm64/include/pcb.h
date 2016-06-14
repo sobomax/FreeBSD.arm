@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/pcb.h 295142 2016-02-02 10:28:56Z andrew $
+ * $FreeBSD: head/sys/arm64/include/pcb.h 297446 2016-03-31 11:07:24Z andrew $
  */
 
 #ifndef	_MACHINE_PCB_H_
@@ -40,7 +40,7 @@ struct pcb {
 	/* These two need to be in order as we access them together */
 	uint64_t	pcb_sp;
 	uint64_t	pcb_tpidr_el0;
-	vm_offset_t	pcb_l1addr;
+	vm_offset_t	pcb_l0addr;
 
 	/* Fault handler, the error value is passed in x0 */
 	vm_offset_t	pcb_onfault;

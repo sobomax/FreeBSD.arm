@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_lan_hmc.c 284049 2015-06-05 22:52:42Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_lan_hmc.c 299548 2016-05-12 18:20:18Z erj $*/
 
 #include "i40e_osdep.h"
 #include "i40e_register.h"
@@ -770,7 +770,7 @@ static void i40e_write_byte(u8 *hmc_bits,
 
 	/* prepare the bits and mask */
 	shift_width = ce_info->lsb % 8;
-	mask = BIT(ce_info->width) - 1;
+	mask = (u8)(BIT(ce_info->width) - 1);
 
 	src_byte = *from;
 	src_byte &= mask;
@@ -955,7 +955,7 @@ static void i40e_read_byte(u8 *hmc_bits,
 
 	/* prepare the bits and mask */
 	shift_width = ce_info->lsb % 8;
-	mask = BIT(ce_info->width) - 1;
+	mask = (u8)(BIT(ce_info->width) - 1);
 
 	/* shift to correct alignment */
 	mask <<= shift_width;

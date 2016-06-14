@@ -1,5 +1,6 @@
-# $FreeBSD: head/bin/freebsd-version/Makefile 291942 2015-12-07 16:08:13Z bdrewery $
+# $FreeBSD: head/bin/freebsd-version/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 SCRIPTS = freebsd-version
 MAN = freebsd-version.1
 CLEANFILES = freebsd-version freebsd-version.sh

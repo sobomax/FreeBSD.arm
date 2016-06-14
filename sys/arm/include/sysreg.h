@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/sysreg.h 294740 2016-01-25 18:02:28Z zbb $
+ * $FreeBSD: head/sys/arm/include/sysreg.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 /*
@@ -38,8 +38,6 @@
 
 #ifndef MACHINE_SYSREG_H
 #define	MACHINE_SYSREG_H
-
-#include <machine/acle-compat.h>
 
 /*
  * CP14 registers

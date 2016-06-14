@@ -1,4 +1,7 @@
-# $FreeBSD: head/share/examples/libusb20/Makefile 257779 2013-11-07 07:22:51Z hselasky $
+# $FreeBSD: head/share/examples/libusb20/Makefile 299293 2016-05-10 00:51:50Z gjb $
+
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/libusb20
 TARGETS=	bulk control
 CFLAGS+=	-Wall
 

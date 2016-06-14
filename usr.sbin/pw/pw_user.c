@@ -27,12 +27,10 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_user.c 296300 2016-03-02 04:56:36Z markj $";
+  "$FreeBSD: head/usr.sbin/pw/pw_user.c 301367 2016-06-04 16:31:33Z bapt $";
 #endif /* not lint */
 
 #include <sys/param.h>
-#include <sys/resource.h>
-#include <sys/time.h>
 #include <sys/types.h>
 
 #include <ctype.h>
@@ -744,7 +742,7 @@ pw_user_next(int argc, char **argv, char *name __unused)
 	bool quiet = false;
 	uid_t next;
 
-	while ((ch = getopt(argc, argv, "Cq")) != -1) {
+	while ((ch = getopt(argc, argv, "C:q")) != -1) {
 		switch (ch) {
 		case 'C':
 			cfg = optarg;

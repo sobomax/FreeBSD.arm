@@ -1,14 +1,14 @@
-# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/dtrace.test.mk 291332 2015-11-25 20:43:45Z bdrewery $
+# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/dtrace.test.mk 299388 2016-05-10 20:25:49Z markj $
 
 TESTGROUP= ${.CURDIR:H:T}/${.CURDIR:T}
-TESTSRC= ${.CURDIR:H:H:H:H:H}/contrib/opensolaris/cmd/dtrace/test/tst/${TESTGROUP}
+TESTSRC= ${SRCTOP}/cddl/contrib/opensolaris/cmd/dtrace/test/tst/${TESTGROUP}
 TESTSDIR= ${TESTSBASE}/cddl/usr.sbin/dtrace/${TESTGROUP}
 
-FILESGROUPS+=	FILES ${TESTGROUP} ${TESTGROUP}EXE
+FILESGROUPS+=	${TESTGROUP}EXE
 
-${TESTGROUP}= ${TESTFILES}
 ${TESTGROUP}EXE= ${TESTEXES}
 ${TESTGROUP}EXEMODE= 0555
+${TESTGROUP}EXEPACKAGE=	${PACKAGE}
 
 TESTWRAPPER=	t_dtrace_contrib
 ATF_TESTS_SH+=	${TESTWRAPPER}
@@ -17,8 +17,8 @@ TEST_METADATA.t_dtrace_contrib+= required_user="root"
 
 GENTEST?=	${.CURDIR:H:H}/tools/gentest.sh
 EXCLUDE=	${.CURDIR:H:H}/tools/exclude.sh
-${TESTWRAPPER}.sh: ${GENTEST} ${EXCLUDE} ${${TESTGROUP}}
-	sh ${GENTEST} -e ${EXCLUDE} ${TESTGROUP} ${${TESTGROUP}:S/ */ /} > ${.TARGET}
+${TESTWRAPPER}.sh: ${GENTEST} ${EXCLUDE} ${${PACKAGE}FILES}
+	sh ${GENTEST} -e ${EXCLUDE} ${TESTGROUP} ${${PACKAGE}FILES:S/ */ /} > ${.TARGET}
 
 CLEANFILES+=	${TESTWRAPPER}.sh
 

@@ -7,7 +7,7 @@
 //  fitness for any particular purpose, or against the infringements of
 //  intellectual property rights of others.
 // ----------------------------------------------------------------------------
-// $FreeBSD: head/sys/boot/arm/at91/libat91/at91rm9200.h 238463 2012-07-15 05:35:14Z imp $
+// $FreeBSD: head/sys/boot/arm/at91/libat91/at91rm9200.h 298826 2016-04-30 00:26:38Z pfg $
 //
 // File Name           : AT91RM9200.h
 // Object              : AT91RM9200 definitions
@@ -474,7 +474,7 @@ typedef struct _AT91S_ST {
 #define	AT91C_ST_CRTV         (0xFFFFFu <<  0) // (ST) Current Real-time Value
 
 // *****************************************************************************
-//              SOFTWARE API DEFINITION  FOR Power Management Controler
+//              SOFTWARE API DEFINITION  FOR Power Management Controller
 // *****************************************************************************
 typedef struct _AT91S_PMC {
 	AT91_REG	 PMC_SCER; 	// System Clock Enable Register
@@ -547,7 +547,7 @@ typedef struct _AT91S_PMC {
 // -------- PMC_IMR : (PMC Offset: 0x6c) PMC Interrupt Mask Register -------- 
 
 // *****************************************************************************
-//              SOFTWARE API DEFINITION  FOR Clock Generator Controler
+//              SOFTWARE API DEFINITION  FOR Clock Generator Controller
 // *****************************************************************************
 typedef struct _AT91S_CKGR {
 	AT91_REG	 CKGR_MOR; 	// Main Oscillator Register
@@ -590,7 +590,7 @@ typedef struct _AT91S_CKGR {
 #define	AT91C_CKGR_USB_PLL    (0x1u << 29) // (CKGR) PLL Use
 
 // *****************************************************************************
-//              SOFTWARE API DEFINITION  FOR Parallel Input Output Controler
+//              SOFTWARE API DEFINITION  FOR Parallel Input Output Controller
 // *****************************************************************************
 typedef struct _AT91S_PIO {
 	AT91_REG	 PIO_PER; 	// PIO Enable Register

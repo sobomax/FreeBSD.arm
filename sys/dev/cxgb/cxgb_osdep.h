@@ -26,7 +26,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 
-$FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 294839 2016-01-26 15:26:35Z hselasky $
+$FreeBSD: head/sys/dev/cxgb/cxgb_osdep.h 299374 2016-05-10 16:31:18Z hselasky $
 
 ***************************************************************************/
 
@@ -169,7 +169,7 @@ static const int debug_flags = DBG_RX;
 #define test_and_clear_bit(bit, p) atomic_cmpset_int((p), ((*(p)) | (1<<bit)), ((*(p)) & ~(1<<bit)))
 
 #define max_t(type, a, b) (type)max((a), (b))
-#define cpu_to_be32            htobe32
+#define cpu_to_be32(x)		htobe32(x)
 
 /* Standard PHY definitions */
 #define BMCR_LOOPBACK		BMCR_LOOP

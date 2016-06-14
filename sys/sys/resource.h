@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resource.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resource.h 296162 2016-02-28 17:52:33Z kib $
+ * $FreeBSD: head/sys/sys/resource.h 301110 2016-06-01 07:45:03Z ed $
  */
 
 #ifndef _SYS_RESOURCE_H_
@@ -36,6 +36,16 @@
 #include <sys/cdefs.h>
 #include <sys/_timeval.h>
 #include <sys/_types.h>
+
+#ifndef _ID_T_DECLARED
+typedef	__id_t		id_t;
+#define	_ID_T_DECLARED
+#endif
+
+#ifndef _RLIM_T_DECLARED
+typedef	__rlim_t	rlim_t;
+#define	_RLIM_T_DECLARED
+#endif
 
 /*
  * Process priority specifications to get/setpriority.
@@ -108,7 +118,7 @@ struct __wrusage {
 
 #define	RLIM_NLIMITS	15		/* number of resource limits */
 
-#define	RLIM_INFINITY	((rlim_t)(((uint64_t)1 << 63) - 1))
+#define	RLIM_INFINITY	((rlim_t)(((__uint64_t)1 << 63) - 1))
 /* XXX Missing: RLIM_SAVED_MAX, RLIM_SAVED_CUR */
 
 
@@ -134,11 +144,6 @@ static const char *rlimit_ident[RLIM_NLIMITS] = {
 	"kqueues",
 	"umtx",
 };
-#endif
-
-#ifndef _RLIM_T_DECLARED
-typedef	__rlim_t	rlim_t;
-#define	_RLIM_T_DECLARED
 #endif
 
 struct rlimit {

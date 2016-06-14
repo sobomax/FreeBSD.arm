@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libdpv/Makefile 296129 2016-02-26 22:14:23Z bdrewery $
+# $FreeBSD: head/lib/libdpv/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=		dpv
 SHLIB_MAJOR=	1
 INCS=		dpv.h

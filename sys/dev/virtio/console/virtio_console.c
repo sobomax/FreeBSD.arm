@@ -27,7 +27,7 @@
 /* Driver for VirtIO console devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/console/virtio_console.c 274215 2014-11-07 03:36:28Z bryanv $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/console/virtio_console.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1177,7 +1177,7 @@ vtcon_port_enable_intr(struct vtcon_port *port)
 {
 
 	/*
-	 * NOTE: The out virtqueue is always polled, so its interupt
+	 * NOTE: The out virtqueue is always polled, so its interrupt
 	 * kept disabled.
 	 */
 	virtqueue_enable_intr(port->vtcport_invq);

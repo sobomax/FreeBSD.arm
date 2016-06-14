@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/mv/orion/db88f5xxx.c 295694 2016-02-17 12:36:24Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/mv/orion/db88f5xxx.c 298627 2016-04-26 11:53:37Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -73,7 +73,7 @@ __FBSDID("$FreeBSD: head/sys/arm/mv/orion/db88f5xxx.c 295694 2016-02-17 12:36:24
 int platform_pci_get_irq(u_int bus, u_int slot, u_int func, u_int pin);
 
 /* Static device mappings. */
-const struct arm_devmap_entry db88f5xxx_devmap[] = {
+const struct devmap_entry db88f5xxx_devmap[] = {
 	/*
 	 * Map the on-board devices VA == PA so that we can access them
 	 * with the MMU on or off.

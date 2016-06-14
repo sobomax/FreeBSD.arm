@@ -1,0 +1,5 @@
+# $FreeBSD: head/sys/mips/conf/BCM.hints 301410 2016-06-04 19:53:47Z landonf $
+hint.bhnd.0.at="nexus0"
+hint.bhnd.0.maddr="0x18000000" 
+hint.bhnd.0.msize="0x00100000"
+

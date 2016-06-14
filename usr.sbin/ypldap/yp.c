@@ -1,5 +1,5 @@
 /*	$OpenBSD: yp.c,v 1.14 2015/02/11 01:26:00 pelikan Exp $ */
-/*	$FreeBSD: head/usr.sbin/ypldap/yp.c 296377 2016-03-04 03:10:08Z araujo $ */
+/*	$FreeBSD: head/usr.sbin/ypldap/yp.c 298177 2016-04-18 03:44:42Z araujo $ */
 /*
  * Copyright (c) 2008 Pierre-Yves Ritschard <pyr@openbsd.org>
  *
@@ -597,14 +597,14 @@ ypproc_maplist_2_svc(domainname *arg, struct svc_req *req)
 		{ "netid.byname",		YPMAP_NETID_BYNAME },
 	};
 	static ypresp_maplist	 res;
-	static struct ypmaplist	 maps[sizeof(mapnames) / sizeof(mapnames[0])];
+	static struct ypmaplist	 maps[nitems(mapnames)];
 	
 	if (yp_valid_domain(*arg, (struct ypresp_val *)&res) == -1)
 		return (&res);
 
 	res.stat = YP_TRUE;
 	res.maps = NULL;
-	for (i = 0; i < sizeof(mapnames) / sizeof(mapnames[0]); i++) {
+	for (i = 0; i < nitems(mapnames); i++) {
 		if (!(env->sc_flags & mapnames[i].cond))
 			continue;
 		maps[i].map = mapnames[i].name;

@@ -1,5 +1,5 @@
 /*	$OpenBSD: ber.c,v 1.9 2015/02/12 00:30:38 pelikan Exp $ */
-/*	$FreeBSD: head/usr.sbin/ypldap/ber.c 292271 2015-12-15 15:41:09Z araujo $ */
+/*	$FreeBSD: head/usr.sbin/ypldap/ber.c 300639 2016-05-25 01:37:25Z truckman $ */
 
 /*
  * Copyright (c) 2007 Reyk Floeter <reyk@vantronix.net>
@@ -621,7 +621,6 @@ ber_printf_elements(struct ber_element *ber, char *fmt, ...)
 
 	return (ber);
  fail:
-	ber_free_elements(ber);
 	return (NULL);
 }
 
@@ -726,7 +725,7 @@ ber_scanf_elements(struct ber_element *ber, char *fmt, ...)
 			continue;
 		case '}':
 		case ')':
-			if (parent[level] == NULL)
+			if (level < 0 || parent[level] == NULL)
 				goto fail;
 			ber = parent[level--];
 			ret++;
@@ -1082,6 +1081,15 @@ ber_read_element(struct ber *ber, struct ber_element *elm)
 		return -1;
 	DPRINTF("ber read element size %zd\n", len);
 	totlen += r + len;
+
+	/*
+	 * If using an external buffer and the total size of the element
+	 * is larger, then the external buffer don't bother to continue.
+	 */
+	if (ber->fd == -1 && len > ber->br_rend - ber->br_rptr) {
+		errno = ECANCELED;
+		return -1;
+	}
 
 	elm->be_type = type;
 	elm->be_len = len;

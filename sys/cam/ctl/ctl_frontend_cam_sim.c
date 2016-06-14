@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_cam_sim.c 289881 2015-10-24 17:24:19Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/ctl/ctl_frontend_cam_sim.c 298810 2016-04-29 21:05:48Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -106,7 +106,7 @@ static void cfcs_async(void *callback_arg, uint32_t code,
 
 struct cfcs_softc cfcs_softc;
 /*
- * This is primarly intended to allow for error injection to test the CAM
+ * This is primarily intended to allow for error injection to test the CAM
  * sense data and sense residual handling code.  This sets the maximum
  * amount of SCSI sense data that we will report to CAM.
  */

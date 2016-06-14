@@ -74,9 +74,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_fastfwd.c 290383 2015-11-05 07:26:32Z gnn $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_fastfwd.c 301717 2016-06-09 05:48:34Z ae $");
 
-#include "opt_ipfw.h"
 #include "opt_ipstealth.h"
 
 #include <sys/param.h>
@@ -205,7 +204,7 @@ ip_tryforward(struct mbuf *m)
 	 *
 	 * XXX: Probably some of these checks could be direct drop
 	 * conditions.  However it is not clear whether there are some
-	 * hacks or obscure behaviours which make it neccessary to
+	 * hacks or obscure behaviours which make it necessary to
 	 * let ip_input handle it.  We play safe here and let ip_input
 	 * deal with it until it is proven that we can directly drop it.
 	 */

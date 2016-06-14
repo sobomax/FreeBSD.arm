@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/allwinner/a31/a31s_padconf.c 296029 2016-02-25 12:17:41Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/allwinner/a31/a31s_padconf.c 298422 2016-04-21 16:49:04Z jmcneill $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -34,6 +34,8 @@ __FBSDID("$FreeBSD: head/sys/arm/allwinner/a31/a31s_padconf.c 296029 2016-02-25 
 #include <sys/types.h>
 
 #include <arm/allwinner/allwinner_pinctrl.h>
+
+#ifdef SOC_ALLWINNER_A31S
 
 const static struct allwinner_pins a31s_pins[] = {
 	{"PA0",  0, 0,  {"gpio_in", "gpio_out", "gmac", NULL, "uart1", NULL, NULL, NULL}},
@@ -194,3 +196,5 @@ const struct allwinner_padconf a31s_padconf = {
 	.npins = nitems(a31s_pins),
 	.pins = a31s_pins,
 };
+
+#endif /* SOC_ALLWINNER_A31S */

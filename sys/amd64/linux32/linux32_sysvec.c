@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_sysvec.c 294930 2016-01-27 17:55:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_sysvec.c 298482 2016-04-22 16:57:42Z pfg $");
 #include "opt_compat.h"
 
 #ifndef COMPAT_FREEBSD32
@@ -185,7 +185,7 @@ static int _bsd_to_linux_trapcode[] = {
 	15			/* 30 T_RESERVED */
 };
 #define bsd_to_linux_trapcode(code) \
-    ((code)<sizeof(_bsd_to_linux_trapcode)/sizeof(*_bsd_to_linux_trapcode)? \
+    ((code)<nitems(_bsd_to_linux_trapcode)? \
      _bsd_to_linux_trapcode[(code)]: \
      LINUX_T_UNKNOWN)
 
@@ -862,7 +862,7 @@ linux_copyout_strings(struct image_params *imgp)
 	destp =	(caddr_t)arginfo - SPARE_USRSPACE -
 	    roundup(sizeof(canary), sizeof(char *)) -
 	    roundup(execpath_len, sizeof(char *)) -
-	    roundup((ARG_MAX - imgp->args->stringspace), sizeof(char *));
+	    roundup(ARG_MAX - imgp->args->stringspace, sizeof(char *));
 
 	if (execpath_len != 0) {
 		imgp->execpathp = (uintptr_t)arginfo - execpath_len;
@@ -1205,3 +1205,4 @@ static moduledata_t linux_elf_mod = {
 
 DECLARE_MODULE_TIED(linuxelf, linux_elf_mod, SI_SUB_EXEC, SI_ORDER_ANY);
 MODULE_DEPEND(linuxelf, linux_common, 1, 1, 1);
+FEATURE(linux, "Linux 32bit support");

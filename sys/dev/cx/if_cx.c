@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cx/if_cx.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/cx/if_cx.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 
@@ -2453,7 +2453,7 @@ static int ng_cx_rmnode (node_p node)
 		NG_NODE_SET_PRIVATE (node, NULL);
 		NG_NODE_UNREF (node);
 	}
-	NG_NODE_REVIVE(node);		/* Persistant node */
+	NG_NODE_REVIVE(node);		/* Persistent node */
 #endif
 	return 0;
 }

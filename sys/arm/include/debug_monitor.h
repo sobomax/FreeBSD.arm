@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/debug_monitor.h 294987 2016-01-28 12:43:58Z zbb $
+ * $FreeBSD: head/sys/arm/include/debug_monitor.h 300969 2016-05-29 17:35:38Z zbb $
  */
 
 #ifndef _MACHINE_DEBUG_MONITOR_H_
@@ -45,6 +45,7 @@ enum dbg_access_t {
 
 #if __ARM_ARCH >= 6
 void dbg_monitor_init(void);
+void dbg_monitor_init_secondary(void);
 void dbg_show_watchpoint(void);
 int dbg_setup_watchpoint(db_expr_t, db_expr_t, enum dbg_access_t);
 int dbg_remove_watchpoint(db_expr_t, db_expr_t);
@@ -69,7 +70,10 @@ static __inline void
 dbg_monitor_init(void)
 {
 }
-
+static __inline void
+dbg_monitor_init_secondary(void)
+{
+}
 static __inline void
 dbg_resume_dbreg(void)
 {

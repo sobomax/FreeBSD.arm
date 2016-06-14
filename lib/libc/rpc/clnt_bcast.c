@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)clnt_bcast.c 1.15 89/04/21 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_bcast.c 290253 2015-11-02 01:22:06Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_bcast.c 300621 2016-05-24 18:53:06Z ngie $");
 
 
 /*
@@ -346,7 +346,8 @@ rpc_broadcast_exp(rpcprog_t prog, rpcvers_t vers, rpcproc_t proc,
 #ifdef PORTMAP
 		if (si.si_af == AF_INET && si.si_proto == IPPROTO_UDP) {
 			udpbufsz = fdlist[fdlistno].dsize;
-			if ((outbuf_pmap = malloc(udpbufsz)) == NULL) {
+			outbuf_pmap = reallocf(outbuf_pmap, udpbufsz);
+			if (outbuf_pmap == NULL) {
 				_close(fd);
 				stat = RPC_SYSTEMERROR;
 				goto done_broad;
@@ -469,7 +470,7 @@ rpc_broadcast_exp(rpcprog_t prog, rpcvers_t vers, rpcproc_t proc,
 						      "broadcast packet");
 						stat = RPC_CANTSEND;
 						continue;
-					};
+					}
 #ifdef RPC_DEBUG
 				if (!__rpc_lowvers)
 					fprintf(stderr, "Broadcast packet sent "

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/userboot/userboot/Makefile 296216 2016-02-29 17:54:55Z emaste $
+# $FreeBSD: head/sys/boot/userboot/userboot/Makefile 298298 2016-04-19 20:56:45Z allanjude $
 
 MAN=
 
@@ -11,6 +11,7 @@ STRIP=
 LIBDIR=		/boot
 
 SRCS=		autoload.c
+SRCS+=		bcache.c
 SRCS+=		biossmap.c
 SRCS+=		bootinfo.c
 SRCS+=		bootinfo32.c

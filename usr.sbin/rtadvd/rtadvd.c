@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/rtadvd.c 288963 2015-10-06 23:42:58Z delphij $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/rtadvd.c 298886 2016-05-01 16:41:25Z pfg $	*/
 /*	$KAME: rtadvd.c,v 1.82 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*
@@ -1223,7 +1223,7 @@ udiff(uint32_t u, uint32_t v)
 	return (u >= v ? u - v : v - u);
 }
 
-/* return a non-zero value if the received prefix is inconsitent with ours */
+/* return a non-zero value if the received prefix is inconsistent with ours */
 static int
 prefix_check(struct nd_opt_prefix_info *pinfo,
 	struct rainfo *rai, struct sockaddr_in6 *from)

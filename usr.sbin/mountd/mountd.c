@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)mountd.c	8.15 (Berkeley) 5/1/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/mountd/mountd.c 293305 2016-01-07 05:34:39Z jpaetzel $");
+__FBSDID("$FreeBSD: head/usr.sbin/mountd/mountd.c 298912 2016-05-02 01:49:42Z araujo $");
 
 #include <sys/param.h>
 #include <sys/fcntl.h>
@@ -434,7 +434,7 @@ main(int argc, char **argv)
 			break;
 		default:
 			usage();
-		};
+		}
 
 	if (modfind("nfsd") < 0) {
 		/* Not present in kernel, try loading it */
@@ -1241,7 +1241,7 @@ xdr_fhs(XDR *xdrsp, caddr_t cp)
 				return (0);
 			return (xdr_long(xdrsp, &auth));
 		}
-	};
+	}
 	return (0);
 }
 
@@ -2540,7 +2540,7 @@ do_mount(struct exportlist *ep, struct grouplist *grp, int exflags,
 				*cp = savedc;
 			ret = 1;
 			goto error_exit;
-		};
+		}
 
 		/*
 		 * For V4:, use the nfssvc() syscall, instead of mount().
@@ -3171,7 +3171,7 @@ makemask(struct sockaddr_storage *ssp, int bitlen)
 		return (-1);
 
 	for (i = 0; i < len; i++) {
-		bits = (bitlen > CHAR_BIT) ? CHAR_BIT : bitlen;
+		bits = MIN(CHAR_BIT, bitlen);
 		*p++ = (u_char)~0 << (CHAR_BIT - bits);
 		bitlen -= bits;
 	}

@@ -18,7 +18,7 @@
  *								       *
  ***********************************************************************
  *
- * $FreeBSD: head/sys/sys/timex.h 271855 2014-09-19 07:44:49Z phk $
+ * $FreeBSD: head/sys/sys/timex.h 298981 2016-05-03 15:14:17Z pfg $
  *
  * This header file defines the Network Time Protocol (NTP) interfaces
  * for user and daemon application programs.
@@ -105,7 +105,7 @@
 #define TIME_INS	1		/* insert leap second warning */
 #define TIME_DEL	2		/* delete leap second warning */
 #define TIME_OOP	3		/* leap second in progress */
-#define TIME_WAIT	4		/* leap second has occured */
+#define TIME_WAIT	4		/* leap second has occurred */
 #define TIME_ERROR	5		/* error (see status word) */
 
 /*

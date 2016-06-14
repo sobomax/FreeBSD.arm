@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/dwc_otg.c 293192 2016-01-05 09:18:43Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/dwc_otg.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*-
  * Copyright (c) 2015 Daisuke Aoyama. All rights reserved.
  * Copyright (c) 2012-2015 Hans Petter Selasky. All rights reserved.
@@ -3332,7 +3332,7 @@ dwc_otg_setup_standard_chain(struct usb_xfer *xfer)
 		 * type in general, as a means to workaround
 		 * that. This trick should work for both FULL and LOW
 		 * speed USB traffic going through a TT. For non-TT
-		 * traffic it works aswell. The reason for using
+		 * traffic it works as well. The reason for using
 		 * CONTROL type instead of BULK is that some TTs might
 		 * reject LOW speed BULK traffic.
 		 */

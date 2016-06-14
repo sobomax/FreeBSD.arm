@@ -1,9 +1,11 @@
-# $FreeBSD: head/usr.sbin/apmd/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/apmd/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 PROG=	apmd
 MAN=	apmd.8
 MANSUBDIR= /i386
 SRCS=	apmd.c apmdlex.l apmdparse.y y.tab.h
+
+PACKAGE=apm
 
 WARNS?=	3
 

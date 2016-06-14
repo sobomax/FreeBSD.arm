@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/tools/tools/nanobsd/nanobsd.sh 291917 2015-12-07 04:02:52Z imp $
+# $FreeBSD: head/tools/tools/nanobsd/nanobsd.sh 300198 2016-05-19 10:39:04Z maxim $
 #
 
 set -e
@@ -55,7 +55,7 @@ set -e
 set -- $args
 for i
 do
-	case "$i" 
+	case "$i"
 	in
 	-K)
 		do_installkernel=false
@@ -138,6 +138,8 @@ if ! $do_clean; then
 fi
 
 pprint 1 "NanoBSD image ${NANO_NAME} build starting"
+
+run_early_customize
 
 if $do_world ; then
 	if $do_clean ; then

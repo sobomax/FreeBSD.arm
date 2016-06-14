@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/uboot/fdt/Makefile 296080 2016-02-26 08:16:44Z sgalabov $
+# $FreeBSD: head/sys/boot/uboot/fdt/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -23,7 +23,7 @@ CFLAGS+=	-I${.CURDIR}/../../fdt
 # Pick up the bootstrap header for some interface items
 CFLAGS+=	-I${.CURDIR}/../../common -I${.CURDIR}/../../.. -I.
 
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../${MACHINE_CPUARCH}/include machine
 
 CLEANFILES+=	machine

@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/raw_ip6.c 293633 2016-01-10 13:40:29Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/raw_ip6.c 298075 2016-04-15 17:30:33Z pfg $");
 
 #include "opt_ipsec.h"
 #include "opt_inet6.h"
@@ -163,7 +163,7 @@ rip6_input(struct mbuf **mp, int *offp, int proto)
 	struct mbuf *m = *mp;
 	register struct ip6_hdr *ip6 = mtod(m, struct ip6_hdr *);
 	register struct inpcb *in6p;
-	struct inpcb *last = 0;
+	struct inpcb *last = NULL;
 	struct mbuf *opts = NULL;
 	struct sockaddr_in6 fromsa;
 

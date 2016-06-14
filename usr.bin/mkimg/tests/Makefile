@@ -1,15 +1,16 @@
-# $FreeBSD: head/usr.bin/mkimg/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/usr.bin/mkimg/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 ATF_TESTS_SH=	mkimg
 
 SOURCES!=	cd ${.CURDIR}; echo *.uu
-FILES=		${SOURCES:S,.gz.uu,,g}
-FILESDIR=	${TESTSDIR}
+${PACKAGE}FILES+=		${SOURCES:S,.gz.uu,,g}
 
-${FILES}:
+${${PACKAGE}FILES}:
 	uudecode -p ${.CURDIR}/${.TARGET}.gz.uu | gunzip -c > ${.TARGET}
 
-CLEANFILES+=	${FILES}
+CLEANFILES+=	${${PACKAGE}FILES}}
 
 rebase:
 	(cd ${.CURDIR}; atf-sh mkimg.sh rebase)

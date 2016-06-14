@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.c	8.3.1.1 (Berkeley) 2/23/95
- * $FreeBSD: head/sys/net/route.c 295529 2016-02-11 17:07:19Z dteske $
+ * $FreeBSD: head/sys/net/route.c 301502 2016-06-06 12:49:47Z bz $
  */
 /************************************************************************
  * Note: In this file a 'fib' is a "forwarding information base"	*
@@ -200,6 +200,18 @@ rt_tables_get_rnh(int table, int fam)
 
 	return (*rt_tables_get_rnh_ptr(table, fam));
 }
+
+u_int
+rt_tables_get_gen(int table, int fam)
+{
+	struct rib_head *rnh;
+
+	rnh = *rt_tables_get_rnh_ptr(table, fam);
+	KASSERT(rnh != NULL, ("%s: NULL rib_head pointer table %d fam %d",
+	    __func__, table, fam));
+	return (rnh->rnh_gen);
+}
+
 
 /*
  * route initialization must occur before ip6_init2(), which happenas at
@@ -1129,6 +1141,15 @@ rt_ifdelroute(const struct rtentry *rt, void *arg)
  * to this interface...oh well...
  */
 void
+rt_flushifroutes_af(struct ifnet *ifp, int af)
+{
+	KASSERT((af >= 1 && af <= AF_MAX), ("%s: af %d not >= 1 and <= %d",
+	    __func__, af, AF_MAX));
+
+	rt_foreach_fib_walk_del(af, rt_ifdelroute, ifp);
+}
+
+void
 rt_flushifroutes(struct ifnet *ifp)
 {
 
@@ -1754,6 +1775,7 @@ rtrequest1_fib(int req, struct rt_addrinfo *info, struct rtentry **ret_nrt,
 			*ret_nrt = rt;
 			RT_ADDREF(rt);
 		}
+		rnh->rnh_gen++;		/* Routing table updated */
 		RT_UNLOCK(rt);
 		break;
 	case RTM_CHANGE:

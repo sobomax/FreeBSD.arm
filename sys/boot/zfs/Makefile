@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/zfs/Makefile 287227 2015-08-27 23:46:42Z imp $
+# $FreeBSD: head/sys/boot/zfs/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 LIB=		zfsboot
 INTERNALLIB=
@@ -21,7 +21,7 @@ CFLAGS+=	-Wformat -Wall
 
 .if ${MACHINE_CPUARCH} == "amd64"
 CLEANFILES+=    machine
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../i386/include machine
 .endif
 

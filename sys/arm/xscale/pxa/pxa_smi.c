@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_smi.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_smi.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -144,9 +144,9 @@ pxa_smi_print_child(device_t dev, device_t child)
 	retval += bus_print_child_header(dev, child);
 
 	retval += resource_list_print_type(&smid->smid_resources, "at mem",
-	    SYS_RES_MEMORY, "%#lx");
+	    SYS_RES_MEMORY, "%#jx");
 	retval += resource_list_print_type(&smid->smid_resources, "irq",
-	    SYS_RES_IRQ, "%ld");
+	    SYS_RES_IRQ, "%jd");
 
 	retval += bus_print_child_footer(dev, child);
 

@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 282865 2015-05-13 17:38:07Z grehan $
+ * $FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 299675 2016-05-13 14:38:04Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 282865 2015-05-13 17:38:07Z grehan $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_virtio_block.c 299675 2016-05-13 14:38:04Z pfg $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -200,7 +200,6 @@ pci_vtblk_proc(struct pci_vtblk_softc *sc, struct vqueue_info *vq)
 	int err;
 	ssize_t iolen;
 	int writeop, type;
-	off_t offset;
 	struct iovec iov[BLOCKIF_IOV_MAX + 2];
 	uint16_t idx, flags[BLOCKIF_IOV_MAX + 2];
 
@@ -249,7 +248,8 @@ pci_vtblk_proc(struct pci_vtblk_softc *sc, struct vqueue_info *vq)
 	io->io_req.br_resid = iolen;
 
 	DPRINTF(("virtio-block: %s op, %zd bytes, %d segs, offset %ld\n\r", 
-		 writeop ? "write" : "read/ident", iolen, i - 1, offset));
+		 writeop ? "write" : "read/ident", iolen, i - 1,
+		 io->io_req.br_offset));
 
 	switch (type) {
 	case VBH_OP_READ:

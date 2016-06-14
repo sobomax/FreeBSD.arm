@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/route_var.h 294706 2016-01-25 06:33:15Z melifaro $
+ * $FreeBSD: head/sys/net/route_var.h 297225 2016-03-24 07:54:56Z gnn $
  */
 
 #ifndef _NET_ROUTE_VAR_H_
@@ -41,7 +41,7 @@ struct rib_head {
 	rn_walktree_t		*rnh_walktree;	/* traverse tree */
 	rn_walktree_from_t	*rnh_walktree_from; /* traverse tree below a */
 	rn_close_t		*rnh_close;	/*do something when the last ref drops*/
-	u_int			rnh_gen;	/* generation counter */
+	rt_gen_t		rnh_gen;	/* generation counter */
 	int			rnh_multipath;	/* multipath capable ? */
 	struct radix_node	rnh_nodes[3];	/* empty tree for common case */
 	struct rwlock		rib_lock;	/* config/data path lock */

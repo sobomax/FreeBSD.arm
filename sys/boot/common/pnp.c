@@ -4,7 +4,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/pnp.c 165876 2007-01-07 22:25:45Z marius $");
+__FBSDID("$FreeBSD: head/sys/boot/common/pnp.c 300117 2016-05-18 05:59:05Z imp $");
 
 /*
  * "Plug and Play" functionality.
@@ -68,15 +68,18 @@ pnp_scan(int argc, char *argv[])
     }
     if (verbose) {
 	pager_open();
-	pager_output("PNP scan summary:\n");
+	if (pager_output("PNP scan summary:\n"))
+		goto out;
 	STAILQ_FOREACH(pi, &pnp_devices, pi_link) {
 	    pager_output(STAILQ_FIRST(&pi->pi_ident)->id_ident);	/* first ident should be canonical */
 	    if (pi->pi_desc != NULL) {
 		pager_output(" : ");
 		pager_output(pi->pi_desc);
 	    }
-	    pager_output("\n");
+	    if (pager_output("\n"))
+		    break;
 	}
+out:
 	pager_close();
     }
     return(CMD_OK);

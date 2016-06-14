@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/mp_machdep.c 291949 2015-12-07 17:41:20Z kib $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/mp_machdep.c 297857 2016-04-12 13:30:39Z avg $");
 
 #include "opt_apic.h"
 #include "opt_cpu.h"
@@ -242,7 +242,7 @@ init_secondary(void)
 	pc->pc_prvspace = pc;
 	pc->pc_curthread = 0;
 
-	intel_fix_cpuid();
+	fix_cpuid();
 
 	gdt_segs[GPRIV_SEL].ssd_base = (int) pc;
 	gdt_segs[GPROC0_SEL].ssd_base = (int) &pc->pc_common_tss;

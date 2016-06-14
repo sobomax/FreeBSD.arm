@@ -51,7 +51,7 @@
 /*
  *      @(#)netdb.h	8.1 (Berkeley) 6/2/93
  *      From: Id: netdb.h,v 8.9 1996/11/19 08:39:29 vixie Exp $
- * $FreeBSD: head/include/netdb.h 292514 2015-12-20 15:18:50Z ume $
+ * $FreeBSD: head/include/netdb.h 301711 2016-06-09 01:28:44Z markj $
  */
 
 #ifndef _NETDB_H_
@@ -59,6 +59,16 @@
 
 #include <sys/cdefs.h>
 #include <sys/_types.h>
+
+#ifndef _IN_ADDR_T_DECLARED
+typedef	__uint32_t	in_addr_t;
+#define	_IN_ADDR_T_DECLARED
+#endif
+
+#ifndef _IN_PORT_T_DECLARED
+typedef	__uint16_t	in_port_t;
+#define	_IN_PORT_T_DECLARED
+#endif
 
 #ifndef _SIZE_T_DECLARED
 typedef	__size_t	size_t;
@@ -130,6 +140,8 @@ struct addrinfo {
 	struct	sockaddr *ai_addr;	/* binary address */
 	struct	addrinfo *ai_next;	/* next structure in linked list */
 };
+
+#define	IPPORT_RESERVED	1024
 
 /*
  * Error return codes from gethostbyname() and gethostbyaddr()
@@ -263,6 +275,7 @@ int		getnetbyname_r(const char *, struct netent *, char *, size_t,
 int		getnetent_r(struct netent *, char *, size_t, struct netent **,
     int *);
 int		getnetgrent(char **, char **, char **);
+int		getnetgrent_r(char **, char **, char **, char *, size_t);
 int		getprotobyname_r(const char *, struct protoent *, char *,
     size_t, struct protoent **);
 int		getprotobynumber_r(int, struct protoent *, char *, size_t,

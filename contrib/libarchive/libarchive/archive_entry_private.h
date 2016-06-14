@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/contrib/libarchive/libarchive/archive_entry_private.h 232153 2012-02-25 10:58:02Z mm $
+ * $FreeBSD: head/contrib/libarchive/libarchive/archive_entry_private.h 299529 2016-05-12 10:16:16Z mm $
  */
 
 #ifndef __LIBARCHIVE_BUILD
@@ -154,6 +154,11 @@ struct archive_entry {
 	/* Not used within libarchive; useful for some clients. */
 	struct archive_mstring ae_sourcepath;	/* Path this entry is sourced from. */
 
+#define AE_ENCRYPTION_NONE 0
+#define AE_ENCRYPTION_DATA 1
+#define AE_ENCRYPTION_METADATA 2
+	char encryption;
+	
 	void *mac_metadata;
 	size_t mac_metadata_size;
 

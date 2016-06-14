@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/usb/serial/u3g.c 292080 2015-12-11 05:28:00Z imp $
+ * $FreeBSD: head/sys/dev/usb/serial/u3g.c 298300 2016-04-19 22:07:36Z pfg $
  */
 
 /*
@@ -670,7 +670,7 @@ u3g_sael_m460_init(struct usb_device *udev)
 		return;
 	}
 
-	for (n = 0; n != (sizeof(setup)/sizeof(setup[0])); n++) {
+	for (n = 0; n != nitems(setup); n++) {
 
 		memcpy(&req, setup[n], sizeof(req));
 

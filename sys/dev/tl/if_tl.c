@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tl/if_tl.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/tl/if_tl.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * Texas Instruments ThunderLAN driver for FreeBSD 2.2.6 and 3.x.
@@ -116,7 +116,7 @@ __FBSDID("$FreeBSD: head/sys/dev/tl/if_tl.c 276750 2015-01-06 12:59:37Z rwatson 
  * To transmit frames, the driver again sets up lists and fragment
  * descriptors, only this time the buffers contain frame data that
  * is to be DMA'ed into the chip instead of out of it. Once the chip
- * has transfered the data into its on-board SRAM, it will trigger a
+ * has transferred the data into its on-board SRAM, it will trigger a
  * TX 'end of frame' interrupt. It will also generate an 'end of channel'
  * interrupt when it reaches the end of the list.
  */

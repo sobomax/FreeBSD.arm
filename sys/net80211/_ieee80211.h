@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/_ieee80211.h 288245 2015-09-26 00:53:37Z adrian $
+ * $FreeBSD: head/sys/net80211/_ieee80211.h 298899 2016-05-01 20:57:10Z avos $
  */
 #ifndef _NET80211__IEEE80211_H_
 #define _NET80211__IEEE80211_H_
@@ -70,6 +70,7 @@ enum ieee80211_phymode {
 	IEEE80211_MODE_QUARTER	= 11,	/* OFDM, 1/4x clock */
 };
 #define	IEEE80211_MODE_MAX	(IEEE80211_MODE_QUARTER+1)
+#define	IEEE80211_MODE_BYTES	howmany(IEEE80211_MODE_MAX, NBBY)
 
 /*
  * Operating mode.  Devices do not necessarily support
@@ -146,7 +147,7 @@ struct ieee80211_channel {
 };
 
 #define	IEEE80211_CHAN_MAX	256
-#define	IEEE80211_CHAN_BYTES	32	/* howmany(IEEE80211_CHAN_MAX, NBBY) */
+#define	IEEE80211_CHAN_BYTES	howmany(IEEE80211_CHAN_MAX, NBBY)
 #define	IEEE80211_CHAN_ANY	0xffff	/* token for ``any channel'' */
 #define	IEEE80211_CHAN_ANYC \
 	((struct ieee80211_channel *) IEEE80211_CHAN_ANY)

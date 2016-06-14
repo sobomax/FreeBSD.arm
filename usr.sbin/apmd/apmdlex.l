@@ -27,9 +27,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/apmd/apmdlex.l 250227 2013-05-03 23:51:32Z jkim $
+ * $FreeBSD: head/usr.sbin/apmd/apmdlex.l 300557 2016-05-24 03:15:46Z peter $
  */
 
+#include <sys/types.h>
 #include <string.h>
 #include <syslog.h>
 #include <bitstring.h>

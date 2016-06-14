@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/isa/isa_common.h 294883 2016-01-27 02:23:54Z jhibbits $
+ * $FreeBSD: head/sys/isa/isa_common.h 299006 2016-05-03 21:51:52Z pfg $
  */
 
 /*
@@ -65,7 +65,7 @@ struct isa_device {
 #define DEVTOISA(dev)	((struct isa_device *) device_get_ivars(dev))
 
 /*
- * These functions are architecture dependant.
+ * These functions are architecture dependent.
  */
 extern void isa_init(device_t dev);
 extern struct resource *isa_alloc_resource(device_t bus, device_t child,

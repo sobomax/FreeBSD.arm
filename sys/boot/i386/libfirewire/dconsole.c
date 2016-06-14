@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/libfirewire/dconsole.c 170101 2007-05-29 14:35:57Z simokawa $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/libfirewire/dconsole.c 298826 2016-04-30 00:26:38Z pfg $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -53,7 +53,7 @@ uint32_t dcons_paddr;
  *	that is mapped at the very early boot state.
  *    - We expect identiy map only for regions before KERNLOAD
  *	(i386:4MB amd64:1MB).
- *    - It seems that heap in conventional memory(640KB) is not sufficent
+ *    - It seems that heap in conventional memory(640KB) is not sufficient
  *	and we move it to high address as LOADER_SUPPORT_BZIP2.
  *    - BSS is placed in conventional memory.
  */

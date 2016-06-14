@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/sdt/sdt.c 288365 2015-09-29 12:14:22Z avg $
+ * $FreeBSD: head/sys/cddl/dev/sdt/sdt.c 297771 2016-04-10 01:24:27Z markj $
  *
  */
 
@@ -384,27 +384,19 @@ sdt_unload()
 static int
 sdt_modevent(module_t mod __unused, int type, void *data __unused)
 {
-	int error = 0;
 
 	switch (type) {
 	case MOD_LOAD:
-		sdt_load();
-		break;
-
 	case MOD_UNLOAD:
-		error = sdt_unload();
-		break;
-
 	case MOD_SHUTDOWN:
-		break;
-
+		return (0);
 	default:
-		error = EOPNOTSUPP;
-		break;
+		return (EOPNOTSUPP);
 	}
-
-	return (error);
 }
+
+SYSINIT(sdt_load, SI_SUB_DTRACE_PROVIDER, SI_ORDER_ANY, sdt_load, NULL);
+SYSUNINIT(sdt_unload, SI_SUB_DTRACE_PROVIDER, SI_ORDER_ANY, sdt_unload, NULL);
 
 DEV_MODULE(sdt, sdt_modevent, NULL);
 MODULE_VERSION(sdt, 1);

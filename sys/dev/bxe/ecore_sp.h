@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_sp.h 296071 2016-02-25 22:44:00Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/bxe/ecore_sp.h 298955 2016-05-03 03:41:25Z pfg $");
 
 #ifndef ECORE_SP_H
 #define ECORE_SP_H
@@ -1949,7 +1949,7 @@ void ecore_init_mcast_obj(struct bxe_softc *sc,
  * the current command will be enqueued to the tail of the
  * pending commands list.
  *
- * Return: 0 is operation was successfull and there are no pending completions,
+ * Return: 0 is operation was successful and there are no pending completions,
  *         negative if there were errors, positive if there are pending
  *         completions.
  */

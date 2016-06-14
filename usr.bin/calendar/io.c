@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)calendar.c  8.3 (Berkeley) 3/25/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/calendar/io.c 285610 2015-07-15 18:49:15Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/calendar/io.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -469,7 +469,7 @@ closecal(FILE *fp)
 		if (setuid(getuid()) < 0) {
 			warnx("setuid failed");
 			_exit(1);
-		};
+		}
 		if (setgid(getegid()) < 0) {
 			warnx("setgid failed");
 			_exit(1);

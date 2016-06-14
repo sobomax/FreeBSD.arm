@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/tests/nss/getrpc_test.c 292323 2015-12-16 08:09:03Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/tests/nss/getrpc_test.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include <arpa/inet.h>
 #include <rpc/rpc.h>
@@ -317,8 +317,8 @@ errfin:
 }
 
 /* rpcent_check_ambiguity() is needed when one port+rpc is associated with
- * more than one peice (these cases are usually marked as PROBLEM in
- * /etc/peices. This functions is needed also when one peice+rpc is
+ * more than one piece (these cases are usually marked as PROBLEM in
+ * /etc/peices. This functions is needed also when one piece+rpc is
  * associated with several ports. We have to check all the rpcent structures
  * to make sure that rpc really exists and correct */
 static int

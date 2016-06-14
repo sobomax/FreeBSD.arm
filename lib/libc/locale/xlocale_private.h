@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/locale/xlocale_private.h 250883 2013-05-21 19:59:37Z ed $
+ * $FreeBSD: head/lib/libc/locale/xlocale_private.h 297790 2016-04-10 19:33:58Z pfg $
  */
 
 #ifndef _XLOCALE_PRIVATE__H_
@@ -155,12 +155,11 @@ __attribute__((unused)) static void
 xlocale_release(void *val)
 {
 	struct xlocale_refcounted *obj = val;
-	long count = atomic_fetchadd_long(&(obj->retain_count), -1) - 1;
-	if (count < 0) {
-		if (0 != obj->destructor) {
-			obj->destructor(obj);
-		}
-	}
+	long count;
+
+	count = atomic_fetchadd_long(&(obj->retain_count), -1) - 1;
+	if (count < 0 && obj->destructor != NULL)
+		obj->destructor(obj);
 }
 
 /**

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/powerpc/ps3/main.c 269153 2014-07-27 16:12:51Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/powerpc/ps3/main.c 298645 2016-04-26 14:51:58Z pfg $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -174,7 +174,7 @@ delay(int usecs)
 	uint64_t tb,ttb;
 	tb = mftb();
 
-	ttb = tb + (usecs * 1000 + ns_per_tick - 1) / ns_per_tick;
+	ttb = tb + howmany(usecs * 1000, ns_per_tick);
 	while (tb < ttb)
 		tb = mftb();
 }

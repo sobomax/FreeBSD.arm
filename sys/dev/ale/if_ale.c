@@ -28,7 +28,7 @@
 /* Driver for Atheros AR8121/AR8113/AR8114 PCIe Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ale/if_ale.c 295735 2016-02-18 01:24:10Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/ale/if_ale.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -343,7 +343,7 @@ ale_probe(device_t dev)
 	vendor = pci_get_vendor(dev);
 	devid = pci_get_device(dev);
 	sp = ale_devs;
-	for (i = 0; i < sizeof(ale_devs) / sizeof(ale_devs[0]); i++) {
+	for (i = 0; i < nitems(ale_devs); i++) {
 		if (vendor == sp->ale_vendorid &&
 		    devid == sp->ale_deviceid) {
 			device_set_desc(dev, sp->ale_name);

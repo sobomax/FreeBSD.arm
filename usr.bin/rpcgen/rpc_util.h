@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/usr.bin/rpcgen/rpc_util.h 152398 2005-11-13 21:17:24Z dwmalone $
+ * $FreeBSD: head/usr.bin/rpcgen/rpc_util.h 299509 2016-05-12 03:49:05Z cem $
  */
 /*
  * Sun RPC is a product of Sun Microsystems, Inc. and is provided for
@@ -152,7 +152,7 @@ extern pid_t childpid;
  * rpc_util routines
  */
 void reinitialize(void);
-void crash(void);
+void crash(void) __dead2;
 void add_type(int len, const char *type);
 void storeval(list **lstp, definition *val);
 void *xmalloc(size_t size);

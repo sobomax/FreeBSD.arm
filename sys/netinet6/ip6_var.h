@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet6/ip6_var.h 296242 2016-03-01 00:17:14Z glebius $
+ * $FreeBSD: head/sys/netinet6/ip6_var.h 301114 2016-06-01 10:14:04Z bz $
  */
 
 #ifndef _NETINET6_IP6_VAR_H_
@@ -354,9 +354,6 @@ int	icmp6_ctloutput(struct socket *, struct sockopt *sopt);
 
 struct in6_ifaddr;
 void	ip6_init(void);
-#ifdef VIMAGE
-void	ip6_destroy(void);
-#endif
 int	ip6proto_register(short);
 int	ip6proto_unregister(short);
 

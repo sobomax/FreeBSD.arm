@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_pshared.c 296268 2016-03-01 15:21:01Z kib $");
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_pshared.c 297141 2016-03-21 06:52:35Z kib $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -251,4 +251,18 @@ __thr_pshared_destroy(void *key)
 	pshared_unlock(curthread);
 	pshared_clean(key, val);
 	pshared_gc(curthread);
+}
+
+void
+__thr_pshared_atfork_pre(void)
+{
+
+	_thr_rwl_rdlock(&pshared_lock);
+}
+
+void
+__thr_pshared_atfork_post(void)
+{
+
+	_thr_rwl_unlock(&pshared_lock);
 }

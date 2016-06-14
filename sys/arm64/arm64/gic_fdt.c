@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_fdt.c 295832 2016-02-20 01:32:58Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/gic_fdt.c 297969 2016-04-14 14:44:23Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -198,7 +198,7 @@ arm_gic_fdt_attach(device_t dev)
 
 static struct resource *
 arm_gic_fdt_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct arm_gic_fdt_softc *sc = device_get_softc(bus);
 	struct gic_devinfo *di;

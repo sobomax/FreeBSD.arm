@@ -24,11 +24,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_errno.c 285641 2015-07-16 18:24:06Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_errno.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
+#include <contrib/cloudabi/cloudabi_types_common.h>
+
 #include <compat/cloudabi/cloudabi_util.h>
 
 /* Converts a FreeBSD errno to a CloudABI errno. */

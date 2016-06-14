@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/intr_machdep.c 271712 2014-09-17 17:33:22Z adrian $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/intr_machdep.c 299070 2016-05-04 15:52:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -367,7 +367,7 @@ inthand_add(const char *name, int vec, driver_filter_t *filt,
 		/*
 		 * Check if we need to upgrade from PIL_ITHREAD to PIL_FILTER.
 		 * Given that apart from the on-board SCCs and UARTs shared
-		 * interrupts are rather uncommon on sparc64 this sould be
+		 * interrupts are rather uncommon on sparc64 this should be
 		 * pretty rare in practice.
 		 */
 		filter = 0;

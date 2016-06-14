@@ -27,9 +27,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/apmd/apmdparse.y 116442 2003-06-16 14:57:07Z maxim $
+ * $FreeBSD: head/usr.sbin/apmd/apmdparse.y 300557 2016-05-24 03:15:46Z peter $
  */
 
+#include <sys/types.h>
 #include <stdio.h>
 #include <bitstring.h>
 #include <stdlib.h>

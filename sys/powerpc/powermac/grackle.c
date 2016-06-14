@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/grackle.c 295837 2016-02-20 12:28:20Z zbb $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/grackle.c 297392 2016-03-29 15:19:56Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -35,11 +35,13 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/grackle.c 295837 2016-02-20 12:28:
 #include <sys/conf.h>
 #include <sys/kernel.h>
 #include <sys/proc.h>
+#include <sys/rman.h>
 
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_pci.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
+#include <dev/ofw/ofwpci.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -50,9 +52,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/grackle.c 295837 2016-02-20 12:28:
 #include <machine/pio.h>
 #include <machine/resource.h>
 
-#include <sys/rman.h>
-
-#include <powerpc/ofw/ofw_pci.h>
 #include <powerpc/powermac/gracklevar.h>
 
 #include <vm/vm.h>

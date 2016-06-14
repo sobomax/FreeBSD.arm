@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/efi/Makefile.inc 287227 2015-08-27 23:46:42Z imp $
+# $FreeBSD: head/sys/boot/efi/Makefile.inc 301706 2016-06-08 23:23:16Z andrew $
 
 BINDIR?=	/boot
 
@@ -16,6 +16,10 @@ LDFLAGS+=	-nostdlib
 CFLAGS+=	-fshort-wchar
 CFLAGS+=	-mno-red-zone
 CFLAGS+=	-mno-aes
+.endif
+
+.if ${MACHINE_CPUARCH} == "aarch64"
+CFLAGS+=	-fshort-wchar
 .endif
 
 .include "../Makefile.inc"

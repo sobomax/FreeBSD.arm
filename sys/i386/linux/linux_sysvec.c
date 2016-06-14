@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/linux/linux_sysvec.c 294930 2016-01-27 17:55:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/linux/linux_sysvec.c 298482 2016-04-22 16:57:42Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -184,7 +184,7 @@ static int _bsd_to_linux_trapcode[] = {
 	15			/* 30 T_RESERVED */
 };
 #define bsd_to_linux_trapcode(code) \
-    ((code)<sizeof(_bsd_to_linux_trapcode)/sizeof(*_bsd_to_linux_trapcode)? \
+    ((code)<nitems(_bsd_to_linux_trapcode)? \
      _bsd_to_linux_trapcode[(code)]: \
      LINUX_T_UNKNOWN)
 
@@ -320,7 +320,7 @@ linux_copyout_strings(struct image_params *imgp)
 	destp = (caddr_t)arginfo - SPARE_USRSPACE - linux_szplatform -
 	    roundup(sizeof(canary), sizeof(char *)) -
 	    roundup(execpath_len, sizeof(char *)) -
-	    roundup((ARG_MAX - imgp->args->stringspace), sizeof(char *));
+	    roundup(ARG_MAX - imgp->args->stringspace, sizeof(char *));
 
 	/*
 	 * install LINUX_PLATFORM
@@ -1197,3 +1197,4 @@ static moduledata_t linux_elf_mod = {
 };
 
 DECLARE_MODULE_TIED(linuxelf, linux_elf_mod, SI_SUB_EXEC, SI_ORDER_ANY);
+FEATURE(linux, "Linux 32bit support");

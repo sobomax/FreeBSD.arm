@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: head/sys/netinet6/nd6.h 296063 2016-02-25 20:12:05Z markj $
+ * $FreeBSD: head/sys/netinet6/nd6.h 301217 2016-06-02 17:51:29Z gnn $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -316,6 +316,10 @@ struct nd_pfxrouter {
 
 LIST_HEAD(nd_prhead, nd_prefix);
 
+#ifdef MALLOC_DECLARE
+MALLOC_DECLARE(M_IP6NDP);
+#endif
+
 /* nd6.c */
 VNET_DECLARE(int, nd6_prune);
 VNET_DECLARE(int, nd6_delay);
@@ -354,9 +358,6 @@ VNET_DECLARE(struct rwlock, nd6_lock);
 #define	ND6_UNLOCK_ASSERT()		rw_assert(&V_nd6_lock, RA_UNLOCKED)
 
 #define nd6log(x)	do { if (V_nd6_debug) log x; } while (/*CONSTCOND*/ 0)
-
-VNET_DECLARE(struct callout, nd6_timer_ch);
-#define	V_nd6_timer_ch			VNET(nd6_timer_ch)
 
 /* nd6_rtr.c */
 VNET_DECLARE(int, nd6_defifindex);
@@ -427,7 +428,7 @@ void nd6_purge(struct ifnet *);
 int nd6_resolve_addr(struct ifnet *ifp, int flags, const struct sockaddr *dst,
     char *desten, uint32_t *pflags);
 int nd6_resolve(struct ifnet *, int, struct mbuf *,
-    const struct sockaddr *, u_char *, uint32_t *);
+    const struct sockaddr *, u_char *, uint32_t *, struct llentry **);
 int nd6_ioctl(u_long, caddr_t, struct ifnet *);
 void nd6_cache_lladdr(struct ifnet *, struct in6_addr *,
 	char *, int, int, int);
@@ -459,7 +460,7 @@ void defrouter_reset(void);
 void defrouter_select(void);
 void defrouter_ref(struct nd_defrouter *);
 void defrouter_rele(struct nd_defrouter *);
-void defrouter_remove(struct nd_defrouter *);
+bool defrouter_remove(struct in6_addr *, struct ifnet *);
 void defrouter_unlink(struct nd_defrouter *, struct nd_drhead *);
 void defrouter_del(struct nd_defrouter *);
 void prelist_remove(struct nd_prefix *);

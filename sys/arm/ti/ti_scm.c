@@ -46,7 +46,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_scm.c 295660 2016-02-16 13:40:23Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_scm.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -111,7 +111,7 @@ ti_scm_probe(device_t dev)
  *	globally and registers both the timecount and eventtimer objects.
  *
  *	RETURNS
- *	Zero on sucess or ENXIO if an error occuried.
+ *	Zero on success or ENXIO if an error occuried.
  */
 static int
 ti_scm_attach(device_t dev)

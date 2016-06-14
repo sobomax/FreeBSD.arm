@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ffec/if_ffec.c 274967 2014-11-24 16:12:11Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/ffec/if_ffec.c 300878 2016-05-27 22:14:39Z ian $");
 
 /*
  * Driver for Freescale Fast Ethernet Controller, found on imx-series SoCs among
@@ -173,7 +173,7 @@ struct ffec_softc {
 	struct ffec_hwdesc	*txdesc_ring;
 	bus_addr_t		txdesc_ring_paddr;
 	bus_dma_tag_t		txbuf_tag;
-	struct ffec_bufmap	txbuf_map[RX_DESC_COUNT];
+	struct ffec_bufmap	txbuf_map[TX_DESC_COUNT];
 	uint32_t		tx_idx_head;
 	uint32_t		tx_idx_tail;
 	int			txcount;
@@ -896,9 +896,9 @@ ffec_rxfinish_locked(struct ffec_softc *sc)
 	}
 
 	if (produced_empty_buffer) {
-		bus_dmamap_sync(sc->rxdesc_tag, sc->txdesc_map, BUS_DMASYNC_PREWRITE);
+		bus_dmamap_sync(sc->rxdesc_tag, sc->rxdesc_map, BUS_DMASYNC_PREWRITE);
 		WR4(sc, FEC_RDAR_REG, FEC_RDAR_RDAR);
-		bus_dmamap_sync(sc->rxdesc_tag, sc->txdesc_map, BUS_DMASYNC_POSTWRITE);
+		bus_dmamap_sync(sc->rxdesc_tag, sc->rxdesc_map, BUS_DMASYNC_POSTWRITE);
 	}
 }
 

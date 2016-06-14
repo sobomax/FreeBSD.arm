@@ -21,7 +21,7 @@
 /* Driver for NVIDIA nForce MCP Fast Ethernet and Gigabit Ethernet */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nfe/if_nfe.c 296272 2016-03-01 17:47:32Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/nfe/if_nfe.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -843,7 +843,7 @@ nfe_can_use_msix(struct nfe_softc *sc)
 	product = kern_getenv("smbios.planar.product");
 	use_msix = 1;
 	if (maker != NULL && product != NULL) {
-		count = sizeof(msix_blacklists) / sizeof(msix_blacklists[0]);
+		count = nitems(msix_blacklists);
 		mblp = msix_blacklists;
 		for (n = 0; n < count; n++) {
 			if (strcmp(maker, mblp->maker) == 0 &&
@@ -2590,7 +2590,7 @@ nfe_setmulti(struct nfe_softc *sc)
 		bzero(addr, ETHER_ADDR_LEN);
 		bzero(mask, ETHER_ADDR_LEN);
 		goto done;
-	};
+	}
 
 	if_multiaddr_array(ifp, mta, &mcnt, mc_count);
 

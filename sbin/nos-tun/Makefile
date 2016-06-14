@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/nos-tun/Makefile 204966 2010-03-10 18:51:13Z uqs $
+# $FreeBSD: head/sbin/nos-tun/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	nos-tun
 MAN=	nos-tun.8
 WARNS?=	3

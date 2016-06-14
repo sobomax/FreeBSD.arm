@@ -45,7 +45,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_pctrie.c 250551 2013-05-12 04:05:01Z jeff $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_pctrie.c 298649 2016-04-26 15:38:17Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -71,7 +71,7 @@ __FBSDID("$FreeBSD: head/sys/kern/subr_pctrie.c 250551 2013-05-12 04:05:01Z jeff
 
 #define	PCTRIE_COUNT	(1 << PCTRIE_WIDTH)
 #define	PCTRIE_MASK	(PCTRIE_COUNT - 1)
-#define	PCTRIE_LIMIT	(howmany((sizeof(uint64_t) * NBBY), PCTRIE_WIDTH) - 1)
+#define	PCTRIE_LIMIT	(howmany(sizeof(uint64_t) * NBBY, PCTRIE_WIDTH) - 1)
 
 /* Flag bits stored in node pointers. */
 #define	PCTRIE_ISLEAF	0x1

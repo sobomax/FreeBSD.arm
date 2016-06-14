@@ -64,8 +64,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/share/examples/kld/cdev/test/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/share/examples/kld/cdev/test/Makefile 299293 2016-05-10 00:51:50Z gjb $
 #
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/kld/cdev/test
 PROG=	testcdev
 MAN=
 WARNS?=	5
@@ -73,7 +75,7 @@ WARNS?=	5
 MODSTAT= /sbin/kldstat
 
 load:
-	@echo "This test program will call the sample kld characer device ";
+	@echo "This test program will call the sample kld character device ";
 	@echo "driver."
 	@echo
 	@echo "The sample driver will display a message on the"

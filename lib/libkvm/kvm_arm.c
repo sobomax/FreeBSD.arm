@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_arm.c 295752 2016-02-18 09:30:04Z skra $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_arm.c 298485 2016-04-22 18:05:34Z ngie $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -117,7 +117,7 @@ _arm_initvtop(kvm_t *kd)
 	}
 
 	vm = _kvm_malloc(kd, sizeof(*vm));
-	if (vm == 0) {
+	if (vm == NULL) {
 		_kvm_err(kd, kd->program, "cannot allocate vm");
 		return (-1);
 	}
@@ -168,6 +168,10 @@ _arm_initvtop(kvm_t *kd)
 		return (-1);
 	}
 	l1pt = _kvm_malloc(kd, ARM_L1_TABLE_SIZE);
+	if (l1pt == NULL) {
+		_kvm_err(kd, kd->program, "cannot allocate l1pt");
+		return (-1);
+	}
 	if (kvm_read2(kd, pa, l1pt, ARM_L1_TABLE_SIZE) != ARM_L1_TABLE_SIZE) {
 		_kvm_err(kd, kd->program, "cannot read l1pt");
 		free(l1pt);

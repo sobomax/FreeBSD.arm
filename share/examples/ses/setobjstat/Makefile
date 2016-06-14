@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/examples/ses/setobjstat/Makefile 153291 2005-12-10 12:09:54Z ru $
+# $FreeBSD: head/share/examples/ses/setobjstat/Makefile 299293 2016-05-10 00:51:50Z gjb $
 #
 # Copyright (c) 2000 by Matthew Jacob
 # All rights reserved.
@@ -34,6 +34,8 @@
 
 .PATH: ${.CURDIR}/../srcs
 
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/ses/${PROG}
 PROG=	setobjstat
 SRCS=	setobjstat.c eltsub.c
 MAN=	setobjstat.8

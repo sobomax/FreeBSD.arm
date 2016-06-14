@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/systat/cmds.c 240605 2012-09-17 13:36:47Z melifaro $");
+__FBSDID("$FreeBSD: head/usr.bin/systat/cmds.c 298324 2016-04-20 01:26:03Z araujo $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)cmds.c	8.2 (Berkeley) 4/29/95";
@@ -120,10 +120,10 @@ command(const char *cmd)
 		(*curcmd->c_close)(wnd);
 		curcmd->c_flags &= ~CF_INIT;
 		wnd = (*p->c_open)();
-		if (wnd == 0) {
+		if (wnd == NULL) {
 			error("Couldn't open new display");
 			wnd = (*curcmd->c_open)();
-			if (wnd == 0) {
+			if (wnd == NULL) {
 				error("Couldn't change back to previous cmd");
 				exit(1);
 			}
@@ -141,7 +141,7 @@ command(const char *cmd)
 		status();
 		goto done;
 	}
-	if (curcmd->c_cmd == 0 || !(*curcmd->c_cmd)(tmpstr1, cp))
+	if (curcmd->c_cmd == NULL || !(*curcmd->c_cmd)(tmpstr1, cp))
 		error("%s: Unknown command.", tmpstr1);
 done:
 	free(tmpstr);

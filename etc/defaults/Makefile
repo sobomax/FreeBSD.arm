@@ -1,9 +1,8 @@
-# $FreeBSD: head/etc/defaults/Makefile 277738 2015-01-26 09:31:48Z ngie $
+# $FreeBSD: head/etc/defaults/Makefile 296695 2016-03-11 23:45:09Z bdrewery $
 
 .include <src.opts.mk>
 
 FILES=	devfs.rules periodic.conf rc.conf
-NO_OBJ=
 FILESDIR= /etc/defaults
 
 .if ${MK_BLUETOOTH} != "no"

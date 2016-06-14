@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/cavium/octopci.c 295880 2016-02-22 09:02:20Z skra $
+ * $FreeBSD: head/sys/mips/cavium/octopci.c 298433 2016-04-21 19:57:40Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/cavium/octopci.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/mips/cavium/octopci.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -487,7 +487,7 @@ octopci_init_bar(device_t dev, unsigned b, unsigned s, unsigned f, unsigned barn
 	if (PCI_BAR_IO(bar)) {
 		size = ~(bar & PCIM_BAR_IO_BASE) + 1;
 
-		sc->sc_io_next = (sc->sc_io_next + size - 1) & ~(size - 1);
+		sc->sc_io_next = roundup2(sc->sc_io_next, size);
 		if (sc->sc_io_next + size > CVMX_OCT_PCI_IO_SIZE) {
 			device_printf(dev, "%02x.%02x:%02x: no ports for BAR%u.\n",
 			    b, s, f, barnum);
@@ -527,7 +527,7 @@ octopci_init_bar(device_t dev, unsigned b, unsigned s, unsigned f, unsigned barn
 
 		size = ~(bar & (uint32_t)PCIM_BAR_MEM_BASE) + 1;
 
-		sc->sc_mem1_next = (sc->sc_mem1_next + size - 1) & ~(size - 1);
+		sc->sc_mem1_next = roundup2(sc->sc_mem1_next, size);
 		if (sc->sc_mem1_next + size > CVMX_OCT_PCI_MEM1_SIZE) {
 			device_printf(dev, "%02x.%02x:%02x: no memory for BAR%u.\n",
 			    b, s, f, barnum);

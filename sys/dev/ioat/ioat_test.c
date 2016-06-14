@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_test.c 292229 2015-12-14 22:02:01Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_test.c 297746 2016-04-09 13:15:34Z cem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -388,7 +388,7 @@ ioat_dma_test(void *arg)
 		return;
 	}
 
-	dmaengine = ioat_get_dmaengine(test->channel_index);
+	dmaengine = ioat_get_dmaengine(test->channel_index, M_NOWAIT);
 	if (dmaengine == NULL) {
 		ioat_test_log(0, "Couldn't acquire dmaengine\n");
 		test->status[IOAT_TEST_NO_DMA_ENGINE]++;

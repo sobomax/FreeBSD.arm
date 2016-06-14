@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bhnd/bcma/bcma_subr.c 296077 2016-02-26 03:34:08Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/bhnd/bcma/bcma_subr.c 299123 2016-05-05 17:47:03Z emaste $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -134,6 +134,8 @@ bcma_corecfg_get_port_list(struct bcma_corecfg *cfg, bhnd_port_type type)
 	case BHND_PORT_AGENT:
 		return (&cfg->wrapper_ports);
 		break;
+	default:
+		return (NULL);
 	}
 }
 

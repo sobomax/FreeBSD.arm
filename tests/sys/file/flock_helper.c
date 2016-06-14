@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tests/sys/file/flock_helper.c 281432 2015-04-11 10:14:59Z ngie $
+ * $FreeBSD: head/tests/sys/file/flock_helper.c 298024 2016-04-15 02:53:52Z ngie $
  */
 
 #include <sys/param.h>
@@ -1566,7 +1566,7 @@ main(int argc, const char *argv[])
 	} else {
 		testnum = 0;
 		test_argc = 0;
-		test_argv = 0;
+		test_argv = NULL;
 	}
 
 	sa.sa_handler = ignore_alarm;

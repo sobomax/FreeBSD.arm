@@ -1,4 +1,4 @@
-/*      $FreeBSD: head/sys/dev/ipw/if_ipwvar.h 287197 2015-08-27 08:56:39Z glebius $	*/
+/*      $FreeBSD: head/sys/dev/ipw/if_ipwvar.h 300239 2016-05-19 22:19:35Z avos $	*/
 
 /*-
  * Copyright (c) 2004-2006
@@ -156,6 +156,8 @@ struct ipw_softc {
 	uint32_t			txold;
 	uint32_t			rxcur;
 	int				txfree;
+
+	uint16_t			chanmask;
 
 	struct ipw_rx_radiotap_header	sc_rxtap;
 	struct ipw_tx_radiotap_header	sc_txtap;

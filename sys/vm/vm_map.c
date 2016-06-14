@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_map.c 294663 2016-01-24 13:38:41Z kib $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_map.c 298940 2016-05-02 20:16:29Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -345,7 +345,7 @@ vmspace_free(struct vmspace *vm)
 {
 
 	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL,
-	    "vmspace_free() called with non-sleepable lock held");
+	    "vmspace_free() called");
 
 	if (vm->vm_refcnt == 0)
 		panic("vmspace_free: attempt to free already freed vmspace");
@@ -3519,7 +3519,7 @@ vm_map_stack_locked(vm_map_t map, vm_offset_t addrbos, vm_size_t max_ssize,
 		return (KERN_NO_SPACE);
 
 	/*
-	 * If we can't accomodate max_ssize in the current mapping, no go.
+	 * If we can't accommodate max_ssize in the current mapping, no go.
 	 * However, we need to be aware that subsequent user mappings might
 	 * map into the space we have reserved for stack, and currently this
 	 * space is not protected.

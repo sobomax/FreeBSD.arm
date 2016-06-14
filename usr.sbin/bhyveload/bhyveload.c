@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 296102 2016-02-26 16:15:02Z marcel $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 297599 2016-04-06 00:01:03Z pfg $
  */
 
 /*-
@@ -51,11 +51,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 296102 2016-02-26 16:15:02Z marcel $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 297599 2016-04-06 00:01:03Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 296102 2016-02-26 16:15:02Z marcel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 297599 2016-04-06 00:01:03Z pfg $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -152,7 +152,6 @@ struct cb_file {
 static int
 cb_open(void *arg, const char *filename, void **hp)
 {
-	struct stat st;
 	struct cb_file *cf;
 	char path[PATH_MAX];
 
@@ -169,7 +168,7 @@ cb_open(void *arg, const char *filename, void **hp)
 		return (errno);
 	}
 
-	cf->cf_size = st.st_size;
+	cf->cf_size = cf->cf_stat.st_size;
 	if (S_ISDIR(cf->cf_stat.st_mode)) {
 		cf->cf_isdir = 1;
 		cf->cf_u.dir = opendir(path);

@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mmc/mmc.c 292420 2015-12-18 01:32:43Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/mmc/mmc.c 297127 2016-03-21 00:52:24Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1811,3 +1811,5 @@ driver_t mmc_driver = {
 	sizeof(struct mmc_softc),
 };
 devclass_t mmc_devclass;
+
+MODULE_VERSION(mmc, 1);

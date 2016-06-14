@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_mbx.c 295323 2016-02-05 17:14:37Z erj $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_mbx.c 299200 2016-05-06 22:54:56Z pfg $*/
 
 #include "e1000_mbx.h"
 
@@ -67,7 +67,7 @@ static s32 e1000_null_mbx_transact(struct e1000_hw E1000_UNUSEDARG *hw,
  *  @size: Length of buffer
  *  @mbx_id: id of mailbox to read
  *
- *  returns SUCCESS if it successfuly read message from buffer
+ *  returns SUCCESS if it successfully read message from buffer
  **/
 s32 e1000_read_mbx(struct e1000_hw *hw, u32 *msg, u16 size, u16 mbx_id)
 {
@@ -493,7 +493,7 @@ out_no_write:
  *  @size: Length of buffer
  *  @mbx_id: id of mailbox to read
  *
- *  returns SUCCESS if it successfuly read message from buffer
+ *  returns SUCCESS if it successfully read message from buffer
  **/
 static s32 e1000_read_mbx_vf(struct e1000_hw *hw, u32 *msg, u16 size,
 			     u16 E1000_UNUSEDARG mbx_id)

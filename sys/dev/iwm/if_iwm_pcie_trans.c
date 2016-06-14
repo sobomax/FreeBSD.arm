@@ -103,7 +103,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_pcie_trans.c 286475 2015-08-08 21:08:35Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_pcie_trans.c 301192 2016-06-02 05:43:16Z adrian $");
+
+#include "opt_wlan.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -361,6 +363,8 @@ iwm_prepare_card_hw(struct iwm_softc *sc)
 	if (iwm_set_hw_ready(sc))
 		goto out;
 
+	DELAY(100);
+
 	/* If HW is not ready, prepare the conditions to check again */
 	IWM_SETBITS(sc, IWM_CSR_HW_IF_CONFIG_REG,
 	    IWM_CSR_HW_IF_CONFIG_REG_PREPARE);
@@ -454,7 +458,7 @@ iwm_apm_init(struct iwm_softc *sc)
 	    IWM_CSR_GP_CNTRL_REG_FLAG_MAC_CLOCK_READY, 25000)) {
 		device_printf(sc->sc_dev,
 		    "timeout waiting for clock stabilization\n");
-
+		error = ETIMEDOUT;
 		goto out;
 	}
 

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: vector.s, 386BSD 0.1 unknown origin
- * $FreeBSD: head/sys/i386/i386/apic_vector.s 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/i386/apic_vector.s 298022 2016-04-15 02:20:18Z sephe $
  */
 
 /*
@@ -176,25 +176,6 @@ IDTVEC(xen_intr_upcall)
 	FAKE_MCOUNT(TF_EIP(%esp))
 	pushl	%esp
 	call	xen_intr_handle_upcall
-	add	$4, %esp
-	MEXITCOUNT
-	jmp	doreti
-#endif
-
-#ifdef HYPERV
-/*
- * This is the Hyper-V vmbus channel direct callback interrupt.
- * Only used when it is running on Hyper-V.
- */
-	.text
-	SUPERALIGN_TEXT
-IDTVEC(hv_vmbus_callback)
-	PUSH_FRAME
-	SET_KERNEL_SREGS
-	cld
-	FAKE_MCOUNT(TF_EIP(%esp))
-	pushl	%esp
-	call	hv_vector_handler
 	add	$4, %esp
 	MEXITCOUNT
 	jmp	doreti

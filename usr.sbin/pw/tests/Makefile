@@ -1,4 +1,6 @@
-# $FreeBSD: head/usr.sbin/pw/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/usr.sbin/pw/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 ATF_TESTS_SH=	pw_etcdir \
 		pw_lock \
@@ -15,8 +17,10 @@ ATF_TESTS_SH=	pw_etcdir \
 TEST_METADATA.${tp}+=	required_user="root"
 .endfor
 
-FILES=		group helper_functions.shin master.passwd pw.conf \
-		pw-modified.conf
-FILESDIR=       ${TESTSDIR}
+${PACKAGE}FILES+=	group
+${PACKAGE}FILES+=	helper_functions.shin
+${PACKAGE}FILES+=	master.passwd
+${PACKAGE}FILES+=	pw.conf
+${PACKAGE}FILES+=	pw-modified.conf
 
 .include <bsd.test.mk>

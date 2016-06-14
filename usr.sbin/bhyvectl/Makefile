@@ -1,9 +1,10 @@
 #
-# $FreeBSD: head/usr.sbin/bhyvectl/Makefile 293745 2016-01-12 10:16:15Z brueffer $
+# $FreeBSD: head/usr.sbin/bhyvectl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
 PROG=	bhyvectl
 SRCS=	bhyvectl.c
+PACKAGE=	bhyve
 
 MAN=	bhyvectl.8
 

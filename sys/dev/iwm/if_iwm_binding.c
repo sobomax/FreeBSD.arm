@@ -103,7 +103,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_binding.c 286475 2015-08-08 21:08:35Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_binding.c 300248 2016-05-19 23:31:00Z avos $");
+
+#include "opt_wlan.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -201,13 +203,13 @@ iwm_mvm_binding_cmd(struct iwm_softc *sc, struct iwm_node *in, uint32_t action)
 }
 
 int
-iwm_mvm_binding_update(struct iwm_softc *sc, struct iwm_node *in, int add)
+iwm_mvm_binding_update(struct iwm_softc *sc, struct iwm_node *in)
 {
-	return iwm_mvm_binding_cmd(sc, in, IWM_FW_CTXT_ACTION_ADD);
+	return iwm_mvm_binding_cmd(sc, in, IWM_FW_CTXT_ACTION_MODIFY);
 }
 
 int
 iwm_mvm_binding_add_vif(struct iwm_softc *sc, struct iwm_node *in)
 {
-	return iwm_mvm_binding_update(sc, in, IWM_FW_CTXT_ACTION_ADD);
+	return iwm_mvm_binding_cmd(sc, in, IWM_FW_CTXT_ACTION_ADD);
 }

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/trap.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/trap.c 298560 2016-04-25 03:01:57Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -434,7 +434,7 @@ printtrap(u_int vector, struct trapframe *frame, int isfatal, int user)
 			    (u_long)mfspr(SPR_MSSSR0));
 #elif defined(BOOKE)
 		pa = mfspr(SPR_MCARU);
-		pa = (pa << 32) | mfspr(SPR_MCAR);
+		pa = (pa << 32) | (u_register_t)mfspr(SPR_MCAR);
 		printf("   mcsr            = 0x%lx\n", (u_long)mfspr(SPR_MCSR));
 		printf("   mcar            = 0x%jx\n", (uintmax_t)pa);
 #endif

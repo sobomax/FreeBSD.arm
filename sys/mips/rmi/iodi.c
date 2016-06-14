@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/iodi.c 295881 2016-02-22 09:04:36Z skra $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/iodi.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #define __RMAN_RESOURCE_VISIBLE
 #include <sys/param.h>
@@ -134,17 +134,17 @@ iodi_alloc_resource(device_t bus, device_t child, int type, int *rid,
 #ifdef DEBUG
 	switch (type) {
 	case SYS_RES_IRQ:
-		device_printf(bus, "IRQ resource - for %s %lx-%lx\n",
+		device_printf(bus, "IRQ resource - for %s %jx-%jx\n",
 		    device_get_nameunit(child), start, end);
 		break;
 
 	case SYS_RES_IOPORT:
-		device_printf(bus, "IOPORT resource - for %s %lx-%lx\n",
+		device_printf(bus, "IOPORT resource - for %s %jx-%jx\n",
 		    device_get_nameunit(child), start, end);
 		break;
 
 	case SYS_RES_MEMORY:
-		device_printf(bus, "MEMORY resource - for %s %lx-%lx\n",
+		device_printf(bus, "MEMORY resource - for %s %jx-%jx\n",
 		    device_get_nameunit(child), start, end);
 		break;
 	}

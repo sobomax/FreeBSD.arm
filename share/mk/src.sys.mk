@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.sys.mk 291613 2015-12-01 20:56:16Z bdrewery $
+# $FreeBSD: head/share/mk/src.sys.mk 298487 2016-04-22 20:31:29Z bdrewery $
 
 # Note: This file is also duplicated in the sys/conf/kern.pre.mk so
 # it will always grab SRCCONF, even if it isn't being built in-tree
@@ -8,7 +8,9 @@
 .if !defined(_WITHOUT_SRCCONF)
 # Allow user to configure things that only effect src tree builds.
 SRCCONF?=	/etc/src.conf
-.if (exists(${SRCCONF}) || ${SRCCONF} != "/etc/src.conf") && !target(_srcconf_included_)
+.if !empty(SRCCONF) && \
+    (exists(${SRCCONF}) || ${SRCCONF} != "/etc/src.conf") && \
+    !target(_srcconf_included_)
 
 # Validate that the user didn't try setting an env-only variable in
 # their src.conf. This benefits from already including bsd.mkopt.mk.

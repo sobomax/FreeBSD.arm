@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/isp_library.h 292725 2015-12-25 13:03:18Z mav $ */
+/* $FreeBSD: head/sys/dev/isp/isp_library.h 297751 2016-04-09 14:50:47Z mav $ */
 /*-
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -144,7 +144,9 @@ void isp_get_fc_hdr(ispsoftc_t *, fc_hdr_t *, fc_hdr_t *);
 void isp_put_fc_hdr(ispsoftc_t *, fc_hdr_t *, fc_hdr_t *);
 void isp_get_fcp_cmnd_iu(ispsoftc_t *, fcp_cmnd_iu_t *, fcp_cmnd_iu_t *);
 void isp_put_rft_id(ispsoftc_t *, rft_id_t *, rft_id_t *);
+void isp_put_rspn_id(ispsoftc_t *, rspn_id_t *, rspn_id_t *);
 void isp_put_rff_id(ispsoftc_t *, rff_id_t *, rff_id_t *);
+void isp_put_rsnn_nn(ispsoftc_t *, rsnn_nn_t *, rsnn_nn_t *);
 void isp_get_ct_hdr(ispsoftc_t *isp, ct_hdr_t *, ct_hdr_t *);
 void isp_put_ct_hdr(ispsoftc_t *isp, ct_hdr_t *, ct_hdr_t *);
 void isp_put_fcp_rsp_iu(ispsoftc_t *isp, fcp_rsp_iu_t *, fcp_rsp_iu_t *);

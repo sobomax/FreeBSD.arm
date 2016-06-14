@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libpmc/Makefile 296263 2016-03-01 11:34:44Z trasz $
+# $FreeBSD: head/lib/libpmc/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	pmc
 
 SRCS=	libpmc.c pmclog.c

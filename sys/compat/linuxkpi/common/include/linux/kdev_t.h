@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/kdev_t.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/kdev_t.h 299665 2016-05-13 11:51:43Z hselasky $
  */
 #ifndef	_LINUX_KDEV_T_H_
 #define	_LINUX_KDEV_T_H_
@@ -34,5 +34,11 @@
 #define MAJOR(dev)      major((dev))
 #define MINOR(dev)      minor((dev))
 #define MKDEV(ma, mi)   makedev((ma), (mi))
+
+static inline uint16_t
+old_encode_dev(dev_t dev)
+{
+	return ((MAJOR(dev) << 8) | MINOR(dev));
+}
 
 #endif	/* _LINUX_KDEV_T_H_ */

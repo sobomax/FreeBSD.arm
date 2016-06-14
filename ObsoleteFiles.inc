@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/ObsoleteFiles.inc 296427 2016-03-06 14:37:49Z dim $
+# $FreeBSD: head/ObsoleteFiles.inc 301602 2016-06-08 11:47:19Z des $
 #
 # This file lists old files (OLD_FILES), libraries (OLD_LIBS) and
 # directories (OLD_DIRS) which should get removed at an update. Recently
@@ -22,7 +22,7 @@
 # grep '+=' /usr/src/tools/build/mk/OptionalObsoleteFiles.inc | sort -u) | \
 # sort | uniq -d
 #
-# To find regular duplicates not dependant on optional components, you can
+# To find regular duplicates not dependent on optional components, you can
 # also use something that will not give you false positives, e.g.:
 # for t in `make -V TARGETS universe`; do
 #   __MAKE_CONF=/dev/null make -f Makefile.inc1 TARGET=$t \
@@ -38,6 +38,96 @@
 #   xargs -n1 | sort | uniq -d;
 # done
 
+# 20160608: removed pam_verbose_error
+OLD_LIBS+=usr/lib/libpam.so.5
+OLD_LIBS+=usr/lib/pam_chroot.so.5
+OLD_LIBS+=usr/lib/pam_deny.so.5
+OLD_LIBS+=usr/lib/pam_echo.so.5
+OLD_LIBS+=usr/lib/pam_exec.so.5
+OLD_LIBS+=usr/lib/pam_ftpusers.so.5
+OLD_LIBS+=usr/lib/pam_group.so.5
+OLD_LIBS+=usr/lib/pam_guest.so.5
+OLD_LIBS+=usr/lib/pam_krb5.so.5
+OLD_LIBS+=usr/lib/pam_ksu.so.5
+OLD_LIBS+=usr/lib/pam_lastlog.so.5
+OLD_LIBS+=usr/lib/pam_login_access.so.5
+OLD_LIBS+=usr/lib/pam_nologin.so.5
+OLD_LIBS+=usr/lib/pam_opie.so.5
+OLD_LIBS+=usr/lib/pam_opieaccess.so.5
+OLD_LIBS+=usr/lib/pam_passwdqc.so.5
+OLD_LIBS+=usr/lib/pam_permit.so.5
+OLD_LIBS+=usr/lib/pam_radius.so.5
+OLD_LIBS+=usr/lib/pam_rhosts.so.5
+OLD_LIBS+=usr/lib/pam_rootok.so.5
+OLD_LIBS+=usr/lib/pam_securetty.so.5
+OLD_LIBS+=usr/lib/pam_self.so.5
+OLD_LIBS+=usr/lib/pam_ssh.so.5
+OLD_LIBS+=usr/lib/pam_tacplus.so.5
+OLD_LIBS+=usr/lib/pam_unix.so.5
+OLD_LIBS+=usr/lib32/libpam.so.5
+OLD_LIBS+=usr/lib32/pam_chroot.so.5
+OLD_LIBS+=usr/lib32/pam_deny.so.5
+OLD_LIBS+=usr/lib32/pam_echo.so.5
+OLD_LIBS+=usr/lib32/pam_exec.so.5
+OLD_LIBS+=usr/lib32/pam_ftpusers.so.5
+OLD_LIBS+=usr/lib32/pam_group.so.5
+OLD_LIBS+=usr/lib32/pam_guest.so.5
+OLD_LIBS+=usr/lib32/pam_krb5.so.5
+OLD_LIBS+=usr/lib32/pam_ksu.so.5
+OLD_LIBS+=usr/lib32/pam_lastlog.so.5
+OLD_LIBS+=usr/lib32/pam_login_access.so.5
+OLD_LIBS+=usr/lib32/pam_nologin.so.5
+OLD_LIBS+=usr/lib32/pam_opie.so.5
+OLD_LIBS+=usr/lib32/pam_opieaccess.so.5
+OLD_LIBS+=usr/lib32/pam_passwdqc.so.5
+OLD_LIBS+=usr/lib32/pam_permit.so.5
+OLD_LIBS+=usr/lib32/pam_radius.so.5
+OLD_LIBS+=usr/lib32/pam_rhosts.so.5
+OLD_LIBS+=usr/lib32/pam_rootok.so.5
+OLD_LIBS+=usr/lib32/pam_securetty.so.5
+OLD_LIBS+=usr/lib32/pam_self.so.5
+OLD_LIBS+=usr/lib32/pam_ssh.so.5
+OLD_LIBS+=usr/lib32/pam_tacplus.so.5
+OLD_LIBS+=usr/lib32/pam_unix.so.5
+# 20160523: remove extranous ALTQ files
+OLD_FILES+=usr/include/altq/altq_codel.h
+OLD_FILES+=usr/include/altq/altq_fairq.h
+# 20160519: remove DTrace Toolkit from base
+OLD_FILES+=usr/share/dtrace/toolkit/execsnoop
+OLD_FILES+=usr/share/dtrace/toolkit/hotkernel
+OLD_FILES+=usr/share/dtrace/toolkit/hotuser
+OLD_FILES+=usr/share/dtrace/toolkit/opensnoop
+OLD_FILES+=usr/share/dtrace/toolkit/procsystime
+OLD_DIRS+=usr/share/dtrace/toolkit
+# 20160519: stale MLINK removed
+OLD_FILES+=usr/share/man/man9/rman_await_resource.9.gz
+# 20160517: ReiserFS removed
+OLD_FILES+=usr/share/man/man5/reiserfs.5.gz
+# 20160430: kvm_getfiles(3) removed from kvm(3)
+OLD_LIBS+=usr/lib/libkvm.so.6
+OLD_FILES+=usr/share/man/man3/kvm_getfiles.3.gz
+# 20160423: remove mroute6d
+OLD_FILES+=etc/rc.d/mroute6d
+# 20160419: rename units.lib -> definitions.units
+OLD_FILES+=usr/share/misc/units.lib
+# 20160419: remove Big5HKSCS locales
+OLD_FILES+=usr/share/locale/zh_HK.Big5HKSCS/LC_COLLATE
+OLD_FILES+=usr/share/locale/zh_HK.Big5HKSCS/LC_CTYPE
+OLD_FILES+=usr/share/locale/zh_HK.Big5HKSCS/LC_MESSAGES
+OLD_FILES+=usr/share/locale/zh_HK.Big5HKSCS/LC_MONETARY
+OLD_FILES+=usr/share/locale/zh_HK.Big5HKSCS/LC_NUMERIC
+OLD_FILES+=usr/share/locale/zh_HK.Big5HKSCS/LC_TIME
+OLD_DIRS+=usr/share/locale/zh_HK.Big5HKSCS
+OLD_FILES+=usr/share/locale/zh_Hant_HK.Big5HKSCS/LC_COLLATE
+OLD_FILES+=usr/share/locale/zh_Hant_HK.Big5HKSCS/LC_CTYPE
+OLD_FILES+=usr/share/locale/zh_Hant_HK.Big5HKSCS/LC_MESSAGES
+OLD_FILES+=usr/share/locale/zh_Hant_HK.Big5HKSCS/LC_MONETARY
+OLD_FILES+=usr/share/locale/zh_Hant_HK.Big5HKSCS/LC_NUMERIC
+OLD_FILES+=usr/share/locale/zh_Hant_HK.Big5HKSCS/LC_TIME
+OLD_DIRS+=usr/share/locale/zh_Hant_HK.Big5HKSCS
+# 20160317: rman_res_t size bump to uintmax_t
+OLD_LIBS+=usr/lib/libdevinfo.so.5
+OLD_LIBS+=usr/lib32/libdevinfo.so.5
 # 20160305: new clang import which bumps version from 3.7.1 to 3.8.0.
 OLD_FILES+=usr/bin/macho-dump
 OLD_FILES+=usr/lib/clang/3.7.1/include/sanitizer/allocator_interface.h
@@ -144,6 +234,12 @@ OLD_FILES+=libexec/casper/grp
 OLD_FILES+=libexec/casper/pwd
 OLD_FILES+=libexec/casper/random
 OLD_FILES+=libexec/casper/sysctl
+OLD_FILES+=libexec/casper/.debug/random.debug
+OLD_FILES+=libexec/casper/.debug/dns.debug
+OLD_FILES+=libexec/casper/.debug/sysctl.debug
+OLD_FILES+=libexec/casper/.debug/pwd.debug
+OLD_FILES+=libexec/casper/.debug/grp.debug
+OLD_DIRS+=libexec/casper/.debug
 OLD_DIRS+=libexec/casper
 OLD_FILES+=usr/lib/libcapsicum.a
 OLD_FILES+=usr/lib/libcapsicum.so
@@ -1723,7 +1819,6 @@ OLD_FILES+=usr/share/man/man4/lindev.4.gz
 # 20140425
 OLD_FILES+=usr/lib/libssp_p.a
 OLD_FILES+=usr/lib/libstand_p.a
-OLD_FILES+=usr/lib32/libc_pic.a
 OLD_FILES+=usr/lib32/libssp_p.a
 OLD_FILES+=usr/lib32/libstand_p.a
 # 20140314: AppleTalk
@@ -3743,7 +3838,7 @@ OLD_FILES+=usr/include/sys/_elf_solaris.h
 OLD_FILES+=usr/share/man/man3/pmc_x86_get_msr.3.gz
 # 20071108: Removed very crunch OLDCARD support file
 OLD_FILES+=etc/defaults/pccard.conf
-# 20071025: rc.d/nfslocking superceeded by rc.d/lockd and rc.d/statd
+# 20071025: rc.d/nfslocking superseded by rc.d/lockd and rc.d/statd
 OLD_FILES+=etc/rc.d/nfslocking
 # 20070930: rename of cached to nscd
 OLD_FILES+=etc/cached.conf
@@ -7843,22 +7938,6 @@ OLD_FILES+=usr/share/bsnmp/mibs/FOKUS-MIB.txt
 OLD_FILES+=usr/share/bsnmp/mibs/BEGEMOT-MIB.txt
 OLD_FILES+=usr/share/bsnmp/mibs/BEGEMOT-SNMPD.txt
 OLD_FILES+=usr/share/bsnmp/mibs/BEGEMOT-NETGRAPH.txt
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.x
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xbn
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xn
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xr
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xs
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xu
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xc
-OLD_FILES+=usr/libdata/ldscripts/elf64_sparc.xsc
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.x
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xbn
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xn
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xr
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xs
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xu
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xc
-OLD_FILES+=usr/libdata/ldscripts/elf32_sparc.xsc
 OLD_FILES+=usr/libdata/msdosfs/iso22dos
 OLD_FILES+=usr/libdata/msdosfs/iso72dos
 OLD_FILES+=usr/libdata/msdosfs/koi2dos

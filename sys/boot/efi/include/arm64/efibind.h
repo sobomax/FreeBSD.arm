@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/arm64/efibind.h 293724 2016-01-12 02:17:39Z smh $ */
+/* $FreeBSD: head/sys/boot/efi/include/arm64/efibind.h 298826 2016-04-30 00:26:38Z pfg $ */
 /*++
 
 Copyright (c)  1999 - 2003 Intel Corporation. All rights reserved
@@ -176,7 +176,7 @@ typedef uint64_t   UINTN;
 #define VOLATILE    volatile
 
 //
-// BugBug: Need to find out if this is portable accross compliers.
+// BugBug: Need to find out if this is portable across compilers.
 //
 void __mfa (void);                       
 #define MEMORY_FENCE()    __mfa()
@@ -190,7 +190,7 @@ void __mfa (void);
 #endif
 
 //
-// When build similiar to FW, then link everything together as
+// When build similar to FW, then link everything together as
 // one big module.
 //
 

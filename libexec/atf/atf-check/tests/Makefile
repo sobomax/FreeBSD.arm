@@ -1,6 +1,4 @@
-# $FreeBSD: head/libexec/atf/atf-check/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
-
-.include <bsd.init.mk>
+# $FreeBSD: head/libexec/atf/atf-check/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-sh

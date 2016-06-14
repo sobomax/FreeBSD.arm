@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)nlist.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 292623 2015-12-22 20:36:14Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 298120 2016-04-16 17:52:00Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -93,7 +93,7 @@ __fdnlist(int fd, struct nlist *list)
 	int n = -1;
 	unsigned int i;
 
-	for (i = 0; i < sizeof(nlist_fn) / sizeof(nlist_fn[0]); i++) {
+	for (i = 0; i < nitems(nlist_fn); i++) {
 		n = (nlist_fn[i].fn)(fd, list);
 		if (n != -1)
 			break;

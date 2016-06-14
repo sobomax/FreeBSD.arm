@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_isa.c 292081 2015-12-11 05:28:07Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/ed/if_ed_isa.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include "opt_ed.h"
 
@@ -202,5 +202,5 @@ DRIVER_MODULE(ed, isa, ed_isa_driver, ed_devclass, 0, 0);
 MODULE_DEPEND(ed, isa, 1, 1, 1);
 MODULE_DEPEND(ed, ether, 1, 1, 1);
 MODULE_PNP_INFO("E:pnpid;", isa, ed, ed_ids, sizeof(ed_ids[0]),
-    sizeof(ed_ids) / sizeof(ed_ids[0]) - 1);
+    nitems(ed_ids) - 1);
 

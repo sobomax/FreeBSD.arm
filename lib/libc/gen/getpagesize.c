@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)getpagesize.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getpagesize.c 288029 2015-09-20 20:23:16Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getpagesize.c 298303 2016-04-19 22:59:21Z ngie $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -53,7 +53,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/getpagesize.c 288029 2015-09-20 20:23:16Z 
 int
 getpagesize(void)
 {
-	int mib[2]; 
+	int mib[2];
 	static int value;
 	size_t size;
 	int error;
@@ -68,7 +68,7 @@ getpagesize(void)
 	mib[0] = CTL_HW;
 	mib[1] = HW_PAGESIZE;
 	size = sizeof value;
-	if (sysctl(mib, 2, &value, &size, NULL, 0) == -1)
+	if (sysctl(mib, nitems(mib), &value, &size, NULL, 0) == -1)
 		return (-1);
 
 	return (value);

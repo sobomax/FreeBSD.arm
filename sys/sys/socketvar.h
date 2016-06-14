@@ -28,7 +28,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: head/sys/sys/socketvar.h 296277 2016-03-01 18:12:14Z jhb $
+ * $FreeBSD: head/sys/sys/socketvar.h 300168 2016-05-18 22:05:50Z glebius $
  */
 
 #ifndef _SYS_SOCKETVAR_H_
@@ -335,12 +335,12 @@ struct uio;
 /*
  * From uipc_socket and friends
  */
-int	sockargs(struct mbuf **mp, caddr_t buf, int buflen, int type);
 int	getsockaddr(struct sockaddr **namp, caddr_t uaddr, size_t len);
 int	getsock_cap(struct thread *td, int fd, cap_rights_t *rightsp,
 	    struct file **fpp, u_int *fflagp);
 void	soabort(struct socket *so);
 int	soaccept(struct socket *so, struct sockaddr **nam);
+void	soaio_enqueue(struct task *task);
 void	soaio_rcv(void *context, int pending);
 void	soaio_snd(void *context, int pending);
 int	socheckuid(struct socket *so, uid_t uid);

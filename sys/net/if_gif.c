@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_gif.c 292980 2015-12-31 07:03:41Z araujo $");
+__FBSDID("$FreeBSD: head/sys/net/if_gif.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1023,7 +1023,7 @@ gif_set_tunnel(struct ifnet *ifp, struct sockaddr *src, struct sockaddr *dst)
 #endif
 	default:
 		return (EAFNOSUPPORT);
-	};
+	}
 
 	if (sc->gif_family != src->sa_family)
 		gif_detach(sc);

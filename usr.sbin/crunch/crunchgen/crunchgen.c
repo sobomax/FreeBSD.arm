@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/crunch/crunchgen/crunchgen.c 285986 2015-07-28 21:39:58Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.sbin/crunch/crunchgen/crunchgen.c 300806 2016-05-26 23:20:36Z bdrewery $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -670,8 +670,13 @@ fillin_program(prog_t *p)
 	* an object directory already exists.
 	*/
 	if (!makeobj && !p->objdir && p->srcdir) {
+		char *auto_obj;
+
+		auto_obj = NULL;
 		snprintf(line, sizeof line, "%s/%s", objprefix, p->realsrcdir);
-		if (is_dir(line)) {
+		if (is_dir(line) ||
+		    ((auto_obj = getenv("MK_AUTO_OBJ")) != NULL &&
+		    strcmp(auto_obj, "yes") == 0)) {
 			if ((p->objdir = strdup(line)) == NULL)
 			out_of_memory();
 		} else

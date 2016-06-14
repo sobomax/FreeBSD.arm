@@ -51,7 +51,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/envy24ht.c 295790 2016-02-19 03:37:56Z jhibbits $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/envy24ht.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 static MALLOC_DEFINE(M_ENVY24HT, "envy24ht", "envy24ht audio");
 
@@ -2507,7 +2507,7 @@ envy24ht_pci_attach(device_t dev)
 
 	/* set status iformation */
 	snprintf(status, SND_STATUSLEN,
-	    "at io 0x%lx:%ld,0x%lx:%ld irq %ld",
+	    "at io 0x%jx:%jd,0x%jx:%jd irq %jd",
 	    rman_get_start(sc->cs),
 	    rman_get_end(sc->cs) - rman_get_start(sc->cs) + 1,
 	    rman_get_start(sc->mt),

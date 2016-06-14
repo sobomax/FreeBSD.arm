@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.usr.dist 296417 2016-03-05 20:24:31Z dim $
+# $FreeBSD: head/etc/mtree/BSD.usr.dist 301479 2016-06-06 02:43:41Z araujo $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -309,8 +309,6 @@
             ..
         ..
         dtrace
-            toolkit
-            ..
         ..
         examples
             BSD_daemon
@@ -427,6 +425,10 @@
             ..
             uefisign
             ..
+            ypldap
+            ..
+        ..
+        firmware
         ..
         games
             fortune
@@ -901,15 +903,11 @@
             ..
             zh_Hans_CN.eucCN
             ..
-            zh_Hant_HK.Big5HKSCS
-            ..
             zh_Hant_HK.UTF-8
             ..
             zh_Hant_TW.Big5
             ..
             zh_Hant_TW.UTF-8
-            ..
-            zh_HK.Big5HKSCS
             ..
             zh_HK.UTF-8
             ..

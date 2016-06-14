@@ -1,8 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/ping/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
+# $FreeBSD: head/sbin/ping/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	ping
 MAN=	ping.8
 BINOWN=	root

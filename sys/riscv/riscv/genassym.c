@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/riscv/riscv/genassym.c 295972 2016-02-24 16:50:34Z br $");
+__FBSDID("$FreeBSD: head/sys/riscv/riscv/genassym.c 298580 2016-04-25 14:47:51Z br $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,6 +58,7 @@ __FBSDID("$FreeBSD: head/sys/riscv/riscv/genassym.c 295972 2016-02-24 16:50:34Z 
 
 ASSYM(KERNBASE, KERNBASE);
 ASSYM(VM_MAXUSER_ADDRESS, VM_MAXUSER_ADDRESS);
+ASSYM(VM_MAX_KERNEL_ADDRESS, VM_MAX_KERNEL_ADDRESS);
 ASSYM(TDF_ASTPENDING, TDF_ASTPENDING);
 ASSYM(TDF_NEEDRESCHED, TDF_NEEDRESCHED);
 
@@ -75,7 +76,6 @@ ASSYM(PCB_A, offsetof(struct pcb, pcb_a));
 ASSYM(SF_UC, offsetof(struct sigframe, sf_uc));
 
 ASSYM(PC_CURPCB, offsetof(struct pcpu, pc_curpcb));
-ASSYM(PC_SPTBR, offsetof(struct pcpu, pc_sptbr));
 ASSYM(PC_CURTHREAD, offsetof(struct pcpu, pc_curthread));
 
 ASSYM(TD_PCB, offsetof(struct thread, td_pcb));

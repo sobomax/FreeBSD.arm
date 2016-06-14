@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc_subr.c 294883 2016-01-27 02:23:54Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc_subr.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include "opt_kbd.h"
 
@@ -63,7 +63,7 @@ atkbdc_print_child(device_t bus, device_t dev)
 		retval += printf(" flags 0x%x", flags);
 	irq = bus_get_resource_start(dev, SYS_RES_IRQ, kbdcdev->rid);
 	if (irq != 0)
-		retval += printf(" irq %ld", irq);
+		retval += printf(" irq %jd", irq);
 	retval += bus_print_child_footer(bus, dev);
 
 	return (retval);

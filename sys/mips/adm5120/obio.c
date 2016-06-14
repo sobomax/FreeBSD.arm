@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/adm5120/obio.c 295832 2016-02-20 01:32:58Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/mips/adm5120/obio.c 299418 2016-05-11 09:42:24Z trasz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -270,7 +270,7 @@ obio_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	}
 
 	rv = rman_reserve_resource(rm, start, end, count, flags, child);
-	if (rv == 0) {
+	if (rv == NULL) {
 		printf("%s: could not reserve resource\n", __func__);
 		return (0);
 	}
@@ -486,10 +486,6 @@ obio_add_child(device_t bus, u_int order, const char *name, int unit)
 	struct obio_ivar	*ivar;
 
 	ivar = malloc(sizeof(struct obio_ivar), M_DEVBUF, M_WAITOK | M_ZERO);
-	if (ivar == NULL) {
-		printf("Failed to allocate ivar\n");
-		return (0);
-	}
 	resource_list_init(&ivar->resources);
 
 	child = device_add_child_ordered(bus, order, name, unit);

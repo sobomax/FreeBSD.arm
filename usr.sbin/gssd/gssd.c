@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 293043 2016-01-01 17:06:16Z jpaetzel $");
+__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 298886 2016-05-01 16:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -64,7 +64,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 293043 2016-01-01 17:06:16Z jpaetz
 
 struct gss_resource {
 	LIST_ENTRY(gss_resource) gr_link;
-	uint64_t	gr_id;	/* indentifier exported to kernel */
+	uint64_t	gr_id;	/* identifier exported to kernel */
 	void*		gr_res;	/* GSS-API resource pointer */
 };
 LIST_HEAD(gss_resource_list, gss_resource) gss_resources;

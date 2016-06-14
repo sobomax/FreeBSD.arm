@@ -28,7 +28,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 294559 2016-01-22 12:00:56Z andrew $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -441,11 +441,10 @@ static vm_paddr_t xlp_mem_excl[] = {
 static int
 mem_exclude_add(vm_paddr_t *avail, vm_paddr_t mstart, vm_paddr_t mend)
 {
-	int nreg = sizeof(xlp_mem_excl)/sizeof(xlp_mem_excl[0]);
 	int i, pos;
 
 	pos = 0;
-	for (i = 0; i < nreg; i += 2) {
+	for (i = 0; i < nitems(xlp_mem_excl); i += 2) {
 		if (mstart > xlp_mem_excl[i + 1])
 			continue;
 		if (mstart < xlp_mem_excl[i]) {

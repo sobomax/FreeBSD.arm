@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mcd/mcd.c 274676 2014-11-18 21:51:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/mcd/mcd.c 298646 2016-04-26 15:03:15Z pfg $");
 static const char __used COPYRIGHT[] = "mcd-driver (C)1993 by H.Veit & B.Moore";
 
 #include <sys/param.h>
@@ -922,7 +922,7 @@ retry_mode:
 			RDELAY_WAITMODE-mbx->count);
 modedone:
 		/* for first block */
-		mbx->nblk = (bp->bio_bcount + (mbx->sz-1)) / mbx->sz;
+		mbx->nblk = howmany(bp->bio_bcount, mbx->sz);
 		mbx->skip = 0;
 
 nextblock:

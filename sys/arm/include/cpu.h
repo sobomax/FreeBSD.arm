@@ -1,10 +1,9 @@
 /* $NetBSD: cpu.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $ */
-/* $FreeBSD: head/sys/arm/include/cpu.h 295315 2016-02-05 09:46:24Z mmel $ */
+/* $FreeBSD: head/sys/arm/include/cpu.h 300694 2016-05-25 19:44:26Z ian $ */
 
 #ifndef MACHINE_CPU_H
 #define MACHINE_CPU_H
 
-#include <machine/acle-compat.h>
 #include <machine/armreg.h>
 #include <machine/frame.h>
 

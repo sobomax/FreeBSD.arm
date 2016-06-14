@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libcasper/libcasper/libcasper_impl.h 296047 2016-02-25 18:23:40Z oshogbo $
+ * $FreeBSD: head/lib/libcasper/libcasper/libcasper_impl.h 301572 2016-06-08 02:03:53Z oshogbo $
  */
 
 #ifndef	_LIBCASPER_IMPL_H_
@@ -46,11 +46,11 @@ bool fd_is_valid(int fd);
 /* Private service functions. */
 struct service	*service_alloc(const char *name,
 		    service_limit_func_t *limitfunc,
-		    service_command_func_t *commandfunc);
+		    service_command_func_t *commandfunc, uint64_t flags);
 void		 service_free(struct service *service);
 void		 service_message(struct service *service,
 		    struct service_connection *sconn);
-void		 service_start(struct service *service, int sock);
+void		 service_start(struct service *service, int sock, int procfd);
 const char	*service_name(struct service *service);
 
 /* Private service connection functions. */

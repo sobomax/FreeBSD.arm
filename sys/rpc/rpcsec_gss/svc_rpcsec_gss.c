@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/rpcsec_gss/svc_rpcsec_gss.c 288272 2015-09-26 16:30:16Z jpaetzel $");
+__FBSDID("$FreeBSD: head/sys/rpc/rpcsec_gss/svc_rpcsec_gss.c 298336 2016-04-20 04:45:23Z cem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -331,7 +331,7 @@ rpc_gss_get_principal_name(rpc_gss_principal_t *principal,
 	 * Construct a gss_buffer containing the full name formatted
 	 * as "name/node@domain" where node and domain are optional.
 	 */
-	namelen = strlen(name);
+	namelen = strlen(name) + 1;
 	if (node) {
 		namelen += strlen(node) + 1;
 	}

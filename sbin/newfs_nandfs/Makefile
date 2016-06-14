@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/newfs_nandfs/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/newfs_nandfs/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=nandfs
 PROG=	newfs_nandfs
 MAN=	newfs_nandfs.8
 

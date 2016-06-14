@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/userboot/ficl/Makefile 287227 2015-08-27 23:46:42Z imp $
+# $FreeBSD: head/sys/boot/userboot/ficl/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 #
 .include <bsd.own.mk>
 MK_SSP=		no
@@ -53,7 +53,7 @@ softcore.c: ${SOFTWORDS} softcore.awk
 #
 #beforedepend ${OBJS}: machine
 #
-#machine:
+#machine: .NOMETA
 #	ln -sf ${.CURDIR}/../../i386/include machine
 #
 #CLEANFILES+=	machine

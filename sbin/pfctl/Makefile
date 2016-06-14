@@ -1,10 +1,11 @@
-# $FreeBSD: head/sbin/pfctl/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/pfctl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 # pf_ruleset.c is shared between kernel and pfctl
 .PATH: ${.CURDIR}/../../sys/netpfil/pf
 
+PACKAGE=pf
 PROG=	pfctl
 MAN=	pfctl.8
 

@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)tunefs.c	8.2 (Berkeley) 4/19/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/tunefs/tunefs.c 250718 2013-05-16 21:04:56Z delphij $");
+__FBSDID("$FreeBSD: head/sbin/tunefs/tunefs.c 296468 2016-03-07 19:14:26Z emaste $");
 
 /*
  * tunefs: change layout parameters to an existing file system.
@@ -316,7 +316,7 @@ main(int argc, char *argv[])
 	}
 	if (Lflag) {
 		name = "volume label";
-		strlcpy(sblock.fs_volname, Lvalue, MAXVOLLEN);
+		strncpy(sblock.fs_volname, Lvalue, MAXVOLLEN);
 	}
 	if (aflag) {
 		name = "POSIX.1e ACLs";

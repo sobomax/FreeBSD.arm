@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009-2012 Microsoft Corp.
+ * Copyright (c) 2009-2012,2016 Microsoft Corp.
  * Copyright (c) 2010-2012 Citrix Inc.
  * Copyright (c) 2012 NetApp Inc.
  * All rights reserved.
@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_rndis_filter.h 296379 2016-03-04 06:52:11Z sephe $
+ * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_rndis_filter.h 298446 2016-04-22 05:01:43Z sephe $
  */
 
 #ifndef __HV_RNDIS_FILTER_H__

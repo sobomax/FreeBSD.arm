@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/smbfs/smbfs_vnops.c 293679 2016-01-11 18:11:06Z ae $
+ * $FreeBSD: head/sys/fs/smbfs/smbfs_vnops.c 297793 2016-04-10 23:07:00Z pfg $
  */
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -341,7 +341,7 @@ smbfs_setattr(ap)
  		    default:
 			error = EINVAL;
 			goto out;
-  		};
+  		}
 		if (isreadonly) {
 			error = EROFS;
 			goto out;

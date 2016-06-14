@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/mem.c 295036 2016-01-29 10:31:54Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/mem.c 300694 2016-05-25 19:44:26Z ian $");
 
 /*
  * Memory special file
@@ -63,7 +63,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/mem.c 295036 2016-01-29 10:31:54Z mmel $");
 #include <vm/pmap.h>
 #include <vm/vm_extern.h>
 
-#include <machine/acle-compat.h>
 #include <machine/memdev.h>
 #include <machine/vmparam.h>
 

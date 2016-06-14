@@ -1,6 +1,7 @@
-# $FreeBSD: head/sbin/quotacheck/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/quotacheck/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
 
+PACKAGE=quotacheck
 PROG=	quotacheck
 SRCS=	quotacheck.c preen.c fsutil.c utilities.c
 WARNS?=	2

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_ich8lan.c 295323 2016-02-05 17:14:37Z erj $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_ich8lan.c 300050 2016-05-17 12:52:31Z eadler $*/
 
 /* 82562G 10/100 Network Connection
  * 82562G-2 10/100 Network Connection
@@ -4904,7 +4904,7 @@ static s32 e1000_id_led_init_pchlan(struct e1000_hw *hw)
  *  @hw: pointer to the HW structure
  *
  *  ICH8 use the PCI Express bus, but does not contain a PCI Express Capability
- *  register, so the the bus width is hard coded.
+ *  register, so the bus width is hard coded.
  **/
 static s32 e1000_get_bus_info_ich8lan(struct e1000_hw *hw)
 {

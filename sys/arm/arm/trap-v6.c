@@ -30,7 +30,7 @@
 #include "opt_ktrace.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 295882 2016-02-22 09:08:04Z skra $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/trap-v6.c 295882 2016-02-22 09:08:04Z skra 
 #include <vm/vm_extern.h>
 #include <vm/vm_param.h>
 
-#include <machine/acle-compat.h>
 #include <machine/cpu.h>
 #include <machine/frame.h>
 #include <machine/machdep.h>

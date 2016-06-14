@@ -34,7 +34,7 @@ static char sccsid[] = "@(#)unix.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/netstat/unix.c 295136 2016-02-02 05:57:59Z alfred $");
+__FBSDID("$FreeBSD: head/usr.bin/netstat/unix.c 298182 2016-04-18 05:46:18Z araujo $");
 
 /*
  * Display protocol blocks in the unix domain.
@@ -83,7 +83,7 @@ pcblist_sysctl(int type, char **bufp)
 			xo_warn("sysctl: %s", mibvar);
 		return (-1);
 	}
-	if ((buf = malloc(len)) == 0) {
+	if ((buf = malloc(len)) == NULL) {
 		xo_warnx("malloc %lu bytes", (u_long)len);
 		return (-2);
 	}
@@ -116,7 +116,7 @@ pcblist_kvm(u_long count_off, u_long gencnt_off, u_long head_off, char **bufp)
 		return (-1);
 	kread(count_off, &unp_count, sizeof(unp_count));
 	len = 2 * sizeof(xug) + (unp_count + unp_count / 8) * sizeof(xu);
-	if ((buf = malloc(len)) == 0) {
+	if ((buf = malloc(len)) == NULL) {
 		xo_warnx("malloc %lu bytes", (u_long)len);
 		return (-2);
 	}

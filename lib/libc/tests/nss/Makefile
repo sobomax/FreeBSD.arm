@@ -1,11 +1,14 @@
-# $FreeBSD: head/lib/libc/tests/nss/Makefile 292323 2015-12-16 08:09:03Z ngie $
+# $FreeBSD: head/lib/libc/tests/nss/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/lib/libc/nss
+
 BINDIR=		${TESTSDIR}
 
 .PATH: ${.CURDIR:H}/resolv
 
-FILES+=		mach
+${PACKAGE}FILES+=	mach
 
 CFLAGS+=	-I${SRCTOP}/tests
 

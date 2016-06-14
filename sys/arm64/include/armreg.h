@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/armreg.h 296256 2016-03-01 08:15:00Z wma $
+ * $FreeBSD: head/sys/arm64/include/armreg.h 297536 2016-04-04 07:06:20Z wma $
  */
 
 #ifndef _MACHINE_ARMREG_H_
@@ -65,6 +65,12 @@
 #define	CTR_ILINE_SHIFT		0
 #define	CTR_ILINE_MASK		(0xf << CTR_ILINE_SHIFT)
 #define	CTR_ILINE_SIZE(reg)	(((reg) & CTR_ILINE_MASK) >> CTR_ILINE_SHIFT)
+
+/* DCZID_EL0 - Data Cache Zero ID register */
+#define DCZID_DZP		(1 << 4) /* DC ZVA prohibited if non-0 */
+#define DCZID_BS_SHIFT		0
+#define DCZID_BS_MASK		(0xf << DCZID_BS_SHIFT)
+#define	DCZID_BS_SIZE(reg)	(((reg) & DCZID_BS_MASK) >> DCZID_BS_SHIFT)
 
 /* ESR_ELx */
 #define	ESR_ELx_ISS_MASK	0x00ffffff

@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet6/in6_var.h 287611 2015-09-10 06:31:24Z hrs $
+ * $FreeBSD: head/sys/netinet6/in6_var.h 301875 2016-06-13 22:31:16Z pfg $
  */
 
 #ifndef _NETINET6_IN6_VAR_H_
@@ -453,7 +453,6 @@ struct	in6_rrenumreq {
 #define SIOCSRTRFLUSH_IN6	_IOWR('i', 80, struct in6_ifreq)
 
 #define SIOCGIFALIFETIME_IN6	_IOWR('i', 81, struct in6_ifreq)
-#define SIOCSIFALIFETIME_IN6	_IOWR('i', 82, struct in6_ifreq)
 #define SIOCGIFSTAT_IN6		_IOWR('i', 83, struct in6_ifreq)
 #define SIOCGIFSTAT_ICMP6	_IOWR('i', 84, struct in6_ifreq)
 

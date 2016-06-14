@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)mount_nfs.c	8.11 (Berkeley) 5/4/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/mount_nfs/mount_nfs.c 285804 2015-07-22 22:53:40Z cem $");
+__FBSDID("$FreeBSD: head/sbin/mount_nfs/mount_nfs.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -1027,7 +1027,7 @@ xdr_fh(XDR *xdrsp, struct nfhret *np)
 		if (!authfnd && (authcnt > 0 || np->auth != AUTH_SYS))
 			np->stat = EAUTH;
 		return (1);
-	};
+	}
 	return (0);
 }
 

@@ -24,7 +24,7 @@
  * the rights to redistribute these changes.
  *
  *	from: FreeBSD: src/sys/i386/include/db_machdep.h,v 1.16 1999/10/04
- * $FreeBSD: head/sys/arm/include/db_machdep.h 294740 2016-01-25 18:02:28Z zbb $
+ * $FreeBSD: head/sys/arm/include/db_machdep.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef	_MACHINE_DB_MACHDEP_H_
@@ -33,7 +33,6 @@
 #include <machine/frame.h>
 #include <machine/trap.h>
 #include <machine/armreg.h>
-#include <machine/acle-compat.h>
 
 #define T_BREAKPOINT	(1)
 #define T_WATCHPOINT	(2)

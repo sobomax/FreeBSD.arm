@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/wpi/if_wpivar.h 289163 2015-10-12 04:05:12Z adrian $	*/
+/*	$FreeBSD: head/sys/dev/wpi/if_wpivar.h 297173 2016-03-21 23:25:41Z avos $	*/
 
 /*-
  * Copyright (c) 2006,2007
@@ -228,12 +228,8 @@ struct wpi_softc {
 	struct wpi_dma_info	fw_dma;
 
 	/* Tasks used by the driver. */
-	struct task		sc_reinittask;
 	struct task		sc_radiooff_task;
 	struct task		sc_radioon_task;
-
-	/* Taskqueue */
-	struct taskqueue	*sc_tq;
 
 	/* Eeprom info. */
 	uint8_t			cap;

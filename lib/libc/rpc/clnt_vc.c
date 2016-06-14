@@ -34,7 +34,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_vc.c 296386 2016-03-04 15:30:41Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/clnt_vc.c 298830 2016-04-30 01:24:24Z pfg $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -601,7 +601,7 @@ clnt_vc_control(CLIENT *cl, u_int request, void *info)
 		/*
 		 * This RELIES on the information that, in the call body,
 		 * the version number field is the fifth field from the
-		 * begining of the RPC header. MUST be changed if the
+		 * beginning of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
 		ntohlp(info, ct->ct_u.ct_mcallc + 4 * BYTES_PER_XDR_UNIT);
@@ -615,7 +615,7 @@ clnt_vc_control(CLIENT *cl, u_int request, void *info)
 		/*
 		 * This RELIES on the information that, in the call body,
 		 * the program number field is the fourth field from the
-		 * begining of the RPC header. MUST be changed if the
+		 * beginning of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
 		ntohlp(info, ct->ct_u.ct_mcallc + 3 * BYTES_PER_XDR_UNIT);

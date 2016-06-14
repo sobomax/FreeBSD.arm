@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/locking.9 285173 2015-07-05 19:29:24Z kib $
+.\" $FreeBSD: head/share/man/man9/locking.9 301590 2016-06-08 09:19:47Z trasz $
 .\"
 .Dd July 5, 2015
 .Dt LOCKING 9
@@ -335,7 +335,8 @@ running inside an interrupt thread.
 .El
 .Ss Interaction table
 The following table shows what you can and can not do while holding
-one of the locking primitives discussed.  Note that
+one of the locking primitives discussed.
+Note that
 .Dq sleep
 includes
 .Fn sema_wait ,

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mips24k.c 282658 2015-05-08 19:40:00Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mips24k.c 298431 2016-04-21 19:40:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -149,8 +149,7 @@ const struct mips_event_code_map mips_event_codes[] = {
 
 };
 
-const int mips_event_codes_size =
-	sizeof(mips_event_codes) / sizeof(mips_event_codes[0]);
+const int mips_event_codes_size = nitems(mips_event_codes);
 
 struct mips_pmc_spec mips_pmc_spec = {
 	.ps_cpuclass = PMC_CLASS_MIPS24K,

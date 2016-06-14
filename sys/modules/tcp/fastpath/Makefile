@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/tcp/fastpath/Makefile 292536 2015-12-21 09:38:45Z uqs $
+# $FreeBSD: head/sys/modules/tcp/fastpath/Makefile 301717 2016-06-09 05:48:34Z ae $
 #
 
 .PATH: ${.CURDIR}/../../../netinet/tcp_stacks
@@ -7,7 +7,7 @@
 KMOD=	fastpath
 SRCS=	fastpath.c
 
-SRCS+=	opt_ipfw.h opt_inet.h opt_inet6.h opt_ipsec.h opt_kdtrace.h
+SRCS+=	opt_inet.h opt_inet6.h opt_ipsec.h
 SRCS+=	opt_tcpdebug.h
 
 #

@@ -62,7 +62,7 @@
  *	and
  *	from: FreeBSD: src/sys/alpha/include/bus.h,v 1.9 2001/01/09
  *
- * $FreeBSD: head/sys/sparc64/include/bus.h 257066 2013-10-24 17:06:41Z marius $
+ * $FreeBSD: head/sys/sparc64/include/bus.h 297792 2016-04-10 22:43:36Z marius $
  */
 
 #ifndef	_MACHINE_BUS_H_
@@ -98,7 +98,7 @@ extern const int bus_stream_asi[];
 #define	BUS_SPACE_MAXSIZE	0xFFFFFFFFFFFFFFFF
 #define	BUS_SPACE_MAXADDR_24BIT	0xFFFFFF
 #define	BUS_SPACE_MAXADDR_32BIT 0xFFFFFFFF
-#define	BUS_SPACE_MAXADDR	0xFFFFFFFF
+#define	BUS_SPACE_MAXADDR	0xFFFFFFFFFFFFFFFF
 
 #define	BUS_SPACE_UNRESTRICTED	(~0)
 

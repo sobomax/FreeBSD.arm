@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/if_ixv.c 294327 2016-01-19 15:33:28Z hselasky $*/
+/*$FreeBSD: head/sys/dev/ixgbe/if_ixv.c 299200 2016-05-06 22:54:56Z pfg $*/
 
 
 #ifndef IXGBE_STANDALONE_BUILD
@@ -195,7 +195,7 @@ TUNABLE_INT("hw.ixv.flow_control", &ixv_flow_control);
 
 /*
  * Header split: this causes the hardware to DMA
- * the header into a seperate mbuf from the payload,
+ * the header into a separate mbuf from the payload,
  * it can be a performance win in some workloads, but
  * in others it actually hurts, its off by default.
  */
@@ -1141,7 +1141,7 @@ ixv_local_timer(void *arg)
 
 	}
 
-	/* Only truely watchdog if all queues show hung */
+	/* Only truly watchdog if all queues show hung */
 	if (hung == adapter->num_queues)
 		goto watchdog;
 	else if (queues != 0) { /* Force an IRQ on queues with work */
@@ -1958,7 +1958,7 @@ ixv_handle_mbx(void *context, int pending)
 }
 
 /*
-** The VF stats registers never have a truely virgin
+** The VF stats registers never have a truly virgin
 ** starting point, so this routine tries to make an
 ** artificial one, marking ground zero on attach as
 ** it were.

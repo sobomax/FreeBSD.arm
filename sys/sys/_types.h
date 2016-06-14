@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_types.h 294883 2016-01-27 02:23:54Z jhibbits $
+ * $FreeBSD: head/sys/sys/_types.h 299571 2016-05-12 21:18:17Z cem $
  */
 
 #ifndef _SYS__TYPES_H_
@@ -51,6 +51,7 @@ typedef	int		__accmode_t;	/* access permissions */
 typedef	int		__nl_item;
 typedef	__uint16_t	__nlink_t;	/* link count */
 typedef	__int64_t	__off_t;	/* file offset */
+typedef	__int64_t	__off64_t;	/* file offset (alias) */
 typedef	__int32_t	__pid_t;	/* process [group] */
 typedef	__int64_t	__rlim_t;	/* resource limit - intentionally */
 					/* signed, because of legacy code */
@@ -112,6 +113,6 @@ typedef union {
 	__int64_t	_mbstateL;	/* for alignment */
 } __mbstate_t;
 
-typedef unsigned long	__rman_res_t;
+typedef __uintmax_t     __rman_res_t;
 
 #endif /* !_SYS__TYPES_H_ */

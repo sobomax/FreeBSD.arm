@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/hostname 286671 2015-08-12 16:22:10Z feld $
+# $FreeBSD: head/etc/rc.d/hostname 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: hostname
@@ -34,6 +34,7 @@
 . /etc/network.subr
 
 name="hostname"
+desc="Set the system\'s hostname"
 start_cmd="hostname_start"
 stop_cmd=":"
 

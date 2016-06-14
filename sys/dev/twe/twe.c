@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/twe/twe.c 280347 2015-03-22 16:10:28Z mav $
+ *	$FreeBSD: head/sys/dev/twe/twe.c 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -531,7 +531,7 @@ twe_ioctl(struct twe_softc *sc, u_long ioctlcmd, void *addr)
     case TWEIO_COMMAND:
 	/*
 	 * if there's a data buffer, allocate and copy it in.
-	 * Must be in multipled of 512 bytes.
+	 * Must be in multiplied of 512 bytes.
 	 */
 	tr_length = roundup2(tu->tu_size, 512);
 	if (tr_length > 0) {

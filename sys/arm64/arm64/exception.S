@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 292194 2015-12-14 10:06:01Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 297028 2016-03-18 16:18:29Z andrew $");
 
 #include "assym.s"
 
@@ -150,7 +150,7 @@ END(handle_el1h_sync)
 ENTRY(handle_el1h_irq)
 	save_registers 1
 	mov	x0, sp
-	bl	arm_cpu_intr
+	bl	intr_irq_handler
 	restore_registers 1
 	eret
 END(handle_el1h_irq)
@@ -171,7 +171,7 @@ END(handle_el0_sync)
 ENTRY(handle_el0_irq)
 	save_registers 0
 	mov	x0, sp
-	bl	arm_cpu_intr
+	bl	intr_irq_handler
 	do_ast
 	restore_registers 0
 	eret

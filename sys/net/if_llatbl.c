@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_llatbl.c 292978 2015-12-31 05:03:27Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/net/if_llatbl.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_inet.h"
@@ -409,7 +409,7 @@ lltable_update_ifaddr(struct lltable *llt)
 
 /*
  *
- * Performes generic cleanup routines and frees lle.
+ * Performs generic cleanup routines and frees lle.
  *
  * Called for non-linked entries, with callouts and
  * other AF-specific cleanups performed.

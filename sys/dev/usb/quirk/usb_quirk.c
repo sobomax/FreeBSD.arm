@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 296342 2016-03-03 08:47:27Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/quirk/usb_quirk.c 298424 2016-04-21 17:45:37Z hselasky $ */
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
  * Copyright (c) 1998 Lennart Augustsson. All rights reserved.
@@ -136,6 +136,8 @@ static struct usb_quirk_entry usb_quirks[USB_DEV_QUIRKS_MAX] = {
 	USB_QUIRK(CORSAIR, K60, 0x0000, 0xffff, UQ_KBD_BOOTPROTO),
 	/* Quirk for Corsair Vengeance K70 keyboard */
 	USB_QUIRK(CORSAIR, K70, 0x0000, 0xffff, UQ_KBD_BOOTPROTO),
+	/* Quirk for Corsair STRAFE Gaming keyboard */
+	USB_QUIRK(CORSAIR, STRAFE, 0x0000, 0xffff, UQ_KBD_BOOTPROTO),
 	/* umodem(4) device quirks */
 	USB_QUIRK(METRICOM, RICOCHET_GS, 0x100, 0x100, UQ_ASSUME_CM_OVER_DATA),
 	USB_QUIRK(SANYO, SCP4900, 0x000, 0x000, UQ_ASSUME_CM_OVER_DATA),
@@ -529,6 +531,9 @@ static struct usb_quirk_entry usb_quirks[USB_DEV_QUIRKS_MAX] = {
 
 	/* DYMO LabelManager Pnp */
 	USB_QUIRK(DYMO, LABELMANAGERPNP, 0x0000, 0xffff, UQ_MSC_DYMO_EJECT),
+
+	/* Holtek USB gaming keyboard */
+	USB_QUIRK(HOLTEK, F85, 0x0000, 0xffff, UQ_KBD_BOOTPROTO),
 };
 #undef USB_QUIRK_VP
 #undef USB_QUIRK

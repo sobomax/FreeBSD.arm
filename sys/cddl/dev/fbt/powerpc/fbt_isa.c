@@ -21,7 +21,7 @@
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  * Portions Copyright 2013 Justin Hibbits jhibbits@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/powerpc/fbt_isa.c 286241 2015-08-03 17:39:36Z markj $
+ * $FreeBSD: head/sys/cddl/dev/fbt/powerpc/fbt_isa.c 298171 2016-04-17 23:08:47Z markj $
  *
  */
 
@@ -51,9 +51,8 @@
 #define	FBT_AFRAMES	7
 
 int
-fbt_invop(uintptr_t addr, uintptr_t *stack, uintptr_t rval)
+fbt_invop(uintptr_t addr, struct trapframe *frame, uintptr_t rval)
 {
-	struct trapframe *frame = (struct trapframe *)stack;
 	solaris_cpu_t *cpu = &solaris_cpu[curcpu];
 	fbt_probe_t *fbt = fbt_probetab[FBT_ADDR2NDX(addr)];
 	uintptr_t tmp;

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82575.c 295323 2016-02-05 17:14:37Z erj $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82575.c 300050 2016-05-17 12:52:31Z eadler $*/
 
 /*
  * 82575EB Gigabit Network Connection
@@ -2416,7 +2416,7 @@ out:
  *  e1000_reset_mdicnfg_82580 - Reset MDICNFG destination and com_mdio bits
  *  @hw: pointer to the HW structure
  *
- *  This resets the the MDICNFG.Destination and MDICNFG.Com_MDIO bits based on
+ *  This resets the MDICNFG.Destination and MDICNFG.Com_MDIO bits based on
  *  the values found in the EEPROM.  This addresses an issue in which these
  *  bits are not restored from EEPROM after reset.
  **/

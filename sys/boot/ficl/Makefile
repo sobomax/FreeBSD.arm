@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/ficl/Makefile 296079 2016-02-26 08:06:25Z sgalabov $
+# $FreeBSD: head/sys/boot/ficl/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 #
 
 FICLDIR?=	${.CURDIR}
@@ -75,7 +75,7 @@ ${SRCS:M*.c:R:S/$/.o/g}: machine
 beforedepend ${OBJS}: machine
 .endif
 
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../i386/include machine
 
 CLEANFILES+=	machine

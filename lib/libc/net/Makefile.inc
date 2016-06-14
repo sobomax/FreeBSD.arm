@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.2 (Berkeley) 9/5/93
-# $FreeBSD: head/lib/libc/net/Makefile.inc 294877 2016-01-27 01:33:23Z bdrewery $
+# $FreeBSD: head/lib/libc/net/Makefile.inc 297283 2016-03-26 03:46:12Z bdrewery $
 
 # machine-independent net sources
 .PATH: ${LIBC_SRCTOP}/net
@@ -35,7 +35,6 @@ YFLAGS+=-p_nsyy
 LFLAGS+=-P_nsyy
 
 CFLAGS.nslexer.c= -DYY_BUF_SIZE=1024
-CFLAGS+=	${CFLAGS.${.IMPSRC:T}}
 
 MAN+=	byteorder.3 ethers.3 eui64.3 \
 	getaddrinfo.3 gai_strerror.3 gethostbyname.3 \

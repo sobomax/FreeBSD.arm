@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)opendir.c	8.8 (Berkeley) 5/1/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/opendir.c 268531 2014-07-11 16:16:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/opendir.c 297790 2016-04-10 19:33:58Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -209,7 +209,7 @@ _filldir(DIR *dirp, bool use_current_pos)
 	 * On the second pass, save pointers to each one.
 	 * Then sort the pointers and remove duplicate names.
 	 */
-	for (dpv = 0;;) {
+	for (dpv = NULL;;) {
 		n = 0;
 		ddptr = buf;
 		while (ddptr < ddeptr) {

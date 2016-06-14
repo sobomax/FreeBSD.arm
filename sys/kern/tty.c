@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/tty.c 294836 2016-01-26 14:46:39Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/tty.c 298819 2016-04-29 22:15:33Z pfg $");
 
 #include "opt_capsicum.h"
 #include "opt_compat.h"
@@ -388,7 +388,7 @@ tty_wait_background(struct tty *tp, struct thread *td, int sig)
 		PROC_LOCK(p);
 		/*
 		 * The process should only sleep, when:
-		 * - This terminal is the controling terminal
+		 * - This terminal is the controlling terminal
 		 * - Its process group is not the foreground process
 		 *   group
 		 * - The parent process isn't waiting for the child to

@@ -23,11 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/msun/arm/fenv-vfp.c 263210 2014-03-15 21:58:07Z andrew $
+ * $FreeBSD: head/lib/msun/arm/fenv-vfp.c 300119 2016-05-18 06:01:18Z imp $
  */
 
 #define	FENV_MANGLE(x)	__vfp_ ##x
 #include "fenv-mangle.h"
-#define	__ARM_PCS_VFP
+#ifndef __ARM_PCS_VFP
+#define	__ARM_PCS_VFP 1
+#endif
 #include "fenv.c"
 

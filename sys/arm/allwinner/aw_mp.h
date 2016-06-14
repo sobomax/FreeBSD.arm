@@ -22,14 +22,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/aw_mp.h 296426 2016-03-06 11:41:08Z andrew $
+ * $FreeBSD: head/sys/arm/allwinner/aw_mp.h 299380 2016-05-10 18:00:37Z manu $
  */
 
 #ifndef _AW_MP_H_
 #define	_AW_MP_H_
 
 void aw_mp_setmaxid(platform_t plat);
-void a20_mp_start_ap(platform_t plat);
-void a31_mp_start_ap(platform_t plat);
+void aw_mp_start_ap(platform_t plat);
+void a83t_mp_start_ap(platform_t plat);
 
 #endif /* _AW_MP_H_ */

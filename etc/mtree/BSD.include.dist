@@ -1,4 +1,4 @@
-# $FreeBSD: head/etc/mtree/BSD.include.dist 296047 2016-02-25 18:23:40Z oshogbo $
+# $FreeBSD: head/etc/mtree/BSD.include.dist 301778 2016-06-10 06:04:53Z imp $
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -90,6 +90,8 @@
     cam
         ata
         ..
+        nvme
+        ..
         scsi
         ..
     ..
@@ -154,6 +156,8 @@
         ..
         wi
         ..
+    ..
+    devdctl
     ..
     edit
         readline

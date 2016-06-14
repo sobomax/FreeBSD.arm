@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/share/man/man7/Makefile 275732 2014-12-12 19:56:36Z jmg $
+# $FreeBSD: head/share/man/man7/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
+
+PACKAGE=runtime-manuals
 
 #MISSING: eqnchar.7 ms.7 term.7
 MAN=	adding_user.7 \

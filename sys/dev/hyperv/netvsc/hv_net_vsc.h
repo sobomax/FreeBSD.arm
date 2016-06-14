@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009-2012 Microsoft Corp.
+ * Copyright (c) 2009-2012,2016 Microsoft Corp.
  * Copyright (c) 2010-2012 Citrix Inc.
  * Copyright (c) 2012 NetApp Inc.
  * All rights reserved.
@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_net_vsc.h 296381 2016-03-04 07:07:42Z sephe $
+ * $FreeBSD: head/sys/dev/hyperv/netvsc/hv_net_vsc.h 299401 2016-05-11 03:31:25Z sephe $
  */
 
 /*
@@ -1164,14 +1164,18 @@ struct hn_rx_ring {
 	u_long		hn_lro_tried;
 	u_long		hn_small_pkts;
 	u_long		hn_pkts;
+	u_long		hn_rss_pkts;
 
 	/* Rarely used stuffs */
 	struct sysctl_oid *hn_rx_sysctl_tree;
+	int		hn_rx_flags;
 } __aligned(CACHE_LINE_SIZE);
 
 #define HN_TRUST_HCSUM_IP	0x0001
 #define HN_TRUST_HCSUM_TCP	0x0002
 #define HN_TRUST_HCSUM_UDP	0x0004
+
+#define HN_RX_FLAG_ATTACHED	0x1
 
 struct hn_tx_ring {
 #ifndef HN_USE_TXDESC_BUFRING
@@ -1182,7 +1186,8 @@ struct hn_tx_ring {
 #endif
 	int		hn_txdesc_cnt;
 	int		hn_txdesc_avail;
-	int		hn_has_txeof;
+	u_short		hn_has_txeof;
+	u_short		hn_txdone_cnt;
 
 	int		hn_sched_tx;
 	void		(*hn_txeof)(struct hn_tx_ring *);
@@ -1207,6 +1212,7 @@ struct hn_tx_ring {
 	u_long		hn_send_failed;
 	u_long		hn_txdma_failed;
 	u_long		hn_tx_collapsed;
+	u_long		hn_tx_chimney_tried;
 	u_long		hn_tx_chimney;
 	u_long		hn_pkts;
 
@@ -1214,7 +1220,10 @@ struct hn_tx_ring {
 	struct hn_txdesc *hn_txdesc;
 	bus_dma_tag_t	hn_tx_rndis_dtag;
 	struct sysctl_oid *hn_tx_sysctl_tree;
+	int		hn_tx_flags;
 } __aligned(CACHE_LINE_SIZE);
+
+#define HN_TX_FLAG_ATTACHED	0x1
 
 /*
  * Device-specific softc structure
@@ -1260,6 +1269,7 @@ int hv_nv_on_device_remove(struct hv_device *device,
     boolean_t destroy_channel);
 int hv_nv_on_send(struct hv_vmbus_channel *chan, netvsc_packet *pkt);
 int hv_nv_get_next_send_section(netvsc_dev *net_dev);
+void hv_nv_subchan_attach(struct hv_vmbus_channel *chan);
 
 #endif  /* __HV_NET_VSC_H__ */
 
