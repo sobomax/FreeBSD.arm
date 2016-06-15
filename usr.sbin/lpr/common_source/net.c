@@ -39,7 +39,7 @@
  */
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: head/usr.sbin/lpr/common_source/net.c 242091 2012-10-25 20:16:38Z ed $");
+__FBSDID("$FreeBSD: head/usr.sbin/lpr/common_source/net.c 297795 2016-04-10 23:47:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -280,7 +280,7 @@ writel(int strm, ...)
 
 	if (n > NIOV) {
 		iovp = malloc(n * sizeof *iovp);
-		if (iovp == 0)
+		if (iovp == NULL)
 			return -1;
 	}
 

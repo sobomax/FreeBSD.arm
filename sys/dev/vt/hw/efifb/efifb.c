@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 286809 2015-08-15 16:13:28Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -39,11 +39,9 @@ __FBSDID("$FreeBSD: head/sys/dev/vt/hw/efifb/efifb.c 286809 2015-08-15 16:13:28Z
 #include "opt_platform.h"
 
 #include <machine/metadata.h>
-#include <machine/vm.h>
 #include <machine/vmparam.h>
 #include <vm/vm.h>
 #include <vm/pmap.h>
-#include <machine/pmap.h>
 
 #include <dev/vt/vt.h>
 #include <dev/vt/hw/fb/vt_fb.h>
@@ -118,7 +116,7 @@ vt_efifb_init(struct vt_device *vd)
 	info->fb_depth = fls(efifb->fb_mask_red | efifb->fb_mask_green |
 	    efifb->fb_mask_blue | efifb->fb_mask_reserved);
 	/* Round to a multiple of the bits in a byte. */
-	info->fb_bpp = (info->fb_depth + NBBY - 1) & ~(NBBY - 1);
+	info->fb_bpp = roundup2(info->fb_depth, NBBY);
 
 	/* Stride in bytes, not pixels */
 	info->fb_stride = efifb->fb_stride * (info->fb_bpp / NBBY);

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014-2015 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2014-2015 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iovctl/validate.c 285063 2015-07-02 21:58:10Z oshogbo $");
+__FBSDID("$FreeBSD: head/usr.sbin/iovctl/validate.c 296865 2016-03-14 17:41:17Z rstone $");
 
 #include <sys/param.h>
 #include <sys/iov.h>

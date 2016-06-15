@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
+# $FreeBSD: head/kerberos5/Makefile 297434 2016-03-30 23:50:23Z bdrewery $
 
 SUBDIR=	lib .WAIT \
 	libexec tools usr.bin usr.sbin
@@ -14,7 +14,6 @@ kerberize:
 	cd ${.CURDIR}/../${entry}; \
 	${MAKE} cleandir; \
 	${MAKE} obj; \
-	${MAKE} depend; \
 	${MAKE} all; \
 	${MAKE} install
 .endfor
@@ -25,7 +24,6 @@ dekerberize:
 	cd ${.CURDIR}/../${entry}; \
 	${MAKE} MK_KERBEROS=no cleandir; \
 	${MAKE} MK_KERBEROS=no obj; \
-	${MAKE} MK_KERBEROS=no depend; \
 	${MAKE} MK_KERBEROS=no all; \
 	${MAKE} MK_KERBEROS=no install
 .endfor

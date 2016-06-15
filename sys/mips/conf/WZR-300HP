@@ -10,7 +10,7 @@
 # + 64MB RAM
 # + uboot environment
 
-# $FreeBSD: head/sys/mips/conf/WZR-300HP 291049 2015-11-19 01:58:12Z imp $
+# $FreeBSD: head/sys/mips/conf/WZR-300HP 295945 2016-02-24 00:39:36Z sobomax $
 
 #NO_UNIVERSE
 
@@ -26,9 +26,9 @@ options 	BOOTVERBOSE
 
 # GEOM modules
 device		geom_map	# to get access to the SPI flash partitions
-device		geom_uncompress	# compressed in-memory filesystem hackery!
+device		geom_uzip	# compressed in-memory filesystem hackery!
 
-options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uncompress\"
+options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uzip\"
 
 options 	AR71XX_ATH_EEPROM	# Fetch EEPROM/PCI config from flash
 options 	ATH_EEPROM_FIRMWARE	# Use EEPROM from flash

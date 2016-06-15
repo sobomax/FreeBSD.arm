@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_flashmap.c 287013 2015-08-22 05:50:18Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_flashmap.c 294616 2016-01-23 05:26:29Z adrian $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -190,8 +190,12 @@ g_flashmap_taste(struct g_class *mp, struct g_provider *pp, int flags)
 		size = sizeof(device_t);
 		if (g_io_getattr("NAND::device", cp, &size, &dev)) {
 			size = sizeof(device_t);
-			if (g_io_getattr("CFI::device", cp, &size, &dev))
-				break;
+			if (g_io_getattr("CFI::device", cp, &size, &dev)) {
+				size = sizeof(device_t);
+				if (g_io_getattr("SPI::device", cp, &size,
+				    &dev))
+					break;
+			}
 		}
 
 		nslices = g_flashmap_load(dev, &head);

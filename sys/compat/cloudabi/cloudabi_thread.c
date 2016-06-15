@@ -24,15 +24,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_thread.c 285908 2015-07-27 10:07:29Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_thread.c 300043 2016-05-17 09:56:22Z kib $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/sched.h>
 #include <sys/syscallsubr.h>
+#include <sys/umtx.h>
+
+#include <contrib/cloudabi/cloudabi_types_common.h>
 
 #include <compat/cloudabi/cloudabi_proto.h>
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
 
 int
 cloudabi_sys_thread_exit(struct thread *td,
@@ -42,6 +44,8 @@ cloudabi_sys_thread_exit(struct thread *td,
 		.lock = uap->lock,
 		.scope = uap->scope,
 	};
+
+	umtx_thread_exit(td);
 
         /* Wake up joining thread. */
 	cloudabi_sys_lock_unlock(td, &cloudabi_sys_lock_unlock_args);

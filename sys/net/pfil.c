@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/net/pfil.c 257176 2013-10-26 17:58:36Z glebius $ */
+/*	$FreeBSD: head/sys/net/pfil.c 301503 2016-06-06 13:01:57Z bz $ */
 /*	$NetBSD: pfil.c,v 1.20 2001/11/12 23:49:46 lukem Exp $	*/
 
 /*-
@@ -363,26 +363,24 @@ pfil_chain_remove(pfil_chain_t *chain, pfil_func_t func, void *arg)
  * Stuff that must be initialized for every instance (including the first of
  * course).
  */
-static int
-vnet_pfil_init(const void *unused)
+static void
+vnet_pfil_init(const void *unused __unused)
 {
 
 	LIST_INIT(&V_pfil_head_list);
 	PFIL_LOCK_INIT_REAL(&V_pfil_lock, "shared");
-	return (0);
 }
 
 /*
  * Called for the removal of each instance.
  */
-static int
-vnet_pfil_uninit(const void *unused)
+static void
+vnet_pfil_uninit(const void *unused __unused)
 {
 
 	KASSERT(LIST_EMPTY(&V_pfil_head_list),
 	    ("%s: pfil_head_list %p not empty", __func__, &V_pfil_head_list));
 	PFIL_LOCK_DESTROY_REAL(&V_pfil_lock);
-	return (0);
 }
 
 /* Define startup order. */

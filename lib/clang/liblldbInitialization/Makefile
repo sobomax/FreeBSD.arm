@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbInitialization/Makefile 285116 2015-07-04 01:02:43Z emaste $
+# $FreeBSD: head/lib/clang/liblldbInitialization/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -9,11 +9,9 @@ SRCS=	SystemInitializer.cpp \
 	SystemInitializerCommon.cpp \
 	SystemLifetimeManager.cpp
 	
-#TGHDRS=	AttrList \
-#	Attrs \
-#	DiagnosticCommonKinds \
-#	DeclNodes \
-#	StmtNodes \
-#	CommentCommandList
+TGHDRS=	CommentCommandList \
+	DeclNodes \
+	DiagnosticCommonKinds \
+	StmtNodes
 
 .include "../lldb.lib.mk"

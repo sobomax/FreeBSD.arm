@@ -1,8 +1,9 @@
 #	@(#)Makefile	8.8 (Berkeley) 3/28/97
-# $FreeBSD: head/usr.sbin/sendmail/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
+# $FreeBSD: head/usr.sbin/sendmail/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=sendmail
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 SMDIR=	${SENDMAIL_DIR}/src
 .PATH: ${SMDIR}

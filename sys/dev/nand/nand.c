@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nand.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nand.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -811,7 +811,7 @@ nand_erase_blocks(struct nand_chip *chip, off_t offset, size_t len)
 			err = ENXIO;
 
 		block++;
-	};
+	}
 
 	NANDBUS_UNLOCK(nandbus);
 

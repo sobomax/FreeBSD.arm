@@ -1,5 +1,7 @@
-# $FreeBSD: head/sys/boot/Makefile.mips 262224 2014-02-19 17:44:59Z rwatson $
+# $FreeBSD: head/sys/boot/Makefile.mips 296183 2016-02-29 07:47:04Z sgalabov $
 
 .if ${MK_FDT} != "no"
 SUBDIR+=		fdt
 .endif
+
+SUBDIR+=		uboot

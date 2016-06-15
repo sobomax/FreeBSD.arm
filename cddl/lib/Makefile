@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/Makefile 287085 2015-08-23 23:12:30Z imp $
+# $FreeBSD: head/cddl/lib/Makefile 300618 2016-05-24 16:41:37Z br $
 
 .include <src.opts.mk>
 

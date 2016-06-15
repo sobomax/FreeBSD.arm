@@ -40,7 +40,7 @@
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
  *	from: src/sys/i386/include/pmap.h,v 1.65.2.2 2000/11/30 01:54:42 peter
  *	JNPR: pmap.h,v 1.7.2.1 2007/09/10 07:44:12 girish
- *      $FreeBSD: head/sys/mips/include/pmap.h 289699 2015-10-21 14:57:59Z ian $
+ *      $FreeBSD: head/sys/mips/include/pmap.h 292469 2015-12-19 18:42:50Z alc $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -178,7 +178,6 @@ void *pmap_kenter_temporary(vm_paddr_t pa, int i);
 void pmap_kenter_temporary_free(vm_paddr_t pa);
 void pmap_flush_pvcache(vm_page_t m);
 int pmap_emulate_modified(pmap_t pmap, vm_offset_t va);
-void pmap_grow_direct_page_cache(void);
 void pmap_page_set_memattr(vm_page_t, vm_memattr_t);
 
 #endif				/* _KERNEL */

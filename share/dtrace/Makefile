@@ -1,16 +1,10 @@
-# $FreeBSD: head/share/dtrace/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
+# $FreeBSD: head/share/dtrace/Makefile 300226 2016-05-19 19:51:39Z gnn $
 #
 # Hand installing our scripts and optionally (based on MK_CDDL) installing
 # the DTraceToolkit.
 #
 
 .include <src.opts.mk>
-
-SUBDIR= ${_toolkit}
-
-.if ${MK_CDDL} != "no"
-_toolkit=	toolkit
-.endif
 
 SCRIPTS=	blocking \
 		disklatency \
@@ -20,10 +14,20 @@ SCRIPTS=	blocking \
 		nfsclienttime \
 		siftr \
 		tcpconn \
+		tcpdebug \
 		tcpstate \
 		tcptrack \
-		udptrack
+		udptrack \
+		watch_execve \
+		watch_kill \
+		watch_vop_remove
 
 SCRIPTSDIR= ${SHAREDIR}/dtrace
+
+DSRCS=		mbuf.d
+
+FILES=		${DSRCS}
+FILESDIR=	/usr/lib/dtrace
+FILESMODE=	${NOBINMODE}
 
 .include <bsd.prog.mk>

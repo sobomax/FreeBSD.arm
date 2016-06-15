@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)pat_rep.c	8.2 (Berkeley) 4/18/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/pax/pat_rep.c 283257 2015-05-21 18:29:36Z delphij $");
+__FBSDID("$FreeBSD: head/bin/pax/pat_rep.c 292877 2015-12-29 16:31:28Z pfg $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -878,7 +878,7 @@ rep_name(char *name, int *nlen, int prnt)
 	 * (the user already saw that substitution go by)
 	 */
 	pt = rephead;
-	(void)strcpy(buf1, name);
+	(void)strlcpy(buf1, name, sizeof(buf1));
 	inpt = buf1;
 	outpt = nname;
 	endpt = outpt + PAXPATHLEN;

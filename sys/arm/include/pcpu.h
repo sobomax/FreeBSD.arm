@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/globaldata.h,v 1.27 2001/04/27
- * $FreeBSD: head/sys/arm/include/pcpu.h 290648 2015-11-10 12:02:41Z mmel $
+ * $FreeBSD: head/sys/arm/include/pcpu.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef	_MACHINE_PCPU_H_
@@ -32,7 +32,6 @@
 
 #ifdef _KERNEL
 
-#include <machine/acle-compat.h>
 #include <machine/cpuconf.h>
 
 #define	ALT_STACK_SIZE	128
@@ -49,7 +48,9 @@ struct vmspace;
 	struct pmap *pc_curpmap;					\
 	vm_offset_t pc_qmap_addr;					\
 	void *pc_qmap_pte;						\
-	char __pad[133]
+	unsigned int pc_dbreg[32];					\
+	int pc_dbreg_cmd;						\
+	char __pad[1]
 #else
 #define PCPU_MD_FIELDS							\
 	vm_offset_t qmap_addr;						\
@@ -58,6 +59,9 @@ struct vmspace;
 #endif
 
 #ifdef _KERNEL
+
+#define	PC_DBREG_CMD_NONE	0
+#define	PC_DBREG_CMD_LOAD	1
 
 struct pcb;
 struct pcpu;

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/vdevice.c 282972 2015-05-15 13:55:18Z br $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/vdevice.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -180,7 +180,7 @@ vdevice_print_child(device_t dev, device_t child)
 
 	retval += bus_print_child_header(dev, child);
 
-	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%ld");
+	retval += resource_list_print_type(rl, "irq", SYS_RES_IRQ, "%jd");
 
 	retval += bus_print_child_footer(dev, child);
 

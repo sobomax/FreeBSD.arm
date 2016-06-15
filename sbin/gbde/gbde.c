@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/gbde/gbde.c 274314 2014-11-09 15:53:29Z phk $
+ * $FreeBSD: head/sbin/gbde/gbde.c 292782 2015-12-27 17:33:59Z allanjude $
  *
  * XXX: Future stuff
  *
@@ -84,7 +84,7 @@
 #include <sys/disk.h>
 #include <sys/stat.h>
 #include <crypto/rijndael/rijndael-api-fst.h>
-#include <crypto/sha2/sha2.h>
+#include <crypto/sha2/sha512.h>
 #include <sys/param.h>
 #include <sys/linker.h>
 

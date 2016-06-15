@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/release/scripts/pkg-stage.sh 276828 2015-01-08 15:50:10Z gjb $
+# $FreeBSD: head/release/scripts/pkg-stage.sh 300860 2016-05-27 18:20:07Z gjb $
 #
 
 set -e
@@ -14,7 +14,7 @@ export PKGCMD="/usr/sbin/pkg -d"
 _DVD_PACKAGES="archivers/unzip
 devel/subversion
 devel/subversion-static
-emulators/linux_base-f10
+emulators/linux_base-c6
 misc/freebsd-doc-all
 net/mpd5
 net/rsync

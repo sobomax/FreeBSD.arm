@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/dwc_otg.c 290542 2015-11-08 09:37:26Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/dwc_otg.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*-
  * Copyright (c) 2015 Daisuke Aoyama. All rights reserved.
  * Copyright (c) 2012-2015 Hans Petter Selasky. All rights reserved.
@@ -454,6 +454,18 @@ dwc_otg_init_fifo(struct dwc_otg_softc *sc, uint8_t mode)
 		memset(sc->sc_chan_state, 0, sizeof(sc->sc_chan_state));
 	}
 	return (0);
+}
+
+static uint8_t
+dwc_otg_uses_split(struct usb_device *udev)
+{
+	/*
+	 * When a LOW or FULL speed device is connected directly to
+	 * the USB port we don't use split transactions:
+	 */ 
+	return (udev->speed != USB_SPEED_HIGH &&
+	    udev->parent_hs_hub != NULL &&
+	    udev->parent_hs_hub->parent_hub != NULL);
 }
 
 static void
@@ -3320,7 +3332,7 @@ dwc_otg_setup_standard_chain(struct usb_xfer *xfer)
 		 * type in general, as a means to workaround
 		 * that. This trick should work for both FULL and LOW
 		 * speed USB traffic going through a TT. For non-TT
-		 * traffic it works aswell. The reason for using
+		 * traffic it works as well. The reason for using
 		 * CONTROL type instead of BULK is that some TTs might
 		 * reject LOW speed BULK traffic.
 		 */
@@ -3329,16 +3341,16 @@ dwc_otg_setup_standard_chain(struct usb_xfer *xfer)
 		else
 			hcchar |= (td->ep_type << HCCHAR_EPTYPE_SHIFT);
 
-		if (usbd_get_speed(xfer->xroot->udev) == USB_SPEED_LOW)
-			hcchar |= HCCHAR_LSPDDEV;
 		if (UE_GET_DIR(xfer->endpointno) == UE_DIR_IN)
 			hcchar |= HCCHAR_EPDIR_IN;
 
 		switch (xfer->xroot->udev->speed) {
-		case USB_SPEED_FULL:
 		case USB_SPEED_LOW:
+			hcchar |= HCCHAR_LSPDDEV;
+			/* FALLTHROUGH */
+		case USB_SPEED_FULL:
 			/* check if root HUB port is running High Speed */
-			if (xfer->xroot->udev->parent_hs_hub != NULL) {
+			if (dwc_otg_uses_split(xfer->xroot->udev)) {
 				hcsplt = HCSPLT_SPLTENA |
 				    (xfer->xroot->udev->hs_port_no <<
 				    HCSPLT_PRTADDR_SHIFT) |
@@ -4160,7 +4172,10 @@ dwc_otg_device_isoc_start(struct usb_xfer *xfer)
 		framenum = DSTS_SOFFN_GET(temp);
 	}
 
-	if (xfer->xroot->udev->parent_hs_hub != NULL)
+	/*
+	 * Check if port is doing 8000 or 1000 frames per second:
+	 */
+	if (sc->sc_flags.status_high_speed)
 		framenum /= 8;
 
 	framenum &= DWC_OTG_FRAME_MASK;
@@ -4837,7 +4852,7 @@ dwc_otg_xfer_setup(struct usb_setup_params *parm)
 			td = USB_ADD_BYTES(parm->buf, parm->size[0]);
 
 			/* compute shared bandwidth resource index for TT */
-			if (parm->udev->parent_hs_hub != NULL && parm->udev->speed != USB_SPEED_HIGH) {
+			if (dwc_otg_uses_split(parm->udev)) {
 				if (parm->udev->parent_hs_hub->ddesc.bDeviceProtocol == UDPROTO_HSHUBMTT)
 					td->tt_index = parm->udev->device_index;
 				else

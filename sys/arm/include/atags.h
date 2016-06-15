@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/atags.h 290648 2015-11-10 12:02:41Z mmel $
+ * $FreeBSD: head/sys/arm/include/atags.h 297285 2016-03-26 06:57:36Z mmel $
  */
 
 #ifndef	__MACHINE_ATAGS_H__
@@ -123,7 +123,7 @@ struct arm_lbabi_tag
 };
 
 #define	ATAG_TAG(a)  (a)->tag_hdr.tag
-#define ATAG_SIZE(a) (a)->tag_hdr.size
+#define ATAG_SIZE(a) ((a)->tag_hdr.size * sizeof(uint32_t))
 #define ATAG_NEXT(a) (struct arm_lbabi_tag *)((char *)(a) + ATAG_SIZE(a))
 
 #endif /* __MACHINE_ATAGS_H__ */

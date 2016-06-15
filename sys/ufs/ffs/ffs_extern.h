@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_extern.h	8.6 (Berkeley) 3/30/95
- * $FreeBSD: head/sys/ufs/ffs/ffs_extern.h 262678 2014-03-02 02:52:34Z pfg $
+ * $FreeBSD: head/sys/ufs/ffs/ffs_extern.h 294983 2016-01-28 12:21:23Z trasz $
  */
 
 #ifndef _UFS_FFS_EXTERN_H
@@ -77,7 +77,6 @@ void	ffs_fserr(struct fs *, ino_t, char *);
 int	ffs_isblock(struct fs *, u_char *, ufs1_daddr_t);
 int	ffs_isfreeblock(struct fs *, u_char *, ufs1_daddr_t);
 void	ffs_load_inode(struct buf *, struct inode *, struct fs *, ino_t);
-int	ffs_mountroot(void);
 void	ffs_oldfscompat_write(struct fs *, struct ufsmount *);
 int	ffs_own_mount(const struct mount *mp);
 int	ffs_reallocblks(struct vop_reallocblks_args *);

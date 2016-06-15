@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/iscsid/iscsid.h 285086 2015-07-03 10:08:10Z trasz $
+ * $FreeBSD: head/usr.sbin/iscsid/iscsid.h 301721 2016-06-09 07:49:20Z trasz $
  */
 
 #ifndef ISCSID_H
@@ -42,8 +42,10 @@
 #define	CONN_DIGEST_NONE		0
 #define	CONN_DIGEST_CRC32C		1
 
-#define CONN_MUTUAL_CHALLENGE_LEN	1024
+#define	CONN_MUTUAL_CHALLENGE_LEN	1024
 #define	SOCKBUF_SIZE			1048576
+#define	MAX_BURST_LENGTH		(256 * 1024)
+#define	FIRST_BURST_LENGTH		(128 * 1024)
 
 struct connection {
 	int			conn_iscsi_fd;

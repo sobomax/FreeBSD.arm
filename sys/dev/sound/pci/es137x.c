@@ -88,7 +88,7 @@
 
 #include "mixer_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/es137x.c 283291 2015-05-22 17:05:21Z jkim $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/es137x.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #define MEM_MAP_REG 0x14
 
@@ -1856,7 +1856,7 @@ es_pci_attach(device_t dev)
 		goto bad;
 	}
 
-	snprintf(status, SND_STATUSLEN, "at %s 0x%lx irq %ld %s",
+	snprintf(status, SND_STATUSLEN, "at %s 0x%jx irq %jd %s",
 	    (es->regtype == SYS_RES_IOPORT)? "io" : "memory",
 	    rman_get_start(es->reg), rman_get_start(es->irq),
 	    PCM_KLDSTRING(snd_es137x));

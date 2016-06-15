@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/procdesc.h 269282 2014-07-30 00:28:29Z emaste $
+ * $FreeBSD: head/sys/sys/procdesc.h 301573 2016-06-08 02:09:14Z oshogbo $
  */
 
 #ifndef _SYS_PROCDESC_H_
@@ -101,6 +101,9 @@ void	 procdesc_finit(struct procdesc *, struct file *);
 pid_t	 procdesc_pid(struct file *);
 void	 procdesc_reap(struct proc *);
 
+int	 procdesc_falloc(struct thread *, struct file **, int *, int,
+	    struct filecaps *);
+
 #else /* !_KERNEL */
 
 #include <sys/_types.h>
@@ -127,5 +130,8 @@ __END_DECLS
  * Flags which can be passed to pdfork(2).
  */
 #define	PD_DAEMON	0x00000001	/* Don't exit when procdesc closes. */
+#define	PD_CLOEXEC	0x00000002	/* Close file descriptor on exec. */
+
+#define	PD_ALLOWED_AT_FORK	(PD_DAEMON | PD_CLOEXEC)
 
 #endif /* !_SYS_PROCDESC_H_ */

@@ -26,10 +26,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/ath_dfs/null/dfs_null.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/dev/ath/ath_dfs/null/dfs_null.c 298939 2016-05-02 19:56:48Z pfg $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/ath_dfs/null/dfs_null.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/ath_dfs/null/dfs_null.c 298939 2016-05-02 19:56:48Z pfg $");
 
 /*
  * This implements an empty DFS module.
@@ -181,7 +181,7 @@ ath_dfs_process_phy_err(struct ath_softc *sc, struct mbuf *m,
 }
 
 /*
- * Process the radar events and determine whether a DFS event has occured.
+ * Process the radar events and determine whether a DFS event has occurred.
  *
  * This is designed to run outside of the RX processing path.
  * The RX path will call ath_dfs_tasklet_needed() to see whether

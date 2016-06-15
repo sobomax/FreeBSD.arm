@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_subr.c 254657 2013-08-22 14:02:34Z trasz $");
+__FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_subr.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include "opt_iscsi_initiator.h"
 
@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: head/sys/dev/iscsi_initiator/isc_subr.c 254657 2013-08-22 14
 #include <sys/syslog.h>
 #include <sys/mbuf.h>
 #include <sys/libkern.h>
+#include <vm/uma.h>
 
 #include <dev/iscsi_initiator/iscsi.h>
 #include <dev/iscsi_initiator/iscsivar.h>

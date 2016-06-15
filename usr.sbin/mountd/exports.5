@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)exports.5	8.3 (Berkeley) 3/29/95
-.\" $FreeBSD: head/usr.sbin/mountd/exports.5 270005 2014-08-14 22:52:05Z rmacklem $
+.\" $FreeBSD: head/usr.sbin/mountd/exports.5 293305 2016-01-07 05:34:39Z jpaetzel $
 .\"
 .Dd August 14, 2014
 .Dt EXPORTS 5
@@ -131,6 +131,7 @@ The credential includes all the groups to which the user is a member
 on the local machine (see
 .Xr id 1 ) .
 The user may be specified by name or number.
+The user string may be quoted, or use backslash escaping.
 .Pp
 .Sm off
 .Fl maproot Li = Sy user:group1:group2:...
@@ -140,6 +141,7 @@ to be used for remote access by root.
 The elements of the list may be either names or numbers.
 Note that user: should be used to distinguish a credential containing
 no groups from a complete credential for that user.
+The group names may be quoted, or use backslash escaping.
 .Pp
 .Sm off
 .Fl mapall Li = Sy user

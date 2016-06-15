@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-dwarfdump/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/usr.bin/clang/llvm-dwarfdump/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -15,6 +15,6 @@ LIBDEPS=llvmdebuginfodwarf \
 	llvmcore \
 	llvmsupport
 
-LIBADD=	z
+LIBADD+=	z
 
 .include "../clang.prog.mk"

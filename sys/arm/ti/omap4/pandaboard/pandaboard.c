@@ -27,7 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/omap4/pandaboard/pandaboard.c 283314 2015-05-23 14:48:03Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/omap4/pandaboard/pandaboard.c 295128 2016-02-01 19:36:33Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -38,7 +38,6 @@ __FBSDID("$FreeBSD: head/sys/arm/ti/omap4/pandaboard/pandaboard.c 283314 2015-05
 #include <vm/pmap.h>
 
 #include <machine/bus.h>
-#include <machine/pte.h>
 #include <machine/vmparam.h>
 #include <machine/fdt.h>
 

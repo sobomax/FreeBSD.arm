@@ -32,14 +32,14 @@
  * The Cambria PLD does not set the i2c ack bit after each write, if we used the
  * regular iicbus interface it would abort the xfer after the address byte
  * times out and not write our latch. To get around this we grab the iicbus and
- * then do our own bit banging. This is a comprimise to changing all the iicbb
+ * then do our own bit banging. This is a compromise to changing all the iicbb
  * device methods to allow a flag to be passed down and is similir to how Linux
  * does it.
  *
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/cambria_gpio.c 277996 2015-01-31 19:32:14Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/cambria_gpio.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

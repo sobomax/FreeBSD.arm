@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2010-2015 Solarflare Communications Inc.
+ * Copyright (c) 2010-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * This software was developed in part by Philip Paeps under contract for
@@ -32,7 +32,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_intr.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_intr.c 301492 2016-06-06 09:06:38Z arybchik $");
+
+#include "opt_rss.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -48,6 +50,10 @@ __FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_intr.c 283514 2015-05-25 08:34:55Z 
 
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
+
+#ifdef RSS
+#include <net/rss_config.h>
+#endif
 
 #include "common/efx.h"
 
@@ -192,7 +198,12 @@ sfxge_intr_bus_enable(struct sfxge_softc *sc)
 			bus_describe_intr(sc->dev, table[index].eih_res,
 			    table[index].eih_tag, "%d", index);
 #endif
+#ifdef RSS
+		bus_bind_intr(sc->dev, table[index].eih_res,
+			      rss_getcpu(index));
+#else
 		bus_bind_intr(sc->dev, table[index].eih_res, index);
+#endif
 
 	}
 

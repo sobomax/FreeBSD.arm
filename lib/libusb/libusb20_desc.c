@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb20_desc.c 285720 2015-07-20 16:15:56Z pfg $ */
+/* $FreeBSD: head/lib/libusb/libusb20_desc.c 298896 2016-05-01 19:37:33Z pfg $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -135,7 +135,7 @@ libusb20_parse_config_desc(const void *config_desc)
 
 	/*
 	 * Make a copy of the config descriptor, so that the caller can free
-	 * the inital config descriptor pointer!
+	 * the initial config descriptor pointer!
 	 */
 	memcpy((void *)(lub_endpoint + nendpoint), config_desc, pcdesc.len);
 

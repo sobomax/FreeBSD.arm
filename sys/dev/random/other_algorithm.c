@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/other_algorithm.c 286839 2015-08-17 07:36:12Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/other_algorithm.c 292782 2015-12-27 17:33:59Z allanjude $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -55,7 +55,7 @@ __FBSDID("$FreeBSD: head/sys/dev/random/other_algorithm.c 286839 2015-08-17 07:3
 #include <machine/cpu.h>
 
 #include <crypto/rijndael/rijndael-api-fst.h>
-#include <crypto/sha2/sha2.h>
+#include <crypto/sha2/sha256.h>
 
 #include <dev/random/hash.h>
 #include <dev/random/randomdev.h>

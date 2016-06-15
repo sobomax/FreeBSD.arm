@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/profile/profile.c 291855 2015-12-05 10:00:01Z andrew $
+ * $FreeBSD: head/sys/cddl/dev/profile/profile.c 300618 2016-05-24 16:41:37Z br $
  *
  */
 
@@ -139,6 +139,11 @@ struct profile_probe_percpu;
 #endif
 
 #ifdef __aarch64__
+/* TODO: verify */
+#define	PROF_ARTIFICIAL_FRAMES	10
+#endif
+
+#ifdef __riscv__
 /* TODO: verify */
 #define	PROF_ARTIFICIAL_FRAMES	10
 #endif

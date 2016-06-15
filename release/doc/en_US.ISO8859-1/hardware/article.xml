@@ -12,7 +12,7 @@
 
     <author><orgname>The &os; Documentation Project</orgname></author>
 
-    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 288378 2015-09-29 17:04:20Z brueffer $</pubdate>
+    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/hardware/article.xml 293170 2016-01-04 18:34:27Z brueffer $</pubdate>
 
     <copyright>
       <year>2000</year>
@@ -1016,6 +1016,9 @@
       &hwlist.ral;
 
       &hwlist.rsu;
+
+      <para>Realtek RTL8188CE based PCIe IEEE 802.11b/g/n wireless network
+	adapters (&man.rtwn.4; driver)</para>
 
       &hwlist.rum;
 

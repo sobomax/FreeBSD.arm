@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/hash.c 284959 2015-06-30 17:00:45Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/hash.c 292782 2015-12-27 17:33:59Z allanjude $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: head/sys/dev/random/hash.c 284959 2015-06-30 17:00:45Z markm
 #endif /* _KERNEL */
 
 #include <crypto/rijndael/rijndael-api-fst.h>
-#include <crypto/sha2/sha2.h>
+#include <crypto/sha2/sha256.h>
 
 #include <dev/random/hash.h>
 

@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_tom_l2t.c 272719 2014-10-07 21:26:22Z np $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_tom_l2t.c 292978 2015-12-31 05:03:27Z melifaro $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -233,7 +233,7 @@ resolve_entry(struct adapter *sc, struct l2t_entry *e)
 	struct sockaddr_in sin = {0};
 	struct sockaddr_in6 sin6 = {0};
 	struct sockaddr *sa;
-	uint8_t dmac[ETHER_ADDR_LEN];
+	uint8_t dmac[ETHER_HDR_LEN];
 	uint16_t vtag = VLAN_NONE;
 	int rc;
 

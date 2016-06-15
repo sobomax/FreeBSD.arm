@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.3 (Berkeley) 4/4/95
- * $FreeBSD: head/sys/sys/param.h 291537 2015-11-30 22:35:53Z rmacklem $
+ * $FreeBSD: head/sys/sys/param.h 301892 2016-06-14 17:15:36Z bdrewery $
  */
 
 #ifndef _SYS_PARAM_H_
@@ -58,7 +58,7 @@
  *		in the range 5 to 9.
  */
 #undef __FreeBSD_version
-#define __FreeBSD_version 1100091	/* Master, propagated to newvers */
+#define __FreeBSD_version 1100117	/* Master, propagated to newvers */
 
 /*
  * __FreeBSD_kernel__ indicates that this system uses the kernel of FreeBSD,

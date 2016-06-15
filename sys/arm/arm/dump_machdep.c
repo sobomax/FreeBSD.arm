@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/dump_machdep.c 276772 2015-01-07 01:01:39Z markj $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/dump_machdep.c 295319 2016-02-05 14:57:41Z mmel $");
 
 #include "opt_watchdog.h"
 
@@ -59,8 +59,7 @@ dumpsys_wbinv_all(void)
 	 * have already been stopped, and their flush/invalidate was done as
 	 * part of stopping.
 	 */
-	cpu_idcache_wbinv_all();
-	cpu_l2cache_wbinv_all();
+	dcache_wbinv_poc_all();
 #ifdef __XSCALE__
 	xscale_cache_clean_minidata();
 #endif

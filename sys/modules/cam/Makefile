@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/cam/Makefile 291989 2015-12-08 07:39:39Z uqs $
+# $FreeBSD: head/sys/modules/cam/Makefile 299864 2016-05-15 20:04:43Z markj $
 
 S=	${.CURDIR}/../..
 
@@ -11,7 +11,6 @@ SRCS=	opt_cam.h
 SRCS+=	opt_ada.h
 SRCS+=	opt_scsi.h
 SRCS+=	opt_cd.h
-SRCS+=	opt_kdtrace.h
 SRCS+=	opt_pt.h
 SRCS+=	opt_sa.h
 SRCS+=	opt_ses.h
@@ -21,7 +20,7 @@ SRCS+=	cam_compat.c
 .if exists($S/${MACHINE}/${MACHINE}/cam_machdep.c)
 SRCS+=	cam_machdep.c
 .endif
-SRCS+=	cam_periph.c cam_queue.c cam_sim.c cam_xpt.c
+SRCS+=	cam_iosched.c cam_periph.c cam_queue.c cam_sim.c cam_xpt.c
 SRCS+=	scsi_all.c scsi_cd.c scsi_ch.c
 SRCS+=	scsi_da.c
 SRCS+=	scsi_pass.c

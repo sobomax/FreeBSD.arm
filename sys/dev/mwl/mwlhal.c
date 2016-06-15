@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/mwl/mwlhal.c 267340 2014-06-10 20:25:45Z jhb $
+ * $FreeBSD: head/sys/dev/mwl/mwlhal.c 300077 2016-05-17 20:53:56Z avos $
  */
 
 #include <sys/param.h>
@@ -1440,7 +1440,7 @@ mwl_hal_bastream_alloc(struct mwl_hal_vap *vap, int ba_policy,
 	sp->setup = 0;
 	sp->ba_policy = ba_policy;
 	MWL_HAL_UNLOCK(mh);
-	return sp != NULL ? &sp->public : NULL;
+	return &sp->public;
 }
 
 const MWL_HAL_BASTREAM *

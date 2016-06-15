@@ -26,7 +26,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mpi/mpi2_init.h 279253 2015-02-24 22:07:42Z slm $
+ * $FreeBSD: head/sys/dev/mps/mpi/mpi2_init.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -53,7 +53,7 @@
  *  05-21-08  02.00.05  Fixed typo in name of Mpi2SepRequest_t.
  *  10-02-08  02.00.06  Removed Untagged and No Disconnect values from SCSI IO
  *                      Control field Task Attribute flags.
- *                      Moved LUN field defines to mpi2.h becasue they are
+ *                      Moved LUN field defines to mpi2.h because they are
  *                      common to many structures.
  *  05-06-09  02.00.07  Changed task management type of Query Unit Attention to
  *                      Query Asynchronous Event.

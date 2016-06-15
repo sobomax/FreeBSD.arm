@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 .\" DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/vn_fullpath.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/vn_fullpath.9 301590 2016-06-08 09:19:47Z trasz $
 .\"
 .Dd November 23, 2008
 .Dt VN_FULLPATH 9
@@ -73,7 +73,8 @@ The thread performing the call; this pointer will be dereferenced to find
 the process and its file descriptor structure, in order to identify the
 root vnode to use.
 .It Fa vp
-The vnode to search for.  No need to be locked by the caller.
+The vnode to search for.
+No need to be locked by the caller.
 .It Fa retbuf
 Pointer to a
 .Vt "char *"

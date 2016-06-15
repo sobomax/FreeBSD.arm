@@ -32,7 +32,7 @@
  * CHARMAP file handling for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/localedef/charmap.c 290517 2015-11-07 22:57:00Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/localedef/charmap.c 298878 2016-05-01 16:10:56Z pfg $");
 
 #include <sys/types.h>
 #include <sys/tree.h>
@@ -324,7 +324,7 @@ add_charmap_char(const char *name, int val)
 
 /*
  * POSIX insists that certain entries be present, even when not in the
- * orginal charmap file.
+ * original charmap file.
  */
 void
 add_charmap_posix(void)

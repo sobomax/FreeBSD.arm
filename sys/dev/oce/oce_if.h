@@ -36,11 +36,12 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_if.h 271946 2014-09-22 08:27:27Z hselasky $ */
+/* $FreeBSD: head/sys/dev/oce/oce_if.h 295126 2016-02-01 17:41:21Z glebius $ */
 
 #include <sys/param.h>
 #include <sys/endian.h>
 #include <sys/eventhandler.h>
+#include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/kernel.h>
 #include <sys/bus.h>

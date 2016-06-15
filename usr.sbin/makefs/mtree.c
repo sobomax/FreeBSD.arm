@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/mtree.c 287417 2015-09-03 01:15:23Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/mtree.c 299953 2016-05-16 16:16:46Z truckman $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -150,7 +150,7 @@ mtree_file_path(fsnode *node)
 
 	depth = 0;
 	rp[depth] = node->name;
-	for (pnode = node->parent; pnode && depth < MAKEFS_MAX_TREE_DEPTH;
+	for (pnode = node->parent; pnode && depth < MAKEFS_MAX_TREE_DEPTH - 1;
 	     pnode = pnode->parent) {
 		if (strcmp(pnode->name, ".") == 0)
 			break;

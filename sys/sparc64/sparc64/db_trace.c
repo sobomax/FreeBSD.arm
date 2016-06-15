@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/db_trace.c 217265 2011-01-11 13:59:06Z jhb $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/db_trace.c 298352 2016-04-20 15:45:55Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,7 +74,7 @@ struct	db_variable db_regs[] = {
 	{ "tpc",	DB_OFFSET(tf_tpc),		db_frame },
 	{ "tstate",	DB_OFFSET(tf_tstate),		db_frame },
 };
-struct db_variable *db_eregs = db_regs + sizeof(db_regs)/sizeof(db_regs[0]);
+struct db_variable *db_eregs = db_regs + nitems(db_regs);
 
 static int
 db_frame(struct db_variable *vp, db_expr_t *valuep, int op)

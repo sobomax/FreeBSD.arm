@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/ukswitch/ukswitch.c 257324 2013-10-29 11:17:49Z glebius $
+ * $FreeBSD: head/sys/dev/etherswitch/ukswitch/ukswitch.c 292738 2015-12-26 02:31:39Z adrian $
  */
 
 #include <sys/param.h>
@@ -50,7 +50,7 @@
 #include <machine/bus.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/etherswitch/etherswitch.h>
 

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/nl_langinfo.c 290637 2015-11-10 08:11:27Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/nl_langinfo.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include <langinfo.h>
 #include <limits.h>
@@ -153,7 +153,7 @@ nl_langinfo_l(nl_item item, locale_t loc)
 		break;
 	/*
 	 * YESSTR and NOSTR items marked with LEGACY are available, but not
-	 * recomended by SUSv2 to be used in portable applications since
+	 * recommended by SUSv2 to be used in portable applications since
 	 * they're subject to remove in future specification editions.
 	 */
 	case YESSTR:            /* LEGACY  */

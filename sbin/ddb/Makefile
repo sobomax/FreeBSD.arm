@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/ddb/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/ddb/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	ddb
 SRCS=	ddb.c ddb_capture.c ddb_script.c
 MAN=	ddb.8

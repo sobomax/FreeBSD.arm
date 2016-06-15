@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iir/iir_pci.c 280347 2015-03-22 16:10:28Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/iir/iir_pci.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 /*
  *  iir_pci.c:  PCI Bus Attachment for Intel Integrated RAID Controller driver
@@ -228,7 +228,7 @@ iir_pci_attach(device_t dev)
     /* check and reset interface area */
     bus_write_4(gdt->sc_dpmem, GDT_MPR_IC, htole32(GDT_MPR_MAGIC));
     if (bus_read_4(gdt->sc_dpmem, GDT_MPR_IC) != htole32(GDT_MPR_MAGIC)) {
-	device_printf(dev, "cannot access DPMEM at 0x%lx (shadowed?)\n",
+	device_printf(dev, "cannot access DPMEM at 0x%jx (shadowed?)\n",
 	    rman_get_start(gdt->sc_dpmem));
         error = ENXIO;
         goto err;

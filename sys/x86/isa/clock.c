@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/isa/clock.c 263008 2014-03-11 10:20:42Z royger $");
+__FBSDID("$FreeBSD: head/sys/x86/isa/clock.c 299746 2016-05-14 18:22:52Z jhb $");
 
 /*
  * Routines to handle clock hardware.
@@ -166,7 +166,7 @@ clkintr(void *arg)
 		mtx_unlock_spin(&clock_lock);
 	}
 
-	if (sc && sc->et.et_active && sc->mode != MODE_STOP)
+	if (sc->et.et_active && sc->mode != MODE_STOP)
 		sc->et.et_event_cb(&sc->et, sc->et.et_arg);
 
 #ifdef DEV_MCA
@@ -475,8 +475,27 @@ startrtclock()
 void
 cpu_initclocks(void)
 {
+#ifdef EARLY_AP_STARTUP
+	struct thread *td;
+	int i;
 
+	td = curthread;
 	cpu_initclocks_bsp();
+	CPU_FOREACH(i) {
+		if (i == 0)
+			continue;
+		thread_lock(td);
+		sched_bind(td, i);
+		thread_unlock(td);
+		cpu_initclocks_ap();
+	}
+	thread_lock(td);
+	if (sched_is_bound(td))
+		sched_unbind(td);
+	thread_unlock(td);
+#else
+	cpu_initclocks_bsp();
+#endif
 }
 
 static int
@@ -656,7 +675,7 @@ static int
 attimer_attach(device_t dev)
 {
 	struct attimer_softc *sc;
-	u_long s;
+	rman_res_t s;
 	int i;
 
 	attimer_sc = sc = device_get_softc(dev);

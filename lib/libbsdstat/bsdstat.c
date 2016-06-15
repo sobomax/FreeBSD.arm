@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/lib/libbsdstat/bsdstat.c 262992 2014-03-11 01:10:44Z eadler $
+ * $FreeBSD: head/lib/libbsdstat/bsdstat.c 299950 2016-05-16 15:42:59Z truckman $
  */
 
 #include <stdio.h>
@@ -53,7 +53,7 @@ bsdstat_setfmt(struct bsdstat *sf, const char *fmt0)
 				"skipped\n", sf->name, tok);
 			continue;
 		}
-		if (j+3 > (int) sizeof(sf->fmts)) {
+		if (j+4 > (int) sizeof(sf->fmts)) {
 			fprintf(stderr, "%s: not enough room for all stats; "
 				"stopped at %s\n", sf->name, tok);
 			break;

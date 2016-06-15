@@ -35,7 +35,7 @@
 
 #ifdef __FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/firewire/fwmem.c 277509 2015-01-21 20:05:10Z will $");
+__FBSDID("$FreeBSD: head/sys/dev/firewire/fwmem.c 299351 2016-05-10 10:21:03Z trasz $");
 #endif
 
 #include <sys/param.h>
@@ -287,8 +287,6 @@ fwmem_open(struct cdev *dev, int flags, int fmt, fw_proc *td)
 		FW_GUNLOCK(sc->fc);
 		dev->si_drv1 = malloc(sizeof(struct fwmem_softc),
 		    M_FWMEM, M_WAITOK);
-		if (dev->si_drv1 == NULL)
-			return (ENOMEM);
 		dev->si_iosize_max = DFLTPHYS;
 		fms = dev->si_drv1;
 		bcopy(&fwmem_eui64, &fms->eui, sizeof(struct fw_eui64));
@@ -364,7 +362,7 @@ fwmem_strategy(struct bio *bp)
 	}
 
 	iolen = MIN(bp->bio_bcount, MAXLEN);
-	if ((bp->bio_cmd & BIO_READ) == BIO_READ) {
+	if (bp->bio_cmd == BIO_READ) {
 		if (iolen == 4 && (bp->bio_offset & 3) == 0)
 			xfer = fwmem_read_quad(fwdev,
 			    (void *)bp, fwmem_speed,

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/arm/Makefile.inc 272369 2014-10-01 16:08:19Z andrew $
+# $FreeBSD: head/lib/libc/arm/Makefile.inc 300119 2016-05-18 06:01:18Z imp $
 #
 # Machine dependent definitions for the arm architecture.
 #
@@ -11,7 +11,7 @@ SYM_MAPS+=${LIBC_SRCTOP}/arm/Symbol.map
 
 .include "${LIBC_SRCTOP}/arm/aeabi/Makefile.inc"
 
-.if ${MACHINE_ARCH:Marm*hf*} != ""
+.if ${MACHINE_ARCH:Marmv6*} && (!defined(CPUTYPE) || ${CPUTYPE:M*soft*} == "")
 SYM_MAPS+=${LIBC_SRCTOP}/arm/Symbol_vfp.map
 .endif
 

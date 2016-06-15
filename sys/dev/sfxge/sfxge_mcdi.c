@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2010-2015 Solarflare Communications Inc.
+ * Copyright (c) 2010-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * This software was developed in part by Philip Paeps under contract for
@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_mcdi.c 291843 2015-12-05 07:04:11Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/sfxge_mcdi.c 300607 2016-05-24 12:16:57Z arybchik $");
 
 #include <sys/param.h>
 #include <sys/condvar.h>
@@ -250,10 +250,6 @@ sfxge_mcdi_ioctl(struct sfxge_softc *sc, sfxge_ioc_t *ip)
 	}
 
 	mcdibuf = malloc(SFXGE_MCDI_MAX_PAYLOAD, M_TEMP, M_WAITOK | M_ZERO);
-	if (mcdibuf == NULL) {
-		rc = ENOMEM;
-		goto fail4;
-	}
 	if ((rc = copyin(ip->u.mcdi.payload, mcdibuf, ip->u.mcdi.len)) != 0) {
 		goto fail5;
 	}
@@ -292,7 +288,6 @@ sfxge_mcdi_ioctl(struct sfxge_softc *sc, sfxge_ioc_t *ip)
 fail6:
 fail5:
 	free(mcdibuf, M_TEMP);
-fail4:
 fail3:
 fail2:
 fail1:

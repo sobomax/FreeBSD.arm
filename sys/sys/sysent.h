@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sysent.h 291420 2015-11-28 08:49:07Z kib $
+ * $FreeBSD: head/sys/sys/sysent.h 300429 2016-05-22 19:04:34Z dchagin $
  */
 
 #ifndef _SYS_SYSENT_H_
@@ -38,18 +38,18 @@ struct rlimit;
 struct sysent;
 struct thread;
 struct ksiginfo;
+struct syscall_args;
+
+enum systrace_probe_t {
+	SYSTRACE_ENTRY,
+	SYSTRACE_RETURN,
+};
 
 typedef	int	sy_call_t(struct thread *, void *);
 
-/* Used by the machine dependent syscall() code. */
-typedef	void (*systrace_probe_func_t)(u_int32_t, int, struct sysent *, void *,
-    int);
-
-/*
- * Used by loaded syscalls to convert arguments to a DTrace array
- * of 64-bit arguments.
- */
-typedef	void (*systrace_args_func_t)(int, void *, u_int64_t *, int *);
+typedef	void	(*systrace_probe_func_t)(struct syscall_args *,
+		    enum systrace_probe_t, int);
+typedef	void	(*systrace_args_func_t)(int, void *, uint64_t *, int *);
 
 extern systrace_probe_func_t	systrace_probe_func;
 
@@ -84,7 +84,6 @@ struct sysent {			/* system call table */
 
 struct image_params;
 struct __sigset;
-struct syscall_args;
 struct trapframe;
 struct vnode;
 
@@ -130,6 +129,7 @@ struct sysentvec {
 	void		*sv_shared_page_obj;
 	void		(*sv_schedtail)(struct thread *);
 	void		(*sv_thread_detach)(struct thread *);
+	int		(*sv_trap)(struct thread *);
 };
 
 #define	SV_ILP32	0x000100	/* 32-bit executable. */
@@ -141,6 +141,8 @@ struct sysentvec {
 #define	SV_TIMEKEEP	0x040000
 
 #define	SV_ABI_MASK	0xff
+#define	SV_ABI_ERRNO(p, e)	((p)->p_sysent->sv_errsize <= 0 ? e :	\
+	((e) >= (p)->p_sysent->sv_errsize ? -1 : (p)->p_sysent->sv_errtbl[e]))
 #define	SV_PROC_FLAG(p, x)	((p)->p_sysent->sv_flags & (x))
 #define	SV_PROC_ABI(p)		((p)->p_sysent->sv_flags & SV_ABI_MASK)
 #define	SV_CURPROC_FLAG(x)	SV_PROC_FLAG(curproc, x)
@@ -153,8 +155,6 @@ struct sysentvec {
 
 #ifdef _KERNEL
 extern struct sysentvec aout_sysvec;
-extern struct sysentvec elf_freebsd_sysvec;
-extern struct sysentvec null_sysvec;
 extern struct sysent sysent[];
 extern const char *syscallnames[];
 

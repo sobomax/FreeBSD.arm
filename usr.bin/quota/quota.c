@@ -44,7 +44,7 @@ static const char sccsid[] = "from: @(#)quota.c	8.1 (Berkeley) 6/6/93";
  * Disk quota reporting program.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/quota/quota.c 285253 2015-07-07 20:15:09Z hrs $");
+__FBSDID("$FreeBSD: head/usr.bin/quota/quota.c 298682 2016-04-27 02:13:57Z araujo $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -266,8 +266,8 @@ prthumanval(int len, u_int64_t bytes)
 	/*
 	 * Limit the width to 5 bytes as that is what users expect.
 	 */
-	humanize_number(buf, sizeof(buf) < 5 ? sizeof(buf) : 5, bytes, "",
-	    HN_AUTOSCALE, HN_B | HN_NOSPACE | HN_DECIMAL);
+	humanize_number(buf, MIN(sizeof(buf), 5), bytes, "",
+			HN_AUTOSCALE, HN_B | HN_NOSPACE | HN_DECIMAL);
 
 	(void)printf(" %*s", len, buf);
 }

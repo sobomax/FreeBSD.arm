@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_port.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_port.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -171,7 +171,7 @@ port_setup(int pnum, enum ev_type pevt, void (*ih)(void *), void *ih_user)
 		break;
 	default:
 		return (-1);
-	};
+	}
 
 	reg = READ4(sc, PORT_PCR(pnum));
 	reg &= ~(PCR_IRQC_M << PCR_IRQC_S);

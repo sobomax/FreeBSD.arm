@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/security/mac/mac_cred.c 258541 2013-11-25 07:38:45Z attilio $");
+__FBSDID("$FreeBSD: head/sys/security/mac/mac_cred.c 299187 2016-05-06 16:59:04Z pfg $");
 
 #include "opt_mac.h"
 
@@ -174,7 +174,7 @@ mac_cred_internalize_label(struct label *label, char *string)
 
 /*
  * When a new process is created, its label must be initialized.  Generally,
- * this involves inheritence from the parent process, modulo possible deltas.
+ * this involves inheritance from the parent process, modulo possible deltas.
  * This function allows that processing to take place.
  */
 void

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/eli/pkcs5v2.c 155174 2006-02-01 12:06:01Z pjd $");
+__FBSDID("$FreeBSD: head/sys/geom/eli/pkcs5v2.c 293306 2016-01-07 05:47:34Z allanjude $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -83,6 +83,7 @@ pkcs5v2_genkey(uint8_t *key, unsigned keylen, const uint8_t *salt,
 }
 
 #ifndef _KERNEL
+#ifndef _STAND
 /*
  * Return the number of microseconds needed for 'interations' iterations.
  */
@@ -120,4 +121,5 @@ pkcs5v2_calculate(int usecs)
 	}
 	return (((intmax_t)iterations * (intmax_t)usecs) / v);
 }
+#endif	/* !_STAND */
 #endif	/* !_KERNEL */

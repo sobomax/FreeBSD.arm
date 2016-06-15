@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/vm_machdep.c 280957 2015-04-01 12:42:26Z rstone $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/vm_machdep.c 300415 2016-05-22 12:46:34Z dchagin $");
 
 #include "opt_pmap.h"
 
@@ -167,13 +167,7 @@ cpu_set_syscall_retval(struct thread *td, int error)
 		break;
 
 	default:
-		if (td->td_proc->p_sysent->sv_errsize) {
-			if (error >= td->td_proc->p_sysent->sv_errsize)
-				error = -1;	/* XXX */
-			else
-				error = td->td_proc->p_sysent->sv_errtbl[error];
-		}
-		td->td_frame->tf_out[0] = error;
+		td->td_frame->tf_out[0] = SV_ABI_ERRNO(td->td_proc, error);
 		td->td_frame->tf_tstate |= TSTATE_XCC_C;
 		break;
 	}

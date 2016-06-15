@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/cloudabi/cloudabi_util.h 286359 2015-08-06 06:47:28Z ed $
+ * $FreeBSD: head/sys/compat/cloudabi/cloudabi_util.h 297468 2016-03-31 18:50:06Z ed $
  */
 
 #ifndef _CLOUDABI_UTIL_H_
@@ -30,7 +30,7 @@
 
 #include <sys/socket.h>
 
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
+#include <contrib/cloudabi/cloudabi_types_common.h>
 
 struct file;
 struct thread;
@@ -67,13 +67,13 @@ int cloudabi_convert_timespec(const struct timespec *, cloudabi_timestamp_t *);
  * sleep on a lock or condition variable.
  */
 int cloudabi_futex_condvar_wait(struct thread *, cloudabi_condvar_t *,
-    cloudabi_mflags_t, cloudabi_lock_t *, cloudabi_mflags_t, cloudabi_clockid_t,
+    cloudabi_scope_t, cloudabi_lock_t *, cloudabi_scope_t, cloudabi_clockid_t,
     cloudabi_timestamp_t, cloudabi_timestamp_t);
 int cloudabi_futex_lock_rdlock(struct thread *, cloudabi_lock_t *,
-    cloudabi_mflags_t, cloudabi_clockid_t, cloudabi_timestamp_t,
+    cloudabi_scope_t, cloudabi_clockid_t, cloudabi_timestamp_t,
     cloudabi_timestamp_t);
 int cloudabi_futex_lock_wrlock(struct thread *, cloudabi_lock_t *,
-    cloudabi_mflags_t, cloudabi_clockid_t, cloudabi_timestamp_t,
+    cloudabi_scope_t, cloudabi_clockid_t, cloudabi_timestamp_t,
     cloudabi_timestamp_t);
 
 #endif

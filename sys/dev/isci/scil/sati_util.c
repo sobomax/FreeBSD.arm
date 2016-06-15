@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/scil/sati_util.c 240514 2012-09-14 20:05:38Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/scil/sati_util.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /**
  * @file
@@ -1790,7 +1790,7 @@ void sati_ata_smart_read_log_construct(
 
 /**
  * @brief This method will construct a Write Uncorrectable ATA command that
- *        will write one sector with a psuedo or flagged error. The type of
+ *        will write one sector with a pseudo or flagged error. The type of
  *        error is specified by the feature value.
  *
  * @return N/A

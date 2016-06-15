@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/db_interface.c 250138 2013-05-01 06:57:46Z imp $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/db_interface.c 298352 2016-04-20 15:45:55Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -117,7 +117,7 @@ struct db_variable db_regs[] = {
 	{ "cs",  DB_OFFSET(cause),	db_frame },
 	{ "pc",  DB_OFFSET(pc),		db_frame },
 };
-struct db_variable *db_eregs = db_regs + sizeof(db_regs)/sizeof(db_regs[0]);
+struct db_variable *db_eregs = db_regs + nitems(db_regs);
 
 int (*do_db_log_stack_trace_cmd)(char *);
 

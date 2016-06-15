@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athaggrstats/main.c 287297 2015-08-29 19:47:20Z rodrigc $
+ * $FreeBSD: head/tools/tools/ath/athaggrstats/main.c 295363 2016-02-07 04:28:03Z adrian $
  */
 
 /*
@@ -89,7 +89,7 @@ main(int argc, char *argv[])
 
 	ifname = getenv("ATH");
 	if (ifname == NULL)
-		ifname = "ath0";
+		ifname = ATH_DEFAULT;
 	wf = athaggrstats_new(ifname, getfmt("default"));
 	while ((c = getopt(argc, argv, "bi:lo:z")) != -1) {
 		switch (c) {

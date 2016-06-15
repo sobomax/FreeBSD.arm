@@ -33,7 +33,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: head/sys/x86/include/_types.h 286328 2015-08-05 17:21:42Z jkim $
+ * $FreeBSD: head/sys/x86/include/_types.h 301029 2016-05-31 08:36:39Z ed $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -42,6 +42,8 @@
 #ifndef _SYS_CDEFS_H_
 #error this file needs sys/cdefs.h as a prerequisite
 #endif
+
+#include <machine/_limits.h>
 
 #define __NO_STRICT_ALIGNMENT
 

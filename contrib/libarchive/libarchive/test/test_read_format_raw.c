@@ -26,7 +26,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/test/test_read_format_raw.c 232153 2012-02-25 10:58:02Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/test/test_read_format_raw.c 299529 2016-05-12 10:16:16Z mm $");
 
 DEFINE_TEST(test_read_format_raw)
 {
@@ -53,6 +53,8 @@ DEFINE_TEST(test_read_format_raw)
 	assert(!archive_entry_atime_is_set(ae));
 	assert(!archive_entry_ctime_is_set(ae));
 	assert(!archive_entry_mtime_is_set(ae));
+	assertEqualInt(archive_entry_is_encrypted(ae), 0);
+	assertEqualIntA(a, archive_read_has_encrypted_entries(a), ARCHIVE_READ_FORMAT_ENCRYPTION_UNSUPPORTED);
 	assertEqualInt(4, archive_read_data(a, buff, 32));
 	assertEqualMem(buff, "foo\n", 4);
 
@@ -74,6 +76,8 @@ DEFINE_TEST(test_read_format_raw)
 	/* First (and only!) Entry */
 	assertEqualIntA(a, ARCHIVE_OK, archive_read_next_header(a, &ae));
 	assertEqualString("data", archive_entry_pathname(ae));
+	assertEqualInt(archive_entry_is_encrypted(ae), 0);
+	assertEqualIntA(a, archive_read_has_encrypted_entries(a), ARCHIVE_READ_FORMAT_ENCRYPTION_UNSUPPORTED);
 	/* Most fields should be unset (unknown) */
 	assert(!archive_entry_size_is_set(ae));
 	assert(!archive_entry_atime_is_set(ae));

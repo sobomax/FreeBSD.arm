@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/crypto/sha2/sha256.h 285366 2015-07-11 03:12:34Z jmg $
+ * $FreeBSD: head/sys/crypto/sha2/sha256.h 300773 2016-05-26 19:29:29Z cem $
  */
 
 #ifndef _SHA256_H_
@@ -33,10 +33,14 @@
 #include <sys/types.h>
 #endif
 
+#define SHA256_BLOCK_LENGTH		64
+#define SHA256_DIGEST_LENGTH		32
+#define SHA256_DIGEST_STRING_LENGTH	(SHA256_DIGEST_LENGTH * 2 + 1)
+
 typedef struct SHA256Context {
 	uint32_t state[8];
 	uint64_t count;
-	uint8_t buf[64];
+	uint8_t buf[SHA256_BLOCK_LENGTH];
 } SHA256_CTX;
 
 __BEGIN_DECLS
@@ -74,10 +78,10 @@ __BEGIN_DECLS
 
 void	SHA256_Init(SHA256_CTX *);
 void	SHA256_Update(SHA256_CTX *, const void *, size_t);
-void	SHA256_Final(unsigned char [32], SHA256_CTX *);
+void	SHA256_Final(unsigned char [static SHA256_DIGEST_LENGTH], SHA256_CTX *);
+#ifndef _KERNEL
 char   *SHA256_End(SHA256_CTX *, char *);
 char   *SHA256_Data(const void *, unsigned int, char *);
-#ifndef _KERNEL
 char   *SHA256_File(const char *, char *);
 char   *SHA256_FileChunk(const char *, char *, off_t, off_t);
 #endif

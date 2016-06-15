@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/if_ic.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/if_ic.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * I2C bus IP driver
@@ -289,7 +289,7 @@ icintr(device_t dev, int event, char *ptr)
 
 	case INTR_STOP:
 
-		/* if any error occured during transfert,
+		/* if any error occurred during transfert,
 		 * drop the packet */
 		sc->ic_flags &= ~IC_IFBUF_BUSY;
 		if ((sc->ic_flags & (IC_BUFFERS_BUSY | IC_BUFFER_WAITER)) ==

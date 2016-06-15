@@ -1,4 +1,4 @@
-# $FreeBSD: head/release/Makefile 289337 2015-10-14 22:33:11Z gjb $
+# $FreeBSD: head/release/Makefile 300776 2016-05-26 21:08:44Z gjb $
 #
 # Makefile for building releases and release media.
 #
@@ -176,7 +176,7 @@ disc1: packagesystem
 		MK_DEBUG_FILES=no
 # Copy distfiles
 	mkdir -p ${.TARGET}/usr/freebsd-dist
-	for dist in MANIFEST $$(ls *.txz | grep -v -- '-dbg'); \
+	for dist in MANIFEST $$(ls *.txz | grep -vE -- '(base|lib32)-dbg'); \
 	    do cp $${dist} ${.TARGET}/usr/freebsd-dist; \
 	done
 # Copy documentation, if generated
@@ -200,7 +200,7 @@ bootonly: packagesystem
 	    MK_GAMES=no MK_GROFF=no \
 	    MK_INSTALLLIB=no MK_LIB32=no MK_MAIL=no \
 	    MK_NCP=no MK_TOOLCHAIN=no MK_PROFILE=no \
-	    MK_INSTALLIB=no MK_RESCUE=no MK_DICT=no \
+	    MK_RESCUE=no MK_DICT=no \
 	    MK_KERNEL_SYMBOLS=no MK_TESTS=no MK_DEBUG_FILES=no
 # Copy manifest only (no distfiles) to get checksums
 	mkdir -p ${.TARGET}/usr/freebsd-dist
@@ -225,7 +225,7 @@ dvd: packagesystem
 		MK_TESTS=no MK_DEBUG_FILES=no
 # Copy distfiles
 	mkdir -p ${.TARGET}/usr/freebsd-dist
-	for dist in MANIFEST $$(ls *.txz | grep -v -- '-dbg'); \
+	for dist in MANIFEST $$(ls *.txz | grep -v -- '(base|lib32)-dbg'); \
 	    do cp $${dist} ${.TARGET}/usr/freebsd-dist; \
 	done
 # Copy documentation, if generated
@@ -281,13 +281,17 @@ ftp: packagesystem
 	cp *.txz MANIFEST ftp
 
 release:	real-release vm-release cloudware-release
-	touch ${.TARGET}
+	${MAKE} -C ${.CURDIR} ${.MAKEFLAGS} release-done
+	true
+
+release-done:
+	touch release
 
 real-release:
 	${MAKE} -C ${.CURDIR} ${.MAKEFLAGS} obj
 	${MAKE} -C ${.CURDIR} ${.MAKEFLAGS} ${RELEASE_TARGETS}
 
-install:	release-install vm-install cloudware-install
+install:	release-install vm-install
 
 release-install:
 .if defined(DESTDIR) && !empty(DESTDIR)

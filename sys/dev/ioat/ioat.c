@@ -25,7 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.c 292032 2015-12-09 22:46:00Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.c 301712 2016-06-09 01:31:09Z cem $");
+
+#include "opt_ddb.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,6 +42,7 @@ __FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.c 292032 2015-12-09 22:46:00Z cem $")
 #include <sys/rman.h>
 #include <sys/sbuf.h>
 #include <sys/sysctl.h>
+#include <sys/taskqueue.h>
 #include <sys/time.h>
 #include <dev/pci/pcireg.h>
 #include <dev/pci/pcivar.h>
@@ -47,10 +50,17 @@ __FBSDID("$FreeBSD: head/sys/dev/ioat/ioat.c 292032 2015-12-09 22:46:00Z cem $")
 #include <machine/resource.h>
 #include <machine/stdarg.h>
 
+#ifdef DDB
+#include <ddb/ddb.h>
+#endif
+
 #include "ioat.h"
 #include "ioat_hw.h"
 #include "ioat_internal.h"
 
+#ifndef	BUS_SPACE_MAXADDR_40BIT
+#define	BUS_SPACE_MAXADDR_40BIT	0xFFFFFFFFFFULL
+#endif
 #define	IOAT_INTR_TIMO	(hz / 10)
 #define	IOAT_REFLK	(&ioat->submit_lock)
 
@@ -92,6 +102,7 @@ static void ioat_submit_single(struct ioat_softc *ioat);
 static void ioat_comp_update_map(void *arg, bus_dma_segment_t *seg, int nseg,
     int error);
 static int ioat_reset_hw(struct ioat_softc *ioat);
+static void ioat_reset_hw_task(void *, int);
 static void ioat_setup_sysctl(device_t device);
 static int sysctl_handle_reset(SYSCTL_HANDLER_ARGS);
 static inline struct ioat_softc *ioat_get(struct ioat_softc *,
@@ -130,7 +141,7 @@ static device_method_t ioat_pci_methods[] = {
 	DEVMETHOD(device_probe,     ioat_probe),
 	DEVMETHOD(device_attach,    ioat_attach),
 	DEVMETHOD(device_detach,    ioat_detach),
-	{ 0, 0 }
+	DEVMETHOD_END
 };
 
 static driver_t ioat_pci_driver = {
@@ -147,8 +158,8 @@ MODULE_VERSION(ioat, 1);
  * Private data structures
  */
 static struct ioat_softc *ioat_channel[IOAT_MAX_CHANNELS];
-static int ioat_channel_index = 0;
-SYSCTL_INT(_hw_ioat, OID_AUTO, channels, CTLFLAG_RD, &ioat_channel_index, 0,
+static unsigned ioat_channel_index = 0;
+SYSCTL_UINT(_hw_ioat, OID_AUTO, channels, CTLFLAG_RD, &ioat_channel_index, 0,
     "Number of IOAT channels attached");
 
 static struct _pcsid
@@ -308,9 +319,13 @@ ioat_detach(device_t device)
 	ioat = DEVICE2SOFTC(device);
 
 	ioat_test_detach();
+	taskqueue_drain(taskqueue_thread, &ioat->reset_task);
 
 	mtx_lock(IOAT_REFLK);
 	ioat->quiescing = TRUE;
+	ioat->destroying = TRUE;
+	wakeup(&ioat->quiescing);
+
 	ioat_channel[ioat->chan_idx] = NULL;
 
 	ioat_drain_locked(ioat);
@@ -398,17 +413,23 @@ ioat3_attach(device_t device)
 	ioat = DEVICE2SOFTC(device);
 	ioat->capabilities = ioat_read_dmacapability(ioat);
 
-	ioat_log_message(1, "Capabilities: %b\n", (int)ioat->capabilities,
+	ioat_log_message(0, "Capabilities: %b\n", (int)ioat->capabilities,
 	    IOAT_DMACAP_STR);
 
 	xfercap = ioat_read_xfercap(ioat);
 	ioat->max_xfer_size = 1 << xfercap;
+
+	ioat->intrdelay_supported = (ioat_read_2(ioat, IOAT_INTRDELAY_OFFSET) &
+	    IOAT_INTRDELAY_SUPPORTED) != 0;
+	if (ioat->intrdelay_supported)
+		ioat->intrdelay_max = IOAT_INTRDELAY_US_MASK;
 
 	/* TODO: need to check DCA here if we ever do XOR/PQ */
 
 	mtx_init(&ioat->submit_lock, "ioat_submit", NULL, MTX_DEF);
 	mtx_init(&ioat->cleanup_lock, "ioat_cleanup", NULL, MTX_DEF);
 	callout_init(&ioat->timer, 1);
+	TASK_INIT(&ioat->reset_task, 0, ioat_reset_hw_task, ioat);
 
 	/* Establish lock order for Witness */
 	mtx_lock(&ioat->submit_lock);
@@ -442,15 +463,13 @@ ioat3_attach(device_t device)
 	num_descriptors = 1 << ioat->ring_size_order;
 
 	bus_dma_tag_create(bus_get_dma_tag(ioat->device), 0x40, 0x0,
-	    BUS_SPACE_MAXADDR, BUS_SPACE_MAXADDR, NULL, NULL,
+	    BUS_SPACE_MAXADDR_40BIT, BUS_SPACE_MAXADDR, NULL, NULL,
 	    sizeof(struct ioat_dma_hw_descriptor), 1,
 	    sizeof(struct ioat_dma_hw_descriptor), 0, NULL, NULL,
 	    &ioat->hw_desc_tag);
 
 	ioat->ring = malloc(num_descriptors * sizeof(*ring), M_IOAT,
 	    M_ZERO | M_WAITOK);
-	if (ioat->ring == NULL)
-		return (ENOMEM);
 
 	ring = ioat->ring;
 	for (i = 0; i < num_descriptors; i++) {
@@ -588,6 +607,7 @@ ioat_interrupt_handler(void *arg)
 {
 	struct ioat_softc *ioat = arg;
 
+	ioat->stats.interrupts++;
 	ioat_process_events(ioat);
 }
 
@@ -624,8 +644,14 @@ ioat_process_events(struct ioat_softc *ioat)
 
 	CTR0(KTR_IOAT, __func__);
 
-	if (status == ioat->last_seen)
+	if (status == ioat->last_seen) {
+		/*
+		 * If we landed in process_events and nothing has been
+		 * completed, check for a timeout due to channel halt.
+		 */
+		comp_update = ioat_get_chansts(ioat);
 		goto out;
+	}
 
 	while (1) {
 		desc = ioat_get_ring_entry(ioat, ioat->tail);
@@ -649,15 +675,21 @@ ioat_process_events(struct ioat_softc *ioat)
 		    ioat_timer_callback, ioat);
 	}
 
+	ioat->stats.descriptors_processed += completed;
+
 out:
 	ioat_write_chanctrl(ioat, IOAT_CHANCTRL_RUN);
 	mtx_unlock(&ioat->cleanup_lock);
 
-	ioat_putn(ioat, completed, IOAT_ACTIVE_DESCR_REF);
-	wakeup(&ioat->tail);
+	if (completed != 0) {
+		ioat_putn(ioat, completed, IOAT_ACTIVE_DESCR_REF);
+		wakeup(&ioat->tail);
+	}
 
-	if (!is_ioat_halted(comp_update))
+	if (!is_ioat_halted(comp_update) && !is_ioat_suspended(comp_update))
 		return;
+
+	ioat->stats.channel_halts++;
 
 	/*
 	 * Fatal programming error on this DMA channel.  Flush any outstanding
@@ -670,6 +702,7 @@ out:
 
 	chanerr = ioat_read_4(ioat, IOAT_CHANERR_OFFSET);
 	ioat_halted_debug(ioat, chanerr);
+	ioat->stats.last_halt_chanerr = chanerr;
 
 	while (ioat_get_active(ioat) > 0) {
 		desc = ioat_get_ring_entry(ioat, ioat->tail);
@@ -682,6 +715,8 @@ out:
 
 		ioat_putn_locked(ioat, 1, IOAT_ACTIVE_DESCR_REF);
 		ioat->tail++;
+		ioat->stats.descriptors_processed++;
+		ioat->stats.descriptors_error++;
 	}
 
 	/* Clear error status */
@@ -691,26 +726,70 @@ out:
 	mtx_unlock(&ioat->submit_lock);
 
 	ioat_log_message(0, "Resetting channel to recover from error\n");
+	error = taskqueue_enqueue(taskqueue_thread, &ioat->reset_task);
+	KASSERT(error == 0,
+	    ("%s: taskqueue_enqueue failed: %d", __func__, error));
+}
+
+static void
+ioat_reset_hw_task(void *ctx, int pending __unused)
+{
+	struct ioat_softc *ioat;
+	int error;
+
+	ioat = ctx;
+	ioat_log_message(1, "%s: Resetting channel\n", __func__);
+
 	error = ioat_reset_hw(ioat);
 	KASSERT(error == 0, ("%s: reset failed: %d", __func__, error));
+	(void)error;
 }
 
 /*
  * User API functions
  */
-bus_dmaengine_t
-ioat_get_dmaengine(uint32_t index)
+unsigned
+ioat_get_nchannels(void)
 {
-	struct ioat_softc *sc;
+
+	return (ioat_channel_index);
+}
+
+bus_dmaengine_t
+ioat_get_dmaengine(uint32_t index, int flags)
+{
+	struct ioat_softc *ioat;
+
+	KASSERT((flags & ~(M_NOWAIT | M_WAITOK)) == 0,
+	    ("invalid flags: 0x%08x", flags));
+	KASSERT((flags & (M_NOWAIT | M_WAITOK)) != (M_NOWAIT | M_WAITOK),
+	    ("invalid wait | nowait"));
 
 	if (index >= ioat_channel_index)
 		return (NULL);
 
-	sc = ioat_channel[index];
-	if (sc == NULL || sc->quiescing)
+	ioat = ioat_channel[index];
+	if (ioat == NULL || ioat->destroying)
 		return (NULL);
 
-	return (&ioat_get(sc, IOAT_DMAENGINE_REF)->dmaengine);
+	if (ioat->quiescing) {
+		if ((flags & M_NOWAIT) != 0)
+			return (NULL);
+
+		mtx_lock(IOAT_REFLK);
+		while (ioat->quiescing && !ioat->destroying)
+			msleep(&ioat->quiescing, IOAT_REFLK, 0, "getdma", 0);
+		mtx_unlock(IOAT_REFLK);
+
+		if (ioat->destroying)
+			return (NULL);
+	}
+
+	/*
+	 * There's a race here between the quiescing check and HW reset or
+	 * module destroy.
+	 */
+	return (&ioat_get(ioat, IOAT_DMAENGINE_REF)->dmaengine);
 }
 
 void
@@ -722,6 +801,50 @@ ioat_put_dmaengine(bus_dmaengine_t dmaengine)
 	ioat_put(ioat, IOAT_DMAENGINE_REF);
 }
 
+int
+ioat_get_hwversion(bus_dmaengine_t dmaengine)
+{
+	struct ioat_softc *ioat;
+
+	ioat = to_ioat_softc(dmaengine);
+	return (ioat->version);
+}
+
+size_t
+ioat_get_max_io_size(bus_dmaengine_t dmaengine)
+{
+	struct ioat_softc *ioat;
+
+	ioat = to_ioat_softc(dmaengine);
+	return (ioat->max_xfer_size);
+}
+
+int
+ioat_set_interrupt_coalesce(bus_dmaengine_t dmaengine, uint16_t delay)
+{
+	struct ioat_softc *ioat;
+
+	ioat = to_ioat_softc(dmaengine);
+	if (!ioat->intrdelay_supported)
+		return (ENODEV);
+	if (delay > ioat->intrdelay_max)
+		return (ERANGE);
+
+	ioat_write_2(ioat, IOAT_INTRDELAY_OFFSET, delay);
+	ioat->cached_intrdelay =
+	    ioat_read_2(ioat, IOAT_INTRDELAY_OFFSET) & IOAT_INTRDELAY_US_MASK;
+	return (0);
+}
+
+uint16_t
+ioat_get_max_coalesce_period(bus_dmaengine_t dmaengine)
+{
+	struct ioat_softc *ioat;
+
+	ioat = to_ioat_softc(dmaengine);
+	return (ioat->intrdelay_max);
+}
+
 void
 ioat_acquire(bus_dmaengine_t dmaengine)
 {
@@ -730,6 +853,21 @@ ioat_acquire(bus_dmaengine_t dmaengine)
 	ioat = to_ioat_softc(dmaengine);
 	mtx_lock(&ioat->submit_lock);
 	CTR0(KTR_IOAT, __func__);
+}
+
+int
+ioat_acquire_reserve(bus_dmaengine_t dmaengine, unsigned n, int mflags)
+{
+	struct ioat_softc *ioat;
+	int error;
+
+	ioat = to_ioat_softc(dmaengine);
+	ioat_acquire(dmaengine);
+
+	error = ioat_reserve_space(ioat, n, mflags);
+	if (error != 0)
+		ioat_release(dmaengine);
+	return (error);
 }
 
 void
@@ -755,8 +893,8 @@ ioat_op_generic(struct ioat_softc *ioat, uint8_t op,
 
 	mtx_assert(&ioat->submit_lock, MA_OWNED);
 
-	KASSERT((flags & ~DMA_ALL_FLAGS) == 0, ("Unrecognized flag(s): %#x",
-		flags & ~DMA_ALL_FLAGS));
+	KASSERT((flags & ~_DMA_GENERIC_FLAGS) == 0,
+	    ("Unrecognized flag(s): %#x", flags & ~_DMA_GENERIC_FLAGS));
 	if ((flags & DMA_NO_WAIT) != 0)
 		mflags = M_NOWAIT;
 	else
@@ -780,6 +918,8 @@ ioat_op_generic(struct ioat_softc *ioat, uint8_t op,
 
 	if ((flags & DMA_INT_EN) != 0)
 		hw_desc->u.control_generic.int_enable = 1;
+	if ((flags & DMA_FENCE) != 0)
+		hw_desc->u.control_generic.fence = 1;
 
 	hw_desc->size = size;
 	hw_desc->src_addr = src;
@@ -879,6 +1019,164 @@ ioat_copy_8k_aligned(bus_dmaengine_t dmaengine, bus_addr_t dst1,
 	if (dst2 != dst1 + PAGE_SIZE) {
 		hw_desc->u.control.dest_page_break = 1;
 		hw_desc->next_dest_addr = dst2;
+	}
+
+	if (g_ioat_debug_level >= 3)
+		dump_descriptor(hw_desc);
+
+	ioat_submit_single(ioat);
+	return (&desc->bus_dmadesc);
+}
+
+struct bus_dmadesc *
+ioat_copy_crc(bus_dmaengine_t dmaengine, bus_addr_t dst, bus_addr_t src,
+    bus_size_t len, uint32_t *initialseed, bus_addr_t crcptr,
+    bus_dmaengine_callback_t callback_fn, void *callback_arg, uint32_t flags)
+{
+	struct ioat_crc32_hw_descriptor *hw_desc;
+	struct ioat_descriptor *desc;
+	struct ioat_softc *ioat;
+	uint32_t teststore;
+	uint8_t op;
+
+	CTR0(KTR_IOAT, __func__);
+	ioat = to_ioat_softc(dmaengine);
+
+	if ((ioat->capabilities & IOAT_DMACAP_MOVECRC) == 0) {
+		ioat_log_message(0, "%s: Device lacks MOVECRC capability\n",
+		    __func__);
+		return (NULL);
+	}
+	if (((src | dst) & (0xffffffull << 40)) != 0) {
+		ioat_log_message(0, "%s: High 24 bits of src/dst invalid\n",
+		    __func__);
+		return (NULL);
+	}
+	teststore = (flags & _DMA_CRC_TESTSTORE);
+	if (teststore == _DMA_CRC_TESTSTORE) {
+		ioat_log_message(0, "%s: TEST and STORE invalid\n", __func__);
+		return (NULL);
+	}
+	if (teststore == 0 && (flags & DMA_CRC_INLINE) != 0) {
+		ioat_log_message(0, "%s: INLINE invalid without TEST or STORE\n",
+		    __func__);
+		return (NULL);
+	}
+
+	switch (teststore) {
+	case DMA_CRC_STORE:
+		op = IOAT_OP_MOVECRC_STORE;
+		break;
+	case DMA_CRC_TEST:
+		op = IOAT_OP_MOVECRC_TEST;
+		break;
+	default:
+		KASSERT(teststore == 0, ("bogus"));
+		op = IOAT_OP_MOVECRC;
+		break;
+	}
+
+	if ((flags & DMA_CRC_INLINE) == 0 &&
+	    (crcptr & (0xffffffull << 40)) != 0) {
+		ioat_log_message(0,
+		    "%s: High 24 bits of crcptr invalid\n", __func__);
+		return (NULL);
+	}
+
+	desc = ioat_op_generic(ioat, op, len, src, dst, callback_fn,
+	    callback_arg, flags & ~_DMA_CRC_FLAGS);
+	if (desc == NULL)
+		return (NULL);
+
+	hw_desc = desc->u.crc32;
+
+	if ((flags & DMA_CRC_INLINE) == 0)
+		hw_desc->crc_address = crcptr;
+	else
+		hw_desc->u.control.crc_location = 1;
+
+	if (initialseed != NULL) {
+		hw_desc->u.control.use_seed = 1;
+		hw_desc->seed = *initialseed;
+	}
+
+	if (g_ioat_debug_level >= 3)
+		dump_descriptor(hw_desc);
+
+	ioat_submit_single(ioat);
+	return (&desc->bus_dmadesc);
+}
+
+struct bus_dmadesc *
+ioat_crc(bus_dmaengine_t dmaengine, bus_addr_t src, bus_size_t len,
+    uint32_t *initialseed, bus_addr_t crcptr,
+    bus_dmaengine_callback_t callback_fn, void *callback_arg, uint32_t flags)
+{
+	struct ioat_crc32_hw_descriptor *hw_desc;
+	struct ioat_descriptor *desc;
+	struct ioat_softc *ioat;
+	uint32_t teststore;
+	uint8_t op;
+
+	CTR0(KTR_IOAT, __func__);
+	ioat = to_ioat_softc(dmaengine);
+
+	if ((ioat->capabilities & IOAT_DMACAP_CRC) == 0) {
+		ioat_log_message(0, "%s: Device lacks CRC capability\n",
+		    __func__);
+		return (NULL);
+	}
+	if ((src & (0xffffffull << 40)) != 0) {
+		ioat_log_message(0, "%s: High 24 bits of src invalid\n",
+		    __func__);
+		return (NULL);
+	}
+	teststore = (flags & _DMA_CRC_TESTSTORE);
+	if (teststore == _DMA_CRC_TESTSTORE) {
+		ioat_log_message(0, "%s: TEST and STORE invalid\n", __func__);
+		return (NULL);
+	}
+	if (teststore == 0 && (flags & DMA_CRC_INLINE) != 0) {
+		ioat_log_message(0, "%s: INLINE invalid without TEST or STORE\n",
+		    __func__);
+		return (NULL);
+	}
+
+	switch (teststore) {
+	case DMA_CRC_STORE:
+		op = IOAT_OP_CRC_STORE;
+		break;
+	case DMA_CRC_TEST:
+		op = IOAT_OP_CRC_TEST;
+		break;
+	default:
+		KASSERT(teststore == 0, ("bogus"));
+		op = IOAT_OP_CRC;
+		break;
+	}
+
+	if ((flags & DMA_CRC_INLINE) == 0 &&
+	    (crcptr & (0xffffffull << 40)) != 0) {
+		ioat_log_message(0,
+		    "%s: High 24 bits of crcptr invalid\n", __func__);
+		return (NULL);
+	}
+
+	desc = ioat_op_generic(ioat, op, len, src, 0, callback_fn,
+	    callback_arg, flags & ~_DMA_CRC_FLAGS);
+	if (desc == NULL)
+		return (NULL);
+
+	hw_desc = desc->u.crc32;
+
+	if ((flags & DMA_CRC_INLINE) == 0)
+		hw_desc->crc_address = crcptr;
+	else
+		hw_desc->u.control.crc_location = 1;
+
+	if (initialseed != NULL) {
+		hw_desc->u.control.use_seed = 1;
+		hw_desc->seed = *initialseed;
 	}
 
 	if (g_ioat_debug_level >= 3)
@@ -1363,6 +1661,8 @@ ioat_submit_single(struct ioat_softc *ioat)
 		callout_reset(&ioat->timer, IOAT_INTR_TIMO,
 		    ioat_timer_callback, ioat);
 	}
+
+	ioat->stats.descriptors_submitted++;
 }
 
 static int
@@ -1468,6 +1768,7 @@ ioat_reset_hw(struct ioat_softc *ioat)
 out:
 	mtx_lock(IOAT_REFLK);
 	ioat->quiescing = FALSE;
+	wakeup(&ioat->quiescing);
 	mtx_unlock(IOAT_REFLK);
 
 	if (error == 0)
@@ -1512,6 +1813,36 @@ sysctl_handle_chansts(SYSCTL_HANDLER_ARGS)
 	error = sbuf_finish(&sb);
 	sbuf_delete(&sb);
 
+	if (error != 0 || req->newptr == NULL)
+		return (error);
+	return (EINVAL);
+}
+
+static int
+sysctl_handle_dpi(SYSCTL_HANDLER_ARGS)
+{
+	struct ioat_softc *ioat;
+	struct sbuf sb;
+#define	PRECISION	"1"
+	const uintmax_t factor = 10;
+	uintmax_t rate;
+	int error;
+
+	ioat = arg1;
+	sbuf_new_for_sysctl(&sb, NULL, 16, req);
+
+	if (ioat->stats.interrupts == 0) {
+		sbuf_printf(&sb, "NaN");
+		goto out;
+	}
+	rate = ioat->stats.descriptors_processed * factor /
+	    ioat->stats.interrupts;
+	sbuf_printf(&sb, "%ju.%." PRECISION "ju", rate / factor,
+	    rate % factor);
+#undef	PRECISION
+out:
+	error = sbuf_finish(&sb);
+	sbuf_delete(&sb);
 	if (error != 0 || req->newptr == NULL)
 		return (error);
 	return (EINVAL);
@@ -1587,9 +1918,9 @@ dump_descriptor(void *hw_desc)
 static void
 ioat_setup_sysctl(device_t device)
 {
-	struct sysctl_oid_list *par;
+	struct sysctl_oid_list *par, *statpar, *state, *hammer;
 	struct sysctl_ctx_list *ctx;
-	struct sysctl_oid *tree;
+	struct sysctl_oid *tree, *tmp;
 	struct ioat_softc *ioat;
 
 	ioat = DEVICE2SOFTC(device);
@@ -1601,37 +1932,82 @@ ioat_setup_sysctl(device_t device)
 	    &ioat->version, 0, "HW version (0xMM form)");
 	SYSCTL_ADD_UINT(ctx, par, OID_AUTO, "max_xfer_size", CTLFLAG_RD,
 	    &ioat->max_xfer_size, 0, "HW maximum transfer size");
+	SYSCTL_ADD_INT(ctx, par, OID_AUTO, "intrdelay_supported", CTLFLAG_RD,
+	    &ioat->intrdelay_supported, 0, "Is INTRDELAY supported");
+	SYSCTL_ADD_U16(ctx, par, OID_AUTO, "intrdelay_max", CTLFLAG_RD,
+	    &ioat->intrdelay_max, 0,
+	    "Maximum configurable INTRDELAY on this channel (microseconds)");
 
-	SYSCTL_ADD_UINT(ctx, par, OID_AUTO, "ring_size_order", CTLFLAG_RD,
+	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "state", CTLFLAG_RD, NULL,
+	    "IOAT channel internal state");
+	state = SYSCTL_CHILDREN(tmp);
+
+	SYSCTL_ADD_UINT(ctx, state, OID_AUTO, "ring_size_order", CTLFLAG_RD,
 	    &ioat->ring_size_order, 0, "SW descriptor ring size order");
-	SYSCTL_ADD_UINT(ctx, par, OID_AUTO, "head", CTLFLAG_RD, &ioat->head, 0,
-	    "SW descriptor head pointer index");
-	SYSCTL_ADD_UINT(ctx, par, OID_AUTO, "tail", CTLFLAG_RD, &ioat->tail, 0,
-	    "SW descriptor tail pointer index");
-	SYSCTL_ADD_UINT(ctx, par, OID_AUTO, "hw_head", CTLFLAG_RD,
+	SYSCTL_ADD_UINT(ctx, state, OID_AUTO, "head", CTLFLAG_RD, &ioat->head,
+	    0, "SW descriptor head pointer index");
+	SYSCTL_ADD_UINT(ctx, state, OID_AUTO, "tail", CTLFLAG_RD, &ioat->tail,
+	    0, "SW descriptor tail pointer index");
+	SYSCTL_ADD_UINT(ctx, state, OID_AUTO, "hw_head", CTLFLAG_RD,
 	    &ioat->hw_head, 0, "HW DMACOUNT");
 
-	SYSCTL_ADD_UQUAD(ctx, par, OID_AUTO, "last_completion", CTLFLAG_RD,
+	SYSCTL_ADD_UQUAD(ctx, state, OID_AUTO, "last_completion", CTLFLAG_RD,
 	    ioat->comp_update, "HW addr of last completion");
 
-	SYSCTL_ADD_INT(ctx, par, OID_AUTO, "is_resize_pending", CTLFLAG_RD,
+	SYSCTL_ADD_INT(ctx, state, OID_AUTO, "is_resize_pending", CTLFLAG_RD,
 	    &ioat->is_resize_pending, 0, "resize pending");
-	SYSCTL_ADD_INT(ctx, par, OID_AUTO, "is_completion_pending", CTLFLAG_RD,
-	    &ioat->is_completion_pending, 0, "completion pending");
-	SYSCTL_ADD_INT(ctx, par, OID_AUTO, "is_reset_pending", CTLFLAG_RD,
+	SYSCTL_ADD_INT(ctx, state, OID_AUTO, "is_completion_pending",
+	    CTLFLAG_RD, &ioat->is_completion_pending, 0, "completion pending");
+	SYSCTL_ADD_INT(ctx, state, OID_AUTO, "is_reset_pending", CTLFLAG_RD,
 	    &ioat->is_reset_pending, 0, "reset pending");
-	SYSCTL_ADD_INT(ctx, par, OID_AUTO, "is_channel_running", CTLFLAG_RD,
+	SYSCTL_ADD_INT(ctx, state, OID_AUTO, "is_channel_running", CTLFLAG_RD,
 	    &ioat->is_channel_running, 0, "channel running");
 
-	SYSCTL_ADD_PROC(ctx, par, OID_AUTO, "force_hw_reset",
-	    CTLTYPE_INT | CTLFLAG_RW, ioat, 0, sysctl_handle_reset, "I",
-	    "Set to non-zero to reset the hardware");
-	SYSCTL_ADD_PROC(ctx, par, OID_AUTO, "force_hw_error",
-	    CTLTYPE_INT | CTLFLAG_RW, ioat, 0, sysctl_handle_error, "I",
-	    "Set to non-zero to inject a recoverable hardware error");
-	SYSCTL_ADD_PROC(ctx, par, OID_AUTO, "chansts",
+	SYSCTL_ADD_PROC(ctx, state, OID_AUTO, "chansts",
 	    CTLTYPE_STRING | CTLFLAG_RD, ioat, 0, sysctl_handle_chansts, "A",
 	    "String of the channel status");
+
+	SYSCTL_ADD_U16(ctx, state, OID_AUTO, "intrdelay", CTLFLAG_RD,
+	    &ioat->cached_intrdelay, 0,
+	    "Current INTRDELAY on this channel (cached, microseconds)");
+
+	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "hammer", CTLFLAG_RD, NULL,
+	    "Big hammers (mostly for testing)");
+	hammer = SYSCTL_CHILDREN(tmp);
+
+	SYSCTL_ADD_PROC(ctx, hammer, OID_AUTO, "force_hw_reset",
+	    CTLTYPE_INT | CTLFLAG_RW, ioat, 0, sysctl_handle_reset, "I",
+	    "Set to non-zero to reset the hardware");
+	SYSCTL_ADD_PROC(ctx, hammer, OID_AUTO, "force_hw_error",
+	    CTLTYPE_INT | CTLFLAG_RW, ioat, 0, sysctl_handle_error, "I",
+	    "Set to non-zero to inject a recoverable hardware error");
+
+	tmp = SYSCTL_ADD_NODE(ctx, par, OID_AUTO, "stats", CTLFLAG_RD, NULL,
+	    "IOAT channel statistics");
+	statpar = SYSCTL_CHILDREN(tmp);
+
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "interrupts", CTLFLAG_RW,
+	    &ioat->stats.interrupts,
+	    "Number of interrupts processed on this channel");
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "descriptors", CTLFLAG_RW,
+	    &ioat->stats.descriptors_processed,
+	    "Number of descriptors processed on this channel");
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "submitted", CTLFLAG_RW,
+	    &ioat->stats.descriptors_submitted,
+	    "Number of descriptors submitted to this channel");
+	SYSCTL_ADD_UQUAD(ctx, statpar, OID_AUTO, "errored", CTLFLAG_RW,
+	    &ioat->stats.descriptors_error,
+	    "Number of descriptors failed by channel errors");
+	SYSCTL_ADD_U32(ctx, statpar, OID_AUTO, "halts", CTLFLAG_RW,
+	    &ioat->stats.channel_halts, 0,
+	    "Number of times the channel has halted");
+	SYSCTL_ADD_U32(ctx, statpar, OID_AUTO, "last_halt_chanerr", CTLFLAG_RW,
+	    &ioat->stats.last_halt_chanerr, 0,
+	    "The raw CHANERR when the channel was last halted");
+
+	SYSCTL_ADD_PROC(ctx, statpar, OID_AUTO, "desc_per_interrupt",
+	    CTLTYPE_STRING | CTLFLAG_RD, ioat, 0, sysctl_handle_dpi, "A",
+	    "Descriptors per interrupt");
 }
 
 static inline struct ioat_softc *
@@ -1720,3 +2096,96 @@ ioat_drain_locked(struct ioat_softc *ioat)
 	while (ioat->refcnt > 0)
 		msleep(IOAT_REFLK, IOAT_REFLK, 0, "ioat_drain", 0);
 }
+
+#ifdef DDB
+#define	_db_show_lock(lo)	LOCK_CLASS(lo)->lc_ddb_show(lo)
+#define	db_show_lock(lk)	_db_show_lock(&(lk)->lock_object)
+DB_SHOW_COMMAND(ioat, db_show_ioat)
+{
+	struct ioat_softc *sc;
+	unsigned idx;
+
+	if (!have_addr)
+		goto usage;
+	idx = (unsigned)addr;
+	if (addr >= ioat_channel_index)
+		goto usage;
+
+	sc = ioat_channel[idx];
+	db_printf("ioat softc at %p\n", sc);
+	if (sc == NULL)
+		return;
+
+	db_printf(" version: %d\n", sc->version);
+	db_printf(" chan_idx: %u\n", sc->chan_idx);
+	db_printf(" submit_lock: ");
+	db_show_lock(&sc->submit_lock);
+
+	db_printf(" capabilities: %b\n", (int)sc->capabilities,
+	    IOAT_DMACAP_STR);
+	db_printf(" cached_intrdelay: %u\n", sc->cached_intrdelay);
+	db_printf(" *comp_update: 0x%jx\n", (uintmax_t)*sc->comp_update);
+
+	db_printf(" timer:\n");
+	db_printf("  c_time: %ju\n", (uintmax_t)sc->timer.c_time);
+	db_printf("  c_arg: %p\n", sc->timer.c_arg);
+	db_printf("  c_func: %p\n", sc->timer.c_func);
+	db_printf("  c_lock: %p\n", sc->timer.c_lock);
+	db_printf("  c_flags: 0x%x\n", (unsigned)sc->timer.c_flags);
+
+	db_printf(" quiescing: %d\n", (int)sc->quiescing);
+	db_printf(" destroying: %d\n", (int)sc->destroying);
+	db_printf(" is_resize_pending: %d\n", (int)sc->is_resize_pending);
+	db_printf(" is_completion_pending: %d\n", (int)sc->is_completion_pending);
+	db_printf(" is_reset_pending: %d\n", (int)sc->is_reset_pending);
+	db_printf(" is_channel_running: %d\n", (int)sc->is_channel_running);
+	db_printf(" intrdelay_supported: %d\n", (int)sc->intrdelay_supported);
+
+	db_printf(" head: %u\n", sc->head);
+	db_printf(" tail: %u\n", sc->tail);
+	db_printf(" hw_head: %u\n", sc->hw_head);
+	db_printf(" ring_size_order: %u\n", sc->ring_size_order);
+	db_printf(" last_seen: 0x%lx\n", sc->last_seen);
+	db_printf(" ring: %p\n", sc->ring);
+
+	db_printf(" cleanup_lock: ");
+	db_show_lock(&sc->cleanup_lock);
+
+	db_printf(" refcnt: %u\n", sc->refcnt);
+#ifdef INVARIANTS
+	CTASSERT(IOAT_NUM_REF_KINDS == 2);
+	db_printf(" refkinds: [ENG=%u, DESCR=%u]\n", sc->refkinds[0],
+	    sc->refkinds[1]);
+#endif
+	db_printf(" stats:\n");
+	db_printf("  interrupts: %lu\n", sc->stats.interrupts);
+	db_printf("  descriptors_processed: %lu\n", sc->stats.descriptors_processed);
+	db_printf("  descriptors_error: %lu\n", sc->stats.descriptors_error);
+	db_printf("  descriptors_submitted: %lu\n", sc->stats.descriptors_submitted);
+
+	db_printf("  channel_halts: %u\n", sc->stats.channel_halts);
+	db_printf("  last_halt_chanerr: %u\n", sc->stats.last_halt_chanerr);
+
+	if (db_pager_quit)
+		return;
+
+	db_printf(" hw status:\n");
+	db_printf("  status: 0x%lx\n", ioat_get_chansts(sc));
+	db_printf("  chanctrl: 0x%x\n",
+	    (unsigned)ioat_read_2(sc, IOAT_CHANCTRL_OFFSET));
+	db_printf("  chancmd: 0x%x\n",
+	    (unsigned)ioat_read_1(sc, IOAT_CHANCMD_OFFSET));
+	db_printf("  dmacount: 0x%x\n",
+	    (unsigned)ioat_read_2(sc, IOAT_DMACOUNT_OFFSET));
+	db_printf("  chainaddr: 0x%lx\n",
+	    ioat_read_double_4(sc, IOAT_CHAINADDR_OFFSET_LOW));
+	db_printf("  chancmp: 0x%lx\n",
+	    ioat_read_double_4(sc, IOAT_CHANCMP_OFFSET_LOW));
+	db_printf("  chanerr: %b\n",
+	    (int)ioat_read_4(sc, IOAT_CHANERR_OFFSET), IOAT_CHANERR_STR);
+	return;
+usage:
+	db_printf("usage: show ioat <0-%u>\n", ioat_channel_index);
+	return;
+}
+#endif /* DDB */

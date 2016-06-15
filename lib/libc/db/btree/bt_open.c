@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)bt_open.c	8.10 (Berkeley) 8/17/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/btree/bt_open.c 287292 2015-08-29 14:25:01Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/db/btree/bt_open.c 298600 2016-04-26 01:17:05Z pfg $");
 
 /*
  * Implementation of btree access method for 4.4BSD.
@@ -277,7 +277,7 @@ __bt_open(const char *fname, int flags, int mode, const BTREEINFO *openinfo, int
 		b.cachesize = b.psize * MINCACHE;
 
 	/* Calculate number of pages to cache. */
-	ncache = (b.cachesize + t->bt_psize - 1) / t->bt_psize;
+	ncache = howmany(b.cachesize, t->bt_psize);
 
 	/*
 	 * The btree data structure requires that at least two keys can fit on

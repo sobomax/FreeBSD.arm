@@ -2,6 +2,7 @@
  * Copyright (c) 2006,2007
  *	Damien Bergamini <damien.bergamini@free.fr>
  *	Benjamin Close <Benjamin.Close@clearchain.com>
+ * Copyright (c) 2015 Andriy Voskoboinyk <avos@FreeBSD.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/wpi/if_wpi_debug.h 282398 2015-05-03 23:37:13Z adrian $
+ * $FreeBSD: head/sys/dev/wpi/if_wpi_debug.h 292176 2015-12-13 22:08:27Z avos $
  */
 
 #ifndef __IF_WPI_DEBUG_H__

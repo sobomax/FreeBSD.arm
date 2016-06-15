@@ -36,7 +36,7 @@
 #if defined(__RCSID) && !defined(lint)
 __RCSID("$NetBSD: decl.c,v 1.33 2004/06/20 22:20:16 jmc Exp $");
 #endif
-__FBSDID("$FreeBSD: head/usr.bin/xlint/lint1/decl.c 286614 2015-08-11 02:58:33Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/xlint/lint1/decl.c 298453 2016-04-22 06:23:23Z araujo $");
 
 #include <sys/param.h>
 #include <limits.h>
@@ -1105,7 +1105,7 @@ align(int al, int len)
 	if (al > dcs->d_stralign)
 		dcs->d_stralign = al;
 
-	no = (dcs->d_offset + (al - 1)) & ~(al - 1);
+	no = roundup2(dcs->d_offset, al);
 	if (len == 0 || dcs->d_offset + len > no)
 		dcs->d_offset = no;
 }

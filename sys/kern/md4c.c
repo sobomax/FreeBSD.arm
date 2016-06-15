@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/md4c.c 139804 2005-01-06 23:35:40Z imp $");
+__FBSDID("$FreeBSD: head/sys/kern/md4c.c 300773 2016-05-26 19:29:29Z cem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -164,9 +164,7 @@ MD4_CTX *context;                                        /* context */
 /* MD4 finalization. Ends an MD4 message-digest operation, writing the
      the message digest and zeroizing the context.
  */
-void MD4Final (digest, context)
-unsigned char digest[16];                         /* message digest */
-MD4_CTX *context;                                        /* context */
+void MD4Final (unsigned char digest[static 16], MD4_CTX *context)
 {
   /* Do padding */
   MD4Pad (context);
@@ -176,7 +174,7 @@ MD4_CTX *context;                                        /* context */
 
   /* Zeroize sensitive information.
    */
-  bzero((POINTER)context, sizeof (*context));
+  bzero(context, sizeof (*context));
 }
 
 /* MD4 basic transformation. Transforms state based on block.

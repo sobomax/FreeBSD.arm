@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/et/if_et.c 272064 2014-09-24 11:23:55Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/et/if_et.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1395,7 +1395,7 @@ et_start_locked(struct ifnet *ifp)
 	 * Driver does not request TX completion interrupt for every
 	 * queued frames to prevent generating excessive interrupts.
 	 * This means driver may wait for TX completion interrupt even
-	 * though some frames were sucessfully transmitted.  Reclaiming
+	 * though some frames were successfully transmitted.  Reclaiming
 	 * transmitted frames will ensure driver see all available
 	 * descriptors.
 	 */

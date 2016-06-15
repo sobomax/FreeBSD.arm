@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libdevctl/devctl.c 278320 2015-02-06 16:09:01Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libdevctl/devctl.c 298709 2016-04-27 16:33:17Z jhb $");
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -121,4 +121,19 @@ devctl_set_driver(const char *device, const char *driver, bool force)
 	if (force)
 		req.dr_flags |= DEVF_SET_DRIVER_DETACH;
 	return (devctl_request(DEV_SET_DRIVER, &req));
+}
+
+int
+devctl_rescan(const char *device)
+{
+
+	return (devctl_simple_request(DEV_RESCAN, device, 0));
+}
+
+int
+devctl_delete(const char *device, bool force)
+{
+
+	return (devctl_simple_request(DEV_DELETE, device, force ?
+	    DEVF_FORCE_DELETE : 0));
 }

@@ -29,9 +29,10 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/apmd/apmd.c 212048 2010-08-31 07:19:10Z kevlo $";
+  "$FreeBSD: head/usr.sbin/apmd/apmd.c 300557 2016-05-24 03:15:46Z peter $";
 #endif /* not lint */
 
+#include <sys/types.h>
 #include <assert.h>
 #include <bitstring.h>
 #include <err.h>
@@ -45,7 +46,6 @@ static const char rcsid[] =
 #include <syslog.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include <sys/types.h>
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <machine/apm_bios.h>

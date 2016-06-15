@@ -25,8 +25,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tests/sys/kern/kern_descrip_test.c 263336 2014-03-19 09:41:12Z pho $");
+__FBSDID("$FreeBSD: head/tests/sys/kern/kern_descrip_test.c 299508 2016-05-12 03:44:29Z cem $");
 
+#include <sys/param.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -170,7 +171,7 @@ ATF_TC_CLEANUP(kern_maxfiles__increase, tc)
 	char buf[80];
 
 	if ((n = readlink(VALUE, buf, sizeof(buf))) > 0) {
-		buf[n] = '\0';
+		buf[MIN((size_t)n, sizeof(buf) - 1)] = '\0';
 		if (sscanf(buf, "%d", &oldmaxfiles) == 1) {
 			oldlen = sizeof(oldmaxfiles);
 			(void) sysctlbyname("kern.maxfiles", NULL, 0,

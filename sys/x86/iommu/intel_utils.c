@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_utils.c 284869 2015-06-26 07:01:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_utils.c 298144 2016-04-17 10:56:56Z kib $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -618,6 +618,7 @@ dmar_barrier_exit(struct dmar_unit *dmar, u_int barrier_id)
 }
 
 int dmar_match_verbose;
+int dmar_batch_coalesce = 100;
 
 static SYSCTL_NODE(_hw, OID_AUTO, dmar, CTLFLAG_RD, NULL, "");
 SYSCTL_INT(_hw_dmar, OID_AUTO, tbl_pagecnt, CTLFLAG_RD,
@@ -626,6 +627,9 @@ SYSCTL_INT(_hw_dmar, OID_AUTO, tbl_pagecnt, CTLFLAG_RD,
 SYSCTL_INT(_hw_dmar, OID_AUTO, match_verbose, CTLFLAG_RWTUN,
     &dmar_match_verbose, 0,
     "Verbose matching of the PCI devices to DMAR paths");
+SYSCTL_INT(_hw_dmar, OID_AUTO, batch_coalesce, CTLFLAG_RWTUN,
+    &dmar_batch_coalesce, 0,
+    "Number of qi batches between interrupt");
 #ifdef INVARIANTS
 int dmar_check_free;
 SYSCTL_INT(_hw_dmar, OID_AUTO, check_free, CTLFLAG_RWTUN,

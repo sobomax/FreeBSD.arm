@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-intel.c 290855 2015-11-15 10:58:01Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-intel.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -380,7 +380,7 @@ ata_intel_ch_attach(device_t dev)
 				} else if (ata_intel_sata_sidpr_test(dev)) {
 					ch->hw.pm_read = ata_intel_sata_sidpr_read;
 					ch->hw.pm_write = ata_intel_sata_sidpr_write;
-				};
+				}
 			}
 			if (ch->hw.pm_write != NULL) {
 				ch->flags |= ATA_PERIODIC_POLL;

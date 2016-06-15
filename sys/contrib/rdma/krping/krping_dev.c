@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/contrib/rdma/krping/krping_dev.c 256470 2013-10-14 23:02:05Z np $");
+__FBSDID("$FreeBSD: head/sys/contrib/rdma/krping/krping_dev.c 297945 2016-04-14 00:25:11Z np $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -207,16 +207,6 @@ krping_write(struct cdev *dev, struct uio *uio, int ioflag)
 	err = krping_doit(krpingmsg->msg, curproc);
 	free(krpingmsg, M_DEVBUF);
 	return(err);
-}
-
-void
-krping_printf(void *cookie, const char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vtprintf(cookie, -1, fmt, ap);
-	va_end(ap);
 }
 
 int

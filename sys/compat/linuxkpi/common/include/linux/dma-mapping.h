@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/dma-mapping.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/dma-mapping.h 298829 2016-04-30 00:53:10Z pfg $
  */
 #ifndef	_LINUX_DMA_MAPPING_H_
 #define _LINUX_DMA_MAPPING_H_
@@ -47,7 +47,6 @@
 #include <vm/pmap.h>
 
 #include <machine/bus.h>
-#include <machine/pmap.h>
 
 enum dma_data_direction {
 	DMA_BIDIRECTIONAL = 0,
@@ -116,7 +115,7 @@ dma_set_coherent_mask(struct device *dev, u64 mask)
 
 	if (!dma_supported(dev, mask))
 		return -EIO;
-	/* XXX Currently we don't support a seperate coherent mask. */
+	/* XXX Currently we don't support a separate coherent mask. */
 	return 0;
 }
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_test.c 292044 2015-12-10 02:05:35Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_test.c 297746 2016-04-09 13:15:34Z cem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -337,10 +337,11 @@ ioat_test_submit_1_tx(struct ioat_test *test, bus_dmaengine_t dma)
 static void
 ioat_dma_test(void *arg)
 {
+	struct ioat_softc *ioat;
 	struct ioat_test *test;
 	bus_dmaengine_t dmaengine;
 	uint32_t loops;
-	int index, rc, start, end;
+	int index, rc, start, end, error;
 
 	test = arg;
 	memset(__DEVOLATILE(void *, test->status), 0, sizeof(test->status));
@@ -387,21 +388,41 @@ ioat_dma_test(void *arg)
 		return;
 	}
 
-	dmaengine = ioat_get_dmaengine(test->channel_index);
+	dmaengine = ioat_get_dmaengine(test->channel_index, M_NOWAIT);
 	if (dmaengine == NULL) {
 		ioat_test_log(0, "Couldn't acquire dmaengine\n");
 		test->status[IOAT_TEST_NO_DMA_ENGINE]++;
 		return;
 	}
+	ioat = to_ioat_softc(dmaengine);
 
 	if (test->testkind == IOAT_TEST_FILL &&
-	    (to_ioat_softc(dmaengine)->capabilities & IOAT_DMACAP_BFILL) == 0)
+	    (ioat->capabilities & IOAT_DMACAP_BFILL) == 0)
 	{
 		ioat_test_log(0,
 		    "Hardware doesn't support block fill, aborting test\n");
 		test->status[IOAT_TEST_INVALID_INPUT]++;
 		goto out;
 	}
+
+	if (test->coalesce_period > ioat->intrdelay_max) {
+		ioat_test_log(0,
+		    "Hardware doesn't support intrdelay of %u us.\n",
+		    (unsigned)test->coalesce_period);
+		test->status[IOAT_TEST_INVALID_INPUT]++;
+		goto out;
+	}
+	error = ioat_set_interrupt_coalesce(dmaengine, test->coalesce_period);
+	if (error == ENODEV && test->coalesce_period == 0)
+		error = 0;
+	if (error != 0) {
+		ioat_test_log(0, "ioat_set_interrupt_coalesce: %d\n", error);
+		test->status[IOAT_TEST_INVALID_INPUT]++;
+		goto out;
+	}
+
+	if (test->zero_stats)
+		memset(&ioat->stats, 0, sizeof(ioat->stats));
 
 	if (test->testkind == IOAT_TEST_RAW_DMA) {
 		if (test->raw_is_virtual) {

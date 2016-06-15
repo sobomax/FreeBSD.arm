@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/ipf/ipf/Makefile 291329 2015-11-25 20:38:07Z bdrewery $
+# $FreeBSD: head/sbin/ipf/ipf/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	ipf
 PROG=		ipf
 SRCS=		${GENHDRS} ipf.c ipfcomp.c ipf_y.c ipf_l.c bpf_filter.c
 MAN=		ipfilter.4 ipfilter.5 ipf.8 ipf.4 ipf.5 ipl.4

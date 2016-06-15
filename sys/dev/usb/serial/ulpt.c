@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ulpt.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ulpt.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /*	$NetBSD: ulpt.c,v 1.60 2003/10/04 21:19:50 augustss Exp $	*/
 
@@ -419,7 +419,7 @@ ulpt_open(struct usb_fifo *fifo, int fflags)
 
 	if (sc->sc_fflags == 0) {
 
-		/* reset USB paralell port */
+		/* reset USB parallel port */
 
 		ulpt_reset(sc);
 	}

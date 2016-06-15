@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/pc98/boot2/Makefile 280980 2015-04-02 06:58:17Z dim $
+# $FreeBSD: head/sys/boot/pc98/boot2/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -114,4 +114,3 @@ boot2.h: boot1.out
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.boot1.S=		${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

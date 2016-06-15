@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ipmon 275324 2014-11-30 12:34:48Z ngie $
+# $FreeBSD: head/etc/rc.d/ipmon 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: ipmon
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="ipmon"
+desc="Monitors /dev/ipl for logged packets"
 rcvar="ipmon_enable"
 command="/sbin/${name}"
 start_precmd="ipmon_precmd"

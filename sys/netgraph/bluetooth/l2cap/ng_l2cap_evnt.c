@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_evnt.c,v 1.5 2003/09/08 19:11:45 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_evnt.c 290038 2015-10-27 03:42:26Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_evnt.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 #include <sys/param.h>
@@ -358,7 +358,7 @@ ng_l2cap_process_lesignal_cmd(ng_l2cap_con_p con)
 /*Update Paramater Request*/
 static int ng_l2cap_process_cmd_urq(ng_l2cap_con_p con, uint8_t ident)
 {
-	/*We do not implement paramter negotiasion for now*/
+	/* We do not implement parameter negotiation for now. */
 	send_l2cap_param_urs(con, ident, NG_L2CAP_UPDATE_PARAM_ACCEPT);
 	NG_FREE_M(con->rx_pkt);
 	return 0;
@@ -1068,7 +1068,7 @@ ng_l2cap_process_discon_rsp(ng_l2cap_con_p con, u_int8_t ident)
 	}
 
 	/*
-	 * Looks like we have successfuly disconnected channel, so notify 
+	 * Looks like we have successfully disconnected channel, so notify 
 	 * upper layer. If command timeout already happened then ignore
 	 * response.
 	 */

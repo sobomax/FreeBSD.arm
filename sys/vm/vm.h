@@ -55,7 +55,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm.h 253604 2013-07-24 09:45:31Z avg $
+ * $FreeBSD: head/sys/vm/vm.h 300317 2016-05-20 17:57:47Z jhb $
  */
 
 #ifndef VM_H
@@ -109,8 +109,9 @@ typedef struct vm_object *vm_object_t;
 typedef int boolean_t;
 
 /*
- * The exact set of memory attributes is machine dependent.  However, every
- * machine is required to define VM_MEMATTR_DEFAULT.
+ * The exact set of memory attributes is machine dependent.  However,
+ * every machine is required to define VM_MEMATTR_DEFAULT and
+ * VM_MEMATTR_UNCACHEABLE.
  */
 typedef	char vm_memattr_t;	/* memory attribute codes */
 

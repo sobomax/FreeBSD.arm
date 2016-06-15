@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_kbd_sun.c 224126 2011-07-17 08:19:19Z ed $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_kbd_sun.c 298431 2016-04-21 19:40:10Z pfg $");
 
 #include "opt_compat.h"
 #include "opt_kbd.h"
@@ -857,7 +857,7 @@ keycode2scancode(int keycode, int shift, int up)
 	int scancode;
 
 	scancode = keycode;
-	if ((keycode >= 89) && (keycode < 89 + sizeof(scan) / sizeof(scan[0])))
+	if ((keycode >= 89) && (keycode < 89 + nitems(scan)))
 	scancode = scan[keycode - 89] | SCAN_PREFIX_E0;
 	/* pause/break */
 	if ((keycode == 104) && !(shift & CTLS))

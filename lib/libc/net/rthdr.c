@@ -30,10 +30,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/rthdr.c 288045 2015-09-20 21:21:01Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/net/rthdr.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 
 #include <netinet/in.h>

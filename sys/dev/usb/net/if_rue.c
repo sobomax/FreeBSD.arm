@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_rue.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_rue.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /*
  * RealTek RTL8150 USB to fast ethernet controller driver.
@@ -693,7 +693,7 @@ rue_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 		usbd_copy_out(pc, actlen - 4, &status, sizeof(status));
 		actlen -= 4;
 
-		/* check recieve packet was valid or not */
+		/* check receive packet was valid or not */
 		status = le16toh(status);
 		if ((status & RUE_RXSTAT_VALID) == 0) {
 			if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);

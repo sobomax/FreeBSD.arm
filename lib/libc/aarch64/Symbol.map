@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/aarch64/Symbol.map 286959 2015-08-20 13:11:52Z andrew $
+ * $FreeBSD: head/lib/libc/aarch64/Symbol.map 300303 2016-05-20 15:04:48Z andrew $
  */
 
 /*
@@ -28,15 +28,11 @@ FBSD_1.0 {
 	ntohl;
 	ntohs;
 	vfork;
-	brk;
-	sbrk;
 	makecontext;
 };
 
 FBSDprivate_1.0 {
 	_set_tp;
 	_end;
-	curbrk;
-	minbrk;
 	__makecontext;
 };

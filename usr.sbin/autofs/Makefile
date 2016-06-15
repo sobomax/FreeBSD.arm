@@ -1,5 +1,6 @@
-# $FreeBSD: head/usr.sbin/autofs/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/autofs/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=autofs
 PROG=	automountd
 SRCS=	automount.c
 SRCS+=	automountd.c

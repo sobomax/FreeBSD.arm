@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/fdformat/fdformat.c 218910 2011-02-21 09:56:08Z brucec $
+ * $FreeBSD: head/usr.sbin/fdformat/fdformat.c 298021 2016-04-15 02:14:11Z araujo $
  */
 
 #include <sys/types.h>
@@ -95,7 +95,7 @@ verify_track(int fd, int track, int tracksize)
 
 	if (bufsz < tracksize)
 		buf = realloc(buf, bufsz = tracksize);
-	if (buf == 0)
+	if (buf == NULL)
 		errx(EX_UNAVAILABLE, "out of memory");
 	if (lseek (fd, (long) track * tracksize, 0) < 0)
 		rv = -1;
@@ -205,7 +205,7 @@ main(int argc, char **argv)
 	if (stat(argv[optind], &sb) == -1 && errno == ENOENT) {
 		/* try prepending _PATH_DEV */
 		device = malloc(strlen(argv[optind]) + sizeof(_PATH_DEV) + 1);
-		if (device == 0)
+		if (device == NULL)
 			errx(EX_UNAVAILABLE, "out of memory");
 		strcpy(device, _PATH_DEV);
 		strcat(device, argv[optind]);
@@ -252,7 +252,7 @@ main(int argc, char **argv)
 	if (format) {
 		getname(type, &name, &descr);
 		fdtp = get_fmt(format, type);
-		if (fdtp == 0)
+		if (fdtp == NULL)
 			errx(EX_USAGE,
 			    "unknown format %d KB for drive type %s",
 			     format, name);

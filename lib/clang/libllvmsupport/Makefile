@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmsupport/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmsupport/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -34,6 +34,7 @@ SRCS=	APFloat.cpp \
 	IntEqClasses.cpp \
 	IntervalMap.cpp \
 	IntrusiveRefCntPtr.cpp \
+	JamCRC.cpp \
 	LEB128.cpp \
 	LineIterator.cpp \
 	Locale.cpp \
@@ -64,7 +65,6 @@ SRCS=	APFloat.cpp \
 	StreamingMemoryObject.cpp \
 	StringExtras.cpp \
 	StringMap.cpp \
-	StringPool.cpp \
 	StringRef.cpp \
 	StringSaver.cpp \
 	TargetParser.cpp \
@@ -96,6 +96,7 @@ SRCS+=	ARMWinEH.cpp \
 	FileOutputBuffer.cpp \
 	FileUtilities.cpp \
 	SystemUtils.cpp \
+	ThreadPool.cpp \
 	Watchdog.cpp
 .endif
 
@@ -103,9 +104,12 @@ SRCS+=	ARMWinEH.cpp \
 SRCS+=	Memory.cpp
 .endif
 
+.if ${MK_LLDB} != "no"
+SRCS+=	StringPool.cpp
+.endif
+
 .include "../clang.lib.mk"
 
 # Ugly hack to work around CLOCK_PROCESS_CPUTIME_ID not being properly defined
 # between r239347 and r245428.
 CXXFLAGS.Process.cpp=	-DCLOCK_PROCESS_CPUTIME_ID=15
-CXXFLAGS+=		${CXXFLAGS.${.IMPSRC:T}}

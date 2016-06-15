@@ -1,6 +1,7 @@
 #	@(#)Makefile	5.4 (Berkeley) 6/5/91
-# $FreeBSD: head/sbin/etherswitchcfg/Makefile 235289 2012-05-11 20:56:04Z adrian $
+# $FreeBSD: head/sbin/etherswitchcfg/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	etherswitchcfg
 MAN=	etherswitchcfg.8
 SRCS=	etherswitchcfg.c ifmedia.c

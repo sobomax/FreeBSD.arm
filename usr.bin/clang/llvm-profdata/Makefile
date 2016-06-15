@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-profdata/Makefile 281049 2015-04-03 19:43:39Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-profdata/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -7,6 +7,8 @@ PROG_CXX=llvm-profdata
 SRCDIR=	tools/llvm-profdata
 SRCS=	llvm-profdata.cpp
 
+TGHDRS=	Attributes
+
 LIBDEPS=llvmprofiledata \
 	llvmobject \
 	llvmmcparser \
@@ -14,5 +16,7 @@ LIBDEPS=llvmprofiledata \
 	llvmbitreader \
 	llvmcore \
 	llvmsupport
+
+LIBADD+=	z
 
 .include "../clang.prog.mk"

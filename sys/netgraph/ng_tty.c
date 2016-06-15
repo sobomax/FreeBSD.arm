@@ -39,7 +39,7 @@
  *
  * Updated by Andrew Thompson <thompsa@FreeBSD.org> for MPSAFE TTY.
  *
- * $FreeBSD: head/sys/netgraph/ng_tty.c 271856 2014-09-19 09:01:19Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_tty.c 298813 2016-04-29 21:25:05Z pfg $
  * $Whistle: ng_tty.c,v 1.21 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -190,7 +190,7 @@ ngt_newhook(node_p node, hook_p hook, const char *name)
 
 /*
  * Set the hook into queueing mode (for outgoing packets),
- * so that we wont deliver mbuf thru the whole graph holding
+ * so that we wont deliver mbuf through the whole graph holding
  * tty locks.
  */
 static int

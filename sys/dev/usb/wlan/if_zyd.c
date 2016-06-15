@@ -1,6 +1,6 @@
 /*	$OpenBSD: if_zyd.c,v 1.52 2007/02/11 00:08:04 jsg Exp $	*/
 /*	$NetBSD: if_zyd.c,v 1.7 2007/06/21 04:04:29 kiyohara Exp $	*/
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 292080 2015-12-11 05:28:00Z imp $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 300751 2016-05-26 15:56:27Z avos $	*/
 
 /*-
  * Copyright (c) 2006 by Damien Bergamini <damien.bergamini@free.fr>
@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_zyd.c 300751 2016-05-26 15:56:27Z avos $");
 
 /*
  * ZyDAS ZD1211/ZD1211B USB WLAN driver.
@@ -164,6 +164,8 @@ static void	zyd_stop(struct zyd_softc *);
 static int	zyd_loadfirmware(struct zyd_softc *);
 static void	zyd_scan_start(struct ieee80211com *);
 static void	zyd_scan_end(struct ieee80211com *);
+static void	zyd_getradiocaps(struct ieee80211com *, int, int *,
+		    struct ieee80211_channel[]);
 static void	zyd_set_channel(struct ieee80211com *);
 static int	zyd_rfmd_init(struct zyd_rf *);
 static int	zyd_rfmd_switch_radio(struct zyd_rf *, int);
@@ -334,7 +336,7 @@ zyd_attach(device_t dev)
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
 	struct zyd_softc *sc = device_get_softc(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
-	uint8_t iface_index, bands;
+	uint8_t iface_index;
 	int error;
 
 	if (uaa->info.bcdDevice < 0x4330) {
@@ -387,15 +389,14 @@ zyd_attach(device_t dev)
 	        | IEEE80211_C_WPA		/* 802.11i */
 		;
 
-	bands = 0;
-	setbit(&bands, IEEE80211_MODE_11B);
-	setbit(&bands, IEEE80211_MODE_11G);
-	ieee80211_init_channels(ic, NULL, &bands);
+	zyd_getradiocaps(ic, IEEE80211_CHAN_MAX, &ic->ic_nchans,
+	    ic->ic_channels);
 
 	ieee80211_ifattach(ic);
 	ic->ic_raw_xmit = zyd_raw_xmit;
 	ic->ic_scan_start = zyd_scan_start;
 	ic->ic_scan_end = zyd_scan_end;
+	ic->ic_getradiocaps = zyd_getradiocaps;
 	ic->ic_set_channel = zyd_set_channel;
 	ic->ic_vap_create = zyd_vap_create;
 	ic->ic_vap_delete = zyd_vap_delete;
@@ -608,8 +609,8 @@ zyd_newstate(struct ieee80211vap *vap, enum ieee80211_state nstate, int arg)
 		/* make data LED blink upon Tx */
 		zyd_write32_m(sc, sc->sc_fwbase + ZYD_FW_LINK_STATUS, 1);
 
-		IEEE80211_ADDR_COPY(ic->ic_macaddr, vap->iv_bss->ni_bssid);
-		zyd_set_bssid(sc, ic->ic_macaddr);
+		IEEE80211_ADDR_COPY(sc->sc_bssid, vap->iv_bss->ni_bssid);
+		zyd_set_bssid(sc, sc->sc_bssid);
 		break;
 	default:
 		break;
@@ -2859,8 +2860,21 @@ zyd_scan_end(struct ieee80211com *ic)
 
 	ZYD_LOCK(sc);
 	/* restore previous bssid */
-	zyd_set_bssid(sc, ic->ic_macaddr);
+	zyd_set_bssid(sc, sc->sc_bssid);
 	ZYD_UNLOCK(sc);
+}
+
+static void
+zyd_getradiocaps(struct ieee80211com *ic,
+    int maxchans, int *nchans, struct ieee80211_channel chans[])
+{
+	uint8_t bands[IEEE80211_MODE_BYTES];
+
+	memset(bands, 0, sizeof(bands));
+	setbit(bands, IEEE80211_MODE_11B);
+	setbit(bands, IEEE80211_MODE_11G);
+	ieee80211_add_channel_list_2ghz(chans, maxchans, nchans,
+	    zyd_chan_2ghz, nitems(zyd_chan_2ghz), bands, 0);
 }
 
 static void

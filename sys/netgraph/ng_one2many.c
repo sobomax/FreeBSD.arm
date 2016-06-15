@@ -37,14 +37,14 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_one2many.c 257174 2013-10-26 17:43:18Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_one2many.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 /*
  * ng_one2many(4) netgraph node type
  *
  * Packets received on the "one" hook are sent out each of the
- * "many" hooks accoring to an algorithm. Packets received on any
+ * "many" hooks according to an algorithm. Packets received on any
  * "many" hook are always delivered to the "one" hook.
  */
 

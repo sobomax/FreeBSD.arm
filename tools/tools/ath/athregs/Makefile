@@ -1,10 +1,13 @@
-# $FreeBSD: head/tools/tools/ath/athregs/Makefile 220534 2011-04-11 06:53:45Z adrian $
+# $FreeBSD: head/tools/tools/ath/athregs/Makefile 296154 2016-02-28 06:30:39Z adrian $
 
 PROG=	athregs
+
+CFLAGS+=	-I${.CURDIR}/../common/
 
 .PATH.c: ${.CURDIR}/../common
 
 SRCS=	dumpregs.c
+SRCS+=	ctrl.c
 SRCS+=	dumpregs_5210.c
 SRCS+=	dumpregs_5211.c
 SRCS+=	dumpregs_5212.c

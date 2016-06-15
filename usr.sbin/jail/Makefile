@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/jail/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/jail/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,8 @@ MAN=	jail.8 jail.conf.5
 SRCS=	jail.c command.c config.c state.c jailp.h jaillex.l jailparse.y y.tab.h
 
 LIBADD=	jail kvm util l
+
+PACKAGE=jail
 
 NO_WMISSING_VARIABLE_DECLARATIONS=
 

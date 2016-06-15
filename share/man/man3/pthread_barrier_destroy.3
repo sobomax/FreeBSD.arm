@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man3/pthread_barrier_destroy.3 172880 2007-10-22 10:08:01Z ru $
+.\" $FreeBSD: head/share/man/man3/pthread_barrier_destroy.3 300970 2016-05-29 18:25:11Z jilles $
 .\"
 .Dd February 19, 2004
 .Dt PTHREAD_BARRIER 3
@@ -75,9 +75,7 @@ argument to
 .Fn pthread_barrier_init .
 Once the threads have been released the barrier will be reset.
 .Sh IMPLEMENTATION NOTES
-In both
-.Lb libkse
-and
+In
 .Lb libthr
 the
 .Dv PTHREAD_BARRIER_SERIAL_THREAD

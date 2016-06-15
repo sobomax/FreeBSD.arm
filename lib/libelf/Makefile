@@ -1,11 +1,12 @@
-# $FreeBSD: head/lib/libelf/Makefile 291593 2015-12-01 16:08:38Z bdrewery $
+# $FreeBSD: head/lib/libelf/Makefile 298401 2016-04-21 12:58:29Z emaste $
 
+PACKAGE=lib${LIB}
 SHLIBDIR?= /lib
 
 .include <bsd.own.mk>
 
-TOP=	${.CURDIR}/../../contrib/elftoolchain
-SRCDIR=	${TOP}/libelf
+ELFTCDIR=${SRCTOP}/contrib/elftoolchain
+SRCDIR=	${ELFTCDIR}/libelf
 
 .PATH:	${SRCDIR}
 
@@ -79,7 +80,7 @@ SRCS+=	sys/elf32.h sys/elf64.h sys/elf_common.h
 GENSRCS=	libelf_fsize.c libelf_msize.c libelf_convert.c
 CLEANFILES=	${GENSRCS}
 CLEANDIRS=	sys
-CFLAGS+=	-I. -I${SRCDIR} -I${TOP}/common
+CFLAGS+=	-I. -I${SRCDIR} -I${ELFTCDIR}/common
 
 sys/elf32.h sys/elf64.h sys/elf_common.h: ${.CURDIR}/../../sys/${.TARGET} .NOMETA
 	mkdir -p ${.OBJDIR}/sys

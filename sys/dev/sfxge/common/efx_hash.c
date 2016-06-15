@@ -10,7 +10,7 @@
  *  ...You can use this free for any purpose.  It's in the public domain.
  *  It has no warranty."
  *
- * Copyright (c) 2014-2015 Solarflare Communications Inc.
+ * Copyright (c) 2014-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,11 +40,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_hash.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_hash.c 300607 2016-05-24 12:16:57Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
-#include "efx_types.h"
 #include "efx_impl.h"
 
 /* Hash initial value */

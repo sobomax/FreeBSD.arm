@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_test.h 292044 2015-12-10 02:05:35Z cem $");
+__FBSDID("$FreeBSD: head/sys/dev/ioat/ioat_test.h 292229 2015-12-14 22:02:01Z cem $");
 
 #ifndef __IOAT_TEST_H__
 #define __IOAT_TEST_H__
@@ -74,6 +74,10 @@ struct ioat_test {
 	void *raw_vtarget;
 	bool raw_write;
 	bool raw_is_virtual;
+
+	bool zero_stats;
+	/* Configure coalesce period */
+	uint16_t coalesce_period;
 
 	/* Internal usage -- not test inputs */
 	TAILQ_HEAD(, test_transaction) free_q;

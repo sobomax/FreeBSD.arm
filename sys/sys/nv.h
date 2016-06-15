@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/nv.h 286796 2015-08-15 06:34:49Z oshogbo $
+ * $FreeBSD: head/sys/sys/nv.h 293361 2016-01-07 20:52:35Z bdrewery $
  */
 
 #ifndef	_NV_H_
@@ -146,7 +146,7 @@ void nvlist_add_bool(nvlist_t *nvl, const char *name, bool value);
 void nvlist_add_number(nvlist_t *nvl, const char *name, uint64_t value);
 void nvlist_add_string(nvlist_t *nvl, const char *name, const char *value);
 void nvlist_add_stringf(nvlist_t *nvl, const char *name, const char *valuefmt, ...) __printflike(3, 4);
-#ifdef _VA_LIST_DECLARED
+#if !defined(_KERNEL) || defined(_VA_LIST_DECLARED)
 void nvlist_add_stringv(nvlist_t *nvl, const char *name, const char *valuefmt, va_list valueap) __printflike(3, 0);
 #endif
 void nvlist_add_nvlist(nvlist_t *nvl, const char *name, const nvlist_t *value);

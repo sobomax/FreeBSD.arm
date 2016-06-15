@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/ata-lowlevel.c 286415 2015-08-07 14:38:26Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/ata-lowlevel.c 297402 2016-03-29 23:33:44Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -851,7 +851,7 @@ ata_pio_read(struct ata_request *request, int length)
 			panic("ata_pio_read: Unsupported CAM data type %x\n",
 			    (request->ccb->ccb_h.flags & CAM_DATA_MASK));
 
-		/* We may have extra byte already red but not stored. */
+		/* We may have extra byte already read but not stored. */
 		if (resid) {
 			addr[0] = buf[1];
 			addr++;

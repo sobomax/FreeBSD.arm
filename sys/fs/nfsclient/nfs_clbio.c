@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clbio.c 284529 2015-06-17 22:44:27Z glebius $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clbio.c 298788 2016-04-29 16:07:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -100,7 +100,7 @@ ncl_getpages(struct vop_getpages_args *ap)
 	cred = curthread->td_ucred;		/* XXX */
 	nmp = VFSTONFS(vp->v_mount);
 	pages = ap->a_m;
-	count = ap->a_count;
+	npages = ap->a_count;
 
 	if ((object = vp->v_object) == NULL) {
 		ncl_printf("nfs_getpages: called with non-merged cache vnode??\n");
@@ -126,22 +126,21 @@ ncl_getpages(struct vop_getpages_args *ap)
 	} else
 		mtx_unlock(&nmp->nm_mtx);
 
-	npages = btoc(count);
-
 	/*
 	 * If the requested page is partially valid, just return it and
 	 * allow the pager to zero-out the blanks.  Partially valid pages
 	 * can only occur at the file EOF.
+	 *
+	 * XXXGL: is that true for NFS, where short read can occur???
 	 */
-	if (pages[ap->a_reqpage]->valid != 0) {
-		vm_pager_free_nonreq(object, pages, ap->a_reqpage, npages,
-		    FALSE);
-		return (VM_PAGER_OK);
-	}
+	VM_OBJECT_WLOCK(object);
+	if (pages[npages - 1]->valid != 0 && --npages == 0)
+		goto out;
+	VM_OBJECT_WUNLOCK(object);
 
 	/*
 	 * We use only the kva address for the buffer, but this is extremely
-	 * convienient and fast.
+	 * convenient and fast.
 	 */
 	bp = getpbuf(&ncl_pbuf_freecnt);
 
@@ -150,6 +149,7 @@ ncl_getpages(struct vop_getpages_args *ap)
 	PCPU_INC(cnt.v_vnodein);
 	PCPU_ADD(cnt.v_vnodepgsin, npages);
 
+	count = npages << PAGE_SHIFT;
 	iov.iov_base = (caddr_t) kva;
 	iov.iov_len = count;
 	uio.uio_iov = &iov;
@@ -167,8 +167,6 @@ ncl_getpages(struct vop_getpages_args *ap)
 
 	if (error && (uio.uio_resid == count)) {
 		ncl_printf("nfs_getpages: error %d\n", error);
-		vm_pager_free_nonreq(object, pages, ap->a_reqpage, npages,
-		    FALSE);
 		return (VM_PAGER_ERROR);
 	}
 
@@ -203,7 +201,7 @@ ncl_getpages(struct vop_getpages_args *ap)
 		} else {
 			/*
 			 * Read operation was short.  If no error
-			 * occured we may have hit a zero-fill
+			 * occurred we may have hit a zero-fill
 			 * section.  We leave valid set to 0, and page
 			 * is freed by vm_page_readahead_finish() if
 			 * its index is not equal to requested, or
@@ -212,11 +210,14 @@ ncl_getpages(struct vop_getpages_args *ap)
 			 */
 			;
 		}
-		if (i != ap->a_reqpage)
-			vm_page_readahead_finish(m);
 	}
+out:
 	VM_OBJECT_WUNLOCK(object);
-	return (0);
+	if (ap->a_rbehind)
+		*ap->a_rbehind = 0;
+	if (ap->a_rahead)
+		*ap->a_rahead = 0;
+	return (VM_PAGER_OK);
 }
 
 /*
@@ -285,7 +286,7 @@ ncl_putpages(struct vop_putpages_args *ap)
 
 	/*
 	 * We use only the kva address for the buffer, but this is extremely
-	 * convienient and fast.
+	 * convenient and fast.
 	 */
 	bp = getpbuf(&ncl_pbuf_freecnt);
 
@@ -680,7 +681,7 @@ ncl_bioread(struct vnode *vp, struct uio *uio, int ioflag, struct ucred *cred)
 		ncl_printf(" ncl_bioread: type %x unexpected\n", vp->v_type);
 		bp = NULL;
 		break;
-	    };
+	    }
 
 	    if (n > 0) {
 		    error = vn_io_fault_uiomove(bp->b_data + on, (int)n, uio);
@@ -1187,7 +1188,7 @@ again:
 
 		/*
 		 * Get the partial update on the progress made from
-		 * uiomove, if an error occured.
+		 * uiomove, if an error occurred.
 		 */
 		if (error != 0)
 			n = local_resid - uio->uio_resid;
@@ -1479,7 +1480,7 @@ again:
 			}
 			/*
 			 * We might have lost our iod while sleeping,
-			 * so check and loop if nescessary.
+			 * so check and loop if necessary.
 			 */
 			goto again;
 		}
@@ -1663,7 +1664,7 @@ ncl_doio(struct vnode *vp, struct buf *bp, struct ucred *cr, struct thread *td,
 	    default:
 		ncl_printf("ncl_doio:  type %x unexpected\n", vp->v_type);
 		break;
-	    };
+	    }
 	    if (error) {
 		bp->b_ioflags |= BIO_ERROR;
 		bp->b_error = error;

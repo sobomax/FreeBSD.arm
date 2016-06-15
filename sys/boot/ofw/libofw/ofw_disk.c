@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/ofw/libofw/ofw_disk.c 236579 2012-06-04 20:45:33Z marius $");
+__FBSDID("$FreeBSD: head/sys/boot/ofw/libofw/ofw_disk.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 /*
  * Disk I/O routines using Open Firmware
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: head/sys/boot/ofw/libofw/ofw_disk.c 236579 2012-06-04 20:45:
 
 static int	ofwd_init(void);
 static int	ofwd_strategy(void *devdata, int flag, daddr_t dblk,
-		    size_t size, char *buf, size_t *rsize);
+		    size_t offset, size_t size, char *buf, size_t *rsize);
 static int	ofwd_open(struct open_file *f, ...);
 static int	ofwd_close(struct open_file *f);
 static int	ofwd_ioctl(struct open_file *f, u_long cmd, void *data);
@@ -83,8 +83,8 @@ ofwd_init(void)
 }
 
 static int
-ofwd_strategy(void *devdata, int flag __unused, daddr_t dblk, size_t size,
-    char *buf, size_t *rsize)
+ofwd_strategy(void *devdata, int flag __unused, daddr_t dblk, size_t offset,
+    size_t size, char *buf, size_t *rsize)
 {
 	struct ofw_devdesc *dp = (struct ofw_devdesc *)devdata;
 	daddr_t pos;

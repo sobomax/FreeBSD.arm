@@ -1,10 +1,11 @@
 #!/usr/local/bin/perl -wC
-# $FreeBSD: head/tools/tools/locale/tools/cldr2def.pl 290865 2015-11-15 14:34:29Z bapt $
+# $FreeBSD: head/tools/tools/locale/tools/cldr2def.pl 300975 2016-05-29 22:27:42Z bapt $
 
 use strict;
 use File::Copy;
 use XML::Parser;
 use Tie::IxHash;
+use Text::Iconv;
 use Data::Dumper;
 use Getopt::Long;
 use Digest::SHA qw(sha1_hex);
@@ -67,7 +68,9 @@ my %callback = (
 	mdorder => \&callback_mdorder,
 	altmon => \&callback_altmon,
 	cformat => \&callback_cformat,
+	dtformat => \&callback_dtformat,
 	cbabmon => \&callback_abmon,
+	cbampm => \&callback_ampm,
 	data => undef,
 );
 
@@ -182,9 +185,9 @@ if ($TYPE eq "timedef") {
 	    "t_fmt"		=> "s",
 	    "d_fmt"		=> "s",
 	    "c_fmt"		=> "<cformat<d_t_fmt<s",
-	    "am_pm"		=> "as",
+	    "am_pm"		=> "<cbampm<am_pm<as",
 	    "d_fmt"		=> "s",
-	    "d_t_fmt"		=> "s",
+	    "d_t_fmt"		=> "<dtformat<d_t_fmt<s",
 	    "altmon"		=> "<altmon<mon<as",
 	    "md_order"		=> "<mdorder<d_fmt<s",
 	    "t_fmt_ampm"	=> "s",
@@ -194,11 +197,45 @@ if ($TYPE eq "timedef") {
 	make_makefile();
 }
 
+sub callback_ampm {
+	my $s = shift;
+	my $nl = $callback{data}{l} . "_" . $callback{data}{c};
+	my $enc = $callback{data}{e};
+	my  $converter = Text::Iconv->new("utf-8", "$enc");
+
+	if ($nl eq 'ru_RU') {
+		if ($enc eq 'UTF-8') {
+			$s = 'дп;пп';
+		} else {
+			$s = $converter->convert("дп;пп");
+		}
+	}
+	return $s;
+}
+
 sub callback_cformat {
- 	my $s = shift;
- 	$s =~ s/ %Z//;
- 	$s =~ s/ %z//;
- 	return $s;
+	my $s = shift;
+	my $nl = $callback{data}{l} . "_" . $callback{data}{c};
+
+	$s =~ s/\.,/\./;
+	$s =~ s/ %Z//;
+	$s =~ s/ %z//;
+	$s =~ s/^"(%B %e, )/"%A, $1/;
+	$s =~ s/^"(%e %B )/"%A $1/;
+	return $s;
+};
+
+sub callback_dtformat {
+	my $s = shift;
+	my $nl = $callback{data}{l} . "_" . $callback{data}{c};
+
+	if ($nl eq 'ja_JP') {
+		$s =~ s/(> )(%H)/$1%A $2/;
+	}
+	$s =~ s/\.,/\./;
+	$s =~ s/^"(%B %e, )/"%A, $1/;
+	$s =~ s/^"(%e %B )/"%A $1/;
+	return $s;
 };
 
 sub callback_mdorder {
@@ -796,28 +833,39 @@ sub make_makefile {
 	print "Creating Makefile for $TYPE\n";
 	my $SRCOUT;
 	my $SRCOUT2;
-	my $SRCOUT3;
+	my $SRCOUT3 = "";
+	my $SRCOUT4 = "";
 	my $MAPLOC;
 	if ($TYPE eq "colldef") {
 		$SRCOUT = "localedef -D -U -i \${.IMPSRC} \\\n" .
-			"\t-f \${MAPLOC}/map.UTF-8 " .
+			"\t-f \${MAPLOC}/map.\${.TARGET:T:R:E} " .
 			"\${.OBJDIR}/\${.IMPSRC:T:R}";
 		$MAPLOC = "MAPLOC=\t\t\${.CURDIR}/../../tools/tools/" .
 				"locale/etc/final-maps\n";
 		$SRCOUT2 = "LC_COLLATE";
+		$SRCOUT3 = "" .
+			".for f t in \${LOCALES_MAPPED}\n" .
+			"FILES+=\t\$t.LC_COLLATE\n" .
+			"FILESDIR_\$t.LC_COLLATE=\t\${LOCALEDIR}/\$t\n" .
+			"\$t.LC_COLLATE: \${.CURDIR}/\$f.src\n" .
+			"\tlocaledef -D -U -i \${.ALLSRC} \\\n" .
+			"\t\t-f \${MAPLOC}/map.\${.TARGET:T:R:E} \\\n" .
+			"\t\t\${.OBJDIR}/\${.TARGET:T:R}\n" .
+			".endfor\n\n";
+		$SRCOUT4 = "## LOCALES_MAPPED\n";
 	}
 	elsif ($TYPE eq "ctypedef") {
 		$SRCOUT = "localedef -D -U -c -w \${MAPLOC}/widths.txt \\\n" .
-			"\t-f \${MAPLOC}/map.\${.IMPSRC:T:R:C/^.*\\.//} " .
+			"\t-f \${MAPLOC}/map.\${.IMPSRC:T:R:E} " .
 			"\\\n\t-i \${.IMPSRC} \${.OBJDIR}/\${.IMPSRC:T:R} " .
 			" || true";
 		$SRCOUT2 = "LC_CTYPE";
 		$MAPLOC = "MAPLOC=\t\t\${.CURDIR}/../../tools/tools/" .
 				"locale/etc/final-maps\n";
 		$SRCOUT3 = "## SYMPAIRS\n\n" .
-			".for PAIR in \${SYMPAIRS}\n" .
-			"\${PAIR:C/^.*://:S/src\$/LC_CTYPE/}: " .
-			"\${PAIR:C/:.*//}\n" .
+			".for s t in \${SYMPAIRS}\n" .
+			"\${t:S/src\$/LC_CTYPE/}: " .
+			"\$s\n" .
 			"\tlocaledef -D -U -c -w \${MAPLOC}/widths.txt \\\n" .
 			"\t-f \${MAPLOC}/map.\${.TARGET:T:R:C/^.*\\.//} " .
 			"\\\n\t-i \${.ALLSRC} \${.OBJDIR}/\${.TARGET:T:R} " .
@@ -843,6 +891,8 @@ ${MAPLOC}
 	$SRCOUT
 
 ## PLACEHOLDER
+
+${SRCOUT4}
 
 EOF
 
@@ -891,7 +941,7 @@ EOF
 				my @a = split(/_/, $file);
 				my @b = split(/\./, $a[-1]);
 				$file =~ s/_x_/_/;
-				print FOUT "SAME+=\t\t$link:$file\n";
+				print FOUT "SAME+=\t\t$link $file\n";
 				undef($languages{$a[0]}{$a[1]}{data}{$b[0]}{$b[1]});
 			}
 		}
@@ -923,7 +973,7 @@ EOF
 				my $file = $l . "_";
 				$file .= $f . "_" if ($f ne "x");
 				$file .= $c;
-				print FOUT "SAME+=\t\t$file.$e:$languages{$l}{$f}{nc_link}.$e\t# legacy (lang/country change)\n";
+				print FOUT "SAME+=\t\t$file.$e $languages{$l}{$f}{nc_link}.$e\t# legacy (lang/country change)\n";
 			}
 		}
 
@@ -933,7 +983,7 @@ EOF
 				my $file = $l . "_";
 				$file .= $f . "_" if ($f ne "x");
 				$file .= $c;
-				print FOUT "SAME+=\t\t$file.$a[0]:$file.$a[1]\t# legacy (same charset)\n";
+				print FOUT "SAME+=\t\t$file.$a[0] $file.$a[1]\t# legacy (same charset)\n";
 			}
 		}
 
@@ -946,9 +996,9 @@ EOF
 FILES=		\${LOCALES:S/\$/.${SRCOUT2}/}
 CLEANFILES=	\${FILES}
 
-.for f in \${SAME}
-SYMLINKS+=	../\${f:C/:.*\$//}/\${FILESNAME} \\
-    \${LOCALEDIR}/\${f:C/^.*://}/\${FILESNAME}
+.for f t in \${SAME}
+SYMLINKS+=	../\$f/\${FILESNAME} \\
+    \${LOCALEDIR}/\$t/\${FILESNAME}
 .endfor
 
 .for f in \${LOCALES}

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/contrib/vchiq/interface/vchiq_arm/vchiq_kmod.c 290535 2015-11-08 03:54:15Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/contrib/vchiq/interface/vchiq_arm/vchiq_kmod.c 294035 2016-01-14 20:25:22Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -173,7 +173,7 @@ bcm_vchiq_attach(device_t dev)
 		return (ENXIO);
 	}
 
-	mtx_init(&sc->lock, "vchiq", MTX_DEF, 0);
+	mtx_init(&sc->lock, "vchiq", 0, MTX_DEF);
 	bcm_vchiq_sc = sc;
 
 	vchiq_init();

@@ -45,7 +45,7 @@
  **/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/moused/moused.c 248478 2013-03-18 23:22:47Z jkim $");
+__FBSDID("$FreeBSD: head/usr.sbin/moused/moused.c 298445 2016-04-22 03:55:33Z araujo $");
 
 #include <sys/param.h>
 #include <sys/consio.h>
@@ -2986,7 +2986,7 @@ pnpgets(char *buf)
 connect_idle:
 
     /* we may still have something in the buffer */
-    return ((i > 0) ? i : 0);
+    return (MAX(i, 0));
 }
 
 static int

@@ -30,12 +30,12 @@
  *
  * ARM11 assembly functions for CPU / MMU / TLB specific operations
  *
- * XXX We make no attempt at present to take advantage of the v6 memroy
+ * XXX We make no attempt at present to take advantage of the v6 memory
  * architecture or physically tagged cache.
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11.S 280833 2015-03-29 22:46:07Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11.S 299069 2016-05-04 15:48:59Z pfg $");
 
 /*
  * TLB functions
@@ -46,12 +46,6 @@ ENTRY(arm11_tlb_flushID_SE)
 	mcr	p15, 0, r0, c7, c10, 4	/* drain write buffer */
 	RET
 END(arm11_tlb_flushID_SE)
-
-ENTRY(arm11_tlb_flushI_SE)
-	mcr	p15, 0, r0, c8, c5, 1	/* flush I tlb single entry */
-	mcr	p15, 0, r0, c7, c10, 4	/* drain write buffer */
-	RET
-END(arm11_tlb_flushI_SE)
 
 /*
  * Context switch.
@@ -86,12 +80,6 @@ ENTRY(arm11_tlb_flushID)
 	mcr	p15, 0, r0, c7, c10, 4	/* drain write buffer */
 	mov	pc, lr
 END(arm11_tlb_flushID)
-
-ENTRY(arm11_tlb_flushI)
-	mcr	p15, 0, r0, c8, c5, 0	/* flush I tlb */
-	mcr	p15, 0, r0, c7, c10, 4	/* drain write buffer */
-	mov	pc, lr
-END(arm11_tlb_flushI)
 
 ENTRY(arm11_tlb_flushD)
 	mcr	p15, 0, r0, c8, c6, 0	/* flush D tlb */

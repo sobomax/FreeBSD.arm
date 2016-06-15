@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)rpcb_prot.c 1.9 89/04/21 Copyr 1984 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_prot.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_prot.c 301754 2016-06-09 19:44:47Z pfg $");
 
 /*
  * rpcb_prot.c
@@ -56,10 +56,10 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_prot.c 288113 2015-09-22 15:40:07Z ro
 bool_t
 xdr_rpcb(XDR *xdrs, RPCB *objp)
 {
-	if (!xdr_u_int32_t(xdrs, &objp->r_prog)) {
+	if (!xdr_rpcprog(xdrs, &objp->r_prog)) {
 		return (FALSE);
 	}
-	if (!xdr_u_int32_t(xdrs, &objp->r_vers)) {
+	if (!xdr_rpcvers(xdrs, &objp->r_vers)) {
 		return (FALSE);
 	}
 	if (!xdr_string(xdrs, &objp->r_netid, (u_int)~0)) {
@@ -207,14 +207,14 @@ xdr_rpcb_entry_list_ptr(XDR *xdrs, rpcb_entry_list_ptr *rp)
 		 * the case of freeing we must remember the next object
 		 * before we free the current object ...
 		 */
-		if (freeing)
+		if (freeing && *rp)
 			next = (*rp)->rpcb_entry_next;
 		if (! xdr_reference(xdrs, (caddr_t *)rp,
 		    (u_int)sizeof (rpcb_entry_list),
 				    (xdrproc_t)xdr_rpcb_entry)) {
 			return (FALSE);
 		}
-		if (freeing && *rp) {
+		if (freeing) {
 			next_copy = next;
 			rp = &next_copy;
 			/*
@@ -243,13 +243,13 @@ xdr_rpcb_rmtcallargs(XDR *xdrs, struct rpcb_rmtcallargs *p)
 
 	buf = XDR_INLINE(xdrs, 3 * BYTES_PER_XDR_UNIT);
 	if (buf == NULL) {
-		if (!xdr_u_int32_t(xdrs, &objp->prog)) {
+		if (!xdr_rpcprog(xdrs, &objp->prog)) {
 			return (FALSE);
 		}
-		if (!xdr_u_int32_t(xdrs, &objp->vers)) {
+		if (!xdr_rpcvers(xdrs, &objp->vers)) {
 			return (FALSE);
 		}
-		if (!xdr_u_int32_t(xdrs, &objp->proc)) {
+		if (!xdr_rpcproc(xdrs, &objp->proc)) {
 			return (FALSE);
 		}
 	} else {

@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_uath.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/wlan/if_uath.c 298818 2016-04-29 22:14:11Z avos $");
 
 /*-
  * Driver for Atheros AR5523 USB parts.
@@ -328,7 +328,8 @@ uath_attach(device_t dev)
 	struct uath_softc *sc = device_get_softc(dev);
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
 	struct ieee80211com *ic = &sc->sc_ic;
-	uint8_t bands, iface_index = UATH_IFACE_INDEX;		/* XXX */
+	uint8_t bands[IEEE80211_MODE_BYTES];
+	uint8_t iface_index = UATH_IFACE_INDEX;		/* XXX */
 	usb_error_t error;
 
 	sc->sc_dev = dev;
@@ -431,13 +432,13 @@ uath_attach(device_t dev)
 	/* put a regulatory domain to reveal informations.  */
 	uath_regdomain = sc->sc_devcap.regDomain;
 
-	bands = 0;
-	setbit(&bands, IEEE80211_MODE_11B);
-	setbit(&bands, IEEE80211_MODE_11G);
+	memset(bands, 0, sizeof(bands));
+	setbit(bands, IEEE80211_MODE_11B);
+	setbit(bands, IEEE80211_MODE_11G);
 	if ((sc->sc_devcap.analog5GhzRevision & 0xf0) == 0x30)
-		setbit(&bands, IEEE80211_MODE_11A);
+		setbit(bands, IEEE80211_MODE_11A);
 	/* XXX turbo */
-	ieee80211_init_channels(ic, NULL, &bands);
+	ieee80211_init_channels(ic, NULL, bands);
 
 	ieee80211_ifattach(ic);
 	ic->ic_raw_xmit = uath_raw_xmit;

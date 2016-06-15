@@ -33,7 +33,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/atomic.h 291426 2015-11-28 12:12:28Z mmel $
+ * $FreeBSD: head/sys/arm/include/atomic.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef	_MACHINE_ATOMIC_H_
@@ -41,8 +41,6 @@
 
 #include <sys/types.h>
 #include <machine/armreg.h>
-
-#include <machine/acle-compat.h>
 
 #ifndef _KERNEL
 #include <machine/sysarch.h>

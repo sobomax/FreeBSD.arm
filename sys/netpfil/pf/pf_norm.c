@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_norm.c 289316 2015-10-14 16:21:41Z kp $");
+__FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_norm.c 300307 2016-05-20 15:41:05Z kp $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -62,7 +62,7 @@ __FBSDID("$FreeBSD: head/sys/netpfil/pf/pf_norm.c 289316 2015-10-14 16:21:41Z kp
 struct pf_frent {
 	TAILQ_ENTRY(pf_frent)	fr_next;
 	struct mbuf	*fe_m;
-	uint16_t	fe_hdrlen;	/* ipv4 header lenght with ip options
+	uint16_t	fe_hdrlen;	/* ipv4 header length with ip options
 					   ipv6, extension, fragment header */
 	uint16_t	fe_extoff;	/* last extension header offset or 0 */
 	uint16_t	fe_len;		/* fragment length */
@@ -374,7 +374,7 @@ pf_fillup_fragment(struct pf_fragment_cmp *key, struct pf_frent *frent,
 		}
 
 		*(struct pf_fragment_cmp *)frag = *key;
-		frag->fr_timeout = time_second;
+		frag->fr_timeout = time_uptime;
 		frag->fr_maxlen = frent->fe_len;
 		TAILQ_INIT(&frag->fr_queue);
 

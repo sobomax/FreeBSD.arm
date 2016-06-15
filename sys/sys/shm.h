@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/sys/shm.h 286088 2015-07-30 18:59:01Z rodrigc $ */
+/* $FreeBSD: head/sys/sys/shm.h 301074 2016-05-31 19:24:32Z ed $ */
 /*	$NetBSD: shm.h,v 1.15 1994/06/29 06:45:17 cgd Exp $	*/
 
 /*-
@@ -43,6 +43,8 @@
 #include <sys/ipc.h>
 #include <sys/_types.h>
 
+#include <machine/param.h>
+
 #define SHM_RDONLY  010000  /* Attach read-only (else read-write) */
 #define SHM_RND     020000  /* Round attach address to SHMLBA */
 #define SHMLBA      PAGE_SIZE /* Segment low boundary address multiple */
@@ -56,7 +58,7 @@
 #define	SHM_LOCK	11
 #define	SHM_UNLOCK	12
 
-/* ipcs shmctl commands for Linux compatability */
+/* ipcs shmctl commands for Linux compatibility */
 #define	SHM_STAT	13
 #define	SHM_INFO	14
 

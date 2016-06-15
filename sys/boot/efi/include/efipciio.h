@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/efipciio.h 287317 2015-08-30 23:58:53Z marcel $ */
+/* $FreeBSD: head/sys/boot/efi/include/efipciio.h 293724 2016-01-12 02:17:39Z smh $ */
 /** @file
   EFI PCI I/O Protocol provides the basic Memory, I/O, PCI configuration, 
   and DMA interfaces that a driver uses to access its PCI controller.
@@ -21,9 +21,7 @@
 /// Global ID for the PCI I/O Protocol
 ///
 #define EFI_PCI_IO_PROTOCOL_GUID \
-  { \
-    0x4cf5b200, 0x68b8, 0x4ca5, {0x9e, 0xec, 0xb2, 0x3e, 0x3f, 0x50, 0x2, 0x9a } \
-  }
+    { 0x4cf5b200, 0x68b8, 0x4ca5, {0x9e, 0xec, 0xb2, 0x3e, 0x3f, 0x50, 0x2, 0x9a} }
 
 typedef struct _EFI_PCI_IO_PROTOCOL  EFI_PCI_IO_PROTOCOL;
 

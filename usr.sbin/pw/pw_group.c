@@ -26,7 +26,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/pw/pw_group.c 289600 2015-10-19 18:29:32Z ngie $";
+  "$FreeBSD: head/usr.sbin/pw/pw_group.c 301367 2016-06-04 16:31:33Z bapt $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -261,7 +261,7 @@ pw_group_next(int argc, char **argv, char *arg1 __unused)
 	int ch;
 	bool quiet = false;
 
-	while ((ch = getopt(argc, argv, "Cq")) != -1) {
+	while ((ch = getopt(argc, argv, "C:q")) != -1) {
 		switch (ch) {
 		case 'C':
 			cfg = optarg;
@@ -662,6 +662,11 @@ pw_group_mod(int argc, char **argv, char *arg1)
 		delete_members(grp, oldmembers);
 	} else if (newmembers) {
 		grp_add_members(&grp, newmembers);
+	}
+
+	if (dryrun) {
+		print_group(grp, pretty);
+		return (EXIT_SUCCESS);
 	}
 
 	if ((rc = chggrent(name, grp)) != 0) {

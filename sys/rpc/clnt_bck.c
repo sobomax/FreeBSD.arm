@@ -34,7 +34,7 @@ static char *sccsid = "@(#)clnt_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 static char sccsid3[] = "@(#)clnt_vc.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/clnt_bck.c 268115 2014-07-01 20:47:16Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/rpc/clnt_bck.c 301800 2016-06-10 17:53:28Z ngie $");
  
 /*
  * clnt_tcp.c, Implements a TCP/IP based, client side RPC.
@@ -175,14 +175,9 @@ clnt_bck_create(
 	return (cl);
 
 err:
-	if (cl) {
-		if (ct) {
-			mtx_destroy(&ct->ct_lock);
-			mem_free(ct, sizeof (struct ct_data));
-		}
-		if (cl)
-			mem_free(cl, sizeof (CLIENT));
-	}
+	mtx_destroy(&ct->ct_lock);
+	mem_free(ct, sizeof (struct ct_data));
+	mem_free(cl, sizeof (CLIENT));
 	return (NULL);
 }
 
@@ -381,7 +376,7 @@ printf("emsgsize\n");
 			break;
 		default:
 			stat = RPC_CANTRECV;
-		};
+		}
 		errp->re_status = stat;
 		goto out;
 	} else {
@@ -431,7 +426,7 @@ got_reply:
 			}
 		}		/* end successful completion */
 		/*
-		 * If unsuccesful AND error is an authentication error
+		 * If unsuccessful AND error is an authentication error
 		 * then refresh credentials and try again, else break
 		 */
 		else if (stat == RPC_AUTHERROR)

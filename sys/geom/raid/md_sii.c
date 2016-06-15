@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/md_sii.c 286615 2015-08-11 03:12:09Z pfg $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/md_sii.c 298698 2016-04-27 15:10:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -1482,7 +1482,7 @@ g_raid_md_write_sii(struct g_raid_md_object *md, struct g_raid_volume *tvol,
 	struct g_raid_md_sii_object *mdi;
 	struct g_raid_md_sii_perdisk *pd;
 	struct sii_raid_conf *meta;
-	int i;
+	u_int i;
 
 	sc = md->mdo_softc;
 	mdi = (struct g_raid_md_sii_object *)md;

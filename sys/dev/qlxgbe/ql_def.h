@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/qlxgbe/ql_def.h 284741 2015-06-23 22:22:36Z davidcs $
+ * $FreeBSD: head/sys/dev/qlxgbe/ql_def.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -113,7 +113,7 @@ typedef struct _qla_tx_ring {
 } qla_tx_ring_t;
 
 /*
- * Adapter structure contains the hardware independant information of the
+ * Adapter structure contains the hardware independent information of the
  * pci function.
  */
 struct qla_host {

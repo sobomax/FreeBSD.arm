@@ -1,8 +1,8 @@
-# $FreeBSD: head/usr.bin/clang/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/usr.bin/clang/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
-SUBDIR=	clang clang-tblgen tblgen
+SUBDIR=	clang clang-tblgen llvm-tblgen
 
 .if !defined(TOOLS_PREFIX)
 .if ${MK_CLANG_EXTRAS} != "no"
@@ -27,7 +27,6 @@ SUBDIR+=bugpoint \
 	llvm-profdata \
 	llvm-rtdyld \
 	llvm-symbolizer \
-	macho-dump \
 	opt
 .endif
 

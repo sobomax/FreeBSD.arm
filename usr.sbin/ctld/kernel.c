@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/kernel.c 290824 2015-11-14 16:18:22Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/kernel.c 301437 2016-06-05 08:48:37Z trasz $");
 
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -900,6 +900,7 @@ kernel_handoff(struct connection *conn)
 	req.data.handoff.max_recv_data_segment_length =
 	    conn->conn_max_data_segment_length;
 	req.data.handoff.max_burst_length = conn->conn_max_burst_length;
+	req.data.handoff.first_burst_length = conn->conn_first_burst_length;
 	req.data.handoff.immediate_data = conn->conn_immediate_data;
 
 	if (ioctl(ctl_fd, CTL_ISCSI, &req) == -1) {

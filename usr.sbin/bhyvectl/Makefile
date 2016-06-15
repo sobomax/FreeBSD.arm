@@ -1,11 +1,12 @@
 #
-# $FreeBSD: head/usr.sbin/bhyvectl/Makefile 284539 2015-06-18 06:00:17Z neel $
+# $FreeBSD: head/usr.sbin/bhyvectl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
 PROG=	bhyvectl
 SRCS=	bhyvectl.c
+PACKAGE=	bhyve
 
-MAN=
+MAN=	bhyvectl.8
 
 LIBADD=	vmmapi util
 

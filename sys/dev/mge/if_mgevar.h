@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mge/if_mgevar.h 289948 2015-10-25 22:17:10Z zbb $
+ * $FreeBSD: head/sys/dev/mge/if_mgevar.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef __IF_MGE_H__
@@ -370,7 +370,7 @@ struct mge_softc {
 /* RX error codes */
 #define MGE_RX_ERROR_CE		(0 << 1)	/* CRC error */
 #define MGE_RX_ERROR_OR		(1 << 1)	/* Overrun error */
-#define MGE_RX_ERROR_MF		(2 << 1)	/* Max frame lenght error */
+#define	MGE_RX_ERROR_MF		(2 << 1)	/* Max frame length error */
 #define MGE_RX_ERROR_RE		(3 << 1)	/* Resource error */
 
 #endif /* __IF_MGE_H__ */

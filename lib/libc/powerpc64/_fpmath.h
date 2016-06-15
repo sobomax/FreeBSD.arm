@@ -23,16 +23,23 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/powerpc64/_fpmath.h 209878 2010-07-10 14:45:03Z nwhitehorn $
+ * $FreeBSD: head/lib/libc/powerpc64/_fpmath.h 296113 2016-02-26 20:38:23Z nwhitehorn $
  */
 
 union IEEEl2bits {
 	long double	e;
 	struct {
+#if _BYTE_ORDER == _LITTLE_ENDIAN
+		unsigned int	manl	:32;
+		unsigned int	manh	:20;
+		unsigned int	exp	:11;
+		unsigned int	sign	:1;
+#else	/* _BYTE_ORDER == _LITTLE_ENDIAN */
 		unsigned int		sign	:1;
 		unsigned int		exp	:11;
 		unsigned int		manh	:20;
 		unsigned int		manl	:32;
+#endif
 	} bits;
 };
 

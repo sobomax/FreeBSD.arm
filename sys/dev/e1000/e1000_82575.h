@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82575.h 286833 2015-08-16 20:13:58Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82575.h 295323 2016-02-05 17:14:37Z erj $*/
 
 #ifndef _E1000_82575_H_
 #define _E1000_82575_H_
@@ -495,10 +495,11 @@ void e1000_rlpml_set_vf(struct e1000_hw *, u16);
 s32 e1000_promisc_set_vf(struct e1000_hw *, enum e1000_promisc_type type);
 u16 e1000_rxpbs_adjust_82580(u32 data);
 s32 e1000_read_emi_reg(struct e1000_hw *hw, u16 addr, u16 *data);
-s32 e1000_set_eee_i350(struct e1000_hw *);
-s32 e1000_set_eee_i354(struct e1000_hw *);
+s32 e1000_set_eee_i350(struct e1000_hw *hw, bool adv1G, bool adv100M);
+s32 e1000_set_eee_i354(struct e1000_hw *hw, bool adv1G, bool adv100M);
 s32 e1000_get_eee_status_i354(struct e1000_hw *, bool *);
 s32 e1000_initialize_M88E1512_phy(struct e1000_hw *hw);
+s32 e1000_initialize_M88E1543_phy(struct e1000_hw *hw);
 
 /* I2C SDA and SCL timing parameters for standard mode */
 #define E1000_I2C_T_HD_STA	4

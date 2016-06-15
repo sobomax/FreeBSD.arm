@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * 	$FreeBSD: head/sys/netgraph/netflow/netflow_v9.c 260169 2014-01-01 21:48:04Z glebius $
+ * 	$FreeBSD: head/sys/netgraph/netflow/netflow_v9.c 295126 2016-02-01 17:41:21Z glebius $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netgraph/netflow/netflow_v9.c 260169 2014-01-01 21:48:04Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netgraph/netflow/netflow_v9.c 295126 2016-02-01 17:41:21Z glebius $");
 
 #include "opt_inet6.h"
 #include "opt_route.h"
@@ -35,10 +35,13 @@ __FBSDID("$FreeBSD: head/sys/netgraph/netflow/netflow_v9.c 260169 2014-01-01 21:
 #include <sys/systm.h>
 #include <sys/counter.h>
 #include <sys/kernel.h>
+#include <sys/ktr.h>
 #include <sys/limits.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/syslog.h>
 #include <sys/socket.h>
+#include <vm/uma.h>
 
 #include <net/if.h>
 #include <net/route.h>

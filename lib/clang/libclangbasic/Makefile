@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangbasic/Makefile 288998 2015-10-08 00:48:29Z rodrigc $
+# $FreeBSD: head/lib/clang/libclangbasic/Makefile 301277 2016-06-03 16:17:36Z dim $
 
 .include <bsd.own.mk>
 
@@ -50,3 +50,6 @@ TGHDRS=	AttrHasAttributeImpl \
 
 # XX: work around GCC bug 67888
 CFLAGS.gcc += -fpermissive
+
+# Ensure FREEBSD_CC_VERSION is defined for Targets.cpp
+CFLAGS.Targets.cpp+= -include ../freebsd_cc_version.h

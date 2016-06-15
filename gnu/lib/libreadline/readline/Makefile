@@ -1,8 +1,8 @@
-# $FreeBSD: head/gnu/lib/libreadline/readline/Makefile 291330 2015-11-25 20:38:17Z bdrewery $
+# $FreeBSD: head/gnu/lib/libreadline/readline/Makefile 294608 2016-01-22 21:33:27Z emaste $
 
 LIB=    readline
 INTERNALLIB=	yes
-NO_MAN=	yes
+MAN=
 
 TILDESRC= tilde.c
 SRCS=     readline.c vi_mode.c funmap.c keymaps.c parens.c search.c \

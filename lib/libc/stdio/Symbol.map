@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/stdio/Symbol.map 285140 2015-07-04 16:42:14Z oshogbo $
+ * $FreeBSD: head/lib/libc/stdio/Symbol.map 299572 2016-05-12 21:30:22Z cem $
  */
 
 FBSD_1.0 {
@@ -164,6 +164,7 @@ FBSD_1.3 {
 
 FBSD_1.4 {
 	fdclose;
+	fopencookie;
 };
 
 FBSDprivate_1.0 {

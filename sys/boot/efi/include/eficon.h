@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/eficon.h 163898 2006-11-02 02:42:48Z marcel $ */
+/* $FreeBSD: head/sys/boot/efi/include/eficon.h 293724 2016-01-12 02:17:39Z smh $ */
 #ifndef _EFI_CON_H
 #define _EFI_CON_H
 
@@ -32,7 +32,7 @@ Revision History
 //
 
 #define SIMPLE_TEXT_OUTPUT_PROTOCOL \
-    { 0x387477c2, 0x69c7, 0x11d2, 0x8e, 0x39, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x3b }
+    { 0x387477c2, 0x69c7, 0x11d2, {0x8e, 0x39, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x3b} }
 
 INTERFACE_DECL(_SIMPLE_TEXT_OUTPUT_INTERFACE);
 
@@ -239,8 +239,8 @@ typedef struct _SIMPLE_TEXT_OUTPUT_INTERFACE {
 // Text input protocol
 //
 
-#define SIMPLE_TEXT_INPUT_PROTOCOL  \
-    { 0x387477c1, 0x69c7, 0x11d2, 0x8e, 0x39, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x3b }
+#define SIMPLE_TEXT_INPUT_PROTOCOL \
+    { 0x387477c1, 0x69c7, 0x11d2, {0x8e, 0x39, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x3b} }
 
 INTERFACE_DECL(_SIMPLE_INPUT_INTERFACE);
 

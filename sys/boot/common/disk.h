@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/common/disk.h 291402 2015-11-27 18:17:53Z zbb $
+ * $FreeBSD: head/sys/boot/common/disk.h 300117 2016-05-18 05:59:05Z imp $
  */
 
 /*
@@ -107,11 +107,12 @@ extern int disk_read(struct disk_devdesc *dev, void *buf, off_t offset,
     u_int blocks);
 extern int disk_write(struct disk_devdesc *dev, void *buf, off_t offset,
     u_int blocks);
+extern int ptblread(void *d, void *buf, size_t blocks, off_t offset);
 
 /*
  * Print information about slices on a disk.
  */
-extern void disk_print(struct disk_devdesc *dev, char *prefix, int verbose);
+extern int disk_print(struct disk_devdesc *dev, char *prefix, int verbose);
 extern char* disk_fmtdev(struct disk_devdesc *dev);
 extern int disk_parsedev(struct disk_devdesc *dev, const char *devspec,
     const char **path);

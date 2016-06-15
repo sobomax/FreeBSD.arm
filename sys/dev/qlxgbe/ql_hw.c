@@ -28,11 +28,11 @@
 /*
  * File: ql_hw.c
  * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
- * Content: Contains Hardware dependant functions
+ * Content: Contains Hardware dependent functions
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_hw.c 289635 2015-10-20 17:27:11Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_hw.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "ql_os.h"
 #include "ql_hw.h"
@@ -1102,7 +1102,7 @@ qla_config_mac_addr(qla_host_t *ha, uint8_t *mac_addr, uint32_t add_mac)
 
 /*
  * Name: qla_set_mac_rcv_mode
- * Function: Enable/Disable AllMulticast and Promiscous Modes.
+ * Function: Enable/Disable AllMulticast and Promiscuous Modes.
  */
 static int
 qla_set_mac_rcv_mode(qla_host_t *ha, uint32_t mode)
@@ -3434,7 +3434,7 @@ qla_iscsi_pdu(qla_host_t *ha, struct mbuf *mp)
 			offset = hdrlen + 4;
 	
 			if (mp->m_len >= offset) {
-				th = (struct tcphdr *)(mp->m_data + hdrlen);;
+				th = (struct tcphdr *)(mp->m_data + hdrlen);
 			} else {
                                 m_copydata(mp, hdrlen, 4, buf);
 				th = (struct tcphdr *)buf;
@@ -3458,7 +3458,7 @@ qla_iscsi_pdu(qla_host_t *ha, struct mbuf *mp)
 			offset = hdrlen + 4;
 
 			if (mp->m_len >= offset) {
-				th = (struct tcphdr *)(mp->m_data + hdrlen);;
+				th = (struct tcphdr *)(mp->m_data + hdrlen);
 			} else {
 				m_copydata(mp, hdrlen, 4, buf);
 				th = (struct tcphdr *)buf;

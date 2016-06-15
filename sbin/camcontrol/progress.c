@@ -42,7 +42,7 @@
 #include <unistd.h>
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/camcontrol/progress.c 286965 2015-08-20 16:07:51Z ken $");
+__FBSDID("$FreeBSD: head/sbin/camcontrol/progress.c 298262 2016-04-19 11:12:57Z araujo $");
 
 #include "progress.h"
 
@@ -56,7 +56,7 @@ static const char * const suffixes[] = {
 	"EiB",	/* 2^60 Exbibyte */
 };
 
-#define NSUFFIXES	(sizeof(suffixes) / sizeof(suffixes[0]))
+#define NSUFFIXES	nitems(suffixes)
 #define SECSPERHOUR	(60 * 60)
 #define DEFAULT_TTYWIDTH	80
 

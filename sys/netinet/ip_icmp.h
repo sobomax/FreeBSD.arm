@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_icmp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/netinet/ip_icmp.h 275985 2014-12-21 05:07:11Z imp $
+ * $FreeBSD: head/sys/netinet/ip_icmp.h 298800 2016-04-29 20:22:01Z tuexen $
  */
 
 #ifndef _NETINET_IP_ICMP_H_
@@ -136,6 +136,14 @@ struct icmp {
 #define	ICMP_ADVLENMIN	(8 + sizeof (struct ip) + 8)	/* min */
 #define	ICMP_ADVLEN(p)	(8 + ((p)->icmp_ip.ip_hl << 2) + 8)
 	/* N.B.: must separately check that ip_hl >= 5 */
+	/* This is the minimum length required by RFC 792. */
+/*
+ * ICMP_ADVLENPREF is the preferred number of bytes which should be contiguous.
+ * SCTP needs additional 12 bytes to be able to access the initiate tag
+ * in packets containing an INIT chunk. For also supporting SCTP/UDP,
+ * additional 8 bytes are needed.
+ */
+#define	ICMP_ADVLENPREF(p)	(8 + ((p)->icmp_ip.ip_hl << 2) + 8 + 8 + 12)
 
 /*
  * Definition of type and code field values.

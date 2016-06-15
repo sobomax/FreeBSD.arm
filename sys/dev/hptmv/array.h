@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptmv/array.h 190809 2009-04-07 16:38:25Z delphij $
+ * $FreeBSD: head/sys/dev/hptmv/array.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef _ARRAY_H_
@@ -99,7 +99,7 @@ typedef struct _RaidArray
 } RaidArray;
 
 /***************************************************************************
- *            Array Descripton on disk
+ *            Array Description on disk
  ***************************************************************************/
 #pragma pack(1)	
 typedef struct _ArrayDescript

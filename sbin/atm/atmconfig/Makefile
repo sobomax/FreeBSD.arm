@@ -3,10 +3,11 @@
 #	All rights reserved.
 # Author: Harti Brandt <brandt@fokus.gmd.de>
 #
-# $FreeBSD: head/sbin/atm/atmconfig/Makefile 290083 2015-10-27 23:35:02Z bdrewery $
+# $FreeBSD: head/sbin/atm/atmconfig/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=atm
 PROG=	atmconfig
 SRCS=	main.c diag.c natm.c
 MAN=	atmconfig.8

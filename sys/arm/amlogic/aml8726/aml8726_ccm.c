@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_ccm.c 283183 2015-05-21 07:09:01Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_ccm.c 300175 2016-05-18 23:41:58Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -141,7 +141,7 @@ aml8726_ccm_configure_gates(struct aml8726_ccm_softc *sc)
 		AML_CCM_UNLOCK(sc);
 	}
 
-	free(functions, M_OFWPROP);
+	OF_prop_free(functions);
 
 	return (0);
 }

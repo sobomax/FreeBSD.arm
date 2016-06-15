@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libufs/cgroup.c 207476 2010-05-01 18:56:45Z emaste $");
+__FBSDID("$FreeBSD: head/lib/libufs/cgroup.c 300163 2016-05-18 19:59:05Z pfg $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -157,7 +157,7 @@ gotit:
 		bzero(block, (int)fs->fs_bsize);
 		dp2 = (struct ufs2_dinode *)&block;
 		for (i = 0; i < INOPB(fs); i++) {
-			dp2->di_gen = arc4random() / 2 + 1;
+			dp2->di_gen = arc4random();
 			dp2++;
 		}
 		if (bwrite(disk, ino_to_fsba(fs,

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nand_cdev.c 258425 2013-11-21 09:19:14Z gber $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nand_cdev.c 292428 2015-12-18 05:55:24Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -236,10 +236,10 @@ nand_strategy(struct bio *bp)
 	chip = dev->si_drv1;
 
 	nand_debug(NDBG_CDEV, "Strategy %s on chip %d [%p]\n",
-	    (bp->bio_cmd & BIO_READ) == BIO_READ ? "READ" : "WRITE",
+	    bp->bio_cmd == BIO_READ ? "READ" : "WRITE",
 	    chip->num, chip);
 
-	if ((bp->bio_cmd & BIO_READ) == BIO_READ) {
+	if (bp->bio_cmd == BIO_READ) {
 		err = nand_read(chip,
 		    bp->bio_offset & 0xffffffff,
 		    bp->bio_data, bp->bio_bcount);

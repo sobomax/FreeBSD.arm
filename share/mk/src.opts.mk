@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.opts.mk 291999 2015-12-08 19:19:26Z emaste $
+# $FreeBSD: head/share/mk/src.opts.mk 301468 2016-06-05 23:05:04Z bdrewery $
 #
 # Option file for FreeBSD /usr/src builds.
 #
@@ -56,6 +56,7 @@ __DEFAULT_YES_OPTIONS = \
     BHYVE \
     BINUTILS \
     BINUTILS_BOOTSTRAP \
+    BLACKLIST \
     BLUETOOTH \
     BOOT \
     BOOTPARAMD \
@@ -80,6 +81,7 @@ __DEFAULT_YES_OPTIONS = \
     DYNAMICROOT \
     ED_CRYPTO \
     EE \
+    ELFCOPY_AS_OBJCOPY \
     ELFTOOLCHAIN_BOOTSTRAP \
     EXAMPLES \
     FDT \
@@ -180,13 +182,15 @@ __DEFAULT_NO_OPTIONS = \
     DTRACE_TESTS \
     EISA \
     HESIOD \
-    LLDB \
+    LIBSOFT \
     NAND \
     OFED \
     OPENLDAP \
     SHARED_TOOLCHAIN \
     SORT_THREADS \
-    SVN
+    SVN \
+    SYSTEM_COMPILER \
+
 
 #
 # Default behaviour of some options depends on the architecture.  Unfortunately
@@ -229,15 +233,29 @@ __DEFAULT_YES_OPTIONS+=GCC GCC_BOOTSTRAP GNUCXX
 __DEFAULT_NO_OPTIONS+=CLANG CLANG_BOOTSTRAP CLANG_FULL CLANG_IS_CC
 .endif
 # In-tree binutils/gcc are older versions without modern architecture support.
-.if ${__T} == "aarch64"
+.if ${__T} == "aarch64" || ${__T} == "riscv64"
 BROKEN_OPTIONS+=BINUTILS BINUTILS_BOOTSTRAP GCC GCC_BOOTSTRAP GDB
-__DEFAULT_YES_OPTIONS+=ELFCOPY_AS_OBJCOPY
+__DEFAULT_YES_OPTIONS+=LLVM_LIBUNWIND
 .else
-__DEFAULT_NO_OPTIONS+=ELFCOPY_AS_OBJCOPY
+__DEFAULT_NO_OPTIONS+=LLVM_LIBUNWIND
+.endif
+.if ${__T} == "riscv64"
+BROKEN_OPTIONS+=PROFILE # "sorry, unimplemented: profiler support for RISC-V"
+BROKEN_OPTIONS+=TESTS   # "undefined reference to `_Unwind_Resume'"
+BROKEN_OPTIONS+=CXX     # "libcxxrt.so: undefined reference to `_Unwind_Resume_or_Rethrow'"
+.endif
+.if ${__T} == "aarch64" || ${__T} == "amd64"
+__DEFAULT_YES_OPTIONS+=LLDB
+.else
+__DEFAULT_NO_OPTIONS+=LLDB
 .endif
 # LLVM lacks support for FreeBSD 64-bit atomic operations for ARMv4/ARMv5
 .if ${__T} == "arm" || ${__T} == "armeb"
 BROKEN_OPTIONS+=LLDB
+.endif
+# Only doing soft float API stuff on armv6
+.if ${__T} != "armv6"
+BROKEN_OPTIONS+=LIBSOFT
 .endif
 
 .include <bsd.mkopt.mk>
@@ -334,12 +352,17 @@ MK_ELFTOOLCHAIN_BOOTSTRAP:= no
 MK_GCC_BOOTSTRAP:= no
 .endif
 
+.if ${MK_META_MODE} == "yes"
+MK_SYSTEM_COMPILER:= no
+.endif
+
 .if ${MK_TOOLCHAIN} == "no"
 MK_BINUTILS:=	no
 MK_CLANG:=	no
 MK_GCC:=	no
 MK_GDB:=	no
 MK_INCLUDES:=	no
+MK_LLDB:=	no
 .endif
 
 .if ${MK_CLANG} == "no"
@@ -356,6 +379,7 @@ MK_CLANG_FULL:= no
 # MK_* variable is set to "no".
 #
 .for var in \
+    BLACKLIST \
     BZIP2 \
     GNU \
     INET \

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme.c 286043 2015-07-29 21:29:50Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/nvme/nvme.c 293328 2016-01-07 16:18:32Z jimharris $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -269,8 +269,6 @@ nvme_attach(device_t dev)
 		nvme_ctrlr_destruct(ctrlr, dev);
 		return (status);
 	}
-
-	nvme_sysctl_initialize_ctrlr(ctrlr);
 
 	pci_enable_busmaster(dev);
 

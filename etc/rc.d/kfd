@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/kfd 270782 2014-08-29 07:51:47Z hrs $
+# $FreeBSD: head/etc/rc.d/kfd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: kfd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name=kfd
+desc="Receive forwarded tickets"
 rcvar=${name}_enable
 start_precmd=${name}_start_precmd
 

@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/fts.c 288029 2015-09-20 20:23:16Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/fts.c 300341 2016-05-21 01:31:41Z bdrewery $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -104,7 +104,6 @@ static const char *ufslike_filesystems[] = {
 	"ufs",
 	"zfs",
 	"nfs",
-	"nfs4",
 	"ext2fs",
 	0
 };

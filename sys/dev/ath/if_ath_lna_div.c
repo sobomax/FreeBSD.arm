@@ -26,10 +26,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 272292 2014-09-30 03:19:29Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 298939 2016-05-02 19:56:48Z pfg $
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 272292 2014-09-30 03:19:29Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 298939 2016-05-02 19:56:48Z pfg $");
 
 /*
  * This module handles LNA diversity for those chips which implement LNA
@@ -73,7 +73,7 @@ __FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_lna_div.c 272292 2014-09-30 03:19:29
 #include <dev/ath/if_ath_debug.h>
 #include <dev/ath/if_ath_lna_div.h>
 
-/* Linux compability macros */
+/* Linux compatibility macros */
 /*
  * XXX these don't handle rounding, underflow, overflow, wrapping!
  */
@@ -766,7 +766,7 @@ ath_lna_rx_comb_scan(struct ath_softc *sc, struct ath_rx_status *rs,
 
 	/* Short scan check */
 	if (antcomb->scan && antcomb->alt_good) {
-		if (time_after(ticks, antcomb->scan_start_time +
+		if (ieee80211_time_after(ticks, antcomb->scan_start_time +
 		    msecs_to_jiffies(ATH_ANT_DIV_COMB_SHORT_SCAN_INTR)))
 			short_scan = AH_TRUE;
 		else

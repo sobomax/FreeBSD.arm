@@ -1,11 +1,15 @@
-# $FreeBSD: head/lib/clang/liblldbPluginSymbolFileDWARF/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/liblldbPluginSymbolFileDWARF/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
 LIB=	lldbPluginSymbolFileDWARF
 
 SRCDIR=	tools/lldb/source/Plugins/SymbolFile/DWARF
-SRCS=	DWARFAbbreviationDeclaration.cpp \
+SRCS=	DIERef.cpp \
+	DWARFAbbreviationDeclaration.cpp \
+	DWARFASTParserClang.cpp \
+	DWARFASTParserGo.cpp \
+	DWARFAttribute.cpp \
 	DWARFCompileUnit.cpp \
 	DWARFDataExtractor.cpp \
 	DWARFDebugAbbrev.cpp \
@@ -13,6 +17,7 @@ SRCS=	DWARFAbbreviationDeclaration.cpp \
 	DWARFDebugArangeSet.cpp \
 	DWARFDebugInfo.cpp \
 	DWARFDebugInfoEntry.cpp \
+	DWARFDebugMacro.cpp \
 	DWARFDebugLine.cpp \
 	DWARFDebugMacinfo.cpp \
 	DWARFDebugMacinfoEntry.cpp \
@@ -21,13 +26,14 @@ SRCS=	DWARFAbbreviationDeclaration.cpp \
 	DWARFDebugRanges.cpp \
 	DWARFDeclContext.cpp \
 	DWARFDefines.cpp \
+	DWARFDIE.cpp \
 	DWARFDIECollection.cpp \
 	DWARFFormValue.cpp \
-	DWARFLocationDescription.cpp \
-	DWARFLocationList.cpp \
 	LogChannelDWARF.cpp \
+	HashedNameToDIE.cpp \
 	NameToDIE.cpp \
 	SymbolFileDWARF.cpp \
+	SymbolFileDWARFDwo.cpp \
 	SymbolFileDWARFDebugMap.cpp \
 	UniqueDWARFASTType.cpp
 

@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)reboot.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/reboot/reboot.c 290548 2015-11-08 17:33:48Z trasz $");
+__FBSDID("$FreeBSD: head/sbin/reboot/reboot.c 299196 2016-05-06 20:49:14Z garga $");
 
 #include <sys/reboot.h>
 #include <sys/time.h>
@@ -67,7 +67,7 @@ main(int argc, char *argv[])
 {
 	struct utmpx utx;
 	const struct passwd *pw;
-	int ch, howto, i, fd, lflag, nflag, qflag, sverrno;
+	int ch, howto, i, fd, lflag, nflag, qflag, sverrno, Nflag;
 	u_int pageins;
 	const char *user, *kernel = NULL;
 
@@ -76,8 +76,8 @@ main(int argc, char *argv[])
 		howto = RB_HALT;
 	} else
 		howto = 0;
-	lflag = nflag = qflag = 0;
-	while ((ch = getopt(argc, argv, "dk:lnpqr")) != -1)
+	lflag = nflag = qflag = Nflag = 0;
+	while ((ch = getopt(argc, argv, "dk:lNnpqr")) != -1)
 		switch(ch) {
 		case 'd':
 			howto |= RB_DUMP;
@@ -91,6 +91,10 @@ main(int argc, char *argv[])
 		case 'n':
 			nflag = 1;
 			howto |= RB_NOSYNC;
+			break;
+		case 'N':
+			nflag = 1;
+			Nflag = 1;
 			break;
 		case 'p':
 			howto |= RB_POWEROFF;
@@ -110,6 +114,8 @@ main(int argc, char *argv[])
 
 	if ((howto & (RB_DUMP | RB_HALT)) == (RB_DUMP | RB_HALT))
 		errx(1, "cannot dump (-d) when halting; must reboot instead");
+	if (Nflag && (howto & RB_NOSYNC) != 0)
+		errx(1, "-N cannot be used with -n");
 	if ((howto & RB_REROOT) != 0 && howto != RB_REROOT)
 		errx(1, "-r cannot be used with -d, -n, or -p");
 	if (geteuid()) {
@@ -242,8 +248,8 @@ usage(void)
 {
 
 	(void)fprintf(stderr, dohalt ?
-	    "usage: halt [-lnpq] [-k kernel]\n" :
-	    "usage: reboot [-dlnpq] [-k kernel]\n");
+	    "usage: halt [-lNnpq] [-k kernel]\n" :
+	    "usage: reboot [-dlNnpqr] [-k kernel]\n");
 	exit(1);
 }
 

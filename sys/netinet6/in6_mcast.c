@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_mcast.c 292015 2015-12-09 11:14:27Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_mcast.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_inet6.h"
 
@@ -574,7 +574,7 @@ in6m_clear_recorded(struct in6_multi *inm)
  *
  * Return 0 if the source didn't exist or was already marked as recorded.
  * Return 1 if the source was marked as recorded by this function.
- * Return <0 if any error occured (negated errno code).
+ * Return <0 if any error occurred (negated errno code).
  */
 int
 in6m_record_source(struct in6_multi *inm, const struct in6_addr *addr)

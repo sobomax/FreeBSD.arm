@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/Makefile 285684 2015-07-19 00:38:19Z marius $
+# $FreeBSD: head/gnu/usr.bin/Makefile 298823 2016-04-29 23:27:15Z bapt $
 
 .include <src.opts.mk>
 
@@ -13,7 +13,6 @@ SUBDIR= ${_binutils} \
 	grep \
 	${_groff} \
 	${_rcs} \
-	sdiff \
 	${_tests}
 
 SUBDIR_DEPEND_gdb= ${_binutils}

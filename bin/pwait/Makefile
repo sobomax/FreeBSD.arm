@@ -1,5 +1,6 @@
-# $FreeBSD: head/bin/pwait/Makefile 199458 2009-11-17 22:47:20Z jilles $
+# $FreeBSD: head/bin/pwait/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	pwait
 
 .include <bsd.prog.mk>

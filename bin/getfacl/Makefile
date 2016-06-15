@@ -1,5 +1,6 @@
-# $FreeBSD: head/bin/getfacl/Makefile 87323 2001-12-04 01:57:47Z obrien $
+# $FreeBSD: head/bin/getfacl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	getfacl
 
 .include <bsd.prog.mk>

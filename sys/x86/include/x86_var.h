@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/x86_var.h 291949 2015-12-07 17:41:20Z kib $
+ * $FreeBSD: head/sys/x86/include/x86_var.h 297857 2016-04-12 13:30:39Z avg $
  */
 
 #ifndef _X86_X86_VAR_H_
@@ -86,6 +86,13 @@ struct	fpreg;
 struct  dbreg;
 struct	dumperinfo;
 
+/*
+ * The interface type of the interrupt handler entry point cannot be
+ * expressed in C.  Use simplest non-variadic function type as an
+ * approximation.
+ */
+typedef void alias_for_inthand_t(void);
+
 void	*alloc_fpusave(int flags);
 void	busdma_swi(void);
 bool	cpu_mwait_usable(void);
@@ -96,7 +103,7 @@ void	dump_drop_page(vm_paddr_t);
 void	identify_cpu(void);
 void	initializecpu(void);
 void	initializecpucache(void);
-bool	intel_fix_cpuid(void);
+bool	fix_cpuid(void);
 void	fillw(int /*u_short*/ pat, void *base, size_t cnt);
 int	is_physical_memory(vm_paddr_t addr);
 int	isa_nmi(int cd);

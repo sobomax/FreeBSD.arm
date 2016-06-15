@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/sys/dev/lmc/if_lmc.c 276750 2015-01-06 12:59:37Z rwatson $
+ * $FreeBSD: head/sys/dev/lmc/if_lmc.c 298955 2016-05-03 03:41:25Z pfg $
  *
  * Copyright (c) 2002-2004 David Boggs. <boggs@boggs.palo-alto.ca.us>
  * All rights reserved.
@@ -1268,7 +1268,7 @@ t3_send_dbl_feac(softc_t *sc, int feac1, int feac2)
   /* Flush received FEACS; don't respond to our own loop cmd! */
   while (read_framer(sc, T3CSR_FEAC_STK) & FEAC_STK_VALID) DELAY(1); /* XXX HANG */
   /* Restore previous state of the FEAC transmitter. */
-  /* If it was sending a continous FEAC, it will resume. */
+  /* If it was sending a continuous FEAC, it will resume. */
   write_framer(sc, T3CSR_TX_FEAC, tx_feac);
   }
 
@@ -4510,8 +4510,8 @@ fbsd_attach(device_t dev)
   sc->csr_res_id   = TLP_CBMA;
   sc->csr_res_type = SYS_RES_MEMORY;
 # endif
-  sc->csr_res = bus_alloc_resource(dev, sc->csr_res_type, &sc->csr_res_id,
-   0, ~0, 1, RF_ACTIVE);
+  sc->csr_res = bus_alloc_resource_any(dev, sc->csr_res_type, &sc->csr_res_id,
+   RF_ACTIVE);
   if (sc->csr_res == NULL)
     {
     printf("%s: bus_alloc_resource(csr) failed.\n", NAME_UNIT);
@@ -4522,8 +4522,8 @@ fbsd_attach(device_t dev)
 
   /* Allocate PCI interrupt resources for the card. */
   sc->irq_res_id = 0;
-  sc->irq_res = bus_alloc_resource(dev, SYS_RES_IRQ, &sc->irq_res_id,
-   0, ~0, 1, RF_ACTIVE | RF_SHAREABLE);
+  sc->irq_res = bus_alloc_resource_any(dev, SYS_RES_IRQ, &sc->irq_res_id,
+   RF_ACTIVE | RF_SHAREABLE);
   if (sc->irq_res == NULL)
     {
     printf("%s: bus_alloc_resource(irq) failed.\n", NAME_UNIT);

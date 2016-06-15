@@ -23,12 +23,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/time.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/time.h 300507 2016-05-23 13:19:20Z hselasky $
  */
 #ifndef _LINUX_TIME_H_
 #define	_LINUX_TIME_H_
 
 #define	NSEC_PER_USEC	1000L
+#define	NSEC_PER_MSEC	1000000L
 #define	NSEC_PER_SEC	1000000000L
 
 #include <sys/time.h>

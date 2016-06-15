@@ -60,14 +60,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/bus.h 291131 2015-11-21 13:02:34Z andrew $
+ * $FreeBSD: head/sys/arm/include/bus.h 300694 2016-05-25 19:44:26Z ian $
  */
 
 #ifndef _MACHINE_BUS_H_
 #define _MACHINE_BUS_H_
 
 #include <machine/_bus.h>
-#include <machine/acle-compat.h>
 
 /*
  *	int bus_space_map  (bus_space_tag_t t, bus_addr_t addr,

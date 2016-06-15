@@ -243,9 +243,8 @@ main_create_user_groups(struct env *env)
 			if ((ue = RB_FIND(user_name_tree, env->sc_user_names_t,
 			    &ukey)) == NULL) {
 				/* User not found */
-				log_warnx("main: user: %s is referenced as a "
-					"group member, but can't be found in the "
-					"users map.\n", ukey.ue_line);
+				log_warnx("main: unknown user %s in group %s\n",
+				   ukey.ue_line, ge->ge_line);
 				if (bp != NULL)
 					*(bp-1) = ',';
 				continue;
@@ -361,7 +360,7 @@ main_dispatch_client(int fd, short events, void *p)
 		fatalx("unknown event");
 
 	if (events & EV_READ) {
-		if ((n = imsg_read(ibuf)) == -1)
+		if ((n = imsg_read(ibuf)) == -1 && errno != EAGAIN)
 			fatal("imsg_read error");
 		if (n == 0)
 			shut = 1;

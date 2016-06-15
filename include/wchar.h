@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/include/wchar.h 265878 2014-05-11 13:48:21Z jilles $
+ * $FreeBSD: head/include/wchar.h 300998 2016-05-30 16:26:34Z ed $
  */
 
 /*-
@@ -74,6 +74,13 @@ typedef	__mbstate_t	mbstate_t;
 #ifndef _SIZE_T_DECLARED
 typedef	__size_t	size_t;
 #define	_SIZE_T_DECLARED
+#endif
+
+#if __POSIX_VISIBLE >= 200809 || __XSI_VISIBLE
+#ifndef _VA_LIST_DECLARED
+typedef	__va_list	va_list;
+#define	_VA_LIST_DECLARED
+#endif
 #endif
 
 #ifndef	__cplusplus

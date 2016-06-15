@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libefi/Makefile 203181 2010-01-30 04:24:03Z marcel $
+# $FreeBSD: head/lib/libefi/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <bsd.own.mk>
 
+PACKAGE=lib${LIB}
 LIB=	efi
 SHLIB_MAJOR= 1
 

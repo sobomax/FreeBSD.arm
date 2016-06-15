@@ -1,6 +1,8 @@
-# $FreeBSD: head/lib/atf/libatf-c/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/lib/atf/libatf-c/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.init.mk>
+
+PACKAGE=	tests
 
 TESTS_SUBDIRS=	detail
 
@@ -16,9 +18,8 @@ CFLAGS+=	-I${ATF}
 # TODO(jmmv): Remove this workaround once we do that update.
 CFLAGS.clang+=	-Wno-duplicate-decl-specifier
 
-FILESDIR=	${TESTSDIR}
-FILES=		macros_h_test.c
-FILES+=		unused_test.c
+${PACKAGE}FILES+=	macros_h_test.c
+${PACKAGE}FILES+=	unused_test.c
 
 .for _T in	atf_c_test \
 		build_test \

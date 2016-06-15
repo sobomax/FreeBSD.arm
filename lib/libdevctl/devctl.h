@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libdevctl/devctl.h 278320 2015-02-06 16:09:01Z jhb $
+ * $FreeBSD: head/lib/libdevctl/devctl.h 298709 2016-04-27 16:33:17Z jhb $
  */
 
 #ifndef __DEVCTL_H__
@@ -38,5 +38,7 @@ int	devctl_disable(const char *device, bool force_detach);
 int	devctl_suspend(const char *device);
 int	devctl_resume(const char *device);
 int	devctl_set_driver(const char *device, const char *driver, bool force);
+int	devctl_rescan(const char *device);
+int	devctl_delete(const char *device, bool force);
 
 #endif /* !__DEVCTL_H__ */

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_proto.h 290058 2015-10-27 20:40:57Z avos $
+ * $FreeBSD: head/sys/net80211/ieee80211_proto.h 298995 2016-05-03 18:05:43Z pfg $
  */
 #ifndef _NET80211_IEEE80211_PROTO_H_
 #define _NET80211_IEEE80211_PROTO_H_
@@ -47,9 +47,26 @@ enum ieee80211_state {
 #define	IEEE80211_SEND_MGMT(_ni,_type,_arg) \
 	((*(_ni)->ni_ic->ic_send_mgmt)(_ni, _type, _arg))
 
-extern	const char *ieee80211_mgt_subtype_name[];
+extern	const char *mgt_subtype_name[];
+extern	const char *ctl_subtype_name[];
 extern	const char *ieee80211_phymode_name[IEEE80211_MODE_MAX];
 extern	const int ieee80211_opcap[IEEE80211_OPMODE_MAX];
+
+static __inline const char *
+ieee80211_mgt_subtype_name(uint8_t subtype)
+{
+	return mgt_subtype_name[(subtype & IEEE80211_FC0_SUBTYPE_MASK) >>
+		   IEEE80211_FC0_SUBTYPE_SHIFT];
+}
+
+static __inline const char *
+ieee80211_ctl_subtype_name(uint8_t subtype)
+{
+	return ctl_subtype_name[(subtype & IEEE80211_FC0_SUBTYPE_MASK) >>
+		   IEEE80211_FC0_SUBTYPE_SHIFT];
+}
+
+const char *ieee80211_reason_to_string(uint16_t);
 
 void	ieee80211_proto_attach(struct ieee80211com *);
 void	ieee80211_proto_detach(struct ieee80211com *);
@@ -259,10 +276,10 @@ struct chanAccParams {
 
 struct ieee80211_wme_state {
 	u_int	wme_flags;
-#define	WME_F_AGGRMODE	0x00000001	/* STATUS: WME agressive mode */
+#define	WME_F_AGGRMODE	0x00000001	/* STATUS: WME aggressive mode */
 	u_int	wme_hipri_traffic;	/* VI/VO frames in beacon interval */
-	u_int	wme_hipri_switch_thresh;/* agressive mode switch thresh */
-	u_int	wme_hipri_switch_hysteresis;/* agressive mode switch hysteresis */
+	u_int	wme_hipri_switch_thresh;/* aggressive mode switch thresh */
+	u_int	wme_hipri_switch_hysteresis;/* aggressive mode switch hysteresis */
 
 	struct wmeParams wme_params[4];		/* from assoc resp for each AC*/
 	struct chanAccParams wme_wmeChanParams;	/* WME params applied to self */

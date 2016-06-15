@@ -1,8 +1,9 @@
-# $FreeBSD: head/lib/libdwarf/Makefile 291321 2015-11-25 19:44:51Z bdrewery $
+# $FreeBSD: head/lib/libdwarf/Makefile 298401 2016-04-21 12:58:29Z emaste $
 .include <bsd.own.mk>
 
-TOP=	${.CURDIR}/../../contrib/elftoolchain
-SRCDIR=	${TOP}/libdwarf
+PACKAGE=lib${LIB}
+ELFTCDIR=${SRCTOP}/contrib/elftoolchain
+SRCDIR=	${ELFTCDIR}/libdwarf
 
 .PATH:	${SRCDIR}
 
@@ -91,7 +92,7 @@ GENSRCS=	dwarf_pubnames.c dwarf_pubtypes.c dwarf_weaks.c \
 		dwarf_pro_vars.c
 CLEANFILES=	${GENSRCS}
 CLEANDIRS=	sys
-CFLAGS+=	-I. -I${SRCDIR} -I${TOP}/common -I${TOP}/libelf
+CFLAGS+=	-I. -I${SRCDIR} -I${ELFTCDIR}/common -I${ELFTCDIR}/libelf
 
 sys/elf32.h sys/elf64.h sys/elf_common.h: ${.CURDIR}/../../sys/${.TARGET} .NOMETA
 	mkdir -p ${.OBJDIR}/sys

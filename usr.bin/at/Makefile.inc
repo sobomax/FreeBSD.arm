@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/at/Makefile.inc 287123 2015-08-25 05:31:00Z delphij $
+# $FreeBSD: head/usr.bin/at/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
 LOCKFILE = .lockfile
 ATSPOOL_DIR=/var/at/spool
@@ -10,6 +10,7 @@ DAEMON_UID=1
 DEFAULT_BATCH_QUEUE=E
 DEFAULT_AT_QUEUE=c
 PERM_PATH=/var/at
+PACKAGE=	at
 
 CFLAGS += -DATJOB_DIR=\"$(ATJOB_DIR)/\" \
 	-DLFILE=\"$(ATJOB_DIR)/$(LOCKFILE)\" \

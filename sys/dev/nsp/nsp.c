@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nsp/nsp.c 274760 2014-11-20 20:50:05Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/nsp/nsp.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1069,7 +1069,7 @@ WriteLoop:
 				 * (not scsi bus!), we should check
 				 * the scsi device sends us request
 				 * signals, which means the scsi device
-				 * is ready to recieve data without
+				 * is ready to receive data without
 				 * heavy delays. 
 				 */
 				if ((slp->sl_scp.scp_datalen % suspendio) == 0)

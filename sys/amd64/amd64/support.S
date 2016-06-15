@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/support.S 288917 2015-10-06 11:29:44Z royger $
+ * $FreeBSD: head/sys/amd64/amd64/support.S 295966 2016-02-24 11:58:15Z kib $
  */
 
 #include "opt_ddb.h"
@@ -151,6 +151,7 @@ END(bcopy)
  */
 ENTRY(memcpy)
 	PUSH_FRAME_POINTER
+	movq	%rdi,%rax
 	movq	%rdx,%rcx
 	shrq	$3,%rcx				/* copy by 64-bit words */
 	cld					/* copy forwards */

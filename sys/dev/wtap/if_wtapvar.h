@@ -26,13 +26,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/wtap/if_wtapvar.h 288095 2015-09-22 06:34:07Z adrian $
+ * $FreeBSD: head/sys/dev/wtap/if_wtapvar.h 292166 2015-12-13 20:53:51Z avos $
  */
 
 #ifndef _DEV_WTAP_WTAPVAR_H
 #define _DEV_WTAP_WTAPVAR_H
 
-#include <sys/cdefs.h>
 #include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/module.h>
@@ -44,7 +43,6 @@
 #include <sys/lock.h>
 #include <sys/mutex.h>
 
-#include <sys/types.h>
 #include <sys/sockio.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>

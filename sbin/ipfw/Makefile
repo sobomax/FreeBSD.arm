@@ -1,7 +1,8 @@
-# $FreeBSD: head/sbin/ipfw/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/ipfw/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=ipfw
 PROG=	ipfw
 SRCS=	ipfw2.c dummynet.c ipv6.c main.c nat.c tables.c
 WARNS?=	2

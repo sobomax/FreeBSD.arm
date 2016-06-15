@@ -36,7 +36,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mge/if_mge.c 289951 2015-10-25 22:20:13Z zbb $");
+__FBSDID("$FreeBSD: head/sys/dev/mge/if_mge.c 292738 2015-12-26 02:31:39Z adrian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,7 +74,7 @@ __FBSDID("$FreeBSD: head/sys/dev/mge/if_mge.c 289951 2015-10-25 22:20:13Z zbb $"
 #include <dev/fdt/fdt_common.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/mge/if_mgevar.h>
 #include <arm/mv/mvreg.h>

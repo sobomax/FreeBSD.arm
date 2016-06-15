@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/jailparse.y 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/jailparse.y 298886 2016-05-01 16:41:25Z pfg $");
 
 #include <stdlib.h>
 #include <string.h>
@@ -60,7 +60,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/jail/jailparse.y 289677 2015-10-21 05:37:09Z e
 
 /*
  * A config file is a series of jails (containing parameters) and jail-less
- * parameters which realy belong to a global pseudo-jail.
+ * parameters which really belong to a global pseudo-jail.
  */
 conf	:
 	;

@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/util.c 249139 2013-04-05 09:14:30Z avg $");
+__FBSDID("$FreeBSD: head/sys/boot/common/util.c 300056 2016-05-17 14:10:45Z imp $");
 
 #include <sys/param.h>
 
@@ -120,6 +120,7 @@ printf(const char *fmt, ...)
 	va_list ap;
 	const char *hex = "0123456789abcdef";
 	char buf[32], *s;
+	uint16_t *S;
 	unsigned long long u;
 	int c, l;
 
@@ -143,6 +144,10 @@ nextfmt:
 			for (s = va_arg(ap, char *); *s != '\0'; s++)
 				putchar(*s);
 			break;
+		case 'S':	/* Assume console can cope with wide chars */
+			for (S = va_arg(ap, uint16_t *); *S != 0; S++)
+				putchar(*S);
+ 			break;
 		case 'd':	/* A lie, always prints unsigned */
 		case 'u':
 		case 'x':

@@ -24,15 +24,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_clock.c 285908 2015-07-27 10:07:29Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_clock.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/stdint.h>
 #include <sys/syscallsubr.h>
 
+#include <contrib/cloudabi/cloudabi_types_common.h>
+
 #include <compat/cloudabi/cloudabi_proto.h>
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
 #include <compat/cloudabi/cloudabi_util.h>
 
 /* Converts a CloudABI clock ID to a FreeBSD clock ID. */

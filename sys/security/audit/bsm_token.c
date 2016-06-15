@@ -29,12 +29,10 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * P4: //depot/projects/trustedbsd/openbsm/libbsm/bsm_token.c#99
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/security/audit/bsm_token.c 255219 2013-09-05 00:09:56Z pjd $");
+__FBSDID("$FreeBSD: head/sys/security/audit/bsm_token.c 292522 2015-12-20 23:22:04Z brueffer $");
 
 #include <sys/param.h>
 #include <sys/types.h>

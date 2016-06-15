@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_variables.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_variables.c 298354 2016-04-20 16:19:44Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -53,8 +53,7 @@ static struct db_variable db_vars[] = {
 	{ "db_vnet",	NULL, db_var_db_vnet },
 #endif
 };
-static struct db_variable *db_evars =
-	db_vars + sizeof(db_vars)/sizeof(db_vars[0]);
+static struct db_variable *db_evars = db_vars + nitems(db_vars);
 
 static int
 db_find_variable(struct db_variable **varp)

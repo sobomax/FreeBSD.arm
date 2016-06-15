@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/ath/athstats/Makefile 283002 2015-05-16 06:18:39Z adrian $
+# $FreeBSD: head/tools/tools/ath/athstats/Makefile 296153 2016-02-28 06:29:25Z adrian $
 
 MAN=
 
@@ -9,6 +9,10 @@ MAN=
 PROG=	athstats
 
 SRCS=	main.c athstats.c opt_ah.h ah_osdep.h
+
+CFLAGS+=	-I${.CURDIR}/../common/
+.PATH.c: ${.CURDIR}/../common/
+SRCS+=	ctrl.c
 
 CLEANFILES+=	opt_ah.h
 

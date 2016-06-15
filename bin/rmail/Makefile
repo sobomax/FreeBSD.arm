@@ -1,6 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 5/31/93
-# $FreeBSD: head/bin/rmail/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
+# $FreeBSD: head/bin/rmail/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=sendmail
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/rmail
 

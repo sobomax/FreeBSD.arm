@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/random/build.sh 287023 2015-08-22 12:59:05Z markm $
+# $FreeBSD: head/sys/dev/random/build.sh 292782 2015-12-27 17:33:59Z allanjude $
 #
 # Basic script to build crude unit tests.
 #
@@ -42,7 +42,6 @@ cc -g -O0 -pthread \
 	hash.c \
 	../../crypto/rijndael/rijndael-api-fst.c \
 	../../crypto/rijndael/rijndael-alg-fst.c \
-	../../crypto/sha2/sha2.c \
 	../../crypto/sha2/sha256c.c \
 	-lz \
 	-o yunit_test
@@ -53,7 +52,6 @@ cc -g -O0 -pthread \
 	hash.c \
 	../../crypto/rijndael/rijndael-api-fst.c \
 	../../crypto/rijndael/rijndael-alg-fst.c \
-	../../crypto/sha2/sha2.c \
 	../../crypto/sha2/sha256c.c \
 	-lz \
 	-o funit_test

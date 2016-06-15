@@ -25,13 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/image.c 286215 2015-08-03 01:24:48Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/image.c 301090 2016-06-01 02:30:06Z markj $");
 
 #include <sys/mman.h>
 #include <sys/queue.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <assert.h>
+#include <err.h>
 #include <errno.h>
 #include <limits.h>
 #include <paths.h>
@@ -315,6 +316,8 @@ image_file_unmap(void *buffer, size_t sz)
 
 	unit = (secsz > image_swap_pgsz) ? secsz : image_swap_pgsz;
 	sz = (sz + unit - 1) & ~(unit - 1);
+	if (madvise(buffer, sz, MADV_DONTNEED) != 0)
+		warn("madvise");
 	munmap(buffer, sz);
 	return (0);
 }

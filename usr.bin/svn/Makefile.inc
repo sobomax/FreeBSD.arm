@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/Makefile.inc 289180 2015-10-12 09:53:55Z peter $
+# $FreeBSD: head/usr.bin/svn/Makefile.inc 298845 2016-04-30 10:35:42Z dim $
 
 .include <src.opts.mk>
 
@@ -8,12 +8,14 @@ SVNLITE?=
 SVNLITE?=	lite
 .endif
 
+PACKAGE=	svn
+
 .if !defined(SVNDIR)
 
 SVNDIR=		${.CURDIR}/../../../contrib/subversion/subversion
 APRU=		${.CURDIR}/../../../contrib/apr-util
 APR=		${.CURDIR}/../../../contrib/apr
-WARNS?=		0	# defintely not warns friendly
+WARNS?=		0	# definitely not warns friendly
 
 .if exists(${.CURDIR}/../../Makefile.inc)
 .include "${.CURDIR}/../../Makefile.inc"

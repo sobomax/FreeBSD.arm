@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/fbt/fbt.h 286241 2015-08-03 17:39:36Z markj $
+ * $FreeBSD: head/sys/cddl/dev/fbt/fbt.h 298171 2016-04-17 23:08:47Z markj $
  *
  */
 
@@ -51,8 +51,9 @@ typedef struct fbt_probe {
 
 struct linker_file;
 struct linker_symval;
+struct trapframe;
 
-int	fbt_invop(uintptr_t, uintptr_t *, uintptr_t);
+int	fbt_invop(uintptr_t, struct trapframe *, uintptr_t);
 void	fbt_patch_tracepoint(fbt_probe_t *, fbt_patchval_t);
 int	fbt_provide_module_function(struct linker_file *, int,
 	    struct linker_symval *, void *);

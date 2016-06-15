@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/ifconfig/iffib.c 288305 2015-09-27 07:51:18Z ngie $
+ * $FreeBSD: head/sbin/ifconfig/iffib.c 299873 2016-05-16 00:25:24Z truckman $
  */
 
 #include <sys/param.h>
@@ -49,13 +49,13 @@ fib_status(int s)
 	struct ifreq ifr;
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	if (ioctl(s, SIOCGIFFIB, (caddr_t)&ifr) == 0 &&
 	    ifr.ifr_fib != RT_DEFAULT_FIB)
 		printf("\tfib: %u\n", ifr.ifr_fib);
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof(ifr.ifr_name));
 	if (ioctl(s, SIOCGTUNFIB, (caddr_t)&ifr) == 0 &&
 	    ifr.ifr_fib != RT_DEFAULT_FIB)
 		printf("\ttunnelfib: %u\n", ifr.ifr_fib);
@@ -74,7 +74,7 @@ setiffib(const char *val, int dummy __unused, int s,
 		return;
 	}
 
-	strncpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
 	ifr.ifr_fib = fib;
 	if (ioctl(s, SIOCSIFFIB, (caddr_t)&ifr) < 0)
 		warn("ioctl (SIOCSIFFIB)");
@@ -93,7 +93,7 @@ settunfib(const char *val, int dummy __unused, int s,
 		return;
 	}
 
-	strncpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
 	ifr.ifr_fib = fib;
 	if (ioctl(s, SIOCSTUNFIB, (caddr_t)&ifr) < 0)
 		warn("ioctl (SIOCSTUNFIB)");

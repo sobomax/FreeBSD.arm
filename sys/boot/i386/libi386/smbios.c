@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/libi386/smbios.c 281138 2015-04-06 06:55:47Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/libi386/smbios.c 293724 2016-01-12 02:17:39Z smh $");
 
 #include <stand.h>
 #include <bootstrap.h>
@@ -332,7 +332,7 @@ static caddr_t
 smbios_find_struct(int type)
 {
 	caddr_t		dmi;
-	int		i;
+	size_t		i;
 
 	if (smbios.addr == NULL)
 		return (NULL);
@@ -402,7 +402,7 @@ smbios_detect(const caddr_t addr)
 {
 	char		buf[16];
 	caddr_t		dmi;
-	int		i;
+	size_t		i;
 
 	smbios_probe(addr);
 	if (smbios.addr == NULL)

@@ -37,7 +37,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/makefs/walk.c 250407 2013-05-09 14:43:36Z brooks $");
+__FBSDID("$FreeBSD: head/usr.sbin/makefs/walk.c 301879 2016-06-14 14:03:28Z emaste $");
 
 #include <sys/param.h>
 
@@ -229,6 +229,20 @@ create_fsnode(const char *root, const char *path, const char *name,
 	cur->type = stbuf->st_mode & S_IFMT;
 	cur->inode->nlink = 1;
 	cur->inode->st = *stbuf;
+	if (stampst.st_ino) {
+		cur->inode->st.st_atime = stampst.st_atime;
+		cur->inode->st.st_mtime = stampst.st_mtime;
+		cur->inode->st.st_ctime = stampst.st_ctime;
+#if HAVE_STRUCT_STAT_ST_MTIMENSEC
+		cur->inode->st.st_atimensec = stampst.st_atimensec;
+		cur->inode->st.st_mtimensec = stampst.st_mtimensec;
+		cur->inode->st.st_ctimensec = stampst.st_ctimensec;
+#endif
+#if HAVE_STRUCT_STAT_BIRTHTIME
+		cur->inode->st.st_birthtime = stampst.st_birthtime;
+		cur->inode->st.st_birthtimensec = stampst.st_birthtimensec;
+#endif
+	}
 	return (cur);
 }
 

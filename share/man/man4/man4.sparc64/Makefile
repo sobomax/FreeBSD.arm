@@ -1,4 +1,6 @@
-# $FreeBSD: head/share/man/man4/man4.sparc64/Makefile 147531 2005-06-22 15:35:14Z ru $
+# $FreeBSD: head/share/man/man4/man4.sparc64/Makefile 298107 2016-04-16 07:45:30Z gjb $
+
+PACKAGE=runtime-manuals
 
 MAN=	auxio.4 \
 	central.4 \

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/lib/libgssapi/gss_accept_sec_context.c 283906 2015-06-02 09:03:15Z araujo $
+ *	$FreeBSD: head/lib/libgssapi/gss_accept_sec_context.c 298896 2016-05-01 19:37:33Z pfg $
  */
 
 #include <gssapi/gssapi.h>
@@ -135,7 +135,7 @@ choose_mech(const gss_buffer_t input, gss_OID mech_oid)
 		return (GSS_S_COMPLETE);
 	} else if (input->length == 0) {
 		/* 
-		 * There is the a wierd mode of SPNEGO (in CIFS and
+		 * There is the a weird mode of SPNEGO (in CIFS and
 		 * SASL GSS-SPENGO where the first token is zero
 		 * length and the acceptor returns a mech_list, lets
 		 * hope that is what is happening now.

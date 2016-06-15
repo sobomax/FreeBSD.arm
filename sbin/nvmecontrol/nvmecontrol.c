@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/nvmecontrol/nvmecontrol.c 253459 2013-07-18 23:25:57Z jimharris $");
+__FBSDID("$FreeBSD: head/sbin/nvmecontrol/nvmecontrol.c 295087 2016-01-30 22:48:06Z imp $");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -58,6 +58,7 @@ static struct nvme_function {
 	{"reset",	reset,		RESET_USAGE},
 	{"logpage",	logpage,	LOGPAGE_USAGE},
 	{"firmware",	firmware,	FIRMWARE_USAGE},
+	{"power",	power,		POWER_USAGE},
 	{NULL,		NULL,		NULL},
 };
 

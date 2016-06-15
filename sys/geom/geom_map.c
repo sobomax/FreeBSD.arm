@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_map.c 280239 2015-03-19 03:58:25Z adrian $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_map.c 292779 2015-12-27 17:09:23Z allanjude $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -259,7 +259,7 @@ g_map_parse_part(struct g_class *mp, struct g_provider *pp,
 	}
 	if (find_marker(cp, value, &end) != 0) {
 		if (bootverbose) {
-			printf("MAP: \"%s\" can't parse/use start value\n",
+			printf("MAP: \"%s\" can't parse/use end value\n",
 			    name);
 		}
 		return (1);

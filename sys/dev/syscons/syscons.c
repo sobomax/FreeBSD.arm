@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/syscons/syscons.c 284959 2015-06-30 17:00:45Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/syscons/syscons.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_compat.h"
 #include "opt_syscons.h"
@@ -3541,7 +3541,7 @@ next_code:
 		if (cold) {
 		    /*
 		     * While devices are being probed, the screen saver need
-		     * to be invoked explictly. XXX
+		     * to be invoked explicitly. XXX
 		     */
 		    if (sc->flags & SC_SCRN_BLANKED) {
 			scsplash_stick(FALSE);

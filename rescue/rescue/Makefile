@@ -1,8 +1,9 @@
-#$FreeBSD: head/rescue/rescue/Makefile 291491 2015-11-30 16:34:13Z ngie $
+#$FreeBSD: head/rescue/rescue/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 .include <src.opts.mk>
 
+PACKAGE=rescue
 MAN=
 MK_SSP=	no
 

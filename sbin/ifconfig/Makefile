@@ -1,8 +1,9 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/ifconfig/Makefile 291470 2015-11-30 06:34:16Z adrian $
+# $FreeBSD: head/sbin/ifconfig/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	ifconfig
 
 SRCS=	ifconfig.c		# base support
@@ -38,7 +39,7 @@ SRCS+=	sfp.c			# SFP/SFP+ information
 LIBADD+=	m
 
 SRCS+=	ifieee80211.c		# SIOC[GS]IEEE80211 support
-LIBADD+=	bsdxml sbuf 80211
+LIBADD+=	80211
 
 SRCS+=	carp.c			# SIOC[GS]VH support
 SRCS+=	ifgroup.c		# ...

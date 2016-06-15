@@ -12,10 +12,11 @@
 # LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 # A PARTICULAR PURPOSE.
 #
-# $FreeBSD: head/sbin/rtsol/Makefile 288963 2015-10-06 23:42:58Z delphij $
+# $FreeBSD: head/sbin/rtsol/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .PATH:	${.CURDIR}/../../usr.sbin/rtsold
 
+PACKAGE=runtime
 PROG=	rtsol
 SRCS=	rtsold.c rtsol.c if.c probe.c dump.c rtsock.c
 MAN=

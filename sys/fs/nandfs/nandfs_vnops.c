@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vnops.c 276007 2014-12-21 13:29:33Z kib $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vnops.c 298806 2016-04-29 20:51:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1251,12 +1251,12 @@ nandfs_readdir(struct vop_readdir_args *ap)
 			diroffset += ndirent->rec_len;
 			blkoff += ndirent->rec_len;
 
-			/* Remember the last entry we transfered */
+			/* Remember the last entry we transferred */
 			transoffset = diroffset;
 		}
 		brelse(bp);
 
-		/* Pass on last transfered offset */
+		/* Pass on last transferred offset */
 		uio->uio_offset = transoffset;
 	}
 

@@ -1,9 +1,11 @@
-# $FreeBSD: head/usr.bin/col/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/usr.bin/col/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 ATF_TESTS_SH=	col
 
-FILES=		rlf.in \
+${PACKAGE}FILES+=	\
+		rlf.in \
 		rlf2.in
-FILESDIR=	${TESTSDIR}
 
 .include <bsd.test.mk>

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/ftp.c 226537 2011-10-19 11:43:51Z des $");
+__FBSDID("$FreeBSD: head/lib/libfetch/ftp.c 297754 2016-04-09 18:08:21Z pfg $");
 
 /*
  * Portions of this code were taken from or based on ftpio.c:
@@ -929,7 +929,7 @@ ftp_authenticate(conn_t *conn, struct url *url, struct url *purl)
 		if (*pwd == '\0')
 			pwd = getenv("FTP_PASSWORD");
 		if (pwd == NULL || *pwd == '\0') {
-			if ((logname = getlogin()) == 0)
+			if ((logname = getlogin()) == NULL)
 				logname = FTP_ANONYMOUS_USER;
 			if ((len = snprintf(pbuf, MAXLOGNAME + 1, "%s@", logname)) < 0)
 				len = 0;

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/geom/class/virstor/geom_virstor.c 215704 2010-11-22 20:10:48Z brucec $");
+__FBSDID("$FreeBSD: head/sbin/geom/class/virstor/geom_virstor.c 298872 2016-05-01 02:24:05Z pfg $");
 
 #include <sys/param.h>
 #include <errno.h>
@@ -255,7 +255,7 @@ virstor_label(struct gctl_req *req)
 	if (md.md_chunk_size % MAXPHYS != 0) {
 		/* XXX: This is not strictly needed, but it's convenient to
 		 * impose some limitations on it, so why not MAXPHYS. */
-		size_t new_size = (md.md_chunk_size / MAXPHYS) * MAXPHYS;
+		size_t new_size = rounddown(md.md_chunk_size, MAXPHYS);
 		if (new_size < md.md_chunk_size)
 			new_size += MAXPHYS;
 		fprintf(stderr, "Resizing chunk size to be a multiple of "

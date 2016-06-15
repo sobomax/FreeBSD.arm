@@ -25,7 +25,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_action.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_action.c 300232 2016-05-19 21:08:33Z avos $");
 #endif
 
 /*
@@ -37,6 +37,7 @@ __FBSDID("$FreeBSD: head/sys/net80211/ieee80211_action.c 257176 2013-10-26 17:58
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/systm.h> 
  
 #include <sys/socket.h>
@@ -102,7 +103,6 @@ ieee80211_send_action_register(int cat, int act, ieee80211_send_action_func *f)
 			break;
 		meshaction_send_action[act] = f;
 		return 0;
-		break;
 	case IEEE80211_ACTION_CAT_VENDOR:
 		if (act >= nitems(vendor_send_action))
 			break;

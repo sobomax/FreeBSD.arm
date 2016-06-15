@@ -1,7 +1,8 @@
 # Makefile for libopie
 #
-# $FreeBSD: head/lib/libopie/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libopie/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
+PACKAGE=lib${LIB}
 OPIE_DIST?=	${.CURDIR}/../../contrib/opie
 DIST_DIR=	${OPIE_DIST}/${.CURDIR:T}
 SHLIB_MAJOR=    8

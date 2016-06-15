@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/aarch64/dtrace_asm.S 285009 2015-07-01 15:51:11Z br $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/aarch64/dtrace_asm.S 300850 2016-05-27 12:02:12Z andrew $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -55,6 +55,7 @@ END(dtrace_membar_consumer)
 dtrace_icookie_t dtrace_interrupt_disable(void)
 */
 ENTRY(dtrace_interrupt_disable)
+	mrs	x0, daif
 	msr	daifset, #2
 	RET
 END(dtrace_interrupt_disable)
@@ -63,7 +64,7 @@ END(dtrace_interrupt_disable)
 void dtrace_interrupt_enable(dtrace_icookie_t cookie)
 */
 ENTRY(dtrace_interrupt_enable)
-	msr	daifclr, #2
+	msr	daif, x0
 	RET
 END(dtrace_interrupt_enable)
 /*

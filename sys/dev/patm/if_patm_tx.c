@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_tx.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_tx.c 298646 2016-04-26 15:03:15Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -119,8 +119,8 @@ cbr2slots(struct patm_softc *sc, struct patm_vcc *vcc)
 {
 	/* compute the number of slots we need, make sure to get at least
 	 * the specified PCR */
-	return ((u_int)(((uint64_t)(sc->mmap->tst_size - 1) *
-	    vcc->vcc.tparam.pcr + IFP2IFATM(sc->ifp)->mib.pcr - 1) / IFP2IFATM(sc->ifp)->mib.pcr));
+	return ((u_int)howmany((uint64_t)(sc->mmap->tst_size - 1) *
+	    vcc->vcc.tparam.pcr, IFP2IFATM(sc->ifp)->mib.pcr));
 }
 
 static __inline u_int

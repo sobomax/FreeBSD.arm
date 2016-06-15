@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcpl_calltree.c 241737 2012-10-19 14:49:42Z ed $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcpl_calltree.c 298885 2016-05-01 16:40:56Z pfg $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -830,7 +830,7 @@ pmcpl_ct_node_printchild(struct pmcpl_ct_node *ct, uintfptr_t paddr,
 
 	/*
 	 * Child cost.
-	 * TODO: attach child cost to the real position in the funtion.
+	 * TODO: attach child cost to the real position in the function.
 	 * TODO: cfn=<fn> / call <ncall> addr(<fn>) / addr(call <fn>) <arccost>
 	 */
 	for (i=0 ; i<ct->pct_narc; i++) {

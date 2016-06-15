@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_sdxc-m8.h 280905 2015-03-31 11:50:46Z ganbold $
+ * $FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_sdxc-m8.h 299069 2016-05-04 15:48:59Z pfg $
  */
 
 #ifndef	_ARM_AMLOGIC_AML8726_SDXC_M8_H
@@ -38,7 +38,7 @@
  * Read and write are per section 4.6.2 of the:
  *
  *   SD Specifications Part 1
- *   Physicaly Layer Simplified Specification
+ *   Physical Layer Simplified Specification
  *   Version 4.10
  */
 #define	AML_SDXC_CMD_TIMEOUT				50

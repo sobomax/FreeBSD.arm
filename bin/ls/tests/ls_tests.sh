@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/bin/ls/tests/ls_tests.sh 291919 2015-12-07 04:03:01Z ngie $
+# $FreeBSD: head/bin/ls/tests/ls_tests.sh 300939 2016-05-29 04:50:49Z ngie $
 #
 
 create_test_dir()
@@ -535,7 +535,7 @@ atf_test_case h_flag
 h_flag_head()
 {
 	atf_set "descr" "Verify that -h prints out the humanized units for file sizes with ls -l"
-	atf_set "require.files" "/usr/bin/bc"
+	atf_set "require.progs" "bc"
 }
 
 h_flag_body()

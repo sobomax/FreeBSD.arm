@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/nic.h 289551 2015-10-18 22:02:58Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/nic.h 299444 2016-05-11 13:22:13Z zbb $
  *
  */
 
@@ -41,6 +41,9 @@
 /* PCI BAR nos */
 #define	PCI_CFG_REG_BAR_NUM		0
 #define	PCI_MSIX_REG_BAR_NUM		4
+
+/* PCI revision IDs */
+#define	PCI_REVID_PASS2			8
 
 /* NIC SRIOV VF count */
 #define	MAX_NUM_VFS_SUPPORTED		128
@@ -173,6 +176,24 @@ struct msix_entry {
 #define	NIC_MAX_RSS_IDR_TBL_SIZE	(1 << NIC_MAX_RSS_HASH_BITS)
 #define	RSS_HASH_KEY_SIZE		5 /* 320 bit key */
 
+struct nicvf_rss_info {
+	boolean_t enable;
+#define	RSS_L2_EXTENDED_HASH_ENA	(1UL << 0)
+#define	RSS_IP_HASH_ENA			(1UL << 1)
+#define	RSS_TCP_HASH_ENA		(1UL << 2)
+#define	RSS_TCP_SYN_DIS			(1UL << 3)
+#define	RSS_UDP_HASH_ENA		(1UL << 4)
+#define	RSS_L4_EXTENDED_HASH_ENA	(1UL << 5)
+#define	RSS_ROCE_ENA			(1UL << 6)
+#define	RSS_L3_BI_DIRECTION_ENA		(1UL << 7)
+#define	RSS_L4_BI_DIRECTION_ENA		(1UL << 8)
+	uint64_t cfg;
+	uint8_t  hash_bits;
+	uint16_t rss_size;
+	uint8_t  ind_tbl[NIC_MAX_RSS_IDR_TBL_SIZE];
+	uint64_t key[RSS_HASH_KEY_SIZE];
+};
+
 enum rx_stats_reg_offset {
 	RX_OCTS = 0x0,
 	RX_UCAST = 0x1,
@@ -282,6 +303,7 @@ struct nicvf {
 	boolean_t		tns_mode:1;
 	boolean_t		sqs_mode:1;
 	bool			loopback_supported:1;
+	struct nicvf_rss_info	rss_info;
 	uint16_t		mtu;
 	struct queue_set	*qs;
 	uint8_t			rx_queues;
@@ -289,6 +311,7 @@ struct nicvf {
 	uint8_t			max_queues;
 	struct resource		*reg_base;
 	boolean_t		link_up;
+	boolean_t		hw_tso;
 	uint8_t			duplex;
 	uint32_t		speed;
 	uint8_t			cpi_alg;
@@ -481,6 +504,14 @@ nic_get_node_id(struct resource *res)
 
 	addr = rman_get_start(res);
 	return ((addr >> NIC_NODE_ID_SHIFT) & NIC_NODE_ID_MASK);
+}
+
+static __inline boolean_t
+pass1_silicon(device_t dev)
+{
+
+	/* Check if the chip revision is < Pass2 */
+	return (pci_get_revid(dev) < PCI_REVID_PASS2);
 }
 
 int nicvf_send_msg_to_pf(struct nicvf *vf, union nic_mbx *mbx);

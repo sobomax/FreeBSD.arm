@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/autounmountd 287951 2015-09-18 06:54:52Z trasz $
+# $FreeBSD: head/etc/rc.d/autounmountd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: autounmountd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="autounmountd"
+desc="daemon unmounting automounted filesystems"
 rcvar="autofs_enable"
 pidfile="/var/run/${name}.pid"
 command="/usr/sbin/${name}"

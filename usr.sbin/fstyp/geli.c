@@ -25,15 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fstyp/geli.c 286569 2015-08-10 10:29:32Z bz $");
+__FBSDID("$FreeBSD: head/usr.sbin/fstyp/geli.c 292829 2015-12-28 08:53:31Z delphij $");
 
 #include <sys/disk.h>
 #include <sys/types.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include <geom/eli/g_eli.h>
 

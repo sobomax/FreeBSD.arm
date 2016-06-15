@@ -1,4 +1,6 @@
-# $FreeBSD: head/lib/libc/tests/net/getaddrinfo/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/lib/libc/tests/net/getaddrinfo/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libc/net/${.CURDIR:T}
 
@@ -12,15 +14,18 @@ NETBSD_ATF_TESTS_SH=	getaddrinfo_test
 
 PROGS=		h_gai
 
-FILESDIR=	${TESTSDIR}/data
+FILESGROUPS+=	${PACKAGE}DATA_FILES
+${PACKAGE}DATA_FILESPACKAGE=	tests
 
-FILES=		basics_v4.exp	basics_v4v6.exp
-FILES+=		no_host_v4.exp	no_host_v4v6.exp
-FILES+=		no_serv_v4.exp	no_serv_v4v6.exp
-FILES+=		sock_raw_v4.exp	sock_raw_v4v6.exp
-FILES+=		spec_fam_v4.exp	spec_fam_v4v6.exp
-FILES+=		scoped.exp
-FILES+=		unsup_fam.exp
+${PACKAGE}DATA_FILESDIR=	${TESTSDIR}/data
+
+${PACKAGE}DATA_FILES+=		basics_v4.exp	basics_v4v6.exp
+${PACKAGE}DATA_FILES+=		no_host_v4.exp	no_host_v4v6.exp
+${PACKAGE}DATA_FILES+=		no_serv_v4.exp	no_serv_v4v6.exp
+${PACKAGE}DATA_FILES+=		sock_raw_v4.exp	sock_raw_v4v6.exp
+${PACKAGE}DATA_FILES+=		spec_fam_v4.exp	spec_fam_v4v6.exp
+${PACKAGE}DATA_FILES+=		scoped.exp
+${PACKAGE}DATA_FILES+=		unsup_fam.exp
 
 .include "../../Makefile.netbsd-tests"
 

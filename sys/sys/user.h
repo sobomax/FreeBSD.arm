@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)user.h	8.2 (Berkeley) 9/23/93
- * $FreeBSD: head/sys/sys/user.h 288944 2015-10-06 18:07:00Z cem $
+ * $FreeBSD: head/sys/sys/user.h 298981 2016-05-03 15:14:17Z pfg $
  */
 
 #ifndef _SYS_USER_H_
@@ -296,7 +296,7 @@ struct user {
 
 /*
  * Old format.  Has variable hidden padding due to alignment.
- * This is a compatability hack for pre-build 7.1 packages.
+ * This is a compatibility hack for pre-build 7.1 packages.
  */
 #if defined(__amd64__)
 #define	KINFO_OFILE_SIZE	1328

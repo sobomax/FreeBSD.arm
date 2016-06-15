@@ -1,9 +1,9 @@
-# $FreeBSD: head/secure/libexec/ssh-keysign/Makefile 291941 2015-12-07 16:08:09Z bdrewery $
+# $FreeBSD: head/secure/libexec/ssh-keysign/Makefile 296633 2016-03-11 00:15:29Z des $
 
 .include <src.opts.mk>
 
 PROG=	ssh-keysign
-SRCS=	ssh-keysign.c roaming_dummy.c readconf.c
+SRCS=	ssh-keysign.c readconf.c
 MAN=	ssh-keysign.8
 CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
 SRCS+=	ssh_namespace.h

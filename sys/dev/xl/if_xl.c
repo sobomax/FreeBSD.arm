@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 271818 2014-09-18 20:35:22Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * 3Com 3c90x Etherlink XL PCI NIC driver
@@ -75,7 +75,7 @@ __FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 271818 2014-09-18 20:35:22Z glebius 
  * Columbia University, New York City
  */
 /*
- * The 3c90x series chips use a bus-master DMA interface for transfering
+ * The 3c90x series chips use a bus-master DMA interface for transferring
  * packets to and from the controller chip. Some of the "vortex" cards
  * (3c59x) also supported a bus master mode, however for those chips
  * you could only DMA packets to/from a contiguous memory buffer. For
@@ -106,8 +106,9 @@ __FBSDID("$FreeBSD: head/sys/dev/xl/if_xl.c 271818 2014-09-18 20:35:22Z glebius 
 #include <sys/systm.h>
 #include <sys/sockio.h>
 #include <sys/endian.h>
-#include <sys/mbuf.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
+#include <sys/mbuf.h>
 #include <sys/module.h>
 #include <sys/socket.h>
 #include <sys/taskqueue.h>

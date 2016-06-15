@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/reconnect/reconnect.c 281411 2015-04-11 07:37:21Z ngie $
+ * $FreeBSD: head/tools/regression/sockets/reconnect/reconnect.c 294126 2016-01-16 02:15:13Z ngie $
  */
 
 /*
@@ -104,7 +104,7 @@ cleanup(void)
 }
 
 int
-main()
+main(void)
 {
     int s_sock1, s_sock2, c_sock;
 
@@ -127,6 +127,7 @@ main()
     connect_uds_server(c_sock, uds_name1);
     close(s_sock1);
     connect_uds_server(c_sock, uds_name2);
+    close(s_sock2);
 
     exit (0);
 }

@@ -24,26 +24,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/arm/cpu_asm-v6.S 283947 2015-06-03 14:07:50Z ian $
+ * $FreeBSD: head/sys/arm/arm/cpu_asm-v6.S 300694 2016-05-25 19:44:26Z ian $
  */
 #include "assym.s"
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/asmacros.h>
 #include <machine/armreg.h>
 #include <machine/sysreg.h>
 
-#if __ARM_ARCH >= 6
 #define GET_PCB(tmp) \
-	mrc CP15_TPIDRPRW(tmp); \
-	add   tmp, tmp, #(TD_PCB)
-#else
-.Lcurpcb:
-	.word _C_LABEL(__pcpu) + PC_CURPCB
-#define GET_PCB(tmp) \
-	ldr   tmp, .Lcurpcb
-#endif
+	mrc	CP15_TPIDRPRW(tmp); \
+	add	tmp, tmp, #(TD_PCB)
 
 /*
  * Define cache functions used by startup code, which counts on the fact that

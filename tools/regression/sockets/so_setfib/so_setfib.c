@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/so_setfib/so_setfib.c 281408 2015-04-11 06:40:38Z ngie $
+ * $FreeBSD: head/tools/regression/sockets/so_setfib/so_setfib.c 298881 2016-05-01 16:20:14Z pfg $
  */
 
 /*
@@ -171,11 +171,11 @@ main(int argc __unused, char *argv[] __unused)
 	size_t s;
 
 	if (geteuid() != 0) {
-		printf("1..0 # SKIP: must be root");
+		printf("1..0 # SKIP: must be root\n");
 		return (0);
 	}
 
-	/* Initalize randomness. */
+	/* Initialize randomness. */
 	srandomdev();
 
 	/* Get number of FIBs supported by kernel. */

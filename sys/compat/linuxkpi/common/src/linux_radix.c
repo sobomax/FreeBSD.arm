@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linuxkpi/common/src/linux_radix.c 290135 2015-10-29 08:28:39Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/compat/linuxkpi/common/src/linux_radix.c 298829 2016-04-30 00:53:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -187,7 +187,7 @@ radix_tree_insert(struct radix_tree_root *root, unsigned long index, void *item)
 		if (temp[idx] == NULL) {
 			while(idx--)
 				free(temp[idx], M_RADIX);
-			/* check if we should free the root node aswell */
+			/* Check if we should free the root node as well. */
 			if (root->rnode->count == 0) {
 				free(root->rnode, M_RADIX);
 				root->rnode = NULL;

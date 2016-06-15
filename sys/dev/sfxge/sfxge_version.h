@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Solarflare Communications Inc.
+ * Copyright (c) 2015-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * This software was developed in part by OKTET Labs under contract for
@@ -30,12 +30,12 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/sfxge_version.h 283679 2015-05-29 05:44:56Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/sfxge_version.h 301725 2016-06-09 12:33:53Z arybchik $
  */
 
 #ifndef _SFXGE_VERSION_H
 #define	_SFXGE_VERSION_H
 
-#define	SFXGE_VERSION_STRING	"v4.5.2.1000"
+#define	SFXGE_VERSION_STRING	"v4.8.0.1081"
 
 #endif	/* _SFXGE_DRIVER_VERSION_H */

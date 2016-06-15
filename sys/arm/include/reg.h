@@ -1,5 +1,5 @@
 /*	$NetBSD: reg.h,v 1.2 2001/02/23 21:23:52 reinoud Exp $	*/
-/* $FreeBSD: head/sys/arm/include/reg.h 137229 2004-11-04 19:20:54Z cognet $ */
+/* $FreeBSD: head/sys/arm/include/reg.h 294987 2016-01-28 12:43:58Z zbb $ */
 #ifndef MACHINE_REG_H
 #define MACHINE_REG_H
 
@@ -19,7 +19,9 @@ struct fpreg {
 };
 
 struct dbreg {
-	        unsigned int  dr[8];    /* debug registers */
+#define	ARM_WR_MAX	16 /* Maximum number of watchpoint registers */
+	unsigned int dbg_wcr[ARM_WR_MAX]; /* Watchpoint Control Registers */
+	unsigned int dbg_wvr[ARM_WR_MAX]; /* Watchpoint Value Registers */
 };
 
 #ifdef _KERNEL

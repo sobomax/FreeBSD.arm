@@ -1,6 +1,6 @@
-# $FreeBSD: head/sbin/dhclient/tests/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/sbin/dhclient/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-.PATH:	${.CURDIR}/..
+.PATH:	${.CURDIR:H}
 
 PLAIN_TESTS_C=				option-domain-search_test
 SRCS.option-domain-search_test=		alloc.c convert.c hash.c options.c \

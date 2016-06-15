@@ -72,7 +72,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)traceroute.c	8.1 (Berkeley) 6/6/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/traceroute6/traceroute6.c 235138 2012-05-08 15:18:35Z ume $";
+  "$FreeBSD: head/usr.sbin/traceroute6/traceroute6.c 299501 2016-05-12 02:05:50Z pfg $";
 #endif /* not lint */
 
 /*
@@ -342,7 +342,7 @@ struct ip6_rthdr *rth;
 #endif
 struct cmsghdr *cmsg;
 
-char *source = 0;
+char *source = NULL;
 char *hostname;
 
 u_long nprobes = 3;

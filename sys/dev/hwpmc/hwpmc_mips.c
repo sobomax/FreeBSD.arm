@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mips.c 282658 2015-05-08 19:40:00Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mips.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include "opt_hwpmc_hooks.h"
 
@@ -543,7 +543,7 @@ pmc_next_frame(register_t *pc, register_t *sp)
 			case OP_SYSCALL:
 			case OP_BREAK:
 				more = 1;	/* stop now */
-			};
+			}
 			break;
 
 		case OP_BCOND:
@@ -564,7 +564,7 @@ pmc_next_frame(register_t *pc, register_t *sp)
 			case OP_BCx:
 			case OP_BCy:
 				more = 2;	/* stop after next instruction */
-			};
+			}
 			break;
 
 		case OP_SW:

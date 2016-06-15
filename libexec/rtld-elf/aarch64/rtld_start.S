@@ -28,19 +28,13 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/rtld_start.S 285038 2015-07-02 14:00:07Z andrew $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/rtld_start.S 293832 2016-01-13 15:54:17Z andrew $");
 
 ENTRY(.rtld_start)
 	mov	x19, x0		/* Put ps_strings in a callee-saved register */
 	mov	x20, sp		/* And the stack pointer */
 
-	/* Handle the old style stack */
-	/* TODO: Remove this when the kernel correctly aligns the stack */
-	cbnz	x0, 1f
-	mov	x0, sp		/* sp points to the args */
-	and	sp, x0, #~0xf	/* Align the stack as needed */
-
-1:	sub	sp, sp, #16	/* Make room for obj_main & exit proc */
+	sub	sp, sp, #16	/* Make room for obj_main & exit proc */
 
 	mov	x1, sp		/* exit_proc */
 	add	x2, x1, #8	/* obj_main */

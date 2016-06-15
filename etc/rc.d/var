@@ -24,17 +24,18 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/var 290628 2015-11-09 23:37:01Z bdrewery $
+# $FreeBSD: head/etc/rc.d/var 299839 2016-05-15 04:38:50Z ngie $
 #
 
 # PROVIDE: var
-# REQUIRE: mountcritlocal zfs
+# REQUIRE: mountcritlocal
 
 # NFS /var is not supported, unless NFS /var is part of diskless NFS /
 
 . /etc/rc.subr
 
 name="var"
+desc="Populate /var directory"
 stop_cmd=':'
 
 load_rc_config $name

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/newfs_nandfs/newfs_nandfs.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: head/sbin/newfs_nandfs/newfs_nandfs.c 298871 2016-05-01 02:19:49Z pfg $");
 
 #include <sys/param.h>
 #include <sys/fdcio.h>
@@ -132,7 +132,7 @@ static uint32_t nuserfiles;
 static uint32_t seg_nblocks;
 static uint32_t seg_endblock;
 
-#define SIZE_TO_BLOCK(size) (((size) + (blocksize - 1)) / blocksize)
+#define SIZE_TO_BLOCK(size) howmany(size, blocksize)
 
 static uint32_t
 nandfs_first_block(void)
@@ -808,7 +808,7 @@ create_fs(void)
 	char *data;
 	int i;
 
-	nuserfiles = (sizeof(user_files) / sizeof(user_files[0]));
+	nuserfiles = nitems(user_files);
 
 	/* Count and assign blocks */
 	count_seg_blocks();

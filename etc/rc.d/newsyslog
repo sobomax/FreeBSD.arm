@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/newsyslog 240336 2012-09-11 05:04:59Z obrien $
+# $FreeBSD: head/etc/rc.d/newsyslog 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: newsyslog
@@ -9,6 +9,7 @@
 . /etc/rc.subr
 
 name="newsyslog"
+desc="Logfile rotation"
 rcvar="newsyslog_enable"
 required_files="/etc/newsyslog.conf"
 command="/usr/sbin/${name}"

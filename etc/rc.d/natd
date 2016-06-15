@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/natd 230099 2012-01-14 02:18:41Z dougb $
+# $FreeBSD: head/etc/rc.d/natd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: natd
@@ -10,6 +10,7 @@
 . /etc/network.subr
 
 name="natd"
+desc="Network Address Translation daemon"
 rcvar="natd_enable"
 command="/sbin/${name}"
 pidfile="/var/run/${name}.pid"

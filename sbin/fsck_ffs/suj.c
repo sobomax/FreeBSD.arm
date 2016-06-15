@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck_ffs/suj.c 260068 2013-12-30 01:16:08Z scottl $");
+__FBSDID("$FreeBSD: head/sbin/fsck_ffs/suj.c 298872 2016-05-01 02:24:05Z pfg $");
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -217,7 +217,7 @@ static void
 closedisk(const char *devnam)
 {
 	struct csum *cgsum;
-	int i;
+	uint32_t i;
 
 	/*
 	 * Recompute the fs summary info from correct cs summaries.
@@ -911,7 +911,7 @@ ino_isat(ino_t parent, off_t diroff, ino_t child, int *mode, int *isdot)
 	 * certain we hit a valid record and not some junk in the middle
 	 * of a file name.  Stop when we reach or pass the expected offset.
 	 */
-	dpoff = (doff / DIRBLKSIZ) * DIRBLKSIZ;
+	dpoff = rounddown(doff, DIRBLKSIZ);
 	do {
 		dp = (struct direct *)&block[dpoff];
 		if (dpoff == doff)

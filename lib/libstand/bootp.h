@@ -19,7 +19,7 @@
  * suitability of this software for any purpose.  It is provided "as is"
  * without express or implied warranty.
  *
- * $FreeBSD: head/lib/libstand/bootp.h 64527 2000-08-11 08:36:17Z ps $
+ * $FreeBSD: head/lib/libstand/bootp.h 297150 2016-03-21 14:58:12Z ian $
  */
 
 
@@ -91,6 +91,7 @@ struct bootp {
 #define TAG_DOMAINNAME		((unsigned char)  15)
 #define TAG_SWAPSERVER		((unsigned char)  16)
 #define TAG_ROOTPATH		((unsigned char)  17)
+#define TAG_INTF_MTU		((unsigned char)  26)
 
 #ifdef SUPPORT_DHCP
 #define TAG_REQ_ADDR		((unsigned char)  50)

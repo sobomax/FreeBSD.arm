@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 286894 2015-08-18 18:12:46Z delphij $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 300836 2016-05-27 08:48:33Z ngie $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -143,7 +143,7 @@ SVCXPRT *
 svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
     size_t recvsize)
 {
-	SVCXPRT *xprt = NULL;
+	SVCXPRT *xprt;
 	struct sockaddr* sa;
 	int error;
 
@@ -189,11 +189,11 @@ svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
 	SOCKBUF_UNLOCK(&so->so_rcv);
 
 	return (xprt);
+
 cleanup_svc_vc_create:
-	if (xprt) {
-		sx_destroy(&xprt->xp_lock);
-		svc_xprt_free(xprt);
-	}
+	sx_destroy(&xprt->xp_lock);
+	svc_xprt_free(xprt);
+
 	return (NULL);
 }
 
@@ -203,8 +203,8 @@ cleanup_svc_vc_create:
 SVCXPRT *
 svc_vc_create_conn(SVCPOOL *pool, struct socket *so, struct sockaddr *raddr)
 {
-	SVCXPRT *xprt = NULL;
-	struct cf_conn *cd = NULL;
+	SVCXPRT *xprt;
+	struct cf_conn *cd;
 	struct sockaddr* sa = NULL;
 	struct sockopt opt;
 	int one = 1;
@@ -279,12 +279,10 @@ svc_vc_create_conn(SVCPOOL *pool, struct socket *so, struct sockaddr *raddr)
 
 	return (xprt);
 cleanup_svc_vc_create:
-	if (xprt) {
-		sx_destroy(&xprt->xp_lock);
-		svc_xprt_free(xprt);
-	}
-	if (cd)
-		mem_free(cd, sizeof(*cd));
+	sx_destroy(&xprt->xp_lock);
+	svc_xprt_free(xprt);
+	mem_free(cd, sizeof(*cd));
+
 	return (NULL);
 }
 
@@ -416,7 +414,7 @@ svc_vc_rendezvous_recv(SVCXPRT *xprt, struct rpc_msg *msg,
 
 	sx_xunlock(&xprt->xp_lock);
 
-	sa = 0;
+	sa = NULL;
 	error = soaccept(so, &sa);
 
 	if (error) {

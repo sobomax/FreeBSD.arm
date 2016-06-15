@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)genassym.c	5.11 (Berkeley) 5/10/91
- * $FreeBSD: head/sys/powerpc/powerpc/genassym.c 279601 2015-03-04 21:06:57Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/powerpc/genassym.c 298237 2016-04-19 01:48:18Z jhibbits $
  */
 
 #include <sys/param.h>
@@ -52,7 +52,6 @@
 #include <vm/vm_map.h>
 
 #include <machine/pcb.h>
-#include <machine/pmap.h>
 #include <machine/psl.h>
 #include <machine/sigframe.h>
 
@@ -119,10 +118,14 @@ ASSYM(USER_SR, USER_SR);
 #endif
 #elif defined(BOOKE)
 ASSYM(PM_PDIR, offsetof(struct pmap, pm_pdir));
-ASSYM(PTE_RPN, offsetof(struct pte, rpn));
-ASSYM(PTE_FLAGS, offsetof(struct pte, flags));
+/*
+ * With pte_t being a bitfield struct, these fields cannot be addressed via
+ * offsetof().
+ */
+ASSYM(PTE_RPN, 0);
+ASSYM(PTE_FLAGS, sizeof(uint32_t));
 #if defined(BOOKE_E500)
-ASSYM(TLB0_ENTRY_SIZE, sizeof(struct tlb_entry));
+ASSYM(TLB_ENTRY_SIZE, sizeof(struct tlb_entry));
 #endif
 #endif
 

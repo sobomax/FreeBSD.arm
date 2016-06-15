@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_kms.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_kms.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"
@@ -611,7 +611,7 @@ void radeon_disable_vblank_kms(struct drm_device *dev, int crtc)
  *
  * Gets the timestamp on the requested crtc based on the
  * scanout position.  (all asics).
- * Returns postive status flags on success, negative error on failure.
+ * Returns positive status flags on success, negative error on failure.
  */
 int radeon_get_vblank_timestamp_kms(struct drm_device *dev, int crtc,
 				    int *max_error,

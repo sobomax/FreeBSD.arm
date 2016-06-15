@@ -32,7 +32,7 @@
 #include <unistd.h>
 
 /*
- * $FreeBSD: head/tests/sys/kern/pipe/pipe_overcommit1_test.c 290914 2015-11-16 05:38:40Z ngie $
+ * $FreeBSD: head/tests/sys/kern/pipe/pipe_overcommit1_test.c 292822 2015-12-28 02:36:57Z ngie $
  * This program just allocates as many pipes as it can to ensure
  * that using up all pipe memory doesn't cause a panic.
  */
@@ -40,12 +40,11 @@
 int
 main(void)
 {
-	int pipes[10000], returnval;
+	int pipes[10000];
 	unsigned int i;
 
-	for (i = 0; i < nitems(pipes); i++) {
-		returnval = pipe(&pipes[i]);
-	}
+	for (i = 0; i < nitems(pipes); i++)
+		(void)pipe(&pipes[i]);
 	printf("PASS\n");
 
 	exit(0);

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/devinfo/devinfo.c 278299 2015-02-05 22:42:44Z jhb $");
+__FBSDID("$FreeBSD: head/usr.sbin/devinfo/devinfo.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include <sys/types.h>
 #include <err.h>
@@ -66,9 +66,9 @@ print_resource(struct devinfo_res *res)
 
 	rman = devinfo_handle_to_rman(res->dr_rman);
 	hexmode =  (rman->dm_size > 1000) || (rman->dm_size == 0);
-	printf(hexmode ? "0x%lx" : "%lu", res->dr_start);
+	printf(hexmode ? "0x%jx" : "%ju", res->dr_start);
 	if (res->dr_size > 1)
-		printf(hexmode ? "-0x%lx" : "-%lu",
+		printf(hexmode ? "-0x%jx" : "-%ju",
 		    res->dr_start + res->dr_size - 1);
 }
 

@@ -1,9 +1,13 @@
-# $FreeBSD: head/sys/boot/Makefile.amd64 280808 2015-03-29 15:43:24Z andrew $
+# $FreeBSD: head/sys/boot/Makefile.amd64 298418 2016-04-21 16:32:48Z allanjude $
 
 SUBDIR+=		efi
 SUBDIR+=		libstand32
 SUBDIR+=		zfs
 SUBDIR+=		userboot
+
+.if !defined(LOADER_NO_GELI_SUPPORT)
+SUBDIR+=		geli
+.endif
 
 .if ${MK_FORTH} != "no"
 SUBDIR+=		ficl32

@@ -25,11 +25,10 @@
 static const char rcsid[] = "$Id: res_mkupdate.c,v 1.10 2008/12/11 09:59:00 marka Exp $";
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 288114 2015-09-22 15:57:26Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 
 #include <netinet/in.h>
@@ -54,7 +53,9 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_mkupdate.c 288114 2015-09-22 15:57:
 #include "port_after.h"
 
 /* Options.  Leave them on. */
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 #define MAXPORT 1024
 
 static int getnum_str(u_char **, u_char *);
@@ -125,7 +126,7 @@ res_nmkupdate(res_state statp, ns_updrec *rrecp_in, u_char *buf, int buflen) {
 	dpp = dnptrs;
 	*dpp++ = buf;
 	*dpp++ = NULL;
-	lastdnptr = dnptrs + sizeof dnptrs / sizeof dnptrs[0];
+	lastdnptr = dnptrs + nitems(dnptrs);
 
 	if (rrecp_start == NULL)
 		return (-5);
@@ -1173,7 +1174,7 @@ res_protocolname(int num) {
 	if (protolist == (struct valuelist *)0)
 		res_buildprotolist();
 	pp = cgetprotobynumber(num);
-	if (pp == 0)  {
+	if (pp == NULL)  {
 		(void) sprintf(number, "%d", num);
 		return (number);
 	}
@@ -1188,7 +1189,7 @@ res_servicename(u_int16_t port, const char *proto) {	/*%< Host byte order. */
 	if (servicelist == (struct valuelist *)0)
 		res_buildservicelist();
 	ss = cgetservbyport(htons(port), proto);
-	if (ss == 0)  {
+	if (ss == NULL)  {
 		(void) sprintf(number, "%d", port);
 		return (number);
 	}

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/zfs/Makefile 286321 2015-08-05 14:45:52Z lwhsu $
+# $FreeBSD: head/sys/modules/zfs/Makefile 301010 2016-05-31 04:12:14Z allanjude $
 
 SYSDIR?=${.CURDIR}/../..
 
@@ -68,7 +68,10 @@ SRCS+=	zmod_subr.c
 SRCS+=	zutil.c
 
 .PATH:	${SYSDIR}/crypto/sha2
-SRCS+=	sha2.c sha256c.c
+SRCS+=	sha256c.c sha512c.c
+
+.PATH:	${SYSDIR}/crypto/skein
+SRCS+=	skein.c skein_block.c
 
 .PATH:	${SUNW}/common/zfs
 .include "${SUNW}/uts/common/Makefile.files"

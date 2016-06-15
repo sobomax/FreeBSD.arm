@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libsm/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
+# $FreeBSD: head/lib/libsm/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=sendmail
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/libsm
 

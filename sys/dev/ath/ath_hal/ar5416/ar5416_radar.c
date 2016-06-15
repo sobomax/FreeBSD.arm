@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5416/ar5416_radar.c 239638 2012-08-24 01:29:46Z adrian $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5416/ar5416_radar.c 297793 2016-04-10 23:07:00Z pfg $
  */
 #include "opt_ah.h"
 
@@ -365,7 +365,7 @@ ar5416ProcessRadarEvent(struct ath_hal *ah, struct ath_rx_status *rxs,
 			/* Cannot use ctrl channel RSSI if ext channel is stronger */
 			if (ext_rssi >= (rssi + 3)) {
 				rssi = 0;
-			};
+			}
 			break;
 		case EXT_CH_RADAR_FOUND:
 			/* Radar in extended channel */

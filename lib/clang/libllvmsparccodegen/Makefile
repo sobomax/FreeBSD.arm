@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmsparccodegen/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmsparccodegen/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -18,7 +18,8 @@ SRCS=	DelaySlotFiller.cpp \
 	SparcTargetMachine.cpp \
 	SparcTargetObjectFile.cpp
 
-TGHDRS=	Intrinsics \
+TGHDRS=	Attributes \
+	Intrinsics \
 	SparcGenAsmWriter \
 	SparcGenCallingConv \
 	SparcGenCodeEmitter \

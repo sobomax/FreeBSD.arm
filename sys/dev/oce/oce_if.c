@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_if.c 283291 2015-05-22 17:05:21Z jkim $ */
+/* $FreeBSD: head/sys/dev/oce/oce_if.c 297482 2016-04-01 06:28:33Z sephe $ */
 
 #include "opt_inet6.h"
 #include "opt_inet.h"
@@ -707,7 +707,7 @@ oce_fast_isr(void *arg)
 
 	oce_arm_eq(sc, ii->eq->eq_id, 0, FALSE, TRUE);
 
-	taskqueue_enqueue_fast(ii->tq, &ii->task);
+	taskqueue_enqueue(ii->tq, &ii->task);
 
  	ii->eq->intr++;	
 
@@ -1065,7 +1065,7 @@ oce_tx_restart(POCE_SOFTC sc, struct oce_wq *wq)
 #else
 	if (!IFQ_DRV_IS_EMPTY(&sc->ifp->if_snd))
 #endif
-		taskqueue_enqueue_fast(taskqueue_swi, &wq->txtask);
+		taskqueue_enqueue(taskqueue_swi, &wq->txtask);
 
 }
 
@@ -1497,16 +1497,12 @@ static void
 oce_rx_flush_lro(struct oce_rq *rq)
 {
 	struct lro_ctrl	*lro = &rq->lro;
-	struct lro_entry *queued;
 	POCE_SOFTC sc = (POCE_SOFTC) rq->parent;
 
 	if (!IF_LRO_ENABLED(sc))
 		return;
 
-	while ((queued = SLIST_FIRST(&lro->lro_active)) != NULL) {
-		SLIST_REMOVE_HEAD(&lro->lro_active, next);
-		tcp_lro_flush(lro, queued);
-	}
+	tcp_lro_flush_all(lro);
 	rq->lro_pkts_queued = 0;
 	
 	return;

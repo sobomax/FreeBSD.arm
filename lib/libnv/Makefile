@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libnv/Makefile 285139 2015-07-04 16:33:37Z oshogbo $
+# $FreeBSD: head/lib/libnv/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
@@ -14,8 +15,6 @@ SRCS=	dnvlist.c
 SRCS+=	msgio.c
 SRCS+=	nvlist.c
 SRCS+=	nvpair.c
-
-WARNS?=	6
 
 .if ${MK_TESTS} != "no"
 SUBDIR+=	tests

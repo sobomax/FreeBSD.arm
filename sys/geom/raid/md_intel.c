@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/md_intel.c 286615 2015-08-11 03:12:09Z pfg $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/md_intel.c 298649 2016-04-26 15:38:17Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -773,7 +773,7 @@ intel_meta_write(struct g_consumer *cp, struct intel_raid_conf *meta)
 	meta->checksum = checksum;
 
 	/* Create and fill buffer. */
-	sectors = (meta->config_size + pp->sectorsize - 1) / pp->sectorsize;
+	sectors = howmany(meta->config_size, pp->sectorsize);
 	buf = malloc(sectors * pp->sectorsize, M_MD_INTEL, M_WAITOK | M_ZERO);
 	if (sectors > 1) {
 		memcpy(buf, ((char *)meta) + pp->sectorsize,

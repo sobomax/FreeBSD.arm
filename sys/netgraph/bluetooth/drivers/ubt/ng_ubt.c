@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_ubt.c,v 1.16 2003/10/10 19:15:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/drivers/ubt/ng_ubt.c 292080 2015-12-11 05:28:00Z imp $
+ * $FreeBSD: head/sys/netgraph/bluetooth/drivers/ubt/ng_ubt.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 /*
@@ -58,7 +58,7 @@
  * 2) Netgraph context. This is where all the Netgraph related stuff happens.
  *    Since we mark node as WRITER, the Netgraph node will be "locked" (from
  *    Netgraph point of view). Any variable that is only modified from the
- *    Netgraph context does not require any additonal locking. It is generally
+ *    Netgraph context does not require any additional locking. It is generally
  *    *NOT* allowed to grab *ANY* additional locks. Whatever you do, *DO NOT*
  *    grab any lock in the Netgraph context that could cause de-scheduling of
  *    the Netgraph thread for significant amount of time. In fact, the only
@@ -1463,7 +1463,7 @@ ng_ubt_shutdown(node_p node)
 	if (node->nd_flags & NGF_REALLY_DIE) {
 		/*
                  * We came here because the USB device is being
-		 * detached, so stop being persistant.
+		 * detached, so stop being persistent.
                  */
 		NG_NODE_SET_PRIVATE(node, NULL);
 		NG_NODE_UNREF(node);

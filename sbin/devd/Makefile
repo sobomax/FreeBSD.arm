@@ -1,7 +1,8 @@
-# $FreeBSD: head/sbin/devd/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/devd/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG_CXX=devd
 SRCS=	devd.cc token.l parse.y y.tab.h
 MAN=	devd.8 devd.conf.5

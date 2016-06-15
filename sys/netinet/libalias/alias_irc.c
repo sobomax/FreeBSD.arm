@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_irc.c 259858 2013-12-25 02:06:57Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_irc.c 298995 2016-05-03 18:05:43Z pfg $");
 
 /* Alias_irc.c intercepts packages contain IRC CTCP commands, and
 	changes DCC commands to export a port on the aliasing host instead
@@ -44,7 +44,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_irc.c 259858 2013-12-25 02:0
 	 Version 2.1:  May, 1997 (cjm)
 	     Very minor changes to conform with
 	     local/global/function naming conventions
-	     withing the packet alising module.
+	     within the packet alising module.
 */
 
 /* Includes */
@@ -482,7 +482,7 @@ lPACKET_DONE:
    which will generate a type-error on all but 32-bit machines.
 
 	[Note 2] This routine really ought to be replaced with one that
-	creates a transparent proxy on the aliasing host, to allow arbitary
+	creates a transparent proxy on the aliasing host, to allow arbitrary
 	changes in the TCP stream.  This should not be too difficult given
 	this base;  I (ee) will try to do this some time later.
 	*/

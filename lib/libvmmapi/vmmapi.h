@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libvmmapi/vmmapi.h 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/lib/libvmmapi/vmmapi.h 298896 2016-05-01 19:37:33Z pfg $
  */
 
 #ifndef _VMMAPI_H_
@@ -176,7 +176,7 @@ int	vm_get_hpet_capabilities(struct vmctx *ctx, uint32_t *capabilities);
 
 /*
  * Translate the GLA range [gla,gla+len) into GPA segments in 'iov'.
- * The 'iovcnt' should be big enough to accomodate all GPA segments.
+ * The 'iovcnt' should be big enough to accommodate all GPA segments.
  *
  * retval	fault		Interpretation
  *   0		  0		Success

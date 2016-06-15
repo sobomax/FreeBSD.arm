@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009-2015 Solarflare Communications Inc.
+ * Copyright (c) 2009-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,11 +29,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_wol.c 291436 2015-11-29 05:42:49Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_wol.c 300607 2016-05-24 12:16:57Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
-#include "efx_types.h"
 #include "efx_impl.h"
 
 #if EFSYS_OPT_WOL

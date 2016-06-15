@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)ndbm.c	8.4 (Berkeley) 7/21/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/ndbm.c 288042 2015-09-20 20:55:00Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/ndbm.c 301066 2016-05-31 18:32:57Z ed $");
 
 /*
  * This package provides a dbm compatible interface to the new hashing
@@ -56,7 +56,7 @@ __FBSDID("$FreeBSD: head/lib/libc/db/hash/ndbm.c 288042 2015-09-20 20:55:00Z rod
  *	 NULL on failure
  */
 extern DBM *
-dbm_open(const char *file, int flags, int mode)
+dbm_open(const char *file, int flags, mode_t mode)
 {
 	HASHINFO info;
 	char path[MAXPATHLEN];

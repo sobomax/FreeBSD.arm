@@ -11,7 +11,7 @@
 # Copyright 2009 Douglas Barton
 # dougb@FreeBSD.org
 
-# $FreeBSD: head/release/scripts/mm-mtree.sh 290565 2015-11-08 23:46:05Z sjg $
+# $FreeBSD: head/release/scripts/mm-mtree.sh 301584 2016-06-08 06:33:55Z delphij $
 
 PATH=/bin:/usr/bin:/usr/sbin
 
@@ -147,7 +147,7 @@ find -d ${TEMPROOT} -type d -empty -delete 2>/dev/null
 
 # Build the mtree database in a temporary location.
 MTREENEW=`mktemp -t mergemaster.mtree`
-mtree -ci -p ${TEMPROOT} -k size,md5digest > ${MTREENEW} 2>/dev/null
+mtree -nci -p ${TEMPROOT} -k size,md5digest > ${MTREENEW} 2>/dev/null
 
 if [ -s "${MTREENEW}" ]; then
   echo "*** Saving mtree database for future upgrades"

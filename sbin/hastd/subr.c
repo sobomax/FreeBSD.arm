@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/hastd/subr.c 263234 2014-03-16 11:04:44Z rwatson $");
+__FBSDID("$FreeBSD: head/sbin/hastd/subr.c 298317 2016-04-20 00:55:35Z araujo $");
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -247,7 +247,7 @@ drop_privs(const struct hast_resource *res)
 			    "Unable to limit capability rights on local descriptor");
 		}
 		if (cap_ioctls_limit(res->hr_localfd, geomcmds,
-		    sizeof(geomcmds) / sizeof(geomcmds[0])) == -1) {
+		    nitems(geomcmds)) == -1) {
 			pjdlog_errno(LOG_ERR,
 			    "Unable to limit allowed GEOM ioctls");
 		}
@@ -266,7 +266,7 @@ drop_privs(const struct hast_resource *res)
 				    "Unable to limit capability rights to CAP_IOCTL on ggate descriptor");
 			}
 			if (cap_ioctls_limit(res->hr_ggatefd, ggatecmds,
-			    sizeof(ggatecmds) / sizeof(ggatecmds[0])) == -1) {
+			    nitems(ggatecmds)) == -1) {
 				pjdlog_errno(LOG_ERR,
 				    "Unable to limit allowed ggate ioctls");
 			}

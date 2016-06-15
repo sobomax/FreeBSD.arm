@@ -34,7 +34,7 @@
  * Copyright (C) 1986 Sun Microsystems, Inc.
  *
  * protocol used between the UNIX kernel (the "client") and the
- * local lock manager.  The local lock manager is a deamon running
+ * local lock manager.  The local lock manager is a daemon running
  * above the kernel.
  */
 
@@ -44,7 +44,7 @@
 %/*static char sccsid[] = "from: @(#)klm_prot.x	2.1 88/08/01 4.0 RPCSRC";*/
 %#endif /* not lint */
 %#include <sys/cdefs.h>
-%__FBSDID("$FreeBSD: head/include/rpcsvc/klm_prot.x 259117 2013-12-09 04:26:50Z hrs $");
+%__FBSDID("$FreeBSD: head/include/rpcsvc/klm_prot.x 298849 2016-04-30 14:43:42Z pfg $");
 #endif
 
 const	LM_MAXSTRLEN = 1024;

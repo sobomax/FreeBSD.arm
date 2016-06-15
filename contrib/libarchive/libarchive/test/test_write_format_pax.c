@@ -23,9 +23,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/test/test_write_format_pax.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/test/test_write_format_pax.c 299529 2016-05-12 10:16:16Z mm $");
 
-char buff2[64];
+static char buff2[64];
 
 DEFINE_TEST(test_write_format_pax)
 {

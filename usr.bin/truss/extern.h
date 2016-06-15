@@ -28,9 +28,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/truss/extern.h 288424 2015-09-30 19:13:32Z jhb $
+ * $FreeBSD: head/usr.bin/truss/extern.h 295930 2016-02-23 19:56:29Z jhb $
  */
 
+extern int print_line_prefix(struct trussinfo *);
 extern void setup_and_wait(struct trussinfo *, char **);
 extern void start_tracing(struct trussinfo *, pid_t);
 extern void restore_proc(int);

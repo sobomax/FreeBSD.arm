@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmlto/Makefile 283770 2015-05-30 15:39:49Z dim $
+# $FreeBSD: head/lib/clang/libllvmlto/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -8,6 +8,7 @@ SRCDIR=	lib/LTO
 SRCS=	LTOCodeGenerator.cpp \
 	LTOModule.cpp
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

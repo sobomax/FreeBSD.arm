@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/lpc/lpc_mmc.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/lpc/lpc_mmc.c 297127 2016-03-21 00:52:24Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -775,3 +775,5 @@ static driver_t lpc_mmc_driver = {
 };
 
 DRIVER_MODULE(lpcmmc, simplebus, lpc_mmc_driver, lpc_mmc_devclass, 0, 0);
+DRIVER_MODULE(mmc, lpcmmc, mmc_driver, mmc_devclass, NULL, NULL);
+MODULE_DEPEND(lpcmmc, mmc, 1, 1, 1);

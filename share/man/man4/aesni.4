@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/aesni.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/aesni.4 292181 2015-12-14 07:08:17Z kevlo $
 .\"
-.Dd September 6, 2010
+.Dd December 14, 2015
 .Dt AESNI 4
 .Os
 .Sh NAME
@@ -36,6 +36,7 @@ place the following lines in your
 kernel configuration file:
 .Bd -ragged -offset indent
 .Cd "device crypto"
+.Cd "device cryptodev"
 .Cd "device aesni"
 .Ed
 .Pp

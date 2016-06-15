@@ -78,7 +78,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/chat/chat.c 241737 2012-10-19 14:49:42Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/chat/chat.c 299971 2016-05-16 19:48:02Z truckman $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -521,7 +521,7 @@ void terminate(int status)
 	    size_t rep_len;
 
 	    rep_len = strlen(report_buffer);
-	    while (rep_len + 1 <= sizeof(report_buffer)) {
+	    while (rep_len + 1 < sizeof(report_buffer)) {
 		alarm(1);
 		c = get_char();
 		alarm(0);
@@ -1401,7 +1401,7 @@ vfmtmsg(char *buf, int buflen, const char *fmt, va_list args)
 		}
 	    }
 	}
-	str = 0;
+	str = NULL;
 	base = 0;
 	neg = 0;
 	++fmt;

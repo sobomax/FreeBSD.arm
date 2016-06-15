@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/intr_machdep.h 288917 2015-10-06 11:29:44Z royger $
+ * $FreeBSD: head/sys/i386/include/intr_machdep.h 299286 2016-05-09 20:50:21Z jhb $
  */
 
 #ifndef __MACHINE_INTR_MACHDEP_H__
@@ -83,7 +83,7 @@
 
 #ifndef LOCORE
 
-typedef void inthand_t(u_int cs, u_int ef, u_int esp, u_int ss);
+typedef void inthand_t(void);
 
 #define	IDTVEC(name)	__CONCAT(X,name)
 
@@ -134,6 +134,9 @@ struct intsrc {
 
 struct trapframe;
 
+#ifdef SMP
+extern cpuset_t intr_cpus;
+#endif
 extern struct mtx icu_lock;
 extern int elcr_found;
 

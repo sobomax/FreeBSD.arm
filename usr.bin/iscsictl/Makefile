@@ -1,5 +1,6 @@
-# $FreeBSD: head/usr.bin/iscsictl/Makefile 281461 2015-04-12 09:36:50Z trasz $
+# $FreeBSD: head/usr.bin/iscsictl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	iscsi
 PROG=		iscsictl
 SRCS=		iscsictl.c periphs.c parse.y token.l y.tab.h
 CFLAGS+=	-I${.CURDIR}

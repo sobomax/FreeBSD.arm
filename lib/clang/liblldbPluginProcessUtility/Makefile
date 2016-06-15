@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbPluginProcessUtility/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbPluginProcessUtility/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -13,6 +13,7 @@ SRCS=	DynamicRegisterInfo.cpp \
 	InferiorCallPOSIX.cpp \
 	LinuxSignals.cpp \
 	MipsLinuxSignals.cpp \
+	NetBSDSignals.cpp \
 	RegisterContextDarwin_arm.cpp \
 	RegisterContextDarwin_arm64.cpp \
 	RegisterContextDarwin_i386.cpp \

@@ -1,10 +1,13 @@
-# $FreeBSD: head/lib/clang/libllvmlinker/Makefile 251662 2013-06-12 18:48:53Z dim $
+# $FreeBSD: head/lib/clang/libllvmlinker/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
 LIB=	llvmlinker
 
 SRCDIR=	lib/Linker
-SRCS=	LinkModules.cpp
+SRCS=	IRMover.cpp \
+	LinkModules.cpp
+
+TGHDRS=	Attributes
 
 .include "../clang.lib.mk"

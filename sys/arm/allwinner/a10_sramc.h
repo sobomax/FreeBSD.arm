@@ -23,12 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/allwinner/a10_sramc.h 263711 2014-03-25 08:31:47Z ganbold $
+ * $FreeBSD: head/sys/arm/allwinner/a10_sramc.h 297703 2016-04-08 10:54:59Z jmcneill $
  */
 
 #ifndef	_A10_SRAMC_H_
 #define	_A10_SRAMC_H_
 
 int	a10_map_to_emac(void);
+int	a10_map_to_otg(void);
 
 #endif

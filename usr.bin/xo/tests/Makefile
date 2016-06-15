@@ -1,4 +1,6 @@
-# $FreeBSD: head/usr.bin/xo/tests/Makefile 291942 2015-12-07 16:08:13Z bdrewery $
+# $FreeBSD: head/usr.bin/xo/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 .include <bsd.own.mk>
 
@@ -8,28 +10,26 @@ LIBXOSRC=	${SRCTOP}/contrib/libxo
 
 .c.out .o.out:
 
-TESTSDIR=	${TESTSBASE}/usr.bin/xo
-
 BINDIR=		${TESTSDIR}
 
 ATF_TESTS_SH+=	functional_test
 
-FILES+=		xo_01.H.err
-FILES+=		xo_01.H.out
-FILES+=		xo_01.HIPx.err
-FILES+=		xo_01.HIPx.out
-FILES+=		xo_01.HP.err
-FILES+=		xo_01.HP.out
-FILES+=		xo_01.J.err
-FILES+=		xo_01.J.out
-FILES+=		xo_01.JP.err
-FILES+=		xo_01.JP.out
-FILES+=		xo_01.T.err
-FILES+=		xo_01.T.out
-FILES+=		xo_01.X.err
-FILES+=		xo_01.X.out
-FILES+=		xo_01.XP.err
-FILES+=		xo_01.XP.out
+${PACKAGE}FILES+=		xo_01.H.err
+${PACKAGE}FILES+=		xo_01.H.out
+${PACKAGE}FILES+=		xo_01.HIPx.err
+${PACKAGE}FILES+=		xo_01.HIPx.out
+${PACKAGE}FILES+=		xo_01.HP.err
+${PACKAGE}FILES+=		xo_01.HP.out
+${PACKAGE}FILES+=		xo_01.J.err
+${PACKAGE}FILES+=		xo_01.J.out
+${PACKAGE}FILES+=		xo_01.JP.err
+${PACKAGE}FILES+=		xo_01.JP.out
+${PACKAGE}FILES+=		xo_01.T.err
+${PACKAGE}FILES+=		xo_01.T.out
+${PACKAGE}FILES+=		xo_01.X.err
+${PACKAGE}FILES+=		xo_01.X.out
+${PACKAGE}FILES+=		xo_01.XP.err
+${PACKAGE}FILES+=		xo_01.XP.out
 
 SCRIPTS+=	xo_01
 CLEANFILES+=	xo_01

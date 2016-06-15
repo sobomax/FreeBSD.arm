@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/i386/common/drv.c 226748 2011-10-25 19:54:06Z jhb $");
+__FBSDID("$FreeBSD: head/sys/boot/i386/common/drv.c 296963 2016-03-16 23:12:19Z allanjude $");
 
 #include <sys/param.h>
 
@@ -29,7 +29,6 @@ __FBSDID("$FreeBSD: head/sys/boot/i386/common/drv.c 226748 2011-10-25 19:54:06Z 
 #include "xreadorg.h"
 #endif
 
-#ifdef GPT
 static struct edd_params params;
 
 uint64_t
@@ -50,7 +49,6 @@ drvsize(struct dsk *dskp)
 	}
 	return (params.sectors);
 }
-#endif	/* GPT */
 
 #ifndef USE_XREAD
 static struct edd_packet packet;

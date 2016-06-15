@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/ofw/common/main.c 279799 2015-03-09 02:57:34Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/boot/ofw/common/main.c 298826 2016-04-30 00:26:38Z pfg $");
 
 #include <stand.h>
 #include "openfirm.h"
@@ -98,7 +98,7 @@ main(int (*openfirm)(void *))
 	char		**bargv;
 
 	/*
-	 * Initalise the Open Firmware routines by giving them the entry point.
+	 * Initialise the Open Firmware routines by giving them the entry point.
 	 */
 	OF_init(openfirm);
 

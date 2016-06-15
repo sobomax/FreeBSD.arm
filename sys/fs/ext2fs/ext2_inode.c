@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_inode.c	8.5 (Berkeley) 12/30/93
- * $FreeBSD: head/sys/fs/ext2fs/ext2_inode.c 277365 2015-01-19 07:10:08Z ngie $
+ * $FreeBSD: head/sys/fs/ext2fs/ext2_inode.c 298805 2016-04-29 20:45:50Z pfg $
  */
 
 #include <sys/param.h>
@@ -183,7 +183,7 @@ ext2_truncate(struct vnode *vp, off_t length, int flags, struct ucred *cred,
 	}
 	/*
 	 * Shorten the size of the file. If the file is not being
-	 * truncated to a block boundry, the contents of the
+	 * truncated to a block boundary, the contents of the
 	 * partial block following the end of the file must be
 	 * zero'ed in case it ever become accessible again because
 	 * of subsequent file growth.

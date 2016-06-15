@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_mibII/Makefile 239462 2012-08-20 18:33:03Z dim $
+# $FreeBSD: head/usr.sbin/bsnmpd/modules/snmp_mibII/Makefile 299815 2016-05-15 00:42:18Z ngie $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 
@@ -15,8 +15,6 @@ MAN=	snmp_mibII.3
 
 CFLAGS+= -I${CONTRIB}/lib -I${CONTRIB}/snmpd
 CFLAGS+= -DHAVE_ERR_H -DHAVE_GETADDRINFO -DHAVE_STRLCPY -DHAVE_SYS_TREE_H
-# XXX Work around clang warning, until maintainer approves fix.
-NO_WERROR.clang=
 
 DEFS=	${MOD}_tree.def
 INCS=	snmp_${MOD}.h

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libutil/login_cap.c 255007 2013-08-28 21:10:37Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libutil/login_cap.c 300152 2016-05-18 15:25:45Z pfg $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -742,7 +742,7 @@ login_getcapsize(login_cap_t *lc, const char *cap, rlim_t def, rlim_t error)
 
 /*
  * login_getcapbool()
- * From the login_cap_t <lc>, check for the existance of the capability
+ * From the login_cap_t <lc>, check for the existence of the capability
  * of <cap>.  Return <def> if <lc>->lc_cap is NULL, otherwise return
  * the whether or not <cap> exists there.
  */

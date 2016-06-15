@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ichwd/ichwd.c 286890 2015-08-18 14:54:29Z fabient $");
+__FBSDID("$FreeBSD: head/sys/dev/ichwd/ichwd.c 297255 2016-03-24 23:24:00Z mav $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -540,9 +540,6 @@ ichwd_find_ich_lpc_bridge(struct ichwd_device **id_p)
 	if (ich == NULL)
 		return (NULL);
 
-	ichwd_verbose_printf(ich, "found ICH%d or equivalent chipset: %s\n",
-	    id->ich_version, id->desc);
-
 	if (id_p)
 		*id_p = id;
 
@@ -572,8 +569,6 @@ ichwd_identify(driver_t *driver, device_t parent)
 
 	if (dev == NULL)
 		return;
-
-	device_set_desc_copy(dev, id_p->desc);
 
 	switch (id_p->tco_version) {
 	case 1:
@@ -611,10 +606,16 @@ ichwd_identify(driver_t *driver, device_t parent)
 static int
 ichwd_probe(device_t dev)
 {
+	struct ichwd_device *id_p;
 
 	/* Do not claim some ISA PnP device by accident. */
 	if (isa_get_logicalid(dev) != 0)
 		return (ENXIO);
+
+	if (ichwd_find_ich_lpc_bridge(&id_p) == NULL)
+		return (ENXIO);
+
+	device_set_desc_copy(dev, id_p->desc);
 	return (0);
 }
 
@@ -676,9 +677,6 @@ ichwd_attach(device_t dev)
 
 	if (ichwd_clear_noreboot(sc) != 0)
 		goto fail;
-
-	ichwd_verbose_printf(dev, "%s (ICH%d or equivalent)\n",
-	    id_p->desc, sc->ich_version);
 
 	/*
 	 * Determine if we are coming up after a watchdog-induced reset.  Some

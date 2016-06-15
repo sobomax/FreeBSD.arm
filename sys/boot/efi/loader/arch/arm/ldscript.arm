@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/loader/arch/arm/ldscript.arm 282896 2015-05-14 12:43:39Z andrew $ */
+/* $FreeBSD: head/sys/boot/efi/loader/arch/arm/ldscript.arm 295420 2016-02-09 00:01:43Z andrew $ */
 OUTPUT_ARCH(arm)
 ENTRY(_start)
 SECTIONS
@@ -15,7 +15,7 @@ SECTIONS
   } =0
   _etext = .;
   PROVIDE (etext = .);
-  . = ALIGN(4096);
+  . = ALIGN(16);
   .data    :
   {
     *(.data *.data.*)
@@ -24,6 +24,7 @@ SECTIONS
     *(.rodata.*)
     CONSTRUCTORS
 
+    . = ALIGN(4);
     PROVIDE (__bss_start = .);
     *(.sbss)
     *(.scommon)
@@ -31,6 +32,7 @@ SECTIONS
     *(.dynbss)
     *(.bss)
     *(COMMON)
+    . = ALIGN(4);
     PROVIDE (__bss_end = .);
   }
   /* We want the small data sections together, so single-instruction offsets

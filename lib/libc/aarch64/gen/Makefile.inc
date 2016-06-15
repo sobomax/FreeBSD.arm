@@ -1,4 +1,6 @@
-# $FreeBSD: head/lib/libc/aarch64/gen/Makefile.inc 286959 2015-08-20 13:11:52Z andrew $
+# $FreeBSD: head/lib/libc/aarch64/gen/Makefile.inc 297619 2016-04-06 16:09:10Z andrew $
+
+CFLAGS+=	-DNO_COMPAT7
 
 SRCS+=	_ctx_start.S \
 	fabs.S \

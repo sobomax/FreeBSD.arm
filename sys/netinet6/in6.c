@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 292015 2015-12-09 11:14:27Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 301875 2016-06-13 22:31:16Z pfg $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -360,7 +360,6 @@ in6_control(struct socket *so, u_long cmd, caddr_t data,
 	case SIOCSPFXFLUSH_IN6:
 	case SIOCSRTRFLUSH_IN6:
 	case SIOCGIFALIFETIME_IN6:
-	case SIOCSIFALIFETIME_IN6:
 	case SIOCGIFSTAT_IN6:
 	case SIOCGIFSTAT_ICMP6:
 		sa6 = &ifr->ifr_addr;
@@ -459,34 +458,6 @@ in6_control(struct socket *so, u_long cmd, caddr_t data,
 			goto out;
 		}
 		break;
-
-	case SIOCSIFALIFETIME_IN6:
-	    {
-		struct in6_addrlifetime *lt;
-
-		if (td != NULL) {
-			error = priv_check(td, PRIV_NETINET_ALIFETIME6);
-			if (error)
-				goto out;
-		}
-		if (ia == NULL) {
-			error = EADDRNOTAVAIL;
-			goto out;
-		}
-		/* sanity for overflow - beware unsigned */
-		lt = &ifr->ifr_ifru.ifru_lifetime;
-		if (lt->ia6t_vltime != ND6_INFINITE_LIFETIME &&
-		    lt->ia6t_vltime + time_uptime < time_uptime) {
-			error = EINVAL;
-			goto out;
-		}
-		if (lt->ia6t_pltime != ND6_INFINITE_LIFETIME &&
-		    lt->ia6t_pltime + time_uptime < time_uptime) {
-			error = EINVAL;
-			goto out;
-		}
-		break;
-	    }
 	}
 
 	switch (cmd) {
@@ -572,21 +543,6 @@ in6_control(struct socket *so, u_long cmd, caddr_t data,
 		}
 		break;
 
-	case SIOCSIFALIFETIME_IN6:
-		ia->ia6_lifetime = ifr->ifr_ifru.ifru_lifetime;
-		/* for sanity */
-		if (ia->ia6_lifetime.ia6t_vltime != ND6_INFINITE_LIFETIME) {
-			ia->ia6_lifetime.ia6t_expire =
-				time_uptime + ia->ia6_lifetime.ia6t_vltime;
-		} else
-			ia->ia6_lifetime.ia6t_expire = 0;
-		if (ia->ia6_lifetime.ia6t_pltime != ND6_INFINITE_LIFETIME) {
-			ia->ia6_lifetime.ia6t_preferred =
-				time_uptime + ia->ia6_lifetime.ia6t_pltime;
-		} else
-			ia->ia6_lifetime.ia6t_preferred = 0;
-		break;
-
 	case SIOCAIFADDR_IN6:
 	{
 		struct nd_prefixctl pr0;
@@ -669,14 +625,6 @@ in6_control(struct socket *so, u_long cmd, caddr_t data,
 					(*carp_detach_p)(&ia->ia_ifa);
 				goto out;
 			}
-			if (pr == NULL) {
-				if (carp_attached)
-					(*carp_detach_p)(&ia->ia_ifa);
-				log(LOG_ERR, "nd6_prelist_add succeeded but "
-				    "no prefix\n");
-				error = EINVAL;
-				goto out;
-			}
 		}
 
 		/* relate the address to the prefix */
@@ -705,9 +653,8 @@ in6_control(struct socket *so, u_long cmd, caddr_t data,
 		 * that is, this address might make other addresses detached.
 		 */
 		pfxlist_onlink_check();
+
 aifaddr_out:
-		if (error != 0 || ia == NULL)
-			break;
 		/*
 		 * Try to clear the flag when a new IPv6 address is added
 		 * onto an IFDISABLED interface and it succeeds.
@@ -1316,7 +1263,7 @@ in6_purgeaddr(struct ifaddr *ifa)
 	plen = in6_mask2len(&ia->ia_prefixmask.sin6_addr, NULL); /* XXX */
 	if ((ia->ia_flags & IFA_ROUTE) && plen == 128) {
 		error = rtinit(&(ia->ia_ifa), RTM_DELETE, ia->ia_flags |
-		    (ia->ia_dstaddr.sin6_family == AF_INET6) ? RTF_HOST : 0);
+		    (ia->ia_dstaddr.sin6_family == AF_INET6 ? RTF_HOST : 0));
 		if (error != 0)
 			log(LOG_INFO, "%s: err=%d, destination address delete "
 			    "failed\n", __func__, error);
@@ -1552,7 +1499,7 @@ in6ifa_llaonifp(struct ifnet *ifp)
 
 	if (ND_IFINFO(ifp)->flags & ND6_IFF_IFDISABLED)
 		return (NULL);
-	if_addr_rlock(ifp);
+	IF_ADDR_RLOCK(ifp);
 	TAILQ_FOREACH(ifa, &ifp->if_addrhead, ifa_link) {
 		if (ifa->ifa_addr->sa_family != AF_INET6)
 			continue;
@@ -1562,7 +1509,7 @@ in6ifa_llaonifp(struct ifnet *ifp)
 		    IN6_IS_ADDR_MC_NODELOCAL(&sin6->sin6_addr))
 			break;
 	}
-	if_addr_runlock(ifp);
+	IF_ADDR_RUNLOCK(ifp);
 
 	return ((struct in6_ifaddr *)ifa);
 }
@@ -1823,7 +1770,7 @@ in6_ifawithifp(struct ifnet *ifp, struct in6_addr *dst)
 {
 	int dst_scope =	in6_addrscope(dst), blen = -1, tlen;
 	struct ifaddr *ifa;
-	struct in6_ifaddr *besta = 0;
+	struct in6_ifaddr *besta = NULL;
 	struct in6_ifaddr *dep[2];	/* last-resort: deprecated */
 
 	dep[0] = dep[1] = NULL;
@@ -1955,7 +1902,7 @@ in6if_do_dad(struct ifnet *ifp)
 	/*
 	 * Our DAD routine requires the interface up and running.
 	 * However, some interfaces can be up before the RUNNING
-	 * status.  Additionaly, users may try to assign addresses
+	 * status.  Additionally, users may try to assign addresses
 	 * before the interface becomes up (or running).
 	 * This function returns EAGAIN in that case.
 	 * The caller should mark "tentative" on the address instead of
@@ -2008,6 +1955,7 @@ in6_if2idlen(struct ifnet *ifp)
 	case IFT_PROPVIRTUAL:	/* XXX: no RFC. treat it as ether */
 	case IFT_L2VLAN:	/* ditto */
 	case IFT_IEEE80211:	/* ditto */
+	case IFT_BRIDGE:	/* bridge(4) only does Ethernet-like links */
 	case IFT_INFINIBAND:
 		return (64);
 	case IFT_FDDI:		/* RFC2467 */
@@ -2055,6 +2003,17 @@ struct in6_llentry {
 
 /*
  * Do actual deallocation of @lle.
+ */
+static void
+in6_lltable_destroy_lle_unlocked(struct llentry *lle)
+{
+
+	LLE_LOCK_DESTROY(lle);
+	LLE_REQ_DESTROY(lle);
+	free(lle, M_LLTABLE);
+}
+
+/*
  * Called by LLE_FREE_LOCKED when number of references
  * drops to zero.
  */
@@ -2063,8 +2022,7 @@ in6_lltable_destroy_lle(struct llentry *lle)
 {
 
 	LLE_WUNLOCK(lle);
-	LLE_LOCK_DESTROY(lle);
-	free(lle, M_LLTABLE);
+	in6_lltable_destroy_lle_unlocked(lle);
 }
 
 static struct llentry *
@@ -2080,6 +2038,7 @@ in6_lltable_new(const struct in6_addr *addr6, u_int flags)
 	lle->base.lle_refcnt = 1;
 	lle->base.lle_free = in6_lltable_destroy_lle;
 	LLE_LOCK_INIT(&lle->base);
+	LLE_REQ_INIT(&lle->base);
 	callout_init(&lle->base.lle_timer, 1);
 
 	return (&lle->base);
@@ -2242,6 +2201,9 @@ in6_lltable_alloc(struct lltable *llt, u_int flags,
 	const struct sockaddr_in6 *sin6 = (const struct sockaddr_in6 *)l3addr;
 	struct ifnet *ifp = llt->llt_ifp;
 	struct llentry *lle;
+	char linkhdr[LLE_MAX_LINKHDR];
+	size_t linkhdrsize;
+	int lladdr_off;
 
 	KASSERT(l3addr->sa_family == AF_INET6,
 	    ("sin_family %d", l3addr->sa_family));
@@ -2262,7 +2224,14 @@ in6_lltable_alloc(struct lltable *llt, u_int flags,
 	}
 	lle->la_flags = flags;
 	if ((flags & LLE_IFADDR) == LLE_IFADDR) {
-		lltable_set_entry_addr(ifp, lle, IF_LLADDR(ifp));
+		linkhdrsize = LLE_MAX_LINKHDR;
+		if (lltable_calc_llheader(ifp, AF_INET6, IF_LLADDR(ifp),
+		    linkhdr, &linkhdrsize, &lladdr_off) != 0) {
+			in6_lltable_destroy_lle_unlocked(lle);
+			return (NULL);
+		}
+		lltable_set_entry_addr(ifp, lle, linkhdr, linkhdrsize,
+		    lladdr_off);
 		lle->la_flags |= LLE_STATIC;
 	}
 
@@ -2287,6 +2256,13 @@ in6_lltable_lookup(struct lltable *llt, u_int flags,
 
 	if (lle == NULL)
 		return (NULL);
+
+	KASSERT((flags & (LLE_UNLOCKED|LLE_EXCLUSIVE)) !=
+	    (LLE_UNLOCKED|LLE_EXCLUSIVE),("wrong lle request flags: 0x%X",
+	    flags));
+
+	if (flags & LLE_UNLOCKED)
+		return (lle);
 
 	if (flags & LLE_EXCLUSIVE)
 		LLE_WLOCK(lle);
@@ -2349,14 +2325,21 @@ in6_lltable_dump_entry(struct lltable *llt, struct llentry *lle,
 			sdl->sdl_alen = ifp->if_addrlen;
 			sdl->sdl_index = ifp->if_index;
 			sdl->sdl_type = ifp->if_type;
-			bcopy(&lle->ll_addr, LLADDR(sdl), ifp->if_addrlen);
-			ndpc.rtm.rtm_rmx.rmx_expire =
-			    lle->la_flags & LLE_STATIC ? 0 : lle->la_expire;
+			bcopy(lle->ll_addr, LLADDR(sdl), ifp->if_addrlen);
+			if (lle->la_expire != 0)
+				ndpc.rtm.rtm_rmx.rmx_expire = lle->la_expire +
+				    lle->lle_remtime / hz +
+				    time_second - time_uptime;
 			ndpc.rtm.rtm_flags |= (RTF_HOST | RTF_LLDATA);
 			if (lle->la_flags & LLE_STATIC)
 				ndpc.rtm.rtm_flags |= RTF_STATIC;
 			if (lle->la_flags & LLE_IFADDR)
 				ndpc.rtm.rtm_flags |= RTF_PINNED;
+			if (lle->ln_router != 0)
+				ndpc.rtm.rtm_flags |= RTF_GATEWAY;
+			ndpc.rtm.rtm_rmx.rmx_pksent = lle->la_asked;
+			/* Store state in rmx_weight value */
+			ndpc.rtm.rtm_rmx.rmx_state = lle->ln_state;
 			ndpc.rtm.rtm_index = ifp->if_index;
 			error = SYSCTL_OUT(wr, &ndpc, sizeof(ndpc));
 
@@ -2423,6 +2406,8 @@ in6_domifattach(struct ifnet *ifp)
 int
 in6_domifmtu(struct ifnet *ifp)
 {
+	if (ifp->if_afdata[AF_INET6] == NULL)
+		return ifp->if_mtu;
 
 	return (IN6_LINKMTU(ifp));
 }

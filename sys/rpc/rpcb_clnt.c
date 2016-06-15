@@ -38,7 +38,7 @@
 static char sccsid[] = "@(#)rpcb_clnt.c 1.30 89/06/21 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/rpcb_clnt.c 259843 2013-12-24 20:57:26Z dim $");
+__FBSDID("$FreeBSD: head/sys/rpc/rpcb_clnt.c 301734 2016-06-09 14:33:00Z kevlo $");
 
 /*
  * rpcb_clnt.c
@@ -1051,7 +1051,7 @@ done:
  *
  * Assuming that the address is all properly allocated
  */
-int
+bool_t
 rpcb_getaddr(program, version, nconf, address, host)
 	rpcprog_t program;
 	rpcvers_t version;

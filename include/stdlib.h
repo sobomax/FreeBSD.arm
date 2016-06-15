@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)stdlib.h	8.5 (Berkeley) 5/19/95
- * $FreeBSD: head/include/stdlib.h 282988 2015-05-15 20:43:37Z pfg $
+ * $FreeBSD: head/include/stdlib.h 297212 2016-03-23 19:17:12Z dim $
  */
 
 #ifndef _STDLIB_H_
@@ -125,7 +125,7 @@ size_t	 wcstombs(char * __restrict, const wchar_t * __restrict, size_t);
  *
  * (The only other extension made by C99 in thie header is _Exit().)
  */
-#if __ISO_C_VISIBLE >= 1999
+#if __ISO_C_VISIBLE >= 1999 || defined(__cplusplus)
 #ifdef __LONG_LONG_SUPPORTED
 /* LONGLONG */
 typedef struct {

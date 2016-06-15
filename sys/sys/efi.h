@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/efi.h 268351 2014-07-07 00:27:09Z marcel $
+ * $FreeBSD: head/sys/sys/efi.h 292472 2015-12-19 19:01:43Z imp $
  */
 
 #ifndef _SYS_EFI_H_
@@ -151,4 +151,5 @@ struct efi_systbl {
 	uint64_t	st_cfgtbl;
 };
 
+extern vm_paddr_t efi_systbl;
 #endif /* _SYS_EFI_H_ */

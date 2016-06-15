@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_tc.c 290257 2015-11-02 03:14:37Z ngie $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_tc.c 298819 2016-04-29 22:15:33Z pfg $");
 
 #include "opt_compat.h"
 #include "opt_ntp.h"
@@ -1898,7 +1898,7 @@ inittimecounter(void *dummy)
 	 * Set the initial timeout to
 	 * max(1, <approx. number of hardclock ticks in a millisecond>).
 	 * People should probably not use the sysctl to set the timeout
-	 * to smaller than its inital value, since that value is the
+	 * to smaller than its initial value, since that value is the
 	 * smallest reasonable one.  If they want better timestamps they
 	 * should use the non-"get"* functions.
 	 */

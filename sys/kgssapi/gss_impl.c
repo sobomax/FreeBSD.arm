@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 273707 2014-10-26 19:42:44Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kgssapi/gss_impl.c 298338 2016-04-20 05:02:13Z cem $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -104,15 +104,20 @@ sys_gssd_syscall(struct thread *td, struct gssd_syscall_args *uap)
 	error = copyinstr(uap->path, path, sizeof(path), NULL);
 	if (error)
 		return (error);
+	if (strlen(path) + 1 > sizeof(sun.sun_path))
+		return (EINVAL);
 
-        sun.sun_family = AF_LOCAL;
-        strcpy(sun.sun_path, path);
-        sun.sun_len = SUN_LEN(&sun);
-        
-        nconf = getnetconfigent("local");
-        cl = clnt_reconnect_create(nconf,
-	    (struct sockaddr *) &sun, GSSD, GSSDVERS,
-	    RPC_MAXDATASIZE, RPC_MAXDATASIZE);
+	if (path[0] != '\0') {
+		sun.sun_family = AF_LOCAL;
+		strlcpy(sun.sun_path, path, sizeof(sun.sun_path));
+		sun.sun_len = SUN_LEN(&sun);
+		
+		nconf = getnetconfigent("local");
+		cl = clnt_reconnect_create(nconf,
+		    (struct sockaddr *) &sun, GSSD, GSSDVERS,
+		    RPC_MAXDATASIZE, RPC_MAXDATASIZE);
+	} else
+		cl = NULL;
 
 	mtx_lock(&kgss_gssd_lock);
 	oldcl = kgss_gssd_handle;
@@ -320,7 +325,7 @@ kgssapi_modevent(module_t mod, int type, void *data)
 		/* FALLTHROUGH */
 	default:
 		error = EOPNOTSUPP;
-	};
+	}
 	return (error);
 }
 static moduledata_t kgssapi_mod = {

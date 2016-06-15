@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: head/share/mk/sys.mk 292091 2015-12-11 07:24:25Z araujo $
+# $FreeBSD: head/share/mk/sys.mk 301888 2016-06-14 16:20:19Z bdrewery $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -13,7 +13,7 @@ unix		?=	We run FreeBSD, not UNIX.
 # and/or endian.  This is called MACHINE_CPU in NetBSD, but that's used
 # for something different in FreeBSD.
 #
-MACHINE_CPUARCH=${MACHINE_ARCH:C/mips(n32|64)?(el)?/mips/:C/arm(v6)?(eb|hf)?/arm/:C/powerpc64/powerpc/}
+MACHINE_CPUARCH=${MACHINE_ARCH:C/mips(n32|64)?(el)?/mips/:C/arm(v6)?(eb|hf)?/arm/:C/powerpc64/powerpc/:C/riscv64/riscv/}
 .endif
 
 
@@ -42,13 +42,55 @@ __ENV_ONLY_OPTIONS:= \
 
 .include <bsd.mkopt.mk>
 
+# Disable MK_META_MODE with make -B
+.if ${MK_META_MODE} == "yes" && defined(.MAKEFLAGS) && ${.MAKEFLAGS:M-B}
+MK_META_MODE=	no
+.endif
+
 .if ${MK_DIRDEPS_BUILD} == "yes"
 .sinclude <meta.sys.mk>
-.elif ${MK_META_MODE} == "yes" && defined(.MAKEFLAGS)
-.if ${.MAKEFLAGS:M-B} == ""
-.MAKE.MODE= meta verbose
+.elif ${MK_META_MODE} == "yes"
+# verbose will show .MAKE.META.PREFIX for each target.
+META_MODE+=	meta verbose
+.if !defined(NO_META_MISSING)
+META_MODE+=	missing-meta=yes
+.endif
+# silent will hide command output if a .meta file is created.
+.if !defined(NO_SILENT)
+META_MODE+=	silent=yes
+.endif
+.if !exists(/dev/filemon)
+META_MODE+= nofilemon
+.endif
+# Require filemon data with bmake
+.if empty(META_MODE:Mnofilemon)
+META_MODE+= missing-filemon=yes
 .endif
 .endif
+META_MODE?= normal
+.export META_MODE
+.MAKE.MODE?= ${META_MODE}
+.if !empty(.MAKE.MODE:Mmeta) && !defined(NO_META_IGNORE_HOST)
+# Ignore host file changes that will otherwise cause
+# buildworld -> installworld -> buildworld to rebuild everything.
+# Since the build is self-reliant and bootstraps everything it needs,
+# this should not be a real problem for incremental builds.
+# Note that these are prefix matching, so /lib matches /libexec.
+.MAKE.META.IGNORE_PATHS+= \
+	${__MAKE_SHELL} \
+	/bin \
+	/lib \
+	/rescue \
+	/sbin \
+	/usr/bin \
+	/usr/include \
+	/usr/lib \
+	/usr/sbin \
+	/usr/share \
+
+.endif
+
+
 .if ${MK_AUTO_OBJ} == "yes"
 # This needs to be done early - before .PATH is computed
 # Don't do this for 'make showconfig' as it enables all options where meta mode
@@ -69,6 +111,10 @@ __ENV_ONLY_OPTIONS:= \
 #
 # The rules below use this macro to distinguish between Posix-compliant
 # and default behaviour.
+#
+# This functionality is currently broken, since make(1) processes sys.mk
+# before reading any other files, and consequently has no opportunity to
+# set the %POSIX macro before we read this point.
 
 .if defined(%POSIX)
 .SUFFIXES:	.o .c .y .l .a .sh .f
@@ -272,8 +318,8 @@ YFLAGS		?=	-d
 
 # non-Posix rule set
 
-.sh: .NOMETA
-	cp -fp ${.IMPSRC} ${.TARGET}
+.sh:
+	cp -f ${.IMPSRC} ${.TARGET}
 	chmod a+x ${.TARGET}
 
 .c.ln:

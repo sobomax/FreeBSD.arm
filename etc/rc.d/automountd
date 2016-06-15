@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/automountd 287951 2015-09-18 06:54:52Z trasz $
+# $FreeBSD: head/etc/rc.d/automountd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: automountd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="automountd"
+desc="daemon handling autofs mount requests"
 rcvar="autofs_enable"
 pidfile="/var/run/${name}.pid"
 command="/usr/sbin/${name}"

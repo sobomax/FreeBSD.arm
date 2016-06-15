@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)column.c	8.4 (Berkeley) 5/4/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/column/column.c 280911 2015-03-31 15:03:58Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.bin/column/column.c 292864 2015-12-29 11:24:41Z uqs $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -244,7 +244,7 @@ maketbl(void)
 		    p = NULL)
 			if (++coloff == maxcols) {
 				if (!(cols = realloc(cols, ((u_int)maxcols +
-				    DEFCOLS) * sizeof(char *))) ||
+				    DEFCOLS) * sizeof(wchar_t *))) ||
 				    !(lens = realloc(lens,
 				    ((u_int)maxcols + DEFCOLS) * sizeof(int))))
 					err(1, NULL);

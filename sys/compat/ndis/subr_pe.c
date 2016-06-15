@@ -31,12 +31,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_pe.c 198786 2009-11-02 11:07:42Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/compat/ndis/subr_pe.c 298828 2016-04-30 00:35:46Z pfg $");
 
 /*
  * This file contains routines for relocating and dynamically linking
  * executable object code files in the Windows(r) PE (Portable Executable)
- * format. In Windows, anything with a .EXE, .DLL or .SYS extention is
+ * format. In Windows, anything with a .EXE, .DLL or .SYS extension is
  * considered an executable, and all such files have some structures in
  * common. The PE format was apparently based largely on COFF but has
  * mutated significantly over time. We are mainly concerned with .SYS files,

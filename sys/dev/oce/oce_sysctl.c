@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_sysctl.c 273377 2014-10-21 07:31:21Z hselasky $ */
+/* $FreeBSD: head/sys/dev/oce/oce_sysctl.c 297793 2016-04-10 23:07:00Z pfg $ */
 
 #include "oce_if.h"
 
@@ -331,7 +331,7 @@ static void oce_fill_flash_img_data(POCE_SOFTC sc, const struct flash_sec_info *
 		case IMG_PXEBIOS:
 			pimg->optype = 3;
 			if (IS_BE3(sc)) {
-				pimg->img_offset =  13107200;;
+				pimg->img_offset =  13107200;
 				pimg->img_size   = 524288;
 			}
 			break;

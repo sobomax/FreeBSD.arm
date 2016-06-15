@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/loader/arch/i386/elf32_freebsd.c 281377 2015-04-10 18:49:43Z emaste $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/loader/arch/i386/elf32_freebsd.c 301306 2016-06-04 08:47:45Z andrew $");
 
 #include <sys/param.h>
 #include <sys/exec.h>
@@ -71,9 +71,12 @@ elf32_exec(struct preloaded_file *fp)
 	return(EFTYPE);
     ehdr = (Elf_Ehdr *)&(md->md_data);
 
+    efi_time_fini();
     err = bi_load(fp->f_args, &boothowto, &bootdev, &bootinfop, &modulep, &kernend);
-    if (err != 0)
+    if (err != 0) {
+	efi_time_init();
 	return(err);
+    }
     entry = ehdr->e_entry & 0xffffff;
 
     printf("Start @ 0x%lx ...\n", entry);

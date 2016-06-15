@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD: head/release/picobsd/build/picobsd 285348 2015-07-10 05:07:18Z luigi $
+# $FreeBSD: head/release/picobsd/build/picobsd 298880 2016-05-01 16:16:11Z pfg $
 # This file requires sysutils/makefs to run
 #
 # The PicoBSD build script. Invoked as
@@ -363,7 +363,7 @@ do_install() {
 	return
     fi
     dialog --title "Build ${THETYPE} completed" --inputbox \
-"\nThe build process was completed successfuly.\n\
+"\nThe build process was completed successfully.\n\
 `cat .build.reply` \n\n\
 Now we are going to install the image on the floppy.\n\
 Please insert a blank floppy in /dev/fd0.\\n

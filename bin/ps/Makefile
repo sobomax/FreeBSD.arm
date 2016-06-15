@@ -1,6 +1,7 @@
-# $FreeBSD: head/bin/ps/Makefile 283304 2015-05-22 23:07:55Z marcel $
+# $FreeBSD: head/bin/ps/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
+PACKAGE=runtime
 PROG=	ps
 SRCS=	fmt.c keyword.c nlist.c print.c ps.c
 

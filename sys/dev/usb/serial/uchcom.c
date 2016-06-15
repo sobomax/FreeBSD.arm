@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uchcom.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/uchcom.c 298300 2016-04-19 22:07:36Z pfg $");
 
 /*
  * Driver for WinChipHead CH341/340, the worst USB-serial chip in the
@@ -195,7 +195,7 @@ static const struct uchcom_divider_record dividers[] =
 	{367, 1, 11719, {0, 0, 0}},
 };
 
-#define	NUM_DIVIDERS	(sizeof (dividers) / sizeof (dividers[0]))
+#define	NUM_DIVIDERS	nitems(dividers)
 
 static const STRUCT_USB_HOST_ID uchcom_devs[] = {
 	{USB_VPI(USB_VENDOR_WCH, USB_PRODUCT_WCH_CH341SER, 0)},

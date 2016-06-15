@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm_tx.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/hatm/if_hatm_tx.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -123,7 +123,7 @@ hatm_alloc_tpd(struct hatm_softc *sc, u_int flags)
 			return (NULL);
 	}
 
-	/* make it beeing used */
+	/* make it being used */
 	t = SLIST_FIRST(&sc->tpd_free);
 	KASSERT(t != NULL, ("tpd botch"));
 	SLIST_REMOVE_HEAD(&sc->tpd_free, link);

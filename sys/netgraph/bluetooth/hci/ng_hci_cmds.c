@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci_cmds.c,v 1.4 2003/09/08 18:57:51 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/hci/ng_hci_cmds.c 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/hci/ng_hci_cmds.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 #include <sys/param.h>
@@ -369,7 +369,7 @@ complete_command(ng_hci_unit_p unit, int opcode, struct mbuf **cp)
 	 * and return command parameters. ng_hci_command_untimeout will
 	 * drop NG_HCI_UNIT_COMMAND_PENDING flag.
 	 * Note: if ng_hci_command_untimeout() fails (returns non-zero)
-	 * then timeout aready happened and timeout message went info node
+	 * then timeout already happened and timeout message went info node
 	 * queue. In this case we ignore command completion and pretend
 	 * there is a timeout.
 	 */

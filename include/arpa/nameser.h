@@ -46,7 +46,7 @@
 
 /*
  *	$Id: nameser.h,v 1.16 2009/03/03 01:52:48 each Exp $
- * $FreeBSD: head/include/arpa/nameser.h 269867 2014-08-12 12:36:06Z ume $
+ * $FreeBSD: head/include/arpa/nameser.h 298849 2016-04-30 14:43:42Z pfg $
  */
 
 #ifndef _ARPA_NAMESER_H_
@@ -106,7 +106,7 @@ typedef enum __ns_sect {
 } ns_sect;
 
 /*%
- * Network name (compressed or not) type.  Equivilent to a pointer when used
+ * Network name (compressed or not) type.  Equivalent to a pointer when used
  * in a function prototype.  Can be const'd.
  */
 typedef u_char ns_nname[NS_MAXNNAME];

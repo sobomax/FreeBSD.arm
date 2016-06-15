@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/rl/if_rlreg.h 290566 2015-11-09 00:19:04Z marius $
+ * $FreeBSD: head/sys/dev/rl/if_rlreg.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -681,7 +681,7 @@ struct rl_desc {
 #define	RL_TDESC_STAT_LINKFAIL	0x00200000	/* link faulure */
 #define	RL_TDESC_STAT_OWINCOL	0x00400000	/* out-of-window collision */
 #define	RL_TDESC_STAT_TXERRSUM	0x00800000	/* transmit error summary */
-#define	RL_TDESC_STAT_UNDERRUN	0x02000000	/* TX underrun occured */
+#define	RL_TDESC_STAT_UNDERRUN	0x02000000	/* TX underrun occurred */
 #define	RL_TDESC_STAT_OWN	0x80000000
 
 /*

@@ -22,10 +22,10 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_rtld.c 286582 2015-08-10 17:02:42Z kib $
- *
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_rtld.c 297706 2016-04-08 11:15:26Z kib $");
 
  /*
   * A lockless rwlock for rtld.
@@ -227,6 +227,7 @@ _thr_rtld_init(void)
 	_rtld_atfork_post(NULL);
 	_malloc_prefork();
 	_malloc_postfork();
+	getpid();
 	syscall(SYS_getpid);
 
 	/* mask signals, also force to resolve __sys_sigprocmask PLT */

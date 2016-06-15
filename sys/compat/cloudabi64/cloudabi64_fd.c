@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_fd.c 285539 2015-07-14 14:33:21Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_fd.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -34,7 +34,8 @@ __FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_fd.c 285539 2015-07-14
 #include <sys/systm.h>
 #include <sys/uio.h>
 
-#include <compat/cloudabi64/cloudabi64_syscalldefs.h>
+#include <contrib/cloudabi/cloudabi64_types.h>
+
 #include <compat/cloudabi64/cloudabi64_proto.h>
 
 /* Copies in 64-bit iovec structures from userspace. */

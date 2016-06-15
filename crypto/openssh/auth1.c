@@ -1,4 +1,4 @@
-/* $OpenBSD: auth1.c,v 1.80 2014/02/02 03:44:31 djm Exp $ */
+/* $OpenBSD: auth1.c,v 1.82 2014/07/15 15:54:14 millert Exp $ */
 /*
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
  *                    All rights reserved
@@ -11,6 +11,8 @@
  */
 
 #include "includes.h"
+
+#ifdef WITH_SSH1
 
 #include <sys/types.h>
 
@@ -27,6 +29,7 @@
 #include "packet.h"
 #include "buffer.h"
 #include "log.h"
+#include "misc.h"
 #include "servconf.h"
 #include "compat.h"
 #include "key.h"
@@ -40,6 +43,9 @@
 #endif
 #include "monitor_wrap.h"
 #include "buffer.h"
+#ifdef USE_BLACKLIST
+#include "blacklist_client.h"
+#endif
 
 /* import */
 extern ServerOptions options;
@@ -334,6 +340,9 @@ do_authloop(Authctxt *authctxt)
 			char *msg;
 			size_t len;
 
+#ifdef USE_BLACKLIST
+			blacklist_notify(1);
+#endif
 			error("Access denied for user %s by PAM account "
 			    "configuration", authctxt->user);
 			len = buffer_len(&loginmsg);
@@ -363,7 +372,7 @@ do_authloop(Authctxt *authctxt)
 #ifdef SSH_AUDIT_EVENTS
 			PRIVSEP(audit_event(SSH_LOGIN_EXCEED_MAXTRIES));
 #endif
-			packet_disconnect(AUTH_FAIL_MSG, authctxt->user);
+			auth_maxtries_exceeded(authctxt);
 		}
 
 		packet_start(SSH_SMSG_FAILURE);
@@ -401,6 +410,9 @@ do_authentication(Authctxt *authctxt)
 	else {
 		debug("do_authentication: invalid user %s", user);
 		authctxt->pw = fakepw();
+#ifdef USE_BLACKLIST
+		blacklist_notify(1);
+#endif
 	}
 
 	/* Configuration may have changed as a result of Match */
@@ -437,3 +449,5 @@ do_authentication(Authctxt *authctxt)
 	packet_send();
 	packet_write_wait();
 }
+
+#endif /* WITH_SSH1 */

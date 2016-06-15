@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)pwd_mkdb.c	8.5 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pwd_mkdb/pwd_mkdb.c 285050 2015-07-02 17:30:59Z garga $");
+__FBSDID("$FreeBSD: head/usr.sbin/pwd_mkdb/pwd_mkdb.c 295925 2016-02-23 15:28:13Z dwmalone $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -228,14 +228,14 @@ main(int argc, char *argv[])
 		clean = FILE_INSECURE;
 		cp(buf2, buf, PERM_INSECURE);
 		dp = dbopen(buf,
-		    O_RDWR|O_EXCL|O_SYNC, PERM_INSECURE, DB_HASH, &openinfo);
+		    O_RDWR|O_EXCL, PERM_INSECURE, DB_HASH, &openinfo);
 		if (dp == NULL)
 			error(buf);
 
 		clean = FILE_SECURE;
 		cp(sbuf2, sbuf, PERM_SECURE);
 		sdp = dbopen(sbuf,
-		    O_RDWR|O_EXCL|O_SYNC, PERM_SECURE, DB_HASH, &openinfo);
+		    O_RDWR|O_EXCL, PERM_SECURE, DB_HASH, &openinfo);
 		if (sdp == NULL)
 			error(sbuf);
 
@@ -292,13 +292,13 @@ main(int argc, char *argv[])
 		method = 0;
 	} else {
 		dp = dbopen(buf,
-		    O_RDWR|O_CREAT|O_EXCL|O_SYNC, PERM_INSECURE, DB_HASH, &openinfo);
+		    O_RDWR|O_CREAT|O_EXCL, PERM_INSECURE, DB_HASH, &openinfo);
 		if (dp == NULL)
 			error(buf);
 		clean = FILE_INSECURE;
 
 		sdp = dbopen(sbuf,
-		    O_RDWR|O_CREAT|O_EXCL|O_SYNC, PERM_SECURE, DB_HASH, &openinfo);
+		    O_RDWR|O_CREAT|O_EXCL, PERM_SECURE, DB_HASH, &openinfo);
 		if (sdp == NULL)
 			error(sbuf);
 		clean = FILE_SECURE;
@@ -352,7 +352,7 @@ main(int argc, char *argv[])
 		data.size = 1;
 		if ((dp->put)(dp, &key, &data, 0) == -1)
 			error("put");
-		if ((dp->put)(sdp, &key, &data, 0) == -1)
+		if ((sdp->put)(sdp, &key, &data, 0) == -1)
 			error("put");
 	}
 	ypcnt = 0;

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/alpm/alpm.c 272017 2014-09-23 06:31:15Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/alpm/alpm.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -202,7 +202,7 @@ alpm_attach(device_t dev)
 			printf(" 55K");
 			break;
 		default:
-			printf("unkown");
+			printf("unknown");
 			break;
 		}
 		printf("\n");

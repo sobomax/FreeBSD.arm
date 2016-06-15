@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmdebuginfodwarf/Makefile 283770 2015-05-30 15:39:49Z dim $
+# $FreeBSD: head/lib/clang/libllvmdebuginfodwarf/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -16,10 +16,12 @@ SRCS=	DWARFAbbreviationDeclaration.cpp \
 	DWARFDebugInfoEntry.cpp \
 	DWARFDebugLine.cpp \
 	DWARFDebugLoc.cpp \
+	DWARFDebugMacro.cpp \
 	DWARFDebugRangeList.cpp \
 	DWARFFormValue.cpp \
 	DWARFTypeUnit.cpp \
 	DWARFUnit.cpp \
+	DWARFUnitIndex.cpp \
 	SyntaxHighlighting.cpp
 
 .include "../clang.lib.mk"

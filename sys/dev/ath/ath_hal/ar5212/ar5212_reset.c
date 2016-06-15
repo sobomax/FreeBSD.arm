@@ -14,7 +14,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212_reset.c 290616 2015-11-09 20:22:59Z garga $
+ * $FreeBSD: head/sys/dev/ath/ath_hal/ar5212/ar5212_reset.c 298939 2016-05-02 19:56:48Z pfg $
  */
 #include "opt_ah.h"
 
@@ -1385,7 +1385,7 @@ ar5212GetNfHistMid(const int16_t calData[AR512_NF_CAL_HIST_MAX])
 }
 
 /*
- * Read the NF and check it against the noise floor threshhold
+ * Read the NF and check it against the noise floor threshold
  */
 int16_t
 ar5212GetNf(struct ath_hal *ah, struct ieee80211_channel *chan)

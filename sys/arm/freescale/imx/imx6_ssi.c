@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_ssi.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx6_ssi.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -463,7 +463,7 @@ find_sdma_controller(struct sc_info *sc)
 	if (sdma_sc == NULL) {
 		device_printf(sc->dev, "No sDMA found. Can't operate\n");
 		return (ENXIO);
-	};
+	}
 
 	sc->sdma_sc = sdma_sc;
 
@@ -738,7 +738,7 @@ ssi_attach(device_t dev)
 
 	sc->lock = snd_mtxcreate(device_get_nameunit(dev), "ssi softc");
 	if (sc->lock == NULL) {
-		device_printf(dev, "Cant create mtx\n");
+		device_printf(dev, "Can't create mtx\n");
 		return (ENXIO);
 	}
 
@@ -764,7 +764,7 @@ ssi_attach(device_t dev)
 
 	/*
 	 * Maximum possible DMA buffer.
-	 * Will be used partialy to match 24 bit word.
+	 * Will be used partially to match 24 bit word.
 	 */
 	sc->dma_size = 131072;
 

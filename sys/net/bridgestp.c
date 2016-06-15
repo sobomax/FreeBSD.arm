@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/bridgestp.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net/bridgestp.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,6 +43,7 @@ __FBSDID("$FreeBSD: head/sys/net/bridgestp.c 257176 2013-10-26 17:58:36Z glebius
 #include <sys/socket.h>
 #include <sys/sockio.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/callout.h>
 #include <sys/module.h>
 #include <sys/proc.h>
@@ -788,7 +789,7 @@ bstp_assign_roles(struct bstp_state *bs)
 	bs->bs_root_htime = bs->bs_bridge_htime;
 	bs->bs_root_port = NULL;
 
-	/* check if any recieved info supersedes us */
+	/* check if any received info supersedes us */
 	LIST_FOREACH(bp, &bs->bs_bplist, bp_next) {
 		if (bp->bp_infois != BSTP_INFO_RECEIVED)
 			continue;

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/kldxref/kldxref.c 292078 2015-12-11 05:27:55Z imp $
+ * $FreeBSD: head/usr.sbin/kldxref/kldxref.c 299878 2016-05-16 01:12:56Z araujo $
  */
 
 #include <sys/types.h>
@@ -494,7 +494,7 @@ parse_entry(struct mod_metadata *md, const char *cval,
 
 							ptr = *(char **)(walker + elt->pe_offset);
 							buffer[0] = '\0';
-							if (ptr != 0) {
+							if (ptr != NULL) {
 								EF_SEG_READ(ef, (Elf_Off)ptr,
 								    sizeof(buffer), buffer);
 								buffer[sizeof(buffer) - 1] = '\0';

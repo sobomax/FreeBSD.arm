@@ -1,9 +1,9 @@
-# $FreeBSD: head/usr.bin/units/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/units/Makefile 298257 2016-04-19 07:28:39Z delphij $
 
 .include <src.opts.mk>
 
 PROG=	units
-FILES=	units.lib
+FILES=	definitions.units
 FILESDIR=	${SHAREDIR}/misc
 
 LIBADD=	edit

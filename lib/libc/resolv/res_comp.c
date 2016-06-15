@@ -69,10 +69,9 @@ static const char sccsid[] = "@(#)res_comp.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_comp.c,v 1.5 2005/07/28 06:51:50 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_comp.c 284229 2015-06-10 16:15:22Z ume $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_comp.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include "port_before.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <netinet/in.h>
 #include <arpa/nameser.h>
@@ -86,7 +85,7 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_comp.c 284229 2015-06-10 16:15:22Z 
 /*%
  * Expand compressed domain name 'src' to full domain name.
  *
- * \li 'msg' is a pointer to the begining of the message,
+ * \li 'msg' is a pointer to the beginning of the message,
  * \li 'eom' points to the first location after the message,
  * \li 'dst' is a pointer to a buffer of size 'dstsiz' for the result.
  * \li Return size of compressed name or -1 if there was an error.

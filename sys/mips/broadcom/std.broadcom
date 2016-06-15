@@ -1,0 +1,7 @@
+# $FreeBSD: head/sys/mips/broadcom/std.broadcom 299994 2016-05-17 00:00:01Z adrian $
+#
+
+machine		mips mipsel
+
+cpu		CPU_MIPS74K
+files		"../broadcom/files.broadcom"

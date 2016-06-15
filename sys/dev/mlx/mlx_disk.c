@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mlx/mlx_disk.c 240963 2012-09-26 14:17:14Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/mlx/mlx_disk.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * Disk driver for Mylex DAC960 RAID adapters.
@@ -170,7 +170,7 @@ mlxd_strategy(struct bio *bp)
 
  bad:
     /*
-     * Correctly set the bio to indicate a failed tranfer.
+     * Correctly set the bio to indicate a failed transfer.
      */
     bp->bio_resid = bp->bio_bcount;
     biodone(bp);

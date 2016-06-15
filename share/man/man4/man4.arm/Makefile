@@ -1,4 +1,6 @@
-# $FreeBSD: head/share/man/man4/man4.arm/Makefile 271907 2014-09-20 15:45:29Z ian $
+# $FreeBSD: head/share/man/man4/man4.arm/Makefile 298107 2016-04-16 07:45:30Z gjb $
+
+PACKAGE=runtime-manuals
 
 MAN=	cgem.4 \
 	devcfg.4 \

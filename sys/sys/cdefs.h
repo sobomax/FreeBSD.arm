@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cdefs.h	8.8 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/cdefs.h 290394 2015-11-05 14:55:58Z pfg $
+ * $FreeBSD: head/sys/sys/cdefs.h 300967 2016-05-29 17:32:19Z dim $
  */
 
 #ifndef	_SYS_CDEFS_H_
@@ -275,7 +275,8 @@
 #define	_Alignof(x)		__alignof(x)
 #endif
 
-#if !__has_extension(c_atomic) && !__has_extension(cxx_atomic)
+#if !defined(__cplusplus) && !__has_extension(c_atomic) && \
+    !__has_extension(cxx_atomic)
 /*
  * No native support for _Atomic(). Place object in structure to prevent
  * most forms of direct non-atomic access.
@@ -604,7 +605,7 @@
  * Embed the rcs id of a source file in the resulting library.  Note that in
  * more recent ELF binutils, we use .ident allowing the ID to be stripped.
  * Usage:
- *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 290394 2015-11-05 14:55:58Z pfg $");
+ *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 300967 2016-05-29 17:32:19Z dim $");
  */
 #ifndef	__FBSDID
 #if !defined(lint) && !defined(STRIP_FBSDID)
@@ -776,8 +777,16 @@
 #endif
 #endif
 
-#if defined(__mips) || defined(__powerpc64__)
+#if defined(__mips) || defined(__powerpc64__) || defined(__riscv__)
 #define	__NO_TLS 1
+#endif
+
+/*
+ * Old versions of GCC use non-standard ARM arch symbols; acle-compat.h
+ * translates them to __ARM_ARCH and the modern feature symbols defined by ARM.
+ */
+#if defined(__arm__) && !defined(__ARM_ARCH)
+#include <machine/acle-compat.h>
 #endif
 
 /*

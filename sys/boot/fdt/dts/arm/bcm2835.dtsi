@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/dts/arm/bcm2835.dtsi 290321 2015-11-03 04:50:58Z gonzo $
+ * $FreeBSD: head/sys/boot/fdt/dts/arm/bcm2835.dtsi 297582 2016-04-05 13:45:23Z skra $
  */
 
 / {
@@ -144,7 +144,7 @@
 			#gpio-cells = <2>;
 
 			interrupt-controller;
-			#interrupt-cells = <1>;
+			#interrupt-cells = <2>;
 
 			pinctrl-names = "default";
 			pinctrl-0 = <&pins_reserved>;

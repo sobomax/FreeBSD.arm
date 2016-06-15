@@ -35,7 +35,7 @@
 static char sccsid[] = "@(#)rpcb_clnt.c 1.30 89/06/21 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_clnt.c 290253 2015-11-02 01:22:06Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcb_clnt.c 301734 2016-06-09 14:33:00Z kevlo $");
 
 /*
  * rpcb_clnt.c
@@ -499,6 +499,7 @@ try_nconf:
 					hostname = IN6_LOCALHOST_STRING;
 			}
 		}
+		endnetconfig(nc_handle);
 		if (tmpnconf == NULL) {
 			rpc_createerr.cf_stat = RPC_UNKNOWNPROTO;
 			mutex_unlock(&loopnconf_lock);
@@ -506,7 +507,6 @@ try_nconf:
 		}
 		loopnconf = getnetconfigent(tmpnconf->nc_netid);
 		/* loopnconf is never freed */
-		endnetconfig(nc_handle);
 	}
 	mutex_unlock(&loopnconf_lock);
 	client = getclnthandle(hostname, loopnconf, NULL);
@@ -661,10 +661,10 @@ __rpcbind_is_up(void)
 		    strcmp(nconf->nc_protofmly, NC_LOOPBACK) == 0)
 			 break;
 	}
+	endnetconfig(localhandle);
+
 	if (nconf == NULL)
 		return (FALSE);
-
-	endnetconfig(localhandle);
 
 	memset(&sun, 0, sizeof sun);
 	sock = _socket(AF_LOCAL, SOCK_STREAM, 0);
@@ -1010,7 +1010,7 @@ done:
  *
  * Assuming that the address is all properly allocated
  */
-int
+bool_t
 rpcb_getaddr(rpcprog_t program, rpcvers_t version, const struct netconfig *nconf,
     struct netbuf *address, const char *host)
 {

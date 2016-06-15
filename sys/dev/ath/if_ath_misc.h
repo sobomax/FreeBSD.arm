@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_ath_misc.h 291233 2015-11-24 03:42:58Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_ath_misc.h 298359 2016-04-20 18:29:30Z avos $
  */
 #ifndef	__IF_ATH_MISC_H__
 #define	__IF_ATH_MISC_H__
@@ -38,15 +38,6 @@
  * Anything in here should eventually be moved out of if_ath.c
  * and into something else.
  */
-
-/* unaligned little endian access */
-#define LE_READ_2(p)							\
-	((u_int16_t)							\
-	 ((((u_int8_t *)(p))[0]      ) | (((u_int8_t *)(p))[1] <<  8)))
-#define LE_READ_4(p)							\
-	((u_int32_t)							\
-	 ((((u_int8_t *)(p))[0]      ) | (((u_int8_t *)(p))[1] <<  8) |	\
-	  (((u_int8_t *)(p))[2] << 16) | (((u_int8_t *)(p))[3] << 24)))
 
 extern int ath_rxbuf;
 extern int ath_txbuf;

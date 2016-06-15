@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/amd64-freebsd32.c 289239 2015-10-13 18:23:51Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/amd64-freebsd32.c 295056 2016-01-30 01:00:54Z jhb $");
 
 /* FreeBSD/amd64-freebsd32-specific system call handling. */
 
@@ -42,10 +42,9 @@ __FBSDID("$FreeBSD: head/usr.bin/truss/amd64-freebsd32.c 289239 2015-10-13 18:23
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sysdecode.h>
 
 #include "truss.h"
-
-#include "freebsd32_syscalls.h"
 
 static int
 amd64_freebsd32_fetch_args(struct trussinfo *trussinfo, u_int narg)
@@ -118,8 +117,7 @@ amd64_freebsd32_fetch_retval(struct trussinfo *trussinfo, long *retval,
 
 static struct procabi amd64_freebsd32 = {
 	"FreeBSD ELF32",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD32,
 	amd64_freebsd32_fetch_args,
 	amd64_freebsd32_fetch_retval
 };
@@ -128,8 +126,7 @@ PROCABI(amd64_freebsd32);
 
 static struct procabi amd64_freebsd32_aout = {
 	"FreeBSD a.out",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD32,
 	amd64_freebsd32_fetch_args,
 	amd64_freebsd32_fetch_retval
 };

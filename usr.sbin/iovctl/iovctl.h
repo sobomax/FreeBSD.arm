@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013-2015 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2013-2015 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/iovctl/iovctl.h 279461 2015-03-01 00:52:41Z rstone $
+ * $FreeBSD: head/usr.sbin/iovctl/iovctl.h 296865 2016-03-14 17:41:17Z rstone $
  */
 
 #ifndef IOVCTL_H

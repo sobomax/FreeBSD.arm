@@ -29,12 +29,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/yp/yplib.c 291073 2015-11-19 13:36:53Z araujo $");
+__FBSDID("$FreeBSD: head/lib/libc/yp/yplib.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "namespace.h"
 #include "reentrant.h"
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/file.h>
 #include <sys/uio.h>

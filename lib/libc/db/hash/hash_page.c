@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)hash_page.c	8.7 (Berkeley) 8/16/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash_page.c 287292 2015-08-29 14:25:01Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/db/hash/hash_page.c 298323 2016-04-20 01:21:39Z pfg $");
 
 /*
  * PACKAGE:  hashing
@@ -677,7 +677,7 @@ overflow_page(HTAB *hashp)
 			bit = hashp->LAST_FREED &
 			    ((hashp->BSIZE << BYTE_SHIFT) - 1);
 			j = bit / BITS_PER_MAP;
-			bit = bit & ~(BITS_PER_MAP - 1);
+			bit = rounddown2(bit, BITS_PER_MAP);
 		} else {
 			bit = 0;
 			j = 0;

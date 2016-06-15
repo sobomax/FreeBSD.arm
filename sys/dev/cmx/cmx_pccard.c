@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cmx/cmx_pccard.c 292079 2015-12-11 05:27:56Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/cmx/cmx_pccard.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,7 @@ cmx_pccard_probe(device_t dev)
 }
 
 /*
- * Attach to the pccard, and call bus independant attach and
+ * Attach to the pccard, and call bus independent attach and
  * resource allocation routines.
  */
 static int

@@ -1,13 +1,17 @@
-# $FreeBSD: head/libexec/rtld-elf/Makefile 291723 2015-12-03 21:25:59Z nwhitehorn $
+# $FreeBSD: head/libexec/rtld-elf/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 # Use the following command to build local debug version of dynamic
 # linker:
 # make DEBUG_FLAGS=-g DEBUG=-DDEBUG MK_TESTS=no all
 
 .include <src.opts.mk>
+PACKAGE=	clibs
 MK_SSP=		no
 
 PROG?=		ld-elf.so.1
+.if (${PROG:M*ld-elf32*} != "")
+TAGS+=		lib32
+.endif
 SRCS=		rtld_start.S \
 		reloc.c rtld.c rtld_lock.c rtld_printf.c map_object.c \
 		malloc.c xmalloc.c debug.c libmap.c
@@ -45,6 +49,9 @@ CFLAGS+=	-fvisibility=hidden
 .endif
 LDFLAGS+=	-shared -Wl,-Bsymbolic
 LIBADD=		c_pic
+.if ${MK_TOOLCHAIN} == "no"
+LDFLAGS+=	-L${LIBCDIR}
+.endif
 
 .if ${MACHINE_CPUARCH} == "arm"
 # Some of the required math functions (div & mod) are implemented in

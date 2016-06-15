@@ -38,7 +38,7 @@
  *
  * machdep.c
  *
- * Machine dependant functions for kernel setup
+ * Machine dependent functions for kernel setup
  *
  * This file needs a lot of work.
  *
@@ -49,7 +49,7 @@
 #include "opt_kstack_pages.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_machdep.c 286584 2015-08-10 17:18:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_machdep.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
@@ -73,6 +73,7 @@ __FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_machdep.c 286584 2015-08-10 17:1
 #include <sys/exec.h>
 #include <sys/kdb.h>
 #include <sys/msgbuf.h>
+#include <sys/devmap.h>
 #include <machine/reg.h>
 #include <machine/cpu.h>
 
@@ -81,7 +82,6 @@ __FBSDID("$FreeBSD: head/sys/arm/xscale/pxa/pxa_machdep.c 286584 2015-08-10 17:1
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
 #include <vm/vm_map.h>
-#include <machine/devmap.h>
 #include <machine/vmparam.h>
 #include <machine/pcb.h>
 #include <machine/undefined.h>
@@ -120,7 +120,7 @@ static void	pxa_probe_sdram(bus_space_tag_t, bus_space_handle_t,
 		    uint32_t *, uint32_t *);
 
 /* Static device mappings. */
-static const struct arm_devmap_entry pxa_devmap[] = {
+static const struct devmap_entry pxa_devmap[] = {
 	/*
 	 * Map the on-board devices up into the KVA region so we don't muck
 	 * up user-space.
@@ -129,10 +129,8 @@ static const struct arm_devmap_entry pxa_devmap[] = {
 		PXA2X0_PERIPH_START + PXA2X0_PERIPH_OFFSET,
 		PXA2X0_PERIPH_START,
 		PXA250_PERIPH_END - PXA2X0_PERIPH_START,
-		VM_PROT_READ|VM_PROT_WRITE,
-		PTE_DEVICE,
 	},
-	{ 0, 0, 0, 0, 0, }
+	{ 0, 0, 0, }
 };
 
 #define SDRAM_START 0xa0000000
@@ -224,8 +222,8 @@ initarm(struct arm_boot_params *abp)
 	l1pagetable = kernel_l1pt.pv_va;
 
 	/* Map the L2 pages tables in the L1 page table */
-	pmap_link_l2pt(l1pagetable, ARM_VECTORS_HIGH & ~(0x00100000 - 1),
-	    &kernel_pt_table[KERNEL_PT_SYS]);
+	pmap_link_l2pt(l1pagetable, rounddown2(ARM_VECTORS_HIGH, 0x00100000),
+		       &kernel_pt_table[KERNEL_PT_SYS]);
 #if 0 /* XXXBJR: What is this?  Don't know if there's an analogue. */
 	pmap_link_l2pt(l1pagetable, IQ80321_IOPXS_VBASE,
 	                &kernel_pt_table[KERNEL_PT_IOPXS]);
@@ -237,11 +235,10 @@ initarm(struct arm_boot_params *abp)
 	pmap_map_chunk(l1pagetable, KERNBASE + 0x100000, SDRAM_START + 0x100000,
 	    0x100000, VM_PROT_READ|VM_PROT_WRITE, PTE_PAGETABLE);
 	pmap_map_chunk(l1pagetable, KERNBASE + 0x200000, SDRAM_START + 0x200000,
-	   (((uint32_t)(lastaddr) - KERNBASE - 0x200000) + L1_S_SIZE) & ~(L1_S_SIZE - 1),
-	    VM_PROT_READ|VM_PROT_WRITE, PTE_CACHE);
-	freemem_after = ((int)lastaddr + PAGE_SIZE) & ~(PAGE_SIZE - 1);
-	afterkern = round_page(((vm_offset_t)lastaddr + L1_S_SIZE) &
-	    ~(L1_S_SIZE - 1));
+	   rounddown2(((uint32_t)(lastaddr) - KERNBASE - 0x200000) + L1_S_SIZE, L1_S_SIZE),
+	   VM_PROT_READ|VM_PROT_WRITE, PTE_CACHE);
+	freemem_after = rounddown2((int)lastaddr + PAGE_SIZE, PAGE_SIZE);
+	afterkern = round_page(rounddown2((vm_offset_t)lastaddr + L1_S_SIZE, L1_S_SIZE));
 	for (i = 0; i < KERNEL_PT_AFKERNEL_NUM; i++) {
 		pmap_link_l2pt(l1pagetable, afterkern + i * 0x00100000,
 		    &kernel_pt_table[KERNEL_PT_AFKERNEL + i]);
@@ -257,7 +254,7 @@ initarm(struct arm_boot_params *abp)
 	/* Map the vector page. */
 	pmap_map_entry(l1pagetable, ARM_VECTORS_HIGH, systempage.pv_pa,
 	    VM_PROT_READ|VM_PROT_WRITE, PTE_CACHE);
-	arm_devmap_bootstrap(l1pagetable, pxa_devmap);
+	devmap_bootstrap(l1pagetable, pxa_devmap);
 
 	/*
 	 * Give the XScale global cache clean code an appropriately
@@ -267,7 +264,7 @@ initarm(struct arm_boot_params *abp)
 	xscale_cache_clean_addr = 0xff000000U;
 
 	cpu_domains((DOMAIN_CLIENT << (PMAP_DOMAIN_KERNEL*2)) | DOMAIN_CLIENT);
-	setttb(kernel_l1pt.pv_pa);
+	cpu_setttb(kernel_l1pt.pv_pa);
 	cpu_tlb_flushID();
 	cpu_domains(DOMAIN_CLIENT << (PMAP_DOMAIN_KERNEL*2));
 
@@ -284,7 +281,7 @@ initarm(struct arm_boot_params *abp)
 	/*
 	 * We must now clean the cache again....
 	 * Cleaning may be done by reading new data to displace any
-	 * dirty data in the cache. This will have happened in setttb()
+	 * dirty data in the cache. This will have happened in cpu_setttb()
 	 * but since we are boot strapping the addresses used for the read
 	 * may have just been remapped and thus the cache could be out
 	 * of sync. A re-clean after the switch will cure this.
@@ -336,9 +333,9 @@ initarm(struct arm_boot_params *abp)
 		if (memsize[j] > 0)
 			arm_physmem_hardware_region(memstart[j], memsize[j]);
 	}
-	arm_physmem_exclude_region(freemem_pt, KERNPHYSADDR -
+	arm_physmem_exclude_region(freemem_pt, abp->abp_physaddr -
 	    freemem_pt, EXFLAG_NOALLOC);
-	arm_physmem_exclude_region(freemempos, KERNPHYSADDR - 0x100000 -
+	arm_physmem_exclude_region(freemempos, abp->abp_physaddr - 0x100000 -
 	    freemempos, EXFLAG_NOALLOC);
 	arm_physmem_exclude_region(abp->abp_physaddr, 
 	    virtual_avail - KERNVIRTADDR, EXFLAG_NOALLOC);

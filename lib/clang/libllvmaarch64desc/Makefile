@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmaarch64desc/Makefile 276783 2015-01-07 19:06:27Z dim $
+# $FreeBSD: head/lib/clang/libllvmaarch64desc/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -19,6 +19,7 @@ CFLAGS+= -I${LLVM_SRCS}/${SRCDIR}/..
 TGHDRS=	AArch64GenInstrInfo \
 	AArch64GenMCCodeEmitter \
 	AArch64GenRegisterInfo \
-	AArch64GenSubtargetInfo
+	AArch64GenSubtargetInfo \
+	Attributes
 
 .include "../clang.lib.mk"

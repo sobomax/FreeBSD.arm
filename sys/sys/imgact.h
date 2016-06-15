@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact.h 285622 2015-07-16 07:05:42Z ed $
+ * $FreeBSD: head/sys/sys/imgact.h 300792 2016-05-26 23:18:54Z bdrewery $
  */
 
 #ifndef _SYS_IMGACT_H_
@@ -37,6 +37,8 @@
 #include <vm/vm.h>
 
 #define MAXSHELLCMDLEN	PAGE_SIZE
+
+struct ucred;
 
 struct image_args {
 	char *buf;		/* pointer to string buffer */
@@ -82,6 +84,8 @@ struct image_params {
 	int pagesizeslen;
 	vm_prot_t stack_prot;
 	u_long stack_sz;
+	struct ucred *newcred;		/* new credentials if changing */
+	bool credential_setid;		/* true if becoming setid */
 };
 
 #ifdef _KERNEL

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_pcpu.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_pcpu.c 298896 2016-05-01 19:37:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/pcpu.h>
@@ -266,7 +266,7 @@ _kvm_dpcpu_init(kvm_t *kd)
 }
 
 /*
- * Check whether the dpcpu module has been initialized sucessfully or not,
+ * Check whether the dpcpu module has been initialized successfully or not,
  * initialize it if permitted.
  */
 int

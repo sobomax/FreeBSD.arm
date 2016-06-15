@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libclangrewritefrontend/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libclangrewritefrontend/Makefile 296417 2016-03-05 20:24:31Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	clangrewritefrontend
 
@@ -11,6 +11,11 @@ SRCS=	FixItRewriter.cpp \
 	InclusionRewriter.cpp \
 	RewriteMacros.cpp \
 	RewriteTest.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	RewriteModernObjC.cpp \
+	RewriteObjC.cpp
+.endif
 
 TGHDRS=	AttrList \
 	AttrParsedAttrList \

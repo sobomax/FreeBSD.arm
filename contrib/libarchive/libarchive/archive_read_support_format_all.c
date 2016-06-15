@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_all.c 232153 2012-02-25 10:58:02Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_all.c 299529 2016-05-12 10:16:16Z mm $");
 
 #include "archive.h"
 #include "archive_private.h"
@@ -61,6 +61,7 @@ archive_read_support_format_all(struct archive *a)
 	archive_read_support_format_mtree(a);
 	archive_read_support_format_tar(a);
 	archive_read_support_format_xar(a);
+	archive_read_support_format_warc(a);
 
 	/*
 	 * Install expensive bidders last.  By doing them last, we

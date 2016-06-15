@@ -28,10 +28,10 @@
 /*
  * File: qls_hw.c
  * Author : David C Somayajulu, Qlogic Corporation, Aliso Viejo, CA 92656.
- * Content: Contains Hardware dependant functions
+ * Content: Contains Hardware dependent functions
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxge/qls_hw.c 252206 2013-06-25 17:50:22Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxge/qls_hw.c 298955 2016-05-03 03:41:25Z pfg $");
 
 
 
@@ -353,7 +353,7 @@ qls_config_mcast_mac_addr_exit:
 
 /*
  * Name: qls_set_mac_rcv_mode
- * Function: Enable/Disable AllMulticast and Promiscous Modes.
+ * Function: Enable/Disable AllMulticast and Promiscuous Modes.
  */
 static int
 qls_wait_for_route_idx_ready(qla_host_t *ha, uint32_t op)

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/wsp.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/wsp.c 298932 2016-05-02 17:44:03Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1040,7 +1040,7 @@ wsp_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 				if (sc->o_ntouch != ntouch)
 					dx = dy = 0;
 
-				/* Ignore unexpeted movment when typing */
+				/* Ignore unexpeted movement when typing */
 				if (ntouch == 1 && sc->index[0]->tool_major > 1200)
 					dx = dy = 0;
 

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fcntl.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/fcntl.h 281845 2015-04-22 01:54:25Z rodrigc $
+ * $FreeBSD: head/sys/sys/fcntl.h 294205 2016-01-17 08:40:51Z kib $
  */
 
 #ifndef _SYS_FCNTL_H_
@@ -138,6 +138,13 @@ typedef	__pid_t		pid_t;
  */
 
 #ifdef _KERNEL
+
+/* Only for devfs d_close() flags. */
+#define	FLASTCLOSE	O_DIRECTORY
+#define	FREVOKE		O_VERIFY
+/* Only for fo_close() from half-succeeded open */
+#define	FOPENFAILED	O_TTY_INIT
+
 /* convert from open() flags to/from fflags; convert O_RD/WR to FREAD/FWRITE */
 #define	FFLAGS(oflags)	((oflags) & O_EXEC ? (oflags) : (oflags) + 1)
 #define	OFLAGS(fflags)	((fflags) & O_EXEC ? (fflags) : (fflags) - 1)

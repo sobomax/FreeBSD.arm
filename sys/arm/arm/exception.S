@@ -48,13 +48,12 @@
 
 #include "assym.s"
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include <machine/asmacros.h>
 #include <machine/trap.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 291852 2015-12-05 09:32:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 300694 2016-05-25 19:44:26Z ian $");
 
 #ifdef KDTRACE_HOOKS
 	.bss
@@ -175,7 +174,7 @@ _C_LABEL(dtrace_invop_jump_addr):
 	ldr	r4, [r5, #4];		/* reset it to point at the     */ \
 	cmp	r4, #0xffffffff;	/* end of memory if necessary;  */ \
 	movne	r1, #0xffffffff;	/* leave value in r4 for later  */ \
-	strne	r1, [r5, #4];		/* comparision against PC.      */ \
+	strne	r1, [r5, #4];		/* comparison against PC.      */ \
 	ldr	r3, [r5];		/* Retrieve global RAS_START    */ \
 	cmp	r3, #0;			/* and reset it if non-zero.    */ \
 	movne	r1, #0;			/* If non-zero RAS_START and    */ \
@@ -410,7 +409,7 @@ ASENTRY_NP(irq_entry)
 	PUSHFRAMEINSVC			/* mode stack, build trapframe there. */
 	adr	lr, exception_exit	/* Return from handler via standard */
 	mov	r0, sp			/* exception exit routine.  Pass the */
-	b	_C_LABEL(arm_irq_handler)/* trapframe to the handler. */
+	b	_C_LABEL(intr_irq_handler)/* trapframe to the handler. */
 END(irq_entry)
 
 /*

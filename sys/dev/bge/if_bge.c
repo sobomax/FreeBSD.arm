@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bge/if_bge.c 279786 2015-03-08 19:55:46Z pfg $");
+__FBSDID("$FreeBSD: head/sys/dev/bge/if_bge.c 301103 2016-06-01 05:15:11Z sephe $");
 
 /*
  * Broadcom BCM57xx(x)/BCM590x NetXtreme and NetLink family Ethernet driver
@@ -171,6 +171,7 @@ static const struct bge_type {
 	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5715 },
 	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5715S },
 	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5717 },
+	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5717C },
 	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5718 },
 	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5719 },
 	{ BCOM_VENDORID,	BCOM_DEVICEID_BCM5720 },
@@ -311,6 +312,7 @@ static const struct bge_revision {
 	{ BGE_CHIPID_BCM5715_A3,	"BCM5715 A3" },
 	{ BGE_CHIPID_BCM5717_A0,	"BCM5717 A0" },
 	{ BGE_CHIPID_BCM5717_B0,	"BCM5717 B0" },
+	{ BGE_CHIPID_BCM5717_C0,	"BCM5717 C0" },
 	{ BGE_CHIPID_BCM5719_A0,	"BCM5719 A0" },
 	{ BGE_CHIPID_BCM5720_A0,	"BCM5720 A0" },
 	{ BGE_CHIPID_BCM5755_A0,	"BCM5755 A0" },
@@ -2698,6 +2700,10 @@ bge_chipid(device_t dev)
 		 * registers.
 		 */
 		switch (pci_get_device(dev)) {
+		case BCOM_DEVICEID_BCM5717C:
+			/* 5717 C0 seems to belong to 5720 line. */
+			id = BGE_CHIPID_BCM5720_A0;
+			break;
 		case BCOM_DEVICEID_BCM5717:
 		case BCOM_DEVICEID_BCM5718:
 		case BCOM_DEVICEID_BCM5719:

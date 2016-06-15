@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.cpu.mk 292085 2015-12-11 05:39:45Z imp $
+# $FreeBSD: head/share/mk/bsd.cpu.mk 300119 2016-05-18 06:01:18Z imp $
 
 # Set default CPU compile flags and baseline CPUTYPE for each arch.  The
 # compile flags must support the minimum CPU type for each architecture but
@@ -18,6 +18,8 @@ MACHINE_CPU = i486
 MACHINE_CPU = mips
 . elif ${MACHINE_CPUARCH} == "powerpc"
 MACHINE_CPU = aim
+. elif ${MACHINE_CPUARCH} == "riscv"
+MACHINE_CPU = riscv
 . elif ${MACHINE_CPUARCH} == "sparc64"
 MACHINE_CPU = ultrasparc
 . endif
@@ -106,21 +108,24 @@ _CPUCFLAGS = -march=${CPUTYPE}
 #XXX: gcc doesn't seem to like -mcpu=xscale, and dies while rebuilding itself
 #_CPUCFLAGS = -mcpu=xscale
 _CPUCFLAGS = -march=armv5te -D__XSCALE__
-. elif ${CPUTYPE} == "armv6"
+.  elif ${CPUTYPE:M*soft*} != ""
+_CPUCFLAGS = -mfloat-abi=softfp
+.  elif ${CPUTYPE} == "armv6"
+# Not sure we still need ARM_ARCH_6=1 here.
 _CPUCFLAGS = -march=${CPUTYPE} -DARM_ARCH_6=1
-. elif ${CPUTYPE} == "cortexa"
+.  elif ${CPUTYPE} == "cortexa"
 _CPUCFLAGS = -march=armv7 -DARM_ARCH_6=1 -mfpu=vfp
-. elif ${CPUTYPE:Marmv[4567]*} != ""
+.  elif ${CPUTYPE:Marmv[4567]*} != ""
 # Handle all the armvX types that FreeBSD runs:
 #	armv4, armv4t, armv5, armv5te, armv6, armv6t2, armv7, armv7-a, armv7ve
 # they require -march=. All the others require -mcpu=.
 _CPUCFLAGS = -march=${CPUTYPE}
-. else
+.  else
 # Common values for FreeBSD
-# arm:
+# arm: (any arm v4 or v5 processor you are targeting)
 #	arm920t, arm926ej-s, marvell-pj4, fa526, fa626,
 #	fa606te, fa626te, fa726te
-# armv6:
+# armv6: (any arm v7 or v8 processor you are targeting and the arm1176jzf-s)
 # 	arm1176jzf-s, generic-armv7-a, cortex-a5, cortex-a7, cortex-a8,
 #	cortex-a9, cortex-a12, cortex-a15, cortex-a17, cortex-a53, cortex-a57,
 #	cortex-a72, exynos-m1
@@ -148,6 +153,8 @@ _CPUCFLAGS = -march=${CPUTYPE}
 #	sb1, xlp, xlr
 _CPUCFLAGS = -march=${CPUTYPE:S/^mips//}
 . endif
+. elif ${MACHINE_CPUARCH} == "riscv"
+_CPUCFLAGS = -msoft-float # -march="RV64I" # RISCVTODO
 . elif ${MACHINE_ARCH} == "sparc64"
 .  if ${CPUTYPE} == "v9"
 _CPUCFLAGS = -mcpu=v9
@@ -277,6 +284,9 @@ MACHINE_CPU = mips
 .  if ${CPUTYPE} == "e500"
 MACHINE_CPU = booke softfp
 .  endif
+########## riscv
+. elif ${MACHINE_CPUARCH} == "riscv"
+MACHINE_CPU = riscv
 ########## sparc64
 . elif ${MACHINE_ARCH} == "sparc64"
 .  if ${CPUTYPE} == "v9"
@@ -299,18 +309,26 @@ MACHINE_CPU += arm
 . if ${MACHINE_ARCH:Marmv6*} != ""
 MACHINE_CPU += armv6
 . endif
-# armv6 is a hybrid. It uses the softfp ABI, but doesn't emulate
+# armv6 is a hybrid. It can use the softfp ABI, but doesn't emulate
 # floating point in the general case, so don't define softfp for
 # it at this time. arm and armeb are pure softfp, so define it
 # for them.
 . if ${MACHINE_ARCH:Marmv6*} == ""
 MACHINE_CPU += softfp
 . endif
-.if ${MACHINE_ARCH} == "armv6"
+# Normally armv6 is hard float ABI from FreeBSD 11 onwards. However
+# when CPUTYPE has 'soft' in it, we use the soft-float ABI to allow
+# building of soft-float ABI libraries. In this case, we have to
+# add the -mfloat-abi=softfp to force that.
+.if ${MACHINE_ARCH:Marmv6*} && defined(CPUTYPE) && ${CPUTYPE:M*soft*} != ""
 # Needs to be CFLAGS not _CPUCFLAGS because it's needed for the ABI
 # not a nice optimization.
 CFLAGS += -mfloat-abi=softfp
 .endif
+.endif
+
+.if ${MACHINE_CPUARCH} == "riscv"
+CFLAGS += -msoft-float
 .endif
 
 # NB: COPTFLAGS is handled in /usr/src/sys/conf/kern.pre.mk

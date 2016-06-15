@@ -1,5 +1,5 @@
 /*	$OpenBSD: ber.c,v 1.9 2015/02/12 00:30:38 pelikan Exp $ */
-/*	$FreeBSD: head/usr.sbin/ypldap/ber.c 290933 2015-11-16 16:52:56Z rodrigc $ */
+/*	$FreeBSD: head/usr.sbin/ypldap/ber.c 300639 2016-05-25 01:37:25Z truckman $ */
 
 /*
  * Copyright (c) 2007 Reyk Floeter <reyk@vantronix.net>
@@ -27,7 +27,6 @@
 #include <err.h>	/* XXX for debug output */
 #include <stdio.h>	/* XXX for debug output */
 #include <string.h>
-#include <strings.h>
 #include <unistd.h>
 #include <stdarg.h>
 
@@ -622,7 +621,6 @@ ber_printf_elements(struct ber_element *ber, char *fmt, ...)
 
 	return (ber);
  fail:
-	ber_free_elements(ber);
 	return (NULL);
 }
 
@@ -727,7 +725,7 @@ ber_scanf_elements(struct ber_element *ber, char *fmt, ...)
 			continue;
 		case '}':
 		case ')':
-			if (parent[level] == NULL)
+			if (level < 0 || parent[level] == NULL)
 				goto fail;
 			ber = parent[level--];
 			ret++;
@@ -1084,6 +1082,15 @@ ber_read_element(struct ber *ber, struct ber_element *elm)
 	DPRINTF("ber read element size %zd\n", len);
 	totlen += r + len;
 
+	/*
+	 * If using an external buffer and the total size of the element
+	 * is larger, then the external buffer don't bother to continue.
+	 */
+	if (ber->fd == -1 && len > ber->br_rend - ber->br_rptr) {
+		errno = ECANCELED;
+		return -1;
+	}
+
 	elm->be_type = type;
 	elm->be_len = len;
 	elm->be_class = class;
@@ -1219,8 +1226,7 @@ ber_set_application(struct ber *b, unsigned long (*cb)(struct ber_element *))
 void
 ber_free(struct ber *b)
 {
-	if (b->br_wbuf != NULL)
-		free (b->br_wbuf);
+	free(b->br_wbuf);
 }
 
 static ssize_t

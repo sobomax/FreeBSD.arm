@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_i2c.c 289093 2015-10-09 22:49:50Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/imx/imx_i2c.c 298643 2016-04-26 14:47:52Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -388,7 +388,7 @@ i2c_reset(device_t dev, u_char speed, u_char addr, u_char *oldadr)
 	 */
 	ipgfreq = imx_ccm_ipg_hz();
 	busfreq = IICBUS_GET_FREQUENCY(sc->iicbus, speed);
-	div = (ipgfreq + busfreq - 1) / busfreq;
+	div = howmany(ipgfreq, busfreq);
 	for (i = 0; i < nitems(clkdiv_table); i++) {
 		if (clkdiv_table[i].divisor >= div)
 			break;

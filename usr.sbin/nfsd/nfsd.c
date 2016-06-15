@@ -41,7 +41,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)nfsd.c	8.9 (Berkeley) 3/29/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/nfsd/nfsd.c 282272 2015-04-30 12:55:27Z trasz $";
+  "$FreeBSD: head/usr.sbin/nfsd/nfsd.c 298089 2016-04-15 22:31:22Z pfg $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -214,7 +214,7 @@ main(int argc, char **argv)
 		default:
 		case '?':
 			usage();
-		};
+		}
 	if (!tcpflag && !udpflag)
 		udpflag = 1;
 	argv += optind;

@@ -1,6 +1,5 @@
-# $FreeBSD: head/sys/arm/broadcom/bcm2835/std.rpi 291102 2015-11-20 16:12:22Z andrew $
+# $FreeBSD: head/sys/arm/broadcom/bcm2835/std.rpi 297068 2016-03-20 16:48:29Z ian $
 
 options		KERNVIRTADDR=0xc0100000
 makeoptions	KERNVIRTADDR=0xc0100000
-options		FREEBSD_BOOT_LOADER
 options		LINUX_BOOT_ABI

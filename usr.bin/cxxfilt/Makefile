@@ -1,8 +1,8 @@
-# $FreeBSD: head/usr.bin/cxxfilt/Makefile 282288 2015-04-30 22:51:15Z emaste $
+# $FreeBSD: head/usr.bin/cxxfilt/Makefile 298401 2016-04-21 12:58:29Z emaste $
 
 .include <src.opts.mk>
 
-ELFTCDIR=	${.CURDIR}/../../contrib/elftoolchain
+ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 SRCDIR=		${ELFTCDIR}/cxxfilt
 
 .PATH: ${SRCDIR}

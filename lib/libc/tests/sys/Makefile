@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/sys/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/sys/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.own.mk>
 
@@ -68,16 +68,17 @@ WARNS?=			3
 WARNS?=			4
 .endif
 
-FILESGROUPS=		FILES truncate_test_FILES
+FILESGROUPS+=		truncate_test_FILES
 
 truncate_test_FILES=	truncate_test.root_owned
 truncate_test_FILESDIR=	${TESTSDIR}
 truncate_test_FILESMODE= 0600
 truncate_test_FILESOWNER= root
 truncate_test_FILESGRP= wheel
+truncate_test_FILESPACKAGE=	${PACKAGE}
 
 CLEANFILES=	truncate_test.root_owned
 truncate_test.root_owned:
-	dd if=/dev/null bs=1 count=1 of=${.TARGET}
+	dd if=/dev/null bs=1 count=1 of=${.TARGET} status=none
 
 .include <bsd.test.mk>

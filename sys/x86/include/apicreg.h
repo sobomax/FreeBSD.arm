@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/apicreg.h 278473 2015-02-09 21:00:56Z kib $
+ * $FreeBSD: head/sys/x86/include/apicreg.h 297347 2016-03-28 09:43:40Z kib $
  */
 
 #ifndef _X86_APICREG_H_
@@ -399,10 +399,11 @@ typedef struct IOAPIC ioapic_t;
 #define APIC_LVTT_VECTOR	0x000000ff
 #define APIC_LVTT_DS		0x00001000
 #define APIC_LVTT_M		0x00010000
-#define APIC_LVTT_TM		0x00020000
+#define APIC_LVTT_TM		0x00060000
 # define APIC_LVTT_TM_ONE_SHOT	0x00000000
 # define APIC_LVTT_TM_PERIODIC	0x00020000
-
+# define APIC_LVTT_TM_TSCDLT	0x00040000
+# define APIC_LVTT_TM_RSRV	0x00060000
 
 /* APIC timer current count */
 #define	APIC_TIMER_MAX_COUNT	0xffffffff

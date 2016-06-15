@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/checking.cc 289935 2015-10-25 14:52:16Z theraven $
+ * $FreeBSD: head/usr.bin/dtc/checking.cc 292876 2015-12-29 16:29:42Z theraven $
  */
 
 #include "checking.hh"
@@ -51,7 +51,7 @@ namespace
 	struct address_cells_checker : public checker
 	{
 		address_cells_checker(const char *name) : checker(name) {}
-		virtual bool check_node(device_tree *tree, const node_ptr &n)
+		virtual bool check_node(device_tree *, const node_ptr &n)
 		{
 			// If this has no children, it trivially meets the
 			// conditions.
@@ -151,7 +151,7 @@ property_checker::check_property(device_tree *tree, const node_ptr &n, property_
 }
 
 bool
-property_size_checker::check(device_tree *tree, const node_ptr &n, property_ptr p)
+property_size_checker::check(device_tree *, const node_ptr &, property_ptr p)
 {
 	uint32_t psize = 0;
 	for (property::value_iterator i=p->begin(),e=p->end() ; i!=e ; ++i)

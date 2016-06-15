@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/self_reloc.c 282727 2015-05-10 13:24:26Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/common/self_reloc.c 293724 2016-01-12 02:17:39Z smh $");
 
 #include <sys/types.h>
 #include <elf.h>
@@ -60,6 +60,8 @@ __FBSDID("$FreeBSD: head/sys/boot/common/self_reloc.c 282727 2015-05-10 13:24:26
 #define	RELOC_TYPE_NONE		R_386_NONE
 #define	RELOC_TYPE_RELATIVE	R_386_RELATIVE
 #endif
+
+void self_reloc(Elf_Addr baseaddr, ElfW_Dyn *dynamic);
 
 /*
  * A simple elf relocator.
@@ -118,6 +120,6 @@ self_reloc(Elf_Addr baseaddr, ElfW_Dyn *dynamic)
 			/* XXX: do we need other relocations ? */
 			break;
 		}
-		rel = (ElfW_Rel *) ((caddr_t) rel + relent);
+		rel = (ElfW_Rel *)(void *)((caddr_t) rel + relent);
 	}
 }

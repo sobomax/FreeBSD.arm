@@ -103,7 +103,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_time_event.c 286475 2015-08-08 21:08:35Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_time_event.c 300248 2016-05-19 23:31:00Z avos $");
+
+#include "opt_wlan.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -244,7 +246,7 @@ iwm_mvm_time_event_send_add(struct iwm_softc *sc, struct iwm_node *in,
 
 void
 iwm_mvm_protect_session(struct iwm_softc *sc, struct iwm_node *in,
-	uint32_t duration, uint32_t min_duration, uint32_t max_delay)
+	uint32_t duration, uint32_t max_delay)
 {
 	struct iwm_time_event_cmd_v2 time_cmd;
 

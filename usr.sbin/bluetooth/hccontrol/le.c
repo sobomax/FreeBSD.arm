@@ -26,15 +26,15 @@
  * SUCH DAMAGE.
  *
  * $Id: hccontrol.c,v 1.5 2003/09/05 00:38:24 max Exp $
- * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/le.c 287597 2015-09-09 13:24:39Z takawata $
+ * $FreeBSD: head/usr.sbin/bluetooth/hccontrol/le.c 299090 2016-05-04 22:34:11Z asomers $
  */
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/sysctl.h>
-#include <sys/bitstring.h>
 #include <sys/select.h>
 #include <assert.h>
+#include <bitstring.h>
 #include <err.h>
 #include <errno.h>
 #include <netgraph/ng_message.h>

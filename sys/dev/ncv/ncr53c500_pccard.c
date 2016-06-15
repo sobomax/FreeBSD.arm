@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ncv/ncr53c500_pccard.c 292111 2015-12-11 15:24:29Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/ncv/ncr53c500_pccard.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -142,7 +142,7 @@ ncv_alloc_resource(device_t dev)
 {
 	struct ncv_softc	*sc = device_get_softc(dev);
 	u_int32_t		flags = device_get_flags(dev);
-	u_long			ioaddr, iosize, maddr, msize;
+	rman_res_t		ioaddr, iosize, maddr, msize;
 	int			error;
 	bus_addr_t		offset = 0;
 

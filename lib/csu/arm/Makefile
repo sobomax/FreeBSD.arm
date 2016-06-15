@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/csu/arm/Makefile 288076 2015-09-21 21:44:02Z bdrewery $
+# $FreeBSD: head/lib/csu/arm/Makefile 293648 2016-01-10 23:41:31Z andrew $
 
 .PATH: ${.CURDIR}/../common
 
@@ -7,6 +7,7 @@ OBJS=		${SRCS:N*.h:R:S/$/.o/g}
 OBJS+=		Scrt1.o gcrt1.o
 CFLAGS+=	-I${.CURDIR}/../common \
 		-I${.CURDIR}/../../libc/include
+STATIC_CFLAGS+=	-mlong-calls
 
 FILES=		${OBJS}
 FILESMODE=	${LIBMODE}
@@ -23,14 +24,14 @@ CLEANFILES+=	crt1.s gcrt1.s Scrt1.s
 # directly compiled to .o files.
 
 crt1.s: crt1.c
-	${CC} ${CFLAGS} -S -o ${.TARGET} ${.CURDIR}/crt1.c
+	${CC} ${CFLAGS} ${STATIC_CFLAGS} -S -o ${.TARGET} ${.CURDIR}/crt1.c
 	sed ${SED_FIX_NOTE} ${.TARGET}
 
 crt1.o: crt1.s
 	${CC} ${ACFLAGS} -c -o ${.TARGET} crt1.s
 
 gcrt1.s: crt1.c
-	${CC} ${CFLAGS} -DGCRT -S -o ${.TARGET} ${.CURDIR}/crt1.c
+	${CC} ${CFLAGS} ${STATIC_CFLAGS} -DGCRT -S -o ${.TARGET} ${.CURDIR}/crt1.c
 	sed ${SED_FIX_NOTE} ${.TARGET}
 
 gcrt1.o: gcrt1.s

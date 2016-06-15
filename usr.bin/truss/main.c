@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/main.c 289080 2015-10-09 20:47:29Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/main.c 295930 2016-02-23 19:56:29Z jhb $");
 
 /*
  * The main module for truss.  Surprisingly simple, but, then, the other
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: head/usr.bin/truss/main.c 289080 2015-10-09 20:47:29Z bdrewe
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sysdecode.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -95,7 +96,7 @@ main(int ac, char **av)
 	trussinfo->curthread = NULL;
 	LIST_INIT(&trussinfo->proclist);
 	init_syscalls();
-	while ((c = getopt(ac, av, "p:o:facedDs:S")) != -1) {
+	while ((c = getopt(ac, av, "p:o:facedDs:SH")) != -1) {
 		switch (c) {
 		case 'p':	/* specified pid */
 			pid = atoi(optarg);
@@ -130,6 +131,9 @@ main(int ac, char **av)
 			break;
 		case 'S':	/* Don't trace signals */
 			trussinfo->flags |= NOSIGS;
+			break;
+		case 'H':
+			trussinfo->flags |= DISPLAYTIDS;
 			break;
 		default:
 			usage();

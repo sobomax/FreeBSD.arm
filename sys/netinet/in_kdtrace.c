@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/in_kdtrace.c 287759 2015-09-13 15:50:55Z gnn $
+ * $FreeBSD: head/sys/netinet/in_kdtrace.c 292384 2015-12-16 23:39:27Z markj $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_kdtrace.c 287759 2015-09-13 15:50:55Z gnn $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_kdtrace.c 292384 2015-12-16 23:39:27Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -122,7 +122,7 @@ SDT_PROBE_DEFINE2_XLATE(tcp, , , debug__user,
 SDT_PROBE_DEFINE3_XLATE(tcp, , , debug__drop,
     "struct tcpcb *", "tcpsinfo_t *" ,
     "struct tcphdr *", "tcpinfo_t *",
-    "uint8_t *", "ipinfo_t *")
+    "uint8_t *", "ipinfo_t *");
 
 SDT_PROBE_DEFINE6_XLATE(tcp, , , state__change,
     "void *", "void *",

@@ -1,6 +1,5 @@
-# $FreeBSD: head/lib/libc/tests/tls/dso/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/lib/libc/tests/tls/dso/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-OBJTOP=		${.OBJDIR:H:H:H:H:H}
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/libc/tls/${.CURDIR:T}
 
 LIB=		h_tls_dlopen

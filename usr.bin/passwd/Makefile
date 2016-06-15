@@ -1,14 +1,15 @@
 # From:	@(#)Makefile	8.3 (Berkeley) 4/2/94
-# $FreeBSD: head/usr.bin/passwd/Makefile 278669 2015-02-13 09:02:15Z bapt $
+# $FreeBSD: head/usr.bin/passwd/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 PROG	 = passwd
 BINOWN	 = root
 BINMODE	 = 4555
+PRECIOUSPROG=
 LIBADD   = pam
 .if ${MK_NIS} != "no"
-LINKS	 = ${BINDIR}/passwd ${BINDIR}/yppasswd
+SYMLINKS = ${BINDIR}/passwd ${BINDIR}/yppasswd
 MLINKS	 = passwd.1 yppasswd.1
 .endif
 
@@ -17,10 +18,5 @@ beforeinstall:
 	[ ! -e ${DESTDIR}${BINDIR}/$i ] || \
 		chflags noschg ${DESTDIR}${BINDIR}/$i || true
 .endfor
-
-.if !defined(NO_FSCHG)
-afterinstall:
-	-chflags schg ${DESTDIR}${BINDIR}/passwd
-.endif
 
 .include <bsd.prog.mk>

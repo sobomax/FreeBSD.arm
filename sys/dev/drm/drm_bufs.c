@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drm_bufs.c 283999 2015-06-04 20:36:16Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drm_bufs.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /** @file drm_bufs.c
  * Implementation of the ioctls for setup of DRM mappings and DMA buffers.
@@ -668,7 +668,7 @@ static int drm_do_addbufs_pci(struct drm_device *dev, struct drm_buf_desc *reque
 		dma->buflist[i + dma->buf_count] = &entry->buflist[i];
 	}
 
-	/* No allocations failed, so now we can replace the orginal pagelist
+	/* No allocations failed, so now we can replace the original pagelist
 	 * with the new one.
 	 */
 	free(dma->pagelist, DRM_MEM_PAGES);

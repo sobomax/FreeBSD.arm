@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbHostPOSIX/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbHostPOSIX/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -6,6 +6,7 @@ LIB=	lldbHostPOSIX
 
 SRCDIR=	tools/lldb/source/Host/posix
 SRCS=	ConnectionFileDescriptorPosix.cpp \
+	DomainSocket.cpp \
 	FileSystem.cpp \
 	HostInfoPosix.cpp \
 	HostProcessPosix.cpp \

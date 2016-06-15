@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_ixp4xx.c 277460 2015-01-21 01:06:08Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/controller/ehci_ixp4xx.c 294989 2016-01-28 14:11:59Z mmel $");
 
 #include "opt_bus.h"
 
@@ -85,6 +85,19 @@ static uint16_t ehci_bs_r_2(bus_space_tag_t tag, bus_space_handle_t, bus_size_t)
 static void ehci_bs_w_2(bus_space_tag_t tag, bus_space_handle_t, bus_size_t, uint16_t);
 static uint32_t ehci_bs_r_4(bus_space_tag_t tag, bus_space_handle_t, bus_size_t);
 static void ehci_bs_w_4(bus_space_tag_t tag, bus_space_handle_t, bus_size_t, uint32_t);
+
+static void
+ehci_ixp_post_reset(struct ehci_softc *ehci_softc)
+{
+	uint32_t usbmode;
+
+	/* Force HOST mode, select big-endian mode */
+	usbmode = EOREAD4(ehci_softc, EHCI_USBMODE_NOLPM);
+	usbmode &= ~EHCI_UM_CM;
+	usbmode |= EHCI_UM_CM_HOST;
+	usbmode |= EHCI_UM_ES_BE;
+	EOWRITE4(ehci_softc, EHCI_USBMODE_NOLPM, usbmode);
+}
 
 static int
 ehci_ixp_probe(device_t self)
@@ -173,19 +186,20 @@ ehci_ixp_attach(device_t self)
 	}
 
 	/*
-	 * Arrange to force Host mode, select big-endian byte alignment,
-	 * and arrange to not terminate reset operations (the adapter
-	 * will ignore it if we do but might as well save a reg write).
-	 * Also, the controller has an embedded Transaction Translator
-	 * which means port speed must be read from the Port Status
-	 * register following a port enable.
+	 * Select big-endian byte alignment and arrange to not terminate
+	 * reset operations (the adapter will ignore it if we do but might
+	 * as well save a reg write). Also, the controller has an embedded
+	 * Transaction Translator which means port speed must be read from
+	 * the Port Status register following a port enable.
 	 */
 	sc->sc_flags |= EHCI_SCFLG_TT
-		     | EHCI_SCFLG_SETMODE
 		     | EHCI_SCFLG_BIGEDESC
-		     | EHCI_SCFLG_BIGEMMIO
 		     | EHCI_SCFLG_NORESTERM
 		     ;
+
+	/* Setup callbacks. */
+	sc->sc_vendor_post_reset = ehci_ixp_post_reset;
+	sc->sc_vendor_get_port_speed = ehci_get_port_speed_portsc;
 
 	err = ehci_init(sc);
 	if (!err) {

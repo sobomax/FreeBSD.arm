@@ -1,10 +1,10 @@
-# $FreeBSD: head/sys/modules/ipfw/Makefile 272840 2014-10-09 19:32:35Z melifaro $
+# $FreeBSD: head/sys/modules/ipfw/Makefile 298016 2016-04-14 22:51:23Z ae $
 
 .PATH: ${.CURDIR}/../../netpfil/ipfw
 
 KMOD=	ipfw
 SRCS=	ip_fw2.c ip_fw_pfil.c
-SRCS+=	ip_fw_dynamic.c ip_fw_log.c
+SRCS+=	ip_fw_dynamic.c ip_fw_log.c ip_fw_eaction.c
 SRCS+=	ip_fw_sockopt.c ip_fw_table.c ip_fw_table_algo.c ip_fw_iface.c
 SRCS+=	ip_fw_table_value.c
 SRCS+=	opt_inet.h opt_inet6.h opt_ipdivert.h opt_ipfw.h opt_ipsec.h

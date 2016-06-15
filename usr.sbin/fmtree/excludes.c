@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fmtree/excludes.c 121300 2003-10-21 08:27:05Z phk $");
+__FBSDID("$FreeBSD: head/usr.sbin/fmtree/excludes.c 298028 2016-04-15 03:38:58Z araujo $");
 
 #include <sys/types.h>
 #include <sys/time.h>		/* XXX for mtree.h */
@@ -69,10 +69,10 @@ read_excludes_file(const char *name)
 	size_t len;
 
 	fp = fopen(name, "r");
-	if (fp == 0)
+	if (fp == NULL)
 		err(1, "%s", name);
 
-	while ((line = fgetln(fp, &len)) != 0) {
+	while ((line = fgetln(fp, &len)) != NULL) {
 		if (line[len - 1] == '\n')
 			len--;
 		if (len == 0)
@@ -80,7 +80,7 @@ read_excludes_file(const char *name)
 
 		str = malloc(len + 1);
 		e = malloc(sizeof *e);
-		if (str == 0 || e == 0)
+		if (str == NULL || e == NULL)
 			errx(1, "memory allocation error");
 		e->glob = str;
 		memcpy(str, line, len);

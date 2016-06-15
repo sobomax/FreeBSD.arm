@@ -1,15 +1,16 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: head/libexec/Makefile 289087 2015-10-09 22:09:44Z bapt $
+# $FreeBSD: head/libexec/Makefile 301553 2016-06-07 16:31:03Z lidl $
 
 .include <src.opts.mk>
 
 SUBDIR=	${_atf} \
 	${_atrun} \
-	${_casper} \
+	${_blacklistd-helper} \
 	${_comsat} \
 	${_dma} \
 	getty \
 	${_mail.local} \
+	${_makewhatis.local} \
 	${_mknetid} \
 	${_pppoed} \
 	revnetgroup \
@@ -33,12 +34,12 @@ SUBDIR=	${_atf} \
 _atrun=		atrun
 .endif
 
-.if ${MK_BOOTPD} != "no"
-SUBDIR+=	bootpd
+.if ${MK_BLACKLIST} != "no"
+_blacklistd-helper+=	blacklistd-helper
 .endif
 
-.if ${MK_CASPER} != "no"
-_casper=	casper
+.if ${MK_BOOTPD} != "no"
+SUBDIR+=	bootpd
 .endif
 
 .if ${MK_FINGER} != "no"
@@ -86,6 +87,10 @@ _rshd=		rshd
 .if ${MK_SENDMAIL} != "no"
 _mail.local=	mail.local
 _smrsh=		smrsh
+.endif
+
+.if ${MK_MAN_UTILS} != "no"
+_makewhatis.local=	makewhatis.local
 .endif
 
 .if ${MK_TALK} != "no"

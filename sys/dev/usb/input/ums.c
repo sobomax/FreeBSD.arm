@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/ums.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf
@@ -572,7 +572,7 @@ ums_attach(device_t dev)
 	 * The Microsoft Wireless Notebook Optical Mouse seems to be in worse
 	 * shape than the Wireless Intellimouse 2.0, as its X, Y, wheel, and
 	 * all of its other button positions are all off. It also reports that
-	 * it has two addional buttons and a tilt wheel.
+	 * it has two additional buttons and a tilt wheel.
 	 */
 	if (usb_test_quirk(uaa, UQ_MS_BAD_CLASS)) {
 

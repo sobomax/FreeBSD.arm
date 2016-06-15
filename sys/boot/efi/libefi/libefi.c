@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/libefi/libefi.c 279950 2015-03-13 09:41:27Z jhb $");
+__FBSDID("$FreeBSD: head/sys/boot/efi/libefi/libefi.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 #include <efi.h>
 #include <eficonsctl.h>
@@ -44,7 +44,7 @@ static CHAR16 *
 arg_skipsep(CHAR16 *argp)
 {
 
-	while (*argp == ' ' || *argp == '\t')
+	while (*argp == ' ' || *argp == '\t' || *argp == '\n')
 		argp++;
 	return (argp);
 }
@@ -53,7 +53,7 @@ static CHAR16 *
 arg_skipword(CHAR16 *argp)
 {
 
-	while (*argp && *argp != ' ' && *argp != '\t')
+	while (*argp && *argp != ' ' && *argp != '\t' && *argp != '\n')
 		argp++;
 	return (argp);
 }
@@ -102,7 +102,7 @@ efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_table)
 		(void)console_control->SetMode(console_control,
 		    EfiConsoleControlScreenText);
 
-	heapsize = 3 * 1024 * 1024;
+	heapsize = 64 * 1024 * 1024;
 	status = BS->AllocatePages(AllocateAnyPages, EfiLoaderData,
 	    EFI_SIZE_TO_PAGES(heapsize), &heap);
 	if (status != EFI_SUCCESS)
@@ -179,7 +179,7 @@ efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_table)
 	argv = malloc((argc + 1) * sizeof(CHAR16*));
 	argc = 0;
 	if (addprog)
-		argv[argc++] = L"loader.efi";
+		argv[argc++] = (CHAR16 *)L"loader.efi";
 	argp = args;
 	while (argp != NULL && *argp != 0) {
 		argp = arg_skipsep(argp);

@@ -48,7 +48,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/igmp.c 291579 2015-12-01 11:24:30Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/igmp.c 301527 2016-06-06 22:26:18Z bz $");
+
+#include "opt_ddb.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -63,6 +65,10 @@ __FBSDID("$FreeBSD: head/sys/netinet/igmp.c 291579 2015-12-01 11:24:30Z ae $");
 #include <sys/sysctl.h>
 #include <sys/ktr.h>
 #include <sys/condvar.h>
+
+#ifdef DDB
+#include <ddb/ddb.h>
+#endif
 
 #include <net/if.h>
 #include <net/if_var.h>
@@ -659,16 +665,12 @@ igmp_ifdetach(struct ifnet *ifp)
 void
 igmp_domifdetach(struct ifnet *ifp)
 {
-	struct igmp_ifsoftc *igi;
 
 	CTR3(KTR_IGMPV3, "%s: called for ifp %p(%s)",
 	    __func__, ifp, ifp->if_xname);
 
 	IGMP_LOCK();
-
-	igi = ((struct in_ifinfo *)ifp->if_afdata[AF_INET])->ii_igmp;
 	igi_delete_locked(ifp);
-
 	IGMP_UNLOCK();
 }
 
@@ -1107,9 +1109,9 @@ out_locked:
 }
 
 /*
- * Process a recieved IGMPv3 group-specific or group-and-source-specific
+ * Process a received IGMPv3 group-specific or group-and-source-specific
  * query.
- * Return <0 if any error occured. Currently this is ignored.
+ * Return <0 if any error occurred. Currently this is ignored.
  */
 static int
 igmp_input_v3_group_query(struct in_multi *inm, struct igmp_ifsoftc *igi,
@@ -1473,7 +1475,7 @@ igmp_input(struct mbuf **mp, int *offp, int proto)
 	else
 		minlen += IGMP_MINLEN;
 	if ((!M_WRITABLE(m) || m->m_len < minlen) &&
-	    (m = m_pullup(m, minlen)) == 0) {
+	    (m = m_pullup(m, minlen)) == NULL) {
 		IGMPSTAT_INC(igps_rcv_tooshort);
 		return (IPPROTO_DONE);
 	}
@@ -3644,6 +3646,37 @@ vnet_igmp_uninit(const void *unused __unused)
 }
 VNET_SYSUNINIT(vnet_igmp_uninit, SI_SUB_PSEUDO, SI_ORDER_ANY,
     vnet_igmp_uninit, NULL);
+
+#ifdef DDB
+DB_SHOW_COMMAND(igi_list, db_show_igi_list)
+{
+	struct igmp_ifsoftc *igi, *tigi;
+	LIST_HEAD(_igi_list, igmp_ifsoftc) *igi_head;
+
+	if (!have_addr) {
+		db_printf("usage: show igi_list <addr>\n");
+		return;
+	}
+	igi_head = (struct _igi_list *)addr;
+
+	LIST_FOREACH_SAFE(igi, igi_head, igi_link, tigi) {
+		db_printf("igmp_ifsoftc %p:\n", igi);
+		db_printf("    ifp %p\n", igi->igi_ifp);
+		db_printf("    version %u\n", igi->igi_version);
+		db_printf("    v1_timer %u\n", igi->igi_v1_timer);
+		db_printf("    v2_timer %u\n", igi->igi_v2_timer);
+		db_printf("    v3_timer %u\n", igi->igi_v3_timer);
+		db_printf("    flags %#x\n", igi->igi_flags);
+		db_printf("    rv %u\n", igi->igi_rv);
+		db_printf("    qi %u\n", igi->igi_qi);
+		db_printf("    qri %u\n", igi->igi_qri);
+		db_printf("    uri %u\n", igi->igi_uri);
+		/* SLIST_HEAD(,in_multi)   igi_relinmhead */
+		/* struct mbufq    igi_gq; */
+		db_printf("\n");
+	}
+}
+#endif
 
 static int
 igmp_modevent(module_t mod, int type, void *unused __unused)

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/iwn/if_iwnvar.h 287399 2015-09-02 15:23:51Z glebius $	*/
+/*	$FreeBSD: head/sys/dev/iwn/if_iwnvar.h 300732 2016-05-26 11:12:36Z avos $	*/
 /*	$OpenBSD: if_iwnvar.h,v 1.18 2010/04/30 16:06:46 damien Exp $	*/
 
 /*-
@@ -304,7 +304,6 @@ struct iwn_softc {
 	int			sc_cap_off;	/* PCIe Capabilities. */
 
 	/* Tasks used by the driver */
-	struct task		sc_reinit_task;
 	struct task		sc_radioon_task;
 	struct task		sc_radiooff_task;
 	struct task		sc_panic_task;
@@ -318,6 +317,7 @@ struct iwn_softc {
 	int			calib_cnt;
 	struct iwn_calib_state	calib;
 	int			last_calib_ticks;
+	struct callout		scan_timeout;
 	struct callout		watchdog_to;
 	struct iwn_fw_info	fw;
 	struct iwn_calib_info	calibcmd[IWN5000_PHY_CALIB_MAX_RESULT];
@@ -379,7 +379,6 @@ struct iwn_softc {
 	uint8_t			chainmask;
 
 	int			sc_tx_timer;
-	int			sc_scan_timer;
 
 	/* Are we doing a scan? */
 	int			sc_is_scanning;

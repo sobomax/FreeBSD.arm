@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/random_harvestq.c 288780 2015-10-05 10:45:52Z markm $");
+__FBSDID("$FreeBSD: head/sys/dev/random/random_harvestq.c 297366 2016-03-28 21:51:56Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -183,7 +183,8 @@ random_kthread(void)
 	/* NOTREACHED */
 }
 /* This happens well after SI_SUB_RANDOM */
-SYSINIT(random_device_h_proc, SI_SUB_CREATE_INIT, SI_ORDER_ANY, kproc_start, &random_proc_kp);
+SYSINIT(random_device_h_proc, SI_SUB_KICK_SCHEDULER, SI_ORDER_ANY, kproc_start,
+    &random_proc_kp);
 
 /*
  * Run through all fast sources reading entropy for the given

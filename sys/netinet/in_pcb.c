@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 291301 2015-11-25 14:45:43Z fabient $");
+__FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 301217 2016-06-02 17:51:29Z gnn $");
 
 #include "opt_ddb.h"
 #include "opt_ipsec.h"
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 291301 2015-11-25 14:45:43Z fabien
 #include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/callout.h>
+#include <sys/eventhandler.h>
 #include <sys/domain.h>
 #include <sys/protosw.h>
 #include <sys/rmlock.h>
@@ -72,6 +73,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/in_pcb.c 291301 2015-11-25 14:45:43Z fabien
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_types.h>
+#include <net/if_llatbl.h>
 #include <net/route.h>
 #include <net/rss_config.h>
 #include <net/vnet.h>
@@ -1297,6 +1299,13 @@ in_pcbfree(struct inpcb *inp)
 	if (inp->inp_moptions != NULL)
 		inp_freemoptions(inp->inp_moptions);
 #endif
+	if (inp->inp_route.ro_rt) {
+		RTFREE(inp->inp_route.ro_rt);
+		inp->inp_route.ro_rt = (struct rtentry *)NULL;
+	}
+	if (inp->inp_route.ro_lle)
+		LLE_FREE(inp->inp_route.ro_lle);	/* zeros ro_lle */
+
 	inp->inp_vflag = 0;
 	inp->inp_flags2 |= INP_FREED;
 	crfree(inp->inp_cred);
@@ -2221,6 +2230,25 @@ in_pcbremlists(struct inpcb *inp)
 #ifdef PCBGROUP
 	in_pcbgroup_remove(inp);
 #endif
+}
+
+/*
+ * Check for alternatives when higher level complains
+ * about service problems.  For now, invalidate cached
+ * routing information.  If the route was created dynamically
+ * (by a redirect), time to try a default gateway again.
+ */
+void
+in_losing(struct inpcb *inp)
+{
+
+	if (inp->inp_route.ro_rt) {
+		RTFREE(inp->inp_route.ro_rt);
+		inp->inp_route.ro_rt = (struct rtentry *)NULL;
+	}
+	if (inp->inp_route.ro_lle)
+		LLE_FREE(inp->inp_route.ro_lle);	/* zeros ro_lle */
+	return;
 }
 
 /*

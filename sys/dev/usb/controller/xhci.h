@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/xhci.h 279544 2015-03-02 20:42:06Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/xhci.h 295928 2016-02-23 18:17:01Z hselasky $ */
 
 /*-
  * Copyright (c) 2010 Hans Petter Selasky. All rights reserved.
@@ -383,6 +383,7 @@ struct xhci_endpoint_ext {
 	uint8_t			trb_halted;
 	uint8_t			trb_running;
 	uint8_t			trb_ep_mode;
+	uint8_t			trb_ep_maxp;
 };
 
 enum {
@@ -465,6 +466,7 @@ struct xhci_softc {
 	struct usb_device	*sc_devices[XHCI_MAX_DEVICES];
 	struct resource		*sc_io_res;
 	struct resource		*sc_irq_res;
+	struct resource		*sc_msix_res;
 
 	void			*sc_intr_hdl;
 	bus_size_t		sc_io_size;

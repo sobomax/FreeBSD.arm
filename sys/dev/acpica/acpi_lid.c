@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_lid.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_lid.c 301418 2016-06-05 02:02:51Z adrian $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -51,6 +51,8 @@ struct acpi_lid_softc {
     ACPI_HANDLE	lid_handle;
     int		lid_status;	/* open or closed */
 };
+
+ACPI_HANDLE acpi_lid_handle;
 
 ACPI_SERIAL_DECL(lid, "ACPI lid");
 
@@ -105,7 +107,7 @@ acpi_lid_attach(device_t dev)
 
     sc = device_get_softc(dev);
     sc->lid_dev = dev;
-    sc->lid_handle = acpi_get_handle(dev);
+    acpi_lid_handle = sc->lid_handle = acpi_get_handle(dev);
 
     /*
      * If a system does not get lid events, it may make sense to change

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 289093 2015-10-09 22:49:50Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_i2c.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -292,7 +292,7 @@ i2c_start(device_t dev, u_char slave, int timeout)
 
 		mtx_unlock(&sc->mutex);
 		return (IIC_ENOACK);
-	};
+	}
 
 	mtx_unlock(&sc->mutex);
 	return (IIC_NOERR);
@@ -387,7 +387,7 @@ i2c_read(device_t dev, char *buf, int len,
 			reg = READ1(sc, I2CCON);
 			reg &= ~(ACKGEN);
 			WRITE1(sc, I2CCON, reg);
-		};
+		}
 
 		clear_ipend(sc);
 
@@ -444,7 +444,7 @@ i2c_write(device_t dev, const char *buf, int len, int *sent, int timeout)
 			DPRINTF("cant i2c write: no ack\n");
 			mtx_unlock(&sc->mutex);
 			return (IIC_ENOACK);
-		};
+		}
 
 		(*sent)++;
 	}

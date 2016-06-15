@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 1990 The Regents of the University of California.
- * Copyright (c) 2014 The FreeBSD Foundation
+ * Copyright (c) 2014-2016 The FreeBSD Foundation
  * All rights reserved.
  *
  * This code is derived from software contributed to Berkeley by
@@ -35,7 +35,7 @@
  *
  *	from: @(#)cpu.h 5.4 (Berkeley) 5/9/91
  *	from: FreeBSD: src/sys/i386/include/cpu.h,v 1.62 2001/06/29
- * $FreeBSD: head/sys/arm64/include/cpu.h 287884 2015-09-16 23:59:45Z zbb $
+ * $FreeBSD: head/sys/arm64/include/cpu.h 298586 2016-04-25 17:32:08Z andrew $
  */
 
 #ifndef _MACHINE_CPU_H_
@@ -46,11 +46,11 @@
 #include <machine/armreg.h>
 
 #define	TRAPF_PC(tfp)		((tfp)->tf_lr)
-#define	TRAPF_USERMODE(tfp)	(((tfp)->tf_elr & (1ul << 63)) == 0)
+#define	TRAPF_USERMODE(tfp)	(((tfp)->tf_spsr & PSR_M_MASK) == PSR_M_EL0t)
 
 #define	cpu_getstack(td)	((td)->td_frame->tf_sp)
 #define	cpu_setstack(td, sp)	((td)->td_frame->tf_sp = (sp))
-#define	cpu_spinwait()		/* nothing */
+#define	cpu_spinwait()		__asm __volatile("yield" ::: "memory")
 
 /* Extract CPU affinity levels 0-3 */
 #define	CPU_AFF0(mpidr)	(u_int)(((mpidr) >> 0) & 0xff)
@@ -145,6 +145,7 @@ void	cpu_halt(void) __dead2;
 void	cpu_reset(void) __dead2;
 void	fork_trampoline(void);
 void	identify_cpu(void);
+void	print_cpu_features(u_int);
 void	swi_vm(void *v);
 
 #define	CPU_AFFINITY(cpu)	__cpu_affinity[(cpu)]

@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)misc.c	8.3 (Berkeley) 4/2/94";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/dd/misc.c 265698 2014-05-08 19:10:04Z asomers $");
+__FBSDID("$FreeBSD: head/bin/dd/misc.c 296156 2016-02-28 10:27:12Z trasz $");
 
 #include <sys/types.h>
 
@@ -54,14 +54,11 @@ __FBSDID("$FreeBSD: head/bin/dd/misc.c 265698 2014-05-08 19:10:04Z asomers $");
 #include "dd.h"
 #include "extern.h"
 
-void
-summary(void)
+double
+secs_elapsed(void)
 {
 	struct timespec end, ts_res;
 	double secs, res;
-
-	if (ddflags & C_NOINFO)
-		return;
 
 	if (clock_gettime(CLOCK_MONOTONIC, &end))
 		err(1, "clock_gettime");
@@ -72,6 +69,20 @@ summary(void)
 	res = ts_res.tv_sec + ts_res.tv_nsec * 1e-9;
 	if (secs < res)
 		secs = res;
+
+	return (secs);
+}
+
+void
+summary(void)
+{
+	double secs;
+
+	if (ddflags & C_NOINFO)
+		return;
+
+	secs = secs_elapsed();
+
 	(void)fprintf(stderr,
 	    "%ju+%ju records in\n%ju+%ju records out\n",
 	    st.in_full, st.in_part, st.out_full, st.out_part);

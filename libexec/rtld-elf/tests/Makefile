@@ -1,9 +1,8 @@
-# $FreeBSD: head/libexec/rtld-elf/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
-
-.include <bsd.own.mk>
+# $FreeBSD: head/libexec/rtld-elf/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 SUBDIR+=	libpythagoras target
 
+SUBDIR_DEPEND_target=	libpythagoras
 ATF_TESTS_C=	ld_library_pathfds
 
 .include <bsd.test.mk>

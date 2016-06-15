@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/mtest/mtest.c 244538 2012-12-21 15:54:13Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.sbin/mtest/mtest.c 297477 2016-04-01 01:35:52Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -396,6 +396,7 @@ process_cmd(char *cmd, int s, int s6, FILE *fp __unused)
 	while (isblank(*++line))
 		;	/* Skip whitespace. */
 
+	n = 0;
 	switch (*cmd) {
 	case '?':
 		usage();
@@ -611,7 +612,6 @@ process_cmd(char *cmd, int s, int s6, FILE *fp __unused)
 		}
 
 		/* First determine our current filter mode. */
-		n = 0;
 		if (getsourcefilter(af2sock(af, s, s6), ifindex,
 		    &su.sa, su.sa.sa_len, &fmode, &n, NULL) != 0) {
 			warn("getsourcefilter");

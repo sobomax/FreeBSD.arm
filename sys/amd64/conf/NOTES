@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/amd64/conf/NOTES 287117 2015-08-24 19:32:03Z cem $
+# $FreeBSD: head/sys/amd64/conf/NOTES 299010 2016-05-03 22:13:04Z pfg $
 #
 
 #
@@ -175,11 +175,6 @@ options 	AUTO_EOI_1
 
 options 	MAXMEM=(128*1024)
 #options 	BROKEN_KEYBOARD_RESET
-
-#
-# PCI bus & PCI options:
-#
-device		pci
 
 #
 # AGP GART support
@@ -514,8 +509,7 @@ device		virtio_balloon	# VirtIO Memory Balloon device
 device		virtio_random	# VirtIO Entropy device
 device		virtio_console	# VirtIO Console device
 
-# Microsoft Hyper-V enchancement support
-options 	HYPERV		# Hyper-V kernel infrastructure
+# Microsoft Hyper-V enhancement support
 device 		hyperv		# HyperV drivers
 
 # Xen HVM Guest Optimizations

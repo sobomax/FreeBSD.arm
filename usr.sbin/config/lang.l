@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)lang.l	8.1 (Berkeley) 6/6/93
- * $FreeBSD: head/usr.sbin/config/lang.l 263429 2014-03-20 17:30:09Z asomers $
+ * $FreeBSD: head/usr.sbin/config/lang.l 299893 2016-05-16 04:39:16Z truckman $
  */
 
 #include <assert.h>
@@ -267,7 +267,8 @@ include(const char *fname, int ateof)
 		asprintf(&fnamebuf, "../../conf/%s", fname);
 		if (fnamebuf != NULL) {
 			fp = fopen(fnamebuf, "r");
-			free(fnamebuf);
+			if (fp == NULL)
+				free(fnamebuf);
 		}
 	}
 	if (fp == NULL) {
@@ -275,10 +276,10 @@ include(const char *fname, int ateof)
 			asprintf(&fnamebuf, "%s/%s", ipath->path, fname);
 			if (fnamebuf != NULL) {
 				fp = fopen(fnamebuf, "r");
-				free(fnamebuf);
 			}
 			if (fp != NULL)
 				break;
+			free(fnamebuf);
 		}
 	}
 	if (fp == NULL) {

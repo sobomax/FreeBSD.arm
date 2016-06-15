@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbTarget/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/liblldbTarget/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -15,6 +15,7 @@ SRCS=	ABI.cpp \
 	InstrumentationRuntimeStopInfo.cpp \
 	JITLoader.cpp \
 	JITLoaderList.cpp \
+	Language.cpp \
 	LanguageRuntime.cpp \
 	Memory.cpp \
 	MemoryHistory.cpp \

@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_l2cap.c,v 1.16 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_l2cap.c 290491 2015-11-07 12:15:02Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_l2cap.c 301558 2016-06-07 16:57:13Z takawata $
  */
 
 #include <sys/param.h>
@@ -708,8 +708,15 @@ static int ng_btsocket_l2cap_process_l2ca_enc_change(struct ng_mesg *msg, ng_bts
 
 	op = (ng_l2cap_l2ca_enc_chg_op *)(msg->data);
 
+	mtx_lock(&ng_btsocket_l2cap_sockets_mtx);
+
 	pcb = ng_btsocket_l2cap_pcb_by_cid(&rt->src, op->lcid,
 					   op->idtype);
+	if (pcb == NULL) {
+		mtx_unlock(&ng_btsocket_l2cap_sockets_mtx);
+		return (ENOENT);
+	}
+
 	mtx_lock(&pcb->pcb_mtx);
 	pcb->encryption = op->result;
 	
@@ -729,6 +736,7 @@ static int ng_btsocket_l2cap_process_l2ca_enc_change(struct ng_mesg *msg, ng_bts
 		}
 	}
 	mtx_unlock(&pcb->pcb_mtx);
+	mtx_unlock(&ng_btsocket_l2cap_sockets_mtx);
 
 	return 0;
 }
@@ -1107,7 +1115,7 @@ ng_btsocket_l2cap_process_l2ca_discon_ind(struct ng_mesg *msg,
 
 	/* Look for the socket with given channel ID */
 	pcb = ng_btsocket_l2cap_pcb_by_cid(&rt->src, ip->lcid,
-					   NG_L2CAP_L2CA_IDTYPE_BREDR);
+					   ip->idtype);
 	if (pcb == NULL) {
 		mtx_unlock(&ng_btsocket_l2cap_sockets_mtx);
 		return (0);
@@ -2068,7 +2076,7 @@ ng_btsocket_l2cap_attach(struct socket *so, int proto, struct thread *td)
 	 * This is totally FUBAR. We could get here in two cases:
 	 *
 	 * 1) When user calls socket()
-	 * 2) When we need to accept new incomming connection and call 
+	 * 2) When we need to accept new incoming connection and call 
 	 *    sonewconn()
 	 *
 	 * In the first case we must acquire ng_btsocket_l2cap_sockets_mtx.
@@ -2602,7 +2610,7 @@ ng_btsocket_l2cap_send(struct socket *so, int flags, struct mbuf *m,
 		goto drop;
 	}
 
-	/* Check packet size agains outgoing (peer's incoming) MTU) */
+	/* Check packet size against outgoing (peer's incoming) MTU) */
 	if (m->m_pkthdr.len > pcb->omtu) {
 		NG_BTSOCKET_L2CAP_ERR(
 "%s: Packet too big, len=%d, omtu=%d\n", __func__, m->m_pkthdr.len, pcb->omtu);
@@ -2682,7 +2690,7 @@ ng_btsocket_l2cap_send2(ng_btsocket_l2cap_pcb_p pcb)
 		hdr->token, pcb->state);
 
 	/*
-	 * If we got here than we have successfuly creates new L2CAP 
+	 * If we got here than we have successfully creates new L2CAP 
 	 * data packet and now we can send it to the L2CAP layer
 	 */
 

@@ -35,7 +35,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/ifbridge.c 288305 2015-09-27 07:51:18Z ngie $";
+  "$FreeBSD: head/sbin/ifconfig/ifbridge.c 298246 2016-04-19 04:42:34Z araujo $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -185,22 +185,19 @@ bridge_interfaces(int s, const char *prefix)
 		printf(" path cost %u", req->ifbr_path_cost);
 
 		if (req->ifbr_ifsflags & IFBIF_STP) {
-			if (req->ifbr_proto <
-			    sizeof(stpproto) / sizeof(stpproto[0]))
+			if (req->ifbr_proto < nitems(stpproto))
 				printf(" proto %s", stpproto[req->ifbr_proto]);
 			else
 				printf(" <unknown proto %d>",
 				    req->ifbr_proto);
 
 			printf("\n%s", pad);
-			if (req->ifbr_role <
-			    sizeof(stproles) / sizeof(stproles[0]))
+			if (req->ifbr_role < nitems(stproles))
 				printf("role %s", stproles[req->ifbr_role]);
 			else
 				printf("<unknown role %d>",
 				    req->ifbr_role);
-			if (req->ifbr_state <
-			    sizeof(stpstates) / sizeof(stpstates[0]))
+			if (req->ifbr_state < nitems(stpstates))
 				printf(" state %s", stpstates[req->ifbr_state]);
 			else
 				printf(" <unknown state %d>",

@@ -23,7 +23,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/xen/xenbus/xenbusvar.h 255040 2013-08-29 19:52:18Z gibbs $
+ * $FreeBSD: head/sys/xen/xenbus/xenbusvar.h 294090 2016-01-15 14:34:31Z royger $
  */
 
 /**
@@ -82,7 +82,13 @@ enum {
 };
 
 /**
- * Simplified accessors for xenbus devices
+ * Simplified accessors for xenbus devices:
+ *
+ * xenbus_get_node
+ * xenbus_get_type
+ * xenbus_get_state
+ * xenbus_get_otherend_id
+ * xenbus_get_otherend_path
  */
 #define	XENBUS_ACCESSOR(var, ivar, type) \
 	__BUS_ACCESSOR(xenbus, var, XENBUS, ivar, type)

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_mbr.c 282465 2015-05-05 09:33:02Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_mbr.c 298354 2016-04-20 16:19:44Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -158,8 +158,7 @@ mbr_parse_type(const char *type, u_char *dp_typ)
 		*dp_typ = (u_char)lt;
 		return (0);
 	}
-	for (i = 0;
-	    i < sizeof(mbr_alias_match) / sizeof(mbr_alias_match[0]); i++) {
+	for (i = 0; i < nitems(mbr_alias_match); i++) {
 		alias = g_part_alias_name(mbr_alias_match[i].alias);
 		if (strcasecmp(type, alias) == 0) {
 			*dp_typ = mbr_alias_match[i].typ;
@@ -560,8 +559,7 @@ g_part_mbr_type(struct g_part_table *basetable, struct g_part_entry *baseentry,
 	int i;
 
 	entry = (struct g_part_mbr_entry *)baseentry;
-	for (i = 0;
-	    i < sizeof(mbr_alias_match) / sizeof(mbr_alias_match[0]); i++) {
+	for (i = 0; i < nitems(mbr_alias_match); i++) {
 		if (mbr_alias_match[i].typ == entry->ent.dp_typ)
 			return (g_part_alias_name(mbr_alias_match[i].alias));
 	}

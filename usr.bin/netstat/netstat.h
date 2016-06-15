@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)netstat.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD: head/usr.bin/netstat/netstat.h 287649 2015-09-11 04:37:01Z markj $
+ * $FreeBSD: head/usr.bin/netstat/netstat.h 296882 2016-03-15 00:19:30Z glebius $
  */
 
 #include <sys/cdefs.h>
@@ -63,8 +63,10 @@ extern int	unit;	/* unit number for above */
 
 extern int	live;	/* true if we are examining a live system */
 
-int	fetch_stats(const char *sysctlname, u_long addr, void *stats,
-	    size_t len, int (*kreadfn)(u_long, void *, size_t));
+typedef	int kreadfn_t(u_long, void *, size_t);
+int	fetch_stats(const char *, u_long, void *, size_t, kreadfn_t);
+int	fetch_stats_ro(const char *, u_long, void *, size_t, kreadfn_t);
+
 int	kread(u_long addr, void *buf, size_t size);
 uint64_t kread_counter(u_long addr);
 int	kread_counters(u_long addr, void *buf, size_t size);

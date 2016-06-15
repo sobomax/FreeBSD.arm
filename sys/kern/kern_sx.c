@@ -41,7 +41,7 @@
 #include "opt_no_adaptive_sx.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_sx.c 286166 2015-08-02 00:03:08Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_sx.c 301157 2016-06-01 18:32:20Z mjg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -544,7 +544,10 @@ _sx_xlock_hard(struct sx *sx, uintptr_t tid, int opts, const char *file,
 	all_time -= lockstat_nsecs(&sx->lock_object);
 	state = sx->sx_lock;
 #endif
-	while (!atomic_cmpset_acq_ptr(&sx->sx_lock, SX_LOCK_UNLOCKED, tid)) {
+	for (;;) {
+		if (sx->sx_lock == SX_LOCK_UNLOCKED &&
+		    atomic_cmpset_acq_ptr(&sx->sx_lock, SX_LOCK_UNLOCKED, tid))
+			break;
 #ifdef KDTRACE_HOOKS
 		spin_cnt++;
 #endif

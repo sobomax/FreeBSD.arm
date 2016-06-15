@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell SheevaPlug devices.
 #
-# $FreeBSD: head/sys/arm/conf/SHEEVAPLUG 289945 2015-10-25 22:00:56Z zbb $
+# $FreeBSD: head/sys/arm/conf/SHEEVAPLUG 294413 2016-01-20 11:57:11Z zbb $
 #
 #NO_UNIVERSE
 
@@ -81,6 +81,9 @@ device		da
 
 # NAND
 device		nand
+
+# GPIO
+device		gpio
 
 # Flattened Device Tree
 options 	FDT			# Configure using FDT/DTB data

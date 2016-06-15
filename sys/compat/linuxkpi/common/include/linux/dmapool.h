@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/dmapool.h 290135 2015-10-29 08:28:39Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/dmapool.h 298829 2016-04-30 00:53:10Z pfg $
  */
 #ifndef _LINUX_DMAPOOL_H_
 #define	_LINUX_DMAPOOL_H_
@@ -50,7 +50,7 @@ dma_pool_create(char *name, struct device *dev, size_t size,
 	pool = kmalloc(sizeof(*pool), GFP_KERNEL);
 	align--;
 	/*
-	 * XXX Eventually this could use a seperate allocf to honor boundary
+	 * XXX Eventually this could use a separate allocf to honor boundary
 	 * and physical address requirements of the device.
 	 */
 	pool->pool_zone = uma_zcreate(name, size, NULL, NULL, NULL, NULL,

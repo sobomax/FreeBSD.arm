@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ofw/openfirm.c 280848 2015-03-30 09:49:54Z zbb $");
+__FBSDID("$FreeBSD: head/sys/dev/ofw/openfirm.c 299477 2016-05-11 18:20:02Z gonzo $");
 
 #include "opt_platform.h"
 
@@ -394,6 +394,9 @@ OF_getencprop(phandle_t node, const char *propname, pcell_t *buf, size_t len)
 	KASSERT(len % 4 == 0, ("Need a multiple of 4 bytes"));
 
 	retval = OF_getprop(node, propname, buf, len);
+	if (retval <= 0)
+		return (retval);
+
 	for (i = 0; i < len/4; i++)
 		buf[i] = be32toh(buf[i]);
 
@@ -472,6 +475,13 @@ OF_getencprop_alloc(phandle_t package, const char *name, int elsz, void **buf)
 		cell[i] = be32toh(cell[i]);
 
 	return (retval);
+}
+
+/* Free buffer allocated by OF_getencprop_alloc or OF_getprop_alloc */
+void OF_prop_free(void *buf)
+{
+
+	free(buf, M_OFWPROP);
 }
 
 /* Get the next property of a package. */
@@ -599,10 +609,9 @@ OF_xref_from_node(phandle_t node)
 		return (xi->xref);
 	}
 
-	if (OF_getencprop(node, "phandle", &xref, sizeof(xref)) ==
-	    -1 && OF_getencprop(node, "ibm,phandle", &xref,
-	    sizeof(xref)) == -1 && OF_getencprop(node,
-	    "linux,phandle", &xref, sizeof(xref)) == -1)
+	if (OF_getencprop(node, "phandle", &xref, sizeof(xref)) == -1 &&
+	    OF_getencprop(node, "ibm,phandle", &xref, sizeof(xref)) == -1 &&
+	    OF_getencprop(node, "linux,phandle", &xref, sizeof(xref)) == -1)
 		return (node);
 	return (xref);
 }

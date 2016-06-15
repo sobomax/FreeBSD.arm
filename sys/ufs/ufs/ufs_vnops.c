@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_vnops.c 291936 2015-12-07 12:09:04Z kib $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_vnops.c 300142 2016-05-18 12:03:57Z kib $");
 
 #include "opt_quota.h"
 #include "opt_suiddir.h"
@@ -625,7 +625,8 @@ ufs_setattr(ap)
 			 */
 			return (0);
 		}
-		if ((error = UFS_TRUNCATE(vp, vap->va_size, IO_NORMAL,
+		if ((error = UFS_TRUNCATE(vp, vap->va_size, IO_NORMAL |
+		    ((vap->va_vaflags & VA_SYNC) != 0 ? IO_SYNC : 0),
 		    cred)) != 0)
 			return (error);
 	}

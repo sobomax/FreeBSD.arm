@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/common/metadata.c 273927 2014-11-01 10:50:18Z andrew $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/common/metadata.c 298309 2016-04-19 23:44:33Z pfg $");
 
 #include <stand.h>
 #include <sys/param.h>
@@ -349,7 +349,7 @@ md_load(char *args, vm_offset_t *modulep)
 
 	/* Do relocation fixup on metadata of each module. */
 	for (xp = file_findfile(NULL, NULL); xp != NULL; xp = xp->f_next) {
-		for (i = 0; i < sizeof mdt / sizeof mdt[0]; i++) {
+		for (i = 0; i < nitems(mdt); i++) {
 			md = file_findmetadata(xp, mdt[i]);
 			if (md) {
 				bcopy(md->md_data, &vaddr, sizeof vaddr);

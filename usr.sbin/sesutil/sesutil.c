@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/sesutil/sesutil.c 292122 2015-12-11 21:11:02Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/sesutil/sesutil.c 298382 2016-04-20 21:37:32Z bapt $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/sesutil/sesutil.c 292122 2015-12-11 21:11:02Z 
 #include <string.h>
 #include <unistd.h>
 
-#include <cam/scsi/scsi_all.h>
 #include <cam/scsi/scsi_enc.h>
 
 #include "eltsub.h"
@@ -273,6 +272,7 @@ sesled(int argc, char **argv, bool setfault)
 				}
 			}
 		}
+		free(objp);
 		close(fd);
 	}
 	globfree(&g);
@@ -302,6 +302,7 @@ static int
 objmap(int argc, char **argv __unused)
 {
 	struct sbuf *extra;
+	encioc_string_t stri;
 	encioc_elm_devnames_t e_devname;
 	encioc_elm_status_t e_status;
 	encioc_elm_desc_t e_desc;
@@ -310,6 +311,7 @@ objmap(int argc, char **argv __unused)
 	int fd;
 	unsigned int j, nobj;
 	size_t i;
+	char str[32];
 
 	if (argc != 1) {
 		usage(stderr, "map");
@@ -355,6 +357,15 @@ objmap(int argc, char **argv __unused)
 		}
 
 		printf("%s:\n", g.gl_pathv[i] + 5);
+		stri.bufsiz = sizeof(str);
+		stri.buf = &str[0];
+		if (ioctl(fd, ENCIOC_GETENCNAME, (caddr_t) &stri) == 0)
+			printf("\tEnclosure Name: %s\n", stri.buf);
+		stri.bufsiz = sizeof(str);
+		stri.buf = &str[0];
+		if (ioctl(fd, ENCIOC_GETENCID, (caddr_t) &stri) == 0)
+			printf("\tEnclosure ID: %s\n", stri.buf);
+
 		for (j = 0; j < nobj; j++) {
 			/* Get the status of the element */
 			memset(&e_status, 0, sizeof(e_status));
@@ -414,6 +425,7 @@ objmap(int argc, char **argv __unused)
 			sbuf_delete(extra);
 			free(e_devname.elm_devnames);
 		}
+		free(e_ptr);
 		close(fd);
 	}
 	globfree(&g);

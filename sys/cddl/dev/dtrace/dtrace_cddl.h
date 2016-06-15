@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_cddl.h 267929 2014-06-26 19:38:16Z rpaulo $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/dtrace_cddl.h 292388 2015-12-17 00:00:27Z markj $
  *
  */
 
@@ -83,8 +83,8 @@ typedef struct kdtrace_thread {
 	uintptr_t	td_dtrace_regv;
 #endif
 	u_int64_t	td_hrtime;	/* Last time on cpu. */
-	int		td_errno;	/* Syscall return value. */
 	void		*td_dtrace_sscr; /* Saved scratch space location. */
+	void		*td_systrace_args; /* syscall probe arguments. */
 } kdtrace_thread_t;
 
 /*
@@ -110,6 +110,7 @@ typedef struct kdtrace_thread {
 #define	t_dtrace_astpc	td_dtrace->td_dtrace_astpc
 #define	t_dtrace_regv	td_dtrace->td_dtrace_regv
 #define	t_dtrace_sscr	td_dtrace->td_dtrace_sscr
+#define	t_dtrace_systrace_args	td_dtrace->td_systrace_args
 #define	p_dtrace_helpers	p_dtrace->p_dtrace_helpers
 #define	p_dtrace_count	p_dtrace->p_dtrace_count
 #define	p_dtrace_probes	p_dtrace->p_dtrace_probes

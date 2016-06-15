@@ -38,7 +38,7 @@
  * - An example of how to use the asynchronous pass(4) driver interface.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/camdd/camdd.c 291724 2015-12-03 22:07:01Z ken $");
+__FBSDID("$FreeBSD: head/usr.sbin/camdd/camdd.c 300547 2016-05-24 00:57:11Z truckman $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -446,7 +446,7 @@ static int need_status = 0;
 #endif
 
 
-/* Generically usefull offsets into the peripheral private area */
+/* Generically useful offsets into the peripheral private area */
 #define ppriv_ptr0 periph_priv.entries[0].ptr
 #define ppriv_ptr1 periph_priv.entries[1].ptr
 #define ppriv_field0 periph_priv.entries[0].field
@@ -1079,9 +1079,7 @@ camdd_probe_file(int fd, struct camdd_io_opts *io_opts, int retry_count,
 		retval = fstat(fd, &file_dev->sb);
 		if (retval != 0) {
 			warn("Cannot stat %s", dev->device_name);
-			goto bailout;
-			camdd_free_dev(dev);
-			dev = NULL;
+			goto bailout_error;
 		}
 		if (S_ISREG(file_dev->sb.st_mode)) {
 			file_dev->file_type = CAMDD_FILE_REG;
@@ -1276,7 +1274,6 @@ camdd_probe_pass(struct cam_device *cam_dev, struct camdd_io_opts *io_opts,
 	struct camdd_dev_pass *pass_dev;
 	struct kevent ke;
 	int scsi_dev_type;
-	int retval;
 
 	dev = NULL;
 
@@ -1308,8 +1305,7 @@ camdd_probe_pass(struct cam_device *cam_dev, struct camdd_io_opts *io_opts,
 		goto bailout;
 	}
 
-	bzero(&(&ccb->ccb_h)[1],
-	      sizeof(struct ccb_scsiio) - sizeof(struct ccb_hdr));
+	CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->csio);
 
 	scsi_read_capacity(&ccb->csio,
 			   /*retries*/ probe_retry_count,
@@ -1336,7 +1332,6 @@ camdd_probe_pass(struct cam_device *cam_dev, struct camdd_io_opts *io_opts,
 
 	if ((ccb->ccb_h.status & CAM_STATUS_MASK) != CAM_REQ_CMP) {
 		cam_error_print(cam_dev, ccb, CAM_ESF_ALL, CAM_EPF_ALL, stderr);
-		retval = 1;
 		goto bailout;
 	}
 
@@ -1371,11 +1366,8 @@ camdd_probe_pass(struct cam_device *cam_dev, struct camdd_io_opts *io_opts,
 
 	if (cam_send_ccb(cam_dev, ccb) < 0) {
 		warn("error sending READ CAPACITY (16) command");
-
 		cam_error_print(cam_dev, ccb, CAM_ESF_ALL,
 				CAM_EPF_ALL, stderr);
-
-		retval = 1;
 		goto bailout;
 	}
 
@@ -1388,9 +1380,13 @@ camdd_probe_pass(struct cam_device *cam_dev, struct camdd_io_opts *io_opts,
 	block_len = scsi_4btoul(rcaplong.length);
 
 rcap_done:
+	if (block_len == 0) {
+		warnx("Sector size for %s%u is 0, cannot continue",
+		    cam_dev->device_name, cam_dev->dev_unit_num);
+		goto bailout_error;
+	}
 
-	bzero(&(&ccb->ccb_h)[1],
-	      sizeof(struct ccb_scsiio) - sizeof(struct ccb_hdr));
+	CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->cpi);
 
 	ccb->ccb_h.func_code = XPT_PATH_INQ;
 	ccb->ccb_h.flags = CAM_DIR_NONE;
@@ -2441,8 +2437,7 @@ camdd_pass_run(struct camdd_dev *dev)
 	data = &buf->buf_type_spec.data;
 
 	ccb = &data->ccb;
-	bzero(&(&ccb->ccb_h)[1],
-	      sizeof(struct ccb_scsiio) - sizeof(struct ccb_hdr));
+	CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->csio);
 
 	/*
 	 * In almost every case the number of blocks should be the device

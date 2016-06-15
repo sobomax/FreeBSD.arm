@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_rfcomm.c,v 1.28 2003/09/14 23:29:06 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_rfcomm.c 285244 2015-07-07 15:56:51Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_rfcomm.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 #include <sys/param.h>
@@ -972,7 +972,7 @@ ng_btsocket_rfcomm_send(struct socket *so, int flags, struct mbuf *m,
 	}
 
 	/* Put the packet on the socket's send queue and wakeup RFCOMM task */
-	sbappend(&pcb->so->so_snd, m);
+	sbappend(&pcb->so->so_snd, m, flags);
 	m = NULL;
 	
 	if (!(pcb->flags & NG_BTSOCKET_RFCOMM_DLC_SENDING)) {
@@ -1475,7 +1475,7 @@ ng_btsocket_rfcomm_session_accept(ng_btsocket_rfcomm_session_p s0)
 			s->state = NG_BTSOCKET_RFCOMM_SESSION_CONNECTED;
 
 			/*
-			 * Adjust MTU on incomming connection. Reserve 5 bytes:
+			 * Adjust MTU on incoming connection. Reserve 5 bytes:
 			 * RFCOMM frame header, one extra byte for length and 
 			 * one extra byte for credits.
 			 */
@@ -2396,7 +2396,7 @@ ng_btsocket_rfcomm_receive_uih(ng_btsocket_rfcomm_session_p s, int dlci,
 			error = ENOBUFS;
 		} else {
 			/* Append packet to the socket receive queue */
-			sbappend(&pcb->so->so_rcv, m0);
+			sbappend(&pcb->so->so_rcv, m0, 0);
 			m0 = NULL;
 
 			sorwakeup(pcb->so);
@@ -2881,7 +2881,7 @@ ng_btsocket_rfcomm_receive_pn(ng_btsocket_rfcomm_session_p s, struct mbuf *m0)
 
 		mtx_unlock(&pcb->pcb_mtx);
 	} else if (RFCOMM_CR(hdr->type)) {
-		/* PN request to non-existing dlci - incomming connection */
+		/* PN request to non-existing dlci - incoming connection */
 		pcb = ng_btsocket_rfcomm_connect_ind(s,
 				RFCOMM_SRVCHANNEL(pn->dlci));
 		if (pcb != NULL) {

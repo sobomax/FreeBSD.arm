@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 298813 2016-04-29 21:25:05Z pfg $");
 
 #include "opt_inet6.h"
 #include "opt_route.h"
@@ -38,11 +38,14 @@ __FBSDID("$FreeBSD: head/sys/netgraph/netflow/ng_netflow.c 283291 2015-05-22 17:
 #include <sys/systm.h>
 #include <sys/counter.h>
 #include <sys/kernel.h>
+#include <sys/ktr.h>
 #include <sys/limits.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/socket.h>
 #include <sys/syslog.h>
 #include <sys/ctype.h>
+#include <vm/uma.h>
 
 #include <net/if.h>
 #include <net/ethernet.h>
@@ -606,7 +609,7 @@ ng_netflow_rcvdata (hook_p hook, item_p item)
 		 */
 		log(LOG_ERR, "ng_netflow: incoming data on export hook!\n");
 		ERROUT(EINVAL);
-	};
+	}
 
 	if (hook == iface->hook) {
 		if ((iface->info.conf & NG_NETFLOW_CONF_INGRESS) == 0)
@@ -823,7 +826,7 @@ ng_netflow_rcvdata (hook_p hook, item_p item)
 			goto bypass;
 
 		/*
-		 * Loop thru IPv6 extended headers to get upper
+		 * Loop through IPv6 extended headers to get upper
 		 * layer header / frag.
 		 */
 		for (;;) {

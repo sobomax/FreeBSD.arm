@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)rpc_parse.c 1.8 89/02/22 (C) 1987 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_parse.c 152398 2005-11-13 21:17:24Z dwmalone $");
+__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_parse.c 298089 2016-04-15 22:31:22Z pfg $");
 
 /*
  * rpc_parse.c, Parser for the RPC protocol compiler
@@ -329,7 +329,7 @@ def_union(definition *defp)
 				*tailp = cases;
 				tailp = &cases->next;
 				cases = XALLOC(case_list);
-			};
+			}
 
 		get_declaration(&dec, DEF_UNION);
 		cases->case_decl = dec;

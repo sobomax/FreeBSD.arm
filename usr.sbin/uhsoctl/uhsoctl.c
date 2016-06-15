@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/uhsoctl/uhsoctl.c 281143 2015-04-06 09:42:23Z glebius $
+ * $FreeBSD: head/usr.sbin/uhsoctl/uhsoctl.c 292585 2015-12-22 05:57:23Z ngie $
  */
 
 #include <sys/types.h>
@@ -452,6 +452,7 @@ set_nameservers(struct ctx *ctx, const char *respath, int ns, ...)
 			free(ctx->ns[i]);
 		}
 		free(ctx->ns);
+		ctx->ns = NULL;
 	}
 
 	fd = open(respath, O_RDWR | O_CREAT | O_NOFOLLOW, 0666);

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.2 (Berkeley) 4/4/94
- * $FreeBSD: head/libexec/ftpd/extern.h 262136 2014-02-17 22:27:32Z brueffer $
+ * $FreeBSD: head/libexec/ftpd/extern.h 299356 2016-05-10 11:12:31Z bapt $
  */
 
 #include <sys/types.h>
@@ -42,7 +42,7 @@ void	fatalerror(char *);
 void    ftpd_logwtmp(char *, char *, struct sockaddr *addr);
 int	ftpd_pclose(FILE *);
 FILE   *ftpd_popen(char *, char *);
-int	getline(char *, int, FILE *);
+int	get_line(char *, int, FILE *);
 void	lreply(int, const char *, ...) __printflike(2, 3);
 void	makedir(char *);
 void	nack(char *);

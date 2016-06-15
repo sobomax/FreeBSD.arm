@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/mii_physubr.c 281821 2015-04-21 09:39:48Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/mii_physubr.c 297793 2016-04-10 23:07:00Z pfg $");
 
 /*
  * Subroutines common to all PHYs.
@@ -154,7 +154,7 @@ mii_phy_setmedia(struct mii_softc *sc)
 		case (IFM_FDX | IFM_FLOW):
 			index = MII_MEDIA_10_T_FDX;
 			break;
-		};
+		}
 		break;
 
 	case IFM_100_TX:

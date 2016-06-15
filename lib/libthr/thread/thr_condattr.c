@@ -25,9 +25,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_condattr.c 208503 2010-05-24 13:44:39Z deischen $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_condattr.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -105,20 +106,21 @@ _pthread_condattr_setclock(pthread_condattr_t *attr, clockid_t clock_id)
 int
 _pthread_condattr_getpshared(const pthread_condattr_t *attr, int *pshared)
 {
+
 	if (attr == NULL || *attr == NULL)
 		return (EINVAL);
-
-	*pshared = PTHREAD_PROCESS_PRIVATE;
+	*pshared = (*attr)->c_pshared;
 	return (0);
 }
 
 int
 _pthread_condattr_setpshared(pthread_condattr_t *attr, int pshared)
 {
-	if (attr == NULL || *attr == NULL)
-		return (EINVAL);
 
-	if  (pshared != PTHREAD_PROCESS_PRIVATE)
+	if (attr == NULL || *attr == NULL ||
+	    (pshared != PTHREAD_PROCESS_PRIVATE &&
+	    pshared != PTHREAD_PROCESS_SHARED))
 		return (EINVAL);
+	(*attr)->c_pshared = pshared;
 	return (0);
 }

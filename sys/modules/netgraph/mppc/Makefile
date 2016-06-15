@@ -1,14 +1,13 @@
 # $Whistle: Makefile,v 1.1 1999/12/08 20:20:39 archie Exp $
-# $FreeBSD: head/sys/modules/netgraph/mppc/Makefile 161283 2006-08-14 13:28:53Z des $
+# $FreeBSD: head/sys/modules/netgraph/mppc/Makefile 301549 2016-06-07 15:07:00Z pfg $
 
 KMOD=	ng_mppc
 SRCS= 	ng_mppc.c opt_netgraph.h
 
-NETGRAPH_MPPC_COMPRESSION?=	0
+NETGRAPH_MPPC_COMPRESSION?=	1
 NETGRAPH_MPPC_ENCRYPTION?=	1
 
 .if ${NETGRAPH_MPPC_COMPRESSION} > 0
-# XXX These files don't exist yet, but hopefully someday they will...
 .PATH: ${.CURDIR}/../../../net
 SRCS+=	mppcc.c mppcd.c
 .endif

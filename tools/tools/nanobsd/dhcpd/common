@@ -1,4 +1,4 @@
-# $FreeBSD: head/tools/tools/nanobsd/dhcpd/common 269984 2014-08-14 16:17:30Z imp $
+# $FreeBSD: head/tools/tools/nanobsd/dhcpd/common 298881 2016-05-01 16:20:14Z pfg $
 
 #-
 # Copyright (c) 2014 Warner Losh. All Rights Reserved.
@@ -229,7 +229,7 @@ add_port () {
     local port_path=$1
     local port=`echo $1 | sed -e 's/\//_/'`
     shift
-    # Check if package allready exist
+    # Check if package already exist
     # Need to:
     # 1. check ARCH of this package!
     # 2. Add a trap

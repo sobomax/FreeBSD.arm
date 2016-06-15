@@ -1,6 +1,6 @@
 # Here are some example (t)csh options and configurations that you may find interesting
 #
-# $FreeBSD: head/share/examples/csh/dot.cshrc 284929 2015-06-29 14:41:19Z brueffer $
+# $FreeBSD: head/share/examples/csh/dot.cshrc 298515 2016-04-23 16:19:34Z lme $
 #
 
 # Sets SSH_AUTH_SOCK to the user's ssh-agent socket path if running
@@ -98,7 +98,7 @@ complete rsync	"c,*:/,F:/," \
 complete scp	"c,*:/,F:/," \
       		"c,*:,F:$HOME," \
       		'c/*@/$hosts/:/'
-complete service  	'c/-/(e l r v)/' 'p/1/`service -l`/' 'n/*/(start stop reload restart status rcvar onestart onestop)/'
+complete service  	'c/-/(e l r v)/' 'p/1/`service -l`/' 'n/*/(start stop reload restart status rcvar describe extracommands onestart onestop oneextracommands)/'
 complete svn		'C@file:///@`'"${HOME}/etc/tcsh/complete.d/svn"'`@@' \
       		'n@ls@(file:/// svn+ssh:// svn://)@@' \
       		'n@help@(add blame cat checkout cleanup commit copy delete export help import info list ls lock log merge mkdir move propdel \

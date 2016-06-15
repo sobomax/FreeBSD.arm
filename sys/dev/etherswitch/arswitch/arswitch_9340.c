@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_9340.c 268564 2014-07-12 06:23:42Z rpaulo $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_9340.c 292738 2015-12-26 02:31:39Z adrian $
  */
 
 #include <sys/param.h>
@@ -50,7 +50,7 @@
 #include <dev/iicbus/iicbus.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/etherswitch/etherswitch.h>
 
@@ -154,10 +154,10 @@ ar9340_hw_global_setup(struct arswitch_softc *sc)
 		arswitch_modifyreg(sc->sc_dev, AR934X_REG_OPER_MODE1,
 		    AR934X_REG_OPER_MODE1_PHY4_MII_EN,
 		    AR934X_REG_OPER_MODE1_PHY4_MII_EN);
-		sc->info.es_nports = 4;
+		sc->info.es_nports = 5;
 	} else {
 		device_printf(sc->sc_dev, "%s: PHY4 - Local\n", __func__);
-		sc->info.es_nports = 5;
+		sc->info.es_nports = 6;
 	}
 
 	/* Settle time */

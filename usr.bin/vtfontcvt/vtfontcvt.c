@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/vtfontcvt/vtfontcvt.c 287340 2015-09-01 01:35:43Z emaste $");
+__FBSDID("$FreeBSD: head/usr.bin/vtfontcvt/vtfontcvt.c 296920 2016-03-15 21:32:46Z emaste $");
 
 #include <sys/types.h>
 #include <sys/fnv_hash.h>
@@ -315,12 +315,13 @@ parse_hex(FILE *fp, unsigned int map_idx)
 			if (bytes != NULL)
 				errx(1, "malformed input: Width tag after font data");
 			set_width(atoi(ln + 9));
-		} else if (sscanf(ln, "%4x:", &curchar)) {
+		} else if (sscanf(ln, "%6x:", &curchar)) {
 			if (bytes == NULL) {
 				bytes = xmalloc(wbytes * height);
 				bytes_r = xmalloc(wbytes * height);
 			}
-			p = ln + 5;
+			/* ln is guaranteed to have a colon here. */
+			p = strchr(ln, ':') + 1;
 			chars_per_row = strlen(p) / height;
 			dwidth = width;
 			if (chars_per_row / 2 > (width + 7) / 8)

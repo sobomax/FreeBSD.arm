@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/amd64/fpu.c 285290 2015-07-08 19:26:36Z jmg $");
+__FBSDID("$FreeBSD: head/sys/amd64/amd64/fpu.c 294312 2016-01-19 08:08:08Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -318,13 +318,15 @@ fpuinitstate(void *arg __unused)
 		cpu_mxcsr_mask = 0xFFBF;
 
 	/*
-	 * The fninit instruction does not modify XMM registers.  The
-	 * fpusave call dumped the garbage contained in the registers
-	 * after reset to the initial state saved.  Clear XMM
-	 * registers file image to make the startup program state and
-	 * signal handler XMM register content predictable.
+	 * The fninit instruction does not modify XMM registers or x87
+	 * registers (MM/ST).  The fpusave call dumped the garbage
+	 * contained in the registers after reset to the initial state
+	 * saved.  Clear XMM and x87 registers file image to make the
+	 * startup program state and signal handler XMM/x87 register
+	 * content predictable.
 	 */
-	bzero(&fpu_initialstate->sv_xmm[0], sizeof(struct xmmacc));
+	bzero(fpu_initialstate->sv_fp, sizeof(fpu_initialstate->sv_fp));
+	bzero(fpu_initialstate->sv_xmm, sizeof(fpu_initialstate->sv_xmm));
 
 	/*
 	 * Create a table describing the layout of the CPU Extended
@@ -375,7 +377,7 @@ fpuexit(struct thread *td)
 }
 
 int
-fpuformat()
+fpuformat(void)
 {
 
 	return (_MC_FPFMT_XMM);
@@ -661,7 +663,8 @@ fpudna(void)
 		 * fpu_initialstate, to ignite the XSAVEOPT
 		 * tracking engine.
 		 */
-		bcopy(fpu_initialstate, curpcb->pcb_save, cpu_max_ext_state_size);
+		bcopy(fpu_initialstate, curpcb->pcb_save,
+		    cpu_max_ext_state_size);
 		fpurestore(curpcb->pcb_save);
 		if (curpcb->pcb_initial_fpucw != __INITIAL_FPUCW__)
 			fldcw(curpcb->pcb_initial_fpucw);
@@ -676,7 +679,7 @@ fpudna(void)
 }
 
 void
-fpudrop()
+fpudrop(void)
 {
 	struct thread *td;
 

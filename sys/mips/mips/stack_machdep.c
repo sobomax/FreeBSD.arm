@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/stack_machdep.c 287645 2015-09-11 03:54:37Z markj $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/stack_machdep.c 295881 2016-02-22 09:04:36Z skra $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -35,7 +35,6 @@ __FBSDID("$FreeBSD: head/sys/mips/mips/stack_machdep.c 287645 2015-09-11 03:54:3
 
 #include <machine/mips_opcode.h>
 
-#include <machine/param.h>
 #include <machine/pcb.h>
 #include <machine/regnum.h>
 

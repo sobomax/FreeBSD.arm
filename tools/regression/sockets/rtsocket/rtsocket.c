@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/rtsocket/rtsocket.c 281392 2015-04-11 02:59:45Z ngie $
+ * $FreeBSD: head/tools/regression/sockets/rtsocket/rtsocket.c 294125 2016-01-16 02:02:50Z ngie $
  */
 
 /*
@@ -52,7 +52,7 @@ main(void)
 		    sock);
 	}
 
-	if (errno != EPROTONOSUPPORT)
+	if (errno != EPROTOTYPE)
 		err(-1, "socket(PF_ROUTE, SOCK_STREAM, 0)");
 
 	sock = socket(PF_ROUTE, SOCK_DGRAM, 0);
@@ -62,7 +62,7 @@ main(void)
 		    sock);
 	}
 
-	if (errno != EPROTONOSUPPORT)
+	if (errno != EPROTOTYPE)
 		err(-1, "socket(PF_ROUTE, SOCK_DGRAM, 0)");
 
 	sock = socket(PF_ROUTE, SOCK_RAW, 0);
@@ -77,7 +77,7 @@ main(void)
 		    "socketpair(PF_ROUTE, SOCK_STREAM, 0, socks) success");
 	}
 
-	if (errno != EPROTONOSUPPORT)
+	if (errno != EPROTOTYPE)
 		err(-1, "socketpair(PF_ROUTE, SOCK_STREAM, 0, socks)");
 
 	if (socketpair(PF_ROUTE, SOCK_DGRAM, 0, socks) == 0) {
@@ -87,7 +87,7 @@ main(void)
 		    "socketpair(PF_ROUTE, SOCK_DGRAM, 0, socks) success");
 	}
 
-	if (errno != EPROTONOSUPPORT)
+	if (errno != EPROTOTYPE)
 		err(-1, "socketpair(PF_ROUTE, SOCK_DGRAM, 0, socks)");
 
 	if (socketpair(PF_ROUTE, SOCK_RAW, 0, socks) == 0) {

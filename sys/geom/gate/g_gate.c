@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/gate/g_gate.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/geom/gate/g_gate.c 298070 2016-04-15 16:18:07Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -945,7 +945,7 @@ g_gate_modevent(module_t mod, int type, void *data)
 		}
 		mtx_unlock(&g_gate_units_lock);
 		mtx_destroy(&g_gate_units_lock);
-		if (status_dev != 0)
+		if (status_dev != NULL)
 			destroy_dev(status_dev);
 		free(g_gate_units, M_GATE);
 		break;

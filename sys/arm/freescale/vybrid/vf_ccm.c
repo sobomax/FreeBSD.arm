@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_ccm.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_ccm.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -379,15 +379,15 @@ set_clock(struct ccm_softc *sc, char *name)
 				reg &= ~(clk->sel_mask << clk->sel_shift);
 				reg |= (clk->sel_val << clk->sel_shift);
 				WRITE4(sc, clk->sel_reg, reg);
-			};
+			}
 
 			reg = READ4(sc, clk->reg);
 			reg |= clk->enable_reg;
 			reg &= ~(clk->div_mask << clk->div_shift);
 			reg |= (clk->div_val << clk->div_shift);
 			WRITE4(sc, clk->reg, reg);
-		};
-	};
+		}
+	}
 
 	return (0);
 }
@@ -425,8 +425,8 @@ ccm_fdt_set(struct ccm_softc *sc)
 				fdt_config += strlen(name) + 1;
 				len -= strlen(name) + 1;
 				set_clock(sc, name);
-			};
-		};
+			}
+		}
 
 		if (OF_peer(child) == 0) {
 			/* No more siblings. */

@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/iwi/if_iwireg.h 263920 2014-03-29 19:53:04Z adrian $	*/
+/*	$FreeBSD: head/sys/dev/iwi/if_iwireg.h 298955 2016-05-03 03:41:25Z pfg $	*/
 
 /*-
  * Copyright (c) 2004, 2005
@@ -481,7 +481,7 @@ struct iwi_scan {
 #define IWI_SCAN_TYPES			5
 
 /* scan result codes */
-#define IWI_SCAN_COMPLETED		1 /* scan compeleted sucessfully */
+#define	IWI_SCAN_COMPLETED		1 /* scan compeleted successfully */
 #define IWI_SCAN_ABORTED		2 /* scan was aborted by the driver */
 
 /* structure for command IWI_CMD_SCAN_EXT */

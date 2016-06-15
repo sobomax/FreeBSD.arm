@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/net/netdb_private.h 288015 2015-09-20 04:20:31Z rodrigc $
+ * $FreeBSD: head/lib/libc/net/netdb_private.h 292719 2015-12-25 10:49:40Z ume $
  */
 
 #ifndef _NETDB_PRIVATE_H_
@@ -133,8 +133,6 @@ void _endhostdnsent(void);
 void _endhosthtent(struct hostent_data *);
 void _endnetdnsent(void);
 void _endnethtent(struct netent_data *);
-struct hostent *_gethostbynisaddr(const void *, socklen_t, int);
-struct hostent *_gethostbynisname(const char *, int);
 void _map_v4v6_address(const char *, char *);
 void _map_v4v6_hostent(struct hostent *, char **, char *);
 void _sethostdnsent(int);

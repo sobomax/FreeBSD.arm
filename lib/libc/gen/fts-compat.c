@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/fts-compat.c 288351 2015-09-29 04:47:31Z delphij $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/fts-compat.c 300660 2016-05-25 06:55:53Z truckman $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -114,7 +114,6 @@ static const char *ufslike_filesystems[] = {
 	"ufs",
 	"zfs",
 	"nfs",
-	"nfs4",
 	"ext2fs",
 	0
 };
@@ -574,8 +573,10 @@ __fts_children_44bsd(FTS *sp, int instr)
 	if ((fd = _open(".", O_RDONLY | O_CLOEXEC, 0)) < 0)
 		return (NULL);
 	sp->fts_child = fts_build(sp, instr);
-	if (fchdir(fd))
+	if (fchdir(fd)) {
+		(void)_close(fd);
 		return (NULL);
+	}
 	(void)_close(fd);
 	return (sp->fts_child);
 }

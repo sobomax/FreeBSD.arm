@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 286227 2015-08-03 12:13:54Z jch $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_timewait.c 296881 2016-03-15 00:15:10Z glebius $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -660,6 +660,7 @@ tcp_tw_2msl_stop(struct tcptw *tw, int reuse)
 
 	if (!reuse)
 		uma_zfree(V_tcptw_zone, tw);
+	TCPSTATES_DEC(TCPS_TIME_WAIT);
 }
 
 struct tcptw *

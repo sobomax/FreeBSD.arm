@@ -1,5 +1,5 @@
 # AM335x generic configuration
-#$FreeBSD: head/sys/arm/ti/am335x/std.am335x 291110 2015-11-20 21:49:46Z imp $
+#$FreeBSD: head/sys/arm/ti/am335x/std.am335x 295885 2016-02-22 11:47:28Z skra $
 files		"../ti/am335x/files.am335x"
 include		"../ti/std.ti"
 
@@ -7,5 +7,3 @@ options		KERNVIRTADDR=0xc0200000		# Used in ldscript.arm
 makeoptions	KERNVIRTADDR=0xc0200000
 
 options		SOC_TI_AM335X
-
-options		ARM_L2_PIPT

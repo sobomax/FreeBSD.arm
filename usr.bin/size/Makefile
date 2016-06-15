@@ -1,8 +1,8 @@
-# $FreeBSD: head/usr.bin/size/Makefile 275373 2014-12-01 17:49:42Z emaste $
+# $FreeBSD: head/usr.bin/size/Makefile 298401 2016-04-21 12:58:29Z emaste $
 
 .include <src.opts.mk>
 
-ELFTCDIR=	${.CURDIR}/../../contrib/elftoolchain
+ELFTCDIR=	${SRCTOP}/contrib/elftoolchain
 SIZEDIR=	${ELFTCDIR}/size
 
 .PATH: ${SIZEDIR}

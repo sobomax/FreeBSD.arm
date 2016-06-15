@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/strtol.c 165906 2007-01-09 01:02:06Z imp $");
+__FBSDID("$FreeBSD: head/lib/libstand/strtol.c 298210 2016-04-18 14:45:56Z pfg $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)strtol.c	8.1 (Berkeley) 6/4/93";
@@ -126,7 +126,7 @@ strtol(nptr, endptr, base)
 		errno = ERANGE;
 	} else if (neg)
 		acc = -acc;
-	if (endptr != 0)
+	if (endptr != NULL)
 		*endptr = (char *)(any ? s - 1 : nptr);
 	return (acc);
 }

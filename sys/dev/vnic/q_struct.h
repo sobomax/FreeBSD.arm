@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/q_struct.h 289551 2015-10-18 22:02:58Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/q_struct.h 296039 2016-02-25 14:29:57Z zbb $
  *
  */
 
@@ -565,25 +565,28 @@ struct sq_hdr_subdesc {
 	uint64_t    subdesc_cnt:8;
 	uint64_t    csum_l4:2;
 	uint64_t    csum_l3:1;
-	uint64_t    rsvd0:5;
+	uint64_t    csum_inner_l4:2;
+	uint64_t    csum_inner_l3:1;
+	uint64_t    rsvd0:2;
 	uint64_t    l4_offset:8;
 	uint64_t    l3_offset:8;
 	uint64_t    rsvd1:4;
 	uint64_t    tot_len:20; /* W0 */
 
-	uint64_t    tso_sdc_cont:8;
-	uint64_t    tso_sdc_first:8;
-	uint64_t    tso_l4_offset:8;
-	uint64_t    tso_flags_last:12;
-	uint64_t    tso_flags_first:12;
-	uint64_t    rsvd2:2;
+	uint64_t    rsvd2:24;
+	uint64_t    inner_l4_offset:8;
+	uint64_t    inner_l3_offset:8;
+	uint64_t    tso_start:8;
+	uint64_t    rsvd3:2;
 	uint64_t    tso_max_paysize:14; /* W1 */
 #elif defined(__LITTLE_ENDIAN_BITFIELD)
 	uint64_t    tot_len:20;
 	uint64_t    rsvd1:4;
 	uint64_t    l3_offset:8;
 	uint64_t    l4_offset:8;
-	uint64_t    rsvd0:5;
+	uint64_t    rsvd0:2;
+	uint64_t    csum_inner_l3:1;
+	uint64_t    csum_inner_l4:2;
 	uint64_t    csum_l3:1;
 	uint64_t    csum_l4:2;
 	uint64_t    subdesc_cnt:8;
@@ -594,12 +597,11 @@ struct sq_hdr_subdesc {
 	uint64_t    subdesc_type:4; /* W0 */
 
 	uint64_t    tso_max_paysize:14;
-	uint64_t    rsvd2:2;
-	uint64_t    tso_flags_first:12;
-	uint64_t    tso_flags_last:12;
-	uint64_t    tso_l4_offset:8;
-	uint64_t    tso_sdc_first:8;
-	uint64_t    tso_sdc_cont:8; /* W1 */
+	uint64_t    rsvd3:2;
+	uint64_t    tso_start:8;
+	uint64_t    inner_l3_offset:8;
+	uint64_t    inner_l4_offset:8;
+	uint64_t    rsvd2:24;
 #endif
 };
 

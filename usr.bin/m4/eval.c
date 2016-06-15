@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/m4/eval.c 291128 2015-11-21 11:05:38Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/m4/eval.c 298879 2016-05-01 16:13:05Z pfg $");
 
 
 /*
@@ -895,7 +895,7 @@ dosub(const char *argv[], int argc)
  * function of ICON language. Within mapvec, we replace every character 
  * of "from" with the corresponding character in "to". 
  * If "to" is shorter than "from", than the corresponding entries are null, 
- * which means that those characters dissapear altogether. 
+ * which means that those characters disappear altogether. 
  */
 static void
 map(char *dest, const char *src, const char *from, const char *to)

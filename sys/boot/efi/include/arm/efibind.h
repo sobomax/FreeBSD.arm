@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/arm/efibind.h 281156 2015-04-06 15:50:20Z andrew $ */
+/* $FreeBSD: head/sys/boot/efi/include/arm/efibind.h 298826 2016-04-30 00:26:38Z pfg $ */
 /*++
 
 Copyright (c) 2004 - 2012, Intel Corporation. All rights reserved.
@@ -34,7 +34,7 @@ Abstract:
 
 
 //
-// Make sure we are useing the correct packing rules per EFI specification
+// Make sure we are using the correct packing rules per EFI specification
 //
 #ifndef __GNUC__
 #pragma pack()

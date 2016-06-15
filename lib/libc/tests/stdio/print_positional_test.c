@@ -30,8 +30,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/tests/stdio/print_positional_test.c 290560 2015-11-08 21:38:46Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/tests/stdio/print_positional_test.c 299511 2016-05-12 04:08:45Z cem $");
 
+#include <sys/param.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -94,7 +95,7 @@ ATF_TC_WITHOUT_HEAD(positional_wide);
 ATF_TC_BODY(positional_wide, tc)
 {
 
-	swprintf(wbuf1, sizeof wbuf1,
+	swprintf(wbuf1, nitems(wbuf1),
 	    L"|xx %1$s %2$s %3$s %4$s\n"
 	    "|xx %5$s %6$s %7$s %8$s\n"
 	    "|xx %9$s %10$s %11$s %12$s\n"
@@ -117,7 +118,7 @@ ATF_TC_BODY(positional_wide, tc)
 	    "43", "44", 45, -1L, 1LL, -1, 1LL
 	    );
 	temp = correct;
-	mbsrtowcs(wbuf2, &temp, sizeof wbuf2, NULL);
+	mbsrtowcs(wbuf2, &temp, nitems(wbuf2), NULL);
 	ATF_REQUIRE_MSG(wcscmp(wbuf1, wbuf2) == 0,
 	    "buffers didn't match");
 }
@@ -139,7 +140,7 @@ ATF_TC_BODY(positional_precision_wide, tc)
 	swprintf(wbuf1, sizeof buf, L"%2$.*4$s %2$.*3$s %1$s",
 		 "BSD", "bsd", 2, 1);
 	temp = correct2;
-	mbsrtowcs(wbuf2, &temp, sizeof wbuf2, NULL);
+	mbsrtowcs(wbuf2, &temp, nitems(wbuf2), NULL);
 	ATF_REQUIRE_MSG(wcscmp(wbuf1, wbuf2) == 0,
 	    "buffers didn't match");
 }

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libclang_rt/safestack/Makefile 287627 2015-09-10 20:37:00Z dim $
+# $FreeBSD: head/lib/libclang_rt/safestack/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.init.mk>
 
@@ -42,6 +42,7 @@ SRCS=	interception_linux.cc\
 	sanitizer_tls_get_addr.cc\
 	sanitizer_thread_registry.cc\
 	sanitizer_win.cc\
+	sanitizer_common_nolibc.cc\
 	safestack.cc
 
 .include <bsd.lib.mk>

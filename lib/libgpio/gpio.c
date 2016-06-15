@@ -23,7 +23,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libgpio/gpio.c 279761 2015-03-08 00:47:50Z loos $
+ * $FreeBSD: head/lib/libgpio/gpio.c 298272 2016-04-19 15:18:31Z loos $
  */
 #include <stdio.h>
 #include <fcntl.h>
@@ -181,14 +181,14 @@ gpio_pin_set(gpio_handle_t handle, gpio_pin_t pin, gpio_value_t value)
 int
 gpio_pin_toggle(gpio_handle_t handle, gpio_pin_t pin)
 {
-	gpio_value_t value;
+	struct gpio_req gpreq;
 
-	value = gpio_pin_get(handle, pin);
-	if (value == GPIO_VALUE_INVALID)
+	bzero(&gpreq, sizeof(gpreq));
+	gpreq.gp_pin = pin;
+	if (ioctl(handle, GPIOTOGGLE, &gpreq) < 0)
 		return (-1);
-	value = !value;
 
-	return (gpio_pin_set(handle, pin, value));
+	return (0);
 }
 
 int

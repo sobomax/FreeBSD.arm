@@ -16,13 +16,13 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/IMX6 291135 2015-11-21 16:23:56Z andrew $
+# $FreeBSD: head/sys/arm/conf/IMX6 298068 2016-04-15 16:05:41Z andrew $
 
 ident		IMX6
 include 	"std.armv6"
 include 	"../freescale/imx/std.imx6"
 
-options 	ARM_INTRNG
+options 	INTRNG
 
 options 	SOC_IMX6
 
@@ -125,13 +125,11 @@ device		u3g			# USB modems
 #device		wlan_tkip		# 802.11 TKIP support
 #device		wlan_amrr		# AMRR transmit rate control algorithm
 
-# NOTE: serial console will be disabled if syscons enabled
-# Uncomment following lines for framebuffer/syscons support
-# Wandboard has no video console support yet.
-#device		sc
-#device		kbdmux
-#options 	SC_DFLT_FONT		# compile font in
-#makeoptions	SC_DFLT_FONT=cp437
+device		vt
+device		kbdmux
+device		ukbd
+device		videomode
+device		hdmi
 
 # Flattened Device Tree
 options 	FDT			# Configure using FDT/DTB data

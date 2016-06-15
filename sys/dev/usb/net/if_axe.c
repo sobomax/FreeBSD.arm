@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 292080 2015-12-11 05:28:00Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_axe.c 292992 2015-12-31 18:12:35Z kp $");
 
 /*
  * ASIX Electronics AX88172/AX88178/AX88778 USB 2.0 ethernet driver.
@@ -175,6 +175,7 @@ static const STRUCT_USB_HOST_ID axe_devs[] = {
 	AXE_DEV(PLANEX3, GU1000T, AXE_FLAG_178),
 	AXE_DEV(SITECOM, LN029, 0),
 	AXE_DEV(SITECOMEU, LN028, AXE_FLAG_178),
+	AXE_DEV(SITECOMEU, LN031, AXE_FLAG_178),
 	AXE_DEV(SYSTEMTALKS, SGCX2UL, 0),
 #undef AXE_DEV
 };

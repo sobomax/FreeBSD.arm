@@ -32,7 +32,7 @@
 static char sccsid[] = "@(#)getnetpath.c	1.11 91/12/19 SMI";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/getnetpath.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/getnetpath.c 301704 2016-06-08 23:17:30Z ngie $");
 
 /*
  * Copyright (c) 1989 by Sun Microsystems, Inc.
@@ -262,7 +262,7 @@ _get_next_token(char *npp, int token)
     *cp++ = '\0';		/* null-terminate token */
     /* get rid of any backslash escapes */
     ep = npp;
-    while ((np = strchr(ep, '\\')) != 0) {
+    while ((np = strchr(ep, '\\')) != NULL) {
 	if (np[1] == '\\')
 	    np++;
 	strcpy(np, (ep = &np[1]));  /* XXX: overlapping string copy */

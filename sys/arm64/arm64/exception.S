@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 291581 2015-12-01 12:37:04Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 297028 2016-03-18 16:18:29Z andrew $");
 
 #include "assym.s"
 
@@ -90,15 +90,19 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/exception.S 291581 2015-12-01 12:37:04Z
 	ldp	x14, x15, [sp, #(TF_X + 14 * 8)]
 	ldp	x16, x17, [sp, #(TF_X + 16 * 8)]
 .if \el == 0
+	/*
+	 * We only restore the callee saved registers when returning to
+	 * userland as they may have been updated by a system call or signal.
+	 */
 	ldp	x18, x19, [sp, #(TF_X + 18 * 8)]
-.else
-	ldr	     x19, [sp, #(TF_X + 19 * 8)]
-.endif
 	ldp	x20, x21, [sp, #(TF_X + 20 * 8)]
 	ldp	x22, x23, [sp, #(TF_X + 22 * 8)]
 	ldp	x24, x25, [sp, #(TF_X + 24 * 8)]
 	ldp	x26, x27, [sp, #(TF_X + 26 * 8)]
 	ldp	x28, x29, [sp, #(TF_X + 28 * 8)]
+.else
+	ldr	     x29, [sp, #(TF_X + 29 * 8)]
+.endif
 .if \el == 0
 	add	sp, sp, #(TF_SIZE + 16)
 .else
@@ -146,7 +150,7 @@ END(handle_el1h_sync)
 ENTRY(handle_el1h_irq)
 	save_registers 1
 	mov	x0, sp
-	bl	arm_cpu_intr
+	bl	intr_irq_handler
 	restore_registers 1
 	eret
 END(handle_el1h_irq)
@@ -167,7 +171,7 @@ END(handle_el0_sync)
 ENTRY(handle_el0_irq)
 	save_registers 0
 	mov	x0, sp
-	bl	arm_cpu_intr
+	bl	intr_irq_handler
 	do_ast
 	restore_registers 0
 	eret

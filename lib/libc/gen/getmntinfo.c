@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)getmntinfo.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/getmntinfo.c 287793 2015-09-14 18:44:13Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/getmntinfo.c 297790 2016-04-10 19:33:58Z pfg $");
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -56,7 +56,7 @@ getmntinfo(struct statfs **mntbufp, int flags)
 		if (mntbuf)
 			free(mntbuf);
 		bufsize = (mntsize + 1) * sizeof(struct statfs);
-		if ((mntbuf = (struct statfs *)malloc(bufsize)) == 0)
+		if ((mntbuf = malloc(bufsize)) == NULL)
 			return (0);
 		if ((mntsize = getfsstat(mntbuf, bufsize, flags)) < 0)
 			return (0);

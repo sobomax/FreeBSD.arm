@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libclang_rt/ubsan_standalone/Makefile 287626 2015-09-10 20:35:47Z dim $
+# $FreeBSD: head/lib/libclang_rt/ubsan_standalone/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.init.mk>
 
@@ -46,7 +46,6 @@ SRCS=	sanitizer_allocator.cc\
 	sanitizer_stoptheworld_linux_libcdep.cc\
 	sanitizer_symbolizer_libcdep.cc\
 	sanitizer_symbolizer_posix_libcdep.cc\
-	sanitizer_symbolizer_process_libcdep.cc\
 	sanitizer_unwind_linux_libcdep.cc\
 	ubsan_diag.cc\
 	ubsan_init.cc\

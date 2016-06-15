@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/smp.h 285316 2015-07-09 13:23:29Z andrew $
+ * $FreeBSD: head/sys/arm64/include/smp.h 297029 2016-03-18 16:29:58Z andrew $
  */
 
 #ifndef	_MACHINE_SMP_H_
@@ -42,7 +42,7 @@ enum {
 	IPI_STOP,
 	IPI_STOP_HARD,
 	IPI_HARDCLOCK,
-	COUNT_IPI,
+	INTR_IPI_COUNT,
 };
 
 void	ipi_all_but_self(u_int ipi);

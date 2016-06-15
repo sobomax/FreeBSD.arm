@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/frame.h 280711 2015-03-26 21:10:42Z andrew $
+ * $FreeBSD: head/sys/arm64/include/frame.h 297611 2016-04-06 05:13:36Z wma $
  */
 
 #ifndef _MACHINE_FRAME_H_
@@ -47,6 +47,11 @@ struct trapframe {
 	uint64_t tf_elr;
 	uint64_t tf_spsr;
 	uint64_t tf_x[30];
+};
+
+struct arm64_frame {
+	struct arm64_frame	*f_frame;
+	u_long			f_retaddr;
 };
 
 /*

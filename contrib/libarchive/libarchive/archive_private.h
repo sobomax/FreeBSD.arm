@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/contrib/libarchive/libarchive/archive_private.h 248616 2013-03-22 13:36:03Z mm $
+ * $FreeBSD: head/contrib/libarchive/libarchive/archive_private.h 299529 2016-05-12 10:16:16Z mm $
  */
 
 #ifndef __LIBARCHIVE_BUILD
@@ -119,6 +119,23 @@ struct archive {
 	unsigned current_codepage; /* Current ACP(ANSI CodePage). */
 	unsigned current_oemcp; /* Current OEMCP(OEM CodePage). */
 	struct archive_string_conv *sconv;
+
+	/*
+	 * Used by archive_read_data() to track blocks and copy
+	 * data to client buffers, filling gaps with zero bytes.
+	 */
+	const char	 *read_data_block;
+	int64_t		  read_data_offset;
+	int64_t		  read_data_output_offset;
+	size_t		  read_data_remaining;
+
+	/*
+	 * Used by formats/filters to determine the amount of data
+	 * requested from a call to archive_read_data(). This is only
+	 * useful when the format/filter has seek support.
+	 */
+	char		  read_data_is_posix_read;
+	size_t		  read_data_requested;
 };
 
 /* Check magic value and state; return(ARCHIVE_FATAL) if it isn't valid. */
@@ -138,6 +155,8 @@ void	__archive_ensure_cloexec_flag(int fd);
 int	__archive_mktemp(const char *tmpdir);
 
 int	__archive_clean(struct archive *);
+
+void __archive_reset_read_data(struct archive *);
 
 #define	err_combine(a,b)	((a) < (b) ? (a) : (b))
 

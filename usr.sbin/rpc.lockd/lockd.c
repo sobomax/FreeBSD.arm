@@ -1,5 +1,5 @@
 /*	$NetBSD: lockd.c,v 1.7 2000/08/12 18:08:44 thorpej Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpc.lockd/lockd.c 277352 2015-01-19 00:33:32Z rstone $ */
+/*	$FreeBSD: head/usr.sbin/rpc.lockd/lockd.c 292864 2015-12-29 11:24:41Z uqs $ */
 
 /*
  * Copyright (c) 1995
@@ -220,7 +220,7 @@ main(int argc, char **argv)
 	 * list.
 	 */
 	if (nhosts == 0) {
-		hosts = malloc(sizeof(char**));
+		hosts = malloc(sizeof(char *));
 		if (hosts == NULL)
 			out_of_mem();
 

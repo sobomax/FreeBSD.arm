@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/makefs/makefs.h 289203 2015-10-13 02:32:15Z adrian $
+ * $FreeBSD: head/usr.sbin/makefs/makefs.h 301879 2016-06-14 14:03:28Z emaste $
  */
 
 #ifndef	_MAKEFS_H
@@ -172,6 +172,7 @@ void		cd9660_makefs(const char *, const char *, fsnode *, fsinfo_t *);
 extern	u_int		debug;
 extern	int		dupsok;
 extern	struct timespec	start_time;
+extern struct stat stampst;
 
 /*
  * If -x is specified, we want to exclude nodes which do not appear

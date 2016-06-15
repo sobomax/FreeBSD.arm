@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/ofw/ofw_pci.h 256846 2013-10-21 13:57:34Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/ofw/ofw_pci.h 294281 2016-01-18 17:27:16Z nwhitehorn $
  */
 
 #ifndef POWERPC_OFW_OFW_PCI_H
@@ -55,8 +55,6 @@ struct ofw_pci_softc {
 	int			sc_initialized;
 
 	int			sc_quirks;
-
-	struct ofw_pci_register	sc_pcir;
 
 	struct ofw_pci_range	*sc_range;
 	int			sc_nrange;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/options.i386 282274 2015-04-30 15:48:48Z jhb $
+# $FreeBSD: head/sys/conf/options.i386 298022 2016-04-15 02:20:18Z sephe $
 # Options specific to the i386 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h
@@ -122,8 +122,6 @@ NPX_DEBUG		opt_npx.h
 BPF_JITTER		opt_bpf.h
 
 XENHVM			opt_global.h
-
-HYPERV			opt_global.h
 
 # options for the Intel C600 SAS driver (isci)
 ISCI_LOGGING	opt_isci.h

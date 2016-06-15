@@ -30,14 +30,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/arc4random.c 268642 2014-07-15 02:21:35Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/arc4random.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "namespace.h"
 #include <fcntl.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/time.h>

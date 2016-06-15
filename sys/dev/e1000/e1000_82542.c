@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_82542.c 287990 2015-09-19 18:22:59Z sbruno $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_82542.c 295323 2016-02-05 17:14:37Z erj $*/
 
 /*
  * 82542 Gigabit Ethernet Controller
@@ -317,7 +317,7 @@ static s32 e1000_init_hw_82542(struct e1000_hw *hw)
 static s32 e1000_setup_link_82542(struct e1000_hw *hw)
 {
 	struct e1000_mac_info *mac = &hw->mac;
-	s32 ret_val = E1000_SUCCESS;
+	s32 ret_val;
 
 	DEBUGFUNC("e1000_setup_link_82542");
 
@@ -565,7 +565,7 @@ static void e1000_clear_hw_cntrs_82542(struct e1000_hw *hw)
  *
  *  Reads the device MAC address from the EEPROM and stores the value.
  **/
-static s32 e1000_read_mac_addr_82542(struct e1000_hw *hw)
+s32 e1000_read_mac_addr_82542(struct e1000_hw *hw)
 {
 	s32  ret_val = E1000_SUCCESS;
 	u16 offset, nvm_data, i;

@@ -1,9 +1,10 @@
 #
-# $FreeBSD: head/usr.bin/vi/Makefile 281373 2015-04-10 17:50:28Z bapt $
+# $FreeBSD: head/usr.bin/vi/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
 .include <src.opts.mk>
 
+PACKAGE=	vi
 SRCDIR=		${.CURDIR}/../../contrib/nvi
 SUBDIR+=	catalog
 

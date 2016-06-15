@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2012-2015 LSI Corp.
- * Copyright (c) 2013-2015 Avago Technologies
+ * Copyright (c) 2013-2016 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,19 +29,20 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mpr/mpi/mpi2_type.h 283661 2015-05-28 18:24:22Z slm $
+ * $FreeBSD: head/sys/dev/mpr/mpi/mpi2_type.h 299263 2016-05-09 16:12:32Z slm $
  */
 
 /*
  *  Copyright (c) 2000-2015 LSI Corporation.
- *  Copyright (c) 2013-2015 Avago Technologies
+ *  Copyright (c) 2013-2016 Avago Technologies
+ *  All rights reserved.
  *
  *
  *           Name:  mpi2_type.h
  *          Title:  MPI basic type definitions
  *  Creation Date:  August 16, 2006
  *
- *    mpi2_type.h Version:  02.00.00
+ *    mpi2_type.h Version:  02.00.01
  *
  *  Version History
  *  ---------------
@@ -49,6 +50,7 @@
  *  Date      Version   Description
  *  --------  --------  ------------------------------------------------------
  *  04-30-07  02.00.00  Corresponds to Fusion-MPT MPI Specification Rev A.
+ *  11-18-14  02.00.01  Updated copyright information.
  *  --------------------------------------------------------------------------
  */
 

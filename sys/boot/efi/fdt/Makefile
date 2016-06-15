@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/efi/fdt/Makefile 281525 2015-04-14 10:41:57Z andrew $
+# $FreeBSD: head/sys/boot/efi/fdt/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -6,6 +6,7 @@
 
 LIB=		efi_fdt
 INTERNALLIB=
+WARNS?=		6
 
 SRCS=		efi_fdt.c
 
@@ -26,7 +27,7 @@ CFLAGS+=	-I${.CURDIR}/../../fdt
 # Pick up the bootstrap header for some interface items
 CFLAGS+=	-I${.CURDIR}/../../common -I${.CURDIR}/../../.. -I.
 
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../${MACHINE}/include machine
 
 CLEANFILES+=	machine

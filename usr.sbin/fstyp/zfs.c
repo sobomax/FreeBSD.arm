@@ -26,9 +26,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fstyp/zfs.c 287937 2015-09-17 20:55:47Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/fstyp/zfs.c 292757 2015-12-26 19:48:36Z allanjude $");
 
 #include <sys/types.h>
+#include <cddl/compat/opensolaris/sys/types.h>
+#include <sys/time.h>
+#include <cddl/compat/opensolaris/sys/time.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

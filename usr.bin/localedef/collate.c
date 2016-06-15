@@ -32,7 +32,7 @@
  * LC_COLLATE database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/localedef/collate.c 290559 2015-11-08 21:22:24Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/localedef/collate.c 298878 2016-05-01 16:10:56Z pfg $");
 
 #include <sys/types.h>
 #include <sys/tree.h>
@@ -502,6 +502,7 @@ define_collsym(char *name)
 		 * This should never happen because we are only called
 		 * for undefined symbols.
 		 */
+		free(sym);
 		INTERR;
 		return;
 	}
@@ -538,6 +539,7 @@ get_collundef(char *name)
 		if (((ud = calloc(sizeof (*ud), 1)) == NULL) ||
 		    ((ud->name = strdup(name)) == NULL)) {
 			fprintf(stderr,"out of memory");
+			free(ud);
 			return (NULL);
 		}
 		for (i = 0; i < NUM_WT; i++) {
@@ -812,6 +814,7 @@ define_collelem(char *name, wchar_t *wcs)
 	if ((RB_FIND(elem_by_symbol, &elem_by_symbol, e) != NULL) ||
 	    (RB_FIND(elem_by_expand, &elem_by_expand, e) != NULL)) {
 		fprintf(stderr, "duplicate collating element definition");
+		free(e);
 		return;
 	}
 	RB_INSERT(elem_by_symbol, &elem_by_symbol, e);
@@ -1117,7 +1120,7 @@ dump_collate(void)
 	collate_chain_t		*chain;
 
 	/*
-	 * We have to run throught a preliminary pass to identify all the
+	 * We have to run through a preliminary pass to identify all the
 	 * weights that we use for each sorting level.
 	 */
 	for (i = 0; i < NUM_WT; i++) {

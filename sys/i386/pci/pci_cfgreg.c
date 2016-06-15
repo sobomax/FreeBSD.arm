@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/pci/pci_cfgreg.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/pci/pci_cfgreg.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include "opt_xbox.h"
 
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: head/sys/i386/pci/pci_cfgreg.c 282274 2015-04-30 15:48:48Z j
 #include <vm/vm_kern.h>
 #include <vm/vm_extern.h>
 #include <vm/pmap.h>
-#include <machine/pmap.h>
 
 #ifdef XBOX
 #include <machine/xbox.h>

@@ -36,7 +36,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: head/sys/dev/oce/oce_mbox.c 278695 2015-02-13 19:44:04Z jmg $ */
+/* $FreeBSD: head/sys/dev/oce/oce_mbox.c 297793 2016-04-10 23:07:00Z pfg $ */
 
 #include "oce_if.h"
 extern uint32_t sfp_vpd_dump_buffer[TRANSCEIVER_DATA_NUM_ELE];
@@ -2113,7 +2113,7 @@ oce_get_profile_config(POCE_SOFTC sc, uint32_t max_rss)
 			sc->nrssqs = MIN(sc->nrssqs, max_rss);
 		else
 			sc->nrssqs = max_rss;
-		sc->nrqs =  sc->nrssqs + 1; /* 1 for def RX */;
+		sc->nrqs =  sc->nrssqs + 1; /* 1 for def RX */
 
 	}
 error:
@@ -2213,7 +2213,7 @@ oce_get_func_config(POCE_SOFTC sc)
 			sc->nrssqs = MIN(sc->nrssqs, max_rss);
 		else
 			sc->nrssqs = max_rss;
-		sc->nrqs =  sc->nrssqs + 1; /* 1 for def RX */;
+		sc->nrqs =  sc->nrssqs + 1; /* 1 for def RX */
 	}
 error:
 	oce_dma_free(sc, &dma);

@@ -25,8 +25,8 @@
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man3/pthread_condattr.3 235286 2012-05-11 20:06:46Z gjb $
-.Dd May 9, 2010
+.\" $FreeBSD: head/share/man/man3/pthread_condattr.3 301077 2016-05-31 21:16:34Z jilles $
+.Dd May 31, 2016
 .Dt PTHREAD_CONDATTR 3
 .Os
 .Sh NAME
@@ -160,15 +160,3 @@ and
 .Fn pthread_condattr_destroy
 functions conform to
 .St -p1003.1-96
-.Sh BUGS
-The implementation of
-condition variables
-does not fully conform to
-.St -p1003.2
-because the process-shared attribute is ignored;
-if any value other than
-.Dv PTHREAD_PROCESSES_PRIVATE
-is specified in a call to
-.Fn pthread_condattr_setpshared ,
-it will return
-.Er EINVAL .

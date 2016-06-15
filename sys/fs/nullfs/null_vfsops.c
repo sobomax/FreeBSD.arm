@@ -32,7 +32,7 @@
  *	@(#)null_vfsops.c	8.2 (Berkeley) 1/21/94
  *
  * @(#)lofs_vfsops.c	1.2 (Berkeley) 6/18/92
- * $FreeBSD: head/sys/fs/nullfs/null_vfsops.c 285182 2015-07-05 22:37:33Z markj $
+ * $FreeBSD: head/sys/fs/nullfs/null_vfsops.c 296388 2016-03-04 17:24:28Z kib $
  */
 
 /*
@@ -199,7 +199,7 @@ nullfs_mount(struct mount *mp)
 	}
 	mp->mnt_kern_flag |= MNTK_LOOKUP_EXCL_DOTDOT;
 	mp->mnt_kern_flag |= lowerrootvp->v_mount->mnt_kern_flag &
-	    MNTK_USES_BCACHE;
+	    (MNTK_USES_BCACHE | MNTK_NO_IOPF | MNTK_UNMAPPED_BUFS);
 	MNT_IUNLOCK(mp);
 	mp->mnt_data = xmp;
 	vfs_getnewfsid(mp);

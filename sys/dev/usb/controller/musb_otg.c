@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/musb_otg.c 278850 2015-02-16 15:34:10Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/musb_otg.c 297587 2016-04-05 18:07:13Z gonzo $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -33,7 +33,6 @@
  * This file contains the driver for the Mentor Graphics Inventra USB
  * 2.0 High Speed Dual-Role controller.
  *
- * NOTE: The current implementation only supports Device Side Mode!
  */
 
 #ifdef USB_GLOBAL_INCLUDE_FILE

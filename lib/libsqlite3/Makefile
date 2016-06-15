@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libsqlite3/Makefile 286511 2015-08-09 05:54:53Z peter $
+# $FreeBSD: head/lib/libsqlite3/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 PRIVATELIB=	yes
 LIB=	sqlite3
 SHLIB_MAJOR?=	0

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmarmdesc/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libllvmarmdesc/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -6,7 +6,6 @@ LIB=	llvmarmdesc
 
 SRCDIR=	lib/Target/ARM/MCTargetDesc
 SRCS=	ARMAsmBackend.cpp \
-	ARMELFObjectWriter.cpp \
 	ARMELFObjectWriter.cpp \
 	ARMELFStreamer.cpp \
 	ARMMCAsmInfo.cpp \
@@ -24,6 +23,7 @@ CFLAGS+= -I${LLVM_SRCS}/${SRCDIR}/..
 TGHDRS=	ARMGenInstrInfo \
 	ARMGenMCCodeEmitter \
 	ARMGenRegisterInfo \
-	ARMGenSubtargetInfo
+	ARMGenSubtargetInfo \
+	Attributes
 
 .include "../clang.lib.mk"

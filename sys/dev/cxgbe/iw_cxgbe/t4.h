@@ -28,7 +28,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/t4.h 256694 2013-10-17 18:37:25Z np $
+ * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/t4.h 297124 2016-03-21 00:29:45Z np $
  */
 #ifndef __T4_H__
 #define __T4_H__
@@ -69,7 +69,6 @@
 #define T4_MAX_SQ_SIZE (T4_MAX_EQ_SIZE - 1)
 #define T4_MAX_QP_DEPTH (T4_MAX_RQ_SIZE - 1)
 #define T4_MAX_CQ_DEPTH (T4_MAX_IQ_SIZE - 1)
-#define T4_MAX_NUM_STAG (1<<15)
 #define T4_MAX_MR_SIZE (~0ULL - 1)
 #define T4_PAGESIZE_MASK 0xffff000  /* 4KB-128MB */
 #define T4_STAG_UNSET 0xffffffff
@@ -524,7 +523,7 @@ static inline void t4_swcq_consume(struct t4_cq *cq)
 static inline void t4_hwcq_consume(struct t4_cq *cq)
 {
 	cq->bits_type_ts = cq->queue[cq->cidx].bits_type_ts;
-	if (++cq->cidx_inc == (cq->size >> 4)) {
+	if (++cq->cidx_inc == (cq->size >> 4) || cq->cidx_inc == M_CIDXINC) {
 		u32 val;
 
 		val = SEINTARM(0) | CIDXINC(cq->cidx_inc) | TIMERREG(7) |

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/tr_raid1e.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/tr_raid1e.c 298808 2016-04-29 20:56:58Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -1096,7 +1096,7 @@ rebuild_round_done:
 	if ((mask & (1U << 31)) != 0) {
 		/*
 		 * We're done with a recovery, mark the range as unlocked.
-		 * For any write errors, we agressively fail the disk since
+		 * For any write errors, we aggressively fail the disk since
 		 * there was both a READ and a WRITE error at this location.
 		 * Both types of errors generally indicates the drive is on
 		 * the verge of total failure anyway.  Better to stop trusting

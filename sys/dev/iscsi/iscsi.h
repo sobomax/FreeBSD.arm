@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/iscsi/iscsi.h 278397 2015-02-08 19:15:14Z trasz $
+ * $FreeBSD: head/sys/dev/iscsi/iscsi.h 295476 2016-02-10 17:55:39Z trasz $
  */
 
 #ifndef ISCSI_H
@@ -119,7 +119,7 @@ struct iscsi_session {
 	char				is_reason[ISCSI_REASON_LEN];
 
 #ifdef ICL_KERNEL_PROXY
-	struct cv			is_login_cv;;
+	struct cv			is_login_cv;
 	struct icl_pdu			*is_login_pdu;
 #endif
 };
@@ -131,7 +131,8 @@ struct iscsi_softc {
 	TAILQ_HEAD(, iscsi_session)	sc_sessions;
 	struct cv			sc_cv;
 	unsigned int			sc_last_session_id;
-	eventhandler_tag		sc_shutdown_eh;
+	eventhandler_tag		sc_shutdown_pre_eh;
+	eventhandler_tag		sc_shutdown_post_eh;
 };
 
 #endif /* !ISCSI_H */

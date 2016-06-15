@@ -47,7 +47,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_cdg.c 274225 2014-11-07 09:39:05Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_cdg.c 294931 2016-01-27 17:59:39Z glebius $");
 
 #include <sys/param.h>
 #include <sys/hhook.h>
@@ -63,14 +63,13 @@ __FBSDID("$FreeBSD: head/sys/netinet/cc/cc_cdg.c 274225 2014-11-07 09:39:05Z gle
 #include <sys/sysctl.h>
 #include <sys/systm.h>
 
-#include <net/if.h>
 #include <net/vnet.h>
 
-#include <netinet/cc.h>
+#include <netinet/tcp.h>
 #include <netinet/tcp_seq.h>
 #include <netinet/tcp_timer.h>
 #include <netinet/tcp_var.h>
-
+#include <netinet/cc/cc.h>
 #include <netinet/cc/cc_module.h>
 
 #include <netinet/khelp/h_ertt.h>

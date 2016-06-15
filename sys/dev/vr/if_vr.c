@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vr/if_vr.c 271808 2014-09-18 20:17:27Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/vr/if_vr.c 296272 2016-03-01 17:47:32Z jhb $");
 
 /*
  * VIA Rhine fast ethernet PCI NIC driver
@@ -1671,7 +1671,7 @@ vr_intr(void *arg)
 	/* Disable interrupts. */
 	CSR_WRITE_2(sc, VR_IMR, 0x0000);
 
-	taskqueue_enqueue_fast(taskqueue_fast, &sc->vr_inttask);
+	taskqueue_enqueue(taskqueue_fast, &sc->vr_inttask);
 
 	return (FILTER_HANDLED);
 }

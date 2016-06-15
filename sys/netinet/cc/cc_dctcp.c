@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_dctcp.c 277054 2015-01-12 08:33:04Z hiren $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_dctcp.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -50,12 +50,10 @@ __FBSDID("$FreeBSD: head/sys/netinet/cc/cc_dctcp.c 277054 2015-01-12 08:33:04Z h
 
 #include <net/vnet.h>
 
-#include <netinet/in.h>
-#include <netinet/ip.h>
-#include <netinet/cc.h>
+#include <netinet/tcp.h>
 #include <netinet/tcp_seq.h>
 #include <netinet/tcp_var.h>
-
+#include <netinet/cc/cc.h>
 #include <netinet/cc/cc_module.h>
 
 #define	CAST_PTR_INT(X)	(*((int*)(X)))
@@ -204,7 +202,7 @@ dctcp_cb_init(struct cc_var *ccv)
 	dctcp_data->bytes_ecn = 0;
 	dctcp_data->bytes_total = 0;
 	/*
-	 * When alpha is set to 0 in the beggining, DCTCP sender transfers as
+	 * When alpha is set to 0 in the beginning, DCTCP sender transfers as
 	 * much data as possible until the value converges which may expand the
 	 * queueing delay at the switch. When alpha is set to 1, queueing delay
 	 * is kept small.

@@ -30,7 +30,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 289661 2015-10-20 20:29:21Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 301456 2016-06-05 17:04:03Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 289661 2015-10-20 20:29:21Z kib 
 #include <sys/sched.h>
 #include <sys/sleepqueue.h>
 #include <sys/selinfo.h>
+#include <sys/syscallsubr.h>
 #include <sys/sysent.h>
 #include <sys/turnstile.h>
 #include <sys/ktr.h>
@@ -210,7 +211,6 @@ thread_init(void *mem, int size, int flags)
 	td->td_turnstile = turnstile_alloc();
 	td->td_rlqe = NULL;
 	EVENTHANDLER_INVOKE(thread_init, td);
-	td->td_sched = (struct td_sched *)&td[1];
 	umtx_thread_init(td);
 	td->td_kstack = 0;
 	td->td_sel = NULL;
@@ -942,7 +942,6 @@ thread_suspend_check(int return_instead)
 		 */
 		if ((p->p_flag & P_SINGLE_EXIT) && (p->p_singlethread != td)) {
 			PROC_UNLOCK(p);
-			tidhash_remove(td);
 
 			/*
 			 * Allow Linux emulation layer to do some work
@@ -950,13 +949,9 @@ thread_suspend_check(int return_instead)
 			 */
 			if (__predict_false(p->p_sysent->sv_thread_detach != NULL))
 				(p->p_sysent->sv_thread_detach)(td);
-
-			PROC_LOCK(p);
-			tdsigcleanup(td);
 			umtx_thread_exit(td);
-			PROC_SLOCK(p);
-			thread_stopped(p);
-			thread_exit();
+			kern_thr_exit(td);
+			panic("stopped thread did not exit");
 		}
 
 		PROC_SLOCK(p);

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/efiuga.h 287317 2015-08-30 23:58:53Z marcel $ */
+/* $FreeBSD: head/sys/boot/efi/include/efiuga.h 298826 2016-04-30 00:26:38Z pfg $ */
 /** @file
   UGA Draw protocol from the EFI 1.1 specification.
 
@@ -22,9 +22,7 @@
 #define __UGA_DRAW_H__
 
 #define EFI_UGA_DRAW_PROTOCOL_GUID \
-  { \
-    0x982c298b, 0xf4fa, 0x41cb, {0xb8, 0x38, 0x77, 0xaa, 0x68, 0x8f, 0xb8, 0x39 } \
-  }
+    { 0x982c298b, 0xf4fa, 0x41cb, {0xb8, 0x38, 0x77, 0xaa, 0x68, 0x8f, 0xb8, 0x39} }
 
 typedef struct _EFI_UGA_DRAW_PROTOCOL EFI_UGA_DRAW_PROTOCOL;
 
@@ -141,7 +139,7 @@ typedef enum {
   
     @retval EFI_SUCCESS           - The Blt operation completed.
     @retval EFI_INVALID_PARAMETER - BltOperation is not valid.
-    @retval EFI_DEVICE_ERROR      - A hardware error occured writting to the video buffer.
+    @retval EFI_DEVICE_ERROR      - A hardware error occurred writting to the video buffer.
 
 --*/
 typedef

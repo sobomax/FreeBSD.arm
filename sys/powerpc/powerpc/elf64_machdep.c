@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powerpc/elf64_machdep.c 291420 2015-11-28 08:49:07Z kib $
+ * $FreeBSD: head/sys/powerpc/powerpc/elf64_machdep.c 298052 2016-04-15 14:25:13Z pfg $
  */
 
 #include <sys/param.h>
@@ -85,6 +85,7 @@ struct sysentvec elf64_freebsd_sysvec_v1 = {
 	.sv_shared_page_len = PAGE_SIZE,
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 INIT_SYSENTVEC(elf64_sysvec_v1, &elf64_freebsd_sysvec_v1);
 
@@ -311,7 +312,7 @@ elf_reloc_internal(linker_file_t lf, Elf_Addr relocbase, const void *data,
 void
 elf_reloc_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 {
-	Elf_Rela *rela = 0, *relalim;
+	Elf_Rela *rela = NULL, *relalim;
 	Elf_Addr relasz = 0;
 	Elf_Addr *where;
 

@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/advansys/advansys.c 274819 2014-11-21 21:01:24Z smh $");
+__FBSDID("$FreeBSD: head/sys/dev/advansys/advansys.c 298955 2016-05-03 03:41:25Z pfg $");
  
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -633,7 +633,7 @@ adv_timeout(void *arg)
 		 * means that the driver attempts to clear only one error
 		 * condition at a time.  In general, timeouts that occur
 		 * close together are related anyway, so there is no benefit
-		 * in attempting to handle errors in parrallel.  Timeouts will
+		 * in attempting to handle errors in parallel.  Timeouts will
 		 * be reinstated when the recovery process ends.
 		 */
 		adv_set_state(adv, ADV_IN_TIMEOUT);
@@ -1123,7 +1123,7 @@ adv_done(struct adv_softc *adv, union ccb *ccb, u_int done_stat,
 			 * from this initiator are in effect, but this
 			 * ignores multi-initiator setups and there is
 			 * evidence that the firmware gets its per-device
-			 * transaction counts screwed up occassionally.
+			 * transaction counts screwed up occasionally.
 			 */
 			ccb->ccb_h.status |= CAM_SCSI_STATUS_ERROR;
 			if ((ccb->ccb_h.flags & CAM_TAG_ACTION_VALID) != 0

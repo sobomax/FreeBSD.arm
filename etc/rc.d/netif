@@ -22,18 +22,19 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/netif 287613 2015-09-10 06:47:23Z hrs $
+# $FreeBSD: head/etc/rc.d/netif 300931 2016-05-29 02:59:03Z ngie $
 #
 
 # PROVIDE: netif
-# REQUIRE: atm1 FILESYSTEMS iovctl serial sppp sysctl
-# REQUIRE: ipfilter ipfs
+# REQUIRE: FILESYSTEMS iovctl serial sppp sysctl
+# REQUIRE: hostid ipfilter ipfs
 # KEYWORD: nojailvnet
 
 . /etc/rc.subr
 . /etc/network.subr
 
 name="netif"
+desc="Network interface setup"
 rcvar="${name}_enable"
 start_cmd="netif_start"
 stop_cmd="netif_stop"

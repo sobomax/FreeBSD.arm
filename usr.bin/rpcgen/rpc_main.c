@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)rpc_main.c 1.30 89/03/30 (C) 1987 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_main.c 267174 2014-06-06 17:38:37Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_main.c 298183 2016-04-18 06:02:26Z araujo $");
 
 /*
  * rpc_main.c, Top level of the RPC protocol compiler.
@@ -451,7 +451,7 @@ generate_guard(const char *pathname)
 	char *guard, *tmp, *stopat;
 
 	filename = strrchr(pathname, '/');  /* find last component */
-	filename = ((filename == 0) ? pathname : filename+1);
+	filename = ((filename == NULL) ? pathname : filename+1);
 	guard = xstrdup(filename);
 	stopat = strrchr(guard, '.');
 
@@ -977,7 +977,7 @@ checkfiles(const char *infile, const char *outfile)
 		{
 			warn("%s", infile);
 			crash();
-		};
+		}
 	if (outfile) {
 		if (stat(outfile, &buf) < 0)
 			return;	/* file does not exist */

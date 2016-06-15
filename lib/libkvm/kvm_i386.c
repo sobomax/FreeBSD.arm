@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_i386.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_i386.c 298485 2016-04-22 18:05:34Z ngie $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -162,6 +162,10 @@ _i386_initvtop(kvm_t *kd)
 		}
 		pa = le32toh(pa);
 		PTD = _kvm_malloc(kd, 4 * I386_PAGE_SIZE);
+		if (PTD == NULL) {
+			_kvm_err(kd, kd->program, "cannot allocate PTD");
+			return (-1);
+		}
 		for (i = 0; i < 4; i++) {
 			if (kvm_read2(kd, pa + (i * sizeof(pa64)), &pa64,
 			    sizeof(pa64)) != sizeof(pa64)) {
@@ -195,6 +199,10 @@ _i386_initvtop(kvm_t *kd)
 		}
 		pa = le32toh(pa);
 		PTD = _kvm_malloc(kd, I386_PAGE_SIZE);
+		if (PTD == NULL) {
+			_kvm_err(kd, kd->program, "cannot allocate PTD");
+			return (-1);
+		}
 		if (kvm_read2(kd, pa, PTD, I386_PAGE_SIZE) != I386_PAGE_SIZE) {
 			_kvm_err(kd, kd->program, "cannot read PTD");
 			return (-1);
@@ -228,7 +236,7 @@ _i386_vatop(kvm_t *kd, kvaddr_t va, off_t *pa)
 	 * If we are initializing (kernel page table descriptor pointer
 	 * not yet set) then return pa == va to avoid infinite recursion.
 	 */
-	if (PTD == 0) {
+	if (PTD == NULL) {
 		s = _kvm_pa2off(kd, va, pa);
 		if (s == 0) {
 			_kvm_err(kd, kd->program,
@@ -318,7 +326,7 @@ _i386_vatop_pae(kvm_t *kd, kvaddr_t va, off_t *pa)
 	 * If we are initializing (kernel page table descriptor pointer
 	 * not yet set) then return pa == va to avoid infinite recursion.
 	 */
-	if (PTD == 0) {
+	if (PTD == NULL) {
 		s = _kvm_pa2off(kd, va, pa);
 		if (s == 0) {
 			_kvm_err(kd, kd->program,

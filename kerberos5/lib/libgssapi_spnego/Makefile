@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/lib/libgssapi_spnego/Makefile 277273 2015-01-16 21:39:08Z will $
+# $FreeBSD: head/kerberos5/lib/libgssapi_spnego/Makefile 301285 2016-06-03 19:25:41Z bdrewery $
 
 LIB=	gssapi_spnego
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined
@@ -38,6 +38,7 @@ CLEANFILES=	${GEN} ${GEN:S/.x$/.c/:S/.hx$/.h/} \
 		spnego_asn1_files spnego_asn1-template.c
 
 .ORDER: ${GEN}
+${GEN:[2..-1]}: .NOMETA
 ${GEN}: spnego.asn1 spnego.opt
 	${ASN1_COMPILE} --option-file=${.ALLSRC:M*.opt} \
 		${.ALLSRC:M*.asn1} spnego_asn1

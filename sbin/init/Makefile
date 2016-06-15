@@ -1,6 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/19/93
-# $FreeBSD: head/sbin/init/Makefile 290548 2015-11-08 17:33:48Z trasz $
+# $FreeBSD: head/sbin/init/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	init
 SRCS=	init.c getmntopts.c
 MAN=	init.8

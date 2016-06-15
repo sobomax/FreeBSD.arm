@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/posix1e/acl_support_nfs4.c 287445 2015-09-04 00:14:20Z delphij $");
+__FBSDID("$FreeBSD: head/lib/libc/posix1e/acl_support_nfs4.c 297790 2016-04-10 19:33:58Z pfg $");
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -81,7 +81,7 @@ static const char *
 format_flag(uint32_t *var, const struct flagnames_struct *flags)
 {
 
-	for (; flags->name != 0; flags++) {
+	for (; flags->name != NULL; flags++) {
 		if ((flags->flag & *var) == 0)
 			continue;
 

@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)setup.c	8.10 (Berkeley) 5/9/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck_ffs/setup.c 276737 2015-01-06 05:28:37Z imp $");
+__FBSDID("$FreeBSD: head/sbin/fsck_ffs/setup.c 298907 2016-05-02 01:28:21Z araujo $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -245,8 +245,7 @@ setup(char *dev)
 		goto badsb;
 	}
 	for (i = 0, j = 0; i < sblock.fs_cssize; i += sblock.fs_bsize, j++) {
-		size = sblock.fs_cssize - i < sblock.fs_bsize ?
-		    sblock.fs_cssize - i : sblock.fs_bsize;
+		size = MIN(sblock.fs_cssize - i, sblock.fs_bsize);
 		readcnt[sblk.b_type]++;
 		if (blread(fsreadfd, (char *)sblock.fs_csp + i,
 		    fsbtodb(&sblock, sblock.fs_csaddr + j * sblock.fs_frag),

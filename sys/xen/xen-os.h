@@ -24,7 +24,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: head/sys/xen/xen-os.h 290392 2015-11-05 14:33:46Z royger $
+ * $FreeBSD: head/sys/xen/xen-os.h 301511 2016-06-06 14:55:46Z royger $
  */
 
 #ifndef _XEN_XEN_OS_H_
@@ -118,7 +118,7 @@ xen_clear_bit(int bit, volatile long *addr)
 	atomic_clear_long(&addr[bit / NBPL], 1UL << (bit % NBPL));
 }
 
-#undef NPBL
+#undef NBPL
 
 /*
  * Functions to allocate/free unused memory in order

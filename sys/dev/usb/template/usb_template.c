@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/template/usb_template.c 283879 2015-06-01 11:24:34Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/template/usb_template.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*-
  * Copyright (c) 2007 Hans Petter Selasky. All rights reserved.
  *
@@ -522,8 +522,8 @@ usb_make_device_desc(struct usb_temp_setup *temp,
  *	usb_hw_ep_match
  *
  * Return values:
- *    0: The endpoint profile does not match the criterias
- * Else: The endpoint profile matches the criterias
+ *    0: The endpoint profile does not match the criteria
+ * Else: The endpoint profile matches the criteria
  *------------------------------------------------------------------------*/
 static uint8_t
 usb_hw_ep_match(const struct usb_hw_ep_profile *pf,

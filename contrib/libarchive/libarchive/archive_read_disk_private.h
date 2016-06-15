@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/contrib/libarchive/libarchive/archive_read_disk_private.h 238856 2012-07-28 06:38:44Z mm $
+ * $FreeBSD: head/contrib/libarchive/libarchive/archive_read_disk_private.h 299529 2016-05-12 10:16:16Z mm $
  */
 
 #ifndef __LIBARCHIVE_BUILD
@@ -38,6 +38,9 @@ struct archive_entry;
 
 struct archive_read_disk {
 	struct archive	archive;
+
+	/* Reused by archive_read_next_header() */
+	struct archive_entry *entry;
 
 	/*
 	 * Symlink mode is one of 'L'ogical, 'P'hysical, or 'H'ybrid,
@@ -68,6 +71,8 @@ struct archive_read_disk {
 	int		 enable_copyfile;
 	/* Set 1 if users request to traverse mount points. */
 	int		 traverse_mount_points;
+	/* Set 1 if users want to suppress xattr information. */
+	int		 suppress_xattr;
 
 	const char * (*lookup_gname)(void *private, int64_t gid);
 	void	(*cleanup_gname)(void *private);

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/pxeldr/Makefile 235219 2012-05-10 09:47:04Z avg $
+# $FreeBSD: head/sys/boot/i386/pxeldr/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 # Pick up ../Makefile.inc early.
 .include <bsd.init.mk>
@@ -31,7 +31,7 @@ CLEANFILES+= ${BOOT}.tmp
 
 ${BOOT}: ${LDR} ${LOADER}
 	cat ${LDR} ${LOADER} > ${.TARGET}.tmp
-	dd if=${.TARGET}.tmp of=${.TARGET} obs=2k conv=osync
+	dd if=${.TARGET}.tmp of=${.TARGET} obs=2k conv=osync status=none
 	rm ${.TARGET}.tmp
 
 LDFLAGS+=-e start -Ttext ${ORG} -Wl,-N,-S,--oformat,binary
@@ -46,4 +46,3 @@ ${LOADER}: ${LOADERBIN} ${BTXLDR} ${BTXKERN}
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.pxeldr.S=	${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

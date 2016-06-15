@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/rwlock.h 285704 2015-07-19 22:24:33Z markj $
+ * $FreeBSD: head/sys/sys/rwlock.h 301157 2016-06-01 18:32:20Z mjg $
  */
 
 #ifndef _SYS_RWLOCK_H_
@@ -96,7 +96,7 @@
 #define	__rw_wlock(rw, tid, file, line) do {				\
 	uintptr_t _tid = (uintptr_t)(tid);				\
 									\
-	if (!_rw_write_lock((rw), _tid))				\
+	if ((rw)->rw_lock != RW_UNLOCKED || !_rw_write_lock((rw), _tid))\
 		_rw_wlock_hard((rw), _tid, (file), (line));		\
 	else 								\
 		LOCKSTAT_PROFILE_OBTAIN_RWLOCK_SUCCESS(rw__acquire, rw,	\
@@ -112,7 +112,7 @@
 	else {								\
 		LOCKSTAT_PROFILE_RELEASE_RWLOCK(rw__release, rw,	\
 		    LOCKSTAT_WRITER);					\
-		if (!_rw_write_unlock((rw), _tid))			\
+		if ((rw)->rw_lock != _tid || !_rw_write_unlock((rw), _tid))\
 			_rw_wunlock_hard((rw), _tid, (file), (line));	\
 	}								\
 } while (0)

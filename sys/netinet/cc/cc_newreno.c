@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_newreno.c 292012 2015-12-09 08:53:41Z hiren $");
+__FBSDID("$FreeBSD: head/sys/netinet/cc/cc_newreno.c 294931 2016-01-27 17:59:39Z glebius $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -62,10 +62,10 @@ __FBSDID("$FreeBSD: head/sys/netinet/cc/cc_newreno.c 292012 2015-12-09 08:53:41Z
 
 #include <net/vnet.h>
 
-#include <netinet/cc.h>
+#include <netinet/tcp.h>
 #include <netinet/tcp_seq.h>
 #include <netinet/tcp_var.h>
-
+#include <netinet/cc/cc.h>
 #include <netinet/cc/cc_module.h>
 
 static void	newreno_ack_received(struct cc_var *ccv, uint16_t type);

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_cpufreq.c 290667 2015-11-11 00:45:41Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_cpufreq.c 300421 2016-05-22 13:58:32Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -82,7 +82,7 @@ __FBSDID("$FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_cpufreq.c 290667 2015-
 #define	MSG_ERROR	  -999999999
 #define	MHZSTEP			 100
 #define	HZSTEP	   (MHZ2HZ(MHZSTEP))
-#define	TZ_ZEROC		2732
+#define	TZ_ZEROC		2731
 
 #define VC_LOCK(sc) do {			\
 		sema_wait(&vc_sema);		\

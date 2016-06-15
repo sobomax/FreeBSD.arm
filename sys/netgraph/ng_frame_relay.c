@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_frame_relay.c 273910 2014-10-31 16:00:45Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_frame_relay.c 298813 2016-04-29 21:25:05Z pfg $
  * $Whistle: ng_frame_relay.c,v 1.20 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -364,7 +364,7 @@ ngfrm_rcvdata(hook_p hook, item_p item)
 	data = mtod(m, char *);
 
 	/*
-	 * Shift the lowest bits into the address field untill we are done.
+	 * Shift the lowest bits into the address field until we are done.
 	 * First byte is MSBits of addr so work backwards.
 	 */
 	switch (alen) {

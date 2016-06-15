@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.initdiskless 243374 2012-11-21 18:12:28Z crees $
+# $FreeBSD: head/etc/rc.initdiskless 298887 2016-05-01 16:43:22Z pfg $
 
 # On entry to this script the entire system consists of a read-only root
 # mounted via NFS. The kernel has run BOOTP and configured an interface
@@ -103,7 +103,7 @@
 #		will be created. In case of multiple entries for the same
 #		directory M, the last one in the scanning order is used.
 #		NOTE: If you only need to create a memory filesystem but not
-#		initialize it from a template, it is preferrable to specify
+#		initialize it from a template, it is preferable to specify
 #		it in fstab e.g. as  "md /tmp mfs -s=30m,rw 0 0"
 #
 # /conf/T/SUBDIR.cpio.gz

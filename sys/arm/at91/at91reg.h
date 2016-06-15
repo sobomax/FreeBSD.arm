@@ -24,7 +24,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/arm/at91/at91reg.h 238331 2012-07-10 02:39:03Z imp $
+ * $FreeBSD: head/sys/arm/at91/at91reg.h 299069 2016-05-04 15:48:59Z pfg $
  */
 
 #ifndef _AT91REG_H_
@@ -39,9 +39,9 @@
 #define	AT91_PA_BASE		0xf0000000
 
 /* A few things that we count on being the same
- * throught the whole family of SOCs */
+ * throughout the whole family of SOCs */
 
-/* SYSC System Controler */
+/* SYSC System Controller */
 /* System Registers */
 #define	AT91_SYS_BASE	0xffff000
 #define	AT91_SYS_SIZE	0x1000

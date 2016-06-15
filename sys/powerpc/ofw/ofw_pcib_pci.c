@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_pcib_pci.c 261351 2014-02-01 17:17:35Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_pcib_pci.c 298711 2016-04-27 16:39:05Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,10 +114,7 @@ ofw_pcib_pci_attach(device_t dev)
 	    sizeof(cell_t));
 
 	pcib_attach_common(dev);
-
-	device_add_child(dev, "pci", -1);
-
-	return (bus_generic_attach(dev));
+	return (pcib_attach_child(dev));
 }
 
 static phandle_t

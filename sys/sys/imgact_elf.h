@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact_elf.h 289706 2015-10-21 16:32:01Z ed $
+ * $FreeBSD: head/sys/sys/imgact_elf.h 298981 2016-05-03 15:14:17Z pfg $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -41,7 +41,7 @@ struct image_params;
 struct thread;
 
 /*
- * Structure used to pass infomation from the loader to the
+ * Structure used to pass information from the loader to the
  * stack fixup routine.
  */
 typedef struct {

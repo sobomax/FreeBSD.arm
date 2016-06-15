@@ -1,5 +1,5 @@
 /*	$NetBSD: rpcent.h,v 1.1 2000/06/02 22:57:56 fvdl Exp $	*/
-/*	$FreeBSD: head/include/rpc/rpcent.h 258578 2013-11-25 19:04:36Z hrs $ */
+/*	$FreeBSD: head/include/rpc/rpcent.h 296133 2016-02-26 23:25:21Z pfg $ */
 
 /*-
  * Copyright (c) 2009, Sun Microsystems, Inc.
@@ -56,7 +56,7 @@ __BEGIN_DECLS
  * These interfaces are currently implemented through nsswitch and are
  * MT-safe.
  */
-extern struct rpcent *getrpcbyname(char *);
+extern struct rpcent *getrpcbyname(const char *);
 extern struct rpcent *getrpcbynumber(int);
 extern struct rpcent *getrpcent(void);
 extern void setrpcent(int);

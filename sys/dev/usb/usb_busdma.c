@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_busdma.c 290489 2015-11-07 11:40:35Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_busdma.c 298433 2016-04-21 19:57:40Z pfg $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -467,22 +467,27 @@ usb_pc_common_mem_cb(void *arg, bus_dma_segment_t *segs,
 
 	off = 0;
 	pg = pc->page_start;
-	pg->physaddr = segs->ds_addr & ~(USB_PAGE_SIZE - 1);
+	pg->physaddr = rounddown2(segs->ds_addr, USB_PAGE_SIZE);
 	rem = segs->ds_addr & (USB_PAGE_SIZE - 1);
 	pc->page_offset_buf = rem;
 	pc->page_offset_end += rem;
 #ifdef USB_DEBUG
-	if (nseg > 1 &&
-	    ((segs->ds_addr + segs->ds_len) & (USB_PAGE_SIZE - 1)) !=
-	    ((segs + 1)->ds_addr & (USB_PAGE_SIZE - 1))) {
-		/*
-		 * This check verifies there is no page offset hole
-		 * between the first and second segment. See the
-		 * BUS_DMA_KEEP_PG_OFFSET flag.
-		 */
-		DPRINTFN(0, "Page offset was not preserved\n");
-		error = 1;
-		goto done;
+	if (nseg > 1) {
+		int x;
+
+		for (x = 0; x != nseg - 1; x++) {
+			if (((segs[x].ds_addr + segs[x].ds_len) & (USB_PAGE_SIZE - 1)) ==
+			    ((segs[x + 1].ds_addr & (USB_PAGE_SIZE - 1))))
+				continue;
+			/*
+			 * This check verifies there is no page offset
+			 * hole between any of the segments. See the
+			 * BUS_DMA_KEEP_PG_OFFSET flag.
+			 */
+			DPRINTFN(0, "Page offset was not preserved\n");
+			error = 1;
+			goto done;
+		}
 	}
 #endif
 	while (pc->ismultiseg) {
@@ -497,7 +502,7 @@ usb_pc_common_mem_cb(void *arg, bus_dma_segment_t *segs,
 				break;
 		}
 		pg++;
-		pg->physaddr = (segs->ds_addr + off) & ~(USB_PAGE_SIZE - 1);
+		pg->physaddr = rounddown2(segs->ds_addr + off, USB_PAGE_SIZE);
 	}
 
 done:

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/pc98/cbus/scterm-sck.c 228471 2011-12-13 14:06:01Z ed $
+ * $FreeBSD: head/sys/pc98/cbus/scterm-sck.c 298352 2016-04-20 15:45:55Z pfg $
  */
 
 #include "opt_syscons.h"
@@ -819,7 +819,7 @@ scterm_scan_esc(scr_stat *scp, term_stat *tcp, u_char c)
 			v2 = tcp->param[2];
 			switch (n) {
 			case 1:	/* flags only */
-				if (v0 < sizeof(cattrs)/sizeof(cattrs[0]))
+				if (v0 < nitems(cattrs))
 					v0 = cattrs[v0];
 				else	/* backward compatibility */
 					v0 = cattrs[v0 & 0x3];
@@ -884,7 +884,7 @@ scterm_scan_esc(scr_stat *scp, term_stat *tcp, u_char c)
 				v0 = 0;
 				/* FALL THROUGH */
 			case 1:
-				if (v0 < sizeof(tcattrs)/sizeof(tcattrs[0]))
+				if (v0 < nitems(tcattrs))
 					sc_change_cursor_shape(scp,
 					    tcattrs[v0], -1, -1);
 				break;

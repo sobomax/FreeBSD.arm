@@ -32,9 +32,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)tcp.4	8.1 (Berkeley) 6/5/93
-.\" $FreeBSD: head/share/man/man4/tcp.4 290043 2015-10-27 09:43:05Z hiren $
+.\" $FreeBSD: head/share/man/man4/tcp.4 300247 2016-05-19 23:03:07Z truckman $
 .\"
-.Dd October 27, 2015
+.Dd May 19, 2016
 .Dt TCP 4
 .Os
 .Sh NAME
@@ -137,6 +137,11 @@ send window size,
 receive window size,
 and
 bandwidth-controlled window space.
+.It Dv TCP_CCALGOOPT
+Set or query congestion control algorithm specific parameters.
+See
+.Xr mod_cc 4
+for details.
 .It Dv TCP_CONGESTION
 Select or query the congestion control algorithm that TCP will use for the
 connection.
@@ -525,6 +530,17 @@ Defaults to 60 seconds.
 Enable support for TCP Explicit Congestion Notification (ECN).
 ECN allows a TCP sender to reduce the transmission rate in order to
 avoid packet drops.
+Settings:
+.Bl -tag -compact
+.It 0
+Disable ECN.
+.It 1
+Allow incoming connections to request ECN.
+Outgoing connections will request ECN.
+.It 2
+Allow incoming connections to request ECN.
+Outgoing connections will not request ECN.
+.El
 .It Va ecn.maxretries
 Number of retries (SYN or SYN/ACK retransmits) before disabling ECN on a
 specific connection.

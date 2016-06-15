@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libbz2/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/libbz2/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	lib${LIB}
 BZ2DIR=	${.CURDIR}/../../contrib/bzip2
 .PATH: ${BZ2DIR}
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/src.libnames.mk 292037 2015-12-10 00:07:11Z bdrewery $
+# $FreeBSD: head/share/mk/src.libnames.mk 301226 2016-06-02 19:06:04Z lidl $
 #
 # The include file <src.libnames.mk> define library names suitable
 # for INTERNALLIB and PRIVATELIB definition
@@ -16,6 +16,7 @@ _PRIVATELIBS=	\
 		atf_c \
 		atf_cxx \
 		bsdstat \
+		devdctl \
 		event \
 		heimipcc \
 		heimipcs \
@@ -39,6 +40,7 @@ _INTERNALLIBS=	\
 		openbsd \
 		opts \
 		parse \
+		pe \
 		readline \
 		sl \
 		sm \
@@ -67,8 +69,12 @@ _LIBRARIES=	\
 		c_pic \
 		calendar \
 		cam \
-		capsicum \
 		casper \
+		cap_dns \
+		cap_grp \
+		cap_pwd \
+		cap_random \
+		cap_sysctl \
 		com_err \
 		compiler_rt \
 		crypt \
@@ -77,6 +83,7 @@ _LIBRARIES=	\
 		cuse \
 		cxxrt \
 		devctl \
+		devdctl \
 		devinfo \
 		devstat \
 		dialog \
@@ -148,7 +155,9 @@ _LIBRARIES=	\
 		ssp_nonshared \
 		stdthreads \
 		supcplusplus \
+		sysdecode \
 		tacplus \
+		termcap \
 		termcapw \
 		ufs \
 		ugidfw \
@@ -168,6 +177,12 @@ _LIBRARIES=	\
 		zfs_core \
 		zfs \
 		zpool \
+
+.if ${MK_BLACKLIST} != "no"
+_LIBRARIES+= \
+		blacklist \
+
+.endif
 
 .if ${MK_OFED} != "no"
 _LIBRARIES+= \
@@ -191,6 +206,9 @@ _LIBRARIES+= \
 # 2nd+ order consumers.  Auto-generating this would be better.
 _DP_80211=	sbuf bsdxml
 _DP_archive=	z bz2 lzma bsdxml
+.if ${MK_BLACKLIST} != "no"
+_DP_blacklist+=	pthread
+.endif
 .if ${MK_OPENSSL} != "no"
 _DP_archive+=	crypto
 .else
@@ -208,9 +226,13 @@ _DP_bsnmp=	crypto
 .endif
 _DP_geom=	bsdxml sbuf
 _DP_cam=	sbuf
-_DP_casper=	capsicum nv pjdlog
-_DP_capsicum=	nv
 _DP_kvm=	elf
+_DP_casper=	nv
+_DP_cap_dns=	nv
+_DP_cap_grp=	nv
+_DP_cap_pwd=	nv
+_DP_cap_random=	nv
+_DP_cap_sysctl=	nv
 _DP_pjdlog=	util
 _DP_opie=	md
 _DP_usb=	pthread
@@ -301,6 +323,18 @@ _DP_zfs=	md pthread umem util uutil m nvpair avl bsdxml geom nvpair z \
 		zfs_core
 _DP_zfs_core=	nvpair
 _DP_zpool=	md pthread z nvpair avl umem
+.if ${MK_OFED} != "no"
+_DP_cxgb4=	ibverbs pthread
+_DP_ibcm=	ibverbs
+_DP_ibmad=	ibcommon ibumad
+_DP_ibumad=	ibcommon
+_DP_mlx4=	ibverbs pthread
+_DP_mthca=	ibverbs pthread
+_DP_opensm=	pthread
+_DP_osmcomp=	pthread
+_DP_osmvendor=	ibumad opensm osmcomp pthread
+_DP_rdmacm=	ibverbs
+.endif
 
 # Define special cases
 LDADD_supcplusplus=	-lsupc++
@@ -346,8 +380,9 @@ DPADD_atf_cxx+=	${DPADD_atf_c}
 LDADD_atf_cxx+=	${LDADD_atf_c}
 
 # Detect LDADD/DPADD that should be LIBADD, before modifying LDADD here.
+_BADLDADD=
 .for _l in ${LDADD:M-l*:N-l*/*:C,^-l,,}
-.if ${_LIBRARIES:M${_l}}
+.if ${_LIBRARIES:M${_l}} && !${_PRIVATELIBS:M${_l}}
 _BADLDADD+=	${_l}
 .endif
 .endfor
@@ -363,6 +398,9 @@ LDADD+=		${LDADD_${_l}}
 # INTERNALLIB definitions.
 LIBELFTCDIR=	${OBJTOP}/lib/libelftc
 LIBELFTC?=	${LIBELFTCDIR}/libelftc.a
+
+LIBPEDIR=	${OBJTOP}/lib/libpe
+LIBPE?=		${LIBPEDIR}/libpe.a
 
 LIBREADLINEDIR=	${OBJTOP}/gnu/lib/libreadline/readline
 LIBREADLINE?=	${LIBREADLINEDIR}/libreadline.a
@@ -470,9 +508,18 @@ LIBKDCDIR=	${OBJTOP}/kerberos5/lib/libkdc
 LIBKRB5DIR=	${OBJTOP}/kerberos5/lib/libkrb5
 LIBROKENDIR=	${OBJTOP}/kerberos5/lib/libroken
 LIBWINDDIR=	${OBJTOP}/kerberos5/lib/libwind
+LIBATF_CDIR=	${OBJTOP}/lib/atf/libatf-c
+LIBATF_CXXDIR=	${OBJTOP}/lib/atf/libatf-c++
 LIBALIASDIR=	${OBJTOP}/lib/libalias/libalias
+LIBBLACKLISTDIR=	${OBJTOP}/lib/libblacklist
 LIBBLOCKSRUNTIMEDIR=	${OBJTOP}/lib/libblocksruntime
 LIBBSNMPDIR=	${OBJTOP}/lib/libbsnmp/libbsnmp
+LIBCASPERDIR=	${OBJTOP}/lib/libcasper/libcasper
+LIBCAP_DNSDIR=	${OBJTOP}/lib/libcasper/services/cap_dns
+LIBCAP_GRPDIR=	${OBJTOP}/lib/libcasper/services/cap_grp
+LIBCAP_PWDDIR=	${OBJTOP}/lib/libcasper/services/cap_pwd
+LIBCAP_RANDOMDIR=	${OBJTOP}/lib/libcasper/services/cap_random
+LIBCAP_SYSCTLDIR=	${OBJTOP}/lib/libcasper/services/cap_sysctl
 LIBBSDXMLDIR=	${OBJTOP}/lib/libexpat
 LIBKVMDIR=	${OBJTOP}/lib/libkvm
 LIBPTHREADDIR=	${OBJTOP}/lib/libthr
@@ -516,6 +563,8 @@ _BADLIBADD+= ${_l}
     (!defined(_DP_${LIB}) || ${LIBADD:O:u} != ${_DP_${LIB}:O:u})
 .error ${.CURDIR}: Missing or incorrect _DP_${LIB} entry in ${_this:T}.  Should match LIBADD for ${LIB} ('${LIBADD}' vs '${_DP_${LIB}}')
 .endif
+# Note that OBJTOP is not yet defined here but for the purpose of the check
+# it is fine as it resolves to the SRC directory.
 .if !defined(LIB${LIB:tu}DIR) || !exists(${SRCTOP}/${LIB${LIB:tu}DIR:S,^${OBJTOP}/,,})
 .error ${.CURDIR}: Missing or incorrect value for LIB${LIB:tu}DIR in ${_this:T}: ${LIB${LIB:tu}DIR:S,^${OBJTOP}/,,}
 .endif

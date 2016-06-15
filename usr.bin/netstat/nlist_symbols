@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/netstat/nlist_symbols 287407 2015-09-02 18:51:36Z hrs $
+# $FreeBSD: head/usr.bin/netstat/nlist_symbols 296882 2016-03-15 00:19:30Z glebius $
 #
 # module_name	symbol_name
 all	_ahstat
@@ -44,6 +44,7 @@ all	_sctpstat
 all	_sfstat
 all	_tcbinfo
 all	_tcpstat
+all	_tcps_states
 all	_udbinfo
 all	_udpstat
 all	_unp_count

@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_rtc.c 227723 2011-11-19 14:10:16Z lstewart $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_rtc.c 299064 2016-05-04 13:48:59Z royger $");
 
 #include "opt_ffclock.h"
 
@@ -84,7 +84,7 @@ clock_register(device_t dev, long res)	/* res has units of microseconds */
 {
 
 	if (clock_dev != NULL) {
-		if (clock_res > res) {
+		if (clock_res <= res) {
 			if (bootverbose)
 				device_printf(dev, "not installed as "
 				    "time-of-day clock: clock %s has higher "

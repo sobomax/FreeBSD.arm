@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptrr/hptrr_os_bsd.c 274819 2014-11-21 21:01:24Z smh $
+ * $FreeBSD: head/sys/dev/hptrr/hptrr_os_bsd.c 296135 2016-02-27 03:34:01Z jhibbits $
  */
 #include <dev/hptrr/hptrr_config.h>
 /* $Id: os_bsd.c,v 1.11 2005/06/03 14:06:38 kdh Exp $
@@ -98,8 +98,8 @@ void *os_map_pci_bar(
     else
     	hba->pcibar[index].type = SYS_RES_MEMORY;
 
-    hba->pcibar[index].res = bus_alloc_resource(hba->pcidev,
-		hba->pcibar[index].type, &hba->pcibar[index].rid, 0, ~0, length, RF_ACTIVE);
+    hba->pcibar[index].res = bus_alloc_resource_any(hba->pcidev,
+		hba->pcibar[index].type, &hba->pcibar[index].rid, RF_ACTIVE);
 	
 	hba->pcibar[index].base = (char *)rman_get_virtual(hba->pcibar[index].res) + offset;
 	return hba->pcibar[index].base;

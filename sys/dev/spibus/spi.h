@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/spibus/spi.h 278957 2015-02-18 14:33:33Z imp $
+ * $FreeBSD: head/sys/dev/spibus/spi.h 300713 2016-05-26 07:02:20Z adrian $
  */
 
 struct spi_command {
@@ -36,5 +36,7 @@ struct spi_command {
 	void	*rx_data;
 	uint32_t rx_data_sz;
 };
+
+#define	SPI_COMMAND_INITIALIZER	{ 0 }
 
 #define	SPI_CHIP_SELECT_HIGH	0x1		/* Chip select high (else low) */

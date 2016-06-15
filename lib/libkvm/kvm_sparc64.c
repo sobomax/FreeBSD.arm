@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_sparc64.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_sparc64.c 298841 2016-04-30 09:31:01Z ngie $");
 
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -134,7 +134,6 @@ _sparc64_initvtop(kvm_t *kd)
 	struct sparc64_dump_reg	*regs;
 	struct vmstate *vm;
 	size_t regsz;
-	uint64_t pa;
 	int i;
 
 	vm = (struct vmstate *)_kvm_malloc(kd, sizeof(*vm));
@@ -151,7 +150,6 @@ _sparc64_initvtop(kvm_t *kd)
 	hdr.dh_tsb_size = be64toh(hdr.dh_tsb_size);
 	hdr.dh_tsb_mask = be64toh(hdr.dh_tsb_mask);
 	hdr.dh_nregions = be32toh(hdr.dh_nregions);
-	pa = hdr.dh_tsb_pa;
 
 	regsz = hdr.dh_nregions * sizeof(*regs);
 	regs = _kvm_malloc(kd, regsz);

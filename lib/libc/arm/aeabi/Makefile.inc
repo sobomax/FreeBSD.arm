@@ -1,17 +1,18 @@
-# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 284451 2015-06-16 16:40:25Z andrew $
+# $FreeBSD: head/lib/libc/arm/aeabi/Makefile.inc 300119 2016-05-18 06:01:18Z imp $
 
 .PATH: ${LIBC_SRCTOP}/arm/aeabi
 
 SRCS+=	aeabi_atexit.c		\
 	aeabi_unwind_cpp.c	\
 	aeabi_unwind_exidx.c
-.if ${MACHINE_ARCH:Marm*hf*} == ""
+.if (${MACHINE_ARCH:Marmv6*} && defined(CPUTYPE) && ${CPUTYPE:M*soft*} != "") || \
+	${MACHINE_ARCH:Marmv6*} == ""
 SRCS+=	aeabi_asm_double.S	\
 	aeabi_asm_float.S	\
 	aeabi_double.c		\
 	aeabi_float.c
 .endif
-.if ${MACHINE_ARCH:Marmv6*}
+.if ${MACHINE_ARCH:Marmv6*} && (!defined(CPUTYPE) || ${CPUTYPE:M*soft*} == "")
 SRCS+=	aeabi_vfp_double.S	\
 	aeabi_vfp_float.S
 .endif

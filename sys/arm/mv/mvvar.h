@@ -34,7 +34,7 @@
  *
  * from: FreeBSD: //depot/projects/arm/src/sys/arm/xscale/pxa2x0/pxa2x0var.h, rev 1
  *
- * $FreeBSD: head/sys/arm/mv/mvvar.h 281087 2015-04-04 22:05:43Z andrew $
+ * $FreeBSD: head/sys/arm/mv/mvvar.h 298627 2016-04-26 11:53:37Z br $
  */
 
 #ifndef _MVVAR_H_
@@ -44,7 +44,6 @@
 #include <machine/bus.h>
 #include <vm/vm.h>
 #include <vm/pmap.h>
-#include <machine/vm.h>
 
 #include <dev/ofw/openfirm.h>
 
@@ -109,7 +108,7 @@ uint32_t get_l2clk(void);
 uint32_t read_cpu_ctrl(uint32_t);
 void write_cpu_ctrl(uint32_t, uint32_t);
 
-#if defined(SOC_MV_ARMADAXP)
+#if defined(SOC_MV_ARMADAXP) || defined(SOC_MV_ARMADA38X)
 uint32_t read_cpu_mp_clocks(uint32_t reg);
 void write_cpu_mp_clocks(uint32_t reg, uint32_t val);
 uint32_t read_cpu_misc(uint32_t reg);
@@ -136,10 +135,10 @@ uint32_t mv_drbl_get_msg(int mnr, int dir, int unit);
 
 int	mv_msi_data(int irq, uint64_t *addr, uint32_t *data);
 
-struct arm_devmap_entry;
+struct devmap_entry;
 
-int mv_pci_devmap(phandle_t, struct arm_devmap_entry *, vm_offset_t,
+int mv_pci_devmap(phandle_t, struct devmap_entry *, vm_offset_t,
     vm_offset_t);
-int fdt_localbus_devmap(phandle_t, struct arm_devmap_entry *, int, int *);
+int fdt_localbus_devmap(phandle_t, struct devmap_entry *, int, int *);
 
 #endif /* _MVVAR_H_ */

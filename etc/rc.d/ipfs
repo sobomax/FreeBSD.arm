@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ipfs 255450 2013-09-10 13:48:33Z cy $
+# $FreeBSD: head/etc/rc.d/ipfs 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: ipfs
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="ipfs"
+desc="Saves and restores information for NAT and state tables"
 rcvar="ipfs_enable"
 start_cmd="ipfs_start"
 stop_cmd="ipfs_stop"

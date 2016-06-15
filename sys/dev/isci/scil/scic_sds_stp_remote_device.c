@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/scil/scic_sds_stp_remote_device.c 231136 2012-02-07 17:43:58Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/scil/scic_sds_stp_remote_device.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /**
  * @file
@@ -424,7 +424,7 @@ SCI_STATUS scic_sds_stp_remote_device_ready_ncq_substate_event_handler(
          this_device, event_code, sci_base_state_machine_get_state(&this_device->ready_substate_machine)
       ));
 
-      // Since we didnt expect to get here start the device again.
+      // Since we didn't expect to get here start the device again.
       status = scic_sds_remote_device_resume(this_device);
       break;
 

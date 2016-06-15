@@ -1,4 +1,4 @@
-#$FreeBSD: head/sys/modules/igb/Makefile 269540 2014-08-04 22:37:02Z imp $
+#$FreeBSD: head/sys/modules/igb/Makefile 299007 2016-05-03 22:01:48Z pfg $
 
 .PATH:  ${.CURDIR}/../../dev/e1000
 KMOD    = if_igb
@@ -17,7 +17,7 @@ CFLAGS += -I${.CURDIR}/../../dev/e1000 -DSMP
 
 # IGB_LEGACY_TX will override the stack if_transmit path and
 # instead use the older if_start non-multiqueue capable interface.
-# This might be desireable for testing, or to enable the use of
+# This might be desirable for testing, or to enable the use of
 # ALTQ. 
 #CFLAGS  += -DIGB_LEGACY_TX
 

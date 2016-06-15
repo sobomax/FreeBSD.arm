@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)rcmd.c	8.3 (Berkeley) 3/26/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/rcmd.c 288046 2015-09-20 21:21:17Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/net/rcmd.c 297790 2016-04-10 19:33:58Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -207,7 +207,7 @@ rcmd_af(char **ahost, int rport, const char *locuser, const char *remuser,
 		}
 	}
 	lport--;
-	if (fd2p == 0) {
+	if (fd2p == NULL) {
 		_write(s, "", 1);
 		lport = 0;
 	} else {

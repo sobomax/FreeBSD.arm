@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/identcpu.c 291425 2015-11-28 12:11:44Z mmel $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/identcpu.c 295252 2016-02-04 12:11:18Z mmel $");
 #include <sys/systm.h>
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -321,7 +321,6 @@ print_enadis(int enadis, char *s)
 	printf(" %s %sabled", s, (enadis == 0) ? "dis" : "en");
 }
 
-extern int ctrl;
 enum cpu_class cpu_class = CPU_CLASS_NONE;
 
 u_int cpu_pfr(int num)
@@ -388,9 +387,10 @@ void
 identify_arm_cpu(void)
 {
 	u_int cpuid, reg, size, sets, ways;
-	u_int8_t type, linesize;
+	u_int8_t type, linesize, ctrl;
 	int i;
 
+	ctrl = cpu_get_control();
 	cpuid = cpu_ident();
 
 	if (cpuid == 0) {

@@ -33,7 +33,7 @@
 .\" ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 .\" POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/bridge.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/bridge.4 295368 2016-02-07 13:33:18Z dteske $
 .\"
 .Dd July 27, 2013
 .Dt IF_BRIDGE 4
@@ -425,8 +425,8 @@ cloned_interfaces="bridge0"
 ifconfig_bridge0="addm wlan0 addm fxp0 up"
 .Ed
 .Pp
-For the bridge to forward packets all member interfaces and the bridge need
-to be up.
+For the bridge to forward packets,
+all member interfaces and the bridge need to be up.
 The above example would also require:
 .Bd -literal -offset indent
 create_args_wlan0="wlanmode hostap"

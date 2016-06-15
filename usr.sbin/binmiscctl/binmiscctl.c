@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/binmiscctl/binmiscctl.c 278827 2015-02-15 23:58:57Z sbruno $");
+__FBSDID("$FreeBSD: head/usr.sbin/binmiscctl/binmiscctl.c 299687 2016-05-13 17:48:04Z truckman $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -416,7 +416,7 @@ main(int argc, char **argv)
 
 	argc--, argv++;
 	cmd = demux_cmd(argc, argv);
-	if (cmd == -1)
+	if (cmd < 0)
 		usage("Error: Unknown command \"%s\"", argv[0]);
 	argc--, argv++;
 

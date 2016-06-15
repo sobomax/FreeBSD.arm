@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pcf/pcf.c 289093 2015-10-09 22:49:50Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/pcf/pcf.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -466,7 +466,7 @@ pcf_read(device_t dev, char *buf, int len, int *read, int last,
 
 		len --;
 		bytes ++;
-	};
+	}
 
 error:
 	*read = bytes;

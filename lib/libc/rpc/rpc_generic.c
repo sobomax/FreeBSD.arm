@@ -33,7 +33,7 @@
 
 /* #pragma ident	"@(#)rpc_generic.c	1.17	94/04/24 SMI" */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_generic.c 288113 2015-09-22 15:40:07Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_generic.c 298226 2016-04-18 21:05:15Z avos $");
 
 /*
  * rpc_generic.c, Miscl routines for RPC.
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_generic.c 288113 2015-09-22 15:40:07Z 
 
 #include "namespace.h"
 #include "reentrant.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/time.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -28,6 +28,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	DereferenceChecker.cpp \
 	DirectIvarAssignment.cpp \
 	DivZeroChecker.cpp \
+	DynamicTypeChecker.cpp \
 	DynamicTypePropagation.cpp \
 	ExprInspectionChecker.cpp \
 	FixedAddressChecker.cpp \
@@ -35,6 +36,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	IdenticalExprChecker.cpp \
 	IvarInvalidationChecker.cpp \
 	LLVMConventionsChecker.cpp \
+	LocalizationChecker.cpp \
 	MacOSKeychainAPIChecker.cpp \
 	MacOSXAPIChecker.cpp \
 	MallocChecker.cpp \
@@ -44,12 +46,14 @@ SRCS=	AllocationDiagnostics.cpp \
 	NSErrorChecker.cpp \
 	NoReturnFunctionChecker.cpp \
 	NonNullParamChecker.cpp \
+	NullabilityChecker.cpp \
 	ObjCAtSyncChecker.cpp \
 	ObjCContainersASTChecker.cpp \
 	ObjCContainersChecker.cpp \
 	ObjCMissingSuperCallChecker.cpp \
 	ObjCSelfInitChecker.cpp \
 	ObjCUnusedIVarsChecker.cpp \
+	PaddingChecker.cpp \
 	PointerArithChecker.cpp \
 	PointerSubChecker.cpp \
 	PthreadLockChecker.cpp \
@@ -70,6 +74,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	UnixAPIChecker.cpp \
 	UnreachableCodeChecker.cpp \
 	VLASizeChecker.cpp \
+	VforkChecker.cpp \
 	VirtualCallChecker.cpp
 
 .if ${MK_CLANG_EXTRAS} != "no"

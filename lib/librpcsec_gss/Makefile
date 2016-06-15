@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/librpcsec_gss/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/librpcsec_gss/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	rpcsec_gss
 SHLIB_MAJOR= 1
 SRCS+=	rpcsec_gss.c rpcsec_gss_prot.c rpcsec_gss_conf.c rpcsec_gss_misc.c \

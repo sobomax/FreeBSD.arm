@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clstate.c 268115 2014-07-01 20:47:16Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clstate.c 298788 2016-04-29 16:07:25Z pfg $");
 
 /*
  * These functions implement the client side state handling for NFSv4.
@@ -716,7 +716,7 @@ nfscl_openrelease(struct nfsclopen *op, int error, int candelete)
 /*
  * Called to get a clientid structure. It will optionally lock the
  * client data structures to do the SetClientId/SetClientId_confirm,
- * but will release that lock and return the clientid with a refernce
+ * but will release that lock and return the clientid with a reference
  * count on it.
  * If the "cred" argument is NULL, a new clientid should not be created.
  * If the "p" argument is NULL, a SetClientID/SetClientIDConfirm cannot
@@ -1297,7 +1297,7 @@ nfscl_checkwritelocked(vnode_t vp, struct flock *fl,
 		break;
 	default:
 		return (1);
-	};
+	}
 	if (fl->l_len != 0) {
 		end = off + fl->l_len;
 		if (end < off)
@@ -3507,7 +3507,7 @@ nfscl_docb(struct nfsrv_descript *nd, NFSPROC_T *p)
 				error = NFSERR_NOTSUPP;
 			}
 			break;
-		};
+		}
 		if (error) {
 			if (error == EBADRPC || error == NFSERR_BADXDR) {
 				nd->nd_repstat = NFSERR_BADXDR;

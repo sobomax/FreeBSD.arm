@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/iscontrol/fsm.c 256659 2013-10-17 01:59:08Z kevlo $");
+__FBSDID("$FreeBSD: head/sbin/iscontrol/fsm.c 300547 2016-05-24 00:57:11Z truckman $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -372,7 +372,7 @@ doCAM(isess_t *sess)
 	  debug(2, "pathstr=%s", pathstr);
 
 	  ccb = cam_getccb(sess->camdev);
-	  bzero(&(&ccb->ccb_h)[1], sizeof(struct ccb_relsim) - sizeof(struct ccb_hdr));
+	  CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->crs);
 	  ccb->ccb_h.func_code = XPT_REL_SIMQ;
 	  ccb->crs.release_flags = RELSIM_ADJUST_OPENINGS;
 	  ccb->crs.openings = sess->op->tags;

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cpuctl/cpuctl.c 275960 2014-12-20 16:40:49Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/cpuctl/cpuctl.c 300424 2016-05-22 15:22:45Z ache $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -126,7 +126,7 @@ set_cpu(int cpu, struct thread *td)
 	sched_bind(td, cpu);
 	thread_unlock(td);
 	KASSERT(td->td_oncpu == cpu,
-	    ("[cpuctl,%d]: cannot bind to target cpu %d", __LINE__, cpu));
+	    ("[cpuctl,%d]: cannot bind to target cpu %d on cpu %d", __LINE__, cpu, td->td_oncpu));
 }
 
 static void

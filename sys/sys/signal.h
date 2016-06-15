@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: head/sys/sys/signal.h 233519 2012-03-26 19:12:09Z rmh $
+ * $FreeBSD: head/sys/sys/signal.h 301071 2016-05-31 19:05:41Z ed $
  */
 
 #ifndef _SYS_SIGNAL_H_
@@ -44,6 +44,23 @@
 
 #include <machine/_limits.h>	/* __MINSIGSTKSZ */
 #include <machine/signal.h>	/* sig_atomic_t; trap codes; sigcontext */
+
+#if __POSIX_VISIBLE >= 200809
+
+#include <sys/_pthreadtypes.h>
+#include <sys/_timespec.h>
+
+#ifndef _SIZE_T_DECLARED
+typedef	__size_t	size_t;
+#define	_SIZE_T_DECLARED
+#endif
+
+#ifndef _UID_T_DECLARED
+typedef	__uid_t		uid_t;
+#define	_UID_T_DECLARED
+#endif
+
+#endif /* __POSIX_VISIBLE >= 200809 */
 
 /*
  * System defined signals.
@@ -160,6 +177,9 @@ union sigval {
 #endif
 
 #if __POSIX_VISIBLE >= 199309
+
+struct pthread_attr;
+
 struct sigevent {
 	int	sigev_notify;		/* Notification type */
 	int	sigev_signo;		/* Signal number */
@@ -168,7 +188,7 @@ struct sigevent {
 		__lwpid_t	_threadid;
 		struct {
 			void (*_function)(union sigval);
-			void *_attribute; /* pthread_attr_t * */
+			struct pthread_attr **_attribute;
 		} _sigev_thread;
 		unsigned short _kevent_flags;
 		long __spare__[8];
@@ -190,6 +210,7 @@ struct sigevent {
 #define	SIGEV_KEVENT	3		/* Generate a kevent. */
 #define	SIGEV_THREAD_ID	4		/* Send signal to a kernel thread. */
 #endif
+
 #endif /* __POSIX_VISIBLE >= 199309 */
 
 #if __POSIX_VISIBLE >= 199309 || __XSI_VISIBLE
@@ -354,24 +375,27 @@ typedef	void __siginfohandler_t(int, struct __siginfo *, void *);
 #endif
 
 #if __XSI_VISIBLE
-/*
- * Structure used in sigaltstack call.
- */
 #if __BSD_VISIBLE
-typedef	struct sigaltstack {
-#else
-typedef	struct {
+#define	__stack_t sigaltstack
 #endif
-	char	*ss_sp;			/* signal stack base */
-	__size_t ss_size;		/* signal stack length */
-	int	ss_flags;		/* SS_DISABLE and/or SS_ONSTACK */
-} stack_t;
+typedef	struct __stack_t stack_t;
 
 #define	SS_ONSTACK	0x0001	/* take signal on alternate stack */
 #define	SS_DISABLE	0x0004	/* disable taking signals on alternate stack */
 #define	MINSIGSTKSZ	__MINSIGSTKSZ		/* minimum stack size */
 #define	SIGSTKSZ	(MINSIGSTKSZ + 32768)	/* recommended stack size */
 #endif
+
+/*
+ * Structure used in sigaltstack call.  Its definition is always
+ * needed for __ucontext.  If __BSD_VISIBLE is defined, the structure
+ * tag is actually sigaltstack.
+ */
+struct __stack_t {
+	void	*ss_sp;			/* signal stack base */
+	__size_t ss_size;		/* signal stack length */
+	int	ss_flags;		/* SS_DISABLE and/or SS_ONSTACK */
+};
 
 #if __BSD_VISIBLE
 /*
@@ -406,8 +430,7 @@ struct osigcontext {
  * Structure used in sigstack call.
  */
 struct sigstack {
-	/* XXX ss_sp's type should be `void *'. */
-	char	*ss_sp;			/* signal stack pointer */
+	void	*ss_sp;			/* signal stack pointer */
 	int	ss_onstack;		/* current status */
 };
 #endif

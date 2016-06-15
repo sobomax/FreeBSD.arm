@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)exec.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/exec.h 288944 2015-10-06 18:07:00Z cem $
+ * $FreeBSD: head/sys/sys/exec.h 299482 2016-05-11 21:14:36Z emaste $
  */
 
 #ifndef _SYS_EXEC_H_
@@ -58,13 +58,6 @@ struct ps_strings {
 	unsigned int ps_nenvstr; /* the number of environment strings */
 };
 
-/*
- * Address of ps_strings structure (in user space).
- * Prefer the kern.ps_strings or kern.proc.ps_strings sysctls to this constant.
- */
-#define	PS_STRINGS	(USRSTACK - sizeof(struct ps_strings))
-#define SPARE_USRSPACE	4096
-
 struct image_params;
 
 struct execsw {
@@ -76,6 +69,13 @@ struct execsw {
 
 #ifdef _KERNEL
 #include <sys/cdefs.h>
+
+/*
+ * Address of ps_strings structure (in user space).
+ * Prefer the kern.ps_strings or kern.proc.ps_strings sysctls to this constant.
+ */
+#define	PS_STRINGS	(USRSTACK - sizeof(struct ps_strings))
+#define	SPARE_USRSPACE	4096
 
 int exec_map_first_page(struct image_params *);        
 void exec_unmap_first_page(struct image_params *);       

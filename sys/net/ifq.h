@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/ifq.h 281613 2015-04-16 20:22:40Z glebius $
+ * $FreeBSD: head/sys/net/ifq.h 296178 2016-02-29 03:54:51Z sephe $
  */
 
 #ifndef	_NET_IFQ_H_
@@ -369,7 +369,7 @@ drbr_peek(struct ifnet *ifp, struct buf_ring *br)
 		return (m);
 	}
 #endif
-	return(buf_ring_peek(br));
+	return(buf_ring_peek_clear_sc(br));
 }
 
 static __inline void

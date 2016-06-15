@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_attach.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/patm/if_patm_attach.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_natm.h"
@@ -189,7 +189,7 @@ patm_attach(device_t dev)
 	IFP2IFATM(sc->ifp)->mib.hw_version = 0;
 	IFP2IFATM(sc->ifp)->mib.sw_version = 0;
 	IFP2IFATM(sc->ifp)->mib.vpi_bits = PATM_VPI_BITS;
-	IFP2IFATM(sc->ifp)->mib.vci_bits = 0;	/* set below */;
+	IFP2IFATM(sc->ifp)->mib.vci_bits = 0;	/* set below */
 	IFP2IFATM(sc->ifp)->mib.max_vpcs = 0;
 	IFP2IFATM(sc->ifp)->mib.max_vccs = 0;	/* set below */
 	IFP2IFATM(sc->ifp)->mib.media = IFM_ATM_UNKNOWN;
@@ -675,7 +675,7 @@ patm_read_eeprom(struct patm_softc *sc)
 	gp = patm_nor_read(sc, IDT_NOR_GP);
 	gp &= ~(IDT_GP_EESCLK | IDT_GP_EECS | IDT_GP_EEDO);
 
-	for (i = 0; i < sizeof(tab) / sizeof(tab[0]); i++) {
+	for (i = 0; i < nitems(tab); i++) {
 		patm_nor_write(sc, IDT_NOR_GP, gp | tab[i]);
 		DELAY(40);
 	}

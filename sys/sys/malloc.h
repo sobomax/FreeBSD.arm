@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)malloc.h	8.5 (Berkeley) 5/3/95
- * $FreeBSD: head/sys/sys/malloc.h 282988 2015-05-15 20:43:37Z pfg $
+ * $FreeBSD: head/sys/sys/malloc.h 300262 2016-05-20 04:45:08Z markj $
  */
 
 #ifndef _SYS_MALLOC_H_
@@ -145,9 +145,6 @@ struct malloc_type_header {
 MALLOC_DECLARE(M_CACHE);
 MALLOC_DECLARE(M_DEVBUF);
 MALLOC_DECLARE(M_TEMP);
-
-MALLOC_DECLARE(M_IP6OPT); /* for INET6 */
-MALLOC_DECLARE(M_IP6NDP); /* for INET6 */
 
 /*
  * Deprecated macro versions of not-quite-malloc() and free().

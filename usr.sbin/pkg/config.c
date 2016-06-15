@@ -26,26 +26,19 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pkg/config.c 287579 2015-09-08 21:25:36Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/pkg/config.c 293834 2016-01-13 17:59:12Z bapt $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
 #include <sys/sbuf.h>
-#include <sys/types.h>
 #include <sys/utsname.h>
 #include <sys/sysctl.h>
 
-#include <assert.h>
 #include <dirent.h>
 #include <ucl.h>
-#include <ctype.h>
 #include <err.h>
 #include <errno.h>
-#include <fcntl.h>
-#include <inttypes.h>
-#include <paths.h>
 #include <stdbool.h>
-#include <string.h>
 #include <unistd.h>
 
 #include "config.h"

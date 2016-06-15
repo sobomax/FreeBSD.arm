@@ -63,7 +63,7 @@
 #ifdef __FreeBSD__
 
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: head/sys/dev/netmap/netmap_generic.c 285349 2015-07-10 05:51:36Z luigi $");
+__FBSDID("$FreeBSD: head/sys/dev/netmap/netmap_generic.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -129,8 +129,9 @@ static inline struct mbuf *
 netmap_get_mbuf(int len)
 {
 	struct mbuf *m;
-	m = m_getcl(M_NOWAIT, MT_DATA, M_PKTHDR | M_NOFREE);
+	m = m_getcl(M_NOWAIT, MT_DATA, M_PKTHDR);
 	if (m) {
+		m->m_flags |= M_NOFREE;	/* XXXNP: Almost certainly incorrect. */
 		m->m_ext.ext_arg1 = m->m_ext.ext_buf; // XXX save
 		m->m_ext.ext_free = (void *)netmap_default_mbuf_destructor;
 		m->m_ext.ext_type = EXT_EXTREF;
@@ -331,7 +332,7 @@ generic_netmap_register(struct netmap_adapter *na, int enable)
 
 	} else if (na->tx_rings[0].tx_pool) {
 		/* Disable netmap mode. We enter here only if the previous
-		   generic_netmap_register(na, 1) was successfull.
+		   generic_netmap_register(na, 1) was successful.
 		   If it was not, na->tx_rings[0].tx_pool was set to NULL by the
 		   error handling code below. */
 		rtnl_lock();

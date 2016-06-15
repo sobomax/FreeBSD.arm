@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bwi/bwirf.c 288087 2015-09-22 02:44:59Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/bwi/bwirf.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_bwi.h"
@@ -1018,8 +1018,7 @@ bwi_rf_calibval(struct bwi_mac *mac)
 
 	val = RF_READ(mac, BWI_RFR_BBP_ATTEN);
 	idx = __SHIFTOUT(val, BWI_RFR_BBP_ATTEN_CALIB_IDX);
-	KASSERT(idx < (int)(sizeof(rf_calibvals) / sizeof(rf_calibvals[0])),
-	    ("idx %d", idx));
+	KASSERT(idx < (int)nitems(rf_calibvals), ("idx %d", idx));
 
 	calib = rf_calibvals[idx] << 1;
 	if (val & BWI_RFR_BBP_ATTEN_CALIB_BIT)

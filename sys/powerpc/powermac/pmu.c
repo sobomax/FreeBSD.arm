@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/pmu.c 274733 2014-11-20 03:23:33Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/pmu.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1064,7 +1064,7 @@ pmu_battquery_sysctl(SYSCTL_HANDLER_ARGS)
 	default:
 		/* This should never happen */
 		result = -1;
-	};
+	}
 
 	error = sysctl_handle_int(oidp, &result, 0, req);
 

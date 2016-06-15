@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcstat_log.c 289023 2015-10-08 09:46:35Z fabient $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcstat_log.c 298885 2016-05-01 16:40:56Z pfg $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -1372,7 +1372,7 @@ pmcstat_analyze_log(void)
 	assert(args.pa_flags & FLAG_DO_ANALYSIS);
 
 	if (elf_version(EV_CURRENT) == EV_NONE)
-		err(EX_UNAVAILABLE, "Elf library intialization failed");
+		err(EX_UNAVAILABLE, "Elf library initialization failed");
 
 	while (pmclog_read(args.pa_logparser, &ev) == 0) {
 		assert(ev.pl_state == PMCLOG_OK);

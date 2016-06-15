@@ -11,9 +11,9 @@
 .\"    documentation and/or other materials provided with the distribution.
 .\"
 .\"     @(#)kbdcontrol.1
-.\" $FreeBSD: head/usr.sbin/kbdcontrol/kbdcontrol.1 276360 2014-12-29 13:50:59Z joel $
+.\" $FreeBSD: head/usr.sbin/kbdcontrol/kbdcontrol.1 296926 2016-03-16 04:05:02Z emaste $
 .\"
-.Dd January 29, 2008
+.Dd March 16, 2016
 .Dt KBDCONTROL 1
 .Os
 .Sh NAME
@@ -36,6 +36,7 @@
 .Op Fl f Ar # Ar string
 .Op Fl k Ar keyboard_device
 .Op Fl L Ar keymap_file
+.Op Fl P Ar path
 .Sh DESCRIPTION
 The
 .Nm
@@ -171,6 +172,12 @@ and write the
 compiled from it to stdout.
 This option is primarily intended for programmers and is probably
 of little use under normal circumstances.
+.It Fl P Ar path
+Search for the keymap file in
+.Ar path .
+The
+.Fl P
+option may be specified multiple times.
 .El
 .Sh ENVIRONMENT
 The environment variable

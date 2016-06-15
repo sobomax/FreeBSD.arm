@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ifconfig/ifgre.c 288305 2015-09-27 07:51:18Z ngie $");
+__FBSDID("$FreeBSD: head/sbin/ifconfig/ifgre.c 299873 2016-05-16 00:25:24Z truckman $");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -68,7 +68,7 @@ setifgrekey(const char *val, int dummy __unused, int s,
 {
 	uint32_t grekey = strtol(val, NULL, 0);
 
-	strncpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
+	strlcpy(ifr.ifr_name, name, sizeof (ifr.ifr_name));
 	ifr.ifr_data = (caddr_t)&grekey;
 	if (ioctl(s, GRESKEY, (caddr_t)&ifr) < 0)
 		warn("ioctl (set grekey)");

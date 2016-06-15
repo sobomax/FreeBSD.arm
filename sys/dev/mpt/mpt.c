@@ -96,7 +96,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpt/mpt.c 285840 2015-07-24 16:00:35Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/mpt/mpt.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <dev/mpt/mpt.h>
 #include <dev/mpt/mpt_cam.h> /* XXX For static handler registration */
@@ -964,7 +964,7 @@ mpt_wait_state(struct mpt_softc *mpt, enum DB_STATE_BITS state)
 }
 
 
-/************************* Intialization/Configuration ************************/
+/************************* Initialization/Configuration ************************/
 static int mpt_download_fw(struct mpt_softc *mpt);
 
 /* Issue the reset COMMAND to the IOC */

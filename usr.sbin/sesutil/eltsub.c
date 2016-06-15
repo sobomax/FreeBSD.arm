@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.sbin/sesutil/eltsub.c 292121 2015-12-11 20:45:39Z bapt $ */
+/* $FreeBSD: head/usr.sbin/sesutil/eltsub.c 297291 2016-03-26 12:11:46Z bapt $ */
 /*
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.
@@ -37,13 +37,9 @@
 #include <sys/sbuf.h>
 
 #include <err.h>
-#include <unistd.h>
 #include <stddef.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/ioctl.h>
-#include <cam/scsi/scsi_all.h>
 #include <cam/scsi/scsi_enc.h>
 
 #include "eltsub.h"

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/exception.s 290164 2015-10-29 21:25:46Z jhb $
+ * $FreeBSD: head/sys/i386/i386/exception.s 297931 2016-04-13 17:37:31Z jhb $
  */
 
 #include "opt_apic.h"
@@ -343,6 +343,7 @@ MCOUNT_LABEL(eintr)
 	.text
 	SUPERALIGN_TEXT
 	.type	doreti,@function
+	.globl	doreti
 doreti:
 	FAKE_MCOUNT($bintr)		/* init "from" bintr -> doreti */
 doreti_next:

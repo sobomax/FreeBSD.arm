@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmcodegen/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmcodegen/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
@@ -27,6 +27,7 @@ SRCS=	AggressiveAntiDepBreaker.cpp \
 	ExpandISelPseudos.cpp \
 	ExpandPostRAPseudos.cpp \
 	FaultMaps.cpp \
+	FuncletLayout.cpp \
 	GCMetadata.cpp \
 	GCRootLowering.cpp \
 	GlobalMerge.cpp \
@@ -39,6 +40,7 @@ SRCS=	AggressiveAntiDepBreaker.cpp \
 	LLVMTargetMachine.cpp \
 	LatencyPriorityQueue.cpp \
 	LexicalScopes.cpp \
+	LiveDebugValues.cpp \
 	LiveDebugVariables.cpp \
 	LiveInterval.cpp \
 	LiveIntervalAnalysis.cpp \
@@ -84,6 +86,7 @@ SRCS=	AggressiveAntiDepBreaker.cpp \
 	OptimizePHIs.cpp \
 	PHIElimination.cpp \
 	PHIEliminationUtils.cpp \
+	ParallelCG.cpp \
 	Passes.cpp \
 	PeepholeOptimizer.cpp \
 	PostRASchedulerList.cpp \
@@ -134,6 +137,7 @@ SRCS+=	GCMetadataPrinter.cpp \
 	GCStrategy.cpp
 .endif
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

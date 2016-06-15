@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/qca953x_chip.c 290910 2015-11-16 04:28:00Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/qca953x_chip.c 298848 2016-04-30 14:41:18Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -196,7 +196,7 @@ qca953x_chip_set_pll_ge(int unit, int speed, uint32_t pll)
 		ATH_WRITE_REG(QCA953X_PLL_ETH_XMII_CONTROL_REG, pll);
 		break;
 	case 1:
-		ATH_WRITE_REG(QCA953X_PLL_ETH_SGMII_CONTROL_REG, pll);
+		/* nothing */
 		break;
 	default:
 		printf("%s: invalid PLL set for arge unit: %d\n",
@@ -360,7 +360,7 @@ qca953x_chip_gpio_output_configure(int gpio, uint8_t func)
 	if (gpio > QCA953X_GPIO_COUNT)
 		return;
 
-	reg = QCA953X_GPIO_REG_OUT_FUNC0 + 4 * (gpio / 4);
+	reg = QCA953X_GPIO_REG_OUT_FUNC0 + rounddown(gpio, 4);
 	s = 8 * (gpio % 4);
 
 	/* read-modify-write */

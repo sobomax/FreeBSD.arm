@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/arm64/gic.h 292064 2015-12-10 16:40:38Z andrew $
+ * $FreeBSD: head/sys/arm64/arm64/gic.h 300051 2016-05-17 13:12:26Z bz $
  */
 
 #ifndef _ARM64_GIC_H_
@@ -49,6 +49,17 @@ struct arm_gic_softc {
 	uint8_t			ver;
 	struct mtx		mutex;
 	uint32_t		nirqs;
+	uint32_t		typer;
+};
+
+DECLARE_CLASS(arm_gicv2m_driver);
+
+struct gicv2m_softc {
+	struct resource	*sc_mem;
+	struct mtx	sc_mutex;
+	u_int		sc_spi_start;
+	u_int		sc_spi_count;
+	u_int		sc_spi_offset;
 };
 
 int arm_gic_attach(device_t);

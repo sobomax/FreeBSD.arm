@@ -26,10 +26,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_ath_btcoex.h 251487 2013-06-07 09:02:02Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_ath_btcoex.h 301181 2016-06-02 00:51:36Z adrian $
  */
 #ifndef	__IF_ATH_BTCOEX_H__
 #define	__IF_ATH_BTCOEX_H__
+
+typedef enum {
+	ATH_COEX_EVENT_BT_NOOP,
+} ATH_BT_COEX_EVENT;
 
 extern	int ath_btcoex_attach(struct ath_softc *sc);
 extern	int ath_btcoex_detach(struct ath_softc *sc);

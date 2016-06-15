@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcpl_gprof.c 291016 2015-11-18 14:52:01Z jtl $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcpl_gprof.c 300669 2016-05-25 08:45:03Z ed $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -310,8 +310,9 @@ pmcstat_callgraph_do_gmon_arcs(void)
 void
 pmcpl_gmon_initimage(struct pmcstat_image *pi)
 {
+	const char *execpath;
 	int count, nlen;
-	char *sn;
+	char *sn, *snbuf;
 	char name[NAME_MAX];
 
 	/*
@@ -321,9 +322,11 @@ pmcpl_gmon_initimage(struct pmcstat_image *pi)
 	 * `basename(path)`+ "~" + NNN + ".gmon" till we get a free
 	 * entry.
 	 */
-	if ((sn = basename(pmcstat_string_unintern(pi->pi_execpath))) == NULL)
-		err(EX_OSERR, "ERROR: Cannot process \"%s\"",
-		    pmcstat_string_unintern(pi->pi_execpath));
+	execpath = pmcstat_string_unintern(pi->pi_execpath);
+	if ((snbuf = strdup(execpath)) == NULL)
+		err(EX_OSERR, "ERROR: Cannot copy \"%s\"", execpath);
+	if ((sn = basename(snbuf)) == NULL)
+		err(EX_OSERR, "ERROR: Cannot process \"%s\"", execpath);
 
 	nlen = strlen(sn);
 	nlen = min(nlen, (int) (sizeof(name) - sizeof(".gmon")));
@@ -355,6 +358,7 @@ pmcpl_gmon_initimage(struct pmcstat_image *pi)
 			}
 		} while (count > 0);
 	}
+	free(snbuf);
 
 	LIST_INIT(&pi->pi_gmlist);
 }

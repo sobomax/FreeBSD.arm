@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx_iomux.c 281085 2015-04-04 21:34:26Z andrew $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx_iomux.c 299702 2016-05-13 22:05:16Z gonzo $
  */
 
 /*
@@ -176,7 +176,7 @@ iomux_configure_pins(device_t dev, phandle_t cfgxref)
 			    cfg->padconf_reg, cfg->padconf_val);
 		}
 	}
-	free(cfgtuples, M_OFWPROP);
+	OF_prop_free(cfgtuples);
 	return (0);
 }
 

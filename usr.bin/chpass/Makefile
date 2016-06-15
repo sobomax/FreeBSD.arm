@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/2/94
-# $FreeBSD: head/usr.bin/chpass/Makefile 278664 2015-02-13 07:51:26Z bapt $
+# $FreeBSD: head/usr.bin/chpass/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
@@ -9,6 +9,7 @@ PROG=	chpass
 SRCS=	chpass.c edit.c field.c pw_scan.c table.c util.c
 BINOWN=	root
 BINMODE=4555
+PRECIOUSPROG=
 .if ${MK_NIS} != "no"
 CFLAGS+= -DYP
 .endif
@@ -21,12 +22,12 @@ LIBADD=	crypt util
 LIBADD+=	ypclnt
 .endif 
 
-LINKS=	${BINDIR}/chpass ${BINDIR}/chfn
-LINKS+=	${BINDIR}/chpass ${BINDIR}/chsh
+SYMLINKS=	${BINDIR}/chpass ${BINDIR}/chfn
+SYMLINKS+=	${BINDIR}/chpass ${BINDIR}/chsh
 .if ${MK_NIS} != "no"
-LINKS+=	${BINDIR}/chpass ${BINDIR}/ypchpass
-LINKS+=	${BINDIR}/chpass ${BINDIR}/ypchfn
-LINKS+=	${BINDIR}/chpass ${BINDIR}/ypchsh
+SYMLINKS+=	${BINDIR}/chpass ${BINDIR}/ypchpass
+SYMLINKS+=	${BINDIR}/chpass ${BINDIR}/ypchfn
+SYMLINKS+=	${BINDIR}/chpass ${BINDIR}/ypchsh
 .endif
 
 MLINKS=	chpass.1 chfn.1 chpass.1 chsh.1
@@ -40,10 +41,5 @@ beforeinstall:
 	-chflags noschg ${DESTDIR}${BINDIR}/$i
 .endif
 .endfor
-
-.if !defined(NO_FSCHG)
-afterinstall:
-	-chflags schg ${DESTDIR}${BINDIR}/chpass
-.endif
 
 .include <bsd.prog.mk>

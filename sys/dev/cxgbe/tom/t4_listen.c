@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_listen.c 291665 2015-12-03 00:02:01Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_listen.c 299206 2016-05-06 23:49:10Z jhb $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -49,14 +49,16 @@ __FBSDID("$FreeBSD: head/sys/dev/cxgbe/tom/t4_listen.c 291665 2015-12-03 00:02:0
 #include <net/if_vlan_var.h>
 #include <net/route.h>
 #include <netinet/in.h>
+#include <netinet/in_fib.h>
 #include <netinet/in_pcb.h>
 #include <netinet/ip.h>
 #include <netinet/ip6.h>
+#include <netinet6/in6_fib.h>
 #include <netinet6/scope6_var.h>
 #include <netinet/tcp_timer.h>
-#include <netinet/tcp_var.h>
 #define TCPSTATES
 #include <netinet/tcp_fsm.h>
+#include <netinet/tcp_var.h>
 #include <netinet/toecore.h>
 
 #include "common/common.h"
@@ -1095,46 +1097,44 @@ static struct l2t_entry *
 get_l2te_for_nexthop(struct port_info *pi, struct ifnet *ifp,
     struct in_conninfo *inc)
 {
-	struct rtentry *rt;
 	struct l2t_entry *e;
 	struct sockaddr_in6 sin6;
 	struct sockaddr *dst = (void *)&sin6;
  
 	if (inc->inc_flags & INC_ISIPV6) {
+		struct nhop6_basic nh6;
+
+		bzero(dst, sizeof(struct sockaddr_in6));
 		dst->sa_len = sizeof(struct sockaddr_in6);
 		dst->sa_family = AF_INET6;
-		((struct sockaddr_in6 *)dst)->sin6_addr = inc->inc6_faddr;
 
 		if (IN6_IS_ADDR_LINKLOCAL(&inc->inc6_laddr)) {
 			/* no need for route lookup */
 			e = t4_l2t_get(pi, ifp, dst);
 			return (e);
 		}
+
+		if (fib6_lookup_nh_basic(RT_DEFAULT_FIB, &inc->inc6_faddr,
+		    0, 0, 0, &nh6) != 0)
+			return (NULL);
+		if (nh6.nh_ifp != ifp)
+			return (NULL);
+		((struct sockaddr_in6 *)dst)->sin6_addr = nh6.nh_addr;
 	} else {
+		struct nhop4_basic nh4;
+
 		dst->sa_len = sizeof(struct sockaddr_in);
 		dst->sa_family = AF_INET;
-		((struct sockaddr_in *)dst)->sin_addr = inc->inc_faddr;
+
+		if (fib4_lookup_nh_basic(RT_DEFAULT_FIB, inc->inc_faddr, 0, 0,
+		    &nh4) != 0)
+			return (NULL);
+		if (nh4.nh_ifp != ifp)
+			return (NULL);
+		((struct sockaddr_in *)dst)->sin_addr = nh4.nh_addr;
 	}
 
-	rt = rtalloc1(dst, 0, 0);
-	if (rt == NULL)
-		return (NULL);
-	else {
-		struct sockaddr *nexthop;
-
-		RT_UNLOCK(rt);
-		if (rt->rt_ifp != ifp)
-			e = NULL;
-		else {
-			if (rt->rt_flags & RTF_GATEWAY)
-				nexthop = rt->rt_gateway;
-			else
-				nexthop = dst;
-			e = t4_l2t_get(pi, ifp, nexthop);
-		}
-		RTFREE(rt);
-	}
-
+	e = t4_l2t_get(pi, ifp, dst);
 	return (e);
 }
 
@@ -1305,6 +1305,7 @@ found:
 		REJECT_PASS_ACCEPT();
 	}
 	so = inp->inp_socket;
+	CURVNET_SET(so->so_vnet);
 
 	mtu_idx = find_best_mtu_idx(sc, &inc, be16toh(cpl->tcpopt.mss));
 	rscale = cpl->tcpopt.wsf && V_tcp_do_rfc1323 ? select_rcv_wscale() : 0;
@@ -1351,6 +1352,7 @@ found:
 	 */
 	toe_syncache_add(&inc, &to, &th, inp, tod, synqe);
 	INP_UNLOCK_ASSERT(inp);	/* ok to assert, we have a ref on the inp */
+	CURVNET_RESTORE();
 
 	/*
 	 * If we replied during syncache_add (synqe->wr has been consumed),

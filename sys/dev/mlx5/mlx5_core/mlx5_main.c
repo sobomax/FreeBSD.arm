@@ -22,8 +22,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mlx5/mlx5_core/mlx5_main.c 290650 2015-11-10 12:20:22Z hselasky $
+ * $FreeBSD: head/sys/dev/mlx5/mlx5_core/mlx5_main.c 300676 2016-05-25 12:03:21Z hselasky $
  */
+
+#define	LINUXKPI_PARAM_PREFIX mlx5_
 
 #include <linux/kmod.h>
 #include <linux/module.h>

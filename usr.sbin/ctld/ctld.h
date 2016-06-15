@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/ctld.h 290615 2015-11-09 18:33:36Z mav $
+ * $FreeBSD: head/usr.sbin/ctld/ctld.h 301720 2016-06-09 07:19:02Z trasz $
  */
 
 #ifndef CTLD_H
@@ -49,6 +49,7 @@
 #define	MAX_NAME_LEN			223
 #define	MAX_DATA_SEGMENT_LENGTH		(128 * 1024)
 #define	MAX_BURST_LENGTH		16776192
+#define	FIRST_BURST_LENGTH		(128 * 1024)
 #define	SOCKBUF_SIZE			1048576
 
 struct auth {
@@ -244,6 +245,7 @@ struct connection {
 	size_t			conn_data_segment_limit;
 	size_t			conn_max_data_segment_length;
 	size_t			conn_max_burst_length;
+	size_t			conn_first_burst_length;
 	int			conn_immediate_data;
 	int			conn_header_digest;
 	int			conn_data_digest;
@@ -297,8 +299,10 @@ int			rchap_receive(struct rchap *rchap,
 char			*rchap_get_response(struct rchap *rchap);
 void			rchap_delete(struct rchap *rchap);
 
+int			parse_conf(struct conf *conf, const char *path);
+int			uclparse_conf(struct conf *conf, const char *path);
+
 struct conf		*conf_new(void);
-struct conf		*conf_new_from_file(const char *path, struct conf *old);
 struct conf		*conf_new_from_kernel(void);
 void			conf_delete(struct conf *conf);
 int			conf_verify(struct conf *conf);

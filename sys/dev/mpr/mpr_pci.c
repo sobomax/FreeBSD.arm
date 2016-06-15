@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_pci.c 283661 2015-05-28 18:24:22Z slm $");
+__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_pci.c 299266 2016-05-09 16:19:13Z slm $");
 
 /* PCI/PCI-X/PCIe bus interface for the Avago Tech (LSI) MPT3 controllers */
 
@@ -110,6 +110,18 @@ struct mpr_ident {
 	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3108_5" },
 	{ MPI2_MFGPAGE_VENDORID_LSI, MPI25_MFGPAGE_DEVID_SAS3108_6,
 	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3108_6" },
+	{ MPI2_MFGPAGE_VENDORID_LSI, MPI26_MFGPAGE_DEVID_SAS3316_1,
+	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3316_1" },
+	{ MPI2_MFGPAGE_VENDORID_LSI, MPI26_MFGPAGE_DEVID_SAS3316_2,
+	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3316_2" },
+	{ MPI2_MFGPAGE_VENDORID_LSI, MPI26_MFGPAGE_DEVID_SAS3324_1,
+	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3324_1" },
+	{ MPI2_MFGPAGE_VENDORID_LSI, MPI26_MFGPAGE_DEVID_SAS3324_2,
+	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3324_2" },
+	{ MPI2_MFGPAGE_VENDORID_LSI, MPI26_MFGPAGE_DEVID_SAS3216,
+	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3216" },
+	{ MPI2_MFGPAGE_VENDORID_LSI, MPI26_MFGPAGE_DEVID_SAS3224,
+	    0xffff, 0xffff, 0, "Avago Technologies (LSI) SAS3224" },
 	{ 0, 0, 0, 0, 0, NULL }
 };
 

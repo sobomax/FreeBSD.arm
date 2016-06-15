@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hyperv/storvsc/hv_vstorage.h 283053 2015-05-18 10:31:23Z whu $
+ * $FreeBSD: head/sys/dev/hyperv/storvsc/hv_vstorage.h 299505 2016-05-12 03:29:29Z sephe $
  */
 
 #ifndef __HV_VSTORAGE_H__
@@ -41,6 +41,11 @@
 #define VMSTOR_PROTOCOL_VERSION(MAJOR_, MINOR_) ((((MAJOR_) & 0xff) << 8) | \
                                                  (((MINOR_) & 0xff)     ))
 
+#define VMSTOR_PROTOCOL_VERSION_WIN6       VMSTOR_PROTOCOL_VERSION(2, 0)
+#define VMSTOR_PROTOCOL_VERSION_WIN7       VMSTOR_PROTOCOL_VERSION(4, 2)
+#define VMSTOR_PROTOCOL_VERSION_WIN8       VMSTOR_PROTOCOL_VERSION(5, 1)
+#define VMSTOR_PROTOCOL_VERSION_WIN8_1     VMSTOR_PROTOCOL_VERSION(6, 0)
+#define VMSTOR_PROTOCOL_VERSION_WIN10      VMSTOR_PROTOCOL_VERSION(6, 2)
 /*
  * Invalid version.
  */

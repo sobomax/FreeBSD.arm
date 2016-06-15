@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libthr/Makefile 282057 2015-04-27 06:49:27Z ngie $
+# $FreeBSD: head/lib/libthr/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 # All library objects contain FreeBSD revision strings by default; they may be
 # excluded as a space-saving measure.  To produce a library that does
@@ -8,6 +8,7 @@
 # (for system call stubs) to CFLAGS below.  -DSYSLIBC_SCCS affects just the
 # system call stubs.
 
+PACKAGE=	clibs
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
@@ -38,7 +39,7 @@ SYMBOL_MAPS=${.CURDIR}/pthread.map
 
 MAN=	libthr.3
 
-# enable extra internal consistancy checks
+# enable extra internal consistency checks
 CFLAGS+=-D_PTHREADS_INVARIANTS
 
 PRECIOUSLIB=

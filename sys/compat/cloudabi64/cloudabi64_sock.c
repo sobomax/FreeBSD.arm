@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_sock.c 286680 2015-08-12 17:42:20Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_sock.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -35,9 +35,10 @@ __FBSDID("$FreeBSD: head/sys/compat/cloudabi64/cloudabi64_sock.c 286680 2015-08-
 #include <sys/systm.h>
 #include <sys/uio.h>
 
+#include <contrib/cloudabi/cloudabi64_types.h>
+
 #include <compat/cloudabi/cloudabi_util.h>
 
-#include <compat/cloudabi64/cloudabi64_syscalldefs.h>
 #include <compat/cloudabi64/cloudabi64_proto.h>
 
 static MALLOC_DEFINE(M_SOCKET, "socket", "CloudABI socket");
@@ -82,7 +83,7 @@ cloudabi64_sys_sock_recv(struct thread *td,
 		msghdr.msg_flags |= MSG_WAITALL;
 
 	/* TODO(ed): Add file descriptor passing. */
-	error = kern_recvit(td, uap->s, &msghdr, UIO_SYSSPACE, NULL);
+	error = kern_recvit(td, uap->sock, &msghdr, UIO_SYSSPACE, NULL);
 	free(msghdr.msg_iov, M_SOCKET);
 	if (error != 0)
 		return (error);
@@ -132,7 +133,7 @@ cloudabi64_sys_sock_send(struct thread *td,
 		flags |= MSG_EOR;
 
 	/* TODO(ed): Add file descriptor passing. */
-	error = kern_sendit(td, uap->s, &msghdr, flags, NULL, UIO_USERSPACE);
+	error = kern_sendit(td, uap->sock, &msghdr, flags, NULL, UIO_USERSPACE);
 	free(msghdr.msg_iov, M_SOCKET);
 	if (error != 0)
 		return (error);

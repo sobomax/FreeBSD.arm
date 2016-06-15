@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/resolvconf/Makefile 282434 2015-05-04 21:07:20Z gjb $
+# $FreeBSD: head/sbin/resolvconf/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 DIST=		${.CURDIR}/../../contrib/openresolv
 .PATH:		${DIST}
 

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sec/sec.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/sec/sec.c 293044 2016-01-01 17:56:52Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: head/sys/dev/sec/sec.c 261410 2014-02-02 19:17:28Z ian $");
 #include <sys/random.h>
 #include <sys/rman.h>
 
+#include <machine/_inttypes.h>
 #include <machine/bus.h>
 #include <machine/resource.h>
 
@@ -235,7 +236,7 @@ sec_probe(device_t dev)
 		sc->sc_version = 3;
 		break;
 	default:
-		device_printf(dev, "unknown SEC ID 0x%016llx!\n", id);
+		device_printf(dev, "unknown SEC ID 0x%016"PRIx64"!\n", id);
 		return (ENXIO);
 	}
 

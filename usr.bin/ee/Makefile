@@ -1,10 +1,11 @@
-# $FreeBSD: head/usr.bin/ee/Makefile 275042 2014-11-25 14:29:10Z bapt $
+# $FreeBSD: head/usr.bin/ee/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .PATH:	${.CURDIR}/../../contrib/ee
 
 CFLAGS+= -DHAS_NCURSES -DHAS_UNISTD -DHAS_STDARG -DHAS_STDLIB \
 	 -DHAS_SYS_WAIT
 
+PACKAGE=ee
 PROG=	ee
 LINKS=	${BINDIR}/ee ${BINDIR}/ree ${BINDIR}/ee ${BINDIR}/edit
 MLINKS=	ee.1 ree.1 ee.1 edit.1

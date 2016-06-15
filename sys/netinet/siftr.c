@@ -59,7 +59,7 @@
  ******************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/siftr.c 282276 2015-04-30 17:43:40Z gnn $");
+__FBSDID("$FreeBSD: head/sys/netinet/siftr.c 296688 2016-03-11 23:18:06Z jhb $");
 
 #include <sys/param.h>
 #include <sys/alq.h>
@@ -1561,6 +1561,6 @@ static moduledata_t siftr_mod = {
  *          Defines the initialisation order of this kld relative to others
  *          within the same subsystem as defined by param 3
  */
-DECLARE_MODULE(siftr, siftr_mod, SI_SUB_SMP, SI_ORDER_ANY);
+DECLARE_MODULE(siftr, siftr_mod, SI_SUB_LAST, SI_ORDER_ANY);
 MODULE_DEPEND(siftr, alq, 1, 1, 1);
 MODULE_VERSION(siftr, MODVERSION);

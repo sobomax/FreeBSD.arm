@@ -1,4 +1,4 @@
-/* $FreeBSD: head/bin/csh/config_p.h 289677 2015-10-21 05:37:09Z eadler $ */
+/* $FreeBSD: head/bin/csh/config_p.h 297673 2016-04-07 14:25:15Z mp $ */
 /*
  * config.h -- configure various defines for tcsh
  *
@@ -34,7 +34,8 @@
  *		Note that some machines eg. rs6000 have a vfork, but not
  *		with the berkeley semantics, so we cannot use it there either.
  */
-#define VFORK
+/* #define VFORK */
+#define	vfork fork
 
 /*
  * BSDJOBS	You have BSD-style job control (both process groups and

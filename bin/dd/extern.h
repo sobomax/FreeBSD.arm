@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: head/bin/dd/extern.h 264067 2014-04-03 06:32:02Z delphij $
+ * $FreeBSD: head/bin/dd/extern.h 296156 2016-02-28 10:27:12Z trasz $
  */
 
 void block(void);
@@ -42,6 +42,7 @@ void def_close(void);
 void jcl(char **);
 void pos_in(void);
 void pos_out(void);
+double secs_elapsed(void);
 void summary(void);
 void siginfo_handler(int);
 void terminate(int);
@@ -54,6 +55,7 @@ extern void (*cfunc)(void);
 extern uintmax_t cpy_cnt;
 extern size_t cbsz;
 extern u_int ddflags;
+extern size_t speed;
 extern uintmax_t files_cnt;
 extern const u_char *ctab;
 extern const u_char a2e_32V[], a2e_POSIX[];

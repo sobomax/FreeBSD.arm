@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_asm.S 283509 2015-05-25 01:22:56Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_asm.S 298171 2016-04-17 23:08:47Z markj $
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
@@ -38,7 +38,7 @@
 
 	pushl	%eax			/* push %eax -- may be return value */
 	pushl	%esp			/* push stack pointer */
-	addl	$48, (%esp)		/* adjust to incoming args */
+	subl	$8, (%esp)		/* skip first arg and segment regs */
 	pushl	40(%esp)		/* push calling EIP */
 
 	/*

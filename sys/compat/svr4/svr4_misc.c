@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_misc.c 285670 2015-07-18 09:02:50Z kib $");
+__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_misc.c 295882 2016-02-22 09:08:04Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,7 +84,6 @@ __FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_misc.c 285670 2015-07-18 09:02:50Z
 
 #include <security/mac/mac_framework.h>
 
-#include <machine/vmparam.h>
 #include <vm/vm.h>
 #include <vm/vm_param.h>
 #include <vm/vm_map.h>

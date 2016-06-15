@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/systat/main.c 288344 2015-09-28 18:19:22Z delphij $");
+__FBSDID("$FreeBSD: head/usr.bin/systat/main.c 298684 2016-04-27 02:26:31Z araujo $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
@@ -276,7 +276,7 @@ display(void)
 			c = '|';
 		dellave = avenrun[0];
 		wmove(wload, 0, 0); wclrtoeol(wload);
-		for (i = (j > 50) ? 50 : j; i > 0; i--)
+		for (i = MIN(j, 50); i > 0; i--)
 			waddch(wload, c);
 		if (j > 50)
 			wprintw(wload, " %4.1f", avenrun[0]);

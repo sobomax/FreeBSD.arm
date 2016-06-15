@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_8327.c 289665 2015-10-20 21:18:02Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch_8327.c 297793 2016-04-10 23:07:00Z pfg $
  */
 
 #include <sys/param.h>
@@ -50,7 +50,7 @@
 #include <dev/iicbus/iicbus.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/etherswitch/etherswitch.h>
 
@@ -662,7 +662,7 @@ ar8327_hw_setup(struct arswitch_softc *sc)
 		/* start PHY autonegotiation? */
 		/* XXX is this done as part of the normal PHY setup? */
 
-	};
+	}
 
 	/* Let things settle */
 	DELAY(1000);

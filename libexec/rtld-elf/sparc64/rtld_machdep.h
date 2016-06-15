@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/libexec/rtld-elf/sparc64/rtld_machdep.h 232831 2012-03-11 20:03:09Z kib $
+ * $FreeBSD: head/libexec/rtld-elf/sparc64/rtld_machdep.h 293066 2016-01-03 04:32:02Z imp $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -70,5 +70,7 @@ extern void *__tls_get_addr(tls_index *ti);
 
 #define	RTLD_DEFAULT_STACK_PF_EXEC	0
 #define	RTLD_DEFAULT_STACK_EXEC		0
+
+#define md_abi_variant_hook(x)
 
 #endif

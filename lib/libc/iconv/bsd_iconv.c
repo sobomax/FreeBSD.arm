@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/bsd_iconv.c 290168 2015-10-29 23:02:34Z bdrewery $ */
+/* $FreeBSD: head/lib/libc/iconv/bsd_iconv.c 299704 2016-05-14 00:35:35Z vangyzen $ */
 /* $NetBSD: iconv.c,v 1.11 2009/03/03 16:22:33 explorer Exp $ */
 
 /*-
@@ -267,8 +267,9 @@ __bsd_iconvctl(iconv_t cd, int request, void *argument)
 	struct _citrus_iconv *cv;
 	struct iconv_hooks *hooks;
 	const char *convname;
-	char src[PATH_MAX], *dst;
+	char *dst;
 	int *i;
+	size_t srclen;
 
 	cv = (struct _citrus_iconv *)(void *)cd;
 	hooks = (struct iconv_hooks *)argument;
@@ -283,12 +284,9 @@ __bsd_iconvctl(iconv_t cd, int request, void *argument)
 	case ICONV_TRIVIALP:
 		convname = cv->cv_shared->ci_convname;
 		dst = strchr(convname, '/');
-
-		strlcpy(src, convname, dst - convname + 1);
+		srclen = dst - convname;
 		dst++;
-		if ((convname == NULL) || (src == NULL) || (dst == NULL))
-			return (-1);
-		*i = strcmp(src, dst) == 0 ? 1 : 0;
+		*i = (srclen == strlen(dst)) && !memcmp(convname, dst, srclen);
 		return (0);
 	case ICONV_GET_TRANSLITERATE:
 		*i = 1;

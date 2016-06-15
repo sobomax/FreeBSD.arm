@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)unix.4	8.1 (Berkeley) 6/9/93
-.\" $FreeBSD: head/share/man/man4/unix.4 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD: head/share/man/man4/unix.4 301597 2016-06-08 10:26:17Z trasz $
 .\"
 .Dd March 19, 2013
 .Dt UNIX 4
@@ -241,7 +241,7 @@ These will arrive in the form of a filled in
 structure, defined in
 .In sys/ucred.h
 as follows:
-.Bd -literal 
+.Bd -literal
 struct xucred {
   u_int	cr_version;		/* structure layout version */
   uid_t	cr_uid;			/* effective user id */

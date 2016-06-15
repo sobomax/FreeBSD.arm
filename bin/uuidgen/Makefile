@@ -1,5 +1,6 @@
-# $FreeBSD: head/bin/uuidgen/Makefile 198148 2009-10-15 18:17:29Z ru $
+# $FreeBSD: head/bin/uuidgen/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	uuidgen
 
 .include <bsd.prog.mk>

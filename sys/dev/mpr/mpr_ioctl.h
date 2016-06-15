@@ -29,11 +29,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: head/sys/dev/mpr/mpr_ioctl.h 283661 2015-05-28 18:24:22Z slm $
+ * $FreeBSD: head/sys/dev/mpr/mpr_ioctl.h 299265 2016-05-09 16:16:00Z slm $
  */
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
- * Copyright (c) 2013-2015 Avago Technologies
+ * Copyright (c) 2013-2016 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,7 +59,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mpr/mpr_ioctl.h 283661 2015-05-28 18:24:22Z slm $
+ * $FreeBSD: head/sys/dev/mpr/mpr_ioctl.h 299265 2016-05-09 16:16:00Z slm $
  */
 
 #ifndef _MPR_IOCTL_H_

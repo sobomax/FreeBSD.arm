@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/fdread/fdutil.c 272248 2014-09-28 11:32:46Z nyan $
+ * $FreeBSD: head/usr.sbin/fdread/fdutil.c 297962 2016-04-14 12:46:46Z araujo $
  */
 
 #include <dev/ic/nec765.h>
@@ -200,10 +200,10 @@ parse_fmt(const char *s, enum fd_drivetype type,
 	*out = in;
 
 	for (i = 0;; i++) {
-		if (s == 0)
+		if (s == NULL)
 			break;
 
-		if ((cp = strchr(s, ',')) == 0) {
+		if ((cp = strchr(s, ',')) == NULL) {
 			s1 = strdup(s);
 			if (s1 == NULL)
 				abort();

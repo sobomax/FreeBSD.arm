@@ -1,7 +1,8 @@
 #
-# $FreeBSD: head/lib/libauditd/Makefile 291617 2015-12-01 22:03:40Z bdrewery $
+# $FreeBSD: head/lib/libauditd/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=lib${LIB}
 OPENBSMDIR=		${.CURDIR}/../../contrib/openbsm
 _LIBAUDITDDIR=		${OPENBSMDIR}/libauditd
 _LIBBSMDIR=		${OPENBSMDIR}/libbsm

@@ -1,14 +1,14 @@
-# $FreeBSD: head/tests/sys/pjdfstest/tests/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD: head/tests/sys/pjdfstest/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
+PACKAGE=	tests
 PJDFSTEST_SRCDIR=	${SRCTOP}/contrib/pjdfstest
 
 TESTSDIR=	${TESTSBASE}/sys/pjdfstest
 
 .PATH: ${.CURDIR}
 
-FILESDIR=	${TESTSDIR}
-FILES=		conf
-FILES+=		misc.sh
+${PACKAGE}FILES+=	conf
+${PACKAGE}FILES+=	misc.sh
 CLEANFILES+=	misc.sh misc.sh.tmp
 
 misc.sh: ${PJDFSTEST_SRCDIR}/tests/misc.sh
@@ -35,7 +35,5 @@ TESTS_SUBDIRS+=	rmdir
 TESTS_SUBDIRS+=	symlink
 TESTS_SUBDIRS+=	truncate
 TESTS_SUBDIRS+=	unlink
-
-SUBDIR_PARALLEL=
 
 .include <bsd.test.mk>

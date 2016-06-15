@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/ssp/Makefile 291864 2015-12-05 18:56:21Z bdrewery $
+# $FreeBSD: head/lib/libc/tests/ssp/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.own.mk>
 
@@ -32,7 +32,7 @@ PROGS+=		h_memset
 #
 # sanitizer is not tested or supported for ARM right now. sbruno
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
-.if ${COMPILER_TYPE} == "clang"
+.if ${COMPILER_TYPE} == "clang" && ${MK_TOOLCHAIN} == "yes"
 .if ${COMPILER_VERSION} < 30500 || 30700 <= ${COMPILER_VERSION}
 PROGS+=		h_raw
 .endif

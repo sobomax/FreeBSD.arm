@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)popen.c	8.3 (Berkeley) 4/6/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/ftpd/popen.c 262136 2014-02-17 22:27:32Z brueffer $");
+__FBSDID("$FreeBSD: head/libexec/ftpd/popen.c 298897 2016-05-01 19:39:23Z pfg $");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -60,7 +60,7 @@ __FBSDID("$FreeBSD: head/libexec/ftpd/popen.c 262136 2014-02-17 22:27:32Z brueff
 #define	MAXGLOBARGS	1000
 
 /*
- * Special version of popen which avoids call to shell.  This ensures noone
+ * Special version of popen which avoids call to shell.  This ensures no one
  * may create a pipe to a hidden program as a side effect of a list or dir
  * command.
  */
@@ -81,9 +81,8 @@ ftpd_popen(char *program, char *type)
 	if (!pids) {
 		if ((fds = getdtablesize()) <= 0)
 			return (NULL);
-		if ((pids = malloc(fds * sizeof(int))) == NULL)
+		if ((pids = calloc(fds, sizeof(int))) == NULL)
 			return (NULL);
-		memset(pids, 0, fds * sizeof(int));
 	}
 	if (pipe(pdes) < 0)
 		return (NULL);
@@ -185,7 +184,7 @@ ftpd_pclose(FILE *iop)
 	 * pclose returns -1 if stream is not associated with a
 	 * `popened' command, or, if already `pclosed'.
 	 */
-	if (pids == 0 || pids[fdes = fileno(iop)] == 0)
+	if (pids == NULL || pids[fdes = fileno(iop)] == 0)
 		return (-1);
 	(void)fclose(iop);
 	omask = sigblock(sigmask(SIGINT)|sigmask(SIGQUIT)|sigmask(SIGHUP));

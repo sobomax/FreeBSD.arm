@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/cpufunc.h 287960 2015-09-18 16:52:18Z kib $
+ * $FreeBSD: head/sys/arm64/include/cpufunc.h 299683 2016-05-13 16:03:50Z andrew $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -118,6 +118,11 @@ clrex(void)
 	 */
 	__asm __volatile("clrex" : : : "memory");
 }
+
+extern int64_t dcache_line_size;
+extern int64_t icache_line_size;
+extern int64_t idcache_line_size;
+extern int64_t dczva_line_size;
 
 #define	cpu_nullop()			arm64_nullop()
 #define	cpufunc_nullop()		arm64_nullop()

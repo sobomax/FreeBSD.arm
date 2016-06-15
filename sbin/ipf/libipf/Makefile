@@ -1,5 +1,6 @@
-#	$FreeBSD: head/sbin/ipf/libipf/Makefile 291735 2015-12-04 03:17:17Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/libipf/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	ipf
 LIB=		ipf
 INTERNALLIB=
 

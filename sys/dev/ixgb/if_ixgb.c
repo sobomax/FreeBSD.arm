@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 
-/*$FreeBSD: head/sys/dev/ixgb/if_ixgb.c 272241 2014-09-28 07:40:26Z glebius $*/
+/*$FreeBSD: head/sys/dev/ixgb/if_ixgb.c 295790 2016-02-19 03:37:56Z jhibbits $*/
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -1243,8 +1243,8 @@ ixgb_allocate_pci_resources(struct adapter * adapter)
 	device_t        dev = adapter->dev;
 
 	rid = IXGB_MMBA;
-	adapter->res_memory = bus_alloc_resource(dev, SYS_RES_MEMORY,
-						 &rid, 0, ~0, 1,
+	adapter->res_memory = bus_alloc_resource_any(dev, SYS_RES_MEMORY,
+						 &rid,
 						 RF_ACTIVE);
 	if (!(adapter->res_memory)) {
 		device_printf(dev, "Unable to allocate bus resource: memory\n");
@@ -1257,9 +1257,9 @@ ixgb_allocate_pci_resources(struct adapter * adapter)
 	adapter->hw.hw_addr = (uint8_t *) & adapter->osdep.mem_bus_space_handle;
 
 	rid = 0x0;
-	adapter->res_interrupt = bus_alloc_resource(dev, SYS_RES_IRQ,
-						    &rid, 0, ~0, 1,
-						  RF_SHAREABLE | RF_ACTIVE);
+	adapter->res_interrupt = bus_alloc_resource_any(dev, SYS_RES_IRQ,
+							&rid,
+							RF_SHAREABLE | RF_ACTIVE);
 	if (!(adapter->res_interrupt)) {
 		device_printf(dev,
 		    "Unable to allocate bus resource: interrupt\n");

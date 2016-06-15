@@ -30,7 +30,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/ndiscvt/ndisgen.sh 259855 2013-12-25 01:20:14Z glebius $
+# $FreeBSD: head/usr.sbin/ndiscvt/ndisgen.sh 297434 2016-03-30 23:50:23Z bdrewery $
 #
 
 header () {
@@ -432,11 +432,6 @@ fi
 echo -n "	Building kernel module... "
 echo "" > bus_if.h
 echo "" > device_if.h
-if ! ${MAKE} -f ${MAKEFILE} depend > /dev/null; then
-	echo "build failed. Exiting."
-	echo ""
-	exit
-fi
 if ! ${MAKE} -f ${MAKEFILE} all > /dev/null; then
 	echo "build failed. Exiting."
 	echo ""

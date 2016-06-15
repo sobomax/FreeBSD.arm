@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb20.c 253339 2013-07-14 10:22:00Z hselasky $ */
+/* $FreeBSD: head/lib/libusb/libusb20.c 297764 2016-04-09 20:36:07Z pfg $ */
 /*-
  * Copyright (c) 2008-2009 Hans Petter Selasky. All rights reserved.
  *
@@ -139,8 +139,8 @@ libusb20_tr_close(struct libusb20_transfer *xfer)
 		free(xfer->ppBuffer);
 	}
 	/* reset variable fields in case the transfer is opened again */
-	xfer->priv_sc0 = 0;
-	xfer->priv_sc1 = 0;
+	xfer->priv_sc0 = NULL;
+	xfer->priv_sc1 = NULL;
 	xfer->is_opened = 0;
 	xfer->is_pending = 0;
 	xfer->is_cancel = 0;

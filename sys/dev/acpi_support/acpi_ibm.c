@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpi_support/acpi_ibm.c 284358 2015-06-13 22:29:43Z ngie $");
+__FBSDID("$FreeBSD: head/sys/dev/acpi_support/acpi_ibm.c 300421 2016-05-22 13:58:32Z loos $");
 
 /*
  * Driver for extra ACPI-controlled gadgets found on IBM ThinkPad laptops.
@@ -839,7 +839,7 @@ acpi_ibm_sysctl_init(struct acpi_ibm_softc *sc, int method)
 	case ACPI_IBM_METHOD_BRIGHTNESS:
 	case ACPI_IBM_METHOD_VOLUME:
 	case ACPI_IBM_METHOD_MUTE:
-		/* EC is required here, which was aready checked before */
+		/* EC is required here, which was already checked before */
 		return (TRUE);
 
 	case ACPI_IBM_METHOD_THINKLIGHT:
@@ -941,7 +941,7 @@ acpi_ibm_thermal_sysctl(SYSCTL_HANDLER_ARGS)
 			temp[i] = -1;
 		else if (sc->thermal_updt_supported)
 			/* Temperature is reported in tenth of Kelvin */
-			temp[i] = (temp[i] - 2732 + 5) / 10;
+			temp[i] = (temp[i] - 2731 + 5) / 10;
 	}
 
 	error = sysctl_handle_opaque(oidp, &temp, 8*sizeof(int), req);

@@ -89,9 +89,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_attr.c 214653 2010-11-02 02:13:13Z davidxu $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_attr.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include "namespace.h"
 #include <errno.h>

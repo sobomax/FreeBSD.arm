@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Mellanox Technologies, Ltd. All rights reserved.
+ * Copyright (c) 2015-2016 Mellanox Technologies, Ltd. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,12 +22,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/etherdevice.h 291693 2015-12-03 12:51:54Z hselasky $
+ * $FreeBSD: head/sys/compat/linuxkpi/common/include/linux/etherdevice.h 301544 2016-06-07 13:10:13Z hselasky $
  */
 #ifndef _LINUX_ETHERDEVICE
 #define	_LINUX_ETHERDEVICE
 
 #include <linux/types.h>
+
+#include <sys/random.h>
+#include <sys/libkern.h>
 
 #define	ETH_MODULE_SFF_8079		1
 #define	ETH_MODULE_SFF_8079_LEN		256
@@ -76,6 +79,34 @@ static inline void
 ether_addr_copy(u8 * dst, const u8 * src)
 {
 	memcpy(dst, src, 6);
+}
+
+static inline bool
+ether_addr_equal(const u8 *pa, const u8 *pb)
+{
+	return (memcmp(pa, pb, 6) == 0);
+}
+
+static inline bool
+ether_addr_equal_64bits(const u8 *pa, const u8 *pb)
+{
+	return (memcmp(pa, pb, 6) == 0);
+}
+
+static inline void
+eth_broadcast_addr(u8 *pa)
+{
+	memset(pa, 0xff, 6);
+}
+
+static inline void
+random_ether_addr(u8 * dst)
+{
+	if (read_random(dst, 6) == 0)
+		arc4rand(dst, 6, 0);
+
+	dst[0] &= 0xfe;
+	dst[0] |= 0x02;
 }
 
 #endif					/* _LINUX_ETHERDEVICE */

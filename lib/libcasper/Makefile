@@ -1,19 +1,8 @@
-# $FreeBSD: head/lib/libcasper/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libcasper/Makefile 296125 2016-02-26 22:14:04Z bdrewery $
 
-LIB=	casper
+SUBDIR=		libcasper
+SUBDIR+=	services
 
-SHLIB_MAJOR=	0
-SHLIBDIR?=	/lib
+SUBDIR_PARALLEL=
 
-SRCS=	libcasper.c
-INCS=	libcasper.h
-
-LIBADD=	capsicum nv pjdlog
-
-CFLAGS+=-I${.CURDIR}
-CFLAGS+=-I${.CURDIR}/../libpjdlog
-CFLAGS+=-I${.CURDIR}/../../sbin/casper
-
-WARNS?=	6
-
-.include <bsd.lib.mk>
+.include <bsd.subdir.mk>

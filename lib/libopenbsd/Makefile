@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libopenbsd/Makefile 292024 2015-12-09 19:25:45Z rodrigc $
+# $FreeBSD: head/lib/libopenbsd/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	openbsd
 SRCS=	getdtablecount.c \
 	imsg-buffer.c \

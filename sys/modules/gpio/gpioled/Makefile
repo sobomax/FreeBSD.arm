@@ -26,14 +26,14 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
-# $FreeBSD: head/sys/modules/gpio/gpioled/Makefile 262559 2014-02-27 13:26:41Z loos $
+# $FreeBSD: head/sys/modules/gpio/gpioled/Makefile 300823 2016-05-27 04:34:42Z ian $
 #
 
 .PATH:	${.CURDIR}/../../../dev/gpio/
 
 KMOD=	gpioled
 SRCS=	gpioled.c
-SRCS+=	device_if.h bus_if.h gpio_if.h gpiobus_if.h opt_platform.h
+SRCS+=	device_if.h bus_if.h gpio_if.h gpiobus_if.h opt_platform.h ofw_bus_if.h
 
 CFLAGS+=  -I. -I${.CURDIR}/../../../dev/gpio/
 

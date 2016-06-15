@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ucred.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/ucred.h 285633 2015-07-16 14:30:11Z mjg $
+ * $FreeBSD: head/sys/sys/ucred.h 293909 2016-01-14 10:16:25Z glebius $
  */
 
 #ifndef _SYS_UCRED_H_
@@ -105,6 +105,7 @@ void	change_svuid(struct ucred *newcred, uid_t svuid);
 void	crcopy(struct ucred *dest, struct ucred *src);
 struct ucred	*crcopysafe(struct proc *p, struct ucred *cr);
 struct ucred	*crdup(struct ucred *cr);
+void	crextend(struct ucred *cr, int n);
 void	proc_set_cred_init(struct proc *p, struct ucred *cr);
 struct ucred	*proc_set_cred(struct proc *p, struct ucred *cr);
 void	crfree(struct ucred *cr);

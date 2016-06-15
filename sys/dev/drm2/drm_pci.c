@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_pci.c 288653 2015-10-04 07:45:36Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_pci.c 293851 2016-01-13 20:35:02Z dumbbell $");
 
 #include <dev/drm2/drmP.h>
 
@@ -225,7 +225,7 @@ int drm_pci_set_unique(struct drm_device *dev,
 
 	master->unique_len = u->unique_len;
 	master->unique_size = u->unique_len + 1;
-	master->unique = malloc(master->unique_size, DRM_MEM_DRIVER, M_NOWAIT);
+	master->unique = malloc(master->unique_size, DRM_MEM_DRIVER, M_WAITOK);
 	if (!master->unique) {
 		ret = -ENOMEM;
 		goto err;

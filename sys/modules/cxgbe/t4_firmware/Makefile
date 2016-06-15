@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/modules/cxgbe/t4_firmware/Makefile 286338 2015-08-05 19:45:11Z np $
+# $FreeBSD: head/sys/modules/cxgbe/t4_firmware/Makefile 299685 2016-05-13 17:38:59Z np $
 #
 
 T4FW=	${.CURDIR}/../../../dev/cxgbe/firmware
@@ -17,7 +17,7 @@ FIRMWS+=	${F}:${F:C/.txt//}:1.0.0.0
 .endif
 .endfor
 
-T4FW_VER=	1.14.4.0
+T4FW_VER=	1.15.37.0
 FIRMWS+=	t4fw.fw:t4fw:${T4FW_VER}
 CLEANFILES+=	t4fw.fw
 

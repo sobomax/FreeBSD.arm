@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nfc_fsl.c 280891 2015-03-31 05:26:30Z jhibbits $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nfc_fsl.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -515,7 +515,7 @@ fsl_nfc_start_command(device_t dev)
 	if (fcm->status)
 		sc->fcm.reg_mdr = LBC_READ(MDR);
 
-	/* Even if timeout occured, we should perform steps below */
+	/* Even if timeout occurred, we should perform steps below */
 	LBC_WRITE(LTESR, ltesr_v);
 	LBC_WRITE(LTEATR, 0);
 

@@ -1,9 +1,10 @@
-# $FreeBSD: head/lib/libkiconv/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/libkiconv/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 SHLIBDIR?=	/lib
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=		kiconv
 SRCS=		kiconv_sysctl.c xlat16_iconv.c xlat16_sysctl.c
 SRCS+=		quirks.c

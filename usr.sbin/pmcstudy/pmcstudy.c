@@ -36,7 +36,7 @@
 #include <sys/wait.h>
 #include <getopt.h>
 #include "eval_expr.h"
-__FBSDID("$FreeBSD: head/usr.sbin/pmcstudy/pmcstudy.c 292043 2015-12-10 01:52:29Z rrs $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmcstudy/pmcstudy.c 298089 2016-04-15 22:31:22Z pfg $");
 
 static int max_pmc_counters = 1;
 static int run_all = 0;
@@ -2873,7 +2873,7 @@ main(int argc, char **argv)
 			printf("-A -- Run all canned tests\n");
 			return(0);
 			break;
-		};
+		}
 	}
 	if ((run_all == 0) && (name == NULL) && (filename == NULL) &&
 	    (test_mode == 0) && (master_exp == NULL)) {

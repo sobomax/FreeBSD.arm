@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/truss/powerpc-freebsd.c 289239 2015-10-13 18:23:51Z bdrewery $");
+__FBSDID("$FreeBSD: head/usr.bin/truss/powerpc-freebsd.c 295056 2016-01-30 01:00:54Z jhb $");
 
 /* FreeBSD/powerpc-specific system call handling. */
 
@@ -37,10 +37,9 @@ __FBSDID("$FreeBSD: head/usr.bin/truss/powerpc-freebsd.c 289239 2015-10-13 18:23
 #include <machine/frame.h>
 
 #include <stdio.h>
+#include <sysdecode.h>
 
 #include "truss.h"
-
-#include "freebsd_syscalls.h"
 
 static int
 powerpc_fetch_args(struct trussinfo *trussinfo, u_int narg)
@@ -113,8 +112,7 @@ powerpc_fetch_retval(struct trussinfo *trussinfo, long *retval, int *errorp)
 
 static struct procabi powerpc_freebsd = {
 	"FreeBSD ELF32",
-	syscallnames,
-	nitems(syscallnames),
+	SYSDECODE_ABI_FREEBSD,
 	powerpc_fetch_args,
 	powerpc_fetch_retval
 };

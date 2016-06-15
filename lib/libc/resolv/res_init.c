@@ -69,13 +69,12 @@ static const char sccsid[] = "@(#)res_init.c	8.1 (Berkeley) 6/7/93";
 static const char rcsid[] = "$Id: res_init.c,v 1.26 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_init.c 289315 2015-10-14 14:26:44Z vangyzen $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_init.c 301592 2016-06-08 09:40:06Z truckman $");
 
 #include "port_before.h"
 
 #include "namespace.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -116,7 +115,9 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_init.c 289315 2015-10-14 14:26:44Z 
 
 /*% Options.  Should all be left alone. */
 #define RESOLVSORT
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 
 #ifdef SOLARIS2
 #include <sys/systeminfo.h>
@@ -143,7 +144,7 @@ static u_int32_t net_mask(struct in_addr);
  * there will have precedence.  Otherwise, the server address is set to
  * INADDR_ANY and the default domain name comes from the gethostname().
  *
- * An interrim version of this code (BIND 4.9, pre-4.4BSD) used 127.0.0.1
+ * An interim version of this code (BIND 4.9, pre-4.4BSD) used 127.0.0.1
  * rather than INADDR_ANY ("0.0.0.0") as the default name server address
  * since it was noted that INADDR_ANY actually meant ``the first interface
  * you "ifconfig"'d at boot time'' and if this was a SLIP or PPP interface,
@@ -166,7 +167,7 @@ res_ninit(res_state statp) {
 	return (__res_vinit(statp, 0));
 }
 
-/*% This function has to be reachable by res_data.c but not publically. */
+/*% This function has to be reachable by res_data.c but not publicly. */
 int
 __res_vinit(res_state statp, int preinit) {
 	FILE *fp;
@@ -228,7 +229,6 @@ __res_vinit(res_state statp, int preinit) {
 	statp->pfcode = 0;
 	statp->_vcsock = -1;
 	statp->_flags = 0;
-	statp->reload_period = 2;
 	statp->qhook = NULL;
 	statp->rhook = NULL;
 	statp->_u._ext.nscount = 0;
@@ -238,6 +238,7 @@ __res_vinit(res_state statp, int preinit) {
 		statp->_u._ext.ext->nsaddrs[0].sin = statp->nsaddr;
 		strcpy(statp->_u._ext.ext->nsuffix, "ip6.arpa");
 		strcpy(statp->_u._ext.ext->nsuffix2, "ip6.int");
+		statp->_u._ext.ext->reload_period = 2;
 	} else {
 		/*
 		 * Historically res_init() rarely, if at all, failed.
@@ -313,7 +314,7 @@ __res_vinit(res_state statp, int preinit) {
 		while (*cp != '\0' && *cp != ' ' && *cp != '\t' && *cp != '\n')
 			cp++;
 		*cp = '\0';
-		*pp++ = 0;
+		*pp++ = NULL;
 	}
 
 #define	MATCH(line, name) \
@@ -326,17 +327,13 @@ __res_vinit(res_state statp, int preinit) {
 	    struct stat sb;
 	    struct timespec now;
 
-	    if (_fstat(fileno(fp), &sb) == 0) {
-		statp->conf_mtim = sb.st_mtim;
-		if (clock_gettime(CLOCK_MONOTONIC_FAST, &now) == 0) {
-		    statp->conf_stat = now.tv_sec;
-		} else {
-		    statp->conf_stat = 0;
+	    if (statp->_u._ext.ext != NULL) {
+		if (_fstat(fileno(fp), &sb) == 0) {
+		    statp->_u._ext.ext->conf_mtim = sb.st_mtim;
+		    if (clock_gettime(CLOCK_MONOTONIC_FAST, &now) == 0) {
+			statp->_u._ext.ext->conf_stat = now.tv_sec;
+		    }
 		}
-	    } else {
-		statp->conf_mtim.tv_sec = 0;
-		statp->conf_mtim.tv_nsec = 0;
-		statp->conf_stat = 0;
 	    }
 
 	    /* read the config file */
@@ -393,7 +390,7 @@ __res_vinit(res_state statp, int preinit) {
 		    while (*cp != '\0' && *cp != ' ' && *cp != '\t')
 			    cp++;
 		    *cp = '\0';
-		    *pp++ = 0;
+		    *pp++ = NULL;
 		    havesearch = 1;
 		    continue;
 		}
@@ -414,20 +411,21 @@ __res_vinit(res_state statp, int preinit) {
 			hints.ai_socktype = SOCK_DGRAM;	/*dummy*/
 			hints.ai_flags = AI_NUMERICHOST;
 			sprintf(sbuf, "%u", NAMESERVER_PORT);
-			if (getaddrinfo(cp, sbuf, &hints, &ai) == 0 &&
-			    ai->ai_addrlen <= minsiz) {
-			    if (statp->_u._ext.ext != NULL) {
-				memcpy(&statp->_u._ext.ext->nsaddrs[nserv],
-				    ai->ai_addr, ai->ai_addrlen);
+			if (getaddrinfo(cp, sbuf, &hints, &ai) == 0) {
+			    if (ai->ai_addrlen <= minsiz) {
+				if (statp->_u._ext.ext != NULL) {
+				    memcpy(&statp->_u._ext.ext->nsaddrs[nserv],
+					ai->ai_addr, ai->ai_addrlen);
+				}
+				if (ai->ai_addrlen <=
+				    sizeof(statp->nsaddr_list[nserv])) {
+				    memcpy(&statp->nsaddr_list[nserv],
+					ai->ai_addr, ai->ai_addrlen);
+				} else
+				    statp->nsaddr_list[nserv].sin_family = 0;
+				nserv++;
 			    }
-			    if (ai->ai_addrlen <=
-			        sizeof(statp->nsaddr_list[nserv])) {
-				memcpy(&statp->nsaddr_list[nserv],
-				    ai->ai_addr, ai->ai_addrlen);
-			    } else
-				statp->nsaddr_list[nserv].sin_family = 0;
 			    freeaddrinfo(ai);
-			    nserv++;
 			}
 		    }
 		    continue;
@@ -599,9 +597,7 @@ res_setoptions(res_state statp, const char *options, const char *source)
 {
 	const char *cp = options;
 	int i;
-#ifndef _LIBC
 	struct __res_state_ext *ext = statp->_u._ext.ext;
-#endif
 
 #ifdef DEBUG
 	if (statp->options & RES_DEBUG)
@@ -686,8 +682,10 @@ res_setoptions(res_state statp, const char *options, const char *source)
 			statp->options |= RES_NOCHECKNAME;
 		} else if (!strncmp(cp, "reload-period:",
 				    sizeof("reload-period:") - 1)) {
-			statp->reload_period = (u_short)
-				atoi(cp + sizeof("reload-period:") - 1);
+			if (ext != NULL) {
+				ext->reload_period = (u_short)
+				    atoi(cp + sizeof("reload-period:") - 1);
+			}
 		}
 #ifdef RES_USE_EDNS0
 		else if (!strncmp(cp, "edns0", sizeof("edns0") - 1)) {

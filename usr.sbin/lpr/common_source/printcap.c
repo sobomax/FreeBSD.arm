@@ -43,7 +43,7 @@ static char sccsid[] = "@(#)printcap.c	8.2 (Berkeley) 4/28/95";
 #endif
 
 #include "lp.cdefs.h"		/* A cross-platform version of <sys/cdefs.h> */
-__FBSDID("$FreeBSD: head/usr.sbin/lpr/common_source/printcap.c 117590 2003-07-14 20:17:55Z gad $");
+__FBSDID("$FreeBSD: head/usr.sbin/lpr/common_source/printcap.c 297795 2016-04-10 23:47:40Z pfg $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -220,7 +220,7 @@ getprintcap_int(char *bp, struct printer *pp)
 	char *rp_name;
 	int error;
 
-	if ((pp->printer = capdb_canonical_name(bp)) == 0)
+	if ((pp->printer = capdb_canonical_name(bp)) == NULL)
 		return PCAPERR_OSERR;
 
 #define CHK(x) do {if ((x) == PCAPERR_OSERR) return PCAPERR_OSERR;}while(0)
@@ -386,7 +386,7 @@ capdb_getaltstr(char *bp, const char *shrt, const char *lng,
 		return status;
 	if (dflt) {
 		*result = strdup(dflt);
-		if (*result == 0)
+		if (*result == NULL)
 			return PCAPERR_OSERR;
 		return strlen(*result);
 	}
@@ -439,9 +439,9 @@ capdb_canonical_name(const char *bp)
 	const char *nameend;
 
 	nameend = strpbrk(bp, "|:");
-	if (nameend == 0)
+	if (nameend == NULL)
 		nameend = bp + 1;
-	if ((retval = malloc(nameend - bp + 1)) != 0) {
+	if ((retval = malloc(nameend - bp + 1)) != NULL) {
 		retval[0] = '\0';
 		strncat(retval, bp, nameend - bp);
 	}

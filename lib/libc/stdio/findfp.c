@@ -34,13 +34,14 @@
 static char sccsid[] = "@(#)findfp.c	8.2 (Berkeley) 1/4/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/stdio/findfp.c 290110 2015-10-28 14:40:02Z ache $");
+__FBSDID("$FreeBSD: head/lib/libc/stdio/findfp.c 292902 2015-12-30 03:36:22Z imp $");
 
 #include <sys/param.h>
 #include <machine/atomic.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <spinlock.h>
@@ -96,11 +97,13 @@ moreglue(int n)
 	struct glue *g;
 	static FILE empty = { ._fl_mutex = PTHREAD_MUTEX_INITIALIZER };
 	FILE *p;
+	size_t align;
 
-	g = (struct glue *)malloc(sizeof(*g) + ALIGNBYTES + n * sizeof(FILE));
+	align = __alignof__(FILE);
+	g = (struct glue *)malloc(sizeof(*g) + align + n * sizeof(FILE));
 	if (g == NULL)
 		return (NULL);
-	p = (FILE *)ALIGN(g + 1);
+	p = (FILE *)roundup((uintptr_t)(g + 1), align);
 	g->next = NULL;
 	g->niobs = n;
 	g->iobs = p;

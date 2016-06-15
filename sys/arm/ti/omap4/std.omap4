@@ -1,5 +1,5 @@
 # Omap4430 generic configuration
-#$FreeBSD: head/sys/arm/ti/omap4/std.omap4 291110 2015-11-20 21:49:46Z imp $
+#$FreeBSD: head/sys/arm/ti/omap4/std.omap4 295885 2016-02-22 11:47:28Z skra $
 files		"../ti/omap4/files.omap4"
 include		"../ti/std.ti"
 
@@ -7,5 +7,3 @@ options		KERNVIRTADDR=0xc0200000		# Used in ldscript.arm
 makeoptions	KERNVIRTADDR=0xc0200000
 
 options		SOC_OMAP4
-
-options		ARM_L2_PIPT

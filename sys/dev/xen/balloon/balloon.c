@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 289686 2015-10-21 10:44:07Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -353,7 +353,7 @@ xenballoon_identify(driver_t *driver __unused, device_t parent)
 }
 
 /**
- * \brief Probe for the existance of the Xen Balloon device
+ * \brief Probe for the existence of the Xen Balloon device
  *
  * \param dev  NewBus device_t for this Xen control instance.
  *

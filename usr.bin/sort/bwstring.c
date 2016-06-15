@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sort/bwstring.c 281181 2015-04-07 01:17:29Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/sort/bwstring.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <ctype.h>
 #include <errno.h>
@@ -297,7 +297,7 @@ bwscsbdup(const unsigned char *str, size_t len)
 						/* NOTREACHED */
 						err(2, "mbrtowc error");
 					cptr += charlen;
-				};
+				}
 			}
 
 			ret->len = chars;

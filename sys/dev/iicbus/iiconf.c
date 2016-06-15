@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/iiconf.c 289726 2015-10-22 00:54:59Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/iiconf.c 300394 2016-05-22 04:09:05Z loos $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -135,7 +135,6 @@ iicbus_request_bus(device_t bus, device_t dev, int how)
 			wakeup_one(sc);
 		}
 	}
-
 
 	IICBUS_UNLOCK(sc);
 

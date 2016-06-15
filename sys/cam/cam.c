@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/cam.c 284192 2015-06-09 21:39:38Z ken $");
+__FBSDID("$FreeBSD: head/sys/cam/cam.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include <sys/param.h>
 #ifdef _KERNEL
@@ -104,9 +104,6 @@ const struct cam_status_entry cam_status_table[] = {
 	{ CAM_LUN_ALRDY_ENA,	 "LUN Already Enabled for Target Mode"	     },
 	{ CAM_SCSI_BUSY,	 "SCSI Bus Busy"			     },
 };
-
-const int num_cam_status_entries =
-    sizeof(cam_status_table)/sizeof(*cam_status_table);
 
 #ifdef _KERNEL
 SYSCTL_NODE(_kern, OID_AUTO, cam, CTLFLAG_RD, 0, "CAM Subsystem");
@@ -256,7 +253,7 @@ cam_fetch_status_entry(cam_status status)
 {
 	status &= CAM_STATUS_MASK;
 	return (bsearch(&status, &cam_status_table,
-			num_cam_status_entries,
+			nitems(cam_status_table),
 			sizeof(*cam_status_table),
 			camstatusentrycomp));
 }
@@ -412,7 +409,8 @@ cam_error_string(struct cam_device *device, union ccb *ccb, char *str,
 			}
 			if (proto_flags & CAM_EAF_PRINT_RESULT) {
 				sbuf_cat(&sb, path_str);
-				ata_res_sbuf(&ccb->ataio, &sb);
+				sbuf_printf(&sb, "RES: ");
+				ata_res_sbuf(&ccb->ataio.res, &sb);
 				sbuf_printf(&sb, "\n");
 			}
 

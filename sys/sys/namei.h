@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)namei.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/namei.h 255219 2013-09-05 00:09:56Z pjd $
+ * $FreeBSD: head/sys/sys/namei.h 296716 2016-03-12 08:50:38Z trasz $
  */
 
 #ifndef _SYS_NAMEI_H_
@@ -53,7 +53,6 @@ struct componentname {
 	char	*cn_pnbuf;	/* pathname buffer */
 	char	*cn_nameptr;	/* pointer to looked up name */
 	long	cn_namelen;	/* length of looked up component */
-	long	cn_consume;	/* chars to consume in lookup() */
 };
 
 /*

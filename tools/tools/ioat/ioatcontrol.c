@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/tools/tools/ioat/ioatcontrol.c 292044 2015-12-10 02:05:35Z cem $");
+__FBSDID("$FreeBSD: head/tools/tools/ioat/ioatcontrol.c 300874 2016-05-27 21:12:25Z ngie $");
 
 #include <sys/ioctl.h>
 #include <sys/queue.h>
@@ -35,6 +35,7 @@ __FBSDID("$FreeBSD: head/tools/tools/ioat/ioatcontrol.c 292044 2015-12-10 02:05:
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sysexits.h>
 #include <unistd.h>
 
@@ -48,10 +49,19 @@ static void
 usage(void)
 {
 
-	printf("Usage: %s [-E|-f|-m] [-V] <channel #> <txns> [<bufsize> "
+	printf("Usage: %s [-c period] [-EfmVz] channel-number num-txns [<bufsize> "
 	    "[<chain-len> [duration]]]\n", getprogname());
-	printf("       %s -r [-vV] <channel #> <addr> [<bufsize>]\n",
+	printf("       %s -r [-c period] [-vVwz] channel-number address [<bufsize>]\n\n",
 	    getprogname());
+	printf("           -c period - Enable interrupt coalescing (us) (default: 0)\n");
+	printf("           -E        - Test non-contiguous 8k copy.\n");
+	printf("           -f        - Test block fill (default: DMA copy).\n");
+	printf("           -m        - Test memcpy instead of DMA.\n");
+	printf("           -r        - Issue DMA to or from a specific address.\n");
+	printf("           -V        - Enable verification\n");
+	printf("           -v        - <address> is a kernel virtual address\n");
+	printf("           -w        - Write to the specified address\n");
+	printf("           -z        - Zero device stats before test\n");
 	exit(EX_USAGE);
 }
 
@@ -100,11 +110,16 @@ main(int argc, char **argv)
 	bool fflag, rflag, Eflag, mflag;
 	unsigned modeflags;
 
+	memset(&t, 0, sizeof(t));
+
 	fflag = rflag = Eflag = mflag = false;
 	modeflags = 0;
 
-	while ((ch = getopt(argc, argv, "EfmrvVw")) != -1) {
+	while ((ch = getopt(argc, argv, "c:EfmrvVwz")) != -1) {
 		switch (ch) {
+		case 'c':
+			t.coalesce_period = atoi(optarg);
+			break;
 		case 'E':
 			Eflag = true;
 			modeflags++;
@@ -129,6 +144,9 @@ main(int argc, char **argv)
 			break;
 		case 'w':
 			t.raw_write = true;
+			break;
+		case 'z':
+			t.zero_stats = true;
 			break;
 		default:
 			usage();

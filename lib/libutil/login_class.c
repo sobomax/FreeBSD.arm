@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libutil/login_class.c 273837 2014-10-29 20:18:37Z dim $");
+__FBSDID("$FreeBSD: head/lib/libutil/login_class.c 296723 2016-03-12 14:54:34Z kib $");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -67,6 +67,7 @@ static struct login_res {
     { "pseudoterminals", login_getcapnum,  RLIMIT_NPTS    },
     { "swapuse",         login_getcapsize, RLIMIT_SWAP    },
     { "kqueues",         login_getcapsize, RLIMIT_KQUEUES },
+    { "umtxp",           login_getcapnum,  RLIMIT_UMTXP   },
     { NULL,              0,                0              }
 };
 

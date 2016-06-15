@@ -35,13 +35,13 @@
 
 /*
  * Functions to encode and decode struct disklabel and struct partition into
- * a bytestream of little endianess and correct packing.
+ * a bytestream of little endianness and correct packing.
  *
  * NB!  This file must be usable both in kernel and userland.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_bsd_enc.c 174500 2007-12-09 22:44:22Z marcel $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_bsd_enc.c 298808 2016-04-29 20:56:58Z pfg $");
 
 #include <sys/types.h>
 #include <sys/endian.h>

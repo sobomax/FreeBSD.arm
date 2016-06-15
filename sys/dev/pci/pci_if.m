@@ -23,10 +23,11 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/pci/pci_if.m 283670 2015-05-28 22:01:50Z jhb $
+# $FreeBSD: head/sys/dev/pci/pci_if.m 299932 2016-05-16 09:31:44Z andrew $
 #
 
 #include <sys/bus.h>
+#include <dev/pci/pcivar.h>
 
 INTERFACE pci;
 
@@ -36,7 +37,13 @@ CODE {
 	{
 		return (0);
 	}
-	
+
+	static int
+	null_msix_bar(device_t dev, device_t child)
+	{
+		return (-1);
+	}
+
 	static device_t
 	null_create_iov_child(device_t bus, device_t pf, uint16_t rid,
 	    uint16_t vid, uint16_t did)
@@ -48,6 +55,11 @@ CODE {
 
 HEADER {
 	struct nvlist;
+
+	enum pci_id_type {
+	    PCI_ID_RID,
+	    PCI_ID_MSI,
+	};
 }
 
 
@@ -192,9 +204,25 @@ METHOD int msix_count {
 	device_t	child;
 } DEFAULT null_msi_count;
 
-METHOD uint16_t get_rid {
+METHOD int msix_pba_bar {
 	device_t	dev;
 	device_t	child;
+} DEFAULT null_msix_bar;
+
+METHOD int msix_table_bar {
+	device_t	dev;
+	device_t	child;
+} DEFAULT null_msix_bar;
+
+METHOD int get_id {
+	device_t	dev;
+	device_t	child;
+	enum pci_id_type type;
+	uintptr_t	*id;
+};
+
+METHOD struct pci_devinfo * alloc_devinfo {
+	device_t	dev;
 };
 
 METHOD void child_added {

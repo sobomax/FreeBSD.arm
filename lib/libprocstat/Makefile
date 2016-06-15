@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libprocstat/Makefile 283167 2015-05-21 03:32:44Z allanjude $
+# $FreeBSD: head/lib/libprocstat/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	procstat
 
 SRCS=	cd9660.c	\

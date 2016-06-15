@@ -1,11 +1,10 @@
-/* $FreeBSD: head/lib/clang/include/clang/Config/config.h 289525 2015-10-18 17:18:19Z dim $ */
-/* tools/clang/include/clang/Config/config.h.  Generated from config.h.in by configure.  */
+/* $FreeBSD: head/lib/clang/include/clang/Config/config.h 296417 2016-03-05 20:24:31Z dim $ */
 /* This generated file is for internal use. Do not include it from headers. */
 
-#ifdef CONFIG_H
+#ifdef CLANG_CONFIG_H
 #error config.h can only be included once
 #else
-#define CONFIG_H
+#define CLANG_CONFIG_H
 
 /* Bug report URL. */
 #define BUG_REPORT_URL "https://bugs.freebsd.org/submit/"
@@ -31,10 +30,8 @@
 /* Define if we have libxml2 */
 /* #undef CLANG_HAVE_LIBXML */
 
-#define PACKAGE_STRING "LLVM 3.7.0"
-
 /* The LLVM product name and version */
-#define BACKEND_PACKAGE_STRING PACKAGE_STRING
+#define BACKEND_PACKAGE_STRING "LLVM 3.8.0"
 
 /* Linker version detected at compile time. */
 /* #undef HOST_LINK_VERSION */

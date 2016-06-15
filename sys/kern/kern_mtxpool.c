@@ -39,12 +39,12 @@
  *
  * Disadvantages:
  *	- should generally only be used as leaf mutexes.
- *	- pool/pool dependancy ordering cannot be depended on.
+ *	- pool/pool dependency ordering cannot be depended on.
  *	- possible L1 cache mastersip contention between cpus.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_mtxpool.c 265216 2014-05-02 07:57:40Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_mtxpool.c 298819 2016-04-29 22:15:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/proc.h>

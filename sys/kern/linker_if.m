@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/kern/linker_if.m 194016 2009-06-11 17:05:45Z avg $
+# $FreeBSD: head/sys/kern/linker_if.m 298819 2016-04-29 22:15:33Z pfg $
 #
 
 #include <sys/linker.h>
@@ -89,7 +89,7 @@ METHOD int lookup_set {
 };
 
 #
-# Unload a file, releasing dependancies and freeing storage.
+# Unload a file, releasing dependencies and freeing storage.
 #
 METHOD void unload {
     linker_file_t	file;

@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libblocksruntime/Makefile 276852 2015-01-08 20:08:00Z dim $
+# $FreeBSD: head/lib/libblocksruntime/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB:tl}
 LIB=	BlocksRuntime
 SHLIB_MAJOR=0
 CFLAGS+=-I${.CURDIR}

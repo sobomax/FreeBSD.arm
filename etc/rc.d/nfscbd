@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/nfscbd 230099 2012-01-14 02:18:41Z dougb $
+# $FreeBSD: head/etc/rc.d/nfscbd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: nfscbd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="nfscbd"
+desc="NFSv4 client side callback daemon"
 rcvar="nfscbd_enable"
 command="/usr/sbin/${name}"
 sig_stop="USR1"

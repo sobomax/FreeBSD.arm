@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_task.h 256729 2013-10-18 11:25:08Z glebius $
+ * $FreeBSD: head/sys/sys/_task.h 300372 2016-05-21 14:51:49Z avg $
  */
 
 #ifndef _SYS__TASK_H_
@@ -45,10 +45,20 @@ typedef void task_fn_t(void *context, int pending);
 
 struct task {
 	STAILQ_ENTRY(task) ta_link;	/* (q) link for queue */
-	u_short	ta_pending;		/* (q) count times queued */
+	uint16_t ta_pending;		/* (q) count times queued */
 	u_short	ta_priority;		/* (c) Priority */
 	task_fn_t *ta_func;		/* (c) task handler */
 	void	*ta_context;		/* (c) argument for handler */
+};
+
+struct grouptask {
+	struct	task		gt_task;
+	void			*gt_taskqueue;
+	LIST_ENTRY(grouptask)	gt_list;
+	void			*gt_uniq;
+	char			*gt_name;
+	int16_t			gt_irq;
+	int16_t			gt_cpu;
 };
 
 #endif /* !_SYS__TASK_H_ */

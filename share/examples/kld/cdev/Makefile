@@ -1,5 +1,7 @@
-# $FreeBSD: head/share/examples/kld/cdev/Makefile 99771 2002-07-11 13:38:05Z ru $
+# $FreeBSD: head/share/examples/kld/cdev/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/kld/cdev
 SUBDIR=	module test
 
 load unload: _SUBDIR

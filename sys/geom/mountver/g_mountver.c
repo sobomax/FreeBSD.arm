@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/mountver/g_mountver.c 243333 2012-11-20 12:32:18Z jh $");
+__FBSDID("$FreeBSD: head/sys/geom/mountver/g_mountver.c 300288 2016-05-20 08:25:37Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -611,12 +611,10 @@ g_mountver_shutdown_pre_sync(void *arg, int howto)
 	struct g_geom *gp, *gp2;
 
 	mp = arg;
-	DROP_GIANT();
 	g_topology_lock();
 	LIST_FOREACH_SAFE(gp, &mp->geom, geom, gp2)
 		g_mountver_destroy(gp, 1);
 	g_topology_unlock();
-	PICKUP_GIANT();
 }
 
 static void

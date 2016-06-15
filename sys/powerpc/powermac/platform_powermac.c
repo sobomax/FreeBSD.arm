@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/platform_powermac.c 279853 2015-03-10 16:01:43Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/platform_powermac.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/platform_powermac.c 279853 2015-03
 #include <machine/fpu.h>	/* For save_fpu() */
 #include <machine/hid.h>
 #include <machine/platformvar.h>
-#include <machine/pmap.h>
 #include <machine/setjmp.h>
 #include <machine/smp.h>
 #include <machine/spr.h>

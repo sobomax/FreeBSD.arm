@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_prf.c 291058 2015-11-19 05:50:22Z markj $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_prf.c 301750 2016-06-09 18:24:51Z cem $");
 
 #ifdef _KERNEL
 #include "opt_ddb.h"
@@ -730,7 +730,15 @@ reswitch:	switch (ch = (u_char)*fmt++) {
 				PCHAR('>');
 			break;
 		case 'c':
+			width -= 1;
+
+			if (!ladjust && width > 0)
+				while (width--)
+					PCHAR(padc);
 			PCHAR(va_arg(ap, int));
+			if (ladjust && width > 0)
+				while (width--)
+					PCHAR(padc);
 			break;
 		case 'D':
 			up = va_arg(ap, u_char *);

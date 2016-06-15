@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/elf_machdep.c 291937 2015-12-07 12:20:26Z kib $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/elf_machdep.c 293613 2016-01-09 20:18:53Z dchagin $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -87,6 +87,8 @@ static struct sysentvec elf64_freebsd_sysvec = {
 	.sv_shared_page_base = SHAREDPAGE,
 	.sv_shared_page_len = PAGE_SIZE,
 	.sv_schedtail	= NULL,
+	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 INIT_SYSENTVEC(elf64_sysvec, &elf64_freebsd_sysvec);
 

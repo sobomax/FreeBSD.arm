@@ -41,7 +41,7 @@
 static char sccsid[] = "@(#)rpc_soc.c 1.41 89/05/02 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_soc.c 290253 2015-11-02 01:22:06Z ngie $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpc_soc.c 293704 2016-01-11 21:56:53Z ngie $");
 
 #ifdef PORTMAP
 /*
@@ -483,7 +483,7 @@ svcunix_create(int sock, u_int sendsize, u_int recvsize, char *path)
 			break;
 	}
 	if (nconf == NULL)
-		return(xprt);
+		goto done;
 
 	if ((sock = __rpc_nconf2fd(nconf)) < 0)
 		goto done;

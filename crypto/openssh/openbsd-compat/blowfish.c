@@ -40,7 +40,6 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/openbsd-compat/blowfish.c 290672 2015-11-11 13:26:47Z des $");
 
 #if !defined(HAVE_BCRYPT_PBKDF) && (!defined(HAVE_BLOWFISH_INITSTATE) || \
     !defined(HAVE_BLOWFISH_EXPAND0STATE) || !defined(HAVE_BLF_ENC))

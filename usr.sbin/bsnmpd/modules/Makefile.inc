@@ -1,6 +1,7 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/modules/Makefile.inc 249657 2013-04-19 19:45:00Z ed $
+# $FreeBSD: head/usr.sbin/bsnmpd/modules/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
 SHLIB_MAJOR=	6
+PACKAGE=	bsnmp
 
 MANFILTER=	sed -e 's%@MODPATH@%${LIBDIR}/%g'		\
 		    -e 's%@DEFPATH@%${DEFSDIR}/%g'		\

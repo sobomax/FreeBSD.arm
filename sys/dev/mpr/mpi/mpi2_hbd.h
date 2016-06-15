@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2012-2015 LSI Corp.
- * Copyright (c) 2013-2015 Avago Technologies
+ * Copyright (c) 2013-2016 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,19 +29,20 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mpr/mpi/mpi2_hbd.h 283661 2015-05-28 18:24:22Z slm $
+ * $FreeBSD: head/sys/dev/mpr/mpi/mpi2_hbd.h 299263 2016-05-09 16:12:32Z slm $
  */
 
 /*
  *  Copyright (c) 2009-2015 LSI Corporation.
- *  Copyright (c) 2013-2015 Avago Technologies
+ *  Copyright (c) 2013-2016 Avago Technologies
+ *  All rights reserved.
  *
  *
  *           Name:  mpi2_hbd.h
  *          Title:  MPI Host Based Discovery messages and structures
  *  Creation Date:  October 21, 2009
  *
- *  mpi2_hbd.h Version:  02.00.02
+ *  mpi2_hbd.h Version:  02.00.03
  *
  *  NOTE: Names (typedefs, defines, etc.) beginning with an MPI25 or Mpi25
  *        prefix are for use only on MPI v2.5 products, and must not be used
@@ -57,6 +58,7 @@
  *  08-11-10  02.00.01  Removed PortGroups, DmaGroup, and ControlGroup from
  *                      HBD Action request, replaced by AdditionalInfo field.
  *  11-18-11  02.00.02  Incorporating additions for MPI v2.5.
+ *  11-18-14  02.00.03  Updated copyright information.
  *  --------------------------------------------------------------------------
  */
 

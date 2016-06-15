@@ -31,7 +31,7 @@
 
 *******************************************************************************/
 
-/*$FreeBSD: head/sys/dev/ixgb/ixgb_ee.c 218909 2011-02-21 09:01:34Z brucec $*/
+/*$FreeBSD: head/sys/dev/ixgb/ixgb_ee.c 298955 2016-05-03 03:41:25Z pfg $*/
 
 #include <dev/ixgb/ixgb_hw.h> 
 #include <dev/ixgb/ixgb_ee.h> 
@@ -375,7 +375,7 @@ ixgb_update_eeprom_checksum(struct ixgb_hw *hw)
  *
  * hw - Struct containing variables accessed by shared code
  * reg - offset within the EEPROM to be written to
- * data - 16 bit word to be writen to the EEPROM
+ * data - 16 bit word to be written to the EEPROM
  *
  * If ixgb_update_eeprom_checksum is not called after this function, the
  * EEPROM will most likely contain an invalid checksum.

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mse/mse_isa.c 272956 2014-10-11 19:36:59Z jhb $
+ * $FreeBSD: head/sys/dev/mse/mse_isa.c 296137 2016-02-27 03:38:01Z jhibbits $
  */
 
 /*-
@@ -206,8 +206,8 @@ mse_isa_probe(device_t dev)
 
 	sc = device_get_softc(dev);
 	rid = 0;
-	sc->sc_port = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid, 0, ~0,
-					 MSE_IOSIZE, RF_ACTIVE);
+	sc->sc_port = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+						  MSE_IOSIZE, RF_ACTIVE);
 	if (sc->sc_port == NULL)
 		return ENXIO;
 
@@ -243,8 +243,8 @@ mse_isa_attach(device_t dev)
 	sc = device_get_softc(dev);
 
 	rid = 0;
-	sc->sc_port = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid, 0, ~0,
-					 MSE_IOSIZE, RF_ACTIVE);
+	sc->sc_port = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+						  MSE_IOSIZE, RF_ACTIVE);
 	if (sc->sc_port == NULL)
 		return ENXIO;
 

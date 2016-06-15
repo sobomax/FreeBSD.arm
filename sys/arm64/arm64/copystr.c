@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/copystr.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/copystr.c 295140 2016-02-02 10:11:56Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,6 +56,6 @@ copystr(const void * __restrict kfaddr, void * __restrict kdaddr, size_t len,
 	if (lencopied != NULL)
 		*lencopied = pos;
 
-	return (0);
+	return (error);
 }
 

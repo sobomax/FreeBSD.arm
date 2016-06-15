@@ -28,7 +28,7 @@
  * Freescale integrated Three-Speed Ethernet Controller (TSEC) driver.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/tsec/if_tsec.c 293039 2016-01-01 15:17:24Z jhibbits $");
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -561,7 +561,7 @@ tsec_set_mac_address(struct tsec_softc *sc)
 	TSEC_GLOBAL_LOCK_ASSERT(sc);
 
 	KASSERT((ETHER_ADDR_LEN <= sizeof(macbuf)),
-	    ("tsec_set_mac_address: (%d <= %d", ETHER_ADDR_LEN,
+	    ("tsec_set_mac_address: (%d <= %zd", ETHER_ADDR_LEN,
 	    sizeof(macbuf)));
 
 	macbufp = (char *)macbuf;

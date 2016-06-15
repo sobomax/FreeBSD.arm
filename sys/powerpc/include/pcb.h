@@ -29,13 +29,13 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	$NetBSD: pcb.h,v 1.4 2000/06/04 11:57:17 tsubai Exp $
- * $FreeBSD: head/sys/powerpc/include/pcb.h 279189 2015-02-22 21:40:27Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/include/pcb.h 293636 2016-01-10 16:42:14Z nwhitehorn $
  */
 
 #ifndef _MACHINE_PCB_H_
 #define	_MACHINE_PCB_H_
 
-typedef register_t faultbuf[25];
+#include <machine/setjmp.h>
 
 struct pcb {
 	register_t	pcb_context[20];	/* non-volatile r14-r31 */
@@ -44,7 +44,7 @@ struct pcb {
 	register_t	pcb_toc;		/* toc pointer */
 	register_t	pcb_lr;			/* link register */
 	struct		pmap *pcb_pm;		/* pmap of our vmspace */
-	faultbuf	*pcb_onfault;		/* For use during
+	jmp_buf		*pcb_onfault;		/* For use during
 						    copyin/copyout */
 	int		pcb_flags;
 #define	PCB_FPU		1	/* Process uses FPU */

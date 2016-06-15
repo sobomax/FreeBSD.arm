@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/host.c 223695 2011-06-30 16:08:56Z dfr $");
+__FBSDID("$FreeBSD: head/sys/boot/userboot/userboot/host.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 /*
  * Read from the host filesystem
@@ -167,8 +167,8 @@ host_dev_close(struct open_file *f)
 }
 
 static int
-host_dev_strategy(void *devdata, int rw, daddr_t dblk, size_t size,
-    char *buf, size_t *rsize)
+host_dev_strategy(void *devdata, int rw, daddr_t dblk, size_t offset,
+    size_t size, char *buf, size_t *rsize)
 {
 
 	return (ENOSYS);

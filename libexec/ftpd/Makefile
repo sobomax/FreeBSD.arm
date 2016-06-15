@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/4/94
-# $FreeBSD: head/libexec/ftpd/Makefile 287111 2015-08-24 16:26:20Z marcel $
+# $FreeBSD: head/libexec/ftpd/Makefile 301241 2016-06-03 06:24:03Z lidl $
 
 .include <src.opts.mk>
 
@@ -23,6 +23,13 @@ LSDIR=	../../bin/ls
 SRCS+=	ls.c cmp.c print.c util.c
 CFLAGS+=-Dmain=ls_main -I${.CURDIR}/${LSDIR}
 LIBADD+=	m
+
+.if ${MK_BLACKLIST_SUPPORT} != "no"
+CFLAGS+= -DUSE_BLACKLIST -I${SRCTOP}/contrib/blacklist/include
+SRCS+= blacklist.c
+LIBADD+= blacklist
+LDFLAGS+=-L${LIBBLACKLISTDIR}
+.endif
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=-DINET6

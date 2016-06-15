@@ -1,8 +1,10 @@
-# $FreeBSD: head/etc/pam.d/Makefile 277737 2015-01-26 08:50:12Z ngie $
+# $FreeBSD: head/etc/pam.d/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 NO_OBJ=
+
+FILESGROUPS=	FILES
 
 FILES=	README \
 	cron \
@@ -11,13 +13,24 @@ FILES=	README \
 	login \
 	other \
 	passwd pop3 \
-	rsh \
 	sshd su system \
 	telnetd \
 	xdm
 
 .if ${MK_AT} != "no"
-FILES+=	atrun
+FILESGROUPS+=	AT
+AT+=	atrun
+ATPACKAGE+=	at
+ATDIR=	/etc/pam.d
+ATMODE=	644
+.endif
+
+.if ${MK_RCMDS} != "no"
+FILESGROUPS+=	RCMDS
+RCMDS+=		rsh
+RCMDSPACKAGE+=	rcmds
+RCMDSDIR=	/etc/pam.d
+RCMDSMODE=	644
 .endif
 
 FILESDIR=	/etc/pam.d

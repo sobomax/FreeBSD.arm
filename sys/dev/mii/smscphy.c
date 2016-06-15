@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mii/smscphy.c 257184 2013-10-26 18:40:17Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/mii/smscphy.c 301632 2016-06-08 14:22:16Z bapt $");
 
 /*
  * Driver for the SMSC LAN8710A
@@ -77,6 +77,7 @@ DRIVER_MODULE(smscphy, miibus, smscphy_driver, smscphy_devclass, 0, 0);
 
 static const struct mii_phydesc smscphys[] = {
 	MII_PHY_DESC(SMC, LAN8710A),
+	MII_PHY_DESC(SMC, LAN8700),
 	MII_PHY_END
 };
 

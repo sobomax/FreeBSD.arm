@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_proc.c 286844 2015-08-17 13:07:12Z ed $");
+__FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_proc.c 297247 2016-03-24 21:47:15Z ed $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -38,8 +38,9 @@ __FBSDID("$FreeBSD: head/sys/compat/cloudabi/cloudabi_proc.c 286844 2015-08-17 1
 #include <sys/syscallsubr.h>
 #include <sys/unistd.h>
 
+#include <contrib/cloudabi/cloudabi_types_common.h>
+
 #include <compat/cloudabi/cloudabi_proto.h>
-#include <compat/cloudabi/cloudabi_syscalldefs.h>
 
 int
 cloudabi_sys_proc_exec(struct thread *td,
@@ -75,12 +76,16 @@ int
 cloudabi_sys_proc_fork(struct thread *td,
     struct cloudabi_sys_proc_fork_args *uap)
 {
+	struct fork_req fr;
 	struct filecaps fcaps = {};
-	struct proc *p2;
 	int error, fd;
 
 	cap_rights_init(&fcaps.fc_rights, CAP_FSTAT, CAP_EVENT);
-	error = fork1(td, RFFDG | RFPROC | RFPROCDESC, 0, &p2, &fd, 0, &fcaps);
+	bzero(&fr, sizeof(fr));
+	fr.fr_flags = RFFDG | RFPROC | RFPROCDESC;
+	fr.fr_pd_fd = &fd;
+	fr.fr_pd_fcaps = &fcaps;
+	error = fork1(td, &fr);
 	if (error != 0)
 		return (error);
 	/* Return the file descriptor to the parent process. */

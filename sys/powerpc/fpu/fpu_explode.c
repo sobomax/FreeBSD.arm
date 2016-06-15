@@ -46,14 +46,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/fpu/fpu_explode.c 279189 2015-02-22 21:40:27Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/fpu/fpu_explode.c 295271 2016-02-04 17:43:56Z jhb $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
 
 #include <machine/fpu.h>
 #include <machine/ieee.h>
-#include <machine/reg.h>
+#include <machine/pcb.h>
 
 #include <powerpc/fpu/fpu_arith.h>
 #include <powerpc/fpu/fpu_emu.h>
@@ -211,9 +211,9 @@ fpu_explode(struct fpemu *fe, struct fpn *fp, int type, int reg)
 	u_int s, *space;
 	u_int64_t l, *xspace;
 
-	xspace = (u_int64_t *)&fe->fe_fpstate->fpreg[reg].fpr;
+	xspace = (u_int64_t *)&fe->fe_fpstate->fpr[reg].fpr;
 	l = xspace[0];
-	space = (u_int *)&fe->fe_fpstate->fpreg[reg].fpr;
+	space = (u_int *)&fe->fe_fpstate->fpr[reg].fpr;
 	s = space[0];
 	fp->fp_sign = s >> 31;
 	fp->fp_sticky = 0;

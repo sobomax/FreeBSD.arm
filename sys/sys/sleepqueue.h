@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sleepqueue.h 271992 2014-09-22 19:14:27Z lwhsu $
+ * $FreeBSD: head/sys/sys/sleepqueue.h 296973 2016-03-17 01:05:53Z cem $
  */
 
 #ifndef _SYS_SLEEPQUEUE_H_
@@ -106,6 +106,12 @@ int	sleepq_timedwait_sig(void *wchan, int pri);
 int	sleepq_type(void *wchan);
 void	sleepq_wait(void *wchan, int pri);
 int	sleepq_wait_sig(void *wchan, int pri);
+
+#ifdef STACK
+struct sbuf;
+int sleepq_sbuf_print_stacks(struct sbuf *sb, void *wchan, int queue,
+    int *count_stacks_printed);
+#endif
 
 #endif	/* _KERNEL */
 #endif	/* !_SYS_SLEEPQUEUE_H_ */

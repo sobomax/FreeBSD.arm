@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/netisr.h 271300 2014-09-09 04:18:20Z adrian $
+ * $FreeBSD: head/sys/net/netisr.h 301270 2016-06-03 13:57:10Z bz $
  */
 
 #ifndef _NET_NETISR_H_
@@ -210,6 +210,10 @@ void	netisr_getqlimit(const struct netisr_handler *nhp, u_int *qlimitp);
 void	netisr_register(const struct netisr_handler *nhp);
 int	netisr_setqlimit(const struct netisr_handler *nhp, u_int qlimit);
 void	netisr_unregister(const struct netisr_handler *nhp);
+#ifdef VIMAGE
+void	netisr_register_vnet(const struct netisr_handler *nhp);
+void	netisr_unregister_vnet(const struct netisr_handler *nhp);
+#endif
 
 /*
  * Process a packet destined for a protocol, and attempt direct dispatch.

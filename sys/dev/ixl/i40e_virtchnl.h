@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_virtchnl.h 284049 2015-06-05 22:52:42Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_virtchnl.h 299548 2016-05-12 18:20:18Z erj $*/
 
 #ifndef _I40E_VIRTCHNL_H_
 #define _I40E_VIRTCHNL_H_
@@ -158,8 +158,10 @@ struct i40e_virtchnl_vsi_resource {
 #define I40E_VIRTCHNL_VF_OFFLOAD_FCOE		0x00000004
 #define I40E_VIRTCHNL_VF_OFFLOAD_RSS_AQ		0x00000008
 #define I40E_VIRTCHNL_VF_OFFLOAD_RSS_REG	0x00000010
+#define I40E_VIRTCHNL_VF_OFFLOAD_WB_ON_ITR	0x00000020
 #define I40E_VIRTCHNL_VF_OFFLOAD_VLAN		0x00010000
 #define I40E_VIRTCHNL_VF_OFFLOAD_RX_POLLING	0x00020000
+#define I40E_VIRTCHNL_VF_OFFLOAD_RSS_PCTYPE_V2	0x00040000
 
 struct i40e_virtchnl_vf_resource {
 	u16 num_vsis;

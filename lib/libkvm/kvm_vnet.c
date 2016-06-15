@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_vnet.c 291406 2015-11-27 18:58:26Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_vnet.c 298896 2016-05-01 19:37:33Z pfg $");
 
 #include <sys/param.h>
 
@@ -127,7 +127,7 @@ _kvm_vnet_selectpid(kvm_t *kd, pid_t pid)
 
 	/*
 	 * First, find the process for this pid.  If we are working on a
-	 * dump, either locate the thread dumptid is refering to or proc0.
+	 * dump, either locate the thread dumptid is referring to or proc0.
 	 * Based on either, take the address of the ucred.
 	 */
 	credp = 0;
@@ -208,7 +208,7 @@ _kvm_vnet_selectpid(kvm_t *kd, pid_t pid)
 }
 
 /*
- * Check whether the vnet module has been initialized sucessfully
+ * Check whether the vnet module has been initialized successfully
  * or not, initialize it if permitted.
  */
 int

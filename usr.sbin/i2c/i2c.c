@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/i2c/i2c.c 287820 2015-09-15 11:21:16Z zbb $");
+__FBSDID("$FreeBSD: head/usr.sbin/i2c/i2c.c 299682 2016-05-13 15:57:55Z pfg $");
 
 #include <err.h>
 #include <errno.h>
@@ -294,6 +294,9 @@ i2c_write(char *dev, struct options i2c_opt, char *i2c_buf)
 			err_msg = "error: offset malloc";
 			goto err1;
 		}
+	} else {
+		bufsize = 0;
+		buf = NULL;
 	}
 
 	switch(i2c_opt.mode) {

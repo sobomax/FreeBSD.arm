@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_mbox_prop.h 290381 2015-11-05 03:46:54Z gonzo $
+ * $FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2835_mbox_prop.h 298383 2016-04-20 22:38:00Z gonzo $
  */
 
 #ifndef _BCM2835_MBOX_PROP_H_
@@ -469,8 +469,6 @@ struct bcm2835_fb_config {
 struct msg_fb_get_w_h {
 	struct bcm2835_mbox_hdr hdr;
 	struct bcm2835_mbox_tag_fb_w_h physical_w_h;
-	struct bcm2835_mbox_tag_fb_w_h virtual_w_h;
-	struct bcm2835_mbox_tag_virtual_offset offset;
 	uint32_t end_tag;
 };
 

@@ -34,7 +34,7 @@ static char sccsid[] = "From: @(#)route.c	8.6 (Berkeley) 4/28/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/netstat/route.c 291592 2015-12-01 16:04:50Z ume $");
+__FBSDID("$FreeBSD: head/usr.bin/netstat/route.c 297321 2016-03-27 20:02:21Z pfg $");
 
 #include <sys/param.h>
 #include <sys/protosw.h>
@@ -417,6 +417,7 @@ p_sockaddr(const char *name, struct sockaddr *sa, struct sockaddr *mask,
 	if (width < 0) {
 		snprintf(buf, sizeof(buf), "{:%s/%%s} ", name);
 		xo_emit(buf, cp);
+		protrusion = 0;
 	} else {
 		if (Wflag != 0 || numeric_addr) {
 			snprintf(buf, sizeof(buf), "{[:%d}{:%s/%%s}{]:} ",

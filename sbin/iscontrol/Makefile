@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/iscontrol/Makefile 275510 2014-12-05 12:38:01Z trasz $
+# $FreeBSD: head/sbin/iscontrol/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=iscsi_legacy
 SRCS= iscontrol.c pdu.c fsm.c config.c login.c auth_subr.c misc.c
 PROG= iscontrol
 LIBADD=	cam md

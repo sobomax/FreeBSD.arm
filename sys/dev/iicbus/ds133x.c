@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/ds133x.c 246128 2013-01-30 18:01:20Z sbz $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/ds133x.c 298955 2016-05-03 03:41:25Z pfg $");
 /*
  * Dallas Semiconductor DS133X RTC sitting on the I2C bus.
  */
@@ -150,7 +150,7 @@ ds133x_detect(device_t dev, int *sc_type)
 
 	/*
 	 * Now Check for DS1337. Bit 5 in control register of this chip will be
-	 * allways read as 0. In DS1339 changing of this bit is safe until
+	 * always read as 0. In DS1339 changing of this bit is safe until
 	 * chip is powered up.
 	 */
 

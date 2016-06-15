@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/llvm-cov/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/usr.bin/clang/llvm-cov/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -21,5 +21,7 @@ LIBDEPS=llvmprofiledata \
 	llvmbitreader \
 	llvmcore \
 	llvmsupport
+
+LIBADD+=	z
 
 .include "../clang.prog.mk"

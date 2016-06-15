@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_regs.h 291084 2015-11-19 19:53:09Z cem $
+ * $FreeBSD: head/sys/dev/ntb/ntb_hw/ntb_regs.h 295618 2016-02-14 22:37:28Z cem $
  */
 
 #ifndef _NTB_REGS_H_
@@ -44,6 +44,7 @@
 #define XEON_DB_MSIX_VECTOR_COUNT	4
 #define XEON_DB_MSIX_VECTOR_SHIFT	5
 #define XEON_DB_LINK_BIT	(1 << XEON_DB_LINK)
+#define XEON_NONLINK_DB_MSIX_BITS	3
 
 #define XEON_SPCICMD_OFFSET	0x0504
 #define XEON_DEVCTRL_OFFSET	0x0598

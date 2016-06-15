@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/at/at.c 272289 2014-09-29 21:54:46Z delphij $");
+__FBSDID("$FreeBSD: head/usr.bin/at/at.c 298369 2016-04-20 20:54:47Z bapt $");
 
 #define _USE_BSD 1
 
@@ -351,7 +351,7 @@ writefile(time_t runtimer, char queue)
 	char *eqp;
 
 	eqp = strchr(*atenv, '=');
-	if (ap == NULL)
+	if (eqp == NULL)
 	    eqp = *atenv;
 	else
 	{

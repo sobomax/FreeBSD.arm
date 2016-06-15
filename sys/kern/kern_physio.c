@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_physio.c 290140 2015-10-29 13:53:37Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_physio.c 297633 2016-04-07 04:23:25Z trasz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -27,6 +27,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_physio.c 290140 2015-10-29 13:53:37Z hsel
 #include <sys/conf.h>
 #include <sys/malloc.h>
 #include <sys/proc.h>
+#include <sys/racct.h>
 #include <sys/uio.h>
 #include <geom/geom.h>
 
@@ -109,8 +110,24 @@ physio(struct cdev *dev, struct uio *uio, int ioflag)
 		prot |= VM_PROT_WRITE;	/* Less backwards than it looks */
 	error = 0;
 	for (i = 0; i < uio->uio_iovcnt; i++) {
+#ifdef RACCT
+		if (racct_enable) {
+			PROC_LOCK(curproc);
+			if (uio->uio_rw == UIO_READ) {
+				racct_add_force(curproc, RACCT_READBPS,
+				    uio->uio_iov[i].iov_len);
+				racct_add_force(curproc, RACCT_READIOPS, 1);
+			} else {
+				racct_add_force(curproc, RACCT_WRITEBPS,
+				    uio->uio_iov[i].iov_len);
+				racct_add_force(curproc, RACCT_WRITEIOPS, 1);
+			}
+			PROC_UNLOCK(curproc);
+		}
+#endif /* RACCT */
+
 		while (uio->uio_iov[i].iov_len) {
-			bzero(bp, sizeof(*bp));
+			g_reset_bio(bp);
 			if (uio->uio_rw == UIO_READ) {
 				bp->bio_cmd = BIO_READ;
 				curthread->td_ru.ru_inblock++;

@@ -1,7 +1,7 @@
-# $FreeBSD: head/tools/regression/sockets/unix_gc/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/regression/sockets/unix_gc/Makefile 294128 2016-01-16 02:19:56Z ngie $
 
 PROG=	unix_gc
 MAN=
-WARNS?=	3
+WARNS?=	6
 
 .include <bsd.prog.mk>

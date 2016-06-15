@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.5 (Berkeley) 3/31/94
-# $FreeBSD: head/sbin/Makefile 291021 2015-11-18 17:52:38Z bdrewery $
+# $FreeBSD: head/sbin/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
 
 .include <src.opts.mk>
 
@@ -71,7 +71,6 @@ SUBDIR=adjkerntz \
 	umount
 
 SUBDIR.${MK_ATM}+=	atm
-SUBDIR.${MK_CASPER}+=	casperd
 SUBDIR.${MK_CCD}+=	ccdconfig
 SUBDIR.${MK_CXX}+=	devd
 SUBDIR.${MK_HAST}+=	hastctl

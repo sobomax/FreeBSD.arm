@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/xenpv.c 283516 2015-05-25 09:47:16Z royger $");
+__FBSDID("$FreeBSD: head/sys/x86/xen/xenpv.c 296336 2016-03-03 05:07:35Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -120,7 +120,7 @@ xenpv_alloc_physmem(device_t dev, device_t child, int *res_id, size_t size)
 	int error;
 
 	res = bus_alloc_resource(child, SYS_RES_MEMORY, res_id, LOW_MEM_LIMIT,
-	    ~0ul, size, RF_ACTIVE);
+	    ~0, size, RF_ACTIVE);
 	if (res == NULL)
 		return (NULL);
 

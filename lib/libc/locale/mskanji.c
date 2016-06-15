@@ -44,7 +44,7 @@
 static char sccsid[] = "@(#)mskanji.c	1.0 (Phase One) 5/5/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/mskanji.c 290494 2015-11-07 12:43:35Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/mskanji.c 297557 2016-04-04 15:56:14Z ache $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -83,7 +83,7 @@ _MSKanji_init(struct xlocale_ctype *l, _RuneLocale *rl)
 	l->__mbsinit = _MSKanji_mbsinit;
 	l->runes = rl;
 	l->__mb_cur_max = 2;
-	l->__mb_sb_limit = 256;
+	l->__mb_sb_limit = 224;
 	return (0);
 }
 

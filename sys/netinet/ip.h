@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip.h	8.2 (Berkeley) 6/1/94
- * $FreeBSD: head/sys/netinet/ip.h 285669 2015-07-18 06:48:30Z kevlo $
+ * $FreeBSD: head/sys/netinet/ip.h 298995 2016-05-03 18:05:43Z pfg $
  */
 
 #ifndef _NETINET_IP_H_
@@ -147,7 +147,7 @@ struct ip {
 #define	IPOPT_SECURITY		130		/* provide s,c,h,tcc */
 #define	IPOPT_LSRR		131		/* loose source route */
 #define	IPOPT_ESO		133		/* extended security */
-#define	IPOPT_CIPSO		134		/* commerical security */
+#define	IPOPT_CIPSO		134		/* commercial security */
 #define	IPOPT_SATID		136		/* satnet id */
 #define	IPOPT_SSRR		137		/* strict source route */
 #define	IPOPT_RA		148		/* router alert */

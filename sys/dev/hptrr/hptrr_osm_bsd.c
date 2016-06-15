@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hptrr/hptrr_osm_bsd.c 269615 2014-08-05 23:47:26Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hptrr/hptrr_osm_bsd.c 295790 2016-02-19 03:37:56Z jhibbits $");
 
 #include <dev/hptrr/hptrr_config.h>
 /* $Id: osm_bsd.c,v 1.27 2007/11/22 07:35:49 gmm Exp $
@@ -1093,8 +1093,8 @@ static void hpt_final_init(void *dummy)
 
 		for (hba = vbus_ext->hba_list; hba; hba = hba->next) {
 			int rid = 0;
-			if ((hba->irq_res = bus_alloc_resource(hba->pcidev,
-				SYS_RES_IRQ, &rid, 0, ~0ul, 1, RF_SHAREABLE | RF_ACTIVE)) == NULL)
+			if ((hba->irq_res = bus_alloc_resource_any(hba->pcidev,
+				SYS_RES_IRQ, &rid, RF_SHAREABLE | RF_ACTIVE)) == NULL)
 			{
 				os_printk("can't allocate interrupt");
 				return ;

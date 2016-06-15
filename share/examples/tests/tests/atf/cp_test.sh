@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/examples/tests/tests/atf/cp_test.sh 263173 2014-03-14 12:55:06Z jmmv $
+# $FreeBSD: head/share/examples/tests/tests/atf/cp_test.sh 299094 2016-05-04 23:20:53Z ngie $
 #
 # Copyright 2013 Google Inc.
 # All rights reserved.
@@ -61,7 +61,7 @@ verify_copy() {
 #
 atf_test_case simple
 simple_body() {
-	echo 'File 1' >file1
+	cp $(atf_get_srcdir)/file1 .
 
 	# The atf_check function is a very powerful function of atf-sh.
 	# It allows you to define checkers for the exit status, the
@@ -102,7 +102,7 @@ force_head() {
 	    "override the destination file"
 }
 force_body() {
-	echo 'File 1' >file1
+	cp $(atf_get_srcdir)/file1 .
 	echo 'File 2' >file2
 	chmod 400 file2
 	atf_check cp -f file1 file2

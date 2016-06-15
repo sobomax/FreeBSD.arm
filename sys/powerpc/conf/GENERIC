@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/powerpc/conf/GENERIC 291374 2015-11-26 21:35:50Z emaste $
+# $FreeBSD: head/sys/powerpc/conf/GENERIC 299142 2016-05-05 22:26:23Z jhb $
 
 cpu		AIM
 ident		GENERIC
@@ -102,6 +102,7 @@ device		cpufreq
 
 # Standard busses
 device		pci
+options 	PCI_HP			# PCI-Express native HotPlug
 device		agp
 
 # ATA controllers

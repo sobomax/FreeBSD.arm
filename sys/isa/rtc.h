@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)rtc.h	7.1 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/isa/rtc.h 209371 2010-06-20 21:33:29Z mav $
+ * $FreeBSD: head/sys/isa/rtc.h 298928 2016-05-02 16:14:55Z royger $
  */
 
 #ifndef _I386_ISA_RTC_H_
@@ -117,6 +117,7 @@ extern	int atrtcclock_disable;
 int	rtcin(int reg);
 void	atrtc_restore(void);
 void	writertc(int reg, u_char val);
+void	atrtc_set(struct timespec *ts);
 #endif
 
 #endif /* _I386_ISA_RTC_H_ */

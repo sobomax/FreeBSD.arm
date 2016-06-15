@@ -31,7 +31,7 @@
  */
 
 /**
- * Power, Reset and Clock Managment Module
+ * Power, Reset and Clock Management Module
  *
  * This is a very simple driver wrapper around the PRCM set of registers in
  * the OMAP3 chip. It allows you to turn on and off things like the functional
@@ -39,7 +39,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_prcm.c 284532 2015-06-17 23:26:00Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_prcm.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

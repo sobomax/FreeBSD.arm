@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_var.h 291292 2015-11-25 07:31:59Z ae $
+ * $FreeBSD: head/sys/net/if_var.h 300164 2016-05-18 20:06:45Z bz $
  */
 
 #ifndef	_NET_IF_VAR_H_
@@ -134,6 +134,48 @@ struct ifnet_hw_tsomax {
 	u_int	tsomaxsegsize;	/* TSO maximum segment size in bytes */
 };
 
+/* Interface encap request types */
+typedef enum {
+	IFENCAP_LL = 1			/* pre-calculate link-layer header */
+} ife_type;
+
+/*
+ * The structure below allows to request various pre-calculated L2/L3 headers
+ * for different media. Requests varies by type (rtype field).
+ *
+ * IFENCAP_LL type: pre-calculates link header based on address family
+ *   and destination lladdr.
+ *
+ *   Input data fields:
+ *     buf: pointer to destination buffer
+ *     bufsize: buffer size
+ *     flags: IFENCAP_FLAG_BROADCAST if destination is broadcast
+ *     family: address family defined by AF_ constant.
+ *     lladdr: pointer to link-layer address
+ *     lladdr_len: length of link-layer address
+ *     hdata: pointer to L3 header (optional, used for ARP requests).
+ *   Output data fields:
+ *     buf: encap data is stored here
+ *     bufsize: resulting encap length is stored here
+ *     lladdr_off: offset of link-layer address from encap hdr start
+ *     hdata: L3 header may be altered if necessary
+ */
+
+struct if_encap_req {
+	u_char		*buf;		/* Destination buffer (w) */
+	size_t		bufsize;	/* size of provided buffer (r) */
+	ife_type	rtype;		/* request type (r) */
+	uint32_t	flags;		/* Request flags (r) */
+	int		family;		/* Address family AF_* (r) */
+	int		lladdr_off;	/* offset from header start (w) */
+	int		lladdr_len;	/* lladdr length (r) */
+	char		*lladdr;	/* link-level address pointer (r) */
+	char		*hdata;		/* Upper layer header data (rw) */
+};
+
+#define	IFENCAP_FLAG_BROADCAST	0x02	/* Destination is broadcast */
+
+
 /*
  * Structure defining a network interface.
  *
@@ -235,6 +277,8 @@ struct ifnet {
 	void	(*if_reassign)		/* reassign to vnet routine */
 		(struct ifnet *, struct vnet *, char *);
 	if_get_counter_t if_get_counter; /* get counter values */
+	int	(*if_requestencap)	/* make link header from request */
+		(struct ifnet *, struct if_encap_req *);
 
 	/* Statistics. */
 	counter_u64_t	if_counters[IFCOUNTERS];
@@ -491,7 +535,6 @@ void	if_dead(struct ifnet *);
 int	if_delmulti(struct ifnet *, struct sockaddr *);
 void	if_delmulti_ifma(struct ifmultiaddr *);
 void	if_detach(struct ifnet *);
-void	if_vmove(struct ifnet *, struct vnet *);
 void	if_purgeaddrs(struct ifnet *);
 void	if_delallmulti(struct ifnet *);
 void	if_down(struct ifnet *);
@@ -584,6 +627,7 @@ int if_setupmultiaddr(if_t ifp, void *mta, int *cnt, int max);
 int if_multiaddr_array(if_t ifp, void *mta, int *cnt, int max);
 int if_multiaddr_count(if_t ifp, int max);
 
+int if_multi_apply(struct ifnet *ifp, int (*filter)(void *, struct ifmultiaddr *, int), void *arg);
 int if_getamcount(if_t ifp);
 struct ifaddr * if_getifaddr(if_t ifp);
 

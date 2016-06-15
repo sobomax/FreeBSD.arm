@@ -7,12 +7,12 @@
 # override the default options (adding devices as needed) and adding
 # hints as needed (for example, the GPIO and LAN PHY.)
 #
-# $FreeBSD: head/sys/mips/conf/QCA953X_BASE 291438 2015-11-29 05:49:49Z adrian $
+# $FreeBSD: head/sys/mips/conf/QCA953X_BASE 295503 2016-02-11 06:23:02Z adrian $
 #
 
 machine 	mips mips
 ident		QCA953X_BASE
-cpu		CPU_MIPS4KC
+cpu		CPU_MIPS24K
 makeoptions	KERNLOADADDR=0x80050000
 options 	HZ=1000
 

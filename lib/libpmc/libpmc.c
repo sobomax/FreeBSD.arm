@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libpmc/libpmc.c 291494 2015-11-30 17:35:49Z rrs $");
+__FBSDID("$FreeBSD: head/lib/libpmc/libpmc.c 298896 2016-05-01 19:37:33Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -3240,7 +3240,7 @@ pmc_init(void)
 	if (PMC_CALL(GETMODULEVERSION, &abi_version) < 0)
 		return (pmc_syscall = -1);
 
-	/* ignore patch & minor numbers for the comparision */
+	/* ignore patch & minor numbers for the comparison */
 	if ((abi_version & 0xFF000000) != (PMC_VERSION & 0xFF000000)) {
 		errno  = EPROGMISMATCH;
 		return (pmc_syscall = -1);

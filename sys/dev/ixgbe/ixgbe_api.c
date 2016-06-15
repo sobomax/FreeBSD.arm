@@ -30,13 +30,15 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/ixgbe_api.c 282289 2015-04-30 22:53:27Z erj $*/
+/*$FreeBSD: head/sys/dev/ixgbe/ixgbe_api.c 299200 2016-05-06 22:54:56Z pfg $*/
 
 #include "ixgbe_api.h"
 #include "ixgbe_common.h"
 
+#define IXGBE_EMPTY_PARAM
+
 static const u32 ixgbe_mvals_base[IXGBE_MVALS_IDX_LIMIT] = {
-	IXGBE_MVALS_INIT()
+	IXGBE_MVALS_INIT(IXGBE_EMPTY_PARAM)
 };
 
 static const u32 ixgbe_mvals_X540[IXGBE_MVALS_IDX_LIMIT] = {
@@ -113,6 +115,7 @@ s32 ixgbe_init_shared_code(struct ixgbe_hw *hw)
 		status = IXGBE_ERR_DEVICE_NOT_SUPPORTED;
 		break;
 	}
+	hw->mac.max_link_up_time = IXGBE_LINK_UP_TIME;
 
 	return status;
 }
@@ -187,6 +190,7 @@ s32 ixgbe_set_mac_type(struct ixgbe_hw *hw)
 		hw->mvals = ixgbe_mvals_X540;
 		break;
 	case IXGBE_DEV_ID_X550T:
+	case IXGBE_DEV_ID_X550T1:
 		hw->mac.type = ixgbe_mac_X550;
 		hw->mvals = ixgbe_mvals_X550;
 		break;
@@ -875,7 +879,7 @@ s32 ixgbe_update_eeprom_checksum(struct ixgbe_hw *hw)
  *  @vmdq: VMDq pool to assign
  *
  *  Puts an ethernet address into a receive address register, or
- *  finds the rar that it is aleady in; adds to the pool list
+ *  finds the rar that it is already in; adds to the pool list
  **/
 s32 ixgbe_insert_mac_addr(struct ixgbe_hw *hw, u8 *addr, u32 vmdq)
 {

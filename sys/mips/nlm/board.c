@@ -28,7 +28,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/board.c 279387 2015-02-28 00:17:29Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/board.c 298431 2016-04-21 19:40:10Z pfg $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -105,10 +105,10 @@ nlm_get_vfbid_mapping(int vfbid)
 	struct vfbid_tbl *p;
 
 	if (nlm_is_xlp3xx()) {
-		nentries = sizeof(nlm3xx_vfbid)/sizeof(struct vfbid_tbl);
+		nentries = nitems(nlm3xx_vfbid);
 		p = nlm3xx_vfbid;
 	} else {
-		nentries = sizeof(nlm_vfbid)/sizeof(struct vfbid_tbl);
+		nentries = nitems(nlm_vfbid);
 		p = nlm_vfbid;
 	}
 

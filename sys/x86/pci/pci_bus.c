@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/pci/pci_bus.c 287882 2015-09-16 23:34:51Z zbb $");
+__FBSDID("$FreeBSD: head/sys/x86/pci/pci_bus.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include "opt_cpu.h"
 
@@ -578,8 +578,8 @@ static unsigned long host_mem_start = 0x80000000;
 SYSCTL_ULONG(_hw_pci, OID_AUTO, host_mem_start, CTLFLAG_RDTUN, &host_mem_start,
     0, "Limit the host bridge memory to being above this address.");
 
-u_long
-hostb_alloc_start(int type, u_long start, u_long end, u_long count)
+rman_res_t
+hostb_alloc_start(int type, rman_res_t start, rman_res_t end, rman_res_t count)
 {
 
 	if (start + count - 1 != end) {
@@ -593,7 +593,7 @@ hostb_alloc_start(int type, u_long start, u_long end, u_long count)
 
 struct resource *
 legacy_pcib_alloc_resource(device_t dev, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 
 #if defined(NEW_PCIB) && defined(PCI_RES_BUS)
@@ -609,7 +609,7 @@ legacy_pcib_alloc_resource(device_t dev, device_t child, int type, int *rid,
 #if defined(NEW_PCIB) && defined(PCI_RES_BUS)
 int
 legacy_pcib_adjust_resource(device_t dev, device_t child, int type,
-    struct resource *r, u_long start, u_long end)
+    struct resource *r, rman_res_t start, rman_res_t end)
 {
 
 	if (type == PCI_RES_BUS)

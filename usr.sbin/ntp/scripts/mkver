@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# $FreeBSD: head/usr.sbin/ntp/scripts/mkver 289764 2015-10-22 19:42:57Z glebius $
+# $FreeBSD: head/usr.sbin/ntp/scripts/mkver 301247 2016-06-03 08:00:22Z delphij $
 #
 PROG=${1-UNKNOWN}
 
 ConfStr="$PROG"
 
-ConfStr="$ConfStr 4.2.8p4"
+ConfStr="$ConfStr 4.2.8p8"
 
 case "$CSET" in
  '') ;;

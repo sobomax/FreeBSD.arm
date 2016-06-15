@@ -26,7 +26,7 @@
 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_tdma.c 283538 2015-05-25 19:18:16Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_tdma.c 298376 2016-04-20 21:15:55Z avos $");
 #endif
 
 /*
@@ -343,8 +343,7 @@ tdma_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0,
 			 */
 			IEEE80211_DISCARD(vap,
 			    IEEE80211_MSG_ELEMID | IEEE80211_MSG_INPUT,
-			    wh, ieee80211_mgt_subtype_name[subtype >>
-				IEEE80211_FC0_SUBTYPE_SHIFT],
+			    wh, ieee80211_mgt_subtype_name(subtype),
 			    "%s", "no TDMA ie");
 			vap->iv_stats.is_rx_mgtdiscard++;
 			return;

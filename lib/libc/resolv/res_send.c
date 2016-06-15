@@ -69,7 +69,7 @@ static const char sccsid[] = "@(#)res_send.c	8.1 (Berkeley) 6/4/93";
 static const char rcsid[] = "$Id: res_send.c,v 1.22 2009/01/22 23:49:23 tbox Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/resolv/res_send.c 288114 2015-09-22 15:57:26Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/resolv/res_send.c 298226 2016-04-18 21:05:15Z avos $");
 
 /*! \file
  * \brief
@@ -82,7 +82,6 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_send.c 288114 2015-09-22 15:57:26Z 
 #endif
 
 #include "namespace.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/socket.h>
@@ -119,7 +118,9 @@ __FBSDID("$FreeBSD: head/lib/libc/resolv/res_send.c 288114 2015-09-22 15:57:26Z 
 #include "un-namespace.h"
 
 /* Options.  Leave them on. */
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 #include "res_debug.h"
 #include "res_private.h"
 

@@ -1,5 +1,6 @@
 # Standard kernel config items for all ARMv4/v5 systems.
 #
-# $FreeBSD: head/sys/arm/conf/std.arm 282499 2015-05-05 16:09:25Z ian $
+# $FreeBSD: head/sys/arm/conf/std.arm 296938 2016-03-16 15:31:09Z andrew $
 
+options 	COMPAT_FREEBSD10	# Compatible with FreeBSD10
 

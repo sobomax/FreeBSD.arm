@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ps.h	8.1 (Berkeley) 5/31/93
- * $FreeBSD: head/bin/ps/ps.h 283304 2015-05-22 23:07:55Z marcel $
+ * $FreeBSD: head/bin/ps/ps.h 300648 2016-05-25 05:12:56Z truckman $
  */
 
 #include <sys/queue.h>
@@ -42,8 +42,8 @@ typedef struct kinfo_str {
 
 typedef struct kinfo {
 	struct kinfo_proc *ki_p;	/* kinfo_proc structure */
-	char *ki_args;		/* exec args */
-	char *ki_env;		/* environment */
+	const char *ki_args;	/* exec args */
+	const char *ki_env;	/* environment */
 	int ki_valid;		/* 1 => uarea stuff valid */
 	double	 ki_pcpu;	/* calculated in main() */
 	segsz_t	 ki_memsize;	/* calculated in main() */

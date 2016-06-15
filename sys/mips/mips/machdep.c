@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/mips/machdep.c 272098 2014-09-25 08:28:10Z royger $");
+__FBSDID("$FreeBSD: head/sys/mips/mips/machdep.c 298053 2016-04-15 14:26:24Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_md.h"
@@ -316,7 +316,7 @@ cpu_initclocks(void)
 	cpu_initclocks_bsp();
 }
 
-struct msgbuf *msgbufp=0;
+struct msgbuf *msgbufp = NULL;
 
 /*
  * Initialize the hardware exception vectors, and the jump table used to

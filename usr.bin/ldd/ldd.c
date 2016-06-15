@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 289425 2015-10-16 17:50:36Z jkim $");
+__FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 299952 2016-05-16 16:01:46Z truckman $");
 
 #include <sys/wait.h>
 
@@ -48,8 +48,8 @@ __FBSDID("$FreeBSD: head/usr.bin/ldd/ldd.c 289425 2015-10-16 17:50:36Z jkim $");
 
 #include "extern.h"
 
-/* We don't support a.out executables on arm64 */
-#ifndef __aarch64__
+/* We don't support a.out executables on arm64 and riscv */
+#if !defined(__aarch64__) && !defined(__riscv__)
 #include <a.out.h>
 #define	AOUT_SUPPORTED
 #endif
@@ -88,7 +88,7 @@ static void	usage(void);
 static int
 execldd32(char *file, char *fmt1, char *fmt2, int aflag, int vflag)
 {
-	char *argv[8];
+	char *argv[9];
 	int i, rval, status;
 
 	LDD_UNSETENV("TRACE_LOADED_OBJECTS");

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_examine.c 285774 2015-07-21 23:07:55Z markj $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_examine.c 299970 2016-05-16 19:42:38Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -225,6 +225,10 @@ db_print_cmd(db_expr_t addr, bool have_addr, db_expr_t count, char *modif)
 		else
 		    db_printf("\\%03o", (int)value);
 		break;
+	    default:
+		db_print_format = 'x';
+		db_error("Syntax error: unsupported print modifier\n");
+		/*NOTREACHED*/
 	}
 	db_printf("\n");
 }

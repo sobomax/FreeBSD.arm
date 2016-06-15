@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/collcmp.c 290494 2015-11-07 12:43:35Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/collcmp.c 301461 2016-06-05 19:12:52Z pfg $");
 
 #include <string.h>
 #include <wchar.h>
@@ -41,14 +41,27 @@ __FBSDID("$FreeBSD: head/lib/libc/locale/collcmp.c 290494 2015-11-07 12:43:35Z b
  * Compare two characters using collate
  */
 
-int __collate_range_cmp(struct xlocale_collate *table, wchar_t c1, wchar_t c2)
+int __collate_range_cmp(struct xlocale_collate *table, char c1, char c2)
+{
+	char s1[2], s2[2];
+
+	s1[0] = c1;
+	s1[1] = '\0';
+	s2[0] = c2;
+	s2[1] = '\0';
+	struct _xlocale l = {{0}};
+	l.components[XLC_COLLATE] = (struct xlocale_component *)table;
+	return (strcoll_l(s1, s2, &l));
+}
+
+int __wcollate_range_cmp(struct xlocale_collate *table, wchar_t c1, wchar_t c2)
 {
 	wchar_t s1[2], s2[2];
 
 	s1[0] = c1;
-	s1[1] = 0;
+	s1[1] = L'\0';
 	s2[0] = c2;
-	s2[1] = 0;
+	s2[1] = L'\0';
 	struct _xlocale l = {{0}};
 	l.components[XLC_COLLATE] = (struct xlocale_component *)table;
 	return (wcscoll_l(s1, s2, &l));

@@ -27,7 +27,7 @@
 /*
  * The API to write a packet scheduling algorithm for dummynet.
  *
- * $FreeBSD: head/sys/netpfil/ipfw/dn_sched.h 283111 2015-05-19 14:49:31Z luigi $
+ * $FreeBSD: head/sys/netpfil/ipfw/dn_sched.h 300779 2016-05-26 21:40:13Z truckman $
  */
 
 #ifndef _DN_SCHED_H
@@ -132,6 +132,10 @@ struct dn_alg {
 	int (*free_fsk)(struct dn_fsk *f);
 	int (*new_queue)(struct dn_queue *q);
 	int (*free_queue)(struct dn_queue *q);
+#ifdef NEW_AQM
+	/* Getting scheduler extra parameters */
+	int (*getconfig)(struct dn_schk *, struct dn_extra_parms *);
+#endif
 
 	/* run-time fields */
 	int ref_count;      /* XXX number of instances in the system */
@@ -165,6 +169,11 @@ dn_dequeue(struct dn_queue *q)
 	struct mbuf *m = q->mq.head;
 	if (m == NULL)
 		return NULL;
+#ifdef NEW_AQM
+	/* Call AQM dequeue function  */
+	if (q->fs->aqmfp && q->fs->aqmfp->dequeue )
+		return q->fs->aqmfp->dequeue(q);
+#endif
 	q->mq.head = m->m_nextpkt;
 	q->mq.count--;
 

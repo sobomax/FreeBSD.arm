@@ -1,13 +1,12 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: head/sys/conf/files.mips 289765 2015-10-22 20:28:37Z cem $
+# $FreeBSD: head/sys/conf/files.mips 299118 2016-05-05 13:54:50Z br $
 #
 
 # Arch dependent files
 mips/mips/autoconf.c			standard
 mips/mips/bus_space_generic.c		standard
-mips/mips/bus_space_fdt.c		optional	fdt
 mips/mips/busdma_machdep.c		standard
 mips/mips/cache.c			standard
 mips/mips/cache_mipsNN.c		standard
@@ -30,6 +29,7 @@ mips/mips/minidump_machdep.c		standard
 mips/mips/mp_machdep.c			optional	smp
 mips/mips/mpboot.S			optional	smp
 mips/mips/nexus.c			standard
+mips/mips/ofw_machdep.c			optional	fdt
 mips/mips/pm_machdep.c			standard
 mips/mips/pmap.c			standard
 mips/mips/ptrace_machdep.c		standard
@@ -79,7 +79,6 @@ dev/syscons/scvtb.c			optional	sc
 mips/mips/sc_machdep.c			optional	sc
 
 # FDT support
-dev/fdt/fdt_mips.c			optional	fdt
 dev/uart/uart_cpu_fdt.c			optional	uart fdt
 
 # crypto support -- use generic
@@ -93,3 +92,12 @@ dev/nvram2env/nvram2env.c		optional	nvram2env
 dev/hwpmc/hwpmc_mips.c			optional	hwpmc
 dev/hwpmc/hwpmc_mips24k.c		optional	hwpmc_mips24k
 dev/hwpmc/hwpmc_mips74k.c		optional	hwpmc_mips74k
+
+# ofw support
+dev/ofw/ofwpci.c			optional	fdt pci
+
+# DTrace
+cddl/compat/opensolaris/kern/opensolaris_atomic.c	optional zfs | dtrace compile-with "${CDDL_C}"
+cddl/dev/dtrace/mips/dtrace_asm.S			optional dtrace compile-with "${DTRACE_S}"
+cddl/dev/dtrace/mips/dtrace_subr.c			optional dtrace compile-with "${DTRACE_C}"
+cddl/dev/fbt/mips/fbt_isa.c				optional dtrace_fbt | dtraceall compile-with "${FBT_C}"

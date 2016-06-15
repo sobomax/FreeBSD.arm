@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/tests/gen/posix_spawn/Makefile 289172 2015-10-12 08:16:03Z ngie $
+# $FreeBSD: head/lib/libc/tests/gen/posix_spawn/Makefile 295757 2016-02-18 14:17:28Z emaste $
 
 .include <bsd.own.mk>
 
@@ -20,7 +20,7 @@ CLEANFILES+=	h_nonexec
 .include "../../Makefile.netbsd-tests"
 
 h_zero:
-	dd if=/dev/zero of=h_zero bs=1k count=2
+	dd if=/dev/zero of=h_zero bs=1k count=2 status=none
 	chmod a+x h_zero
 
 CLEANFILES+=	h_zero

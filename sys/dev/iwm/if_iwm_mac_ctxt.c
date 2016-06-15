@@ -103,7 +103,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_mac_ctxt.c 287197 2015-08-27 08:56:39Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_mac_ctxt.c 300248 2016-05-19 23:31:00Z avos $");
+
+#include "opt_wlan.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -426,7 +428,7 @@ iwm_mvm_mac_ctxt_cmd_station(struct iwm_softc *sc, struct ieee80211vap *vap,
 	uint32_t action)
 {
 	struct ieee80211_node *ni = vap->iv_bss;
-	struct iwm_node *in = (struct iwm_node *) ni;
+	struct iwm_node *in = IWM_NODE(ni);
 	struct iwm_mac_ctx_cmd cmd;
 
 	IWM_DPRINTF(sc, IWM_DEBUG_RESET,

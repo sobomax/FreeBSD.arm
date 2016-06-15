@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.3 2000/06/20 13:56:43 fvdl Exp $
-# $FreeBSD: head/usr.sbin/rpcbind/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/rpcbind/Makefile 293229 2016-01-06 00:00:11Z asomers $
 
 .include <src.opts.mk>
 
@@ -12,6 +12,10 @@ CFLAGS+= -DPORTMAP -DLIBWRAP
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+= -DINET6
+.endif
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
 .endif
 
 WARNS?=	1

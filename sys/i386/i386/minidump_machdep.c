@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/minidump_machdep.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/minidump_machdep.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include "opt_watchdog.h"
 
@@ -54,7 +54,7 @@ CTASSERT(sizeof(struct kerneldumpheader) == 512);
 #define	SIZEOF_METADATA		(64*1024)
 
 #define	MD_ALIGN(x)	(((off_t)(x) + PAGE_MASK) & ~PAGE_MASK)
-#define	DEV_ALIGN(x)	(((off_t)(x) + (DEV_BSIZE-1)) & ~(DEV_BSIZE-1))
+#define	DEV_ALIGN(x)	roundup2((off_t)(x), DEV_BSIZE)
 
 uint32_t *vm_page_dump;
 int vm_page_dump_size;

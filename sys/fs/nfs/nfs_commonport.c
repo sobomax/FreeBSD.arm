@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonport.c 291638 2015-12-02 02:47:13Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfs/nfs_commonport.c 298788 2016-04-29 16:07:25Z pfg $");
 
 /*
  * Functions that need to be different for different versions of BSD
@@ -155,7 +155,7 @@ newnfs_realign(struct mbuf **pm, int how)
  *	we cannot afford to overwrite them.
  *
  *	We would prefer to avoid this situation entirely.  The situation does
- *	not occur with NFS/UDP and is supposed to only occassionally occur
+ *	not occur with NFS/UDP and is supposed to only occasionally occur
  *	with TCP.  Use vfs.nfs.realign_count and realign_test to check this.
  *
  */
@@ -337,7 +337,7 @@ nfsvno_pathconf(struct vnode *vp, int flag, register_t *retf,
 			 */
 			*retf = 0;
 			printf("nfsrvd pathconf flag=%d not supp\n", flag);
-		};
+		}
 		error = 0;
 	}
 	NFSEXITCODE(error);

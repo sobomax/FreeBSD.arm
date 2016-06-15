@@ -28,7 +28,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 279387 2015-02-28 00:17:29Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_machdep.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"
@@ -311,8 +311,6 @@ xlp_bootargs_init(__register_t arg)
 		while (1);
 	if (OF_init((void *)dtbp) != 0)
 		while (1);
-	if (fdt_immr_addr(xlp_io_base) != 0)
-		while (1);
 	OF_interpret("perform-fixup", 0);
 
 	chosen = OF_finddevice("/chosen");
@@ -443,11 +441,10 @@ static vm_paddr_t xlp_mem_excl[] = {
 static int
 mem_exclude_add(vm_paddr_t *avail, vm_paddr_t mstart, vm_paddr_t mend)
 {
-	int nreg = sizeof(xlp_mem_excl)/sizeof(xlp_mem_excl[0]);
 	int i, pos;
 
 	pos = 0;
-	for (i = 0; i < nreg; i += 2) {
+	for (i = 0; i < nitems(xlp_mem_excl); i += 2) {
 		if (mstart > xlp_mem_excl[i + 1])
 			continue;
 		if (mstart < xlp_mem_excl[i]) {

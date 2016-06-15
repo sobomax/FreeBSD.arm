@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_offload.c 257176 2013-10-26 17:58:36Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/tcp_offload.c 294869 2016-01-27 00:45:46Z glebius $");
 
 #include "opt_inet.h"
 
@@ -42,10 +42,10 @@ __FBSDID("$FreeBSD: head/sys/netinet/tcp_offload.c 257176 2013-10-26 17:58:36Z g
 #include <netinet/in.h>
 #include <netinet/in_pcb.h>
 #include <netinet/tcp.h>
-#include <netinet/tcp_var.h>
 #include <netinet/tcp_offload.h>
 #define	TCPOUTFLAGS
 #include <netinet/tcp_fsm.h>
+#include <netinet/tcp_var.h>
 #include <netinet/toecore.h>
 
 int registered_toedevs;

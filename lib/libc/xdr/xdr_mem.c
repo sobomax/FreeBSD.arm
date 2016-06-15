@@ -36,7 +36,7 @@ static char *sccsid2 = "@(#)xdr_mem.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)xdr_mem.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_mem.c 283833 2015-05-31 18:08:58Z rodrigc $");
+__FBSDID("$FreeBSD: head/lib/libc/xdr/xdr_mem.c 297790 2016-04-10 19:33:58Z pfg $");
 
 /*
  * xdr_mem.h, XDR implementation using memory buffers.
@@ -215,7 +215,7 @@ xdrmem_setpos(XDR *xdrs, u_int pos)
 static int32_t *
 xdrmem_inline_aligned(XDR *xdrs, u_int len)
 {
-	int32_t *buf = 0;
+	int32_t *buf = NULL;
 
 	if (xdrs->x_handy >= len) {
 		xdrs->x_handy -= len;

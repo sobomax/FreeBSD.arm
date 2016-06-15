@@ -28,7 +28,7 @@
 #ifndef lint
 __RCSID("$NetBSD: boot.c,v 1.11 2006/06/05 16:51:18 christos Exp ");
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/fsck_msdosfs/boot.c 273865 2014-10-30 15:52:01Z ambrisko $";
+  "$FreeBSD: head/sbin/fsck_msdosfs/boot.c 299089 2016-05-04 22:27:22Z pfg $";
 #endif /* not lint */
 
 #include <stdlib.h>
@@ -221,7 +221,7 @@ readboot(int dosfs, struct bootblock *boot)
 		break;
 	}
 
-	if (boot->NumFatEntries < boot->NumClusters) {
+	if (boot->NumFatEntries < boot->NumClusters - CLUST_FIRST) {
 		pfatal("FAT size too small, %u entries won't fit into %u sectors\n",
 		       boot->NumClusters, boot->FATsecs);
 		return FSFATAL;

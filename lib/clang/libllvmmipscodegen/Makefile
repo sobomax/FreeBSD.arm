@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmmipscodegen/Makefile 288943 2015-10-06 17:53:29Z dim $
+# $FreeBSD: head/lib/clang/libllvmmipscodegen/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -38,7 +38,8 @@ SRCS=	Mips16FrameLowering.cpp \
 	MipsTargetMachine.cpp \
 	MipsTargetObjectFile.cpp
 
-TGHDRS=	Intrinsics \
+TGHDRS=	Attributes \
+	Intrinsics \
 	MipsGenAsmWriter \
 	MipsGenCallingConv \
 	MipsGenCodeEmitter \

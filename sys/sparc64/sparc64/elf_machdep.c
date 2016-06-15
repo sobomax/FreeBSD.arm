@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/elf_machdep.c 291420 2015-11-28 08:49:07Z kib $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/elf_machdep.c 298352 2016-04-20 15:45:55Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -85,6 +85,7 @@ static struct sysentvec elf64_freebsd_sysvec = {
 	.sv_syscallnames = syscallnames,
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 
 static Elf64_Brandinfo freebsd_brand_info = {
@@ -356,8 +357,7 @@ elf_reloc(linker_file_t lf, Elf_Addr relocbase, const void *data, int type,
 		return (0);
 
 	if (rtype == R_SPARC_JMP_SLOT || rtype == R_SPARC_COPY ||
-	    rtype >= sizeof(reloc_target_bitmask) /
-	    sizeof(*reloc_target_bitmask)) {
+	    rtype >= nitems(reloc_target_bitmask)) {
 		printf("kldload: unexpected relocation type %ld\n", rtype);
 		return (-1);
 	}

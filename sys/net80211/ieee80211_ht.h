@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_ht.h 288315 2015-09-28 00:17:51Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_ht.h 297603 2016-04-06 01:21:51Z adrian $
  */
 #ifndef _NET80211_IEEE80211_HT_H_
 #define _NET80211_IEEE80211_HT_H_
@@ -64,6 +64,10 @@ struct ieee80211_tx_ampdu {
 /* return non-zero if AMPDU tx for the TID is running */
 #define	IEEE80211_AMPDU_RUNNING(tap) \
 	(((tap)->txa_flags & IEEE80211_AGGR_RUNNING) != 0)
+
+/* return non-zero if AMPDU tx for the TID was NACKed */
+#define	IEEE80211_AMPDU_NACKED(tap)\
+	(!! ((tap)->txa_flags & IEEE80211_AGGR_NAK))
 
 /* return non-zero if AMPDU tx for the TID is running or started */
 #define	IEEE80211_AMPDU_REQUESTED(tap) \

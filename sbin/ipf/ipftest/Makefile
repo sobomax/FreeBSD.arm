@@ -1,5 +1,6 @@
-#	$FreeBSD: head/sbin/ipf/ipftest/Makefile 291329 2015-11-25 20:38:07Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipftest/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	ipf
 PROG=		ipftest
 SRCS=		${GENHDRS} ipftest.c fil.c ip_frag.c ip_state.c ip_nat.c \
 		ip_nat6.c \

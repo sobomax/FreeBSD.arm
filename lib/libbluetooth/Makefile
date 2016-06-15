@@ -1,6 +1,7 @@
 # $Id: Makefile,v 1.5 2003/07/22 18:38:04 max Exp $
-# $FreeBSD: head/lib/libbluetooth/Makefile 195767 2009-07-19 17:25:24Z kensmith $
+# $FreeBSD: head/lib/libbluetooth/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	lib${LIB}
 LIB=		bluetooth
 MAN=		bluetooth.3
 

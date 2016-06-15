@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/proto/proto_bus_isa.c 285707 2015-07-19 23:37:45Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/proto/proto_bus_isa.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -80,7 +80,7 @@ proto_isa_probe(device_t dev)
 		return (ENODEV);
 
 	sb = sbuf_new_auto();
-	sbuf_printf(sb, "%s:%#lx", proto_isa_prefix, rman_get_start(res));
+	sbuf_printf(sb, "%s:%#jx", proto_isa_prefix, rman_get_start(res));
 	sbuf_finish(sb);
 	device_set_desc_copy(dev, sbuf_data(sb));
 	sbuf_delete(sb);

@@ -76,7 +76,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ping6/ping6.c 286834 2015-08-16 23:23:58Z delphij $");
+__FBSDID("$FreeBSD: head/sbin/ping6/ping6.c 299875 2016-05-16 00:35:39Z araujo $");
 
 /*
  * Using the InterNet Control Message Protocol (ICMP) "ECHO" facility,
@@ -863,7 +863,7 @@ main(int argc, char *argv[])
 
 	/* set IP6 packet options */
 	if (ip6optlen) {
-		if ((scmsg = (char *)malloc(ip6optlen)) == 0)
+		if ((scmsg = (char *)malloc(ip6optlen)) == NULL)
 			errx(1, "can't allocate enough memory");
 		smsghdr.msg_control = (caddr_t)scmsg;
 		smsghdr.msg_controllen = ip6optlen;
@@ -916,7 +916,7 @@ main(int argc, char *argv[])
 			errx(1, "can't initialize rthdr");
 #else  /* old advanced API */
 		if ((scmsgp = (struct cmsghdr *)inet6_rthdr_init(scmsgp,
-		    IPV6_RTHDR_TYPE_0)) == 0)
+		    IPV6_RTHDR_TYPE_0)) == NULL)
 			errx(1, "can't initialize rthdr");
 #endif /* USE_RFC2292BIS */
 
@@ -2495,7 +2495,7 @@ pr_icmph(struct icmp6_hdr *icp, u_char *end)
 			break;
 		}
 		if (options & F_VERBOSE) {
-			if (ni->ni_code > sizeof(nircode) / sizeof(nircode[0]))
+			if (ni->ni_code > nitems(nircode))
 				printf(", invalid");
 			else
 				printf(", %s", nircode[ni->ni_code]);

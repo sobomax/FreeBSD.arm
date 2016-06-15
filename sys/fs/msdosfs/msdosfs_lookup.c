@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_lookup.c 277092 2015-01-12 21:55:48Z emaste $ */
+/* $FreeBSD: head/sys/fs/msdosfs/msdosfs_lookup.c 298806 2016-04-29 20:51:24Z pfg $ */
 /*	$NetBSD: msdosfs_lookup.c,v 1.37 1997/11/17 15:36:54 ws Exp $	*/
 
 /*-
@@ -454,7 +454,7 @@ found:
 	 * in a deadlock.
 	 */
 	brelse(bp);
-	bp = 0;
+	bp = NULL;
 	
 foundroot:
 	/*
@@ -924,7 +924,7 @@ readde(struct denode *dep, struct buf **bpp, struct direntry **epp)
 
 /*
  * Remove a directory entry. At this point the file represented by the
- * directory entry to be removed is still full length until noone has it
+ * directory entry to be removed is still full length until no one has it
  * open.  When the file no longer being used msdosfs_inactive() is called
  * and will truncate the file to 0 length.  When the vnode containing the
  * denode is needed for some other purpose by VFS it will call
@@ -975,7 +975,7 @@ removede(struct denode *pdep, struct denode *dep)
 		offset += sizeof(struct direntry);
 		while (1) {
 			/*
-			 * We are a bit agressive here in that we delete any Win95
+			 * We are a bit aggressive here in that we delete any Win95
 			 * entries preceding this entry, not just the ones we "own".
 			 * Since these presumably aren't valid anyway,
 			 * there should be no harm.

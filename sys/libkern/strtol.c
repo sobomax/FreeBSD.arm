@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/libkern/strtol.c 277901 2015-01-29 21:16:45Z dim $");
+__FBSDID("$FreeBSD: head/sys/libkern/strtol.c 298069 2016-04-15 16:10:11Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -123,7 +123,7 @@ strtol(nptr, endptr, base)
 		acc = neg ? LONG_MIN : LONG_MAX;
 	} else if (neg)
 		acc = -acc;
-	if (endptr != 0)
+	if (endptr != NULL)
 		*endptr = __DECONST(char *, any ? s - 1 : nptr);
 	return (acc);
 }

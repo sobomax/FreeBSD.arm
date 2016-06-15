@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/ping6/Makefile 286834 2015-08-16 23:23:58Z delphij $
+# $FreeBSD: head/sbin/ping6/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	ping6
 MAN=	ping6.8
 

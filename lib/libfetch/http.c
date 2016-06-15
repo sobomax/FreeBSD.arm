@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libfetch/http.c 291461 2015-11-29 22:37:48Z dim $");
+__FBSDID("$FreeBSD: head/lib/libfetch/http.c 301027 2016-05-31 08:27:39Z des $");
 
 /*
  * The following copyright applies to the base64 code:
@@ -114,6 +114,7 @@ __FBSDID("$FreeBSD: head/lib/libfetch/http.c 291461 2015-11-29 22:37:48Z dim $")
 #define HTTP_REDIRECT(xyz) ((xyz) == HTTP_MOVED_PERM \
 			    || (xyz) == HTTP_MOVED_TEMP \
 			    || (xyz) == HTTP_TEMP_REDIRECT \
+			    || (xyz) == HTTP_PERM_REDIRECT \
 			    || (xyz) == HTTP_USE_PROXY \
 			    || (xyz) == HTTP_SEE_OTHER)
 
@@ -130,8 +131,8 @@ struct httpio
 	int		 chunked;	/* chunked mode */
 	char		*buf;		/* chunk buffer */
 	size_t		 bufsize;	/* size of chunk buffer */
-	ssize_t		 buflen;	/* amount of data currently in buffer */
-	int		 bufpos;	/* current read offset in buffer */
+	size_t		 buflen;	/* amount of data currently in buffer */
+	size_t		 bufpos;	/* current read offset in buffer */
 	int		 eof;		/* end-of-file flag */
 	int		 error;		/* error flag */
 	size_t		 chunksize;	/* remaining size of current chunk */
@@ -215,6 +216,7 @@ http_fillbuf(struct httpio *io, size_t len)
 	if (io->eof)
 		return (0);
 
+	/* not chunked: just fetch the requested amount */
 	if (io->chunked == 0) {
 		if (http_growbuf(io, len) == -1)
 			return (-1);
@@ -227,6 +229,7 @@ http_fillbuf(struct httpio *io, size_t len)
 		return (io->buflen);
 	}
 
+	/* chunked, but we ran out: get the next chunk header */
 	if (io->chunksize == 0) {
 		switch (http_new_chunk(io)) {
 		case -1:
@@ -238,6 +241,7 @@ http_fillbuf(struct httpio *io, size_t len)
 		}
 	}
 
+	/* fetch the requested amount, but no more than the current chunk */
 	if (len > io->chunksize)
 		len = io->chunksize;
 	if (http_growbuf(io, len) == -1)
@@ -246,16 +250,15 @@ http_fillbuf(struct httpio *io, size_t len)
 		io->error = errno;
 		return (-1);
 	}
+	io->bufpos = 0;
 	io->buflen = nbytes;
-	io->chunksize -= io->buflen;
+	io->chunksize -= nbytes;
 
 	if (io->chunksize == 0) {
 		if (fetch_read(io->conn, &ch, 1) != 1 || ch != '\r' ||
 		    fetch_read(io->conn, &ch, 1) != 1 || ch != '\n')
 			return (-1);
 	}
-
-	io->bufpos = 0;
 
 	return (io->buflen);
 }
@@ -873,7 +876,7 @@ http_parse_mtime(const char *p, time_t *mtime)
 	char locale[64], *r;
 	struct tm tm;
 
-	strncpy(locale, setlocale(LC_TIME, NULL), sizeof(locale));
+	strlcpy(locale, setlocale(LC_TIME, NULL), sizeof(locale));
 	setlocale(LC_TIME, "C");
 	r = strptime(p, "%a, %d %b %Y %H:%M:%S GMT", &tm);
 	/*
@@ -1433,7 +1436,6 @@ http_connect(struct url *URL, struct url *purl, const char *flags)
 	}
 	if (strcasecmp(URL->scheme, SCHEME_HTTPS) == 0 &&
 	    fetch_ssl(conn, URL, verbose) == -1) {
-		fetch_close(conn);
 		/* grrr */
 		errno = EAUTH;
 		fetch_syserr();
@@ -1766,6 +1768,8 @@ http_request_body(struct url *URL, const char *op, struct url_stat *us,
 			break;
 		case HTTP_MOVED_PERM:
 		case HTTP_MOVED_TEMP:
+		case HTTP_TEMP_REDIRECT:
+		case HTTP_PERM_REDIRECT:
 		case HTTP_SEE_OTHER:
 		case HTTP_USE_PROXY:
 			/*

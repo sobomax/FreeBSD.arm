@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/vnic/nic_reg.h 289551 2015-10-18 22:02:58Z zbb $
+ * $FreeBSD: head/sys/dev/vnic/nic_reg.h 296037 2016-02-25 14:26:13Z zbb $
  *
  */
 
@@ -107,6 +107,7 @@
 #define	NIC_PF_ECC3_DBE_ENA_W1C			(0x2710)
 #define	NIC_PF_ECC3_DBE_ENA_W1S			(0x2718)
 #define	NIC_PF_CPI_0_2047_CFG			(0x200000)
+#define	NIC_PF_MPI_0_2047_CFG			(0x210000)
 #define	NIC_PF_RSSI_0_4097_RQ			(0x220000)
 #define	NIC_PF_LMAC_0_7_CFG			(0x240000)
 #define	NIC_PF_LMAC_0_7_SW_XOFF			(0x242000)

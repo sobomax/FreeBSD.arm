@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/iommu.c 246713 2013-02-12 16:57:20Z kib $");
+__FBSDID("$FreeBSD: head/sys/sparc64/sparc64/iommu.c 295880 2016-02-22 09:02:20Z skra $");
 
 /*
  * UltraSPARC IOMMU support; used by both the PCI and SBus code.
@@ -101,7 +101,6 @@ __FBSDID("$FreeBSD: head/sys/sparc64/sparc64/iommu.c 246713 2013-02-12 16:57:20Z
 #include <machine/bus.h>
 #include <machine/bus_private.h>
 #include <machine/iommureg.h>
-#include <machine/pmap.h>
 #include <machine/resource.h>
 #include <machine/ver.h>
 

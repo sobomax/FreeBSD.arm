@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/citrus_esdb.c 290169 2015-10-29 23:06:33Z bdrewery $ */
+/* $FreeBSD: head/lib/libc/iconv/citrus_esdb.c 301215 2016-06-02 17:28:39Z pfg $ */
 /* $NetBSD: citrus_esdb.c,v 1.5 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-
@@ -291,18 +291,12 @@ _citrus_esdb_get_list(char ***rlist, size_t *rnum, bool sorted)
 
 	/* get alias entries */
 	while ((ret = _lookup_seq_next(cla, &key, &data)) == 0) {
-		if (sorted)
-			snprintf(buf, sizeof(buf), "%.*s/%.*s",
-			    (int)_region_size(&data),
-			    (const char *)_region_head(&data),
-			    (int)_region_size(&key),
-			    (const char *)_region_head(&key));
-		else
-			snprintf(buf, sizeof(buf), "%.*s/%.*s",
-			    (int)_region_size(&data),
-			    (const char *)_region_head(&data),
-			    (int)_region_size(&key),
-			    (const char *)_region_head(&key));
+		/* XXX: sorted? */
+		snprintf(buf, sizeof(buf), "%.*s/%.*s",
+		    (int)_region_size(&data),
+		    (const char *)_region_head(&data),
+		    (int)_region_size(&key),
+		    (const char *)_region_head(&key));
 		_bcs_convert_to_upper(buf);
 		list[num] = strdup(buf);
 		if (list[num] == NULL) {

@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)stat.2	8.4 (Berkeley) 5/1/95
-.\" $FreeBSD: head/lib/libc/sys/stat.2 236441 2012-06-02 10:50:25Z ed $
+.\" $FreeBSD: head/lib/libc/sys/stat.2 293863 2016-01-14 01:33:16Z kevlo $
 .\"
-.Dd June 2, 2012
+.Dd January 14, 2016
 .Dt STAT 2
 .Os
 .Sh NAME
@@ -40,12 +40,11 @@
 .Sh LIBRARY
 .Lb libc
 .Sh SYNOPSIS
-.In sys/types.h
 .In sys/stat.h
 .Ft int
-.Fn stat "const char *path" "struct stat *sb"
+.Fn stat "const char * restrict path" "struct stat * restrict sb"
 .Ft int
-.Fn lstat "const char *path" "struct stat *sb"
+.Fn lstat "const char * restrict path" "struct stat * restrict sb"
 .Ft int
 .Fn fstat "int fd" "struct stat *sb"
 .Ft int

@@ -1,8 +1,8 @@
-# $FreeBSD: head/etc/devd/Makefile 277730 2015-01-26 08:04:38Z ngie $
+# $FreeBSD: head/etc/devd/Makefile 298140 2016-04-17 03:45:45Z gjb $
 
 .include <src.opts.mk>
 
-FILES=
+FILEGROUPS=	FILES
 
 .if ${MACHINE} == "powerpc"
 FILES+=	apple.conf

@@ -1,4 +1,6 @@
-# $FreeBSD: head/tests/sys/vfs/Makefile 289300 2015-10-14 08:16:15Z ngie $
+# $FreeBSD: head/tests/sys/vfs/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=		${TESTSBASE}/sys/vfs
 
