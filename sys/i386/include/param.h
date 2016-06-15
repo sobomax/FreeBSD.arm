@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/i386/include/param.h 281495 2015-04-13 15:22:45Z kib $
+ * $FreeBSD: head/sys/i386/include/param.h 286288 2015-08-04 13:50:52Z kib $
  */
 
 
@@ -114,6 +114,11 @@
 #define KSTACK_PAGES 2		/* Includes pcb! */
 #endif
 #define KSTACK_GUARD_PAGES 1	/* pages of kstack guard; 0 disables */
+#if KSTACK_PAGES < 4
+#define	TD0_KSTACK_PAGES 4
+#else
+#define	TD0_KSTACK_PAGES KSTACK_PAGES
+#endif
 
 /*
  * Ceiling on amount of swblock kva space, can be changed via
@@ -156,5 +161,8 @@
 #define i386_ptob(x)		((x) << PAGE_SHIFT)
 
 #define	pgtok(x)		((x) * (PAGE_SIZE / 1024))
+
+#define INKERNEL(va)	(((vm_offset_t)(va)) >= VM_MAXUSER_ADDRESS && \
+    ((vm_offset_t)(va)) < VM_MAX_KERNEL_ADDRESS)
 
 #endif /* !_I386_INCLUDE_PARAM_H_ */

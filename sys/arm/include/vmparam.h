@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
+ * $FreeBSD: head/sys/arm/include/vmparam.h 298627 2016-04-26 11:53:37Z br $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -124,7 +124,8 @@
 #endif
 #define VM_MAX_ADDRESS          VM_MAXUSER_ADDRESS
 
-#define USRSTACK        VM_MAXUSER_ADDRESS
+#define	SHAREDPAGE		(VM_MAXUSER_ADDRESS - PAGE_SIZE)
+#define	USRSTACK		SHAREDPAGE
 
 /* initial pagein size of beginning of executable file */
 #ifndef VM_INITIAL_PAGEIN
@@ -170,5 +171,7 @@ extern vm_offset_t vm_max_kernel_address;
 
 #define	SFBUF
 #define	SFBUF_MAP
+
+#define	DEVMAP_MAX_VADDR	ARM_VECTORS_HIGH
 
 #endif	/* _MACHINE_VMPARAM_H_ */

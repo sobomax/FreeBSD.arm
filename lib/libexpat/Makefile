@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libexpat/Makefile 277273 2015-01-16 21:39:08Z will $
+# $FreeBSD: head/lib/libexpat/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 EXPAT=		${.CURDIR}/../../contrib/expat
 
 LIB=		bsdxml

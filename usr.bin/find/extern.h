@@ -27,12 +27,12 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/16/94
- *	$FreeBSD: head/usr.bin/find/extern.h 264387 2014-04-12 22:36:26Z jilles $
+ *	$FreeBSD: head/usr.bin/find/extern.h 286344 2015-08-05 21:33:30Z jilles $
  */
 
 #include <sys/cdefs.h>
 
-void	 brace_subst(char *, char **, char *, int);
+void	 brace_subst(char *, char **, char *, size_t);
 PLAN	*find_create(char ***);
 int	 find_execute(PLAN *, char **);
 PLAN	*find_formplan(char **);

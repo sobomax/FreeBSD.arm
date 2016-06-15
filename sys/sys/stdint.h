@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/stdint.h 237517 2012-06-24 04:15:58Z andrew $
+ * $FreeBSD: head/sys/sys/stdint.h 290492 2015-11-07 12:30:43Z kib $
  */
 
 #ifndef _SYS_STDINT_H_
@@ -54,15 +54,6 @@ typedef	__uint_fast8_t		uint_fast8_t;
 typedef	__uint_fast16_t		uint_fast16_t;
 typedef	__uint_fast32_t		uint_fast32_t;
 typedef	__uint_fast64_t		uint_fast64_t;
-
-#ifndef _INTMAX_T_DECLARED
-typedef	__intmax_t		intmax_t;
-#define	_INTMAX_T_DECLARED
-#endif
-#ifndef _UINTMAX_T_DECLARED
-typedef	__uintmax_t		uintmax_t;
-#define	_UINTMAX_T_DECLARED
-#endif
 
 /* GNU and Darwin define this and people seem to think it's portable */
 #if defined(UINTPTR_MAX) && defined(UINT64_MAX) && (UINTPTR_MAX == UINT64_MAX)

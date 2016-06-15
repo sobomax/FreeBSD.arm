@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)rpc_cout.c 1.13 89/02/22 (C) 1987 SMI";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_cout.c 207733 2010-05-06 21:57:38Z delphij $");
+__FBSDID("$FreeBSD: head/usr.bin/rpcgen/rpc_cout.c 298089 2016-04-15 22:31:22Z pfg $");
 
 /*
  * rpc_cout.c, XDR routine outputter for the RPC protocol compiler
@@ -81,7 +81,7 @@ emit(definition *def)
 
 		if (strcmp(def->def.ty.old_type, def->def_name) == 0)
 			return;
-	};
+	}
 	print_header(def);
 	switch (def->def_kind) {
 	case DEF_UNION:

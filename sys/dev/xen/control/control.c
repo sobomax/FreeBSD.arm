@@ -89,7 +89,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 299746 2016-05-14 18:22:52Z jhb $");
 
 /**
  * \file control.c
@@ -122,11 +122,14 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:4
 #include <sys/sched.h>
 #include <sys/smp.h>
 #include <sys/eventhandler.h>
+#include <sys/timetc.h>
 
 #include <geom/geom.h>
 
 #include <machine/_inttypes.h>
 #include <machine/intr_machdep.h>
+
+#include <x86/apicvar.h>
 
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
@@ -144,9 +147,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/control/control.c 282274 2015-04-30 15:48:4
 #include <xen/interface/grant_table.h>
 
 #include <xen/xenbus/xenbusvar.h>
-
-#include <machine/xen/xenvar.h>
-#include <machine/xen/xenfunc.h>
 
 /*--------------------------- Forward Declarations --------------------------*/
 /** Function signature for shutdown event handlers. */
@@ -198,13 +198,22 @@ xctrl_suspend()
 #endif
 	int suspend_cancelled;
 
+	EVENTHANDLER_INVOKE(power_suspend_early);
+	stop_all_proc();
 	EVENTHANDLER_INVOKE(power_suspend);
 
+#ifdef EARLY_AP_STARTUP
+	MPASS(mp_ncpus == 1 || smp_started);
+	thread_lock(curthread);
+	sched_bind(curthread, 0);
+	thread_unlock(curthread);
+#else
 	if (smp_started) {
 		thread_lock(curthread);
 		sched_bind(curthread, 0);
 		thread_unlock(curthread);
 	}
+#endif
 	KASSERT((PCPU_GET(cpuid) == 0), ("Not running on CPU#0"));
 
 	/*
@@ -223,9 +232,19 @@ xctrl_suspend()
 		printf("%s: device_suspend failed\n", __func__);
 		return;
 	}
-	mtx_unlock(&Giant);
 
 #ifdef SMP
+#ifdef EARLY_AP_STARTUP
+	/*
+	 * Suspend other CPUs. This prevents IPIs while we
+	 * are resuming, and will allow us to reset per-cpu
+	 * vcpu_info on resume.
+	 */
+	cpu_suspend_map = all_cpus;
+	CPU_CLR(PCPU_GET(cpuid), &cpu_suspend_map);
+	if (!CPU_EMPTY(&cpu_suspend_map))
+		suspend_cpus(cpu_suspend_map);
+#else
 	CPU_ZERO(&cpu_suspend_map);	/* silence gcc */
 	if (smp_started) {
 		/*
@@ -238,6 +257,7 @@ xctrl_suspend()
 		if (!CPU_EMPTY(&cpu_suspend_map))
 			suspend_cpus(cpu_suspend_map);
 	}
+#endif
 #endif
 
 	/*
@@ -259,12 +279,14 @@ xctrl_suspend()
 	gnttab_resume(NULL);
 
 #ifdef SMP
-	if (smp_started && !CPU_EMPTY(&cpu_suspend_map)) {
+	if (!CPU_EMPTY(&cpu_suspend_map)) {
 		/*
 		 * Now that event channels have been initialized,
 		 * resume CPUs.
 		 */
 		resume_cpus(cpu_suspend_map);
+		/* Send an IPI_BITMAP in case there are pending bitmap IPIs. */
+		lapic_ipi_vectored(IPI_BITMAP_VECTOR, APIC_IPI_DEST_ALL);
 	}
 #endif
 
@@ -272,15 +294,29 @@ xctrl_suspend()
 	 * FreeBSD really needs to add DEVICE_SUSPEND_CANCEL or
 	 * similar.
 	 */
-	mtx_lock(&Giant);
 	DEVICE_RESUME(root_bus);
 	mtx_unlock(&Giant);
 
+	/*
+	 * Warm up timecounter again and reset system clock.
+	 */
+	timecounter->tc_get_timecount(timecounter);
+	timecounter->tc_get_timecount(timecounter);
+	inittodr(time_second);
+
+#ifdef EARLY_AP_STARTUP
+	thread_lock(curthread);
+	sched_unbind(curthread);
+	thread_unlock(curthread);
+#else
 	if (smp_started) {
 		thread_lock(curthread);
 		sched_unbind(curthread);
 		thread_unlock(curthread);
 	}
+#endif
+
+	resume_all_proc();
 
 	EVENTHANDLER_INVOKE(power_resume);
 
@@ -357,7 +393,7 @@ xctrl_identify(driver_t *driver __unused, device_t parent)
 }
 
 /**
- * \brief Probe for the existance of the Xen Control device
+ * \brief Probe for the existence of the Xen Control device
  *
  * \param dev  NewBus device_t for this Xen control instance.
  *
@@ -368,7 +404,7 @@ xctrl_probe(device_t dev)
 {
 	device_set_desc(dev, "Xen Control Device");
 
-	return (0);
+	return (BUS_PROBE_NOWILDCARD);
 }
 
 /**

@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_radix.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/vm/vm_radix.c 298482 2016-04-22 16:57:42Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -82,7 +82,7 @@ __FBSDID("$FreeBSD: head/sys/vm/vm_radix.c 267992 2014-06-28 03:56:17Z hselasky 
 #define	VM_RADIX_COUNT	(1 << VM_RADIX_WIDTH)
 #define	VM_RADIX_MASK	(VM_RADIX_COUNT - 1)
 #define	VM_RADIX_LIMIT							\
-	(howmany((sizeof(vm_pindex_t) * NBBY), VM_RADIX_WIDTH) - 1)
+	(howmany(sizeof(vm_pindex_t) * NBBY, VM_RADIX_WIDTH) - 1)
 
 /* Flag bits stored in node pointers. */
 #define	VM_RADIX_ISLEAF	0x1

@@ -38,7 +38,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv4.S 262420 2014-02-24 01:41:58Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_armv4.S 295122 2016-02-01 13:13:53Z mmel $");
 
 /*
  * TLB functions
@@ -47,11 +47,6 @@ ENTRY(armv4_tlb_flushID)
 	mcr	p15, 0, r0, c8, c7, 0	/* flush I+D tlb */
 	RET
 END(armv4_tlb_flushID)
-
-ENTRY(armv4_tlb_flushI)
-	mcr	p15, 0, r0, c8, c5, 0	/* flush I tlb */
-	RET
-END(armv4_tlb_flushI)
 
 ENTRY(armv4_tlb_flushD)
 	mcr	p15, 0, r0, c8, c6, 0	/* flush D tlb */

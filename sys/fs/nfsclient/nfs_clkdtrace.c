@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clkdtrace.c 258637 2013-11-26 10:34:34Z glebius $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clkdtrace.c 298788 2016-04-29 16:07:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -46,7 +46,7 @@ __FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clkdtrace.c 258637 2013-11-26 10:3
 
 /*
  * dtnfscl is a DTrace provider that tracks the intent to perform RPCs
- * in the NFS client, as well as acess to and maintenance of the access and
+ * in the NFS client, as well as access to and maintenance of the access and
  * attribute caches.  This is not quite the same as RPCs, because NFS may
  * issue multiple RPC transactions in the event that authentication fails,
  * there's a jukebox error, or none at all if the access or attribute cache

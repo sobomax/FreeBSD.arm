@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/savecore/savecore.c 280348 2015-03-22 17:29:14Z scottl $");
+__FBSDID("$FreeBSD: head/sbin/savecore/savecore.c 298315 2016-04-20 00:49:49Z ngie $");
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -436,7 +436,7 @@ DoFile(const char *savedir, const char *device)
 {
 	xo_handle_t *xostdout, *xoinfo;
 	static char infoname[PATH_MAX], corename[PATH_MAX], linkname[PATH_MAX];
-	static char *buf = NULL;
+	static char *buf = NULL, *temp = NULL;
 	struct kerneldumpheader kdhf, kdhl;
 	off_t mediasize, dumpsize, firsthd, lasthd;
 	FILE *info, *fp;
@@ -490,15 +490,29 @@ DoFile(const char *savedir, const char *device)
 		printf("sectorsize = %u\n", sectorsize);
 	}
 
+	if (sectorsize < sizeof(kdhl)) {
+		syslog(LOG_ERR,
+		    "Sector size is less the kernel dump header %zu",
+		    sizeof(kdhl));
+		goto closefd;
+	}
+
 	lasthd = mediasize - sectorsize;
-	lseek(fd, lasthd, SEEK_SET);
-	error = read(fd, &kdhl, sizeof kdhl);
-	if (error != sizeof kdhl) {
+	if (temp == NULL) {
+		temp = malloc(sectorsize);
+		if (temp == NULL) {
+			syslog(LOG_ERR, "%m");
+			goto closefd;
+		}
+	}
+	if (lseek(fd, lasthd, SEEK_SET) != lasthd ||
+	    read(fd, temp, sectorsize) != (ssize_t)sectorsize) {
 		syslog(LOG_ERR,
 		    "error reading last dump header at offset %lld in %s: %m",
 		    (long long)lasthd, device);
 		goto closefd;
 	}
+	memcpy(&kdhl, temp, sizeof(kdhl));
 	istextdump = 0;
 	if (strncmp(kdhl.magic, TEXTDUMPMAGIC, sizeof kdhl) == 0) {
 		if (verbose)
@@ -568,16 +582,16 @@ DoFile(const char *savedir, const char *device)
 			goto closefd;
 	}
 	dumpsize = dtoh64(kdhl.dumplength);
-	firsthd = lasthd - dumpsize - sizeof kdhf;
-	lseek(fd, firsthd, SEEK_SET);
-	error = read(fd, &kdhf, sizeof kdhf);
-	if (error != sizeof kdhf) {
+	firsthd = lasthd - dumpsize - sectorsize;
+	if (lseek(fd, firsthd, SEEK_SET) != firsthd ||
+	    read(fd, temp, sectorsize) != (ssize_t)sectorsize) {
 		syslog(LOG_ERR,
 		    "error reading first dump header at offset %lld in %s: %m",
 		    (long long)firsthd, device);
 		nerr++;
 		goto closefd;
 	}
+	memcpy(&kdhf, temp, sizeof(kdhf));
 
 	if (verbose >= 2) {
 		printf("First dump headers:\n");
@@ -588,7 +602,7 @@ DoFile(const char *savedir, const char *device)
 		printf("\n");
 	}
 
-	if (memcmp(&kdhl, &kdhf, sizeof kdhl)) {
+	if (memcmp(&kdhl, &kdhf, sizeof(kdhl))) {
 		syslog(LOG_ERR,
 		    "first and last dump headers disagree on %s", device);
 		nerr++;
@@ -605,8 +619,9 @@ DoFile(const char *savedir, const char *device)
 		exit(0);
 	}
 
-	if (kdhl.panicstring[0])
-		syslog(LOG_ALERT, "reboot after panic: %s", kdhl.panicstring);
+	if (kdhl.panicstring[0] != '\0')
+		syslog(LOG_ALERT, "reboot after panic: %*s",
+		    (int)sizeof(kdhl.panicstring), kdhl.panicstring);
 	else
 		syslog(LOG_ALERT, "reboot");
 
@@ -657,7 +672,7 @@ DoFile(const char *savedir, const char *device)
 	if (info == NULL) {
 		syslog(LOG_ERR, "fdopen failed: %m");
 		nerr++;
-		goto closefd;
+		goto closeall;
 	}
 
 	xostyle = xo_get_style(NULL);
@@ -665,7 +680,7 @@ DoFile(const char *savedir, const char *device)
 	if (xoinfo == NULL) {
 		syslog(LOG_ERR, "%s: %m", infoname);
 		nerr++;
-		goto closefd;
+		goto closeall;
 	}
 	xo_open_container_h(xoinfo, "crashdump");
 
@@ -725,10 +740,10 @@ nuke:
 	if (!keep) {
 		if (verbose)
 			printf("clearing dump header\n");
-		memcpy(kdhl.magic, KERNELDUMPMAGIC_CLEARED, sizeof kdhl.magic);
-		lseek(fd, lasthd, SEEK_SET);
-		error = write(fd, &kdhl, sizeof kdhl);
-		if (error != sizeof kdhl)
+		memcpy(kdhl.magic, KERNELDUMPMAGIC_CLEARED, sizeof(kdhl.magic));
+		memcpy(temp, &kdhl, sizeof(kdhl));
+		if (lseek(fd, lasthd, SEEK_SET) != lasthd ||
+		    write(fd, temp, sectorsize) != (ssize_t)sectorsize)
 			syslog(LOG_ERR,
 			    "error while clearing the dump header: %m");
 	}
@@ -830,6 +845,7 @@ main(int argc, char **argv)
 				continue;
 			DoFile(savedir, fsp->fs_spec);
 		}
+		endfsent();
 	} else {
 		for (i = 0; i < argc; i++)
 			DoFile(savedir, argv[i]);
@@ -838,15 +854,18 @@ main(int argc, char **argv)
 	/* Emit minimal output. */
 	if (nfound == 0) {
 		if (checkfor) {
-			printf("No dump exists\n");
+			if (verbose)
+				printf("No dump exists\n");
 			exit(1);
 		}
-		syslog(LOG_WARNING, "no dumps found");
-	}
-	else if (nsaved == 0) {
-		if (nerr != 0)
-			syslog(LOG_WARNING, "unsaved dumps found but not saved");
-		else
+		if (verbose)
+			syslog(LOG_WARNING, "no dumps found");
+	} else if (nsaved == 0) {
+		if (nerr != 0) {
+			if (verbose)
+				syslog(LOG_WARNING, "unsaved dumps found but not saved");
+			exit(1);
+		} else if (verbose)
 			syslog(LOG_WARNING, "no unsaved dumps found");
 	}
 

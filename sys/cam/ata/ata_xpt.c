@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ata/ata_xpt.c 270327 2014-08-22 13:15:59Z imp $");
+__FBSDID("$FreeBSD: head/sys/cam/ata/ata_xpt.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -159,9 +159,6 @@ static struct ata_quirk_entry ata_quirk_table[] =
 		/*quirks*/0, /*mintags*/0, /*maxtags*/0
 	},
 };
-
-static const int ata_quirk_table_size =
-	sizeof(ata_quirk_table) / sizeof(*ata_quirk_table);
 
 static cam_status	proberegister(struct cam_periph *periph,
 				      void *arg);
@@ -1090,7 +1087,8 @@ notsata:
 
 		periph_qual = SID_QUAL(inq_buf);
 
-		if (periph_qual != SID_QUAL_LU_CONNECTED)
+		if (periph_qual != SID_QUAL_LU_CONNECTED &&
+		    periph_qual != SID_QUAL_LU_OFFLINE)
 			break;
 
 		/*
@@ -1283,7 +1281,7 @@ ata_find_quirk(struct cam_ed *device)
 
 	match = cam_quirkmatch((caddr_t)&device->ident_data,
 			       (caddr_t)ata_quirk_table,
-			       ata_quirk_table_size,
+			       nitems(ata_quirk_table),
 			       sizeof(*ata_quirk_table), ata_identify_match);
 
 	if (match == NULL)
@@ -1578,7 +1576,7 @@ ata_alloc_device(struct cam_eb *bus, struct cam_et *target, lun_id_t lun_id)
 	 * Take the default quirk entry until we have inquiry
 	 * data and can determine a better quirk to use.
 	 */
-	quirk = &ata_quirk_table[ata_quirk_table_size - 1];
+	quirk = &ata_quirk_table[nitems(ata_quirk_table) - 1];
 	device->quirk = (void *)quirk;
 	device->mintags = 0;
 	device->maxtags = 0;

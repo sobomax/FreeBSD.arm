@@ -2,7 +2,7 @@
 #include <arm/at91/at91_rstreg.h>
 #include <arm/at91/at91reg.h>
 #include <arm/at91/at91sam9g20reg.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_reset.S 238330 2012-07-10 02:14:50Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_reset.S 299069 2016-05-04 15:48:59Z pfg $");
 
 #define SDRAM_TR  (AT91_BASE + \
 	AT91SAM9G20_SDRAMC_BASE + AT91SAM9G20_SDRAMC_TR)
@@ -14,7 +14,7 @@ __FBSDID("$FreeBSD: head/sys/arm/at91/at91_reset.S 238330 2012-07-10 02:14:50Z i
 /*
  * From AT91SAM9G20 Datasheet errata 44:3.5:
  *
- * When User Reset occurs durring SDRAM read acces, eh SDRAM clock is turned
+ * When User Reset occurs during SDRAM read access, the SDRAM clock is turned
  * off while data are ready to be read on the data bus. The SDRAM maintains
  * the data until the clock restarts.
  *

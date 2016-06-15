@@ -28,7 +28,7 @@
  *
  * RMI_BSD */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/rmi/fmn.c 280013 2015-03-14 23:30:03Z ian $");
+__FBSDID("$FreeBSD: head/sys/mips/rmi/fmn.c 295881 2016-02-22 09:04:36Z skra $");
 #include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/param.h>
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: head/sys/mips/rmi/fmn.c 280013 2015-03-14 23:30:03Z ian $");
 #include <machine/hwfunc.h>
 #include <machine/mips_opcode.h>
 
-#include <machine/param.h>
 #include <machine/intr_machdep.h>
 #include <mips/rmi/interrupt.h>
 #include <mips/rmi/msgring.h>

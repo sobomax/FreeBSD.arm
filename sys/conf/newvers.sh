@@ -11,7 +11,7 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 4. Neither the name of the University nor the names of its contributors
+# 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 #
@@ -28,11 +28,11 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: head/sys/conf/newvers.sh 281260 2015-04-08 04:01:02Z eadler $
+# $FreeBSD: head/sys/conf/newvers.sh 301815 2016-06-10 19:29:55Z gjb $
 
 TYPE="FreeBSD"
 REVISION="11.0"
-BRANCH="CURRENT"
+BRANCH="ALPHA3"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi
@@ -84,6 +84,12 @@ fi
 COPYRIGHT="$COPYRIGHT
 "
 
+# VARS_ONLY means no files should be generated, this is just being
+# included.
+if [ -n "$VARS_ONLY" ]; then
+	return 0
+fi
+
 LC_ALL=C; export LC_ALL
 if [ ! -r version ]
 then
@@ -91,7 +97,18 @@ then
 fi
 
 touch version
-v=`cat version` u=${USER:-root} d=`pwd` h=${HOSTNAME:-`hostname`} t=`date`
+v=`cat version`
+u=${USER:-root}
+d=`pwd`
+h=${HOSTNAME:-`hostname`}
+if [ -n "$SOURCE_DATE_EPOCH" ]; then
+	if ! t=`date -r $SOURCE_DATE_EPOCH 2>/dev/null`; then
+		echo "Invalid SOURCE_DATE_EPOCH" >&2
+		exit 1
+	fi
+else
+	t=`date`
+fi
 i=`${MAKE:-make} -V KERN_IDENT`
 compiler_v=$($(${MAKE:-make} -V CC) -v 2>&1 | grep -w 'version')
 

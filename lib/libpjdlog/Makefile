@@ -1,7 +1,8 @@
 #
-# $FreeBSD: head/lib/libpjdlog/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libpjdlog/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=lib${LIB}
 SHLIBDIR?=	/lib
 
 .include <bsd.own.mk>
@@ -14,7 +15,5 @@ SHLIB_MAJOR=	0
 CFLAGS+=-I${.CURDIR}
 
 LIBADD=	util
-
-WARNS?=	6
 
 .include <bsd.lib.mk>

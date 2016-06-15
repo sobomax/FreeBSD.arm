@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/syscons/scrnmaps/Makefile 126268 2004-02-26 07:50:56Z bde $
+# $FreeBSD: head/share/syscons/scrnmaps/Makefile 299289 2016-05-09 22:21:09Z bdrewery $
 
 SCRMAPS = armscii8-2haik8.scm \
 	  iso-8859-1_to_cp437.scm iso-8859-4_for_vga9.scm \
@@ -15,11 +15,11 @@ FILESDIR= ${SHAREDIR}/syscons/scrnmaps
 build-tools: ${SCRMAPS_MK}
 
 ${SCRMAPS}: ${.TARGET:R}.mk
-	./${.TARGET:R}.mk ${.TARGET:R}.tmp
+	${BTOOLSPATH:U.}/${.TARGET:R}.mk ${.TARGET:R}.tmp
 	uuencode ${.TARGET:R}.tmp ${.TARGET:R} > ${.TARGET}
 	rm -f ${.TARGET:R}.tmp
 
-${SCRMAPS_MK}: ${.TARGET:R} mkscrfil.c
+${SCRMAPS_MK}: ${.TARGET:R} mkscrfil.c ${BUILD_TOOLS_META}
 	${CC} ${CFLAGS} -I${.CURDIR} -DFIL=\"${.TARGET:R}\" ${LDFLAGS} \
 	    -o ${.TARGET} ${.CURDIR}/mkscrfil.c
 

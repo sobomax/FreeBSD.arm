@@ -1,15 +1,14 @@
-# $FreeBSD: head/usr.bin/soelim/tests/Makefile 282425 2015-05-04 18:20:31Z bapt $
+# $FreeBSD: head/usr.bin/soelim/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-TESTSDIR=	${TESTSBASE}/usr.bin/soelim
+PACKAGE=	tests
 
 ATF_TESTS_SH=	soelim
 
-FILES=		nonexisting.in \
+${PACKAGE}FILES+=		nonexisting.in \
 		basic.in \
 		basic \
 		basic.out \
 		basic-with-space.in \
 		basic-with-space.out
-FILESDIR=	${TESTSDIR}
 
 .include <bsd.test.mk>

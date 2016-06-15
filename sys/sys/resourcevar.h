@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/resourcevar.h 284784 2015-06-25 01:24:36Z mjg $
+ * $FreeBSD: head/sys/sys/resourcevar.h 296162 2016-02-28 17:52:33Z kib $
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -101,6 +101,7 @@ struct uidinfo {
 	long	ui_proccnt;		/* (b) number of processes */
 	long	ui_ptscnt;		/* (b) number of pseudo-terminals */
 	long	ui_kqcnt;		/* (b) number of kqueues */
+	long	ui_umtxcnt;		/* (b) number of shared umtxs */
 	uid_t	ui_uid;			/* (a) uid */
 	u_int	ui_ref;			/* (b) reference count */
 #ifdef	RACCT
@@ -124,6 +125,7 @@ int	 chgproccnt(struct uidinfo *uip, int diff, rlim_t maxval);
 int	 chgsbsize(struct uidinfo *uip, u_int *hiwat, u_int to,
 	    rlim_t maxval);
 int	 chgptscnt(struct uidinfo *uip, int diff, rlim_t maxval);
+int	 chgumtxcnt(struct uidinfo *uip, int diff, rlim_t maxval);
 int	 fuswintr(void *base);
 int	 kern_proc_setrlimit(struct thread *td, struct proc *p, u_int which,
 	    struct rlimit *limp);
@@ -156,10 +158,9 @@ void	 uihashinit(void);
 void	 uihold(struct uidinfo *uip);
 #ifdef	RACCT
 void	 ui_racct_foreach(void (*callback)(struct racct *racct,
-	    void *arg2, void *arg3), void *arg2, void *arg3);
+	    void *arg2, void *arg3), void (*pre)(void), void (*post)(void),
+	    void *arg2, void *arg3);
 #endif
-
-void	lim_update_thread(struct thread *td);
 
 #endif /* _KERNEL */
 #endif /* !_SYS_RESOURCEVAR_H_ */

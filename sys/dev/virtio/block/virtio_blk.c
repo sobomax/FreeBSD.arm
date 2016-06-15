@@ -27,7 +27,7 @@
 /* Driver for VirtIO block devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/block/virtio_blk.c 281698 2015-04-18 19:37:37Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/block/virtio_blk.c 295707 2016-02-17 17:16:02Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: head/sys/dev/virtio/block/virtio_blk.c 281698 2015-04-18 19:
 #include <sys/mutex.h>
 #include <sys/queue.h>
 
+#include <geom/geom.h>
 #include <geom/geom_disk.h>
 
 #include <machine/bus.h>
@@ -1146,7 +1147,7 @@ vtblk_ident(struct vtblk_softc *sc)
 	req->vbr_hdr.sector = 0;
 
 	req->vbr_bp = &buf;
-	bzero(&buf, sizeof(struct bio));
+	g_reset_bio(&buf);
 
 	buf.bio_cmd = BIO_READ;
 	buf.bio_data = dp->d_ident;
@@ -1278,7 +1279,7 @@ vtblk_dump_write(struct vtblk_softc *sc, void *virtual, off_t offset,
 	req->vbr_hdr.sector = offset / 512;
 
 	req->vbr_bp = &buf;
-	bzero(&buf, sizeof(struct bio));
+	g_reset_bio(&buf);
 
 	buf.bio_cmd = BIO_WRITE;
 	buf.bio_data = virtual;
@@ -1300,7 +1301,7 @@ vtblk_dump_flush(struct vtblk_softc *sc)
 	req->vbr_hdr.sector = 0;
 
 	req->vbr_bp = &buf;
-	bzero(&buf, sizeof(struct bio));
+	g_reset_bio(&buf);
 
 	buf.bio_cmd = BIO_FLUSH;
 

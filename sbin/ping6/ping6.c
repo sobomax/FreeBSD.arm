@@ -76,7 +76,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/ping6/ping6.c 275830 2014-12-16 14:59:20Z ae $");
+__FBSDID("$FreeBSD: head/sbin/ping6/ping6.c 299875 2016-05-16 00:35:39Z araujo $");
 
 /*
  * Using the InterNet Control Message Protocol (ICMP) "ECHO" facility,
@@ -288,9 +288,6 @@ main(int argc, char *argv[])
 {
 	struct timeval last, intvl;
 	struct sockaddr_in6 from, *sin6;
-#ifndef HAVE_ARC4RANDOM
-	struct timeval seed;
-#endif
 	struct addrinfo hints, *res;
 	struct sigaction si_sa;
 	int cc, i;
@@ -751,17 +748,7 @@ main(int argc, char *argv[])
 			*datap++ = i;
 
 	ident = getpid() & 0xFFFF;
-#ifndef HAVE_ARC4RANDOM
-	gettimeofday(&seed, NULL);
-	srand((unsigned int)(seed.tv_sec ^ seed.tv_usec ^ (long)ident));
-	memset(nonce, 0, sizeof(nonce));
-	for (i = 0; i < sizeof(nonce); i += sizeof(int))
-		*((int *)&nonce[i]) = rand();
-#else
-	memset(nonce, 0, sizeof(nonce));
-	for (i = 0; i < (int)sizeof(nonce); i += sizeof(u_int32_t))
-		*((u_int32_t *)&nonce[i]) = arc4random();
-#endif
+	arc4random_buf(nonce, sizeof(nonce));
 	optval = 1;
 	if (options & F_DONTFRAG)
 		if (setsockopt(s, IPPROTO_IPV6, IPV6_DONTFRAG,
@@ -876,7 +863,7 @@ main(int argc, char *argv[])
 
 	/* set IP6 packet options */
 	if (ip6optlen) {
-		if ((scmsg = (char *)malloc(ip6optlen)) == 0)
+		if ((scmsg = (char *)malloc(ip6optlen)) == NULL)
 			errx(1, "can't allocate enough memory");
 		smsghdr.msg_control = (caddr_t)scmsg;
 		smsghdr.msg_controllen = ip6optlen;
@@ -929,7 +916,7 @@ main(int argc, char *argv[])
 			errx(1, "can't initialize rthdr");
 #else  /* old advanced API */
 		if ((scmsgp = (struct cmsghdr *)inet6_rthdr_init(scmsgp,
-		    IPV6_RTHDR_TYPE_0)) == 0)
+		    IPV6_RTHDR_TYPE_0)) == NULL)
 			errx(1, "can't initialize rthdr");
 #endif /* USE_RFC2292BIS */
 
@@ -2508,7 +2495,7 @@ pr_icmph(struct icmp6_hdr *icp, u_char *end)
 			break;
 		}
 		if (options & F_VERBOSE) {
-			if (ni->ni_code > sizeof(nircode) / sizeof(nircode[0]))
+			if (ni->ni_code > nitems(nircode))
 				printf(", invalid");
 			else
 				printf(", %s", nircode[ni->ni_code]);

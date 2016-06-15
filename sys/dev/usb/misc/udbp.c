@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/misc/udbp.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /* Driver for arbitrary double bulk pipe devices.
  * The driver assumes that there will be the same driver on the other side.
@@ -258,10 +258,20 @@ static driver_t udbp_driver = {
 	.size = sizeof(struct udbp_softc),
 };
 
+static const STRUCT_USB_HOST_ID udbp_devs[] = {
+	{USB_VPI(USB_VENDOR_NETCHIP, USB_PRODUCT_NETCHIP_TURBOCONNECT, 0)},
+	{USB_VPI(USB_VENDOR_NETCHIP, USB_PRODUCT_NETCHIP_GADGETZERO, 0)},
+	{USB_VPI(USB_VENDOR_PROLIFIC, USB_PRODUCT_PROLIFIC_PL2301, 0)},
+	{USB_VPI(USB_VENDOR_PROLIFIC, USB_PRODUCT_PROLIFIC_PL2302, 0)},
+	{USB_VPI(USB_VENDOR_ANCHOR, USB_PRODUCT_ANCHOR_EZLINK, 0)},
+	{USB_VPI(USB_VENDOR_GENESYS, USB_PRODUCT_GENESYS_GL620USB, 0)},
+};
+
 DRIVER_MODULE(udbp, uhub, udbp_driver, udbp_devclass, udbp_modload, 0);
 MODULE_DEPEND(udbp, netgraph, NG_ABI_VERSION, NG_ABI_VERSION, NG_ABI_VERSION);
 MODULE_DEPEND(udbp, usb, 1, 1, 1);
 MODULE_VERSION(udbp, 1);
+USB_PNP_HOST_INFO(udbp_devs);
 
 static int
 udbp_modload(module_t mod, int event, void *data)
@@ -288,15 +298,6 @@ udbp_modload(module_t mod, int event, void *data)
 	}
 	return (error);
 }
-
-static const STRUCT_USB_HOST_ID udbp_devs[] = {
-	{USB_VPI(USB_VENDOR_NETCHIP, USB_PRODUCT_NETCHIP_TURBOCONNECT, 0)},
-	{USB_VPI(USB_VENDOR_NETCHIP, USB_PRODUCT_NETCHIP_GADGETZERO, 0)},
-	{USB_VPI(USB_VENDOR_PROLIFIC, USB_PRODUCT_PROLIFIC_PL2301, 0)},
-	{USB_VPI(USB_VENDOR_PROLIFIC, USB_PRODUCT_PROLIFIC_PL2302, 0)},
-	{USB_VPI(USB_VENDOR_ANCHOR, USB_PRODUCT_ANCHOR_EZLINK, 0)},
-	{USB_VPI(USB_VENDOR_GENESYS, USB_PRODUCT_GENESYS_GL620USB, 0)},
-};
 
 static int
 udbp_probe(device_t dev)
@@ -743,7 +744,7 @@ ng_udbp_rcvdata(hook_p hook, item_p item)
 
 /*
  * Do local shutdown processing..
- * We are a persistant device, we refuse to go away, and
+ * We are a persistent device, we refuse to go away, and
  * only remove our links and reset ourself.
  */
 static int

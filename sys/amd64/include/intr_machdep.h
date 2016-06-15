@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/intr_machdep.h 280260 2015-03-19 13:57:47Z kib $
+ * $FreeBSD: head/sys/amd64/include/intr_machdep.h 299286 2016-05-09 20:50:21Z jhb $
  */
 
 #ifndef __MACHINE_INTR_MACHDEP_H__
@@ -53,6 +53,7 @@
 #define	FIRST_MSI_INT	256
 #ifdef XENHVM
 #include <xen/xen-os.h>
+#include <xen/interface/event_channel.h>
 #define	NUM_EVTCHN_INTS	NR_EVENT_CHANNELS
 #define	FIRST_EVTCHN_INT \
     (FIRST_MSI_INT + NUM_MSI_INTS)
@@ -82,7 +83,7 @@
 
 #ifndef LOCORE
 
-typedef void inthand_t(u_int cs, u_int ef, u_int esp, u_int ss);
+typedef void inthand_t(void);
 
 #define	IDTVEC(name)	__CONCAT(X,name)
 
@@ -142,6 +143,9 @@ struct nmi_pcpu {
 	register_t	__padding;	/* pad to 16 bytes */
 };
 
+#ifdef SMP
+extern cpuset_t intr_cpus;
+#endif
 extern struct mtx icu_lock;
 extern int elcr_found;
 

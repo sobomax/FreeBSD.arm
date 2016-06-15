@@ -48,18 +48,18 @@
 
 #include "assym.s"
 
-#include "opt_kdtrace.h"
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/armreg.h>
 #include <machine/asmacros.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 284115 2015-06-07 13:59:02Z andrew $");
+#include <machine/trap.h>
+
+__FBSDID("$FreeBSD: head/sys/arm/arm/exception.S 300694 2016-05-25 19:44:26Z ian $");
 
 #ifdef KDTRACE_HOOKS
 	.bss
 	.align 4
-	.global	_C_LABEL(dtrace_invop_calltrap_addr)
-_C_LABEL(dtrace_invop_calltrap_addr):
+	.global _C_LABEL(dtrace_invop_jump_addr)
+_C_LABEL(dtrace_invop_jump_addr):
 	.word 0
 	.word 0
 #endif
@@ -174,7 +174,7 @@ _C_LABEL(dtrace_invop_calltrap_addr):
 	ldr	r4, [r5, #4];		/* reset it to point at the     */ \
 	cmp	r4, #0xffffffff;	/* end of memory if necessary;  */ \
 	movne	r1, #0xffffffff;	/* leave value in r4 for later  */ \
-	strne	r1, [r5, #4];		/* comparision against PC.      */ \
+	strne	r1, [r5, #4];		/* comparison against PC.      */ \
 	ldr	r3, [r5];		/* Retrieve global RAS_START    */ \
 	cmp	r3, #0;			/* and reset it if non-zero.    */ \
 	movne	r1, #0;			/* If non-zero RAS_START and    */ \
@@ -362,9 +362,39 @@ END(data_abort_entry)
  */
 ASENTRY_NP(undefined_entry)
 	PUSHFRAMEINSVC			/* mode stack, build trapframe there. */
+	mov	r4, r0			/* R0 contains SPSR */
 	adr	lr, exception_exit      /* Return from handler via standard */
-	mov	r0, sp			/* exception exit routine.  Pass the */
-	b	undefinedinstruction	/* trapframe to the handler. */
+	mov	r0, sp			/* exception exit routine. pass frame */
+
+	ldr	r2, [sp, #(TF_PC)]	/* load pc */
+#if __ARM_ARCH >= 7
+	tst	r4, #(PSR_T)		/* test if PSR_T */
+	subne	r2, r2, #(THUMB_INSN_SIZE)
+	subeq	r2, r2, #(INSN_SIZE)
+#else
+	sub	r2, r2, #(INSN_SIZE)	/* fix pc */
+#endif
+	str	r2, [sp, #TF_PC]	/* store pc */
+
+#ifdef KDTRACE_HOOKS
+	/* Check if dtrace is enabled */
+	ldr	r1, =_C_LABEL(dtrace_invop_jump_addr)
+	ldr	r3, [r1]
+	cmp	r3, #0
+	beq	undefinedinstruction
+
+	and	r4, r4, #(PSR_MODE)	/* Mask out unneeded bits */
+	cmp	r4, #(PSR_USR32_MODE)	/* Check if we came from usermode */
+	beq	undefinedinstruction
+
+	ldr	r4, [r2]		/* load instrution */
+	ldr	r1, =FBT_BREAKPOINT	/* load fbt inv op */
+	cmp	r1, r4
+	bne	undefinedinstruction
+
+	bx	r3			/* call invop_jump_addr */
+#endif
+	b	undefinedinstruction	/* call stadnard handler */
 END(undefined_entry)
 
 /*
@@ -379,7 +409,7 @@ ASENTRY_NP(irq_entry)
 	PUSHFRAMEINSVC			/* mode stack, build trapframe there. */
 	adr	lr, exception_exit	/* Return from handler via standard */
 	mov	r0, sp			/* exception exit routine.  Pass the */
-	b	_C_LABEL(arm_irq_handler)/* trapframe to the handler. */
+	b	_C_LABEL(intr_irq_handler)/* trapframe to the handler. */
 END(irq_entry)
 
 /*

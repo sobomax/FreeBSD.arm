@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/security/audit/audit_bsm.c 255219 2013-09-05 00:09:56Z pjd $");
+__FBSDID("$FreeBSD: head/sys/security/audit/audit_bsm.c 301867 2016-06-13 09:22:20Z rwatson $");
 
 #include <sys/param.h>
 #include <sys/vnode.h>
@@ -952,6 +952,8 @@ kaudit_to_bsm(struct kaudit_record *kar, struct au_record **pau)
 	case AUE_GETDIRENTRIESATTR:
 	case AUE_LSEEK:
 	case AUE_POLL:
+	case AUE_PREAD:
+	case AUE_PWRITE:
 	case AUE_READ:
 	case AUE_READV:
 	case AUE_WRITE:

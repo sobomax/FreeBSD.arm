@@ -1,8 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/route/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/sbin/route/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	route
 MAN=	route.8
 SRCS=	route.c keywords.h

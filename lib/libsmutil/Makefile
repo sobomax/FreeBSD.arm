@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libsmutil/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/libsmutil/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/libsmutil
 
@@ -19,7 +20,7 @@ CLEANFILES+=sm_os.h
 
 INTERNALLIB=
 
-sm_os.h:
-	ln -sf ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h sm_os.h
+sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.lib.mk>

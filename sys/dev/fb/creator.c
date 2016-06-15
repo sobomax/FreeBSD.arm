@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fb/creator.c 262613 2014-02-28 18:06:00Z dim $");
+__FBSDID("$FreeBSD: head/sys/dev/fb/creator.c 298431 2016-04-21 19:40:10Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -151,8 +151,7 @@ static const struct {
 	{ FFB_VIRT_EXP,		FFB_PHYS_EXP,		FFB_SIZE_EXP },
 };
 
-#define	CREATOR_FB_MAP_SIZE						\
-	(sizeof(creator_fb_map) / sizeof(creator_fb_map[0]))
+#define	CREATOR_FB_MAP_SIZE	nitems(creator_fb_map)
 
 extern const struct gfb_font gallant12x22;
 

@@ -4,7 +4,7 @@
 # then override the default options (adding devices as needed) and adding
 # hints as needed (for example, the GPIO and LAN PHY.)
 
-# $FreeBSD: head/sys/mips/conf/QCA955X_BASE.hints 279513 2015-03-02 02:24:46Z adrian $
+# $FreeBSD: head/sys/mips/conf/QCA955X_BASE.hints 285077 2015-07-03 06:06:44Z adrian $
 
 hint.apb.0.at="nexus0"
 # The default APB is on IP6 (irq4); we need to add
@@ -36,7 +36,9 @@ hint.ehci.1.irq=1
 hint.pcib.0.at="nexus0"
 hint.pcib.0.irq=0
 
-# XXX TODO: PCIe 1: qca955x_int1 (IP3)
+# PCIe 1: qca955x_int1 (IP3)
+hint.pcib.1.at="nexus0"
+hint.pcib.1.irq=1
 
 # IP4
 hint.arge.0.at="nexus0"

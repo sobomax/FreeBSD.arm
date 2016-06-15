@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_dirhash.c 283735 2015-05-29 13:24:17Z kib $");
+__FBSDID("$FreeBSD: head/sys/ufs/ufs/ufs_dirhash.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #include "opt_ufs.h"
 
@@ -1145,7 +1145,7 @@ ufsdirhash_getprev(struct direct *dirp, doff_t offset)
 	doff_t blkoff, prevoff;
 	int entrypos, i;
 
-	blkoff = offset & ~(DIRBLKSIZ - 1);	/* offset of start of block */
+	blkoff = rounddown2(offset, DIRBLKSIZ);	/* offset of start of block */
 	entrypos = offset & (DIRBLKSIZ - 1);	/* entry relative to block */
 	blkbuf = (char *)dirp - entrypos;
 	prevoff = blkoff;

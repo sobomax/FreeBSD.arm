@@ -33,7 +33,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: head/sys/powerpc/include/_types.h 263998 2014-04-01 14:46:11Z tijl $
+ * $FreeBSD: head/sys/powerpc/include/_types.h 287015 2015-08-22 07:27:06Z jhibbits $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -128,7 +128,11 @@ typedef	__uint64_t	__vm_size_t;
 #else
 typedef	__uint32_t	__u_register_t;
 typedef	__uint32_t	__vm_offset_t;
+#ifdef BOOKE
+typedef	__uint64_t	__vm_paddr_t;
+#else
 typedef	__uint32_t	__vm_paddr_t;
+#endif
 typedef	__uint32_t	__vm_size_t;
 #endif
 typedef	__int64_t	__vm_ooffset_t;

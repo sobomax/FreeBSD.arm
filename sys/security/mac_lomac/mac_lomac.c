@@ -35,7 +35,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/security/mac_lomac/mac_lomac.c 280130 2015-03-16 00:10:03Z mjg $
+ * $FreeBSD: head/sys/security/mac_lomac/mac_lomac.c 299187 2016-05-06 16:59:04Z pfg $
  */
 
 /*
@@ -1472,7 +1472,7 @@ lomac_netinet_firewall_send(struct mbuf *m, struct label *mlabel)
 
 	dest = SLOT(mlabel);
 
-	/* XXX: where is the label for the firewall really comming from? */
+	/* XXX: where is the label for the firewall really coming from? */
 	lomac_set_single(dest, MAC_LOMAC_TYPE_EQUAL, 0);
 }
 

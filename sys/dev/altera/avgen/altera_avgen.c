@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/altera/avgen/altera_avgen.c 274820 2014-11-21 21:10:02Z brooks $");
+__FBSDID("$FreeBSD: head/sys/dev/altera/avgen/altera_avgen.c 295883 2016-02-22 09:10:23Z skra $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/sys/dev/altera/avgen/altera_avgen.c 274820 2014-11-21 2
 
 #include <machine/bus.h>
 #include <machine/resource.h>
-#include <machine/vm.h>
 
 #include <vm/vm.h>
 

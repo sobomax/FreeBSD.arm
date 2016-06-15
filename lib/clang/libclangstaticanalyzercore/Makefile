@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzercore/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzercore/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -21,6 +21,7 @@ SRCS=	APSIntType.cpp \
 	CommonBugCategories.cpp \
 	ConstraintManager.cpp \
 	CoreEngine.cpp \
+	DynamicTypeMap.cpp \
 	Environment.cpp \
 	ExplodedGraph.cpp \
 	ExprEngine.cpp \
@@ -30,6 +31,8 @@ SRCS=	APSIntType.cpp \
 	ExprEngineObjC.cpp \
 	FunctionSummary.cpp \
 	HTMLDiagnostics.cpp \
+	IssueHash.cpp \
+	LoopWidening.cpp \
 	MemRegion.cpp \
 	PathDiagnostic.cpp \
 	PlistDiagnostics.cpp \
@@ -50,6 +53,7 @@ TGHDRS=	AttrList \
 	CommentNodes \
 	DeclNodes \
 	DiagnosticCommonKinds \
+	DiagnosticFrontendKinds \
 	StmtNodes
 
 .include "../clang.lib.mk"

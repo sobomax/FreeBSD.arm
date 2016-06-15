@@ -17,7 +17,7 @@
  * only.
  * END_BLOCK
  *
- * $FreeBSD: head/sys/boot/arm/at91/bootiic/env_vars.c 163596 2006-10-21 22:43:39Z imp $
+ * $FreeBSD: head/sys/boot/arm/at91/bootiic/env_vars.c 298826 2016-04-30 00:26:38Z pfg $
  *****************************************************************************/
 
 #include "env_vars.h"
@@ -41,7 +41,7 @@ static int	currentOffset;
 /*
  * .KB_C_FN_DEFINITION_START
  * int ReadCharFromEnvironment(char *)
- *  This private function reads characters from the enviroment variables
+ *  This private function reads characters from the environment variables
  * to service the command prompt during auto-boot or just to setup the
  * default environment.  Returns positive value if valid character was
  * set in the pointer.  Returns negative value to signal input stream

@@ -1,10 +1,9 @@
-# $FreeBSD: head/tools/tools/ifpifa/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/tools/ifpifa/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	ifpifa
 MAN=
 WARNS?=6
 BINDIR?=/usr/local/bin
-DPADD=${LIBKVM}
-LDADD=-lkvm
+LIBADD=kvm
 
 .include <bsd.prog.mk>

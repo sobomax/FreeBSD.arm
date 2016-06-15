@@ -31,8 +31,10 @@
  * - LZ4 homepage : http://fastcompression.blogspot.com/p/lz4.html
  * - LZ4 source repository : http://code.google.com/p/lz4/
  *
- * $FreeBSD: head/sys/cddl/boot/zfs/lz4.c 272389 2014-10-02 00:13:08Z delphij $
+ * $FreeBSD: head/sys/cddl/boot/zfs/lz4.c 300800 2016-05-26 23:20:17Z bdrewery $
  */
+
+#include <netinet/in.h>
 
 static int LZ4_uncompress_unknownOutputSize(const char *source, char *dest,
 					    int isize, int maxOutputSize);
@@ -52,7 +54,7 @@ lz4_decompress(void *s_start, void *d_start, size_t s_len, size_t d_len, int dum
 	 * Returns 0 on success (decompression function returned non-negative)
 	 * and non-zero on failure (decompression function returned negative).
 	 */
-	return (LZ4_uncompress_unknownOutputSize(s_start + 4, d_start, bufsiz,
+	return (LZ4_uncompress_unknownOutputSize((const char *)s_start + 4, d_start, bufsiz,
 	    d_len) < 0);
 }
 

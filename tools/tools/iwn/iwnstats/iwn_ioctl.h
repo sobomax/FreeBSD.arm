@@ -26,12 +26,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/iwn/iwnstats/iwn_ioctl.h 262423 2014-02-24 02:38:43Z adrian $
+ * $FreeBSD: head/tools/tools/iwn/iwnstats/iwn_ioctl.h 287313 2015-08-30 21:54:47Z adrian $
  */
 #ifndef	__IWN_IOCTL_H__
 #define	__IWN_IOCTL_H__
 
-extern	void iwn_setifname(struct iwnstats *is, const char *ifname);
 extern	void iwn_zerostats(struct iwnstats *is);
 extern	int iwn_collect(struct iwnstats *is);
 

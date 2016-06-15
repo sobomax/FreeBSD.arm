@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3cdrom.c 255943 2013-09-29 20:10:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3cdrom.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/ps3/ps3cdrom.c 255943 2013-09-29 20:10:22Z 
 #include <machine/pio.h>
 #include <machine/bus.h>
 #include <machine/platform.h>
-#include <machine/pmap.h>
 #include <machine/resource.h>
 #include <sys/bus.h>
 #include <sys/rman.h>

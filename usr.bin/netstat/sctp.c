@@ -36,7 +36,7 @@ static char sccsid[] = "@(#)sctp.c	0.1 (Berkeley) 4/18/2007";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/netstat/sctp.c 279122 2015-02-21 23:47:20Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/netstat/sctp.c 298442 2016-04-22 03:37:27Z araujo $");
 
 #include <sys/param.h>
 #include <sys/queue.h>
@@ -79,7 +79,7 @@ static void sctp_statesprint(uint32_t state);
 #define	NETSTAT_SCTP_STATES_SHUTDOWN_ACK_SENT	0x8
 #define	NETSTAT_SCTP_STATES_SHUTDOWN_PENDING	0x9
 
-const char *sctpstates[] = {
+static const char *sctpstates[] = {
 	"CLOSED",
 	"BOUND",
 	"LISTEN",
@@ -92,13 +92,13 @@ const char *sctpstates[] = {
 	"SHUTDOWN_PENDING"
 };
 
-LIST_HEAD(xladdr_list, xladdr_entry) xladdr_head;
+static LIST_HEAD(xladdr_list, xladdr_entry) xladdr_head;
 struct xladdr_entry {
 	struct xsctp_laddr *xladdr;
 	LIST_ENTRY(xladdr_entry) xladdr_entries;
 };
 
-LIST_HEAD(xraddr_list, xraddr_entry) xraddr_head;
+static LIST_HEAD(xraddr_list, xraddr_entry) xraddr_head;
 struct xraddr_entry {
 	struct xsctp_raddr *xraddr;
 	LIST_ENTRY(xraddr_entry) xraddr_entries;
@@ -128,7 +128,7 @@ inetname(struct in_addr *inp)
 			if (np)
 				cp = np->n_name;
 		}
-		if (cp == 0) {
+		if (cp == NULL) {
 			hp = gethostbyaddr((char *)inp, sizeof (*inp), AF_INET);
 			if (hp) {
 				cp = hp->h_name;
@@ -349,7 +349,7 @@ sctp_process_tcb(struct xsctp_tcb *xstcb,
 	xo_open_list("address");
 	xl = LIST_FIRST(&xladdr_head);
 	xr = LIST_FIRST(&xraddr_head);
-	x_max = (xl_total > xr_total) ? xl_total : xr_total;
+	x_max = MAX(xl_total, xr_total);
 	for (i = 0; i < x_max; i++) {
 		xo_open_instance("address");
 
@@ -467,9 +467,10 @@ sctp_process_inpcb(struct xsctp_inpcb *xinpcb,
 		tname = "????";
 
 	if (Lflag) {
-		char buf1[9];
+		char buf1[22];
 
-		snprintf(buf1, 9, "%hu/%hu", xinpcb->qlen, xinpcb->maxqlen);
+		snprintf(buf1, sizeof buf1, "%u/%u", 
+		    xinpcb->qlen, xinpcb->maxqlen);
 		xo_emit("{:protocol/%-6.6s/%s} {:type/%-5.5s/%s} ",
 		    pname, tname);
 		xo_emit("{d:queues/%-8.8s}{e:queue-len/%hu}"
@@ -585,7 +586,7 @@ sctp_protopr(u_long off __unused,
 			xo_warn("sysctl: %s", mibvar);
 		return;
 	}
-	if ((buf = malloc(len)) == 0) {
+	if ((buf = malloc(len)) == NULL) {
 		xo_warnx("malloc %lu bytes", (u_long)len);
 		return;
 	}
@@ -614,25 +615,34 @@ sctp_statesprint(uint32_t state)
 	int idx;
 
 	switch (state) {
-	case SCTP_STATE_COOKIE_WAIT:
+	case SCTP_CLOSED:
+		idx = NETSTAT_SCTP_STATES_CLOSED;
+		break;
+	case SCTP_BOUND:
+		idx = NETSTAT_SCTP_STATES_BOUND;
+		break;
+	case SCTP_LISTEN:
+		idx = NETSTAT_SCTP_STATES_LISTEN;
+		break;
+	case SCTP_COOKIE_WAIT:
 		idx = NETSTAT_SCTP_STATES_COOKIE_WAIT;
 		break;
-	case SCTP_STATE_COOKIE_ECHOED:
+	case SCTP_COOKIE_ECHOED:
 		idx = NETSTAT_SCTP_STATES_COOKIE_ECHOED;
 		break;
-	case SCTP_STATE_OPEN:
+	case SCTP_ESTABLISHED:
 		idx = NETSTAT_SCTP_STATES_ESTABLISHED;
 		break;
-	case SCTP_STATE_SHUTDOWN_SENT:
+	case SCTP_SHUTDOWN_SENT:
 		idx = NETSTAT_SCTP_STATES_SHUTDOWN_SENT;
 		break;
-	case SCTP_STATE_SHUTDOWN_RECEIVED:
+	case SCTP_SHUTDOWN_RECEIVED:
 		idx = NETSTAT_SCTP_STATES_SHUTDOWN_RECEIVED;
 		break;
-	case SCTP_STATE_SHUTDOWN_ACK_SENT:
+	case SCTP_SHUTDOWN_ACK_SENT:
 		idx = NETSTAT_SCTP_STATES_SHUTDOWN_ACK_SENT;
 		break;
-	case SCTP_STATE_SHUTDOWN_PENDING:
+	case SCTP_SHUTDOWN_PENDING:
 		idx = NETSTAT_SCTP_STATES_SHUTDOWN_PENDING;
 		break;
 	default:
@@ -649,20 +659,11 @@ sctp_statesprint(uint32_t state)
 void
 sctp_stats(u_long off, const char *name, int af1 __unused, int proto __unused)
 {
-	struct sctpstat sctpstat, zerostat;
-	size_t len = sizeof(sctpstat);
+	struct sctpstat sctpstat;
 
-	if (live) {
-		if (zflag)
-			memset(&zerostat, 0, len);
-		if (sysctlbyname("net.inet.sctp.stats", &sctpstat, &len,
-		    zflag ? &zerostat : NULL, zflag ? len : 0) < 0) {
-			if (errno != ENOENT)
-				xo_warn("sysctl: net.inet.sctp.stats");
-			return;
-		}
-	} else
-		kread(off, &sctpstat, len);
+	if (fetch_stats("net.inet.sctp.stats", off, &sctpstat,
+	    sizeof(sctpstat), kread) != 0)
+		return;
 
 	xo_open_container(name);
 	xo_emit("{T:/%s}:\n", name);

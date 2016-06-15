@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicsmb.c 227843 2011-11-22 21:28:20Z marius $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicsmb.c 289657 2015-10-20 19:52:59Z dumbbell $");
 
 /*
  * I2C to SMB bridge
@@ -167,11 +167,9 @@ static int
 iicsmb_detach(device_t dev)
 {
 	struct iicsmb_softc *sc = (struct iicsmb_softc *)device_get_softc(dev);
-	
+
 	bus_generic_detach(dev);
-	if (sc->smbus) {
-		device_delete_child(dev, sc->smbus);
-	}
+	device_delete_children(dev);
 	mtx_destroy(&sc->lock);
 
 	return (0);

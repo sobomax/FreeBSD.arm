@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/if_fwsubr.c 275211 2014-11-28 14:51:49Z bz $
+ * $FreeBSD: head/sys/net/if_fwsubr.c 301217 2016-06-02 17:51:29Z gnn $
  */
 
 #include "opt_inet.h"
@@ -89,8 +89,8 @@ firewire_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	struct mbuf *mtail;
 	int unicast, dgl, foff;
 	static int next_dgl;
-#ifdef INET
-	int is_gw;
+#if defined(INET) || defined(INET6)
+	int is_gw = 0;
 #endif
 
 #ifdef MAC
@@ -105,6 +105,10 @@ firewire_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 		goto bad;
 	}
 
+#if defined(INET) || defined(INET6)
+	if (ro != NULL)
+		is_gw = (ro->ro_flags & RT_HAS_GW) != 0;
+#endif
 	/*
 	 * For unicast, we make a tag to store the lladdr of the
 	 * destination. This might not be the first time we have seen
@@ -128,7 +132,7 @@ firewire_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 		}
 		destfw = (struct fw_hwaddr *)(mtag + 1);
 	} else {
-		destfw = 0;
+		destfw = NULL;
 	}
 
 	switch (dst->sa_family) {
@@ -140,11 +144,8 @@ firewire_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 		 * doesn't fit into the arp model.
 		 */
 		if (unicast) {
-			is_gw = 0;
-			if (ro != NULL && ro->ro_rt != NULL &&
-			    (ro->ro_rt->rt_flags & RTF_GATEWAY) != 0)
-				is_gw = 1;
-			error = arpresolve(ifp, is_gw, m, dst, (u_char *) destfw, NULL);
+			error = arpresolve(ifp, is_gw, m, dst,
+			    (u_char *) destfw, NULL, NULL);
 			if (error)
 				return (error == EWOULDBLOCK ? 0 : error);
 		}
@@ -173,10 +174,10 @@ firewire_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 #ifdef INET6
 	case AF_INET6:
 		if (unicast) {
-			error = nd6_storelladdr(fc->fc_ifp, m, dst,
-			    (u_char *) destfw, NULL);
+			error = nd6_resolve(fc->fc_ifp, is_gw, m, dst,
+			    (u_char *) destfw, NULL, NULL);
 			if (error)
-				return (error);
+				return (error == EWOULDBLOCK ? 0 : error);
 		}
 		type = ETHERTYPE_IPV6;
 		break;
@@ -269,7 +270,7 @@ firewire_output(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 				mtail = m_split(m, fsize, M_NOWAIT);
 				m_tag_copy_chain(mtail, m, M_NOWAIT);
 			} else {
-				mtail = 0;
+				mtail = NULL;
 			}
 
 			/*
@@ -600,8 +601,6 @@ firewire_input(struct ifnet *ifp, struct mbuf *m, uint16_t src)
 	switch (type) {
 #ifdef INET
 	case ETHERTYPE_IP:
-		if ((m = ip_fastforward(m)) == NULL)
-			return;
 		isr = NETISR_IP;
 		break;
 
@@ -703,7 +702,7 @@ firewire_resolvemulti(struct ifnet *ifp, struct sockaddr **llsa,
 		/*
 		 * No mapping needed.
 		 */
-		*llsa = 0;
+		*llsa = NULL;
 		return 0;
 
 #ifdef INET
@@ -711,7 +710,7 @@ firewire_resolvemulti(struct ifnet *ifp, struct sockaddr **llsa,
 		sin = (struct sockaddr_in *)sa;
 		if (!IN_MULTICAST(ntohl(sin->sin_addr.s_addr)))
 			return EADDRNOTAVAIL;
-		*llsa = 0;
+		*llsa = NULL;
 		return 0;
 #endif
 #ifdef INET6
@@ -724,12 +723,12 @@ firewire_resolvemulti(struct ifnet *ifp, struct sockaddr **llsa,
 			 * (This is used for multicast routers.)
 			 */
 			ifp->if_flags |= IFF_ALLMULTI;
-			*llsa = 0;
+			*llsa = NULL;
 			return 0;
 		}
 		if (!IN6_IS_ADDR_MULTICAST(&sin6->sin6_addr))
 			return EADDRNOTAVAIL;
-		*llsa = 0;
+		*llsa = NULL;
 		return 0;
 #endif
 

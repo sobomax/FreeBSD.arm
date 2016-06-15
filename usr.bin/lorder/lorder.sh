@@ -29,7 +29,7 @@
 #
 #	@(#)lorder.sh	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD: head/usr.bin/lorder/lorder.sh 216370 2010-12-11 08:32:16Z joel $
+# $FreeBSD: head/usr.bin/lorder/lorder.sh 286791 2015-08-14 22:54:52Z rpaulo $
 #
 
 # only one argument is a special case, just output the name twice
@@ -60,7 +60,7 @@ done
 #
 # if the line has " U " it's a globally undefined symbol, put it into
 # the reference file.
-${NM} -go $* | sed "
+${NM} ${NMFLAGS} -go $* | sed "
 	/ [TDW] / {
 		s/:.* [TDW] / /
 		w $S

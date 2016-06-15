@@ -1,7 +1,6 @@
-# $FreeBSD: head/tools/tools/mctest/Makefile 204310 2010-02-25 14:36:50Z ru $
+# $FreeBSD: head/tools/tools/mctest/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG_CXX=   mctest 
-DPADD=	${LIBPTHREAD}
-LDADD=	-lpthread
+LIBADD= pthread
 
 .include <bsd.prog.mk>

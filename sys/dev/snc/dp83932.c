@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/snc/dp83932.c 276750 2015-01-06 12:59:37Z rwatson $	*/
+/*	$FreeBSD: head/sys/dev/snc/dp83932.c 298955 2016-05-03 03:41:25Z pfg $	*/
 /*	$NecBSD: dp83932.c,v 1.5 1999/07/29 05:08:44 kmatsuda Exp $	*/
 /*	$NetBSD: if_snc.c,v 1.18 1998/04/25 21:27:40 scottr Exp $	*/
 
@@ -405,7 +405,7 @@ sncinit_locked(struct snc_softc *sc)
 		/* already running */
 		return;
 
-	NIC_PUT(sc, SNCR_CR, CR_RST);	/* DCR only accessable in reset mode! */
+	NIC_PUT(sc, SNCR_CR, CR_RST);	/* DCR only accessible in reset mode! */
 
 	/* config it */
 	NIC_PUT(sc, SNCR_DCR, (sc->sncr_dcr |
@@ -1001,7 +1001,7 @@ sonicrxint(struct snc_softc *sc)
 		 *
 		 * If this was the last packet in the RRA, give the RRA to
 		 * the chip again.
-		 * If sonic read didnt copy it out then we would have to
+		 * If sonic read didn't copy it out then we would have to
 		 * wait !!
 		 * (dont bother add it back in again straight away)
 		 *

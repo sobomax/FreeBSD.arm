@@ -1,8 +1,9 @@
-# $FreeBSD: head/sbin/nvmecontrol/Makefile 253476 2013-07-19 21:40:57Z jimharris $
+# $FreeBSD: head/sbin/nvmecontrol/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	nvmecontrol
 SRCS=	nvmecontrol.c devlist.c firmware.c identify.c logpage.c	\
-	perftest.c reset.c nvme_util.c
+	perftest.c reset.c nvme_util.c power.c
 MAN=	nvmecontrol.8
 
 .PATH:	${.CURDIR}/../../sys/dev/nvme

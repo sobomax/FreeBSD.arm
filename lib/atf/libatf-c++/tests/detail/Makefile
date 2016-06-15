@@ -1,10 +1,10 @@
-# $FreeBSD: head/lib/atf/libatf-c++/tests/detail/Makefile 273929 2014-11-01 11:17:54Z jmmv $
+# $FreeBSD: head/lib/atf/libatf-c++/tests/detail/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.init.mk>
 
 TESTSDIR=	${TESTSBASE}/lib/atf/libatf-c++/detail
 
-ATF=		${.CURDIR:H:H:H:H:H}/contrib/atf
+ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-c++/detail
 
 CFLAGS+=	-DATF_C_TESTS_BASE='"${TESTSBASE}/lib/atf/libatf-c"'

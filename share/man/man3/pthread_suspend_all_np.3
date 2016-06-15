@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man3/pthread_suspend_all_np.3 267776 2014-06-23 08:27:27Z bapt $
+.\" $FreeBSD: head/share/man/man3/pthread_suspend_all_np.3 299115 2016-05-05 10:22:19Z kib $
 .\"
-.Dd February 13, 2003
+.Dd May 5, 2016
 .Dt PTHREAD_SUSPEND_ALL_NP 3
 .Os
 .Sh NAME
@@ -44,6 +44,13 @@ The only exception is the current thread,
 the thread that called the
 .Fn pthread_suspend_all_np
 function.
+.Pp
+It is not safe for the caller of the
+.Fn pthread_suspend_all_np
+function to use any non-async signal safe functions, besides
+.Xr pthread_resume_all_np 3 ,
+until threads are resumed, unless measures are taken to ensure
+that all threads are suspended at safe points.
 .Sh SEE ALSO
 .Xr pthread_resume_all_np 3 ,
 .Xr pthread_resume_np 3 ,

@@ -39,10 +39,9 @@
  */
 
 #include "assym.s"
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <machine/armreg.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 284264 2015-06-11 13:54:18Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/copystr.S 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/errno.h>
 
@@ -113,6 +112,8 @@ ENTRY(copyinstr)
 	moveq	r0, #ENAMETOOLONG
 	beq	2f
 
+	ldr	r12, =VM_MAXUSER_ADDRESS
+
 	GET_PCB(r4)
 	ldr	r4, [r4]
 
@@ -124,7 +125,10 @@ ENTRY(copyinstr)
 	adr	r5, .Lcopystrfault
 	str	r5, [r4, #PCB_ONFAULT]
 
-1:	ldrbt	r5, [r0], #0x0001
+1:
+	cmp	r0, r12
+	bcs	.Lcopystrfault
+	ldrbt	r5, [r0], #0x0001
 	add	r6, r6, #0x00000001
 	teq	r5, #0x00000000
 	strb	r5, [r1], #0x0001
@@ -161,6 +165,8 @@ ENTRY(copyoutstr)
 	moveq	r0, #ENAMETOOLONG
 	beq	2f
 
+	ldr	r12, =VM_MAXUSER_ADDRESS
+
 	GET_PCB(r4)
 	ldr	r4, [r4]
 
@@ -172,7 +178,10 @@ ENTRY(copyoutstr)
 	adr	r5, .Lcopystrfault
 	str	r5, [r4, #PCB_ONFAULT]
 
-1:	ldrb	r5, [r0], #0x0001
+1:
+	cmp	r0, r12
+	bcs	.Lcopystrfault
+	ldrb	r5, [r0], #0x0001
 	add	r6, r6, #0x00000001
 	teq	r5, #0x00000000
 	strbt	r5, [r1], #0x0001
@@ -195,9 +204,9 @@ END(copyoutstr)
 
 /* A fault occurred during the copy */
 .Lcopystrfault:
-	mov	r0, #EFAULT
 	mov	r1, #0x00000000
 	str	r1, [r4, #PCB_ONFAULT]
+	mov	r0, #EFAULT
 	RESTORE_REGS
 	RET
 

@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: sdp.h,v 1.3 2003/09/05 00:33:59 max Exp $
- * $FreeBSD: head/lib/libsdp/sdp.h 226426 2011-10-16 08:45:16Z ed $
+ * $FreeBSD: head/lib/libsdp/sdp.h 298896 2016-05-01 19:37:33Z pfg $
  */
 
 #ifndef _SDP_H_
@@ -561,7 +561,7 @@ void               sdp_print      (uint32_t level, uint8_t const *start,
  *	bdaddr_t	bdaddr;	local BD_ADDR (or ANY)
  *	profile data[pdu->len - sizeof(uuid) - sizeof(bdaddr)]
  *
- * in successful reponse additional data will contain 4 bytes record handle
+ * in successful response additional data will contain 4 bytes record handle
  *
  *
  * SDP_PDU_SERVICE_UNREGISTER_REQUEST

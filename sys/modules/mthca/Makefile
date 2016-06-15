@@ -1,5 +1,4 @@
-# $FreeBSD: head/sys/modules/mthca/Makefile 278913 2015-02-17 19:27:14Z glebius $
-
+# $FreeBSD: head/sys/modules/mthca/Makefile 290135 2015-10-29 08:28:39Z hselasky $
 .PATH:  ${.CURDIR}/../../ofed/drivers/infiniband/hw/mthca
 
 KMOD    = mthca
@@ -11,6 +10,7 @@ SRCS+=	mthca_reset.c mthca_srq.c mthca_uar.c
 SRCS+=	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${.CURDIR}/../../ofed/include
+CFLAGS+= -I${.CURDIR}/../../compat/linuxkpi/common/include
 
 .include <bsd.kmod.mk>
 

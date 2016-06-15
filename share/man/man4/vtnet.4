@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/vtnet.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/vtnet.4 289116 2015-10-10 17:32:06Z phk $
 .\"
 .Dd January 22, 2012
 .Dt VTNET 4
@@ -52,9 +52,9 @@ device driver provides support for VirtIO Ethernet devices.
 If the hypervisor advertises the appreciate features, the
 .Nm
 driver supports TCP/UDP checksum offload for both transmit and receive,
-TCP segmentation offload (TSO), TCP large receive offload (LRO), and
-hardware VLAN tag stripping/insertion features, as well as a multicast
-hash filter, as well as Jumbo Frames (up to 9216 bytes), which can be
+TCP segmentation offload (TSO), TCP large receive offload (LRO),
+hardware VLAN tag stripping/insertion features, a multicast hash filter,
+as well as Jumbo Frames (up to 9216 bytes), which can be
 configured via the interface MTU setting.
 Selecting an MTU larger than 1500 bytes with the
 .Xr ifconfig 8

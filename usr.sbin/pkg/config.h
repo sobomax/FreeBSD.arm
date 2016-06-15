@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/pkg/config.h 259266 2013-12-12 17:59:09Z bdrewery $
+ * $FreeBSD: head/usr.sbin/pkg/config.h 287579 2015-09-08 21:25:36Z bapt $
  */
 
 #ifndef _PKG_CONFIG_H
@@ -40,6 +40,7 @@ typedef enum {
 	SIGNATURE_TYPE,
 	FINGERPRINTS,
 	REPOS_DIR,
+	PUBKEY,
 	CONFIG_SIZE
 } pkg_config_key;
 

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vt/hw/vga/vt_vga.c 282216 2015-04-29 12:53:41Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/vt/hw/vga/vt_vga.c 298848 2016-04-30 14:41:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -45,13 +45,6 @@ __FBSDID("$FreeBSD: head/sys/dev/vt/hw/vga/vt_vga.c 282216 2015-04-29 12:53:41Z 
 #include <dev/pci/pcivar.h>
 
 #include <machine/bus.h>
-
-#if defined(__amd64__) || defined(__i386__)
-#include <vm/vm.h>
-#include <vm/pmap.h>
-#include <machine/pmap.h>
-#include <machine/vmparam.h>
-#endif /* __amd64__ || __i386__ */
 
 struct vga_softc {
 	bus_space_tag_t		 vga_fb_tag;
@@ -822,9 +815,8 @@ vga_bitblt_text_gfxmode(struct vt_device *vd, const struct vt_window *vw,
 
 	col = area->tr_end.tp_col;
 	row = area->tr_end.tp_row;
-	x2 = (int)((col * vf->vf_width + vw->vw_draw_area.tr_begin.tp_col
-	      + VT_VGA_PIXELS_BLOCK - 1)
-	     / VT_VGA_PIXELS_BLOCK)
+	x2 = (int)howmany(col * vf->vf_width + vw->vw_draw_area.tr_begin.tp_col,
+	    VT_VGA_PIXELS_BLOCK)
 	    * VT_VGA_PIXELS_BLOCK;
 	y2 = row * vf->vf_height + vw->vw_draw_area.tr_begin.tp_row;
 
@@ -890,9 +882,9 @@ vga_bitblt_text_txtmode(struct vt_device *vd, const struct vt_window *vw,
 			/* Convert colors to VGA attributes. */
 			attr = bg << 4 | fg;
 
-			MEM_WRITE1(sc, 0x18000 + (row * 80 + col) * 2 + 0,
+			MEM_WRITE1(sc, (row * 80 + col) * 2 + 0,
 			    ch);
-			MEM_WRITE1(sc, 0x18000 + (row * 80 + col) * 2 + 1,
+			MEM_WRITE1(sc, (row * 80 + col) * 2 + 1,
 			    attr);
 		}
 	}
@@ -920,11 +912,10 @@ vga_bitblt_bitmap(struct vt_device *vd, const struct vt_window *vw,
 	uint8_t pattern_2colors;
 
 	/* Align coordinates with the 8-pxels grid. */
-	x1 = x / VT_VGA_PIXELS_BLOCK * VT_VGA_PIXELS_BLOCK;
+	x1 = rounddown(x, VT_VGA_PIXELS_BLOCK);
 	y1 = y;
 
-	x2 = (x + width + VT_VGA_PIXELS_BLOCK - 1) /
-	    VT_VGA_PIXELS_BLOCK * VT_VGA_PIXELS_BLOCK;
+	x2 = roundup(x + width, VT_VGA_PIXELS_BLOCK);
 	y2 = y + height;
 	x2 = min(x2, vd->vd_width - 1);
 	y2 = min(y2, vd->vd_height - 1);
@@ -1221,28 +1212,39 @@ vga_init(struct vt_device *vd)
 	if (vd->vd_softc == NULL)
 		vd->vd_softc = (void *)&vga_conssoftc;
 	sc = vd->vd_softc;
-	textmode = 0;
 
 	if (vd->vd_flags & VDF_DOWNGRADE && vd->vd_video_dev != NULL)
 		vga_pci_repost(vd->vd_video_dev);
 
 #if defined(__amd64__) || defined(__i386__)
 	sc->vga_fb_tag = X86_BUS_SPACE_MEM;
-	sc->vga_fb_handle = KERNBASE + VGA_MEM_BASE;
 	sc->vga_reg_tag = X86_BUS_SPACE_IO;
-	sc->vga_reg_handle = VGA_REG_BASE;
 #else
 # error "Architecture not yet supported!"
 #endif
 
+	bus_space_map(sc->vga_reg_tag, VGA_REG_BASE, VGA_REG_SIZE, 0,
+	    &sc->vga_reg_handle);
+
+	/*
+	 * If "hw.vga.textmode" is not set and we're running on hypervisor,
+	 * we use text mode by default, this is because when we're on
+	 * hypervisor, vt(4) is usually much slower in graphics mode than
+	 * in text mode, especially when we're on Hyper-V.
+	 */
+	textmode = vm_guest != VM_GUEST_NO;
 	TUNABLE_INT_FETCH("hw.vga.textmode", &textmode);
 	if (textmode) {
 		vd->vd_flags |= VDF_TEXTMODE;
 		vd->vd_width = 80;
 		vd->vd_height = 25;
+		bus_space_map(sc->vga_fb_tag, VGA_TXT_BASE, VGA_TXT_SIZE, 0,
+		    &sc->vga_fb_handle);
 	} else {
 		vd->vd_width = VT_VGA_WIDTH;
 		vd->vd_height = VT_VGA_HEIGHT;
+		bus_space_map(sc->vga_fb_tag, VGA_MEM_BASE, VGA_MEM_SIZE, 0,
+		    &sc->vga_fb_handle);
 	}
 	if (vga_initialize(vd, textmode) != 0)
 		return (CN_DEAD);

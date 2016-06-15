@@ -22,17 +22,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/tools/ath/athspectral/athspectral.c 251737 2013-06-14 08:11:45Z adrian $
+ * $FreeBSD: head/tools/tools/ath/athspectral/athspectral.c 295363 2016-02-07 04:28:03Z adrian $
  */
 
 #include "diag.h"
 
 #include "ah.h"
 #include "ah_internal.h"
-
-#ifndef	ATH_DEFAULT
-#define	ATH_DEFAULT	"ath0"
-#endif
 
 #include <getopt.h>
 #include <errno.h>

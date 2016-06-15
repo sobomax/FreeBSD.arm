@@ -1,14 +1,14 @@
 #!/bin/sh
 #
-# $FreeBSD: head/crypto/openssh/freebsd-post-merge.sh 263691 2014-03-24 19:15:13Z des $
+# $FreeBSD: head/crypto/openssh/freebsd-post-merge.sh 294320 2016-01-19 12:38:53Z des $
 #
 
 xargs perl -n -i -e '
 	print;
 	s/\$(Id|OpenBSD): [^\$]*/\$FreeBSD/ && print;
-	m/^\#include "includes.h"/ && print "__RCSID(\"\$FreeBSD\$\");\n";
 ' <keywords
 
-xargs perl -p -i -e '
-	s/^\.Dd \$Mdocdate: (\w+) (\d+) (\d+) \$$/.Dd $1 $2, $3/
-' <mdocdates
+xargs perl -n -i -e '
+	print;
+	m/^\#include "includes.h"/ && print "__RCSID(\"\$FreeBSD\$\");\n";
+' <rcsid

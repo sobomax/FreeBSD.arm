@@ -1,15 +1,19 @@
-# $FreeBSD: head/lib/clang/libllvmvectorize/Makefile 261991 2014-02-16 19:44:07Z dim $
+# $FreeBSD: head/lib/clang/libllvmvectorize/Makefile 296417 2016-03-05 20:24:31Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmvectorize
 
 SRCDIR=	lib/Transforms/Vectorize
 SRCS=	BBVectorize.cpp \
 	LoopVectorize.cpp \
-	SLPVectorizer.cpp \
-	Vectorize.cpp
+	SLPVectorizer.cpp
 
-TGHDRS=	Intrinsics
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	Vectorize.cpp
+.endif
+
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

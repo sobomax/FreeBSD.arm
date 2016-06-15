@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/qlxge/qls_def.h 252206 2013-06-25 17:50:22Z davidcs $
+ * $FreeBSD: head/sys/dev/qlxge/qls_def.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -237,7 +237,7 @@ typedef struct _qla_mcast {
 #define QLA_PAGE_SIZE		4096
 
 /*
- * Adapter structure contains the hardware independant information of the
+ * Adapter structure contains the hardware independent information of the
  * pci function.
  */
 struct qla_host {

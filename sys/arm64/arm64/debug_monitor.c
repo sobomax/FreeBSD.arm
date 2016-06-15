@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/debug_monitor.c 282078 2015-04-27 09:12:54Z zbb $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/debug_monitor.c 295881 2016-02-22 09:04:36Z skra $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -40,7 +40,6 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/debug_monitor.c 282078 2015-04-27 09:12
 #include <machine/cpu.h>
 #include <machine/debug_monitor.h>
 #include <machine/kdb.h>
-#include <machine/param.h>
 
 #include <ddb/ddb.h>
 #include <ddb/db_sym.h>

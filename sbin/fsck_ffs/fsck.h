@@ -57,7 +57,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fsck.h	8.4 (Berkeley) 5/9/95
- * $FreeBSD: head/sbin/fsck_ffs/fsck.h 262488 2014-02-25 18:25:27Z mckusick $
+ * $FreeBSD: head/sbin/fsck_ffs/fsck.h 289677 2015-10-21 05:37:09Z eadler $
  */
 
 #ifndef _FSCK_H_
@@ -301,7 +301,7 @@ extern char	snapname[BUFSIZ];	/* when doing snapshots, the name of the file */
 extern char	*cdevname;		/* name of device being checked */
 extern long	dev_bsize;		/* computed value of DEV_BSIZE */
 extern long	secsize;		/* actual disk sector size */
-extern u_int	real_dev_bsize;		/* actual disk sector size, not overriden */
+extern u_int	real_dev_bsize;		/* actual disk sector size, not overridden */
 extern char	nflag;			/* assume a no response */
 extern char	yflag;			/* assume a yes response */
 extern int	bkgrdflag;		/* use a snapshot to run on an active system */

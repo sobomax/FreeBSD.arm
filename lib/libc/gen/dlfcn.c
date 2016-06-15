@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/dlfcn.c 283153 2015-05-20 15:37:15Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/dlfcn.c 288028 2015-09-20 20:21:49Z rodrigc $");
 
 /*
  * Linkage to services provided by the dynamic linker.
@@ -40,6 +40,10 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/dlfcn.c 283153 2015-05-20 15:37:15Z kib $"
 #include "libc_private.h"
 
 static char sorry[] = "Service unavailable";
+
+void _rtld_thread_init(void *);
+void _rtld_atfork_pre(int *);
+void _rtld_atfork_post(int *);
 
 /*
  * For ELF, the dynamic linker directly resolves references to its

@@ -28,7 +28,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_vxlan.c 275358 2014-12-01 11:45:24Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/net/if_vxlan.c 301538 2016-06-07 04:51:50Z sephe $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -930,7 +930,7 @@ vxlan_socket_init(struct vxlan_socket *vso, struct ifnet *ifp)
 	}
 
 	error = udp_set_kernel_tunneling(vso->vxlso_sock,
-	    vxlan_rcv_udp_packet, vso);
+	    vxlan_rcv_udp_packet, NULL, vso);
 	if (error) {
 		if_printf(ifp, "cannot set tunneling function: %d\n", error);
 		return (error);
@@ -2237,8 +2237,7 @@ vxlan_pick_source_port(struct vxlan_softc *sc, struct mbuf *m)
 	range = sc->vxl_max_port - sc->vxl_min_port + 1;
 
 	/* check if flowid is set and not opaque */
-	if (M_HASHTYPE_GET(m) != M_HASHTYPE_NONE &&
-	    M_HASHTYPE_GET(m) != M_HASHTYPE_OPAQUE)
+	if (M_HASHTYPE_ISHASH(m))
 		hash = m->m_pkthdr.flowid;
 	else
 		hash = jenkins_hash(m->m_data, ETHER_HDR_LEN,

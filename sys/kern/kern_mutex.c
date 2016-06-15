@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_mutex.c 284297 2015-06-12 10:01:24Z avg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_mutex.c 301157 2016-06-01 18:32:20Z mjg $");
 
 #include "opt_adaptive_mutexes.h"
 #include "opt_ddb.h"
@@ -224,7 +224,7 @@ __mtx_lock_flags(volatile uintptr_t *c, int opts, const char *file, int line)
 	    line);
 	WITNESS_LOCK(&m->lock_object, (opts & ~MTX_RECURSE) | LOP_EXCLUSIVE,
 	    file, line);
-	curthread->td_locks++;
+	TD_LOCKS_INC(curthread);
 }
 
 void
@@ -248,7 +248,7 @@ __mtx_unlock_flags(volatile uintptr_t *c, int opts, const char *file, int line)
 	mtx_assert(m, MA_OWNED);
 
 	__mtx_unlock(m, curthread, opts, file, line);
-	curthread->td_locks--;
+	TD_LOCKS_DEC(curthread);
 }
 
 void
@@ -347,9 +347,9 @@ _mtx_trylock_flags_(volatile uintptr_t *c, int opts, const char *file, int line)
 	if (rval) {
 		WITNESS_LOCK(&m->lock_object, opts | LOP_EXCLUSIVE | LOP_TRYLOCK,
 		    file, line);
-		curthread->td_locks++;
+		TD_LOCKS_INC(curthread);
 		if (m->mtx_recurse == 0)
-			LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(LS_MTX_LOCK_ACQUIRE,
+			LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(adaptive__acquire,
 			    m, contested, waittime, file, line);
 
 	}
@@ -416,10 +416,12 @@ __mtx_lock_sleep(volatile uintptr_t *c, uintptr_t tid, int opts,
 		    "_mtx_lock_sleep: %s contested (lock=%p) at %s:%d",
 		    m->lock_object.lo_name, (void *)m->mtx_lock, file, line);
 #ifdef KDTRACE_HOOKS
-	all_time -= lockstat_nsecs();
+	all_time -= lockstat_nsecs(&m->lock_object);
 #endif
 
-	while (!_mtx_obtain_lock(m, tid)) {
+	for (;;) {
+		if (m->mtx_lock == MTX_UNOWNED && _mtx_obtain_lock(m, tid))
+			break;
 #ifdef KDTRACE_HOOKS
 		spin_cnt++;
 #endif
@@ -513,16 +515,16 @@ __mtx_lock_sleep(volatile uintptr_t *c, uintptr_t tid, int opts,
 		 * Block on the turnstile.
 		 */
 #ifdef KDTRACE_HOOKS
-		sleep_time -= lockstat_nsecs();
+		sleep_time -= lockstat_nsecs(&m->lock_object);
 #endif
 		turnstile_wait(ts, mtx_owner(m), TS_EXCLUSIVE_QUEUE);
 #ifdef KDTRACE_HOOKS
-		sleep_time += lockstat_nsecs();
+		sleep_time += lockstat_nsecs(&m->lock_object);
 		sleep_cnt++;
 #endif
 	}
 #ifdef KDTRACE_HOOKS
-	all_time += lockstat_nsecs();
+	all_time += lockstat_nsecs(&m->lock_object);
 #endif
 #ifdef KTR
 	if (cont_logged) {
@@ -531,17 +533,17 @@ __mtx_lock_sleep(volatile uintptr_t *c, uintptr_t tid, int opts,
 		    m->lock_object.lo_name, (void *)tid, file, line);
 	}
 #endif
-	LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(LS_MTX_LOCK_ACQUIRE, m, contested,
+	LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(adaptive__acquire, m, contested,
 	    waittime, file, line);
 #ifdef KDTRACE_HOOKS
 	if (sleep_time)
-		LOCKSTAT_RECORD1(LS_MTX_LOCK_BLOCK, m, sleep_time);
+		LOCKSTAT_RECORD1(adaptive__block, m, sleep_time);
 
 	/*
 	 * Only record the loops spinning and not sleeping. 
 	 */
 	if (spin_cnt > sleep_cnt)
-		LOCKSTAT_RECORD1(LS_MTX_LOCK_SPIN, m, (all_time - sleep_time));
+		LOCKSTAT_RECORD1(adaptive__spin, m, all_time - sleep_time);
 #endif
 }
 
@@ -600,10 +602,11 @@ _mtx_lock_spin_cookie(volatile uintptr_t *c, uintptr_t tid, int opts,
 #endif
 	lock_profile_obtain_lock_failed(&m->lock_object, &contested, &waittime);
 #ifdef KDTRACE_HOOKS
-	spin_time -= lockstat_nsecs();
+	spin_time -= lockstat_nsecs(&m->lock_object);
 #endif
-	while (!_mtx_obtain_lock(m, tid)) {
-
+	for (;;) {
+		if (m->mtx_lock == MTX_UNOWNED && _mtx_obtain_lock(m, tid))
+			break;
 		/* Give interrupts a chance while we spin. */
 		spinlock_exit();
 		while (m->mtx_lock != MTX_UNOWNED) {
@@ -620,7 +623,7 @@ _mtx_lock_spin_cookie(volatile uintptr_t *c, uintptr_t tid, int opts,
 		spinlock_enter();
 	}
 #ifdef KDTRACE_HOOKS
-	spin_time += lockstat_nsecs();
+	spin_time += lockstat_nsecs(&m->lock_object);
 #endif
 
 	if (LOCK_LOG_TEST(&m->lock_object, opts))
@@ -628,9 +631,12 @@ _mtx_lock_spin_cookie(volatile uintptr_t *c, uintptr_t tid, int opts,
 	KTR_STATE0(KTR_SCHED, "thread", sched_tdname((struct thread *)tid),
 	    "running");
 
-	LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(LS_MTX_SPIN_LOCK_ACQUIRE, m,
-	    contested, waittime, (file), (line));
-	LOCKSTAT_RECORD1(LS_MTX_SPIN_LOCK_SPIN, m, spin_time);
+#ifdef KDTRACE_HOOKS
+	LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(spin__acquire, m,
+	    contested, waittime, file, line);
+	if (spin_time != 0)
+		LOCKSTAT_RECORD1(spin__spin, m, spin_time);
+#endif
 }
 #endif /* SMP */
 
@@ -655,7 +661,7 @@ thread_lock_flags_(struct thread *td, int opts, const char *file, int line)
 		return;
 
 #ifdef KDTRACE_HOOKS
-	spin_time -= lockstat_nsecs();
+	spin_time -= lockstat_nsecs(&td->td_lock->lock_object);
 #endif
 	for (;;) {
 retry:
@@ -672,7 +678,9 @@ retry:
 			    m->lock_object.lo_name, file, line));
 		WITNESS_CHECKORDER(&m->lock_object,
 		    opts | LOP_NEWORDER | LOP_EXCLUSIVE, file, line, NULL);
-		while (!_mtx_obtain_lock(m, tid)) {
+		for (;;) {
+			if (m->mtx_lock == MTX_UNOWNED && _mtx_obtain_lock(m, tid))
+				break;
 			if (m->mtx_lock == tid) {
 				m->mtx_recurse++;
 				break;
@@ -703,15 +711,18 @@ retry:
 		__mtx_unlock_spin(m);	/* does spinlock_exit() */
 	}
 #ifdef KDTRACE_HOOKS
-	spin_time += lockstat_nsecs();
+	spin_time += lockstat_nsecs(&m->lock_object);
 #endif
 	if (m->mtx_recurse == 0)
-		LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(LS_MTX_SPIN_LOCK_ACQUIRE,
-		    m, contested, waittime, (file), (line));
+		LOCKSTAT_PROFILE_OBTAIN_LOCK_SUCCESS(spin__acquire, m,
+		    contested, waittime, file, line);
 	LOCK_LOG_LOCK("LOCK", &m->lock_object, opts, m->mtx_recurse, file,
 	    line);
 	WITNESS_LOCK(&m->lock_object, opts | LOP_EXCLUSIVE, file, line);
-	LOCKSTAT_RECORD1(LS_THREAD_LOCK_SPIN, m, spin_time);
+#ifdef KDTRACE_HOOKS
+	if (spin_time != 0)
+		LOCKSTAT_RECORD1(thread__spin, m, spin_time);
+#endif
 }
 
 struct mtx *
@@ -839,37 +850,6 @@ __mtx_assert(const volatile uintptr_t *c, int what, const char *file, int line)
 #endif
 
 /*
- * The MUTEX_DEBUG-enabled mtx_validate()
- *
- * Most of these checks have been moved off into the LO_INITIALIZED flag
- * maintained by the witness code.
- */
-#ifdef MUTEX_DEBUG
-
-void	mtx_validate(struct mtx *);
-
-void
-mtx_validate(struct mtx *m)
-{
-
-/*
- * XXX: When kernacc() does not require Giant we can reenable this check
- */
-#ifdef notyet
-	/*
-	 * Can't call kernacc() from early init386(), especially when
-	 * initializing Giant mutex, because some stuff in kernacc()
-	 * requires Giant itself.
-	 */
-	if (!cold)
-		if (!kernacc((caddr_t)m, sizeof(m),
-		    VM_PROT_READ | VM_PROT_WRITE))
-			panic("Can't read and write to mutex %p", m);
-#endif
-}
-#endif
-
-/*
  * General init routine used by the MTX_SYSINIT() macro.
  */
 void
@@ -901,11 +881,6 @@ _mtx_init(volatile uintptr_t *c, const char *name, const char *type, int opts)
 	ASSERT_ATOMIC_LOAD_PTR(m->mtx_lock,
 	    ("%s: mtx_lock not aligned for %s: %p", __func__, name,
 	    &m->mtx_lock));
-
-#ifdef MUTEX_DEBUG
-	/* Diagnostic and error correction */
-	mtx_validate(m);
-#endif
 
 	/* Determine lock class and lock flags. */
 	if (opts & MTX_SPIN)
@@ -955,7 +930,7 @@ _mtx_destroy(volatile uintptr_t *c)
 		if (LOCK_CLASS(&m->lock_object) == &lock_class_mtx_spin)
 			spinlock_exit();
 		else
-			curthread->td_locks--;
+			TD_LOCKS_DEC(curthread);
 
 		lock_profile_release_lock(&m->lock_object);
 		/* Tell witness this isn't locked to make it happy. */

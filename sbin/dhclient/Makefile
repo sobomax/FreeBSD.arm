@@ -1,5 +1,5 @@
 # $OpenBSD: Makefile,v 1.9 2004/05/04 12:52:05 henning Exp $
-# $FreeBSD: head/sbin/dhclient/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/dhclient/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 # Copyright (c) 1996, 1997 The Internet Software Consortium.
 # All rights reserved.
@@ -33,6 +33,7 @@
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 SRCS=	dhclient.c clparse.c alloc.c dispatch.c hash.c bpf.c options.c \
 	tree.c conflex.c errwarn.c inet.c packet.c convert.c tables.c \
 	parse.c privsep.c

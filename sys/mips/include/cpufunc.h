@@ -53,7 +53,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *	JNPR: cpufunc.h,v 1.5 2007/08/09 11:23:32 katta
- * $FreeBSD: head/sys/mips/include/cpufunc.h 256935 2013-10-22 21:08:25Z brooks $
+ * $FreeBSD: head/sys/mips/include/cpufunc.h 295138 2016-02-02 07:47:38Z adrian $
  */
 
 #ifndef _MACHINE_CPUFUNC_H_
@@ -248,7 +248,7 @@ MIPS_RW32_COP0_SEL(config5, MIPS_COP_0_CONFIG, 5);
 #if defined(CPU_NLM) || defined(BERI_LARGE_TLB)
 MIPS_RW32_COP0_SEL(config6, MIPS_COP_0_CONFIG, 6);
 #endif
-#ifdef CPU_NLM
+#if defined(CPU_NLM) || defined(CPU_MIPS1004K)
 MIPS_RW32_COP0_SEL(config7, MIPS_COP_0_CONFIG, 7);
 #endif
 MIPS_RW32_COP0(count, MIPS_COP_0_COUNT);
@@ -259,6 +259,7 @@ MIPS_RW32_COP0(cause, MIPS_COP_0_CAUSE);
 MIPS_RW32_COP0(excpc, MIPS_COP_0_EXC_PC);
 #endif
 MIPS_RW32_COP0(status, MIPS_COP_0_STATUS);
+MIPS_RW32_COP0_SEL(cmgcrbase, 15, 3);
 
 /* XXX: Some of these registers are specific to MIPS32. */
 #if !defined(__mips_n64)

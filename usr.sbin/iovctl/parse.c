@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014-2015 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2014-2015 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,16 +25,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iovctl/parse.c 279460 2015-03-01 00:52:34Z rstone $");
+__FBSDID("$FreeBSD: head/usr.sbin/iovctl/parse.c 296865 2016-03-14 17:41:17Z rstone $");
 
 #include <sys/param.h>
 #include <sys/iov.h>
+#include <sys/nv.h>
 #include <net/ethernet.h>
 
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <nv.h>
 #include <regex.h>
 #include <stdint.h>
 #include <stdio.h>

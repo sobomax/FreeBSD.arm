@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if_loop.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_disc.c 274175 2014-11-06 13:13:09Z melifaro $
+ * $FreeBSD: head/sys/net/if_disc.c 298075 2016-04-15 17:30:33Z pfg $
  */
 
 /*
@@ -216,7 +216,7 @@ discioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 		break;
 	case SIOCADDMULTI:
 	case SIOCDELMULTI:
-		if (ifr == 0) {
+		if (ifr == NULL) {
 			error = EAFNOSUPPORT;		/* XXX */
 			break;
 		}

@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/powerpc/powerpc/mmu_if.m 276772 2015-01-07 01:01:39Z markj $
+# $FreeBSD: head/sys/powerpc/powerpc/mmu_if.m 296142 2016-02-27 20:39:36Z jhibbits $
 #
 
 #include <sys/param.h>
@@ -107,14 +107,14 @@ CODE {
 		return;
 	}
 
-	static void *mmu_null_mapdev_attr(mmu_t mmu, vm_offset_t pa,
+	static void *mmu_null_mapdev_attr(mmu_t mmu, vm_paddr_t pa,
 	    vm_size_t size, vm_memattr_t ma)
 	{
 		return MMU_MAPDEV(mmu, pa, size);
 	}
 
 	static void mmu_null_kenter_attr(mmu_t mmu, vm_offset_t va,
-	    vm_offset_t pa, vm_memattr_t ma)
+	    vm_paddr_t pa, vm_memattr_t ma)
 	{
 		MMU_KENTER(mmu, va, pa);
 	}
@@ -123,6 +123,12 @@ CODE {
 	    vm_memattr_t ma)
 	{
 		return;
+	}
+
+	static int mmu_null_change_attr(mmu_t mmu, vm_offset_t va,
+	    vm_size_t sz, vm_memattr_t mode)
+	{
+		return (0);
 	}
 };
 
@@ -792,7 +798,7 @@ METHOD void * mapdev {
  */
 METHOD void * mapdev_attr {
 	mmu_t		_mmu;
-	vm_offset_t	_pa;
+	vm_paddr_t	_pa;
 	vm_size_t	_size;
 	vm_memattr_t	_attr;
 } DEFAULT mmu_null_mapdev_attr;
@@ -859,7 +865,7 @@ METHOD void kenter {
 METHOD void kenter_attr {
 	mmu_t		_mmu;
 	vm_offset_t	_va;
-	vm_offset_t	_pa;
+	vm_paddr_t	_pa;
 	vm_memattr_t	_ma;
 } DEFAULT mmu_null_kenter_attr;
 
@@ -933,3 +939,43 @@ METHOD void dumpsys_unmap {
 METHOD void scan_init {
 	mmu_t		_mmu;
 };
+
+/**
+ * @brief Create a temporary thread-local KVA mapping of a single page.
+ *
+ * @param _pg		The physical page to map
+ *
+ * @retval addr		The temporary KVA
+ */
+METHOD vm_offset_t quick_enter_page {
+	mmu_t		_mmu;
+	vm_page_t	_pg;
+};
+
+/**
+ * @brief Undo a mapping created by quick_enter_page
+ *
+ * @param _va		The mapped KVA
+ */
+METHOD void quick_remove_page {
+	mmu_t		_mmu;
+	vm_offset_t	_va;
+};
+
+/**
+ * @brief Change the specified virtual address range's memory type.
+ *
+ * @param _va		The virtual base address to change
+ *
+ * @param _sz		Size of the region to change
+ *
+ * @param _mode		New mode to set on the VA range
+ *
+ * @retval error	0 on success, EINVAL or ENOMEM on error.
+ */
+METHOD int change_attr {
+	mmu_t		_mmu;
+	vm_offset_t	_va;
+	vm_size_t	_sz;
+	vm_memattr_t	_mode;
+} DEFAULT mmu_null_change_attr;

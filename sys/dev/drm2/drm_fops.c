@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_fops.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_fops.c 288653 2015-10-04 07:45:36Z adrian $");
 
 #include <dev/drm2/drmP.h>
 
@@ -136,7 +136,7 @@ int drm_open(struct cdev *kdev, int flags, int fmt, DRM_STRUCTPROC *p)
 	sx_xlock(&drm_global_mutex);
 
 	/*
-	 * FIXME Linux<->FreeBSD: On Linux, counter updated outisde
+	 * FIXME Linux<->FreeBSD: On Linux, counter updated outside
 	 * global mutex.
 	 */
 	if (!dev->open_count++)

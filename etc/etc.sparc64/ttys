@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/etc/etc.sparc64/ttys 262957 2014-03-09 21:06:22Z marcel $
+# $FreeBSD: head/etc/etc.sparc64/ttys 289634 2015-10-20 16:10:46Z gjb $
 #	@(#)ttys	5.1 (Berkeley) 4/17/89
 #
 # This file specifies various information about terminals on the system.
@@ -46,9 +46,9 @@ ttyv8	"/usr/local/bin/xdm -nodaemon"	xterm	off secure
 # Serial terminals
 # The 'dialup' keyword identifies dialin lines to login, fingerd etc.
 # uart(4)
-ttyu0	"/usr/libexec/getty 3wire"	vt100	on  secure
-ttyu1	"/usr/libexec/getty 3wire"	vt100	on  secure
-ttyu2	"/usr/libexec/getty 3wire"	vt100	on  secure
-ttyu3	"/usr/libexec/getty std.9600"	vt100	off secure
+ttyu0	"/usr/libexec/getty 3wire"	vt100	onifconsole secure
+ttyu1	"/usr/libexec/getty 3wire"	vt100	onifconsole secure
+ttyu2	"/usr/libexec/getty 3wire"	vt100	onifconsole secure
+ttyu3	"/usr/libexec/getty 3wire"	vt100	onifconsole secure
 # Dumb console
 dcons	"/usr/libexec/getty std.9600"	vt100	off secure

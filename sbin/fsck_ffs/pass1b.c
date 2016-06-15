@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)pass1b.c	8.4 (Berkeley) 4/28/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck_ffs/pass1b.c 260068 2013-12-30 01:16:08Z scottl $");
+__FBSDID("$FreeBSD: head/sbin/fsck_ffs/pass1b.c 297886 2016-04-12 22:55:47Z pfg $");
 
 #include <sys/param.h>
 
@@ -108,7 +108,7 @@ pass1bcheck(struct inodesc *idesc)
 			if (dlp == muldup)
 				break;
 		}
-		if (muldup == 0 || duphead == muldup->next) {
+		if (muldup == NULL || duphead == muldup->next) {
 			rerun = 1;
 			return (STOP);
 		}

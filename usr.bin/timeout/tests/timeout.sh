@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/timeout/tests/timeout.sh 273771 2014-10-28 10:39:41Z bapt $
+# $FreeBSD: head/usr.bin/timeout/tests/timeout.sh 298879 2016-05-01 16:13:05Z pfg $
 
 atf_test_case nominal
 nominal_head()
@@ -83,7 +83,7 @@ exit_numbers_body()
 		-s exit:124 \
 		-x timeout .1 sleep 1
 
-	# With preserv status exit shoudl be 128 + TERM aka 143
+	# With preserv status exit should be 128 + TERM aka 143
 	atf_check \
 		-o empty \
 		-e empty \

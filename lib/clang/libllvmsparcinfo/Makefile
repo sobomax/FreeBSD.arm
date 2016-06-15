@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmsparcinfo/Makefile 262263 2014-02-20 22:22:39Z dim $
+# $FreeBSD: head/lib/clang/libllvmsparcinfo/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,8 @@ SRCDIR=	lib/Target/Sparc/TargetInfo
 INCDIR=	lib/Target/Sparc
 SRCS=	SparcTargetInfo.cpp
 
-TGHDRS=	SparcGenInstrInfo \
+TGHDRS=	Attributes \
+	SparcGenInstrInfo \
 	SparcGenRegisterInfo \
 	SparcGenSubtargetInfo
 

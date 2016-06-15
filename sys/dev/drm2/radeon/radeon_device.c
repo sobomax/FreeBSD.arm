@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_device.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/radeon_device.c 300050 2016-05-17 12:52:31Z eadler $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_crtc_helper.h>
@@ -191,7 +191,7 @@ void radeon_scratch_free(struct radeon_device *rdev, uint32_t reg)
 
 /*
  * radeon_wb_*()
- * Writeback is the the method by which the the GPU updates special pages
+ * Writeback is the method by which the GPU updates special pages
  * in memory with the status of certain GPU events (fences, ring pointers,
  * etc.).
  */
@@ -541,7 +541,7 @@ bool radeon_boot_test_post_card(struct radeon_device *rdev)
  * Allocate the dummy page used by the driver (all asics).
  * This dummy page is used by the driver as a filler for gart entries
  * when pages are taken out of the GART
- * Returns 0 on sucess, -ENOMEM on failure.
+ * Returns 0 on success, -ENOMEM on failure.
  */
 int radeon_dummy_page_init(struct radeon_device *rdev)
 {
@@ -724,7 +724,7 @@ static uint32_t cail_ioreg_read(struct card_info *info, uint32_t reg)
  *
  * Initializes the driver info and register access callbacks for the
  * ATOM interpreter (r4xx+).
- * Returns 0 on sucess, -ENOMEM on failure.
+ * Returns 0 on success, -ENOMEM on failure.
  * Called at driver startup.
  */
 int radeon_atombios_init(struct radeon_device *rdev)
@@ -793,7 +793,7 @@ void radeon_atombios_fini(struct radeon_device *rdev)
  * @rdev: radeon_device pointer
  *
  * Initializes the driver info for combios (r1xx-r3xx).
- * Returns 0 on sucess.
+ * Returns 0 on success.
  * Called at driver startup.
  */
 int radeon_combios_init(struct radeon_device *rdev)
@@ -1342,14 +1342,10 @@ int radeon_suspend_kms(struct drm_device *dev)
 
 	radeon_agp_suspend(rdev);
 
-	pci_save_state(device_get_parent(dev->dev));
 #ifdef FREEBSD_WIP
 	if (state.event == PM_EVENT_SUSPEND) {
 		/* Shut down the device */
 		pci_disable_device(dev->pdev);
-#endif /* FREEBSD_WIP */
-		pci_set_powerstate(dev->dev, PCI_POWERSTATE_D3);
-#ifdef FREEBSD_WIP
 	}
 	console_lock();
 #endif /* FREEBSD_WIP */
@@ -1380,10 +1376,6 @@ int radeon_resume_kms(struct drm_device *dev)
 
 #ifdef FREEBSD_WIP
 	console_lock();
-#endif /* FREEBSD_WIP */
-	pci_set_powerstate(device_get_parent(dev->dev), PCI_POWERSTATE_D0);
-	pci_restore_state(device_get_parent(dev->dev));
-#ifdef FREEBSD_WIP
 	if (pci_enable_device(dev->pdev)) {
 		console_unlock();
 		return -1;

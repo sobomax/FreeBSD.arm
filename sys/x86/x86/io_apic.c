@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/io_apic.c 280260 2015-03-19 13:57:47Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/x86/io_apic.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 #include "opt_acpi.h"
 #include "opt_isa.h"
@@ -987,14 +987,6 @@ apic_add_resource(device_t dev, int rid, vm_paddr_t base, size_t length)
 {
 	int error;
 
-#ifdef PAE
-	/*
-	 * Resources use long's to track resources, so we can't
-	 * include memory regions above 4GB.
-	 */
-	if (base >= ~0ul)
-		return;
-#endif
 	error = bus_set_resource(dev, SYS_RES_MEMORY, rid, base, length);
 	if (error)
 		panic("apic_add_resource: resource %d failed set with %d", rid,

@@ -52,12 +52,12 @@
  * TODO
  * ----
  *
- * - Allow subsytems to register to submit files for inclusion in the text
+ * - Allow subsystems to register to submit files for inclusion in the text
  *   dump in a generic way.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_textdump.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_textdump.c 298807 2016-04-29 20:53:39Z pfg $");
 
 #include "opt_config.h"
 

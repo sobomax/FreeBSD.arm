@@ -1,9 +1,10 @@
-# $FreeBSD: head/sys/modules/proto/Makefile 284081 2015-06-06 16:20:39Z marcel $
+# $FreeBSD: head/sys/modules/proto/Makefile 285068 2015-07-03 01:50:26Z imp $
 
 .PATH: ${.CURDIR}/../../dev/proto
 
 KMOD=	proto
 SRCS=	\
+	proto_bus_isa.c \
 	proto_bus_pci.c \
 	proto_busdma.c \
 	proto_core.c
@@ -11,11 +12,7 @@ SRCS=	\
 SRCS+=	\
 	bus_if.h \
 	device_if.h \
-	pci_if.h \
-
-MFILES=	\
-	dev/pci/pci_if.m \
-	kern/bus_if.m \
-	kern/device_if.m
+	isa_if.h \
+	pci_if.h
 
 .include <bsd.kmod.mk>

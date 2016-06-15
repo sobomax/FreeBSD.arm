@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/sys/interposing_table.c 281714 2015-04-18 21:50:13Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/sys/interposing_table.c 295407 2016-02-08 19:24:13Z kib $");
 
 #include <sys/types.h>
 #include "libc_private.h"
@@ -78,6 +78,7 @@ interpos_func_t __libc_interposing[INTERPOS_MAX] = {
 	SLOT(kevent, __sys_kevent),
 	SLOT(wait6, __sys_wait6),
 	SLOT(ppoll, __sys_ppoll),
+	SLOT(map_stacks_exec, __libc_map_stacks_exec),
 };
 #undef SLOT
 

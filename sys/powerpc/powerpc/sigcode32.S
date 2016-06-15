@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/powerpc/sigcode32.S 266778 2014-05-27 23:57:22Z nwhitehorn $ */
+/* $FreeBSD: head/sys/powerpc/powerpc/sigcode32.S 295186 2016-02-03 01:50:27Z jhibbits $ */
 /* $NetBSD: sigcode.S,v 1.1 1999/11/17 14:56:11 kleink Exp $	*/
 
 /*-
@@ -45,9 +45,9 @@
  */
 	.globl	CNAME(sigcode32),CNAME(szsigcode32)
 CNAME(sigcode32):
-	addi	1,1,-20			/* reserved space for callee */
+	addi	1,1,-32			/* reserved space for callee */
 	blrl
-	addi	3,1,20+SF_UC		/* restore sp, and get &frame->sf_uc */
+	addi	3,1,32+SF_UC		/* restore sp, and get &frame->sf_uc */
 	li	0,SYS_sigreturn
 	sc				/* sigreturn(scp) */
 	li	0,SYS_exit

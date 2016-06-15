@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/timed 230099 2012-01-14 02:18:41Z dougb $
+# $FreeBSD: head/etc/rc.d/timed 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: timed
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="timed"
+desc="Time server daemon"
 rcvar="timed_enable"
 command="/usr/sbin/${name}"
 

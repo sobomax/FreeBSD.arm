@@ -29,7 +29,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_prcm.h 284532 2015-06-17 23:26:00Z gonzo $
+ * $FreeBSD: head/sys/arm/ti/ti_prcm.h 297395 2016-03-29 19:11:04Z loos $
  */
 
 
@@ -158,6 +158,10 @@ typedef enum {
 
 	/* RTC module */
 	RTC_CLK = 1900,
+
+	/* McSPI */
+	SPI0_CLK = 2000,
+	SPI1_CLK,
 } clk_ident_t;
 
 /*

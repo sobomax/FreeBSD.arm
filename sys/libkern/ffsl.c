@@ -10,7 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/libkern/ffsl.c 128019 2004-04-07 20:46:16Z imp $");
+__FBSDID("$FreeBSD: head/sys/libkern/ffsl.c 289766 2015-10-22 21:04:47Z cem $");
 
 #include <sys/libkern.h>
 

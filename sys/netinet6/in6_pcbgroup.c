@@ -29,13 +29,14 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/sys/netinet6/in6_pcbgroup.c 277331 2015-01-18 18:06:40Z adrian $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6_pcbgroup.c 297439 2016-03-31 00:53:23Z gnn $");
 
 #include "opt_inet6.h"
 #include "opt_rss.h"
 
 #include <sys/param.h>
 #include <sys/mbuf.h>
+#include <sys/socket.h>
 
 #include <net/rss_config.h>
 

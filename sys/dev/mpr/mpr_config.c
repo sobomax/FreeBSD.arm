@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
- * Copyright (c) 2013-2015 Avago Technologies
+ * Copyright (c) 2013-2016 Avago Technologies
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_config.c 283661 2015-05-28 18:24:22Z slm $");
+__FBSDID("$FreeBSD: head/sys/dev/mpr/mpr_config.c 299265 2016-05-09 16:16:00Z slm $");
 
 /* TODO Move headers to mprvar */
 #include <sys/types.h>

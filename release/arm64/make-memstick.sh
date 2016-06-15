@@ -7,7 +7,7 @@
 #
 # Usage: make-memstick.sh <directory tree> <image filename>
 #
-# $FreeBSD: head/release/arm64/make-memstick.sh 282107 2015-04-27 18:07:11Z gjb $
+# $FreeBSD: head/release/arm64/make-memstick.sh 293188 2016-01-05 03:20:45Z gjb $
 #
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
@@ -29,12 +29,14 @@ if [ -e ${2} ]; then
 fi
 
 echo '/dev/ufs/FreeBSD_Install / ufs ro,noatime 1 1' > ${1}/etc/fstab
+echo 'root_rw_mount="NO"' > ${1}/etc/rc.conf.local
 makefs -B little -o label=FreeBSD_Install ${2}.part ${1}
 if [ $? -ne 0 ]; then
 	echo "makefs failed"
 	exit 1
 fi
 rm ${1}/etc/fstab
+rm ${1}/etc/rc.conf.local
 
 mkimg -s mbr -p efi:=${1}/boot/boot1.efifat -p freebsd:=${2}.part -o ${2}
 rm ${2}.part

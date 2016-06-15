@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/ntpdc/Makefile 283542 2015-05-25 20:27:46Z bapt $
+# $FreeBSD: head/usr.sbin/ntp/ntpdc/Makefile 287982 2015-09-19 03:51:19Z bdrewery $
 
 MAN=
 
@@ -32,8 +32,5 @@ CLEANFILES+= .version version.c
 
 version.c:
 	sh -e ${.CURDIR}/../scripts/mkver ntpdc
-
-afterinstall:
-	rm -f ${DESTDIR}/usr/sbin/xntpdc
 
 .include <bsd.prog.mk>

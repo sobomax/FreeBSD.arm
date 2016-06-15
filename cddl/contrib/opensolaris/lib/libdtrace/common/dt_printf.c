@@ -310,7 +310,8 @@ pfprint_fp(dtrace_hdl_t *dtp, FILE *fp, const char *format,
 	case sizeof (double):
 		return (dt_printf(dtp, fp, format,
 		    *((double *)addr) / n));
-#if !defined(__arm__) && !defined(__powerpc__) && !defined(__mips__)
+#if !defined(__arm__) && !defined(__powerpc__) && \
+    !defined(__mips__) && !defined(__riscv__)
 	case sizeof (long double):
 		return (dt_printf(dtp, fp, format,
 		    *((long double *)addr) / ldn));
@@ -1348,6 +1349,7 @@ dt_printf_format(dtrace_hdl_t *dtp, FILE *fp, const dt_pfargv_t *pfv,
 	dtrace_aggdesc_t *agg;
 	caddr_t lim = (caddr_t)buf + len, limit;
 	char format[64] = "%";
+	size_t ret;
 	int i, aggrec, curagg = -1;
 	uint64_t normal;
 
@@ -1379,7 +1381,9 @@ dt_printf_format(dtrace_hdl_t *dtp, FILE *fp, const dt_pfargv_t *pfv,
 		int prec = pfd->pfd_prec;
 		int rval;
 
+		const char *start;
 		char *f = format + 1; /* skip initial '%' */
+		size_t fmtsz = sizeof(format) - 1;
 		const dtrace_recdesc_t *rec;
 		dt_pfprint_f *func;
 		caddr_t addr;
@@ -1536,6 +1540,7 @@ dt_printf_format(dtrace_hdl_t *dtp, FILE *fp, const dt_pfargv_t *pfv,
 			break;
 		}
 
+		start = f;
 		if (pfd->pfd_flags & DT_PFCONV_ALT)
 			*f++ = '#';
 		if (pfd->pfd_flags & DT_PFCONV_ZPAD)
@@ -1548,6 +1553,7 @@ dt_printf_format(dtrace_hdl_t *dtp, FILE *fp, const dt_pfargv_t *pfv,
 			*f++ = '\'';
 		if (pfd->pfd_flags & DT_PFCONV_SPACE)
 			*f++ = ' ';
+		fmtsz -= f - start;
 
 		/*
 		 * If we're printing a stack and DT_PFCONV_LEFT is set, we
@@ -1558,13 +1564,20 @@ dt_printf_format(dtrace_hdl_t *dtp, FILE *fp, const dt_pfargv_t *pfv,
 		if (func == pfprint_stack && (pfd->pfd_flags & DT_PFCONV_LEFT))
 			width = 0;
 
-		if (width != 0)
-			f += snprintf(f, sizeof (format), "%d", ABS(width));
+		if (width != 0) {
+			ret = snprintf(f, fmtsz, "%d", ABS(width));
+			f += ret;
+			fmtsz = MAX(0, fmtsz - ret);
+		}
 
-		if (prec > 0)
-			f += snprintf(f, sizeof (format), ".%d", prec);
+		if (prec > 0) {
+			ret = snprintf(f, fmtsz, ".%d", prec);
+			f += ret;
+			fmtsz = MAX(0, fmtsz - ret);
+		}
 
-		(void) strcpy(f, pfd->pfd_fmt);
+		if (strlcpy(f, pfd->pfd_fmt, fmtsz) >= fmtsz)
+			return (dt_set_errno(dtp, EDT_COMPILER));
 		pfd->pfd_rec = rec;
 
 		if (func(dtp, fp, format, pfd, addr, size, normal) < 0)

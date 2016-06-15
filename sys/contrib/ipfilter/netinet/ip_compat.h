@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_compat.h	1.8 1/14/96
- * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_compat.h 281192 2015-04-07 06:22:22Z glebius $
+ * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_compat.h 295126 2016-02-01 17:41:21Z glebius $
  * Id: ip_compat.h,v 2.142.2.57 2007/10/10 09:51:42 darrenr Exp $
  */
 
@@ -147,6 +147,7 @@ struct  ether_addr {
 
 #  include <sys/selinfo.h>
 #  include <sys/lock.h>
+#  include <sys/malloc.h>
 #  include <sys/mutex.h>
 #    define	KRWLOCK_FILL_SZ		56
 #    define	KMUTEX_FILL_SZ		56

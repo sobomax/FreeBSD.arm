@@ -38,9 +38,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/ether_addr.c 263090 2014-03-12 12:27:13Z jmmv $");
+__FBSDID("$FreeBSD: head/lib/libc/net/ether_addr.c 298226 2016-04-18 21:05:15Z avos $");
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 

@@ -1,6 +1,6 @@
 /*
  * $NetBSD: rpcb_stat.c,v 1.2 2000/07/04 20:27:40 matt Exp $
- * $FreeBSD: head/usr.sbin/rpcbind/rpcb_stat.c 258564 2013-11-25 16:44:02Z hrs $
+ * $FreeBSD: head/usr.sbin/rpcbind/rpcb_stat.c 301605 2016-06-08 12:45:22Z ngie $
  */
 /*-
  * Copyright (c) 2009, Sun Microsystems, Inc.
@@ -151,7 +151,7 @@ rpcbs_rmtcall(rpcvers_t rtype, rpcproc_t rpcbproc, rpcprog_t prog,
 	rpcbs_rmtcalllist *rl;
 	struct netconfig *nconf;
 
-	if (rtype > RPCBVERS_STAT)
+	if (rtype >= RPCBVERS_STAT)
 		return;
 	for (rl = inf[rtype].rmtinfo; rl; rl = rl->next) {
 

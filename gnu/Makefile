@@ -1,12 +1,15 @@
 #	@(#)Makefile	5.33.1.1 (Berkeley) 5/6/91
-# $FreeBSD: head/gnu/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 .include <src.opts.mk>
 
-SUBDIR= lib ${_tests} usr.bin
+SUBDIR= lib .WAIT \
+	${_tests} usr.bin
 
 .if ${MK_TESTS} != "no"
 _tests=	tests
 .endif
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_sai.c 281085 2015-04-04 21:34:26Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_sai.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -433,7 +433,7 @@ find_edma_controller(struct sc_info *sc)
 
 	if ((len = OF_getproplen(edma_node, "device-id")) <= 0) {
 		return (ENXIO);
-	};
+	}
 
 	OF_getprop(edma_node, "device-id", &dts_value, len);
 	edma_device_id = fdt32_to_cpu(dts_value);
@@ -447,16 +447,16 @@ find_edma_controller(struct sc_info *sc)
 			if (edma_sc->device_id == edma_device_id) {
 				/* found */
 				break;
-			};
+			}
 
 			edma_sc = NULL;
-		};
-	};
+		}
+	}
 
 	if (edma_sc == NULL) {
 		device_printf(sc->dev, "no eDMA. can't operate\n");
 		return (ENXIO);
-	};
+	}
 
 	sc->edma_sc = edma_sc;
 
@@ -465,7 +465,7 @@ find_edma_controller(struct sc_info *sc)
 	if (sc->edma_chnum < 0) {
 		/* cant setup eDMA */
 		return (ENXIO);
-	};
+	}
 
 	return (0);
 };

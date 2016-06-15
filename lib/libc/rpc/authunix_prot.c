@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)authunix_prot.c 1.15 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)authunix_prot.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/authunix_prot.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/authunix_prot.c 288113 2015-09-22 15:40:07Z rodrigc $");
 
 /*
  * authunix_prot.c
@@ -55,9 +55,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/authunix_prot.c 258578 2013-11-25 19:04:36
  * XDR for unix authentication parameters.
  */
 bool_t
-xdr_authunix_parms(xdrs, p)
-	XDR *xdrs;
-	struct authunix_parms *p;
+xdr_authunix_parms(XDR *xdrs, struct authunix_parms *p)
 {
 	u_int **paup_gids;
 

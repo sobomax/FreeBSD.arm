@@ -1,11 +1,7 @@
-# $FreeBSD: head/usr.sbin/sysrc/Makefile 246546 2013-02-08 11:14:01Z dteske $
+# $FreeBSD: head/usr.sbin/sysrc/Makefile 287979 2015-09-18 23:34:47Z bdrewery $
 
 SCRIPTS= sysrc
 
 MAN= sysrc.8
-
-beforeinstall:
-	mkdir -p ${DESTDIR}${SCRIPTSDIR}
-	mkdir -p ${DESTDIR}${MANDIR}8
 
 .include <bsd.prog.mk>

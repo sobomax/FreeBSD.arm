@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_softdep.c 283832 2015-05-31 15:50:54Z kib $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_softdep.c 298804 2016-04-29 20:43:51Z pfg $");
 
 #include "opt_ffs.h"
 #include "opt_quota.h"
@@ -69,6 +69,7 @@ __FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_softdep.c 283832 2015-05-31 15:50:54Z k
 #include <sys/namei.h>
 #include <sys/priv.h>
 #include <sys/proc.h>
+#include <sys/racct.h>
 #include <sys/rwlock.h>
 #include <sys/stat.h>
 #include <sys/sysctl.h>
@@ -923,8 +924,7 @@ static	int journal_unsuspend(struct ufsmount *ump);
 static	void softdep_prelink(struct vnode *, struct vnode *);
 static	void add_to_journal(struct worklist *);
 static	void remove_from_journal(struct worklist *);
-static	bool softdep_excess_inodes(struct ufsmount *);
-static	bool softdep_excess_dirrem(struct ufsmount *);
+static	bool softdep_excess_items(struct ufsmount *, int);
 static	void softdep_process_journal(struct mount *, struct worklist *, int);
 static	struct jremref *newjremref(struct dirrem *, struct inode *,
 	    struct inode *ip, off_t, nlink_t);
@@ -1869,7 +1869,7 @@ softdep_move_dependencies(oldbp, newbp)
 		if (wk->wk_type == D_BMSAFEMAP &&
 		    bmsafemap_backgroundwrite(WK_BMSAFEMAP(wk), newbp))
 			dirty = 1;
-		if (wktail == 0)
+		if (wktail == NULL)
 			LIST_INSERT_HEAD(&newbp->b_dep, wk, wk_list);
 		else
 			LIST_INSERT_AFTER(wktail, wk, wk_list);
@@ -1938,9 +1938,9 @@ softdep_waitidle(struct mount *mp, int flags __unused)
 		vn_lock(devvp, LK_EXCLUSIVE | LK_RETRY);
 		error = VOP_FSYNC(devvp, MNT_WAIT, td);
 		VOP_UNLOCK(devvp, 0);
+		ACQUIRE_LOCK(ump);
 		if (error != 0)
 			break;
-		ACQUIRE_LOCK(ump);
 	}
 	ump->softdep_req = 0;
 	if (i == SU_WAITIDLE_RETRIES && error == 0 && ump->softdep_deps != 0) {
@@ -2212,7 +2212,7 @@ inodedep_lookup(mp, inum, flags, inodedeppp)
 	 * responsible for more than our share of that usage and
 	 * we are not in a rush, request some inodedep cleanup.
 	 */
-	if (softdep_excess_inodes(ump))
+	if (softdep_excess_items(ump, D_INODEDEP))
 		schedule_cleanup(mp);
 	else
 		FREE_LOCK(ump);
@@ -2307,7 +2307,12 @@ newblk_lookup(mp, newblkno, flags, newblkpp)
 		return (1);
 	if ((flags & DEPALLOC) == 0)
 		return (0);
-	FREE_LOCK(ump);
+	if (softdep_excess_items(ump, D_NEWBLK) ||
+	    softdep_excess_items(ump, D_ALLOCDIRECT) ||
+	    softdep_excess_items(ump, D_ALLOCINDIR))
+		schedule_cleanup(mp);
+	else
+		FREE_LOCK(ump);
 	newblk = malloc(sizeof(union allblk), M_NEWBLK,
 	    M_SOFTDEP_FLAGS | M_ZERO);
 	workitem_alloc(&newblk->nb_list, D_NEWBLK, mp);
@@ -2406,7 +2411,11 @@ softdep_initialize()
 {
 
 	TAILQ_INIT(&softdepmounts);
+#ifdef __LP64__
 	max_softdeps = desiredvnodes * 4;
+#else
+	max_softdeps = desiredvnodes * 2;
+#endif
 
 	/* initialise bioops hack */
 	bioops.io_start = softdep_disk_io_initiation;
@@ -6221,6 +6230,13 @@ setup_trunc_indir(freeblks, ip, lbn, lastlbn, blkno)
 		vfs_busy_pages(bp, 0);
 		bp->b_iooffset = dbtob(bp->b_blkno);
 		bstrategy(bp);
+#ifdef RACCT
+		if (racct_enable) {
+			PROC_LOCK(curproc);
+			racct_add_buf(curproc, bp, 0);
+			PROC_UNLOCK(curproc);
+		}
+#endif /* RACCT */
 		curthread->td_ru.ru_inblock++;
 		error = bufwait(bp);
 		if (error) {
@@ -6659,7 +6675,7 @@ softdep_journal_freeblocks(ip, cred, length, flags)
 		}
 	}
 	if ((flags & IO_EXT) != 0)
-		while ((adp = TAILQ_FIRST(&inodedep->id_extupdt)) != 0)
+		while ((adp = TAILQ_FIRST(&inodedep->id_extupdt)) != NULL)
 			cancel_allocdirect(&inodedep->id_extupdt, adp,
 			    freeblks);
 	/*
@@ -6827,6 +6843,13 @@ softdep_setup_freeblocks(ip, length, flags)
 	    ip->i_number, length);
 	KASSERT(length == 0, ("softdep_setup_freeblocks: non-zero length"));
 	fs = ip->i_fs;
+	if ((error = bread(ip->i_devvp,
+	    fsbtodb(fs, ino_to_fsba(fs, ip->i_number)),
+	    (int)fs->fs_bsize, NOCRED, &bp)) != 0) {
+		brelse(bp);
+		softdep_error("softdep_setup_freeblocks", error);
+		return;
+	}
 	freeblks = newfreeblks(mp, ip);
 	extblocks = 0;
 	datablocks = 0;
@@ -6863,12 +6886,6 @@ softdep_setup_freeblocks(ip, length, flags)
 	 * to delete its dependencies below. Once the dependencies are gone
 	 * the buffer can be safely released.
 	 */
-	if ((error = bread(ip->i_devvp,
-	    fsbtodb(fs, ino_to_fsba(fs, ip->i_number)),
-	    (int)fs->fs_bsize, NOCRED, &bp)) != 0) {
-		brelse(bp);
-		softdep_error("softdep_setup_freeblocks", error);
-	}
 	if (ump->um_fstype == UFS1) {
 		dp1 = ((struct ufs1_dinode *)bp->b_data +
 		    ino_to_fsbo(fs, ip->i_number));
@@ -6911,14 +6928,14 @@ softdep_setup_freeblocks(ip, length, flags)
 	if (flags & IO_NORMAL) {
 		merge_inode_lists(&inodedep->id_newinoupdt,
 		    &inodedep->id_inoupdt);
-		while ((adp = TAILQ_FIRST(&inodedep->id_inoupdt)) != 0)
+		while ((adp = TAILQ_FIRST(&inodedep->id_inoupdt)) != NULL)
 			cancel_allocdirect(&inodedep->id_inoupdt, adp,
 			    freeblks);
 	}
 	if (flags & IO_EXT) {
 		merge_inode_lists(&inodedep->id_newextupdt,
 		    &inodedep->id_extupdt);
-		while ((adp = TAILQ_FIRST(&inodedep->id_extupdt)) != 0)
+		while ((adp = TAILQ_FIRST(&inodedep->id_extupdt)) != NULL)
 			cancel_allocdirect(&inodedep->id_extupdt, adp,
 			    freeblks);
 	}
@@ -8033,8 +8050,8 @@ indir_trunc(freework, dbn, lbn)
 	struct fs *fs;
 	struct indirdep *indirdep;
 	struct ufsmount *ump;
-	ufs1_daddr_t *bap1 = 0;
-	ufs2_daddr_t nb, nnb, *bap2 = 0;
+	ufs1_daddr_t *bap1;
+	ufs2_daddr_t nb, nnb, *bap2;
 	ufs_lbn_t lbnadd, nlbn;
 	int i, nblocks, ufs1fmt;
 	int freedblocks;
@@ -8117,10 +8134,12 @@ indir_trunc(freework, dbn, lbn)
 		bap1 = (ufs1_daddr_t *)bp->b_data;
 		nb = bap1[freework->fw_off];
 		ufs1fmt = 1;
+		bap2 = NULL;
 	} else {
 		bap2 = (ufs2_daddr_t *)bp->b_data;
 		nb = bap2[freework->fw_off];
 		ufs1fmt = 0;
+		bap1 = NULL;
 	}
 	level = lbn_level(lbn);
 	needj = MOUNTEDSUJ(UFSTOVFS(ump)) != 0;
@@ -8295,7 +8314,7 @@ setup_newdir(dap, newinum, dinum, newdirbp, mkdirp)
 	struct newblk *newblk;
 	struct pagedep *pagedep;
 	struct inodedep *inodedep;
-	struct newdirblk *newdirblk = 0;
+	struct newdirblk *newdirblk;
 	struct mkdir *mkdir1, *mkdir2;
 	struct worklist *wk;
 	struct jaddref *jaddref;
@@ -8422,7 +8441,7 @@ softdep_setup_directory_add(bp, dp, diroffset, newinum, newdirbp, isnewblk)
 	struct newblk *newblk;
 	struct pagedep *pagedep;
 	struct inodedep *inodedep;
-	struct newdirblk *newdirblk = 0;
+	struct newdirblk *newdirblk;
 	struct mkdir *mkdir1, *mkdir2;
 	struct jaddref *jaddref;
 	struct ufsmount *ump;
@@ -8454,6 +8473,7 @@ softdep_setup_directory_add(bp, dp, diroffset, newinum, newdirbp, isnewblk)
 	dap->da_state = ATTACHED;
 	LIST_INIT(&dap->da_jwork);
 	isindir = bp->b_lblkno >= NDADDR;
+	newdirblk = NULL;
 	if (isnewblk &&
 	    (isindir ? blkoff(fs, diroffset) : fragoff(fs, diroffset)) == 0) {
 		newdirblk = malloc(sizeof(struct newdirblk),
@@ -8544,7 +8564,7 @@ softdep_setup_directory_add(bp, dp, diroffset, newinum, newdirbp, isnewblk)
 		inodedep->id_mkdiradd = dap;
 	} else if (inodedep->id_mkdiradd)
 		merge_diradd(inodedep, dap);
-	if (newdirblk) {
+	if (newdirblk != NULL) {
 		/*
 		 * There is nothing to do if we are already tracking
 		 * this block.
@@ -9106,7 +9126,7 @@ newdirrem(bp, dp, ip, isrmdir, prevdirremp)
 	 * the number of freefile and freeblks structures.
 	 */
 	ACQUIRE_LOCK(ip->i_ump);
-	if (!IS_SNAPSHOT(ip) && softdep_excess_dirrem(ip->i_ump))
+	if (!IS_SNAPSHOT(ip) && softdep_excess_items(ip->i_ump, D_DIRREM))
 		schedule_cleanup(ITOV(dp)->v_mount);
 	else
 		FREE_LOCK(ip->i_ump);
@@ -10521,13 +10541,13 @@ cancel_indirdep(indirdep, bp, freeblks)
 	 * Pass in bp for blocks still have journal writes
 	 * pending so we can cancel them on their own.
 	 */
-	while ((aip = LIST_FIRST(&indirdep->ir_deplisthd)) != 0)
+	while ((aip = LIST_FIRST(&indirdep->ir_deplisthd)) != NULL)
 		cancel_allocindir(aip, bp, freeblks, 0);
-	while ((aip = LIST_FIRST(&indirdep->ir_donehd)) != 0)
+	while ((aip = LIST_FIRST(&indirdep->ir_donehd)) != NULL)
 		cancel_allocindir(aip, NULL, freeblks, 0);
-	while ((aip = LIST_FIRST(&indirdep->ir_writehd)) != 0)
+	while ((aip = LIST_FIRST(&indirdep->ir_writehd)) != NULL)
 		cancel_allocindir(aip, NULL, freeblks, 0);
-	while ((aip = LIST_FIRST(&indirdep->ir_completehd)) != 0)
+	while ((aip = LIST_FIRST(&indirdep->ir_completehd)) != NULL)
 		cancel_allocindir(aip, NULL, freeblks, 0);
 	/*
 	 * If there are pending partial truncations we need to keep the
@@ -11557,7 +11577,7 @@ handle_written_indirdep(indirdep, bp, bpp)
 	 * the indirdep's pointer is not yet written.  Otherwise
 	 * free them here.
 	 */
-	while ((aip = LIST_FIRST(&indirdep->ir_writehd)) != 0) {
+	while ((aip = LIST_FIRST(&indirdep->ir_writehd)) != NULL) {
 		LIST_REMOVE(aip, ai_next);
 		if ((indirdep->ir_state & DEPCOMPLETE) == 0) {
 			LIST_INSERT_HEAD(&indirdep->ir_completehd, aip,
@@ -11572,7 +11592,7 @@ handle_written_indirdep(indirdep, bp, bpp)
 	 * the done list to the write list after updating the pointers.
 	 */
 	if (TAILQ_EMPTY(&indirdep->ir_trunc)) {
-		while ((aip = LIST_FIRST(&indirdep->ir_donehd)) != 0) {
+		while ((aip = LIST_FIRST(&indirdep->ir_donehd)) != NULL) {
 			handle_allocindir_partdone(aip);
 			if (aip == LIST_FIRST(&indirdep->ir_donehd))
 				panic("disk_write_complete: not gone");
@@ -13167,7 +13187,7 @@ softdep_request_cleanup(fs, vp, cred, resource)
 	 *
 	 * Additionally, if we are unpriviledged and allocating space,
 	 * we need to ensure that we clean up enough blocks to get the
-	 * needed number of blocks over the threshhold of the minimum
+	 * needed number of blocks over the threshold of the minimum
 	 * number of blocks required to be kept free by the filesystem
 	 * (fs_minfree).
 	 */
@@ -13244,20 +13264,12 @@ retry:
 }
 
 static bool
-softdep_excess_inodes(struct ufsmount *ump)
+softdep_excess_items(struct ufsmount *ump, int item)
 {
 
-	return (dep_current[D_INODEDEP] > max_softdeps &&
-	    ump->softdep_curdeps[D_INODEDEP] > max_softdeps /
-	    stat_flush_threads);
-}
-
-static bool
-softdep_excess_dirrem(struct ufsmount *ump)
-{
-
-	return (dep_current[D_DIRREM] > max_softdeps / 2 &&
-	    ump->softdep_curdeps[D_DIRREM] > (max_softdeps / 2) /
+	KASSERT(item >= 0 && item < D_LAST, ("item %d", item));
+	return (dep_current[item] > max_softdeps &&
+	    ump->softdep_curdeps[item] > max_softdeps /
 	    stat_flush_threads);
 }
 
@@ -13300,33 +13312,43 @@ softdep_ast_cleanup_proc(void)
 	bool req;
 
 	td = curthread;
-	mp = td->td_su;
-	if (mp == NULL)
-		return;
-	td->td_su = NULL;
-	error = vfs_busy(mp, MBF_NOWAIT);
-	vfs_rel(mp);
-	if (error != 0)
-		return;
-	if (ffs_own_mount(mp) && MOUNTEDSOFTDEP(mp)) {
-		ump = VFSTOUFS(mp);
-		for (;;) {
-			req = false;
-			ACQUIRE_LOCK(ump);
-			if (softdep_excess_inodes(ump)) {
-				req = true;
-				request_cleanup(mp, FLUSH_INODES);
+	while ((mp = td->td_su) != NULL) {
+		td->td_su = NULL;
+		error = vfs_busy(mp, MBF_NOWAIT);
+		vfs_rel(mp);
+		if (error != 0)
+			return;
+		if (ffs_own_mount(mp) && MOUNTEDSOFTDEP(mp)) {
+			ump = VFSTOUFS(mp);
+			for (;;) {
+				req = false;
+				ACQUIRE_LOCK(ump);
+				if (softdep_excess_items(ump, D_INODEDEP)) {
+					req = true;
+					request_cleanup(mp, FLUSH_INODES);
+				}
+				if (softdep_excess_items(ump, D_DIRREM)) {
+					req = true;
+					request_cleanup(mp, FLUSH_BLOCKS);
+				}
+				FREE_LOCK(ump);
+				if (softdep_excess_items(ump, D_NEWBLK) ||
+				    softdep_excess_items(ump, D_ALLOCDIRECT) ||
+				    softdep_excess_items(ump, D_ALLOCINDIR)) {
+					error = vn_start_write(NULL, &mp,
+					    V_WAIT);
+					if (error == 0) {
+						req = true;
+						VFS_SYNC(mp, MNT_WAIT);
+						vn_finished_write(mp);
+					}
+				}
+				if ((td->td_pflags & TDP_KTHREAD) != 0 || !req)
+					break;
 			}
-			if (softdep_excess_dirrem(ump)) {
-				req = true;
-				request_cleanup(mp, FLUSH_BLOCKS);
-			}
-			FREE_LOCK(ump);
-			if ((td->td_pflags & TDP_KTHREAD) != 0 || !req)
-				break;
 		}
+		vfs_unbusy(mp);
 	}
-	vfs_unbusy(mp);
 }
 
 /*
@@ -13572,7 +13594,7 @@ clear_inodedeps(mp)
 	/*
 	 * Find the last inode in the block with dependencies.
 	 */
-	firstino = inodedep->id_ino & ~(INOPB(fs) - 1);
+	firstino = rounddown2(inodedep->id_ino, INOPB(fs));
 	for (lastino = firstino + INOPB(fs) - 1; lastino > firstino; lastino--)
 		if (inodedep_lookup(mp, lastino, 0, &inodedep) != 0)
 			break;
@@ -13866,7 +13888,7 @@ getdirtybuf(bp, lock, waitfor)
 		error = BUF_LOCK(bp,
 		    LK_EXCLUSIVE | LK_SLEEPFAIL | LK_INTERLOCK, lock);
 		/*
-		 * Even if we sucessfully acquire bp here, we have dropped
+		 * Even if we successfully acquire bp here, we have dropped
 		 * lock, which may violates our guarantee.
 		 */
 		if (error == 0)

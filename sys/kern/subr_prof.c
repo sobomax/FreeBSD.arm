@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_prof.c 275121 2014-11-26 14:10:00Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_prof.c 298819 2016-04-29 22:15:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -269,7 +269,7 @@ kmstartup(dummy)
 	 * without much risk of reducing the profiling times below what they
 	 * would be when profiling is not configured.  Abbreviate:
 	 *	ab = minimum time between MC1 and MC3
-	 *	a  = minumum time between MC1 and MC2
+	 *	a  = minimum time between MC1 and MC2
 	 *	b  = minimum time between MC2 and MC3
 	 *	cd = minimum time between ME1 and ME3
 	 *	c  = minimum time between ME1 and ME2

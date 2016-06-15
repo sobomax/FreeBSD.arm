@@ -29,7 +29,7 @@
  * Bsnmpget and bsnmpwalk are simple tools for querying SNMP agents,
  * bsnmpset can be used to set MIB objects in an agent.
  *
- * $FreeBSD: head/usr.sbin/bsnmpd/tools/bsnmptools/bsnmpget.c 229933 2012-01-10 15:29:03Z syrinx $
+ * $FreeBSD: head/usr.sbin/bsnmpd/tools/bsnmptools/bsnmpget.c 299767 2016-05-14 22:29:11Z ngie $
  */
 
 #include <sys/queue.h>
@@ -500,7 +500,7 @@ snmptool_walk(struct snmp_toolinfo *snmptoolctx)
 			outputs += rc;
 			snmp_pdu_free(&resp);
 
-			if (rc < resp.nbindings)
+			if ((u_int)rc < resp.nbindings)
 				break;
 
 			snmpwalk_nextpdu_create(op,

@@ -1,11 +1,12 @@
-# $FreeBSD: head/lib/clang/libllvmobject/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libllvmobject/Makefile 296417 2016-03-05 20:24:31Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmobject
 
 SRCDIR=	lib/Object
 SRCS=	Archive.cpp \
+	ArchiveWriter.cpp \
 	Binary.cpp \
 	COFFObjectFile.cpp \
 	COFFYAML.cpp \
@@ -13,12 +14,19 @@ SRCS=	Archive.cpp \
 	ELFObjectFile.cpp \
 	ELFYAML.cpp \
 	Error.cpp \
+	FunctionIndexObjectFile.cpp \
 	IRObjectFile.cpp \
 	MachOObjectFile.cpp \
 	MachOUniversal.cpp \
-	Object.cpp \
 	ObjectFile.cpp \
 	RecordStreamer.cpp \
 	SymbolicFile.cpp
 
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	Object.cpp \
+	SymbolSize.cpp
+.endif
+
+TGHDRS=	Attributes
+	
 .include "../clang.lib.mk"

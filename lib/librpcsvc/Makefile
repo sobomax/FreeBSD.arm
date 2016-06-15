@@ -1,10 +1,11 @@
 #	from: @(#)Makefile    5.10 (Berkeley) 6/24/90
-# $FreeBSD: head/lib/librpcsvc/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/lib/librpcsvc/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 .PATH: ${.CURDIR}/../../include/rpcsvc
 
+PACKAGE=lib${LIB}
 LIB=    rpcsvc
 
 RPCSRCS= klm_prot.x mount.x nfs_prot.x nlm_prot.x rex.x rnusers.x \

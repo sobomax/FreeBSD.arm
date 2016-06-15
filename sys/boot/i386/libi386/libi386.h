@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/i386/libi386/libi386.h 281138 2015-04-06 06:55:47Z rpaulo $
+ * $FreeBSD: head/sys/boot/i386/libi386/libi386.h 292344 2015-12-16 17:13:09Z bapt $
  */
 
 
@@ -123,5 +123,4 @@ int	bi_load32(char *args, int *howtop, int *bootdevp, vm_offset_t *bip,
 int	bi_load64(char *args, vm_offset_t addr, vm_offset_t *modulep,
 	    vm_offset_t *kernend, int add_smap);
 
-char	*pxe_default_rc(void);
 void	pxe_enable(void *pxeinfo);

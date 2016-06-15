@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ipnat 230099 2012-01-14 02:18:41Z dougb $
+# $FreeBSD: head/etc/rc.d/ipnat 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: ipnat
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="ipnat"
+desc="user interface to the NAT subsystem"
 rcvar="ipnat_enable"
 load_rc_config $name
 start_cmd="ipnat_start"

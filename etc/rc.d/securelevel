@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/securelevel 239568 2012-08-22 18:35:17Z obrien $
+# $FreeBSD: head/etc/rc.d/securelevel 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: securelevel
@@ -9,6 +9,7 @@
 . /etc/rc.subr
 
 name="securelevel"
+desc="Securelevel configuration"
 rcvar='kern_securelevel_enable'
 start_cmd="securelevel_start"
 stop_cmd=":"

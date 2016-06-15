@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2007-2015 Solarflare Communications Inc.
+ * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,15 +29,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_sram.c 283514 2015-05-25 08:34:55Z arybchik $");
+__FBSDID("$FreeBSD: head/sys/dev/sfxge/common/efx_sram.c 300607 2016-05-24 12:16:57Z arybchik $");
 
-#include "efsys.h"
 #include "efx.h"
-#include "efx_types.h"
-#include "efx_regs.h"
 #include "efx_impl.h"
 
-	__checkReturn	int
+	__checkReturn	efx_rc_t
 efx_sram_buf_tbl_set(
 	__in		efx_nic_t *enp,
 	__in		uint32_t id,
@@ -50,25 +47,26 @@ efx_sram_buf_tbl_set(
 	efsys_dma_addr_t addr;
 	efx_oword_t oword;
 	unsigned int count;
-	int rc;
+	efx_rc_t rc;
 
 	EFSYS_ASSERT3U(enp->en_magic, ==, EFX_NIC_MAGIC);
 	EFSYS_ASSERT3U(enp->en_mod_flags, &, EFX_MOD_NIC);
 
-#if EFSYS_OPT_HUNTINGTON
-	if (enp->en_family == EFX_FAMILY_HUNTINGTON) {
+#if EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD
+	if (enp->en_family == EFX_FAMILY_HUNTINGTON ||
+	    enp->en_family == EFX_FAMILY_MEDFORD) {
 		/*
 		 * FIXME: the efx_sram_buf_tbl_*() functionality needs to be
 		 * pulled inside the Falcon/Siena queue create/destroy code,
 		 * and then the original functions can be removed (see bug30834
 		 * comment #1).  But, for now, we just ensure that they are
-		 * no-ops for Huntington, to allow bringing up existing drivers
+		 * no-ops for EF10, to allow bringing up existing drivers
 		 * without modification.
 		 */
 
 		return (0);
 	}
-#endif	/* EFSYS_OPT_HUNTINGTON */
+#endif	/* EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD */
 
 	if (stop >= EFX_BUF_TBL_SIZE) {
 		rc = EFBIG;
@@ -158,7 +156,7 @@ fail2:
 	EFX_BAR_WRITEO(enp, FR_AZ_BUF_TBL_UPD_REG, &oword);
 
 fail1:
-	EFSYS_PROBE1(fail1, int, rc);
+	EFSYS_PROBE1(fail1, efx_rc_t, rc);
 
 	return (rc);
 }
@@ -176,20 +174,21 @@ efx_sram_buf_tbl_clear(
 	EFSYS_ASSERT3U(enp->en_magic, ==, EFX_NIC_MAGIC);
 	EFSYS_ASSERT3U(enp->en_mod_flags, &, EFX_MOD_NIC);
 
-#if EFSYS_OPT_HUNTINGTON
-	if (enp->en_family == EFX_FAMILY_HUNTINGTON) {
+#if EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD
+	if (enp->en_family == EFX_FAMILY_HUNTINGTON ||
+	    enp->en_family == EFX_FAMILY_MEDFORD) {
 		/*
 		 * FIXME: the efx_sram_buf_tbl_*() functionality needs to be
 		 * pulled inside the Falcon/Siena queue create/destroy code,
 		 * and then the original functions can be removed (see bug30834
 		 * comment #1).  But, for now, we just ensure that they are
-		 * no-ops for Huntington, to allow bringing up existing drivers
+		 * no-ops for EF10, to allow bringing up existing drivers
 		 * without modification.
 		 */
 
 		return;
 	}
-#endif	/* EFSYS_OPT_HUNTINGTON */
+#endif	/* EFSYS_OPT_HUNTINGTON || EFSYS_OPT_MEDFORD */
 
 	EFSYS_ASSERT3U(stop, <, EFX_BUF_TBL_SIZE);
 
@@ -306,12 +305,11 @@ efx_sram_pattern_fn_t	__efx_sram_pattern_fns[] = {
 	efx_sram_bit_sweep_set
 };
 
-	__checkReturn	int
+	__checkReturn	efx_rc_t
 efx_sram_test(
 	__in		efx_nic_t *enp,
 	__in		efx_pattern_type_t type)
 {
-	efx_nic_ops_t *enop = enp->en_enop;
 	efx_sram_pattern_fn_t func;
 
 	EFSYS_ASSERT3U(enp->en_magic, ==, EFX_NIC_MAGIC);
@@ -322,11 +320,15 @@ efx_sram_test(
 	EFSYS_ASSERT(!(enp->en_mod_flags & EFX_MOD_TX));
 	EFSYS_ASSERT(!(enp->en_mod_flags & EFX_MOD_EV));
 
+	/* SRAM testing is only available on Siena. */
+	if (enp->en_family != EFX_FAMILY_SIENA)
+		return (0);
+
 	/* Select pattern generator */
 	EFSYS_ASSERT3U(type, <, EFX_PATTERN_NTYPES);
 	func = __efx_sram_pattern_fns[type];
 
-	return (enop->eno_sram_test(enp, func));
+	return (siena_sram_test(enp, func));
 }
 
 #endif	/* EFSYS_OPT_DIAG */

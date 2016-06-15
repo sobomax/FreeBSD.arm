@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_sysvec.c 283382 2015-05-24 14:51:29Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/compat/svr4/svr4_sysvec.c 298519 2016-04-23 20:29:55Z dchagin $");
 
 /* XXX we use functions that might not exist. */
 #include "opt_compat.h"
@@ -167,8 +167,6 @@ struct sysentvec svr4_sysvec = {
 	.sv_size	= SVR4_SYS_MAXSYSCALL,
 	.sv_table	= svr4_sysent,
 	.sv_mask	= 0xff,
-	.sv_sigsize	= SVR4_NSIG-1, /* NB: signal trans table indexed with signno-1 */
-	.sv_sigtbl	= bsd_to_svr4_sig+1,
 	.sv_errsize	= ELAST,  /* ELAST */
 	.sv_errtbl	= bsd_to_svr4_errno,
 	.sv_transtrap	= NULL,
@@ -176,7 +174,6 @@ struct sysentvec svr4_sysvec = {
 	.sv_sendsig	= svr4_sendsig,
 	.sv_sigcode	= svr4_sigcode,
 	.sv_szsigcode	= &svr4_szsigcode,
-	.sv_prepsyscall	= NULL,
 	.sv_name	= "SVR4",
 	.sv_coredump	= elf32_coredump,
 	.sv_imgact_try	= NULL,
@@ -197,6 +194,7 @@ struct sysentvec svr4_sysvec = {
 	.sv_syscallnames = NULL,
 	.sv_schedtail	= NULL,
 	.sv_thread_detach = NULL,
+	.sv_trap	= NULL,
 };
 
 const char      svr4_emul_path[] = "/compat/svr4";
@@ -312,4 +310,4 @@ static moduledata_t svr4_elf_mod = {
 	0
 };
 DECLARE_MODULE_TIED(svr4elf, svr4_elf_mod, SI_SUB_EXEC, SI_ORDER_ANY);
-MODULE_DEPEND(svr4elf, streams, 1, 1, 1);
+MODULE_VERSION(svr4elf, 1);

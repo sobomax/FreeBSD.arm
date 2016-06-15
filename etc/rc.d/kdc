@@ -1,15 +1,17 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/kdc 270782 2014-08-29 07:51:47Z hrs $
+# $FreeBSD: head/etc/rc.d/kdc 298844 2016-04-30 09:50:08Z ngie $
 #
 
 # PROVIDE: kdc
 # REQUIRE: NETWORKING
+# BEFORE: SERVERS
 # KEYWORD: shutdown
 
 . /etc/rc.subr
 
 name=kdc
+desc="Kerberos 5 server"
 rcvar=${name}_enable
 start_precmd=${name}_start_precmd
 

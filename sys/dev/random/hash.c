@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2000-2013 Mark R V Murray
+ * Copyright (c) 2000-2015 Mark R V Murray
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/hash.c 274341 2014-11-10 09:55:35Z des $");
+__FBSDID("$FreeBSD: head/sys/dev/random/hash.c 292782 2015-12-27 17:33:59Z allanjude $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -43,12 +43,12 @@ __FBSDID("$FreeBSD: head/sys/dev/random/hash.c 274341 2014-11-10 09:55:35Z des $
 #endif /* _KERNEL */
 
 #include <crypto/rijndael/rijndael-api-fst.h>
-#include <crypto/sha2/sha2.h>
+#include <crypto/sha2/sha256.h>
 
 #include <dev/random/hash.h>
 
-/* This code presumes that KEYSIZE is twice as large as BLOCKSIZE */
-CTASSERT(KEYSIZE == 2*BLOCKSIZE);
+/* This code presumes that RANDOM_KEYSIZE is twice as large as RANDOM_BLOCKSIZE */
+CTASSERT(RANDOM_KEYSIZE == 2*RANDOM_BLOCKSIZE);
 
 /* Initialise the hash */
 void
@@ -67,7 +67,7 @@ randomdev_hash_iterate(struct randomdev_hash *context, const void *data, size_t 
 }
 
 /* Conclude by returning the hash in the supplied <*buf> which must be
- * KEYSIZE bytes long.
+ * RANDOM_KEYSIZE bytes long.
  */
 void
 randomdev_hash_finish(struct randomdev_hash *context, void *buf)
@@ -77,20 +77,20 @@ randomdev_hash_finish(struct randomdev_hash *context, void *buf)
 }
 
 /* Initialise the encryption routine by setting up the key schedule
- * from the supplied <*data> which must be KEYSIZE bytes of binary
- * data. Use CBC mode for better avalanche.
+ * from the supplied <*data> which must be RANDOM_KEYSIZE bytes of binary
+ * data.
  */
 void
 randomdev_encrypt_init(struct randomdev_key *context, const void *data)
 {
 
-	rijndael_cipherInit(&context->cipher, MODE_CBC, NULL);
-	rijndael_makeKey(&context->key, DIR_ENCRYPT, KEYSIZE*8, data);
+	rijndael_cipherInit(&context->cipher, MODE_ECB, NULL);
+	rijndael_makeKey(&context->key, DIR_ENCRYPT, RANDOM_KEYSIZE*8, data);
 }
 
 /* Encrypt the supplied data using the key schedule preset in the context.
  * <length> bytes are encrypted from <*d_in> to <*d_out>. <length> must be
- * a multiple of BLOCKSIZE.
+ * a multiple of RANDOM_BLOCKSIZE.
  */
 void
 randomdev_encrypt(struct randomdev_key *context, const void *d_in, void *d_out, u_int length)

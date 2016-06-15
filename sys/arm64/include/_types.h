@@ -29,7 +29,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: head/sys/arm64/include/_types.h 280381 2015-03-23 16:04:04Z emaste $
+ * $FreeBSD: head/sys/arm64/include/_types.h 285274 2015-07-08 16:18:28Z andrew $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -94,7 +94,7 @@ typedef	__uint64_t	__vm_pindex_t;
 typedef	__uint64_t	__vm_size_t;
 typedef	unsigned int	___wchar_t;
 
-#define	__WCHAR_MIN	__UINT_MIN	/* min value for a wchar_t */
+#define	__WCHAR_MIN	0		/* min value for a wchar_t */
 #define	__WCHAR_MAX	__UINT_MAX	/* max value for a wchar_t */
 
 /*

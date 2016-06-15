@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_adcvar.h 266960 2014-06-02 02:00:17Z loos $
+ * $FreeBSD: head/sys/arm/ti/ti_adcvar.h 298802 2016-04-29 20:31:49Z gonzo $
  */
 
 #ifndef _TI_ADCVAR_H_
@@ -42,6 +42,19 @@ struct ti_adc_softc {
 	struct resource		*sc_mem_res;
 	struct resource		*sc_irq_res;
 	void			*sc_intrhand;
+	int			sc_tsc_wires;
+	int			sc_tsc_wire_config[TI_ADC_NPINS];
+	int			sc_coord_readouts;
+	int			sc_x_plate_resistance;
+	int			sc_charge_delay;
+	int			sc_adc_nchannels;
+	int			sc_adc_channels[TI_ADC_NPINS];
+	int			sc_xp_bit, sc_xp_inp;
+	int			sc_xn_bit, sc_xn_inp;
+	int			sc_yp_bit, sc_yp_inp;
+	int			sc_yn_bit, sc_yn_inp;
+	uint32_t		sc_tsc_enabled;
+	int			sc_pen_down;
 };
 
 struct ti_adc_input {

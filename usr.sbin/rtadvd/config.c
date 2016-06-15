@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/usr.sbin/rtadvd/config.c 281143 2015-04-06 09:42:23Z glebius $	*/
+/*	$FreeBSD: head/usr.sbin/rtadvd/config.c 299867 2016-05-15 22:06:21Z truckman $	*/
 /*	$KAME: config.c,v 1.84 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*
@@ -234,7 +234,6 @@ rm_ifinfo(struct ifinfo *ifi)
 		TAILQ_REMOVE(&ifilist, ifi, ifi_next);
 		syslog(LOG_DEBUG, "<%s>: ifinfo (idx=%d) removed.",
 		    __func__, ifi->ifi_ifindex);
-		free(ifi);
 	} else {
 		/* recreate an empty entry */
 		update_persist_ifinfo(&ifilist, ifi->ifi_ifname);
@@ -278,6 +277,8 @@ rm_ifinfo(struct ifinfo *ifi)
 	}
 
 	syslog(LOG_DEBUG, "<%s> leave (%s).", __func__, ifi->ifi_ifname);
+	if (!ifi->ifi_persist)
+		free(ifi);
 	return (0);
 }
 
@@ -639,7 +640,7 @@ getconfig_free_pfx:
 			exit(1);
 		}
 		memset(&ndi, 0, sizeof(ndi));
-		strncpy(ndi.ifname, ifi->ifi_ifname, sizeof(ndi.ifname));
+		strlcpy(ndi.ifname, ifi->ifi_ifname, sizeof(ndi.ifname));
 		if (ioctl(s, SIOCGIFINFO_IN6, (caddr_t)&ndi) < 0)
 			syslog(LOG_INFO, "<%s> ioctl:SIOCGIFINFO_IN6 at %s: %s",
 			    __func__, ifi->ifi_ifname, strerror(errno));
@@ -808,7 +809,7 @@ getconfig_free_rti:
 		makeentry(entbuf, sizeof(entbuf), i, "rdnss");
 		addr = (char *)agetstr(entbuf, &bp);
 		if (addr == NULL)
-			break;
+			continue;
 		ELM_MALLOC(rdn, exit(1));
 
 		TAILQ_INIT(&rdn->rd_list);
@@ -859,7 +860,7 @@ getconfig_free_rdn:
 		makeentry(entbuf, sizeof(entbuf), i, "dnssl");
 		addr = (char *)agetstr(entbuf, &bp);
 		if (addr == NULL)
-			break;
+			continue;
 
 		ELM_MALLOC(dns, exit(1));
 
@@ -1528,6 +1529,7 @@ make_packet(struct rainfo *rai)
 		/* Padding to next 8 octets boundary */
 		len = buf - (char *)ndopt_dnssl;
 		len += (len % 8) ? 8 - len % 8 : 0;
+		buf = (char *)ndopt_dnssl + len;
 
 		/* Length field must be in 8 octets */
 		ndopt_dnssl->nd_opt_dnssl_len = len / 8;

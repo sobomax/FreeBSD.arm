@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/part/g_part_bsd.c 267357 2014-06-11 10:19:11Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/part/g_part_bsd.c 298354 2016-04-20 16:19:44Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -140,8 +140,7 @@ bsd_parse_type(const char *type, uint8_t *fstype)
 		*fstype = (u_int)lt;
 		return (0);
 	}
-	for (i = 0;
-	    i < sizeof(bsd_alias_match) / sizeof(bsd_alias_match[0]); i++) {
+	for (i = 0; i < nitems(bsd_alias_match); i++) {
 		alias = g_part_alias_name(bsd_alias_match[i].alias);
 		if (strcasecmp(type, alias) == 0) {
 			*fstype = bsd_alias_match[i].type;

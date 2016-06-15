@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact_binmisc.h 264282 2014-04-08 22:12:01Z sbruno $
+ * $FreeBSD: head/sys/sys/imgact_binmisc.h 298986 2016-05-03 16:37:09Z pfg $
  */
 
 #ifndef	_IMGACT_BINMISC_H_
@@ -41,7 +41,7 @@
 #define	IBE_NAME_MAX	32	/* Max size for entry name. */
 #define	IBE_MAGIC_MAX	256	/* Max size for header magic and mask. */
 #define	IBE_ARG_LEN_MAX	256	/* Max space for optional interpreter command-
-				   line argruments seperated by white space */
+				   line arguments separated by white space */
 #define	IBE_INTERP_LEN_MAX	(MAXPATHLEN + IBE_ARG_LEN_MAX)
 #define	IBE_MAX_ENTRIES	64	/* Max number of interpreter entries. */
 

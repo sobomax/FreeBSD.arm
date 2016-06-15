@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_clocksource.c 278209 2015-02-04 14:49:47Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_clocksource.c 299746 2016-05-14 18:22:52Z jhb $");
 
 /*
  * Common routines to manage event timers hardware.
@@ -116,7 +116,7 @@ struct pcpu_state {
 	sbintime_t	now;		/* Last tick time. */
 	sbintime_t	nextevent;	/* Next scheduled event on this CPU. */
 	sbintime_t	nexttick;	/* Next timer tick time. */
-	sbintime_t	nexthard;	/* Next hardlock() event. */
+	sbintime_t	nexthard;	/* Next hardclock() event. */
 	sbintime_t	nextstat;	/* Next statclock() event. */
 	sbintime_t	nextprof;	/* Next profclock() event. */
 	sbintime_t	nextcall;	/* Next callout event. */
@@ -322,9 +322,16 @@ timercb(struct eventtimer *et, void *arg)
 	    curcpu, (int)(now >> 32), (u_int)(now & 0xffffffff));
 
 #ifdef SMP
+#ifdef EARLY_AP_STARTUP
+	MPASS(mp_ncpus == 1 || smp_started);
+#endif
 	/* Prepare broadcasting to other CPUs for non-per-CPU timers. */
 	bcast = 0;
+#ifdef EARLY_AP_STARTUP
+	if ((et->et_flags & ET_FLAGS_PERCPU) == 0) {
+#else
 	if ((et->et_flags & ET_FLAGS_PERCPU) == 0 && smp_started) {
+#endif
 		CPU_FOREACH(cpu) {
 			state = DPCPU_ID_PTR(cpu, timerstate);
 			ET_HW_LOCK(state);
@@ -485,12 +492,17 @@ configtimer(int start)
 			nexttick = next;
 		else
 			nexttick = -1;
+#ifdef EARLY_AP_STARTUP
+		MPASS(mp_ncpus == 1 || smp_started);
+#endif
 		CPU_FOREACH(cpu) {
 			state = DPCPU_ID_PTR(cpu, timerstate);
 			state->now = now;
+#ifndef EARLY_AP_STARTUP
 			if (!smp_started && cpu != CPU_FIRST())
 				state->nextevent = SBT_MAX;
 			else
+#endif
 				state->nextevent = next;
 			if (periodic)
 				state->nexttick = next;
@@ -513,8 +525,13 @@ configtimer(int start)
 	}
 	ET_HW_UNLOCK(DPCPU_PTR(timerstate));
 #ifdef SMP
+#ifdef EARLY_AP_STARTUP
+	/* If timer is global we are done. */
+	if ((timer->et_flags & ET_FLAGS_PERCPU) == 0) {
+#else
 	/* If timer is global or there is no other CPUs yet - we are done. */
 	if ((timer->et_flags & ET_FLAGS_PERCPU) == 0 || !smp_started) {
+#endif
 		critical_exit();
 		return;
 	}

@@ -37,27 +37,21 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/dwc/if_dwc.c 283949 2015-06-03 15:18:32Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/dwc/if_dwc.c 301841 2016-06-12 22:55:50Z jmcneill $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
+#include <sys/gpio.h>
 #include <sys/kernel.h>
-#include <sys/module.h>
-#include <sys/malloc.h>
-#include <sys/rman.h>
-#include <sys/endian.h>
 #include <sys/lock.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
+#include <sys/module.h>
 #include <sys/mutex.h>
+#include <sys/rman.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>
-#include <sys/sysctl.h>
-
-#include <dev/fdt/fdt_common.h>
-#include <dev/ofw/openfirm.h>
-#include <dev/ofw/ofw_bus.h>
-#include <dev/ofw/ofw_bus_subr.h>
 
 #include <net/bpf.h>
 #include <net/if.h>
@@ -66,13 +60,23 @@ __FBSDID("$FreeBSD: head/sys/dev/dwc/if_dwc.c 283949 2015-06-03 15:18:32Z loos $
 #include <net/if_media.h>
 #include <net/if_types.h>
 #include <net/if_var.h>
-#include <net/if_vlan_var.h>
 
 #include <machine/bus.h>
-#include <machine/fdt.h>
 
+#include <dev/dwc/if_dwc.h>
+#include <dev/dwc/if_dwcvar.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
+#include <dev/ofw/ofw_bus.h>
+#include <dev/ofw/ofw_bus_subr.h>
+
+#ifdef EXT_RESOURCES
+#include <dev/extres/clk/clk.h>
+#include <dev/extres/hwreset/hwreset.h>
+#endif
+
+#include "if_dwc_if.h"
+#include "gpio_if.h"
 #include "miibus_if.h"
 
 #define	READ4(_sc, _reg) \
@@ -83,100 +87,52 @@ __FBSDID("$FreeBSD: head/sys/dev/dwc/if_dwc.c 283949 2015-06-03 15:18:32Z loos $
 #define	MAC_RESET_TIMEOUT	100
 #define	WATCHDOG_TIMEOUT_SECS	5
 #define	STATS_HARVEST_INTERVAL	2
-#define	MII_CLK_VAL		2
-
-#include <dev/dwc/if_dwc.h>
 
 #define	DWC_LOCK(sc)			mtx_lock(&(sc)->mtx)
 #define	DWC_UNLOCK(sc)			mtx_unlock(&(sc)->mtx)
-#define	DWC_ASSERT_LOCKED(sc)		mtx_assert(&(sc)->mtx, MA_OWNED);
-#define	DWC_ASSERT_UNLOCKED(sc)		mtx_assert(&(sc)->mtx, MA_NOTOWNED);
+#define	DWC_ASSERT_LOCKED(sc)		mtx_assert(&(sc)->mtx, MA_OWNED)
+#define	DWC_ASSERT_UNLOCKED(sc)		mtx_assert(&(sc)->mtx, MA_NOTOWNED)
 
-#define	DDESC_TDES0_OWN			(1 << 31)
-#define	DDESC_TDES0_TXINT		(1 << 30)
-#define	DDESC_TDES0_TXLAST		(1 << 29)
-#define	DDESC_TDES0_TXFIRST		(1 << 28)
-#define	DDESC_TDES0_TXCRCDIS		(1 << 27)
-#define	DDESC_TDES0_TXRINGEND		(1 << 21)
-#define	DDESC_TDES0_TXCHAIN		(1 << 20)
+#define	DDESC_TDES0_OWN			(1U << 31)
+#define	DDESC_TDES0_TXINT		(1U << 30)
+#define	DDESC_TDES0_TXLAST		(1U << 29)
+#define	DDESC_TDES0_TXFIRST		(1U << 28)
+#define	DDESC_TDES0_TXCRCDIS		(1U << 27)
+#define	DDESC_TDES0_TXRINGEND		(1U << 21)
+#define	DDESC_TDES0_TXCHAIN		(1U << 20)
 
-#define	DDESC_RDES0_OWN			(1 << 31)
+#define	DDESC_RDES0_OWN			(1U << 31)
 #define	DDESC_RDES0_FL_MASK		0x3fff
 #define	DDESC_RDES0_FL_SHIFT		16	/* Frame Length */
-#define	DDESC_RDES1_CHAINED		(1 << 14)
+#define	DDESC_RDES1_CHAINED		(1U << 14)
 
-struct dwc_bufmap {
-	bus_dmamap_t	map;
-	struct mbuf	*mbuf;
-};
+/* Alt descriptor bits. */
+#define	DDESC_CNTL_TXINT		(1U << 31)
+#define	DDESC_CNTL_TXLAST		(1U << 30)
+#define	DDESC_CNTL_TXFIRST		(1U << 29)
+#define	DDESC_CNTL_TXCRCDIS		(1U << 26)
+#define	DDESC_CNTL_TXRINGEND		(1U << 25)
+#define	DDESC_CNTL_TXCHAIN		(1U << 24)
+
+#define	DDESC_CNTL_CHAINED		(1U << 24)
 
 /*
  * A hardware buffer descriptor.  Rx and Tx buffers have the same descriptor
- * layout, but the bits in the flags field have different meanings.
+ * layout, but the bits in the fields have different meanings.
  */
 struct dwc_hwdesc
 {
-	uint32_t tdes0;
-	uint32_t tdes1;
+	uint32_t tdes0;		/* status for alt layout */
+	uint32_t tdes1;		/* cntl for alt layout */
 	uint32_t addr;		/* pointer to buffer data */
 	uint32_t addr_next;	/* link to next descriptor */
 };
-
-/*
- * Driver data and defines.
- */
-#define	RX_DESC_COUNT	1024
-#define	RX_DESC_SIZE	(sizeof(struct dwc_hwdesc) * RX_DESC_COUNT)
-#define	TX_DESC_COUNT	1024
-#define	TX_DESC_SIZE	(sizeof(struct dwc_hwdesc) * TX_DESC_COUNT)
 
 /*
  * The hardware imposes alignment restrictions on various objects involved in
  * DMA transfers.  These values are expressed in bytes (not bits).
  */
 #define	DWC_DESC_RING_ALIGN		2048
-
-struct dwc_softc {
-	struct resource		*res[2];
-	bus_space_tag_t		bst;
-	bus_space_handle_t	bsh;
-	device_t		dev;
-	int			mii_clk;
-	device_t		miibus;
-	struct mii_data *	mii_softc;
-	struct ifnet		*ifp;
-	int			if_flags;
-	struct mtx		mtx;
-	void *			intr_cookie;
-	struct callout		dwc_callout;
-	uint8_t			phy_conn_type;
-	uint8_t			mactype;
-	boolean_t		link_is_up;
-	boolean_t		is_attached;
-	boolean_t		is_detaching;
-	int			tx_watchdog_count;
-	int			stats_harvest_count;
-
-	/* RX */
-	bus_dma_tag_t		rxdesc_tag;
-	bus_dmamap_t		rxdesc_map;
-	struct dwc_hwdesc	*rxdesc_ring;
-	bus_addr_t		rxdesc_ring_paddr;
-	bus_dma_tag_t		rxbuf_tag;
-	struct dwc_bufmap	rxbuf_map[RX_DESC_COUNT];
-	uint32_t		rx_idx;
-
-	/* TX */
-	bus_dma_tag_t		txdesc_tag;
-	bus_dmamap_t		txdesc_map;
-	struct dwc_hwdesc	*txdesc_ring;
-	bus_addr_t		txdesc_ring_paddr;
-	bus_dma_tag_t		txbuf_tag;
-	struct dwc_bufmap	txbuf_map[RX_DESC_COUNT];
-	uint32_t		tx_idx_head;
-	uint32_t		tx_idx_tail;
-	int			txcount;
-};
 
 static struct resource_spec dwc_spec[] = {
 	{ SYS_RES_MEMORY,	0,	RF_ACTIVE },
@@ -226,14 +182,23 @@ dwc_setup_txdesc(struct dwc_softc *sc, int idx, bus_addr_t paddr,
 		flags = 0;
 		--sc->txcount;
 	} else {
-		flags = DDESC_TDES0_TXCHAIN | DDESC_TDES0_TXFIRST
-		    | DDESC_TDES0_TXLAST | DDESC_TDES0_TXINT;
+		if (sc->mactype == DWC_GMAC_ALT_DESC)
+			flags = DDESC_CNTL_TXCHAIN | DDESC_CNTL_TXFIRST
+			    | DDESC_CNTL_TXLAST | DDESC_CNTL_TXINT;
+		else
+			flags = DDESC_TDES0_TXCHAIN | DDESC_TDES0_TXFIRST
+			    | DDESC_TDES0_TXLAST | DDESC_TDES0_TXINT;
 		++sc->txcount;
 	}
 
 	sc->txdesc_ring[idx].addr = (uint32_t)(paddr);
-	sc->txdesc_ring[idx].tdes0 = flags;
-	sc->txdesc_ring[idx].tdes1 = len;
+	if (sc->mactype == DWC_GMAC_ALT_DESC) {
+		sc->txdesc_ring[idx].tdes0 = 0;
+		sc->txdesc_ring[idx].tdes1 = flags | len;
+	} else {
+		sc->txdesc_ring[idx].tdes0 = flags;
+		sc->txdesc_ring[idx].tdes1 = len;
+	}
 
 	if (paddr && len) {
 		wmb();
@@ -331,7 +296,7 @@ static void
 dwc_stop_locked(struct dwc_softc *sc)
 {
 	struct ifnet *ifp;
-	int reg;
+	uint32_t reg;
 
 	DWC_ASSERT_LOCKED(sc);
 
@@ -365,7 +330,7 @@ dwc_stop_locked(struct dwc_softc *sc)
 
 static void dwc_clear_stats(struct dwc_softc *sc)
 {
-	int reg;
+	uint32_t reg;
 
 	reg = READ4(sc, MMC_CONTROL);
 	reg |= (MMC_CONTROL_CNTRST);
@@ -448,7 +413,7 @@ static void
 dwc_init_locked(struct dwc_softc *sc)
 {
 	struct ifnet *ifp = sc->ifp;
-	int reg;
+	uint32_t reg;
 
 	DWC_ASSERT_LOCKED(sc);
 
@@ -506,7 +471,10 @@ dwc_setup_rxdesc(struct dwc_softc *sc, int idx, bus_addr_t paddr)
 	nidx = next_rxidx(sc, idx);
 	sc->rxdesc_ring[idx].addr_next = sc->rxdesc_ring_paddr +	\
 	    (nidx * sizeof(struct dwc_hwdesc));
-	sc->rxdesc_ring[idx].tdes1 = DDESC_RDES1_CHAINED | MCLBYTES;
+	if (sc->mactype == DWC_GMAC_ALT_DESC)
+		sc->rxdesc_ring[idx].tdes1 = DDESC_CNTL_CHAINED | RX_MAX_PACKET;
+	else
+		sc->rxdesc_ring[idx].tdes1 = DDESC_RDES1_CHAINED | MCLBYTES;
 
 	wmb();
 	sc->rxdesc_ring[idx].tdes0 = DDESC_RDES0_OWN;
@@ -618,27 +586,26 @@ dwc_setup_rxfilter(struct dwc_softc *sc)
 {
 	struct ifmultiaddr *ifma;
 	struct ifnet *ifp;
-	uint8_t *eaddr;
-	uint32_t crc;
-	uint8_t val;
-	int hashbit;
-	int hashreg;
-	int ffval;
-	int reg;
-	int lo;
-	int hi;
+	uint8_t *eaddr, val;
+	uint32_t crc, ffval, hashbit, hashreg, hi, lo, hash[8];
+	int nhash, i;
 
 	DWC_ASSERT_LOCKED(sc);
 
 	ifp = sc->ifp;
+	nhash = sc->mactype == DWC_GMAC_ALT_DESC ? 2 : 8;
 
 	/*
 	 * Set the multicast (group) filter hash.
 	 */
-	if ((ifp->if_flags & IFF_ALLMULTI))
+	if ((ifp->if_flags & IFF_ALLMULTI) != 0) {
 		ffval = (FRAME_FILTER_PM);
-	else {
+		for (i = 0; i < nhash; i++)
+			hash[i] = ~0;
+	} else {
 		ffval = (FRAME_FILTER_HMC);
+		for (i = 0; i < nhash; i++)
+			hash[i] = 0;
 		if_maddr_rlock(ifp);
 		TAILQ_FOREACH(ifma, &sc->ifp->if_multiaddrs, ifma_link) {
 			if (ifma->ifma_addr->sa_family != AF_LINK)
@@ -648,12 +615,11 @@ dwc_setup_rxfilter(struct dwc_softc *sc)
 
 			/* Take lower 8 bits and reverse it */
 			val = bitreverse(~crc & 0xff);
+			if (sc->mactype == DWC_GMAC_ALT_DESC)
+				val >>= nhash; /* Only need lower 6 bits */
 			hashreg = (val >> 5);
 			hashbit = (val & 31);
-
-			reg = READ4(sc, HASH_TABLE_REG(hashreg));
-			reg |= (1 << hashbit);
-			WRITE4(sc, HASH_TABLE_REG(hashreg), reg);
+			hash[hashreg] |= (1 << hashbit);
 		}
 		if_maddr_runlock(ifp);
 	}
@@ -674,6 +640,13 @@ dwc_setup_rxfilter(struct dwc_softc *sc)
 	WRITE4(sc, MAC_ADDRESS_LOW(0), lo);
 	WRITE4(sc, MAC_ADDRESS_HIGH(0), hi);
 	WRITE4(sc, MAC_FRAME_FILTER, ffval);
+	if (sc->mactype == DWC_GMAC_ALT_DESC) {
+		WRITE4(sc, GMAC_MAC_HTLOW, hash[0]);
+		WRITE4(sc, GMAC_MAC_HTHIGH, hash[1]);
+	} else {
+		for (i = 0; i < nhash; i++)
+			WRITE4(sc, HASH_TABLE_REG(i), hash[i]);
+	}
 }
 
 static int
@@ -759,6 +732,7 @@ dwc_txfinish_locked(struct dwc_softc *sc)
 		dwc_setup_txdesc(sc, sc->tx_idx_tail, 0, 0);
 		sc->tx_idx_tail = next_txidx(sc, sc->tx_idx_tail);
 		ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
+		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
 	}
 
 	/* If there are no buffers outstanding, muzzle the watchdog. */
@@ -773,10 +747,8 @@ dwc_rxfinish_locked(struct dwc_softc *sc)
 	struct ifnet *ifp;
 	struct mbuf *m0;
 	struct mbuf *m;
-	int error;
-	int rdes0;
-	int idx;
-	int len;
+	int error, idx, len;
+	uint32_t rdes0;
 
 	ifp = sc->ifp;
 
@@ -798,6 +770,9 @@ dwc_rxfinish_locked(struct dwc_softc *sc)
 			m->m_pkthdr.len = len;
 			m->m_len = len;
 			if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
+
+			/* Remove trailing FCS */
+			m_adj(m, -ETHER_CRC_LEN);
 
 			DWC_UNLOCK(sc);
 			(*ifp->if_input)(ifp, m);
@@ -831,10 +806,8 @@ dwc_intr(void *arg)
 	DWC_LOCK(sc);
 
 	reg = READ4(sc, INTERRUPT_STATUS);
-	if (reg) {
-		mii_mediachg(sc->mii_softc);
+	if (reg)
 		READ4(sc, SGMII_RGMII_SMII_CTRL_STATUS);
-	}
 
 	reg = READ4(sc, DMA_STATUS);
 	if (reg & DMA_STATUS_NIS) {
@@ -908,10 +881,8 @@ setup_dma(struct dwc_softc *sc)
 	}
 
 	for (idx = 0; idx < TX_DESC_COUNT; idx++) {
-		sc->txdesc_ring[idx].tdes0 = DDESC_TDES0_TXCHAIN;
-		sc->txdesc_ring[idx].tdes1 = 0;
 		nidx = next_txidx(sc, idx);
-		sc->txdesc_ring[idx].addr_next = sc->txdesc_ring_paddr + \
+		sc->txdesc_ring[idx].addr_next = sc->txdesc_ring_paddr +
 		    (nidx * sizeof(struct dwc_hwdesc));
 	}
 
@@ -1028,9 +999,7 @@ out:
 static int
 dwc_get_hwaddr(struct dwc_softc *sc, uint8_t *hwaddr)
 {
-	int rnd;
-	int lo;
-	int hi;
+	uint32_t hi, lo, rnd;
 
 	/*
 	 * Try to recover a MAC address from the running hardware. If there's
@@ -1063,6 +1032,92 @@ dwc_get_hwaddr(struct dwc_softc *sc, uint8_t *hwaddr)
 	return (0);
 }
 
+#define	GPIO_ACTIVE_LOW 1
+
+static int
+dwc_reset(device_t dev)
+{
+	pcell_t gpio_prop[4];
+	pcell_t delay_prop[3];
+	phandle_t node, gpio_node;
+	device_t gpio;
+	uint32_t pin, flags;
+	uint32_t pin_value;
+
+	node = ofw_bus_get_node(dev);
+	if (OF_getencprop(node, "snps,reset-gpio",
+	    gpio_prop, sizeof(gpio_prop)) <= 0)
+		return (0);
+
+	if (OF_getencprop(node, "snps,reset-delays-us",
+	    delay_prop, sizeof(delay_prop)) <= 0) {
+		device_printf(dev,
+		    "Wrong property for snps,reset-delays-us");
+		return (ENXIO);
+	}
+
+	gpio_node = OF_node_from_xref(gpio_prop[0]);
+	if ((gpio = OF_device_from_xref(gpio_prop[0])) == NULL) {
+		device_printf(dev,
+		    "Can't find gpio controller for phy reset\n");
+		return (ENXIO);
+	}
+
+	if (GPIO_MAP_GPIOS(gpio, node, gpio_node,
+	    nitems(gpio_prop) - 1,
+	    gpio_prop + 1, &pin, &flags) != 0) {
+		device_printf(dev, "Can't map gpio for phy reset\n");
+		return (ENXIO);
+	}
+
+	pin_value = GPIO_PIN_LOW;
+	if (OF_hasprop(node, "snps,reset-active-low"))
+		pin_value = GPIO_PIN_HIGH;
+
+	if (flags & GPIO_ACTIVE_LOW)
+		pin_value = !pin_value;
+
+	GPIO_PIN_SETFLAGS(gpio, pin, GPIO_PIN_OUTPUT);
+	GPIO_PIN_SET(gpio, pin, pin_value);
+	DELAY(delay_prop[0]);
+	GPIO_PIN_SET(gpio, pin, !pin_value);
+	DELAY(delay_prop[1]);
+	GPIO_PIN_SET(gpio, pin, pin_value);
+	DELAY(delay_prop[2]);
+
+	return (0);
+}
+
+#ifdef EXT_RESOURCES
+static int
+dwc_clock_init(device_t dev)
+{
+	hwreset_t rst;
+	clk_t clk;
+	int error;
+
+	/* Enable clock */
+	if (clk_get_by_ofw_name(dev, "stmmaceth", &clk) == 0) {
+		error = clk_enable(clk);
+		if (error != 0) {
+			device_printf(dev, "could not enable main clock\n");
+			return (error);
+		}
+	}
+
+	/* De-assert reset */
+	if (hwreset_get_by_ofw_name(dev, "stmmaceth", &rst) == 0) {
+		error = hwreset_deassert(rst);
+		if (error != 0) {
+			device_printf(dev, "could not de-assert reset\n");
+			return (error);
+		}
+	}
+
+	return (0);
+}
+#endif
+
 static int
 dwc_probe(device_t dev)
 {
@@ -1083,16 +1138,23 @@ dwc_attach(device_t dev)
 	uint8_t macaddr[ETHER_ADDR_LEN];
 	struct dwc_softc *sc;
 	struct ifnet *ifp;
-	int error;
-	int reg;
-	int i;
+	int error, i;
+	uint32_t reg;
 
 	sc = device_get_softc(dev);
 	sc->dev = dev;
-	sc->mii_clk = MII_CLK_VAL;
 	sc->rx_idx = 0;
-
 	sc->txcount = TX_DESC_COUNT;
+	sc->mii_clk = IF_DWC_MII_CLK(dev);
+	sc->mactype = IF_DWC_MAC_TYPE(dev);
+
+	if (IF_DWC_INIT(dev) != 0)
+		return (ENXIO);
+
+#ifdef EXT_RESOURCES
+	if (dwc_clock_init(dev) != 0)
+		return (ENXIO);
+#endif
 
 	if (bus_alloc_resources(dev, dwc_spec, sc->res)) {
 		device_printf(dev, "could not allocate resources\n");
@@ -1106,6 +1168,12 @@ dwc_attach(device_t dev)
 	/* Read MAC before reset */
 	if (dwc_get_hwaddr(sc, macaddr)) {
 		device_printf(sc->dev, "can't get mac\n");
+		return (ENXIO);
+	}
+
+	/* Reset the PHY if needed */
+	if (dwc_reset(dev) != 0) {
+		device_printf(dev, "Can't reset the PHY\n");
 		return (ENXIO);
 	}
 
@@ -1124,8 +1192,11 @@ dwc_attach(device_t dev)
 		return (ENXIO);
 	}
 
-	reg = READ4(sc, BUS_MODE);
-	reg |= (BUS_MODE_EIGHTXPBL);
+	if (sc->mactype == DWC_GMAC_ALT_DESC) {
+		reg = BUS_MODE_FIXEDBURST;
+		reg |= (BUS_MODE_PRIORXTX_41 << BUS_MODE_PRIORXTX_SHIFT);
+	} else
+		reg = (BUS_MODE_EIGHTXPBL);
 	reg |= (BUS_MODE_PBL_BEATS_8 << BUS_MODE_PBL_SHIFT);
 	WRITE4(sc, BUS_MODE, reg);
 
@@ -1170,7 +1241,6 @@ dwc_attach(device_t dev)
 	IFQ_SET_MAXLEN(&ifp->if_snd, TX_DESC_COUNT - 1);
 	ifp->if_snd.ifq_drv_maxlen = TX_DESC_COUNT - 1;
 	IFQ_SET_READY(&ifp->if_snd);
-	ifp->if_hdrlen = sizeof(struct ether_vlan_header);
 
 	/* Attach the mii driver. */
 	error = mii_attach(dev, &sc->miibus, ifp, dwc_media_change,
@@ -1250,7 +1320,7 @@ dwc_miibus_statchg(device_t dev)
 {
 	struct dwc_softc *sc;
 	struct mii_data *mii;
-	int reg;
+	uint32_t reg;
 
 	/*
 	 * Called by the MII bus driver when the PHY establishes
@@ -1309,7 +1379,7 @@ static device_method_t dwc_methods[] = {
 	{ 0, 0 }
 };
 
-static driver_t dwc_driver = {
+driver_t dwc_driver = {
 	"dwc",
 	dwc_methods,
 	sizeof(struct dwc_softc),

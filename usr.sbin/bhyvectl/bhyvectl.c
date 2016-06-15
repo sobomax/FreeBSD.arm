@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyvectl/bhyvectl.c 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/usr.sbin/bhyvectl/bhyvectl.c 285145 2015-07-04 18:36:02Z araujo $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyvectl/bhyvectl.c 284539 2015-06-18 06:00:17Z neel $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyvectl/bhyvectl.c 285145 2015-07-04 18:36:02Z araujo $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -44,7 +44,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyvectl/bhyvectl.c 284539 2015-06-18 06:00:17
 #include <libgen.h>
 #include <libutil.h>
 #include <fcntl.h>
-#include <string.h>
 #include <getopt.h>
 #include <time.h>
 #include <assert.h>

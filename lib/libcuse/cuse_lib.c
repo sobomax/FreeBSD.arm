@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libcuse/cuse_lib.c 273059 2014-10-13 19:05:18Z hselasky $ */
+/* $FreeBSD: head/lib/libcuse/cuse_lib.c 298602 2016-04-26 01:20:16Z pfg $ */
 /*-
  * Copyright (c) 2010-2012 Hans Petter Selasky. All rights reserved.
  *
@@ -184,7 +184,7 @@ cuse_vmalloc(int size)
 	if (size < 1)
 		return (NULL);
 
-	info.page_count = (size + PAGE_SIZE - 1) / PAGE_SIZE;
+	info.page_count = howmany(size, PAGE_SIZE);
 
 	CUSE_LOCK();
 	for (n = 0; n != CUSE_ALLOC_UNIT_MAX; n++) {
@@ -711,8 +711,8 @@ cuse_copy_out(const void *src, void *user_dst, int len)
 	if (pe->is_local) {
 		memcpy(user_dst, src, len);
 	} else {
-		info.local_ptr = (unsigned long)src;
-		info.peer_ptr = (unsigned long)user_dst;
+		info.local_ptr = (uintptr_t)src;
+		info.peer_ptr = (uintptr_t)user_dst;
 		info.length = len;
 
 		error = ioctl(f_cuse, CUSE_IOCTL_WRITE_DATA, &info);
@@ -744,8 +744,8 @@ cuse_copy_in(const void *user_src, void *dst, int len)
 	if (pe->is_local) {
 		memcpy(dst, user_src, len);
 	} else {
-		info.local_ptr = (unsigned long)dst;
-		info.peer_ptr = (unsigned long)user_src;
+		info.local_ptr = (uintptr_t)dst;
+		info.peer_ptr = (uintptr_t)user_src;
 		info.length = len;
 
 		error = ioctl(f_cuse, CUSE_IOCTL_READ_DATA, &info);

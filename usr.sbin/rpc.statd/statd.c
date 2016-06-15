@@ -36,7 +36,7 @@
 /* The actual program logic is in the file procs.c			*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/rpc.statd/statd.c 277352 2015-01-19 00:33:32Z rstone $");
+__FBSDID("$FreeBSD: head/usr.sbin/rpc.statd/statd.c 300935 2016-05-29 04:18:47Z ngie $");
 
 #include <err.h>
 #include <errno.h>
@@ -72,9 +72,9 @@ static int	create_service(struct netconfig *nconf);
 static void	complete_service(struct netconfig *nconf, char *port_str);
 static void	clearout_service(void);
 static void handle_sigchld(int sig);
-void out_of_mem(void);
+void out_of_mem(void) __dead2;
 
-static void usage(void);
+static void usage(void) __dead2;
 
 int
 main(int argc, char **argv)
@@ -150,7 +150,7 @@ main(int argc, char **argv)
    * list.
    */
   if (nhosts == 0) {
-	  hosts = malloc(sizeof(char**));
+	  hosts = malloc(sizeof(char *));
 	  if (hosts == NULL)
 		  out_of_mem();
 
@@ -613,7 +613,7 @@ clearout_service(void)
 }
 
 static void
-usage()
+usage(void)
 {
       fprintf(stderr, "usage: rpc.statd [-d] [-h <bindip>] [-p <port>]\n");
       exit(1);
@@ -647,7 +647,7 @@ static void handle_sigchld(int sig __unused)
  * Out of memory, fatal
  */
 void
-out_of_mem()
+out_of_mem(void)
 {
 
 	syslog(LOG_ERR, "out of memory");

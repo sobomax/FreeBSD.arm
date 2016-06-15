@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/pc98/cbus/pmc.c 130026 2004-06-03 06:10:02Z phk $
+ * $FreeBSD: head/sys/pc98/cbus/pmc.c 296330 2016-03-03 01:09:00Z jhibbits $
  */
 
 #include <sys/param.h>
@@ -100,9 +100,8 @@ pmc_isa_alloc_resources(device_t dev)
 	bzero(sc, sizeof(*sc));
 
 	rid = 0;
-	sc->port_res = bus_alloc_resource(dev, SYS_RES_IOPORT, &rid,
-					  0ul, ~0ul, PMC_ISA_PORTSIZE,
-					  RF_ACTIVE);
+	sc->port_res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT, &rid,
+						   PMC_ISA_PORTSIZE, RF_ACTIVE);
 	if (sc->port_res == NULL) {
 		return (ENOMEM);
 	}

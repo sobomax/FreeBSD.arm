@@ -1,10 +1,10 @@
-# $FreeBSD: head/sys/modules/zfs/Makefile 276606 2015-01-03 03:35:18Z imp $
+# $FreeBSD: head/sys/modules/zfs/Makefile 301010 2016-05-31 04:12:14Z allanjude $
 
 SYSDIR?=${.CURDIR}/../..
 
 KMOD=	zfs
 
-SRCS=	bus_if.h device_if.h vnode_if.h
+SRCS=	bus_if.h device_if.h vnode_if.h opt_kstack_pages.h
 
 SUNW=	${SYSDIR}/cddl/contrib/opensolaris
 
@@ -13,9 +13,9 @@ SRCS+=	acl_common.c
 .PATH:	${SUNW}/common/avl
 SRCS+=	avl.c
 .PATH:	${SUNW}/common/nvpair
-SRCS+=	nvpair.c
-SRCS+=	nvpair_alloc_fixed.c
-SRCS+=	fnvpair.c
+SRCS+=	opensolaris_nvpair.c
+SRCS+=	opensolaris_nvpair_alloc_fixed.c
+SRCS+=	opensolaris_fnvpair.c
 .PATH:	${SYSDIR}/cddl/contrib/opensolaris/common/unicode
 SRCS+=	u8_textprep.c
 
@@ -68,7 +68,10 @@ SRCS+=	zmod_subr.c
 SRCS+=	zutil.c
 
 .PATH:	${SYSDIR}/crypto/sha2
-SRCS+=	sha2.c sha256c.c
+SRCS+=	sha256c.c sha512c.c
+
+.PATH:	${SYSDIR}/crypto/skein
+SRCS+=	skein.c skein_block.c
 
 .PATH:	${SUNW}/common/zfs
 .include "${SUNW}/uts/common/Makefile.files"

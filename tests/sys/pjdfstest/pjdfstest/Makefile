@@ -1,8 +1,8 @@
-# $FreeBSD: head/tests/sys/pjdfstest/pjdfstest/Makefile 284289 2015-06-11 21:13:05Z sjg $
+# $FreeBSD: head/tests/sys/pjdfstest/pjdfstest/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-TOP=		${.CURDIR:H:H:H:H}
+PACKAGE=	tests
 
-.PATH: ${TOP}/contrib/pjdfstest
+.PATH: ${SRCTOP}/contrib/pjdfstest
 
 BINDIR=		${TESTSBASE}/sys/pjdfstest
 PROG=		pjdfstest

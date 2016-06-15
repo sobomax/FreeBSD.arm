@@ -1,16 +1,21 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
-# $FreeBSD: head/bin/ls/Makefile 284198 2015-06-10 01:27:38Z marcel $
+# $FreeBSD: head/bin/ls/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	ls
 SRCS=	cmp.c ls.c print.c util.c
-LIBADD=	util
+LIBADD=	xo util
 
 .if !defined(RELEASE_CRUNCH) && \
 	${MK_LS_COLORS} != no
 CFLAGS+= -DCOLORLS
-LIBADD+=	termcapw xo
+LIBADD+=	termcapw
+.endif
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
 .endif
 
 .include <bsd.prog.mk>

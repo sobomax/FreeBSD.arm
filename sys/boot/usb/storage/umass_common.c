@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/usb/storage/umass_common.c 266881 2014-05-30 13:10:49Z hselasky $ */
+/* $FreeBSD: head/sys/boot/usb/storage/umass_common.c 291401 2015-11-27 18:16:10Z zbb $ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.
@@ -82,6 +82,9 @@ umass_attach(device_t dev)
 static int
 umass_detach(device_t dev)
 {
+
+#ifdef USB_DEBUG
 	memset(&umass_uaa, 0, sizeof(umass_uaa));
+#endif
 	return (0);
 }

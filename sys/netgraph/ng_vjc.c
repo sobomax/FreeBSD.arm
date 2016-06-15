@@ -38,7 +38,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_vjc.c 276750 2015-01-06 12:59:37Z rwatson $
+ * $FreeBSD: head/sys/netgraph/ng_vjc.c 298813 2016-04-29 21:25:05Z pfg $
  * $Whistle: ng_vjc.c,v 1.17 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -348,7 +348,7 @@ ng_vjc_rcvmsg(node_p node, item_p item, hook_p lasthook)
 			sl = (struct slcompress *)resp->data;
 			*sl = *sl0;
 
-			/* Replace pointers with integer indicies */
+			/* Replace pointers with integer indices */
 			if (sl->last_cs != NULL) {
 				index = sl0->last_cs - sl0->tstate;
 				bzero(&sl->last_cs, sizeof(sl->last_cs));

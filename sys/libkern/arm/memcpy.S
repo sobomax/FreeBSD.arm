@@ -26,9 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/libkern/arm/memcpy.S 283805 2015-05-31 07:31:20Z andrew $");
-
-#ifdef __ARM_EABI__
+__FBSDID("$FreeBSD: head/sys/libkern/arm/memcpy.S 285338 2015-07-09 21:02:40Z andrew $");
 
 ENTRY_NP(__aeabi_memcpy)
 EENTRY_NP(__aeabi_memcpy4)
@@ -37,6 +35,3 @@ EENTRY_NP(__aeabi_memcpy8)
 EEND(__aeabi_memcpy8)
 EEND(__aeabi_memcpy4)
 END(__aeabi_memcpy)
-
-#endif
-

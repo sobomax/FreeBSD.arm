@@ -30,7 +30,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/vgrind/regexp.c 284047 2015-06-05 21:35:20Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/vgrind/regexp.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #ifndef lint
 static const char copyright[] =
@@ -318,7 +318,7 @@ expconv()
 
 
 /*
- *	The following routine recognises an irregular expresion
+ *	The following routine recognises an irregular expression
  *	with the following special characters:
  *
  *		\?	-	means last match was optional

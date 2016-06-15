@@ -28,7 +28,7 @@
 #define _R300_REG_H_
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r300_reg.h 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r300_reg.h 300050 2016-05-17 12:52:31Z eadler $");
 
 #define R300_SURF_TILE_MACRO (1<<16)
 #define R300_SURF_TILE_MICRO (2<<16)
@@ -356,7 +356,7 @@ __FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/r300_reg.h 258780 2013-11-30 22:17:
 #       define R300_PVS_CNTL_1_PROGRAM_START_SHIFT   0
 #       define R300_PVS_CNTL_1_POS_END_SHIFT         10
 #       define R300_PVS_CNTL_1_PROGRAM_END_SHIFT     20
-/* Addresses are relative the the vertex program parameters area. */
+/* Addresses are relative the vertex program parameters area. */
 #define R300_VAP_PVS_CNTL_2                 0x22D4
 #       define R300_PVS_CNTL_2_PARAM_OFFSET_SHIFT 0
 #       define R300_PVS_CNTL_2_PARAM_COUNT_SHIFT  16

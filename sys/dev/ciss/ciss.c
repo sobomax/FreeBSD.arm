@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/ciss/ciss.c 281008 2015-04-02 23:12:18Z peter $
+ *	$FreeBSD: head/sys/dev/ciss/ciss.c 300551 2016-05-24 01:42:21Z sbruno $
  */
 
 /*
@@ -345,21 +345,22 @@ static struct
     { 0x103C, 0x1928, CISS_BOARD_SA5,   "HP Smart Array P230i" },
     { 0x103C, 0x1929, CISS_BOARD_SA5,   "HP Smart Array P530" },
     { 0x103C, 0x192A, CISS_BOARD_SA5,   "HP Smart Array P531" },
-    { 0x103C, 0x21BD, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21BE, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21BF, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C0, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C2, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C3, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C5, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C6, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C7, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21C8, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21CA, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21CB, CISS_BOARD_SA5,   "HP Smart Array TBD" },
+    { 0x103C, 0x21BD, CISS_BOARD_SA5,   "HP Smart Array P244br" },
+    { 0x103C, 0x21BE, CISS_BOARD_SA5,   "HP Smart Array P741m" },
+    { 0x103C, 0x21BF, CISS_BOARD_SA5,   "HP Smart Array H240ar" },
+    { 0x103C, 0x21C0, CISS_BOARD_SA5,   "HP Smart Array P440ar" },
+    { 0x103C, 0x21C1, CISS_BOARD_SA5,   "HP Smart Array P840ar" },
+    { 0x103C, 0x21C2, CISS_BOARD_SA5,   "HP Smart Array P440" },
+    { 0x103C, 0x21C3, CISS_BOARD_SA5,   "HP Smart Array P441" },
+    { 0x103C, 0x21C5, CISS_BOARD_SA5,   "HP Smart Array P841" },
+    { 0x103C, 0x21C6, CISS_BOARD_SA5,   "HP Smart Array H244br" },
+    { 0x103C, 0x21C7, CISS_BOARD_SA5,   "HP Smart Array H240" },
+    { 0x103C, 0x21C8, CISS_BOARD_SA5,   "HP Smart Array H241" },
+    { 0x103C, 0x21CA, CISS_BOARD_SA5,   "HP Smart Array P246br" },
+    { 0x103C, 0x21CB, CISS_BOARD_SA5,   "HP Smart Array P840" },
     { 0x103C, 0x21CC, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21CD, CISS_BOARD_SA5,   "HP Smart Array TBD" },
-    { 0x103C, 0x21CE, CISS_BOARD_SA5,   "HP Smart Array TBD" },
+    { 0x103C, 0x21CD, CISS_BOARD_SA5,   "HP Smart Array P240nr" },
+    { 0x103C, 0x21CE, CISS_BOARD_SA5,   "HP Smart Array H240nr" },
     { 0, 0, 0, NULL }
 };
 
@@ -464,7 +465,7 @@ ciss_attach(device_t dev)
     ciss_initq_notify(sc);
 
     /*
-     * Initalize device sysctls.
+     * Initialize device sysctls.
      */
     ciss_init_sysctl(sc);
 
@@ -619,7 +620,7 @@ ciss_init_pci(struct ciss_softc *sc)
 	/*
 	 * XXX Big hammer, masks/unmasks all possible interrupts.  This should
 	 * work on all hardware variants.  Need to add code to handle the
-	 * "controller crashed" interupt bit that this unmasks.
+	 * "controller crashed" interrupt bit that this unmasks.
 	 */
 	sqmask = ~0;
     }
@@ -1431,7 +1432,7 @@ ciss_init_logical(struct ciss_softc *sc)
 	goto out;
     }
 
-    for (i = 0; i <= sc->ciss_max_logical_bus; i++) {
+    for (i = 0; i < sc->ciss_max_logical_bus; i++) {
 	sc->ciss_logical[i] =
 	    malloc(sc->ciss_cfg->max_logical_supported *
 		   sizeof(struct ciss_ldrive),
@@ -2030,7 +2031,7 @@ ciss_free(struct ciss_softc *sc)
     if (sc->ciss_parent_dmat)
 	bus_dma_tag_destroy(sc->ciss_parent_dmat);
     if (sc->ciss_logical) {
-	for (i = 0; i <= sc->ciss_max_logical_bus; i++) {
+	for (i = 0; i < sc->ciss_max_logical_bus; i++) {
 	    for (j = 0; j < sc->ciss_cfg->max_logical_supported; j++) {
 		if (sc->ciss_logical[i][j].cl_ldrive)
 		    free(sc->ciss_logical[i][j].cl_ldrive, CISS_MALLOC_CLASS);
@@ -4016,8 +4017,7 @@ static void
 ciss_notify_logical(struct ciss_softc *sc, struct ciss_notify *cn)
 {
     struct ciss_ldrive	*ld;
-    int			bus, target;
-    int			rescan_ld;
+    int			ostatus, bus, target;
 
     debug_called(2);
 
@@ -4040,6 +4040,7 @@ ciss_notify_logical(struct ciss_softc *sc, struct ciss_notify *cn)
 	    /*
 	     * Update our idea of the drive's status.
 	     */
+	    ostatus = ciss_decode_ldrive_status(cn->data.logical_status.previous_state);
 	    ld->cl_status = ciss_decode_ldrive_status(cn->data.logical_status.new_state);
 	    if (ld->cl_lstatus != NULL)
 		ld->cl_lstatus->status = cn->data.logical_status.new_state;
@@ -4047,9 +4048,7 @@ ciss_notify_logical(struct ciss_softc *sc, struct ciss_notify *cn)
 	    /*
 	     * Have CAM rescan the drive if its status has changed.
 	     */
-            rescan_ld = (cn->data.logical_status.previous_state !=
-                         cn->data.logical_status.new_state) ? 1 : 0;
-	    if (rescan_ld) {
+	    if (ostatus != ld->cl_status) {
 		ld->cl_update = 1;
 		ciss_notify_rescan_logical(sc);
 	    }
@@ -4489,7 +4488,7 @@ ciss_name_ldrive_org(int org)
     case CISS_LDRIVE_RAIDADG:
 	return("RAID ADG");
     }
-    return("unkown");
+    return("unknown");
 }
 
 /************************************************************************

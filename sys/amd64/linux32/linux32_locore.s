@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/amd64/linux32/linux32_locore.s 283432 2015-05-24 16:25:44Z dchagin $ */
+/* $FreeBSD: head/sys/amd64/linux32/linux32_locore.s 290144 2015-10-29 15:20:47Z jhb $ */
 
 #include "linux32_assym.h"			/* system definitions */
 #include <machine/asmacros.h>			/* miscellaneous asm macros */
@@ -28,7 +28,7 @@ NON_GPROF_ENTRY(linux32_sigcode)
 	jmp	*LINUX_SIGF_HANDLER(%ebx)
 .startsigcode:
 	popl	%eax
-	movl	$LINUX_SYS_linux_sigreturn,%eax	/* linux_sigreturn() */
+	movl	$LINUX32_SYS_linux_sigreturn,%eax	/* linux_sigreturn() */
 	int	$0x80				/* enter kernel with args */
 .endsigcode:
 0:	jmp	0b
@@ -44,7 +44,7 @@ NON_GPROF_ENTRY(linux32_rt_sigcode)
 	push	%eax
 	jmp	*LINUX_RT_SIGF_HANDLER(%edi)
 .startrtsigcode:
-	movl	$LINUX_SYS_linux_rt_sigreturn,%eax   /* linux_rt_sigreturn() */
+	movl	$LINUX32_SYS_linux_rt_sigreturn,%eax   /* linux_rt_sigreturn() */
 	int	$0x80				/* enter kernel with args */
 .endrtsigcode:
 0:	jmp	0b

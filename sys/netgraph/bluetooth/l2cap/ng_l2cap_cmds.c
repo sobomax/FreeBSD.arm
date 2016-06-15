@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap_cmds.c,v 1.2 2003/09/08 19:11:45 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_cmds.c 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/l2cap/ng_l2cap_cmds.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 #include <sys/param.h>
@@ -332,7 +332,7 @@ ng_l2cap_con_fail(ng_l2cap_con_p con, u_int16_t result)
 
 /*
  * Process L2CAP command timeout. In general - notify upper layer and destroy
- * channel. Do not pay much attension to return code, just do our best.
+ * channel. Do not pay much attention to return code, just do our best.
  */
 
 void

@@ -30,7 +30,7 @@
 static char sccsid[] = "@(#)publickey.c 1.10 91/03/11 Copyr 1986 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/getpublickey.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/getpublickey.c 288995 2015-10-07 19:55:58Z rodrigc $");
 
 /*
  * publickey.c
@@ -56,15 +56,13 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/getpublickey.c 258578 2013-11-25 19:04:36Z
 /*
  * Hack to let ypserv/rpc.nisd use AUTH_DES.
  */
-int (*__getpublickey_LOCAL)() = 0;
+int (*__getpublickey_LOCAL)(const char *, char *) = 0;
 
 /*
  * Get somebody's public key
  */
 static int
-__getpublickey_real(netname, publickey)
-	const char *netname;
-	char *publickey;
+__getpublickey_real(const char *netname, char *publickey)
 {
 	char lookup[3 * HEXKEYBYTES];
 	char *p;
@@ -89,9 +87,7 @@ __getpublickey_real(netname, publickey)
  */
 
 int
-getpublicandprivatekey(key, ret)
-	const char *key;
-	char *ret;
+getpublicandprivatekey(const char *key, char *ret)
 {
 	char buf[1024];	/* big enough */
 	char *res;
@@ -166,9 +162,7 @@ getpublicandprivatekey(key, ret)
 	}
 }
 
-int getpublickey(netname, publickey)
-	const char *netname;
-	char *publickey;
+int getpublickey(const char *netname, char *publickey)
 {
 	if (__getpublickey_LOCAL != NULL)
 		return(__getpublickey_LOCAL(netname, publickey));

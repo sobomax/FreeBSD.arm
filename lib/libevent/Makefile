@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libevent/Makefile 282420 2015-05-04 16:28:54Z bapt $
+# $FreeBSD: head/lib/libevent/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 .PATH:	${.CURDIR}/../../contrib/pf/libevent
 
 .include <src.opts.mk>

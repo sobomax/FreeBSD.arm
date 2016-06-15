@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/usb/usb_busdma_loader.c 266882 2014-05-30 13:39:58Z hselasky $ */
+/* $FreeBSD: head/sys/boot/usb/usb_busdma_loader.c 291399 2015-11-27 18:13:28Z zbb $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *
@@ -233,7 +233,7 @@ usb_pc_alloc_mem(struct usb_page_cache *pc, struct usb_page *pg,
 	pc->ismultiseg = (align == 1);
 
 	/* compute physical address */
- 	usb_pc_common_mem_cb(pc, ptr, size);
+ 	usb_pc_common_mem_cb(pc, pc->buffer, size);
 
 	usb_pc_cpu_flush(pc);
  	return (0);

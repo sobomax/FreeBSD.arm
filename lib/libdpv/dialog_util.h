@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libdpv/dialog_util.h 274116 2014-11-04 23:46:01Z dteske $
+ * $FreeBSD: head/lib/libdpv/dialog_util.h 294892 2016-01-27 06:16:53Z dteske $
  */
 
 #ifndef _DIALOG_UTIL_H_
@@ -55,7 +55,6 @@ extern int dheight, dwidth;
 
 __BEGIN_DECLS
 uint8_t		 dialog_prompt_nlstate(const char *_prompt);
-void		 dialog_gauge_free(void);
 void		 dialog_maxsize_free(void);
 char		*dialog_prompt_lastline(char *_prompt, uint8_t _nlstate);
 int		 dialog_maxcols(void);

@@ -30,7 +30,7 @@
 static char sccsid[] = "@(#)rpcdname.c 1.7 91/03/11 Copyr 1989 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcdname.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/rpcdname.c 297790 2016-04-10 19:33:58Z pfg $");
 
 /*
  * rpcdname.c
@@ -43,20 +43,20 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/rpcdname.c 258578 2013-11-25 19:04:36Z hrs
 #include <string.h>
 #include "un-namespace.h"
 
-static char *default_domain = 0;
+static char *default_domain;
 
 static char *
-get_default_domain()
+get_default_domain(void)
 {
 	char temp[256];
 
-	if (default_domain)
+	if (default_domain != NULL)
 		return (default_domain);
 	if (getdomainname(temp, sizeof(temp)) < 0)
 		return (0);
 	if ((int) strlen(temp) > 0) {
-		default_domain = (char *)malloc((strlen(temp)+(unsigned)1));
-		if (default_domain == 0)
+		default_domain = malloc((strlen(temp) + (unsigned)1));
+		if (default_domain == NULL)
 			return (0);
 		(void) strcpy(default_domain, temp);
 		return (default_domain);
@@ -71,10 +71,9 @@ get_default_domain()
  * get rejected elsewhere in the NIS client package.
  */
 int
-__rpc_get_default_domain(domain)
-	char **domain;
+__rpc_get_default_domain(char **domain)
 {
-	if ((*domain = get_default_domain()) != 0)
+	if ((*domain = get_default_domain()) != NULL)
 		return (0);
 	return (-1);
 }

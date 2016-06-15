@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/i386/boot0/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sys/boot/i386/boot0/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 PROG?=	boot0
 STRIP=
@@ -80,5 +80,3 @@ LDFLAGS=-e start -Ttext ${BOOT_BOOT0_ORG} -Wl,-N,-S,--oformat,binary
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.boot0.S=		${CLANG_NO_IAS}
-CFLAGS.boot0ext.S=	${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

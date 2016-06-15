@@ -1,7 +1,8 @@
 #	@(#)Makefile	8.4 (Berkeley) 6/22/95
 #
-# $FreeBSD: head/sbin/umount/Makefile 201135 2009-12-28 17:57:37Z delphij $
+# $FreeBSD: head/sbin/umount/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	umount
 SRCS=	umount.c vfslist.c mounttab.c
 MAN=	umount.8

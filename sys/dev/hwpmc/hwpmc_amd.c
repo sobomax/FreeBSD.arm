@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_amd.c 282658 2015-05-08 19:40:00Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_amd.c 298431 2016-04-21 19:40:10Z pfg $");
 
 /* Support for the AMD K7 and later processors */
 
@@ -241,8 +241,7 @@ const struct amd_event_code_map amd_event_codes[] = {
 
 };
 
-const int amd_event_codes_size =
-	sizeof(amd_event_codes) / sizeof(amd_event_codes[0]);
+const int amd_event_codes_size = nitems(amd_event_codes);
 
 /*
  * Per-processor information

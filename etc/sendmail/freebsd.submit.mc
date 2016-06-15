@@ -7,7 +7,6 @@ divert(-1)
 # forth in the LICENSE file which can be found at the top level of
 # the sendmail distribution.
 #
-#
 
 #
 #  This is the FreeBSD configuration for a set-group-ID sm-msp sendmail
@@ -15,7 +14,7 @@ divert(-1)
 #
 
 divert(0)dnl
-VERSIONID(`$FreeBSD: head/etc/sendmail/freebsd.submit.mc 266529 2014-05-22 04:43:40Z gshapiro $')
+VERSIONID(`$FreeBSD: head/etc/sendmail/freebsd.submit.mc 285230 2015-07-07 03:00:57Z gshapiro $')
 define(`confCF_VERSION', `Submit')dnl
 define(`__OSTYPE__',`')dnl dirty hack to keep proto.m4 from complaining
 define(`_USE_DECNET_SYNTAX_', `1')dnl support DECnet

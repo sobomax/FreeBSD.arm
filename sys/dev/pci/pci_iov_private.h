@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013-2015 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2013-2015 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/pci/pci_iov_private.h 279451 2015-03-01 00:40:42Z rstone $
+ * $FreeBSD: head/sys/dev/pci/pci_iov_private.h 299002 2016-05-03 19:45:24Z jhb $
  */
 
 #ifndef _PCI_IOV_PRIVATE_H_
@@ -47,10 +47,16 @@ struct pcicfg_iov {
 	int iov_pos;
 	int iov_num_vfs;
 	uint32_t iov_flags;
+
+	uint16_t iov_ctl;
+	uint32_t iov_page_size;
 };
 
 #define	IOV_RMAN_INITED		0x0001
 #define	IOV_BUSY		0x0002
+
+void	pci_iov_cfg_restore(device_t dev, struct pci_devinfo *dinfo);
+void	pci_iov_cfg_save(device_t dev, struct pci_devinfo *dinfo);
 
 #endif
 

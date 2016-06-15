@@ -33,7 +33,7 @@
  *
  *	From: @(#)ansi.h	8.2 (Berkeley) 1/4/94
  *	From: @(#)types.h	8.3 (Berkeley) 1/5/94
- * $FreeBSD: head/sys/x86/include/_types.h 263998 2014-04-01 14:46:11Z tijl $
+ * $FreeBSD: head/sys/x86/include/_types.h 301029 2016-05-31 08:36:39Z ed $
  */
 
 #ifndef _MACHINE__TYPES_H_
@@ -42,6 +42,8 @@
 #ifndef _SYS_CDEFS_H_
 #error this file needs sys/cdefs.h as a prerequisite
 #endif
+
+#include <machine/_limits.h>
 
 #define __NO_STRICT_ALIGNMENT
 
@@ -152,8 +154,16 @@ typedef	int		___wchar_t;
  */
 #ifdef __GNUCLIKE_BUILTIN_VARARGS
 typedef	__builtin_va_list	__va_list;	/* internally known to gcc */
-#elif defined(lint)
-typedef	char *			__va_list;	/* pretend */
+#else
+#ifdef __LP64__
+struct __s_va_list {
+	__uint32_t	_pad1[2];	/* gp_offset, fp_offset */
+	__uint64_t	_pad2[2];	/* overflow_arg_area, reg_save_area */
+};
+typedef	struct __s_va_list	__va_list;
+#else
+typedef	char *			__va_list;
+#endif
 #endif
 #if defined(__GNUC_VA_LIST_COMPATIBILITY) && !defined(__GNUC_VA_LIST) \
     && !defined(__NO_GNUC_VA_LIST)

@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/ARMADAXP 282576 2015-05-07 12:38:23Z andrew $
+# $FreeBSD: head/sys/arm/conf/ARMADAXP 295621 2016-02-14 23:42:07Z andrew $
 
 ident		MV-88F78XX0
 
@@ -90,11 +90,13 @@ device		uart
 # I2C (TWSI)
 device		iic
 device		iicbus
+device		twsi
 
 #Network
 device		ether
 device		mge			# Marvell Gigabit Ethernet controller
 device		mii
+device		mdio
 device		e1000phy
 device		bpf
 options 	DEVICE_POLLING

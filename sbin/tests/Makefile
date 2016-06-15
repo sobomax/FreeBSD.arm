@@ -1,10 +1,6 @@
-# $FreeBSD: head/sbin/tests/Makefile 263220 2014-03-16 02:07:08Z jmmv $
+# $FreeBSD: head/sbin/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-.include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/sbin
-
-.PATH:		${.CURDIR:H:H}/tests
+.PATH:		${SRCTOP}/tests
 KYUAFILE=	yes
 
 .include <bsd.test.mk>

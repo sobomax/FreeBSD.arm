@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicbus.c 282702 2015-05-10 02:19:27Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/iicbus/iicbus.c 297199 2016-03-22 22:25:08Z jhibbits $");
 
 /*
  * Autoconfiguration and support routines for the Philips serial I2C bus
@@ -40,7 +40,7 @@ __FBSDID("$FreeBSD: head/sys/dev/iicbus/iicbus.c 282702 2015-05-10 02:19:27Z loo
 #include <sys/mutex.h>
 #include <sys/rman.h>
 #include <sys/sysctl.h>
-#include <sys/bus.h> 
+#include <sys/bus.h>
 
 #include <dev/iicbus/iiconf.h>
 #include <dev/iicbus/iicbus.h>
@@ -61,7 +61,7 @@ iicbus_probe(device_t dev)
 }
 
 #if SCAN_IICBUS
-static int 
+static int
 iic_probe_device(device_t dev, u_char addr)
 {
 	int count;
@@ -127,7 +127,7 @@ iicbus_attach(device_t dev)
 	bus_generic_attach(dev);
         return (0);
 }
-  
+
 static int
 iicbus_detach(device_t dev)
 {
@@ -135,10 +135,11 @@ iicbus_detach(device_t dev)
 
 	iicbus_reset(dev, IIC_FASTEST, 0, NULL);
 	bus_generic_detach(dev);
+	device_delete_children(dev);
 	mtx_destroy(&sc->lock);
 	return (0);
 }
-  
+
 static int
 iicbus_print_child(device_t dev, device_t child)
 {
@@ -148,7 +149,7 @@ iicbus_print_child(device_t dev, device_t child)
 	retval += bus_print_child_header(dev, child);
 	if (devi->addr != 0)
 		retval += printf(" at addr %#x", devi->addr);
-	resource_list_print_type(&devi->rl, "irq", SYS_RES_IRQ, "%ld");
+	resource_list_print_type(&devi->rl, "irq", SYS_RES_IRQ, "%jd");
 	retval += bus_print_child_footer(dev, child);
 
 	return (retval);

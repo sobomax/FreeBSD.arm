@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/bugpoint/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/bugpoint/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -15,28 +15,31 @@ SRCS=	BugDriver.cpp \
 	ToolRunner.cpp \
 	bugpoint.cpp
 
-TGHDRS=	Intrinsics
+TGHDRS=	Attributes \
+	Intrinsics
+
 LIBDEPS=llvmcodegen \
+	llvmtarget \
 	llvmobjcarcopts \
-	llvmirreader \
 	llvmbitwriter \
-	llvmlinker \
 	llvmipo \
 	llvmvectorize \
+	llvmlinker \
+	llvmirreader \
 	llvmscalaropts \
+	llvminstcombine \
+	llvminstrumentation \
 	llvmprofiledata \
 	llvmobject \
 	llvmmcparser \
 	llvmbitreader \
-	llvminstcombine \
-	llvminstrumentation \
 	llvmtransformutils \
-	llvmipa \
-	llvmanalysis \
-	llvmtarget \
 	llvmmc \
+	llvmanalysis \
 	llvmasmparser \
 	llvmcore \
 	llvmsupport
+
+LIBADD+=	z
 
 .include "../clang.prog.mk"

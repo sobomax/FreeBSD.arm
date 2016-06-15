@@ -30,7 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/xlint/lint1/param.h 280218 2015-03-18 13:07:19Z emaste $
+ * $FreeBSD: head/usr.bin/xlint/lint1/param.h 294571 2016-01-22 16:32:22Z br $
  */
 
 /*
@@ -80,6 +80,9 @@
 #elif __powerpc__
 #define PTRDIFF_IS_LONG		0
 #define SIZEOF_IS_ULONG		0
+#elif __riscv__
+#define PTRDIFF_IS_LONG		1
+#define SIZEOF_IS_ULONG		1
 #elif __sparc__
 #define PTRDIFF_IS_LONG		0
 #define SIZEOF_IS_ULONG		0

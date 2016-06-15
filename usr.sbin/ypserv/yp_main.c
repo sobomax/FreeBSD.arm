@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_main.c 253253 2013-07-12 06:54:29Z hrs $");
+__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_main.c 285926 2015-07-28 02:32:40Z araujo $");
 
 /*
  * ypserv startup function.
@@ -72,13 +72,11 @@ __FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_main.c 253253 2013-07-12 06:54:29Z h
 
 #define	_RPCSVC_CLOSEDOWN 120
 int _rpcpmstart;		/* Started by a port monitor ? */
-static int _rpcfdtype;
-		 /* Whether Stream or Datagram ? */
+static int _rpcfdtype;  /* Whether Stream or Datagram? */
 static int _rpcaf;
 static int _rpcfd;
 
-	/* States a server can be in wrt request */
-
+/* States a server can be in wrt request */
 #define	_IDLE 0
 #define	_SERVED 1
 #define	_SERVING 2

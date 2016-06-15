@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/powerpc/ps3/Makefile 284597 2015-06-19 14:20:21Z bapt $
+# $FreeBSD: head/sys/boot/powerpc/ps3/Makefile 286368 2015-08-06 16:07:27Z allanjude $
 
 .include <src.opts.mk>
 MK_SSP=		no
@@ -114,12 +114,6 @@ loader.help: help.common help.ps3 ${.CURDIR}/../../fdt/help.fdt
 .PATH: ${.CURDIR}/../../forth
 .include	"${.CURDIR}/../../forth/Makefile.inc"
 
-.if !exists(${DESTDIR}/boot/loader.rc)
-FILES+= loader.rc
-.endif
-
-.if !exists(${DESTDIR}/boot/menu.rc)
-FILES+= menu.rc
-.endif
+FILES+= loader.rc menu.rc
 
 .include <bsd.prog.mk>

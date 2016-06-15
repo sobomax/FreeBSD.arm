@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 278323 2015-02-06 17:54:53Z jamie $");
+__FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 298562 2016-04-25 03:24:48Z jamie $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -47,6 +47,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/jail/command.c 278323 2015-02-06 17:54:53Z jam
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <vis.h>
 
 #include "jailp.h"
 
@@ -444,8 +445,14 @@ run_command(struct cfjail *j)
 		strcpy(comcs, comstring->s);
 		argc = 0;
 		for (cs = strtok(comcs, " \t\f\v\r\n"); cs && argc < 4;
-		     cs = strtok(NULL, " \t\f\v\r\n"))
+		     cs = strtok(NULL, " \t\f\v\r\n")) {
+			if (argc <= 1 && strunvis(cs, cs) < 0) {
+				jail_warnx(j, "%s: %s: fstab parse error",
+				    j->intparams[comparam]->name, comstring->s);
+				return -1;
+			}
 			argv[argc++] = cs;
+		}
 		if (argc == 0)
 			return 0;
 		if (argc < 3) {
@@ -761,7 +768,7 @@ add_proc(struct cfjail *j, pid_t pid)
 	if (j->timeout.tv_sec == 0)
 		requeue(j, &sleeping);
 	else {
-		/* File the jail in the sleep queue acording to its timeout. */
+		/* File the jail in the sleep queue according to its timeout. */
 		TAILQ_REMOVE(j->queue, j, tq);
 		TAILQ_FOREACH(tj, &sleeping, tq) {
 			if (!tj->timeout.tv_sec ||
@@ -877,6 +884,7 @@ get_user_info(struct cfjail *j, const char *username,
 {
 	const struct passwd *pwd;
 
+	errno = 0;
 	*pwdp = pwd = username ? getpwnam(username) : getpwuid(getuid());
 	if (pwd == NULL) {
 		if (errno)

@@ -154,7 +154,6 @@ int	hardpps_enable;		/* kernel PPS discipline enabled */
 int	ext_enable;		/* external clock enabled */
 int	pps_stratum;		/* pps stratum */
 int	kernel_status;		/* from ntp_adjtime */
-int	allow_panic = FALSE;	/* allow panic correction (-g) */
 int	force_step_once = FALSE; /* always step time once at startup (-G) */
 int	mode_ntpdate = FALSE;	/* exit on first clock set (-q) */
 int	freq_cnt;		/* initial frequency clamp */
@@ -246,6 +245,8 @@ ntp_adjtime_error_handler(
 	int line		/* line number of ntp_adjtime call */
 	)
 {
+	char des[1024] = "";	/* Decoded Error Status */
+
 	switch (ret) {
 	    case -1:
 		switch (saved_errno) {
@@ -317,14 +318,88 @@ ntp_adjtime_error_handler(
 # warning TIME_WAIT is not defined
 #endif
 #ifdef TIME_ERROR
+#if 0
+
+from the reference implementation of ntp_gettime():
+
+		// Hardware or software error
+        if ((time_status & (STA_UNSYNC | STA_CLOCKERR))
+
+	/*
+         * PPS signal lost when either time or frequency synchronization
+         * requested
+         */
+	|| (time_status & (STA_PPSFREQ | STA_PPSTIME)
+	    && !(time_status & STA_PPSSIGNAL))
+
+        /*
+         * PPS jitter exceeded when time synchronization requested
+         */
+	|| (time_status & STA_PPSTIME &&
+            time_status & STA_PPSJITTER)
+
+        /*
+         * PPS wander exceeded or calibration error when frequency
+         * synchronization requested
+         */
+	|| (time_status & STA_PPSFREQ &&
+            time_status & (STA_PPSWANDER | STA_PPSERROR)))
+                return (TIME_ERROR);
+
+or, from ntp_adjtime():
+
+	if (  (time_status & (STA_UNSYNC | STA_CLOCKERR))
+	    || (time_status & (STA_PPSFREQ | STA_PPSTIME)
+		&& !(time_status & STA_PPSSIGNAL)) 
+	    || (time_status & STA_PPSTIME
+		&& time_status & STA_PPSJITTER)
+	    || (time_status & STA_PPSFREQ
+		&& time_status & (STA_PPSWANDER | STA_PPSERROR))
+	   )
+		return (TIME_ERROR);
+#endif
+
 	    case TIME_ERROR: /* 5: unsynchronized, or loss of synchronization */
 				/* error (see status word) */
+
+		if (ptimex->status & STA_UNSYNC)
+			snprintf(des, sizeof(des), "%s%sClock Unsynchronized",
+				des, (*des) ? "; " : "");
+
+		if (ptimex->status & STA_CLOCKERR)
+			snprintf(des, sizeof(des), "%s%sClock Error",
+				des, (*des) ? "; " : "");
+
+		if (!(ptimex->status & STA_PPSSIGNAL)
+		    && ptimex->status & STA_PPSFREQ)
+			snprintf(des, sizeof(des), "%s%sPPS Frequency Sync wanted but no PPS",
+				des, (*des) ? "; " : "");
+
+		if (!(ptimex->status & STA_PPSSIGNAL)
+		    && ptimex->status & STA_PPSTIME)
+			snprintf(des, sizeof(des), "%s%sPPS Time Sync wanted but no PPS signal",
+				des, (*des) ? "; " : "");
+
+		if (   ptimex->status & STA_PPSTIME
+		    && ptimex->status & STA_PPSJITTER)
+			snprintf(des, sizeof(des), "%s%sPPS Time Sync wanted but PPS Jitter exceeded",
+				des, (*des) ? "; " : "");
+
+		if (   ptimex->status & STA_PPSFREQ
+		    && ptimex->status & STA_PPSWANDER)
+			snprintf(des, sizeof(des), "%s%sPPS Frequency Sync wanted but PPS Wander exceeded",
+				des, (*des) ? "; " : "");
+
+		if (   ptimex->status & STA_PPSFREQ
+		    && ptimex->status & STA_PPSERROR)
+			snprintf(des, sizeof(des), "%s%sPPS Frequency Sync wanted but Calibration error detected",
+				des, (*des) ? "; " : "");
+
 		if (pps_call && !(ptimex->status & STA_PPSSIGNAL))
 			report_event(EVNT_KERN, NULL,
-			    "PPS no signal");
-		errno = saved_errno;
-		DPRINTF(1, ("kernel loop status (%s) %d %m\n",
-			k_st_flags(ptimex->status), errno));
+			    "no PPS signal");
+		DPRINTF(1, ("kernel loop status %#x (%s)\n",
+			ptimex->status, des));
 		/*
 		 * This code may be returned when ntp_adjtime() has just
 		 * been called for the first time, quite a while after
@@ -339,15 +414,14 @@ ntp_adjtime_error_handler(
 		 * or ???
 		 * msyslog(LOG_INFO, "kernel reports time synchronization lost");
 		 */
-		errno = saved_errno;	/* may not be needed */
-		msyslog(LOG_INFO, "kernel reports TIME_ERROR: %#x: %s %m",
-			ptimex->status, k_st_flags(ptimex->status));
+		msyslog(LOG_INFO, "kernel reports TIME_ERROR: %#x: %s",
+			ptimex->status, des);
 	    break;
 #else
 # warning TIME_ERROR is not defined
 #endif
 	    default:
-		msyslog(LOG_NOTICE, "%s: %s line %d: unhandled return value %d from ntp_adjtime in %s at line %d",
+		msyslog(LOG_NOTICE, "%s: %s line %d: unhandled return value %d from ntp_adjtime() in %s at line %d",
 		    caller, file_name(), line,
 		    ret,
 		    __func__, __LINE__
@@ -384,16 +458,16 @@ local_clock(
 	double	dtemp, etemp;	/* double temps */
 	char	tbuf[80];	/* report buffer */
 
+	(void)ntp_adj_ret; /* not always used below... */
 	/*
 	 * If the loop is opened or the NIST LOCKCLOCK is in use,
 	 * monitor and record the offsets anyway in order to determine
 	 * the open-loop response and then go home.
 	 */
-#ifdef LOCKCLOCK
+#ifndef LOCKCLOCK
+	if (!ntp_enable)
+#endif /* not LOCKCLOCK */
 	{
-#else
-	if (!ntp_enable) {
-#endif /* LOCKCLOCK */
 		record_loop_stats(fp_offset, drift_comp, clock_jitter,
 		    clock_stability, sys_poll);
 		return (0);
@@ -417,6 +491,8 @@ local_clock(
 		report_event(EVNT_SYSFAULT, NULL, tbuf);
 		return (-1);
 	}
+
+	allow_panic = FALSE;
 
 	/*
 	 * This section simulates ntpdate. If the offset exceeds the
@@ -463,12 +539,8 @@ local_clock(
 		else
 			dtemp = (peer->delay - sys_mindly) / 2;
 		fp_offset += dtemp;
-#ifdef DEBUG
-		if (debug)
-			printf(
-		    "local_clock: size %d mindly %.6f huffpuff %.6f\n",
-			    sys_hufflen, sys_mindly, dtemp);
-#endif
+		DPRINTF(1, ("local_clock: size %d mindly %.6f huffpuff %.6f\n",
+			    sys_hufflen, sys_mindly, dtemp));
 	}
 
 	/*
@@ -502,7 +574,7 @@ local_clock(
 		switch (state) {
 
 		/*
-		 * In SYNC state we ignore the first outlyer and switch
+		 * In SYNC state we ignore the first outlier and switch
 		 * to SPIK state.
 		 */
 		case EVNT_SYNC:
@@ -513,8 +585,8 @@ local_clock(
 			return (0);
 
 		/*
-		 * In FREQ state we ignore outlyers and inlyers. At the
-		 * first outlyer after the stepout threshold, compute
+		 * In FREQ state we ignore outliers and inlyers. At the
+		 * first outlier after the stepout threshold, compute
 		 * the apparent frequency correction and step the phase.
 		 */
 		case EVNT_FREQ:
@@ -526,7 +598,7 @@ local_clock(
 			/* fall through to EVNT_SPIK */
 
 		/*
-		 * In SPIK state we ignore succeeding outlyers until
+		 * In SPIK state we ignore succeeding outliers until
 		 * either an inlyer is found or the stepout threshold is
 		 * exceeded.
 		 */
@@ -619,7 +691,6 @@ local_clock(
 		 * startup until the initial transient has subsided.
 		 */
 		default:
-			allow_panic = FALSE;
 			if (freq_cnt == 0) {
 
 				/*
@@ -846,15 +917,11 @@ local_clock(
 	 */
 	record_loop_stats(clock_offset, drift_comp, clock_jitter,
 	    clock_stability, sys_poll);
-#ifdef DEBUG
-	if (debug)
-		printf(
-		    "local_clock: offset %.9f jit %.9f freq %.3f stab %.3f poll %d\n",
+	DPRINTF(1, ("local_clock: offset %.9f jit %.9f freq %.3f stab %.3f poll %d\n",
 		    clock_offset, clock_jitter, drift_comp * 1e6,
-		    clock_stability * 1e6, sys_poll);
-#endif /* DEBUG */
+		    clock_stability * 1e6, sys_poll));
 	return (rval);
-#endif /* LOCKCLOCK */
+#endif /* not LOCKCLOCK */
 }
 
 
@@ -930,7 +997,10 @@ adj_host_clock(
 	 * but does not automatically stop slewing when an offset
 	 * has decayed to zero.
 	 */
+	DEBUG_INSIST(enable_panic_check == TRUE);
+	enable_panic_check = FALSE;
 	adj_systime(offset_adj + freq_adj);
+	enable_panic_check = TRUE;
 #endif /* LOCKCLOCK */
 }
 
@@ -944,12 +1014,9 @@ rstclock(
 	double	offset		/* new offset */
 	)
 {
-#ifdef DEBUG
-	if (debug > 1)
-		printf("local_clock: mu %lu state %d poll %d count %d\n",
+	DPRINTF(2, ("rstclock: mu %lu state %d poll %d count %d\n",
 		    current_time - clock_epoch, trans, sys_poll,
-		    tc_counter);
-#endif
+		    tc_counter));
 	if (trans != state && trans != EVNT_FSET)
 		report_event(trans, NULL, NULL);
 	state = trans;
@@ -1000,6 +1067,7 @@ set_freq(
 	const char *	loop_desc;
 	int ntp_adj_ret;
 
+	(void)ntp_adj_ret; /* not always used below... */
 	drift_comp = freq;
 	loop_desc = "ntpd";
 #ifdef KERNEL_PLL
@@ -1161,10 +1229,7 @@ loop_config(
 	int	i;
 	double	ftemp;
 
-#ifdef DEBUG
-	if (debug > 1)
-		printf("loop_config: item %d freq %f\n", item, freq);
-#endif
+	DPRINTF(2, ("loop_config: item %d freq %f\n", item, freq));
 	switch (item) {
 
 	/*

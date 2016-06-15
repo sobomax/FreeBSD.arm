@@ -1,8 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/sbin/restore/Makefile 203155 2010-01-29 10:00:42Z jh $
+# $FreeBSD: head/sbin/restore/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .PATH: ${.CURDIR}/../dump
 
+PACKAGE=runtime
 PROG=	restore
 LINKS=	${BINDIR}/restore ${BINDIR}/rrestore
 MAN=	restore.8

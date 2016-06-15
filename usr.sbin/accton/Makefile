@@ -1,7 +1,9 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: head/usr.sbin/accton/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD: head/usr.sbin/accton/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 PROG=	accton
 MAN=	accton.8
+
+PACKAGE=acct
 
 .include <bsd.prog.mk>

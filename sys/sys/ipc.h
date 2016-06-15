@@ -37,7 +37,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ipc.h	8.4 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/ipc.h 241837 2012-10-22 02:59:55Z eadler $
+ * $FreeBSD: head/sys/sys/ipc.h 298981 2016-05-03 15:14:17Z pfg $
  */
 
 /*
@@ -112,7 +112,7 @@ struct ipc_perm {
 #define	IPC_STAT	2	/* get options */
 #if __BSD_VISIBLE
 /*
- * For Linux compatability.
+ * For Linux compatibility.
  */
 #define	IPC_INFO	3	/* get info */
 #endif

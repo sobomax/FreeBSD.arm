@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libmt/mtlib.c 279570 2015-03-03 22:49:07Z ken $");
+__FBSDID("$FreeBSD: head/lib/libmt/mtlib.c 300327 2016-05-20 19:30:52Z ken $");
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -643,6 +643,7 @@ static struct densities {
 	{ 0x55, 20670,  525018, "3592A5 (unencrypted)" },
 	{ 0x58, 15142,  384607, "LTO-5" },
 	{ 0x5A, 15142,  384607, "LTO-6" },
+	{ 0x5C, 19107,  485318, "LTO-7" },
 	{ 0x71, 11800,  299720, "3592A1 (encrypted)" },
 	{ 0x72, 11800,  299720, "3592A2 (encrypted)" },
 	{ 0x73, 13452,  341681, "3592A3 (encrypted)" },

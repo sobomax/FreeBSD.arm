@@ -22,7 +22,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/powermac/uninorthvar.h 259284 2013-12-13 02:37:35Z jhibbits $
+ * $FreeBSD: head/sys/powerpc/powermac/uninorthvar.h 297392 2016-03-29 15:19:56Z zbb $
  */
 
 #ifndef	_POWERPC_POWERMAC_UNINORTHVAR_H_
@@ -30,7 +30,7 @@
 
 #include <dev/ofw/ofw_bus_subr.h>
 #include <dev/ofw/ofw_pci.h>
-#include <powerpc/ofw/ofw_pci.h>
+#include <dev/ofw/ofwpci.h>
 
 struct uninorth_softc {
 	struct ofw_pci_softc	pci_sc;

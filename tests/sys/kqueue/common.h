@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/tests/sys/kqueue/common.h 200483 2009-12-13 20:27:46Z rwatson $
+ * $FreeBSD: head/tests/sys/kqueue/common.h 295012 2016-01-28 20:24:15Z vangyzen $
  */
 
 #ifndef _COMMON_H
@@ -46,6 +46,7 @@ int vnode_fd;
 
 extern const char * kevent_to_str(struct kevent *);
 struct kevent * kevent_get(int);
+struct kevent * kevent_get_timeout(int, int);
 
 
 void kevent_cmp(struct kevent *, struct kevent *);

@@ -100,6 +100,18 @@ flag = {
 };
 
 flag = {
+    name      = refid;
+    value     = r;
+    descrip   = "Set default display type for S2+ refids";
+    arg-type  = keyword;
+    keyword   = hash, ipv4;
+    arg-default = ipv4;
+    doc = <<-  _EndOfDoc_
+	Set the default display format for S2+ refids.
+	_EndOfDoc_;
+};
+
+flag = {
     name      = wide;
     value     = w;
     descrip   = "Display the full 'remote' value";
@@ -325,7 +337,9 @@ switch.
 This command allows the specification of a key number to be
 used to authenticate configuration requests.
 This must correspond
-to a key number the server has been configured to use for this
+to the
+.Cm controlkey
+key number the server has been configured to use for this
 purpose.
 .It Ic keytype Xo Oo
 .Cm md5 |
@@ -606,6 +620,14 @@ offset of server relative to this host
 .It Ic jitter
 jitter
 .El
+.It Ic apeers
+Display a list of peers in the form:
+.Dl [tally]remote refid assid st t when pool reach delay offset jitter
+where the output is just like the
+.Ic peers
+command except that the
+.Ic refid
+is displayed in hex format and the association number is also displayed.
 .It Ic pstats Ar assocID
 Show the statistics for the peer with the given
 .Ar assocID .

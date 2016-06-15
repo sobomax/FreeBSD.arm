@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/cpuset.h 284866 2015-06-26 04:14:05Z adrian $
+ * $FreeBSD: head/sys/sys/cpuset.h 299122 2016-05-05 15:43:26Z jhb $
  */
 
 #ifndef _SYS_CPUSET_H_
@@ -35,6 +35,10 @@
 #include <sys/_cpuset.h>
 
 #include <sys/bitset.h>
+#include <sys/queue.h>
+
+#define	_NCPUBITS	_BITSET_BITS
+#define	_NCPUWORDS	__bitset_words(CPU_SETSIZE)
 
 #define	CPUSETBUFSIZ	((2 + sizeof(long) * 2) * _NCPUWORDS)
 
@@ -61,6 +65,8 @@
 #define	CPU_COPY_STORE_REL(f, t)	BIT_COPY_STORE_REL(CPU_SETSIZE, f, t)
 #define	CPU_FFS(p)			BIT_FFS(CPU_SETSIZE, p)
 #define	CPU_COUNT(p)			BIT_COUNT(CPU_SETSIZE, p)
+#define	CPUSET_FSET			BITSET_FSET(_NCPUWORDS)
+#define	CPUSET_T_INITIALIZER		BITSET_T_INITIALIZER
 
 /*
  * Valid cpulevel_t values.
@@ -116,6 +122,7 @@ struct cpuset {
 extern cpuset_t *cpuset_root;
 struct prison;
 struct proc;
+struct thread;
 
 struct cpuset *cpuset_thread0(void);
 struct cpuset *cpuset_ref(struct cpuset *);

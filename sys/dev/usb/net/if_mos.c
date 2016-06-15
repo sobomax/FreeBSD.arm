@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_mos.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_mos.c 298918 2016-05-02 05:37:25Z adrian $");
 
 /*
  * Moschip MCS7730/MCS7830/MCS7832 USB to Ethernet controller
@@ -247,6 +247,7 @@ MODULE_DEPEND(mos, uether, 1, 1, 1);
 MODULE_DEPEND(mos, usb, 1, 1, 1);
 MODULE_DEPEND(mos, ether, 1, 1, 1);
 MODULE_DEPEND(mos, miibus, 1, 1, 1);
+USB_PNP_HOST_INFO(mos_devs);
 
 static const struct usb_ether_methods mos_ue_methods = {
 	.ue_attach_post = mos_attach_post,
@@ -417,7 +418,7 @@ mos_write_mcast(struct mos_softc *sc, u_char *hashtbl)
 }
 
 static int
-mos_miibus_readreg(struct device *dev, int phy, int reg)
+mos_miibus_readreg(device_t dev, int phy, int reg)
 {
 	struct mos_softc *sc = device_get_softc(dev);
 	uWord val;
@@ -607,7 +608,7 @@ mos_setmulti(struct usb_ether *ue)
 		if (ifma->ifma_addr->sa_family != AF_LINK) {
 			allmulti = 1;
 			continue;
-		};
+		}
 		h = ether_crc32_be(LLADDR((struct sockaddr_dl *)
 		    ifma->ifma_addr), ETHER_ADDR_LEN) >> 26;
 		hashtbl[h / 8] |= 1 << (h % 8);

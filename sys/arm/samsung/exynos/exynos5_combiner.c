@@ -28,9 +28,11 @@
  * Samsung Exynos 5 Interrupt Combiner
  * Chapter 7, Exynos 5 Dual User's Manual Public Rev 1.00
  */
-
+#ifdef USB_GLOBAL_INCLUDE_FILE
+#include USB_GLOBAL_INCLUDE_FILE
+#else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_combiner.c 269703 2014-08-08 06:30:17Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_combiner.c 291405 2015-11-27 18:22:04Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,6 +52,7 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_combiner.c 269703 2014-0
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/intr.h>
+#endif
 
 #include <arm/samsung/exynos/exynos5_common.h>
 #include <arm/samsung/exynos/exynos5_combiner.h>

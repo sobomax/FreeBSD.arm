@@ -22,17 +22,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/tools/ath/athradar/athradar.c 231710 2012-02-14 20:08:50Z adrian $
+ * $FreeBSD: head/tools/tools/ath/athradar/athradar.c 295363 2016-02-07 04:28:03Z adrian $
  */
 
 #include "diag.h"
 
 #include "ah.h"
 #include "ah_internal.h"
-
-#ifndef	ATH_DEFAULT
-#define	ATH_DEFAULT	"ath0"
-#endif
 
 #include <getopt.h>
 #include <errno.h>

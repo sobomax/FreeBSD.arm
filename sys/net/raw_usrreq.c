@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)raw_usrreq.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/raw_usrreq.c 257135 2013-10-25 19:49:03Z glebius $
+ * $FreeBSD: head/sys/net/raw_usrreq.c 298075 2016-04-15 17:30:33Z pfg $
  */
 
 #include <sys/param.h>
@@ -83,7 +83,7 @@ raw_input_ext(struct mbuf *m0, struct sockproto *proto, struct sockaddr *src,
 	struct mbuf *m = m0;
 	struct socket *last;
 
-	last = 0;
+	last = NULL;
 	mtx_lock(&rawcb_mtx);
 	LIST_FOREACH(rp, &V_rawcb_list, list) {
 		if (rp->rcb_proto.sp_family != proto->sp_family)

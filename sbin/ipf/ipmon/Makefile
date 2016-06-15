@@ -1,5 +1,6 @@
-#	$FreeBSD: head/sbin/ipf/ipmon/Makefile 270168 2014-08-19 15:04:32Z bdrewery $
+#	$FreeBSD: head/sbin/ipf/ipmon/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	ipf
 PROG=		ipmon
 SRCS=		${GENHDRS} ipmon.c ipmon_y.c ipmon_l.c
 MAN=		ipmon.8
@@ -7,8 +8,6 @@ MAN=		ipmon.8
 CFLAGS+=	-DLOGFAC=LOG_LOCAL0 -I.
 
 GENHDRS+=	ipmon_l.h ipmon_y.h
-DPSRCS+=	${GENHDRS}
-
 CLEANFILES+=	${GENHDRS} ipmon_y.c ipmon_l.c
 
 ipmon_y.c: ipmon_y.y

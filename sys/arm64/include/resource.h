@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/resource.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/resource.h 300206 2016-05-19 14:00:18Z andrew $
  */
 
 #ifndef _MACHINE_RESOURCE_H_
@@ -42,5 +42,8 @@
 #define	SYS_RES_MEMORY	3	/* i/o memory */
 #define	SYS_RES_IOPORT	4	/* i/o ports */
 #define	SYS_RES_GPIO	5	/* general purpose i/o */
+#ifdef NEW_PCIB
+#define	PCI_RES_BUS	6	/* PCI bus numbers */
+#endif
 
 #endif /* !_MACHINE_RESOURCE_H_ */

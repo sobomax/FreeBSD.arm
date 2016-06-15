@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nge/if_nge.c 277050 2015-01-12 07:43:19Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/nge/if_nge.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * National Semiconductor DP83820/DP83821 gigabit ethernet driver
@@ -2109,7 +2109,7 @@ nge_init_locked(struct nge_softc *sc)
 	CSR_WRITE_4(sc, NGE_PRIOQCTL, 0);
 
 	/*
-	 * Set pause frames paramters.
+	 * Set pause frames parameters.
 	 *  Rx stat FIFO hi-threshold : 2 or more packets
 	 *  Rx stat FIFO lo-threshold : less than 2 packets
 	 *  Rx data FIFO hi-threshold : 2K or more bytes

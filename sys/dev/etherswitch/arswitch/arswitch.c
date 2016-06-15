@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch.c 279797 2015-03-08 23:02:15Z adrian $
+ * $FreeBSD: head/sys/dev/etherswitch/arswitch/arswitch.c 297793 2016-04-10 23:07:00Z pfg $
  */
 
 #include <sys/param.h>
@@ -52,7 +52,7 @@
 #include <dev/iicbus/iicbus.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/etherswitch/etherswitch.h>
 
@@ -225,7 +225,7 @@ arswitch_set_vlan_mode(struct arswitch_softc *sc, uint32_t mode)
 		break;
 	default:
 		sc->vlan_mode = 0;
-	};
+	}
 
 	/* Reset VLANs. */
 	sc->hal.arswitch_vlan_init_hw(sc);

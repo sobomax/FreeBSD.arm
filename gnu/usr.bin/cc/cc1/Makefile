@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/cc1/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/gnu/usr.bin/cc/cc1/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 MAN=
 .include <src.opts.mk>
@@ -9,7 +9,7 @@ MAN=
 
 PROG=	cc1
 SRCS=	main.c c-parser.c c-lang.c
-BINDIR=	/usr/libexec
+BINDIR=	${LIBEXECDIR}
 .if ${MK_SHARED_TOOLCHAIN} == "no"
 NO_SHARED?=yes
 .endif

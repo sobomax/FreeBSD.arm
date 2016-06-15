@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_ctx.c 284869 2015-06-26 07:01:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_ctx.c 298144 2016-04-17 10:56:56Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -74,7 +74,6 @@ static void dmar_domain_unload_task(void *arg, int pending);
 static void dmar_unref_domain_locked(struct dmar_unit *dmar,
     struct dmar_domain *domain);
 static void dmar_domain_destroy(struct dmar_domain *domain);
-static void dmar_ctx_dtr(struct dmar_ctx *ctx);
 
 static void
 dmar_ensure_ctx_page(struct dmar_unit *dmar, int bus)
@@ -712,6 +711,18 @@ dmar_domain_unload_entry(struct dmar_map_entry *entry, bool free)
 	}
 }
 
+static struct dmar_qi_genseq *
+dmar_domain_unload_gseq(struct dmar_domain *domain,
+    struct dmar_map_entry *entry, struct dmar_qi_genseq *gseq)
+{
+
+	if (TAILQ_NEXT(entry, dmamap_link) != NULL)
+		return (NULL);
+	if (domain->batch_no++ % dmar_batch_coalesce != 0)
+		return (NULL);
+	return (gseq);
+}
+
 void
 dmar_domain_unload(struct dmar_domain *domain,
     struct dmar_map_entries_tailq *entries, bool cansleep)
@@ -745,8 +756,8 @@ dmar_domain_unload(struct dmar_domain *domain,
 		entry->gseq.gen = 0;
 		entry->gseq.seq = 0;
 		dmar_qi_invalidate_locked(domain, entry->start, entry->end -
-		    entry->start, TAILQ_NEXT(entry, dmamap_link) == NULL ?
-		    &gseq : NULL);
+		    entry->start, dmar_domain_unload_gseq(domain, entry,
+		    &gseq));
 	}
 	TAILQ_FOREACH_SAFE(entry, entries, dmamap_link, entry1) {
 		entry->gseq = gseq;

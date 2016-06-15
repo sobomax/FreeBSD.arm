@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.2 (Berkeley) 4/20/94
-# $FreeBSD: head/share/doc/usd/Makefile 281994 2015-04-26 07:52:43Z bapt $
+# $FreeBSD: head/share/doc/usd/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 # The following modules are not provided:
 # 14.jove
@@ -19,5 +19,6 @@ SUBDIR=	title \
 	20.meref \
 	21.troff \
 	22.trofftut
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

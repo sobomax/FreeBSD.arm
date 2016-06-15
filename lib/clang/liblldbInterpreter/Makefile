@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/liblldbInterpreter/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -34,6 +34,8 @@ SRCS=	Args.cpp \
 	OptionValueFileSpec.cpp \
 	OptionValueFileSpecLIst.cpp \
 	OptionValueFormat.cpp \
+	OptionValueFormatEntity.cpp \
+	OptionValueLanguage.cpp \
 	OptionValuePathMappings.cpp \
 	OptionValueProperties.cpp \
 	OptionValueRegex.cpp \
@@ -45,10 +47,7 @@ SRCS=	Args.cpp \
 	OptionGroupWatchpoint.cpp \
 	Options.cpp \
 	Property.cpp \
-	PythonDataObjects.cpp \
-	ScriptInterpreter.cpp \
-	ScriptInterpreterNone.cpp \
-	ScriptInterpreterPython.cpp
+	ScriptInterpreter.cpp
 
 TGHDRS=	AttrList \
 	Attrs \

@@ -1,7 +1,9 @@
-# $FreeBSD: head/tests/sys/vm/Makefile 282104 2015-04-27 17:53:09Z ngie $
+# $FreeBSD: head/tests/sys/vm/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/vm
 
-TAP_TESTS_C+=	mmap_test
+ATF_TESTS_C+=	mmap_test
 
 .include <bsd.test.mk>

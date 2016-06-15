@@ -1,28 +1,18 @@
-# $FreeBSD: head/lib/clang/liblldbDataFormatters/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/liblldbDataFormatters/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
 LIB=	lldbDataFormatters
 
 SRCDIR=	tools/lldb/source/DataFormatters
-SRCS=	CF.cpp \
-	Cocoa.cpp \
-	CXXFormatterFunctions.cpp \
+SRCS=	CXXFunctionPointer.cpp \
 	DataVisualization.cpp \
+	DumpValueObjectOptions.cpp \
 	FormatCache.cpp \
 	FormatClasses.cpp \
 	FormatManager.cpp \
-	LibCxx.cpp \
-	LibCxxInitializerList.cpp \
-	LibCxxList.cpp \
-	LibCxxMap.cpp \
-	LibCxxUnorderedMap.cpp \
-	LibCxxVector.cpp \
-	LibStdcpp.cpp \
-	NSArray.cpp \
-	NSDictionary.cpp \
-	NSIndexPath.cpp \
-	NSSet.cpp \
+	FormattersHelpers.cpp \
+	LanguageCategory.cpp \
 	StringPrinter.cpp \
 	TypeCategory.cpp \
 	TypeCategoryMap.cpp \
@@ -30,7 +20,8 @@ SRCS=	CF.cpp \
 	TypeSummary.cpp \
 	TypeSynthetic.cpp \
 	TypeValidator.cpp \
-	ValueObjectPrinter.cpp
+	ValueObjectPrinter.cpp \
+	VectorType.cpp
 
 TGHDRS=	AttrList \
 	Attrs \

@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libstand/dosfs.h 259590 2013-12-19 05:23:10Z marcel $
+ * $FreeBSD: head/lib/libstand/dosfs.h 298230 2016-04-18 23:09:22Z allanjude $
  */
 
 #ifndef DOSIO_H
@@ -96,8 +96,6 @@ typedef union {
 
 typedef struct {
     struct open_file *fd;       /* file descriptor */
-    u_char *buf;                /* buffer */
-    u_int bufsec;               /* buffered sector */
     u_int links;                /* active links to structure */
     u_int spc;                  /* sectors per cluster */
     u_int bsize;                /* cluster size in bytes */

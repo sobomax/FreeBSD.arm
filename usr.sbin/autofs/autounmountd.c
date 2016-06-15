@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/autofs/autounmountd.c 277834 2015-01-28 15:46:11Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/autofs/autounmountd.c 294670 2016-01-24 18:11:36Z trasz $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -37,13 +37,13 @@ __FBSDID("$FreeBSD: head/usr.sbin/autofs/autounmountd.c 277834 2015-01-28 15:46:
 #include <sys/time.h>
 #include <assert.h>
 #include <errno.h>
+#include <libutil.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <libutil.h>
 
 #include "common.h"
 

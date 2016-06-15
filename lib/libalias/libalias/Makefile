@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libalias/libalias/Makefile 204596 2010-03-02 18:44:08Z uqs $
+# $FreeBSD: head/lib/libalias/libalias/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .PATH: ${.CURDIR}/../../../sys/netinet/libalias
 
+PACKAGE=lib${LIB}
 LIB=	alias
 SHLIBDIR?= /lib
 SHLIB_MAJOR= 7

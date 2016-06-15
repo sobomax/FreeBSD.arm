@@ -1,9 +1,10 @@
 #
-# $FreeBSD: head/lib/libusb/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libusb/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
 
+PACKAGE=lib${LIB}
 LIB=		usb
 SHLIB_MAJOR=	3
 SHLIB_MINOR=	0
@@ -37,15 +38,8 @@ SRCS+=		libusb10_io.c
 CFLAGS+=	-DCOMPAT_32BIT
 .endif
 
-.ifndef COMPAT_32BIT
-beforeinstall:
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libusb-0.1.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libusb-1.0.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libusb-2.0.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-.endif
+FILES=		libusb-0.1.pc libusb-1.0.pc libusb-2.0.pc
+FILESDIR=	${LIBDATADIR}/pkgconfig
 
 #
 # Cross platform support
@@ -69,8 +63,6 @@ CFLAGS+=	-DLIBUSB_GLOBAL_INCLUDE_FILE=\"${LIBUSB_GLOBAL_INCLUDE_FILE}\"
 CFLAGS+=	-DUSB_GLOBAL_INCLUDE_FILE=\"${LIBUSB_GLOBAL_INCLUDE_FILE}\"
 CFLAGS+=	-I ../../sys
 .endif
-
-.include <bsd.lib.mk>
 
 # LibUSB v1.0
 MLINKS += libusb.3 libusb_init.3
@@ -259,3 +251,5 @@ MLINKS += libusb20.3 libusb20_me_decode.3
 MLINKS += libusb20.3 libusb20_desc_foreach.3
 MLINKS += libusb20.3 libusb20_strerror.3
 MLINKS += libusb20.3 libusb20_error_name.3
+
+.include <bsd.lib.mk>

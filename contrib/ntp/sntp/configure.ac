@@ -11,6 +11,7 @@ AC_INIT(
 )
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([libevent/build-aux])
+AC_LANG([C])
 
 # Bump sntp_configure_cache_version for each change to configure.ac or
 # .m4 files which invalidates cached values from previous configure 
@@ -137,9 +138,12 @@ AC_DEFINE([HAVE_TERMIOS], 1, [sntp does not care about TTY stuff])
 # Checks for library functions.
 AC_CHECK_FUNCS([socket])
 
+NTP_UNITYBUILD
 # HMS: if we don't find c++ we should not look for gtest.
 AC_PROG_CXX
 NTP_GOOGLETEST
+
+SNTP_PROBLEM_TESTS
 
 # All libraries should be in various LIB_* variables now. 
 #LIBS=
@@ -150,5 +154,7 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([include/Makefile])
 AC_CONFIG_FILES([scripts/Makefile])
 AC_CONFIG_FILES([tests/Makefile])
+AC_CONFIG_FILES([tests/fileHandlingTest.h])
+AC_CONFIG_FILES([unity/Makefile])
 
 AC_OUTPUT

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ppp/radius.c 277857 2015-01-28 21:33:49Z dim $
+ * $FreeBSD: head/usr.sbin/ppp/radius.c 298089 2016-04-15 22:31:22Z pfg $
  *
  */
 
@@ -1150,7 +1150,7 @@ radius_Account(struct radius *r, struct radacct *ac, struct datalink *dl,
     snprintf(ac->multi_session_id, sizeof ac->multi_session_id, "%s",
              dl->bundle->ncp.mp.active ?
              dl->bundle->ncp.mp.server.socket.sun_path : "");
-  };
+  }
 
   if (rad_put_string(r->cx.rad, RAD_USER_NAME, ac->user_name) != 0 ||
       rad_put_int(r->cx.rad, RAD_SERVICE_TYPE, RAD_FRAMED) != 0 ||

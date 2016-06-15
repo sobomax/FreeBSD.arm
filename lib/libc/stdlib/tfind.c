@@ -17,18 +17,21 @@
 __RCSID("$NetBSD: tfind.c,v 1.2 1999/09/16 11:45:37 lukem Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: head/lib/libc/stdlib/tfind.c 108694 2003-01-05 02:43:18Z tjr $");
+__FBSDID("$FreeBSD: head/lib/libc/stdlib/tfind.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #define _SEARCH_PRIVATE
 #include <stdlib.h>
 #include <search.h>
 
-/* find a node, or return 0 */
+/* 
+ * find a node, or return 0
+ *
+ * vkey   - key to be found 
+ * vrootp - address of the tree root 
+ */
 void *
-tfind(vkey, vrootp, compar)
-	const void *vkey;		/* key to be found */
-	void * const *vrootp;		/* address of the tree root */
-	int (*compar)(const void *, const void *);
+tfind(const void *vkey, void * const *vrootp,
+    int (*compar)(const void *, const void *))
 {
 	node_t **rootp = (node_t **)vrootp;
 

@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_asm_float.S 283807 2015-05-31 09:07:26Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_asm_float.S 288373 2015-09-29 16:09:58Z kib $");
 
 #define	PCR_Z	(1 << 30)
 #define	PCR_C	(1 << 29)
@@ -108,3 +108,5 @@ ENTRY(__aeabi_cfcmpeq)
 	msr	cpsr_c, ip
 	RET
 END(__aeabi_cfcmpeq)
+
+	.section .note.GNU-stack,"",%progbits

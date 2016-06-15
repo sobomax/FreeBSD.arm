@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/geom/part/g_part_if.m 274661 2014-11-18 17:06:40Z imp $
+# $FreeBSD: head/sys/geom/part/g_part_if.m 298808 2016-04-29 20:56:58Z pfg $
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -201,7 +201,7 @@ METHOD int setunset {
 };
 
 # type() - return a string representation of the partition type.
-# Preferrably, the alias names.
+# Preferably, the alias names.
 METHOD const char * type {
         struct g_part_table *table;
         struct g_part_entry *entry;

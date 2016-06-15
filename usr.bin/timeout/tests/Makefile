@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.bin/timeout/tests/Makefile 273771 2014-10-28 10:39:41Z bapt $
-
-TESTSDIR=	${TESTSBASE}/usr.bin/timeout
+# $FreeBSD: head/usr.bin/timeout/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 ATF_TESTS_SH=	timeout
 

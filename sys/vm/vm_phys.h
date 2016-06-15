@@ -28,7 +28,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/vm_phys.h 282621 2015-05-08 06:02:23Z adrian $
+ * $FreeBSD: head/sys/vm/vm_phys.h 297748 2016-04-09 13:58:04Z jhb $
  */
 
 /*
@@ -84,9 +84,12 @@ void vm_phys_free_contig(vm_page_t m, u_long npages);
 void vm_phys_free_pages(vm_page_t m, int order);
 void vm_phys_init(void);
 vm_page_t vm_phys_paddr_to_vm_page(vm_paddr_t pa);
+vm_page_t vm_phys_scan_contig(u_long npages, vm_paddr_t low, vm_paddr_t high,
+    u_long alignment, vm_paddr_t boundary, int options);
 void vm_phys_set_pool(int pool, vm_page_t m, int order);
 boolean_t vm_phys_unfree_page(vm_page_t m);
 boolean_t vm_phys_zero_pages_idle(void);
+int vm_phys_mem_affinity(int f, int t);
 
 /*
  *	vm_phys_domain:
@@ -96,7 +99,7 @@ boolean_t vm_phys_zero_pages_idle(void);
 static inline struct vm_domain *
 vm_phys_domain(vm_page_t m)
 {
-#if MAXMEMDOM > 1
+#ifdef VM_NUMA_ALLOC
 	int domn, segind;
 
 	/* XXXKIB try to assert that the page is managed */

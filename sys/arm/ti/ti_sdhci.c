@@ -26,7 +26,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_sdhci.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_sdhci.c 297127 2016-03-21 00:52:24Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -725,3 +725,5 @@ static driver_t ti_sdhci_driver = {
 
 DRIVER_MODULE(sdhci_ti, simplebus, ti_sdhci_driver, ti_sdhci_devclass, 0, 0);
 MODULE_DEPEND(sdhci_ti, sdhci, 1, 1, 1);
+DRIVER_MODULE(mmc, sdhci_ti, mmc_driver, mmc_devclass, NULL, NULL);
+MODULE_DEPEND(sdhci_ti, mmc, 1, 1, 1);

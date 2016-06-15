@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libcuse/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libcuse/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 # Copyright (c) 2010 Hans Petter Selasky. All rights reserved.
 #
@@ -24,6 +24,7 @@
 # SUCH DAMAGE.
 #
 
+PACKAGE=lib${LIB}
 LIB=		cuse
 SHLIB_MAJOR=	1
 SHLIB_MINOR=	0

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_clkmsr.c 281418 2015-04-11 08:34:41Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_clkmsr.c 298352 2016-04-20 15:45:55Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,8 +69,7 @@ static struct aml8726_clkmsr_clk {
 
 #define	AML_CLKMSR_CLK81	0
 
-#define	AML_CLKMSR_NCLKS	(sizeof(aml8726_clkmsr_clks) \
-    / sizeof(aml8726_clkmsr_clks[0]))
+#define	AML_CLKMSR_NCLKS	nitems(aml8726_clkmsr_clks)
 
 struct aml8726_clkmsr_softc {
 	device_t		dev;

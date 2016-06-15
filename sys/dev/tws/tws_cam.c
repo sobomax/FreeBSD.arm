@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/tws/tws_cam.c 274819 2014-11-21 21:01:24Z smh $
+ * $FreeBSD: head/sys/dev/tws/tws_cam.c 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #include <dev/tws/tws.h>
@@ -1099,7 +1099,7 @@ tws_intr_attn_aen(struct tws_softc *sc)
 {
     u_int32_t db=0;
 
-    /* maskoff db intrs untill all the aens are fetched */
+    /* maskoff db intrs until all the aens are fetched */
     /* tws_disable_db_intr(sc); */
     tws_fetch_aen((void *)sc);
     tws_write_reg(sc, TWS_I2O0_HOBDBC, TWS_BIT18, 4);

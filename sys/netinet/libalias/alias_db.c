@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_db.c 259859 2013-12-25 03:24:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet/libalias/alias_db.c 298066 2016-04-15 15:46:41Z pfg $");
 
 /*
     Alias_db.c encapsulates all data structures used for storing
@@ -784,9 +784,9 @@ FindNewPortGroup(struct libalias *la,
 		struct alias_link *search_result;
 
 		for (j = 0; j < port_count; j++)
-			if (0 != (search_result = FindLinkIn(la, dst_addr, alias_addr,
-			    dst_port, htons(port_sys + j),
-			    link_type, 0)))
+			if ((search_result = FindLinkIn(la, dst_addr,
+			    alias_addr, dst_port, htons(port_sys + j),
+			    link_type, 0)) != NULL)
 				break;
 
 		/* Found a good range, return base */

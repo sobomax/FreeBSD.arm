@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_gas.c 284869 2015-06-26 07:01:29Z kib $");
+__FBSDID("$FreeBSD: head/sys/x86/iommu/intel_gas.c 298433 2016-04-21 19:57:40Z pfg $");
 
 #define	RB_AUGMENT(entry) dmar_gas_augment_entry(entry)
 
@@ -327,8 +327,8 @@ dmar_gas_match_one(struct dmar_gas_match_args *a, struct dmar_map_entry *prev,
 	 * the boundary.  Check if there is enough space after the
 	 * next boundary after the prev->end.
 	 */
-	bs = (a->entry->start + a->offset + a->common->boundary) &
-	    ~(a->common->boundary - 1);
+	bs = rounddown2(a->entry->start + a->offset + a->common->boundary,
+	    a->common->boundary);
 	start = roundup2(bs, a->common->alignment);
 	/* DMAR_PAGE_SIZE to create gap after new entry. */
 	if (start + a->offset + a->size + DMAR_PAGE_SIZE <=

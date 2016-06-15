@@ -29,7 +29,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_sym.c 284508 2015-06-17 10:20:59Z bz $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_sym.c 298073 2016-04-15 17:27:20Z pfg $");
+
+#include "opt_kstack_pages.h"
 
 #include <sys/param.h>
 #include <sys/pcpu.h>
@@ -393,7 +395,7 @@ db_symbol_values(c_db_sym_t sym, const char **namep, db_expr_t *valuep)
 	db_expr_t	value;
 
 	if (sym == DB_SYM_NULL) {
-		*namep = 0;
+		*namep = NULL;
 		return;
 	}
 
@@ -436,13 +438,13 @@ db_printsym(db_expr_t off, db_strategy_t strategy)
 
 	cursym = db_search_symbol(off, strategy, &d);
 	db_symbol_values(cursym, &name, &value);
-	if (name == 0)
+	if (name == NULL)
 		value = off;
 	if (value >= DB_SMALL_VALUE_MIN && value <= DB_SMALL_VALUE_MAX) {
 		db_printf("%+#lr", (long)off);
 		return;
 	}
-	if (name == 0 || d >= (unsigned long)db_maxoff) {
+	if (name == NULL || d >= (unsigned long)db_maxoff) {
 		db_printf("%#lr", (unsigned long)off);
 		return;
 	}

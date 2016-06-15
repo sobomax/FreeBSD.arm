@@ -34,8 +34,9 @@
 static char sccsid[] = "@(#)sysconf.c	8.2 (Berkeley) 3/20/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 268467 2014-07-09 19:12:18Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 292521 2015-12-20 23:05:20Z jilles $");
 
+#include "namespace.h"
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/sysctl.h>
@@ -49,6 +50,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 268467 2014-07-09 19:12:18Z kib 
 #include <pthread.h>		/* we just need the limits */
 #include <time.h>
 #include <unistd.h>
+#include "un-namespace.h"
 
 #include "../stdlib/atexit.h"
 #include "tzfile.h"		/* from ../../../contrib/tzcode/stdtime */
@@ -69,8 +71,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/sysconf.c 268467 2014-07-09 19:12:18Z kib 
  * less useful than returning up-to-date values, however.
  */
 long
-sysconf(name)
-	int name;
+sysconf(int name)
 {
 	struct rlimit rl;
 	size_t len;
@@ -576,10 +577,10 @@ yesno:
 	case _SC_IPV6:
 #if _POSIX_IPV6 == 0
 		sverrno = errno;
-		value = socket(PF_INET6, SOCK_DGRAM, 0);
+		value = _socket(PF_INET6, SOCK_DGRAM, 0);
 		errno = sverrno;
 		if (value >= 0) {
-			close(value);
+			_close(value);
 			return (200112L);
 		} else
 			return (0);

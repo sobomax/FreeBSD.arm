@@ -1,8 +1,7 @@
-# $FreeBSD: head/tools/diag/dumpvfscache/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/tools/diag/dumpvfscache/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	dumpvfscache
-DPADD=	${LIBKVM}
-LDADD=	-lkvm
+LIBADD=	kvm
 
 MAN=
 

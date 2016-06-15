@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_write_set_format_pax.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_write_set_format_pax.c 299529 2016-05-12 10:16:16Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -1036,22 +1036,12 @@ archive_write_pax_header(struct archive_write *a,
 		need_extension = 1;
 
 	/*
-	 * The following items are handled differently in "pax
-	 * restricted" format.  In particular, in "pax restricted"
-	 * format they won't be added unless need_extension is
-	 * already set (we're already generating an extended header, so
-	 * may as well include these).
+	 * Libarchive used to include these in extended headers for
+	 * restricted pax format, but that confused people who
+	 * expected ustar-like time semantics.  So now we only include
+	 * them in full pax format.
 	 */
-	if (a->archive.archive_format != ARCHIVE_FORMAT_TAR_PAX_RESTRICTED ||
-	    need_extension) {
-
-		if (archive_entry_mtime(entry_main) < 0  ||
-		    archive_entry_mtime(entry_main) >= 0x7fffffff  ||
-		    archive_entry_mtime_nsec(entry_main) != 0)
-			add_pax_attr_time(&(pax->pax_header), "mtime",
-			    archive_entry_mtime(entry_main),
-			    archive_entry_mtime_nsec(entry_main));
-
+	if (a->archive.archive_format != ARCHIVE_FORMAT_TAR_PAX_RESTRICTED) {
 		if (archive_entry_ctime(entry_main) != 0  ||
 		    archive_entry_ctime_nsec(entry_main) != 0)
 			add_pax_attr_time(&(pax->pax_header), "ctime",
@@ -1072,6 +1062,23 @@ archive_write_pax_header(struct archive_write *a,
 			    "LIBARCHIVE.creationtime",
 			    archive_entry_birthtime(entry_main),
 			    archive_entry_birthtime_nsec(entry_main));
+	}
+
+	/*
+	 * The following items are handled differently in "pax
+	 * restricted" format.  In particular, in "pax restricted"
+	 * format they won't be added unless need_extension is
+	 * already set (we're already generating an extended header, so
+	 * may as well include these).
+	 */
+	if (a->archive.archive_format != ARCHIVE_FORMAT_TAR_PAX_RESTRICTED ||
+	    need_extension) {
+		if (archive_entry_mtime(entry_main) < 0  ||
+		    archive_entry_mtime(entry_main) >= 0x7fffffff  ||
+		    archive_entry_mtime_nsec(entry_main) != 0)
+			add_pax_attr_time(&(pax->pax_header), "mtime",
+			    archive_entry_mtime(entry_main),
+			    archive_entry_mtime_nsec(entry_main));
 
 		/* I use a star-compatible file flag attribute. */
 		p = archive_entry_fflags_text(entry_main);

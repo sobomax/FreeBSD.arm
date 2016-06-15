@@ -39,7 +39,7 @@
  *
  * $Id: //depot/aic7xxx/aic7xxx/aic7xxx_inline.h#47 $
  *
- * $FreeBSD: head/sys/dev/aic7xxx/aic7xxx_inline.h 168873 2007-04-19 18:53:52Z scottl $
+ * $FreeBSD: head/sys/dev/aic7xxx/aic7xxx_inline.h 299375 2016-05-10 16:40:19Z pfg $
  */
 
 #ifndef _AIC7XXX_INLINE_H_
@@ -229,7 +229,7 @@ ahc_name(struct ahc_softc *ahc)
 	return (ahc->name);
 }
 
-/*********************** Miscelaneous Support Functions ***********************/
+/********************** Miscellaneous Support Functions ***********************/
 
 static __inline void	ahc_update_residual(struct ahc_softc *ahc,
 					    struct scb *scb);

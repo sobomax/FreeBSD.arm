@@ -22,7 +22,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/adb/adb_mouse.c 261068 2014-01-23 01:09:33Z jhibbits $
+ * $FreeBSD: head/sys/dev/adb/adb_mouse.c 298433 2016-04-21 19:57:40Z pfg $
  */
 
 #include <sys/cdefs.h>
@@ -403,7 +403,7 @@ adb_mouse_receive_packet(device_t dev, u_char status, u_char command,
 	 * high button events when they are touched.
 	 */
 
-	if (buttons & ~((1 << sc->hw.buttons) - 1)
+	if (rounddown2(buttons, 1 << sc->hw.buttons)
 	    && !(sc->flags & AMS_TOUCHPAD)) {
 		buttons |= 1 << (sc->hw.buttons - 1);
 	}

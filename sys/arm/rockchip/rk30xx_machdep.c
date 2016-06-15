@@ -32,19 +32,19 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_machdep.c 266301 2014-05-17 11:27:36Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/rockchip/rk30xx_machdep.c 298627 2016-04-26 11:53:37Z br $");
 
 #define _ARM32_BUS_DMA_PRIVATE
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
+#include <sys/devmap.h>
 
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
 #include <machine/armreg.h>
 #include <machine/bus.h>
-#include <machine/devmap.h>
 #include <machine/machdep.h>
 #include <machine/platform.h> 
 
@@ -56,7 +56,7 @@ vm_offset_t
 platform_lastaddr(void)
 {
 
-	return (arm_devmap_lastaddr());
+	return (devmap_lastaddr());
 }
 
 void
@@ -86,8 +86,8 @@ int
 platform_devmap_init(void)
 {
 
-	arm_devmap_add_entry(0x10000000, 0x00200000);
-	arm_devmap_add_entry(0x20000000, 0x00100000);
+	devmap_add_entry(0x10000000, 0x00200000);
+	devmap_add_entry(0x20000000, 0x00100000);
 	
 	return (0);
 }

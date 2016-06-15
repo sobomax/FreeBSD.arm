@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/io/vlapic.c 282301 2015-05-01 16:00:29Z neel $
+ * $FreeBSD: head/sys/amd64/vmm/io/vlapic.c 299009 2016-05-03 22:07:18Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 282301 2015-05-01 16:00:29Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/io/vlapic.c 299009 2016-05-03 22:07:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -841,7 +841,7 @@ vlapic_calcdest(struct vm *vm, cpuset_t *dmask, uint32_t dest, bool phys,
 	} else {
 		/*
 		 * In the "Flat Model" the MDA is interpreted as an 8-bit wide
-		 * bitmask. This model is only avilable in the xAPIC mode.
+		 * bitmask. This model is only available in the xAPIC mode.
 		 */
 		mda_flat_ldest = dest & 0xff;
 

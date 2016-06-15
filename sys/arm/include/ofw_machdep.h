@@ -26,19 +26,22 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/include/ofw_machdep.h 260327 2014-01-05 18:46:58Z nwhitehorn $
+ * $FreeBSD: head/sys/arm/include/ofw_machdep.h 294754 2016-01-25 23:04:40Z andrew $
  */
 
 #ifndef _MACHINE_OFW_MACHDEP_H_
 #define _MACHINE_OFW_MACHDEP_H_
 
+#include <sys/types.h>
+#include <sys/bus.h>
+#include <sys/rman.h>
 #include <vm/vm.h>
 
 typedef	uint32_t	cell_t;
 
 struct mem_region {
-	vm_offset_t	mr_start;
-	vm_size_t	mr_size;
+	uint64_t	mr_start;
+	uint64_t	mr_size;
 };
 
 #endif /* _MACHINE_OFW_MACHDEP_H_ */

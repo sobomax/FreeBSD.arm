@@ -1,8 +1,9 @@
-# $FreeBSD: head/bin/freebsd-version/Makefile 277531 2015-01-22 17:13:43Z ume $
+# $FreeBSD: head/bin/freebsd-version/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 SCRIPTS = freebsd-version
 MAN = freebsd-version.1
-CLEANFILES = freebsd-version.sh
+CLEANFILES = freebsd-version freebsd-version.sh
 NEWVERS = ${.CURDIR}/../../sys/conf/newvers.sh
 
 freebsd-version.sh: ${.CURDIR}/freebsd-version.sh.in ${NEWVERS}

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/include/namespace.h 242960 2012-11-13 12:55:52Z kib $
+ * $FreeBSD: head/lib/libc/include/namespace.h 295039 2016-01-29 14:12:12Z kib $
  */
 
 #ifndef _NAMESPACE_H_
@@ -208,6 +208,7 @@
 #define		readv				_readv
 #define		recvfrom			_recvfrom
 #define		recvmsg				_recvmsg
+#define		recvmmsg			_recvmmsg
 #define		select				_select
 #define		sem_close			_sem_close
 #define		sem_destroy			_sem_destroy
@@ -220,6 +221,7 @@
 #define		sem_unlink			_sem_unlink
 #define		sem_wait			_sem_wait
 #define		sendmsg				_sendmsg
+#define		sendmmsg			_sendmmsg
 #define		sendto				_sendto
 #define		setsockopt			_setsockopt
 /*#define		sigaction			_sigaction*/

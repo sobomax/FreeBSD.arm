@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/scil/scic_sds_remote_node_context.c 231136 2012-02-07 17:43:58Z jimharris $");
+__FBSDID("$FreeBSD: head/sys/dev/isci/scil/scic_sds_remote_node_context.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /**
 * @file
@@ -302,7 +302,7 @@ void scic_sds_remote_node_context_setup_to_resume(
 
 /**
 * This method will setup the remote node context object so it will
-* transistion to its final state.
+* transition to its final state.
 *
 * @param[in] this_rnc
 * @param[in] the_callback

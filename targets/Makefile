@@ -1,6 +1,6 @@
-# $FreeBSD: head/targets/Makefile 283595 2015-05-27 01:19:58Z sjg $
+# $FreeBSD: head/targets/Makefile 300138 2016-05-18 10:59:16Z avos $
 
-# This is the top-level makefile - derrived from the Junos version
+# This is the top-level makefile - derived from the Junos version
 #
 # If a subdir that matches the requested target exists, we assume
 # a build target and initialize DIRDEPS, dirdeps.mk does the rest.

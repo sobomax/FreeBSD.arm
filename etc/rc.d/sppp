@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/sppp 180563 2008-07-16 19:22:48Z dougb $
+# $FreeBSD: head/etc/rc.d/sppp 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: sppp
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="sppp"
+desc="Point to point protocol network layer for synchronous lines"
 start_cmd="sppp_start"
 stop_cmd=":"
 

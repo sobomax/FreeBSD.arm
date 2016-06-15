@@ -23,7 +23,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man7/ports.7 267160 2014-06-06 13:36:52Z gjb $
+.\" $FreeBSD: head/share/man/man7/ports.7 297355 2016-03-28 16:48:28Z trasz $
 .\"
 .Dd June 6, 2014
 .Dt PORTS 7
@@ -214,12 +214,12 @@ portion never recurses
 (this is perhaps a bug).
 .It Cm reinstall
 Use this to restore a port after using
-.Xr pkg_delete 1
+.Xr pkg-delete 8
 when you should have used
 .Cm deinstall .
 .It Cm deinstall
 Remove an installed port from the system, similar to
-.Xr pkg_delete 1 .
+.Xr pkg-delete 8 .
 .It Cm deinstall-all
 Remove all installed ports with the same
 .Va PKGORIGIN
@@ -231,7 +231,7 @@ The package is a
 .Pa .tbz
 file that you can use to
 install the port on other machines with
-.Xr pkg_add 1 .
+.Xr pkg-add 8 .
 If the directory specified by
 .Va PACKAGES
 does not exist, the package will be put into the current directory.

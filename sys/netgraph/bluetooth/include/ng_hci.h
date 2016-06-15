@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci.h,v 1.2 2003/03/18 00:09:37 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_hci.h 281683 2015-04-18 06:16:33Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_hci.h 298813 2016-04-29 21:25:05Z pfg $
  */
 
 /*
@@ -469,7 +469,13 @@ typedef struct {
 typedef struct {
 	u_int16_t	con_handle; /* connection handle */
 } ng_hci_lp_qos_ind_ep;
-
+/*Encryption Change event*/
+#define NGM_HCI_LP_ENC_CHG 			10 /* HCI->Upper*/
+typedef struct {
+	uint16_t con_handle;
+	uint8_t status;
+	uint8_t link_type; 
+}ng_hci_lp_enc_change_ep;
 /**************************************************************************
  **************************************************************************
  **                    HCI node command/event parameters
@@ -1554,7 +1560,7 @@ typedef struct {
 	u_int16_t min_ce_length;
 	u_int16_t max_ce_length;
 }__attribute__((packed)) ng_hci_le_create_connection_cp;
-/* no return paramters*/
+/* No return parameters. */
 #define NG_HCI_OCF_LE_CREATE_CONNECTION_CANCEL		0x000e
 /*No command parameter*/	
 typedef ng_hci_status_rp	ng_hci_le_create_connection_cancel_rp;	
@@ -1566,7 +1572,7 @@ typedef struct {
 } __attribute__ ((packed)) ng_hci_le_read_white_list_size_rp;
 	
 #define NG_HCI_OCF_LE_CLEAR_WHITE_LIST			0x0010
-/*No command paramters*/
+/* No command parameters. */
 typedef ng_hci_status_rp	ng_hci_le_clear_white_list_rp;	
 #define NG_HCI_OCF_LE_ADD_DEVICE_TO_WHITE_LIST		0x0011
 typedef struct {
@@ -1683,7 +1689,7 @@ typedef struct{
 typedef ng_hci_status_rp	ng_hci_le_transmitter_test_rp;
 
 #define NG_HCI_OCF_LE_TEST_END				0x001f
-/*No command paramter*/
+/* No command parameter. */
 typedef struct {
 	u_int8_t status;
 	u_int16_t number_of_packets;

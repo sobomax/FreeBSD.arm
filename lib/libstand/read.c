@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libstand/read.c 276079 2014-12-22 20:42:36Z ian $");
+__FBSDID("$FreeBSD: head/lib/libstand/read.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 #include <sys/param.h>
 #include "stand.h"
@@ -79,7 +79,7 @@ read(int fd, void *dest, size_t bcount)
     if (f->f_flags & F_RAW) {
 	twiddle(4);
 	errno = (f->f_dev->dv_strategy)(f->f_devdata, F_READ,
-					btodb(f->f_offset), bcount, dest, &resid);
+				btodb(f->f_offset), 0, bcount, dest, &resid);
 	if (errno)
 	    return (-1);
 	f->f_offset += resid;

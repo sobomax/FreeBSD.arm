@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/sys/mips/conf/std.SWARM 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/std.SWARM 289137 2015-10-11 13:01:51Z mav $
 #
 
 hints		"SWARM.hints"
@@ -57,4 +57,3 @@ device da
 device pass
 
 device		ata
-options 	ATA_STATIC_ID	# Static device numbering

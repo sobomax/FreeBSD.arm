@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/iwn/if_iwnreg.h 271246 2014-09-08 03:12:42Z adrian $	*/
+/*	$FreeBSD: head/sys/dev/iwn/if_iwnreg.h 285234 2015-07-07 03:51:29Z adrian $	*/
 /*	$OpenBSD: if_iwnreg.h,v 1.40 2010/05/05 19:41:57 damien Exp $	*/
 
 /*-
@@ -586,9 +586,13 @@ struct iwn_rxon {
 #define IWN_RXON_ANTENNA_B	(1 <<  9)
 #define IWN_RXON_TSF		(1 << 15)
 #define IWN_RXON_HT_HT40MINUS	(1 << 22)
+
 #define IWN_RXON_HT_PROTMODE(x)	(x << 23)
+
+/* 0=legacy, 1=pure40, 2=mixed */
 #define IWN_RXON_HT_MODEPURE40	(1 << 25)
 #define IWN_RXON_HT_MODEMIXED	(2 << 25)
+
 #define IWN_RXON_CTS_TO_SELF	(1 << 30)
 
 	uint32_t	filter;

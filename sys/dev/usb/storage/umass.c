@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 280165 2015-03-17 08:42:09Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 298932 2016-05-02 17:44:03Z pfg $");
 
 /*-
  * Copyright (c) 1999 MAEKAWA Masahide <bishop@rr.iij4u.or.jp>,
@@ -27,7 +27,7 @@ __FBSDID("$FreeBSD: head/sys/dev/usb/storage/umass.c 280165 2015-03-17 08:42:09Z
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/usb/storage/umass.c 280165 2015-03-17 08:42:09Z hselasky $
+ *	$FreeBSD: head/sys/dev/usb/storage/umass.c 298932 2016-05-02 17:44:03Z pfg $
  *	$NetBSD: umass.c,v 1.28 2000/04/02 23:46:53 augustss Exp $
  */
 
@@ -706,19 +706,20 @@ static driver_t umass_driver = {
 	.size = sizeof(struct umass_softc),
 };
 
-DRIVER_MODULE(umass, uhub, umass_driver, umass_devclass, NULL, 0);
-MODULE_DEPEND(umass, usb, 1, 1, 1);
-MODULE_DEPEND(umass, cam, 1, 1, 1);
-MODULE_VERSION(umass, 1);
-
-/*
- * USB device probe/attach/detach
- */
-
 static const STRUCT_USB_HOST_ID __used umass_devs[] = {
 	/* generic mass storage class */
 	{USB_IFACE_CLASS(UICLASS_MASS),},
 };
+
+DRIVER_MODULE(umass, uhub, umass_driver, umass_devclass, NULL, 0);
+MODULE_DEPEND(umass, usb, 1, 1, 1);
+MODULE_DEPEND(umass, cam, 1, 1, 1);
+MODULE_VERSION(umass, 1);
+USB_PNP_HOST_INFO(umass_devs);
+
+/*
+ * USB device probe/attach/detach
+ */
 
 static uint16_t
 umass_get_proto(struct usb_interface *iface)
@@ -2720,7 +2721,7 @@ umass_rbc_transform(struct umass_softc *sc, uint8_t *cmd_ptr, uint8_t cmd_len)
 			cmd_len = 12;
 		}
 		sc->sc_transfer.cmd_len = cmd_len;
-		return (1);		/* sucess */
+		return (1);		/* success */
 
 		/* All other commands are not legal in RBC */
 	default:

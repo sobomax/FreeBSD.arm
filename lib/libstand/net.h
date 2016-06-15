@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libstand/net.h 213235 2010-09-28 01:30:49Z emaste $
+ * $FreeBSD: head/lib/libstand/net.h 297150 2016-03-21 14:58:12Z ian $
  */
 
 #ifndef _KERNEL	/* XXX - see <netinet/in.h> */
@@ -83,6 +83,7 @@ extern	struct in_addr swapip;
 extern	struct in_addr gateip;
 extern	struct in_addr nameip;
 extern	n_long netmask;
+extern	u_int intf_mtu;
 
 extern	int debug;			/* defined in the machdep sources */
 

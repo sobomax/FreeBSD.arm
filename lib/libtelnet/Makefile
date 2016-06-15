@@ -1,8 +1,9 @@
 #	From: @(#)Makefile	8.2 (Berkeley) 12/15/93
-# $FreeBSD: head/lib/libtelnet/Makefile 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/lib/libtelnet/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 TELNETDIR=	${.CURDIR}/../../contrib/telnet
 .PATH:		${TELNETDIR}/libtelnet
 

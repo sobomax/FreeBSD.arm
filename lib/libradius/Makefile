@@ -22,10 +22,11 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libradius/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libradius/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=		radius
 SRCS=		radlib.c
 INCS=		radlib.h radlib_vs.h

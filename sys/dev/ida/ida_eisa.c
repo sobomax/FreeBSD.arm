@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ida/ida_eisa.c 280347 2015-03-22 16:10:28Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ida/ida_eisa.c 299471 2016-05-11 17:38:09Z hselasky $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -333,7 +333,7 @@ ida_eisa_attach(device_t dev)
 		return (ENOMEM);
 	}
 
-	error = ida_init(ida);
+	error = ida_setup(ida);
 	if (error) {
 		ida_free(ida);
 		return (error);

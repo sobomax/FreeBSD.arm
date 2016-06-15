@@ -28,7 +28,7 @@
  * These notices must be retained in any copies of any part of this software.
  *
  * $KAME: altq_cbq.c,v 1.19 2003/09/17 14:23:25 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq_cbq.c 281642 2015-04-17 06:38:31Z glebius $
+ * $FreeBSD: head/sys/net/altq/altq_cbq.c 300050 2016-05-17 12:52:31Z eadler $
  */
 
 #include "opt_altq.h"
@@ -236,6 +236,10 @@ get_class_stats(class_stats_t *statsp, struct rm_class *cl)
 #ifdef ALTQ_RIO
 	if (q_is_rio(cl->q_))
 		rio_getstats((rio_t *)cl->red_, &statsp->red[0]);
+#endif
+#ifdef ALTQ_CODEL
+	if (q_is_codel(cl->q_))
+		codel_getstats(cl->codel_, &statsp->codel);
 #endif
 }
 
@@ -697,8 +701,8 @@ cbq_modify_class(acp)
  *		struct rm_class *parent, struct rm_class *borrow)
  *
  * This function create a new traffic class in the CBQ class hierarchy of
- * given paramters.  The class that created is either the root, default,
- * or a new dynamic class.  If CBQ is not initilaized, the the root class
+ * given parameters.  The class that created is either the root, default,
+ * or a new dynamic class.  If CBQ is not initilaized, the root class
  * will be created.
  */
 static int

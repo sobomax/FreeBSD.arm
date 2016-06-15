@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/ctld/ctld.h 279392 2015-02-28 12:02:32Z trasz $
+ * $FreeBSD: head/usr.sbin/ctld/ctld.h 301720 2016-06-09 07:19:02Z trasz $
  */
 
 #ifndef CTLD_H
@@ -39,16 +39,17 @@
 #include <sys/socket.h>
 #include <stdbool.h>
 #include <libutil.h>
-#include <openssl/md5.h>
 
 #define	DEFAULT_CONFIG_PATH		"/etc/ctl.conf"
 #define	DEFAULT_PIDFILE			"/var/run/ctld.pid"
 #define	DEFAULT_BLOCKSIZE		512
+#define	DEFAULT_CD_BLOCKSIZE		2048
 
 #define	MAX_LUNS			1024
 #define	MAX_NAME_LEN			223
 #define	MAX_DATA_SEGMENT_LENGTH		(128 * 1024)
 #define	MAX_BURST_LENGTH		16776192
+#define	FIRST_BURST_LENGTH		(128 * 1024)
 #define	SOCKBUF_SIZE			1048576
 
 struct auth {
@@ -105,6 +106,8 @@ struct portal {
 	int				p_socket;
 };
 
+TAILQ_HEAD(options, option);
+
 #define	PG_FILTER_UNKNOWN		0
 #define	PG_FILTER_NONE			1
 #define	PG_FILTER_PORTAL		2
@@ -114,9 +117,11 @@ struct portal {
 struct portal_group {
 	TAILQ_ENTRY(portal_group)	pg_next;
 	struct conf			*pg_conf;
+	struct options			pg_options;
 	char				*pg_name;
 	struct auth_group		*pg_discovery_auth_group;
 	int				pg_discovery_filter;
+	int				pg_foreign;
 	bool				pg_unassigned;
 	TAILQ_HEAD(, portal)		pg_portals;
 	TAILQ_HEAD(, port)		pg_ports;
@@ -146,23 +151,24 @@ struct port {
 	struct portal_group		*p_portal_group;
 	struct pport			*p_pport;
 	struct target			*p_target;
+	int				p_foreign;
 
 	uint32_t			p_ctl_port;
 };
 
-struct lun_option {
-	TAILQ_ENTRY(lun_option)		lo_next;
-	struct lun			*lo_lun;
-	char				*lo_name;
-	char				*lo_value;
+struct option {
+	TAILQ_ENTRY(option)		o_next;
+	char				*o_name;
+	char				*o_value;
 };
 
 struct lun {
 	TAILQ_ENTRY(lun)		l_next;
 	struct conf			*l_conf;
-	TAILQ_HEAD(, lun_option)	l_options;
+	struct options			l_options;
 	char				*l_name;
 	char				*l_backend;
+	uint8_t				l_device_type;
 	int				l_blocksize;
 	char				*l_device_id;
 	char				*l_path;
@@ -239,6 +245,7 @@ struct connection {
 	size_t			conn_data_segment_limit;
 	size_t			conn_max_data_segment_length;
 	size_t			conn_max_burst_length;
+	size_t			conn_first_burst_length;
 	int			conn_immediate_data;
 	int			conn_header_digest;
 	int			conn_data_digest;
@@ -263,11 +270,12 @@ struct keys {
 };
 
 #define	CHAP_CHALLENGE_LEN	1024
+#define	CHAP_DIGEST_LEN		16 /* Equal to MD5 digest size. */
 
 struct chap {
 	unsigned char	chap_id;
 	char		chap_challenge[CHAP_CHALLENGE_LEN];
-	char		chap_response[MD5_DIGEST_LENGTH];
+	char		chap_response[CHAP_DIGEST_LEN];
 };
 
 struct rchap {
@@ -291,8 +299,10 @@ int			rchap_receive(struct rchap *rchap,
 char			*rchap_get_response(struct rchap *rchap);
 void			rchap_delete(struct rchap *rchap);
 
+int			parse_conf(struct conf *conf, const char *path);
+int			uclparse_conf(struct conf *conf, const char *path);
+
 struct conf		*conf_new(void);
-struct conf		*conf_new_from_file(const char *path, struct conf *old);
 struct conf		*conf_new_from_kernel(void);
 void			conf_delete(struct conf *conf);
 int			conf_verify(struct conf *conf);
@@ -373,6 +383,7 @@ struct lun		*lun_new(struct conf *conf, const char *name);
 void			lun_delete(struct lun *lun);
 struct lun		*lun_find(const struct conf *conf, const char *name);
 void			lun_set_backend(struct lun *lun, const char *value);
+void			lun_set_device_type(struct lun *lun, uint8_t value);
 void			lun_set_blocksize(struct lun *lun, size_t value);
 void			lun_set_device_id(struct lun *lun, const char *value);
 void			lun_set_path(struct lun *lun, const char *value);
@@ -381,23 +392,21 @@ void			lun_set_serial(struct lun *lun, const char *value);
 void			lun_set_size(struct lun *lun, size_t value);
 void			lun_set_ctl_lun(struct lun *lun, uint32_t value);
 
-struct lun_option	*lun_option_new(struct lun *lun,
+struct option		*option_new(struct options *os,
 			    const char *name, const char *value);
-void			lun_option_delete(struct lun_option *clo);
-struct lun_option	*lun_option_find(const struct lun *lun,
-			    const char *name);
-void			lun_option_set(struct lun_option *clo,
-			    const char *value);
+void			option_delete(struct options *os, struct option *co);
+struct option		*option_find(const struct options *os, const char *name);
+void			option_set(struct option *o, const char *value);
 
 void			kernel_init(void);
 int			kernel_lun_add(struct lun *lun);
-int			kernel_lun_resize(struct lun *lun);
+int			kernel_lun_modify(struct lun *lun);
 int			kernel_lun_remove(struct lun *lun);
 void			kernel_handoff(struct connection *conn);
 void			kernel_limits(const char *offload,
 			    size_t *max_data_segment_length);
 int			kernel_port_add(struct port *port);
-int			kernel_port_update(struct port *port);
+int			kernel_port_update(struct port *port, struct port *old);
 int			kernel_port_remove(struct port *port);
 void			kernel_capsicate(void);
 

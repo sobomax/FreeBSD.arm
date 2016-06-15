@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/conf/ldscript.powerpc64 277334 2015-01-18 18:32:43Z nwhitehorn $ */
+/* $FreeBSD: head/sys/conf/ldscript.powerpc64 291441 2015-11-29 06:40:09Z nwhitehorn $ */
 
 OUTPUT_FORMAT("elf64-powerpc-freebsd", "elf64-powerpc-freebsd",
 	      "elf64-powerpc-freebsd")
@@ -69,6 +69,7 @@ SECTIONS
   .toc1      : ALIGN(8) { *(.toc1) }
   .opd       : ALIGN(8) { KEEP (*(.opd)) }
   .branch_lt : ALIGN(8) { *(.branch_lt) }
+  . = ALIGN(4096);
   .got       : ALIGN(8) { __tocbase = .; *(.got .toc) }
 
   .dynamic        : { *(.dynamic) }

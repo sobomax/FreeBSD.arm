@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ip_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/netinet/ip_var.h 280971 2015-04-01 22:26:39Z glebius $
+ * $FreeBSD: head/sys/netinet/ip_var.h 301114 2016-06-01 10:14:04Z bz $
  */
 
 #ifndef _NETINET_IP_VAR_H_
@@ -209,9 +209,6 @@ int	ip_fragment(struct ip *ip, struct mbuf **m_frag, int mtu,
 	    u_long if_hwassist_flags);
 void	ip_forward(struct mbuf *m, int srcrt);
 void	ip_init(void);
-#ifdef VIMAGE
-void	ip_destroy(void);
-#endif
 extern int
 	(*ip_mforward)(struct ip *, struct ifnet *, struct mbuf *,
 	    struct ip_moptions *);
@@ -222,8 +219,6 @@ int	ipproto_register(short);
 int	ipproto_unregister(short);
 struct mbuf *
 	ip_reass(struct mbuf *);
-struct in_ifaddr *
-	ip_rtaddr(struct in_addr, u_int fibnum);
 void	ip_savecontrol(struct inpcb *, struct mbuf **, struct ip *,
 	    struct mbuf *);
 void	ip_slowtimo(void);
@@ -231,9 +226,6 @@ void	ip_fillid(struct ip *);
 int	rip_ctloutput(struct socket *, struct sockopt *);
 void	rip_ctlinput(int, struct sockaddr *, void *);
 void	rip_init(void);
-#ifdef VIMAGE
-void	rip_destroy(void);
-#endif
 int	rip_input(struct mbuf **, int *, int);
 int	rip_output(struct mbuf *, struct socket *, ...);
 int	ipip_input(struct mbuf **, int *, int);
@@ -281,7 +273,7 @@ enum {
 	IPFW_IS_MASK	= 0x30000000,	/* which source ? */
 	IPFW_IS_DIVERT	= 0x20000000,
 	IPFW_IS_DUMMYNET =0x10000000,
-	IPFW_IS_PIPE	= 0x08000000,	/* pip1=1, queue = 0 */
+	IPFW_IS_PIPE	= 0x08000000,	/* pipe=1, queue = 0 */
 };
 #define MTAG_IPFW	1148380143	/* IPFW-tagged cookie */
 #define MTAG_IPFW_RULE	1262273568	/* rule reference */

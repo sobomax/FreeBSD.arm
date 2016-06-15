@@ -23,11 +23,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/ti_hwmods.c 283276 2015-05-22 03:16:18Z gonzo $
+ * $FreeBSD: head/sys/arm/ti/ti_hwmods.c 299477 2016-05-11 18:20:02Z gonzo $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/ti/ti_hwmods.c 283276 2015-05-22 03:16:18Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/ti/ti_hwmods.c 299477 2016-05-11 18:20:02Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -75,6 +75,9 @@ struct hwmod ti_hwmods[] = {
 	{"epwmss0",	PWMSS0_CLK},
 	{"epwmss1",	PWMSS1_CLK},
 	{"epwmss2",	PWMSS2_CLK},
+
+	{"spi0",	SPI0_CLK},
+	{"spi1",	SPI1_CLK},
 
 	{"timer1",	TIMER1_CLK},
 	{"timer2",	TIMER2_CLK},
@@ -129,9 +132,9 @@ ti_hwmods_get_clock(device_t dev)
 	}
 
 	if (len > 0)
-		device_printf(dev, "WARNING: more then one ti,hwmod \n");
+		device_printf(dev, "WARNING: more than one ti,hwmod \n");
 
-	free(buf, M_OFWPROP);
+	OF_prop_free(buf);
 	return (clk);
 }
 
@@ -164,7 +167,39 @@ int ti_hwmods_contains(device_t dev, const char *hwmod)
 		len -= l;
 	}
 
-	free(buf, M_OFWPROP);
+	OF_prop_free(buf);
 
+	return (result);
+}
+
+int 
+ti_hwmods_get_unit(device_t dev, const char *hwmod)
+{
+	phandle_t node;
+	int l, len, hwmodlen, result;
+	char *name;
+	char *buf;
+
+	if ((node = ofw_bus_get_node(dev)) == 0)
+		return (0);
+
+	if ((len = OF_getprop_alloc(node, "ti,hwmods", 1, (void**)&name)) <= 0)
+		return (0);
+
+	buf = name;
+	hwmodlen = strlen(hwmod);
+	result = 0;
+	while (len > 0) {
+		if (strncmp(name, hwmod, hwmodlen) == 0) {
+                        result = (int)strtoul(name + hwmodlen, NULL, 10);
+			break;
+		}
+		/* Slide to the next sub-string. */
+		l = strlen(name) + 1;
+		name += l;
+		len -= l;
+	}
+
+	OF_prop_free(buf);
 	return (result);
 }

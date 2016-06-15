@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/share/doc/Makefile 274016 2014-11-03 07:18:42Z ngie $
+# $FreeBSD: head/share/doc/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -27,6 +27,8 @@ _IPv6=	IPv6
 .if ${MK_GROFF} != "no"
 _roffdocs=	papers psd smm usd
 .endif
+
+SUBDIR_PARALLEL=
 
 # Default output format for troff documents is ascii.
 # To generate postscript versions of troff documents, use:

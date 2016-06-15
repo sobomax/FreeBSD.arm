@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/autofs/defined.c 270276 2014-08-21 15:07:25Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/autofs/defined.c 294670 2016-01-24 18:11:36Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/autofs/defined.c 270276 2014-08-21 15:07:25Z t
 #include <errno.h>
 #include <fcntl.h>
 #include <libgen.h>
+#include <libutil.h>
 #include <netdb.h>
 #include <signal.h>
 #include <stdbool.h>
@@ -59,8 +60,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/autofs/defined.c 270276 2014-08-21 15:07:25Z t
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <libutil.h>
 
 #include "common.h"
 

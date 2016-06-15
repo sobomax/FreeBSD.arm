@@ -1,7 +1,7 @@
 /*	$NetBSD: umodem.c,v 1.45 2002/09/23 05:51:23 simonb Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ufoma.c 263289 2014-03-18 01:40:25Z emaste $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/serial/ufoma.c 292080 2015-12-11 05:28:00Z imp $");
 #define UFOMA_HANDSFREE
 /*-
  * Copyright (c) 2005, Takanori Watanabe
@@ -317,15 +317,16 @@ static driver_t ufoma_driver = {
 	.size = sizeof(struct ufoma_softc),
 };
 
-DRIVER_MODULE(ufoma, uhub, ufoma_driver, ufoma_devclass, NULL, 0);
-MODULE_DEPEND(ufoma, ucom, 1, 1, 1);
-MODULE_DEPEND(ufoma, usb, 1, 1, 1);
-MODULE_VERSION(ufoma, 1);
-
 static const STRUCT_USB_HOST_ID ufoma_devs[] = {
 	{USB_IFACE_CLASS(UICLASS_CDC),
 	 USB_IFACE_SUBCLASS(UISUBCLASS_MCPC),},
 };
+
+DRIVER_MODULE(ufoma, uhub, ufoma_driver, ufoma_devclass, NULL, 0);
+MODULE_DEPEND(ufoma, ucom, 1, 1, 1);
+MODULE_DEPEND(ufoma, usb, 1, 1, 1);
+MODULE_VERSION(ufoma, 1);
+USB_PNP_HOST_INFO(ufoma_devs);
 
 static int
 ufoma_probe(device_t dev)

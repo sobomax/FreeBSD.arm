@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libfetch/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libfetch/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=		fetch
 CFLAGS+=	-I.
 SRCS=		fetch.c common.c ftp.c http.c file.c \

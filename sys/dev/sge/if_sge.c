@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/sge/if_sge.c 271849 2014-09-19 03:51:26Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/sge/if_sge.c 298411 2016-04-21 15:38:28Z pfg $");
 
 /*
  * SiS 190/191 PCI Ethernet NIC driver.
@@ -276,9 +276,8 @@ sge_get_mac_addr_apc(struct sge_softc *sc, uint8_t *dest)
 		{ SIS_VENDORID, 0x0968 }
 	};
 	uint8_t reg;
-	int busnum, cnt, i, j, numkids;
+	int busnum, i, j, numkids;
 
-	cnt = sizeof(apc_tbls) / sizeof(apc_tbls[0]);
 	pci = devclass_find("pci");
 	for (busnum = 0; busnum < devclass_get_maxunit(pci); busnum++) {
 		bus = devclass_get_device(pci, busnum);
@@ -291,7 +290,7 @@ sge_get_mac_addr_apc(struct sge_softc *sc, uint8_t *dest)
 			if (pci_get_class(dev) == PCIC_BRIDGE &&
 			    pci_get_subclass(dev) == PCIS_BRIDGE_ISA) {
 				tp = apc_tbls;
-				for (j = 0; j < cnt; j++) {
+				for (j = 0; j < nitems(apc_tbls); j++) {
 					if (pci_get_vendor(dev) == tp->vid &&
 					    pci_get_device(dev) == tp->did) {
 						free(kids, M_TEMP);

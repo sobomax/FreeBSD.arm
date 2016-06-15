@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/imgact_elf.h 283297 2015-05-22 20:50:35Z imp $
+ * $FreeBSD: head/sys/sys/imgact_elf.h 298981 2016-05-03 15:14:17Z pfg $
  */
 
 #ifndef _SYS_IMGACT_ELF_H_
@@ -37,10 +37,11 @@
 
 #define	AUXARGS_ENTRY(pos, id, val) {suword(pos++, id); suword(pos++, val);}
 
+struct image_params;
 struct thread;
 
 /*
- * Structure used to pass infomation from the loader to the
+ * Structure used to pass information from the loader to the
  * stack fixup routine.
  */
 typedef struct {

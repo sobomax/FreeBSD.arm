@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)conf.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/conf.h 277897 2015-01-29 19:55:33Z jhb $
+ * $FreeBSD: head/sys/sys/conf.h 298890 2016-05-01 17:46:56Z kib $
  */
 
 #ifndef _SYS_CONF_H_
@@ -138,7 +138,7 @@ typedef int dumper_t(
 #define	D_TAPE	0x0001
 #define	D_DISK	0x0002
 #define	D_TTY	0x0004
-#define	D_MEM	0x0008
+#define	D_MEM	0x0008	/* /dev/(k)mem */
 
 #ifdef _KERNEL
 
@@ -226,6 +226,28 @@ void clone_cleanup(struct clonedevs **);
 #define	CLONE_FLAG0	(CLONE_UNITMASK + 1)
 int clone_create(struct clonedevs **, struct cdevsw *, int *unit, struct cdev **dev, int extra);
 
+#define	MAKEDEV_REF		0x01
+#define	MAKEDEV_WHTOUT		0x02
+#define	MAKEDEV_NOWAIT		0x04
+#define	MAKEDEV_WAITOK		0x08
+#define	MAKEDEV_ETERNAL		0x10
+#define	MAKEDEV_CHECKNAME	0x20
+struct make_dev_args {
+	size_t		 mda_size;
+	int		 mda_flags;
+	struct cdevsw	*mda_devsw;
+	struct ucred	*mda_cr;
+	uid_t		 mda_uid;
+	gid_t		 mda_gid;
+	int		 mda_mode;
+	int		 mda_unit;
+	void		*mda_si_drv1;
+	void		*mda_si_drv2;
+};
+void make_dev_args_init_impl(struct make_dev_args *_args, size_t _sz);
+#define	make_dev_args_init(a) \
+    make_dev_args_init_impl((a), sizeof(struct make_dev_args))
+	
 int	count_dev(struct cdev *_dev);
 void	delist_dev(struct cdev *_dev);
 void	destroy_dev(struct cdev *_dev);
@@ -240,19 +262,11 @@ void	dev_depends(struct cdev *_pdev, struct cdev *_cdev);
 void	dev_ref(struct cdev *dev);
 void	dev_refl(struct cdev *dev);
 void	dev_rel(struct cdev *dev);
-void	dev_strategy(struct cdev *dev, struct buf *bp);
-void	dev_strategy_csw(struct cdev *dev, struct cdevsw *csw, struct buf *bp);
 struct cdev *make_dev(struct cdevsw *_devsw, int _unit, uid_t _uid, gid_t _gid,
 		int _perms, const char *_fmt, ...) __printflike(6, 7);
 struct cdev *make_dev_cred(struct cdevsw *_devsw, int _unit,
 		struct ucred *_cr, uid_t _uid, gid_t _gid, int _perms,
 		const char *_fmt, ...) __printflike(7, 8);
-#define	MAKEDEV_REF		0x01
-#define	MAKEDEV_WHTOUT		0x02
-#define	MAKEDEV_NOWAIT		0x04
-#define	MAKEDEV_WAITOK		0x08
-#define	MAKEDEV_ETERNAL		0x10
-#define	MAKEDEV_CHECKNAME	0x20
 struct cdev *make_dev_credf(int _flags,
 		struct cdevsw *_devsw, int _unit,
 		struct ucred *_cr, uid_t _uid, gid_t _gid, int _mode,
@@ -260,6 +274,8 @@ struct cdev *make_dev_credf(int _flags,
 int	make_dev_p(int _flags, struct cdev **_cdev, struct cdevsw *_devsw,
 		struct ucred *_cr, uid_t _uid, gid_t _gid, int _mode,
 		const char *_fmt, ...) __printflike(8, 9);
+int	make_dev_s(struct make_dev_args *_args, struct cdev **_cdev,
+		const char *_fmt, ...) __printflike(3, 4);
 struct cdev *make_dev_alias(struct cdev *_pdev, const char *_fmt, ...)
 		__printflike(2, 3);
 int	make_dev_alias_p(int _flags, struct cdev **_cdev, struct cdev *_pdev,
@@ -279,11 +295,10 @@ void	setconf(void);
 
 #define	dev2unit(d)	((d)->si_drv0)
 
-typedef	void (*cdevpriv_dtr_t)(void *data);
+typedef void d_priv_dtor_t(void *data);
 int	devfs_get_cdevpriv(void **datap);
-int	devfs_set_cdevpriv(void *priv, cdevpriv_dtr_t dtr);
+int	devfs_set_cdevpriv(void *priv, d_priv_dtor_t *dtr);
 void	devfs_clear_cdevpriv(void);
-void	devfs_fpdrop(struct file *fp);	/* XXX This is not public KPI */
 
 ino_t	devfs_alloc_cdp_inode(void);
 void	devfs_free_cdp_inode(ino_t ino);
@@ -299,6 +314,7 @@ void	devfs_free_cdp_inode(ino_t ino);
 #define		GID_OPERATOR	5
 #define		GID_BIN		7
 #define		GID_GAMES	13
+#define		GID_VIDEO	44
 #define		GID_DIALER	68
 #define		GID_NOBODY	65534
 
@@ -312,15 +328,18 @@ EVENTHANDLER_DECLARE(dev_clone, dev_clone_fn);
 
 struct dumperinfo {
 	dumper_t *dumper;	/* Dumping function. */
-	void    *priv;		/* Private parts. */
-	u_int   blocksize;	/* Size of block in bytes. */
+	void	*priv;		/* Private parts. */
+	u_int	blocksize;	/* Size of block in bytes. */
 	u_int	maxiosize;	/* Max size allowed for an individual I/O */
-	off_t   mediaoffset;	/* Initial offset in bytes. */
-	off_t   mediasize;	/* Space available in bytes. */
+	off_t	mediaoffset;	/* Initial offset in bytes. */
+	off_t	mediasize;	/* Space available in bytes. */
+	void	*blockbuf;	/* Buffer for padding shorter dump blocks */
 };
 
 int set_dumper(struct dumperinfo *, const char *_devname, struct thread *td);
 int dump_write(struct dumperinfo *, void *, vm_offset_t, off_t, size_t);
+int dump_write_pad(struct dumperinfo *, void *, vm_offset_t, off_t, size_t,
+    size_t *);
 int doadump(boolean_t);
 extern int dumping;		/* system is dumping */
 

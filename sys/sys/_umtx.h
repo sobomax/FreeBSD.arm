@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/_umtx.h 273604 2014-10-24 20:02:44Z jhb $
+ * $FreeBSD: head/sys/sys/_umtx.h 300043 2016-05-17 09:56:22Z kib $
  *
  */
 
@@ -37,7 +37,11 @@ struct umutex {
 	volatile __lwpid_t	m_owner;	/* Owner of the mutex */
 	__uint32_t		m_flags;	/* Flags of the mutex */
 	__uint32_t		m_ceilings[2];	/* Priority protect ceiling */
-	__uint32_t		m_spare[4];
+	__uintptr_t		m_rb_lnk;	/* Robust linkage */
+#ifndef __LP64__
+	__uint32_t		m_pad;
+#endif
+	__uint32_t		m_spare[2];
 };
 
 struct ucond {

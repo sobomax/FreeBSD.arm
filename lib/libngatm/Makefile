@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libngatm/Makefile 201381 2010-01-02 09:58:07Z ed $
+# $FreeBSD: head/lib/libngatm/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 # Author: Harti Brandt <harti@freebsd.org>
 #
+PACKAGE=lib${LIB}
 LIB=	ngatm
 SHLIB_MAJOR= 4
 MAN=	libngatm.3 uniaddr.3 unifunc.3 unimsg.3 unisap.3 unistruct.3

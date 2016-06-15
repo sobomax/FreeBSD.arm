@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/wtap/vis_map/vis_map.c 230445 2012-01-22 04:51:00Z adrian $
+ * $FreeBSD: head/tools/tools/wtap/vis_map/vis_map.c 298881 2016-05-01 16:20:14Z pfg $
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -110,7 +110,7 @@ main(int argc, const char* argv[])
 		link_op(&l);
 		break;
 	default:
-		printf("wtap ioctl: unkown command '%c'\n", *argv[1]);
+		printf("wtap ioctl: unknown command '%c'\n", *argv[1]);
 		exit(1);
 	}
 	exit(0);

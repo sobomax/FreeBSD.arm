@@ -28,9 +28,11 @@
  * Samsung Exynos 5 Pad Control
  * Chapter 4, Exynos 5 Dual User's Manual Public Rev 1.00
  */
-
+#ifdef USB_GLOBAL_INCLUDE_FILE
+#include USB_GLOBAL_INCLUDE_FILE
+#else
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_pad.c 277996 2015-01-31 19:32:14Z loos $");
+__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_pad.c 297793 2016-04-10 23:07:00Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -55,6 +57,7 @@ __FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/exynos5_pad.c 277996 2015-01-31 
 #include <machine/intr.h>
 
 #include "gpio_if.h"
+#endif
 
 #include <arm/samsung/exynos/exynos5_combiner.h>
 #include <arm/samsung/exynos/exynos5_pad.h>
@@ -327,10 +330,10 @@ get_bank(struct pad_softc *sc, int gpio_number,
 			*bank = sc->gpio_map[i];
 			*pin_shift = (gpio_number - n);
 			return (0);
-		};
+		}
 
 		n += ngpio;
-	};
+	}
 
 	return (-1);
 }
@@ -513,7 +516,7 @@ pad_attach(device_t dev)
 		break;
 	default:
 		goto fail;
-	};
+	}
 
 	if (bus_alloc_resources(dev, sc->pad_spec, sc->res)) {
 		device_printf(dev, "could not allocate resources\n");
@@ -525,7 +528,7 @@ pad_attach(device_t dev)
 	for (i = 0; i < sc->nports; i++) {
 		sc->bst[i] = rman_get_bustag(sc->res[i]);
 		sc->bsh[i] = rman_get_bushandle(sc->res[i]);
-	};
+	}
 
 	sc->dev = dev;
 

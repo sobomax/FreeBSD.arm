@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libsbuf/Makefile 284192 2015-06-09 21:39:38Z ken $
+# $FreeBSD: head/lib/libsbuf/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=		sbuf
 SHLIBDIR?= 	/lib
 SRCS=		subr_prf.c subr_sbuf.c

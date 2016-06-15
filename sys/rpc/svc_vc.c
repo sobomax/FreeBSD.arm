@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 281199 2015-04-07 10:25:27Z mav $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc_vc.c 300836 2016-05-27 08:48:33Z ngie $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -143,14 +143,16 @@ SVCXPRT *
 svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
     size_t recvsize)
 {
-	SVCXPRT *xprt = NULL;
+	SVCXPRT *xprt;
 	struct sockaddr* sa;
 	int error;
 
 	SOCK_LOCK(so);
 	if (so->so_state & (SS_ISCONNECTED|SS_ISDISCONNECTED)) {
 		SOCK_UNLOCK(so);
+		CURVNET_SET(so->so_vnet);
 		error = so->so_proto->pr_usrreqs->pru_peeraddr(so, &sa);
+		CURVNET_RESTORE();
 		if (error)
 			return (NULL);
 		xprt = svc_vc_create_conn(pool, so, sa);
@@ -167,7 +169,9 @@ svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
 	xprt->xp_p2 = NULL;
 	xprt->xp_ops = &svc_vc_rendezvous_ops;
 
+	CURVNET_SET(so->so_vnet);
 	error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+	CURVNET_RESTORE();
 	if (error) {
 		goto cleanup_svc_vc_create;
 	}
@@ -185,11 +189,11 @@ svc_vc_create(SVCPOOL *pool, struct socket *so, size_t sendsize,
 	SOCKBUF_UNLOCK(&so->so_rcv);
 
 	return (xprt);
+
 cleanup_svc_vc_create:
-	if (xprt) {
-		sx_destroy(&xprt->xp_lock);
-		svc_xprt_free(xprt);
-	}
+	sx_destroy(&xprt->xp_lock);
+	svc_xprt_free(xprt);
+
 	return (NULL);
 }
 
@@ -199,8 +203,8 @@ cleanup_svc_vc_create:
 SVCXPRT *
 svc_vc_create_conn(SVCPOOL *pool, struct socket *so, struct sockaddr *raddr)
 {
-	SVCXPRT *xprt = NULL;
-	struct cf_conn *cd = NULL;
+	SVCXPRT *xprt;
+	struct cf_conn *cd;
 	struct sockaddr* sa = NULL;
 	struct sockopt opt;
 	int one = 1;
@@ -249,7 +253,9 @@ svc_vc_create_conn(SVCPOOL *pool, struct socket *so, struct sockaddr *raddr)
 
 	memcpy(&xprt->xp_rtaddr, raddr, raddr->sa_len);
 
+	CURVNET_SET(so->so_vnet);
 	error = so->so_proto->pr_usrreqs->pru_sockaddr(so, &sa);
+	CURVNET_RESTORE();
 	if (error)
 		goto cleanup_svc_vc_create;
 
@@ -273,12 +279,10 @@ svc_vc_create_conn(SVCPOOL *pool, struct socket *so, struct sockaddr *raddr)
 
 	return (xprt);
 cleanup_svc_vc_create:
-	if (xprt) {
-		sx_destroy(&xprt->xp_lock);
-		svc_xprt_free(xprt);
-	}
-	if (cd)
-		mem_free(cd, sizeof(*cd));
+	sx_destroy(&xprt->xp_lock);
+	svc_xprt_free(xprt);
+	mem_free(cd, sizeof(*cd));
+
 	return (NULL);
 }
 
@@ -410,7 +414,7 @@ svc_vc_rendezvous_recv(SVCXPRT *xprt, struct rpc_msg *msg,
 
 	sx_xunlock(&xprt->xp_lock);
 
-	sa = 0;
+	sa = NULL;
 	error = soaccept(so, &sa);
 
 	if (error) {
@@ -860,7 +864,7 @@ svc_vc_reply(SVCXPRT *xprt, struct rpc_msg *msg,
 		len = mrep->m_pkthdr.len;
 		*mtod(mrep, uint32_t *) =
 			htonl(0x80000000 | (len - sizeof(uint32_t)));
-		atomic_add_acq_32(&xprt->xp_snd_cnt, len);
+		atomic_add_32(&xprt->xp_snd_cnt, len);
 		error = sosend(xprt->xp_socket, NULL, NULL, mrep, NULL,
 		    0, curthread);
 		if (!error) {

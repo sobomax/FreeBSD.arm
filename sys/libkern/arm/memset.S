@@ -26,9 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/libkern/arm/memset.S 248395 2013-03-16 23:11:55Z andrew $");
-
-#ifdef __ARM_EABI__
+__FBSDID("$FreeBSD: head/sys/libkern/arm/memset.S 285338 2015-07-09 21:02:40Z andrew $");
 
 /*
  * This implements
@@ -44,6 +42,3 @@ ENTRY_NP(__aeabi_memset)
 	mov	r1, r3
 	b	memset
 END(__aeabi_memset)
-
-#endif
-

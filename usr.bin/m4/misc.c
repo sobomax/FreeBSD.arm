@@ -1,4 +1,4 @@
-/*	$OpenBSD: misc.c,v 1.45 2014/12/21 09:33:12 espie Exp $	*/
+/*	$OpenBSD: misc.c,v 1.46 2015/12/07 14:12:46 espie Exp $	*/
 /*	$NetBSD: misc.c,v 1.6 1995/09/28 05:37:41 tls Exp $	*/
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/m4/misc.c 283089 2015-05-18 22:40:12Z bapt $");
+__FBSDID("$FreeBSD: head/usr.bin/m4/misc.c 294298 2016-01-18 22:12:07Z bapt $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -424,6 +424,8 @@ do_emit_synchline(void)
 void
 release_input(struct input_file *f)
 {
+	if (ferror(f->file))
+		errx(1, "Fatal error reading from %s\n", f->name);
 	if (f->file != stdin)
 	    fclose(f->file);
 	f->c = EOF;

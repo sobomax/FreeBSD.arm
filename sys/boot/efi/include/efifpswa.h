@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/efi/include/efifpswa.h 96893 2002-05-19 03:17:22Z marcel $ */
+/* $FreeBSD: head/sys/boot/efi/include/efifpswa.h 293724 2016-01-12 02:17:39Z smh $ */
 #ifndef _EFI_FPSWA_H
 #define _EFI_FPSWA_H
 
@@ -7,7 +7,7 @@
  */
 
 #define EFI_INTEL_FPSWA \
-    { 0xc41b6531, 0x97b9, 0x11d3, 0x9a, 0x29, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d }
+    { 0xc41b6531, 0x97b9, 0x11d3, {0x9a, 0x29, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d} }
 
 INTERFACE_DECL(_FPSWA_INTERFACE);
 

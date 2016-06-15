@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/natd/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/natd/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	natd
 PROG		= natd
 SRCS		= natd.c icmp.c
 WARNS?=	3

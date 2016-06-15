@@ -51,7 +51,7 @@
 
 #define DRV_NAME	"mlx4_core"
 #define PFX		DRV_NAME ": "
-#define DRV_VERSION	"2.1"
+#define DRV_VERSION	"2.1.6"
 #define DRV_RELDATE	__DATE__
 
 #define DRV_STACK_NAME		"Linux-MLNX_OFED"
@@ -164,7 +164,7 @@ enum mlx4_res_tracker_free_type {
 
 /*
  *Virtual HCR structures.
- * mlx4_vhcr is the sw representation, in machine endianess
+ * mlx4_vhcr is the sw representation, in machine endianness
  *
  * mlx4_vhcr_cmd is the formalized structure, the one that is passed
  * to FW to go through communication channel.
@@ -755,6 +755,13 @@ struct mlx4_set_port_rqp_calc_context {
 	__be32 mcast;
 };
 
+struct mlx4_hca_info {
+	struct mlx4_dev	       *dev;
+	struct device_attribute firmware_attr;
+	struct device_attribute hca_attr;
+	struct device_attribute board_attr;
+};
+
 struct mlx4_port_info {
 	struct mlx4_dev	       *dev;
 	int			port;
@@ -845,6 +852,7 @@ struct mlx4_priv {
 	struct mlx4_uar		driver_uar;
 	void __iomem	       *kar;
 	struct mlx4_port_info	port[MLX4_MAX_PORTS + 1];
+	struct mlx4_hca_info	hca_info;
 	struct mlx4_sense       sense;
 	struct mutex		port_mutex;
 	struct mlx4_msix_ctl	msix_ctl;

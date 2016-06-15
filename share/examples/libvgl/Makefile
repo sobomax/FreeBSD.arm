@@ -1,5 +1,7 @@
-# $FreeBSD: head/share/examples/libvgl/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/share/examples/libvgl/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/libvgl
 PROG=	demo
 MAN=
 DPADD=	${LIBVGL}

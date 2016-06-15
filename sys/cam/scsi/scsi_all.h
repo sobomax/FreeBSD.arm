@@ -14,7 +14,7 @@
  *
  * Ported to run under 386BSD by Julian Elischer (julian@tfs.com) Sept 1992
  *
- * $FreeBSD: head/sys/cam/scsi/scsi_all.h 284192 2015-06-09 21:39:38Z ken $
+ * $FreeBSD: head/sys/cam/scsi/scsi_all.h 300207 2016-05-19 14:08:36Z ken $
  */
 
 /*
@@ -102,6 +102,9 @@ typedef enum {
 
 /* The retyable, error action, with table specified error code */
 #define	SS_RET		SS_RETRY|SSQ_DECREMENT_COUNT|SSQ_PRINT_SENSE
+
+/* Wait for transient error status to change */
+#define	SS_WAIT		SS_TUR|SSQ_MANY|SSQ_DECREMENT_COUNT|SSQ_PRINT_SENSE
 
 /* Fatal error action, with table specified error code */
 #define	SS_FATAL	SS_FAIL|SSQ_PRINT_SENSE
@@ -697,6 +700,19 @@ struct scsi_control_page {
 	u_int8_t extended_selftest_completion_time[2];
 };
 
+struct scsi_control_ext_page {
+	uint8_t page_code;
+	uint8_t subpage_code;
+	uint8_t page_length[2];
+	uint8_t flags;
+#define	SCEP_TCMOS			0x04	/* Timestamp Changeable by */
+#define	SCEP_SCSIP			0x02	/* SCSI Precedence (clock) */
+#define	SCEP_IALUAE			0x01	/* Implicit ALUA Enabled */
+	uint8_t prio;
+	uint8_t max_sense;
+	uint8_t reserve[25];
+};
+
 struct scsi_cache_page {
 	u_int8_t page_code;
 #define	SCHP_PAGE_SAVABLE		0x80	/* Page is savable */
@@ -986,6 +1002,16 @@ struct scsi_read_buffer
         u_int8_t control;
 };
 
+struct scsi_read_buffer_16
+{
+	uint8_t opcode;
+	uint8_t byte2;
+	uint8_t offset[8];
+	uint8_t length[4];
+	uint8_t buffer_id;
+	uint8_t control;
+};
+
 struct scsi_write_buffer
 {
 	u_int8_t opcode;
@@ -1257,6 +1283,17 @@ struct scsi_rw_16
 	u_int8_t control;
 };
 
+struct scsi_write_atomic_16
+{
+	uint8_t	opcode;
+	uint8_t	byte2;
+	uint8_t	addr[8];
+	uint8_t	boundary[2];
+	uint8_t	length[2];
+	uint8_t	group;
+	uint8_t	control;
+};
+
 struct scsi_write_same_10
 {
 	uint8_t	opcode;
@@ -1377,6 +1414,7 @@ struct ata_pass_12 {
 #define	AP_PROTO_UDMA_OUT	(0x0b << 1)
 #define	AP_PROTO_FPDMA		(0x0c << 1)
 #define	AP_PROTO_RESP_INFO	(0x0f << 1)
+#define AP_PROTO_MASK		0x1e
 #define	AP_MULTI	0xe0
 	u_int8_t flags;
 #define	AP_T_LEN	0x03
@@ -1457,6 +1495,11 @@ struct scsi_report_supported_opcodes_one
 	uint8_t  reserved;
 	uint8_t  support;
 #define RSO_ONE_CTDP		0x80
+#define RSO_ONE_SUP_MASK	0x07
+#define RSO_ONE_SUP_UNAVAIL	0x00
+#define RSO_ONE_SUP_NOT_SUP	0x01
+#define RSO_ONE_SUP_AVAIL	0x03
+#define RSO_ONE_SUP_VENDOR	0x05
 	uint8_t  cdb_length[2];
 	uint8_t  cdb_usage[];
 };
@@ -1661,6 +1704,7 @@ struct scsi_ec_cscd
 	uint8_t  type_code;
 #define EC_CSCD_EXT		0xff
 	uint8_t  luidt_pdt;
+#define EC_NUL			0x20
 #define EC_LUIDT_MASK		0xc0
 #define EC_LUIDT_LUN		0x00
 #define EC_LUIDT_PROXY_TOKEN	0x40
@@ -1912,6 +1956,27 @@ struct ata_pass_16 {
 	u_int8_t control;
 };
 
+struct ata_pass_32 {
+	uint8_t opcode;
+	uint8_t control;
+	uint8_t reserved1[5];
+	uint8_t length;
+	uint8_t service_action[2];
+#define	ATA_PASS_32_SA		0x1ff0
+	uint8_t protocol;
+	uint8_t flags;
+	uint8_t reserved2[2];
+	uint8_t lba[6];
+	uint8_t features[2];
+	uint8_t count[2];
+	uint8_t device;
+	uint8_t command;
+	uint8_t reserved3;
+	uint8_t icc;
+	uint8_t auxiliary[4];
+};
+
+
 #define	SC_SCSI_1 0x01
 #define	SC_SCSI_2 0x03
 
@@ -1954,6 +2019,8 @@ struct ata_pass_16 {
 #define	MODE_SENSE_10		0x5A
 #define	PERSISTENT_RES_IN	0x5E
 #define	PERSISTENT_RES_OUT	0x5F
+#define	EXTENDED_CDB		0x7E
+#define	VARIABLE_LEN_CDB	0x7F
 #define	EXTENDED_COPY		0x83
 #define	RECEIVE_COPY_STATUS	0x84
 #define	ATA_PASS_16		0x85
@@ -1966,6 +2033,7 @@ struct ata_pass_16 {
 #define	VERIFY_16		0x8F
 #define	SYNCHRONIZE_CACHE_16	0x91
 #define	WRITE_SAME_16		0x93
+#define	READ_BUFFER_16		0x9B
 #define	WRITE_ATOMIC_16		0x9C
 #define	SERVICE_ACTION_IN	0x9E
 #define	REPORT_LUNS		0xA0
@@ -2020,6 +2088,7 @@ struct ata_pass_16 {
 #define	T_OCRW		0x0f
 #define	T_OSD		0x11
 #define	T_ADC		0x12
+#define	T_ZBC_HM	0x14
 #define	T_NODEVICE	0x1f
 #define	T_ANY		0xff	/* Used in Quirk table matches */
 
@@ -2247,6 +2316,8 @@ struct scsi_vpd_id_descriptor
 #define	SVPD_ID_TYPE_LUNGRP	0x06
 #define	SVPD_ID_TYPE_MD5_LUN_ID	0x07
 #define	SVPD_ID_TYPE_SCSI_NAME	0x08
+#define	SVPD_ID_TYPE_PROTO	0x09
+#define	SVPD_ID_TYPE_UUID	0x0a
 #define	SVPD_ID_TYPE_MASK	0x0f
 	u_int8_t	reserved;
 	u_int8_t	length;
@@ -2666,9 +2737,16 @@ struct scsi_vpd_block_device_characteristics
 	uint8_t flags;
 #define	SVPD_VBULS		0x01
 #define	SVPD_FUAB		0x02
-#define	SVPD_HAW_ZBC		0x10
+#define	SVPD_ZBC_NR		0x00	/* Not Reported */
+#define	SVPD_HAW_ZBC		0x10	/* Host Aware */
+#define	SVPD_DM_ZBC		0x20	/* Drive Managed */
+#define	SVPD_ZBC_MASK		0x30	/* Zoned mask */
 	uint8_t reserved[55];
 };
+
+#define SBDC_IS_PRESENT(bdc, length, field)				   \
+	((length >= offsetof(struct scsi_vpd_block_device_characteristics, \
+	  field) + sizeof(bdc->field)) ? 1 : 0)
 
 /*
  * Logical Block Provisioning VPD Page based on
@@ -2724,7 +2802,30 @@ struct scsi_vpd_block_limits
 	u_int8_t max_atomic_transfer_length[4];
 	u_int8_t atomic_alignment[4];
 	u_int8_t atomic_transfer_length_granularity[4];
-	u_int8_t reserved2[8];
+	u_int8_t max_atomic_transfer_length_with_atomic_boundary[4];
+	u_int8_t max_atomic_boundary_size[4];
+};
+
+/*
+ * Zoned Block Device Characacteristics VPD page.
+ * From ZBC-r04, dated August 12, 2015.
+ */
+struct scsi_vpd_zoned_bdc {
+	uint8_t device;
+	uint8_t page_code;
+#define	SVPD_ZONED_BDC		0xB6
+	uint8_t page_length[2];
+#define	SVPD_ZBDC_PL	0x3C
+	uint8_t flags;
+#define	SVPD_ZBDC_URSWRZ	0x01
+	uint8_t reserved1[3];
+	uint8_t optimal_seq_zones[4];
+#define	SVPD_ZBDC_OPT_SEQ_NR		0xffffffff
+	uint8_t optimal_nonseq_zones[4];
+#define SVPD_ZBDC_OPT_NONSEQ_NR		0xffffffff
+	uint8_t max_seq_req_zones[4];
+#define	SVPD_ZBDC_MAX_SEQ_UNLIMITED	0xffffffff
+	uint8_t reserved2[44];
 };
 
 struct scsi_read_capacity
@@ -2819,6 +2920,9 @@ struct scsi_report_luns
 #define	RPL_REPORT_DEFAULT	0x00
 #define	RPL_REPORT_WELLKNOWN	0x01
 #define	RPL_REPORT_ALL		0x02
+#define	RPL_REPORT_ADMIN	0x10
+#define	RPL_REPORT_NONSUBSID	0x11
+#define	RPL_REPORT_CONGLOM	0x12
 	uint8_t select_report;
 	uint8_t reserved2[3];
 	uint8_t length[4];
@@ -3096,7 +3200,7 @@ struct scsi_sense_info
 
 /*
  * Command-specific information depends on the command for which the
- * reported condition occured.
+ * reported condition occurred.
  *
  * Note that any changes to the field names or positions in this structure,
  * even reserved fields, should be accompanied by an examination of the
@@ -3295,6 +3399,29 @@ struct scsi_sense_osd_attr_id
 };
 
 /*
+ * ATA Return descriptor, used for the SCSI ATA PASS-THROUGH(12), (16) and
+ * (32) commands.  Described in SAT-4r05.
+ */
+struct scsi_sense_ata_ret_desc
+{
+	uint8_t desc_type;
+#define	SSD_DESC_ATA		0x09
+	uint8_t length;
+	uint8_t flags;
+#define	SSD_DESC_ATA_FLAG_EXTEND	0x01
+	uint8_t error;
+	uint8_t count_15_8;
+	uint8_t count_7_0;
+	uint8_t lba_31_24;
+	uint8_t lba_7_0;
+	uint8_t lba_39_32;
+	uint8_t lba_15_8;
+	uint8_t lba_47_40;
+	uint8_t lba_23_16;
+	uint8_t device;
+	uint8_t status;
+};
+/*
  * Used with Sense keys No Sense (0x00) and Not Ready (0x02).
  *
  * Maximum descriptors allowed: 32 (as of SPC-4)
@@ -3331,7 +3458,7 @@ struct scsi_sense_forwarded
 
 /*
  * Vendor-specific sense descriptor.  The desc_type field will be in the
- * range bewteen MIN and MAX inclusive.
+ * range between MIN and MAX inclusive.
  */
 struct scsi_sense_vendor
 {
@@ -3596,6 +3723,7 @@ const char *	scsi_op_desc(u_int16_t opcode,
 			     struct scsi_inquiry_data *inq_data);
 char *		scsi_cdb_string(u_int8_t *cdb_ptr, char *cdb_string,
 				size_t len);
+void		scsi_cdb_sbuf(u_int8_t *cdb_ptr, struct sbuf *sb);
 
 void		scsi_print_inquiry(struct scsi_inquiry_data *inq_data);
 void		scsi_print_inquiry_short(struct scsi_inquiry_data *inq_data);
@@ -3610,6 +3738,7 @@ int		scsi_devid_is_lun_eui64(uint8_t *bufp);
 int		scsi_devid_is_lun_naa(uint8_t *bufp);
 int		scsi_devid_is_lun_name(uint8_t *bufp);
 int		scsi_devid_is_lun_t10(uint8_t *bufp);
+int		scsi_devid_is_port_naa(uint8_t *bufp);
 struct scsi_vpd_id_descriptor *
 		scsi_get_devid(struct scsi_vpd_device_id *id, uint32_t len,
 			       scsi_devid_checkfn_t ck_fn);
@@ -3908,6 +4037,23 @@ void scsi_ata_trim(struct ccb_scsiio *csio, u_int32_t retries,
 	           u_int8_t *data_ptr, u_int16_t dxfer_len,
 	           u_int8_t sense_len, u_int32_t timeout);
 
+int scsi_ata_read_log(struct ccb_scsiio *csio, uint32_t retries,
+		      void (*cbfcnp)(struct cam_periph *, union ccb *),
+		      uint8_t tag_action, uint32_t log_address,
+		      uint32_t page_number, uint16_t block_count,
+		      uint8_t protocol, uint8_t *data_ptr, uint32_t dxfer_len,
+		      uint8_t sense_len, uint32_t timeout);
+
+int scsi_ata_pass(struct ccb_scsiio *csio, uint32_t retries,
+		  void (*cbfcnp)(struct cam_periph *, union ccb *),
+		  uint32_t flags, uint8_t tag_action,
+		  uint8_t protocol, uint8_t ata_flags, uint16_t features,
+		  uint16_t sector_count, uint64_t lba, uint8_t command,
+		  uint8_t device, uint8_t icc, uint32_t auxiliary,
+		  uint8_t control, u_int8_t *data_ptr, uint32_t dxfer_len,
+		  uint8_t *cdb_storage, size_t cdb_storage_len,
+		  int minimum_cmd_size, u_int8_t sense_len, u_int32_t timeout);
+
 void scsi_ata_pass_16(struct ccb_scsiio *csio, u_int32_t retries,
 		      void (*cbfcnp)(struct cam_periph *, union ccb *),
 		      u_int32_t flags, u_int8_t tag_action,
@@ -3966,6 +4112,14 @@ void scsi_persistent_reserve_out(struct ccb_scsiio *csio, uint32_t retries,
 				 int scope, int res_type, uint8_t *data_ptr,
 				 uint32_t dxfer_len, int sense_len,
 				 int timeout);
+
+void scsi_report_supported_opcodes(struct ccb_scsiio *csio, uint32_t retries, 
+				   void (*cbfcnp)(struct cam_periph *,
+						  union ccb *),
+				   uint8_t tag_action, int options,
+				   int req_opcode, int req_service_action,
+				   uint8_t *data_ptr, uint32_t dxfer_len,
+				   int sense_len, int timeout);
 
 int		scsi_inquiry_match(caddr_t inqbuffer, caddr_t table_entry);
 int		scsi_static_inquiry_match(caddr_t inqbuffer,

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netgraph/ng_eiface.c 271851 2014-09-19 05:03:11Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_eiface.c 290819 2015-11-14 13:34:03Z melifaro $
  */
 
 #include <sys/param.h>
@@ -489,7 +489,6 @@ ng_eiface_rcvmsg(node_p node, item_p item, hook_p lasthook)
 			}
 			error = if_setlladdr(priv->ifp,
 			    (u_char *)msg->data, ETHER_ADDR_LEN);
-			EVENTHANDLER_INVOKE(iflladdr_event, priv->ifp);
 			break;
 		    }
 

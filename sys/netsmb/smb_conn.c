@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netsmb/smb_conn.c 252354 2013-06-28 20:21:13Z davide $");
+__FBSDID("$FreeBSD: head/sys/netsmb/smb_conn.c 291035 2015-11-18 23:04:01Z rmacklem $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -683,7 +683,9 @@ int
 smb_vc_disconnect(struct smb_vc *vcp)
 {
 
-	smb_iod_request(vcp->vc_iod, SMBIOD_EV_DISCONNECT | SMBIOD_EV_SYNC, NULL);
+	if (vcp->vc_iod != NULL)
+		smb_iod_request(vcp->vc_iod, SMBIOD_EV_DISCONNECT |
+		    SMBIOD_EV_SYNC, NULL);
 	return 0;
 }
 

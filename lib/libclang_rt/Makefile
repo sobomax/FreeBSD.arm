@@ -1,13 +1,16 @@
-# $FreeBSD: head/lib/libclang_rt/Makefile 277146 2015-01-13 19:54:47Z dim $
+# $FreeBSD: head/lib/libclang_rt/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <src.opts.mk>
 
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64"
-SUBDIR+= asan\
+SUBDIR+= include\
+	 asan\
+	 asan-preinit\
+	 asan_dynamic\
 	 asan_cxx\
-	 san\
-	 ubsan\
-	 ubsan_cxx
+	 safestack\
+	 ubsan_standalone\
+	 ubsan_standalone_cxx
 .endif
 
 .if ${MACHINE_CPUARCH} == "i386" || ${MACHINE_CPUARCH} == "amd64" || \

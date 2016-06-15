@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/wtap/Makefile 230273 2012-01-17 18:20:34Z adrian $
+# $FreeBSD: head/sys/modules/wtap/Makefile 297434 2016-03-30 23:50:23Z bdrewery $
 
 
 # Declare Name of kernel module
@@ -16,11 +16,8 @@ SRCS	+= visibility.c
 
 SRCS	+= opt_global.h
 
-.if defined(KERNBUILDDIR)
-MKDEP=          -include ${KERNBUILDDIR}/opt_global.h
-.else
+.if !defined(KERNBUILDDIR)
 CFLAGS+=        -include opt_global.h
-MKDEP=          -include opt_global.h
 
 opt_global.h:
 	echo "#define VIMAGE 1" > ${.TARGET}

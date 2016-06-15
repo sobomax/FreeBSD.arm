@@ -33,7 +33,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/vidcontrol/vidcontrol.c 281779 2015-04-20 17:43:55Z emaste $";
+  "$FreeBSD: head/usr.sbin/vidcontrol/vidcontrol.c 294321 2016-01-19 13:09:20Z trasz $";
 #endif /* not lint */
 
 #include <ctype.h>
@@ -198,7 +198,7 @@ usage(void)
 	if (vt4_mode)
 		fprintf(stderr, "%s\n%s\n%s\n%s\n%s\n",
 "usage: vidcontrol [-CHPpx] [-b color] [-c appearance] [-f [[size] file]]",
-"                  [-g geometry] [-h size] [-i adapter | mode]",
+"                  [-g geometry] [-h size] [-i active | adapter | mode]",
 "                  [-M char] [-m on | off] [-r foreground background]",
 "                  [-S on | off] [-s number] [-T xterm | cons25] [-t N | off]",
 "                  [mode] [foreground [background]] [show]");
@@ -1035,6 +1035,18 @@ static const char
 
 
 /*
+ * Show active VTY, ie current console number.
+ */
+
+static void
+show_active_info(void)
+{
+
+	printf("%d\n", cur_info.active_vty);
+}
+
+
+/*
  * Show graphics adapter information.
  */
 
@@ -1153,13 +1165,16 @@ show_mode_info(void)
 static void
 show_info(char *arg)
 {
-	if (!strcmp(arg, "adapter")) {
+
+	if (!strcmp(arg, "active")) {
+		show_active_info();
+	} else if (!strcmp(arg, "adapter")) {
 		show_adapter_info();
 	} else if (!strcmp(arg, "mode")) {
 		show_mode_info();
 	} else {
 		revert();
-		errx(1, "argument to -i must be either adapter or mode");
+		errx(1, "argument to -i must be active, adapter, or mode");
 	}
 }
 

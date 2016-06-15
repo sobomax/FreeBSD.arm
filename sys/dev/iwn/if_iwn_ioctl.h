@@ -13,13 +13,18 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/iwn/if_iwn_ioctl.h 262422 2014-02-24 02:37:04Z adrian $
+ * $FreeBSD: head/sys/dev/iwn/if_iwn_ioctl.h 287312 2015-08-30 21:54:33Z adrian $
  */
 #ifndef	__IF_IWN_IOCTL_H__
 #define	__IF_IWN_IOCTL_H__
 
+struct iwn_ioctl_data {
+	void *dst_addr;
+	int dst_len;
+};
+
 /* XXX how should I pick appropriate ioctl numbers? */
-#define	SIOCGIWNSTATS		_IOWR('i', 145, struct ifreq)
-#define	SIOCZIWNSTATS		_IOWR('i', 146, struct ifreq)
+#define	SIOCGIWNSTATS		_IOWR('f', 145, struct iwn_ioctl_data)
+#define	SIOCZIWNSTATS		_IOWR('f', 146, struct iwn_ioctl_data)
 
 #endif	/* __IF_IWN_IOCTL_H__ */

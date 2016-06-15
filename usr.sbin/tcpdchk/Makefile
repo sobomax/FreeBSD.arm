@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/tcpdchk/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/tcpdchk/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -8,7 +8,7 @@ PROG=	tcpdchk
 MAN=	tcpdchk.8
 SRCS=	tcpdchk.c fakelog.c inetcf.c scaffold.c
 
-CFLAGS+=-DREAL_DAEMON_DIR=\"/usr/libexec\" \
+CFLAGS+=-DREAL_DAEMON_DIR=\"${LIBEXECDIR}\" \
 	-DSEVERITY=LOG_INFO -DRFC931_TIMEOUT=10 -DPROCESS_OPTIONS \
 	-DHOSTS_DENY=\"/etc/hosts.deny\" -DHOSTS_ALLOW=\"/etc/hosts.allow\"
 .if ${MK_INET6_SUPPORT} != "no"

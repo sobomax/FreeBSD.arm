@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/geom/class/virstor/Makefile 216472 2010-12-16 00:00:28Z obrien $
+# $FreeBSD: head/sbin/geom/class/virstor/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 .PATH: ${.CURDIR}/../../misc ${.CURDIR}/../../../../sys/geom/virstor
 
 GEOM_CLASS=	virstor

@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/atkbdc/psm.c 284585 2015-06-19 00:10:30Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/atkbdc/psm.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include "opt_isa.h"
 #include "opt_psm.h"
@@ -524,8 +524,7 @@ static struct {
 	{ MOUSE_MODEL_GENERIC,
 	  0xc0, MOUSE_PS2_PACKETSIZE, NULL },
 };
-#define	GENERIC_MOUSE_ENTRY	\
-    ((sizeof(vendortype) / sizeof(*vendortype)) - 1)
+#define	GENERIC_MOUSE_ENTRY (nitems(vendortype) - 1)
 
 /* device driver declarateion */
 static device_method_t psm_methods[] = {
@@ -1808,7 +1807,7 @@ psmread(struct cdev *dev, struct uio *uio, int flag)
 	if ((sc->state & PSM_VALID) == 0)
 		return (EIO);
 
-	/* block until mouse activity occured */
+	/* block until mouse activity occurred */
 	s = spltty();
 	while (sc->queue.count <= 0) {
 		if (dev != sc->bdev) {
@@ -2841,6 +2840,7 @@ proc_synaptics(struct psm_softc *sc, packetbuf_t *pb, mousestatus_t *ms,
 		int two_finger_scroll;
 		int len, weight_prev_x, weight_prev_y;
 		int div_max_x, div_max_y, div_x, div_y;
+		int exiting_scroll;
 
 		/* Read sysctl. */
 		/* XXX Verify values? */
@@ -2866,6 +2866,8 @@ proc_synaptics(struct psm_softc *sc, packetbuf_t *pb, mousestatus_t *ms,
 		vscroll_hor_area = sc->syninfo.vscroll_hor_area;
 		vscroll_ver_area = sc->syninfo.vscroll_ver_area;
 		two_finger_scroll = sc->syninfo.two_finger_scroll;
+
+		exiting_scroll = 0;
 
 		/* Palm detection. */
 		if (!(
@@ -3006,7 +3008,7 @@ proc_synaptics(struct psm_softc *sc, packetbuf_t *pb, mousestatus_t *ms,
 		if (synaction->queue_len < synaction->window_min)
 			goto SYNAPTICS_END;
 
-		/* Is a scrolling action occuring? */
+		/* Is a scrolling action occurring? */
 		if (!synaction->in_taphold && !synaction->in_vscroll) {
 			/*
 			 * A scrolling action must not conflict with a tap
@@ -3068,8 +3070,10 @@ proc_synaptics(struct psm_softc *sc, packetbuf_t *pb, mousestatus_t *ms,
 		 * Reset two finger scrolling when the number of fingers
 		 * is different from two.
 		 */
-		if (two_finger_scroll && w != 0)
+		if (two_finger_scroll && w != 0 && synaction->in_vscroll != 0) {
 			synaction->in_vscroll = 0;
+			exiting_scroll = 1;
+		}
 
 		VLOG(5, (LOG_DEBUG,
 			"synaptics: virtual scrolling: %s "
@@ -3177,6 +3181,10 @@ proc_synaptics(struct psm_softc *sc, packetbuf_t *pb, mousestatus_t *ms,
 			/* The pointer is not moved. */
 			*x = *y = 0;
 		} else {
+			/* On exit the x/y pos may jump, ignore this */
+			if (exiting_scroll)
+				*x = *y = 0;
+
 			VLOG(3, (LOG_DEBUG, "synaptics: [%d, %d] -> [%d, %d]\n",
 			    dx, dy, *x, *y));
 		}
@@ -3510,7 +3518,7 @@ psmsoftintr(void *arg)
 
 		case MOUSE_MODEL_NETSCROLL:
 			/*
-			 * three addtional bytes encode buttons and
+			 * three additional bytes encode buttons and
 			 * wheel events
 			 */
 			ms.button |= (pb->ipacket[3] & MOUSE_PS2_BUTTON3DOWN) ?
@@ -3865,7 +3873,7 @@ enable_kmouse(struct psm_softc *sc, enum probearg arg)
 	 * The special sequence to enable the third and fourth buttons.
 	 * Otherwise they behave like the first and second buttons.
 	 */
-	for (i = 0; i < sizeof(rate)/sizeof(rate[0]); ++i)
+	for (i = 0; i < nitems(rate); ++i)
 		if (set_mouse_sampling_rate(kbdc, rate[i]) != rate[i])
 			return (FALSE);
 
@@ -3962,7 +3970,7 @@ enable_msexplorer(struct psm_softc *sc, enum probearg arg)
 	enable_msintelli(sc, arg);
 
 	/* the special sequence to enable the extra buttons and the roller. */
-	for (i = 0; i < sizeof(rate1)/sizeof(rate1[0]); ++i)
+	for (i = 0; i < nitems(rate1); ++i)
 		if (set_mouse_sampling_rate(kbdc, rate1[i]) != rate1[i])
 			return (FALSE);
 	/* the device will give the genuine ID only after the above sequence */
@@ -3985,7 +3993,7 @@ enable_msexplorer(struct psm_softc *sc, enum probearg arg)
 	 * sequence; it will make the KVM think the mouse is IntelliMouse
 	 * when it is in fact IntelliMouse Explorer.
 	 */
-	for (i = 0; i < sizeof(rate0)/sizeof(rate0[0]); ++i)
+	for (i = 0; i < nitems(rate0); ++i)
 		if (set_mouse_sampling_rate(kbdc, rate0[i]) != rate0[i])
 			break;
 	get_aux_id(kbdc);
@@ -4007,7 +4015,7 @@ enable_msintelli(struct psm_softc *sc, enum probearg arg)
 	int i;
 
 	/* the special sequence to enable the third button and the roller. */
-	for (i = 0; i < sizeof(rate)/sizeof(rate[0]); ++i)
+	for (i = 0; i < nitems(rate); ++i)
 		if (set_mouse_sampling_rate(kbdc, rate[i]) != rate[i])
 			return (FALSE);
 	/* the device will give the genuine ID only after the above sequence */
@@ -4035,7 +4043,7 @@ enable_4dmouse(struct psm_softc *sc, enum probearg arg)
 	int id;
 	int i;
 
-	for (i = 0; i < sizeof(rate)/sizeof(rate[0]); ++i)
+	for (i = 0; i < nitems(rate); ++i)
 		if (set_mouse_sampling_rate(kbdc, rate[i]) != rate[i])
 			return (FALSE);
 	id = get_aux_id(kbdc);

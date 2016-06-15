@@ -38,7 +38,7 @@ static char sccsid[] = "@(#)kvm_proc.c	8.3 (Berkeley) 9/23/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 273266 2014-10-18 19:36:11Z adrian $");
+__FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 298839 2016-04-30 09:13:26Z ngie $");
 
 /*
  * Proc traversal interface for kvm.  ps and w are (probably) the exclusive
@@ -66,6 +66,8 @@ __FBSDID("$FreeBSD: head/lib/libkvm/kvm_proc.c 273266 2014-10-18 19:36:11Z adria
 #include <sys/tty.h>
 #include <sys/file.h>
 #include <sys/conf.h>
+#define	_WANT_KW_EXITCODE
+#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -267,7 +269,7 @@ kvm_proclist(kvm_t *kd, int what, int arg, struct proc *p,
 				return (-1);
 			}
 			kp->ki_ppid = pproc.p_pid;
-		} else 
+		} else
 			kp->ki_ppid = 0;
 		if (proc.p_pgrp == NULL)
 			goto nopgrp;
@@ -343,7 +345,7 @@ nopgrp:
 		 * this field.
 		 */
 #define		pmap_resident_count(pm) ((pm)->pm_stats.resident_count)
-		kp->ki_rssize = pmap_resident_count(&vmspace.vm_pmap); 
+		kp->ki_rssize = pmap_resident_count(&vmspace.vm_pmap);
 		kp->ki_swrss = vmspace.vm_swrss;
 		kp->ki_tsize = vmspace.vm_tsize;
 		kp->ki_dsize = vmspace.vm_dsize;
@@ -389,7 +391,7 @@ nopgrp:
 		kp->ki_siglist = proc.p_siglist;
 		SIGSETOR(kp->ki_siglist, mtd.td_siglist);
 		kp->ki_sigmask = mtd.td_sigmask;
-		kp->ki_xstat = proc.p_xstat;
+		kp->ki_xstat = KW_EXITCODE(proc.p_xexit, proc.p_xsig);
 		kp->ki_acflag = proc.p_acflag;
 		kp->ki_lock = proc.p_lock;
 		if (proc.p_state != PRS_ZOMBIE) {
@@ -398,12 +400,12 @@ nopgrp:
 			kp->ki_sflag = 0;
 			kp->ki_nice = proc.p_nice;
 			kp->ki_traceflag = proc.p_traceflag;
-			if (proc.p_state == PRS_NORMAL) { 
+			if (proc.p_state == PRS_NORMAL) {
 				if (TD_ON_RUNQ(&mtd) ||
 				    TD_CAN_RUN(&mtd) ||
 				    TD_IS_RUNNING(&mtd)) {
 					kp->ki_stat = SRUN;
-				} else if (mtd.td_state == 
+				} else if (mtd.td_state ==
 				    TDS_INHIBITED) {
 					if (P_SHOULDSTOP(&proc)) {
 						kp->ki_stat = SSTOP;
@@ -542,7 +544,7 @@ kvm_getprocs(kvm_t *kd, int op, int arg, int *cnt)
 			size += size / 10;
 			kd->procbase = (struct kinfo_proc *)
 			    _kvm_realloc(kd, kd->procbase, size);
-			if (kd->procbase == 0)
+			if (kd->procbase == NULL)
 				return (0);
 			osize = size;
 			st = sysctl(mib, temp_op == KERN_PROC_ALL ||
@@ -580,6 +582,12 @@ liveout:
 		nl[5].n_name = "_cpu_tick_frequency";
 		nl[6].n_name = 0;
 
+		if (!kd->arch->ka_native(kd)) {
+			_kvm_err(kd, kd->program,
+			    "cannot read procs from non-native core");
+			return (0);
+		}
+
 		if (kvm_nlist(kd, nl) != 0) {
 			for (p = nl; p->n_type != 0; ++p)
 				;
@@ -606,7 +614,7 @@ liveout:
 		}
 		size = nprocs * sizeof(struct kinfo_proc);
 		kd->procbase = (struct kinfo_proc *)_kvm_malloc(kd, size);
-		if (kd->procbase == 0)
+		if (kd->procbase == NULL)
 			return (0);
 
 		nprocs = kvm_deadprocs(kd, op, arg, nl[1].n_value,
@@ -629,21 +637,19 @@ liveout:
 void
 _kvm_freeprocs(kvm_t *kd)
 {
-	if (kd->procbase) {
-		free(kd->procbase);
-		kd->procbase = 0;
-	}
+
+	free(kd->procbase);
+	kd->procbase = NULL;
 }
 
 void *
 _kvm_realloc(kvm_t *kd, void *p, size_t n)
 {
-	void *np = (void *)realloc(p, n);
+	void *np;
 
-	if (np == 0) {
-		free(p);
+	np = reallocf(p, n);
+	if (np == NULL)
 		_kvm_err(kd, kd->program, "out of memory");
-	}
 	return (np);
 }
 
@@ -660,11 +666,12 @@ kvm_argv(kvm_t *kd, const struct kinfo_proc *kp, int env, int nchr)
 	static char *buf, *p;
 	static char **bufp;
 	static int argc;
+	char **nbufp;
 
 	if (!ISALIVE(kd)) {
 		_kvm_err(kd, kd->program,
 		    "cannot read user space from dead kernel");
-		return (0);
+		return (NULL);
 	}
 
 	if (nchr == 0 || nchr > ARG_MAX)
@@ -673,11 +680,17 @@ kvm_argv(kvm_t *kd, const struct kinfo_proc *kp, int env, int nchr)
 		buf = malloc(nchr);
 		if (buf == NULL) {
 			_kvm_err(kd, kd->program, "cannot allocate memory");
-			return (0);
+			return (NULL);
 		}
-		buflen = nchr;
 		argc = 32;
 		bufp = malloc(sizeof(char *) * argc);
+		if (bufp == NULL) {
+			free(buf);
+			buf = NULL;
+			_kvm_err(kd, kd->program, "cannot allocate memory");
+			return (NULL);
+		}
+		buflen = nchr;
 	} else if (nchr > buflen) {
 		p = realloc(buf, nchr);
 		if (p != NULL) {
@@ -698,12 +711,11 @@ kvm_argv(kvm_t *kd, const struct kinfo_proc *kp, int env, int nchr)
 		 * to the requested len.
 		 */
 		if (errno != ENOMEM || bufsz != (size_t)buflen)
-			return (0);
+			return (NULL);
 		buf[bufsz - 1] = '\0';
 		errno = 0;
-	} else if (bufsz == 0) {
-		return (0);
-	}
+	} else if (bufsz == 0)
+		return (NULL);
 	i = 0;
 	p = buf;
 	do {
@@ -711,8 +723,10 @@ kvm_argv(kvm_t *kd, const struct kinfo_proc *kp, int env, int nchr)
 		p += strlen(p) + 1;
 		if (i >= argc) {
 			argc += argc;
-			bufp = realloc(bufp,
-			    sizeof(char *) * argc);
+			nbufp = realloc(bufp, sizeof(char *) * argc);
+			if (nbufp == NULL)
+				return (NULL);
+			bufp = nbufp;
 		}
 	} while (p < buf + bufsz);
 	bufp[i++] = 0;

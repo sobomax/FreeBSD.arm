@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_ftp_pxy.c 255332 2013-09-06 23:11:19Z cy $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_ftp_pxy.c 296299 2016-03-02 03:28:57Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -8,7 +8,7 @@
  * Simple FTP transparent proxy for in-kernel use.  For use with the NAT
  * code.
  *
- * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_ftp_pxy.c 255332 2013-09-06 23:11:19Z cy $
+ * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_ftp_pxy.c 296299 2016-03-02 03:28:57Z cy $
  * Id: ip_ftp_pxy.c,v 2.88.2.19 2006/04/01 10:14:53 darrenr Exp $
  */
 
@@ -1950,10 +1950,6 @@ ipf_p_ftp_epsv(softf, fin, ip, nat, ftp, dlen)
 		ap *= 10;
 		ap += *s++ - '0';
 	}
-
-	if (!s) {
-		return 0;
-}
 
 	if (*s == '|')
 		s++;

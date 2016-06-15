@@ -1,5 +1,7 @@
-# $FreeBSD: head/share/examples/hwpmc/Makefile 269327 2014-07-31 09:18:15Z gnn $
+# $FreeBSD: head/share/examples/hwpmc/Makefile 299293 2016-05-10 00:51:50Z gjb $
 
+PACKAGE=examples
+FILESDIR=${SHAREDIR}/examples/hwpmc
 PROG=	overhead
 LDFLAGS+= -lpmc
 MAN=

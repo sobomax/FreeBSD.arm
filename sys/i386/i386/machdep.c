@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 284325 2015-06-12 15:14:08Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/machdep.c 298308 2016-04-19 23:41:46Z pfg $");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"
@@ -166,9 +166,6 @@ CTASSERT(offsetof(struct pcpu, pc_curthread) == 0);
 extern register_t init386(int first);
 extern void dblfault_handler(void);
 
-#define	CS_SECURE(cs)		(ISPL(cs) == SEL_UPL)
-#define	EFL_SECURE(ef, oef)	((((ef) ^ (oef)) & ~PSL_USERCHANGE) == 0)
-
 #if !defined(CPU_DISABLE_SSE) && defined(I686_CPU)
 #define CPU_ENABLE_SSE
 #endif
@@ -179,10 +176,6 @@ static void get_fpcontext(struct thread *td, mcontext_t *mcp,
     char *xfpusave, size_t xfpusave_len);
 static int  set_fpcontext(struct thread *td, mcontext_t *mcp,
     char *xfpustate, size_t xfpustate_len);
-#ifdef CPU_ENABLE_SSE
-static void set_fpregs_xmm(struct save87 *, struct savexmm *);
-static void fill_fpregs_xmm(struct savexmm *, struct save87 *);
-#endif /* CPU_ENABLE_SSE */
 SYSINIT(cpu, SI_SUB_CPU, SI_ORDER_FIRST, cpu_startup, NULL);
 
 /* Intel ICH registers */
@@ -228,8 +221,8 @@ vm_paddr_t phys_avail[PHYSMAP_SIZE + 2];
 vm_paddr_t dump_avail[PHYSMAP_SIZE + 2];
 
 /* must be 2 less so 0 0 can signal end of chunks */
-#define PHYS_AVAIL_ARRAY_END ((sizeof(phys_avail) / sizeof(phys_avail[0])) - 2)
-#define DUMP_AVAIL_ARRAY_END ((sizeof(dump_avail) / sizeof(dump_avail[0])) - 2)
+#define	PHYS_AVAIL_ARRAY_END (nitems(phys_avail) - 2)
+#define	DUMP_AVAIL_ARRAY_END (nitems(dump_avail) - 2)
 
 struct kva_md_info kmi;
 
@@ -375,7 +368,7 @@ osendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	/* Allocate space for the signal handler context. */
 	if ((td->td_pflags & TDP_ALTSTACK) && !oonstack &&
 	    SIGISMEMBER(psp->ps_sigonstack, sig)) {
-		fp = (struct osigframe *)(td->td_sigstk.ss_sp +
+		fp = (struct osigframe *)((uintptr_t)td->td_sigstk.ss_sp +
 		    td->td_sigstk.ss_size - sizeof(struct osigframe));
 #if defined(COMPAT_43)
 		td->td_sigstk.ss_flags |= SS_ONSTACK;
@@ -522,7 +515,7 @@ freebsd4_sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	/* Allocate space for the signal handler context. */
 	if ((td->td_pflags & TDP_ALTSTACK) != 0 && !oonstack &&
 	    SIGISMEMBER(psp->ps_sigonstack, sig)) {
-		sfp = (struct sigframe4 *)(td->td_sigstk.ss_sp +
+		sfp = (struct sigframe4 *)((uintptr_t)td->td_sigstk.ss_sp +
 		    td->td_sigstk.ss_size - sizeof(struct sigframe4));
 #if defined(COMPAT_43)
 		td->td_sigstk.ss_flags |= SS_ONSTACK;
@@ -682,7 +675,7 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	/* Allocate space for the signal handler context. */
 	if ((td->td_pflags & TDP_ALTSTACK) != 0 && !oonstack &&
 	    SIGISMEMBER(psp->ps_sigonstack, sig)) {
-		sp = td->td_sigstk.ss_sp + td->td_sigstk.ss_size;
+		sp = (char *)td->td_sigstk.ss_sp + td->td_sigstk.ss_size;
 #if defined(COMPAT_43)
 		td->td_sigstk.ss_flags |= SS_ONSTACK;
 #endif
@@ -697,10 +690,6 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 
 	/* Align to 16 bytes. */
 	sfp = (struct sigframe *)((unsigned int)sp & ~0xF);
-
-	/* Translate the signal if appropriate. */
-	if (p->p_sysent->sv_sigtbl && sig <= p->p_sysent->sv_sigsize)
-		sig = p->p_sysent->sv_sigtbl[_SIG_IDX(sig)];
 
 	/* Build the argument list for the signal handler. */
 	sf.sf_signum = sig;
@@ -1589,6 +1578,29 @@ DB_SHOW_COMMAND(sysregs, db_show_sysregs)
 	db_printf("cr2\t0x%08x\n", rcr2());
 	db_printf("cr3\t0x%08x\n", rcr3());
 	db_printf("cr4\t0x%08x\n", rcr4());
+	if (rcr4() & CR4_XSAVE)
+		db_printf("xcr0\t0x%016llx\n", rxcr(0));
+	if (amd_feature & (AMDID_NX | AMDID_LM))
+		db_printf("EFER\t0x%016llx\n", rdmsr(MSR_EFER));
+	if (cpu_feature2 & (CPUID2_VMX | CPUID2_SMX))
+		db_printf("FEATURES_CTL\t0x%016llx\n",
+		    rdmsr(MSR_IA32_FEATURE_CONTROL));
+	if ((cpu_vendor_id == CPU_VENDOR_INTEL ||
+	    cpu_vendor_id == CPU_VENDOR_AMD) && CPUID_TO_FAMILY(cpu_id) >= 6)
+		db_printf("DEBUG_CTL\t0x%016llx\n", rdmsr(MSR_DEBUGCTLMSR));
+	if (cpu_feature & CPUID_PAT)
+		db_printf("PAT\t0x%016llx\n", rdmsr(MSR_PAT));
+}
+
+DB_SHOW_COMMAND(dbregs, db_show_dbregs)
+{
+
+	db_printf("dr0\t0x%08x\n", rdr0());
+	db_printf("dr1\t0x%08x\n", rdr1());
+	db_printf("dr2\t0x%08x\n", rdr2());
+	db_printf("dr3\t0x%08x\n", rdr3());
+	db_printf("dr6\t0x%08x\n", rdr6());
+	db_printf("dr7\t0x%08x\n", rdr7());	
 }
 #endif
 
@@ -2081,9 +2093,8 @@ getmemsize(int first)
 	kmdp = preload_search_by_type("elf kernel");
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type("elf32 kernel");
-	if (kmdp != NULL)
-		smapbase = (struct bios_smap *)preload_search_info(kmdp,
-		    MODINFO_METADATA | MODINFOMD_SMAP);
+	smapbase = (struct bios_smap *)preload_search_info(kmdp,
+	    MODINFO_METADATA | MODINFOMD_SMAP);
 	if (smapbase != NULL) {
 		add_smap_entries(smapbase, physmap, &physmap_idx);
 		has_smap = 1;
@@ -2429,7 +2440,7 @@ init386(first)
 #endif
 
 	thread0.td_kstack = proc0kstack;
-	thread0.td_kstack_pages = KSTACK_PAGES;
+	thread0.td_kstack_pages = TD0_KSTACK_PAGES;
 
 	/*
  	 * This may be done better later if it gets more high level
@@ -2451,10 +2462,11 @@ init386(first)
 	} else {
 		metadata_missing = 1;
 	}
-	if (envmode == 1)
-		kern_envp = static_env;
-	else if (bootinfo.bi_envp)
-		kern_envp = (caddr_t)bootinfo.bi_envp + KERNBASE;
+
+	if (bootinfo.bi_envp != 0)
+		init_static_kenv((char *)bootinfo.bi_envp + KERNBASE, 0);
+	else
+		init_static_kenv(NULL, 0);
 
 	/* Init basic tunables, hz etc */
 	init_param1();
@@ -2505,7 +2517,7 @@ init386(first)
 	/* make ldt memory segments */
 	ldt_segs[LUCODE_SEL].ssd_limit = atop(0 - 1);
 	ldt_segs[LUDATA_SEL].ssd_limit = atop(0 - 1);
-	for (x = 0; x < sizeof ldt_segs / sizeof ldt_segs[0]; x++)
+	for (x = 0; x < nitems(ldt_segs); x++)
 		ssdtosd(&ldt_segs[x], &ldt[x].sd);
 
 	_default_ldt = GSEL(GLDT_SEL, SEL_KPL);
@@ -2596,6 +2608,40 @@ init386(first)
 	 */
 	clock_init();
 
+	finishidentcpu();	/* Final stage of CPU initialization */
+	setidt(IDT_UD, &IDTVEC(ill),  SDT_SYS386TGT, SEL_KPL,
+	    GSEL(GCODE_SEL, SEL_KPL));
+	setidt(IDT_GP, &IDTVEC(prot),  SDT_SYS386TGT, SEL_KPL,
+	    GSEL(GCODE_SEL, SEL_KPL));
+	initializecpu();	/* Initialize CPU registers */
+	initializecpucache();
+
+	/* pointer to selector slot for %fs/%gs */
+	PCPU_SET(fsgs_gdt, &gdt[GUFS_SEL].sd);
+
+	dblfault_tss.tss_esp = dblfault_tss.tss_esp0 = dblfault_tss.tss_esp1 =
+	    dblfault_tss.tss_esp2 = (int)&dblfault_stack[sizeof(dblfault_stack)];
+	dblfault_tss.tss_ss = dblfault_tss.tss_ss0 = dblfault_tss.tss_ss1 =
+	    dblfault_tss.tss_ss2 = GSEL(GDATA_SEL, SEL_KPL);
+#if defined(PAE) || defined(PAE_TABLES)
+	dblfault_tss.tss_cr3 = (int)IdlePDPT;
+#else
+	dblfault_tss.tss_cr3 = (int)IdlePTD;
+#endif
+	dblfault_tss.tss_eip = (int)dblfault_handler;
+	dblfault_tss.tss_eflags = PSL_KERNEL;
+	dblfault_tss.tss_ds = dblfault_tss.tss_es =
+	    dblfault_tss.tss_gs = GSEL(GDATA_SEL, SEL_KPL);
+	dblfault_tss.tss_fs = GSEL(GPRIV_SEL, SEL_KPL);
+	dblfault_tss.tss_cs = GSEL(GCODE_SEL, SEL_KPL);
+	dblfault_tss.tss_ldt = GSEL(GLDT_SEL, SEL_KPL);
+
+	vm86_initialize();
+	getmemsize(first);
+	init_param2(physmem);
+
+	/* now running on new page tables, configured,and u/iom is accessible */
+
 	/*
 	 * Initialize the console before we print anything out.
 	 */
@@ -2635,40 +2681,6 @@ init386(first)
 	if (boothowto & RB_KDB)
 		kdb_enter(KDB_WHY_BOOTFLAGS, "Boot flags requested debugger");
 #endif
-
-	finishidentcpu();	/* Final stage of CPU initialization */
-	setidt(IDT_UD, &IDTVEC(ill),  SDT_SYS386TGT, SEL_KPL,
-	    GSEL(GCODE_SEL, SEL_KPL));
-	setidt(IDT_GP, &IDTVEC(prot),  SDT_SYS386TGT, SEL_KPL,
-	    GSEL(GCODE_SEL, SEL_KPL));
-	initializecpu();	/* Initialize CPU registers */
-	initializecpucache();
-
-	/* pointer to selector slot for %fs/%gs */
-	PCPU_SET(fsgs_gdt, &gdt[GUFS_SEL].sd);
-
-	dblfault_tss.tss_esp = dblfault_tss.tss_esp0 = dblfault_tss.tss_esp1 =
-	    dblfault_tss.tss_esp2 = (int)&dblfault_stack[sizeof(dblfault_stack)];
-	dblfault_tss.tss_ss = dblfault_tss.tss_ss0 = dblfault_tss.tss_ss1 =
-	    dblfault_tss.tss_ss2 = GSEL(GDATA_SEL, SEL_KPL);
-#if defined(PAE) || defined(PAE_TABLES)
-	dblfault_tss.tss_cr3 = (int)IdlePDPT;
-#else
-	dblfault_tss.tss_cr3 = (int)IdlePTD;
-#endif
-	dblfault_tss.tss_eip = (int)dblfault_handler;
-	dblfault_tss.tss_eflags = PSL_KERNEL;
-	dblfault_tss.tss_ds = dblfault_tss.tss_es =
-	    dblfault_tss.tss_gs = GSEL(GDATA_SEL, SEL_KPL);
-	dblfault_tss.tss_fs = GSEL(GPRIV_SEL, SEL_KPL);
-	dblfault_tss.tss_cs = GSEL(GCODE_SEL, SEL_KPL);
-	dblfault_tss.tss_ldt = GSEL(GLDT_SEL, SEL_KPL);
-
-	vm86_initialize();
-	getmemsize(first);
-	init_param2(physmem);
-
-	/* now running on new page tables, configured,and u/iom is accessible */
 
 	msgbufinit(msgbufp, msgbufsize);
 #ifdef DEV_NPX
@@ -2762,8 +2774,6 @@ smap_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	kmdp = preload_search_by_type("elf kernel");
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type("elf32 kernel");
-	if (kmdp == NULL)
-		return (0);
 	smapbase = (struct bios_smap *)preload_search_info(kmdp,
 	    MODINFO_METADATA | MODINFOMD_SMAP);
 	if (smapbase == NULL)
@@ -2955,58 +2965,6 @@ set_regs(struct thread *td, struct reg *regs)
 	return (0);
 }
 
-#ifdef CPU_ENABLE_SSE
-static void
-fill_fpregs_xmm(sv_xmm, sv_87)
-	struct savexmm *sv_xmm;
-	struct save87 *sv_87;
-{
-	register struct env87 *penv_87 = &sv_87->sv_env;
-	register struct envxmm *penv_xmm = &sv_xmm->sv_env;
-	int i;
-
-	bzero(sv_87, sizeof(*sv_87));
-
-	/* FPU control/status */
-	penv_87->en_cw = penv_xmm->en_cw;
-	penv_87->en_sw = penv_xmm->en_sw;
-	penv_87->en_tw = penv_xmm->en_tw;
-	penv_87->en_fip = penv_xmm->en_fip;
-	penv_87->en_fcs = penv_xmm->en_fcs;
-	penv_87->en_opcode = penv_xmm->en_opcode;
-	penv_87->en_foo = penv_xmm->en_foo;
-	penv_87->en_fos = penv_xmm->en_fos;
-
-	/* FPU registers */
-	for (i = 0; i < 8; ++i)
-		sv_87->sv_ac[i] = sv_xmm->sv_fp[i].fp_acc;
-}
-
-static void
-set_fpregs_xmm(sv_87, sv_xmm)
-	struct save87 *sv_87;
-	struct savexmm *sv_xmm;
-{
-	register struct env87 *penv_87 = &sv_87->sv_env;
-	register struct envxmm *penv_xmm = &sv_xmm->sv_env;
-	int i;
-
-	/* FPU control/status */
-	penv_xmm->en_cw = penv_87->en_cw;
-	penv_xmm->en_sw = penv_87->en_sw;
-	penv_xmm->en_tw = penv_87->en_tw;
-	penv_xmm->en_fip = penv_87->en_fip;
-	penv_xmm->en_fcs = penv_87->en_fcs;
-	penv_xmm->en_opcode = penv_87->en_opcode;
-	penv_xmm->en_foo = penv_87->en_foo;
-	penv_xmm->en_fos = penv_87->en_fos;
-
-	/* FPU registers */
-	for (i = 0; i < 8; ++i)
-		sv_xmm->sv_fp[i].fp_acc = sv_87->sv_ac[i];
-}
-#endif /* CPU_ENABLE_SSE */
-
 int
 fill_fpregs(struct thread *td, struct fpreg *fpregs)
 {
@@ -3021,7 +2979,7 @@ fill_fpregs(struct thread *td, struct fpreg *fpregs)
 #endif
 #ifdef CPU_ENABLE_SSE
 	if (cpu_fxsr)
-		fill_fpregs_xmm(&get_pcb_user_save_td(td)->sv_xmm,
+		npx_fill_fpregs_xmm(&get_pcb_user_save_td(td)->sv_xmm,
 		    (struct save87 *)fpregs);
 	else
 #endif /* CPU_ENABLE_SSE */
@@ -3036,7 +2994,7 @@ set_fpregs(struct thread *td, struct fpreg *fpregs)
 
 #ifdef CPU_ENABLE_SSE
 	if (cpu_fxsr)
-		set_fpregs_xmm((struct save87 *)fpregs,
+		npx_set_fpregs_xmm((struct save87 *)fpregs,
 		    &get_pcb_user_save_td(td)->sv_xmm);
 	else
 #endif /* CPU_ENABLE_SSE */

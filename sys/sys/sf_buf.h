@@ -24,14 +24,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sf_buf.h 270201 2014-08-20 08:02:38Z kib $
+ * $FreeBSD: head/sys/sys/sf_buf.h 293439 2016-01-08 20:34:57Z glebius $
  */
 
 #ifndef _SYS_SF_BUF_H_
 #define _SYS_SF_BUF_H_
 
 struct sfstat {				/* sendfile statistics */
+	uint64_t	sf_syscalls;	/* times sendfile was called */
+	uint64_t	sf_noiocnt;	/* times sendfile didn't require I/O */
 	uint64_t	sf_iocnt;	/* times sendfile had to do disk I/O */
+	uint64_t	sf_pages_read;	/* pages read as part of a request */
+	uint64_t	sf_pages_valid;	/* pages were valid for a request */
+	uint64_t	sf_rhpages_requested;	/* readahead pages requested */
+	uint64_t	sf_rhpages_read;	/* readahead pages read */
+	uint64_t	sf_busy;	/* times aborted on a busy page */
 	uint64_t	sf_allocfail;	/* times sfbuf allocation failed */
 	uint64_t	sf_allocwait;	/* times sfbuf allocation had to wait */
 };

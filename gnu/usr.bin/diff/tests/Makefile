@@ -1,17 +1,15 @@
-# $FreeBSD: head/gnu/usr.bin/diff/tests/Makefile 272787 2014-10-09 02:07:34Z ngie $
+# $FreeBSD: head/gnu/usr.bin/diff/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-TESTSRC=	${.CURDIR}/../../../../contrib/netbsd-tests/usr.bin/diff
-.PATH: ${TESTSRC}
+PACKAGE=	tests
 
-.include <bsd.own.mk>
+TESTSRC=	${SRCTOP}/contrib/netbsd-tests/usr.bin/diff
 
-TESTSDIR=	${TESTSBASE}/gnu/usr.bin/diff
-ATF_TESTS_SH=	diff_test
+NETBSD_ATF_TESTS_SH=	diff_test
 ATF_TESTS_SH_SED_diff_test=	-e 's/t_diff/`basename $$0`/g'
-ATF_TESTS_SH_SRC_diff_test=	t_diff.sh
 
-FILESDIR=	${TESTSDIR}
-FILES+=		d_mallocv1.in
-FILES+=		d_mallocv2.in
+${PACKAGE}FILES+=	d_mallocv1.in
+${PACKAGE}FILES+=	d_mallocv2.in
+
+.include <netbsd-tests.test.mk>
 
 .include <bsd.test.mk>

@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD: head/sys/boot/common/newvers.sh 131393 2004-07-01 06:40:12Z ps $
+# $FreeBSD: head/sys/boot/common/newvers.sh 289896 2015-10-24 21:59:58Z ngie $
 #	$NetBSD: newvers.sh,v 1.1 1997/07/26 01:50:38 thorpej Exp $
 #
 # Copyright (c) 1984, 1986, 1990, 1993
@@ -32,12 +32,16 @@
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
 
+tempfile=$(mktemp tmp.XXXXXX) || exit
+trap "rm -f $tempfile" EXIT INT TERM
+
 LC_ALL=C; export LC_ALL
 u=${USER-root} h=${HOSTNAME-`hostname`} t=`date`
 #r=`head -n 6 $1 | tail -n 1 | awk -F: ' { print $1 } '`
 r=`awk -F: ' /^[0-9]\.[0-9]+:/ { print $1; exit }' $1`
 
-echo "char bootprog_name[] = \"FreeBSD/${3} ${2}\";" > vers.c
-echo "char bootprog_rev[] = \"${r}\";" >> vers.c
-echo "char bootprog_date[] = \"${t}\";" >> vers.c
-echo "char bootprog_maker[] = \"${u}@${h}\";" >> vers.c
+echo "char bootprog_name[] = \"FreeBSD/${3} ${2}\";" > $tempfile
+echo "char bootprog_rev[] = \"${r}\";" >> $tempfile
+echo "char bootprog_date[] = \"${t}\";" >> $tempfile
+echo "char bootprog_maker[] = \"${u}@${h}\";" >> $tempfile
+mv $tempfile vers.c

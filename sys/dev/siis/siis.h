@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/siis/siis.h 279963 2015-03-13 20:08:35Z mav $
+ * $FreeBSD: head/sys/dev/siis/siis.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /* ATA register defines */
@@ -389,7 +389,7 @@ struct siis_channel {
 	int			numtslots[SIIS_MAX_SLOTS]; /* Number of tagged slots */
 	int			numhslots;	/* Number of held slots */
 	int			recoverycmd;	/* Our READ LOG active */
-	int			fatalerr;	/* Fatal error happend */
+	int			fatalerr;	/* Fatal error happened */
 	int			recovery;	/* Some slots are in error */
 	union ccb		*frozen;	/* Frozen command */
 

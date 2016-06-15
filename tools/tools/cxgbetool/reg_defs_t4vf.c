@@ -3,7 +3,7 @@
  * Virtual Function register map definitions in t4vf_defs.h in the common
  * code.
  */
-__FBSDID("$FreeBSD: head/tools/tools/cxgbetool/reg_defs_t4vf.c 222900 2011-06-09 20:21:45Z np $");
+__FBSDID("$FreeBSD: head/tools/tools/cxgbetool/reg_defs_t4vf.c 296471 2016-03-07 21:11:35Z np $");
 
 struct reg_info t4vf_sge_regs[] = {
 	{ "SGE_KDOORBELL",			0x000, 0 },
@@ -11,6 +11,21 @@ struct reg_info t4vf_sge_regs[] = {
 		{ "Priority", 14, 1 },
 		{ "PIDX", 0, 14 },
 	{ "SGE_GTS",				0x004, 0 },
+		{ "IngressQID", 16, 16 },
+		{ "TimerReg", 13, 3 },
+		{ "SEIntArm", 12, 1 },
+		{ "CIDXInc", 0, 12 },
+
+	{ NULL, 0, 0 }
+};
+
+struct reg_info t5vf_sge_regs[] = {
+	{ "SGE_VF_KDOORBELL",			0x000, 0 },
+		{ "QID", 15, 17 },
+		{ "Priority", 14, 1 },
+		{ "Type", 13, 1 },
+		{ "PIDX", 0, 13 },
+	{ "SGE_VF_GTS",				0x004, 0 },
 		{ "IngressQID", 16, 16 },
 		{ "TimerReg", 13, 3 },
 		{ "SEIntArm", 12, 1 },
@@ -70,9 +85,41 @@ struct reg_info t4vf_mps_regs[] = {
 
 struct reg_info t4vf_pl_regs[] = {
 	{ "PL_VF_WHOAMI",			0x200, 0 },
-		{ "PortxMap", 5, 3 },
-		{ "SourceBus", 3, 2 },
-		{ "SourcePF", 0, 3 },
+		{ "PortxMap", 24, 3 },
+		{ "SourceBus", 16, 2 },
+		{ "SourcePF", 8, 3 },
+		{ "IsVF", 7, 1 },
+		{ "VFID", 0, 7 },
+
+	{ NULL, 0, 0 }
+};
+
+struct reg_info t5vf_pl_regs[] = {
+	{ "PL_WHOAMI",				0x200, 0 },
+		{ "PortxMap", 24, 3 },
+		{ "SourceBus", 16, 2 },
+		{ "SourcePF", 8, 3 },
+		{ "IsVF", 7, 1 },
+		{ "VFID", 0, 7 },
+	{ "PL_VF_REV",				0x204, 0 },
+		{ "ChipID", 4, 4 },
+		{ "Rev", 0, 4 },
+	{ "PL_VF_REVISION",			0x208, 0 },
+
+	{ NULL, 0, 0 }
+};
+
+struct reg_info t6vf_pl_regs[] = {
+	{ "PL_WHOAMI",				0x200, 0 },
+		{ "PortxMap", 24, 3 },
+		{ "SourceBus", 16, 2 },
+		{ "SourcePF", 9, 3 },
+		{ "IsVF", 8, 1 },
+		{ "VFID", 0, 8 },
+	{ "PL_VF_REV",				0x204, 0 },
+		{ "ChipID", 4, 4 },
+		{ "Rev", 0, 4 },
+	{ "PL_VF_REVISION",			0x208, 0 },
 
 	{ NULL, 0, 0 }
 };
@@ -85,7 +132,7 @@ struct reg_info t4vf_cim_regs[] = {
 	{ "CIM_VF_EXT_MAILBOX_CTRL",		0x300, 0 },
 		{ "MBGeneric", 4, 4 },
 		{ "MBMsgValid", 3, 1 },
-		{ "MBIntReq", 3, 1 },
+		{ "MBIntReq", 2, 1 },
 		{ "MBOwner", 0, 2 },
 	{ "CIM_VF_EXT_MAILBOX_STATUS",		0x304, 0 },
 		{ "MBVFReady", 0, 1 },

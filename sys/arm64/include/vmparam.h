@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: head/sys/arm64/include/vmparam.h 284147 2015-06-08 04:59:32Z alc $
+ * $FreeBSD: head/sys/arm64/include/vmparam.h 298627 2016-04-26 11:53:37Z br $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -125,16 +125,22 @@
  * split into 2 regions at each end of the 64 bit address space, with an
  * out of range "hole" in the middle.
  *
- * We limit the size of the two spaces to 39 bits each.
+ * We use the full 48 bits for each region, however the kernel may only use
+ * a limited range within this space.
  *
- * Upper region:	0xffffffffffffffff
- *			0xffffff8000000000
+ * Upper region:    0xffffffffffffffff  Top of virtual memory
  *
- * Hole:		0xffffff7fffffffff
- *			0x0000008000000000
+ *                  0xfffffeffffffffff  End of DMAP
+ *                  0xfffffd0000000000  Start of DMAP
  *
- * Lower region:	0x0000007fffffffff
- *			0x0000000000000000
+ *                  0xffff007fffffffff  End of KVA
+ *                  0xffff000000000000  Kernel base address & start of KVA
+ *
+ * Hole:            0xfffeffffffffffff
+ *                  0x0001000000000000
+ *
+ * Lower region:    0x0000ffffffffffff End of user address space
+ *                  0x0000000000000000 Start of user address space
  *
  * We use the upper region for the kernel, and the lower region for userland.
  *
@@ -152,44 +158,49 @@
 #define	VM_MIN_ADDRESS		(0x0000000000000000UL)
 #define	VM_MAX_ADDRESS		(0xffffffffffffffffUL)
 
-/* 32 GiB of kernel addresses */
-#define	VM_MIN_KERNEL_ADDRESS	(0xffffff8000000000UL)
-#define	VM_MAX_KERNEL_ADDRESS	(0xffffff8800000000UL)
+/* 512 GiB of kernel addresses */
+#define	VM_MIN_KERNEL_ADDRESS	(0xffff000000000000UL)
+#define	VM_MAX_KERNEL_ADDRESS	(0xffff008000000000UL)
 
-/* Direct Map for 64 GiB of PA: 0x0 - 0xfffffffff */
-#define	DMAP_MIN_ADDRESS	(0xffffffc000000000UL)
-#define	DMAP_MAX_ADDRESS	(0xffffffcfffffffffUL)
+/* 2 TiB maximum for the direct map region */
+#define	DMAP_MIN_ADDRESS	(0xfffffd0000000000UL)
+#define	DMAP_MAX_ADDRESS	(0xffffff0000000000UL)
 
-#define	DMAP_MIN_PHYSADDR	(0x0000000000000000UL)
-#define	DMAP_MAX_PHYSADDR	(DMAP_MAX_ADDRESS - DMAP_MIN_ADDRESS)
+#define	DMAP_MIN_PHYSADDR	(dmap_phys_base)
+#define	DMAP_MAX_PHYSADDR	(dmap_phys_max)
 
 /* True if pa is in the dmap range */
-#define	PHYS_IN_DMAP(pa)	((pa) <= DMAP_MAX_PHYSADDR)
+#define	PHYS_IN_DMAP(pa)	((pa) >= DMAP_MIN_PHYSADDR && \
+    (pa) < DMAP_MAX_PHYSADDR)
+/* True if va is in the dmap range */
+#define	VIRT_IN_DMAP(va)	((va) >= DMAP_MIN_ADDRESS && \
+    (va) < (dmap_max_addr))
 
 #define	PHYS_TO_DMAP(pa)						\
 ({									\
 	KASSERT(PHYS_IN_DMAP(pa),					\
 	    ("%s: PA out of range, PA: 0x%lx", __func__,		\
 	    (vm_paddr_t)(pa)));						\
-	(pa) | DMAP_MIN_ADDRESS;					\
+	((pa) - dmap_phys_base) | DMAP_MIN_ADDRESS;			\
 })
 
 #define	DMAP_TO_PHYS(va)						\
 ({									\
-	KASSERT(((va) <= DMAP_MAX_ADDRESS || (va) >= DMAP_MIN_ADDRESS),	\
+	KASSERT(VIRT_IN_DMAP(va),					\
 	    ("%s: VA out of range, VA: 0x%lx", __func__,		\
 	    (vm_offset_t)(va)));					\
-	(va) & ~DMAP_MIN_ADDRESS;					\
+	((va) & ~DMAP_MIN_ADDRESS) + dmap_phys_base;			\
 })
 
 #define	VM_MIN_USER_ADDRESS	(0x0000000000000000UL)
-#define	VM_MAX_USER_ADDRESS	(0x0000008000000000UL)
+#define	VM_MAX_USER_ADDRESS	(0x0001000000000000UL)
 
 #define	VM_MINUSER_ADDRESS	(VM_MIN_USER_ADDRESS)
 #define	VM_MAXUSER_ADDRESS	(VM_MAX_USER_ADDRESS)
 
 #define	KERNBASE		(VM_MIN_KERNEL_ADDRESS)
-#define	USRSTACK		(VM_MAX_USER_ADDRESS)
+#define	SHAREDPAGE		(VM_MAXUSER_ADDRESS - PAGE_SIZE)
+#define	USRSTACK		SHAREDPAGE
 
 /*
  * How many physical pages per kmem arena virtual page.
@@ -221,10 +232,21 @@
 #define	VM_INITIAL_PAGEIN	16
 #endif
 
+#define	UMA_MD_SMALL_ALLOC
+
+#ifndef LOCORE
+
+extern vm_paddr_t dmap_phys_base;
+extern vm_paddr_t dmap_phys_max;
+extern vm_offset_t dmap_max_addr;
 extern u_int tsb_kernel_ldd_phys;
 extern vm_offset_t vm_max_kernel_address;
 extern vm_offset_t init_pt_va;
 
+#endif
+
 #define	ZERO_REGION_SIZE	(64 * 1024)	/* 64KB */
+
+#define	DEVMAP_MAX_VADDR	VM_MAX_KERNEL_ADDRESS
 
 #endif /* !_MACHINE_VMPARAM_H_ */

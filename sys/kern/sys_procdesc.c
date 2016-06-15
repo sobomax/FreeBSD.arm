@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/sys_procdesc.c 271976 2014-09-22 16:20:47Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/sys_procdesc.c 301573 2016-06-08 02:09:14Z oshogbo $");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -243,6 +243,22 @@ procdesc_new(struct proc *p, int flags)
 }
 
 /*
+ * Create a new process decriptor for the process that refers to it.
+ */
+int
+procdesc_falloc(struct thread *td, struct file **resultfp, int *resultfd,
+    int flags, struct filecaps *fcaps)
+{
+	int fflags;
+
+	fflags = 0;
+	if (flags & PD_CLOEXEC)
+		fflags = O_CLOEXEC;
+
+	return (falloc_caps(td, resultfp, resultfd, fflags, fcaps));
+}
+
+/*
  * Initialize a file with a process descriptor.
  */
 void
@@ -295,7 +311,7 @@ procdesc_exit(struct proc *p)
 	    ("procdesc_exit: closed && parent not init"));
 
 	pd->pd_flags |= PDF_EXITED;
-	pd->pd_xstat = p->p_xstat;
+	pd->pd_xstat = KW_EXITCODE(p->p_xexit, p->p_xsig);
 
 	/*
 	 * If the process descriptor has been closed, then we have nothing

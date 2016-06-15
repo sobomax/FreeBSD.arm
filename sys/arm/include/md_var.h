@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: head/sys/arm/include/md_var.h 277533 2015-01-22 17:46:05Z ian $
+ * $FreeBSD: head/sys/arm/include/md_var.h 291937 2015-12-07 12:20:26Z kib $
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -44,6 +44,11 @@ extern int (*_arm_bzero)(void *, int, int);
 
 extern int _min_memcpy_size;
 extern int _min_bzero_size;
+
+struct vdso_timehands;
+struct timecounter;
+extern uint32_t (*arm_cpu_fill_vdso_timehands)(struct vdso_timehands *,
+    struct timecounter *);
 
 #define DST_IS_USER	0x1
 #define SRC_IS_USER	0x2
@@ -70,5 +75,7 @@ void busdma_swi(void);
 void dump_add_page(vm_paddr_t);
 void dump_drop_page(vm_paddr_t);
 int minidumpsys(struct dumperinfo *);
+
+extern uint32_t initial_fpscr;
 
 #endif /* !_MACHINE_MD_VAR_H_ */

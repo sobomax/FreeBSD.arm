@@ -1,6 +1,7 @@
 #	$NetBSD: Makefile,v 1.5 1999/07/23 09:44:38 mrg Exp $
-#	$FreeBSD: head/lib/libusbhid/Makefile 213920 2010-10-16 11:20:53Z hselasky $
+#	$FreeBSD: head/lib/libusbhid/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	usbhid
 MAN=	usbhid.3
 

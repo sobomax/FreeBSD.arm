@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmsparcdisassembler/Makefile 262263 2014-02-20 22:22:39Z dim $
+# $FreeBSD: head/lib/clang/libllvmsparcdisassembler/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,9 @@ SRCDIR=	lib/Target/Sparc/Disassembler
 INCDIR=	lib/Target/Sparc
 SRCS=	SparcDisassembler.cpp
 
-TGHDRS=	SparcGenDisassemblerTables \
+TGHDRS=	Attributes \
+	Intrinsics \
+	SparcGenDisassemblerTables \
 	SparcGenInstrInfo \
 	SparcGenRegisterInfo \
 	SparcGenSubtargetInfo

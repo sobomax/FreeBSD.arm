@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/raid/md_sii.c 279278 2015-02-25 10:18:11Z mav $");
+__FBSDID("$FreeBSD: head/sys/geom/raid/md_sii.c 298698 2016-04-27 15:10:40Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -549,7 +549,7 @@ nofit:
 		if (olddisk == NULL)
 			panic("No disk at position %d!", disk_pos);
 		if (olddisk->d_state != G_RAID_DISK_S_OFFLINE) {
-			G_RAID_DEBUG1(1, sc, "More then one disk for pos %d",
+			G_RAID_DEBUG1(1, sc, "More than one disk for pos %d",
 			    disk_pos);
 			g_raid_change_disk_state(disk, G_RAID_DISK_S_STALE);
 			return (0);
@@ -1482,7 +1482,7 @@ g_raid_md_write_sii(struct g_raid_md_object *md, struct g_raid_volume *tvol,
 	struct g_raid_md_sii_object *mdi;
 	struct g_raid_md_sii_perdisk *pd;
 	struct sii_raid_conf *meta;
-	int i;
+	u_int i;
 
 	sc = md->mdo_softc;
 	mdi = (struct g_raid_md_sii_object *)md;

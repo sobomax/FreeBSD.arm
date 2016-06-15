@@ -40,8 +40,10 @@
  *	Utah $Hdr: vm_machdep.c 1.16.1.1 89/06/23$
  */
 
+#include "opt_compat.h"
+
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 284115 2015-06-07 13:59:02Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -55,7 +57,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 284115 2015-06-07 13:59:02Z an
 #include <sys/sysent.h>
 #include <sys/unistd.h>
 
-#include <machine/acle-compat.h>
 #include <machine/cpu.h>
 #include <machine/frame.h>
 #include <machine/pcb.h>
@@ -74,7 +75,6 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 284115 2015-06-07 13:59:02Z an
 #include <vm/uma.h>
 #include <vm/uma_int.h>
 
-#include <machine/acle-compat.h>
 #include <machine/md_var.h>
 #include <machine/vfp.h>
 
@@ -84,6 +84,8 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/vm_machdep.c 284115 2015-06-07 13:59:02Z an
  */
 CTASSERT(sizeof(struct switchframe) == 48);
 CTASSERT(sizeof(struct trapframe) == 80);
+
+uint32_t initial_fpscr = VFPSCR_DN | VFPSCR_FZ;
 
 /*
  * Finish a fork operation, with process p2 nearly set up.
@@ -134,7 +136,7 @@ cpu_fork(register struct thread *td1, register struct proc *p2,
 	pcb2->pcb_regs.sf_sp = STACKALIGN(td2->td_frame);
 
 	pcb2->pcb_vfpcpu = -1;
-	pcb2->pcb_vfpstate.fpscr = VFPSCR_DN | VFPSCR_FZ;
+	pcb2->pcb_vfpstate.fpscr = initial_fpscr;
 
 	tf = td2->td_frame;
 	tf->tf_spsr &= ~PSR_C;
@@ -144,7 +146,7 @@ cpu_fork(register struct thread *td1, register struct proc *p2,
 
 	/* Setup to release spin count in fork_exit(). */
 	td2->td_md.md_spinlock_count = 1;
-	td2->td_md.md_saved_cspr = PSR_SVC32_MODE;;
+	td2->td_md.md_saved_cspr = PSR_SVC32_MODE;
 #if __ARM_ARCH >= 6
 	td2->td_md.md_tp = td1->td_md.md_tp;
 #else
@@ -178,7 +180,7 @@ cpu_set_syscall_retval(struct thread *td, int error)
 	/*
 	 * __syscall returns an off_t while most other syscalls return an
 	 * int. As an off_t is 64-bits and an int is 32-bits we need to
-	 * place the returned data into r1. As the lseek and frerebsd6_lseek
+	 * place the returned data into r1. As the lseek and freebsd6_lseek
 	 * syscalls also return an off_t they do not need this fixup.
 	 */
 	call = frame->tf_r7;
@@ -187,8 +189,7 @@ cpu_set_syscall_retval(struct thread *td, int error)
 		register_t code = ap[_QUAD_LOWWORD];
 		if (td->td_proc->p_sysent->sv_mask)
 			code &= td->td_proc->p_sysent->sv_mask;
-		fixup = (code != SYS_freebsd6_lseek && code != SYS_lseek)
-		    ? 1 : 0;
+		fixup = (code != SYS_lseek);
 	}
 #endif
 

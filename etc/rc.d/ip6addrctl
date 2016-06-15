@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ip6addrctl 270836 2014-08-30 07:08:10Z hrs $
+# $FreeBSD: head/etc/rc.d/ip6addrctl 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: ip6addrctl
@@ -12,6 +12,7 @@
 . /etc/network.subr
 
 name="ip6addrctl"
+desc="configure address selection policy for IPv6 and IPv4"
 rcvar="ip6addrctl_enable"
 start_cmd="ip6addrctl_start"
 stop_cmd="ip6addrctl_stop"

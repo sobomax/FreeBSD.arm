@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  * $Id: btsockstat.c,v 1.8 2003/05/21 22:40:25 max Exp $
- * $FreeBSD: head/usr.bin/bluetooth/btsockstat/btsockstat.c 281210 2015-04-07 16:48:23Z takawata $
+ * $FreeBSD: head/usr.bin/bluetooth/btsockstat/btsockstat.c 287345 2015-09-01 06:28:16Z delphij $
  */
 
 #include <sys/types.h>
@@ -154,9 +154,9 @@ main(int argc, char *argv[])
 	 * Discard setgid privileges if not the running kernel so that
 	 * bad guys can't print interesting stuff from kernel memory.
 	 */
-
 	if (memf != NULL)
-		setgid(getgid());
+		if (setgid(getgid()) != 0)
+			err(1, "setgid");
 
 	kvmd = kopen(memf);
 	if (kvmd == NULL)
@@ -583,15 +583,9 @@ kopen(char const *memf)
 	kvm_t	*kvmd = NULL;
 	char	 errbuf[_POSIX2_LINE_MAX];
 
-	/*
-	 * Discard setgid privileges if not the running kernel so that 
-	 * bad guys can't print interesting stuff from kernel memory.
-	 */
-
-	if (memf != NULL)
-		setgid(getgid());   
-
 	kvmd = kvm_openfiles(NULL, memf, NULL, O_RDONLY, errbuf);
+	if (setgid(getgid()) != 0)
+		err(1, "setgid");
 	if (kvmd == NULL) {
 		warnx("kvm_openfiles: %s", errbuf);
 		return (NULL);

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libc/iconv/citrus_esdb.c 219019 2011-02-25 00:04:39Z gabor $ */
+/* $FreeBSD: head/lib/libc/iconv/citrus_esdb.c 301215 2016-06-02 17:28:39Z pfg $ */
 /* $NetBSD: citrus_esdb.c,v 1.5 2008/02/09 14:56:20 junyoung Exp $ */
 
 /*-
@@ -291,18 +291,12 @@ _citrus_esdb_get_list(char ***rlist, size_t *rnum, bool sorted)
 
 	/* get alias entries */
 	while ((ret = _lookup_seq_next(cla, &key, &data)) == 0) {
-		if (sorted)
-			snprintf(buf, sizeof(buf), "%.*s/%.*s",
-			    (int)_region_size(&data),
-			    (const char *)_region_head(&data),
-			    (int)_region_size(&key),
-			    (const char *)_region_head(&key));
-		else
-			snprintf(buf, sizeof(buf), "%.*s/%.*s",
-			    (int)_region_size(&data),
-			    (const char *)_region_head(&data),
-			    (int)_region_size(&key),
-			    (const char *)_region_head(&key));
+		/* XXX: sorted? */
+		snprintf(buf, sizeof(buf), "%.*s/%.*s",
+		    (int)_region_size(&data),
+		    (const char *)_region_head(&data),
+		    (int)_region_size(&key),
+		    (const char *)_region_head(&key));
 		_bcs_convert_to_upper(buf);
 		list[num] = strdup(buf);
 		if (list[num] == NULL) {
@@ -328,7 +322,7 @@ _citrus_esdb_get_list(char ***rlist, size_t *rnum, bool sorted)
 			    (int)_region_size(&data),
 			    (const char *)_region_head(&data));
 			if ((p = strchr(buf1, '/')) != NULL)
-				memcpy(buf1, p + 1, strlen(p) - 1);
+				memmove(buf1, p + 1, strlen(p) - 1);
 			if ((p = strstr(buf1, ".esdb")) != NULL)
 				*p = '\0';
 			snprintf(buf, sizeof(buf), "%s/%.*s", buf1,

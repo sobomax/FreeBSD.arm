@@ -1,10 +1,9 @@
-# $FreeBSD: head/tools/tools/tscdrift/Makefile 271044 2014-09-03 17:26:46Z jhb $
+# $FreeBSD: head/tools/tools/tscdrift/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 PROG=	tscdrift
 MAN=
 WARNS?=	6
 
-LDADD=	-lpthread -lm
-DPADD=	${LIBPTHREAD} ${LIBM}
+LIBADD=	pthread m
 
 .include <bsd.prog.mk>

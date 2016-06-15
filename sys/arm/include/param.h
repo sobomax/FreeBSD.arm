@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: head/sys/arm/include/param.h 273783 2014-10-28 15:22:13Z kib $
+ * $FreeBSD: head/sys/arm/include/param.h 300701 2016-05-26 00:03:23Z ian $
  */
 
 #ifndef _ARM_INCLUDE_PARAM_H_
@@ -46,7 +46,6 @@
  */
 
 #include <machine/_align.h>
-#include <machine/acle-compat.h>
 
 #define STACKALIGNBYTES	(8 - 1)
 #define STACKALIGN(p)	((u_int)(p) & ~STACKALIGNBYTES)
@@ -59,12 +58,6 @@
 #define	_V6_SUFFIX ""
 #endif
 
-#ifdef __ARM_PCS_VFP
-#define	_HF_SUFFIX "hf"
-#else
-#define	_HF_SUFFIX ""
-#endif
-
 #ifdef __ARM_BIG_ENDIAN
 #define	_EB_SUFFIX "eb"
 #else
@@ -75,7 +68,7 @@
 #define	MACHINE		"arm"
 #endif
 #ifndef MACHINE_ARCH
-#define	MACHINE_ARCH	"arm" _V6_SUFFIX _HF_SUFFIX _EB_SUFFIX
+#define	MACHINE_ARCH	"arm" _V6_SUFFIX _EB_SUFFIX
 #endif
 
 #if defined(SMP) || defined(KLD_MODULE)
@@ -97,8 +90,16 @@
  * is valid to fetch data elements of type t from on this architecture.
  * This does not reflect the optimal alignment, just the possibility
  * (within reasonable limits).
+ *
+ * armv4 and v5 require alignment to the type's size.  armv6 and later require
+ * that an 8-byte type be aligned to at least a 4-byte boundary; access to
+ * smaller types can be unaligned.
  */
+#if __ARM_ARCH >= 6
+#define	ALIGNED_POINTER(p, t)	(((sizeof(t) != 8) || ((unsigned)(p) & 3) == 0))
+#else
 #define	ALIGNED_POINTER(p, t)	((((unsigned)(p)) & (sizeof(t)-1)) == 0)
+#endif
 
 /*
  * CACHE_LINE_SIZE is the compile-time maximum cache line size for an
@@ -110,7 +111,6 @@
 #define	PAGE_SHIFT	12
 #define	PAGE_SIZE	(1 << PAGE_SHIFT)	/* Page size */
 #define	PAGE_MASK	(PAGE_SIZE - 1)
-#define	NPTEPG		(PAGE_SIZE/(sizeof (pt_entry_t)))
 
 #define PDR_SHIFT	20 /* log2(NBPDR) */
 #define NBPDR		(1 << PDR_SHIFT)
@@ -131,7 +131,7 @@
 #define KSTACK_GUARD_PAGES	1
 #endif /* !KSTACK_GUARD_PAGES */
 
-#define USPACE_SVC_STACK_TOP		(KSTACK_PAGES * PAGE_SIZE)
+#define USPACE_SVC_STACK_TOP		(kstack_pages * PAGE_SIZE)
 
 /*
  * Mach derived conversion macros
@@ -148,9 +148,5 @@
 #define	arm32_ptob(x)		((unsigned)(x) << PAGE_SHIFT)
 
 #define	pgtok(x)		((x) * (PAGE_SIZE / 1024))
-
-#ifdef _KERNEL
-#define	NO_FUEWORD	1
-#endif
 
 #endif /* !_ARM_INCLUDE_PARAM_H_ */

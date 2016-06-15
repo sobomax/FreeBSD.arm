@@ -1,6 +1,6 @@
 /*-
  * Copyright (c) 2014 Ian Lepore <ian@freebsd.org>
- * All rights excluded.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/arm/locore.S 276397 2014-12-30 03:19:46Z ian $
+ * $FreeBSD: head/sys/arm/arm/locore.S 297682 2016-04-07 18:19:09Z ian $
  */
 
 /*

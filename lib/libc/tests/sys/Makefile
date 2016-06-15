@@ -1,8 +1,8 @@
-# $FreeBSD: head/lib/libc/tests/sys/Makefile 282091 2015-04-27 13:56:20Z andrew $
+# $FreeBSD: head/lib/libc/tests/sys/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.own.mk>
 
-TESTSDIR=		${TESTSBASE}/lib/libc/sys
+ATF_TESTS_C+=			queue_test
 
 # TODO: clone, lwp_create, lwp_ctl, posix_fadvise, recvmmsg,
 # swapcontext
@@ -12,9 +12,7 @@ NETBSD_ATF_TESTS_C+=		clock_gettime_test
 NETBSD_ATF_TESTS_C+=		connect_test
 NETBSD_ATF_TESTS_C+=		dup_test
 NETBSD_ATF_TESTS_C+=		fsync_test
-.if ${MACHINE} != "arm64" # ARM64TODO: Missing makecontext
 NETBSD_ATF_TESTS_C+=		getcontext_test
-.endif
 NETBSD_ATF_TESTS_C+=		getgroups_test
 NETBSD_ATF_TESTS_C+=		getitimer_test
 NETBSD_ATF_TESTS_C+=		getlogin_test
@@ -59,10 +57,8 @@ NETBSD_ATF_TESTS_C+=		umask_test
 NETBSD_ATF_TESTS_C+=		unlink_test
 NETBSD_ATF_TESTS_C+=		write_test
 
-DPADD.getpid_test+=	${LIBPTHREAD}
-LDADD.getpid_test+=	-lpthread
-DPADD.timer_create_test+=	${LIBRT}
-LDADD.timer_create_test+=	-lrt
+LIBADD.getpid_test+=		pthread
+LIBADD.timer_create_test+=	rt
 
 .include "../Makefile.netbsd-tests"
 
@@ -72,16 +68,17 @@ WARNS?=			3
 WARNS?=			4
 .endif
 
-FILESGROUPS=		FILES truncate_test_FILES
+FILESGROUPS+=		truncate_test_FILES
 
 truncate_test_FILES=	truncate_test.root_owned
 truncate_test_FILESDIR=	${TESTSDIR}
 truncate_test_FILESMODE= 0600
 truncate_test_FILESOWNER= root
 truncate_test_FILESGRP= wheel
+truncate_test_FILESPACKAGE=	${PACKAGE}
 
 CLEANFILES=	truncate_test.root_owned
 truncate_test.root_owned:
-	dd if=/dev/null bs=1 count=1 of=${.TARGET}
+	dd if=/dev/null bs=1 count=1 of=${.TARGET} status=none
 
 .include <bsd.test.mk>

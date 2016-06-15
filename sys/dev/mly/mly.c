@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/mly/mly.c 280347 2015-03-22 16:10:28Z mav $
+ *	$FreeBSD: head/sys/dev/mly/mly.c 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #include <sys/param.h>
@@ -1931,7 +1931,7 @@ mly_unmap_command(struct mly_command *mc)
  * the kernel environment variable "hw.mly.register_physical_channels" is set.
  *
  * When we refer to a "bus", we are referring to the bus number registered with
- * the SIM, wheras a "channel" is a channel number given to the adapter.  In order
+ * the SIM, whereas a "channel" is a channel number given to the adapter.  In order
  * to keep things simple, we map these 1:1, so "bus" and "channel" may be used
  * interchangeably.
  */

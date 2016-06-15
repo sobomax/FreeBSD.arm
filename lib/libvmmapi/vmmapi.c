@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libvmmapi/vmmapi.c 284688 2015-06-22 00:30:34Z neel $
+ * $FreeBSD: head/lib/libvmmapi/vmmapi.c 295881 2016-02-22 09:04:36Z skra $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libvmmapi/vmmapi.c 284688 2015-06-22 00:30:34Z neel $");
+__FBSDID("$FreeBSD: head/lib/libvmmapi/vmmapi.c 295881 2016-02-22 09:04:36Z skra $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -38,7 +38,6 @@ __FBSDID("$FreeBSD: head/lib/libvmmapi/vmmapi.c 284688 2015-06-22 00:30:34Z neel
 
 #include <x86/segments.h>
 #include <machine/specialreg.h>
-#include <machine/param.h>
 
 #include <errno.h>
 #include <stdio.h>
@@ -472,7 +471,7 @@ vm_create_devmem(struct vmctx *ctx, int segid, const char *name, size_t len)
 	if (error)
 		goto done;
 
-	strlcpy(pathname, "/dev/vmm/", sizeof(pathname));
+	strlcpy(pathname, "/dev/vmm.io/", sizeof(pathname));
 	strlcat(pathname, ctx->name, sizeof(pathname));
 	strlcat(pathname, ".", sizeof(pathname));
 	strlcat(pathname, name, sizeof(pathname));

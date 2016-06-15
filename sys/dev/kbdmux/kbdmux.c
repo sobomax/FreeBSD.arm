@@ -28,11 +28,12 @@
  * SUCH DAMAGE.
  *
  * $Id: kbdmux.c,v 1.4 2005/07/14 17:38:35 max Exp $
- * $FreeBSD: head/sys/dev/kbdmux/kbdmux.c 241885 2012-10-22 13:06:09Z eadler $
+ * $FreeBSD: head/sys/dev/kbdmux/kbdmux.c 297685 2016-04-07 20:12:45Z emaste $
  */
 
 #include "opt_compat.h"
 #include "opt_kbd.h"
+#include "opt_kbdmux.h"
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -54,6 +55,13 @@
 #include <sys/taskqueue.h>
 #include <sys/uio.h>
 #include <dev/kbd/kbdreg.h>
+
+/* the initial key map, accent map and fkey strings */
+#ifdef KBDMUX_DFLT_KEYMAP
+#define KBD_DFLT_KEYMAP
+#include "kbdmuxmap.h"
+#endif
+
 #include <dev/kbd/kbdtables.h>
 
 #define KEYBOARD_NAME	"kbdmux"

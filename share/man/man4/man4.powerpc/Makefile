@@ -1,4 +1,6 @@
-# $FreeBSD: head/share/man/man4/man4.powerpc/Makefile 279043 2015-02-20 05:40:39Z nwhitehorn $
+# $FreeBSD: head/share/man/man4/man4.powerpc/Makefile 298107 2016-04-16 07:45:30Z gjb $
+
+PACKAGE=runtime-manuals
 
 MAN=	adb.4 \
 	akbd.4 \

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/posix1e/acl_flag.c 194957 2009-06-25 13:08:02Z trasz $");
+__FBSDID("$FreeBSD: head/lib/libc/posix1e/acl_flag.c 287093 2015-08-24 04:49:20Z delphij $");
 
 #include <stdio.h>
 #include <errno.h>
@@ -71,7 +71,7 @@ acl_clear_flags_np(acl_flagset_t flagset_d)
 		return (-1);
 	}
 
-	*flagset_d |= 0;
+	*flagset_d = 0;
 
 	return (0);
 }

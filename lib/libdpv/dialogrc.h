@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013-2014 Devin Teske <dteske@FreeBSD.org>
+ * Copyright (c) 2013-2015 Devin Teske <dteske@FreeBSD.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libdpv/dialogrc.h 274120 2014-11-05 01:47:25Z dteske $
+ * $FreeBSD: head/lib/libdpv/dialogrc.h 290275 2015-11-02 20:03:59Z dteske $
  */
 
 #ifndef _DIALOGRC_H_
@@ -50,7 +50,7 @@ extern char separator[];
 __BEGIN_DECLS
 void			 dialogrc_free(void);
 int			 parse_dialogrc(void);
-struct fp_config	*dialogrc_config_option(const char *_directive);
+struct figpar_config	*dialogrc_config_option(const char *_directive);
 __END_DECLS
 
 #endif /* !_DIALOGRC_H_ */

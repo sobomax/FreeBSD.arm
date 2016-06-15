@@ -23,9 +23,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/lib/libutil/pty.3 206622 2010-04-14 19:08:06Z uqs $
+.\" $FreeBSD: head/lib/libutil/pty.3 290440 2015-11-06 12:02:24Z smh $
 .\" "
-.Dd December 29, 1996
+.Dd November 11, 2015
 .Dt PTY 3
 .Os
 .Sh NAME
@@ -120,7 +120,7 @@ function may fail and set the global variable
 .Dv errno
 for any of the errors specified for the
 .Xr grantpt 3 ,
-.Xr posix_openpt 3 ,
+.Xr posix_openpt 2 ,
 .Xr ptsname 3 ,
 and
 .Xr unlockpt 3

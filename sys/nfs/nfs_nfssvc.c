@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/nfs/nfs_nfssvc.c 273707 2014-10-26 19:42:44Z mjg $");
+__FBSDID("$FreeBSD: head/sys/nfs/nfs_nfssvc.c 298788 2016-04-29 16:07:25Z pfg $");
 
 #include "opt_nfs.h"
 
@@ -70,7 +70,7 @@ int (*nfsd_call_nfscl)(struct thread *, struct nfssvc_args *) = NULL;
 int (*nfsd_call_nfsd)(struct thread *, struct nfssvc_args *) = NULL;
 
 /*
- * Nfs server psuedo system call for the nfsd's
+ * Nfs server pseudo system call for the nfsd's
  */
 int
 sys_nfssvc(struct thread *td, struct nfssvc_args *uap)

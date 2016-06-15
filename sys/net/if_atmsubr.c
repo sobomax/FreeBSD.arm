@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_atmsubr.c 271867 2014-09-19 10:39:58Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net/if_atmsubr.c 298075 2016-04-15 17:30:33Z pfg $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -192,7 +192,7 @@ atm_output(struct ifnet *ifp, struct mbuf *m0, const struct sockaddr *dst,
 		if (atm_flags & ATM_PH_LLCSNAP)
 			sz += 8;	/* sizeof snap == 8 */
 		M_PREPEND(m, sz, M_NOWAIT);
-		if (m == 0)
+		if (m == NULL)
 			senderr(ENOBUFS);
 		ad = mtod(m, struct atm_pseudohdr *);
 		*ad = atmdst;
@@ -295,7 +295,7 @@ atm_input(struct ifnet *ifp, struct atm_pseudohdr *ah, struct mbuf *m,
 			struct atmllc *alc;
 
 			if (m->m_len < sizeof(*alc) &&
-			    (m = m_pullup(m, sizeof(*alc))) == 0)
+			    (m = m_pullup(m, sizeof(*alc))) == NULL)
 				return; /* failed */
 			alc = mtod(m, struct atmllc *);
 			if (bcmp(alc, ATMLLC_HDR, 6)) {

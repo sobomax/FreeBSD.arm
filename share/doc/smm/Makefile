@@ -1,5 +1,5 @@
 #	From: @(#)Makefile	8.1 (Berkeley) 6/10/93
-# $FreeBSD: head/share/doc/smm/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/share/doc/smm/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -31,5 +31,7 @@ _08.sendmailop=	08.sendmailop
 .if ${MK_LPR} != "no"
 _07.lpd=	07.lpd
 .endif
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

@@ -1,9 +1,10 @@
-# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/kerberos5/lib/libhdb/Makefile 301285 2016-06-03 19:25:41Z bdrewery $
 
 LIB=	hdb
-LDFLAGS=	-Wl,--no-undefined
+LDFLAGS=	-Wl,--no-undefined ${LDAPLDFLAGS}
 VERSION_MAP=	${KRB5DIR}/lib/hdb/version-script.map
 LIBADD=	asn1 com_err krb5 roken sqlite3
+LDADD=	${LDAPLDADD}
 DPADD=	${LDAPDPADD}
 
 MAN=	HDB.3 hdb_entry_ex.3
@@ -85,6 +86,7 @@ CLEANFILES=	${GEN} ${GEN:S/.x$/.c/:S/.hx$/.h/} hdb_asn1_files \
 		hdb_asn1-template.[ch]*
 
 .ORDER: ${GEN}
+${GEN:[2..-1]}: .NOMETA
 ${GEN}: hdb.asn1
 	${ASN1_COMPILE} ${.ALLSRC:M*.asn1} hdb_asn1
 
@@ -95,11 +97,6 @@ ${GEN}: hdb.asn1
 
 .hx.h:
 	${CP} ${.IMPSRC} ${.TARGET}
-
-# This makefile generates a lot of its headers
-# so tell bsd.sys.mk not to try and stage them before they are built.
-# Note: this is rare
-NO_BEFOREBUILD_INCLUDES=
 
 .include <bsd.lib.mk>
 

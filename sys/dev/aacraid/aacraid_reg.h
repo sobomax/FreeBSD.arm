@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/dev/aacraid/aacraid_reg.h 257847 2013-11-08 13:23:26Z achim $
+ *	$FreeBSD: head/sys/dev/aacraid/aacraid_reg.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 /*
@@ -875,7 +875,7 @@ typedef enum {
 	AifEnSMARTEvent, 	       	/* SMART Event */
 	AifEnBatteryNeedsRecond,	/* The battery needs reconditioning */
 	AifEnClusterEvent,		/* Some cluster event */
-	AifEnDiskSetEvent,		/* A disk set event occured. */
+	AifEnDiskSetEvent,		/* A disk set event occurred. */
 	AifEnContainerScsiEvent,	/* a container event with no. and scsi id */
 	AifEnPicBatteryEvent,	/* An event gen. by pic_battery.c for an ABM */
 	AifEnExpEvent,		/* Exp. Event Type to replace CTPopUp messages */

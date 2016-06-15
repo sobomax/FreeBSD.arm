@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2009-2015 Solarflare Communications Inc.
+ * Copyright (c) 2009-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/siena_impl.h 283514 2015-05-25 08:34:55Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/siena_impl.h 300607 2016-05-24 12:16:57Z arybchik $
  */
 
 #ifndef _SYS_SIENA_IMPL_H
@@ -42,42 +42,23 @@
 extern "C" {
 #endif
 
-#if EFSYS_OPT_PHY_PROPS
-
-/* START MKCONFIG GENERATED SienaPhyHeaderPropsBlock a8db1f8eb5106efd */
-typedef enum siena_phy_prop_e {
-	SIENA_PHY_NPROPS
-} siena_phy_prop_t;
-
-/* END MKCONFIG GENERATED SienaPhyHeaderPropsBlock */
-
-#endif  /* EFSYS_OPT_PHY_PROPS */
-
 #define	SIENA_NVRAM_CHUNK 0x80
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_nic_probe(
 	__in		efx_nic_t *enp);
 
-#if EFSYS_OPT_PCIE_TUNE
-
-extern	__checkReturn	int
-siena_nic_pcie_extended_sync(
-	__in		efx_nic_t *enp);
-
-#endif
-
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_nic_reset(
 	__in		efx_nic_t *enp);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_nic_init(
 	__in		efx_nic_t *enp);
 
 #if EFSYS_OPT_DIAG
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_nic_register_test(
 	__in		efx_nic_t *enp);
 
@@ -99,7 +80,7 @@ siena_sram_init(
 
 #if EFSYS_OPT_DIAG
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_sram_test(
 	__in		efx_nic_t *enp,
 	__in		efx_sram_pattern_fn_t func);
@@ -108,29 +89,31 @@ siena_sram_test(
 
 #if EFSYS_OPT_MCDI
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_mcdi_init(
 	__in		efx_nic_t *enp,
 	__in		const efx_mcdi_transport_t *mtp);
 
 extern			void
-siena_mcdi_request_copyin(
+siena_mcdi_send_request(
 	__in		efx_nic_t *enp,
-	__in		efx_mcdi_req_t *emrp,
-	__in		unsigned int seq,
-	__in		boolean_t ev_cpl,
-	__in		boolean_t new_epoch);
+	__in		void *hdrp,
+	__in		size_t hdr_len,
+	__in		void *sdup,
+	__in		size_t sdu_len);
 
 extern	__checkReturn	boolean_t
-siena_mcdi_request_poll(
+siena_mcdi_poll_response(
 	__in		efx_nic_t *enp);
 
 extern			void
-siena_mcdi_request_copyout(
-	__in		efx_nic_t *enp,
-	__in		efx_mcdi_req_t *emrp);
+siena_mcdi_read_response(
+	__in			efx_nic_t *enp,
+	__out_bcount(length)	void *bufferp,
+	__in			size_t offset,
+	__in			size_t length);
 
-extern			int
+extern			efx_rc_t
 siena_mcdi_poll_reboot(
 	__in		efx_nic_t *enp);
 
@@ -138,63 +121,30 @@ extern			void
 siena_mcdi_fini(
 	__in		efx_nic_t *enp);
 
-extern	__checkReturn	int
-siena_mcdi_fw_update_supported(
+extern	__checkReturn	efx_rc_t
+siena_mcdi_feature_supported(
 	__in		efx_nic_t *enp,
-	__out		boolean_t *supportedp);
-
-extern	__checkReturn	int
-siena_mcdi_macaddr_change_supported(
-	__in		efx_nic_t *enp,
+	__in		efx_mcdi_feature_id_t id,
 	__out		boolean_t *supportedp);
 
 #endif /* EFSYS_OPT_MCDI */
 
 #if EFSYS_OPT_NVRAM || EFSYS_OPT_VPD
 
-extern	__checkReturn		int
-siena_nvram_partn_size(
-	__in			efx_nic_t *enp,
-	__in			unsigned int partn,
-	__out			size_t *sizep);
-
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_nvram_partn_lock(
 	__in			efx_nic_t *enp,
-	__in			unsigned int partn);
-
-extern	__checkReturn		int
-siena_nvram_partn_read(
-	__in			efx_nic_t *enp,
-	__in			unsigned int partn,
-	__in			unsigned int offset,
-	__out_bcount(size)	caddr_t data,
-	__in			size_t size);
-
-extern	__checkReturn		int
-siena_nvram_partn_erase(
-	__in			efx_nic_t *enp,
-	__in			unsigned int partn,
-	__in			unsigned int offset,
-	__in			size_t size);
-
-extern	__checkReturn		int
-siena_nvram_partn_write(
-	__in			efx_nic_t *enp,
-	__in			unsigned int partn,
-	__in			unsigned int offset,
-	__out_bcount(size)	caddr_t data,
-	__in			size_t size);
+	__in			uint32_t partn);
 
 extern				void
 siena_nvram_partn_unlock(
 	__in			efx_nic_t *enp,
-	__in			unsigned int partn);
+	__in			uint32_t partn);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_nvram_get_dynamic_cfg(
 	__in			efx_nic_t *enp,
-	__in			unsigned int index,
+	__in			uint32_t partn,
 	__in			boolean_t vpd,
 	__out			siena_mc_dynamic_config_hdr_t **dcfgp,
 	__out			size_t *sizep);
@@ -205,115 +155,123 @@ siena_nvram_get_dynamic_cfg(
 
 #if EFSYS_OPT_DIAG
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_nvram_test(
 	__in			efx_nic_t *enp);
 
 #endif	/* EFSYS_OPT_DIAG */
 
-extern	__checkReturn		int
-siena_nvram_size(
-	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type,
-	__out			size_t *sizep);
-
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_nvram_get_subtype(
 	__in			efx_nic_t *enp,
-	__in			unsigned int partn,
+	__in			uint32_t partn,
 	__out			uint32_t *subtypep);
 
-extern	__checkReturn		int
-siena_nvram_get_version(
+extern	__checkReturn		efx_rc_t
+siena_nvram_type_to_partn(
 	__in			efx_nic_t *enp,
 	__in			efx_nvram_type_t type,
-	__out			uint32_t *subtypep,
-	__out_ecount(4)		uint16_t version[4]);
+	__out			uint32_t *partnp);
 
-extern	__checkReturn		int
-siena_nvram_rw_start(
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_size(
 	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type,
-	__out			size_t *pref_chunkp);
+	__in			uint32_t partn,
+	__out			size_t *sizep);
 
-extern	__checkReturn		int
-siena_nvram_read_chunk(
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_rw_start(
 	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type,
+	__in			uint32_t partn,
+	__out			size_t *chunk_sizep);
+
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_read(
+	__in			efx_nic_t *enp,
+	__in			uint32_t partn,
 	__in			unsigned int offset,
 	__out_bcount(size)	caddr_t data,
 	__in			size_t size);
 
-extern	 __checkReturn		int
-siena_nvram_erase(
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_erase(
 	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type);
-
-extern	__checkReturn		int
-siena_nvram_write_chunk(
-	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type,
+	__in			uint32_t partn,
 	__in			unsigned int offset,
-	__in_bcount(size)	caddr_t data,
+	__in			size_t size);
+
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_write(
+	__in			efx_nic_t *enp,
+	__in			uint32_t partn,
+	__in			unsigned int offset,
+	__out_bcount(size)	caddr_t data,
 	__in			size_t size);
 
 extern				void
-siena_nvram_rw_finish(
+siena_nvram_partn_rw_finish(
 	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type);
+	__in			uint32_t partn);
 
-extern	__checkReturn		int
-siena_nvram_set_version(
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_get_version(
 	__in			efx_nic_t *enp,
-	__in			efx_nvram_type_t type,
+	__in			uint32_t partn,
+	__out			uint32_t *subtypep,
+	__out_ecount(4)		uint16_t version[4]);
+
+extern	__checkReturn		efx_rc_t
+siena_nvram_partn_set_version(
+	__in			efx_nic_t *enp,
+	__in			uint32_t partn,
 	__in_ecount(4)		uint16_t version[4]);
 
 #endif	/* EFSYS_OPT_NVRAM */
 
 #if EFSYS_OPT_VPD
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_init(
 	__in			efx_nic_t *enp);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_size(
 	__in			efx_nic_t *enp,
 	__out			size_t *sizep);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_read(
 	__in			efx_nic_t *enp,
 	__out_bcount(size)	caddr_t data,
 	__in			size_t size);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_verify(
 	__in			efx_nic_t *enp,
 	__in_bcount(size)	caddr_t data,
 	__in			size_t size);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_reinit(
 	__in			efx_nic_t *enp,
 	__in_bcount(size)	caddr_t data,
 	__in			size_t size);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_get(
 	__in			efx_nic_t *enp,
 	__in_bcount(size)	caddr_t data,
 	__in			size_t size,
 	__inout			efx_vpd_value_t *evvp);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_set(
 	__in			efx_nic_t *enp,
 	__in_bcount(size)	caddr_t data,
 	__in			size_t size,
 	__in			efx_vpd_value_t *evvp);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_vpd_next(
 	__in			efx_nic_t *enp,
 	__in_bcount(size)	caddr_t data,
@@ -321,7 +279,7 @@ siena_vpd_next(
 	__out			efx_vpd_value_t *evvp,
 	__inout			unsigned int *contp);
 
-extern __checkReturn		int
+extern __checkReturn		efx_rc_t
 siena_vpd_write(
 	__in			efx_nic_t *enp,
 	__in_bcount(size)	caddr_t data,
@@ -350,81 +308,55 @@ siena_phy_link_ev(
 	__in		efx_qword_t *eqp,
 	__out		efx_link_mode_t *link_modep);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_phy_get_link(
 	__in		efx_nic_t *enp,
 	__out		siena_link_state_t *slsp);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_phy_power(
 	__in		efx_nic_t *enp,
 	__in		boolean_t on);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_phy_reconfigure(
 	__in		efx_nic_t *enp);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_phy_verify(
 	__in		efx_nic_t *enp);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_phy_oui_get(
 	__in		efx_nic_t *enp,
 	__out		uint32_t *ouip);
 
 #if EFSYS_OPT_PHY_STATS
 
-extern					void
+extern						void
 siena_phy_decode_stats(
-	__in				efx_nic_t *enp,
-	__in				uint32_t vmask,
-	__in_opt			efsys_mem_t *esmp,
-	__out_opt			uint64_t *smaskp,
-	__out_ecount_opt(EFX_PHY_NSTATS)	uint32_t *stat);
+	__in					efx_nic_t *enp,
+	__in					uint32_t vmask,
+	__in_opt				efsys_mem_t *esmp,
+	__out_opt				uint64_t *smaskp,
+	__inout_ecount_opt(EFX_PHY_NSTATS)	uint32_t *stat);
 
-extern	__checkReturn			int
+extern	__checkReturn			efx_rc_t
 siena_phy_stats_update(
 	__in				efx_nic_t *enp,
 	__in				efsys_mem_t *esmp,
-	__out_ecount(EFX_PHY_NSTATS)	uint32_t *stat);
+	__inout_ecount(EFX_PHY_NSTATS)	uint32_t *stat);
 
 #endif	/* EFSYS_OPT_PHY_STATS */
 
-#if EFSYS_OPT_PHY_PROPS
-
-#if EFSYS_OPT_NAMES
-
-extern		const char *
-siena_phy_prop_name(
-	__in	efx_nic_t *enp,
-	__in	unsigned int id);
-
-#endif	/* EFSYS_OPT_NAMES */
-
-extern	__checkReturn	int
-siena_phy_prop_get(
-	__in		efx_nic_t *enp,
-	__in		unsigned int id,
-	__in		uint32_t flags,
-	__out		uint32_t *valp);
-
-extern	__checkReturn	int
-siena_phy_prop_set(
-	__in		efx_nic_t *enp,
-	__in		unsigned int id,
-	__in		uint32_t val);
-
-#endif	/* EFSYS_OPT_PHY_PROPS */
-
 #if EFSYS_OPT_BIST
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_phy_bist_start(
 	__in			efx_nic_t *enp,
 	__in			efx_bist_type_t type);
 
-extern	__checkReturn		int
+extern	__checkReturn		efx_rc_t
 siena_phy_bist_poll(
 	__in			efx_nic_t *enp,
 	__in			efx_bist_type_t type,
@@ -442,23 +374,28 @@ siena_phy_bist_stop(
 
 #endif	/* EFSYS_OPT_BIST */
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_mac_poll(
 	__in		efx_nic_t *enp,
 	__out		efx_link_mode_t *link_modep);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_mac_up(
 	__in		efx_nic_t *enp,
 	__out		boolean_t *mac_upp);
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_mac_reconfigure(
 	__in	efx_nic_t *enp);
 
+extern	__checkReturn	efx_rc_t
+siena_mac_pdu_get(
+	__in	efx_nic_t *enp,
+	__out	size_t *pdu);
+
 #if EFSYS_OPT_LOOPBACK
 
-extern	__checkReturn	int
+extern	__checkReturn	efx_rc_t
 siena_mac_loopback_set(
 	__in		efx_nic_t *enp,
 	__in		efx_link_mode_t link_mode,
@@ -468,12 +405,12 @@ siena_mac_loopback_set(
 
 #if EFSYS_OPT_MAC_STATS
 
-extern	__checkReturn			int
+extern	__checkReturn			efx_rc_t
 siena_mac_stats_update(
 	__in				efx_nic_t *enp,
 	__in				efsys_mem_t *esmp,
-	__out_ecount(EFX_MAC_NSTATS)	efsys_stat_t *stat,
-	__out_opt			uint32_t *generationp);
+	__inout_ecount(EFX_MAC_NSTATS)	efsys_stat_t *stat,
+	__inout_opt			uint32_t *generationp);
 
 #endif	/* EFSYS_OPT_MAC_STATS */
 

@@ -1,20 +1,11 @@
-# $FreeBSD: head/sys/arm/altera/socfpga/std.socfpga 276520 2015-01-01 23:21:46Z ian $
-
-makeoption	ARM_LITTLE_ENDIAN
+# $FreeBSD: head/sys/arm/altera/socfpga/std.socfpga 295885 2016-02-22 11:47:28Z skra $
 
 cpu		CPU_CORTEXA
 machine		arm armv6
 makeoptions	CONF_CFLAGS="-march=armv7a"
 
-options		PHYSADDR=0x00000000
-
-makeoptions	KERNPHYSADDR=0x00f00000
-options		KERNPHYSADDR=0x00f00000
-
 makeoptions	KERNVIRTADDR=0xc0f00000
 options		KERNVIRTADDR=0xc0f00000
-
-options		ARM_L2_PIPT
 
 options		IPI_IRQ_START=0
 options		IPI_IRQ_END=15

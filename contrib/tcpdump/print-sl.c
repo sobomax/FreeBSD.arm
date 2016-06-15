@@ -18,7 +18,7 @@
  * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $FreeBSD: head/contrib/tcpdump/print-sl.c 277783 2015-01-27 01:45:47Z pfg $
+ * $FreeBSD: head/contrib/tcpdump/print-sl.c 285275 2015-07-08 16:19:32Z pkelsey $
  */
 
 #define NETDISSECT_REWORKED
@@ -80,11 +80,9 @@ sl_if_print(netdissect_options *ndo,
 	case 4:
 	        ip_print(ndo, (u_char *)ip, length);
 		break;
-#ifdef INET6
 	case 6:
 		ip6_print(ndo, (u_char *)ip, length);
 		break;
-#endif
 	default:
 		ND_PRINT((ndo, "ip v%d", IP_V(ip)));
 	}

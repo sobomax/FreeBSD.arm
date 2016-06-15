@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/pcpu.h 261722 2014-02-10 19:47:14Z glebius $
+ * $FreeBSD: head/sys/sys/pcpu.h 287235 2015-08-28 00:44:17Z markj $
  */
 
 #ifndef _SYS_PCPU_H_
@@ -162,7 +162,7 @@ struct pcpu {
 	long		pc_cp_time[CPUSTATES];	/* statclock ticks */
 	struct device	*pc_device;
 	void		*pc_netisr;		/* netisr SWI cookie */
-	int		pc_dnweight;		/* vm_page_dontneed() */
+	int		pc_unused1;		/* unused field */
 	int		pc_domain;		/* Memory domain. */
 	struct rm_queue	pc_rm_queue;		/* rmlock list of trackers */
 	uintptr_t	pc_dynamic;		/* Dynamic per-cpu data area */

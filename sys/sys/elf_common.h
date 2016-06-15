@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/elf_common.h 283110 2015-05-19 14:23:33Z emaste $
+ * $FreeBSD: head/sys/sys/elf_common.h 301006 2016-05-30 20:51:51Z emaste $
  */
 
 #ifndef _SYS_ELF_COMMON_H_
@@ -297,6 +297,7 @@ typedef struct {
 #define	EM_UNICORE	110	/* Microprocessor series from PKU-Unity Ltd.
 				   and MPRC of Peking University */
 #define	EM_AARCH64	183	/* AArch64 (64-bit ARM) */
+#define	EM_RISCV	243	/* RISC-V */
 
 /* Non-standard or deprecated. */
 #define	EM_486		6	/* Intel i486. */
@@ -414,7 +415,8 @@ typedef struct {
 #define	SHT_HISUNW		0x6fffffff
 #define	SHT_HIOS		0x6fffffff	/* Last of OS specific semantics */
 #define	SHT_LOPROC		0x70000000	/* reserved range for processor */
-#define	SHT_AMD64_UNWIND	0x70000001	/* unwind information */
+#define	SHT_X86_64_UNWIND	0x70000001	/* unwind information */
+#define	SHT_AMD64_UNWIND	SHT_X86_64_UNWIND 
 
 #define	SHT_ARM_EXIDX		0x70000001	/* Exception index table. */
 #define	SHT_ARM_PREEMPTMAP	0x70000002	/* BPABI DLL dynamic linking 
@@ -451,6 +453,7 @@ typedef struct {
 #define	SHT_MIPS_EH_REGION	0x70000027
 #define	SHT_MIPS_XLATE_OLD	0x70000028
 #define	SHT_MIPS_PDR_EXCEPTION	0x70000029
+#define	SHT_MIPS_ABIFLAGS	0x7000002a
 
 #define	SHT_SPARC_GOTDATA	0x70000000
 
@@ -470,11 +473,18 @@ typedef struct {
 #define	SHF_OS_NONCONFORMING	0x100	/* OS-specific processing required. */
 #define	SHF_GROUP		0x200	/* Member of section group. */
 #define	SHF_TLS			0x400	/* Section contains TLS data. */
+#define	SHF_COMPRESSED		0x800	/* Section contains compressed data. */
 #define	SHF_MASKOS	0x0ff00000	/* OS-specific semantics. */
 #define	SHF_MASKPROC	0xf0000000	/* Processor-specific semantics. */
 
 /* Flags for section groups. */
 #define	GRP_COMDAT	0x1	/* COMDAT semantics. */
+
+/*
+ * Flags / mask for .gnu.versym sections.
+ */
+#define	VERSYM_VERSION	0x7fff
+#define	VERSYM_HIDDEN	0x8000
 
 /* Values for p_type. */
 #define	PT_NULL		0	/* Unused entry. */
@@ -599,6 +609,8 @@ typedef struct {
  */
 #define	DT_ADDRRNGLO	0x6ffffe00
 #define	DT_GNU_HASH	0x6ffffef5	/* GNU-style hash table */
+#define	DT_TLSDESC_PLT	0x6ffffef6	/* loc. of PLT for tlsdesc resolver */
+#define	DT_TLSDESC_GOT	0x6ffffef7	/* loc. of GOT for tlsdesc resolver */
 #define	DT_GNU_CONFLICT	0x6ffffef8	/* address of conflict section */
 #define	DT_GNU_LIBLIST	0x6ffffef9	/* address of library list */
 #define	DT_CONFIG	0x6ffffefa	/* configuration information */
@@ -719,6 +731,11 @@ typedef struct {
 #define	LL_DELAY_LOAD		0x10
 #define	LL_DELTA		0x20
 
+/* Values for n_type used in executables. */
+#define	NT_FREEBSD_ABI_TAG	1
+#define	NT_FREEBSD_NOINIT_TAG	2
+#define	NT_FREEBSD_ARCH_TAG	3
+
 /* Values for n_type.  Used in core files. */
 #define	NT_PRSTATUS	1	/* Process status. */
 #define	NT_FPREGSET	2	/* Floating point registers. */
@@ -740,8 +757,9 @@ typedef struct {
 #define	STB_LOCAL	0	/* Local symbol */
 #define	STB_GLOBAL	1	/* Global symbol */
 #define	STB_WEAK	2	/* like global - lower precedence */
-#define	STB_LOOS	10	/* Reserved range for operating system */
-#define	STB_HIOS	12	/*   specific semantics. */
+#define	STB_LOOS	10	/* Start of operating system reserved range. */
+#define	STB_GNU_UNIQUE	10	/* Unique symbol (GNU) */
+#define	STB_HIOS	12	/* End of operating system reserved range. */
 #define	STB_LOPROC	13	/* reserved range for processor */
 #define	STB_HIPROC	15	/*   specific semantics. */
 
@@ -757,8 +775,9 @@ typedef struct {
 #define	STT_LOOS	10	/* Reserved range for operating system */
 #define	STT_GNU_IFUNC	10
 #define	STT_HIOS	12	/*   specific semantics. */
-#define	STT_LOPROC	13	/* reserved range for processor */
-#define	STT_HIPROC	15	/*   specific semantics. */
+#define	STT_LOPROC	13	/* Start of processor reserved range. */
+#define	STT_SPARC_REGISTER 13	/* SPARC register information. */
+#define	STT_HIPROC	15	/* End of processor reserved range. */
 
 /* Symbol visibility - ELFNN_ST_VISIBILITY - st_other */
 #define	STV_DEFAULT	0x0	/* Default visibility (see binding). */
@@ -1018,10 +1037,16 @@ typedef struct {
 #define	R_MIPS_CALL16	11	/* 16 bit GOT entry for function */
 #define	R_MIPS_GPREL32	12	/* GP relative 32 bit */
 #define	R_MIPS_64	18	/* Direct 64 bit */
-#define	R_MIPS_GOTHI16	21	/* GOT HI 16 bit */
-#define	R_MIPS_GOTLO16	22	/* GOT LO 16 bit */
+#define	R_MIPS_GOT_DISP	19
+#define	R_MIPS_GOT_PAGE	20
+#define	R_MIPS_GOT_OFST	21
+#define	R_MIPS_GOT_HI16	22	/* GOT HI 16 bit */
+#define	R_MIPS_GOT_LO16	23	/* GOT LO 16 bit */
+#define	R_MIPS_SUB	24
 #define	R_MIPS_CALLHI16 30	/* upper 16 bit GOT entry for function */
 #define	R_MIPS_CALLLO16 31	/* lower 16 bit GOT entry for function */
+#define	R_MIPS_JALR	37
+#define	R_MIPS_TLS_GD	42
 
 #define	R_PPC_NONE		0	/* No relocation. */
 #define	R_PPC_ADDR32		1
@@ -1131,6 +1156,56 @@ typedef struct {
 #define	R_PPC_EMB_RELST_HA	114
 #define	R_PPC_EMB_BIT_FLD	115
 #define	R_PPC_EMB_RELSDA	116
+
+/*
+ * RISC-V relocation types.
+ */
+
+/* Relocation types used by the dynamic linker. */
+#define	R_RISCV_NONE		0
+#define	R_RISCV_32		1
+#define	R_RISCV_64		2
+#define	R_RISCV_RELATIVE	3
+#define	R_RISCV_COPY		4
+#define	R_RISCV_JUMP_SLOT	5
+#define	R_RISCV_TLS_DTPMOD32	6
+#define	R_RISCV_TLS_DTPMOD64	7
+#define	R_RISCV_TLS_DTPREL32	8
+#define	R_RISCV_TLS_DTPREL64	9
+#define	R_RISCV_TLS_TPREL32	10
+#define	R_RISCV_TLS_TPREL64	11
+
+/* Relocation types not used by the dynamic linker. */
+#define	R_RISCV_BRANCH		16
+#define	R_RISCV_JAL		17
+#define	R_RISCV_CALL		18
+#define	R_RISCV_CALL_PLT	19
+#define	R_RISCV_GOT_HI20	20
+#define	R_RISCV_TLS_GOT_HI20	21
+#define	R_RISCV_TLS_GD_HI20	22
+#define	R_RISCV_PCREL_HI20	23
+#define	R_RISCV_PCREL_LO12_I	24
+#define	R_RISCV_PCREL_LO12_S	25
+#define	R_RISCV_HI20		26
+#define	R_RISCV_LO12_I		27
+#define	R_RISCV_LO12_S		28
+#define	R_RISCV_TPREL_HI20	29
+#define	R_RISCV_TPREL_LO12_I	30
+#define	R_RISCV_TPREL_LO12_S	31
+#define	R_RISCV_TPREL_ADD	32
+#define	R_RISCV_ADD8		33
+#define	R_RISCV_ADD16		34
+#define	R_RISCV_ADD32		35
+#define	R_RISCV_ADD64		36
+#define	R_RISCV_SUB8		37
+#define	R_RISCV_SUB16		38
+#define	R_RISCV_SUB32		39
+#define	R_RISCV_SUB64		40
+#define	R_RISCV_GNU_VTINHERIT	41
+#define	R_RISCV_GNU_VTENTRY	42
+#define	R_RISCV_ALIGN		43
+#define	R_RISCV_RVC_BRANCH	44
+#define	R_RISCV_RVC_JUMP	45
 
 #define	R_SPARC_NONE		0
 #define	R_SPARC_8		1

@@ -1,7 +1,7 @@
 # This is a generated file, do NOT edit!
 # See contrib/bmake/bsd.after-import.mk
 #
-# $FreeBSD: head/usr.bin/bmake/Makefile 284254 2015-06-11 04:00:22Z sjg $
+# $FreeBSD: head/usr.bin/bmake/Makefile 301665 2016-06-08 17:51:21Z sjg $
 
 .sinclude "Makefile.inc"
 
@@ -14,10 +14,10 @@ CFLAGS+= -I${.CURDIR}
 CLEANDIRS+= FreeBSD
 CLEANFILES+= bootstrap
 
-#	$Id: Makefile,v 1.39 2015/06/07 15:54:37 sjg Exp $
+#	$Id: Makefile,v 1.67 2016/06/07 00:46:12 sjg Exp $
 
 # Base version on src date
-MAKE_VERSION= 20150606
+_MAKE_VERSION= 20160606
 
 PROG?=	${.CURDIR:T}
 
@@ -34,6 +34,7 @@ SRCS= \
 	make.c \
 	make_malloc.c \
 	meta.c \
+	metachar.c \
 	parse.c \
 	str.c \
 	strlist.c \
@@ -91,7 +92,7 @@ CFLAGS+= ${CPPFLAGS}
 CFLAGS+= -D_PATH_DEFSYSPATH=\"${DEFAULT_SYS_PATH}\"
 CFLAGS+= -I. -I${srcdir} ${XDEFS} -DMAKE_NATIVE
 CFLAGS+= ${COPTS.${.ALLSRC:M*.c:T:u}}
-COPTS.main.c+= "-DMAKE_VERSION=\"${MAKE_VERSION}\""
+COPTS.main.c+= "-DMAKE_VERSION=\"${_MAKE_VERSION}\""
 
 # meta mode can be useful even without filemon 
 FILEMON_H ?= /usr/include/dev/filemon/filemon.h

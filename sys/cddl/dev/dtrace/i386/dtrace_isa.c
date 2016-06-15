@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_isa.c 280834 2015-03-30 03:55:51Z markj $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/i386/dtrace_isa.c 298171 2016-04-17 23:08:47Z markj $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -46,9 +46,6 @@
 
 extern uintptr_t kernbase;
 uintptr_t kernelbase = (uintptr_t) &kernbase;
-
-#define INKERNEL(va) (((vm_offset_t)(va)) >= USRSTACK && \
-	 ((vm_offset_t)(va)) < VM_MAX_KERNEL_ADDRESS)
 
 uint8_t dtrace_fuword8_nocheck(void *);
 uint16_t dtrace_fuword16_nocheck(void *);
@@ -95,8 +92,8 @@ dtrace_getpcstack(pc_t *pcstack, int pcstack_limit, int aframes,
 		}
 
 		if (frame->f_frame <= frame ||
-		    (vm_offset_t)frame->f_frame >=
-		    (vm_offset_t)ebp + KSTACK_PAGES * PAGE_SIZE)
+		    (vm_offset_t)frame->f_frame >= curthread->td_kstack +
+		    curthread->td_kstack_pages * PAGE_SIZE)
 			break;
 		frame = frame->f_frame;
 	}
@@ -426,9 +423,9 @@ zero:
 uint64_t
 dtrace_getarg(int arg, int aframes)
 {
-	uintptr_t val;
+	struct trapframe *frame;
 	struct i386_frame *fp = (struct i386_frame *)dtrace_getfp();
-	uintptr_t *stack;
+	uintptr_t *stack, val;
 	int i;
 
 	for (i = 1; i <= aframes; i++) {
@@ -438,13 +435,18 @@ dtrace_getarg(int arg, int aframes)
 		    (long)dtrace_invop_callsite) {
 			/*
 			 * If we pass through the invalid op handler, we will
-			 * use the pointer that it passed to the stack as the
-			 * second argument to dtrace_invop() as the pointer to
-			 * the stack.  When using this stack, we must step
-			 * beyond the EIP/RIP that was pushed when the trap was
-			 * taken -- hence the "+ 1" below.
+			 * use the trap frame pointer that it pushed on the
+			 * stack as the second argument to dtrace_invop() as
+			 * the pointer to the stack.  When using this stack, we
+			 * must skip the third argument to dtrace_invop(),
+			 * which is included in the i386_frame.
 			 */
-			stack = ((uintptr_t **)&fp[1])[0] + 1;
+			frame = (struct trapframe *)(((uintptr_t **)&fp[1])[0]);
+			/*
+			 * Skip the three hardware-saved registers and the
+			 * return address.
+			 */
+			stack = (uintptr_t *)frame->tf_isp + 4;
 			goto load;
 		}
 
@@ -488,8 +490,8 @@ dtrace_getstackdepth(int aframes)
 			break;
 		depth++;
 		if (frame->f_frame <= frame ||
-		    (vm_offset_t)frame->f_frame >=
-		    (vm_offset_t)ebp + KSTACK_PAGES * PAGE_SIZE)
+		    (vm_offset_t)frame->f_frame >= curthread->td_kstack +
+		    curthread->td_kstack_pages * PAGE_SIZE)
 			break;
 		frame = frame->f_frame;
 	}

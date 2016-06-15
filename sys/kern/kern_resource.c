@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_resource.c 284783 2015-06-25 00:15:37Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_resource.c 296162 2016-02-28 17:52:33Z kib $");
 
 #include "opt_compat.h"
 
@@ -79,8 +79,6 @@ static void	calcru1(struct proc *p, struct rusage_ext *ruxp,
 static int	donice(struct thread *td, struct proc *chgp, int n);
 static struct uidinfo *uilookup(uid_t uid);
 static void	ruxagg_locked(struct rusage_ext *rux, struct thread *td);
-
-static __inline int	lim_shared(struct plimit *limp);
 
 /*
  * Resource controls and accounting.
@@ -1109,13 +1107,6 @@ lim_hold(struct plimit *limp)
 	return (limp);
 }
 
-static __inline int
-lim_shared(struct plimit *limp)
-{
-
-	return (limp->pl_refcnt > 1);
-}
-
 void
 lim_fork(struct proc *p1, struct proc *p2)
 {
@@ -1146,7 +1137,7 @@ void
 lim_copy(struct plimit *dst, struct plimit *src)
 {
 
-	KASSERT(!lim_shared(dst), ("lim_copy to shared limit"));
+	KASSERT(dst->pl_refcnt <= 1, ("lim_copy to shared limit"));
 	bcopy(src->pl_rlimit, dst->pl_rlimit, sizeof(src->pl_rlimit));
 }
 
@@ -1356,17 +1347,22 @@ uifree(struct uidinfo *uip)
 #ifdef RACCT
 void
 ui_racct_foreach(void (*callback)(struct racct *racct,
-    void *arg2, void *arg3), void *arg2, void *arg3)
+    void *arg2, void *arg3), void (*pre)(void), void (*post)(void),
+    void *arg2, void *arg3)
 {
 	struct uidinfo *uip;
 	struct uihashhead *uih;
 
 	rw_rlock(&uihashtbl_lock);
+	if (pre != NULL)
+		(pre)();
 	for (uih = &uihashtbl[uihash]; uih >= uihashtbl; uih--) {
 		LIST_FOREACH(uip, uih, ui_hash) {
 			(callback)(uip->ui_racct, arg2, arg3);
 		}
 	}
+	if (post != NULL)
+		(post)();
 	rw_runlock(&uihashtbl_lock);
 }
 #endif
@@ -1437,16 +1433,9 @@ chgkqcnt(struct uidinfo *uip, int diff, rlim_t max)
 	return (chglimit(uip, &uip->ui_kqcnt, diff, max, "kqcnt"));
 }
 
-void
-lim_update_thread(struct thread *td)
+int
+chgumtxcnt(struct uidinfo *uip, int diff, rlim_t max)
 {
-	struct proc *p;
-	struct plimit *lim;
 
-	p = td->td_proc;
-	lim = td->td_limit;
-	PROC_LOCK_ASSERT(p, MA_OWNED);
-	td->td_limit = lim_hold(p->p_limit);
-	if (lim != NULL)
-		lim_free(lim);
+	return (chglimit(uip, &uip->ui_umtxcnt, diff, max, "umtxcnt"));
 }

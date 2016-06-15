@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/jail/jailp.h 278323 2015-02-06 17:54:53Z jamie $
+ * $FreeBSD: head/usr.sbin/jail/jailp.h 289677 2015-10-21 05:37:09Z eadler $
  */
 
 #include <sys/param.h>
@@ -41,7 +41,7 @@
 
 #define DF_SEEN		0x01	/* Dependency has been followed */
 #define DF_LIGHT	0x02	/* Implied dependency on jail existence only */
-#define DF_NOFAIL	0x04	/* Don't propigate failed jails */
+#define DF_NOFAIL	0x04	/* Don't propagate failed jails */
 
 #define PF_VAR		0x01	/* This is a variable, not a true parameter */
 #define PF_APPEND	0x02	/* Append to existing parameter list */
@@ -51,6 +51,7 @@
 #define PF_INT		0x20	/* Integer parameter */
 #define PF_CONV		0x40	/* Parameter duplicated in converted form */
 #define PF_REV		0x80	/* Run commands in reverse order on stopping */
+#define	PF_IMMUTABLE	0x100	/* Immutable parameter */
 
 #define JF_START	0x0001	/* -c */
 #define JF_SET		0x0002	/* -m */

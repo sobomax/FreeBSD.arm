@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pkg/dns_utils.c 256978 2013-10-23 15:29:42Z bapt $");
+__FBSDID("$FreeBSD: head/usr.sbin/pkg/dns_utils.c 287193 2015-08-27 06:28:42Z delphij $");
 
 #include <stdlib.h>
 #include <string.h>
@@ -84,7 +84,6 @@ compute_weight(struct dns_srvinfo **d, int first, int last)
 	int i, j, totalweight;
 	int *chosen;
 
-	chosen = malloc(sizeof(int) * (last - first + 1));
 	totalweight = 0;
 	
 	for (i = 0; i <= last; i++)
@@ -92,6 +91,8 @@ compute_weight(struct dns_srvinfo **d, int first, int last)
 
 	if (totalweight == 0)
 		return;
+
+	chosen = malloc(sizeof(int) * (last - first + 1));
 
 	for (i = 0; i <= last; i++) {
 		for (;;) {

@@ -32,7 +32,7 @@ up-to-date.  Many thanks.
 ******************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/nls/msgcat.c 278530 2015-02-10 20:45:40Z bdrewery $");
+__FBSDID("$FreeBSD: head/lib/libc/nls/msgcat.c 295176 2016-02-02 23:33:58Z bdrewery $");
 
 #define _NLS_PRIVATE
 
@@ -325,6 +325,21 @@ notfound:
 	return ((char *)s);
 }
 
+static void
+catfree(struct catentry *np)
+{
+
+	if (np->catd != NULL && np->catd != NLERR) {
+		munmap(np->catd->__data, (size_t)np->catd->__size);
+		free(np->catd);
+	}
+	SLIST_REMOVE(&cache, np, catentry, list);
+	free(np->name);
+	free(np->path);
+	free(np->lang);
+	free(np);
+}
+
 int
 catclose(nl_catd catd)
 {
@@ -341,15 +356,8 @@ catclose(nl_catd catd)
 	SLIST_FOREACH(np, &cache, list) {
 		if (catd == np->catd) {
 			np->refcount--;
-			if (np->refcount == 0) {
-				munmap(catd->__data, (size_t)catd->__size);
-				free(catd);
-				SLIST_REMOVE(&cache, np, catentry, list);
-				free(np->name);
-				free(np->path);
-				free(np->lang);
-				free(np);
-			}
+			if (np->refcount == 0)
+				catfree(np);
 			break;
 		}
 	}

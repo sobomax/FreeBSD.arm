@@ -26,13 +26,13 @@
  * common memory mode. Interrupts are driven by polling. The driver
  * implements an ATA bridge and attached ATA channel driver on top
  * of it.
- * NOTE WELL: this driver uses polling mode. To achive an acceptable
+ * NOTE WELL: this driver uses polling mode. To achieve an acceptable
  * operating speed you will probably want to use HZ=2000 in kernel
  * config.
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/at91_cfata.c 193934 2009-06-10 17:39:19Z imp $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/at91_cfata.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>

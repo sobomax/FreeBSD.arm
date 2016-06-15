@@ -1,12 +1,12 @@
-# $FreeBSD: head/lib/libc/aarch64/sys/Makefile.inc 281197 2015-04-07 09:52:14Z andrew $
+# $FreeBSD: head/lib/libc/aarch64/sys/Makefile.inc 300303 2016-05-20 15:04:48Z andrew $
 
-SRCS+=	trivial-vdso_tc.c
+MIASM:=	${MIASM:Nfreebsd[467]_*}
+
+SRCS+=	__vdso_gettc.c
 
 #MDASM= ptrace.S
-MDASM=	brk.S \
-	cerror.S \
+MDASM=	cerror.S \
 	pipe.S \
-	sbrk.S \
 	shmat.S \
 	sigreturn.S \
 	syscall.S \
@@ -17,6 +17,7 @@ NOASM=	break.o \
 	exit.o \
 	getlogin.o \
 	openbsd_poll.o \
+	sbrk.o \
 	sstk.o \
 	vfork.o \
 	yield.o

@@ -209,7 +209,7 @@ HYPERVISOR_set_timer_op(
 	unsigned long timeout_lo = (unsigned long)timeout;
 	return _hypercall2(long, set_timer_op, timeout_lo, timeout_hi);
 }
-#if 0
+
 static inline int
 HYPERVISOR_platform_op(
         struct xen_platform_op *platform_op)
@@ -217,7 +217,7 @@ HYPERVISOR_platform_op(
         platform_op->interface_version = XENPF_INTERFACE_VERSION;
         return _hypercall1(int, platform_op, platform_op);
 }
-#endif
+
 static inline int
 HYPERVISOR_set_debugreg(
 	int reg, unsigned long value)
@@ -293,7 +293,7 @@ HYPERVISOR_xen_version(
 
 static inline int
 HYPERVISOR_console_io(
-	int cmd, int count, char *str)
+	int cmd, int count, const char *str)
 {
 	return _hypercall3(int, console_io, cmd, count, str);
 }

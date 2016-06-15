@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sdhci/sdhci.h 283263 2015-05-21 20:09:36Z loos $
+ * $FreeBSD: head/sys/dev/sdhci/sdhci.h 300707 2016-05-26 02:55:41Z ian $
  */
 
 #ifndef	__SDHCI_H__
@@ -63,6 +63,8 @@
 #define	SDHCI_QUIRK_WAITFOR_RESET_ASSERTED		(1<<14)
 /* Leave controller in standard mode when putting card in HS mode. */
 #define	SDHCI_QUIRK_DONT_SET_HISPD_BIT			(1<<15)
+/* Alternate clock source is required when supplying a 400 KHz clock. */
+#define	SDHCI_QUIRK_BCM577XX_400KHZ_CLKSRC		(1<<16)
 
 /*
  * Controller registers
@@ -151,6 +153,9 @@
 #define  SDHCI_CLOCK_CARD_EN	0x0004
 #define  SDHCI_CLOCK_INT_STABLE	0x0002
 #define  SDHCI_CLOCK_INT_EN	0x0001
+#define  SDHCI_DIVIDERS_MASK	\
+    ((SDHCI_DIVIDER_MASK << SDHCI_DIVIDER_SHIFT) | \
+    (SDHCI_DIVIDER_HI_MASK << SDHCI_DIVIDER_HI_SHIFT))
 
 #define SDHCI_TIMEOUT_CONTROL	0x2E
 

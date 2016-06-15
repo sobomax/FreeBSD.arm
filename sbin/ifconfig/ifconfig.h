@@ -31,7 +31,7 @@
  *
  * so there!
  *
- * $FreeBSD: head/sbin/ifconfig/ifconfig.h 271603 2014-09-14 22:10:35Z bryanv $
+ * $FreeBSD: head/sbin/ifconfig/ifconfig.h 295836 2016-02-20 11:36:35Z kp $
  */
 
 #define	__constructor	__attribute__((constructor))
@@ -133,6 +133,7 @@ extern	int supmedia;
 extern	int printkeys;
 extern	int newaddr;
 extern	int verbose;
+extern	int printifname;
 
 void	setifcap(const char *, int value, int s, const struct afswtch *);
 

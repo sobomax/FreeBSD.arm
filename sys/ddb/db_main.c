@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_main.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_main.c 285774 2015-07-21 23:07:55Z markj $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -110,7 +110,7 @@ X_db_search_symbol(db_symtab_t *symtab, db_addr_t off, db_strategy_t strat,
 	diff = ~0UL;
 	match = NULL;
 	for (sym = (Elf_Sym*)symtab->start; (char*)sym < symtab->end; sym++) {
-		if (sym->st_name == 0)
+		if (sym->st_name == 0 || sym->st_shndx == SHN_UNDEF)
 			continue;
 		if (off < sym->st_value)
 			continue;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 1984-2012  Mark Nudelman
+ * Copyright (C) 1984-2015  Mark Nudelman
  *
  * You may distribute under the terms of either the GNU General Public
  * License or the Less License, as specified in the README file.
@@ -7,7 +7,7 @@
  * For more information, see the README file.
  */
 
-/* $FreeBSD: head/contrib/less/signal.c 238730 2012-07-24 01:09:11Z delphij $ */
+/* $FreeBSD: head/contrib/less/signal.c 293190 2016-01-05 05:25:16Z delphij $ */
 
 /*
  * Routines dealing with signals.

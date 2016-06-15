@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/sdt.h 270990 2014-09-02 23:43:06Z markj $
+ * $FreeBSD: head/sys/sys/sdt.h 288366 2015-09-29 12:14:59Z avg $
  *
  * Statically Defined Tracing (SDT) definitions.
  *
@@ -398,7 +398,7 @@ struct sdt_probe {
 	struct sdt_provider *prov;	/* Ptr to the provider structure. */
 	TAILQ_ENTRY(sdt_probe)
 			probe_entry;	/* SDT probe list entry. */
-	TAILQ_HEAD(argtype_list_head, sdt_argtype) argtype_list;
+	TAILQ_HEAD(, sdt_argtype) argtype_list;
 	const char	*mod;
 	const char	*func;
 	const char	*name;

@@ -1,11 +1,12 @@
-# $FreeBSD: head/lib/atf/tests/test-programs/Makefile 263161 2014-03-14 08:56:19Z jmmv $
+# $FreeBSD: head/lib/atf/tests/test-programs/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
 .include <bsd.init.mk>
 
 TESTSDIR=	${TESTSBASE}/lib/atf/test-programs
+
 KYUAFILE=	yes
 
-ATF=		${.CURDIR:H:H:H:H}/contrib/atf
+ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/test-programs
 
 CFLAGS+=	-I${ATF}

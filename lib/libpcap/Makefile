@@ -1,10 +1,11 @@
 # Makefile for libpcap
-# $FreeBSD: head/lib/libpcap/Makefile 276768 2015-01-06 22:29:12Z delphij $
+# $FreeBSD: head/lib/libpcap/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	pcap
 SRCS=	grammar.y tokdefs.h version.h pcap-bpf.c \
 	pcap-netmap.c \
@@ -126,9 +127,8 @@ version.h: ${PCAP_DISTDIR}/VERSION
 	@rm -f $@
 	sed 's/.*/char pcap_version_string[] = "libpcap version &";/' ${PCAP_DISTDIR}/VERSION > $@
 
-tokdefs.h: grammar.h
-	ln -sf grammar.h tokdefs.h
-
+tokdefs.h: grammar.h .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 
 #
 # Magic to convert the man pages to something non Solarish

@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_ath_alq.h 250619 2013-05-13 21:18:00Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_ath_alq.h 301767 2016-06-09 22:01:05Z adrian $
  */
 #ifndef	__IF_ATH_ALQ_H__
 #define	__IF_ATH_ALQ_H__
@@ -112,6 +112,14 @@ struct if_ath_alq_mib_counters {
 #define	ATH_ALQ_MISSED_BEACON		12
 #define	ATH_ALQ_STUCK_BEACON		13
 #define	ATH_ALQ_RESUME_BEACON		14
+
+#define	ATH_ALQ_TX_FIFO_PUSH		15
+struct if_ath_alq_tx_fifo_push {
+	uint32_t	txq;
+	uint32_t	nframes;
+	uint32_t	fifo_depth;
+	uint32_t	frame_cnt;
+};
 
 /*
  * These will always be logged, regardless.

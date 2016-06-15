@@ -25,13 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mkimg/image.c 274410 2014-11-12 00:10:27Z marcel $");
+__FBSDID("$FreeBSD: head/usr.bin/mkimg/image.c 301090 2016-06-01 02:30:06Z markj $");
 
 #include <sys/mman.h>
 #include <sys/queue.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <assert.h>
+#include <err.h>
 #include <errno.h>
 #include <limits.h>
 #include <paths.h>
@@ -315,6 +316,8 @@ image_file_unmap(void *buffer, size_t sz)
 
 	unit = (secsz > image_swap_pgsz) ? secsz : image_swap_pgsz;
 	sz = (sz + unit - 1) & ~(unit - 1);
+	if (madvise(buffer, sz, MADV_DONTNEED) != 0)
+		warn("madvise");
 	munmap(buffer, sz);
 	return (0);
 }
@@ -517,14 +520,14 @@ image_copyout_memory(int fd, size_t size, void *ptr)
 	return (0);
 }
 
-static int
-image_copyout_zeroes(int fd, size_t size)
+int
+image_copyout_zeroes(int fd, size_t count)
 {
 	static uint8_t *zeroes = NULL;
 	size_t sz;
 	int error;
 
-	if (lseek(fd, (off_t)size, SEEK_CUR) != -1)
+	if (lseek(fd, (off_t)count, SEEK_CUR) != -1)
 		return (0);
 
 	/*
@@ -537,12 +540,12 @@ image_copyout_zeroes(int fd, size_t size)
 			return (ENOMEM);
 	}
 
-	while (size > 0) {
-		sz = (size > secsz) ? secsz : size;
+	while (count > 0) {
+		sz = (count > secsz) ? secsz : count;
 		error = image_copyout_memory(fd, sz, zeroes);
 		if (error)
 			return (error);
-		size -= sz;
+		count -= sz;
 	}
 	return (0);
 }

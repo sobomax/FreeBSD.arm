@@ -1,4 +1,4 @@
- $FreeBSD: head/sys/amd64/linux/syscalls.master 283492 2015-05-24 18:08:01Z dchagin $
+ $FreeBSD: head/sys/amd64/linux/syscalls.master 300359 2016-05-21 08:01:14Z dchagin $
 
 ;	@(#)syscalls.master	8.1 (Berkeley) 7/19/93
 ; System call name/number master file (or rather, slave, from LINUX).
@@ -49,8 +49,8 @@
 				    struct l_newstat *buf); }
 6	AUE_LSTAT	STD	{ int linux_newlstat(char *path, \
 				    struct l_newstat *buf); }
-7	AUE_POLL	NOPROTO	{ int poll(struct pollfd*, \
-				    unsigned int nfds, int timeout); }
+7	AUE_POLL	NOPROTO	{ int poll(struct pollfd *fds, u_int nfds, \
+				    int timeout); }
 8	AUE_LSEEK	STD	{ int linux_lseek(l_uint fdes, l_off_t off, \
 				    l_int whence); }
 9	AUE_MMAP	STD	{ int linux_mmap2(l_ulong addr, l_ulong len, \
@@ -283,12 +283,12 @@
 141	AUE_SETPRIORITY	NOPROTO	{ int setpriority(int which, int who, \
 				    int prio); }
 142	AUE_SCHED_SETPARAM	STD	{ int linux_sched_setparam(l_pid_t pid, \
-				    struct l_sched_param *param); }
+				    struct sched_param *param); }
 143	AUE_SCHED_GETPARAM	STD	{ int linux_sched_getparam(l_pid_t pid, \
-				    struct l_sched_param *param); }
+				    struct sched_param *param); }
 144	AUE_SCHED_SETSCHEDULER	STD { int linux_sched_setscheduler( \
 				    l_pid_t pid, l_int policy, \
-				    struct l_sched_param *param); }
+				    struct sched_param *param); }
 145	AUE_SCHED_GETSCHEDULER	STD { int linux_sched_getscheduler( \
 				    l_pid_t pid); }
 146	AUE_SCHED_GET_PRIORITY_MAX	STD { int linux_sched_get_priority_max( \
@@ -316,7 +316,7 @@
 161	AUE_CHROOT	NOPROTO	{ int chroot(char *path); }
 162	AUE_SYNC	NOPROTO	{ int sync(void); }
 163	AUE_ACCT	NOPROTO	{ int acct(char *path); }
-164	AUE_SETTIMEOFDAY	NOPROTO	{ int settimeofday(struct l_timeval *tp, struct timezone *tzp); }
+164	AUE_SETTIMEOFDAY	NOPROTO	{ int settimeofday(struct l_timeval *tv, struct timezone *tzp); }
 165	AUE_MOUNT	STD	{ int linux_mount(char *specialfile, \
 				    char *dir, char *filesystemtype, \
 				    l_ulong rwflag, void *data); }
@@ -461,8 +461,8 @@
 272	AUE_NULL	STD	{ int linux_unshare(void); }
 273	AUE_NULL	STD	{ int linux_set_robust_list(struct linux_robust_list_head *head, \
 				    l_size_t len); }
-274	AUE_NULL	STD	{ int linux_get_robust_list(l_int pid, struct linux_robust_list_head *head, \
-				    l_size_t *len); }
+274	AUE_NULL	STD	{ int linux_get_robust_list(l_int pid, \
+				    struct linux_robust_list_head **head, l_size_t *len); }
 275	AUE_NULL	STD	{ int linux_splice(void); }
 276	AUE_NULL	STD	{ int linux_tee(void); }
 277	AUE_NULL	STD	{ int linux_sync_file_range(void); }

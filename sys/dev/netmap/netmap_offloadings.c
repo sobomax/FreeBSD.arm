@@ -23,7 +23,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: head/sys/dev/netmap/netmap_offloadings.c 270063 2014-08-16 15:00:01Z luigi $ */
+/* $FreeBSD: head/sys/dev/netmap/netmap_offloadings.c 298955 2016-05-03 03:41:25Z pfg $ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <sys/errno.h>
 #include <sys/param.h>	/* defines used in kernel.h */
+#include <sys/malloc.h>	/* types used in module initialization */
 #include <sys/kernel.h>	/* types used in module initialization */
 #include <sys/sockio.h>
 #include <sys/socketvar.h>	/* struct socket */
@@ -170,7 +171,7 @@ void bdg_mismatch_datapath(struct netmap_vp_adapter *na,
 	 *    - 12: the first 10 bytes correspond to the struct
 	 *          virtio_net_hdr, and the last 2 bytes store the
 	 *          "mergeable buffers" info, which is an optional
-	 *	    hint that can be zeroed for compability
+	 *	    hint that can be zeroed for compatibility
 	 *
 	 * The destination header is therefore built according to the
 	 * following table:

@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ioctl.h#4 $
- * $FreeBSD: head/sys/cam/ctl/ctl_ioctl.h 278331 2015-02-06 21:03:25Z trasz $
+ * $FreeBSD: head/sys/cam/ctl/ctl_ioctl.h 298810 2016-04-29 21:05:48Z pfg $
  */
 /*
  * CAM Target Layer ioctl interface.
@@ -81,35 +81,6 @@
 #define	CTL_MINOR	225
 
 typedef enum {
-	CTL_OOA_INVALID_LUN,
-	CTL_OOA_SUCCESS
-} ctl_ooa_status;
-
-struct ctl_ooa_info {
-	uint32_t target_id;	/* Passed in to CTL */
-	uint32_t lun_id;	/* Passed in to CTL */
-	uint32_t num_entries;	/* Returned from CTL */
-	ctl_ooa_status status;	/* Returned from CTL */
-};
-
-struct ctl_hard_startstop_info {
-	cfi_mt_status status;
-	int total_luns;
-	int luns_complete;
-	int luns_failed;
-};
-
-struct ctl_bbrread_info {
-	int			lun_num;	/* Passed in to CTL */
-	uint64_t		lba;		/* Passed in to CTL */
-	int			len;		/* Passed in to CTL */
-	cfi_mt_status		status;		/* Returned from CTL */
-	cfi_bbrread_status	bbr_status;	/* Returned from CTL */
-	uint8_t			scsi_status;	/* Returned from CTL */
-	struct scsi_sense_data	sense_data;	/* Returned from CTL */
-};
-
-typedef enum {
 	CTL_DELAY_TYPE_NONE,
 	CTL_DELAY_TYPE_CONT,
 	CTL_DELAY_TYPE_ONESHOT
@@ -131,29 +102,11 @@ typedef enum {
 } ctl_delay_status;
 
 struct ctl_io_delay_info {
-	uint32_t		target_id;
 	uint32_t		lun_id;
 	ctl_delay_type		delay_type;
 	ctl_delay_location	delay_loc;
 	uint32_t		delay_secs;
 	ctl_delay_status	status;
-};
-
-typedef enum {
-	CTL_GS_SYNC_NONE,
-	CTL_GS_SYNC_OK,
-	CTL_GS_SYNC_NO_LUN
-} ctl_gs_sync_status;
-
-/*
- * The target and LUN id specify which device to modify.  The sync interval
- * means that we will let through every N SYNCHRONIZE CACHE commands.
- */
-struct ctl_sync_info {
-	uint32_t		target_id;	/* passed to kernel */
-	uint32_t		lun_id;		/* passed to kernel */
-	int			sync_interval;	/* depends on whether get/set */
-	ctl_gs_sync_status	status;		/* passed from kernel */
 };
 
 typedef enum {
@@ -279,7 +232,6 @@ struct ctl_error_desc_cmd {
 /*
  * Error injection descriptor.
  *
- * target_id:	   Target ID to act on.
  * lun_id	   LUN to act on.
  * lun_error:	   The type of error to inject.  See above for descriptions.
  * error_pattern:  What kind of command to act on.  See above.
@@ -290,7 +242,6 @@ struct ctl_error_desc_cmd {
  * links:	   Kernel use only.
  */
 struct ctl_error_desc {
-	uint32_t			target_id;	/* To kernel */
 	uint32_t			lun_id;		/* To kernel */
 	ctl_lun_error			lun_error;	/* To kernel */
 	ctl_lun_error_pattern		error_pattern;	/* To kernel */
@@ -344,23 +295,6 @@ struct ctl_ooa {
 };
 
 typedef enum {
-	CTL_PORT_LIST_NONE,
-	CTL_PORT_LIST_OK,
-	CTL_PORT_LIST_NEED_MORE_SPACE,
-	CTL_PORT_LIST_ERROR
-} ctl_port_list_status;
-
-struct ctl_port_list {
-	uint32_t		alloc_len;	/* passed to kernel */
-	uint32_t		alloc_num;	/* passed to kernel */
-	struct ctl_port_entry   *entries;	/* filled in kernel */
-	uint32_t		fill_len;	/* passed to userland */
-	uint32_t		fill_num;	/* passed to userland */
-	uint32_t		dropped_num;	/* passed to userland */
-	ctl_port_list_status	status;		/* passed to userland */
-};
-
-typedef enum {
 	CTL_LUN_NOSTATUS,
 	CTL_LUN_OK,
 	CTL_LUN_ERROR,
@@ -379,7 +313,7 @@ typedef enum {
  *
  * namelen:	Length of the name field, including the terminating NUL.
  *
- * name:	Name of the paramter.  This must be NUL-terminated.
+ * name:	Name of the parameter.  This must be NUL-terminated.
  *
  * flags:	Flags for the parameter, see above for values.
  *
@@ -551,7 +485,7 @@ struct ctl_lun_req {
  * NEED_MORE_SPACE:	The allocated length of the entries field is too
  * 			small for the available data.
  *
- * ERROR:		An error occured, look at the error string for a
+ * ERROR:		An error occurred, look at the error string for a
  *			description of the error.
  */
 typedef enum {
@@ -639,7 +573,7 @@ struct ctl_req {
  *
  * OK:			Request completed successfully.
  *
- * ERROR:		An error occured, look at the error string for a
+ * ERROR:		An error occurred, look at the error string for a
  *			description of the error.
  *
  * CTL_ISCSI_LIST_NEED_MORE_SPACE:
@@ -826,23 +760,11 @@ struct ctl_lun_map {
 #define	CTL_IO			_IOWR(CTL_MINOR, 0x00, union ctl_io)
 #define	CTL_ENABLE_PORT		_IOW(CTL_MINOR, 0x04, struct ctl_port_entry)
 #define	CTL_DISABLE_PORT	_IOW(CTL_MINOR, 0x05, struct ctl_port_entry)
-#define	CTL_DUMP_OOA		_IO(CTL_MINOR, 0x06)
-#define	CTL_CHECK_OOA		_IOWR(CTL_MINOR, 0x07, struct ctl_ooa_info)
-#define	CTL_HARD_STOP		_IOR(CTL_MINOR, 0x08, \
-				     struct ctl_hard_startstop_info)
-#define	CTL_HARD_START		_IOR(CTL_MINOR, 0x09, \
-				     struct ctl_hard_startstop_info)
 #define	CTL_DELAY_IO		_IOWR(CTL_MINOR, 0x10, struct ctl_io_delay_info)
-#define	CTL_REALSYNC_GET	_IOR(CTL_MINOR, 0x11, int)
-#define	CTL_REALSYNC_SET	_IOW(CTL_MINOR, 0x12, int)
-#define	CTL_SETSYNC		_IOWR(CTL_MINOR, 0x13, struct ctl_sync_info)
-#define	CTL_GETSYNC		_IOWR(CTL_MINOR, 0x14, struct ctl_sync_info)
 #define	CTL_GETSTATS		_IOWR(CTL_MINOR, 0x15, struct ctl_stats)
 #define	CTL_ERROR_INJECT	_IOWR(CTL_MINOR, 0x16, struct ctl_error_desc)
-#define	CTL_BBRREAD		_IOWR(CTL_MINOR, 0x17, struct ctl_bbrread_info)
 #define	CTL_GET_OOA		_IOWR(CTL_MINOR, 0x18, struct ctl_ooa)
 #define	CTL_DUMP_STRUCTS	_IO(CTL_MINOR, 0x19)
-#define	CTL_GET_PORT_LIST	_IOWR(CTL_MINOR, 0x20, struct ctl_port_list)
 #define	CTL_LUN_REQ		_IOWR(CTL_MINOR, 0x21, struct ctl_lun_req)
 #define	CTL_LUN_LIST		_IOWR(CTL_MINOR, 0x22, struct ctl_lun_list)
 #define	CTL_ERROR_INJECT_DELETE	_IOW(CTL_MINOR, 0x23, struct ctl_error_desc)

@@ -1,7 +1,7 @@
-# $FreeBSD: head/usr.sbin/wpa/Makefile.crypto 281807 2015-04-21 02:00:37Z rpaulo $
+# $FreeBSD: head/usr.sbin/wpa/Makefile.crypto 289549 2015-10-18 21:38:25Z rpaulo $
 
 .if ${MK_OPENSSL} != "no" && !defined(RELEASE_CRUNCH)
-SRCS+=	crypto_openssl.c random.c sha1-prf.c sha256-prf.c
+SRCS+=	crypto_openssl.c random.c sha1-prf.c sha256-prf.c sha256-tlsprf.c
 LIBADD+=	ssl crypto
 CFLAGS+= -DCONFIG_SHA256
 .else
@@ -19,6 +19,7 @@ CONFIG_INTERNAL_TLS=y
 CONFIG_INTERNAL_DH5=y
 CONFIG_INTERNAL_DH=y
 NEED_AES_ENC=true
+NEED_AES_CBC=true
 .endif
 
 .if defined(TLS_FUNCS)

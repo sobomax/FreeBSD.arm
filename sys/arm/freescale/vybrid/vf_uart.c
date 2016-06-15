@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_uart.c 281438 2015-04-11 17:16:23Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/freescale/vybrid/vf_uart.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include "opt_ddb.h"
 
@@ -205,7 +205,7 @@ uart_reinit(struct uart_softc *sc, int clkspeed, int baud)
 
 	bas = &sc->sc_bas;
 	if (!bas) {
-		printf("Error: cant reconfigure bas\n");
+		printf("Error: can't reconfigure bas\n");
 		return;
 	}
 

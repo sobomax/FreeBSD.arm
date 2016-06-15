@@ -22,14 +22,16 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_sig.c 284385 2015-06-14 19:19:46Z kib $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_sig.c 299114 2016-05-05 10:20:22Z kib $");
 
 #include "namespace.h"
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/signalvar.h>
+#include <sys/syscall.h>
 #include <signal.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -257,7 +259,7 @@ handle_signal(struct sigaction *actp, int sig, siginfo_t *info, ucontext_t *ucp)
 	/* reschedule cancellation */
 	check_cancel(curthread, &uc2);
 	errno = err;
-	__sys_sigreturn(&uc2);
+	syscall(SYS_sigreturn, &uc2);
 }
 
 void
@@ -372,8 +374,7 @@ check_suspend(struct pthread *curthread)
 	 */
 	curthread->critical_count++;
 	THR_UMUTEX_LOCK(curthread, &(curthread)->lock);
-	while ((curthread->flags & (THR_FLAGS_NEED_SUSPEND |
-		THR_FLAGS_SUSPENDED)) == THR_FLAGS_NEED_SUSPEND) {
+	while ((curthread->flags & THR_FLAGS_NEED_SUSPEND) != 0) {
 		curthread->cycle++;
 		cycle = curthread->cycle;
 
@@ -390,7 +391,6 @@ check_suspend(struct pthread *curthread)
 		THR_UMUTEX_UNLOCK(curthread, &(curthread)->lock);
 		_thr_umtx_wait_uint(&curthread->cycle, cycle, NULL, 0);
 		THR_UMUTEX_LOCK(curthread, &(curthread)->lock);
-		curthread->flags &= ~THR_FLAGS_SUSPENDED;
 	}
 	THR_UMUTEX_UNLOCK(curthread, &(curthread)->lock);
 	curthread->critical_count--;

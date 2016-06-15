@@ -1,6 +1,10 @@
-# $FreeBSD: head/tests/sys/pjdfstest/Makefile 274016 2014-11-03 07:18:42Z ngie $
+# $FreeBSD: head/tests/sys/pjdfstest/Makefile 299094 2016-05-04 23:20:53Z ngie $
+
+PACKAGE=	tests
 
 SUBDIR+=	pjdfstest
 SUBDIR+=	tests
+
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

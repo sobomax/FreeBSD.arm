@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_piv.c 282658 2015-05-08 19:40:00Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_piv.c 299353 2016-05-10 10:26:07Z trasz $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -604,9 +604,6 @@ p4_pcpu_init(struct pmc_mdep *md, int cpu)
 	}
 
 	p4c = malloc(sizeof(struct p4_cpu), M_PMC, M_WAITOK|M_ZERO);
-
-	if (p4c == NULL)
-		return (ENOMEM);
 
 	pc = pmc_pcpu[cpu];
 

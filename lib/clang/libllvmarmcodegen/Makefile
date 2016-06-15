@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmarmcodegen/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmarmcodegen/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -21,8 +21,8 @@ SRCS=	A15SDOptimizer.cpp \
 	ARMLoadStoreOptimizer.cpp \
 	ARMMCInstLower.cpp \
 	ARMMachineFunctionInfo.cpp \
-	ARMRegisterInfo.cpp \
 	ARMOptimizeBarriersPass.cpp \
+	ARMRegisterInfo.cpp \
 	ARMSelectionDAGInfo.cpp \
 	ARMSubtarget.cpp \
 	ARMTargetMachine.cpp \
@@ -31,11 +31,10 @@ SRCS=	A15SDOptimizer.cpp \
 	MLxExpansionPass.cpp \
 	Thumb1FrameLowering.cpp \
 	Thumb1InstrInfo.cpp \
-	Thumb1RegisterInfo.cpp \
 	Thumb2ITBlockPass.cpp \
 	Thumb2InstrInfo.cpp \
-	Thumb2RegisterInfo.cpp \
-	Thumb2SizeReduction.cpp
+	Thumb2SizeReduction.cpp \
+	ThumbRegisterInfo.cpp
 
 TGHDRS=	ARMGenAsmWriter \
 	ARMGenCallingConv \
@@ -47,6 +46,7 @@ TGHDRS=	ARMGenAsmWriter \
 	ARMGenMCPseudoLowering \
 	ARMGenRegisterInfo \
 	ARMGenSubtargetInfo \
+	Attributes \
 	Intrinsics
 
 .include "../clang.lib.mk"

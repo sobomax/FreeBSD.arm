@@ -30,13 +30,13 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netgraph/atm/ccatm/ng_ccatm.c 243882 2012-12-05 08:04:20Z glebius $
+ * $FreeBSD: head/sys/netgraph/atm/ccatm/ng_ccatm.c 298075 2016-04-15 17:30:33Z pfg $
  *
  * ATM call control and API
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netgraph/atm/ccatm/ng_ccatm.c 243882 2012-12-05 08:04:20Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netgraph/atm/ccatm/ng_ccatm.c 298075 2016-04-15 17:30:33Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -441,7 +441,7 @@ send_dump(struct ccdata *data, void *uarg, const char *buf)
 		m->m_pkthdr.len = 0;
 	} else {
 		m = m_getcl(M_NOWAIT, MT_DATA, 0);
-		if (m == 0) {
+		if (m == NULL) {
 			m_freem(priv->dump_first);
 			return (ENOBUFS);
 		}

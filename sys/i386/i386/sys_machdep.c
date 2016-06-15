@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/sys_machdep.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/sys_machdep.c 300332 2016-05-20 19:50:32Z kib $");
 
 #include "opt_capsicum.h"
 #include "opt_kstack_pages.h"
@@ -63,7 +63,7 @@ __FBSDID("$FreeBSD: head/sys/i386/i386/sys_machdep.c 282274 2015-04-30 15:48:48Z
 
 #define MAX_LD 8192
 #define LD_PER_PAGE 512
-#define NEW_MAX_LD(num)  ((num + LD_PER_PAGE) & ~(LD_PER_PAGE-1))
+#define	NEW_MAX_LD(num)  rounddown2(num + LD_PER_PAGE, LD_PER_PAGE)
 #define SIZE_FROM_LARGEST_LD(num) (NEW_MAX_LD(num) << 3)
 #define	NULL_LDT_BASE	((caddr_t)NULL)
 
@@ -73,6 +73,22 @@ static void set_user_ldt_rv(struct vmspace *vmsp);
 static int i386_set_ldt_data(struct thread *, int start, int num,
 	union descriptor *descs);
 static int i386_ldt_grow(struct thread *td, int len);
+
+void
+fill_based_sd(struct segment_descriptor *sdp, uint32_t base)
+{
+
+	sdp->sd_lobase = base & 0xffffff;
+	sdp->sd_hibase = (base >> 24) & 0xff;
+	sdp->sd_lolimit = 0xffff;	/* 4GB limit, wraps around */
+	sdp->sd_hilimit = 0xf;
+	sdp->sd_type = SDT_MEMRWA;
+	sdp->sd_dpl = SEL_UPL;
+	sdp->sd_p = 1;
+	sdp->sd_xx = 0;
+	sdp->sd_def32 = 1;
+	sdp->sd_gran = 1;
+}
 
 #ifndef _SYS_SYSPROTO_H_
 struct sysarch_args {
@@ -188,23 +204,14 @@ sysarch(td, uap)
 		break;
 	case I386_SET_FSBASE:
 		error = copyin(uap->parms, &base, sizeof(base));
-		if (!error) {
+		if (error == 0) {
 			/*
 			 * Construct a descriptor and store it in the pcb for
 			 * the next context switch.  Also store it in the gdt
 			 * so that the load of tf_fs into %fs will activate it
 			 * at return to userland.
 			 */
-			sd.sd_lobase = base & 0xffffff;
-			sd.sd_hibase = (base >> 24) & 0xff;
-			sd.sd_lolimit = 0xffff;	/* 4GB limit, wraps around */
-			sd.sd_hilimit = 0xf;
-			sd.sd_type  = SDT_MEMRWA;
-			sd.sd_dpl   = SEL_UPL;
-			sd.sd_p     = 1;
-			sd.sd_xx    = 0;
-			sd.sd_def32 = 1;
-			sd.sd_gran  = 1;
+			fill_based_sd(&sd, base);
 			critical_enter();
 			td->td_pcb->pcb_fsd = sd;
 			PCPU_GET(fsgs_gdt)[0] = sd;
@@ -219,23 +226,13 @@ sysarch(td, uap)
 		break;
 	case I386_SET_GSBASE:
 		error = copyin(uap->parms, &base, sizeof(base));
-		if (!error) {
+		if (error == 0) {
 			/*
 			 * Construct a descriptor and store it in the pcb for
 			 * the next context switch.  Also store it in the gdt
 			 * because we have to do a load_gs() right now.
 			 */
-			sd.sd_lobase = base & 0xffffff;
-			sd.sd_hibase = (base >> 24) & 0xff;
-
-			sd.sd_lolimit = 0xffff;	/* 4GB limit, wraps around */
-			sd.sd_hilimit = 0xf;
-			sd.sd_type  = SDT_MEMRWA;
-			sd.sd_dpl   = SEL_UPL;
-			sd.sd_p     = 1;
-			sd.sd_xx    = 0;
-			sd.sd_def32 = 1;
-			sd.sd_gran  = 1;
+			fill_based_sd(&sd, base);
 			critical_enter();
 			td->td_pcb->pcb_gsd = sd;
 			PCPU_GET(fsgs_gdt)[1] = sd;
@@ -278,8 +275,7 @@ i386_extend_pcb(struct thread *td)
 	ext = (struct pcb_ext *)kmem_malloc(kernel_arena, ctob(IOPAGES+1),
 	    M_WAITOK | M_ZERO);
 	/* -16 is so we can convert a trapframe into vm86trapframe inplace */
-	ext->ext_tss.tss_esp0 = td->td_kstack + ctob(KSTACK_PAGES) -
-	    sizeof(struct pcb) - 16;
+	ext->ext_tss.tss_esp0 = (vm_offset_t)td->td_pcb - 16;
 	ext->ext_tss.tss_ss0 = GSEL(GDATA_SEL, SEL_KPL);
 	/*
 	 * The last byte of the i/o map must be followed by an 0xff byte.
@@ -319,8 +315,9 @@ i386_set_ioperm(td, uap)
 	struct thread *td;
 	struct i386_ioperm_args *uap;
 {
-	int i, error;
 	char *iomap;
+	u_int i;
+	int error;
 
 	if ((error = priv_check(td, PRIV_IO)) != 0)
 		return (error);
@@ -338,7 +335,8 @@ i386_set_ioperm(td, uap)
 			return (error);
 	iomap = (char *)td->td_pcb->pcb_ext->ext_iomap;
 
-	if (uap->start + uap->length > IOPAGES * PAGE_SIZE * NBBY)
+	if (uap->start > uap->start + uap->length ||
+	    uap->start + uap->length > IOPAGES * PAGE_SIZE * NBBY)
 		return (EINVAL);
 
 	for (i = uap->start; i < uap->start + uap->length; i++) {

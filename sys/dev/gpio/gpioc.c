@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/gpio/gpioc.c 279761 2015-03-08 00:47:50Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/gpio/gpioc.c 299396 2016-05-11 00:34:43Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -195,7 +195,7 @@ static device_method_t gpioc_methods[] = {
 	DEVMETHOD(device_suspend,	bus_generic_suspend),
 	DEVMETHOD(device_resume,	bus_generic_resume),
 
-	{ 0, 0 }
+	DEVMETHOD_END
 };
 
 driver_t gpioc_driver = {

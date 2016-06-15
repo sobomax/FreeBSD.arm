@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sbin/pfctl/pfctl_parser.h 284777 2015-06-24 19:16:41Z eri $
+ * $FreeBSD: head/sbin/pfctl/pfctl_parser.h 287009 2015-08-21 22:02:22Z loos $
  */
 
 #ifndef _PFCTL_PARSER_H_
@@ -168,6 +168,7 @@ struct node_queue_opt {
 	int			 qtype;
 	union {
 		struct cbq_opts		cbq_opts;
+		struct codel_opts	codel_opts;
 		struct priq_opts	priq_opts;
 		struct node_hfsc_opts	hfsc_opts;
 		struct node_fairq_opts	fairq_opts;

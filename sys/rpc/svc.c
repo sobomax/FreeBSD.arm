@@ -33,7 +33,7 @@ static char *sccsid2 = "@(#)svc.c 1.44 88/02/08 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc.c	2.4 88/08/11 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/rpc/svc.c 280930 2015-04-01 00:45:47Z wollman $");
+__FBSDID("$FreeBSD: head/sys/rpc/svc.c 300625 2016-05-24 20:06:41Z ngie $");
 
 /*
  * svc.c, Server-side remote procedure call interface.
@@ -440,7 +440,7 @@ xprt_inactive(SVCXPRT *xprt)
 
 /*
  * Variant of xprt_inactive() for use only when sure that port is
- * assigned to thread. For example, withing receive handlers.
+ * assigned to thread. For example, within receive handlers.
  */
 void
 xprt_inactive_self(SVCXPRT *xprt)
@@ -560,7 +560,7 @@ svc_loss_reg(SVCXPRT *xprt, void (*dispatch)(SVCXPRT *))
 		mtx_unlock(&pool->sp_lock);
 		return (TRUE);
 	}
-	s = malloc(sizeof (struct svc_callout), M_RPC, M_NOWAIT);
+	s = malloc(sizeof(struct svc_loss_callout), M_RPC, M_NOWAIT);
 	if (s == NULL) {
 		mtx_unlock(&pool->sp_lock);
 		return (FALSE);
@@ -847,9 +847,7 @@ svc_xprt_alloc()
 	SVCXPRT_EXT *ext;
 
 	xprt = mem_alloc(sizeof(SVCXPRT));
-	memset(xprt, 0, sizeof(SVCXPRT));
 	ext = mem_alloc(sizeof(SVCXPRT_EXT));
-	memset(ext, 0, sizeof(SVCXPRT_EXT));
 	xprt->xp_p3 = ext;
 	refcount_init(&xprt->xp_refs, 1);
 
@@ -1303,7 +1301,9 @@ svc_new_thread(SVCGROUP *grp)
 	SVCPOOL *pool = grp->sg_pool;
 	struct thread *td;
 
+	mtx_lock(&grp->sg_lock);
 	grp->sg_threadcount++;
+	mtx_unlock(&grp->sg_lock);
 	kthread_add(svc_thread_start, grp, pool->sp_proc, &td, 0, 0,
 	    "%s: service", pool->sp_name);
 }
@@ -1336,12 +1336,12 @@ svc_run(SVCPOOL *pool)
 	}
 
 	/* Starting threads */
+	pool->sp_groups[0].sg_threadcount++;
 	for (g = 0; g < pool->sp_groupcount; g++) {
 		grp = &pool->sp_groups[g];
 		for (i = ((g == 0) ? 1 : 0); i < grp->sg_minthreads; i++)
 			svc_new_thread(grp);
 	}
-	pool->sp_groups[0].sg_threadcount++;
 	svc_run_internal(&pool->sp_groups[0], TRUE);
 
 	/* Waiting for threads to stop. */

@@ -23,7 +23,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/pmap.9 269485 2014-08-03 20:40:51Z alc $
+.\" $FreeBSD: head/share/man/man9/pmap.9 301719 2016-06-09 06:55:00Z trasz $
 .\"
 .Dd August 3, 2014
 .Dt PMAP 9
@@ -87,7 +87,6 @@ and it must be updated by the implementation after each relevant
 .Nm
 operation.
 .Sh SEE ALSO
-.Xr pmap 9 ,
 .Xr pmap_activate 9 ,
 .Xr pmap_clear_modify 9 ,
 .Xr pmap_copy 9 ,
@@ -111,6 +110,8 @@ operation.
 .Xr pmap_protect 9 ,
 .Xr pmap_qenter 9 ,
 .Xr pmap_qremove 9 ,
+.Xr pmap_quick_enter_page 9 ,
+.Xr pmap_quick_remove_page 9 ,
 .Xr pmap_release 9 ,
 .Xr pmap_remove 9 ,
 .Xr pmap_remove_all 9 ,

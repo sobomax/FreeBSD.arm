@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/fs/nfs/nfsport.h 281960 2015-04-25 00:52:01Z rmacklem $
+ * $FreeBSD: head/sys/fs/nfs/nfsport.h 298788 2016-04-29 16:07:25Z pfg $
  */
 
 #ifndef _NFS_NFSPORT_H_
@@ -788,12 +788,14 @@ MALLOC_DECLARE(M_NEWNFSDSESSION);
 /*
  * Set the n_time in the client write rpc, as required.
  */
-#define	NFSWRITERPC_SETTIME(w, n, v4)					\
+#define	NFSWRITERPC_SETTIME(w, n, a, v4)				\
 	do {								\
 		if (w) {						\
-			(n)->n_mtime = (n)->n_vattr.na_vattr.va_mtime; \
+			mtx_lock(&((n)->n_mtx));			\
+			(n)->n_mtime = (a)->na_mtime;			\
 			if (v4)						\
-			    (n)->n_change = (n)->n_vattr.na_vattr.va_filerev; \
+				(n)->n_change = (a)->na_filerev;	\
+			mtx_unlock(&((n)->n_mtx));			\
 		}							\
 	} while (0)
 
@@ -963,6 +965,13 @@ struct nfsreq {
 #else
 #define	NFSVNO_DELEGOK(v)	(1)
 #endif
+
+/*
+ * Name used by getnewvnode() to describe filesystem, "nfs".
+ * For performance reasons it is useful to have the same string
+ * used in both places that call getnewvnode().
+ */
+extern const char nfs_vnode_tag[];
 
 #endif	/* _KERNEL */
 

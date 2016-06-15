@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/less/defines.h 242618 2012-11-05 17:42:50Z delphij $ */
+/* $FreeBSD: head/usr.bin/less/defines.h 293190 2016-01-05 05:25:16Z delphij $ */
 /* defines.h.  Generated from defines.h.in by configure.  */
 /* defines.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -417,6 +417,11 @@
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1
+
+/* Enable large inode numbers on Mac OS X 10.5.  */
+#ifndef _DARWIN_USE_64_BIT_INODE
+# define _DARWIN_USE_64_BIT_INODE 1
+#endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */

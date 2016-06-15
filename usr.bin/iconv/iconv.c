@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/iconv/iconv.c 281550 2015-04-15 09:09:20Z tijl $ */
+/* $FreeBSD: head/usr.bin/iconv/iconv.c 287319 2015-08-31 05:57:26Z delphij $ */
 /* $NetBSD: iconv.c,v 1.16 2009/02/20 15:28:21 yamt Exp $ */
 
 /*-
@@ -156,11 +156,11 @@ int
 main(int argc, char **argv)
 {
 	FILE *fp;
-	char *opt_f, *opt_t;
+	const char *opt_f, *opt_t;
 	int ch, i, res;
 	bool opt_c = false, opt_s = false;
 
-	opt_f = opt_t = strdup("");
+	opt_f = opt_t = "";
 
 	setlocale(LC_ALL, "");
 	setprogname(argv[0]);
@@ -186,12 +186,12 @@ main(int argc, char **argv)
 		case 'f':
 			/* from */
 			if (optarg != NULL)
-				opt_f = strdup(optarg);
+				opt_f = optarg;
 			break;
 		case 't':
 			/* to */
 			if (optarg != NULL)
-				opt_t = strdup(optarg);
+				opt_t = optarg;
 			break;
 		default:
 			usage();

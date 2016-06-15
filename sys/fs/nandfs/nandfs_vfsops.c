@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vfsops.c 281562 2015-04-15 20:16:31Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nandfs/nandfs_vfsops.c 298848 2016-04-30 14:41:18Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -331,8 +331,8 @@ nandfs_write_superblock_at(struct nandfs_device *fsdev,
 	    super->s_last_pseg, super->s_last_cno, super->s_last_seq,
 	    super->s_wtime, index));
 
-	read_block = btodb(offset + ((index / sb_per_sector) * sb_per_sector)
-	    * sizeof(struct nandfs_super_block));
+	read_block = btodb(offset + rounddown(index, sb_per_sector) *
+	    sizeof(struct nandfs_super_block));
 
 	DPRINTF(SYNC, ("%s: read_block %#x\n", __func__, read_block));
 

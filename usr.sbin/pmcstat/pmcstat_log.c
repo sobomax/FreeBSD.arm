@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcstat_log.c 282866 2015-05-13 18:52:18Z stas $");
+__FBSDID("$FreeBSD: head/usr.sbin/pmcstat/pmcstat_log.c 298885 2016-05-01 16:40:56Z pfg $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -966,21 +966,32 @@ pmcstat_image_addr2line(struct pmcstat_image *image, uintfptr_t addr,
     char *funcname, size_t funcname_len)
 {
 	static int addr2line_warn = 0;
-	unsigned l;
 
 	char *sep, cmdline[PATH_MAX], imagepath[PATH_MAX];
+	unsigned l;
 	int fd;
 
 	if (image->pi_addr2line == NULL) {
-		snprintf(imagepath, sizeof(imagepath), "%s%s.symbols",
+		/* Try default debug file location. */
+		snprintf(imagepath, sizeof(imagepath),
+		    "/usr/lib/debug/%s%s.debug",
 		    args.pa_fsroot,
 		    pmcstat_string_unintern(image->pi_fullpath));
 		fd = open(imagepath, O_RDONLY);
 		if (fd < 0) {
-			snprintf(imagepath, sizeof(imagepath), "%s%s",
+			/* Old kernel symbol path. */
+			snprintf(imagepath, sizeof(imagepath), "%s%s.symbols",
 			    args.pa_fsroot,
 			    pmcstat_string_unintern(image->pi_fullpath));
-		} else
+			fd = open(imagepath, O_RDONLY);
+			if (fd < 0) {
+				snprintf(imagepath, sizeof(imagepath), "%s%s",
+				    args.pa_fsroot,
+				    pmcstat_string_unintern(
+				        image->pi_fullpath));
+			}
+		}
+		if (fd >= 0)
 			close(fd);
 		/*
 		 * New addr2line support recursive inline function with -i
@@ -1361,7 +1372,7 @@ pmcstat_analyze_log(void)
 	assert(args.pa_flags & FLAG_DO_ANALYSIS);
 
 	if (elf_version(EV_CURRENT) == EV_NONE)
-		err(EX_UNAVAILABLE, "Elf library intialization failed");
+		err(EX_UNAVAILABLE, "Elf library initialization failed");
 
 	while (pmclog_read(args.pa_logparser, &ev) == 0) {
 		assert(ev.pl_state == PMCLOG_OK);

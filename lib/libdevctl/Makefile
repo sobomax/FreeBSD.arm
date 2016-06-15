@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libdevctl/Makefile 278320 2015-02-06 16:09:01Z jhb $
+# $FreeBSD: head/lib/libdevctl/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	devctl
 SRCS=	devctl.c
 INCS=	devctl.h

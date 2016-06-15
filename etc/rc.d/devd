@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/devd 282145 2015-04-28 13:13:23Z glebius $
+# $FreeBSD: head/etc/rc.d/devd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: devd
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="devd"
+desc="Device state change daemon"
 rcvar="devd_enable"
 command="/sbin/${name}"
 

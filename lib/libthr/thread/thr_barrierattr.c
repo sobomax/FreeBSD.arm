@@ -24,9 +24,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_barrierattr.c 157457 2006-04-04 02:57:49Z davidxu $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_barrierattr.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -56,7 +57,7 @@ _pthread_barrierattr_destroy(pthread_barrierattr_t *attr)
 
 int
 _pthread_barrierattr_getpshared(const pthread_barrierattr_t *attr,
-	int *pshared)
+    int *pshared)
 {
 
 	if (attr == NULL || *attr == NULL)
@@ -84,11 +85,9 @@ int
 _pthread_barrierattr_setpshared(pthread_barrierattr_t *attr, int pshared)
 {
 
-	if (attr == NULL || *attr == NULL)
-		return (EINVAL);
-
-	/* Only PTHREAD_PROCESS_PRIVATE is supported. */
-	if (pshared != PTHREAD_PROCESS_PRIVATE)
+	if (attr == NULL || *attr == NULL ||
+	    (pshared != PTHREAD_PROCESS_PRIVATE &&
+	    pshared != PTHREAD_PROCESS_SHARED))
 		return (EINVAL);
 
 	(*attr)->pshared = pshared;

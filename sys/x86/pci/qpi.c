@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/pci/qpi.c 281887 2015-04-23 14:22:20Z jhb $");
+__FBSDID("$FreeBSD: head/sys/x86/pci/qpi.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -218,7 +218,7 @@ static int
 qpi_pcib_attach(device_t dev)
 {
 
-	device_add_child(dev, "pci", pcib_get_bus(dev));      
+	device_add_child(dev, "pci", -1);
         return (bus_generic_attach(dev));
 }
 
@@ -241,7 +241,7 @@ qpi_pcib_read_ivar(device_t dev, device_t child, int which, uintptr_t *result)
 #if defined(NEW_PCIB) && defined(PCI_RES_BUS)
 static struct resource *
 qpi_pcib_alloc_resource(device_t dev, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 
 	if (type == PCI_RES_BUS)

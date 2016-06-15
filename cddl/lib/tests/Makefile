@@ -1,10 +1,6 @@
-# $FreeBSD: head/cddl/lib/tests/Makefile 264741 2014-04-21 21:39:25Z jmmv $
+# $FreeBSD: head/cddl/lib/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-.include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/cddl/lib
-
-.PATH:		${.CURDIR:H:H:H}/tests
+.PATH:		${SRCTOP}/tests
 KYUAFILE=	yes
 
 .include <bsd.test.mk>

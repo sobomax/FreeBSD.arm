@@ -48,7 +48,7 @@ static char sccsid[] = "@(#)newfs.c	8.13 (Berkeley) 5/1/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/newfs/newfs.c 276737 2015-01-06 05:28:37Z imp $");
+__FBSDID("$FreeBSD: head/sbin/newfs/newfs.c 298205 2016-04-18 14:08:35Z araujo $");
 
 /*
  * newfs: friendly front end to mkfs
@@ -130,7 +130,6 @@ main(int argc, char *argv[])
 {
 	struct partition *pp;
 	struct disklabel *lp;
-	struct partition oldpartition;
 	struct stat st;
 	char *cp, *special;
 	intmax_t reserved;
@@ -307,7 +306,7 @@ main(int argc, char *argv[])
 	if (!special[0])
 		err(1, "empty file/special name");
 	cp = strrchr(special, '/');
-	if (cp == 0) {
+	if (cp == NULL) {
 		/*
 		 * No path prefix; try prefixing _PATH_DEV.
 		 */
@@ -362,7 +361,6 @@ main(int argc, char *argv[])
 			pp = &lp->d_partitions[RAW_PART];
 		else
 			pp = &lp->d_partitions[*cp - 'a'];
-		oldpartition = *pp;
 		if (pp->p_size == 0)
 			errx(1, "%s: `%c' partition is unavailable",
 			    special, *cp);

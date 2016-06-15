@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/wi/if_wi_pci.c 257176 2013-10-26 17:58:36Z glebius $
+ * $FreeBSD: head/sys/dev/wi/if_wi_pci.c 295126 2016-02-01 17:41:21Z glebius $
  */
 
 /*
@@ -42,6 +42,7 @@
 
 #include <sys/param.h>
 #include <sys/kernel.h>
+#include <sys/malloc.h>
 #include <sys/socket.h>
 #include <sys/systm.h>
 #include <sys/module.h>
@@ -238,7 +239,9 @@ wi_pci_suspend(device_t dev)
 {
 	struct wi_softc	*sc = device_get_softc(dev);
 
+	WI_LOCK(sc);
 	wi_stop(sc, 1);
+	WI_UNLOCK(sc);
 	
 	return (0);
 }
@@ -247,16 +250,15 @@ static int
 wi_pci_resume(device_t dev)
 {
 	struct wi_softc	*sc = device_get_softc(dev);
-	struct ifnet *ifp = sc->sc_ifp;
+	struct ieee80211com *ic = &sc->sc_ic;
 
-	if (sc->wi_bus_type != WI_BUS_PCI_NATIVE)
+	WI_LOCK(sc);
+	if (sc->wi_bus_type != WI_BUS_PCI_NATIVE) {
 		return (0);
-
-	if (ifp->if_flags & IFF_UP) {
-		ifp->if_init(ifp->if_softc);
-		if (ifp->if_drv_flags & IFF_DRV_RUNNING)
-			ifp->if_start(ifp);
+		WI_UNLOCK(sc);
 	}
-
+	if (ic->ic_nrunning > 0)
+		wi_init(sc);
+	WI_UNLOCK(sc);
 	return (0);
 }

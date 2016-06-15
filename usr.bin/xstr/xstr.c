@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/xstr/xstr.c 227247 2011-11-06 18:50:39Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/xstr/xstr.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #ifndef lint
 static const char copyright[] =
@@ -139,7 +139,7 @@ main(int argc, char *argv[])
 			argc--, argv++;
 		else
 			readstd = 0;
-	};
+	}
 	flushsh();
 	if (cflg == 0)
 		xsdotc();

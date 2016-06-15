@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/i386/libi386/amd64_tramp.S 269017 2014-07-23 15:53:29Z royger $
+ * $FreeBSD: head/sys/boot/i386/libi386/amd64_tramp.S 298826 2016-04-30 00:26:38Z pfg $
  */
 
 /*
@@ -96,7 +96,7 @@ amd64_tramp:
 	orl	$CR0_PG, %eax
 	movl	%eax, %cr0
 	
-	/* Now we're in compatability mode. set %cs for long mode */
+	/* Now we're in compatibility mode. set %cs for long mode */
 	movl	$VTOP(gdtdesc), %eax
 	movl	VTOP(entry_hi), %esi
 	movl	VTOP(entry_lo), %edi

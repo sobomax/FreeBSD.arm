@@ -1,11 +1,13 @@
 #
 # DB120 - the AR9344 SoC reference design
 #
-# $FreeBSD: head/sys/mips/conf/DB120 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/DB120 295945 2016-02-24 00:39:36Z sobomax $
 #
 
 # Include the default AR934x parameters
 include         "AR934X_BASE"
+
+#NO_UNIVERSE
 
 ident           DB120
 
@@ -36,8 +38,8 @@ device		arswitch
 options 	AR71XX_ENV_UBOOT
 
 # uzip - to boot natively from flash
-device		geom_uncompress
-options 	GEOM_UNCOMPRESS
+device		geom_uzip
+options 	GEOM_UZIP
 
 # Used for the static uboot partition map
 device          geom_map
@@ -49,4 +51,4 @@ device		firmware		# Used by the above
 options 	ATH_EEPROM_FIRMWARE
 
 # Boot off of the rootfs, as defined in the geom_map setup.
-options 	ROOTDEVNAME=\"ufs:map/rootfs.uncompress\"
+options 	ROOTDEVNAME=\"ufs:map/rootfs.uzip\"

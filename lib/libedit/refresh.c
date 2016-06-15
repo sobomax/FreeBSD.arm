@@ -41,7 +41,7 @@ __RCSID("$NetBSD: refresh.c,v 1.37 2011/07/29 23:44:45 christos Exp $");
 #endif
 #endif /* not lint && not SCCSID */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libedit/refresh.c 276881 2015-01-09 07:40:56Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libedit/refresh.c 298896 2016-05-01 19:37:33Z pfg $");
 
 /*
  * refresh.c: Lower level screen refreshing functions
@@ -561,7 +561,7 @@ re_update_line(EditLine *el, Char *old, Char *new, int i)
 	nls = ++n;
 
 	/*
-         * find same begining and same end
+         * find same beginning and same end
          */
 	osb = ols;
 	nsb = nls;

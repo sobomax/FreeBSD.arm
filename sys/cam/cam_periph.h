@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/cam_periph.h 260541 2014-01-11 13:35:36Z mav $
+ * $FreeBSD: head/sys/cam/cam_periph.h 288420 2015-09-30 13:31:37Z mav $
  */
 
 #ifndef _CAM_CAM_PERIPH_H
@@ -160,7 +160,8 @@ int		cam_periph_hold(struct cam_periph *periph, int priority);
 void		cam_periph_unhold(struct cam_periph *periph);
 void		cam_periph_invalidate(struct cam_periph *periph);
 int		cam_periph_mapmem(union ccb *ccb,
-				  struct cam_periph_map_info *mapinfo);
+				  struct cam_periph_map_info *mapinfo,
+				  u_int maxmap);
 void		cam_periph_unmapmem(union ccb *ccb,
 				    struct cam_periph_map_info *mapinfo);
 union ccb	*cam_periph_getccb(struct cam_periph *periph,

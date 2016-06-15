@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_ktr.c 283283 2015-05-22 11:09:41Z jhb $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_ktr.c 295098 2016-01-31 17:32:20Z andrew $");
 
 #include "opt_ddb.h"
 #include "opt_ktr.h"
@@ -55,9 +55,6 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_ktr.c 283283 2015-05-22 11:09:41Z jhb $")
 #include <sys/time.h>
 
 #include <machine/cpu.h>
-#ifdef __sparc64__
-#include <machine/ktr.h>
-#endif
 
 #ifdef DDB
 #include <ddb/ddb.h>
@@ -422,7 +419,7 @@ DB_SHOW_COMMAND(ktr, db_ktr_all)
 	db_ktr_verbose |= (strchr(modif, 'V') != NULL) ? 1 : 0; /* just timestap please */
 	if (strchr(modif, 'a') != NULL) {
 		db_disable_pager();
-		while (cncheckc() != -1)
+		while (cncheckc() == -1)
 			if (db_mach_vtrace() == 0)
 				break;
 	} else {

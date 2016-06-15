@@ -39,7 +39,7 @@
  * Authors: Archie Cobbs <archie@freebsd.org>
  *	    Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_ether.c 274231 2014-11-07 15:14:10Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_ether.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 /*
@@ -534,7 +534,6 @@ ng_ether_rcvmsg(node_p node, item_p item, hook_p lasthook)
 			}
 			error = if_setlladdr(priv->ifp,
 			    (u_char *)msg->data, ETHER_ADDR_LEN);
-			EVENTHANDLER_INVOKE(iflladdr_event, priv->ifp);
 			break;
 		    }
 		case NGM_ETHER_GET_PROMISC:
@@ -755,7 +754,7 @@ ng_ether_shutdown(node_p node)
 	if (node->nd_flags & NGF_REALLY_DIE) {
 		/*
 		 * WE came here because the ethernet card is being unloaded,
-		 * so stop being persistant.
+		 * so stop being persistent.
 		 * Actually undo all the things we did on creation.
 		 * Assume the ifp has already been freed.
 		 */

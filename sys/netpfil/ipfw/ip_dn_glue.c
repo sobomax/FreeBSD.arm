@@ -25,7 +25,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/netpfil/ipfw/ip_dn_glue.c 266955 2014-06-01 20:19:17Z hiren $
+ * $FreeBSD: head/sys/netpfil/ipfw/ip_dn_glue.c 300779 2016-05-26 21:40:13Z truckman $
  *
  * Binary compatibility support for /sbin/ipfw RELENG_7 and RELENG_8
  */
@@ -55,6 +55,9 @@
 #include <netpfil/ipfw/ip_fw_private.h>
 #include <netpfil/ipfw/dn_heap.h>
 #include <netpfil/ipfw/ip_dn_private.h>
+#ifdef NEW_AQM
+#include <netpfil/ipfw/dn_aqm.h>
+#endif
 #include <netpfil/ipfw/dn_sched.h>
 
 /* FREEBSD7.2 ip_dummynet.h r191715*/
@@ -778,7 +781,7 @@ ip_dummynet_compat(struct sockopt *sopt)
 	void *v = NULL;
 	struct dn_id oid;
 
-	/* Lenght of data, used to found ipfw version... */
+	/* Length of data, used to found ipfw version... */
 	int len = sopt->sopt_valsize;
 
 	/* len can be 0 if command was dummynet_flush */

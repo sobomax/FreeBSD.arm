@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/pmc_mdep.h 233628 2012-03-28 20:58:30Z fabient $
+ * $FreeBSD: head/sys/amd64/include/pmc_mdep.h 285041 2015-07-02 14:37:21Z kib $
  */
 
 /* Machine dependent interfaces */
@@ -113,9 +113,7 @@ union pmc_md_pmc {
 
 #define	PMC_IN_KERNEL_STACK(S,START,END)		\
 	((S) >= (START) && (S) < (END))
-#define	PMC_IN_KERNEL(va) (((va) >= DMAP_MIN_ADDRESS &&			\
-	(va) < DMAP_MAX_ADDRESS) || ((va) >= VM_MIN_KERNEL_ADDRESS &&	\
-	(va) < VM_MAX_KERNEL_ADDRESS))
+#define	PMC_IN_KERNEL(va) INKERNEL(va)
 
 #define	PMC_IN_USERSPACE(va) ((va) <= VM_MAXUSER_ADDRESS)
 

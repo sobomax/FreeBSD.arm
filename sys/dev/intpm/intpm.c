@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/intpm/intpm.c 272017 2014-09-23 06:31:15Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/dev/intpm/intpm.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -496,7 +496,7 @@ intsmb_stop(struct intsmb_softc *sc)
 	/* Timeout Procedure. */
 	sc->isbusy = 0;
 
-	/* Re-enable supressed interrupt from slave part. */
+	/* Re-enable suppressed interrupt from slave part. */
 	bus_write_1(sc->io_res, PIIX4_SMBSLVCNT, PIIX4_SMBSLVCNT_ALTEN);
 	if (error == EWOULDBLOCK)
 		return (SMB_ETIMEOUT);

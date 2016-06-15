@@ -28,7 +28,7 @@
 /* Driver for Atheros AR813x/AR815x PCIe Ethernet. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/alc/if_alc.c 277907 2015-01-30 01:13:07Z yongari $");
+__FBSDID("$FreeBSD: head/sys/dev/alc/if_alc.c 295735 2016-02-18 01:24:10Z yongari $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1532,7 +1532,7 @@ alc_attach(device_t dev)
 	/* Create device sysctl node. */
 	alc_sysctl_node(sc);
 
-	if ((error = alc_dma_alloc(sc) != 0))
+	if ((error = alc_dma_alloc(sc)) != 0)
 		goto fail;
 
 	/* Load station address. */

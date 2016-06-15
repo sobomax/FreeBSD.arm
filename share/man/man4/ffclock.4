@@ -25,7 +25,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/ffclock.4 267938 2014-06-26 21:46:14Z bapt $
+.\" $FreeBSD: head/share/man/man4/ffclock.4 294116 2016-01-16 00:43:10Z imp $
 .\"
 .Dd December 1, 2011
 .Dt FFCLOCK 4
@@ -87,7 +87,7 @@ in order to change the default active system clock.
 .It Va kern.sysclock.available
 Lists the names of available system clocks
 .Po
-read only
+read-only
 .Pc .
 .El
 .Pp
@@ -98,7 +98,7 @@ sysctl tree which provides the following variables:
 .It Va kern.sysclock.ffclock.version
 Feed-forward clock kernel version
 .Po
-read only
+read-only
 .Pc .
 .It Va kern.sysclock.ffclock.ffcounter_bypass
 Use reliable hardware timecounter as the feed-forward counter.

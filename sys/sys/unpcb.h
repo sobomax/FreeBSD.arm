@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unpcb.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/unpcb.h 263116 2014-03-13 18:42:12Z asomers $
+ * $FreeBSD: head/sys/sys/unpcb.h 285522 2015-07-14 02:00:50Z cem $
  */
 
 #ifndef _SYS_UNPCB_H_
@@ -106,6 +106,7 @@ struct unpcb {
 #define	UNPGC_REF			0x1	/* unpcb has external ref. */
 #define	UNPGC_DEAD			0x2	/* unpcb might be dead. */
 #define	UNPGC_SCANNED			0x4	/* Has been scanned. */
+#define	UNPGC_IGNORE_RIGHTS		0x8	/* Attached rights are freed */
 
 /*
  * These flags are used to handle non-atomicity in connect() and bind()

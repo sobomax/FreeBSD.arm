@@ -23,7 +23,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: head/sys/boot/forth/loader.4th 281275 2015-04-08 20:10:42Z dteske $
+\ $FreeBSD: head/sys/boot/forth/loader.4th 300115 2016-05-18 05:58:57Z imp $
 
 only forth definitions
 
@@ -136,7 +136,7 @@ only forth definitions also support-functions
 \ ***** start
 \
 \       Initializes support.4th global variables, sets loader_conf_files,
-\       processes conf files, and, if any one such file was succesfully
+\       processes conf files, and, if any one such file was successfully
 \       read to the end, loads kernel and modules.
 
 : start  ( -- ) ( throws: abort & user-defined )
@@ -144,7 +144,7 @@ only forth definitions also support-functions
   include_conf_files
   include_nextboot_file
   \ Will *NOT* try to load kernel and modules if no configuration file
-  \ was succesfully loaded!
+  \ was successfully loaded!
   any_conf_read? if
     s" loader_delay" getenv -1 = if
       load_xen_throw
@@ -230,6 +230,13 @@ only forth definitions also support-functions
 
 : .? 2 spaces 2swap 15 #type 2 spaces type cr ;
 
+\ Execute the ? command to print all the commands defined in
+\ C, then list the ones we support here. Please note that this
+\ doesn't use pager_* routines that the C implementation of ?
+\ does, so these will always appear, even if you stop early
+\ there. And they may cause the commands to scroll off the
+\ screen if the number of commands modulus LINES is close
+\ to LINEs....
 : ?
   ['] ? execute
   s" boot-conf" s" load kernel and modules, then autoboot" .?

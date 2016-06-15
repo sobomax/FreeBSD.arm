@@ -6,7 +6,7 @@
  *   of this software, nor does the author assume any responsibility
  *   for damages incurred with its use.
  *
- * $FreeBSD: head/sys/dev/ed/if_edreg.h 260050 2013-12-29 19:21:59Z marius $
+ * $FreeBSD: head/sys/dev/ed/if_edreg.h 298955 2016-05-03 03:41:25Z pfg $
  */
 /*
  * National Semiconductor DS8390 NIC register definitions
@@ -793,7 +793,7 @@ struct ed_ring	{
 #define ED_3COM_PSPR		1
 
 /*
- *	Drq Timer Register. Determines number of bytes to be transfered during
+ *	Drq Timer Register. Determines number of bytes to be transferred during
  *		a DMA burst.
  */
 #define ED_3COM_DQTR		2

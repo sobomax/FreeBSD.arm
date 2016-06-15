@@ -25,11 +25,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libnv/tests/dnv_tests.cc 282254 2015-04-29 22:46:18Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libnv/tests/dnv_tests.cc 293102 2016-01-03 11:22:15Z ngie $");
+
+#include <sys/types.h>
+#include <sys/dnv.h>
+#include <sys/nv.h>
 
 #include <atf-c++.hpp>
-#include <dnv.h>
-#include <nv.h>
 
 ATF_TEST_CASE_WITHOUT_HEAD(dnvlist_get_bool__present);
 ATF_TEST_CASE_BODY(dnvlist_get_bool__present)

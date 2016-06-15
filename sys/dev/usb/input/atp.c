@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/atp.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/atp.c 292080 2015-12-11 05:28:00Z imp $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -2630,3 +2630,5 @@ static driver_t atp_driver = {
 DRIVER_MODULE(atp, uhub, atp_driver, atp_devclass, NULL, 0);
 MODULE_DEPEND(atp, usb, 1, 1, 1);
 MODULE_VERSION(atp, 1);
+USB_PNP_HOST_INFO(fg_devs);
+USB_PNP_HOST_INFO(wsp_devs);

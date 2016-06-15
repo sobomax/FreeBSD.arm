@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/arm/Symbol.map 268893 2014-07-19 22:13:27Z ian $
+ * $FreeBSD: head/lib/libc/arm/Symbol.map 297418 2016-03-30 14:42:09Z emaste $
  */
 
 /*
@@ -29,7 +29,6 @@ FBSD_1.0 {
 	ntohs;
 	vfork;
 	brk;
-	cerror;		/* XXX - Should this be .cerror (see sys/cerror.S)? */
 	sbrk;
 };
 
@@ -60,8 +59,6 @@ FBSDprivate_1.0 {
 	_vfork;
 	_brk;
 	_end;
-	curbrk;
-	minbrk;
 	_sbrk;
 
 	/* softfloat */

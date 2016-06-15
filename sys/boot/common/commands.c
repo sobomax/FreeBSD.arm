@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/commands.c 198537 2009-10-28 10:06:27Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/boot/common/commands.c 300156 2016-05-18 15:57:13Z imp $");
 
 #include <stand.h>
 #include <string.h>
@@ -211,6 +211,14 @@ command_help(int argc, char *argv[])
 
 COMMAND_SET(commandlist, "?", "list commands", command_commandlist);
 
+/*
+ * Please note: although we use the pager for the list of commands,
+ * this routine is called from the ? FORTH function which then
+ * unconditionally prints some commands. This will lead to anomalous
+ * behavior. There's no 'pager_output' binding to FORTH to allow
+ * things to work right, so I'm documenting the bug rather than
+ * fixing it.
+ */
 static int
 command_commandlist(int argc, char *argv[])
 {

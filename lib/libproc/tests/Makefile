@@ -1,6 +1,4 @@
-# $FreeBSD: head/lib/libproc/tests/Makefile 271937 2014-09-21 21:25:41Z markj $
-
-TESTSDIR=	${TESTSBASE}/lib/libproc
+# $FreeBSD: head/lib/libproc/tests/Makefile 296129 2016-02-26 22:14:23Z bdrewery $
 
 ATF_TESTS_C+=	proc_test
 
@@ -8,14 +6,10 @@ PROGS=		target_prog
 SRCS_target_prog=	target_prog.c
 BINDIR_target_prog=	${TESTSDIR}
 
-LDADD+=	-lelf -lproc -lrtld_db -lutil
-DPADD+=	${LIBELF} ${LIBPROC} ${LIBRTLD_DB} ${LIBUTIL}
+LIBADD=	elf proc rtld_db util
 
 # Ensure that symbols aren't stripped from the test program, as they're needed
 # for testing symbol lookup.
 STRIP=
-
-MAN=
-WARNS?=	6
 
 .include <bsd.test.mk>

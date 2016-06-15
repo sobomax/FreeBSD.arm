@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/i386/vm_machdep.c 300415 2016-05-22 12:46:34Z dchagin $");
 
 #include "opt_isa.h"
 #include "opt_npx.h"
@@ -111,6 +111,8 @@ _Static_assert(OFFSETOF_CURTHREAD == offsetof(struct pcpu, pc_curthread),
     "OFFSETOF_CURTHREAD does not correspond with offset of pc_curthread.");
 _Static_assert(OFFSETOF_CURPCB == offsetof(struct pcpu, pc_curpcb),
     "OFFSETOF_CURPCB does not correspond with offset of pc_curpcb.");
+_Static_assert(__OFFSETOF_MONITORBUF == offsetof(struct pcpu, pc_monitorbuf),
+    "__OFFSETOF_MONINORBUF does not correspond with offset of pc_monitorbuf.");
 
 static void	cpu_reset_real(void);
 #ifdef SMP
@@ -125,8 +127,8 @@ get_pcb_user_save_td(struct thread *td)
 	vm_offset_t p;
 
 	p = td->td_kstack + td->td_kstack_pages * PAGE_SIZE -
-	    cpu_max_ext_state_size;
-	KASSERT((p % 64) == 0, ("Unaligned pcb_user_save area"));
+	    roundup2(cpu_max_ext_state_size, XSAVE_AREA_ALIGN);
+	KASSERT((p % XSAVE_AREA_ALIGN) == 0, ("Unaligned pcb_user_save area"));
 	return ((union savefpu *)p);
 }
 
@@ -145,7 +147,8 @@ get_pcb_td(struct thread *td)
 	vm_offset_t p;
 
 	p = td->td_kstack + td->td_kstack_pages * PAGE_SIZE -
-	    cpu_max_ext_state_size - sizeof(struct pcb);
+	    roundup2(cpu_max_ext_state_size, XSAVE_AREA_ALIGN) -
+	    sizeof(struct pcb);
 	return ((struct pcb *)p);
 }
 
@@ -448,13 +451,7 @@ cpu_set_syscall_retval(struct thread *td, int error)
 		break;
 
 	default:
-		if (td->td_proc->p_sysent->sv_errsize) {
-			if (error >= td->td_proc->p_sysent->sv_errsize)
-				error = -1;	/* XXX */
-			else
-				error = td->td_proc->p_sysent->sv_errtbl[error];
-		}
-		td->td_frame->tf_eax = error;
+		td->td_frame->tf_eax = SV_ABI_ERRNO(td->td_proc, error);
 		td->td_frame->tf_eflags |= PSL_C;
 		break;
 	}

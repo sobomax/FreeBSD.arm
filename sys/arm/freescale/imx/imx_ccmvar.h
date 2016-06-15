@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/freescale/imx/imx_ccmvar.h 282516 2015-05-05 23:27:49Z ian $
+ * $FreeBSD: head/sys/arm/freescale/imx/imx_ccmvar.h 292565 2015-12-21 20:17:24Z gonzo $
  */
 
 #ifndef	IMX_CCMVAR_H
@@ -52,6 +52,8 @@ uint32_t imx_ccm_ahb_hz(void);
 void imx_ccm_usb_enable(device_t _usbdev);
 void imx_ccm_usbphy_enable(device_t _phydev);
 void imx_ccm_ssi_configure(device_t _ssidev);
+void imx_ccm_hdmi_enable(void);
+void imx_ccm_ipu_enable(int ipu);
 
 /* Routines to get and set the arm clock root divisor register. */
 uint32_t imx_ccm_get_cacrr(void);

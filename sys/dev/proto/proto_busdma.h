@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/proto/proto_busdma.h 284168 2015-06-08 21:47:44Z marcel $
+ * $FreeBSD: head/sys/dev/proto/proto_busdma.h 285069 2015-07-03 01:52:22Z marcel $
  */
 
 #ifndef _DEV_PROTO_BUSDMA_H_
@@ -68,7 +68,7 @@ int proto_busdma_detach(struct proto_softc *, struct proto_busdma *);
 int proto_busdma_cleanup(struct proto_softc *, struct proto_busdma *);
 
 int proto_busdma_ioctl(struct proto_softc *, struct proto_busdma *,
-    struct proto_ioc_busdma *);
+    struct proto_ioc_busdma *, struct thread *);
 
 int proto_busdma_mmap_allowed(struct proto_busdma *, vm_paddr_t);
 

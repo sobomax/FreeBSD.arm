@@ -1,7 +1,7 @@
 #
 # This builds network tools.
 #
-# $FreeBSD: head/tools/bsdbox/Makefile.net 263140 2014-03-14 02:58:48Z glebius $
+# $FreeBSD: head/tools/bsdbox/Makefile.net 291479 2015-11-30 09:02:28Z adrian $
 #
 
 CRUNCH_PROGS_sbin+=	route ping
@@ -21,6 +21,7 @@ CRUNCH_LIBS+=	-lmemstat -lnetgraph
 
 # ifconfig
 CRUNCH_PROGS_sbin+=	ifconfig
+CRUNCH_SHLIBS+=	-l80211
 
 # wlan stuff
 CRUNCH_PROGS_usr.sbin+=	wlandebug

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libipsec/pfkey.c 231532 2012-02-11 20:43:01Z bz $");
+__FBSDID("$FreeBSD: head/lib/libipsec/pfkey.c 298214 2016-04-18 15:08:31Z pfg $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -1645,7 +1645,7 @@ pfkey_recv(so)
 
 	/* read real message */
 	reallen = PFKEY_UNUNIT64(buf.sadb_msg_len);
-	if ((newmsg = CALLOC(reallen, struct sadb_msg *)) == 0) {
+	if ((newmsg = CALLOC(reallen, struct sadb_msg *)) == NULL) {
 		__ipsec_set_strerror(strerror(errno));
 		return NULL;
 	}

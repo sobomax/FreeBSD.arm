@@ -33,7 +33,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/at91/if_ate.c 271859 2014-09-19 09:20:16Z glebius $");
+__FBSDID("$FreeBSD: head/sys/arm/at91/if_ate.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -228,22 +228,81 @@ static void	ate_rxfilter(struct ate_softc *sc);
 static int	ate_miibus_readreg(device_t dev, int phy, int reg);
 
 static int	ate_miibus_writereg(device_t dev, int phy, int reg, int data);
+
 /*
  * The AT91 family of products has the ethernet interface called EMAC.
  * However, it isn't self identifying.  It is anticipated that the parent bus
  * code will take care to only add ate devices where they really are.  As
  * such, we do nothing here to identify the device and just set its name.
+ * However, FDT makes it self-identifying.
  */
 static int
 ate_probe(device_t dev)
 {
 #ifdef FDT
-	if (!ofw_bus_is_compatible(dev, "cdns,at32ap7000-macb"))
+	if (!ofw_bus_is_compatible(dev, "cdns,at91rm9200-emac") &&
+	    !ofw_bus_is_compatible(dev, "cdns,emac") &&
+	    !ofw_bus_is_compatible(dev, "cdns,at32ap7000-macb"))
 		return (ENXIO);
 #endif
 	device_set_desc(dev, "EMAC");
 	return (0);
 }
+
+#ifdef FDT
+/*
+ * We have to know if we're using MII or RMII attachment
+ * for the MACB to talk to the PHY correctly. With FDT,
+ * we must use rmii if there's a proprety phy-mode
+ * equal to "rmii". Otherwise we MII mode is used.
+ */
+static void
+ate_set_rmii(struct ate_softc *sc)
+{
+	phandle_t node;
+	char prop[10];
+	ssize_t len;
+
+	node = ofw_bus_get_node(sc->dev);
+	memset(prop, 0 ,sizeof(prop));
+	len = OF_getproplen(node, "phy-mode");
+	if (len != 4)
+		return;
+	if (OF_getprop(node, "phy-mode", prop, len) != len)
+		return;
+	if (strncmp(prop, "rmii", 4) == 0)
+		sc->use_rmii = 1;
+}
+
+#else
+/*
+ * We have to know if we're using MII or RMII attachment
+ * for the MACB to talk to the PHY correctly. Without FDT,
+ * there's no good way to do this. So, if the config file
+ * has 'option AT91_ATE_USE_RMII', then we'll force RMII.
+ * Otherwise, we'll use what the bootloader setup. Either
+ * it setup RMII or MII, in which case we'll get it right,
+ * or it did nothing, and we'll fall back to MII and the
+ * option would override if present.
+ */
+static void
+ate_set_rmii(struct ate_softc *sc)
+{
+
+	/* Default to what boot rom did */
+	if (!sc->is_emacb)
+		sc->use_rmii =
+		    (RD4(sc, ETH_CFG) & ETH_CFG_RMII) == ETH_CFG_RMII;
+	else
+		sc->use_rmii =
+		    (RD4(sc, ETHB_UIO) & ETHB_UIO_RMII) == ETHB_UIO_RMII;
+
+#ifdef AT91_ATE_USE_RMII
+	/* Compile time override */
+	sc->use_rmii = 1;
+#endif
+}
+#endif
 
 static int
 ate_attach(device_t dev)
@@ -278,25 +337,19 @@ ate_attach(device_t dev)
 	}
 
 	/* New or old version, chooses buffer size. */
+#ifdef FDT
+	sc->is_emacb = ofw_bus_is_compatible(dev, "cdns,at32ap7000-macb");
+#else
 	sc->is_emacb = at91_is_sam9() || at91_is_sam9xe();
+#endif
 	sc->rx_buf_size = RX_BUF_SIZE(sc);
 
 	err = ate_activate(dev);
 	if (err)
 		goto out;
 
-	/* Default to what boot rom did */
-	if (!sc->is_emacb)
-		sc->use_rmii =
-		    (RD4(sc, ETH_CFG) & ETH_CFG_RMII) == ETH_CFG_RMII;
-	else
-		sc->use_rmii =
-		    (RD4(sc, ETHB_UIO) & ETHB_UIO_RMII) == ETHB_UIO_RMII;
+	ate_set_rmii(sc);
 
-#ifdef AT91_ATE_USE_RMII
-	/* Compile time override */
-	sc->use_rmii = 1;
-#endif
 	/* Sysctls */
 	sctx = device_get_sysctl_ctx(dev);
 	soid = device_get_sysctl_tree(dev);
@@ -598,7 +651,7 @@ ate_activate(device_t dev)
 	    ate_getaddr, &sc->tx_desc_phys, 0) != 0)
 		goto errout;
 
-	/* Initilize descriptors; mark all empty */
+	/* Initialize descriptors; mark all empty */
 	for (i = 0; i < ATE_MAX_TX_BUFFERS; i++) {
 		sc->tx_descs[i].addr =0;
 		sc->tx_descs[i].status = ETHB_TX_USED;
@@ -866,7 +919,7 @@ ate_intr(void *xsc)
 				/*
 				 * Simulate SAM9 FIRST/LAST bits for RM9200.
 				 * RM9200 EMAC has only on Rx buffer per packet.
-				 * But sometime we are handed a zero lenght packet.
+				 * But sometime we are handed a zero length packet.
 				 */
 				if ((rxdhead->status & ETH_LEN_MASK) == 0)
 					rxdhead->status = 0; /* Mark error */
@@ -927,7 +980,7 @@ ate_intr(void *xsc)
 			do {
 
 				/* Last buffer may just be 1-4 bytes of FCS so remain
-				 * may be zero for last decriptor.  */
+				 * may be zero for last descriptor.  */
 				if (remain > 0) {
 						/* Make sure we get the current bytes */
 						bus_dmamap_sync(sc->rx_tag, sc->rx_map[sc->rxhead],
@@ -936,7 +989,7 @@ ate_intr(void *xsc)
 						count = MIN(remain, sc->rx_buf_size);
 
 						/* XXX Performance robbing copy. Could
-						 * recieve directly to mbufs if not an
+						 * receive directly to mbufs if not an
 						 * RM9200. And even then we could likely
 						 * copy just the protocol headers. XXX  */
 						m_append(mb, count, sc->rx_buf[sc->rxhead]);
@@ -1131,7 +1184,7 @@ atestart_locked(struct ifnet *ifp)
 		}
 
 		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
-		if (m == 0)
+		if (m == NULL)
 			break;
 
 		e = bus_dmamap_load_mbuf_sg(sc->mtag, sc->tx_map[sc->txhead], m,
@@ -1415,7 +1468,7 @@ ate_miibus_readreg(device_t dev, int phy, int reg)
 	int val;
 
 	/*
-	 * XXX if we implement agressive power savings, then we need
+	 * XXX if we implement aggressive power savings, then we need
 	 * XXX to make sure that the clock to the emac is on here
 	 */
 
@@ -1435,7 +1488,7 @@ ate_miibus_writereg(device_t dev, int phy, int reg, int data)
 	struct ate_softc *sc;
 
 	/*
-	 * XXX if we implement agressive power savings, then we need
+	 * XXX if we implement aggressive power savings, then we need
 	 * XXX to make sure that the clock to the emac is on here
 	 */
 

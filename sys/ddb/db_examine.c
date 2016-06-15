@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_examine.c 283248 2015-05-21 15:16:18Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_examine.c 299970 2016-05-16 19:42:38Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -225,6 +225,10 @@ db_print_cmd(db_expr_t addr, bool have_addr, db_expr_t count, char *modif)
 		else
 		    db_printf("\\%03o", (int)value);
 		break;
+	    default:
+		db_print_format = 'x';
+		db_error("Syntax error: unsupported print modifier\n");
+		/*NOTREACHED*/
 	}
 	db_printf("\n");
 }
@@ -232,9 +236,13 @@ db_print_cmd(db_expr_t addr, bool have_addr, db_expr_t count, char *modif)
 void
 db_print_loc_and_inst(db_addr_t loc)
 {
+	db_expr_t off;
+
 	db_printsym(loc, DB_STGY_PROC);
-	db_printf(":\t");
-	(void) db_disasm(loc, true);
+	if (db_search_symbol(loc, DB_STGY_PROC, &off) != C_DB_SYM_NULL) {
+		db_printf(":\t");
+		(void)db_disasm(loc, true);
+	}
 }
 
 /*

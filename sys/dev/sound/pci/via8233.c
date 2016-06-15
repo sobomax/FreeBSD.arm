@@ -48,7 +48,7 @@
 
 #include <dev/sound/pci/via8233.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/via8233.c 283291 2015-05-22 17:05:21Z jkim $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/via8233.c 297862 2016-04-12 17:23:03Z pfg $");
 
 #define VIA8233_PCI_ID 0x30591106
 
@@ -1164,7 +1164,7 @@ via_chip_init(device_t dev)
 static int
 via_attach(device_t dev)
 {
-	struct via_info *via = 0;
+	struct via_info *via = NULL;
 	char status[SND_STATUSLEN];
 	int i, via_dxs_disabled, via_dxs_src, via_dxs_chnum, via_sgd_chnum;
 	int nsegs;
@@ -1348,7 +1348,7 @@ via_attach(device_t dev)
 		ac97_setextmode(via->codec, ext);
 	}
 
-	snprintf(status, SND_STATUSLEN, "at io 0x%lx irq %ld %s",
+	snprintf(status, SND_STATUSLEN, "at io 0x%jx irq %jd %s",
 	    rman_get_start(via->reg), rman_get_start(via->irq),
 	    PCM_KLDSTRING(snd_via8233));
 

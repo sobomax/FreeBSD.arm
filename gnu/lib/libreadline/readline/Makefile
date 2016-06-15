@@ -1,8 +1,8 @@
-# $FreeBSD: head/gnu/lib/libreadline/readline/Makefile 284289 2015-06-11 21:13:05Z sjg $
+# $FreeBSD: head/gnu/lib/libreadline/readline/Makefile 294608 2016-01-22 21:33:27Z emaste $
 
 LIB=    readline
 INTERNALLIB=	yes
-NO_MAN=	yes
+MAN=
 
 TILDESRC= tilde.c
 SRCS=     readline.c vi_mode.c funmap.c keymaps.c parens.c search.c \
@@ -16,14 +16,11 @@ INSTALLED_HEADERS= readline.h chardefs.h keymaps.h history.h tilde.h \
 CFLAGS+=	-I${.OBJDIR}/..
 SRCDIR=	${.CURDIR}/../../../../contrib/libreadline
 
-.NOPATH: ${INSTALLED_HEADERS}
-
-beforebuild: ${INSTALLED_HEADERS}
 CLEANFILES+= ${INSTALLED_HEADERS}
-DPSRCS+= ${INSTALLED_HEADERS}
+SRCS+= ${INSTALLED_HEADERS}
 
 .for _h in ${INSTALLED_HEADERS}
-${_h}:	${SRCDIR}/${_h}
+${_h}:	${SRCDIR}/${_h} .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 .endfor
 

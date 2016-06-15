@@ -23,14 +23,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sparc64/pci/firereg.h 262613 2014-02-28 18:06:00Z dim $
+ * $FreeBSD: head/sys/sparc64/pci/firereg.h 287726 2015-09-12 22:49:32Z marius $
  */
 
 #ifndef _SPARC64_PCI_FIREREG_H_
 #define	_SPARC64_PCI_FIREREG_H_
 
 #define	FIRE_NINTR				3	/* 2 OFW + 1 MSIq */
-#define	FIRE_NRANGE				4
 #define	FIRE_NREG				2
 
 #define	FIRE_PCI				0

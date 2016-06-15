@@ -5,7 +5,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/input/uhid.c 279854 2015-03-10 16:06:07Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/input/uhid.c 292080 2015-12-11 05:28:00Z imp $");
 
 /*-
  * Copyright (c) 1998 The NetBSD Foundation, Inc.
@@ -878,3 +878,4 @@ static driver_t uhid_driver = {
 DRIVER_MODULE(uhid, uhub, uhid_driver, uhid_devclass, NULL, 0);
 MODULE_DEPEND(uhid, usb, 1, 1, 1);
 MODULE_VERSION(uhid, 1);
+USB_PNP_HOST_INFO(uhid_devs);

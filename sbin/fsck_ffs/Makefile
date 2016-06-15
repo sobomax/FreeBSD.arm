@@ -1,6 +1,7 @@
-# $FreeBSD: head/sbin/fsck_ffs/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/fsck_ffs/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #	@(#)Makefile	8.2 (Berkeley) 4/27/95
 
+PACKAGE=runtime
 PROG=	fsck_ffs
 LINKS+=	${BINDIR}/fsck_ffs ${BINDIR}/fsck_ufs
 LINKS+=	${BINDIR}/fsck_ffs ${BINDIR}/fsck_4.2bsd

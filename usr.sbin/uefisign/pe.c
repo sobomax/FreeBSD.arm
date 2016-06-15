@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/uefisign/pe.c 283141 2015-05-20 09:40:34Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/uefisign/pe.c 289677 2015-10-21 05:37:09Z eadler $");
 
 #include <assert.h>
 #include <err.h>
@@ -304,7 +304,7 @@ parse_directory(struct executable *x, off_t off,
  * Note that most software does not care about the checksum at all; perhaps
  * we could just set it to 0 instead.
  *
- * XXX: Endianess?
+ * XXX: Endianness?
  */
 static uint32_t
 compute_checksum(const struct executable *x)

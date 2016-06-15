@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/vx/if_vx.c 276750 2015-01-06 12:59:37Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/dev/vx/if_vx.c 298955 2016-05-03 03:41:25Z pfg $");
 
 /*
  * Created from if_ep.c driver by Fred Gray (fgray@rice.edu) to support
@@ -251,7 +251,7 @@ vx_init_locked(struct vx_softc *sc)
 	    S_RX_COMPLETE | S_TX_COMPLETE | S_TX_AVAIL);
 
 	/*
-         * Attempt to get rid of any stray interrupts that occured during
+         * Attempt to get rid of any stray interrupts that occurred during
          * configuration.  On the i386 this isn't possible because one may
          * already be queued.  However, a single stray interrupt is
          * unimportant.
@@ -752,7 +752,7 @@ again:
 	eh = mtod(m, struct ether_header *);
 
 	/*
-         * XXX: Some cards seem to be in promiscous mode all the time.
+         * XXX: Some cards seem to be in promiscuous mode all the time.
          * we need to make sure we only get our own stuff always.
          * bleah!
          */

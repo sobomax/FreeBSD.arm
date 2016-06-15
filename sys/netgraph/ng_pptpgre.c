@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_pptpgre.c 243882 2012-12-05 08:04:20Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_pptpgre.c 298813 2016-04-29 21:25:05Z pfg $
  * $Whistle: ng_pptpgre.c,v 1.7 1999/12/08 00:10:06 archie Exp $
  */
 
@@ -124,7 +124,7 @@ typedef u_int64_t		pptptime_t;
 #define PPTP_MIN_TIMEOUT	(PPTP_TIME_SCALE / 83)	/* 12 milliseconds */
 #define PPTP_MAX_TIMEOUT	(3 * PPTP_TIME_SCALE)	/* 3 seconds */
 
-/* When we recieve a packet, we wait to see if there's an outgoing packet
+/* When we receive a packet, we wait to see if there's an outgoing packet
    we can piggy-back the ACK off of. These parameters determine the mimimum
    and maxmimum length of time we're willing to wait in order to do that.
    These have no effect unless "enableDelayedAck" is turned on. */
@@ -846,7 +846,7 @@ ng_pptpgre_start_recv_ack_timer(hpriv_p hpriv)
 		remain = 0;
 
 	/* Be conservative: timeout can happen up to 1 tick early */
-	ticks = (((remain * hz) + PPTP_TIME_SCALE - 1) / PPTP_TIME_SCALE) + 1;
+	ticks = howmany(remain * hz, PPTP_TIME_SCALE) + 1;
 	ng_callout(&hpriv->rackTimer, hpriv->node, hpriv->hook,
 	    ticks, ng_pptpgre_recv_ack_timeout, hpriv, 0);
 }
@@ -894,7 +894,7 @@ ng_pptpgre_start_send_ack_timer(hpriv_p hpriv)
 		ackTimeout = PPTP_MAX_ACK_DELAY;
 
 	/* Be conservative: timeout can happen up to 1 tick early */
-	ticks = (((ackTimeout * hz) + PPTP_TIME_SCALE - 1) / PPTP_TIME_SCALE);
+	ticks = howmany(ackTimeout * hz, PPTP_TIME_SCALE);
 	ng_callout(&hpriv->sackTimer, hpriv->node, hpriv->hook,
 	    ticks, ng_pptpgre_send_ack_timeout, hpriv, 0);
 }

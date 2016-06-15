@@ -1,4 +1,4 @@
-#	$FreeBSD: head/sbin/ipf/Makefile.inc 275030 2014-11-25 11:23:12Z bapt $
+#	$FreeBSD: head/sbin/ipf/Makefile.inc 291621 2015-12-01 22:39:19Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -18,7 +18,9 @@ CFLAGS+=	-DUSE_INET6
 CFLAGS+=	-DNOINET6
 .endif
 
+.if ${.CURDIR:M*/libipf} == ""
 LIBADD+=	ipf
+.endif
 
 CLEANFILES+=	y.tab.c y.tab.h
 

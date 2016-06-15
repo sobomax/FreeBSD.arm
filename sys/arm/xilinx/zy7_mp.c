@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_mp.c 281092 2015-04-04 23:03:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_mp.c 296100 2016-02-26 16:04:47Z andrew $");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -34,6 +34,7 @@ __FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_mp.c 281092 2015-04-04 23:03:11Z and
 #include <vm/vm.h>
 #include <vm/pmap.h>
 
+#include <machine/cpu.h>
 #include <machine/smp.h>
 #include <machine/fdt.h>
 #include <machine/intr.h>
@@ -46,25 +47,11 @@ __FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_mp.c 281092 2015-04-04 23:03:11Z and
 #define	   SCU_CONTROL_ENABLE	(1 << 0)
 
 void
-platform_mp_init_secondary(void)
-{
-
-	arm_init_secondary_ic();
-}
-
-void
 platform_mp_setmaxid(void)
 {
 
 	mp_maxid = 1;
-}
-
-int
-platform_mp_probe(void)
-{
-
 	mp_ncpus = 2;
-	return (1);
 }
 
 void    
@@ -104,16 +91,8 @@ platform_mp_start_ap(void)
 	 * magic location, 0xfffffff0, isn't in the SCU's filtering range so it
 	 * needs a write-back too.
 	 */
-	cpu_idcache_wbinv_all();
-	cpu_l2cache_wbinv_all();
+	dcache_wbinv_poc_all();
 
 	/* Wake up CPU1. */
 	armv7_sev();
-}
-
-void
-platform_ipi_send(cpuset_t cpus, u_int ipi)
-{
-
-	pic_ipi_send(cpus, ipi);
 }

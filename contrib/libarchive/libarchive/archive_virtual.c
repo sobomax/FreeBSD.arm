@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_virtual.c 248616 2013-03-22 13:36:03Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_virtual.c 299529 2016-05-12 10:16:16Z mm $");
 
 #include "archive.h"
 #include "archive_entry.h"
@@ -55,6 +55,14 @@ archive_filter_bytes(struct archive *a, int n)
 }
 
 int
+archive_free(struct archive *a)
+{
+	if (a == NULL)
+		return (ARCHIVE_OK);
+	return ((a->vtable->archive_free)(a));
+}
+
+int
 archive_write_close(struct archive *a)
 {
 	return ((a->vtable->archive_close)(a));
@@ -76,9 +84,7 @@ archive_write_fail(struct archive *a)
 int
 archive_write_free(struct archive *a)
 {
-	if (a == NULL)
-		return (ARCHIVE_OK);
-	return ((a->vtable->archive_free)(a));
+	return archive_free(a);
 }
 
 #if ARCHIVE_VERSION_NUMBER < 4000000
@@ -93,9 +99,7 @@ archive_write_finish(struct archive *a)
 int
 archive_read_free(struct archive *a)
 {
-	if (a == NULL)
-		return (ARCHIVE_OK);
-	return ((a->vtable->archive_free)(a));
+	return archive_free(a);
 }
 
 #if ARCHIVE_VERSION_NUMBER < 4000000

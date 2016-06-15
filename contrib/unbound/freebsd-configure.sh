@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/contrib/unbound/freebsd-configure.sh 268883 2014-07-19 18:38:48Z des $
+# $FreeBSD: head/contrib/unbound/freebsd-configure.sh 292135 2015-12-12 22:54:12Z des $
 #
 
 set -e
@@ -21,8 +21,11 @@ ldnsbld=$(realpath $unbound/../../lib/libldns)
 [ -f $ldnsbld/Makefile ] || error "can't find LDNS build directory"
 
 ldnsobj=$(realpath $(make -C$ldnsbld -V.OBJDIR))
-[ -f $ldnsobj/libldns.a ] || error "can't find LDNS object directory"
+[ -f $ldnsobj/libprivateldns.a ] || error "can't find LDNS object directory"
 export LDFLAGS="-L$ldnsobj"
+
+export CC=$(echo ".include <bsd.lib.mk>" | make -f /dev/stdin -VCC)
+export CPP=$(echo ".include <bsd.lib.mk>" | make -f /dev/stdin -VCPP)
 
 autoconf
 autoheader

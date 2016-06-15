@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 284877 2015-06-26 18:00:29Z tychon $
+ * $FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 299009 2016-05-03 22:07:18Z pfg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 284877 2015-06-26 18:00:29Z tychon $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/vmm_instruction_emul.c 299009 2016-05-03 22:07:18Z pfg $");
 
 #ifdef _KERNEL
 #include <sys/param.h>
@@ -1232,7 +1232,7 @@ emulate_stack_op(void *vm, int vcpuid, uint64_t mmio_gpa, struct vie *vie,
 		size = vie->opsize_override ? 2 : 8;
 	} else {
 		/*
-		 * In protected or compability mode the 'B' flag in the
+		 * In protected or compatibility mode the 'B' flag in the
 		 * stack-segment descriptor determines the size of the
 		 * stack pointer.
 		 */

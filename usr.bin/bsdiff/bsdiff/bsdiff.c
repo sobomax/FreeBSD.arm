@@ -25,13 +25,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/bsdiff/bsdiff/bsdiff.c 264823 2014-04-23 14:05:28Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/bsdiff/bsdiff/bsdiff.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/types.h>
 
 #include <bzlib.h>
 #include <err.h>
+#include <errno.h>
 #include <fcntl.h>
+#include <limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,24 +57,24 @@ static void split(off_t *I,off_t *V,off_t start,off_t len,off_t h)
 				if(V[I[k+i]+h]<x) {
 					x=V[I[k+i]+h];
 					j=0;
-				};
+				}
 				if(V[I[k+i]+h]==x) {
 					tmp=I[k+j];I[k+j]=I[k+i];I[k+i]=tmp;
 					j++;
-				};
-			};
+				}
+			}
 			for(i=0;i<j;i++) V[I[k+i]]=k+j-1;
 			if(j==1) I[k]=-1;
-		};
+		}
 		return;
-	};
+	}
 
 	x=V[I[start+len/2]+h];
 	jj=0;kk=0;
 	for(i=start;i<start+len;i++) {
 		if(V[I[i]+h]<x) jj++;
 		if(V[I[i]+h]==x) kk++;
-	};
+	}
 	jj+=start;kk+=jj;
 
 	i=start;j=0;k=0;
@@ -84,8 +87,8 @@ static void split(off_t *I,off_t *V,off_t start,off_t len,off_t h)
 		} else {
 			tmp=I[i];I[i]=I[kk+k];I[kk+k]=tmp;
 			k++;
-		};
-	};
+		}
+	}
 
 	while(jj+j<kk) {
 		if(V[I[jj+j]+h]==x) {
@@ -93,8 +96,8 @@ static void split(off_t *I,off_t *V,off_t start,off_t len,off_t h)
 		} else {
 			tmp=I[jj+j];I[jj+j]=I[kk+k];I[kk+k]=tmp;
 			k++;
-		};
-	};
+		}
+	}
 
 	if(jj>start) split(I,V,start,jj-start,h);
 
@@ -134,10 +137,10 @@ static void qsufsort(off_t *I,off_t *V,u_char *old,off_t oldsize)
 				split(I,V,i,len,h);
 				i+=len;
 				len=0;
-			};
-		};
+			}
+		}
 		if(len) I[i-len]=-len;
-	};
+	}
 
 	for(i=0;i<oldsize+1;i++) I[V[i]]=i;
 }
@@ -168,7 +171,7 @@ static off_t search(off_t *I,u_char *old,off_t oldsize,
 			*pos=I[en];
 			return y;
 		}
-	};
+	}
 
 	x=st+(en-st)/2;
 	if(memcmp(old+I[x],new,MIN(oldsize-I[x],newsize))<0) {
@@ -230,8 +233,17 @@ int main(int argc,char *argv[])
 	/* Allocate oldsize+1 bytes instead of oldsize bytes to ensure
 		that we never try to malloc(0) and get a NULL pointer */
 	if(((fd=open(argv[1],O_RDONLY|O_BINARY,0))<0) ||
-		((oldsize=lseek(fd,0,SEEK_END))==-1) ||
-		((old=malloc(oldsize+1))==NULL) ||
+	    ((oldsize=lseek(fd,0,SEEK_END))==-1))
+		err(1, "%s", argv[1]);
+
+	if (oldsize > SSIZE_MAX ||
+	    (uintmax_t)oldsize >= SIZE_T_MAX / sizeof(off_t) ||
+	    oldsize == OFF_MAX) {
+		errno = EFBIG;
+		err(1, "%s", argv[1]);
+	}
+
+	if (((old=malloc(oldsize+1))==NULL) ||
 		(lseek(fd,0,SEEK_SET)!=0) ||
 		(read(fd,old,oldsize)!=oldsize) ||
 		(close(fd)==-1)) err(1,"%s",argv[1]);
@@ -246,8 +258,16 @@ int main(int argc,char *argv[])
 	/* Allocate newsize+1 bytes instead of newsize bytes to ensure
 		that we never try to malloc(0) and get a NULL pointer */
 	if(((fd=open(argv[2],O_RDONLY|O_BINARY,0))<0) ||
-		((newsize=lseek(fd,0,SEEK_END))==-1) ||
-		((new=malloc(newsize+1))==NULL) ||
+	    ((newsize=lseek(fd,0,SEEK_END))==-1))
+		err(1, "%s", argv[2]);
+
+	if (newsize > SSIZE_MAX || (uintmax_t)newsize >= SIZE_T_MAX ||
+	    newsize == OFF_MAX) {
+		errno = EFBIG;
+		err(1, "%s", argv[2]);
+	}
+
+	if (((new=malloc(newsize+1))==NULL) ||
 		(lseek(fd,0,SEEK_SET)!=0) ||
 		(read(fd,new,newsize)!=newsize) ||
 		(close(fd)==-1)) err(1,"%s",argv[2]);
@@ -301,24 +321,24 @@ int main(int argc,char *argv[])
 			if((scan+lastoffset<oldsize) &&
 				(old[scan+lastoffset] == new[scan]))
 				oldscore--;
-		};
+		}
 
 		if((len!=oldscore) || (scan==newsize)) {
 			s=0;Sf=0;lenf=0;
 			for(i=0;(lastscan+i<scan)&&(lastpos+i<oldsize);) {
 				if(old[lastpos+i]==new[lastscan+i]) s++;
 				i++;
-				if(s*2-i>Sf*2-lenf) { Sf=s; lenf=i; };
-			};
+				if(s*2-i>Sf*2-lenf) { Sf=s; lenf=i; }
+			}
 
 			lenb=0;
 			if(scan<newsize) {
 				s=0;Sb=0;
 				for(i=1;(scan>=lastscan+i)&&(pos>=i);i++) {
 					if(old[pos-i]==new[scan-i]) s++;
-					if(s*2-i>Sb*2-lenb) { Sb=s; lenb=i; };
-				};
-			};
+					if(s*2-i>Sb*2-lenb) { Sb=s; lenb=i; }
+				}
+			}
 
 			if(lastscan+lenf>scan-lenb) {
 				overlap=(lastscan+lenf)-(scan-lenb);
@@ -328,12 +348,12 @@ int main(int argc,char *argv[])
 					   old[lastpos+lenf-overlap+i]) s++;
 					if(new[scan-lenb+i]==
 					   old[pos-lenb+i]) s--;
-					if(s>Ss) { Ss=s; lens=i+1; };
-				};
+					if(s>Ss) { Ss=s; lens=i+1; }
+				}
 
 				lenf+=lens-overlap;
 				lenb-=lens;
-			};
+			}
 
 			for(i=0;i<lenf;i++)
 				db[dblen+i]=new[lastscan+i]-old[lastpos+i];
@@ -361,8 +381,8 @@ int main(int argc,char *argv[])
 			lastscan=scan-lenb;
 			lastpos=pos-lenb;
 			lastoffset=pos-scan;
-		};
-	};
+		}
+	}
 	BZ2_bzWriteClose(&bz2err, pfbz2, 0, NULL, NULL);
 	if (bz2err != BZ_OK)
 		errx(1, "BZ2_bzWriteClose, bz2err = %d", bz2err);

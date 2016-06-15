@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libllvmtablegen/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libllvmtablegen/Makefile 288943 2015-10-06 17:53:29Z dim $
 
 .include <bsd.own.mk>
 
@@ -10,8 +10,8 @@ SRCS=	Error.cpp \
 	Record.cpp \
 	SetTheory.cpp \
 	StringMatcher.cpp \
-	TableGenBackend.cpp \
 	TGLexer.cpp \
-	TGParser.cpp
+	TGParser.cpp \
+	TableGenBackend.cpp
 
 .include "../clang.lib.mk"

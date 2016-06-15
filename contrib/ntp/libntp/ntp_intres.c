@@ -201,8 +201,6 @@ static	time_t		next_res_init;
 /* === forward declarations === */
 static	u_int		reserve_dnschild_ctx(void);
 static	u_int		get_dnschild_ctx(void);
-static	void		alloc_dnsworker_context(u_int);
-/* static	void		free_dnsworker_context(u_int); */
 static	dnsworker_ctx *	get_worker_context(blocking_child *, u_int);
 static	void		scheduled_sleep(time_t, time_t,
 					dnsworker_ctx *);
@@ -249,12 +247,12 @@ getaddrinfo_sometime(
 	size_t			servsize;
 	time_t			now;
 	
-	NTP_REQUIRE(NULL != node);
+	REQUIRE(NULL != node);
 	if (NULL != hints) {
-		NTP_REQUIRE(0 == hints->ai_addrlen);
-		NTP_REQUIRE(NULL == hints->ai_addr);
-		NTP_REQUIRE(NULL == hints->ai_canonname);
-		NTP_REQUIRE(NULL == hints->ai_next);
+		REQUIRE(0 == hints->ai_addrlen);
+		REQUIRE(NULL == hints->ai_addr);
+		REQUIRE(NULL == hints->ai_canonname);
+		REQUIRE(NULL == hints->ai_next);
 	}
 
 	idx = get_dnschild_ctx();
@@ -420,7 +418,7 @@ blocking_getaddrinfo(
 
 		ai = ai_res;
 		while (NULL != ai) {
-			NTP_INSIST(ai->ai_addrlen <= sizeof(sockaddr_u));
+			INSIST(ai->ai_addrlen <= sizeof(sockaddr_u));
 			memcpy(cp, ai->ai_addr, ai->ai_addrlen);
 			cp += sizeof(sockaddr_u);
 
@@ -568,7 +566,7 @@ getaddrinfo_sometime_complete(
 			ai[i].ai_canonname += (size_t)canon_start;
 	}
 
-	NTP_ENSURE((char *)psau == canon_start);
+	ENSURE((char *)psau == canon_start);
 
 	if (!gai_resp->ai_count)
 		ai = NULL;
@@ -634,8 +632,8 @@ getnameinfo_sometime(
 	dnschild_ctx *		child_ctx;
 	time_t			time_now;
 	
-	NTP_REQUIRE(hostoctets);
-	NTP_REQUIRE(hostoctets + servoctets < 1024);
+	REQUIRE(hostoctets);
+	REQUIRE(hostoctets + servoctets < 1024);
 
 	idx = get_dnschild_ctx();
 	child_ctx = dnschild_contexts[idx];
@@ -699,7 +697,7 @@ blocking_getnameinfo(
 	 * large allocations.  We only need room for the host
 	 * and service names.
 	 */
-	NTP_REQUIRE(octets < sizeof(host));
+	REQUIRE(octets < sizeof(host));
 	service = host + gni_req->hostoctets;
 
 	worker_ctx = get_worker_context(c, gni_req->dns_idx);
@@ -775,8 +773,8 @@ blocking_getnameinfo(
 		cp += gni_resp->servoctets;
 	}
 
-	NTP_INSIST((size_t)(cp - (char *)resp) == resp_octets);
-	NTP_INSIST(resp_octets - sizeof(*resp) == gni_resp->octets);
+	INSIST((size_t)(cp - (char *)resp) == resp_octets);
+	INSIST(resp_octets - sizeof(*resp) == gni_resp->octets);
 
 	rc = queue_blocking_response(c, resp, resp_octets, req);
 	if (rc)
@@ -949,47 +947,41 @@ get_dnschild_ctx(void)
 }
 
 
-static void
-alloc_dnsworker_context(
-	u_int idx
-	)
-{
-	const size_t worker_context_sz = sizeof(*dnsworker_contexts[0]);
-
-	REQUIRE(NULL == dnsworker_contexts[idx]);
-	dnsworker_contexts[idx] = emalloc_zero(worker_context_sz);
-}
-
-
 static dnsworker_ctx *
 get_worker_context(
 	blocking_child *	c,
 	u_int			idx
 	)
 {
-	static size_t	ps = sizeof(dnsworker_contexts[0]);
-	u_int	min_new_alloc;
-	u_int	new_alloc;
-	size_t	octets;
-	size_t	new_octets;
+	u_int		min_new_alloc;
+	u_int		new_alloc;
+	size_t		octets;
+	size_t		new_octets;
+	dnsworker_ctx *	retv;
 
+	worker_global_lock(TRUE);
+	
 	if (dnsworker_contexts_alloc <= idx) {
 		min_new_alloc = 1 + idx;
 		/* round new_alloc up to nearest multiple of 4 */
 		new_alloc = (min_new_alloc + 4) & ~(4 - 1);
-		new_octets = new_alloc * ps;
-		octets = dnsworker_contexts_alloc * ps;
+		new_octets = new_alloc * sizeof(dnsworker_ctx*);
+		octets = dnsworker_contexts_alloc * sizeof(dnsworker_ctx*);
 		dnsworker_contexts = erealloc_zero(dnsworker_contexts,
 						   new_octets, octets);
 		dnsworker_contexts_alloc = new_alloc;
+		retv = emalloc_zero(sizeof(dnsworker_ctx));
+		dnsworker_contexts[idx] = retv;
+	} else if (NULL == (retv = dnsworker_contexts[idx])) {
+		retv = emalloc_zero(sizeof(dnsworker_ctx));
+		dnsworker_contexts[idx] = retv;
 	}
-
-	if (NULL == dnsworker_contexts[idx])
-		alloc_dnsworker_context(idx);
-	ZERO(*dnsworker_contexts[idx]);
-	dnsworker_contexts[idx]->c = c;
-
-	return dnsworker_contexts[idx];
+	
+	worker_global_lock(FALSE);
+	
+	ZERO(*retv);
+	retv->c = c;
+	return retv;
 }
 
 

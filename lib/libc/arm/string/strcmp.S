@@ -30,7 +30,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/strcmp.S 283831 2015-05-31 14:04:11Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/strcmp.S 288373 2015-09-29 16:09:58Z kib $");
 
 ENTRY(strcmp)
 1:
@@ -43,3 +43,5 @@ ENTRY(strcmp)
 	sub	r0, r2, r3
 	RET
 END(strcmp)
+
+	.section .note.GNU-stack,"",%progbits

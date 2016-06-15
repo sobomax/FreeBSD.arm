@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/mixer/mixer.c 230611 2012-01-27 09:15:55Z mav $");
+__FBSDID("$FreeBSD: head/usr.sbin/mixer/mixer.c 299470 2016-05-11 17:27:27Z cem $");
 
 #include <err.h>
 #include <fcntl.h>
@@ -26,11 +26,11 @@ __FBSDID("$FreeBSD: head/usr.sbin/mixer/mixer.c 230611 2012-01-27 09:15:55Z mav 
 
 static const char *names[SOUND_MIXER_NRDEVICES] = SOUND_DEVICE_NAMES;
 
-static void	usage(int devmask, int recmask);
+static void	usage(int devmask, int recmask) __dead2;
 static int	res_name(const char *name, int mask);
 static void	print_recsrc(int recsrc, int recmask, int sflag);
 
-static void
+static void __dead2
 usage(int devmask, int recmask)
 {
 	int	i, n;

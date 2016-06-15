@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/hptnr/hptnr_os_bsd.c 274819 2014-11-21 21:01:24Z smh $
+ * $FreeBSD: head/sys/dev/hptnr/hptnr_os_bsd.c 296135 2016-02-27 03:34:01Z jhibbits $
  */
 
 #include <dev/hptnr/hptnr_config.h>
@@ -106,13 +106,13 @@ void *os_map_pci_bar(
 
 	if (base & 1) {
 		hba->pcibar[index].type = SYS_RES_IOPORT;
-		hba->pcibar[index].res = bus_alloc_resource(hba->pcidev,
-			hba->pcibar[index].type, &hba->pcibar[index].rid, 0, ~0, length, RF_ACTIVE);
+		hba->pcibar[index].res = bus_alloc_resource_any(hba->pcidev,
+			hba->pcibar[index].type, &hba->pcibar[index].rid, RF_ACTIVE);
 		hba->pcibar[index].base = (void *)(unsigned long)(base & ~0x1);
 	} else {
 		hba->pcibar[index].type = SYS_RES_MEMORY;
-		hba->pcibar[index].res = bus_alloc_resource(hba->pcidev,
-			hba->pcibar[index].type, &hba->pcibar[index].rid, 0, ~0, length, RF_ACTIVE);
+		hba->pcibar[index].res = bus_alloc_resource_any(hba->pcidev,
+			hba->pcibar[index].type, &hba->pcibar[index].rid, RF_ACTIVE);
 		hba->pcibar[index].base = (char *)rman_get_virtual(hba->pcibar[index].res) + offset;
 	}
 

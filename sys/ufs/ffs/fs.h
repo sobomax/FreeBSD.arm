@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fs.h	8.13 (Berkeley) 3/21/95
- * $FreeBSD: head/sys/ufs/ffs/fs.h 262678 2014-03-02 02:52:34Z pfg $
+ * $FreeBSD: head/sys/ufs/ffs/fs.h 298804 2016-04-29 20:43:51Z pfg $
  */
 
 #ifndef _UFS_FFS_FS_H_
@@ -401,8 +401,8 @@ CTASSERT(sizeof(struct fs) == 1376);
  * flag to enforce that inconsistent filesystems be mounted read-only.
  * The FS_INDEXDIRS flag when set indicates that the kernel maintains
  * on-disk auxiliary indexes (such as B-trees) for speeding directory
- * accesses. Kernels that do not support auxiliary indicies clear the
- * flag to indicate that the indicies need to be rebuilt (by fsck) before
+ * accesses. Kernels that do not support auxiliary indices clear the
+ * flag to indicate that the indices need to be rebuilt (by fsck) before
  * they can be used.
  *
  * FS_ACLS indicates that POSIX.1e ACLs are administratively enabled

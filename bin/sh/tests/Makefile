@@ -1,8 +1,6 @@
-# $FreeBSD: head/bin/sh/tests/Makefile 269902 2014-08-13 04:14:50Z ngie $
+# $FreeBSD: head/bin/sh/tests/Makefile 295643 2016-02-16 02:13:59Z bdrewery $
 
 .include <bsd.own.mk>
-
-TESTSDIR=	${TESTSBASE}/bin/sh
 
 TESTS_SUBDIRS+=	builtins
 TESTS_SUBDIRS+=	errors

@@ -60,7 +60,7 @@
 
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11x6.S 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/cpufunc_asm_arm11x6.S 295207 2016-02-03 13:47:50Z mmel $");
 
 	.cpu arm1176jz-s
 
@@ -131,17 +131,6 @@ ENTRY_NP(arm11x6_dcache_wbinv_all)
 	Flush_D_cache(r0)
 	RET
 END(arm11x6_dcache_wbinv_all)
-
-ENTRY_NP(arm11x6_icache_sync_all)
-	Flush_D_cache(r0)
-	Invalidate_I_cache(r0, r1)
-	RET
-END(arm11x6_icache_sync_all)
-
-ENTRY_NP(arm11x6_flush_prefetchbuf)
-	mcr	p15, 0, r0, c7, c5, 4	/* Flush Prefetch Buffer */
-	RET
-END(arm11x6_flush_prefetchbuf)
 
 ENTRY_NP(arm11x6_icache_sync_range)
 	add	r1, r1, r0

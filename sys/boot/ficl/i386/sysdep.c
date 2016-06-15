@@ -7,7 +7,7 @@
 **
 *******************************************************************/
 
-/* $FreeBSD: head/sys/boot/ficl/i386/sysdep.c 274528 2014-11-14 21:08:51Z imp $ */
+/* $FreeBSD: head/sys/boot/ficl/i386/sysdep.c 294926 2016-01-27 16:45:23Z allanjude $ */
 
 #ifdef TESTMAIN
 #include <stdio.h>
@@ -58,7 +58,7 @@ void  ficlTextOut(FICL_VM *pVM, char *msg, int fNewline)
     IGNORE(pVM);
 
     while(*msg != 0)
-	putchar(*(msg++));
+	putchar((unsigned char)*(msg++));
     if (fNewline)
 	putchar('\n');
 

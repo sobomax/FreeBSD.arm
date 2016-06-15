@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/kldconfig/kldconfig.c 262946 2014-03-09 13:19:37Z jilles $");
+__FBSDID("$FreeBSD: head/sbin/kldconfig/kldconfig.c 298248 2016-04-19 04:52:13Z araujo $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -85,7 +85,7 @@ getmib(void)
 	if (miblen != 0)
 		return;
 	
-	miblen = sizeof(mib) / sizeof(mib[0]);
+	miblen = nitems(mib);
 	if (sysctlnametomib(pathctl, mib, &miblen) != 0)
 		err(1, "sysctlnametomib(%s)", pathctl);
 }

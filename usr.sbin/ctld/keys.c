@@ -29,12 +29,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/keys.c 281532 2015-04-14 18:13:55Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/ctld/keys.c 290823 2015-11-14 16:15:38Z trasz $");
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "ctld.h"
 
 struct keys *
@@ -136,7 +137,7 @@ keys_save(struct keys *keys, struct pdu *pdu)
 		if (keys->keys_names[i] == NULL)
 			break;
 		data += sprintf(data, "%s=%s",
-		        keys->keys_names[i], keys->keys_values[i]);
+		    keys->keys_names[i], keys->keys_values[i]);
 		data += 1; /* for '\0'. */
 	}
 }

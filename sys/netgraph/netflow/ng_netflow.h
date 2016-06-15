@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	 $SourceForge: ng_netflow.h,v 1.26 2004/09/04 15:44:55 glebius Exp $
- *	 $FreeBSD: head/sys/netgraph/netflow/ng_netflow.h 260169 2014-01-01 21:48:04Z glebius $
+ *	 $FreeBSD: head/sys/netgraph/netflow/ng_netflow.h 298813 2016-04-29 21:25:05Z pfg $
  */
 
 #ifndef	_NG_NETFLOW_H_
@@ -166,7 +166,7 @@ struct ng_netflow_setmtu {
 	uint16_t mtu;		/* MTU for packet */
 };
 
-/* This structure is used in NGM_NETFLOW_SHOW request/responce */
+/* This structure is used in NGM_NETFLOW_SHOW request/response */
 struct ngnf_show_header {
 	u_char		version;	/* IPv4 or IPv6 */
 	uint32_t	hash_id;	/* current hash index */

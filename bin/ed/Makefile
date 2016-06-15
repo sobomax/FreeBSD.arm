@@ -1,7 +1,8 @@
-# $FreeBSD: head/bin/ed/Makefile 275028 2014-11-25 11:15:40Z bapt $
+# $FreeBSD: head/bin/ed/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
+PACKAGE=runtime
 PROG=	ed
 SRCS=	buf.c cbc.c glbl.c io.c main.c re.c sub.c undo.c
 LINKS=	${BINDIR}/ed ${BINDIR}/red

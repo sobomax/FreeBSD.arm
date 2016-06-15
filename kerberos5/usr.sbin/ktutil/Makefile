@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.sbin/ktutil/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/usr.sbin/ktutil/Makefile 288199 2015-09-24 23:15:24Z bdrewery $
 
 PROG=	ktutil
 MAN=	ktutil.8
@@ -19,13 +19,13 @@ SRCS=	add.c \
 CFLAGS+=-I${KRB5DIR}/lib/roken -I${KRB5DIR}/lib/sl -I.
 LIBADD=	kadm5clnt krb5 roken crypto edit sl vers
 
+CLEANFILES=	ktutil-commands.h ktutil-commands.c
+
 .include <bsd.prog.mk>
 
 ktutil-commands.h: ${KRB5DIR}/admin/ktutil-commands.in
 	${SLC} ${.ALLSRC:M*.in}
 
-.for ext in c o
-ktutil-commands.${ext}: ktutil-commands.h
-.endfor
+ktutil-commands.c: ktutil-commands.h
 
 .PATH: ${KRB5DIR}/admin

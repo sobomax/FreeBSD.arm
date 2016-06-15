@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_isr.c 284741 2015-06-23 22:22:36Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_isr.c 301538 2016-06-07 04:51:50Z sephe $");
 
 
 #include "ql_os.h"
@@ -159,7 +159,7 @@ qla_rx_intr(qla_host_t *ha, qla_sgl_rcv_t *sgc, uint32_t sds_idx)
 	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 
 	mpf->m_pkthdr.flowid = sgc->rss_hash;
-	M_HASHTYPE_SET(mpf, M_HASHTYPE_OPAQUE);
+	M_HASHTYPE_SET(mpf, M_HASHTYPE_OPAQUE_HASH);
 
 	(*ifp->if_input)(ifp, mpf);
 
@@ -324,7 +324,7 @@ qla_lro_intr(qla_host_t *ha, qla_sgl_lro_t *sgc, uint32_t sds_idx)
 	mpf->m_pkthdr.csum_data = 0xFFFF;
 
 	mpf->m_pkthdr.flowid = sgc->rss_hash;
-	M_HASHTYPE_SET(mpf, M_HASHTYPE_OPAQUE);
+	M_HASHTYPE_SET(mpf, M_HASHTYPE_OPAQUE_HASH);
 
 	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 

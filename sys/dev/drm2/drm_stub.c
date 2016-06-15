@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_stub.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/drm_stub.c 288653 2015-10-04 07:45:36Z adrian $");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/drm_core.h>
@@ -94,9 +94,9 @@ static int drm_minor_get_id(struct drm_device *dev, int type)
 
 	if (type == DRM_MINOR_CONTROL) {
 		new_id += 64;
-        } else if (type == DRM_MINOR_RENDER) {
-                new_id += 128;
-        }
+	} else if (type == DRM_MINOR_RENDER) {
+		new_id += 128;
+	}
 
 	return new_id;
 }

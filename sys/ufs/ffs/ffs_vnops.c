@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_vnops.c 283968 2015-06-03 20:48:00Z kib $");
+__FBSDID("$FreeBSD: head/sys/ufs/ffs/ffs_vnops.c 285819 2015-07-23 19:13:41Z jeff $");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -581,7 +581,7 @@ ffs_read(ap)
 			xfersize = size;
 		}
 
-		if ((bp->b_flags & B_UNMAPPED) == 0) {
+		if (buf_mapped(bp)) {
 			error = vn_io_fault_uiomove((char *)bp->b_data +
 			    blkoffset, (int)xfersize, uio);
 		} else {
@@ -758,7 +758,7 @@ ffs_write(ap)
 		if (size < xfersize)
 			xfersize = size;
 
-		if ((bp->b_flags & B_UNMAPPED) == 0) {
+		if (buf_mapped(bp)) {
 			error = vn_io_fault_uiomove((char *)bp->b_data +
 			    blkoffset, (int)xfersize, uio);
 		} else {

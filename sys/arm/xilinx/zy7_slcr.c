@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/xilinx/zy7_slcr.c 279677 2015-03-05 21:41:58Z gonzo $
+ * $FreeBSD: head/sys/arm/xilinx/zy7_slcr.c 299069 2016-05-04 15:48:59Z pfg $
  */
 
 /*
@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_slcr.c 279677 2015-03-05 21:41:58Z gonzo $");
+__FBSDID("$FreeBSD: head/sys/arm/xilinx/zy7_slcr.c 299069 2016-05-04 15:48:59Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -177,7 +177,7 @@ zy7_slcr_preload_pl(void)
 /* After PL configuration, enable level shifters and deassert top-level
  * PL resets.  Called from zy7_devcfg.c.  Optionally, the level shifters
  * can be left disabled but that's rare of an FPGA application. That option
- * is controled by a sysctl in the devcfg driver.
+ * is controlled by a sysctl in the devcfg driver.
  */
 void
 zy7_slcr_postload_pl(int en_level_shifters)

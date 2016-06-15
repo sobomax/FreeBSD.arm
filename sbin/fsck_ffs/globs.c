@@ -39,7 +39,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/14/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck_ffs/globs.c 260076 2013-12-30 05:02:57Z scottl $");
+__FBSDID("$FreeBSD: head/sbin/fsck_ffs/globs.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/param.h>
 #include <ufs/ufs/dinode.h>
@@ -73,7 +73,7 @@ char	snapname[BUFSIZ];	/* when doing snapshots, the name of the file */
 char	*cdevname;		/* name of device being checked */
 long	dev_bsize;		/* computed value of DEV_BSIZE */
 long	secsize;		/* actual disk sector size */
-u_int	real_dev_bsize;		/* actual disk sector size, not overriden */
+u_int	real_dev_bsize;		/* actual disk sector size, not overridden */
 char	nflag;			/* assume a no response */
 char	yflag;			/* assume a yes response */
 int	bkgrdflag;		/* use a snapshot to run on an active system */
@@ -118,7 +118,7 @@ fsckinit(void)
 	bzero(totalreadcnt, sizeof(long) * BT_NUMBUFTYPES);
 	bzero(readtime, sizeof(struct timespec) * BT_NUMBUFTYPES);
 	bzero(totalreadtime, sizeof(struct timespec) * BT_NUMBUFTYPES);
-	bzero(&startprog, sizeof(struct timespec));;
+	bzero(&startprog, sizeof(struct timespec));
 	bzero(&sblk, sizeof(struct bufarea));
 	pdirbp = NULL;
 	pbp = NULL;

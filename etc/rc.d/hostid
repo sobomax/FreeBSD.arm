@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/etc/rc.d/hostid 282745 2015-05-11 00:16:32Z delphij $
+# $FreeBSD: head/etc/rc.d/hostid 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: hostid
@@ -35,6 +35,7 @@
 . /etc/rc.subr
 
 name="hostid"
+desc="Generate a unique host ID"
 start_cmd="hostid_start"
 stop_cmd=":"
 reset_cmd="hostid_reset"

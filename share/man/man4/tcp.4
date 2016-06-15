@@ -32,9 +32,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)tcp.4	8.1 (Berkeley) 6/5/93
-.\" $FreeBSD: head/share/man/man4/tcp.4 276345 2014-12-28 20:56:03Z sbruno $
+.\" $FreeBSD: head/share/man/man4/tcp.4 300247 2016-05-19 23:03:07Z truckman $
 .\"
-.Dd October 13, 2014
+.Dd May 19, 2016
 .Dt TCP 4
 .Os
 .Sh NAME
@@ -137,6 +137,11 @@ send window size,
 receive window size,
 and
 bandwidth-controlled window space.
+.It Dv TCP_CCALGOOPT
+Set or query congestion control algorithm specific parameters.
+See
+.Xr mod_cc 4
+for details.
 .It Dv TCP_CONGESTION
 Select or query the congestion control algorithm that TCP will use for the
 connection.
@@ -454,6 +459,17 @@ code.
 For this reason, we use 200ms of slop and a near-0
 minimum, which gives us an effective minimum of 200ms (similar to
 .Tn Linux ) .
+.It Va initcwnd_segments
+Enable the ability to specify initial congestion window in number of segments.
+The default value is 10 as suggested by RFC 6928.
+Changing the value on fly would not affect connections using congestion window
+from the hostcache.
+Caution:
+This regulates the burst of packets allowed to be sent in the first RTT.
+The value should be relative to the link capacity.
+Start with small values for lower-capacity links.
+Large bursts can cause buffer overruns and packet drops if routers have small
+buffers or the link is experiencing congestion.
 .It Va rfc3042
 Enable the Limited Transmit algorithm as described in RFC 3042.
 It helps avoid timeouts on lossy links and also when the congestion window
@@ -514,6 +530,17 @@ Defaults to 60 seconds.
 Enable support for TCP Explicit Congestion Notification (ECN).
 ECN allows a TCP sender to reduce the transmission rate in order to
 avoid packet drops.
+Settings:
+.Bl -tag -compact
+.It 0
+Disable ECN.
+.It 1
+Allow incoming connections to request ECN.
+Outgoing connections will request ECN.
+.It 2
+Allow incoming connections to request ECN.
+Outgoing connections will not request ECN.
+.El
 .It Va ecn.maxretries
 Number of retries (SYN or SYN/ACK retransmits) before disabling ECN on a
 specific connection.

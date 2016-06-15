@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/contrib/smbfs/smbutil/print.c 161207 2006-08-11 12:35:22Z keramida $");
+__FBSDID("$FreeBSD: head/contrib/smbfs/smbutil/print.c 295118 2016-02-01 07:09:08Z ngie $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: head/contrib/smbfs/smbutil/print.c 161207 2006-08-11 12:35:2
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include <strings.h>
 #include <stdlib.h>
 #include <sysexits.h>

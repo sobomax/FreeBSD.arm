@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/clock.c 256818 2013-10-21 00:58:35Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/clock.c 298642 2016-04-26 14:44:49Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -301,7 +301,7 @@ DELAY(int n)
 	u_quad_t	tb, ttb;
 
 	tb = mftb();
-	ttb = tb + (n * 1000 + ns_per_tick - 1) / ns_per_tick;
+	ttb = tb + howmany(n * 1000, ns_per_tick);
 	while (tb < ttb)
 		tb = mftb();
 }

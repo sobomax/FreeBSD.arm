@@ -288,7 +288,7 @@ ar9300_upload_noise_floor(struct ath_hal *ah, int is_2g,
      */
     if (AR_SREV_HORNET(ah) || AR_SREV_POSEIDON(ah) || AR_SREV_APHRODITE(ah)) {
         chainmask = 0x01;
-    } else if (AR_SREV_WASP(ah) || AR_SREV_JUPITER(ah)) {
+    } else if (AR_SREV_WASP(ah) || AR_SREV_JUPITER(ah) || AR_SREV_HONEYBEE(ah)) {
         chainmask = 0x03;
     } else {
         chainmask = 0x07;
@@ -1476,7 +1476,7 @@ ar9300_init_pll(struct ath_hal *ah, struct ieee80211_channel *chan)
 
         OS_REG_WRITE(ah, AR_RTC_PLL_CONTROL, 0x142c);
         OS_DELAY(1000);
-    } else if (AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah)) {
+    } else if (AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah) || AR_SREV_HONEYBEE(ah)) {
 #define SRIF_PLL 1
         u_int32_t regdata, pll2_divint, pll2_divfrac;
 
@@ -1492,9 +1492,15 @@ ar9300_init_pll(struct ath_hal *ah, struct ieee80211_channel *chan)
             pll2_divint = 0x1c;
             pll2_divfrac = 0xa3d7;
 #else
-            pll2_divint = 0x54;
-            pll2_divfrac = 0x1eb85;
-            refdiv = 3;
+            if (AR_SREV_HONEYBEE(ah)) {
+                pll2_divint = 0x1c;
+                pll2_divfrac = 0xa3d2;
+                refdiv = 1;
+            } else {
+                pll2_divint = 0x54;
+                pll2_divfrac = 0x1eb85;
+                refdiv = 3;
+            }
 #endif
         } else {
 #ifndef SRIF_PLL
@@ -1520,7 +1526,11 @@ ar9300_init_pll(struct ath_hal *ah, struct ieee80211_channel *chan)
         OS_DELAY(1000);
         do {
             regdata = OS_REG_READ(ah, AR_PHY_PLL_MODE);
-            regdata = regdata | (0x1 << 16);
+            if (AR_SREV_HONEYBEE(ah)) {
+                regdata = regdata | (0x1 << 22);
+            } else {
+                regdata = regdata | (0x1 << 16);
+            }
             OS_REG_WRITE(ah, AR_PHY_PLL_MODE, regdata); /* PWD_PLL set to 1 */
             OS_DELAY(100);
             /* override int, frac, refdiv */
@@ -1540,6 +1550,12 @@ ar9300_init_pll(struct ath_hal *ah, struct ieee80211_channel *chan)
             if (AR_SREV_WASP(ah)) {
                 regdata = (regdata & 0x80071fff) |
                     (0x1 << 30) | (0x1 << 13) | (0x4 << 26) | (0x18 << 19);
+            } else if (AR_SREV_HONEYBEE(ah)) {
+                /*
+                 * Kd=10, Ki=2, Outdiv=1, Local PLL=0, Phase Shift=4 
+                 */
+                regdata = (regdata & 0x01c00fff) |
+                    (0x1 << 31) | (0x2 << 29) | (0xa << 25) | (0x1 << 19) | (0x6 << 12);
             } else {
                 regdata = (regdata & 0x80071fff) |
                     (0x3 << 30) | (0x1 << 13) | (0x4 << 26) | (0x60 << 19);
@@ -1548,7 +1564,11 @@ ar9300_init_pll(struct ath_hal *ah, struct ieee80211_channel *chan)
             /* Ki, Kd, Local PLL, Outdiv */
             OS_REG_WRITE(ah, AR_PHY_PLL_MODE, regdata);
             regdata = OS_REG_READ(ah, AR_PHY_PLL_MODE);
-            regdata = (regdata & 0xfffeffff);
+            if (AR_SREV_HONEYBEE(ah)) {
+                regdata = (regdata & 0xffbfffff);
+            } else {
+                regdata = (regdata & 0xfffeffff);
+            }
             OS_REG_WRITE(ah, AR_PHY_PLL_MODE, regdata); /* PWD_PLL set to 0 */
             OS_DELAY(1000);
             if (AR_SREV_WASP(ah)) {
@@ -1617,6 +1637,7 @@ ar9300_init_pll(struct ath_hal *ah, struct ieee80211_channel *chan)
     OS_REG_WRITE(ah, AR_RTC_SLEEP_CLK,
         AR_RTC_FORCE_DERIVED_CLK | AR_RTC_PCIE_RST_PWDN_EN);
 
+    /* XXX TODO: honeybee? */
     if (AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah)) {
         if (clk_25mhz) {
             OS_REG_WRITE(ah,
@@ -1774,12 +1795,12 @@ ar9300_set_reset(struct ath_hal *ah, int type)
 		    }
 
 		    data = DDR_REG_READ(ah,DDR_CTL_CONFIG_OFFSET);
-		    ath_hal_printf(ah, "check DDR Activity - HIGH\n");
+		    HALDEBUG(ah, HAL_DEBUG_RESET, "check DDR Activity - HIGH\n");
 
 		    count = 0;
 		    while (DDR_CTL_CONFIG_CLIENT_ACTIVITY_GET(data)) {
 			    //      AVE_DEBUG(0,"DDR Activity - HIGH\n");
-			    ath_hal_printf(ah, "DDR Activity - HIGH\n");
+			    HALDEBUG(ah, HAL_DEBUG_RESET, "DDR Activity - HIGH\n");
 			    count++;
 			    OS_DELAY(10);
 			    data = DDR_REG_READ(ah,DDR_CTL_CONFIG_OFFSET);
@@ -1801,7 +1822,7 @@ ar9300_set_reset(struct ath_hal *ah, int type)
 		    OS_DELAY(10);
 		    OS_REG_WRITE(ah, AR_RTC_RESET, 1);
 		    OS_DELAY(10);
-		    ath_hal_printf(ah,"%s: Scorpion SoC RTC reset done.\n", __func__);
+		    HALDEBUG(ah, HAL_DEBUG_RESET, "%s: Scorpion SoC RTC reset done.\n", __func__);
 	    }
 #undef REG_READ
 #undef REG_WRITE
@@ -1949,6 +1970,9 @@ ar9300_phy_disable(struct ath_hal *ah)
         }
         /* Turn off JMPST led */
         REG_WRITE(ATH_GPIO_OUT, (REG_READ(ATH_GPIO_OUT) | (0x1 << 15)));
+    }
+    else if (AR_SREV_HONEYBEE(ah)) {
+        REG_WRITE(ATH_GPIO_OE, (REG_READ(ATH_GPIO_OE) | (0x1 << 12)));
     }
 #undef REG_READ
 #undef REG_WRITE
@@ -2207,7 +2231,7 @@ ar9300_load_nf(struct ath_hal *ah, int16_t nf[])
      */
     if (AR_SREV_HORNET(ah) || AR_SREV_POSEIDON(ah) || AR_SREV_APHRODITE(ah)) {
         chainmask = 0x9;
-    } else if (AR_SREV_WASP(ah) || AR_SREV_JUPITER(ah)) {
+    } else if (AR_SREV_WASP(ah) || AR_SREV_JUPITER(ah) || AR_SREV_HONEYBEE(ah)) {
         chainmask = 0x1b;
     } else {
         chainmask = 0x3F;
@@ -2395,7 +2419,7 @@ ar9300_calibration(struct ath_hal *ah, struct ieee80211_channel *chan, u_int8_t 
         HALDEBUG(ah, HAL_DEBUG_CALIBRATE,
             "%s: Chain 1 Rx IQ Cal Correction 0x%08x\n",
             __func__, OS_REG_READ(ah, AR_PHY_RX_IQCAL_CORR_B1));
-        if (!AR_SREV_WASP(ah) && !AR_SREV_JUPITER(ah)) {
+        if (!AR_SREV_WASP(ah) && !AR_SREV_JUPITER(ah) && !AR_SREV_HONEYBEE(ah)) {
             HALDEBUG(ah, HAL_DEBUG_CALIBRATE,
                 "%s: Chain 2 Rx IQ Cal Correction 0x%08x\n",
                 __func__, OS_REG_READ(ah, AR_PHY_RX_IQCAL_CORR_B2));
@@ -2855,6 +2879,7 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
             }
         }
         modes_index = 1;
+        freq_index  = 1;
         break;
 
     case CHANNEL_A_HT40PLUS:
@@ -2869,6 +2894,7 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
             }
         }
         modes_index = 2;
+        freq_index  = 1;
         break;
 
     case CHANNEL_PUREG:
@@ -2876,20 +2902,27 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
     case CHANNEL_B:
         if (AR_SREV_SCORPION(ah)){
             modes_txgaintable_index = 8;
-        }
+        }else if (AR_SREV_HONEYBEE(ah)){
+	    modes_txgaintable_index = 1;
+	}
         modes_index = 4;
+        freq_index  = 2;
         break;
 
     case CHANNEL_G_HT40PLUS:
     case CHANNEL_G_HT40MINUS:
         if (AR_SREV_SCORPION(ah)){
             modes_txgaintable_index = 7;
+        }else if (AR_SREV_HONEYBEE(ah)){
+            modes_txgaintable_index = 1;
         }
         modes_index = 3;
+        freq_index  = 2;
         break;
 
     case CHANNEL_108G:
         modes_index = 5;
+        freq_index  = 2;
         break;
 
     default:
@@ -2930,11 +2963,15 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
         } else if (IEEE80211_IS_CHAN_HT40U(chan) || IEEE80211_IS_CHAN_HT40D(chan)) {
             if (AR_SREV_SCORPION(ah)){
                 modes_txgaintable_index = 7;
+            } else if (AR_SREV_HONEYBEE(ah)){
+                modes_txgaintable_index = 1;
             }
             modes_index = 3;
         } else if (IEEE80211_IS_CHAN_HT20(chan) || IEEE80211_IS_CHAN_G(chan) || IEEE80211_IS_CHAN_B(chan) || IEEE80211_IS_CHAN_PUREG(chan)) {
             if (AR_SREV_SCORPION(ah)){
                 modes_txgaintable_index = 8;
+            } else if (AR_SREV_HONEYBEE(ah)){
+                modes_txgaintable_index = 1;
             }
             modes_index = 4;
         } else
@@ -2963,7 +3000,7 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
         ar9300_prog_ini(ah, &ahp->ah_ini_mac[i], modes_index);
         ar9300_prog_ini(ah, &ahp->ah_ini_bb[i], modes_index);
         ar9300_prog_ini(ah, &ahp->ah_ini_radio[i], modes_index);
-        if ((i == ATH_INI_POST) && (AR_SREV_JUPITER_20(ah) || AR_SREV_APHRODITE(ah))) {
+        if ((i == ATH_INI_POST) && (AR_SREV_JUPITER_20_OR_LATER(ah) || AR_SREV_APHRODITE(ah))) {
             ar9300_prog_ini(ah, &ahp->ah_ini_radio_post_sys2ant, modes_index);
         }
 
@@ -3016,6 +3053,26 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
     REG_WRITE_ARRAY(&ahp->ah_ini_modes_rxgain, 1, reg_writes);
     HALDEBUG(ah, HAL_DEBUG_RESET, "ar9300_process_ini: Rx Gain programming\n");
 
+    if (AR_SREV_JUPITER_20_OR_LATER(ah)) {
+        /*
+         * CUS217 mix LNA mode.
+         */
+        if (ar9300_rx_gain_index_get(ah) == 2) {
+            REG_WRITE_ARRAY(&ahp->ah_ini_modes_rxgain_bb_core, 1, reg_writes);
+            REG_WRITE_ARRAY(&ahp->ah_ini_modes_rxgain_bb_postamble,
+                modes_index, reg_writes);
+        }
+
+        /*
+         * 5G-XLNA
+         */
+        if ((ar9300_rx_gain_index_get(ah) == 2) ||
+            (ar9300_rx_gain_index_get(ah) == 3)) {
+            REG_WRITE_ARRAY(&ahp->ah_ini_modes_rxgain_xlna, modes_index,
+              reg_writes);
+        }
+    }
+
     if (AR_SREV_SCORPION(ah)) {
         /* Write rxgain bounds Array */
         REG_WRITE_ARRAY(&ahp->ah_ini_modes_rxgain_bounds, modes_index, reg_writes);
@@ -3045,7 +3102,7 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
 
 
     /* Write txgain Array Parameters */
-    if (AR_SREV_SCORPION(ah)) {
+    if (AR_SREV_SCORPION(ah) || AR_SREV_HONEYBEE(ah)) {
         REG_WRITE_ARRAY(&ahp->ah_ini_modes_txgain, modes_txgaintable_index, 
             reg_writes);
     }else{
@@ -3081,7 +3138,8 @@ ar9300_process_ini(struct ath_hal *ah, struct ieee80211_channel *chan,
     }
 
 #if 0
-    if (AR_SREV_JUPITER_20(ah) || AR_SREV_APHRODITE(ah)) {
+    /* XXX TODO! */
+    if (AR_SREV_JUPITER_20_OR_LATER(ah) || AR_SREV_APHRODITE(ah)) {
         ar9300_prog_ini(ah, &ahp->ah_ini_BTCOEX_MAX_TXPWR, 1);
     }
 #endif
@@ -3510,7 +3568,7 @@ ar9300_init_cal_internal(struct ath_hal *ah, struct ieee80211_channel *chan,
         /* Hornet: 1 x 1 */
         ahp->ah_rx_cal_chainmask = 0x1;
         ahp->ah_tx_cal_chainmask = 0x1;
-    } else if (AR_SREV_WASP(ah) || AR_SREV_JUPITER(ah)) {
+    } else if (AR_SREV_WASP(ah) || AR_SREV_JUPITER(ah) || AR_SREV_HONEYBEE(ah)) {
         /* Wasp/Jupiter: 2 x 2 */
         ahp->ah_rx_cal_chainmask = 0x3;
         ahp->ah_tx_cal_chainmask = 0x3;
@@ -4069,7 +4127,7 @@ ar9300_init_bb(struct ath_hal *ah, struct ieee80211_channel *chan)
     /*
      * There is an issue if the AP starts the calibration before
      * the base band timeout completes.  This could result in the
-     * rx_clear AH_FALSE triggering.  As a workaround we add delay an
+     * rx_clear false triggering.  As a workaround we add delay an
      * extra BASE_ACTIVATE_DELAY usecs to ensure this condition
      * does not happen.
      */
@@ -4438,6 +4496,7 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
 #ifdef ATH_FORCE_PPM
     u_int32_t               save_force_val, tmp_reg;
 #endif
+    u_int8_t                clk_25mhz = AH9300(ah)->clk_25mhz;
     HAL_BOOL                    stopped, cal_ret;
     HAL_BOOL                    apply_last_iqcorr = AH_FALSE;
 
@@ -4449,7 +4508,7 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
 
     /*
      * Set the status to "ok" by default to cover the cases
-     * where we return AH_FALSE without going to "bad"
+     * where we return false without going to "bad"
      */
     HALASSERT(status);
     *status = HAL_OK;
@@ -4459,7 +4518,7 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
 
 #if ATH_SUPPORT_MCI
     if (AH_PRIVATE(ah)->ah_caps.halMciSupport &&
-        (AR_SREV_JUPITER_20(ah) || AR_SREV_APHRODITE(ah)))
+        (AR_SREV_JUPITER_20_OR_LATER(ah) || AR_SREV_APHRODITE(ah)))
     {
         ar9300_mci_2g5g_changed(ah, IEEE80211_IS_CHAN_2GHZ(chan));
     }
@@ -4791,6 +4850,18 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
     ecode = ar9300_process_ini(ah, chan, ichan, macmode);
     if (ecode != HAL_OK) {
         goto bad;
+    }
+ 
+    /*
+     * Configuring WMAC PLL values for 25/40 MHz 
+     */
+    if(AR_SREV_WASP(ah) || AR_SREV_HONEYBEE(ah) || AR_SREV_SCORPION(ah) ) {
+        if(clk_25mhz) {
+            OS_REG_WRITE(ah, AR_RTC_DERIVED_RTC_CLK, (0x17c << 1)); // 32KHz sleep clk
+        } else {
+            OS_REG_WRITE(ah, AR_RTC_DERIVED_RTC_CLK, (0x261 << 1)); // 32KHz sleep clk
+        }
+        OS_DELAY(100);
     }
 
     ahp->ah_immunity_on = AH_FALSE;
@@ -5147,14 +5218,14 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
      * For big endian systems turn on swapping for descriptors
      */
 #if AH_BYTE_ORDER == AH_BIG_ENDIAN
-    if (AR_SREV_HORNET(ah) || AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah)) {
+    if (AR_SREV_HORNET(ah) || AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah) || AR_SREV_HONEYBEE(ah)) {
         OS_REG_RMW(ah, AR_CFG, AR_CFG_SWTB | AR_CFG_SWRB, 0);
     } else {
         ar9300_init_cfg_reg(ah);
     }
 #endif
 
-    if ( AR_SREV_OSPREY(ah) || AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah)) {
+    if ( AR_SREV_OSPREY(ah) || AR_SREV_WASP(ah) || AR_SREV_SCORPION(ah) || AR_SREV_HONEYBEE(ah) ) {
         OS_REG_RMW(ah, AR_CFG_LED, AR_CFG_LED_ASSOC_CTL, AR_CFG_LED_ASSOC_CTL);
     }
 
@@ -5188,6 +5259,10 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
             REG_WRITE(ATH_GPIO_OUT_FUNCTION3, ( REG_READ(ATH_GPIO_OUT_FUNCTION3) & (~(0xff))) | (0x2F) );
     	    REG_WRITE(ATH_GPIO_OE, (( REG_READ(ATH_GPIO_OE) & (~(0x1 << 12) )) | (0x1 << 13)));
         }
+    }
+    else if (AR_SREV_HONEYBEE(ah)) {
+            REG_WRITE(ATH_GPIO_OUT_FUNCTION3, ( REG_READ(ATH_GPIO_OUT_FUNCTION3) & (~(0xff))) | (0x32) );
+            REG_WRITE(ATH_GPIO_OE, (( REG_READ(ATH_GPIO_OE) & (~(0x1 << 12) ))));
     }
 #undef REG_READ
 #undef REG_WRITE
@@ -5285,6 +5360,9 @@ ar9300_reset(struct ath_hal *ah, HAL_OPMODE opmode, struct ieee80211_channel *ch
     }
 
     ar9300_set_smart_antenna(ah, ahp->ah_smartantenna_enable);
+
+    if (AR_SREV_APHRODITE(ah) && ahp->ah_lna_div_use_bt_ant_enable)
+        OS_REG_SET_BIT(ah, AR_BTCOEX_WL_LNADIV, AR_BTCOEX_WL_LNADIV_FORCE_ON);
 
     if (ahp->ah_skip_rx_iq_cal && !is_scan) {
         /* restore RX Cal result if existing */
@@ -6331,6 +6409,9 @@ ar9300_ant_ctrl_set_lna_div_use_bt_ant(struct ath_hal *ah, HAL_BOOL enable, cons
     struct ath_hal_private *ahpriv = AH_PRIVATE(ah);
     HAL_CAPABILITIES *pcap = &ahpriv->ah_caps;
 
+    HALDEBUG(ah, HAL_DEBUG_RESET | HAL_DEBUG_BT_COEX,
+      "%s: called; enable=%d\n", __func__, enable);
+
     if (AR_SREV_POSEIDON(ah)) {
         // Make sure this scheme is only used for WB225(Astra)
         ahp->ah_lna_div_use_bt_ant_enable = enable;
@@ -6400,10 +6481,35 @@ ar9300_ant_ctrl_set_lna_div_use_bt_ant(struct ath_hal *ah, HAL_BOOL enable, cons
         }
 
         return AH_TRUE;
-    } else {
+    } else if (AR_SREV_APHRODITE(ah)) {
+        ahp->ah_lna_div_use_bt_ant_enable = enable;
+        if (enable) {
+                OS_REG_SET_BIT(ah, AR_PHY_MC_GAIN_CTRL, ANT_DIV_ENABLE);
+                OS_REG_SET_BIT(ah, AR_PHY_MC_GAIN_CTRL, (1 << MULTICHAIN_GAIN_CTRL__ENABLE_ANT_SW_RX_PROT__SHIFT));
+                OS_REG_SET_BIT(ah, AR_PHY_CCK_DETECT, AR_PHY_CCK_DETECT_BB_ENABLE_ANT_FAST_DIV);
+                OS_REG_SET_BIT(ah, AR_PHY_RESTART, RESTART__ENABLE_ANT_FAST_DIV_M2FLAG__MASK);
+                OS_REG_SET_BIT(ah, AR_BTCOEX_WL_LNADIV, AR_BTCOEX_WL_LNADIV_FORCE_ON);
+        } else {
+                OS_REG_CLR_BIT(ah, AR_PHY_MC_GAIN_CTRL, ANT_DIV_ENABLE);
+                OS_REG_CLR_BIT(ah, AR_PHY_MC_GAIN_CTRL, (1 << MULTICHAIN_GAIN_CTRL__ENABLE_ANT_SW_RX_PROT__SHIFT));
+                OS_REG_CLR_BIT(ah, AR_PHY_CCK_DETECT, AR_PHY_CCK_DETECT_BB_ENABLE_ANT_FAST_DIV);
+                OS_REG_CLR_BIT(ah, AR_PHY_RESTART, RESTART__ENABLE_ANT_FAST_DIV_M2FLAG__MASK);
+                OS_REG_CLR_BIT(ah, AR_BTCOEX_WL_LNADIV, AR_BTCOEX_WL_LNADIV_FORCE_ON);
+
+                regval = OS_REG_READ(ah, AR_PHY_MC_GAIN_CTRL);
+                regval &= (~(MULTICHAIN_GAIN_CTRL__ANT_DIV_MAIN_LNACONF__MASK |
+                             MULTICHAIN_GAIN_CTRL__ANT_DIV_ALT_LNACONF__MASK |
+                             MULTICHAIN_GAIN_CTRL__ANT_DIV_ALT_GAINTB__MASK |
+                             MULTICHAIN_GAIN_CTRL__ANT_DIV_MAIN_GAINTB__MASK));
+                regval |= (HAL_ANT_DIV_COMB_LNA1 <<
+                           MULTICHAIN_GAIN_CTRL__ANT_DIV_MAIN_LNACONF__SHIFT);
+                regval |= (HAL_ANT_DIV_COMB_LNA2 <<
+                           MULTICHAIN_GAIN_CTRL__ANT_DIV_ALT_LNACONF__SHIFT);
+ 
+                OS_REG_WRITE(ah, AR_PHY_MC_GAIN_CTRL, regval);
+        }
         return AH_TRUE;
     }
-
-    /* XXX TODO: Add AR9565 support? */
+    return AH_TRUE;
 }
 #endif /* ATH_ANT_DIV_COMB */

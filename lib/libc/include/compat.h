@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/include/compat.h 281887 2015-04-23 14:22:20Z jhb $
+ * $FreeBSD: head/lib/libc/include/compat.h 298830 2016-04-30 01:24:24Z pfg $
  */
 
 /*
- * This file defines compatiblity symbol versions for old system calls.  It
+ * This file defines compatibility symbol versions for old system calls.  It
  * is included in all generated system call files.
  */
 
@@ -38,9 +38,11 @@
 #define	__sym_compat(sym,impl,verid)	\
 	.symver impl, sym@verid
 
+#ifndef NO_COMPAT7
 __sym_compat(__semctl, freebsd7___semctl, FBSD_1.0);
 __sym_compat(msgctl, freebsd7_msgctl, FBSD_1.0);
 __sym_compat(shmctl, freebsd7_shmctl, FBSD_1.0);
+#endif
 
 #undef __sym_compat
 

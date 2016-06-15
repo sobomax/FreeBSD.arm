@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 282274 2015-04-30 15:48:48Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -49,8 +49,6 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/balloon/balloon.c 282274 2015-04-30 15:48:4
 #include <xen/features.h>
 #include <xen/xenstore/xenstorevar.h>
 
-#include <machine/xen/xenvar.h>
-
 static MALLOC_DEFINE(M_BALLOON, "Balloon", "Xen Balloon Driver");
 
 /* Convert from KB (as fetched from xenstore) to number of PAGES */
@@ -59,7 +57,7 @@ static MALLOC_DEFINE(M_BALLOON, "Balloon", "Xen Balloon Driver");
 struct mtx balloon_mutex;
 
 /* We increase/decrease in batches which fit in a page */
-static unsigned long frame_list[PAGE_SIZE / sizeof(unsigned long)];
+static xen_pfn_t frame_list[PAGE_SIZE / sizeof(xen_pfn_t)];
 
 struct balloon_stats {
 	/* We aim for 'current allocation' == 'target allocation'. */
@@ -151,7 +149,7 @@ minimum_target(void)
 static int 
 increase_reservation(unsigned long nr_pages)
 {
-	unsigned long  pfn, i;
+	unsigned long  i;
 	vm_page_t      page;
 	long           rc;
 	struct xen_memory_reservation reservation = {
@@ -197,7 +195,6 @@ increase_reservation(unsigned long nr_pages)
 		TAILQ_REMOVE(&ballooned_pages, page, plinks.q);
 		bs.balloon_low--;
 
-		pfn = (VM_PAGE_TO_PHYS(page) >> PAGE_SHIFT);
 		KASSERT(xen_feature(XENFEAT_auto_translated_physmap),
 		    ("auto translated physmap but mapping is valid"));
 
@@ -213,7 +210,7 @@ increase_reservation(unsigned long nr_pages)
 static int
 decrease_reservation(unsigned long nr_pages)
 {
-	unsigned long  pfn, i;
+	unsigned long  i;
 	vm_page_t      page;
 	int            need_sleep = 0;
 	int ret;
@@ -248,8 +245,7 @@ decrease_reservation(unsigned long nr_pages)
 			pmap_zero_page(page);
 		}
 
-		pfn = (VM_PAGE_TO_PHYS(page) >> PAGE_SHIFT);
-		frame_list[i] = pfn;
+		frame_list[i] = (VM_PAGE_TO_PHYS(page) >> PAGE_SHIFT);
 
 		TAILQ_INSERT_HEAD(&ballooned_pages, page, plinks.q);
 		bs.balloon_low++;
@@ -357,7 +353,7 @@ xenballoon_identify(driver_t *driver __unused, device_t parent)
 }
 
 /**
- * \brief Probe for the existance of the Xen Balloon device
+ * \brief Probe for the existence of the Xen Balloon device
  *
  * \param dev  NewBus device_t for this Xen control instance.
  *

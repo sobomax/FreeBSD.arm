@@ -16,6 +16,7 @@
 #include "ntp_malloc.h"
 #include "ntp_string.h"
 #include "ntp_syslog.h"
+#include "ntp_keyacc.h"
 
 #ifdef __GNUC__
 #define NTP_PRINTF(fmt, args) __attribute__((__format__(__printf__, fmt, args)))
@@ -31,6 +32,7 @@ extern	int	mvsnprintf(char *, size_t, const char *, va_list)
 extern	int	msnprintf(char *, size_t, const char *, ...)
 			NTP_PRINTF(3, 4);
 extern	void	msyslog(int, const char *, ...) NTP_PRINTF(2, 3);
+extern	void	mvsyslog(int, const char *, va_list) NTP_PRINTF(2, 0);
 extern	void	init_logging	(const char *, u_int32, int);
 extern	int	change_logfile	(const char *, int);
 extern	void	setup_logfile	(const char *);
@@ -64,10 +66,11 @@ typedef void (*ctrl_c_fn)(void);
 /* authkeys.c */
 extern	void	auth_delkeys	(void);
 extern	int	auth_havekey	(keyid_t);
-extern	int	authdecrypt	(keyid_t, u_int32 *, int, int);
-extern	int	authencrypt	(keyid_t, u_int32 *, int);
+extern	int	authdecrypt	(keyid_t, u_int32 *, size_t, size_t);
+extern	size_t	authencrypt	(keyid_t, u_int32 *, size_t);
 extern	int	authhavekey	(keyid_t);
 extern	int	authistrusted	(keyid_t);
+extern	int	authistrustedip	(keyid_t, sockaddr_u *);
 extern	int	authreadkeys	(const char *);
 extern	void	authtrust	(keyid_t, u_long);
 extern	int	authusekey	(keyid_t, int, const u_char *);
@@ -94,34 +97,43 @@ extern	void	auth_prealloc_symkeys(int);
 extern	int	ymd2yd		(int, int, int);
 
 /* a_md5encrypt.c */
-extern	int	MD5authdecrypt	(int, u_char *, u_int32 *, int, int);
-extern	int	MD5authencrypt	(int, u_char *, u_int32 *, int);
-extern	void	MD5auth_setkey	(keyid_t, int, const u_char *, size_t);
+extern	int	MD5authdecrypt	(int, const u_char *, u_int32 *, size_t, size_t);
+extern	size_t	MD5authencrypt	(int, const u_char *, u_int32 *, size_t);
+extern	void	MD5auth_setkey	(keyid_t, int, const u_char *, size_t, KeyAccT *c);
 extern	u_int32	addr2refid	(sockaddr_u *);
 
 /* emalloc.c */
 #ifndef EREALLOC_CALLSITE	/* ntp_malloc.h defines */
 extern	void *	ereallocz	(void *, size_t, size_t, int);
-#define	erealloczsite(p, n, o, z, f, l) ereallocz(p, n, o, (z))
-#define	emalloc(n)		ereallocz(NULL, n, 0, FALSE)
+extern	void *	oreallocarray	(void *optr, size_t nmemb, size_t size);
+#define	erealloczsite(p, n, o, z, f, l) ereallocz((p), (n), (o), (z))
+#define	emalloc(n)		ereallocz(NULL, (n), 0, FALSE)
 #define	emalloc_zero(c)		ereallocz(NULL, (c), 0, TRUE)
-#define	erealloc(p, c)		ereallocz(p, (c), 0, FALSE)
-#define erealloc_zero(p, n, o)	ereallocz(p, n, (o), TRUE)
-extern	char *	estrdup_impl	(const char *);
+#define	erealloc(p, c)		ereallocz((p), (c), 0, FALSE)
+#define erealloc_zero(p, n, o)	ereallocz((p), (n), (o), TRUE)
+#define ereallocarray(p, n, s)	oreallocarray((p), (n), (s))
+#define eallocarray(n, s)	oreallocarray(NULL, (n), (s))
+extern	char *	estrdup_impl(const char *);
 #define	estrdup(s)		estrdup_impl(s)
 #else
 extern	void *	ereallocz	(void *, size_t, size_t, int,
+				 const char *, int);
+extern	void *	oreallocarray	(void *optr, size_t nmemb, size_t size,
 				 const char *, int);
 #define erealloczsite		ereallocz
 #define	emalloc(c)		ereallocz(NULL, (c), 0, FALSE, \
 					  __FILE__, __LINE__)
 #define	emalloc_zero(c)		ereallocz(NULL, (c), 0, TRUE, \
 					  __FILE__, __LINE__)
-#define	erealloc(p, c)		ereallocz(p, (c), 0, FALSE, \
+#define	erealloc(p, c)		ereallocz((p), (c), 0, FALSE, \
 					  __FILE__, __LINE__)
-#define	erealloc_zero(p, n, o)	ereallocz(p, n, (o), TRUE, \
+#define	erealloc_zero(p, n, o)	ereallocz((p), (n), (o), TRUE, \
 					  __FILE__, __LINE__)
-extern	char *	estrdup_impl	(const char *, const char *, int);
+#define ereallocarray(p, n, s)	oreallocarray((p), (n), (s), \
+					  __FILE__, __LINE__)
+#define eallocarray(n, s)	oreallocarray(NULL, (n), (s), \
+					  __FILE__, __LINE__)
+extern	char *	estrdup_impl(const char *, const char *, int);
 #define	estrdup(s) estrdup_impl((s), __FILE__, __LINE__)
 #endif
 
@@ -131,6 +143,7 @@ extern	int	atouint		(const char *, u_long *);
 extern	int	hextoint	(const char *, u_long *);
 extern	const char *	humanlogtime	(void);
 extern	const char *	humantime	(time_t);
+extern int	is_ip_address	(const char *, u_short, sockaddr_u *);
 extern	char *	mfptoa		(u_int32, u_int32, short);
 extern	char *	mfptoms		(u_int32, u_int32, short);
 extern	const char * modetoa	(size_t);
@@ -187,7 +200,7 @@ extern int	authnumfreekeys;
 extern keyid_t	cache_keyid;		/* key identifier */
 extern int	cache_type;		/* key type */
 extern u_char *	cache_secret;		/* secret */
-extern u_short	cache_secretsize;	/* secret octets */
+extern size_t	cache_secretsize;	/* secret octets */
 extern u_short	cache_flags;		/* KEY_ bit flags */
 
 /* getopt.c */

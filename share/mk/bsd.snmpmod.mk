@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.snmpmod.mk 175156 2008-01-08 12:55:56Z harti $
+# $FreeBSD: head/share/mk/bsd.snmpmod.mk 301285 2016-06-03 19:25:41Z bdrewery $
 
 INCSDIR=	${INCLUDEDIR}/bsnmp
 
@@ -11,17 +11,18 @@ ${MOD}_oid.h: ${MOD}_tree.def ${EXTRAMIBDEFS} ${EXTRAMIBSYMS}
 	cat ${.ALLSRC} | gensnmptree -e ${XSYM} > ${.TARGET}
 
 .ORDER: ${MOD}_tree.c ${MOD}_tree.h
+${MOD}_tree.h: .NOMETA
 ${MOD}_tree.c ${MOD}_tree.h: ${MOD}_tree.def ${EXTRAMIBDEFS}
 	cat ${.ALLSRC} | gensnmptree -p ${MOD}_
 
 .if defined(DEFS)
 FILESGROUPS+=	DEFS
-DEFSDIR=	${SHAREDIR}/snmp/defs
+DEFSDIR?=	${SHAREDIR}/snmp/defs
 .endif
 
 .if defined(BMIBS)
 FILESGROUPS+=	BMIBS
-BMIBSDIR=	${SHAREDIR}/snmp/mibs
+BMIBSDIR?=	${SHAREDIR}/snmp/mibs
 .endif
 
 .include <bsd.lib.mk>

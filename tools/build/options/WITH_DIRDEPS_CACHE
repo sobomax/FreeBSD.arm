@@ -1,5 +1,5 @@
-.\" $FreeBSD: head/tools/build/options/WITH_DIRDEPS_CACHE 284708 2015-06-22 20:21:57Z sjg $
+.\" $FreeBSD: head/tools/build/options/WITH_DIRDEPS_CACHE 290816 2015-11-14 03:24:48Z sjg $
 Cache result of dirdeps.mk which can save significant time
 for subsequent builds.
 Depends on
-.Va WITH_META_MODE .
+.Va WITH_DIRDEPS_BUILD .

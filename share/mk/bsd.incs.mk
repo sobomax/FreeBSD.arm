@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.incs.mk 284684 2015-06-21 22:27:52Z bapt $
+# $FreeBSD: head/share/mk/bsd.incs.mk 298107 2016-04-16 07:45:30Z gjb $
 
 .if !target(__<bsd.init.mk>__)
 .error bsd.incs.mk cannot be included directly.
@@ -8,16 +8,27 @@
 
 INCSGROUPS?=	INCS
 
+_INCSGROUPS=	${INCSGROUPS:C,[/*],_,g}
+
+.if defined(NO_ROOT)
+.if !defined(TAGS) || ! ${TAGS:Mpackage=*}
+TAGS+=		package=${PACKAGE:Uruntime}
+.endif
+TAG_ARGS=	-T ${TAGS:[*]:S/ /,/g}
+.endif
+
 .if !target(buildincludes)
-.for group in ${INCSGROUPS}
+.for group in ${_INCSGROUPS}
 buildincludes: ${${group}}
 .endfor
 .endif
 
+.if !defined(_SKIP_BUILD)
 all: buildincludes
+.endif
 
 .if !target(installincludes)
-.for group in ${INCSGROUPS}
+.for group in ${_INCSGROUPS}
 .if defined(${group}) && !empty(${group})
 
 ${group}OWN?=	${BINOWN}
@@ -42,10 +53,12 @@ ${group}NAME_${header:T}?=	${${group}NAME}
 .else
 ${group}NAME_${header:T}?=	${header:T}
 .endif
-STAGE_AS_SETS+= ${group}
+STAGE_AS_SETS+= ${header:T}
 STAGE_AS_${header:T}= ${${group}NAME_${header:T}}
-stage_as.${group}: ${header}
-stage_includes: stage_as.${group}
+# XXX {group}OWN,GRP,MODE
+STAGE_DIR.${header:T}= ${STAGE_OBJTOP}${${group}DIR_${header:T}}
+stage_as.${header:T}: ${header}
+stage_includes: stage_as.${header:T}
 
 installincludes: _${group}INS_${header:T}
 _${group}INS_${header:T}: ${header}
@@ -64,11 +77,11 @@ stage_includes: stage_files.${group}
 installincludes: _${group}INS
 _${group}INS: ${_${group}INCS}
 .if defined(${group}NAME)
-	${INSTALL} -C -o ${${group}OWN} -g ${${group}GRP} -m ${${group}MODE} \
+	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},development} -C -o ${${group}OWN} -g ${${group}GRP} -m ${${group}MODE} \
 	    ${.ALLSRC} ${DESTDIR}${${group}DIR}/${${group}NAME}
 .else
-	${INSTALL} -C -o ${${group}OWN} -g ${${group}GRP} -m ${${group}MODE} \
-	    ${.ALLSRC} ${DESTDIR}${${group}DIR}
+	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},development} -C -o ${${group}OWN} -g ${${group}GRP} -m ${${group}MODE} \
+	    ${.ALLSRC} ${DESTDIR}${${group}DIR}/
 .endif
 .endif
 
@@ -78,8 +91,8 @@ _${group}INS: ${_${group}INCS}
 .if defined(INCSLINKS) && !empty(INCSLINKS)
 installincludes:
 .for s t in ${INCSLINKS}
-	@${ECHO} "$t -> $s" ; \
-	${INSTALL_SYMLINK} $s ${DESTDIR}$t
+	@${ECHO} "${DESTDIR}${t} -> ${s}" ; \
+	${INSTALL_SYMLINK} ${TAG_ARGS:D${TAG_ARGS},development} ${s} ${DESTDIR}${t}
 .endfor
 .endif
 .endif # !target(installincludes)
@@ -89,12 +102,12 @@ realinstall: installincludes
 
 .if ${MK_STAGING} != "no" && !defined(_SKIP_BUILD)
 .if !defined(NO_STAGE_INCLUDES)
-staging: stage_includes
+STAGE_TARGETS+= stage_includes
 .if !empty(INCSLINKS)
-staging: stage_symlinks
+STAGE_TARGETS+= stage_symlinks
 STAGE_SYMLINKS.INCS= ${INCSLINKS}
 .endif
 .endif
 .endif
 
-.endif # ${MK_TOOLCHAIN} != "no"
+.endif # ${MK_INCLUDES} != "no"

@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)pwd_mkdb.c	8.5 (Berkeley) 4/20/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/pwd_mkdb/pwd_mkdb.c 283982 2015-06-04 07:25:40Z delphij $");
+__FBSDID("$FreeBSD: head/usr.sbin/pwd_mkdb/pwd_mkdb.c 295925 2016-02-23 15:28:13Z dwmalone $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/pwd_mkdb/pwd_mkdb.c 283982 2015-06-04 07:25:40
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <libgen.h>
 #include <limits.h>
 #include <pwd.h>
 #include <signal.h>
@@ -351,7 +352,7 @@ main(int argc, char *argv[])
 		data.size = 1;
 		if ((dp->put)(dp, &key, &data, 0) == -1)
 			error("put");
-		if ((dp->put)(sdp, &key, &data, 0) == -1)
+		if ((sdp->put)(sdp, &key, &data, 0) == -1)
 			error("put");
 	}
 	ypcnt = 0;
@@ -721,13 +722,27 @@ void
 mv(char *from, char *to)
 {
 	char buf[MAXPATHLEN];
+	char *to_dir;
+	int to_dir_fd = -1;
 
-	if (rename(from, to)) {
+	/*
+	 * Make sure file is safe on disk. To improve performance we will call
+	 * fsync() to the directory where file lies
+	 */
+	if (rename(from, to) != 0 ||
+	    (to_dir = dirname(to)) == NULL ||
+	    (to_dir_fd = open(to_dir, O_RDONLY|O_DIRECTORY)) == -1 ||
+	    fsync(to_dir_fd) != 0) {
 		int sverrno = errno;
 		(void)snprintf(buf, sizeof(buf), "%s to %s", from, to);
 		errno = sverrno;
+		if (to_dir_fd != -1)
+			close(to_dir_fd);
 		error(buf);
 	}
+
+	if (to_dir_fd != -1)
+		close(to_dir_fd);
 }
 
 void

@@ -1,7 +1,4 @@
-.\" $FreeBSD: head/tools/build/options/WITHOUT_TOOLCHAIN 273172 2014-10-16 15:55:13Z brooks $
+.\" $FreeBSD: head/tools/build/options/WITHOUT_TOOLCHAIN 297939 2016-04-13 20:55:05Z bdrewery $
 Set to not install header or
 programs used for program development,
 compilers, debuggers etc.
-.Bf -symbolic
-The option does not work for build targets.
-.Ef

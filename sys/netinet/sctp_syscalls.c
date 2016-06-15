@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_syscalls.c 284613 2015-06-19 21:55:12Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_syscalls.c 298066 2016-04-15 15:46:41Z pfg $");
 
 #include "opt_capsicum.h"
 #include "opt_inet.h"
@@ -562,7 +562,7 @@ sys_sctp_generic_recvmsg(td, uap)
 
 	if (fromlen && uap->from) {
 		len = fromlen;
-		if (len <= 0 || fromsa == 0)
+		if (len <= 0 || fromsa == NULL)
 			len = 0;
 		else {
 			len = MIN(len, fromsa->sa_len);

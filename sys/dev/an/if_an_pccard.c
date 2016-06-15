@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/an/if_an_pccard.c 259393 2013-12-14 18:49:59Z gavin $");
+__FBSDID("$FreeBSD: head/sys/dev/an/if_an_pccard.c 292079 2015-12-11 05:27:56Z imp $");
 
 #include "opt_inet.h"
 
@@ -108,6 +108,7 @@ static const struct pccard_product an_pccard_products[] = {
 	PCMCIA_CARD(XIRCOM, CWE1130), 
 	{ NULL }
 };
+PCCARD_PNP_INFO(an_pccard_products);
 
 static int
 an_pccard_probe(device_t dev)

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_busdma_bufalloc.c 280957 2015-04-01 12:42:26Z rstone $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_busdma_bufalloc.c 289618 2015-10-20 03:25:17Z ian $");
 
 /*
  * Buffer allocation support routines for bus_dmamem_alloc implementations.
@@ -94,8 +94,8 @@ busdma_bufalloc_create(const char *name, bus_size_t minimum_alignment,
 	for (i = 0, bz = ba->buf_zones, cursize = ba->min_size;
 	    i < nitems(ba->buf_zones) && cursize <= MAX_ZONE_BUFSIZE;
 	    ++i, ++bz, cursize <<= 1) {
-		snprintf(bz->name, sizeof(bz->name), "dma %.10s %lu",
-		    name, cursize);
+		snprintf(bz->name, sizeof(bz->name), "dma %.10s %ju",
+		    name, (uintmax_t)cursize);
 		bz->size = cursize;
 		bz->umazone = uma_zcreate(bz->name, bz->size,
 		    NULL, NULL, NULL, NULL, bz->size - 1, zcreate_flags);

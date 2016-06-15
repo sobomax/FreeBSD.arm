@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libstdthreads/Makefile 275024 2014-11-25 11:07:26Z bapt $
+# $FreeBSD: head/lib/libstdthreads/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	stdthreads
 SHLIB_MAJOR= 0
 

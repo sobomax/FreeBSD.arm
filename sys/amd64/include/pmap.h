@@ -39,7 +39,7 @@
  *
  *	from: hp300: @(#)pmap.h	7.2 (Berkeley) 12/16/90
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/amd64/include/pmap.h 282684 2015-05-09 19:11:01Z kib $
+ * $FreeBSD: head/sys/amd64/include/pmap.h 299350 2016-05-10 09:58:51Z kib $
  */
 
 #ifndef _MACHINE_PMAP_H_
@@ -284,9 +284,13 @@ extern pt_entry_t pg_nx;
 struct	pv_entry;
 struct	pv_chunk;
 
+/*
+ * Locks
+ * (p) PV list lock
+ */
 struct md_page {
-	TAILQ_HEAD(,pv_entry)	pv_list;
-	int			pv_gen;
+	TAILQ_HEAD(, pv_entry)	pv_list;  /* (p) */
+	int			pv_gen;   /* (p) */
 	int			pat_mode;
 };
 

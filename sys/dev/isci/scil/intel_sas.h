@@ -49,7 +49,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/isci/scil/intel_sas.h 231136 2012-02-07 17:43:58Z jimharris $
+ * $FreeBSD: head/sys/dev/isci/scil/intel_sas.h 298955 2016-05-03 03:41:25Z pfg $
  */
 #ifndef _INTEL_SAS_H_
 #define _INTEL_SAS_H_
@@ -465,7 +465,7 @@ typedef struct SMP_REQUEST_CONFIGURE_ROUTE_INFORMATION
 
 /**
  * @struct SMP_REQUEST_PHY_CONTROL
- * @brief  This structure defines the contents of an SMP Phy Controler
+ * @brief  This structure defines the contents of an SMP Phy Controller
  *         request.
  *         @note For specific information on each of these
  *               individual fields please reference the SAS specification.

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/pc98/loader/main.c 269153 2014-07-27 16:12:51Z marcel $");
+__FBSDID("$FreeBSD: head/sys/boot/pc98/loader/main.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 /*
  * MD bootstrap main() and assorted miscellaneous
@@ -147,9 +147,9 @@ main(void)
     cons_probe();
 
     /*
-     * Initialise the block cache
+     * Initialise the block cache. Set the upper limit.
      */
-    bcache_init(32, 512);	/* 16k cache XXX tune this */
+    bcache_init(32768, 512);
 
     /*
      * Special handling for PXE and CD booting.

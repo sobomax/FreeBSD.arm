@@ -22,7 +22,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: head/sys/boot/forth/delay.4th 280937 2015-04-01 01:54:28Z dteske $
+\ $FreeBSD: head/sys/boot/forth/delay.4th 298831 2016-04-30 02:47:41Z pfg $
 
 marker task-delay.4th
 
@@ -66,7 +66,7 @@ only forth definitions also delay-processing
 
 	false delay_showdots ! \ reset to zero and read from environment
 	s" delay_showdots" getenv dup -1 <> if
-		2drop \ don't need the value, just existance
+		2drop \ don't need the value, just existence
 		true delay_showdots !
 	else
 		drop

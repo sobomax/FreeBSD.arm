@@ -58,7 +58,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in.h	8.3 (Berkeley) 1/3/94
- * $FreeBSD: head/sys/netinet6/in6.h 281649 2015-04-17 11:57:06Z glebius $
+ * $FreeBSD: head/sys/netinet6/in6.h 301217 2016-06-02 17:51:29Z gnn $
  */
 
 #ifndef __KAME_NETINET_IN_H_INCLUDED_
@@ -376,11 +376,23 @@ extern const struct in6_addr in6addr_linklocal_allv2routers;
 struct route_in6 {
 	struct	rtentry *ro_rt;
 	struct	llentry *ro_lle;
-	struct	in6_addr *ro_ia6;
-	int		ro_flags;
+	/*
+	 * ro_prepend and ro_plen are only used for bpf to pass in a
+	 * preformed header.  They are not cacheable.
+	 */
+	char		*ro_prepend;
+	uint16_t	ro_plen;
+	uint16_t	ro_flags;
+	uint16_t	ro_mtu;	/* saved ro_rt mtu */
+	uint16_t	spare;
 	struct	sockaddr_in6 ro_dst;
 };
 #endif
+
+#ifdef _KERNEL
+#define MTAG_ABI_IPV6		1444287380	/* IPv6 ABI */
+#define IPV6_TAG_DIRECT		0		/* direct-dispatch IPv6 */
+#endif /* _KERNEL */
 
 /*
  * Options for use with [gs]etsockopt at the IPV6 level.
@@ -485,6 +497,8 @@ struct route_in6 {
 #define	IPV6_FLOWID		67 /* int; flowid of given socket */
 #define	IPV6_FLOWTYPE		68 /* int; flowtype of given socket */
 #define	IPV6_RSSBUCKETID	69 /* int; RSS bucket ID of given socket */
+#define	IPV6_RECVFLOWID		70 /* bool; receive IP6 flowid/flowtype w/ datagram */
+#define	IPV6_RECVRSSBUCKETID	71 /* bool; receive IP6 RSS bucket id w/ datagram */
 
 /*
  * The following option is private; do not use it from user applications.

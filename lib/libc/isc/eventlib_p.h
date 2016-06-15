@@ -20,14 +20,13 @@
  * \author vix 09sep95 [initial]
  *
  * $Id: eventlib_p.h,v 1.9 2006/03/09 23:57:56 marka Exp $
- * $FreeBSD: head/lib/libc/isc/eventlib_p.h 269867 2014-08-12 12:36:06Z ume $
+ * $FreeBSD: head/lib/libc/isc/eventlib_p.h 298226 2016-04-18 21:05:15Z avos $
  */
 
 #ifndef _EVENTLIB_P_H
 #define _EVENTLIB_P_H
 
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/un.h>

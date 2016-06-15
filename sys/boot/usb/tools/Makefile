@@ -1,7 +1,7 @@
-# $FreeBSD: head/sys/boot/usb/tools/Makefile 269541 2014-08-04 23:00:13Z brooks $
+# $FreeBSD: head/sys/boot/usb/tools/Makefile 294608 2016-01-22 21:33:27Z emaste $
 
 PROG=	sysinit
-NO_MAN=
+MAN=
 
 CFLAGS+=	-I${.CURDIR}/../../kshim
 

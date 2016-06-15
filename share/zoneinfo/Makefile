@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/zoneinfo/Makefile 271047 2014-09-03 18:51:33Z emaste $
+# $FreeBSD: head/share/zoneinfo/Makefile 297994 2016-04-14 21:04:42Z bdrewery $
 
 #
 # HOW TO UPDATE THE ZONEINFO DATA
@@ -34,7 +34,7 @@ CONTRIBDIR=	${.CURDIR}/../../contrib/tzdata/
 .PATH:		${CONTRIBDIR}
 
 .if defined(LEAPSECONDS)
-LEAPFILE=	-L leapseconds
+LEAPFILE=	-L ${CONTRIBDIR}leapseconds
 .else
 LEAPFILE=
 .endif
@@ -67,9 +67,11 @@ TZBUILDSUBDIRS=	\
 		Pacific \
 		SystemV
 
+.if !defined(_SKIP_BUILD)
 all: zoneinfo
+.endif
+META_TARGETS+=	zoneinfo install-zoneinfo
 
-.PHONY: zoneinfo
 zoneinfo: yearistype ${TDATA}
 	mkdir -p ${TZBUILDDIR}
 	cd ${TZBUILDDIR}; mkdir -p ${TZBUILDSUBDIRS}
@@ -77,9 +79,10 @@ zoneinfo: yearistype ${TDATA}
 	zic -D -d ${TZBUILDDIR} -p ${POSIXRULES} -m ${NOBINMODE} \
 	    ${LEAPFILE} -y ${.OBJDIR}/yearistype ${TZFILES}
 
-beforeinstall:
+beforeinstall: install-zoneinfo
+install-zoneinfo:
 	cd ${TZBUILDDIR} && \
-	    find * -type f -print -exec ${INSTALL} \
+	    find -s * -type f -print -exec ${INSTALL} \
 	    -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} \
 	    \{} ${DESTDIR}/usr/share/zoneinfo/\{} \;
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} \

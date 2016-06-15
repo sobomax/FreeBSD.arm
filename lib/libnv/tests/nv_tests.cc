@@ -25,10 +25,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libnv/tests/nv_tests.cc 282348 2015-05-02 18:07:47Z oshogbo $");
+__FBSDID("$FreeBSD: head/lib/libnv/tests/nv_tests.cc 285063 2015-07-02 21:58:10Z oshogbo $");
+
+#include <sys/nv.h>
 
 #include <atf-c++.hpp>
-#include <nv.h>
 
 #include <errno.h>
 #include <limits>

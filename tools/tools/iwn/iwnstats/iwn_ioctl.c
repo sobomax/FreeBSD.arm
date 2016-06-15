@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/iwn/iwnstats/iwn_ioctl.c 281143 2015-04-06 09:42:23Z glebius $
+ * $FreeBSD: head/tools/tools/iwn/iwnstats/iwn_ioctl.c 287313 2015-08-30 21:54:47Z adrian $
  */
 
 /*
@@ -63,28 +63,24 @@
 #include "iwn_ioctl.h"
 
 void
-iwn_setifname(struct iwnstats *is, const char *ifname)
-{
-
-	strncpy(is->ifr.ifr_name, ifname, sizeof (is->ifr.ifr_name));
-}
-
-void
 iwn_zerostats(struct iwnstats *is)
 {
 
-	if (ioctl(is->s, SIOCZIWNSTATS, &is->ifr) < 0)
-		err(-1, "ioctl: %s", is->ifr.ifr_name);
+	if (ioctl(is->s, SIOCZIWNSTATS, NULL) < 0)
+		err(-1, "ioctl");
 }
 
 int
 iwn_collect(struct iwnstats *is)
 {
 	int err;
+	struct iwn_ioctl_data d;
 
-	is->ifr.ifr_data = (caddr_t) &is->st;
-	err = ioctl(is->s, SIOCGIWNSTATS, &is->ifr);
+	printf("st: %p\n", &is->st);
+	d.dst_addr = &is->st;
+	d.dst_len = sizeof(is->st);
+	err = ioctl(is->s, SIOCGIWNSTATS, (caddr_t) &d);
 	if (err < 0)
-		warn("ioctl: %s", is->ifr.ifr_name);
+		warn("ioctl");
 	return (err);
 }

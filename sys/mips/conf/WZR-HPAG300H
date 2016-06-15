@@ -10,7 +10,9 @@
 # + 128MB RAM
 # + uboot environment
 
-# $FreeBSD: head/sys/mips/conf/WZR-HPAG300H 275057 2014-11-25 17:33:22Z sbruno $
+# $FreeBSD: head/sys/mips/conf/WZR-HPAG300H 295945 2016-02-24 00:39:36Z sobomax $
+
+#NO_UNIVERSE
 
 include		"AR71XX_BASE"
 ident		"WZR-HPAG300H"
@@ -23,10 +25,10 @@ options 	AR71XX_ENV_UBOOT
 options 	BOOTVERBOSE
 
 # GEOM modules
-device		geom_uncompress	# compressed in-memory filesystem hackery!
+device		geom_uzip	# compressed in-memory filesystem hackery!
 device		geom_map	# to get access to the SPI flash partitions
 
-options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uncompress\"
+options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uzip\"
 
 options 	AR71XX_ATH_EEPROM	# Fetch EEPROM/PCI config from flash
 options 	ATH_EEPROM_FIRMWARE	# Use EEPROM from flash

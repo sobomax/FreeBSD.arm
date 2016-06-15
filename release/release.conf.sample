@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/release/release.conf.sample 281802 2015-04-21 00:48:35Z gjb $
+# $FreeBSD: head/release/release.conf.sample 301280 2016-06-03 18:37:56Z garga $
 #
 
 ## Redefine environment variables here to override prototypes
@@ -51,6 +51,7 @@ PORTBRANCH="ports/head@rHEAD"
 ## Set miscellaneous 'make release' settings.
 #NODOC=
 #NOPORTS=
+#NOSRC=
 #WITH_DVD=
 #WITH_COMPRESSED_IMAGES=
 
@@ -109,4 +110,4 @@ PORTBRANCH="ports/head@rHEAD"
 
 ## If WITH_CLOUDWARE is set to a non-empty value, this is a list of providers
 ## to create disk images.
-#CLOUDWARE="AZURE OPENSTACK"
+#CLOUDWARE="EC2 GCE VAGRANT-VIRTUALBOX VAGRANT-VMWARE"

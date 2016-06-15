@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/libclangserialization/Makefile 249423 2013-04-12 17:57:40Z dim $
+# $FreeBSD: head/lib/clang/libclangserialization/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -15,6 +15,7 @@ SRCS=	ASTCommon.cpp \
 	GeneratePCH.cpp \
 	GlobalModuleIndex.cpp \
 	Module.cpp \
+	ModuleFileExtension.cpp \
 	ModuleManager.cpp
 
 TGHDRS=	AttrList \

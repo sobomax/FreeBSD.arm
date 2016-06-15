@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/sys/arm/at91/if_macbvar.h 258780 2013-11-30 22:17:27Z eadler $
+ * $FreeBSD: head/sys/arm/at91/if_macbvar.h 290509 2015-11-07 20:02:07Z imp $
  */
 
 #ifndef	_IF_MACB_H
@@ -131,8 +131,8 @@ struct macb_softc
 
 	struct macb_chain_data	macb_cdata;
 	int clock;
+
+	uint32_t use_rmii; /* 0 or USRIO_RMII */
 };
-
-
 
 #endif

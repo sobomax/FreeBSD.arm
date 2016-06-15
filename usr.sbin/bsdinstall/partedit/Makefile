@@ -1,6 +1,6 @@
-# $FreeBSD: head/usr.sbin/bsdinstall/partedit/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/bsdinstall/partedit/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
-BINDIR= /usr/libexec/bsdinstall
+BINDIR= ${LIBEXECDIR}/bsdinstall
 PROG=	partedit
 LINKS= ${BINDIR}/partedit ${BINDIR}/autopart \
        ${BINDIR}/partedit ${BINDIR}/scriptedpart

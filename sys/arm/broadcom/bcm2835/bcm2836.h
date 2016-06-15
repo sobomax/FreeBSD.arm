@@ -24,14 +24,17 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836.h 280558 2015-03-25 10:59:42Z andrew $
+ * $FreeBSD: head/sys/arm/broadcom/bcm2835/bcm2836.h 298068 2016-04-15 16:05:41Z andrew $
  */
 
 #ifndef _BCM2815_BCM2836_H
 #define	_BCM2815_BCM2836_H
 
+#ifndef INTRNG
+#define	BCM2836_GPU_IRQ		8
+
 int bcm2836_get_next_irq(int);
 void bcm2836_mask_irq(uintptr_t);
 void bcm2836_unmask_irq(uintptr_t);
-
+#endif
 #endif

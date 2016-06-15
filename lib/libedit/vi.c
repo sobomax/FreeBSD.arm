@@ -1,4 +1,4 @@
-/*	$NetBSD: vi.c,v 1.45 2014/06/18 18:12:28 christos Exp $	*/
+/*	$NetBSD: vi.c,v 1.47 2015/10/21 21:45:30 christos Exp $	*/
 
 /*-
  * Copyright (c) 1992, 1993
@@ -42,11 +42,11 @@
 #if 0
 static char sccsid[] = "@(#)vi.c	8.1 (Berkeley) 6/4/93";
 #else
-__RCSID("$NetBSD: vi.c,v 1.45 2014/06/18 18:12:28 christos Exp $");
+__RCSID("$NetBSD: vi.c,v 1.47 2015/10/21 21:45:30 christos Exp $");
 #endif
 #endif /* not lint && not SCCSID */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libedit/vi.c 276881 2015-01-09 07:40:56Z bapt $");
+__FBSDID("$FreeBSD: head/lib/libedit/vi.c 297757 2016-04-09 18:52:09Z pfg $");
 
 /*
  * vi.c: Vi mode commands.
@@ -1040,12 +1040,12 @@ vi_histedit(EditLine *el, Int c __attribute__((__unused__)))
 		while (waitpid(pid, &status, 0) != pid)
 			continue;
 		lseek(fd, (off_t)0, SEEK_SET);
-		st = read(fd, cp, TMP_BUFSIZ);
+		st = read(fd, cp, TMP_BUFSIZ - 1);
 		if (st > 0) {
-			len = (size_t)(el->el_line.lastchar -
-			    el->el_line.buffer);
+			cp[st] = '\0';
+			len = (size_t)(el->el_line.limit - el->el_line.buffer);
 			len = ct_mbstowcs(el->el_line.buffer, cp, len);
-			if (len > 0 && el->el_line.buffer[len -1] == '\n')
+			if (len > 0 && el->el_line.buffer[len - 1] == '\n')
 				--len;
 		}
 		else
@@ -1088,7 +1088,7 @@ vi_history_word(EditLine *el, Int c __attribute__((__unused__)))
 	if (wp == NULL)
 		return CC_ERROR;
 
-	wep = wsp = 0;
+	wep = wsp = NULL;
 	do {
 		while (Isspace(*wp))
 			wp++;
@@ -1101,7 +1101,7 @@ vi_history_word(EditLine *el, Int c __attribute__((__unused__)))
 	} while ((!el->el_state.doingarg || --el->el_state.argument > 0)
 	    && *wp != 0);
 
-	if (wsp == 0 || (el->el_state.doingarg && el->el_state.argument != 0))
+	if (wsp == NULL || (el->el_state.doingarg && el->el_state.argument != 0))
 		return CC_ERROR;
 
 	cv_undo(el);

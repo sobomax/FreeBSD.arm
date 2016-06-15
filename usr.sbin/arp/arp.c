@@ -42,7 +42,7 @@ static char const sccsid[] = "@(#)from: arp.c	8.2 (Berkeley) 1/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/arp/arp.c 280998 2015-04-02 18:18:40Z markj $");
+__FBSDID("$FreeBSD: head/usr.sbin/arp/arp.c 288297 2015-09-27 04:54:29Z melifaro $");
 
 /*
  * arp - display, set, and delete arp table entries
@@ -673,9 +673,12 @@ print_entry(struct sockaddr_dl *sdl,
  */
 static void
 nuke_entry(struct sockaddr_dl *sdl __unused,
-	struct sockaddr_in *addr, struct rt_msghdr *rtm __unused)
+	struct sockaddr_in *addr, struct rt_msghdr *rtm)
 {
 	char ip[20];
+
+	if (rtm->rtm_flags & RTF_PINNED)
+		return;
 
 	snprintf(ip, sizeof(ip), "%s", inet_ntoa(addr->sin_addr));
 	delete(ip);

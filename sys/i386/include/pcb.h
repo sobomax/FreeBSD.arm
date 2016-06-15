@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/i386/include/pcb.h 273995 2014-11-02 22:58:30Z jhb $
+ * $FreeBSD: head/sys/i386/include/pcb.h 290728 2015-11-12 22:00:59Z jhb $
  */
 
 #ifndef _I386_PCB_H_
@@ -44,13 +44,17 @@
 #endif
 #include <machine/npx.h>
 
+/*
+ * NB: The fields marked with (*) are used by kernel debuggers.  Their
+ * ABI should be preserved.
+ */
 struct pcb {
-	int	pcb_edi;
-	int	pcb_esi;
-	int	pcb_ebp;
-	int	pcb_esp;
-	int	pcb_ebx;
-	int	pcb_eip;
+	int	pcb_edi;	/* (*) */
+	int	pcb_esi;	/* (*) */
+	int	pcb_ebp;	/* (*) */
+	int	pcb_esp;	/* (*) */
+	int	pcb_ebx;	/* (*) */
+	int	pcb_eip;	/* (*) */
 	struct segment_descriptor pcb_fsd;
 	struct segment_descriptor pcb_gsd;
 	int	pcb_ds;

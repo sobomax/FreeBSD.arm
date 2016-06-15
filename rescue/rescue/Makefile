@@ -1,8 +1,9 @@
-#$FreeBSD: head/rescue/rescue/Makefile 279219 2015-02-23 21:59:30Z ken $
+#$FreeBSD: head/rescue/rescue/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #	@(#)Makefile	8.1 (Berkeley) 6/2/93
 
 .include <src.opts.mk>
 
+PACKAGE=rescue
 MAN=
 MK_SSP=	no
 
@@ -53,7 +54,7 @@ CRUNCH_PROGS_bin= cat chflags chio chmod cp date dd df echo 	\
 	 ed expr getfacl hostname kenv kill ln ls mkdir mv	\
 	 pkill ps pwd realpath rm rmdir setfacl sh sleep stty	\
 	 sync test
-CRUNCH_LIBS+= -lcrypt -ledit -ljail -lkvm -ll -ltermcapw -lutil -lxo
+CRUNCH_LIBS+= -lcrypt -ledit -ljail -lkvm -lelf -ll -ltermcapw -lutil -lxo
 CRUNCH_BUILDTOOLS+= bin/sh
 
 # Additional options for specific programs
@@ -120,7 +121,7 @@ CRUNCH_PROGS_usr.sbin+= zdb
 # crunchgen does not like C++ programs; this should be fixed someday
 # CRUNCH_PROGS+= devd
 
-CRUNCH_LIBS+= -lalias -lcam -lncursesw -ldevstat -lipsec -llzma
+CRUNCH_LIBS+= -l80211 -lalias -lcam -lncursesw -ldevstat -lipsec -llzma
 .if ${MK_ZFS} != "no"
 CRUNCH_LIBS+= -lavl -lzpool -lzfs_core -lzfs -lnvpair -lpthread -luutil -lumem
 .else
@@ -220,6 +221,11 @@ CRUNCH_PROGS_usr.sbin+= chown
 CRUNCH_ALIAS_chown= chgrp
 ##################################################################
 CRUNCH_LIBS+= -lm
+
+.if ${MK_ISCSI} != "no"
+CRUNCH_PROGS_usr.bin+=	iscsictl
+CRUNCH_PROGS_usr.sbin+=	iscsid
+.endif
 
 .include <bsd.crunchgen.mk>
 .include <bsd.prog.mk>

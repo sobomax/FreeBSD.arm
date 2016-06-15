@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_machdep.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/amd64/linux32/linux32_machdep.c 299010 2016-05-03 22:13:04Z pfg $");
 
 #include "opt_compat.h"
 
@@ -426,7 +426,6 @@ linux_set_cloned_tls(struct thread *td, void *desc)
 #endif
 		pcb = td->td_pcb;
 		pcb->pcb_gsbase = (register_t)info.base_addr;
-/* XXXKIB	pcb->pcb_gs32sd = sd; */
 		td->td_frame->tf_gs = GSEL(GUGS32_SEL, SEL_UPL);
 		set_pcb_flags(pcb, PCB_32BIT);
 	}
@@ -577,7 +576,7 @@ linux_mmap_common(struct thread *td, l_uintptr_t addr, l_size_t len, l_int prot,
 		/*
 		 * The Linux MAP_GROWSDOWN option does not limit auto
 		 * growth of the region.  Linux mmap with this option
-		 * takes as addr the inital BOS, and as len, the initial
+		 * takes as addr the initial BOS, and as len, the initial
 		 * region size.  It can then grow down from addr without
 		 * limit.  However, Linux threads has an implicit internal
 		 * limit to stack size of STACK_SIZE.  Its just not

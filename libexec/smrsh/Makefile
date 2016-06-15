@@ -1,6 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 7/2/95
-# $FreeBSD: head/libexec/smrsh/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: head/libexec/smrsh/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=sendmail
 SENDMAIL_DIR=${.CURDIR}/../../contrib/sendmail
 .PATH:	${SENDMAIL_DIR}/smrsh
 
@@ -22,7 +23,7 @@ DPADD+=${SENDMAIL_DPADD}
 LDADD+=${SENDMAIL_LDADD}
 LDFLAGS+=${SENDMAIL_LDFLAGS}
 
-sm_os.h:
-	ln -sf ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h sm_os.h
+sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

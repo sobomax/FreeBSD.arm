@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/cam/scsi/scsi_enc.h 235911 2012-05-24 14:07:44Z mav $ */
+/* $FreeBSD: head/sys/cam/scsi/scsi_enc.h 291126 2015-11-21 10:22:01Z mav $ */
 /*-
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.
@@ -46,6 +46,8 @@
 #define	ENCIOC_GETELMDEVNAMES	_IO(ENCIOC, 10)
 #define	ENCIOC_GETSTRING	_IO(ENCIOC, 11)
 #define	ENCIOC_SETSTRING	_IO(ENCIOC, 12)
+#define	ENCIOC_GETENCNAME	_IO(ENCIOC, 13)
+#define	ENCIOC_GETENCID		_IO(ENCIOC, 14)
 
 /*
  * Platform Independent Definitions for enclosure devices.

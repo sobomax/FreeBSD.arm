@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 9/21/96
-# $FreeBSD: head/usr.sbin/mailstats/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD: head/usr.sbin/mailstats/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 SENDMAIL_DIR= ${.CURDIR}/../../contrib/sendmail
 .PATH: ${SENDMAIL_DIR}/mailstats
@@ -24,7 +24,7 @@ DPADD+=	${SENDMAIL_DPADD}
 LDADD+=	${SENDMAIL_LDADD}
 LDFLAGS+= ${SENDMAIL_LDFLAGS}
 
-sm_os.h:
-	ln -sf ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h sm_os.h
+sm_os.h: ${SENDMAIL_DIR}/include/sm/os/sm_os_freebsd.h .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 
 .include <bsd.prog.mk>

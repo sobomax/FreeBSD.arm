@@ -1,5 +1,5 @@
 /* $NetBSD: reg.h,v 1.4 2000/06/04 09:30:44 tsubai Exp $	*/
-/* $FreeBSD: head/sys/powerpc/include/reg.h 281266 2015-04-08 16:30:45Z jhb $	*/
+/* $FreeBSD: head/sys/powerpc/include/reg.h 295132 2016-02-01 23:12:04Z jhb $	*/
 
 #ifndef _POWERPC_REG_H_
 #define	_POWERPC_REG_H_
@@ -18,12 +18,8 @@ struct reg {
 	register_t pc;
 };
 
-/* Must match pcb.pcb_fpu */
 struct fpreg {
-	union {
-		double fpr;
-		uint64_t vsr[2];
-	} fpreg[32];
+	double fpreg[32];
 	double fpscr;
 };
 

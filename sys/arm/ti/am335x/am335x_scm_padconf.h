@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/am335x/am335x_scm_padconf.h 273262 2014-10-18 17:51:34Z andrew $
+ * $FreeBSD: head/sys/arm/ti/am335x/am335x_scm_padconf.h 285867 2015-07-25 03:03:32Z gonzo $
  */
 
 #ifndef AM335X_SCM_PADCONF_H
@@ -34,8 +34,9 @@
 #define PULLTYPESEL	(0x01 << 4) /* Pad pullup/pulldown type selection */
 #define PULLUDEN	(0x01 << 3) /* Pullup/pulldown disabled */
 
-#define PADCONF_OUTPUT			(0)
+#define PADCONF_OUTPUT			(PULLUDEN)
 #define PADCONF_OUTPUT_PULLUP		(PULLTYPESEL)
+#define PADCONF_OUTPUT_PULLDOWN		(0)
 #define PADCONF_INPUT			(RXACTIVE | PULLUDEN)
 #define PADCONF_INPUT_PULLUP		(RXACTIVE | PULLTYPESEL)
 #define PADCONF_INPUT_PULLDOWN		(RXACTIVE)

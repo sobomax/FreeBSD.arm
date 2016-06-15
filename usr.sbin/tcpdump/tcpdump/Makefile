@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/tcpdump/tcpdump/Makefile 276788 2015-01-07 19:55:18Z delphij $
+# $FreeBSD: head/usr.sbin/tcpdump/tcpdump/Makefile 296047 2016-02-25 18:23:40Z oshogbo $
 
 .include <src.opts.mk>
 
@@ -58,13 +58,17 @@ SRCS=	addrtoname.c \
 	print-fddi.c \
 	print-forces.c \
 	print-fr.c \
+	print-ftp.c \
+	print-geneve.c \
 	print-geonet.c \
 	print-gre.c \
 	print-hsrp.c \
+	print-http.c \
 	print-icmp.c \
 	print-igmp.c \
 	print-igrp.c \
 	print-ip.c \
+	print-ip6.c \
 	print-ipcomp.c \
 	print-ipfc.c \
 	print-ipnet.c \
@@ -111,6 +115,7 @@ SRCS=	addrtoname.c \
 	print-rpki-rtr.c \
 	print-rrcp.c \
 	print-rsvp.c \
+	print-rtsp.c \
 	print-rx.c \
 	print-sctp.c \
 	print-sflow.c \
@@ -119,6 +124,7 @@ SRCS=	addrtoname.c \
 	print-sll.c \
 	print-slow.c \
 	print-smb.c \
+	print-smtp.c \
 	print-snmp.c \
 	print-stp.c \
 	print-sunatm.c \
@@ -158,7 +164,6 @@ SRCS+=	print-babel.c \
 	print-dhcp6.c \
 	print-frag6.c \
 	print-icmp6.c \
-	print-ip6.c \
 	print-ip6opts.c \
 	print-mobility.c \
 	print-ospf6.c \
@@ -172,8 +177,9 @@ CFLAGS+=	-DLBL_ALIGN
 
 LIBADD=	l pcap
 .if ${MK_CASPER} != "no"
-LIBADD+=	capsicum
-CFLAGS+=-DHAVE_CAPSICUM
+LIBADD+=	casper
+LIBADD+=	cap_dns
+CFLAGS+=-DHAVE_CASPER
 .endif
 .if ${MK_OPENSSL} != "no"
 LIBADD+=	crypto

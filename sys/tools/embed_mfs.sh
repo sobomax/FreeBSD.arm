@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/tools/embed_mfs.sh 175984 2008-02-05 10:46:30Z raj $ 
+# $FreeBSD: head/sys/tools/embed_mfs.sh 295137 2016-02-02 07:02:51Z adrian $ 
 #
 # Embed the MFS image into the kernel body (expects space reserved via 
 # MD_ROOT_SIZE)
@@ -32,8 +32,20 @@
 # $2: MFS image filename
 #
 
-obs=`strings -at d $1 | grep "MFS Filesystem goes here" | awk '{print $1}'`
-dd if=$2 ibs=8192 of=$1 obs=${obs} oseek=1 conv=notrunc 2> /dev/null
+mfs_size=`stat -f '%z' $2 2> /dev/null`
+# If we can't determine MFS image size - bail.
+[ -z ${mfs_size} ] && echo "Can't determine MFS image size" && exit 1
 
-strings $1 | grep 'MFS Filesystem had better STOP here' > /dev/null || \
-	(rm $1 && echo "MFS image too large" && false)
+sec_info=`objdump -h $1 2> /dev/null | grep " oldmfs "`
+# If we can't find the mfs section within the given kernel - bail.
+[ -z "${sec_info}" ] && echo "Can't locate mfs section within kernel" && exit 1
+
+sec_size=`echo ${sec_info} | awk '{printf("%d", "0x" $3)}' 2> /dev/null`
+sec_start=`echo ${sec_info} | awk '{printf("%d", "0x" $6)}' 2> /dev/null`
+
+# If the mfs section size is smaller than the mfs image - bail.
+[ ${sec_size} -lt ${mfs_size} ] && echo "MFS image too large" && exit 1
+
+# Dump the mfs image into the mfs section
+dd if=$2 ibs=8192 of=$1 obs=${sec_start} oseek=1 conv=notrunc 2> /dev/null && \
+    echo "MFS image embedded into kernel" && exit 0

@@ -1,12 +1,7 @@
-# $FreeBSD: head/bin/sleep/tests/Makefile 272782 2014-10-09 01:39:07Z ngie $
-
-TESTSRC=	${.CURDIR}/../../../contrib/netbsd-tests/bin/sleep
-.PATH: ${TESTSRC}
+# $FreeBSD: head/bin/sleep/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.own.mk>
 
-TESTSDIR=	${TESTSBASE}/bin/sleep
-ATF_TESTS_SH=	sleep_test
-ATF_TESTS_SH_SRC_sleep_test=	t_sleep.sh
+NETBSD_ATF_TESTS_SH=	sleep_test
 
 .include <bsd.test.mk>

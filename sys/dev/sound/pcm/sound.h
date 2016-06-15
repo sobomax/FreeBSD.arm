@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/sound/pcm/sound.h 282650 2015-05-08 17:00:33Z hselasky $
+ * $FreeBSD: head/sys/dev/sound/pcm/sound.h 295440 2016-02-09 17:09:14Z hselasky $
  */
 
 /*
@@ -350,8 +350,6 @@ void snd_mtxassert(void *m);
 #define	snd_mtxunlock(m) mtx_unlock(m)
 
 typedef int (*sndstat_handler)(struct sbuf *s, device_t dev, int verbose);
-int sndstat_acquire(struct thread *td);
-int sndstat_release(struct thread *td);
 int sndstat_register(device_t dev, char *str, sndstat_handler handler);
 int sndstat_registerfile(char *str);
 int sndstat_unregister(device_t dev);

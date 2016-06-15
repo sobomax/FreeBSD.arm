@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/isp/isp_target.h 238869 2012-07-28 20:06:29Z mjacob $ */
+/* $FreeBSD: head/sys/dev/isp/isp_target.h 289843 2015-10-23 18:34:18Z mav $ */
 /*-
  *  Copyright (c) 1997-2009 by Matthew Jacob
  *  All rights reserved.
@@ -51,9 +51,9 @@ typedef enum {
 	NT_LOGOUT,
 	NT_GLOBAL_LOGOUT,
 	NT_CHANGED,
-	NT_ARRIVED,
-	NT_DEPARTED,
-	NT_HBA_RESET
+	NT_HBA_RESET,
+	NT_QUERY_TASK_SET,
+	NT_QUERY_ASYNC_EVENT
 } isp_ncode_t;
 
 typedef struct isp_notify {

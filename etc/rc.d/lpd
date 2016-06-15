@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/lpd 230099 2012-01-14 02:18:41Z dougb $
+# $FreeBSD: head/etc/rc.d/lpd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: lpd
@@ -11,6 +11,7 @@
 . /etc/rc.subr
 
 name="lpd"
+desc="Line printer spooler daemon"
 rcvar="lpd_enable"
 command="/usr/sbin/${name}"
 required_files="/etc/printcap"

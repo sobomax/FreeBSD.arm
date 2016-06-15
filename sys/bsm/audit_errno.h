@@ -26,8 +26,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE. 
  *
- * P4: //depot/projects/trustedbsd/openbsm/sys/bsm/audit_errno.h#7
- * $FreeBSD: head/sys/bsm/audit_errno.h 243751 2012-12-01 13:46:37Z rwatson $
+ * $FreeBSD: head/sys/bsm/audit_errno.h 292522 2015-12-20 23:22:04Z brueffer $
  */
 
 #ifndef _BSM_AUDIT_ERRNO_H_

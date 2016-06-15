@@ -1,6 +1,7 @@
-# $FreeBSD: head/usr.sbin/unbound/Makefile 255809 2013-09-23 04:36:51Z des $
+# $FreeBSD: head/usr.sbin/unbound/Makefile 288266 2015-09-26 14:13:51Z bdrewery $
 
 SUBDIR=	daemon anchor checkconf control
 SUBDIR+= local-setup
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

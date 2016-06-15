@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/evergreen.c 280183 2015-03-17 18:50:33Z dumbbell $");
+__FBSDID("$FreeBSD: head/sys/dev/drm2/radeon/evergreen.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <dev/drm2/drmP.h>
 #include "radeon.h"
@@ -105,7 +105,7 @@ void evergreen_fix_pci_max_read_req_size(struct radeon_device *rdev)
 	v = (ctl & PCIEM_CTL_MAX_READ_REQUEST) >> 12;
 
 	/* if bios or OS sets MAX_READ_REQUEST_SIZE to an invalid value, fix it
-	 * to avoid hangs or perfomance issues
+	 * to avoid hangs or performance issues
 	 */
 	if ((v == 0) || (v == 6) || (v == 7)) {
 		ctl &= ~PCIEM_CTL_MAX_READ_REQUEST;

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/ofw/libofw/Makefile 235364 2012-05-12 20:27:33Z avg $
+# $FreeBSD: head/sys/boot/ofw/libofw/Makefile 296706 2016-03-11 23:45:51Z bdrewery $
 
 LIB=		ofw
 INTERNALLIB=
@@ -25,7 +25,7 @@ SRCS+=		ppc64_elf_freebsd.c
 CFLAGS+= -DDISK_DEBUG
 .endif
 
-machine:
+machine: .NOMETA
 	ln -sf ${.CURDIR}/../../../${MACHINE_CPUARCH}/include machine
 
 CLEANFILES+=	machine

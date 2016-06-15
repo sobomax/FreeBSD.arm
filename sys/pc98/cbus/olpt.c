@@ -46,7 +46,7 @@
  * SUCH DAMAGE.
  *
  *	from: unknown origin, 386BSD 0.1
- * $FreeBSD: head/sys/pc98/cbus/olpt.c 272124 2014-09-25 18:54:36Z jhb $
+ * $FreeBSD: head/sys/pc98/cbus/olpt.c 297793 2016-04-10 23:07:00Z pfg $
  */
 
 /*
@@ -420,7 +420,7 @@ lptopen (struct cdev *dev, int flags, int fmt, struct thread *td)
 	lprintf(("irq %x\n", sc->sc_irq));
 	if (sc->sc_irq & LP_USE_IRQ) {
 		sc->sc_state |= TOUT;
-		sc->sc_backoff = hz / LPTOUTINITIAL;;
+		sc->sc_backoff = hz / LPTOUTINITIAL;
 		callout_reset(&sc->timer, sc->sc_backoff, lptout, sc);
 	}
 

@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)mv.c	8.2 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/bin/mv/mv.c 280386 2015-03-23 17:35:05Z jilles $");
+__FBSDID("$FreeBSD: head/bin/mv/mv.c 300643 2016-05-25 02:51:15Z truckman $");
 
 #include <sys/types.h>
 #include <sys/acl.h>
@@ -122,7 +122,7 @@ main(int argc, char *argv[])
 	 */
 	if (stat(argv[argc - 1], &sb) || !S_ISDIR(sb.st_mode)) {
 		if (argc > 2)
-			usage();
+			errx(1, "%s is not a directory", argv[argc - 1]);
 		exit(do_move(argv[0], argv[1]));
 	}
 
@@ -286,6 +286,7 @@ fastcopy(const char *from, const char *to, struct stat *sbp)
 	}
 	if (bp == NULL && (bp = malloc((size_t)blen)) == NULL) {
 		warnx("malloc(%u) failed", blen);
+		(void)close(from_fd);
 		return (1);
 	}
 	while ((to_fd =

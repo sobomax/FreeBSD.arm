@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/dev/net/xlpge.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/dev/net/xlpge.c 295881 2016-02-22 09:04:36Z skra $");
 #include <sys/endian.h>
 #include <sys/systm.h>
 #include <sys/sockio.h>
@@ -72,7 +72,6 @@ __FBSDID("$FreeBSD: head/sys/mips/nlm/dev/net/xlpge.c 283291 2015-05-22 17:05:21
 #include <machine/asm.h>
 #include <machine/cpuregs.h>
 
-#include <machine/param.h>
 #include <machine/intr_machdep.h>
 #include <machine/clock.h>	/* for DELAY */
 #include <machine/bus.h>

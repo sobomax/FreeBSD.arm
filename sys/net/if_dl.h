@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_dl.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_dl.h 260870 2014-01-18 23:24:51Z melifaro $
+ * $FreeBSD: head/sys/net/if_dl.h 287476 2015-09-05 05:33:20Z melifaro $
  */
 
 #ifndef _NET_IF_DL_H_
@@ -67,6 +67,7 @@ struct sockaddr_dl {
 };
 
 #define LLADDR(s) ((caddr_t)((s)->sdl_data + (s)->sdl_nlen))
+#define CLLADDR(s) ((c_caddr_t)((s)->sdl_data + (s)->sdl_nlen))
 #define LLINDEX(s) ((s)->sdl_index)
 
 

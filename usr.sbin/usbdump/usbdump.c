@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/usr.sbin/usbdump/usbdump.c 266803 2014-05-28 12:58:37Z hselasky $
+ * $FreeBSD: head/usr.sbin/usbdump/usbdump.c 298216 2016-04-18 17:30:33Z pfg $
  */
 
 #include <sys/param.h>
@@ -94,8 +94,6 @@ struct usbcap_filehdr {
 	uint8_t		minor;
 	uint8_t		reserved[26];
 } __packed;
-
-#define	HEADER_ALIGN(x,a) (((x) + (a) - 1) & ~((a) - 1))
 
 struct header_32 {
 	/* capture timestamp */
@@ -622,7 +620,7 @@ print_packets(uint8_t *data, const int datalen)
 		temp.hdrlen = hdr32->hdrlen;
 		temp.align = hdr32->align;
 
-		next = ptr + HEADER_ALIGN(temp.hdrlen + temp.caplen, temp.align);
+		next = ptr + roundup2(temp.hdrlen + temp.caplen, temp.align);
 
 		if (next <= ptr)
 			err(EXIT_FAILURE, "Invalid length");

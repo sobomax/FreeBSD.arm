@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/boot/kshim/bsd_busspace.c 269541 2014-08-04 23:00:13Z brooks $ */
+/* $FreeBSD: head/sys/boot/kshim/bsd_busspace.c 291400 2015-11-27 18:14:45Z zbb $ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *
@@ -36,6 +36,15 @@ struct burst {
 	uint32_t dw6;
 	uint32_t dw7;
 };
+
+int
+bus_space_subregion(bus_space_tag_t t, bus_space_handle_t bsh,
+    bus_size_t offset, bus_size_t size, bus_space_handle_t *nbshp)
+{
+
+	*nbshp = bsh + offset;
+	return (0);
+}
 
 void
 bus_space_read_multi_1(bus_space_tag_t t, bus_space_handle_t h,

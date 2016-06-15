@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man9/memguard.9 267936 2014-06-26 21:44:30Z bapt $
+.\" $FreeBSD: head/share/man/man9/memguard.9 301177 2016-06-01 22:34:21Z markj $
 .\"
-.Dd March 21, 2014
+.Dd June 1, 2016
 .Dt MEMGUARD 9
 .Os
 .Sh NAME
@@ -204,17 +204,3 @@ Additions have been made by
 and
 .An Gleb Smirnoff Aq Mt glebius@FreeBSD.org
 to both the implementation and the documentation.
-.Sh BUGS
-It is not possible to guard allocations that really expect themselves to be
-allocated from
-.Xr uma 9 ,
-utilizing additional interfaces apart from
-.Fn uma_zalloc
-and
-.Fn uma_free ,
-for example
-.Fn uma_find_refcnt .
-For the moment of writing only
-.Xr mbuf 9
-cluster zones belong to that kind of allocations.
-Attempt to guard them would lead to kernel panic.

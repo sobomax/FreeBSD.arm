@@ -1,5 +1,4 @@
-#$FreeBSD: head/sys/arm/xscale/ixp425/files.ixp425 280831 2015-03-29 22:43:39Z andrew $
-arm/arm/bus_space_generic.c		standard
+#$FreeBSD: head/sys/arm/xscale/ixp425/files.ixp425 291133 2015-11-21 15:30:08Z andrew $
 arm/xscale/ixp425/ixp425.c		standard
 arm/xscale/ixp425/ixp425_mem.c		standard
 arm/xscale/ixp425/ixp425_space.c	standard

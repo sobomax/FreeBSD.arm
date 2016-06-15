@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ichiic/ig4_iic.c 284803 2015-06-25 07:52:51Z grembo $");
+__FBSDID("$FreeBSD: head/sys/dev/ichiic/ig4_iic.c 300990 2016-05-30 09:05:24Z grembo $");
 
 /*
  * Intel fourth generation mobile cpus integrated I2C device, smbus driver.
@@ -74,8 +74,8 @@ static void ig4iic_intr(void *cookie);
 static void ig4iic_dump(ig4iic_softc_t *sc);
 
 static int ig4_dump;
-SYSCTL_INT(_debug, OID_AUTO, ig4_dump, CTLTYPE_INT | CTLFLAG_RW,
-	   &ig4_dump, 0, "");
+SYSCTL_INT(_debug, OID_AUTO, ig4_dump, CTLFLAG_RW,
+	   &ig4_dump, 0, "Dump controller registers");
 
 /*
  * Low-level inline support functions
@@ -108,6 +108,17 @@ set_controller(ig4iic_softc_t *sc, uint32_t ctl)
 	int error;
 	uint32_t v;
 
+	/*
+	 * When the controller is enabled, interrupt on STOP detect
+	 * or receive character ready and clear pending interrupts.
+	 */
+	if (ctl & IG4_I2C_ENABLE) {
+		reg_write(sc, IG4_REG_INTR_MASK, IG4_INTR_STOP_DET |
+						 IG4_INTR_RX_FULL);
+		reg_read(sc, IG4_REG_CLR_INTR);
+	} else
+		reg_write(sc, IG4_REG_INTR_MASK, 0);
+
 	reg_write(sc, IG4_REG_I2C_EN, ctl);
 	error = SMB_ETIMEOUT;
 
@@ -117,7 +128,10 @@ set_controller(ig4iic_softc_t *sc, uint32_t ctl)
 			error = 0;
 			break;
 		}
-		mtx_sleep(sc, &sc->io_lock, 0, "i2cslv", 1);
+		if (cold)
+			DELAY(1000);
+		else
+			mtx_sleep(sc, &sc->io_lock, 0, "i2cslv", 1);
 	}
 	return (error);
 }
@@ -550,11 +564,6 @@ ig4iic_attach(ig4iic_softc_t *sc)
 	reg_write(sc, IG4_REG_RESETS, IG4_RESETS_DEASSERT);
 #endif
 
-	/*
-	 * Interrupt on STOP detect or receive character ready
-	 */
-	reg_write(sc, IG4_REG_INTR_MASK, IG4_INTR_STOP_DET |
-					 IG4_INTR_RX_FULL);
 	mtx_lock(&sc->io_lock);
 	if (set_controller(sc, 0))
 		device_printf(sc->dev, "controller error during attach-1\n");
@@ -571,7 +580,8 @@ ig4iic_attach(ig4iic_softc_t *sc)
 	sc->enum_hook.ich_func = ig4iic_start;
 	sc->enum_hook.ich_arg = sc->dev;
 
-	/* We have to wait until interrupts are enabled. I2C read and write
+	/*
+	 * We have to wait until interrupts are enabled. I2C read and write
 	 * only works if the interrupts are available.
 	 */
 	if (config_intrhook_establish(&sc->enum_hook) != 0)
@@ -625,7 +635,6 @@ ig4iic_detach(ig4iic_softc_t *sc)
 	sc->smb = NULL;
 	sc->intr_handle = NULL;
 	reg_write(sc, IG4_REG_INTR_MASK, 0);
-	reg_read(sc, IG4_REG_CLR_INTR);
 	set_controller(sc, 0);
 
 	mtx_unlock(&sc->io_lock);
@@ -656,7 +665,7 @@ ig4iic_smb_callback(device_t dev, int index, void *data)
 /*
  * Quick command.  i.e. START + cmd + R/W + STOP and no data.  It is
  * unclear to me how I could implement this with the intel i2c controller
- * because the controler sends STARTs and STOPs automatically with data.
+ * because the controller sends STARTs and STOPs automatically with data.
  */
 int
 ig4iic_smb_quick(device_t dev, u_char slave, int how)
@@ -914,6 +923,7 @@ ig4iic_intr(void *cookie)
 
 	mtx_lock(&sc->io_lock);
 /*	reg_write(sc, IG4_REG_INTR_MASK, IG4_INTR_STOP_DET);*/
+	reg_read(sc, IG4_REG_CLR_INTR);
 	status = reg_read(sc, IG4_REG_I2C_STA);
 	while (status & IG4_STATUS_RX_NOTEMPTY) {
 		sc->rbuf[sc->rnext & IG4_RBUFMASK] =
@@ -921,7 +931,6 @@ ig4iic_intr(void *cookie)
 		++sc->rnext;
 		status = reg_read(sc, IG4_REG_I2C_STA);
 	}
-	reg_read(sc, IG4_REG_CLR_INTR);
 	wakeup(sc);
 	mtx_unlock(&sc->io_lock);
 }

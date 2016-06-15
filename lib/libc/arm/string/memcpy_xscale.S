@@ -36,7 +36,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcpy_xscale.S 275256 2014-11-29 15:56:52Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/memcpy_xscale.S 288373 2015-09-29 16:09:58Z kib $");
 
 .syntax	unified
 
@@ -1784,3 +1784,5 @@ ENTRY(memcpy)
 	bx	lr
 #endif	/* !_STANDALONE */
 END(memcpy)
+
+	.section .note.GNU-stack,"",%progbits

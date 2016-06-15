@@ -56,7 +56,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_rio.c,v 1.17 2003/07/10 12:07:49 kjc Exp $
- * $FreeBSD: head/sys/net/altq/altq_rio.c 281642 2015-04-17 06:38:31Z glebius $
+ * $FreeBSD: head/sys/net/altq/altq_rio.c 298995 2016-05-03 18:05:43Z pfg $
  */
 
 #include "opt_altq.h"
@@ -146,7 +146,7 @@
 #define	TH_MIN		 5	/* min threshold */
 #define	TH_MAX		15	/* max threshold */
 
-#define	RIO_LIMIT	60	/* default max queue lenght */
+#define	RIO_LIMIT	60	/* default max queue length */
 #define	RIO_STATS		/* collect statistics */
 
 #define	TV_DELTA(a, b, delta) {					\

@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/qlxgbe/ql_ver.h 284741 2015-06-23 22:22:36Z davidcs $
+ * $FreeBSD: head/sys/dev/qlxgbe/ql_ver.h 294854 2016-01-26 22:32:58Z davidcs $
  */
 /*
  * File: ql_ver.h
@@ -36,6 +36,6 @@
 
 #define QLA_VERSION_MAJOR 	3
 #define QLA_VERSION_MINOR	10
-#define QLA_VERSION_BUILD       24
+#define QLA_VERSION_BUILD       26
 
 #endif /* #ifndef _QL_VER_H_ */

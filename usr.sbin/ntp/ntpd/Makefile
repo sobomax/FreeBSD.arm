@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/ntpd/Makefile 283542 2015-05-25 20:27:46Z bapt $
+# $FreeBSD: head/usr.sbin/ntp/ntpd/Makefile 285169 2015-07-05 15:42:16Z cy $
 
 MAN=
 
@@ -13,6 +13,7 @@ SRCS=	cmd_args.c ntp_config.c ntp_control.c ntp_crypto.c ntp_filegen.c \
 	ntp_io.c ntp_leapsec.c ntp_loopfilter.c ntp_monitor.c ntp_parser.c \
 	ntp_peer.c ntp_proto.c ntp_refclock.c ntp_request.c ntp_restrict.c \
 	ntp_scanner.c ntp_signd.c ntp_timer.c ntp_util.c ntpd-opts.c ntpd.c \
+	rc_cmdlength.c \
 	refclock_acts.c refclock_arbiter.c refclock_arc.c refclock_as2201.c \
 	refclock_atom.c refclock_bancomm.c refclock_chronolog.c \
 	refclock_chu.c refclock_conf.c refclock_datum.c refclock_dumbclock.c \

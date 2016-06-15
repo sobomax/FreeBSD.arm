@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/cam/scsi/scsi_low.h 274760 2014-11-20 20:50:05Z jhb $	*/
+/*	$FreeBSD: head/sys/cam/scsi/scsi_low.h 298810 2016-04-29 21:05:48Z pfg $	*/
 /*	$NecBSD: scsi_low.h,v 1.24.10.5 2001/06/26 07:31:46 honda Exp $	*/
 /*	$NetBSD$	*/
 
@@ -146,7 +146,7 @@ struct slccb {
 	 *****************************************/
 	struct sc_p ccb_scp;		/* given */
 	struct sc_p ccb_sscp;		/* saved scsi data pointer */
-	int ccb_datalen;		/* transfered data counter */
+	int ccb_datalen;		/* transferred data counter */
 
 	/*****************************************
 	 * Msgout 
@@ -165,7 +165,7 @@ struct slccb {
 #define	CCB_STARTQ	0x0010
 #define	CCB_POLLED	0x0100	/* polling ccb */
 #define	CCB_NORETRY	0x0200	/* do NOT retry */
-#define	CCB_AUTOSENSE	0x0400	/* do a sence after CA */
+#define	CCB_AUTOSENSE	0x0400	/* do a sense after CA */
 #define	CCB_URGENT	0x0800	/* an urgent ccb */
 #define	CCB_NOSDONE	0x1000	/* do not call an os done routine */
 #define	CCB_SCSIIO	0x2000	/* a normal scsi io coming from upper layer */

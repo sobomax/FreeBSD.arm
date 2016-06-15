@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)libkern.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/sys/libkern.h 280279 2015-03-20 10:27:06Z jhb $
+ * $FreeBSD: head/sys/sys/libkern.h 298714 2016-04-27 19:09:21Z jkim $
  */
 
 #ifndef _SYS_LIBKERN_H_
@@ -61,8 +61,20 @@ static __inline u_int max(u_int a, u_int b) { return (a > b ? a : b); }
 static __inline u_int min(u_int a, u_int b) { return (a < b ? a : b); }
 static __inline quad_t qmax(quad_t a, quad_t b) { return (a > b ? a : b); }
 static __inline quad_t qmin(quad_t a, quad_t b) { return (a < b ? a : b); }
+static __inline u_quad_t uqmax(u_quad_t a, u_quad_t b) { return (a > b ? a : b); }
+static __inline u_quad_t uqmin(u_quad_t a, u_quad_t b) { return (a < b ? a : b); }
 static __inline u_long ulmax(u_long a, u_long b) { return (a > b ? a : b); }
 static __inline u_long ulmin(u_long a, u_long b) { return (a < b ? a : b); }
+static __inline __uintmax_t ummax(__uintmax_t a, __uintmax_t b)
+{
+
+	return (a > b ? a : b);
+}
+static __inline __uintmax_t ummin(__uintmax_t a, __uintmax_t b)
+{
+
+	return (a < b ? a : b);
+}
 static __inline off_t omax(off_t a, off_t b) { return (a > b ? a : b); }
 static __inline off_t omin(off_t a, off_t b) { return (a < b ? a : b); }
 
@@ -88,6 +100,9 @@ int	 ffs(int);
 #endif
 #ifndef	HAVE_INLINE_FFSL
 int	 ffsl(long);
+#endif
+#ifndef	HAVE_INLINE_FFSLL
+int	 ffsll(long long);
 #endif
 #ifndef	HAVE_INLINE_FLS
 int	 fls(int);
@@ -124,6 +139,7 @@ int	 strcmp(const char *, const char *);
 char	*strcpy(char * __restrict, const char * __restrict);
 size_t	 strcspn(const char * __restrict, const char * __restrict) __pure;
 char	*strdup(const char *__restrict, struct malloc_type *);
+char	*strncat(char *, const char *, size_t);
 char	*strndup(const char *__restrict, size_t, struct malloc_type *);
 size_t	 strlcat(char *, const char *, size_t);
 size_t	 strlcpy(char *, const char *, size_t);

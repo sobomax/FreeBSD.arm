@@ -1,19 +1,10 @@
-# $FreeBSD: head/sys/arm/freescale/vybrid/std.vybrid 276520 2015-01-01 23:21:46Z ian $
-
-makeoption	ARM_LITTLE_ENDIAN
+# $FreeBSD: head/sys/arm/freescale/vybrid/std.vybrid 295885 2016-02-22 11:47:28Z skra $
 
 cpu		CPU_CORTEXA
 machine		arm armv6
 makeoptions	CONF_CFLAGS="-march=armv7a"
 
-options		PHYSADDR=0x80000000
-
-makeoptions	KERNPHYSADDR=0x80100000
-options		KERNPHYSADDR=0x80100000
-
 makeoptions	KERNVIRTADDR=0xc0100000
 options		KERNVIRTADDR=0xc0100000
-
-options		ARM_L2_PIPT
 
 files		"../freescale/vybrid/files.vybrid"

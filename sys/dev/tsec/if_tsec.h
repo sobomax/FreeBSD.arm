@@ -22,7 +22,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/tsec/if_tsec.h 257993 2013-11-11 15:43:21Z nwhitehorn $
+ * $FreeBSD: head/sys/dev/tsec/if_tsec.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef _IF_TSEC_H
@@ -60,12 +60,12 @@ struct tsec_softc {
 	bus_dma_tag_t	tsec_tx_dtag;	/* TX descriptors tag */
 	bus_dmamap_t	tsec_tx_dmap;	/* TX descriptors map */
 	struct tsec_desc *tsec_tx_vaddr;/* vadress of TX descriptors */
-	uint32_t	tsec_tx_raddr;	/* real adress of TX descriptors */
+	uint32_t	tsec_tx_raddr;	/* real address of TX descriptors */
 
 	bus_dma_tag_t	tsec_rx_dtag;	/* RX descriptors tag */
 	bus_dmamap_t	tsec_rx_dmap;	/* RX descriptors map */
 	struct tsec_desc *tsec_rx_vaddr; /* vadress of RX descriptors */
-	uint32_t	tsec_rx_raddr;	/* real adress of RX descriptors */
+	uint32_t	tsec_rx_raddr;	/* real address of RX descriptors */
 
 	bus_dma_tag_t	tsec_tx_mtag;	/* TX mbufs tag */
 	bus_dma_tag_t	tsec_rx_mtag;	/* TX mbufs tag */
@@ -73,7 +73,7 @@ struct tsec_softc {
 	struct rx_data_type {
 		bus_dmamap_t	map;	/* mbuf map */
 		struct mbuf	*mbuf;
-		uint32_t	paddr;	/* DMA addres of buffer */
+		uint32_t	paddr;	/* DMA address of buffer */
 	} rx_data[TSEC_RX_NUM_DESC];
 
 	uint32_t	tx_cur_desc_cnt;

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_server.c 200100 2009-12-04 14:12:37Z kuriyama $");
+__FBSDID("$FreeBSD: head/usr.sbin/ypserv/yp_server.c 300635 2016-05-25 00:16:52Z truckman $");
 
 #include "yp.h"
 #include "yp_extern.h"
@@ -711,6 +711,7 @@ yp_maplist_create(const char *domain)
 				yp_error("strdup() failed: %s",strerror(errno));
 				closedir(dird);
 				yp_maplist_free(yp_maplist);
+				free(cur);
 				return(NULL);
 			}
 			cur->next = yp_maplist;

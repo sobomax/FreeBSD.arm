@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/exec_machdep.c 283479 2015-05-24 17:56:02Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/exec_machdep.c 300415 2016-05-22 12:46:34Z dchagin $");
 
 #include "opt_compat.h"
 #include "opt_fpu_emu.h"
@@ -162,7 +162,7 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 		code = siginfo32.si_code;
 		sfp = (caddr_t)&sf32;
 		sfpsize = sizeof(sf32);
-		rndfsize = ((sizeof(sf32) + 15) / 16) * 16;
+		rndfsize = roundup(sizeof(sf32), 16);
 
 		/*
 		 * Save user context
@@ -189,9 +189,9 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 		 * 64-bit PPC defines a 288 byte scratch region
 		 * below the stack.
 		 */
-		rndfsize = 288 + ((sizeof(sf) + 47) / 48) * 48;
+		rndfsize = 288 + roundup(sizeof(sf), 48);
 		#else
-		rndfsize = ((sizeof(sf) + 15) / 16) * 16;
+		rndfsize = roundup(sizeof(sf), 16);
 		#endif
 
 		/*
@@ -219,10 +219,10 @@ sendsig(sig_t catcher, ksiginfo_t *ksi, sigset_t *mask)
 	 */
 	if ((td->td_pflags & TDP_ALTSTACK) != 0 && !oonstack &&
 	    SIGISMEMBER(psp->ps_sigonstack, sig)) {
-		usfp = (void *)(td->td_sigstk.ss_sp +
-		   td->td_sigstk.ss_size - rndfsize);
+		usfp = (void *)(((uintptr_t)td->td_sigstk.ss_sp +
+		   td->td_sigstk.ss_size - rndfsize) & ~0xFul);
 	} else {
-		usfp = (void *)(tf->fixreg[1] - rndfsize);
+		usfp = (void *)((tf->fixreg[1] - rndfsize) & ~0xFul);
 	}
 
 	/*
@@ -501,9 +501,6 @@ exec_setregs(struct thread *td, struct image_params *imgp, u_long stack)
 {
 	struct trapframe	*tf;
 	register_t		argc;
-	#ifdef __powerpc64__
-	register_t		entry_desc[3];
-	#endif
 
 	tf = trapframe(td);
 	bzero(tf, sizeof *tf);
@@ -546,24 +543,13 @@ exec_setregs(struct thread *td, struct image_params *imgp, u_long stack)
 	tf->fixreg[7] = 0;				/* termination vector */
 	tf->fixreg[8] = (register_t)imgp->ps_strings;	/* NetBSD extension */
 
+	tf->srr0 = imgp->entry_addr;
 	#ifdef __powerpc64__
-	/*
-	 * For 64-bit, we need to disentangle the function descriptor
-	 * 
-	 * 0. entry point
-	 * 1. TOC value (r2)
-	 * 2. Environment pointer (r11)
-	 */
-
-	(void)copyin((void *)imgp->entry_addr, entry_desc, sizeof(entry_desc));
-	tf->srr0 = entry_desc[0] + imgp->reloc_base;
-	tf->fixreg[2] = entry_desc[1] + imgp->reloc_base;
-	tf->fixreg[11] = entry_desc[2] + imgp->reloc_base;
+	tf->fixreg[12] = imgp->entry_addr;
 	tf->srr1 = PSL_SF | PSL_USERSET | PSL_FE_DFLT;
 	if (mfmsr() & PSL_HV)
 		tf->srr1 |= PSL_HV;
 	#else
-	tf->srr0 = imgp->entry_addr;
 	tf->srr1 = PSL_USERSET | PSL_FE_DFLT;
 	#endif
 	td->td_pcb->pcb_flags = 0;
@@ -622,13 +608,18 @@ int
 fill_fpregs(struct thread *td, struct fpreg *fpregs)
 {
 	struct pcb *pcb;
+	int i;
 
 	pcb = td->td_pcb;
 
 	if ((pcb->pcb_flags & PCB_FPREGS) == 0)
 		memset(fpregs, 0, sizeof(struct fpreg));
-	else
-		memcpy(fpregs, &pcb->pcb_fpu, sizeof(struct fpreg));
+	else {
+		memcpy(&fpregs->fpscr, &pcb->pcb_fpu.fpscr, sizeof(double));
+		for (i = 0; i < 32; i++)
+			memcpy(&fpregs->fpreg[i], &pcb->pcb_fpu.fpr[i].fpr,
+			    sizeof(double));
+	}
 
 	return (0);
 }
@@ -655,10 +646,15 @@ int
 set_fpregs(struct thread *td, struct fpreg *fpregs)
 {
 	struct pcb *pcb;
+	int i;
 
 	pcb = td->td_pcb;
 	pcb->pcb_flags |= PCB_FPREGS;
-	memcpy(&pcb->pcb_fpu, fpregs, sizeof(struct fpreg));
+	memcpy(&pcb->pcb_fpu.fpscr, &fpregs->fpscr, sizeof(double));
+	for (i = 0; i < 32; i++) {
+		memcpy(&pcb->pcb_fpu.fpr[i].fpr, &fpregs->fpreg[i],
+		    sizeof(double));
+	}
 
 	return (0);
 }
@@ -883,8 +879,11 @@ cpu_set_syscall_retval(struct thread *td, int error)
 		int code = tf->fixreg[FIRSTARG + 1];
 		if (p->p_sysent->sv_mask)
 			code &= p->p_sysent->sv_mask;
-		fixup = (code != SYS_freebsd6_lseek && code != SYS_lseek) ?
-		    1 : 0;
+		fixup = (
+#if defined(COMPAT_FREEBSD6) && defined(SYS_freebsd6_lseek)
+		    code != SYS_freebsd6_lseek &&
+#endif
+		    code != SYS_lseek) ?  1 : 0;
 	} else
 		fixup = 0;
 
@@ -909,11 +908,7 @@ cpu_set_syscall_retval(struct thread *td, int error)
 		tf->srr0 -= 4;
 		break;
 	default:
-		if (p->p_sysent->sv_errsize) {
-			error = (error < p->p_sysent->sv_errsize) ?
-			    p->p_sysent->sv_errtbl[error] : -1;
-		}
-		tf->fixreg[FIRSTARG] = error;
+		tf->fixreg[FIRSTARG] = SV_ABI_ERRNO(p, error);
 		tf->cr |= 0x10000000;		/* Set summary overflow */
 		break;
 	}
@@ -986,11 +981,12 @@ cpu_set_upcall(struct thread *td, struct thread *td0)
 	cf->cf_arg1 = (register_t)tf;
 
 	pcb2->pcb_sp = (register_t)cf;
-	#ifdef __powerpc64__
+	#if defined(__powerpc64__) && (!defined(_CALL_ELF) || _CALL_ELF == 1)
 	pcb2->pcb_lr = ((register_t *)fork_trampoline)[0];
 	pcb2->pcb_toc = ((register_t *)fork_trampoline)[1];
 	#else
 	pcb2->pcb_lr = (register_t)fork_trampoline;
+	pcb2->pcb_context[0] = pcb2->pcb_lr;
 	#endif
 	pcb2->pcb_cpu.aim.usr_vsid = 0;
 
@@ -1073,7 +1069,7 @@ ppc_instr_emulate(struct trapframe *frame, struct pcb *pcb)
 		bzero(&pcb->pcb_fpu, sizeof(pcb->pcb_fpu));
 		pcb->pcb_flags |= PCB_FPREGS;
 	}
-	sig = fpu_emulate(frame, (struct fpreg *)&pcb->pcb_fpu);
+	sig = fpu_emulate(frame, &pcb->pcb_fpu);
 #endif
 
 	return (sig);

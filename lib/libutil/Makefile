@@ -1,6 +1,7 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-#	$FreeBSD: head/lib/libutil/Makefile 284225 2015-06-10 15:07:13Z brooks $
+#	$FreeBSD: head/lib/libutil/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 SHLIBDIR?= /lib
 
 .include <src.opts.mk>

@@ -1,5 +1,5 @@
 /*	$NetBSD: rpcbind.c,v 1.3 2002/11/08 00:16:40 fvdl Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpcbind/rpcbind.c 262860 2014-03-06 17:33:27Z mav $ */
+/*	$FreeBSD: head/usr.sbin/rpcbind/rpcbind.c 300947 2016-05-29 07:01:12Z ngie $ */
 
 /*-
  * Copyright (c) 2009, Sun Microsystems, Inc.
@@ -85,7 +85,7 @@ rpcblist_ptr list_rbl;	/* A list of version 3/4 rpcbind services */
 
 #define RPCBINDDLOCK "/var/run/rpcbind.lock"
 
-int runasdaemon = 0;
+static int runasdaemon = 0;
 int insecure = 0;
 int oldstyle_local = 0;
 #ifdef LIBWRAP
@@ -93,12 +93,12 @@ int libwrap = 0;
 #endif
 int verboselog = 0;
 
-char **hosts = NULL;
-struct sockaddr **bound_sa;
-int ipv6_only = 0;
-int nhosts = 0;
-int on = 1;
-int rpcbindlockfd;
+static char **hosts = NULL;
+static struct sockaddr **bound_sa;
+static int ipv6_only = 0;
+static int nhosts = 0;
+static int on = 1;
+static int rpcbindlockfd;
 
 #ifdef WARMSTART
 /* Local Variable */

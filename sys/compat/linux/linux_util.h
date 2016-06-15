@@ -28,7 +28,7 @@
  *
  * from: svr4_util.h,v 1.5 1994/11/18 02:54:31 christos Exp
  * from: linux_util.h,v 1.2 1995/03/05 23:23:50 fvdl Exp
- * $FreeBSD: head/sys/compat/linux/linux_util.h 283447 2015-05-24 16:52:45Z dchagin $
+ * $FreeBSD: head/sys/compat/linux/linux_util.h 295882 2016-02-22 09:08:04Z skra $
  */
 
 #ifndef	_LINUX_UTIL_H_
@@ -37,7 +37,6 @@
 #include <vm/vm.h>
 #include <vm/vm_param.h>
 #include <vm/pmap.h>
-#include <machine/vmparam.h>
 #include <sys/exec.h>
 #include <sys/sysent.h>
 #include <sys/syslog.h>

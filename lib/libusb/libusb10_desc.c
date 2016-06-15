@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb10_desc.c 248236 2013-03-13 12:23:14Z hselasky $ */
+/* $FreeBSD: head/lib/libusb/libusb10_desc.c 301846 2016-06-13 01:33:02Z hselasky $ */
 /*-
  * Copyright (c) 2009 Sylvestre Gallon. All rights reserved.
  *
@@ -332,7 +332,7 @@ libusb_get_string_descriptor_ascii(libusb_device_handle *pdev,
 
 	if (libusb20_dev_req_string_simple_sync(pdev, desc_index,
 	    data, length) == 0)
-		return (strlen(data));
+		return (strlen((char *)data));
 
 	return (LIBUSB_ERROR_OTHER);
 }

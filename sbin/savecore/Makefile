@@ -1,5 +1,6 @@
-# $FreeBSD: head/sbin/savecore/Makefile 280348 2015-03-22 17:29:14Z scottl $
+# $FreeBSD: head/sbin/savecore/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=runtime
 PROG=	savecore
 LIBADD=	z xo
 MAN=	savecore.8

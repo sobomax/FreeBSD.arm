@@ -22,7 +22,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man3/pthread_resume_np.3 267776 2014-06-23 08:27:27Z bapt $
+.\" $FreeBSD: head/share/man/man3/pthread_resume_np.3 301076 2016-05-31 21:09:42Z jilles $
 .\"
 .Dd February 13, 2003
 .Dt PTHREAD_RESUME_NP 3
@@ -57,7 +57,7 @@ function will fail if:
 The value specified by the
 .Fa tid
 argument is invalid.
-.It Bq ESRC
+.It Bq Er ESRCH
 No thread could be found corresponding to the thread ID specified by the
 .Fa tid
 argument.

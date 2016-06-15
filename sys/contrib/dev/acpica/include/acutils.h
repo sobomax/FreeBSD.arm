@@ -5,7 +5,7 @@
  *****************************************************************************/
 
 /*
- * Copyright (C) 2000 - 2015, Intel Corp.
+ * Copyright (C) 2000 - 2016, Intel Corp.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -115,13 +115,25 @@ extern const char                       *AcpiGbl_PtDecode[];
 /*
  * Common error message prefixes
  */
+#ifndef ACPI_MSG_ERROR
 #define ACPI_MSG_ERROR          "ACPI Error: "
+#endif
+#ifndef ACPI_MSG_EXCEPTION
 #define ACPI_MSG_EXCEPTION      "ACPI Exception: "
+#endif
+#ifndef ACPI_MSG_WARNING
 #define ACPI_MSG_WARNING        "ACPI Warning: "
+#endif
+#ifndef ACPI_MSG_INFO
 #define ACPI_MSG_INFO           "ACPI: "
+#endif
 
+#ifndef ACPI_MSG_BIOS_ERROR
 #define ACPI_MSG_BIOS_ERROR     "ACPI BIOS Error (bug): "
+#endif
+#ifndef ACPI_MSG_BIOS_WARNING
 #define ACPI_MSG_BIOS_WARNING   "ACPI BIOS Warning (bug): "
+#endif
 
 /*
  * Common message suffix
@@ -173,6 +185,55 @@ typedef struct acpi_pkg_info
 #define DB_DWORD_DISPLAY    4
 #define DB_QWORD_DISPLAY    8
 
+
+/*
+ * utascii - ASCII utilities
+ */
+BOOLEAN
+AcpiUtValidNameseg (
+    char                    *Signature);
+
+BOOLEAN
+AcpiUtValidNameChar (
+    char                    Character,
+    UINT32                  Position);
+
+void
+AcpiUtCheckAndRepairAscii (
+    UINT8                   *Name,
+    char                    *RepairedName,
+    UINT32                  Count);
+
+
+/*
+ * utnonansi - Non-ANSI C library functions
+ */
+void
+AcpiUtStrupr (
+    char                    *SrcString);
+
+void
+AcpiUtStrlwr (
+    char                    *SrcString);
+
+int
+AcpiUtStricmp (
+    char                    *String1,
+    char                    *String2);
+
+ACPI_STATUS
+AcpiUtStrtoul64 (
+    char                    *String,
+    UINT32                  Base,
+    UINT32                  MaxIntegerByteWidth,
+    UINT64                  *RetInteger);
+
+/* Values for MaxIntegerByteWidth above */
+
+#define ACPI_MAX32_BYTE_WIDTH       4
+#define ACPI_MAX64_BYTE_WIDTH       8
+
+
 /*
  * utglobal - Global data structures and procedures
  */
@@ -182,7 +243,7 @@ AcpiUtInitGlobals (
 
 #if defined(ACPI_DEBUG_OUTPUT) || defined(ACPI_DEBUGGER)
 
-char *
+const char *
 AcpiUtGetMutexName (
     UINT32                  MutexId);
 
@@ -192,15 +253,15 @@ AcpiUtGetNotifyName (
     ACPI_OBJECT_TYPE        Type);
 #endif
 
-char *
+const char *
 AcpiUtGetTypeName (
     ACPI_OBJECT_TYPE        Type);
 
-char *
+const char *
 AcpiUtGetNodeName (
     void                    *Object);
 
-char *
+const char *
 AcpiUtGetDescriptorName (
     void                    *Object);
 
@@ -208,15 +269,15 @@ const char *
 AcpiUtGetReferenceName (
     ACPI_OPERAND_OBJECT     *Object);
 
-char *
+const char *
 AcpiUtGetObjectTypeName (
     ACPI_OPERAND_OBJECT     *ObjDesc);
 
-char *
+const char *
 AcpiUtGetRegionName (
     UINT8                   SpaceId);
 
-char *
+const char *
 AcpiUtGetEventName (
     UINT32                  EventId);
 
@@ -245,8 +306,6 @@ void
 AcpiUtSubsystemShutdown (
     void);
 
-
-#define ACPI_IS_ASCII(c)  ((c) < 0x80)
 
 /*
  * utcopy - Object construction and conversion interfaces
@@ -319,7 +378,7 @@ AcpiUtTracePtr (
     const char              *FunctionName,
     const char              *ModuleName,
     UINT32                  ComponentId,
-    void                    *Pointer);
+    const void              *Pointer);
 
 void
 AcpiUtTraceU32 (
@@ -335,7 +394,7 @@ AcpiUtTraceStr (
     const char              *FunctionName,
     const char              *ModuleName,
     UINT32                  ComponentId,
-    char                    *String);
+    const char              *String);
 
 void
 AcpiUtExit (
@@ -367,6 +426,14 @@ AcpiUtPtrExit (
     const char              *ModuleName,
     UINT32                  ComponentId,
     UINT8                   *Ptr);
+
+void
+AcpiUtStrExit (
+    UINT32                  LineNumber,
+    const char              *FunctionName,
+    const char              *ModuleName,
+    UINT32                  ComponentId,
+    const char              *String);
 
 void
 AcpiUtDebugDumpBuffer (
@@ -407,6 +474,7 @@ AcpiUtReportWarning (
     char                    *ModuleName,
     UINT32                  LineNumber);
 
+
 /*
  * utdelete - Object deletion and reference counts
  */
@@ -437,13 +505,13 @@ AcpiUtDeleteInternalObjectList (
 ACPI_STATUS
 AcpiUtEvaluateObject (
     ACPI_NAMESPACE_NODE     *PrefixNode,
-    char                    *Path,
+    const char              *Path,
     UINT32                  ExpectedReturnBtypes,
     ACPI_OPERAND_OBJECT     **ReturnDesc);
 
 ACPI_STATUS
 AcpiUtEvaluateNumericObject (
-    char                    *ObjectName,
+    const char              *ObjectName,
     ACPI_NAMESPACE_NODE     *DeviceNode,
     UINT64                  *Value);
 
@@ -461,17 +529,6 @@ AcpiUtExecutePowerMethods (
 
 
 /*
- * utfileio - file operations
- */
-#ifdef ACPI_APPLICATION
-ACPI_STATUS
-AcpiUtReadTableFromFile (
-    char                    *Filename,
-    ACPI_TABLE_HEADER       **Table);
-#endif
-
-
-/*
  * utids - device ID support
  */
 ACPI_STATUS
@@ -481,11 +538,6 @@ AcpiUtExecute_HID (
 
 ACPI_STATUS
 AcpiUtExecute_UID (
-    ACPI_NAMESPACE_NODE     *DeviceNode,
-    ACPI_PNP_DEVICE_ID      **ReturnId);
-
-ACPI_STATUS
-AcpiUtExecute_SUB (
     ACPI_NAMESPACE_NODE     *DeviceNode,
     ACPI_PNP_DEVICE_ID      **ReturnId);
 
@@ -719,7 +771,7 @@ BOOLEAN
 AcpiUtIsPciRootBridge (
     char                    *Id);
 
-#if (defined ACPI_ASL_COMPILER || defined ACPI_EXEC_APP)
+#if (defined ACPI_ASL_COMPILER || defined ACPI_EXEC_APP || defined ACPI_NAMES_APP)
 BOOLEAN
 AcpiUtIsAmlTable (
     ACPI_TABLE_HEADER       *Table);
@@ -732,10 +784,10 @@ AcpiUtWalkPackageTree (
     ACPI_PKG_CALLBACK       WalkCallback,
     void                    *Context);
 
-
 /* Values for Base above (16=Hex, 10=Decimal) */
 
 #define ACPI_ANY_BASE        0
+
 
 UINT32
 AcpiUtDwordByteSwap (
@@ -750,7 +802,7 @@ void
 AcpiUtDisplayInitPathname (
     UINT8                   Type,
     ACPI_NAMESPACE_NODE     *ObjHandle,
-    char                    *Path);
+    const char              *Path);
 #endif
 
 
@@ -809,27 +861,6 @@ AcpiUtGetResourceEndTag (
  * utstring - String and character utilities
  */
 void
-AcpiUtStrupr (
-    char                    *SrcString);
-
-#ifdef ACPI_ASL_COMPILER
-void
-AcpiUtStrlwr (
-    char                    *SrcString);
-
-int
-AcpiUtStricmp (
-    char                    *String1,
-    char                    *String2);
-#endif
-
-ACPI_STATUS
-AcpiUtStrtoul64 (
-    char                    *String,
-    UINT32                  Base,
-    UINT64                  *RetInteger);
-
-void
 AcpiUtPrintString (
     char                    *String,
     UINT16                  MaxLength);
@@ -839,15 +870,6 @@ void
 UtConvertBackslashes (
     char                    *Pathname);
 #endif
-
-BOOLEAN
-AcpiUtValidAcpiName (
-    char                    *Name);
-
-BOOLEAN
-AcpiUtValidAcpiChar (
-    char                    Character,
-    UINT32                  Position);
 
 void
 AcpiUtRepairName (
@@ -866,14 +888,12 @@ AcpiUtSafeStrcat (
     ACPI_SIZE               DestSize,
     char                    *Source);
 
-#ifndef _KERNEL
 BOOLEAN
 AcpiUtSafeStrncat (
     char                    *Dest,
     ACPI_SIZE               DestSize,
     char                    *Source,
     ACPI_SIZE               MaxTransferLength);
-#endif
 #endif
 
 
@@ -950,11 +970,12 @@ AcpiUtDumpAllocations (
 
 ACPI_STATUS
 AcpiUtCreateList (
-    char                    *ListName,
+    const char              *ListName,
     UINT16                  ObjectSize,
     ACPI_MEMORY_LIST        **ReturnCache);
 
 #endif /* ACPI_DBG_TRACK_ALLOCATIONS */
+
 
 /*
  * utaddress - address range check
@@ -981,6 +1002,7 @@ AcpiUtCheckAddressRange (
 void
 AcpiUtDeleteAddressLists (
     void);
+
 
 /*
  * utxferror - various error/warning output functions
@@ -1028,6 +1050,7 @@ AcpiUtMethodError (
     const char              *Path,
     ACPI_STATUS             LookupStatus);
 
+
 /*
  * Utility functions for ACPI names and IDs
  */
@@ -1042,6 +1065,7 @@ AcpiAhMatchHardwareId (
 const char *
 AcpiAhMatchUuid (
     UINT8                   *Data);
+
 
 /*
  * utprint - printf/vprintf output functions
@@ -1083,6 +1107,7 @@ AcpiUtFilePrintf (
     const char              *Format,
     ...);
 #endif
+
 
 /*
  * utuuid -- UUID support functions

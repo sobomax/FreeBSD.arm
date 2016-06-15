@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_pci.c 279387 2015-02-28 00:17:29Z jchandra $");
+__FBSDID("$FreeBSD: head/sys/mips/nlm/xlp_pci.c 298712 2016-04-27 17:49:42Z jhb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -125,8 +125,8 @@ xlp_pci_attach(device_t dev)
 				    XLP_PCI_DEVSCRATCH_REG0 << 2,
 				    (1 << 8) | irq, 4);
 			}
-			dinfo = pci_read_device(pcib, pcib_get_domain(dev),
-			    busno, s, f, sizeof(*dinfo));
+			dinfo = pci_read_device(pcib, dev, pcib_get_domain(dev),
+			    busno, s, f);
 			pci_add_child(dev, dinfo);
 		}
 	}
@@ -154,6 +154,7 @@ static device_method_t xlp_pci_methods[] = {
 	/* Device interface */
 	DEVMETHOD(device_probe,		xlp_pci_probe),
 	DEVMETHOD(device_attach,	xlp_pci_attach),
+	DEVMETHOD(bus_rescan,		bus_null_rescan),
 	DEVMETHOD_END
 };
 
@@ -314,7 +315,7 @@ xlp_pcib_attach(device_t dev)
 		for (link = 0; link < 4; link++)
 			xlp_pcib_hardware_swap_enable(node, link);
 
-	device_add_child(dev, "pci", 0);
+	device_add_child(dev, "pci", -1);
 	bus_generic_attach(dev);
 	return (0);
 }
@@ -433,7 +434,7 @@ mips_platform_pcib_setup_intr(device_t dev, device_t child,
 	if (error)
 		return error;
 	if (rman_get_start(irq) != rman_get_end(irq)) {
-		device_printf(dev, "Interrupt allocation %lu != %lu\n",
+		device_printf(dev, "Interrupt allocation %ju != %ju\n",
 		    rman_get_start(irq), rman_get_end(irq));
 		return (EINVAL);
 	}

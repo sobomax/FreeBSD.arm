@@ -1,10 +1,10 @@
 # $Id: Makefile,v 1.1 2005/06/23 00:30:50 max Exp $
-# $FreeBSD: head/sys/modules/kbdmux/Makefile 162711 2006-09-27 19:57:02Z ru $
+# $FreeBSD: head/sys/modules/kbdmux/Makefile 297685 2016-04-07 20:12:45Z emaste $
 
 .PATH: ${.CURDIR}/../../dev/kbdmux
 
 KMOD=	kbdmux
-SRCS=	kbdmux.c opt_compat.h opt_kbd.h bus_if.h device_if.h
+SRCS=	kbdmux.c opt_compat.h opt_kbd.h opt_kbdmux.h bus_if.h device_if.h
 
 .if !defined(KERNBUILDDIR)
 opt_compat.h:

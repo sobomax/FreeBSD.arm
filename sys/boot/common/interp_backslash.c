@@ -15,13 +15,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/common/interp_backslash.c 119483 2003-08-25 23:30:41Z obrien $");
+__FBSDID("$FreeBSD: head/sys/boot/common/interp_backslash.c 299499 2016-05-12 01:19:11Z pfg $");
 
 #include <stand.h>
 #include <string.h>
 #include "bootstrap.h"
 
-#define DIGIT(x) (isdigit(x) ? (x) - '0' : islower(x) ? (x) + 10 - 'a' : (x) + 10 - 'A')
+#define	DIGIT(x) (isdigit(x) ? (x) - '0' : islower(x) ? (x) + 10 - 'a' : (x) + 10 - 'A')
 
 /*
  * backslash: Return malloc'd copy of str with all standard "backslash
@@ -146,20 +146,20 @@ backslash(char *str)
 		break;
 	    }
 	}
-        else {
-            if (*str == '\\') {
-                seenbs = 1;
-                str++;
-            }
+	else {
+	    if (*str == '\\') {
+		seenbs = 1;
+		str++;
+	    }
 	    else
 		new_str[i++] = *str++;
-        }
+	}
     }
 
     if (seenbs) {
-        /*
-         * The final character was a '\'. Put it in as a single backslash.
-         */
+	/*
+	 * The final character was a '\'. Put it in as a single backslash.
+	 */
 	new_str[i++] = '\\';
     }
     new_str[i] = '\0';

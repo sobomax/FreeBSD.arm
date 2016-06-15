@@ -1,8 +1,10 @@
-# $FreeBSD: head/sys/boot/efi/Makefile 281526 2015-04-14 13:55:01Z andrew $
+# $FreeBSD: head/sys/boot/efi/Makefile 296892 2016-03-15 05:17:31Z imp $
 
 .include <src.opts.mk>
 
-SUBDIR=		libefi
+# In-tree GCC does not support __attribute__((ms_abi)), but gcc newer
+# than 4.5 supports it.
+.if ${COMPILER_TYPE} != "gcc" || ${COMPILER_VERSION} >= 404500
 
 .if ${MACHINE_CPUARCH} == "aarch64" || ${MACHINE_CPUARCH} == "arm"
 .if ${MK_FDT} != "no"
@@ -13,7 +15,9 @@ SUBDIR+=	fdt
 .if ${MACHINE_CPUARCH} == "aarch64" || \
     ${MACHINE_CPUARCH} == "amd64" || \
     ${MACHINE_CPUARCH} == "arm"
-SUBDIR+=	loader boot1
+SUBDIR+=	libefi loader boot1
 .endif
+
+.endif # ${COMPILER_TYPE} != "gcc" || ${COMPILER_VERSION} >= 404500
 
 .include <bsd.subdir.mk>

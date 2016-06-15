@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_os.c 284741 2015-06-23 22:22:36Z davidcs $");
+__FBSDID("$FreeBSD: head/sys/dev/qlxgbe/ql_os.c 289635 2015-10-20 17:27:11Z davidcs $");
 
 
 #include "ql_os.h"
@@ -288,8 +288,6 @@ qla_pci_attach(device_t dev)
 	uint32_t rsrc_len;
 	int i;
 	uint32_t num_rcvq = 0;
-
-	QL_DPRINT2(ha, (dev, "%s: enter\n", __func__));
 
         if ((ha = device_get_softc(dev)) == NULL) {
                 device_printf(dev, "cannot get softc\n");

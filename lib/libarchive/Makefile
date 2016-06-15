@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libarchive/Makefile 281550 2015-04-15 09:09:20Z tijl $
+# $FreeBSD: head/lib/libarchive/Makefile 299529 2016-05-12 10:16:16Z mm $
 .include <src.opts.mk>
 
-LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
+PACKAGE=lib${LIB}
+_LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
 
 LIB=	archive
 
@@ -37,13 +38,7 @@ CFLAGS+=	-DPPMD_32BIT
 .endif
 NO_WCAST_ALIGN.clang=
 
-.ifndef COMPAT_32BIT
-beforeinstall:
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/libarchive.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-.endif
-
-.PATH: ${LIBARCHIVEDIR}/libarchive
+.PATH: ${_LIBARCHIVEDIR}/libarchive
 
 # Headers to be installed in /usr/include
 INCS=	archive.h archive_entry.h
@@ -52,7 +47,8 @@ INCS=	archive.h archive_entry.h
 SRCS=	archive_acl.c					\
 	archive_check_magic.c				\
 	archive_cmdline.c				\
-	archive_crypto.c				\
+	archive_cryptor.c				\
+	archive_digest.c				\
 	archive_entry.c					\
 	archive_entry_copy_stat.c			\
 	archive_entry_link_resolver.c			\
@@ -61,18 +57,23 @@ SRCS=	archive_acl.c					\
 	archive_entry_strmode.c				\
 	archive_entry_xattr.c				\
 	archive_getdate.c				\
+	archive_hmac.c					\
 	archive_match.c					\
 	archive_options.c				\
+	archive_pack_dev.c				\
 	archive_pathmatch.c				\
 	archive_ppmd7.c					\
+	archive_random.c				\
 	archive_rb.c					\
 	archive_read.c					\
+	archive_read_add_passphrase.c			\
 	archive_read_append_filter.c			\
 	archive_read_data_into_fd.c			\
 	archive_read_disk_entry_from_file.c		\
 	archive_read_disk_posix.c			\
 	archive_read_disk_set_standard_lookup.c		\
 	archive_read_extract.c				\
+	archive_read_extract2.c				\
 	archive_read_open_fd.c				\
 	archive_read_open_file.c			\
 	archive_read_open_filename.c			\
@@ -85,6 +86,7 @@ SRCS=	archive_acl.c					\
 	archive_read_support_filter_gzip.c		\
 	archive_read_support_filter_grzip.c		\
 	archive_read_support_filter_lrzip.c		\
+	archive_read_support_filter_lz4.c		\
 	archive_read_support_filter_lzop.c		\
 	archive_read_support_filter_none.c		\
 	archive_read_support_filter_program.c		\
@@ -104,6 +106,7 @@ SRCS=	archive_acl.c					\
 	archive_read_support_format_rar.c		\
 	archive_read_support_format_raw.c		\
 	archive_read_support_format_tar.c		\
+	archive_read_support_format_warc.c		\
 	archive_read_support_format_xar.c		\
 	archive_read_support_format_zip.c		\
 	archive_string.c				\
@@ -126,6 +129,7 @@ SRCS=	archive_acl.c					\
 	archive_write_add_filter_grzip.c		\
 	archive_write_add_filter_gzip.c			\
 	archive_write_add_filter_lrzip.c		\
+	archive_write_add_filter_lz4.c			\
 	archive_write_add_filter_lzop.c			\
 	archive_write_add_filter_none.c			\
 	archive_write_add_filter_program.c		\
@@ -137,15 +141,19 @@ SRCS=	archive_acl.c					\
 	archive_write_set_format_by_name.c		\
 	archive_write_set_format_cpio.c			\
 	archive_write_set_format_cpio_newc.c		\
+	archive_write_set_format_filter_by_ext.c	\
 	archive_write_set_format_gnutar.c		\
 	archive_write_set_format_iso9660.c		\
 	archive_write_set_format_mtree.c		\
 	archive_write_set_format_pax.c			\
+	archive_write_set_format_raw.c			\
 	archive_write_set_format_shar.c			\
 	archive_write_set_format_ustar.c		\
 	archive_write_set_format_v7tar.c		\
+	archive_write_set_format_warc.c			\
 	archive_write_set_format_xar.c			\
 	archive_write_set_format_zip.c			\
+	archive_write_set_passphrase.c			\
 	archive_write_set_options.c			\
 	filter_fork_posix.c
 
@@ -404,11 +412,8 @@ MLINKS+=	archive_write_set_options.3 archive_write_set_format_option.3
 MLINKS+=	archive_write_set_options.3 archive_write_set_option.3
 MLINKS+=	libarchive.3 archive.3
 
-.PHONY: check test clean-test
-check test:
-	cd ${.CURDIR}/test && make obj && make test
-
-clean-test:
-	cd ${.CURDIR}/test && make clean
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.lib.mk>

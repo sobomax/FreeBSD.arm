@@ -1,10 +1,12 @@
-# $FreeBSD: head/secure/usr.bin/ssh-keyscan/Makefile 275083 2014-11-25 22:25:13Z bapt $
+# $FreeBSD: head/secure/usr.bin/ssh-keyscan/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 PROG=	ssh-keyscan
-SRCS=	ssh-keyscan.c roaming_dummy.c
+SRCS=	ssh-keyscan.c
+PACKAGE=	ssh
 CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
+SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh
 
@@ -12,11 +14,8 @@ LIBADD=	ssh
 CFLAGS+=	-DHAVE_LDNS=1
 #DPADD+=	${LIBLDNS}
 #LDADD+=	-lldns
-#USEPRIVATELIB+= ldns
 .endif
 
 .include <bsd.prog.mk>
 
 .PATH:	${SSHDIR}
-
-${OBJS} ${POBJS} ${SOBJS}: ssh_namespace.h

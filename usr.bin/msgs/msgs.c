@@ -40,7 +40,7 @@ static char sccsid[] = "@(#)msgs.c	8.2 (Berkeley) 4/28/95";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/msgs/msgs.c 241848 2012-10-22 03:07:05Z eadler $");
+__FBSDID("$FreeBSD: head/usr.bin/msgs/msgs.c 299525 2016-05-12 08:55:57Z truckman $");
 
 /*
  * msgs - a user bulletin board program
@@ -855,7 +855,7 @@ gfrsub(FILE *infile)
 			}
 			*ptr = '\0';
 			if (*(in = nxtfld(in)))
-				strncpy(date, in, sizeof date);
+				strlcpy(date, in, sizeof date);
 			else {
 				date[0] = '\n';
 				date[1] = '\0';
@@ -886,7 +886,7 @@ gfrsub(FILE *infile)
 		if (!seensubj && strncmp(inbuf, "Subj", 4)==0) {
 			seensubj = YES;
 			frompos = ftello(infile);
-			strncpy(subj, nxtfld(inbuf), sizeof subj);
+			strlcpy(subj, nxtfld(inbuf), sizeof subj);
 		}
 	}
 	if (!blankline)
@@ -899,7 +899,7 @@ gfrsub(FILE *infile)
 		/*
 		 * for possible use with Mail
 		 */
-		strncpy(subj, "(No Subject)\n", sizeof subj);
+		strlcpy(subj, "(No Subject)\n", sizeof subj);
 }
 
 static char *

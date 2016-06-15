@@ -30,9 +30,11 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/support.S 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/support.S 297615 2016-04-06 14:08:10Z andrew $");
 
 #include <machine/setjmp.h>
+#include <machine/param.h>
+#include <machine/vmparam.h>
 
 #include "assym.s"
 
@@ -41,6 +43,7 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/support.S 281494 2015-04-13 14:43:10Z a
  */
 ENTRY(fsu_fault)
 	SET_FAULT_HANDLER(xzr, x1)	/* Reset the handler function */
+fsu_fault_nopcb:
 	mov	x0, #-1
 	ret
 END(fsu_fault)
@@ -49,6 +52,9 @@ END(fsu_fault)
  * int casueword32(volatile uint32_t *, uint32_t, uint32_t *, uint32_t)
  */
 ENTRY(casueword32)
+	ldr	x4, =(VM_MAXUSER_ADDRESS-3)
+	cmp	x0, x4
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x4)	/* And set it */
 1:	ldxr	w4, [x0]		/* Load-exclusive the data */
@@ -56,9 +62,9 @@ ENTRY(casueword32)
 	b.ne	2f			/* Not equal, exit */
 	stxr	w5, w3, [x0]		/* Store the new data */
 	cbnz	w5, 1b			/* Retry on failure */
-	ldrb	w0, [x0]		/* Try loading the data */
 2:	SET_FAULT_HANDLER(xzr, x5)	/* Reset the fault handler */
 	str	w4, [x2]		/* Store the read data */
+	mov	x0, #0			/* Success */
 	ret				/* Return */
 END(casueword32)
 
@@ -66,6 +72,9 @@ END(casueword32)
  * int casueword(volatile u_long *, u_long, u_long *, u_long)
  */
 ENTRY(casueword)
+	ldr	x4, =(VM_MAXUSER_ADDRESS-7)
+	cmp	x0, x4
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x4)	/* And set it */
 1:	ldxr	x4, [x0]		/* Load-exclusive the data */
@@ -73,9 +82,9 @@ ENTRY(casueword)
 	b.ne	2f			/* Not equal, exit */
 	stxr	w5, x3, [x0]		/* Store the new data */
 	cbnz	w5, 1b			/* Retry on failure */
-	ldrb	w0, [x0]		/* Try loading the data */
 2:	SET_FAULT_HANDLER(xzr, x5)	/* Reset the fault handler */
 	str	x4, [x2]		/* Store the read data */
+	mov	x0, #0			/* Success */
 	ret				/* Return */
 END(casueword)
 
@@ -83,6 +92,9 @@ END(casueword)
  * int fubyte(volatile const void *)
  */
 ENTRY(fubyte)
+	ldr	x1, =VM_MAXUSER_ADDRESS
+	cmp	x0, x1
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x1)	/* And set it */
 	ldrb	w0, [x0]		/* Try loading the data */
@@ -94,6 +106,9 @@ END(fubyte)
  * int fuword(volatile const void *)
  */
 ENTRY(fuword16)
+	ldr	x1, =(VM_MAXUSER_ADDRESS-1)
+	cmp	x0, x1
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x1)	/* And set it */
 	ldrh	w0, [x0]		/* Try loading the data */
@@ -105,6 +120,9 @@ END(fuword16)
  * int32_t fueword32(volatile const void *, int32_t *)
  */
 ENTRY(fueword32)
+	ldr	x2, =(VM_MAXUSER_ADDRESS-3)
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	ldr	w0, [x0]		/* Try loading the data */
@@ -120,6 +138,9 @@ END(fueword32)
  */
 ENTRY(fueword)
 EENTRY(fueword64)
+	ldr	x2, =(VM_MAXUSER_ADDRESS-7)
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	ldr	x0, [x0]		/* Try loading the data */
@@ -134,6 +155,9 @@ END(fueword)
  * int subyte(volatile void *, int)
  */
 ENTRY(subyte)
+	ldr	x2, =VM_MAXUSER_ADDRESS
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	strb	w1, [x0]		/* Try storing the data */
@@ -146,6 +170,9 @@ END(subyte)
  * int suword16(volatile void *, int)
  */
 ENTRY(suword16)
+	ldr	x2, =(VM_MAXUSER_ADDRESS-1)
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	strh	w1, [x0]		/* Try storing the data */
@@ -158,6 +185,9 @@ END(suword16)
  * int suword32(volatile void *, int)
  */
 ENTRY(suword32)
+	ldr	x2, =(VM_MAXUSER_ADDRESS-3)
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	str	w1, [x0]		/* Try storing the data */
@@ -171,6 +201,9 @@ END(suword32)
  */
 ENTRY(suword)
 EENTRY(suword64)
+	ldr	x2, =(VM_MAXUSER_ADDRESS-7)
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_fault		/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	str	x1, [x0]		/* Try storing the data */
@@ -199,6 +232,9 @@ END(fsu_fault)
  * int fuswintr(void *)
  */
 ENTRY(fuswintr)
+	ldr	x1, =(VM_MAXUSER_ADDRESS-3)
+	cmp	x0, x1
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_intr_fault	/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x1)	/* And set it */
 	ldr	w0, [x0]		/* Try loading the data */
@@ -210,6 +246,9 @@ END(fuswintr)
  * int suswintr(void *base, int word)
  */
 ENTRY(suswintr)
+	ldr	x2, =(VM_MAXUSER_ADDRESS-3)
+	cmp	x0, x2
+	b.cs	fsu_fault_nopcb
 	adr	x6, fsu_intr_fault	/* Load the fault handler */
 	SET_FAULT_HANDLER(x6, x2)	/* And set it */
 	str	w1, [x0]		/* Try storing the data */
@@ -221,7 +260,7 @@ END(suswintr)
 ENTRY(setjmp)
 	/* Store the stack pointer */
 	mov	x8, sp
-	str	x8, [x0]
+	str	x8, [x0], #8
 
 	/* Store the general purpose registers and lr */
 	stp	x19, x20, [x0], #16
@@ -253,3 +292,38 @@ ENTRY(longjmp)
 	mov	x0, x1
 	ret
 END(longjmp)
+
+/*
+ * pagezero, simple implementation
+ */
+ENTRY(pagezero_simple)
+	add	x1, x0, #PAGE_SIZE
+
+1:
+	stp	xzr, xzr, [x0], #0x10
+	stp	xzr, xzr, [x0], #0x10
+	stp	xzr, xzr, [x0], #0x10
+	stp	xzr, xzr, [x0], #0x10
+	cmp	x0, x1
+	b.ne	1b
+	ret
+
+END(pagezero_simple)
+
+/*
+ * pagezero, cache assisted
+ */
+ENTRY(pagezero_cache)
+	add	x1, x0, #PAGE_SIZE
+
+	ldr	x2, =dczva_line_size
+	ldr	x2, [x2]
+
+1:
+	dc	zva, x0
+	add	x0, x0, x2
+	cmp	x0, x1
+	b.ne	1b
+	ret
+
+END(pagezero_cache)

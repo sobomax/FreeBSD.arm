@@ -25,7 +25,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_write_set_format_shar.c 232153 2012-02-25 10:58:02Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_write_set_format_shar.c 299529 2016-05-12 10:16:16Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -548,6 +548,7 @@ archive_write_shar_finish_entry(struct archive_write *a)
 				archive_strcat(&shar->work, ":");
 				shar_quote(&shar->work, g, 1);
 			}
+			archive_strcat(&shar->work, " ");
 			shar_quote(&shar->work,
 			    archive_entry_pathname(shar->entry), 1);
 			archive_strcat(&shar->work, "\n");

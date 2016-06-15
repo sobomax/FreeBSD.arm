@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/rtld-elf/tests/libpythagoras/Makefile 269600 2014-08-05 18:09:39Z ngie $
+# $FreeBSD: head/libexec/rtld-elf/tests/libpythagoras/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .include <bsd.own.mk>
 
@@ -10,7 +10,6 @@ SHLIBDIR=	${TESTSBASE}/libexec/rtld-elf
 
 SRCS=		pythagoras.c
 
-DPADD=		${LIBM}
-LDADD=		-lm
+LIBADD=		m
 
 .include <bsd.lib.mk>

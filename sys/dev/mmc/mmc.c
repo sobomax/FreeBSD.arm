@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mmc/mmc.c 283253 2015-05-21 17:39:42Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/mmc/mmc.c 297127 2016-03-21 00:52:24Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -118,7 +118,7 @@ struct mmc_ivars {
 static SYSCTL_NODE(_hw, OID_AUTO, mmc, CTLFLAG_RD, NULL, "mmc driver");
 
 static int mmc_debug;
-SYSCTL_INT(_hw_mmc, OID_AUTO, debug, CTLFLAG_RW, &mmc_debug, 0, "Debug level");
+SYSCTL_INT(_hw_mmc, OID_AUTO, debug, CTLFLAG_RWTUN, &mmc_debug, 0, "Debug level");
 
 /* bus entry points */
 static int mmc_acquire_bus(device_t busdev, device_t dev);
@@ -1381,17 +1381,18 @@ mmc_discover_cards(struct mmc_softc *sc)
 			}
 
 			/*
-			 * We reselect the card here. Some cards become
-			 * unselected and timeout with the above two commands,
-			 * although the state tables / diagrams in the standard
-			 * suggest they go back to the transfer state. The only
-			 * thing we use from the sd_status is the erase sector
-			 * size, but it is still nice to get that right. It is
-			 * normally harmless for cards not misbehaving. The
-			 * Atmel bridge will complain about this command timing
-			 * out. Others seem to handle it correctly, so it may
-			 * be a combination of card and controller.
+			 * We deselect then reselect the card here.  Some cards
+			 * become unselected and timeout with the above two
+			 * commands, although the state tables / diagrams in the
+			 * standard suggest they go back to the transfer state.
+			 * Other cards don't become deselected, and if we
+			 * atttempt to blindly re-select them, we get timeout
+			 * errors from some controllers.  So we deselect then
+			 * reselect to handle all situations.  The only thing we
+			 * use from the sd_status is the erase sector size, but
+			 * it is still nice to get that right.
 			 */
+			mmc_select_card(sc, 0);
 			mmc_select_card(sc, ivar->rca);
 			mmc_app_sd_status(sc, ivar->rca, ivar->raw_sd_status);
 			mmc_app_decode_sd_status(ivar->raw_sd_status,
@@ -1804,21 +1805,11 @@ static device_method_t mmc_methods[] = {
 	DEVMETHOD_END
 };
 
-static driver_t mmc_driver = {
+driver_t mmc_driver = {
 	"mmc",
 	mmc_methods,
 	sizeof(struct mmc_softc),
 };
-static devclass_t mmc_devclass;
+devclass_t mmc_devclass;
 
-DRIVER_MODULE(mmc, a10_mmc, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, aml8726_mmc, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, aml8726_sdxc, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, at91_mci, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, sdhci_bcm, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, sdhci_fdt, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, sdhci_imx, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, sdhci_pci, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, sdhci_ti, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, ti_mmchs, mmc_driver, mmc_devclass, NULL, NULL);
-DRIVER_MODULE(mmc, dwmmc, mmc_driver, mmc_devclass, NULL, NULL);
+MODULE_VERSION(mmc, 1);

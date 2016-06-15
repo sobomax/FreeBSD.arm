@@ -29,10 +29,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/iscsid/keys.c 278622 2015-02-12 11:57:31Z trasz $");
+__FBSDID("$FreeBSD: head/usr.sbin/iscsid/keys.c 290822 2015-11-14 16:12:56Z trasz $");
 
 #include <assert.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/powerpc/kboot/hostdisk.c 278020 2015-02-01 02:02:50Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/boot/powerpc/kboot/hostdisk.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 #include <sys/types.h>
 #include <stdarg.h>
@@ -33,7 +33,7 @@ __FBSDID("$FreeBSD: head/sys/boot/powerpc/kboot/hostdisk.c 278020 2015-02-01 02:
 
 static int hostdisk_init(void);
 static int hostdisk_strategy(void *devdata, int flag, daddr_t dblk,
-    size_t size, char *buf, size_t *rsize);
+    size_t offset, size_t size, char *buf, size_t *rsize);
 static int hostdisk_open(struct open_file *f, ...);
 static int hostdisk_close(struct open_file *f);
 static int hostdisk_ioctl(struct open_file *f, u_long cmd, void *data);
@@ -58,8 +58,8 @@ hostdisk_init(void)
 }
 
 static int
-hostdisk_strategy(void *devdata, int flag, daddr_t dblk, size_t size,
-    char *buf, size_t *rsize)
+hostdisk_strategy(void *devdata, int flag, daddr_t dblk, size_t offset,
+    size_t size, char *buf, size_t *rsize)
 {
 	struct devdesc *desc = devdata;
 	daddr_t pos;

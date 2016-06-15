@@ -1,5 +1,5 @@
 /*	$NetBSD: rpcbind.h,v 1.1 2000/06/03 00:47:21 fvdl Exp $	*/
-/*	$FreeBSD: head/usr.sbin/rpcbind/rpcbind.h 262860 2014-03-06 17:33:27Z mav $ */
+/*	$FreeBSD: head/usr.sbin/rpcbind/rpcbind.h 293229 2016-01-06 00:00:11Z asomers $ */
 
 /*-
  * Copyright (c) 2009, Sun Microsystems, Inc.
@@ -85,7 +85,7 @@ extern char *tcp_uaddr;		/* Universal TCP address */
 int add_bndlist(struct netconfig *, struct netbuf *);
 bool_t is_bound(char *, char *);
 char *mergeaddr(SVCXPRT *, char *, char *, char *);
-struct netconfig *rpcbind_get_conf(char *);
+struct netconfig *rpcbind_get_conf(const char *);
 
 void rpcbs_init(void); 
 void rpcbs_procinfo(rpcvers_t, rpcproc_t);
@@ -134,8 +134,8 @@ extern void pmap_service(struct svc_req *, SVCXPRT *);
 void write_warmstart(void);
 void read_warmstart(void);
 
-char *addrmerge(struct netbuf *caller, char *serv_uaddr, char *clnt_uaddr,
-		     char *netid);
+char *addrmerge(struct netbuf *caller, const char *serv_uaddr,
+		const char *clnt_uaddr, char const *netid);
 int listen_addr(const struct sockaddr *sa);
 void network_init(void);
 struct sockaddr *local_sa(int);

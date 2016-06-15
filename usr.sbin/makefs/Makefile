@@ -1,4 +1,6 @@
-#	$FreeBSD: head/usr.sbin/makefs/Makefile 274990 2014-11-24 22:15:30Z bapt $
+#	$FreeBSD: head/usr.sbin/makefs/Makefile 289739 2015-10-22 05:32:45Z ngie $
+
+.include <src.opts.mk>
 
 PROG=	makefs
 
@@ -31,5 +33,9 @@ SRCS+=	ffs_tables.c
 
 CFLAGS+=	-I${.CURDIR}/../../lib/libnetbsd
 LIBADD=		netbsd util sbuf
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
 .include <bsd.prog.mk>

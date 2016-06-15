@@ -26,7 +26,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/sem_new.c 277862 2015-01-28 22:42:56Z jilles $
+ * $FreeBSD: head/lib/libc/gen/sem_new.c 294565 2016-01-22 14:52:31Z jilles $
  */
 
 #include "namespace.h"
@@ -177,8 +177,10 @@ _sem_open(const char *name, int flags, ...)
 		if (ni->name != NULL && strcmp(name, ni->name) == 0) {
 			fd = _open(path, flags | O_RDWR | O_CLOEXEC |
 			    O_EXLOCK, mode);
-			if (fd == -1 || _fstat(fd, &sb) == -1)
+			if (fd == -1 || _fstat(fd, &sb) == -1) {
+				ni = NULL;
 				goto error;
+			}
 			if ((flags & (O_CREAT | O_EXCL)) == (O_CREAT |
 			    O_EXCL) || ni->dev != sb.st_dev ||
 			    ni->ino != sb.st_ino) {

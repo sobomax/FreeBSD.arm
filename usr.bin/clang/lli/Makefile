@@ -1,14 +1,15 @@
-# $FreeBSD: head/usr.bin/clang/lli/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/usr.bin/clang/lli/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
 PROG_CXX=lli
 
 SRCDIR=	tools/lli
-SRCS=	lli.cpp \
-	RemoteMemoryManager.cpp \
-	RemoteTarget.cpp \
-	RemoteTargetExternal.cpp
+SRCS=	OrcLazyJIT.cpp \
+	lli.cpp
+
+TGHDRS=	Attributes \
+	Intrinsics
 
 LIBDEPS=llvmx86disassembler \
 	llvmx86asmparser \
@@ -18,23 +19,24 @@ LIBDEPS=llvmx86disassembler \
 	llvmx86desc \
 	llvmx86info \
 	llvmmcdisassembler \
-	llvmx86instprinter \
+	llvmx86asmprinter \
 	llvmx86utils \
 	llvmselectiondag \
 	llvmasmprinter \
 	llvminterpreter \
 	llvmcodegen \
 	llvmscalaropts \
-	llvmprofiledata \
 	llvminstcombine \
+	llvmbitwriter \
 	llvminstrumentation \
+	llvmprofiledata \
+	llvmorcjit \
 	llvmtransformutils \
-	llvmipa \
-	llvmanalysis \
 	llvmmcjit \
-	llvmtarget \
-	llvmruntimedyld \
 	llvmexecutionengine \
+	llvmtarget \
+	llvmanalysis \
+	llvmruntimedyld \
 	llvmobject \
 	llvmmcparser \
 	llvmbitreader \
@@ -42,7 +44,6 @@ LIBDEPS=llvmx86disassembler \
 	llvmcore \
 	llvmsupport
 
-.include "../clang.prog.mk"
+LIBADD+=	z
 
-DPADD+=	${LIBZ}
-LDADD+=	-lz
+.include "../clang.prog.mk"

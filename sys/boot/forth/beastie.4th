@@ -24,7 +24,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \ 
-\ $FreeBSD: head/sys/boot/forth/beastie.4th 280937 2015-04-01 01:54:28Z dteske $
+\ $FreeBSD: head/sys/boot/forth/beastie.4th 293234 2016-01-06 15:50:21Z emaste $
 
 marker task-beastie.4th
 
@@ -85,11 +85,6 @@ variable logoY
 also support-functions
 
 : beastie-start ( -- ) \ starts the menu
-	s" console" getenv dup -1 <> if
-		s" efi" 2swap contains? if
-			s" set beastie_disable=YES" evaluate
-		then
-	else drop then
 	s" beastie_disable" getenv dup -1 <> if
 		s" YES" compare-insensitive 0= if
 			any_conf_read? if

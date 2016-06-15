@@ -13,7 +13,7 @@
  * UCL. This driver is based much more on read/write/poll mode of
  * operation though.
  *
- * $FreeBSD: head/sys/net/if_tun.c 273872 2014-10-30 21:21:53Z markm $
+ * $FreeBSD: head/sys/net/if_tun.c 300205 2016-05-19 13:52:12Z tuexen $
  */
 
 #include "opt_inet.h"
@@ -848,7 +848,7 @@ tunwrite(struct cdev *dev, struct uio *uio, int flag)
 	struct tun_softc *tp = dev->si_drv1;
 	struct ifnet	*ifp = TUN2IFP(tp);
 	struct mbuf	*m;
-	uint32_t	family;
+	uint32_t	family, mru;
 	int 		isr;
 
 	TUNDEBUG(ifp, "tunwrite\n");
@@ -860,7 +860,10 @@ tunwrite(struct cdev *dev, struct uio *uio, int flag)
 	if (uio->uio_resid == 0)
 		return (0);
 
-	if (uio->uio_resid < 0 || uio->uio_resid > TUNMRU) {
+	mru = TUNMRU;
+	if (tp->tun_flags & TUN_IFHEAD)
+		mru += sizeof(family);
+	if (uio->uio_resid < 0 || uio->uio_resid > mru) {
 		TUNDEBUG(ifp, "len=%zd!\n", uio->uio_resid);
 		return (EIO);
 	}
@@ -906,7 +909,7 @@ tunwrite(struct cdev *dev, struct uio *uio, int flag)
 		m_freem(m);
 		return (EAFNOSUPPORT);
 	}
-	random_harvest(&(m->m_data), 12, 2, RANDOM_NET_TUN);
+	random_harvest_queue(m, sizeof(*m), 2, RANDOM_NET_TUN);
 	if_inc_counter(ifp, IFCOUNTER_IBYTES, m->m_pkthdr.len);
 	if_inc_counter(ifp, IFCOUNTER_IPACKETS, 1);
 	CURVNET_SET(ifp->if_vnet);

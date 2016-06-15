@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/meta2deps.sh 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/share/mk/meta2deps.sh 296323 2016-03-02 20:06:24Z bdrewery $
 #!/bin/sh
 
 # NAME:
@@ -310,7 +310,7 @@ meta2deps() {
 	*)  seen=$dir;;
 	esac
 	case "$dir" in
-	${CURDIR:-.}|${CURDIR:-.}/*|"") continue;;
+	${CURDIR:-.}|"") continue;;
 	$src_re)
 	    # avoid repeating ourselves...
 	    case "$DPDEPS,$seensrc," in

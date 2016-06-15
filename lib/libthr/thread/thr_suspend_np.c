@@ -25,9 +25,10 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_suspend_np.c 239718 2012-08-27 03:09:39Z davidxu $
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_suspend_np.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include "namespace.h"
 #include <errno.h>

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xe/if_xe_pccard.c 257179 2013-10-26 18:18:50Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/xe/if_xe_pccard.c 297000 2016-03-18 01:28:41Z jhibbits $");
 
 /* xe pccard interface driver */
 
@@ -140,7 +140,7 @@ xe_cemfix(device_t dev)
 
 	DEVPRINTF(2, (dev, "cemfix\n"));
 
-	DEVPRINTF(1, (dev, "CEM I/O port 0x%0lx, size 0x%0lx\n",
+	DEVPRINTF(1, (dev, "CEM I/O port 0x%0jx, size 0x%0jx\n",
 		bus_get_resource_start(dev, SYS_RES_IOPORT, sc->port_rid),
 		bus_get_resource_count(dev, SYS_RES_IOPORT, sc->port_rid)));
 
@@ -386,3 +386,4 @@ static driver_t xe_pccard_driver = {
 devclass_t xe_devclass;
 
 DRIVER_MODULE(xe, pccard, xe_pccard_driver, xe_devclass, 0, 0);
+PCCARD_PNP_INFO(xe_pccard_products);

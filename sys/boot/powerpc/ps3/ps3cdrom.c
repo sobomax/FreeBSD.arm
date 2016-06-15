@@ -22,7 +22,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/powerpc/ps3/ps3cdrom.c 224857 2011-08-14 00:20:37Z nwhitehorn $
+ * $FreeBSD: head/sys/boot/powerpc/ps3/ps3cdrom.c 298230 2016-04-18 23:09:22Z allanjude $
  */
 
 #include <sys/param.h>
@@ -46,7 +46,7 @@
 
 static int ps3cdrom_init(void);
 static int ps3cdrom_strategy(void *devdata, int flag, daddr_t dblk,
-	size_t size, char *buf, size_t *rsize);
+	size_t offset, size_t size, char *buf, size_t *rsize);
 static int ps3cdrom_open(struct open_file *f, ...);
 static int ps3cdrom_close(struct open_file *f);
 static void ps3cdrom_print(int verbose);
@@ -76,7 +76,7 @@ static int ps3cdrom_init(void)
 }
 
 static int ps3cdrom_strategy(void *devdata, int flag, daddr_t dblk,
-	size_t size, char *buf, size_t *rsize)
+	size_t offset, size_t size, char *buf, size_t *rsize)
 {
 	struct ps3_devdesc *dev = (struct ps3_devdesc *) devdata;
 	int err;

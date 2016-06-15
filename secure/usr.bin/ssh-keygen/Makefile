@@ -1,15 +1,12 @@
-# $FreeBSD: head/secure/usr.bin/ssh-keygen/Makefile 275083 2014-11-25 22:25:13Z bapt $
+# $FreeBSD: head/secure/usr.bin/ssh-keygen/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 PROG=	ssh-keygen
 SRCS=	ssh-keygen.c
+PACKAGE=	ssh
 CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-
-.if !defined(NO_SHARED)
-# required when linking with a dynamic libssh
-SRCS+=	roaming_dummy.c
-.endif
+SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh
 
@@ -22,5 +19,3 @@ LIBADD+=	crypto
 .include <bsd.prog.mk>
 
 .PATH:	${SSHDIR}
-
-${OBJS} ${POBJS} ${SOBJS}: ssh_namespace.h

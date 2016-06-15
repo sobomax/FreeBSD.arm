@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/radeon_drv.h 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/radeon_drv.h 298955 2016-05-03 03:41:25Z pfg $");
 
 #ifndef __RADEON_DRV_H__
 #define __RADEON_DRV_H__
@@ -365,7 +365,7 @@ typedef struct drm_radeon_private {
 
 	u32 scratch_ages[5];
 
-	/* starting from here on, data is preserved accross an open */
+	/* starting from here on, data is preserved across an open */
 	uint32_t flags;		/* see radeon_chip_flags */
 	unsigned long fb_aper_offset;
 

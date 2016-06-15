@@ -1,4 +1,4 @@
-/* $FreeBSD: head/usr.bin/grep/regex/glue.h 226035 2011-10-05 09:56:43Z gabor $ */
+/* $FreeBSD: head/usr.bin/grep/regex/glue.h 296799 2016-03-13 14:53:12Z ian $ */
 
 #ifndef GLUE_H
 #define GLUE_H
@@ -50,7 +50,7 @@ typedef enum { STR_WIDE, STR_BYTE, STR_MBS, STR_USER } tre_str_type_t;
       if ((long long)pmatch[0].rm_eo - pmatch[0].rm_so < 0)		\
 	return REG_NOMATCH;						\
       ret = fn;								\
-      for (unsigned i = 0; (!(eflags & REG_NOSUB) && (i < nmatch)); i++)\
+      for (unsigned i = 0; (!preg->nosub && (i < nmatch)); i++)		\
 	{								\
 	  pmatch[i].rm_so += offset;					\
 	  pmatch[i].rm_eo += offset;					\

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/common/Makefile.inc 284590 2015-06-19 05:42:24Z bapt $
+# $FreeBSD: head/sys/boot/common/Makefile.inc 296378 2016-03-04 05:36:53Z sgalabov $
 
 SRCS+=	boot.c commands.c console.c devopen.c interp.c 
 SRCS+=	interp_backslash.c interp_parse.c ls.c misc.c 
@@ -20,6 +20,8 @@ SRCS+=	load_elf64.c reloc_elf64.c
 SRCS+=	load_elf64.c reloc_elf64.c
 .elif ${MACHINE_ARCH} == "mips64" || ${MACHINE_ARCH} == "mips64el"
 SRCS+= load_elf64.c reloc_elf64.c
+.elif ${MACHINE} == "mips"
+SRCS+=	load_elf32.c reloc_elf32.c
 .endif
 
 .if defined(LOADER_NET_SUPPORT)

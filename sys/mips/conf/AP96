@@ -11,7 +11,9 @@
 # + 64mb RAM
 # + uboot environment
 
-# $FreeBSD: head/sys/mips/conf/AP96 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD: head/sys/mips/conf/AP96 295945 2016-02-24 00:39:36Z sobomax $
+
+#NO_UNIVERSE
 
 include		"AR71XX_BASE"
 ident		"AP96"
@@ -25,9 +27,9 @@ options 	AR71XX_ENV_UBOOT
 options 	MSDOSFS
 
 # uncompress - to boot read-only lzma natively from flash
-device		geom_uncompress
-options 	GEOM_UNCOMPRESS
-options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uncompress\"
+device		geom_uzip
+options 	GEOM_UZIP
+options 	ROOTDEVNAME=\"ufs:/dev/map/rootfs.uzip\"
 
 # Used for the static uboot partition map
 device          geom_map

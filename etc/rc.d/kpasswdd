@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/kpasswdd 270782 2014-08-29 07:51:47Z hrs $
+# $FreeBSD: head/etc/rc.d/kpasswdd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: kpasswdd
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name=kpasswdd
+desc="Kerberos 5 password changing"
 rcvar=${name}_enable
 required_vars=kdc_enable
 start_precmd=${name}_start_precmd

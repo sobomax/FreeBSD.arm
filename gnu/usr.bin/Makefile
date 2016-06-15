@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/Makefile 276551 2015-01-02 18:45:03Z bapt $
+# $FreeBSD: head/gnu/usr.bin/Makefile 298823 2016-04-29 23:27:15Z bapt $
 
 .include <src.opts.mk>
 
@@ -13,8 +13,9 @@ SUBDIR= ${_binutils} \
 	grep \
 	${_groff} \
 	${_rcs} \
-	sdiff \
 	${_tests}
+
+SUBDIR_DEPEND_gdb= ${_binutils}
 
 .if ${MK_CXX} != "no"
 .if ${MK_GCC} != "no"
@@ -39,12 +40,13 @@ _tests=		tests
 
 .if ${MK_BINUTILS} != "no"
 _binutils=	binutils
-.endif
-.if ${MK_GCC} != "no"
-_cc=		cc
-.endif
 .if ${MK_GDB} != "no"
 _gdb=		gdb
+.endif
+.endif
+
+.if ${MK_GCC} != "no"
+_cc=		cc
 .endif
 
 SUBDIR_PARALLEL=

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/misc/uled.c 271680 2014-09-16 17:07:32Z brooks $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/misc/uled.c 292080 2015-12-11 05:28:00Z imp $");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -107,13 +107,14 @@ static driver_t uled_driver = {
 	.size = sizeof(struct uled_softc),
 };
 
-DRIVER_MODULE(uled, uhub, uled_driver, uled_devclass, NULL, NULL);
-MODULE_DEPEND(uled, usb, 1, 1, 1);
-MODULE_VERSION(uled, 1);
-
 static const STRUCT_USB_HOST_ID uled_devs[] = {
 	{USB_VPI(USB_VENDOR_DREAMLINK, USB_PRODUCT_DREAMLINK_DL100B, 0)},
 };
+
+DRIVER_MODULE(uled, uhub, uled_driver, uled_devclass, NULL, NULL);
+MODULE_DEPEND(uled, usb, 1, 1, 1);
+MODULE_VERSION(uled, 1);
+USB_PNP_HOST_INFO(uled_devs);
 
 static int
 uled_probe(device_t dev)

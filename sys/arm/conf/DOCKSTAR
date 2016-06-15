@@ -1,7 +1,7 @@
 #
 # Custom kernel for Seagate DockStar (Marvell SheevaPlug based) devices.
 #
-# $FreeBSD: head/sys/arm/conf/DOCKSTAR 283547 2015-05-25 23:27:13Z ian $
+# $FreeBSD: head/sys/arm/conf/DOCKSTAR 295621 2016-02-14 23:42:07Z andrew $
 #
 #    http://www.FreeBSD.org/doc/en_US.ISO8859-1/books/handbook/kernelconfig-config.html
 #
@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/DOCKSTAR 283547 2015-05-25 23:27:13Z ian $
+# $FreeBSD: head/sys/arm/conf/DOCKSTAR 295621 2016-02-14 23:42:07Z andrew $
 #
 #NO_UNIVERSE
 
@@ -96,6 +96,7 @@ device		uart
 # Networking
 device		mge			# Marvell Gigabit Ethernet controller
 device		mii
+device		mdio
 device		e1000phy
 
 # USB
@@ -116,6 +117,7 @@ device		u3g  			# USB-based 3G modems (Option, Huawei, Sierra)
 # I2C (TWSI)
 device		iic
 device		iicbus
+device		twsi
 
 # Sound
 device		sound
@@ -146,6 +148,9 @@ options 	IPDIVERT
 device		pf
 device		pflog
 device		pfsync
+
+# GPIO
+device		gpio
 
 # ALTQ, required for PF
 options 	ALTQ			# Basic ALTQ support

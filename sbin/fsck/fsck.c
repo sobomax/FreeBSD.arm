@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/fsck/fsck.c 274770 2014-11-21 01:43:55Z imp $");
+__FBSDID("$FreeBSD: head/sbin/fsck/fsck.c 298194 2016-04-18 07:44:53Z araujo $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -200,7 +200,7 @@ main(int argc, char *argv[])
 		mntpt = NULL;
 		spec = *argv;
 		cp = strrchr(spec, '/');
-		if (cp == 0) {
+		if (cp == NULL) {
 			(void)snprintf(device, sizeof(device), "%s%s",
 				_PATH_DEV, spec);
 			spec = device;

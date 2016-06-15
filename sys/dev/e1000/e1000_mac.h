@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2001-2014, Intel Corporation 
+  Copyright (c) 2001-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,15 +30,13 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/e1000_mac.h 267935 2014-06-26 21:33:32Z jfv $*/
+/*$FreeBSD: head/sys/dev/e1000/e1000_mac.h 295323 2016-02-05 17:14:37Z erj $*/
 
 #ifndef _E1000_MAC_H_
 #define _E1000_MAC_H_
 
 void e1000_init_mac_ops_generic(struct e1000_hw *hw);
-#ifndef E1000_REMOVED
 #define E1000_REMOVED(a) (0)
-#endif /* E1000_REMOVED */
 void e1000_null_mac_generic(struct e1000_hw *hw);
 s32  e1000_null_ops_generic(struct e1000_hw *hw);
 s32  e1000_null_link_info(struct e1000_hw *hw, u16 *s, u16 *d);

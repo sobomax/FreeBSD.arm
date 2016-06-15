@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_ec.c 277594 2015-01-23 18:55:04Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/acpica/acpi_ec.c 295940 2016-02-23 23:09:45Z jkim $");
 
 #include "opt_acpi.h"
 #include <sys/param.h>
@@ -434,9 +434,7 @@ out:
 		 params->gpe_bit, (params->glk) ? ", GLK" : "",
 		 ecdt ? ", ECDT" : "");
 	device_set_desc_copy(dev, desc);
-    }
-
-    if (ret > 0 && params)
+    } else
 	free(params, M_TEMP);
     if (buf.Pointer)
 	AcpiOsFree(buf.Pointer);

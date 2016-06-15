@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_os_bsd.h 284515 2015-06-17 15:20:14Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_os_bsd.h 292782 2015-12-27 17:33:59Z allanjude $");
 
 #ifndef _NETINET_SCTP_OS_BSD_H_
 #define _NETINET_SCTP_OS_BSD_H_
@@ -95,7 +95,6 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_os_bsd.h 284515 2015-06-17 15:20:14Z t
 #include <netinet/ip6.h>
 #include <netinet6/ip6_var.h>
 #include <netinet6/in6_pcb.h>
-#include <netinet/icmp6.h>
 #include <netinet6/ip6protosw.h>
 #include <netinet6/nd6.h>
 #include <netinet6/scope6_var.h>
@@ -105,7 +104,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_os_bsd.h 284515 2015-06-17 15:20:14Z t
 #include <netinet/ip_options.h>
 
 #include <crypto/sha1.h>
-#include <crypto/sha2/sha2.h>
+#include <crypto/sha2/sha256.h>
 
 #ifndef in6pcb
 #define in6pcb		inpcb

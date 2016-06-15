@@ -36,7 +36,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/amd64/include/param.h 270223 2014-08-20 16:06:24Z jhb $
+ * $FreeBSD: head/sys/amd64/include/param.h 297877 2016-04-12 21:23:44Z jhb $
  */
 
 
@@ -72,7 +72,7 @@
 #endif
 
 #ifndef MAXMEMDOM
-#define	MAXMEMDOM	1
+#define	MAXMEMDOM	8
 #endif
 
 #define	ALIGNBYTES		_ALIGNBYTES
@@ -148,5 +148,8 @@
 #define	amd64_ptob(x)	((unsigned long)(x) << PAGE_SHIFT)
 
 #define	pgtok(x)	((unsigned long)(x) * (PAGE_SIZE / 1024)) 
+
+#define	INKERNEL(va) (((va) >= DMAP_MIN_ADDRESS && (va) < DMAP_MAX_ADDRESS) \
+    || ((va) >= VM_MIN_KERNEL_ADDRESS && (va) < VM_MAX_KERNEL_ADDRESS))
 
 #endif /* !_AMD64_INCLUDE_PARAM_H_ */

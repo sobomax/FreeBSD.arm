@@ -48,11 +48,13 @@
  * or the SD Card Association to disclose or distribute any technical
  * information, know-how or other confidential information to any third party.
  *
- * $FreeBSD: head/sys/dev/mmc/bridge.h 183704 2008-10-08 17:35:41Z mav $
+ * $FreeBSD: head/sys/dev/mmc/bridge.h 292180 2015-12-14 01:09:25Z ian $
  */
 
 #ifndef DEV_MMC_BRIDGE_H
 #define DEV_MMC_BRIDGE_H
+
+#include <sys/bus.h>
 
 /*
  * This file defines interfaces for the mmc bridge.  The names chosen
@@ -134,5 +136,8 @@ struct mmc_host {
 	enum mmc_card_mode mode;
 	struct mmc_ios ios;	/* Current state of the host */
 };
+
+extern driver_t   mmc_driver;
+extern devclass_t mmc_devclass;
 
 #endif /* DEV_MMC_BRIDGE_H */

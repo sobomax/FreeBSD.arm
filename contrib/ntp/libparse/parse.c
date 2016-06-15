@@ -288,7 +288,7 @@ parse_ioread(
 		break;
 	}
 
-	parseprintf(DD_PARSE, ("parse_ioread(0x%lx, char=0x%x, ..., ...)\n", (unsigned long)parseio, ch & 0xFF));
+	parseprintf(DD_PARSE, ("parse_ioread(0x%p, char=0x%x, ..., ...)\n", (void*)parseio, ch & 0xFF));
 
 	if (!clockformats[parseio->parse_lformat]->convert)
 	{
@@ -697,14 +697,14 @@ timepacket(
 	{
 	case CVT_FAIL:
 		parseio->parse_badformat++;
-		break;
+		return cvtrtc;
 
 	case CVT_NONE:
 		/*
 		 * too bad - pretend bad format
 		 */
 		parseio->parse_badformat++;
-		break;
+		return CVT_NONE;
 
 	case CVT_OK:
 		break;

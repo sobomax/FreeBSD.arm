@@ -27,7 +27,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb_provider.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/cxgb/ulp/iw_cxgb/iw_cxgb_provider.c 294610 2016-01-22 23:33:34Z np $");
 
 #include "opt_inet.h"
 
@@ -303,7 +303,7 @@ iwch_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags)
 	else
 		cq_op = CQ_ARM_AN;
 	if (chp->user_rptr_addr) {
-		if (copyin(&rptr, chp->user_rptr_addr, 4))
+		if (copyin(chp->user_rptr_addr, &rptr, sizeof(rptr)))
 			return (-EFAULT);
 		mtx_lock(&chp->lock);
 		chp->cq.rptr = rptr;
@@ -1140,8 +1140,9 @@ int iwch_register_device(struct iwch_dev *dev)
 	dev->ibdev.iwcm->connect = iwch_connect;
 	dev->ibdev.iwcm->accept = iwch_accept_cr;
 	dev->ibdev.iwcm->reject = iwch_reject_cr;
-	dev->ibdev.iwcm->create_listen = iwch_create_listen;
-	dev->ibdev.iwcm->destroy_listen = iwch_destroy_listen;
+	dev->ibdev.iwcm->create_listen_ep = iwch_create_listen_ep;
+	dev->ibdev.iwcm->destroy_listen_ep = iwch_destroy_listen_ep;
+	dev->ibdev.iwcm->newconn = process_newconn;
 	dev->ibdev.iwcm->add_ref = iwch_qp_add_ref;
 	dev->ibdev.iwcm->rem_ref = iwch_qp_rem_ref;
 	dev->ibdev.iwcm->get_qp = iwch_get_qp;

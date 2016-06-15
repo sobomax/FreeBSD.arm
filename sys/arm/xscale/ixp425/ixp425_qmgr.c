@@ -57,7 +57,7 @@
  * SUCH DAMAGE.
 */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_qmgr.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/arm/xscale/ixp425/ixp425_qmgr.c 299069 2016-05-04 15:48:59Z pfg $");
 
 /*
  * Intel XScale Queue Manager support.
@@ -355,7 +355,7 @@ ixpqmgr_qconfig(int qId, int qEntries, int ne, int nf, int srcSel,
 	if (cb == NULL) {
 	    /* Reset to dummy callback */
 	    qi->cb = dummyCallback;
-	    qi->cbarg = 0;
+	    qi->cbarg = NULL;
 	} else {
 	    qi->cb = cb;
 	    qi->cbarg = cbarg;
@@ -421,7 +421,7 @@ ixpqmgr_qwrite(int qId, uint32_t entry)
 		    return ENOSPC;
 		}
 		/*
-		 * No overflow occured : someone is draining the queue
+		 * No overflow occurred : someone is draining the queue
 		 * and the current counter needs to be
 		 * updated from the current number of entries in the queue
 		 */

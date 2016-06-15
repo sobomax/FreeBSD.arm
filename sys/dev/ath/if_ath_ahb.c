@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ahb.c 279512 2015-03-02 02:14:44Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_ahb.c 288349 2015-09-29 03:37:17Z adrian $");
 
 /*
  * AHB bus front-end for the Atheros Wireless LAN controller driver.
@@ -115,6 +115,14 @@ ath_ahb_probe(device_t dev)
 		return BUS_PROBE_DEFAULT;
 	}
 	return ENXIO;
+}
+
+static void
+ath_ahb_intr(void *arg)
+{
+	/* XXX TODO: check if its ours! */
+	ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_WMAC);
+	ath_intr(arg);
 }
 
 static int
@@ -212,7 +220,7 @@ ath_ahb_attach(device_t dev)
 	}
 	if (bus_setup_intr(dev, psc->sc_irq,
 			   INTR_TYPE_NET | INTR_MPSAFE,
-			   NULL, ath_intr, sc, &psc->sc_ih)) {
+			   NULL, ath_ahb_intr, sc, &psc->sc_ih)) {
 		device_printf(dev, "could not establish interrupt\n");
 		goto bad2;
 	}
@@ -253,7 +261,6 @@ ath_ahb_attach(device_t dev)
 	ATH_PCU_LOCK_INIT(sc);
 	ATH_RX_LOCK_INIT(sc);
 	ATH_TX_LOCK_INIT(sc);
-	ATH_TX_IC_LOCK_INIT(sc);
 	ATH_TXSTATUS_LOCK_INIT(sc);
 
 	error = ath_attach(device_id, sc);
@@ -263,7 +270,6 @@ ath_ahb_attach(device_t dev)
 	ATH_TXSTATUS_LOCK_DESTROY(sc);
 	ATH_RX_LOCK_DESTROY(sc);
 	ATH_TX_LOCK_DESTROY(sc);
-	ATH_TX_IC_LOCK_DESTROY(sc);
 	ATH_PCU_LOCK_DESTROY(sc);
 	ATH_LOCK_DESTROY(sc);
 	bus_dma_tag_destroy(sc->sc_dmat);
@@ -307,7 +313,6 @@ ath_ahb_detach(device_t dev)
 	ATH_TXSTATUS_LOCK_DESTROY(sc);
 	ATH_RX_LOCK_DESTROY(sc);
 	ATH_TX_LOCK_DESTROY(sc);
-	ATH_TX_IC_LOCK_DESTROY(sc);
 	ATH_PCU_LOCK_DESTROY(sc);
 	ATH_LOCK_DESTROY(sc);
 

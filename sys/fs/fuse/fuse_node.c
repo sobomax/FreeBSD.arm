@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/fuse/fuse_node.c 279537 2015-03-02 19:14:58Z jkim $");
+__FBSDID("$FreeBSD: head/sys/fs/fuse/fuse_node.c 299816 2016-05-15 00:45:17Z rmacklem $");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -289,7 +289,9 @@ fuse_vnode_open(struct vnode *vp, int32_t fuse_open_flags, struct thread *td)
 	 * XXXIP: Handle fd based DIRECT_IO
 	 */
 	if (fuse_open_flags & FOPEN_DIRECT_IO) {
+		ASSERT_VOP_ELOCKED(vp, __func__);
 		VTOFUD(vp)->flag |= FN_DIRECTIO;
+		fuse_io_invalbuf(vp, td);
 	} else {
 	        VTOFUD(vp)->flag &= ~FN_DIRECTIO;
 	}

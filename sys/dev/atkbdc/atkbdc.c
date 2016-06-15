@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc.c 278787 2015-02-14 22:12:17Z grembo $");
+__FBSDID("$FreeBSD: head/sys/dev/atkbdc/atkbdc.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include "opt_kbd.h"
 
@@ -154,7 +154,7 @@ atkbdc_softc_t
 {
 	atkbdc_softc_t *sc;
 
-	if (unit >= sizeof(atkbdc_softc)/sizeof(atkbdc_softc[0]))
+	if (unit >= nitems(atkbdc_softc))
 		return NULL;
 	sc = atkbdc_softc[unit];
 	if (sc == NULL) {

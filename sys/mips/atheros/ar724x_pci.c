@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar724x_pci.c 272239 2014-09-28 07:27:58Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar724x_pci.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include "opt_ar71xx.h"
 
@@ -48,7 +48,6 @@ __FBSDID("$FreeBSD: head/sys/mips/atheros/ar724x_pci.c 272239 2014-09-28 07:27:5
 #include <machine/bus.h>
 #include <machine/cpu.h>
 #include <machine/intr_machdep.h>
-#include <machine/pmap.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -369,7 +368,6 @@ static int
 ar724x_pci_attach(device_t dev)
 {
 	struct ar71xx_pci_softc *sc = device_get_softc(dev);
-	int busno = 0;
 	int rid = 0;
 
 	sc->sc_mem_rman.rm_type = RMAN_ARRAY;
@@ -429,7 +427,7 @@ ar724x_pci_attach(device_t dev)
 	    | PCIM_CMD_SERRESPEN | PCIM_CMD_BACKTOBACK
 	    | PCIM_CMD_PERRESPEN | PCIM_CMD_MWRICEN, 2);
 
-	device_add_child(dev, "pci", busno);
+	device_add_child(dev, "pci", -1);
 	return (bus_generic_attach(dev));
 }
 
@@ -466,7 +464,7 @@ ar724x_pci_write_ivar(device_t dev, device_t child, int which, uintptr_t result)
 
 static struct resource *
 ar724x_pci_alloc_resource(device_t bus, device_t child, int type, int *rid,
-    u_long start, u_long end, u_long count, u_int flags)
+    rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	struct ar71xx_pci_softc *sc = device_get_softc(bus);	
 	struct resource *rv;
@@ -587,7 +585,6 @@ ar724x_pci_intr(void *arg)
 	struct intr_event *event;
 	uint32_t reg, irq, mask;
 
-	ar71xx_device_ddr_flush_ip2();
 
 	reg = ATH_READ_REG(AR724X_PCI_INTR_STATUS);
 	mask = ATH_READ_REG(AR724X_PCI_INTR_MASK);
@@ -603,6 +600,9 @@ ar724x_pci_intr(void *arg)
 			printf("Stray IRQ %d\n", irq);
 			return (FILTER_STRAY);
 		}
+
+		/* Flush pending memory transactions */
+		ar71xx_device_flush_ddr(AR71XX_CPU_DDR_FLUSH_PCIE);
 
 		/* TODO: frame instead of NULL? */
 		intr_event_handle(event, NULL);

@@ -52,7 +52,7 @@
 
 #include <dev/sound/pci/cs461x_dsp.h>
 
-SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/csa.c 274035 2014-11-03 11:11:45Z bapt $");
+SND_DECLARE_FILE("$FreeBSD: head/sys/dev/sound/pci/csa.c 294883 2016-01-27 02:23:54Z jhibbits $");
 
 /* This is the pci device id. */
 #define CS4610_PCI_ID 0x60011013
@@ -81,7 +81,8 @@ typedef struct csa_softc *sc_p;
 static int csa_probe(device_t dev);
 static int csa_attach(device_t dev);
 static struct resource *csa_alloc_resource(device_t bus, device_t child, int type, int *rid,
-					      u_long start, u_long end, u_long count, u_int flags);
+					      rman_res_t start, rman_res_t end,
+					      rman_res_t count, u_int flags);
 static int csa_release_resource(device_t bus, device_t child, int type, int rid,
 				   struct resource *r);
 static int csa_setup_intr(device_t bus, device_t child,
@@ -396,7 +397,7 @@ csa_resume(device_t dev)
 
 static struct resource *
 csa_alloc_resource(device_t bus, device_t child, int type, int *rid,
-		      u_long start, u_long end, u_long count, u_int flags)
+		   rman_res_t start, rman_res_t end, rman_res_t count, u_int flags)
 {
 	sc_p scp;
 	csa_res *resp;

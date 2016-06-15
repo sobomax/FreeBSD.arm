@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014-2015 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2014-2015 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci_iov_schema.c 279465 2015-03-01 00:59:28Z rstone $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci_iov_schema.c 296865 2016-03-14 17:41:17Z rstone $");
 
 #include <sys/param.h>
 #include <sys/conf.h>

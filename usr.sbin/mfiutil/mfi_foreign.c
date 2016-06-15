@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: head/usr.sbin/mfiutil/mfi_foreign.c 251516 2013-06-08 02:54:59Z sbruno $
+ * $FreeBSD: head/usr.sbin/mfiutil/mfi_foreign.c 285067 2015-07-03 01:43:11Z emaste $
  */
 
 #include <sys/param.h>
@@ -110,7 +110,7 @@ static int
 foreign_show_cfg(int fd, uint32_t opcode, uint8_t cfgidx, int diagnostic)
 {
 	struct mfi_config_data *config;
-	char prefix[26];
+	char prefix[64];
 	int error;
 	uint8_t mbox[4];
 

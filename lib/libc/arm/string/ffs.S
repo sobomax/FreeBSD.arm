@@ -30,7 +30,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: head/lib/libc/arm/string/ffs.S 283831 2015-05-31 14:04:11Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/string/ffs.S 288373 2015-09-29 16:09:58Z kib $");
 
 .syntax unified
 
@@ -84,3 +84,5 @@ ENTRY(ffs)
 	RET
 #endif
 END(ffs)
+
+	.section .note.GNU-stack,"",%progbits

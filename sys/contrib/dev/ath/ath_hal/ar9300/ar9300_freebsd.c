@@ -97,6 +97,18 @@ ar9300_freebsd_get_cts_timeout(struct ath_hal *ah)
     return ath_hal_mac_usec(ah, clks);      /* convert from system clocks */
 }
 
+static void
+ar9300_freebsd_set_tsf64(struct ath_hal *ah, uint64_t tsf64)
+{
+
+	/*
+	 * XXX TODO: read ar5416SetTsf64() - we should wait before we do
+	 * this.
+	 */
+	OS_REG_WRITE(ah, AR_TSF_L32, tsf64 & 0xffffffff);
+	OS_REG_WRITE(ah, AR_TSF_U32, (tsf64 >> 32) & 0xffffffff);
+}
+
 void
 ar9300_attach_freebsd_ops(struct ath_hal *ah)
 {
@@ -182,6 +194,7 @@ ar9300_attach_freebsd_ops(struct ath_hal *ah)
 	ah->ah_getTsf32		= ar9300_get_tsf32;
 	ah->ah_getTsf64		= ar9300_get_tsf64;
 	ah->ah_resetTsf		= ar9300_reset_tsf;
+	ah->ah_setTsf64		= ar9300_freebsd_set_tsf64;
 	ah->ah_detectCardPresent	= ar9300_detect_card_present;
 	// ah->ah_updateMibCounters	= ar9300_update_mib_counters;
 	ah->ah_getRfGain		= ar9300_get_rfgain;
@@ -210,6 +223,14 @@ ar9300_attach_freebsd_ops(struct ath_hal *ah)
 	// procradarevent
 	ah->ah_isFastClockEnabled	= ar9300_is_fast_clock_enabled;
 	ah->ah_get11nExtBusy	= ar9300_get_11n_ext_busy;
+
+	/* Spectral Scan Functions */
+	ah->ah_spectralConfigure	= ar9300_configure_spectral_scan;
+	ah->ah_spectralGetConfig	= ar9300_get_spectral_params;
+	ah->ah_spectralStart		= ar9300_start_spectral_scan;
+	ah->ah_spectralStop		= ar9300_stop_spectral_scan;
+	ah->ah_spectralIsEnabled	= ar9300_is_spectral_enabled;
+	ah->ah_spectralIsActive		= ar9300_is_spectral_active;
 
 	/* Key cache functions */
 	ah->ah_getKeyCacheSize	= ar9300_get_key_cache_size;
@@ -282,6 +303,15 @@ ar9300_attach_freebsd_ops(struct ath_hal *ah)
 
 	/* MCI bluetooth functions */
 	if (AR_SREV_JUPITER(ah) || AR_SREV_APHRODITE(ah)) {
+		/*
+		 * Note: these are done in attach too for now, because
+		 * at this point we haven't yet setup the mac/bb revision
+		 * values, so this code is effectively NULL.
+		 * However, I'm leaving this here so people digging
+		 * into the code (a) see the MCI bits here, and (b)
+		 * are now told they should look elsewhere for
+		 * these methods.
+		 */
 		ah->ah_btCoexSetWeights = ar9300_mci_bt_coex_set_weights;
 		ah->ah_btCoexDisable = ar9300_mci_bt_coex_disable;
 		ah->ah_btCoexEnable = ar9300_mci_bt_coex_enable;
@@ -289,7 +319,7 @@ ar9300_attach_freebsd_ops(struct ath_hal *ah)
 	ah->ah_btMciSetup		= ar9300_mci_setup;
 	ah->ah_btMciSendMessage		= ar9300_mci_send_message;
 	ah->ah_btMciGetInterrupt	= ar9300_mci_get_interrupt;
-	ah->ah_btMciGetState		= ar9300_mci_state;
+	ah->ah_btMciState		= ar9300_mci_state;
 	ah->ah_btMciDetach		= ar9300_mci_detach;
 
 	/* LNA diversity functions */
@@ -300,6 +330,7 @@ ar9300_attach_freebsd_ops(struct ath_hal *ah)
 HAL_BOOL
 ar9300_reset_freebsd(struct ath_hal *ah, HAL_OPMODE opmode,
     struct ieee80211_channel *chan, HAL_BOOL bChannelChange,
+    HAL_RESET_TYPE resetType,
     HAL_STATUS *status)
 {
 	HAL_BOOL r;
@@ -743,8 +774,7 @@ ar9300_beacon_set_beacon_timers(struct ath_hal *ah,
 	OS_REG_WRITE(ah, AR_NEXT_NDP_TIMER, TU_TO_USEC(bt->bt_nextatim));
 
 	bperiod = TU_TO_USEC(bt->bt_intval & HAL_BEACON_PERIOD);
-	/* XXX TODO! */
-//        ahp->ah_beaconInterval = bt->bt_intval & HAL_BEACON_PERIOD;
+	AH9300(ah)->ah_beaconInterval = bt->bt_intval & HAL_BEACON_PERIOD;
 	OS_REG_WRITE(ah, AR_BEACON_PERIOD, bperiod);
 	OS_REG_WRITE(ah, AR_DMA_BEACON_PERIOD, bperiod);
 	OS_REG_WRITE(ah, AR_SWBA_PERIOD, bperiod);

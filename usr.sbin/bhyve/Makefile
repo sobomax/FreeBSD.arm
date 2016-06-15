@@ -1,12 +1,15 @@
 #
-# $FreeBSD: head/usr.sbin/bhyve/Makefile 284539 2015-06-18 06:00:17Z neel $
+# $FreeBSD: head/usr.sbin/bhyve/Makefile 298355 2016-04-20 17:05:32Z grehan $
 #
 
 PROG=	bhyve
+PACKAGE=	bhyve
 
 DEBUG_FLAGS= -g -O0
 
 MAN=	bhyve.8
+
+BHYVE_SYSDIR?=${SRCTOP}
 
 SRCS=	\
 	atkbdc.c		\
@@ -16,6 +19,7 @@ SRCS=	\
 	bootrom.c		\
 	consport.c		\
 	dbgport.c		\
+	fwctl.c			\
 	inout.c			\
 	ioapic.c		\
 	mem.c			\
@@ -41,7 +45,7 @@ SRCS=	\
 	xmsr.c			\
 	spinup_ap.c
 
-.PATH:	${.CURDIR}/../../sys/amd64/vmm
+.PATH:  ${BHYVE_SYSDIR}/sys/amd64/vmm
 SRCS+=	vmm_instruction_emul.c
 
 LIBADD=	vmmapi md pthread

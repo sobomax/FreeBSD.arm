@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/camcontrol/attrib.c 284192 2015-06-09 21:39:38Z ken $");
+__FBSDID("$FreeBSD: head/sbin/camcontrol/attrib.c 300547 2016-05-24 00:57:11Z truckman $");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -137,8 +137,7 @@ scsiattrib(struct cam_device *device, int argc, char **argv, char *combinedopt,
 		goto bailout;
 	}
 
-	bzero(&(&ccb->ccb_h)[1],
-	      sizeof(union ccb) - sizeof(struct ccb_hdr));
+	CCB_CLEAR_ALL_EXCEPT_HDR(&ccb->csio);
 
 	STAILQ_INIT(&write_attr_list);
 

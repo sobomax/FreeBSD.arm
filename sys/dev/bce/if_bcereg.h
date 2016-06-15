@@ -22,7 +22,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/bce/if_bcereg.h 279223 2015-02-24 01:00:46Z yongari $
+ * $FreeBSD: head/sys/dev/bce/if_bcereg.h 298955 2016-05-03 03:41:25Z pfg $
  */
 
 #ifndef	_BCEREG_H_DEFINED
@@ -6089,7 +6089,7 @@ struct l2_fhdr {
 /****************************************************************************/
 /* The following definitions refer to pre-defined locations in processor    */
 /* memory space which allows the driver to enable particular functionality  */
-/* within the firmware or read specfic information about the running        */
+/* within the firmware or read specific information about the running        */
 /* firmware.                                                                */
 /****************************************************************************/
 
@@ -6174,7 +6174,7 @@ struct l2_fhdr {
 #define RX_IDX(x) ((x) & USABLE_RX_BD_PER_PAGE)
 
 /*
- * To accomodate jumbo frames, the page chain should
+ * To accommodate jumbo frames, the page chain should
  * be 4 times larger than the receive chain.
  */
 #define DEFAULT_PG_PAGES		(DEFAULT_RX_PAGES * 4)

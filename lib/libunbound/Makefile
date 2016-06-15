@@ -1,18 +1,20 @@
-# $FreeBSD: head/lib/libunbound/Makefile 277273 2015-01-16 21:39:08Z will $
+# $FreeBSD: head/lib/libunbound/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 # Vendor sources and generated files
 LDNSDIR= ${.CURDIR}/../../contrib/ldns
 UNBOUNDDIR= ${.CURDIR}/../../contrib/unbound
 
 # Hold my beer and watch this
-.PATH: ${UNBOUNDDIR} ${UNBOUNDDIR}/dns64 ${UNBOUNDDIR}/iterator ${UNBOUNDDIR}/ldns ${UNBOUNDDIR}/libunbound ${UNBOUNDDIR}/services ${UNBOUNDDIR}/services/cache ${UNBOUNDDIR}/util ${UNBOUNDDIR}/util/data ${UNBOUNDDIR}/util/storage ${UNBOUNDDIR}/validator 
+.PATH: ${UNBOUNDDIR} ${UNBOUNDDIR}/dns64 ${UNBOUNDDIR}/iterator ${UNBOUNDDIR}/sldns ${UNBOUNDDIR}/libunbound ${UNBOUNDDIR}/services ${UNBOUNDDIR}/services/cache ${UNBOUNDDIR}/util ${UNBOUNDDIR}/util/data ${UNBOUNDDIR}/util/storage ${UNBOUNDDIR}/validator 
 
 LIB=	unbound
 PRIVATELIB=
+PACKAGE=	unbound
 
-CFLAGS= -I${UNBOUNDDIR} -I${LDNSDIR} -I${.OBJDIR}
+CFLAGS+= -I${UNBOUNDDIR} -I${LDNSDIR} -I${.OBJDIR}
 
-SRCS=	alloc.c autotrust.c config_file.c configlexer.l configparser.y \
+SRCS=	alloc.c as112.c autotrust.c config_file.c configlexer.l configparser.y \
 	context.c dname.c dns.c dns64.c dnstree.c fptr_wlist.c infra.c \
 	iter_delegpt.c iter_donotq.c iter_fwd.c iter_hints.c iter_priv.c \
 	iter_resptype.c iter_scrub.c iter_utils.c iterator.c keyraw.c \

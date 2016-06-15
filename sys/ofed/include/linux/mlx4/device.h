@@ -106,7 +106,7 @@ enum {
 	MLX4_MFUNC_EQE_MASK     = (MLX4_MFUNC_MAX_EQES - 1)
 };
 
-/* Driver supports 3 diffrent device methods to manage traffic steering:
+/* Driver supports 3 different device methods to manage traffic steering:
  *	-device managed - High level API for ib and eth flow steering. FW is
  *			  managing flow steering tables.
  *	- B0 steering mode - Common low level API for ib and (if supported) eth.
@@ -412,6 +412,13 @@ enum {
 
 #define MSTR_SM_CHANGE_MASK (MLX4_EQ_PORT_INFO_MSTR_SM_SL_CHANGE_MASK | \
 			     MLX4_EQ_PORT_INFO_MSTR_SM_LID_CHANGE_MASK)
+
+enum mlx4_module_id {
+	MLX4_MODULE_ID_SFP		= 0x3,
+	MLX4_MODULE_ID_QSFP		= 0xC,
+	MLX4_MODULE_ID_QSFP_PLUS	= 0xD,
+	MLX4_MODULE_ID_QSFP28		= 0x11,
+};
 
 static inline u64 mlx4_fw_ver(u64 major, u64 minor, u64 subminor)
 {

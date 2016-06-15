@@ -1,8 +1,10 @@
 #
 # TPLink TL-WDR4300 - AR9344 based dual-band 2x2 wifi
 #
-# $FreeBSD: head/sys/mips/conf/TL-WDR4300 280318 2015-03-21 06:16:23Z adrian $
+# $FreeBSD: head/sys/mips/conf/TL-WDR4300 295945 2016-02-24 00:39:36Z sobomax $
 #
+
+#NO_UNIVERSE
 
 # Include the default AR934x parameters
 include         "AR934X_BASE"
@@ -36,8 +38,8 @@ options 	MSDOSFS
 options 	AR71XX_ENV_UBOOT
 
 # uzip - to boot natively from flash
-device		geom_uncompress
-options 	GEOM_UNCOMPRESS
+device		geom_uzip
+options 	GEOM_UZIP
 
 # Used for the static uboot partition map
 device          geom_map
@@ -49,4 +51,4 @@ device		firmware		# Used by the above
 options 	ATH_EEPROM_FIRMWARE
 
 # Boot off of the rootfs, as defined in the geom_map setup.
-options 	ROOTDEVNAME=\"ufs:map/rootfs.uncompress\"
+options 	ROOTDEVNAME=\"ufs:map/rootfs.uzip\"

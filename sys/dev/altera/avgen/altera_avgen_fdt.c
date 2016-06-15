@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/altera/avgen/altera_avgen_fdt.c 261410 2014-02-02 19:17:28Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/altera/avgen/altera_avgen_fdt.c 299747 2016-05-14 18:44:30Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: head/sys/dev/altera/avgen/altera_avgen_fdt.c 261410 2014-02-
 
 #include <machine/bus.h>
 #include <machine/resource.h>
-#include <machine/vm.h>
 
 #include <vm/vm.h>
 
@@ -121,11 +120,11 @@ altera_avgen_fdt_attach(device_t dev)
 		bus_release_resource(dev, SYS_RES_MEMORY, sc->avg_rid,
 		    sc->avg_res);
 	if (str_fileio != NULL)
-		free(str_fileio, M_OFWPROP);
+		OF_prop_free(str_fileio);
 	if (str_mmapio != NULL)
-		free(str_mmapio, M_OFWPROP);
+		OF_prop_free(str_mmapio);
 	if (str_devname != NULL)
-		free(str_devname, M_OFWPROP);
+		OF_prop_free(str_devname);
 	return (error);
 }
 

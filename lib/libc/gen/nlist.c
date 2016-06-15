@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)nlist.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 280219 2015-03-18 13:54:53Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 298120 2016-04-16 17:52:00Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -47,8 +47,8 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 280219 2015-03-18 13:54:53Z andrew
 #include <unistd.h>
 #include "un-namespace.h"
 
-/* There is no a.out support on arm64 */
-#ifndef __aarch64__
+/* i386 is the only current FreeBSD architecture that used a.out format. */
+#ifdef __i386__
 #define _NLIST_DO_AOUT
 #endif
 #define _NLIST_DO_ELF
@@ -61,11 +61,10 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/nlist.c 280219 2015-03-18 13:54:53Z andrew
 int __fdnlist(int, struct nlist *);
 int __aout_fdnlist(int, struct nlist *);
 int __elf_fdnlist(int, struct nlist *);
+int __elf_is_okay__(Elf_Ehdr *);
 
 int
-nlist(name, list)
-	const char *name;
-	struct nlist *list;
+nlist(const char *name, struct nlist *list)
 {
 	int fd, n;
 
@@ -89,13 +88,12 @@ static struct nlist_handlers {
 };
 
 int
-__fdnlist(fd, list)
-	int fd;
-	struct nlist *list;
+__fdnlist(int fd, struct nlist *list)
 {
-	int n = -1, i;
+	int n = -1;
+	unsigned int i;
 
-	for (i = 0; i < sizeof(nlist_fn) / sizeof(nlist_fn[0]); i++) {
+	for (i = 0; i < nitems(nlist_fn); i++) {
 		n = (nlist_fn[i].fn)(fd, list);
 		if (n != -1)
 			break;
@@ -107,9 +105,7 @@ __fdnlist(fd, list)
 
 #ifdef _NLIST_DO_AOUT
 int
-__aout_fdnlist(fd, list)
-	int fd;
-	struct nlist *list;
+__aout_fdnlist(int fd, struct nlist *list)
 {
 	struct nlist *p, *symtab;
 	caddr_t strtab, a_out_mmap;
@@ -235,9 +231,7 @@ __elf_is_okay__(Elf_Ehdr *ehdr)
 }
 
 int
-__elf_fdnlist(fd, list)
-	int fd;
-	struct nlist *list;
+__elf_fdnlist(int fd, struct nlist *list)
 {
 	struct nlist *p;
 	Elf_Off symoff = 0, symstroff = 0;
@@ -377,11 +371,7 @@ __elf_fdnlist(fd, list)
  * n_value and n_type members.
  */
 static void
-elf_sym_to_nlist(nl, s, shdr, shnum)
-	struct nlist *nl;
-	Elf_Sym *s;
-	Elf_Shdr *shdr;
-	int shnum;
+elf_sym_to_nlist(struct nlist *nl, Elf_Sym *s, Elf_Shdr *shdr, int shnum)
 {
 	nl->n_value = s->st_value;
 

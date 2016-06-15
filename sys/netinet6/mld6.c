@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/mld6.c 279027 2015-02-19 22:37:01Z glebius $");
+__FBSDID("$FreeBSD: head/sys/netinet6/mld6.c 301528 2016-06-06 22:34:12Z bz $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -300,7 +300,8 @@ mld_restore_context(struct mbuf *m)
 
 #if defined(VIMAGE) && defined(INVARIANTS)
 	KASSERT(curvnet == m->m_pkthdr.PH_loc.ptr,
-	    ("%s: called when curvnet was not restored", __func__));
+	    ("%s: called when curvnet was not restored: cuvnet %p m ptr %p",
+	    __func__, curvnet, m->m_pkthdr.PH_loc.ptr));
 #endif
 	return (m->m_pkthdr.flowid);
 }
@@ -971,9 +972,9 @@ out_locked:
 }
 
 /*
- * Process a recieved MLDv2 group-specific or group-and-source-specific
+ * Process a received MLDv2 group-specific or group-and-source-specific
  * query.
- * Return <0 if any error occured. Currently this is ignored.
+ * Return <0 if any error occurred. Currently this is ignored.
  */
 static int
 mld_v2_process_group_query(struct in6_multi *inm, struct mld_ifsoftc *mli,
@@ -2985,6 +2986,15 @@ mld_v2_dispatch_general_query(struct mld_ifsoftc *mli)
 	KASSERT(mli->mli_version == MLD_VERSION_2,
 	    ("%s: called when version %d", __func__, mli->mli_version));
 
+	/*
+	 * Check that there are some packets queued. If so, send them first.
+	 * For large number of groups the reply to general query can take
+	 * many packets, we should finish sending them before starting of
+	 * queuing the new reply.
+	 */
+	if (mbufq_len(&mli->mli_gq) != 0)
+		goto send;
+
 	ifp = mli->mli_ifp;
 
 	IF_ADDR_RLOCK(ifp);
@@ -3020,6 +3030,7 @@ mld_v2_dispatch_general_query(struct mld_ifsoftc *mli)
 	}
 	IF_ADDR_RUNLOCK(ifp);
 
+send:
 	mld_dispatch_queue(&mli->mli_gq, MLD_MAX_RESPONSE_BURST);
 
 	/*

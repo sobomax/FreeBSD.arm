@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/lib/libsupc++/Makefile 272350 2014-10-01 08:26:51Z andrew $
+# $FreeBSD: head/gnu/lib/libsupc++/Makefile 291320 2015-11-25 19:44:43Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -38,7 +38,7 @@ unwind.h: ${GCCDIR}/config/arm/unwind-arm.h
 unwind.h: ${GCCDIR}/unwind-generic.h
 .endif
 
-unwind.h:
+unwind.h: .NOMETA
 	ln -sf ${.ALLSRC} ${.TARGET}
 
 SRCS+=		unwind.h

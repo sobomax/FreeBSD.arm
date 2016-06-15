@@ -29,13 +29,13 @@
  * Abstract: Abstraction of a Text mode or GOP/UGA screen
  */
 
-/* $FreeBSD: head/sys/boot/efi/include/eficonsctl.h 272105 2014-09-25 13:31:08Z emaste $ */
+/* $FreeBSD: head/sys/boot/efi/include/eficonsctl.h 293724 2016-01-12 02:17:39Z smh $ */
 
 #ifndef _EFI_CONS_CTL_H
 #define _EFI_CONS_CTL_H
 
 #define EFI_CONSOLE_CONTROL_PROTOCOL_GUID \
-  { 0xf42f7782, 0x12e, 0x4c12, {0x99, 0x56, 0x49, 0xf9, 0x43, 0x4, 0xf7, 0x21} }
+    { 0xf42f7782, 0x12e, 0x4c12, {0x99, 0x56, 0x49, 0xf9, 0x43, 0x4, 0xf7, 0x21} }
 
 typedef struct _EFI_CONSOLE_CONTROL_PROTOCOL   EFI_CONSOLE_CONTROL_PROTOCOL;
 

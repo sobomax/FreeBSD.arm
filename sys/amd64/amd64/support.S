@@ -27,13 +27,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/amd64/support.S 281103 2015-04-05 05:18:14Z eadler $
+ * $FreeBSD: head/sys/amd64/amd64/support.S 295966 2016-02-24 11:58:15Z kib $
  */
 
 #include "opt_ddb.h"
 
 #include <machine/asmacros.h>
-#include <machine/intr_machdep.h>
 #include <machine/pmap.h>
 
 #include "assym.s"
@@ -152,6 +151,7 @@ END(bcopy)
  */
 ENTRY(memcpy)
 	PUSH_FRAME_POINTER
+	movq	%rdi,%rax
 	movq	%rdx,%rcx
 	shrq	$3,%rcx				/* copy by 64-bit words */
 	cld					/* copy forwards */

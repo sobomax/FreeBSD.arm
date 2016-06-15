@@ -33,6 +33,8 @@
  * SOFTWARE.
  */
 
+#define	LINUXKPI_PARAM_PREFIX ibcore_
+
 #include <linux/file.h>
 #include <linux/fs.h>
 #include <linux/slab.h>
@@ -1379,7 +1381,8 @@ ssize_t ib_uverbs_create_cq(struct ib_uverbs_file *file,
 		return -EFAULT;
 
 	return create_cq(file, buf, in_len, out_len, &cmd,
-			 IB_USER_VERBS_CMD_BASIC, (void __user *)cmd.response);
+			 IB_USER_VERBS_CMD_BASIC,
+			 (void __user *) (unsigned long) cmd.response);
 }
 
 ssize_t ib_uverbs_resize_cq(struct ib_uverbs_file *file,
@@ -1609,10 +1612,10 @@ ssize_t ib_uverbs_create_qp(struct ib_uverbs_file *file,
 	if (copy_from_user(&cmd_obj, buf, cmd_size))
 		return -EFAULT;
 
-	response = (void __user *)cmd->response;
+	response = (void __user *) (unsigned long) cmd->response;
 
 	if (!disable_raw_qp_enforcement &&
-	    cmd->qp_type == IB_QPT_RAW_PACKET && !priv_check(curthread, PRIV_NET_RAW))
+	    cmd->qp_type == IB_QPT_RAW_PACKET && priv_check(curthread, PRIV_NET_RAW))
 		return -EPERM;
 
 	INIT_UDATA(&udata, buf + cmd_size, response + resp_size,
@@ -2093,11 +2096,11 @@ static ssize_t __uverbs_modify_qp(struct ib_uverbs_file *file,
 		} else {
 			ret = rdma_addr_find_dmac_by_grh(&sgid, dgid,
 							 attr->ah_attr.dmac,
-							 &attr->vlan_id);
+							 &attr->vlan_id, -1U);
 			if (ret)
 				goto out;
 			ret = rdma_addr_find_smac_by_sgid(&sgid, attr->smac,
-							  NULL);
+							  NULL, -1U);
 			if (ret)
 				goto out;
 		}
@@ -3376,7 +3379,7 @@ int ib_uverbs_ex_create_flow(struct ib_uverbs_file *file,
 	if (cmd.comp_mask)
 		return -EINVAL;
 
-	if (!priv_check(curthread, PRIV_NET_RAW) && !disable_raw_qp_enforcement)
+	if (priv_check(curthread, PRIV_NET_RAW) && !disable_raw_qp_enforcement)
 		return -EPERM;
 
 	if (cmd.flow_attr.num_of_specs > IB_FLOW_SPEC_SUPPORT_LAYERS)
@@ -3685,7 +3688,7 @@ ssize_t ib_uverbs_exp_create_qp(struct ib_uverbs_file *file,
 		return ret;
 
 	if (!disable_raw_qp_enforcement &&
-	    cmd_exp.qp_type == IB_QPT_RAW_PACKET && !priv_check(curthread,
+	    cmd_exp.qp_type == IB_QPT_RAW_PACKET && priv_check(curthread,
 		    PRIV_NET_RAW))
 		return -EPERM;
 

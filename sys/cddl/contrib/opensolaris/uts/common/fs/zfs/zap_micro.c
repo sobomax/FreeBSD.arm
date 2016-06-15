@@ -21,6 +21,8 @@
 /*
  * Copyright (c) 2005, 2010, Oracle and/or its affiliates. All rights reserved.
  * Copyright (c) 2011, 2014 by Delphix. All rights reserved.
+ * Copyright (c) 2014 Spectra Logic Corporation, All rights reserved.
+ * Copyright (c) 2014 Integros [integros.com]
  */
 
 #include <sys/zio.h>
@@ -371,6 +373,9 @@ mzap_open(objset_t *os, uint64_t obj, dmu_buf_t *db)
 	zap_t *winner;
 	zap_t *zap;
 	int i;
+	uint64_t *zap_hdr = (uint64_t *)db->db_data;
+	uint64_t zap_block_type = zap_hdr[0];
+	uint64_t zap_magic = zap_hdr[1];
 
 	ASSERT3U(MZAP_ENT_LEN, ==, sizeof (mzap_ent_phys_t));
 
@@ -381,9 +386,13 @@ mzap_open(objset_t *os, uint64_t obj, dmu_buf_t *db)
 	zap->zap_object = obj;
 	zap->zap_dbuf = db;
 
-	if (*(uint64_t *)db->db_data != ZBT_MICRO) {
+	if (zap_block_type != ZBT_MICRO) {
 		mutex_init(&zap->zap_f.zap_num_entries_mtx, 0, 0, 0);
 		zap->zap_f.zap_block_shift = highbit64(db->db_size) - 1;
+		if (zap_block_type != ZBT_HEADER || zap_magic != ZAP_MAGIC) {
+			winner = NULL;	/* No actual winner here... */
+			goto handle_winner;
+		}
 	} else {
 		zap->zap_ismicro = TRUE;
 	}
@@ -393,16 +402,11 @@ mzap_open(objset_t *os, uint64_t obj, dmu_buf_t *db)
 	 * it, because zap_lockdir() checks zap_ismicro without the lock
 	 * held.
 	 */
-	winner = dmu_buf_set_user(db, zap, zap_evict);
+	dmu_buf_init_user(&zap->zap_dbu, zap_evict, &zap->zap_dbuf);
+	winner = dmu_buf_set_user(db, &zap->zap_dbu);
 
-	if (winner != NULL) {
-		rw_exit(&zap->zap_rwlock);
-		rw_destroy(&zap->zap_rwlock);
-		if (!zap->zap_ismicro)
-			mutex_destroy(&zap->zap_f.zap_num_entries_mtx);
-		kmem_free(zap, sizeof (zap_t));
-		return (winner);
-	}
+	if (winner != NULL)
+		goto handle_winner;
 
 	if (zap->zap_ismicro) {
 		zap->zap_salt = zap_m_phys(zap)->mz_salt;
@@ -454,6 +458,14 @@ mzap_open(objset_t *os, uint64_t obj, dmu_buf_t *db)
 	}
 	rw_exit(&zap->zap_rwlock);
 	return (zap);
+
+handle_winner:
+	rw_exit(&zap->zap_rwlock);
+	rw_destroy(&zap->zap_rwlock);
+	if (!zap->zap_ismicro)
+		mutex_destroy(&zap->zap_f.zap_num_entries_mtx);
+	kmem_free(zap, sizeof (zap_t));
+	return (winner);
 }
 
 int
@@ -480,8 +492,17 @@ zap_lockdir(objset_t *os, uint64_t obj, dmu_tx_t *tx,
 #endif
 
 	zap = dmu_buf_get_user(db);
-	if (zap == NULL)
+	if (zap == NULL) {
 		zap = mzap_open(os, obj, db);
+		if (zap == NULL) {
+			/*
+			 * mzap_open() didn't like what it saw on-disk.
+			 * Check for corruption!
+			 */
+			dmu_buf_rele(db, NULL);
+			return (SET_ERROR(EIO));
+		}
+	}
 
 	/*
 	 * We're checking zap_ismicro without the lock held, in order to
@@ -547,7 +568,7 @@ mzap_upgrade(zap_t **zapp, dmu_tx_t *tx, zap_flags_t flags)
 	ASSERT(RW_WRITE_HELD(&zap->zap_rwlock));
 
 	sz = zap->zap_dbuf->db_size;
-	mzp = kmem_alloc(sz, KM_SLEEP);
+	mzp = zio_buf_alloc(sz);
 	bcopy(zap->zap_dbuf->db_data, mzp, sz);
 	nchunks = zap->zap_m.zap_num_chunks;
 
@@ -555,7 +576,7 @@ mzap_upgrade(zap_t **zapp, dmu_tx_t *tx, zap_flags_t flags)
 		err = dmu_object_set_blocksize(zap->zap_objset, zap->zap_object,
 		    1ULL << fzap_default_block_shift, 0, tx);
 		if (err) {
-			kmem_free(mzp, sz);
+			zio_buf_free(mzp, sz);
 			return (err);
 		}
 	}
@@ -581,7 +602,7 @@ mzap_upgrade(zap_t **zapp, dmu_tx_t *tx, zap_flags_t flags)
 		if (err)
 			break;
 	}
-	kmem_free(mzp, sz);
+	zio_buf_free(mzp, sz);
 	*zapp = zap;
 	return (err);
 }
@@ -690,11 +711,10 @@ zap_destroy(objset_t *os, uint64_t zapobj, dmu_tx_t *tx)
 	return (dmu_object_free(os, zapobj, tx));
 }
 
-_NOTE(ARGSUSED(0))
 void
-zap_evict(dmu_buf_t *db, void *vzap)
+zap_evict(void *dbu)
 {
-	zap_t *zap = vzap;
+	zap_t *zap = dbu;
 
 	rw_destroy(&zap->zap_rwlock);
 

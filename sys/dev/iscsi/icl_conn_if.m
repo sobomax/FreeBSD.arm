@@ -26,9 +26,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/iscsi/icl_conn_if.m 281088 2015-04-04 22:11:38Z trasz $
+# $FreeBSD: head/sys/dev/iscsi/icl_conn_if.m 300044 2016-05-17 11:10:44Z trasz $
 #
 
+#include <sys/socket.h>
 #include <dev/iscsi/icl.h>
 
 INTERFACE icl_conn;
@@ -84,6 +85,7 @@ METHOD void close {
 
 METHOD int task_setup {
 	struct icl_conn *_ic;
+	struct icl_pdu *_ip;
 	struct ccb_scsiio *_csio;
 	uint32_t *_task_tag;
 	void **_prvp;
@@ -104,4 +106,16 @@ METHOD int transfer_setup {
 METHOD void transfer_done {
 	struct icl_conn *_ic;
 	void *_prv;
+};
+
+#
+# The function below is only used with ICL_KERNEL_PROXY.
+#
+METHOD int connect {
+	struct icl_conn *_ic;
+	int _domain;
+	int _socktype;
+	int _protocol;
+	struct sockaddr *_from_sa;
+	struct sockaddr *_to_sa;
 };

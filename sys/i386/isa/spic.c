@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/i386/isa/spic.c 274759 2014-11-20 20:24:30Z jhb $");
+__FBSDID("$FreeBSD: head/sys/i386/isa/spic.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -234,8 +234,8 @@ spic_probe(device_t dev)
 
 	bzero(sc, sizeof(struct spic_softc));
 
-	if (!(sc->sc_port_res = bus_alloc_resource(dev, SYS_RES_IOPORT,
-		&sc->sc_port_rid, 0, ~0, 5, RF_ACTIVE))) {
+	if (!(sc->sc_port_res = bus_alloc_resource_anywhere(dev, SYS_RES_IOPORT,
+		&sc->sc_port_rid, 5, RF_ACTIVE))) {
 		device_printf(dev,"Couldn't map I/O\n");
 		return ENXIO;
 	}

@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/vinum/geom_vinum_subr.c 223921 2011-07-11 05:22:31Z ae $");
+__FBSDID("$FreeBSD: head/sys/geom/vinum/geom_vinum_subr.c 298808 2016-04-29 20:56:58Z pfg $");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -72,7 +72,7 @@ gv_parse_config(struct gv_softc *sc, char *buf, struct gv_drive *d)
 		bptr = aptr;
 		cptr = aptr;
 
-		/* Seperate input lines. */
+		/* Separate input lines. */
 		while (*bptr != '\n')
 			bptr++;
 		*bptr = '\0';

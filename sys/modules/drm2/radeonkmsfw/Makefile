@@ -1,6 +1,4 @@
-# $FreeBSD: head/sys/modules/drm2/radeonkmsfw/Makefile 279600 2015-03-04 20:47:43Z dumbbell $
-
-SUBDIR_PARALLEL=
+# $FreeBSD: head/sys/modules/drm2/radeonkmsfw/Makefile 290665 2015-11-10 17:15:36Z bdrewery $
 
 SUBDIR=									\
 	ARUBA_me							\

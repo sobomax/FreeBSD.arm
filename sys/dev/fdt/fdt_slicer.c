@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/fdt/fdt_slicer.c 257127 2013-10-25 18:38:44Z loos $");
+__FBSDID("$FreeBSD: head/sys/dev/fdt/fdt_slicer.c 287013 2015-08-22 05:50:18Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: head/sys/dev/fdt/fdt_slicer.c 257127 2013-10-25 18:38:44Z lo
 #endif
 
 int
-flash_fill_slices(device_t dev, struct flash_slice *slices, int *slices_num)
+fdt_flash_fill_slices(device_t dev, struct flash_slice *slices, int *slices_num)
 {
 	char *slice_name;
 	phandle_t dt_node, dt_child;

@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)wait.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/wait.c 277032 2015-01-11 22:16:31Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/wait.c 288028 2015-09-20 20:21:49Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -41,6 +41,8 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/wait.c 277032 2015-01-11 22:16:31Z kib $")
 #include "un-namespace.h"
 
 #include "libc_private.h"
+
+pid_t __wait(int *);
 
 pid_t
 __wait(int *istat)

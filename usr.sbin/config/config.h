@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: head/usr.sbin/config/config.h 263429 2014-03-20 17:30:09Z asomers $
+ * $FreeBSD: head/usr.sbin/config/config.h 289677 2015-10-21 05:37:09Z eadler $
  */
 
 /*
@@ -50,7 +50,7 @@ struct file_list {
 	int     f_type;                 /* type */
 	u_char	f_flags;		/* see below */
 	char	*f_compilewith;		/* special make rule if present */
-	char	*f_depends;		/* additional dependancies */
+	char	*f_depends;		/* additional dependencies */
 	char	*f_clean;		/* File list to add to clean rule */
 	char	*f_warn;		/* warning message */
 	const char *f_objprefix;	/* prefix string for object name */

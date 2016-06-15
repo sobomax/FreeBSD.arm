@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/mips/beri/loader/beri_disk_cfi.c 262197 2014-02-18 23:18:32Z rwatson $");
+__FBSDID("$FreeBSD: head/sys/boot/mips/beri/loader/beri_disk_cfi.c 298230 2016-04-18 23:09:22Z allanjude $");
 
 #include <sys/param.h>
 
@@ -45,8 +45,8 @@ static int	beri_cfi_disk_init(void);
 static int	beri_cfi_disk_open(struct open_file *, ...);
 static int	beri_cfi_disk_close(struct open_file *);
 static void	beri_cfi_disk_cleanup(void);
-static int	beri_cfi_disk_strategy(void *, int, daddr_t, size_t, char *,
-		    size_t *);
+static int	beri_cfi_disk_strategy(void *, int, daddr_t, size_t, size_t,
+		    char *, size_t *);
 static void	beri_cfi_disk_print(int);
 
 struct devsw beri_cfi_disk = {
@@ -69,8 +69,8 @@ beri_cfi_disk_init(void)
 }
 
 static int
-beri_cfi_disk_strategy(void *devdata, int flag, daddr_t dblk, size_t size,
-    char *buf, size_t *rsizep)
+beri_cfi_disk_strategy(void *devdata, int flag, daddr_t dblk, size_t offset,
+    size_t size, char *buf, size_t *rsizep)
 {
 	int error;
 

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ubsec/ubsec.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/ubsec/ubsec.c 284959 2015-06-30 17:00:45Z markm $");
 
 /*
  * uBsec 5[56]01, 58xx hardware crypto accelerator
@@ -259,7 +259,8 @@ ubsec_partname(struct ubsec_softc *sc)
 static void
 default_harvest(struct rndtest_state *rsp, void *buf, u_int count)
 {
-	random_harvest(buf, count, count*NBBY/2, RANDOM_PURE_UBSEC);
+	/* MarkM: FIX!! Check that this does not swamp the harvester! */
+	random_harvest_queue(buf, count, count*NBBY/2, RANDOM_PURE_UBSEC);
 }
 
 static int

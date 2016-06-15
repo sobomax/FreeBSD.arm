@@ -1,20 +1,54 @@
-.\" $FreeBSD: head/tools/build/options/WITH_META_MODE 284708 2015-06-22 20:21:57Z sjg $
-Enable building in meta mode.
-.Pp
-The build is driven by dirdeps.mk using DIRDEPS stored in
-Makefile.depend files found in each directory.
-.Pp
-The build can be started from anywhere, and behaves the same.
-The initial instance of make recursively reads DIRDEPS from Makefile.depend
-computing a graph of tree dependencies from the current origin.
-See http://www.crufty.net/help/sjg/dirdeps.htm
-.Pp
-As each target is made
+.\" $FreeBSD: head/tools/build/options/WITH_META_MODE 301889 2016-06-14 16:20:25Z bdrewery $
+Creates
 .Xr make 1
-produces a meta file which is used to capture (and compare)
-the command line,
-as well as any command output.
-If
+meta files when building, which can provide a reliable incremental build when
+using
+.Xr filemon 4 .
+The meta file is created in the OBJDIR as
+.Pa target.meta .
+These meta files track the command ran, its output, and the current directory.
+The
 .Xr filemon 4
-is available the meta file will also capture a record of syscalls
-used to produce the target.
+module is required unless
+.Va NO_FILEMON
+is defined.
+When the module is loaded, any files used by the commands executed will be
+tracked as
+dependencies for the target in its meta file.
+The target will be considered out-of-date and rebuilt if any of the following
+are true compared to the last build:
+.Bl -bullet -compact
+.It
+The command to execute changes.
+.It
+The current working directory changes.
+.It
+The target's meta file is missing.
+.It
+The target's meta file is missing filemon data when filemon is loaded
+and a previous run did not have it loaded.
+.It
+[requires
+.Xr filemon 4 ]
+Files read, executed or linked to are newer than the target.
+.It
+[requires
+.Xr filemon 4 ]
+Files read, written, executed or linked are missing.
+.El
+The meta files can also be useful for debugging.
+.Pp
+The build will hide commands ran unless
+.Va NO_SILENT
+is defined.
+Errors will cause
+.Xr make 1
+to show some of its environment for further debugging.
+.Pp
+The build operates as it normally would otherwise.
+This option originally invoked a different build system but that was renamed
+to
+.Va WITH_DIRDEPS_BUILD .
+.Pp
+Currently this also enforces
+.Va WITHOUT_SYSTEM_COMPILER .

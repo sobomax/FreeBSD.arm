@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/powerpc/swtch32.S 279750 2015-03-07 20:14:46Z nwhitehorn $ */
+/* $FreeBSD: head/sys/powerpc/powerpc/swtch32.S 288909 2015-10-06 01:24:46Z jhibbits $ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-
@@ -187,6 +187,8 @@ ENTRY(savectx)
 	stmw	%r12,PCB_CONTEXT(%r3)	/* Save the non-volatile GP regs */
 	mfcr	%r4			/* Save the condition register */
 	stw	%r4,PCB_CR(%r3)
+	mflr	%r4			/* Save the link register */
+	stw	%r4,PCB_LR(%r3)
 	blr
 
 /*

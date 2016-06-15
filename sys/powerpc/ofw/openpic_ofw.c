@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/openpic_ofw.c 261513 2014-02-05 14:44:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/openpic_ofw.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -127,9 +127,9 @@ openpic_ofw_attach(device_t dev)
 
 	node = ofw_bus_get_node(dev);
 
-	if (OF_getprop(node, "phandle", &xref, sizeof(xref)) == -1 &&
-	    OF_getprop(node, "ibm,phandle", &xref, sizeof(xref)) == -1 &&
-	    OF_getprop(node, "linux,phandle", &xref, sizeof(xref)) == -1)
+	if (OF_getencprop(node, "phandle", &xref, sizeof(xref)) == -1 &&
+	    OF_getencprop(node, "ibm,phandle", &xref, sizeof(xref)) == -1 &&
+	    OF_getencprop(node, "linux,phandle", &xref, sizeof(xref)) == -1)
 		xref = node;
 
 	return (openpic_common_attach(dev, xref));

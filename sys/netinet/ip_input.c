@@ -30,10 +30,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_input.c 281388 2015-04-11 01:06:59Z delphij $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_input.c 301717 2016-06-09 05:48:34Z ae $");
 
 #include "opt_bootp.h"
-#include "opt_ipfw.h"
 #include "opt_ipstealth.h"
 #include "opt_ipsec.h"
 #include "opt_route.h"
@@ -41,6 +40,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/ip_input.c 281388 2015-04-11 01:06:59Z delp
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/hhook.h>
 #include <sys/mbuf.h>
 #include <sys/malloc.h>
 #include <sys/domain.h>
@@ -49,6 +49,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/ip_input.c 281388 2015-04-11 01:06:59Z delp
 #include <sys/time.h>
 #include <sys/kernel.h>
 #include <sys/lock.h>
+#include <sys/rmlock.h>
 #include <sys/rwlock.h>
 #include <sys/sdt.h>
 #include <sys/syslog.h>
@@ -78,6 +79,8 @@ __FBSDID("$FreeBSD: head/sys/netinet/ip_input.c 281388 2015-04-11 01:06:59Z delp
 #include <netinet/ip_carp.h>
 #ifdef IPSEC
 #include <netinet/ip_ipsec.h>
+#include <netipsec/ipsec.h>
+#include <netipsec/key.h>
 #endif /* IPSEC */
 #include <netinet/in_rss.h>
 
@@ -97,8 +100,8 @@ extern void ipreass_slowtimo(void);
 extern void ipreass_destroy(void);
 #endif
 
-struct	rwlock in_ifaddr_lock;
-RW_SYSINIT(in_ifaddr_lock, &in_ifaddr_lock, "in_ifaddr_lock");
+struct rmlock in_ifaddr_lock;
+RM_SYSINIT(in_ifaddr_lock, &in_ifaddr_lock, "in_ifaddr_lock");
 
 VNET_DEFINE(int, rsvp_on);
 
@@ -139,7 +142,7 @@ static struct netisr_handler ip_nh = {
 	.nh_handler = ip_input,
 	.nh_proto = NETISR_IP,
 #ifdef	RSS
-	.nh_m2cpuid = rss_soft_m2cpuid,
+	.nh_m2cpuid = rss_soft_m2cpuid_v4,
 	.nh_policy = NETISR_POLICY_CPU,
 	.nh_dispatch = NETISR_DISPATCH_HYBRID,
 #else
@@ -159,7 +162,7 @@ static struct netisr_handler ip_direct_nh = {
 	.nh_name = "ip_direct",
 	.nh_handler = ip_direct_input,
 	.nh_proto = NETISR_IP_DIRECT,
-	.nh_m2cpuid = rss_m2cpuid,
+	.nh_m2cpuid = rss_soft_m2cpuid_v4,
 	.nh_policy = NETISR_POLICY_CPU,
 	.nh_dispatch = NETISR_DISPATCH_HYBRID,
 };
@@ -315,9 +318,27 @@ ip_init(void)
 		printf("%s: WARNING: unable to register pfil hook, "
 			"error %d\n", __func__, i);
 
+	if (hhook_head_register(HHOOK_TYPE_IPSEC_IN, AF_INET,
+	    &V_ipsec_hhh_in[HHOOK_IPSEC_INET],
+	    HHOOK_WAITOK | HHOOK_HEADISINVNET) != 0)
+		printf("%s: WARNING: unable to register input helper hook\n",
+		    __func__);
+	if (hhook_head_register(HHOOK_TYPE_IPSEC_OUT, AF_INET,
+	    &V_ipsec_hhh_out[HHOOK_IPSEC_INET],
+	    HHOOK_WAITOK | HHOOK_HEADISINVNET) != 0)
+		printf("%s: WARNING: unable to register output helper hook\n",
+		    __func__);
+
 	/* Skip initialization of globals for non-default instances. */
-	if (!IS_DEFAULT_VNET(curvnet))
+#ifdef VIMAGE
+	if (!IS_DEFAULT_VNET(curvnet)) {
+		netisr_register_vnet(&ip_nh);
+#ifdef	RSS
+		netisr_register_vnet(&ip_direct_nh);
+#endif
 		return;
+	}
+#endif
 
 	pr = pffindproto(PF_INET, IPPROTO_RAW, SOCK_RAW);
 	if (pr == NULL)
@@ -346,21 +367,40 @@ ip_init(void)
 }
 
 #ifdef VIMAGE
-void
-ip_destroy(void)
+static void
+ip_destroy(void *unused __unused)
 {
-	int i;
+	int error;
 
-	if ((i = pfil_head_unregister(&V_inet_pfil_hook)) != 0)
+#ifdef	RSS
+	netisr_unregister_vnet(&ip_direct_nh);
+#endif
+	netisr_unregister_vnet(&ip_nh);
+
+	if ((error = pfil_head_unregister(&V_inet_pfil_hook)) != 0)
 		printf("%s: WARNING: unable to unregister pfil hook, "
-		    "error %d\n", __func__, i);
+		    "error %d\n", __func__, error);
 
+	error = hhook_head_deregister(V_ipsec_hhh_in[HHOOK_IPSEC_INET]);
+	if (error != 0) {
+		printf("%s: WARNING: unable to deregister input helper hook "
+		    "type HHOOK_TYPE_IPSEC_IN, id HHOOK_IPSEC_INET: "
+		    "error %d returned\n", __func__, error);
+	}
+	error = hhook_head_deregister(V_ipsec_hhh_out[HHOOK_IPSEC_INET]);
+	if (error != 0) {
+		printf("%s: WARNING: unable to deregister output helper hook "
+		    "type HHOOK_TYPE_IPSEC_OUT, id HHOOK_IPSEC_INET: "
+		    "error %d returned\n", __func__, error);
+	}
 	/* Cleanup in_ifaddr hash table; should be empty. */
 	hashdestroy(V_in_ifaddrhashtbl, M_IFADDR, V_in_ifaddrhmask);
 
 	/* Destroy IP reassembly queue. */
 	ipreass_destroy();
 }
+
+VNET_SYSUNINIT(ip, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD, ip_destroy, NULL);
 #endif
 
 #ifdef	RSS
@@ -499,12 +539,22 @@ tooshort:
 			m_adj(m, ip_len - m->m_pkthdr.len);
 	}
 
+	/* Try to forward the packet, but if we fail continue */
 #ifdef IPSEC
+	/* For now we do not handle IPSEC in tryforward. */
+	if (!key_havesp(IPSEC_DIR_INBOUND) && !key_havesp(IPSEC_DIR_OUTBOUND) &&
+	    (V_ipforwarding == 1))
+		if (ip_tryforward(m) == NULL)
+			return;
 	/*
 	 * Bypass packet filtering for packets previously handled by IPsec.
 	 */
 	if (ip_ipsec_filtertunnel(m))
 		goto passin;
+#else
+	if (V_ipforwarding == 1)
+		if (ip_tryforward(m) == NULL)
+			return;
 #endif /* IPSEC */
 
 	/*
@@ -534,8 +584,7 @@ tooshort:
 		goto ours;
 	}
 	if (m->m_flags & M_IP_NEXTHOP) {
-		dchg = (m_tag_find(m, PACKET_TAG_IPFORWARD, NULL) != NULL);
-		if (dchg != 0) {
+		if (m_tag_find(m, PACKET_TAG_IPFORWARD, NULL) != NULL) {
 			/*
 			 * Directly ship the packet on.  This allows
 			 * forwarding packets originally destined to us
@@ -841,33 +890,6 @@ ipproto_unregister(short ipproto)
 	return (0);
 }
 
-/*
- * Given address of next destination (final or next hop), return (referenced)
- * internet address info of interface to be used to get there.
- */
-struct in_ifaddr *
-ip_rtaddr(struct in_addr dst, u_int fibnum)
-{
-	struct route sro;
-	struct sockaddr_in *sin;
-	struct in_ifaddr *ia;
-
-	bzero(&sro, sizeof(sro));
-	sin = (struct sockaddr_in *)&sro.ro_dst;
-	sin->sin_family = AF_INET;
-	sin->sin_len = sizeof(*sin);
-	sin->sin_addr = dst;
-	in_rtalloc_ign(&sro, 0, fibnum);
-
-	if (sro.ro_rt == NULL)
-		return (NULL);
-
-	ia = ifatoia(sro.ro_rt->rt_ifa);
-	ifa_ref(&ia->ia_ifa);
-	RTFREE(sro.ro_rt);
-	return (ia);
-}
-
 u_char inetctlerrmap[PRC_NCMDS] = {
 	0,		0,		0,		0,
 	0,		EMSGSIZE,	EHOSTDOWN,	EHOSTUNREACH,
@@ -897,6 +919,7 @@ ip_forward(struct mbuf *m, int srcrt)
 	struct ip *ip = mtod(m, struct ip *);
 	struct in_ifaddr *ia;
 	struct mbuf *mcopy;
+	struct sockaddr_in *sin;
 	struct in_addr dest;
 	struct route ro;
 	int error, type = 0, code = 0, mtu = 0;
@@ -925,7 +948,23 @@ ip_forward(struct mbuf *m, int srcrt)
 	}
 #endif
 
-	ia = ip_rtaddr(ip->ip_dst, M_GETFIB(m));
+	bzero(&ro, sizeof(ro));
+	sin = (struct sockaddr_in *)&ro.ro_dst;
+	sin->sin_family = AF_INET;
+	sin->sin_len = sizeof(*sin);
+	sin->sin_addr = ip->ip_dst;
+#ifdef RADIX_MPATH
+	rtalloc_mpath_fib(&ro,
+	    ntohl(ip->ip_src.s_addr ^ ip->ip_dst.s_addr),
+	    M_GETFIB(m));
+#else
+	in_rtalloc_ign(&ro, 0, M_GETFIB(m));
+#endif
+	if (ro.ro_rt != NULL) {
+		ia = ifatoia(ro.ro_rt->rt_ifa);
+		ifa_ref(&ia->ia_ifa);
+	} else
+		ia = NULL;
 #ifndef IPSEC
 	/*
 	 * 'ia' may be NULL if there is no route for this destination.
@@ -934,6 +973,7 @@ ip_forward(struct mbuf *m, int srcrt)
 	 */
 	if (!srcrt && ia == NULL) {
 		icmp_error(m, ICMP_UNREACH, ICMP_UNREACH_HOST, 0, 0);
+		RO_RTFREE(&ro);
 		return;
 	}
 #endif
@@ -990,15 +1030,7 @@ ip_forward(struct mbuf *m, int srcrt)
 	dest.s_addr = 0;
 	if (!srcrt && V_ipsendredirects &&
 	    ia != NULL && ia->ia_ifp == m->m_pkthdr.rcvif) {
-		struct sockaddr_in *sin;
 		struct rtentry *rt;
-
-		bzero(&ro, sizeof(ro));
-		sin = (struct sockaddr_in *)&ro.ro_dst;
-		sin->sin_family = AF_INET;
-		sin->sin_len = sizeof(*sin);
-		sin->sin_addr = ip->ip_dst;
-		in_rtalloc_ign(&ro, 0, M_GETFIB(m));
 
 		rt = ro.ro_rt;
 
@@ -1018,15 +1050,7 @@ ip_forward(struct mbuf *m, int srcrt)
 				code = ICMP_REDIRECT_HOST;
 			}
 		}
-		if (rt)
-			RTFREE(rt);
 	}
-
-	/*
-	 * Try to cache the route MTU from ip_output so we can consider it for
-	 * the ICMP_UNREACH_NEEDFRAG "Next-Hop MTU" field described in RFC1191.
-	 */
-	bzero(&ro, sizeof(ro));
 
 	error = ip_output(m, NULL, &ro, IP_FORWARDING, NULL, NULL);
 

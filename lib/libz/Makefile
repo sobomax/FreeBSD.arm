@@ -1,7 +1,8 @@
 #
-# $FreeBSD: head/lib/libz/Makefile 273756 2014-10-27 23:43:25Z jmg $
+# $FreeBSD: head/lib/libz/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=lib${LIB}
 LIB=		z
 SHLIBDIR?=	/lib
 SHLIB_MAJOR=	6
@@ -68,14 +69,10 @@ test: example minigzip
 	(export LD_LIBRARY_PATH=. ; \
 		echo hello world | ./minigzip | ./minigzip -d )
 
-.ifndef COMPAT_32BIT
-beforeinstall:
-	${INSTALL} -C -o ${LIBOWN} -g ${LIBGRP} -m ${LIBMODE} \
-		${.CURDIR}/zlib.pc ${DESTDIR}${LIBDATADIR}/pkgconfig
-.endif
+FILES=		zlib.pc
+FILESDIR=	${LIBDATADIR}/pkgconfig
 
 .include <bsd.lib.mk>
 
 ## XXX: clang integrated-as doesn't grok .intel_syntax directives yet
 #ACFLAGS.gvmat64.S=	${CLANG_NO_IAS}
-#ACFLAGS+=		${ACFLAGS.${.IMPSRC:T}}

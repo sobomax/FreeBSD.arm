@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/opencrypto/gfmult.c 275732 2014-12-12 19:56:36Z jmg $
+ *	$FreeBSD: head/sys/opencrypto/gfmult.c 299202 2016-05-06 23:37:19Z pfg $
  *
  */
 
@@ -40,7 +40,7 @@ static const uint8_t nib_rev[] = {
 	0x1, 0x9, 0x5, 0xd, 0x3, 0xb, 0x7, 0xf,
 };
 
-/* calulate v * 2 */
+/* calculate v * 2 */
 static inline struct gf128
 gf128_mulalpha(struct gf128 v)
 {

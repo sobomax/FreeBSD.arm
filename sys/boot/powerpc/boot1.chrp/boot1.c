@@ -16,15 +16,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/powerpc/boot1.chrp/boot1.c 243254 2012-11-19 01:15:32Z trasz $");
+__FBSDID("$FreeBSD: head/sys/boot/powerpc/boot1.chrp/boot1.c 294765 2016-01-26 06:26:19Z imp $");
 
 #include <sys/param.h>
 #include <sys/dirent.h>
 #include <machine/elf.h>
 #include <machine/stdarg.h>
 
-#define _PATH_LOADER	"/boot/loader"
-#define _PATH_KERNEL	"/boot/kernel/kernel"
+#include "paths.h"
 
 #define BSIZEMAX	16384
 
@@ -396,7 +395,7 @@ main(int ac, char **av)
 	char bootpath_full[255];
 	int i, len;
 
-	path = _PATH_LOADER;
+	path = PATH_LOADER;
 	for (i = 0; i < ac; i++) {
 		switch (av[i][0]) {
 		case '-':
@@ -563,10 +562,6 @@ printf(const char *fmt, ...)
 {
 	va_list ap;
 	int ret;
-
-	/* Don't annoy the user as we probe for partitions */
-	if (strcmp(fmt,"Not ufs\n") == 0)
-		return 0;
 
 	va_start(ap, fmt);
 	ret = vprintf(fmt, ap);

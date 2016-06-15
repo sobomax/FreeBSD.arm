@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_ath_misc.h 265205 2014-05-02 00:48:09Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_ath_misc.h 298359 2016-04-20 18:29:30Z avos $
  */
 #ifndef	__IF_ATH_MISC_H__
 #define	__IF_ATH_MISC_H__
@@ -38,15 +38,6 @@
  * Anything in here should eventually be moved out of if_ath.c
  * and into something else.
  */
-
-/* unaligned little endian access */
-#define LE_READ_2(p)							\
-	((u_int16_t)							\
-	 ((((u_int8_t *)(p))[0]      ) | (((u_int8_t *)(p))[1] <<  8)))
-#define LE_READ_4(p)							\
-	((u_int32_t)							\
-	 ((((u_int8_t *)(p))[0]      ) | (((u_int8_t *)(p))[1] <<  8) |	\
-	  (((u_int8_t *)(p))[2] << 16) | (((u_int8_t *)(p))[3] << 24)))
 
 extern int ath_rxbuf;
 extern int ath_txbuf;
@@ -65,7 +56,7 @@ extern void ath_freebuf(struct ath_softc *sc, struct ath_buf *bf);
 extern void ath_returnbuf_head(struct ath_softc *sc, struct ath_buf *bf);
 extern void ath_returnbuf_tail(struct ath_softc *sc, struct ath_buf *bf);
 
-extern int ath_reset(struct ifnet *, ATH_RESET_TYPE);
+extern int ath_reset(struct ath_softc *, ATH_RESET_TYPE);
 extern void ath_tx_default_comp(struct ath_softc *sc, struct ath_buf *bf,
 	    int fail);
 extern void ath_tx_update_ratectrl(struct ath_softc *sc,
@@ -87,18 +78,6 @@ extern void ath_mode_init(struct ath_softc *sc);
 extern void ath_setdefantenna(struct ath_softc *sc, u_int antenna);
 
 extern void ath_setslottime(struct ath_softc *sc);
-
-extern	int ath_descdma_alloc_desc(struct ath_softc *sc,
-	    struct ath_descdma *dd, ath_bufhead *head, const char *name,
-	    int ds_size, int ndesc);
-extern	int ath_descdma_setup(struct ath_softc *sc, struct ath_descdma *dd,
-	    ath_bufhead *head, const char *name, int ds_size, int nbuf,
-	    int ndesc);
-extern	int ath_descdma_setup_rx_edma(struct ath_softc *sc,
-	    struct ath_descdma *dd, ath_bufhead *head, const char *name,
-	    int nbuf, int desclen);
-extern	void ath_descdma_cleanup(struct ath_softc *sc,
-	    struct ath_descdma *dd, ath_bufhead *head);
 
 extern	void ath_legacy_attach_comp_func(struct ath_softc *sc);
 

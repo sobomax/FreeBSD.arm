@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/kern/kern_loginclass.c 280130 2015-03-16 00:10:03Z mjg $
+ * $FreeBSD: head/sys/kern/kern_loginclass.c 290857 2015-11-15 12:10:51Z trasz $
  */
 
 /*
@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_loginclass.c 280130 2015-03-16 00:10:03Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_loginclass.c 290857 2015-11-15 12:10:51Z trasz $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -234,12 +234,17 @@ sys_setloginclass(struct thread *td, struct setloginclass_args *uap)
 
 void
 loginclass_racct_foreach(void (*callback)(struct racct *racct,
-    void *arg2, void *arg3), void *arg2, void *arg3)
+    void *arg2, void *arg3), void (*pre)(void), void (*post)(void),
+    void *arg2, void *arg3)
 {
 	struct loginclass *lc;
 
 	rw_rlock(&loginclasses_lock);
+	if (pre != NULL)
+		(pre)();
 	LIST_FOREACH(lc, &loginclasses, lc_next)
 		(callback)(lc->lc_racct, arg2, arg3);
+	if (post != NULL)
+		(post)();
 	rw_runlock(&loginclasses_lock);
 }

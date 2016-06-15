@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 4/4/94
-# $FreeBSD: head/libexec/ftpd/Makefile 284221 2015-06-10 13:17:41Z marcel $
+# $FreeBSD: head/libexec/ftpd/Makefile 301241 2016-06-03 06:24:03Z lidl $
 
 .include <src.opts.mk>
 
@@ -13,7 +13,7 @@ YFLAGS=
 WARNS?=	2
 WFORMAT=0
 
-LIBADD=	util crypt xo
+LIBADD=	crypt xo util
 
 # XXX Kluge! Conversation mechanism needs to be fixed.
 LIBADD+=	opie md
@@ -23,6 +23,13 @@ LSDIR=	../../bin/ls
 SRCS+=	ls.c cmp.c print.c util.c
 CFLAGS+=-Dmain=ls_main -I${.CURDIR}/${LSDIR}
 LIBADD+=	m
+
+.if ${MK_BLACKLIST_SUPPORT} != "no"
+CFLAGS+= -DUSE_BLACKLIST -I${SRCTOP}/contrib/blacklist/include
+SRCS+= blacklist.c
+LIBADD+= blacklist
+LDFLAGS+=-L${LIBBLACKLISTDIR}
+.endif
 
 .if ${MK_INET6_SUPPORT} != "no"
 CFLAGS+=-DINET6

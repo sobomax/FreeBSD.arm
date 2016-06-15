@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_l2cap.h,v 1.2 2003/04/27 00:52:26 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_l2cap.h 281198 2015-04-07 10:22:56Z takawata $
+ * $FreeBSD: head/sys/netgraph/bluetooth/include/ng_l2cap.h 298813 2016-04-29 21:25:05Z pfg $
  */
 
 /*
@@ -256,6 +256,7 @@ typedef union {
 	u_int16_t		mtu;		/* NG_L2CAP_OPT_MTU */
 	u_int16_t		flush_timo;	/* NG_L2CAP_OPT_FLUSH_TIMO */
 	ng_l2cap_flow_t		flow;		/* NG_L2CAP_OPT_QOS */
+	uint16_t		encryption;
 } ng_l2cap_cfg_opt_val_t;
 typedef ng_l2cap_cfg_opt_val_t * ng_l2cap_cfg_opt_val_p;
 
@@ -357,6 +358,7 @@ typedef struct {
 #define NG_L2CAP_L2CA_IDTYPE_BREDR 0
 #define NG_L2CAP_L2CA_IDTYPE_ATT  1
 #define NG_L2CAP_L2CA_IDTYPE_LE  2
+#define NG_L2CAP_L2CA_IDTYPE_SMP  3
 /* L2CA_Connect */
 #define NGM_L2CAP_L2CA_CON		0x80
 /* Upper -> L2CAP */
@@ -373,6 +375,7 @@ typedef struct {
 	uint16_t	idtype; /*ID type*/
 	u_int16_t	result; /* 0x00 - success */
 	u_int16_t	status; /* if result != 0x00 */
+	uint8_t 	encryption;
 } ng_l2cap_l2ca_con_op;
 
 /* L2CA_ConnectInd */
@@ -382,7 +385,7 @@ typedef struct {
 	bdaddr_t	bdaddr; /* remote unit address */
 	u_int16_t	lcid;   /* local channel ID */
 	u_int16_t	psm;    /* Procotol/Service Multiplexor */
-	u_int8_t	ident;  /* indentifier */
+	u_int8_t	ident;  /* identifier */
 	u_int8_t	linktype; /* link type*/
 } ng_l2cap_l2ca_con_ind_ip;
 /* No output parameters */
@@ -598,6 +601,12 @@ typedef struct {
  * 	u_int16_t	result; /* 0x00 - success */
  * } ng_l2cap_l2ca_enable_clt_op;
 #endif
+#define NGM_L2CAP_L2CA_ENC_CHANGE 0x92
+typedef struct {
+	uint16_t 	lcid;
+	uint16_t	result;
+	uint8_t 	idtype;
+} ng_l2cap_l2ca_enc_chg_op;
 
 /**************************************************************************
  **************************************************************************
@@ -679,7 +688,7 @@ typedef struct {
 	u_int16_t	scid;		/* source (local) channel ID */
 	u_int16_t	dcid;		/* destination (remote) channel ID */
 
-	u_int16_t	imtu;		/* incomming MTU */
+	u_int16_t	imtu;		/* incoming MTU */
 	u_int16_t	omtu;		/* outgoing MTU */
 
 	u_int16_t	psm;		/* PSM */

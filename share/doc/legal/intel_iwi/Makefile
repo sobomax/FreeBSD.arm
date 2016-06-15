@@ -1,6 +1,7 @@
-# $FreeBSD: head/share/doc/legal/intel_iwi/Makefile 284321 2015-06-12 14:30:27Z sjg $
+# $FreeBSD: head/share/doc/legal/intel_iwi/Makefile 289399 2015-10-16 00:38:05Z bdrewery $
 
 FILES=		${.CURDIR}/../../../../sys/contrib/dev/iwi/LICENSE
-FILESDIR=	${SHAREDIR}/doc/legal/intel_iwi
+FILESDIR=	${SHAREDIR}/doc/legal
+FILESNAME=	intel_iwi.LICENSE
 
 .include <bsd.prog.mk>

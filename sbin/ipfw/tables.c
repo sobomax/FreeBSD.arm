@@ -13,7 +13,7 @@
  *
  * in-kernel ipfw tables support.
  *
- * $FreeBSD: head/sbin/ipfw/tables.c 283118 2015-05-19 18:29:13Z melifaro $
+ * $FreeBSD: head/sbin/ipfw/tables.c 298016 2016-04-14 22:51:23Z ae $
  */
 
 
@@ -53,8 +53,8 @@ static void table_lock(ipfw_obj_header *oh, int lock);
 static int table_swap(ipfw_obj_header *oh, char *second);
 static int table_get_info(ipfw_obj_header *oh, ipfw_xtable_info *i);
 static int table_show_info(ipfw_xtable_info *i, void *arg);
-static void table_fill_ntlv(ipfw_obj_ntlv *ntlv, char *name, uint32_t set,
-    uint16_t uidx);
+static void table_fill_ntlv(ipfw_obj_ntlv *ntlv, const char *name,
+    uint32_t set, uint16_t uidx);
 
 static int table_flush_one(ipfw_xtable_info *i, void *arg);
 static int table_show_one(ipfw_xtable_info *i, void *arg);
@@ -128,18 +128,6 @@ lookup_host (char *host, struct in_addr *ipaddr)
 		*ipaddr = *(struct in_addr *)he->h_addr_list[0];
 	}
 	return(0);
-}
-
-static int
-get_token(struct _s_x *table, char *string, char *errbase)
-{
-	int tcmd;
-
-	if ((tcmd = match_token_relaxed(table, string)) < 0)
-		errx(EX_USAGE, "%s %s %s",
-		    (tcmd == 0) ? "invalid" : "ambiguous", errbase, string);
-
-	return (tcmd);
 }
 
 /*
@@ -293,7 +281,8 @@ ipfw_table_handler(int ac, char *av[])
 }
 
 static void
-table_fill_ntlv(ipfw_obj_ntlv *ntlv, char *name, uint32_t set, uint16_t uidx)
+table_fill_ntlv(ipfw_obj_ntlv *ntlv, const char *name, uint32_t set,
+    uint16_t uidx)
 {
 
 	ntlv->head.type = IPFW_TLV_TBL_NAME;
@@ -387,11 +376,9 @@ table_create(ipfw_obj_header *oh, int ac, char *av[])
 	ipfw_xtable_info xi;
 	int error, tcmd, val;
 	uint32_t fset, fclear;
-	size_t sz;
 	char *e, *p;
 	char tbuf[128];
 
-	sz = sizeof(tbuf);
 	memset(&xi, 0, sizeof(xi));
 
 	while (ac > 0) {
@@ -452,7 +439,7 @@ table_create(ipfw_obj_header *oh, int ac, char *av[])
 		}
 	}
 
-	/* Set some defaults to preserve compability */
+	/* Set some defaults to preserve compatibility. */
 	if (xi.algoname[0] == '\0' && xi.type == 0)
 		xi.type = IPFW_TABLE_ADDR;
 	if (xi.vmask == 0)
@@ -494,10 +481,7 @@ table_modify(ipfw_obj_header *oh, int ac, char *av[])
 {
 	ipfw_xtable_info xi;
 	int tcmd;
-	size_t sz;
-	char tbuf[128];
 
-	sz = sizeof(tbuf);
 	memset(&xi, 0, sizeof(xi));
 
 	while (ac > 0) {
@@ -923,14 +907,14 @@ table_modify_record(ipfw_obj_header *oh, int ac, char *av[], int add,
 		tentry_fill_key(oh, ptent, *av, add, &type, &vmask, &xi);
 
 		/*
-		 * compability layer: auto-create table if not exists
+		 * Compatibility layer: auto-create table if not exists.
 		 */
 		if (xi.tablename[0] == '\0') {
 			xi.type = type;
 			xi.vmask = vmask;
 			strlcpy(xi.tablename, oh->ntlv.name,
 			    sizeof(xi.tablename));
-			fprintf(stderr, "DEPRECATED: inserting data info "
+			fprintf(stderr, "DEPRECATED: inserting data into "
 			    "non-existent table %s. (auto-created)\n",
 			    xi.tablename);
 			table_do_create(oh, &xi);
@@ -1392,8 +1376,8 @@ tentry_fill_key(ipfw_obj_header *oh, ipfw_obj_tentry *tent, char *key,
 			vmask = xi->vmask;
 		} else {
 			/*
-			 * we're running `ipfw -n`
-			 * Compability layer: try to guess key type
+			 * We're running `ipfw -n`
+			 * Compatibility layer: try to guess key type
 			 * before failing.
 			 */
 			if (guess_key_type(key, &type) != 0) {
@@ -1412,7 +1396,7 @@ tentry_fill_key(ipfw_obj_header *oh, ipfw_obj_tentry *tent, char *key,
 			    oh->ntlv.name);
 		/*
 		 * Table does not exist
-		 * Compability layer: try to guess key type before failing.
+		 * Compatibility layer: try to guess key type before failing.
 		 */
 		if (guess_key_type(key, &type) != 0) {
 			/* Inknown key */
@@ -1449,14 +1433,13 @@ tentry_fill_value(ipfw_obj_header *oh, ipfw_obj_tentry *tent, char *arg,
     uint8_t type, uint32_t vmask)
 {
 	struct addrinfo hints, *res;
-	uint32_t a4, flag, val, vm;
+	uint32_t a4, flag, val;
 	ipfw_table_value *v;
 	uint32_t i;
 	int dval;
 	char *comma, *e, *etype, *n, *p;
 
 	v = &tent->v.value;
-	vm = vmask;
 
 	/* Compat layer: keep old behavior for legacy value types */
 	if (vmask == IPFW_VTYPE_LEGACY) {
@@ -2000,30 +1983,14 @@ ipfw_list_values(int ac, char *av[])
 }
 
 int
-table_check_name(char *tablename)
+table_check_name(const char *tablename)
 {
-	int c, i, l;
 
-	/*
-	 * Check if tablename is null-terminated and contains
-	 * valid symbols only. Valid mask is:
-	 * [a-zA-Z0-9\-_\.]{1,63}
-	 */
-	l = strlen(tablename);
-	if (l == 0 || l >= 64)
+	if (ipfw_check_object_name(tablename) != 0)
 		return (EINVAL);
-	for (i = 0; i < l; i++) {
-		c = tablename[i];
-		if (isalpha(c) || isdigit(c) || c == '_' ||
-		    c == '-' || c == '.')
-			continue;
-		return (EINVAL);	
-	}
-
 	/* Restrict some 'special' names */
 	if (strcmp(tablename, "all") == 0)
 		return (EINVAL);
-
 	return (0);
 }
 

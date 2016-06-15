@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/usr.sbin/mptable/mptable.c 262978 2014-03-10 16:07:45Z jhb $";
+  "$FreeBSD: head/usr.sbin/mptable/mptable.c 289767 2015-10-22 21:13:35Z bapt $";
 #endif /* not lint */
 
 /*
@@ -217,7 +217,8 @@ main( int argc, char *argv[] )
     apic_probe( &paddr, &where );
     if ( where <= 0 ) {
         fprintf( stderr, "\n MP FPS NOT found,\n" );
-        fprintf( stderr, " suggest trying -grope option!!!\n\n" );
+        if (!grope)
+            fprintf( stderr, " suggest trying -grope option!!!\n\n" );
         return 1;
     }
 

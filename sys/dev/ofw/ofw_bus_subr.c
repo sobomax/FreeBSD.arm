@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_bus_subr.c 284624 2015-06-20 04:48:48Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/ofw/ofw_bus_subr.c 301453 2016-06-05 16:20:12Z skra $");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -170,7 +170,8 @@ ofw_bus_status_okay(device_t dev)
 	const char *status;
 
 	status = ofw_bus_get_status(dev);
-	if (status == NULL || strcmp(status, "okay") == 0)
+	if (status == NULL || strcmp(status, "okay") == 0 ||
+	    strcmp(status, "ok") == 0)
 		return (1);
 	
 	return (0);
@@ -340,6 +341,7 @@ ofw_bus_search_intrmap(void *intr, int intrsz, void *regs, int physsz,
 	uint8_t *uiregs = regs;
 	uint8_t *uiimapmsk = imapmsk;
 	uint8_t *mptr;
+	pcell_t paddrsz;
 	pcell_t pintrsz;
 	int i, rsz, tsz;
 
@@ -356,19 +358,32 @@ ofw_bus_search_intrmap(void *intr, int intrsz, void *regs, int physsz,
 
 	mptr = imap;
 	i = imapsz;
+	paddrsz = 0;
 	while (i > 0) {
 		bcopy(mptr + physsz + intrsz, &parent, sizeof(parent));
+#ifndef OFW_IMAP_NO_IPARENT_ADDR_CELLS
+		/*
+		 * Find if we need to read the parent address data.
+		 * CHRP-derived OF bindings, including ePAPR-compliant FDTs,
+		 * use this as an optional part of the specifier.
+		 */
+		if (OF_getencprop(OF_node_from_xref(parent),
+		    "#address-cells", &paddrsz, sizeof(paddrsz)) == -1)
+			paddrsz = 0;	/* default */
+		paddrsz *= sizeof(pcell_t);
+#endif
+
 		if (OF_searchencprop(OF_node_from_xref(parent),
 		    "#interrupt-cells", &pintrsz, sizeof(pintrsz)) == -1)
 			pintrsz = 1;	/* default */
 		pintrsz *= sizeof(pcell_t);
 
 		/* Compute the map stride size. */
-		tsz = physsz + intrsz + sizeof(phandle_t) + pintrsz;
+		tsz = physsz + intrsz + sizeof(phandle_t) + paddrsz + pintrsz;
 		KASSERT(i >= tsz, ("ofw_bus_search_intrmap: truncated map"));
 
 		if (bcmp(ref, mptr, physsz + intrsz) == 0) {
-			bcopy(mptr + physsz + intrsz + sizeof(parent),
+			bcopy(mptr + physsz + intrsz + sizeof(parent) + paddrsz,
 			    result, MIN(rintrsz, pintrsz));
 
 			if (iparent != NULL)
@@ -379,6 +394,57 @@ ofw_bus_search_intrmap(void *intr, int intrsz, void *regs, int physsz,
 		i -= tsz;
 	}
 	return (0);
+}
+
+int
+ofw_bus_msimap(phandle_t node, uint16_t pci_rid, phandle_t *msi_parent,
+    uint32_t *msi_rid)
+{
+	pcell_t *map, mask, msi_base, rid_base, rid_length;
+	ssize_t len;
+	uint32_t masked_rid, rid;
+	int err, i;
+
+	/* TODO: This should be OF_searchprop_alloc if we had it */
+	len = OF_getencprop_alloc(node, "msi-map", sizeof(*map), (void **)&map);
+	if (len < 0) {
+		if (msi_parent != NULL) {
+			*msi_parent = 0;
+			OF_getencprop(node, "msi-parent", msi_parent,
+			    sizeof(*msi_parent));
+		}
+		if (msi_rid != NULL)
+			*msi_rid = pci_rid;
+		return (0);
+	}
+
+	err = ENOENT;
+	rid = 0;
+	mask = 0xffffffff;
+	OF_getencprop(node, "msi-map-mask", &mask, sizeof(mask));
+
+	masked_rid = pci_rid & mask;
+	for (i = 0; i < len; i += 4) {
+		rid_base = map[i + 0];
+		rid_length = map[i + 3];
+
+		if (masked_rid < rid_base ||
+		    masked_rid >= (rid_base + rid_length))
+			continue;
+
+		msi_base = map[i + 2];
+
+		if (msi_parent != NULL)
+			*msi_parent = map[i + 1];
+		if (msi_rid != NULL)
+			*msi_rid = masked_rid - rid_base + msi_base;
+		err = 0;
+		break;
+	}
+
+	free(map, M_OFWPROP);
+
+	return (err);
 }
 
 int
@@ -394,7 +460,7 @@ ofw_bus_reg_to_rl(device_t dev, phandle_t node, pcell_t acells, pcell_t scells,
 	 * This may be just redundant when having ofw_bus_devinfo
 	 * but makes this routine independent of it.
 	 */
-	ret = OF_getencprop_alloc(node, "name", sizeof(*name), (void **)&name);
+	ret = OF_getprop_alloc(node, "name", sizeof(*name), (void **)&name);
 	if (ret == -1)
 		name = NULL;
 
@@ -429,6 +495,28 @@ ofw_bus_reg_to_rl(device_t dev, phandle_t node, pcell_t acells, pcell_t scells,
 	return (0);
 }
 
+/*
+ * Get interrupt parent for given node.
+ * Returns 0 if interrupt parent doesn't exist.
+ */
+phandle_t
+ofw_bus_find_iparent(phandle_t node)
+{
+	phandle_t iparent;
+
+	if (OF_searchencprop(node, "interrupt-parent", &iparent,
+		    sizeof(iparent)) == -1) {
+		for (iparent = node; iparent != 0;
+		    iparent = OF_parent(iparent)) {
+			if (OF_hasprop(iparent, "interrupt-controller"))
+				break;
+		}
+		iparent = OF_xref_from_node(iparent);
+	}
+	return (iparent);
+}
+
+#ifndef INTRNG
 int
 ofw_bus_intr_to_rl(device_t dev, phandle_t node,
     struct resource_list *rl, int *rlen)
@@ -441,18 +529,11 @@ ofw_bus_intr_to_rl(device_t dev, phandle_t node,
 	nintr = OF_getencprop_alloc(node, "interrupts",  sizeof(*intr),
 	    (void **)&intr);
 	if (nintr > 0) {
-		if (OF_searchencprop(node, "interrupt-parent", &iparent,
-		    sizeof(iparent)) == -1) {
-			for (iparent = node; iparent != 0;
-			    iparent = OF_parent(node)) {
-				if (OF_hasprop(iparent, "interrupt-controller"))
-					break;
-			}
-			if (iparent == 0) {
-				device_printf(dev, "No interrupt-parent found, "
-				    "assuming direct parent\n");
-				iparent = OF_parent(node);
-			}
+		iparent = ofw_bus_find_iparent(node);
+		if (iparent == 0) {
+			device_printf(dev, "No interrupt-parent found, "
+			    "assuming direct parent\n");
+			iparent = OF_parent(node);
 			iparent = OF_xref_from_node(iparent);
 		}
 		if (OF_searchencprop(OF_node_from_xref(iparent), 
@@ -501,6 +582,78 @@ ofw_bus_intr_to_rl(device_t dev, phandle_t node,
 	free(intr, M_OFWPROP);
 	return (err);
 }
+#endif
+
+int
+ofw_bus_intr_by_rid(device_t dev, phandle_t node, int wanted_rid,
+    phandle_t *producer, int *ncells, pcell_t **cells)
+{
+	phandle_t iparent;
+	uint32_t icells, *intr;
+	int err, i, nintr, rid;
+	boolean_t extended;
+
+	nintr = OF_getencprop_alloc(node, "interrupts",  sizeof(*intr),
+	    (void **)&intr);
+	if (nintr > 0) {
+		iparent = ofw_bus_find_iparent(node);
+		if (iparent == 0) {
+			device_printf(dev, "No interrupt-parent found, "
+			    "assuming direct parent\n");
+			iparent = OF_parent(node);
+			iparent = OF_xref_from_node(iparent);
+		}
+		if (OF_searchencprop(OF_node_from_xref(iparent),
+		    "#interrupt-cells", &icells, sizeof(icells)) == -1) {
+			device_printf(dev, "Missing #interrupt-cells "
+			    "property, assuming <1>\n");
+			icells = 1;
+		}
+		if (icells < 1 || icells > nintr) {
+			device_printf(dev, "Invalid #interrupt-cells property "
+			    "value <%d>, assuming <1>\n", icells);
+			icells = 1;
+		}
+		extended = false;
+	} else {
+		nintr = OF_getencprop_alloc(node, "interrupts-extended",
+		    sizeof(*intr), (void **)&intr);
+		if (nintr <= 0)
+			return (ESRCH);
+		extended = true;
+	}
+	err = ESRCH;
+	rid = 0;
+	for (i = 0; i < nintr; i += icells, rid++) {
+		if (extended) {
+			iparent = intr[i++];
+			if (OF_searchencprop(OF_node_from_xref(iparent),
+			    "#interrupt-cells", &icells, sizeof(icells)) == -1) {
+				device_printf(dev, "Missing #interrupt-cells "
+				    "property\n");
+				err = ENOENT;
+				break;
+			}
+			if (icells < 1 || (i + icells) > nintr) {
+				device_printf(dev, "Invalid #interrupt-cells "
+				    "property value <%d>\n", icells);
+				err = ERANGE;
+				break;
+			}
+		}
+		if (rid == wanted_rid) {
+			*cells = malloc(icells * sizeof(**cells), M_OFWPROP,
+			    M_WAITOK);
+			*producer = iparent;
+			*ncells= icells;
+			memcpy(*cells, intr + i, icells * sizeof(**cells));
+			err = 0;
+			break;
+		}
+	}
+	free(intr, M_OFWPROP);
+	return (err);
+}
 
 phandle_t
 ofw_bus_find_child(phandle_t start, const char *child_name)
@@ -510,7 +663,7 @@ ofw_bus_find_child(phandle_t start, const char *child_name)
 	phandle_t child;
 
 	for (child = OF_child(start); child != 0; child = OF_peer(child)) {
-		ret = OF_getencprop_alloc(child, "name", sizeof(*name), (void **)&name);
+		ret = OF_getprop_alloc(child, "name", sizeof(*name), (void **)&name);
 		if (ret == -1)
 			continue;
 		if (strcmp(name, child_name) == 0) {
@@ -591,4 +744,188 @@ ofw_bus_find_child_device_by_phandle(device_t bus, phandle_t node)
 	free(children, M_TEMP);
 
 	return (retval);
+}
+
+/*
+ * Parse property that contain list of xrefs and values
+ * (like standard "clocks" and "resets" properties)
+ * Input arguments:
+ *  node - consumers device node
+ *  list_name  - name of parsed list - "clocks"
+ *  cells_name - name of size property - "#clock-cells"
+ *  idx - the index of the requested list entry, or, if -1, an indication
+ *        to return the number of entries in the parsed list.
+ * Output arguments:
+ *  producer - handle of producer
+ *  ncells   - number of cells in result or the number of items in the list when
+ *             idx == -1.
+ *  cells    - array of decoded cells
+ */
+static int
+ofw_bus_parse_xref_list_internal(phandle_t node, const char *list_name,
+    const char *cells_name, int idx, phandle_t *producer, int *ncells,
+    pcell_t **cells)
+{
+	phandle_t pnode;
+	phandle_t *elems;
+	uint32_t  pcells;
+	int rv, i, j, nelems, cnt;
+
+	elems = NULL;
+	nelems = OF_getencprop_alloc(node, list_name,  sizeof(*elems),
+	    (void **)&elems);
+	if (nelems <= 0)
+		return (ENOENT);
+	rv = (idx == -1) ? 0 : ENOENT;
+	for (i = 0, cnt = 0; i < nelems; i += pcells, cnt++) {
+		pnode = elems[i++];
+		if (OF_getencprop(OF_node_from_xref(pnode),
+		    cells_name, &pcells, sizeof(pcells)) == -1) {
+			printf("Missing %s property\n", cells_name);
+			rv = ENOENT;
+			break;
+		}
+
+		if ((i + pcells) > nelems) {
+			printf("Invalid %s property value <%d>\n", cells_name,
+			    pcells);
+			rv = ERANGE;
+			break;
+		}
+		if (cnt == idx) {
+			*cells= malloc(pcells * sizeof(**cells), M_OFWPROP,
+			    M_WAITOK);
+			*producer = pnode;
+			*ncells = pcells;
+			for (j = 0; j < pcells; j++)
+				(*cells)[j] = elems[i + j];
+			rv = 0;
+			break;
+		}
+	}
+	if (elems != NULL)
+		free(elems, M_OFWPROP);
+	if (idx == -1 && rv == 0)
+		*ncells = cnt;
+	return (rv);
+}
+
+/*
+ * Parse property that contain list of xrefs and values
+ * (like standard "clocks" and "resets" properties)
+ * Input arguments:
+ *  node - consumers device node
+ *  list_name  - name of parsed list - "clocks"
+ *  cells_name - name of size property - "#clock-cells"
+ *  idx - the index of the requested list entry (>= 0)
+ * Output arguments:
+ *  producer - handle of producer
+ *  ncells   - number of cells in result
+ *  cells    - array of decoded cells
+ */
+int
+ofw_bus_parse_xref_list_alloc(phandle_t node, const char *list_name,
+    const char *cells_name, int idx, phandle_t *producer, int *ncells,
+    pcell_t **cells)
+{
+
+	KASSERT(idx >= 0,
+	    ("ofw_bus_parse_xref_list_alloc: negative index supplied"));
+
+	return (ofw_bus_parse_xref_list_internal(node, list_name, cells_name,
+		    idx, producer, ncells, cells));
+}
+
+/*
+ * Parse property that contain list of xrefs and values
+ * (like standard "clocks" and "resets" properties)
+ * and determine the number of items in the list
+ * Input arguments:
+ *  node - consumers device node
+ *  list_name  - name of parsed list - "clocks"
+ *  cells_name - name of size property - "#clock-cells"
+ * Output arguments:
+ *  count - number of items in list
+ */
+int
+ofw_bus_parse_xref_list_get_length(phandle_t node, const char *list_name,
+    const char *cells_name, int *count)
+{
+
+	return (ofw_bus_parse_xref_list_internal(node, list_name, cells_name,
+		    -1, NULL, count, NULL));
+}
+
+/*
+ * Find index of string in string list property (case sensitive).
+ */
+int
+ofw_bus_find_string_index(phandle_t node, const char *list_name,
+    const char *name, int *idx)
+{
+	char *elems;
+	int rv, i, cnt, nelems;
+
+	elems = NULL;
+	nelems = OF_getprop_alloc(node, list_name, 1, (void **)&elems);
+	if (nelems <= 0)
+		return (ENOENT);
+
+	rv = ENOENT;
+	for (i = 0, cnt = 0; i < nelems; cnt++) {
+		if (strcmp(elems + i, name) == 0) {
+			*idx = cnt;
+			rv = 0;
+			break;
+		}
+		i += strlen(elems + i) + 1;
+	}
+
+	if (elems != NULL)
+		free(elems, M_OFWPROP);
+	return (rv);
+}
+
+/*
+ * Create zero terminated array of strings from string list property.
+ */
+int
+ofw_bus_string_list_to_array(phandle_t node, const char *list_name,
+   const char ***out_array)
+{
+	char *elems, *tptr;
+	const char **array;
+	int i, cnt, nelems, len;
+
+	elems = NULL;
+	nelems = OF_getprop_alloc(node, list_name, 1, (void **)&elems);
+	if (nelems <= 0)
+		return (nelems);
+
+	/* Count number of strings. */
+	for (i = 0, cnt = 0; i < nelems; cnt++)
+		i += strlen(elems + i) + 1;
+
+	/* Allocate space for arrays and all strings. */
+	array = malloc((cnt + 1) * sizeof(char *) + nelems, M_OFWPROP,
+	    M_WAITOK);
+
+	/* Get address of first string. */
+	tptr = (char *)(array + cnt + 1);
+
+	/* Copy strings. */
+	memcpy(tptr, elems, nelems);
+	free(elems, M_OFWPROP);
+
+	/* Fill string pointers. */
+	for (i = 0, cnt = 0; i < nelems; cnt++) {
+		len = strlen(tptr) + 1;
+		array[cnt] = tptr;
+		i += len;
+		tptr += len;
+	}
+	array[cnt] = 0;
+	*out_array = array;
+
+	return (cnt);
 }

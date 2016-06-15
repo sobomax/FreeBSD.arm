@@ -27,12 +27,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/dtc/string.hh 245803 2013-01-22 17:49:51Z theraven $
+ * $FreeBSD: head/usr.bin/dtc/string.hh 289935 2015-10-25 14:52:16Z theraven $
  */
 
 #ifndef _STRING_HH_
 #define _STRING_HH_
 #include "input_buffer.hh"
+#include <string>
+#include <functional>
 
 namespace dtc
 {
@@ -48,6 +50,7 @@ namespace dtc
  */
 class string
 {
+	friend std::hash<string>;
 	/** Start address.  Contained within the mmap()'d input file and not
 	 * owned by this object. */
 	const char *start;
@@ -143,5 +146,19 @@ class string
 };
 
 } // namespace dtc
+namespace std
+{
+	template<>
+	struct hash<dtc::string>
+	{
+		std::size_t operator()(dtc::string const& s) const
+		{
+			std::string str(s.start, s.length);
+			std::hash<std::string> h;
+			return h(str);
+		}
+	};
+}
+
 
 #endif // !_STRING_HH_

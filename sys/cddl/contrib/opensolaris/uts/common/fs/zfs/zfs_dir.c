@@ -20,7 +20,7 @@
  */
 /*
  * Copyright (c) 2005, 2010, Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2013, 2014 by Delphix. All rights reserved.
+ * Copyright (c) 2013, 2015 by Delphix. All rights reserved.
  */
 
 #include <sys/types.h>
@@ -222,7 +222,7 @@ zfs_dirent_lock(zfs_dirlock_t **dlpp, znode_t *dzp, char *name, znode_t **zpp,
 
 	mutex_enter(&dzp->z_lock);
 	for (;;) {
-		if (dzp->z_unlinked) {
+		if (dzp->z_unlinked && !(flag & ZXATTR)) {
 			mutex_exit(&dzp->z_lock);
 			if (!(flag & ZHAVELOCK))
 				rw_exit(&dzp->z_name_lock);
@@ -611,19 +611,25 @@ zfs_rmnode(znode_t *zp)
 			zfs_znode_free(zp);
 			return;
 		}
-	}
-
-	/*
-	 * Free up all the data in the file.
-	 */
-	error = dmu_free_long_range(os, zp->z_id, 0, DMU_OBJECT_END);
-	if (error) {
+	} else {
 		/*
-		 * Not enough space.  Leave the file in the unlinked set.
+		 * Free up all the data in the file.  We don't do this for
+		 * XATTR directories because we need truncate and remove to be
+		 * in the same tx, like in zfs_znode_delete(). Otherwise, if
+		 * we crash here we'll end up with an inconsistent truncated
+		 * zap object in the delete queue.  Note a truncated file is
+		 * harmless since it only contains user data.
 		 */
-		zfs_znode_dmu_fini(zp);
-		zfs_znode_free(zp);
-		return;
+		error = dmu_free_long_range(os, zp->z_id, 0, DMU_OBJECT_END);
+		if (error) {
+			/*
+			 * Not enough space.  Leave the file in the unlinked
+			 * set.
+			 */
+			zfs_znode_dmu_fini(zp);
+			zfs_znode_free(zp);
+			return;
+		}
 	}
 
 	/*
@@ -806,7 +812,7 @@ zfs_dropname(zfs_dirlock_t *dl, znode_t *zp, znode_t *dzp, dmu_tx_t *tx,
  */
 int
 zfs_link_destroy(zfs_dirlock_t *dl, znode_t *zp, dmu_tx_t *tx, int flag,
-	boolean_t *unlinkedp)
+    boolean_t *unlinkedp)
 {
 	znode_t *dzp = dl->dl_dzp;
 	zfsvfs_t *zfsvfs = dzp->z_zfsvfs;

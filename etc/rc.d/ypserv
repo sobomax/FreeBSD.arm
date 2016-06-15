@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/ypserv 231667 2012-02-14 10:51:24Z dougb $
+# $FreeBSD: head/etc/rc.d/ypserv 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: ypserv
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="ypserv"
+desc="NIS database server"
 rcvar="nis_server_enable"
 
 load_rc_config $name

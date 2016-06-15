@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_usb_phy-m6.c 283188 2015-05-21 07:35:20Z ganbold $");
+__FBSDID("$FreeBSD: head/sys/arm/amlogic/aml8726/aml8726_usb_phy-m6.c 300175 2016-05-18 23:41:58Z gonzo $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -164,7 +164,7 @@ aml8726_usb_phy_attach(device_t dev)
 			sc->force_aca = TRUE;
 	}
 
-	free(force_aca, M_OFWPROP);
+	OF_prop_free(force_aca);
 
 	err = 0;
 
@@ -187,7 +187,7 @@ aml8726_usb_phy_attach(device_t dev)
 		}
 	}
 
-	free(prop, M_OFWPROP);
+	OF_prop_free(prop);
 
 	len = OF_getencprop_alloc(node, "usb-hub-rst",
 	    3 * sizeof(pcell_t), (void **)&prop);
@@ -200,7 +200,7 @@ aml8726_usb_phy_attach(device_t dev)
 			err = 1;
 	}
 
-	free(prop, M_OFWPROP);
+	OF_prop_free(prop);
 
 	if (err) {
 		device_printf(dev, "unable to parse gpio\n");

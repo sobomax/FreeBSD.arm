@@ -27,7 +27,7 @@
 /* Driver for VirtIO network devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 284348 2015-06-13 19:39:21Z kp $");
+__FBSDID("$FreeBSD: head/sys/dev/virtio/network/if_vtnet.c 299725 2016-05-14 06:07:15Z kp $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -304,25 +304,29 @@ DRIVER_MODULE(vtnet, virtio_pci, vtnet_driver, vtnet_devclass,
     vtnet_modevent, 0);
 MODULE_VERSION(vtnet, 1);
 MODULE_DEPEND(vtnet, virtio, 1, 1, 1);
+#ifdef DEV_NETMAP
+MODULE_DEPEND(vtnet, netmap, 1, 1, 1);
+#endif /* DEV_NETMAP */
 
 static int
 vtnet_modevent(module_t mod, int type, void *unused)
 {
-	int error;
-
-	error = 0;
+	int error = 0;
+	static int loaded = 0;
 
 	switch (type) {
 	case MOD_LOAD:
-		vtnet_tx_header_zone = uma_zcreate("vtnet_tx_hdr",
-		    sizeof(struct vtnet_tx_header),
-		    NULL, NULL, NULL, NULL, 0, 0);
+		if (loaded++ == 0)
+			vtnet_tx_header_zone = uma_zcreate("vtnet_tx_hdr",
+				sizeof(struct vtnet_tx_header),
+				NULL, NULL, NULL, NULL, 0, 0);
 		break;
 	case MOD_QUIESCE:
-	case MOD_UNLOAD:
 		if (uma_zone_get_cur(vtnet_tx_header_zone) > 0)
 			error = EBUSY;
-		else if (type == MOD_UNLOAD) {
+		break;
+	case MOD_UNLOAD:
+		if (--loaded == 0) {
 			uma_zdestroy(vtnet_tx_header_zone);
 			vtnet_tx_header_zone = NULL;
 		}
@@ -1639,14 +1643,12 @@ static int
 vtnet_rxq_merged_eof(struct vtnet_rxq *rxq, struct mbuf *m_head, int nbufs)
 {
 	struct vtnet_softc *sc;
-	struct ifnet *ifp;
 	struct virtqueue *vq;
 	struct mbuf *m, *m_tail;
 	int len;
 
 	sc = rxq->vtnrx_sc;
 	vq = rxq->vtnrx_vq;
-	ifp = sc->vtnet_ifp;
 	m_tail = m_head;
 
 	while (--nbufs > 0) {
@@ -3642,10 +3644,8 @@ vtnet_set_rx_process_limit(struct vtnet_softc *sc)
 static void
 vtnet_set_tx_intr_threshold(struct vtnet_softc *sc)
 {
-	device_t dev;
 	int size, thresh;
 
-	dev = sc->vtnet_dev;
 	size = virtqueue_size(sc->vtnet_txqs[0].vtntx_vq);
 
 	/*

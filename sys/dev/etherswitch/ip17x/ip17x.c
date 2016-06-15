@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/etherswitch/ip17x/ip17x.c 265770 2014-05-09 13:21:34Z loos $
+ * $FreeBSD: head/sys/dev/etherswitch/ip17x/ip17x.c 292738 2015-12-26 02:31:39Z adrian $
  */
 
 #include <sys/param.h>
@@ -51,7 +51,7 @@
 #include <machine/bus.h>
 #include <dev/mii/mii.h>
 #include <dev/mii/miivar.h>
-#include <dev/etherswitch/mdio.h>
+#include <dev/mdio/mdio.h>
 
 #include <dev/etherswitch/etherswitch.h>
 #include <dev/etherswitch/ip17x/ip17x_phy.h>

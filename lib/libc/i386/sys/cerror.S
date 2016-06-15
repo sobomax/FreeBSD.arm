@@ -34,11 +34,12 @@
 	.asciz "@(#)cerror.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/i386/sys/cerror.S 240152 2012-09-05 21:41:05Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/i386/sys/cerror.S 296474 2016-03-08 00:09:34Z emaste $");
 
 #include "SYS.h"
 
 	.globl HIDENAME(cerror)
+	.hidden HIDENAME(cerror)
 
 	/*
 	 * The __error() function is thread aware. For non-threaded

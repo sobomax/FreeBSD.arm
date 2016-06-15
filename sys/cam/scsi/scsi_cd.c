@@ -46,7 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_cd.c 278111 2015-02-02 20:23:05Z mav $");
+__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_cd.c 299180 2016-05-06 15:36:25Z pfg $");
 
 #include "opt_cd.h"
 
@@ -389,7 +389,8 @@ cdasync(void *callback_arg, u_int32_t code,
 
 		if (cgd->protocol != PROTO_SCSI)
 			break;
-
+		if (SID_QUAL(&cgd->inq_data) != SID_QUAL_LU_CONNECTED)
+			break;
 		if (SID_TYPE(&cgd->inq_data) != T_CDROM
 		    && SID_TYPE(&cgd->inq_data) != T_WORM)
 			break;
@@ -577,7 +578,7 @@ cdregister(struct cam_periph *periph, void *arg)
 	 */
 	match = cam_quirkmatch((caddr_t)&cgd->inq_data,
 			       (caddr_t)cd_quirk_table,
-			       sizeof(cd_quirk_table)/sizeof(*cd_quirk_table),
+			       nitems(cd_quirk_table),
 			       sizeof(*cd_quirk_table), scsi_inquiry_match);
 
 	if (match != NULL)
@@ -1080,11 +1081,11 @@ cddone(struct cam_periph *periph, union ccb *done_ccb)
 		if ((csio->ccb_h.status & CAM_STATUS_MASK) == CAM_REQ_CMP ||
 		    (error = cderror(done_ccb, CAM_RETRY_SELTO,
 				SF_RETRY_UA | SF_NO_PRINT)) == 0) {
-
 			snprintf(announce_buf, sizeof(announce_buf),
-				"cd present [%lu x %lu byte records]",
-				cdp->disksize, (u_long)cdp->blksize);
-
+			    "%juMB (%ju %u byte sectors)",
+			    ((uintmax_t)cdp->disksize * cdp->blksize) /
+			     (1024 * 1024),
+			    (uintmax_t)cdp->disksize, cdp->blksize);
 		} else {
 			if (error == ERESTART) {
 				/*
@@ -1263,10 +1264,9 @@ cdgetpage(struct cd_mode_params *mode_params)
 static int
 cdgetpagesize(int page_num)
 {
-	int i;
+	u_int i;
 
-	for (i = 0; i < (sizeof(cd_page_size_table)/
-	     sizeof(cd_page_size_table[0])); i++) {
+	for (i = 0; i < nitems(cd_page_size_table); i++) {
 		if (cd_page_size_table[i].page == page_num)
 			return (cd_page_size_table[i].page_size);
 	}

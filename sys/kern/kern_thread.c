@@ -30,7 +30,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 284215 2015-06-10 10:48:12Z mjg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 301456 2016-06-05 17:04:03Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -45,6 +45,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 284215 2015-06-10 10:48:12Z mjg 
 #include <sys/sched.h>
 #include <sys/sleepqueue.h>
 #include <sys/selinfo.h>
+#include <sys/syscallsubr.h>
 #include <sys/sysent.h>
 #include <sys/turnstile.h>
 #include <sys/ktr.h>
@@ -60,6 +61,7 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 284215 2015-06-10 10:48:12Z mjg 
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 #include <vm/uma.h>
+#include <vm/vm_domain.h>
 #include <sys/eventhandler.h>
 
 SDT_PROVIDER_DECLARE(proc);
@@ -209,7 +211,6 @@ thread_init(void *mem, int size, int flags)
 	td->td_turnstile = turnstile_alloc();
 	td->td_rlqe = NULL;
 	EVENTHANDLER_INVOKE(thread_init, td);
-	td->td_sched = (struct td_sched *)&td[1];
 	umtx_thread_init(td);
 	td->td_kstack = 0;
 	td->td_sel = NULL;
@@ -280,7 +281,7 @@ threadinit(void)
 
 	thread_zone = uma_zcreate("THREAD", sched_sizeof_thread(),
 	    thread_ctor, thread_dtor, thread_init, thread_fini,
-	    16 - 1, 0);
+	    16 - 1, UMA_ZONE_NOFREE);
 	tidhashtbl = hashinit(maxproc / 2, M_TIDHASH, &tidhash);
 	rw_init(&tidhash_lock, "tidhash");
 }
@@ -351,6 +352,7 @@ thread_alloc(int pages)
 		return (NULL);
 	}
 	cpu_thread_alloc(td);
+	vm_domain_policy_init(&td->td_vm_dom_policy);
 	return (td);
 }
 
@@ -380,6 +382,7 @@ thread_free(struct thread *td)
 	cpu_thread_free(td);
 	if (td->td_kstack != 0)
 		vm_thread_dispose(td);
+	vm_domain_policy_cleanup(&td->td_vm_dom_policy);
 	uma_zfree(thread_zone, td);
 }
 
@@ -406,9 +409,9 @@ void
 thread_cow_free(struct thread *td)
 {
 
-	if (td->td_ucred)
+	if (td->td_ucred != NULL)
 		crfree(td->td_ucred);
-	if (td->td_limit)
+	if (td->td_limit != NULL)
 		lim_free(td->td_limit);
 }
 
@@ -416,15 +419,27 @@ void
 thread_cow_update(struct thread *td)
 {
 	struct proc *p;
+	struct ucred *oldcred;
+	struct plimit *oldlimit;
 
 	p = td->td_proc;
+	oldcred = NULL;
+	oldlimit = NULL;
 	PROC_LOCK(p);
-	if (td->td_ucred != p->p_ucred)
-		cred_update_thread(td);
-	if (td->td_limit != p->p_limit)
-		lim_update_thread(td);
+	if (td->td_ucred != p->p_ucred) {
+		oldcred = td->td_ucred;
+		td->td_ucred = crhold(p->p_ucred);
+	}
+	if (td->td_limit != p->p_limit) {
+		oldlimit = td->td_limit;
+		td->td_limit = lim_hold(p->p_limit);
+	}
 	td->td_cowgen = p->p_cowgen;
 	PROC_UNLOCK(p);
+	if (oldcred != NULL)
+		crfree(oldcred);
+	if (oldlimit != NULL)
+		lim_free(oldlimit);
 }
 
 /*
@@ -927,7 +942,6 @@ thread_suspend_check(int return_instead)
 		 */
 		if ((p->p_flag & P_SINGLE_EXIT) && (p->p_singlethread != td)) {
 			PROC_UNLOCK(p);
-			tidhash_remove(td);
 
 			/*
 			 * Allow Linux emulation layer to do some work
@@ -935,13 +949,9 @@ thread_suspend_check(int return_instead)
 			 */
 			if (__predict_false(p->p_sysent->sv_thread_detach != NULL))
 				(p->p_sysent->sv_thread_detach)(td);
-
-			PROC_LOCK(p);
-			tdsigcleanup(td);
 			umtx_thread_exit(td);
-			PROC_SLOCK(p);
-			thread_stopped(p);
-			thread_exit();
+			kern_thr_exit(td);
+			panic("stopped thread did not exit");
 		}
 
 		PROC_SLOCK(p);

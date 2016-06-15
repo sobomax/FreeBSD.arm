@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)mount.8	8.8 (Berkeley) 6/16/94
-.\" $FreeBSD: head/sbin/mount/mount.8 281691 2015-04-18 16:08:06Z trasz $
+.\" $FreeBSD: head/sbin/mount/mount.8 289229 2015-10-13 17:14:27Z ngie $
 .\"
-.Dd December 3, 2014
+.Dd October 13, 2015
 .Dt MOUNT 8
 .Os
 .Sh NAME
@@ -189,7 +189,7 @@ to use the specified program to mount the file system, instead of calling
 directly.
 For example:
 .Bd -literal
-mount -t foofs -o mountprog=/mydir/fooprog /dev/acd0 /mnt
+mount -t foofs -o mountprog=/mydir/fooprog /dev/cd0 /mnt
 .Ed
 .It Cm multilabel
 Enable multi-label Mandatory Access Control, or MAC, on the specified file

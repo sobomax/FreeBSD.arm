@@ -1,7 +1,7 @@
 /*	$NetBSD: if_bah_zbus.c,v 1.6 2000/01/23 21:06:12 aymeric Exp $ */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cm/if_cm_isa.c 257289 2013-10-28 23:17:41Z glebius $");
+__FBSDID("$FreeBSD: head/sys/dev/cm/if_cm_isa.c 296137 2016-02-27 03:38:01Z jhibbits $");
 
 /*-
  * Copyright (c) 1994, 1995, 1998 The NetBSD Foundation, Inc.
@@ -63,8 +63,8 @@ cm_isa_probe(dev)
 	int rid;
 
 	rid = 0;
-	sc->port_res = bus_alloc_resource(
-	    dev, SYS_RES_IOPORT, &rid, 0ul, ~0ul, CM_IO_PORTS, RF_ACTIVE);
+	sc->port_res = bus_alloc_resource_anywhere(
+	    dev, SYS_RES_IOPORT, &rid, CM_IO_PORTS, RF_ACTIVE);
 	if (sc->port_res == NULL)
 		return (ENOENT);
 
@@ -74,8 +74,8 @@ cm_isa_probe(dev)
 	}
 
 	rid = 0;
-	sc->mem_res = bus_alloc_resource(
-	    dev, SYS_RES_MEMORY, &rid, 0ul, ~0ul, CM_MEM_SIZE, RF_ACTIVE);
+	sc->mem_res = bus_alloc_resource_anywhere(
+	    dev, SYS_RES_MEMORY, &rid, CM_MEM_SIZE, RF_ACTIVE);
 	if (sc->mem_res == NULL) {
 		cm_release_resources(dev);
 		return (ENOENT);

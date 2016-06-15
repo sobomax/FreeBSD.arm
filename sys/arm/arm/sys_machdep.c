@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/sys_machdep.c 284115 2015-06-07 13:59:02Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/sys_machdep.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include "opt_capsicum.h"
 
@@ -44,8 +44,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/sys_machdep.c 284115 2015-06-07 13:59:02Z a
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
 
-#include <machine/acle-compat.h>
-#include <machine/cpu-v6.h>
+#include <machine/cpu.h>
 #include <machine/sysarch.h>
 #include <machine/vmparam.h>
 
@@ -153,8 +152,13 @@ arm32_drain_writebuf(struct thread *td, void *args)
 {
 	/* No args. */
 
-	td->td_retval[0] = 0;
+#if __ARM_ARCH < 6
 	cpu_drain_writebuf();
+#else
+	dsb();
+	cpu_l2cache_drain_writebuf();
+#endif
+	td->td_retval[0] = 0;
 	return (0);
 }
 

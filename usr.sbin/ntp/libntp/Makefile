@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ntp/libntp/Makefile 280849 2015-03-30 13:30:15Z cy $
+# $FreeBSD: head/usr.sbin/ntp/libntp/Makefile 298695 2016-04-27 07:46:38Z delphij $
 
 .PATH: ${.CURDIR}/../../../contrib/ntp/libntp \
 	${.CURDIR}/../../../contrib/ntp/lib/isc \
@@ -16,12 +16,14 @@ NTP_SRCS= systime.c	a_md5encrypt.c	adjtime.c	atoint.c \
 	clocktypes.c	decodenetnum.c	dofptoa.c	dolfptoa.c \
 	emalloc.c	findconfig.c	getopt.c	hextoint.c \
 	hextolfp.c	humandate.c	icom.c		iosignal.c \
+	is_ip_address.c \
 	lib_strbuf.c	machines.c	mktime.c	modetoa.c \
 	mstolfp.c	msyslog.c	netof.c		ntp_calendar.c \
 	ntp_crypto_rnd.c		ntp_intres.c	ntp_libopts.c \
 	ntp_lineedit.c	ntp_random.c	ntp_rfc2553.c	ntp_worker.c \
 	numtoa.c	numtohost.c	octtoint.c	prettydate.c \
-	recvbuff.c	refnumtoa.c	snprintf.c	socket.c \
+	recvbuff.c	refidsmear.c	\
+	refnumtoa.c	snprintf.c	socket.c \
 	socktoa.c	socktohost.c	ssl_init.c	statestr.c \
 	strdup.c	strl_obsd.c	syssignal.c	timetoa.c \
 	timevalops.c	uglydate.c	vint64ops.c	work_fork.c \
@@ -39,7 +41,8 @@ ISC_UNIX_SRCS= dir.c \
 	stdio.c \
 	stdtime.c \
 	strerror.c \
-	time.c
+	time.c \
+	tsmemcmp.c
 
 ISC_NLS_SRCS= msgcat.c
 

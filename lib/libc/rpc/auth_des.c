@@ -57,7 +57,7 @@
 static char sccsid[] = 	"@(#)auth_des.c	2.2 88/07/29 4.0 RPCSRC; from 1.9 88/02/08 SMI";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/auth_des.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/auth_des.c 287350 2015-09-01 08:34:44Z rodrigc $");
 
 #define USEC_PER_SEC		1000000
 #define RTIME_TIMEOUT		5	/* seconds to wait for sync */
@@ -69,7 +69,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/auth_des.c 258578 2013-11-25 19:04:36Z hrs
 
 extern bool_t xdr_authdes_cred( XDR *, struct authdes_cred *);
 extern bool_t xdr_authdes_verf( XDR *, struct authdes_verf *);
-extern int key_encryptsession_pk();
+extern int key_encryptsession_pk(char *, netobj *, des_block *);
 
 extern bool_t __rpc_get_time_offset(struct timeval *, nis_server *, char *,
 	char **, char **);
@@ -259,7 +259,7 @@ failed:
  */	
 /*ARGSUSED*/
 static void
-authdes_nextverf(AUTH *auth)
+authdes_nextverf(AUTH *auth __unused)
 {
 	/* what the heck am I supposed to do??? */
 }
@@ -420,7 +420,7 @@ authdes_validate(AUTH *auth, struct opaque_auth *rverf)
  */
 /*ARGSUSED*/
 static bool_t
-authdes_refresh(AUTH *auth, void *dummy)
+authdes_refresh(AUTH *auth, void *dummy __unused)
 {
 /* LINTED pointer alignment */
 	struct ad_private *ad = AUTH_PRIVATE(auth);

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_syscons.c 278495 2015-02-10 06:35:16Z rpaulo $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_syscons.c 295662 2016-02-16 15:18:12Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -342,7 +342,7 @@ ofwfb_configure(int flags)
 		if (fb_phys == sc->sc_num_pciaddrs)
 			return (0);
 
-		OF_decode_addr(node, fb_phys, &sc->sc_tag, &sc->sc_addr);
+		OF_decode_addr(node, fb_phys, &sc->sc_tag, &sc->sc_addr, NULL);
 	}
 
 	ofwfb_init(0, &sc->sc_va, 0);

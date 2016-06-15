@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/toupper.c 235239 2012-05-10 20:03:34Z dim $");
+__FBSDID("$FreeBSD: head/lib/libc/locale/toupper.c 288037 2015-09-20 20:50:18Z rodrigc $");
 
 #include <ctype.h>
 #include <stdio.h>
@@ -45,9 +45,7 @@ __FBSDID("$FreeBSD: head/lib/libc/locale/toupper.c 235239 2012-05-10 20:03:34Z d
 #include "mblocal.h"
 
 __ct_rune_t
-___toupper_l(c, l)
-	__ct_rune_t c;
-	locale_t l;
+___toupper_l(__ct_rune_t c, locale_t l)
 {
 	size_t lim;
 	FIX_LOCALE(l);
@@ -74,8 +72,7 @@ ___toupper_l(c, l)
 	return(c);
 }
 __ct_rune_t
-___toupper(c)
-	__ct_rune_t c;
+___toupper(__ct_rune_t c)
 {
 	return ___toupper_l(c, __get_locale());
 }

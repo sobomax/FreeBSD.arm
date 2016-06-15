@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)telldir.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/telldir.c 282560 2015-05-06 17:23:42Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/telldir.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -50,8 +50,7 @@ __FBSDID("$FreeBSD: head/lib/libc/gen/telldir.c 282560 2015-05-06 17:23:42Z jhb 
  * return a pointer into a directory
  */
 long
-telldir(dirp)
-	DIR *dirp;
+telldir(DIR *dirp)
 {
 	struct ddloc *lp;
 	long idx;
@@ -86,9 +85,7 @@ telldir(dirp)
  * Only values returned by "telldir" should be passed to seekdir.
  */
 void
-_seekdir(dirp, loc)
-	DIR *dirp;
-	long loc;
+_seekdir(DIR *dirp, long loc)
 {
 	struct ddloc *lp;
 	struct dirent *dp;
@@ -152,8 +149,7 @@ _fixtelldir(DIR *dirp, long oldseek, long oldloc)
  * Reclaim memory for telldir cookies which weren't used.
  */
 void
-_reclaim_telldir(dirp)
-	DIR *dirp;
+_reclaim_telldir(DIR *dirp)
 {
 	struct ddloc *lp;
 	struct ddloc *templp;

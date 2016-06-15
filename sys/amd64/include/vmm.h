@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/vmm.h 284539 2015-06-18 06:00:17Z neel $
+ * $FreeBSD: head/sys/amd64/include/vmm.h 299010 2016-05-03 22:13:04Z pfg $
  */
 
 #ifndef _VMM_H_
@@ -377,7 +377,7 @@ struct vm_copyinfo {
  * at 'gla' and 'len' bytes long. The 'prot' should be set to PROT_READ for
  * a copyin or PROT_WRITE for a copyout. 
  *
- * retval	is_fault	Intepretation
+ * retval	is_fault	Interpretation
  *   0		   0		Success
  *   0		   1		An exception was injected into the guest
  * EFAULT	  N/A		Unrecoverable error

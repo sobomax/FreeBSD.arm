@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/autoconf.c 281494 2015-04-13 14:43:10Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/autoconf.c 299936 2016-05-16 10:48:51Z andrew $");
 
 /*
  * Setup the system to run on the current machine.
@@ -80,7 +80,13 @@ configure(void *dummy)
 static void
 configure_final(void *dummy)
 {
+
+#ifdef INTRNG
+	/* Enable interrupt reception on this CPU */
+	intr_enable();
+#else
 	arm_enable_intr();
+#endif
 	cninit_finish(); 
 
 	if (bootverbose)

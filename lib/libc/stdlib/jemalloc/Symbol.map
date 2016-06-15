@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: head/lib/libc/stdlib/jemalloc/Symbol.map 276630 2015-01-03 18:38:46Z kib $
+ * $FreeBSD: head/lib/libc/stdlib/jemalloc/Symbol.map 296221 2016-02-29 19:10:32Z jasone $
  */
 
 FBSD_1.0 {
@@ -49,6 +49,16 @@ FBSD_1.3 {
 	__sallocm;
 	__dallocm;
 	__nallocm;
+};
+
+FBSD_1.4 {
+	sdallocx;
+	__sdallocx;
+	__aligned_alloc;
+	__malloc_stats_print;
+	__mallctl;
+	__mallctlnametomib;
+	__mallctlbymib;
 };
 
 FBSDprivate_1.0 {

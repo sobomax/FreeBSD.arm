@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/fstyp/Makefile 284728 2015-06-23 16:34:43Z allanjude $
+# $FreeBSD: head/usr.sbin/fstyp/Makefile 292757 2015-12-26 19:48:36Z allanjude $
 
 .include <src.opts.mk>
 
@@ -11,7 +11,15 @@ SRCS +=	zfs.c
 
 MAN=	fstyp.8
 
-WARNS?=	0
+WARNS?=	2
+
+.include <src.opts.mk>
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
+
+CFLAGS+=-I${.CURDIR}/../../sys
 
 .if ${MK_ZFS} != "no"
 IGNORE_PRAGMA=  YES
@@ -28,14 +36,10 @@ CFLAGS+= -I${.CURDIR}/../../sys/cddl/contrib/opensolaris/uts/common/sys
 CFLAGS+= -I${.CURDIR}/../../cddl/contrib/opensolaris/head
 .endif
 
-CFLAGS+=-I${.CURDIR}/../../sys
-
-DPADD=   ${LIBGEOM} ${LIBMD}
-LDADD=   -lgeom -lmd
+LIBADD=	geom md
 
 .if ${MK_ZFS} != "no"
-DPADD += ${LIBNVPAIR} ${LIBZFS}
-LDADD += -lnvpair -lzfs
+LIBADD+=nvpair zfs
 .endif
 
 .include <bsd.prog.mk>

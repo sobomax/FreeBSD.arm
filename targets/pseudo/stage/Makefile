@@ -1,4 +1,4 @@
-# $FreeBSD: head/targets/pseudo/stage/Makefile 265799 2014-05-10 05:11:34Z sjg $
+# $FreeBSD: head/targets/pseudo/stage/Makefile 296700 2016-03-11 23:45:28Z bdrewery $
 
 # this makefile gets hooked into everyone's dependencies so that
 # distrib-dirs can be done in STAGE_OBJTOP
@@ -6,9 +6,10 @@ all:
 
 # mtree makes a lot of noise if we are not root, 
 # we don't need to see it.
-stage-distrib-dirs: .META
+stage-distrib-dirs: .META ${META_DEPS}
 	mkdir -p ${STAGE_OBJTOP}
-	${.MAKE} -C ${SRCTOP}/etc distrib-dirs -DWITH_TESTS DESTDIR=${STAGE_OBJTOP} > $@
+	INSTALL="sh ${SRCTOP}/tools/install.sh" ${.MAKE} -C ${SRCTOP}/etc \
+	    distrib-dirs -DNO_FSCHG -DWITH_TESTS DESTDIR=${STAGE_OBJTOP}
 
 .include <bsd.prog.mk>
 

@@ -1,5 +1,5 @@
 #	$NetBSD: Makefile,v 1.4 2011/02/16 01:31:33 joerg Exp $
-#	$FreeBSD: head/usr.bin/grep/Makefile 284345 2015-06-13 19:20:56Z sjg $
+#	$FreeBSD: head/usr.bin/grep/Makefile 285884 2015-07-26 00:11:04Z pfg $
 #	$OpenBSD: Makefile,v 1.6 2003/06/25 15:00:04 millert Exp $
 
 .include <src.opts.mk>
@@ -19,6 +19,8 @@ SRCS=	file.c grep.c queue.c util.c
 .PATH: ${.CURDIR}/regex
 SRCS+=	fastmatch.c hashtable.c tre-compile.c tre-fastmatch.c xmalloc.c
 CFLAGS+=-I${.CURDIR}/regex
+
+CFLAGS.gcc+= --param max-inline-insns-single=500
 
 .if ${MK_BSD_GREP} == "yes"
 LINKS=	${BINDIR}/grep ${BINDIR}/egrep \

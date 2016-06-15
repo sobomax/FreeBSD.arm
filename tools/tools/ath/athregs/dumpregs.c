@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/tools/tools/ath/athregs/dumpregs.c 269761 2014-08-09 18:17:16Z adrian $
+ * $FreeBSD: head/tools/tools/ath/athregs/dumpregs.c 296154 2016-02-28 06:30:39Z adrian $
  */
 #include "diag.h"
 
@@ -42,6 +42,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <err.h>
+
+#include "ctrl.h"
 
 typedef struct {
 	HAL_REVS revs;
@@ -93,11 +95,11 @@ main(int argc, char *argv[])
 	const char *ifname;
 	u_int32_t *data;
 	u_int32_t *dp, *ep;
-	int what, c, s, i;
+	int what, c, i;
+	struct ath_driver_req req;
 
-	s = socket(AF_INET, SOCK_DGRAM, 0);
-	if (s < 0)
-		err(1, "socket");
+	ath_driver_req_init(&req);
+
 	ifname = getenv("ATH");
 	if (!ifname)
 		ifname = ATH_DEFAULT;
@@ -144,6 +146,16 @@ main(int argc, char *argv[])
 			usage();
 			/*NOTREACHED*/
 		}
+
+	/* Initialise the driver interface */
+	if (ath_driver_req_open(&req, ifname) < 0) {
+		exit(127);
+	}
+
+	/*
+	 * Whilst we're doing the ath_diag pieces, we have to set this
+	 * ourselves.
+	 */
 	strncpy(atd.ad_name, ifname, sizeof (atd.ad_name));
 
 	argc -= optind;
@@ -154,8 +166,9 @@ main(int argc, char *argv[])
 	atd.ad_id = HAL_DIAG_REVS;
 	atd.ad_out_data = (caddr_t) &state.revs;
 	atd.ad_out_size = sizeof(state.revs);
-	if (ioctl(s, SIOCGATHDIAG, &atd) < 0)
-		err(1, atd.ad_name);
+
+	if (ath_driver_req_fetch_diag(&req, SIOCGATHDIAG, &atd) < 0)
+		err(1, "%s", atd.ad_name);
 
 	if (ath_hal_setupregs(&atd, what) == 0)
 		errx(-1, "no registers are known for this part "
@@ -172,8 +185,9 @@ main(int argc, char *argv[])
 		exit(-1);
 	}
 	atd.ad_id = HAL_DIAG_REGS | ATH_DIAG_IN | ATH_DIAG_DYN;
-	if (ioctl(s, SIOCGATHDIAG, &atd) < 0)
-		err(1, atd.ad_name);
+
+	if (ath_driver_req_fetch_diag(&req, SIOCGATHDIAG, &atd) < 0)
+		err(1, "%s", atd.ad_name);
 
 	/*
 	 * Expand register data into global space that can be
@@ -238,6 +252,7 @@ main(int argc, char *argv[])
 			fprintf(stdout, "\n");
 		ath_hal_dumpbb(stdout, what);
 	}
+	ath_driver_req_close(&req);
 	return 0;
 }
 

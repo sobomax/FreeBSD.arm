@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/mips/include/fdt.h 260327 2014-01-05 18:46:58Z nwhitehorn $
+ * $FreeBSD: head/sys/mips/include/fdt.h 295501 2016-02-11 06:19:32Z adrian $
  */
 
 #ifndef _MACHINE_FDT_H_
@@ -40,7 +40,7 @@
 #if defined(CPU_RMI) || defined(CPU_NLM)
 #define fdtbus_bs_tag	rmi_uart_bus_space
 #else
-#define fdtbus_bs_tag	mips_bus_space_fdt
+#define fdtbus_bs_tag	mips_bus_space_generic
 #endif
 
 #endif /* _MACHINE_FDT_H_ */

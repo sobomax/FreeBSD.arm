@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/usr.bin/systat/netcmds.c 256506 2013-10-15 07:37:30Z kevlo $");
+__FBSDID("$FreeBSD: head/usr.bin/systat/netcmds.c 298324 2016-04-20 01:26:03Z araujo $");
 
 #ifdef lint
 static const char sccsid[] = "@(#)netcmds.c	8.1 (Berkeley) 6/6/93";
@@ -150,7 +150,7 @@ changeitems(const char *args, int onoff)
 			continue;
 		}
 		hp = gethostbyname(tmpstr1);
-		if (hp == 0) {
+		if (hp == NULL) {
 			in.s_addr = inet_addr(tmpstr1);
 			if (in.s_addr == INADDR_NONE) {
 				error("%s: unknown host or port", tmpstr1);
@@ -167,7 +167,7 @@ static int
 selectproto(const char *proto)
 {
 
-	if (proto == 0 || streq(proto, "all"))
+	if (proto == NULL || streq(proto, "all"))
 		protos = TCP | UDP;
 	else if (streq(proto, "tcp"))
 		protos = TCP;
@@ -202,13 +202,13 @@ selectport(long port, int onoff)
 	struct pitem *p;
 
 	if (port == -1) {
-		if (ports == 0)
+		if (ports == NULL)
 			return (0);
 		free((char *)ports), ports = 0;
 		nports = 0;
 		return (1);
 	}
-	for (p = ports; p < ports+nports; p++)
+	for (p = ports; p < ports + nports; p++)
 		if (p->port == port) {
 			p->onoff = onoff;
 			return (0);
@@ -258,8 +258,8 @@ selecthost(struct in_addr *in, int onoff)
 {
 	struct hitem *p;
 
-	if (in == 0) {
-		if (hosts == 0)
+	if (in == NULL) {
+		if (hosts == NULL)
 			return (0);
 		free((char *)hosts), hosts = 0;
 		nhosts = 0;

@@ -1,39 +1,6 @@
-# $FreeBSD: head/libexec/dma/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: head/libexec/dma/Makefile 289094 2015-10-09 23:19:29Z bapt $
 
-.PATH:	${.CURDIR}/../../contrib/dma
+SUBDIR=	dmagent \
+	dma-mbox-create
 
-CFLAGS=	-I${.CURDIR}/../../contrib/dma \
-	-DHAVE_REALLOCF -DHAVE_STRLCPY -DHAVE_GETPROGNAME \
-	-DCONF_PATH='"/etc/dma"' \
-	-DLIBEXEC_PATH='"/usr/libexec"' -DDMA_VERSION='"v0.9+"' \
-	-DDMA_ROOT_USER='"mailnull"' \
-	-DDMA_GROUP='"mail"'
-LIBADD=	ssl crypto
-
-PROG=	dma
-SRCS=	aliases_parse.y \
-	aliases_scan.l \
-	base64.c \
-	conf.c \
-	crypto.c \
-	dma.c \
-	dns.c \
-	local.c \
-	mail.c \
-	net.c \
-	spool.c \
-	util.c
-MAN8=	dma.8
-YFLAGS+=	-i
-CLEANFILES=	aliases_parse.i
-
-BINGRP=	mail
-BINMODE=	2555
-
-.include <bsd.compiler.mk>
-
-.if ${COMPILER_TYPE} == gcc
-WARNS=	5
-.endif
-
-.include <bsd.prog.mk>
+.include <bsd.subdir.mk>

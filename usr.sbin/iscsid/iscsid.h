@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/iscsid/iscsid.h 278622 2015-02-12 11:57:31Z trasz $
+ * $FreeBSD: head/usr.sbin/iscsid/iscsid.h 301721 2016-06-09 07:49:20Z trasz $
  */
 
 #ifndef ISCSID_H
@@ -34,7 +34,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <openssl/md5.h>
 
 #include <iscsi_ioctl.h>
 
@@ -43,8 +42,10 @@
 #define	CONN_DIGEST_NONE		0
 #define	CONN_DIGEST_CRC32C		1
 
-#define CONN_MUTUAL_CHALLENGE_LEN	1024
+#define	CONN_MUTUAL_CHALLENGE_LEN	1024
 #define	SOCKBUF_SIZE			1048576
+#define	MAX_BURST_LENGTH		(256 * 1024)
+#define	FIRST_BURST_LENGTH		(128 * 1024)
 
 struct connection {
 	int			conn_iscsi_fd;
@@ -83,11 +84,12 @@ struct keys {
 };
 
 #define	CHAP_CHALLENGE_LEN	1024
+#define	CHAP_DIGEST_LEN		16 /* Equal to MD5 digest size. */
 
 struct chap {
 	unsigned char	chap_id;
 	char		chap_challenge[CHAP_CHALLENGE_LEN];
-	char		chap_response[MD5_DIGEST_LENGTH];
+	char		chap_response[CHAP_DIGEST_LEN];
 };
 
 struct rchap {

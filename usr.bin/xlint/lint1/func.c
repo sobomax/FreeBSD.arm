@@ -35,7 +35,7 @@
 #if defined(__RCSID) && !defined(lint)
 __RCSID("$NetBSD: func.c,v 1.16 2002/01/03 04:25:15 thorpej Exp $");
 #endif
-__FBSDID("$FreeBSD: head/usr.bin/xlint/lint1/func.c 280387 2015-03-23 18:45:29Z pfg $");
+__FBSDID("$FreeBSD: head/usr.bin/xlint/lint1/func.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <stdlib.h>
 #include <string.h>
@@ -517,7 +517,7 @@ label(int typ, sym_t *sym, tnode_t *tn)
 			ci->c_default = 1;
 		}
 		break;
-	};
+	}
 	reached = 1;
 }
 
@@ -652,7 +652,7 @@ switch2(void)
 
 	if (cstk->c_break) {
 		/*
-		 * end of switch alway reached (c_break is only set if the
+		 * end of switch always reached (c_break is only set if the
 		 * break statement can be reached).
 		 */
 		reached = 1;

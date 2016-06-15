@@ -20,7 +20,8 @@
  */
 /*
  * Copyright (c) 2005, 2010, Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2012, 2014 by Delphix. All rights reserved.
+ * Copyright (c) 2012, 2015 by Delphix. All rights reserved.
+ * Copyright (c) 2014 Spectra Logic Corporation, All rights reserved.
  */
 
 /*
@@ -52,7 +53,6 @@ int fzap_default_block_shift = 14; /* 16k blocksize */
 
 extern inline zap_phys_t *zap_f_phys(zap_t *zap);
 
-static void zap_leaf_pageout(dmu_buf_t *db, void *vl);
 static uint64_t zap_allocate_blocks(zap_t *zap, int nblocks);
 
 void
@@ -81,7 +81,7 @@ fzap_upgrade(zap_t *zap, dmu_tx_t *tx, zap_flags_t flags)
 	ASSERT(RW_WRITE_HELD(&zap->zap_rwlock));
 	zap->zap_ismicro = FALSE;
 
-	(void) dmu_buf_update_user(zap->zap_dbuf, zap, zap, zap_evict);
+	zap->zap_dbu.dbu_evict_func = zap_evict;
 
 	mutex_init(&zap->zap_f.zap_num_entries_mtx, 0, 0, 0);
 	zap->zap_f.zap_block_shift = highbit64(zap->zap_dbuf->db_size) - 1;
@@ -162,8 +162,9 @@ zap_table_grow(zap_t *zap, zap_table_phys_t *tbl,
 		newblk = zap_allocate_blocks(zap, tbl->zt_numblks * 2);
 		tbl->zt_nextblk = newblk;
 		ASSERT0(tbl->zt_blks_copied);
-		dmu_prefetch(zap->zap_objset, zap->zap_object,
-		    tbl->zt_blk << bs, tbl->zt_numblks << bs);
+		dmu_prefetch(zap->zap_objset, zap->zap_object, 0,
+		    tbl->zt_blk << bs, tbl->zt_numblks << bs,
+		    ZIO_PRIORITY_SYNC_READ);
 	}
 
 	/*
@@ -387,11 +388,20 @@ zap_allocate_blocks(zap_t *zap, int nblocks)
 	return (newblk);
 }
 
+static void
+zap_leaf_pageout(void *dbu)
+{
+	zap_leaf_t *l = dbu;
+
+	rw_destroy(&l->l_rwlock);
+	kmem_free(l, sizeof (zap_leaf_t));
+}
+
 static zap_leaf_t *
 zap_create_leaf(zap_t *zap, dmu_tx_t *tx)
 {
 	void *winner;
-	zap_leaf_t *l = kmem_alloc(sizeof (zap_leaf_t), KM_SLEEP);
+	zap_leaf_t *l = kmem_zalloc(sizeof (zap_leaf_t), KM_SLEEP);
 
 	ASSERT(RW_WRITE_HELD(&zap->zap_rwlock));
 
@@ -403,7 +413,8 @@ zap_create_leaf(zap_t *zap, dmu_tx_t *tx)
 	VERIFY(0 == dmu_buf_hold(zap->zap_objset, zap->zap_object,
 	    l->l_blkid << FZAP_BLOCK_SHIFT(zap), NULL, &l->l_dbuf,
 	    DMU_READ_NO_PREFETCH));
-	winner = dmu_buf_set_user(l->l_dbuf, l, zap_leaf_pageout);
+	dmu_buf_init_user(&l->l_dbu, zap_leaf_pageout, &l->l_dbuf);
+	winner = dmu_buf_set_user(l->l_dbuf, &l->l_dbu);
 	ASSERT(winner == NULL);
 	dmu_buf_will_dirty(l->l_dbuf, tx);
 
@@ -435,16 +446,6 @@ zap_put_leaf(zap_leaf_t *l)
 	dmu_buf_rele(l->l_dbuf, NULL);
 }
 
-_NOTE(ARGSUSED(0))
-static void
-zap_leaf_pageout(dmu_buf_t *db, void *vl)
-{
-	zap_leaf_t *l = vl;
-
-	rw_destroy(&l->l_rwlock);
-	kmem_free(l, sizeof (zap_leaf_t));
-}
-
 static zap_leaf_t *
 zap_open_leaf(uint64_t blkid, dmu_buf_t *db)
 {
@@ -452,19 +453,20 @@ zap_open_leaf(uint64_t blkid, dmu_buf_t *db)
 
 	ASSERT(blkid != 0);
 
-	l = kmem_alloc(sizeof (zap_leaf_t), KM_SLEEP);
+	l = kmem_zalloc(sizeof (zap_leaf_t), KM_SLEEP);
 	rw_init(&l->l_rwlock, 0, 0, 0);
 	rw_enter(&l->l_rwlock, RW_WRITER);
 	l->l_blkid = blkid;
 	l->l_bs = highbit64(db->db_size) - 1;
 	l->l_dbuf = db;
 
-	winner = dmu_buf_set_user(db, l, zap_leaf_pageout);
+	dmu_buf_init_user(&l->l_dbu, zap_leaf_pageout, &l->l_dbuf);
+	winner = dmu_buf_set_user(db, &l->l_dbu);
 
 	rw_exit(&l->l_rwlock);
 	if (winner != NULL) {
 		/* someone else set it first */
-		zap_leaf_pageout(NULL, l);
+		zap_leaf_pageout(&l->l_dbu);
 		l = winner;
 	}
 
@@ -573,7 +575,14 @@ zap_deref_leaf(zap_t *zap, uint64_t h, dmu_tx_t *tx, krw_t lt, zap_leaf_t **lp)
 
 	ASSERT(zap->zap_dbuf == NULL ||
 	    zap_f_phys(zap) == zap->zap_dbuf->db_data);
-	ASSERT3U(zap_f_phys(zap)->zap_magic, ==, ZAP_MAGIC);
+
+	/* Reality check for corrupt zap objects (leaf or header). */
+	if ((zap_f_phys(zap)->zap_block_type != ZBT_LEAF &&
+	    zap_f_phys(zap)->zap_block_type != ZBT_HEADER) ||
+	    zap_f_phys(zap)->zap_magic != ZAP_MAGIC) {
+		return (SET_ERROR(EIO));
+	}
+
 	idx = ZAP_HASH_IDX(h, zap_f_phys(zap)->zap_ptrtbl.zt_shift);
 	err = zap_idx_to_blk(zap, idx, &blk);
 	if (err != 0)
@@ -938,7 +947,8 @@ fzap_prefetch(zap_name_t *zn)
 	if (zap_idx_to_blk(zap, idx, &blk) != 0)
 		return;
 	bs = FZAP_BLOCK_SHIFT(zap);
-	dmu_prefetch(zap->zap_objset, zap->zap_object, blk << bs, 1 << bs);
+	dmu_prefetch(zap->zap_objset, zap->zap_object, 0, blk << bs, 1 << bs,
+	    ZIO_PRIORITY_SYNC_READ);
 }
 
 /*
@@ -952,8 +962,8 @@ zap_create_link(objset_t *os, dmu_object_type_t ot, uint64_t parent_obj,
 	uint64_t new_obj;
 
 	VERIFY((new_obj = zap_create(os, ot, DMU_OT_NONE, 0, tx)) > 0);
-	VERIFY(zap_add(os, parent_obj, name, sizeof (uint64_t), 1, &new_obj,
-	    tx) == 0);
+	VERIFY0(zap_add(os, parent_obj, name, sizeof (uint64_t), 1, &new_obj,
+	    tx));
 
 	return (new_obj);
 }
@@ -1309,9 +1319,10 @@ fzap_get_stats(zap_t *zap, zap_stats_t *zs)
 	} else {
 		int b;
 
-		dmu_prefetch(zap->zap_objset, zap->zap_object,
+		dmu_prefetch(zap->zap_objset, zap->zap_object, 0,
 		    zap_f_phys(zap)->zap_ptrtbl.zt_blk << bs,
-		    zap_f_phys(zap)->zap_ptrtbl.zt_numblks << bs);
+		    zap_f_phys(zap)->zap_ptrtbl.zt_numblks << bs,
+		    ZIO_PRIORITY_SYNC_READ);
 
 		for (b = 0; b < zap_f_phys(zap)->zap_ptrtbl.zt_numblks;
 		    b++) {

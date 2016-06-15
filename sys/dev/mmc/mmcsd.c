@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mmc/mmcsd.c 283754 2015-05-29 20:50:41Z marcel $");
+__FBSDID("$FreeBSD: head/sys/dev/mmc/mmcsd.c 295707 2016-02-17 17:16:02Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -65,6 +65,7 @@ __FBSDID("$FreeBSD: head/sys/dev/mmc/mmcsd.c 283754 2015-05-29 20:50:41Z marcel 
 #include <sys/module.h>
 #include <sys/mutex.h>
 #include <sys/time.h>
+#include <geom/geom.h>
 #include <geom/geom_disk.h>
 
 #include <dev/mmc/mmcbrvar.h>
@@ -487,7 +488,7 @@ mmcsd_dump(void *arg, void *virtual, vm_offset_t physical,
 	if (!length)
 		return (0);
 
-	bzero(&bp, sizeof(struct bio));
+	g_reset_bio(&bp);
 	bp.bio_disk = disk;
 	bp.bio_pblkno = offset / disk->d_sectorsize;
 	bp.bio_bcount = length;

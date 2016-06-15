@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/drm/drmP.h 283999 2015-06-04 20:36:16Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/drm/drmP.h 295881 2016-02-22 09:04:36Z skra $");
 
 #ifndef _DRM_P_H_
 #define _DRM_P_H_
@@ -75,8 +75,6 @@ struct drm_file;
 #include <vm/vm_pager.h>
 #include <vm/vm_param.h>
 #include <vm/vm_phys.h>
-#include <machine/param.h>
-#include <machine/pmap.h>
 #include <machine/bus.h>
 #include <machine/resource.h>
 #if defined(__i386__) || defined(__amd64__)
@@ -174,8 +172,8 @@ SYSCTL_DECL(_hw_drm);
 #define __OS_HAS_AGP	1
 
 #define DRM_DEV_MODE	(S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP)
-#define DRM_DEV_UID	0
-#define DRM_DEV_GID	0
+#define DRM_DEV_UID	UID_ROOT
+#define DRM_DEV_GID	GID_VIDEO
 
 #define wait_queue_head_t	atomic_t
 #define DRM_WAKEUP(w)		wakeup((void *)w)

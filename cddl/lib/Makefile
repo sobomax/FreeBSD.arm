@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/Makefile 283145 2015-05-20 11:16:17Z ngie $
+# $FreeBSD: head/cddl/lib/Makefile 300618 2016-05-24 16:41:37Z br $
 
 .include <src.opts.mk>
 
@@ -26,9 +26,7 @@ _libzpool=	libzpool
 .endif
 .endif
 
-.if ${MACHINE_ARCH} == "amd64" || ${MACHINE_ARCH} == "i386" || \
-	${MACHINE_CPUARCH} == "mips" || ${MACHINE_CPUARCH} == "powerpc" || \
-	${MACHINE_CPUARCH} == "arm"
+.if ${MACHINE_CPUARCH} != "sparc64"
 _drti=		drti
 _libdtrace=	libdtrace
 .endif

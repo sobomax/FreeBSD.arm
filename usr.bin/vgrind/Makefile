@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/9/93
-# $FreeBSD: head/usr.bin/vgrind/Makefile 282451 2015-05-05 07:42:40Z bapt $
+# $FreeBSD: head/usr.bin/vgrind/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 PROG=	vfontedpr
 SRCS=	regexp.c vfontedpr.c
@@ -13,7 +13,7 @@ MAN=	vgrind.1 vgrindefs.5
 
 WARNS?=	3
 
-BINDIR=	/usr/libexec
+BINDIR=	${LIBEXECDIR}
 SCRIPTSDIR=/usr/bin
 
 CLEANFILES= vgrindefs.src.db

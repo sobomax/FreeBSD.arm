@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/arm64/vm_machdep.c 281554 2015-04-15 14:18:25Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm64/arm64/vm_machdep.c 299478 2016-05-11 18:48:47Z andrew $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: head/sys/arm64/arm64/vm_machdep.c 281554 2015-04-15 14:18:25
 
 #include <machine/armreg.h>
 #include <machine/cpu.h>
+#include <machine/md_var.h>
 #include <machine/pcb.h>
 #include <machine/frame.h>
 
@@ -74,7 +75,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 		td1->td_pcb->pcb_tpidr_el0 = READ_SPECIALREG(tpidr_el0);
 #ifdef VFP
 		if ((td1->td_pcb->pcb_fpflags & PCB_FP_STARTED) != 0)
-			vfp_save_state(td1);
+			vfp_save_state(td1, td1->td_pcb);
 #endif
 	}
 
@@ -84,8 +85,8 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_pcb = pcb2;
 	bcopy(td1->td_pcb, pcb2, sizeof(*pcb2));
 
-	td2->td_pcb->pcb_l1addr =
-	    vtophys(vmspace_pmap(td2->td_proc->p_vmspace)->pm_l1);
+	td2->td_pcb->pcb_l0addr =
+	    vtophys(vmspace_pmap(td2->td_proc->p_vmspace)->pm_l0);
 
 	tf = (struct trapframe *)STACKALIGN((struct trapframe *)pcb2 - 1);
 	bcopy(td1->td_frame, tf, sizeof(*tf));
@@ -184,15 +185,25 @@ void
 cpu_set_upcall_kse(struct thread *td, void (*entry)(void *), void *arg,
 	stack_t *stack)
 {
+	struct trapframe *tf = td->td_frame;
 
-	panic("cpu_set_upcall_kse");
+	tf->tf_sp = STACKALIGN((uintptr_t)stack->ss_sp + stack->ss_size);
+	tf->tf_elr = (register_t)entry;
+	tf->tf_x[0] = (register_t)arg;
 }
 
 int
 cpu_set_user_tls(struct thread *td, void *tls_base)
 {
+	struct pcb *pcb;
 
-	panic("cpu_set_user_tls");
+	if ((uintptr_t)tls_base >= VM_MAXUSER_ADDRESS)
+		return (EINVAL);
+
+	pcb = td->td_pcb;
+	pcb->pcb_tpidr_el0 = (register_t)tls_base;
+
+	return (0);
 }
 
 void
@@ -246,20 +257,6 @@ void
 swi_vm(void *v)
 {
 
-	/* Nothing to do here - busdma bounce buffers are not implemented. */
+	if (busdma_swi_pending != 0)
+		busdma_swi();
 }
-
-void *
-uma_small_alloc(uma_zone_t zone, vm_size_t bytes, u_int8_t *flags, int wait)
-{
-
-	panic("uma_small_alloc");
-}
-
-void
-uma_small_free(void *mem, vm_size_t size, u_int8_t flags)
-{
-
-	panic("uma_small_free");
-}
-

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)cdefs.h	8.8 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/sys/cdefs.h 284858 2015-06-25 19:39:07Z tijl $
+ * $FreeBSD: head/sys/sys/cdefs.h 300967 2016-05-29 17:32:19Z dim $
  */
 
 #ifndef	_SYS_CDEFS_H_
@@ -39,7 +39,6 @@
 /*
  * Testing against Clang-specific extensions.
  */
-
 #ifndef	__has_attribute
 #define	__has_attribute(x)	0
 #endif
@@ -212,6 +211,8 @@
 #define	__unused
 #define	__packed
 #define	__aligned(x)
+#define	__alloc_align(x)
+#define	__alloc_size(x)
 #define	__section(x)
 #define	__weak_symbol
 #else
@@ -227,7 +228,7 @@
 #define	__unused
 /* XXX Find out what to do for __packed, __aligned and __section */
 #endif
-#if __GNUC_PREREQ__(2, 7)
+#if __GNUC_PREREQ__(2, 7) || defined(__INTEL_COMPILER)
 #define	__dead2		__attribute__((__noreturn__))
 #define	__pure2		__attribute__((__const__))
 #define	__unused	__attribute__((__unused__))
@@ -236,14 +237,15 @@
 #define	__aligned(x)	__attribute__((__aligned__(x)))
 #define	__section(x)	__attribute__((__section__(x)))
 #endif
-#if defined(__INTEL_COMPILER)
-#define	__dead2		__attribute__((__noreturn__))
-#define	__pure2		__attribute__((__const__))
-#define	__unused	__attribute__((__unused__))
-#define	__used		__attribute__((__used__))
-#define	__packed	__attribute__((__packed__))
-#define	__aligned(x)	__attribute__((__aligned__(x)))
-#define	__section(x)	__attribute__((__section__(x)))
+#if __GNUC_PREREQ__(4, 3) || __has_attribute(__alloc_size__)
+#define	__alloc_size(x)	__attribute__((__alloc_size__(x)))
+#else
+#define	__alloc_size(x)
+#endif
+#if __GNUC_PREREQ__(4, 9) || __has_attribute(__alloc_align__)
+#define	__alloc_align(x)	__attribute__((__alloc_align__(x)))
+#else
+#define	__alloc_align(x)
 #endif
 #endif /* lint */
 
@@ -273,7 +275,8 @@
 #define	_Alignof(x)		__alignof(x)
 #endif
 
-#if !__has_extension(c_atomic) && !__has_extension(cxx_atomic)
+#if !defined(__cplusplus) && !__has_extension(c_atomic) && \
+    !__has_extension(cxx_atomic)
 /*
  * No native support for _Atomic(). Place object in structure to prevent
  * most forms of direct non-atomic access.
@@ -380,22 +383,10 @@
 #define	__returns_twice
 #endif
 
-#if __has_attribute(alloc_size) || __GNUC_PREREQ__(4, 3)
-#define	__alloc_size(x)	__attribute__((__alloc_size__(x)))
-#else
-#define	__alloc_size(x)
-#endif
-
-#if __has_builtin(__builtin_unreachable) || __GNUC_PREREQ__(4, 6)
+#if __GNUC_PREREQ__(4, 6) || __has_builtin(__builtin_unreachable)
 #define	__unreachable()	__builtin_unreachable()
 #else
 #define	__unreachable()	((void)0)
-#endif
-
-#if __has_attribute(alloc_align) || __GNUC_PREREQ__(4, 9)
-#define	__alloc_align(x)	__attribute__((__alloc_align__(x)))
-#else
-#define	__alloc_align(x)
 #endif
 
 /* XXX: should use `#if __STDC_VERSION__ < 199901'. */
@@ -469,11 +460,13 @@
 #endif
 
 #if __GNUC_PREREQ__(4, 0)
-#define	__hidden	__attribute__((__visibility__("hidden")))
+#define	__null_sentinel	__attribute__((__sentinel__))
 #define	__exported	__attribute__((__visibility__("default")))
+#define	__hidden	__attribute__((__visibility__("hidden")))
 #else
-#define	__hidden
+#define	__null_sentinel
 #define	__exported
+#define	__hidden
 #endif
 
 /*
@@ -542,8 +535,8 @@
  * using these but GCC-compatible compilers tend to support the extensions
  * well enough to use them in limited cases.
  */ 
-#if __GNUC_PREREQ__(4, 1)
-#if __has_attribute(artificial) || __GNUC_PREREQ__(4, 3)
+#if defined(__GNUC_GNU_INLINE__) || defined(__GNUC_STDC_INLINE__)
+#if __GNUC_PREREQ__(4, 3) || __has_attribute(__artificial__)
 #define	__gnu_inline	__attribute__((__gnu_inline__, __artificial__))
 #else
 #define	__gnu_inline	__attribute__((__gnu_inline__))
@@ -612,7 +605,7 @@
  * Embed the rcs id of a source file in the resulting library.  Note that in
  * more recent ELF binutils, we use .ident allowing the ID to be stripped.
  * Usage:
- *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 284858 2015-06-25 19:39:07Z tijl $");
+ *	__FBSDID("$FreeBSD: head/sys/sys/cdefs.h 300967 2016-05-29 17:32:19Z dim $");
  */
 #ifndef	__FBSDID
 #if !defined(lint) && !defined(STRIP_FBSDID)
@@ -784,8 +777,16 @@
 #endif
 #endif
 
-#if defined(__mips) || defined(__powerpc64__)
+#if defined(__mips) || defined(__powerpc64__) || defined(__riscv__)
 #define	__NO_TLS 1
+#endif
+
+/*
+ * Old versions of GCC use non-standard ARM arch symbols; acle-compat.h
+ * translates them to __ARM_ARCH and the modern feature symbols defined by ARM.
+ */
+#if defined(__arm__) && !defined(__ARM_ARCH)
+#include <machine/acle-compat.h>
 #endif
 
 /*
@@ -795,8 +796,8 @@
  * properties that cannot be enforced by the C type system. 
  */
 
-#if __has_attribute(argument_with_type_tag) && \
-    __has_attribute(type_tag_for_datatype) && !defined(lint)
+#if __has_attribute(__argument_with_type_tag__) && \
+    __has_attribute(__type_tag_for_datatype__) && !defined(lint)
 #define	__arg_type_tag(arg_kind, arg_idx, type_tag_idx) \
 	    __attribute__((__argument_with_type_tag__(arg_kind, arg_idx, type_tag_idx)))
 #define	__datatype_type_tag(kind, type) \

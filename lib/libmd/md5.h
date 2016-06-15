@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libmd/md5.h 282736 2015-05-10 21:21:52Z thomas $ */
+/* $FreeBSD: head/lib/libmd/md5.h 300824 2016-05-27 05:31:14Z cem $ */
 
 #ifndef _MD5_H_
 #define _MD5_H_
@@ -37,5 +37,13 @@
 
 #endif
 
+#ifdef __cplusplus
+#define static
+#endif
+
 #include <sys/md5.h>
+
+#ifdef __cplusplus
+#undef static
+#endif
 #endif /* _MD5_H_ */

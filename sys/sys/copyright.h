@@ -1,5 +1,5 @@
 /*-
- * Copyright (C) 1992-2015 The FreeBSD Project. All rights reserved.
+ * Copyright (C) 1992-2016 The FreeBSD Project. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/sys/copyright.h 278478 2015-02-09 23:04:30Z rpaulo $
+ * $FreeBSD: head/sys/sys/copyright.h 292983 2015-12-31 11:21:45Z bz $
  */
 
 
@@ -34,7 +34,7 @@
 
 /* FreeBSD */
 #define COPYRIGHT_FreeBSD \
-	"Copyright (c) 1992-2015 The FreeBSD Project.\n"
+	"Copyright (c) 1992-2016 The FreeBSD Project.\n"
 
 /* Foundation */
 #define	TRADEMARK_Foundation \

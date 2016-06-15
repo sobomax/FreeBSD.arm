@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/automount 274965 2014-11-24 13:02:39Z trasz $
+# $FreeBSD: head/etc/rc.d/automount 287951 2015-09-18 06:54:52Z trasz $
 #
 
 # PROVIDE: automount
-# REQUIRE: nfsclient
+# REQUIRE: nfsclient automountd
 # KEYWORD: nojail shutdown
 
 . /etc/rc.subr

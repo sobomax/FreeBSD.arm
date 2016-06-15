@@ -1,15 +1,12 @@
-# $FreeBSD: head/secure/usr.bin/sftp/Makefile 275083 2014-11-25 22:25:13Z bapt $
+# $FreeBSD: head/secure/usr.bin/sftp/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
 PROG=	sftp
 SRCS=   sftp.c sftp-client.c sftp-common.c sftp-glob.c progressmeter.c
+PACKAGE=	ssh
 CFLAGS+=-I${SSHDIR} -include ssh_namespace.h
-
-.if !defined(NO_SHARED)
-# required when linking with a dynamic libssh
-SRCS+=	roaming_dummy.c
-.endif
+SRCS+=	ssh_namespace.h
 
 LIBADD=	ssh edit
 
@@ -17,11 +14,8 @@ LIBADD=	ssh edit
 CFLAGS+=	-DHAVE_LDNS=1
 #DPADD+=	${LIBLDNS}
 #LDADD+=	-lldns
-#USEPRIVATELIB+= ldns
 .endif
 
 .include <bsd.prog.mk>
 
 .PATH:	${SSHDIR}
-
-${OBJS} ${POBJS} ${SOBJS}: ssh_namespace.h

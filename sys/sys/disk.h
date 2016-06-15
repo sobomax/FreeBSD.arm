@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: head/sys/sys/disk.h 278672 2015-02-13 13:26:23Z mav $
+ * $FreeBSD: head/sys/sys/disk.h 300207 2016-05-19 14:08:36Z ken $
  *
  */
 
@@ -15,6 +15,7 @@
 
 #include <sys/ioccom.h>
 #include <sys/types.h>
+#include <sys/disk_zone.h>
 
 #ifdef _KERNEL
 
@@ -135,5 +136,7 @@ struct diocgattr_arg {
 	} value;
 };
 #define	DIOCGATTR _IOWR('d', 142, struct diocgattr_arg)
+
+#define	DIOCZONECMD	_IOWR('d', 143, struct disk_zone_args)
 
 #endif /* _SYS_DISK_H_ */

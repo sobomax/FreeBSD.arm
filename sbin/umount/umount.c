@@ -38,7 +38,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)umount.c	8.8 (Berkeley) 5/8/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/umount/umount.c 270062 2014-08-16 14:56:11Z peter $";
+  "$FreeBSD: head/sbin/umount/umount.c 292863 2015-12-29 11:24:35Z uqs $";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -434,7 +434,7 @@ getmntentry(const char *fromname, const char *onname, fsid_t *fsid, dowhat what)
 {
 	static struct statfs *mntbuf;
 	static size_t mntsize = 0;
-	static char *mntcheck = NULL;
+	static int *mntcheck = NULL;
 	struct statfs *sfs, *foundsfs;
 	int i, count;
 

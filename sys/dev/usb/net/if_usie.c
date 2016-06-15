@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_usie.c 276701 2015-01-05 15:04:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/if_usie.c 292080 2015-12-11 05:28:00Z imp $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -212,6 +212,7 @@ DRIVER_MODULE(usie, uhub, usie_driver, usie_devclass, usie_driver_loaded, 0);
 MODULE_DEPEND(usie, ucom, 1, 1, 1);
 MODULE_DEPEND(usie, usb, 1, 1, 1);
 MODULE_VERSION(usie, 1);
+USB_PNP_HOST_INFO(usie_devs);
 
 static const struct ucom_callback usie_uc_callback = {
 	.ucom_cfg_get_status = &usie_uc_cfg_get_status,

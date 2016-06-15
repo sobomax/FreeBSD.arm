@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_prf.c 284192 2015-06-09 21:39:38Z ken $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_prf.c 301750 2016-06-09 18:24:51Z cem $");
 
 #ifdef _KERNEL
 #include "opt_ddb.h"
@@ -302,9 +302,15 @@ log(int level, const char *fmt, ...)
 	va_list ap;
 
 	va_start(ap, fmt);
-	(void)_vprintf(level, log_open ? TOLOG : TOCONS | TOLOG, fmt, ap);
+	vlog(level, fmt, ap);
 	va_end(ap);
+}
 
+void
+vlog(int level, const char *fmt, va_list ap)
+{
+
+	(void)_vprintf(level, log_open ? TOLOG : TOCONS | TOLOG, fmt, ap);
 	msgbuftrigger = 1;
 }
 
@@ -724,7 +730,15 @@ reswitch:	switch (ch = (u_char)*fmt++) {
 				PCHAR('>');
 			break;
 		case 'c':
+			width -= 1;
+
+			if (!ladjust && width > 0)
+				while (width--)
+					PCHAR(padc);
 			PCHAR(va_arg(ap, int));
+			if (ladjust && width > 0)
+				while (width--)
+					PCHAR(padc);
 			break;
 		case 'D':
 			up = va_arg(ap, u_char *);

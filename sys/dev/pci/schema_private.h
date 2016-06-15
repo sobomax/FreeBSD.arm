@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Sandvine Inc.  All rights reserved.
+ * Copyright (c) 2014 Sandvine Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/pci/schema_private.h 279465 2015-03-01 00:59:28Z rstone $
+ * $FreeBSD: head/sys/dev/pci/schema_private.h 296865 2016-03-14 17:41:17Z rstone $
  */
 
 #ifndef _SCHEMA_PRIVATE_H_

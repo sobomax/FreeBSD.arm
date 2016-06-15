@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/agp/Makefile 267297 2014-06-09 20:48:38Z jhb $
+# $FreeBSD: head/sys/modules/agp/Makefile 285068 2015-07-03 01:50:26Z imp $
 
 .PATH: ${.CURDIR}/../../dev/agp
 
@@ -19,7 +19,6 @@ SRCS+=  agp_apple.c
 .endif
 SRCS+=	device_if.h bus_if.h agp_if.h pci_if.h
 SRCS+=	opt_agp.h
-MFILES=	kern/device_if.m kern/bus_if.m dev/agp/agp_if.m dev/pci/pci_if.m
 
 EXPORT_SYMS=	agp_find_device		\
 		agp_state		\

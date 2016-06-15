@@ -25,11 +25,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/net/sourcefilter.c 268878 2014-07-19 14:34:06Z pfg $");
+__FBSDID("$FreeBSD: head/lib/libc/net/sourcefilter.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "namespace.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>

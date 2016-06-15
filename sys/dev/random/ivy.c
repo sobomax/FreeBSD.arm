@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/random/ivy.c 274381 2014-11-11 14:30:35Z kib $");
+__FBSDID("$FreeBSD: head/sys/dev/random/ivy.c 298102 2016-04-16 06:10:47Z kib $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -46,18 +46,15 @@ __FBSDID("$FreeBSD: head/sys/dev/random/ivy.c 274381 2014-11-11 14:30:35Z kib $"
 #include <machine/specialreg.h>
 
 #include <dev/random/randomdev.h>
-#include <dev/random/randomdev_soft.h>
-#include <dev/random/random_adaptors.h>
-#include <dev/random/live_entropy_sources.h>
 
 #define	RETRY_COUNT	10
 
 static u_int random_ivy_read(void *, u_int);
 
-static struct live_entropy_source random_ivy = {
-	.les_ident = "Intel Secure Key RNG",
-	.les_source = RANDOM_PURE_RDRAND,
-	.les_read = random_ivy_read
+static struct random_source random_ivy = {
+	.rs_ident = "Intel Secure Key RNG",
+	.rs_source = RANDOM_PURE_RDRAND,
+	.rs_read = random_ivy_read
 };
 
 static inline int
@@ -108,14 +105,14 @@ rdrand_modevent(module_t mod, int type, void *unused)
 	switch (type) {
 	case MOD_LOAD:
 		if (cpu_feature2 & CPUID2_RDRAND) {
-			live_entropy_source_register(&random_ivy);
-			printf("random: live provider: \"%s\"\n", random_ivy.les_ident);
+			random_source_register(&random_ivy);
+			printf("random: fast provider: \"%s\"\n", random_ivy.rs_ident);
 		}
 		break;
 
 	case MOD_UNLOAD:
 		if (cpu_feature2 & CPUID2_RDRAND)
-			live_entropy_source_deregister(&random_ivy);
+			random_source_deregister(&random_ivy);
 		break;
 
 	case MOD_SHUTDOWN:
@@ -132,4 +129,4 @@ rdrand_modevent(module_t mod, int type, void *unused)
 
 DEV_MODULE(rdrand, rdrand_modevent, NULL);
 MODULE_VERSION(rdrand, 1);
-MODULE_DEPEND(rdrand, randomdev, 1, 1, 1);
+MODULE_DEPEND(rdrand, random_device, 1, 1, 1);

@@ -57,7 +57,7 @@
 /* XXX is M_NETADDR correct? */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/ip_encap.c 284566 2015-06-18 18:28:38Z ae $");
+__FBSDID("$FreeBSD: head/sys/netinet/ip_encap.c 293470 2016-01-09 09:34:39Z melifaro $");
 
 #include "opt_mrouting.h"
 #include "opt_inet.h"
@@ -65,6 +65,8 @@ __FBSDID("$FreeBSD: head/sys/netinet/ip_encap.c 284566 2015-06-18 18:28:38Z ae $
 
 #include <sys/param.h>
 #include <sys/systm.h>
+#include <sys/lock.h>
+#include <sys/mutex.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>
 #include <sys/mbuf.h>

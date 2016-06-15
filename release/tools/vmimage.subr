@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/release/tools/vmimage.subr 282772 2015-05-11 14:53:07Z gjb $
+# $FreeBSD: head/release/tools/vmimage.subr 288370 2015-09-29 15:30:27Z gjb $
 #
 #
 # Common functions for virtual machine image build scripts.
@@ -108,7 +108,7 @@ vm_copy_base() {
 
 	umount_loop /dev/${mdnew}
 	rmdir ${DESTDIR}/new
-	tunefs -j enable /dev/${mdnew}
+	tunefs -n enable /dev/${mdnew}
 	mdconfig -d -u ${mdnew}
 	mv ${VMBASE}.tmp ${VMBASE}
 }

@@ -1,10 +1,8 @@
-# $FreeBSD: head/libexec/atf/atf-sh/tests/Makefile 273929 2014-11-01 11:17:54Z jmmv $
+# $FreeBSD: head/libexec/atf/atf-sh/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 .include <bsd.init.mk>
 
-TESTSDIR=	${TESTSBASE}/libexec/atf/atf-sh
-
-ATF=		${.CURDIR:H:H:H:H}/contrib/atf
+ATF=		${SRCTOP}/contrib/atf
 .PATH:		${ATF}/atf-sh
 
 ATF_TESTS_SH+=	atf_check_test

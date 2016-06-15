@@ -1,7 +1,8 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/tools/Makefile.inc 216295 2010-12-08 14:30:25Z syrinx $
+# $FreeBSD: head/usr.sbin/bsnmpd/tools/Makefile.inc 299806 2016-05-15 00:08:09Z ngie $
 # Author: Shteryana Shopova <syrinx@FreeBSD.org>
 
 BINDIR?= /usr/bin
+PACKAGE=	bsnmp
 
 CFLAGS+= -I. -I${.CURDIR}
 
@@ -11,3 +12,5 @@ LIBBSNMPTOOLSDIR=      ${.OBJDIR}/../libbsnmptools
 LIBBSNMPTOOLSDIR=      ${.CURDIR}/../libbsnmptools
 .endif
 LIBBSNMPTOOLS=         ${LIBBSNMPTOOLSDIR}/libbsnmptools.a
+
+WARNS?=		6

@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/vt/keymaps/Makefile 271452 2014-09-12 06:23:57Z se $
+# $FreeBSD: head/share/vt/keymaps/Makefile 291347 2015-11-26 01:14:27Z bdrewery $
 
 FILES=	INDEX.keymaps \
 	am.kbd \
@@ -87,7 +87,5 @@ FILES=	INDEX.keymaps \
 	us.unix.kbd \
 
 FILESDIR= ${SHAREDIR}/vt/keymaps
-
-NO_OBJ=
 
 .include <bsd.prog.mk>

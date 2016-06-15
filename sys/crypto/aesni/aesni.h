@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/crypto/aesni/aesni.h 275732 2014-12-12 19:56:36Z jmg $
+ * $FreeBSD: head/sys/crypto/aesni/aesni.h 300773 2016-05-26 19:29:29Z cem $
  */
 
 #ifndef _AESNI_H_
@@ -56,7 +56,6 @@ struct aesni_session {
 	uint8_t enc_schedule[AES_SCHED_LEN] __aligned(16);
 	uint8_t dec_schedule[AES_SCHED_LEN] __aligned(16);
 	uint8_t xts_schedule[AES_SCHED_LEN] __aligned(16);
-	uint8_t iv[AES_BLOCK_LEN];
 	int algo;
 	int rounds;
 	/* uint8_t *ses_ictx; */
@@ -65,7 +64,6 @@ struct aesni_session {
 	int used;
 	uint32_t id;
 	TAILQ_ENTRY(aesni_session) next;
-	struct fpu_kern_ctx *fpu_ctx;
 };
 
 /*
@@ -81,23 +79,23 @@ void aesni_set_deckey(const uint8_t *encrypt_schedule /*__aligned(16)*/,
  */
 void aesni_encrypt_cbc(int rounds, const void *key_schedule /*__aligned(16)*/,
     size_t len, const uint8_t *from, uint8_t *to,
-    const uint8_t iv[AES_BLOCK_LEN]);
+    const uint8_t iv[static AES_BLOCK_LEN]);
 void aesni_decrypt_cbc(int rounds, const void *key_schedule /*__aligned(16)*/,
-    size_t len, uint8_t *buf, const uint8_t iv[AES_BLOCK_LEN]);
+    size_t len, uint8_t *buf, const uint8_t iv[static AES_BLOCK_LEN]);
 void aesni_encrypt_ecb(int rounds, const void *key_schedule /*__aligned(16)*/,
     size_t len, const uint8_t *from, uint8_t *to);
 void aesni_decrypt_ecb(int rounds, const void *key_schedule /*__aligned(16)*/,
     size_t len, const uint8_t *from, uint8_t *to);
 void aesni_encrypt_icm(int rounds, const void *key_schedule /*__aligned(16)*/,
     size_t len, const uint8_t *from, uint8_t *to,
-    const uint8_t iv[AES_BLOCK_LEN]);
+    const uint8_t iv[static AES_BLOCK_LEN]);
 
 void aesni_encrypt_xts(int rounds, const void *data_schedule /*__aligned(16)*/,
     const void *tweak_schedule /*__aligned(16)*/, size_t len,
-    const uint8_t *from, uint8_t *to, const uint8_t iv[AES_BLOCK_LEN]);
+    const uint8_t *from, uint8_t *to, const uint8_t iv[static AES_BLOCK_LEN]);
 void aesni_decrypt_xts(int rounds, const void *data_schedule /*__aligned(16)*/,
     const void *tweak_schedule /*__aligned(16)*/, size_t len,
-    const uint8_t *from, uint8_t *to, const uint8_t iv[AES_BLOCK_LEN]);
+    const uint8_t *from, uint8_t *to, const uint8_t iv[static AES_BLOCK_LEN]);
 
 /* GCM & GHASH functions */
 void AES_GCM_encrypt(const unsigned char *in, unsigned char *out,
@@ -106,7 +104,7 @@ void AES_GCM_encrypt(const unsigned char *in, unsigned char *out,
     const unsigned char *key, int nr);
 int AES_GCM_decrypt(const unsigned char *in, unsigned char *out,
     const unsigned char *addt, const unsigned char *ivec,
-    unsigned char *tag, uint32_t nbytes, uint32_t abytes, int ibytes,
+    const unsigned char *tag, uint32_t nbytes, uint32_t abytes, int ibytes,
     const unsigned char *key, int nr);
 
 int aesni_cipher_setup_common(struct aesni_session *ses, const uint8_t *key,

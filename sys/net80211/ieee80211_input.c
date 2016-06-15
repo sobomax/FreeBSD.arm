@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_input.c 283541 2015-05-25 20:06:49Z glebius $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_input.c 300910 2016-05-28 18:49:17Z avos $");
 
 #include "opt_wlan.h"
 
@@ -86,10 +86,21 @@ int
 ieee80211_input_mimo(struct ieee80211_node *ni, struct mbuf *m,
     struct ieee80211_rx_stats *rx)
 {
+	struct ieee80211_rx_stats rxs;
+
+	if (rx) {
+		memcpy(&rxs, rx, sizeof(*rx));
+	} else {
+		/* try to read from mbuf */
+		bzero(&rxs, sizeof(rxs));
+		ieee80211_get_rx_params(m, &rxs);
+	}
+
 	/* XXX should assert IEEE80211_R_NF and IEEE80211_R_RSSI are set */
-	ieee80211_process_mimo(ni, rx);
+	ieee80211_process_mimo(ni, &rxs);
+
 	//return ieee80211_input(ni, m, rx->rssi, rx->nf);
-	return ni->ni_vap->iv_input(ni, m, rx, rx->rssi, rx->nf);
+	return ni->ni_vap->iv_input(ni, m, &rxs, rxs.rssi, rxs.nf);
 }
 
 int
@@ -107,10 +118,19 @@ int
 ieee80211_input_mimo_all(struct ieee80211com *ic, struct mbuf *m,
     struct ieee80211_rx_stats *rx)
 {
+	struct ieee80211_rx_stats rxs;
 	struct ieee80211vap *vap;
 	int type = -1;
 
 	m->m_flags |= M_BCAST;		/* NB: mark for bpf tap'ing */
+
+	if (rx) {
+		memcpy(&rxs, rx, sizeof(*rx));
+	} else {
+		/* try to read from mbuf */
+		bzero(&rxs, sizeof(rxs));
+		ieee80211_get_rx_params(m, &rxs);
+	}
 
 	/* XXX locking */
 	TAILQ_FOREACH(vap, &ic->ic_vaps, iv_next) {
@@ -143,7 +163,7 @@ ieee80211_input_mimo_all(struct ieee80211com *ic, struct mbuf *m,
 			m = NULL;
 		}
 		ni = ieee80211_ref_node(vap->iv_bss);
-		type = ieee80211_input_mimo(ni, mcopy, rx);
+		type = ieee80211_input_mimo(ni, mcopy, &rxs);
 		ieee80211_free_node(ni);
 	}
 	if (m != NULL)			/* no vaps, reclaim mbuf */
@@ -207,9 +227,16 @@ ieee80211_defrag(struct ieee80211_node *ni, struct mbuf *m, int hdrspace)
 		lwh = mtod(mfrag, struct ieee80211_frame *);
 		last_rxseq = le16toh(*(uint16_t *)lwh->i_seq);
 		/* NB: check seq # and frag together */
-		if (rxseq != last_rxseq+1 ||
-		    !IEEE80211_ADDR_EQ(wh->i_addr1, lwh->i_addr1) ||
-		    !IEEE80211_ADDR_EQ(wh->i_addr2, lwh->i_addr2)) {
+		if (rxseq == last_rxseq+1 &&
+		    IEEE80211_ADDR_EQ(wh->i_addr1, lwh->i_addr1) &&
+		    IEEE80211_ADDR_EQ(wh->i_addr2, lwh->i_addr2)) {
+			/* XXX clear MORE_FRAG bit? */
+			/* track last seqnum and fragno */
+			*(uint16_t *) lwh->i_seq = *(uint16_t *) wh->i_seq;
+
+			m_adj(m, hdrspace);		/* strip header */
+			m_catpkt(mfrag, m);		/* concatenate */
+		} else {
 			/*
 			 * Unrelated fragment or no space for it,
 			 * clear current fragments.
@@ -227,14 +254,6 @@ ieee80211_defrag(struct ieee80211_node *ni, struct mbuf *m, int hdrspace)
 			return NULL;
 		}
 		mfrag = m;
-	} else {				/* concatenate */
-		m_adj(m, hdrspace);		/* strip header */
-		m_cat(mfrag, m);
-		/* NB: m_cat doesn't update the packet header */
-		mfrag->m_pkthdr.len += m->m_pkthdr.len;
-		/* track last seqnum and fragno */
-		lwh = mtod(mfrag, struct ieee80211_frame *);
-		*(uint16_t *) lwh->i_seq = *(uint16_t *) wh->i_seq;
 	}
 	if (more_frag) {			/* more to come, save */
 		ni->ni_rxfragstamp = ticks;
@@ -531,7 +550,7 @@ ieee80211_parse_beacon(struct ieee80211_node *ni, struct mbuf *m,
 			break;
 		case IEEE80211_ELEMID_FHPARMS:
 			if (ic->ic_phytype == IEEE80211_T_FH) {
-				scan->fhdwell = LE_READ_2(&frm[2]);
+				scan->fhdwell = le16dec(&frm[2]);
 				scan->chan = IEEE80211_FH_CHAN(frm[4], frm[5]);
 				scan->fhindex = frm[6];
 			}
@@ -552,6 +571,8 @@ ieee80211_parse_beacon(struct ieee80211_node *ni, struct mbuf *m,
 		case IEEE80211_ELEMID_IBSSPARMS:
 		case IEEE80211_ELEMID_CFPARMS:
 		case IEEE80211_ELEMID_PWRCNSTR:
+		case IEEE80211_ELEMID_BSSLOAD:
+		case IEEE80211_ELEMID_APCHANREP:
 			/* NB: avoid debugging complaints */
 			break;
 		case IEEE80211_ELEMID_XRATES:
@@ -584,6 +605,9 @@ ieee80211_parse_beacon(struct ieee80211_node *ni, struct mbuf *m,
 			scan->meshconf = frm;
 			break;
 #endif
+		/* Extended capabilities; nothing handles it for now */
+		case IEEE80211_ELEMID_EXTCAP:
+			break;
 		case IEEE80211_ELEMID_VENDOR:
 			if (iswpaoui(frm))
 				scan->wpa = frm;
@@ -907,12 +931,8 @@ ieee80211_discard_frame(const struct ieee80211vap *vap,
 
 	if_printf(vap->iv_ifp, "[%s] discard ",
 		ether_sprintf(ieee80211_getbssid(vap, wh)));
-	if (type == NULL) {
-		printf("%s frame, ", ieee80211_mgt_subtype_name[
-			(wh->i_fc[0] & IEEE80211_FC0_SUBTYPE_MASK) >>
-			IEEE80211_FC0_SUBTYPE_SHIFT]);
-	} else
-		printf("%s frame, ", type);
+	printf("%s frame, ", type != NULL ? type :
+	    ieee80211_mgt_subtype_name(wh->i_fc[0]));
 	va_start(ap, fmt);
 	vprintf(fmt, ap);
 	va_end(ap);

@@ -16,7 +16,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/pc98/conf/GENERIC 282901 2015-05-14 14:03:55Z trasz $
+# $FreeBSD: head/sys/pc98/conf/GENERIC 291374 2015-11-26 21:35:50Z emaste $
 
 cpu		I486_CPU
 cpu		I586_CPU
@@ -29,6 +29,7 @@ options 	SCHED_4BSD		# 4BSD scheduler
 #options 	PREEMPTION		# Enable kernel thread preemption
 options 	INET			# InterNETworking
 options 	INET6			# IPv6 communications protocols
+options 	IPSEC			# IP (v4/v6) security
 options 	SCTP			# Stream Control Transmission Protocol
 options 	FFS			# Berkeley Fast Filesystem
 options 	SOFTUPDATES		# Enable FFS soft updates support
@@ -92,7 +93,6 @@ device		fdc
 # ATA controllers
 device		ahci			# AHCI-compatible SATA controllers
 device		ata			# Legacy ATA/SATA controllers
-options 	ATA_STATIC_ID		# Static device numbering
 device		mvs			# Marvell 88SX50XX/88SX60XX/88SX70XX/SoC SATA
 device		siis			# SiliconImage SiI3124/SiI3132/SiI3531 SATA
 
@@ -255,3 +255,6 @@ device		bpf			# Berkeley packet filter
 #device		snd_mss			# Microsoft Sound System
 #device		"snd_sb16"		# Sound Blaster 16
 #device		snd_sbc			# Sound Blaster
+
+# The crypto framework is required by IPSEC
+device		crypto			# Required by IPSEC

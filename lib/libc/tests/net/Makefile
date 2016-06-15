@@ -1,39 +1,41 @@
-# $FreeBSD: head/lib/libc/tests/net/Makefile 274075 2014-11-04 00:56:25Z ngie $
+# $FreeBSD: head/lib/libc/tests/net/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-.include <bsd.own.mk>
+PACKAGE=	tests
 
-TESTSDIR=	${TESTSBASE}/lib/libc/net
+ATF_TESTS_C+=	ether_test
+ATF_TESTS_C+=	eui64_aton_test
+ATF_TESTS_C+=	eui64_ntoa_test
 
-BINDIR=		${TESTSDIR}
+CFLAGS+=	-I${.CURDIR}
 
-NETBSD_ATF_TESTS_C=	getprotoent_test
+NETBSD_ATF_TESTS_C+=	getprotoent_test
 NETBSD_ATF_TESTS_C+=	ether_aton_test
 
-SRCS.t_ether_aton=	aton_ether_subr.c t_ether_aton.c
-
-aton_ether_subr.c: gen_ether_subr ${.CURDIR:H:H:H:H}/sys/net/if_ethersubr.c
-	${HOST_SH} ${.ALLSRC} ${.TARGET}
+SRCS.ether_aton_test=	aton_ether_subr.c t_ether_aton.c
 
 # TODO: hostent_test
 NETBSD_ATF_TESTS_SH=	nsdispatch_test
 NETBSD_ATF_TESTS_SH+=	protoent_test
 NETBSD_ATF_TESTS_SH+=	servent_test
 
+BINDIR=		${TESTSDIR}
+
 PROGS=		h_nsd_recurse
 PROGS+=		h_protoent
 PROGS+=		h_servent
 PROGS+=		h_dns_server
 
-DPADD.h_nsd_recurse+=	${LIBPTHREAD}
-LDADD.h_nsd_recurse+=	-lpthread
+LIBADD.h_nsd_recurse+=	pthread
 
 CLEANFILES+=	aton_ether_subr.c
+aton_ether_subr.c: gen_ether_subr ${SRCTOP}/sys/net/if_ethersubr.c
+	${__MAKE_SHELL} ${.ALLSRC} ${.TARGET}
 
 .include "../Makefile.netbsd-tests"
 
 # TODO: the testcases needs to be ported to FreeBSD
 #TESTS_SUBDIRS=	getaddrinfo
-FILES=	hosts
-FILES+=	resolv.conf
+${PACKAGE}FILES+=	hosts
+${PACKAGE}FILES+=	resolv.conf
 
 .include <bsd.test.mk>

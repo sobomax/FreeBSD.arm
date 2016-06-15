@@ -48,14 +48,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/disassem.c 279312 2015-02-26 07:47:35Z dim $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/disassem.c 300694 2016-05-25 19:44:26Z ian $");
 #include <sys/param.h>
 
 
 #include <sys/systm.h>
 #include <machine/disassem.h>
 #include <machine/armreg.h>
-#include <machine/acle-compat.h>
 #include <ddb/ddb.h>
 
 /*
@@ -523,7 +522,7 @@ disasm(const disasm_interface_t *di, vm_offset_t loc, int altfmt)
 			else
 				di->di_printf(", ");
 		}
-	};
+	}
 
 	di->di_printf("\n");
 

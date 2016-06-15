@@ -29,12 +29,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/feature_present.c 175220 2008-01-10 22:11:21Z jhb $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/feature_present.c 288007 2015-09-20 03:56:57Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /*
  * Returns true if the named feature is present in the currently

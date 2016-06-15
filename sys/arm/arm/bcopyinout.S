@@ -38,7 +38,6 @@
 
 #include "assym.s"
 
-#include <machine/acle-compat.h>
 #include <machine/asm.h>
 #include <sys/errno.h>
 
@@ -47,7 +46,7 @@
 .L_min_memcpy_size:
 	.word	_C_LABEL(_min_memcpy_size)
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 284264 2015-06-11 13:54:18Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 300694 2016-05-25 19:44:26Z ian $");
 #ifdef _ARM_ARCH_5E
 #include <arm/arm/bcopyinout_xscale.S>
 #else
@@ -68,7 +67,7 @@ __FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout.S 284264 2015-06-11 13:54:18Z an
 #endif
 
 
-#define SAVE_REGS	stmfd	sp!, {r4-r11}
+#define SAVE_REGS	stmfd	sp!, {r4-r11}; _SAVE({r4-r11})
 #define RESTORE_REGS	ldmfd	sp!, {r4-r11}
 
 #if defined(_ARM_ARCH_5E)
@@ -93,6 +92,15 @@ ENTRY(copyin)
 	teq	r2, #0
 	moveq	r0, #0
 	RETeq
+
+	adds	r3, r0, r2
+	movcs	r0, #EFAULT
+	RETc(cs)
+
+	ldr	r12, =(VM_MAXUSER_ADDRESS + 1)
+	cmp	r3, r12
+	movcs	r0, #EFAULT
+	RETc(cs)
 
 	ldr	r3, .L_arm_memcpy
 	ldr	r3, [r3]
@@ -332,6 +340,15 @@ ENTRY(copyout)
 	moveq	r0, #0
 	RETeq
 
+	adds	r3, r1, r2
+	movcs	r0, #EFAULT
+	RETc(cs)
+
+	ldr	r12, =(VM_MAXUSER_ADDRESS + 1)
+	cmp	r3, r12
+	movcs	r0, #EFAULT
+	RETc(cs)
+
 	ldr	r3, .L_arm_memcpy
 	ldr	r3, [r3]
 	cmp	r3, #0
@@ -341,6 +358,7 @@ ENTRY(copyout)
 	cmp	r2, r3
 	blt	.Lnormale
 	stmfd	sp!, {r0-r2, r4, lr}
+	_SAVE({r0-r2, r4, lr})
 	mov     r3, r0
 	mov     r0, r1
 	mov     r1, r3

@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 276479 2014-12-31 20:31:32Z dim $
+# $FreeBSD: head/lib/clang/libclangstaticanalyzercheckers/Makefile 296417 2016-03-05 20:24:31Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	clangstaticanalyzercheckers
 
@@ -21,7 +21,6 @@ SRCS=	AllocationDiagnostics.cpp \
 	CheckObjCInstMethSignature.cpp \
 	CheckSecuritySyntaxOnly.cpp \
 	CheckSizeofPointer.cpp \
-	CheckerDocumentation.cpp \
 	ChrootChecker.cpp \
 	ClangCheckers.cpp \
 	DeadStoresChecker.cpp \
@@ -29,6 +28,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	DereferenceChecker.cpp \
 	DirectIvarAssignment.cpp \
 	DivZeroChecker.cpp \
+	DynamicTypeChecker.cpp \
 	DynamicTypePropagation.cpp \
 	ExprInspectionChecker.cpp \
 	FixedAddressChecker.cpp \
@@ -36,6 +36,7 @@ SRCS=	AllocationDiagnostics.cpp \
 	IdenticalExprChecker.cpp \
 	IvarInvalidationChecker.cpp \
 	LLVMConventionsChecker.cpp \
+	LocalizationChecker.cpp \
 	MacOSKeychainAPIChecker.cpp \
 	MacOSXAPIChecker.cpp \
 	MallocChecker.cpp \
@@ -45,12 +46,14 @@ SRCS=	AllocationDiagnostics.cpp \
 	NSErrorChecker.cpp \
 	NoReturnFunctionChecker.cpp \
 	NonNullParamChecker.cpp \
+	NullabilityChecker.cpp \
 	ObjCAtSyncChecker.cpp \
 	ObjCContainersASTChecker.cpp \
 	ObjCContainersChecker.cpp \
 	ObjCMissingSuperCallChecker.cpp \
 	ObjCSelfInitChecker.cpp \
 	ObjCUnusedIVarsChecker.cpp \
+	PaddingChecker.cpp \
 	PointerArithChecker.cpp \
 	PointerSubChecker.cpp \
 	PthreadLockChecker.cpp \
@@ -71,7 +74,12 @@ SRCS=	AllocationDiagnostics.cpp \
 	UnixAPIChecker.cpp \
 	UnreachableCodeChecker.cpp \
 	VLASizeChecker.cpp \
+	VforkChecker.cpp \
 	VirtualCallChecker.cpp
+
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	CheckerDocumentation.cpp
+.endif
 
 TGHDRS=	AttrList \
 	AttrVisitor \

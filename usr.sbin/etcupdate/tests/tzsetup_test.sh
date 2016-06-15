@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/etcupdate/tests/tzsetup_test.sh 281887 2015-04-23 14:22:20Z jhb $
+# $FreeBSD: head/usr.sbin/etcupdate/tests/tzsetup_test.sh 297606 2016-04-06 03:12:44Z ngie $
 
 # Various regression tests for the tzsetup handling in the 'update' command.
 
@@ -196,7 +196,7 @@ $COMMAND -nr -d $WORKDIR -D $TEST > $WORKDIR/testn.out
 
 cat > $WORKDIR/correct.out <<EOF
 Warnings:
-  Needs update: /etc/localtime (required manual update via tzsetup(1))
+  Needs update: /etc/localtime (required manual update via tzsetup(8))
 EOF
 
 echo "Differences for missing /var/db/zoneinfo with -n:"

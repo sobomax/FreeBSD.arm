@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_iface.c 277059 2015-01-12 09:50:42Z glebius $
+ * $FreeBSD: head/sys/netgraph/ng_iface.c 298431 2016-04-21 19:40:10Z pfg $
  * $Whistle: ng_iface.c,v 1.33 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -104,7 +104,7 @@ const static struct iffam gFamilies[] = {
 	{ AF_ATM,	NG_IFACE_HOOK_ATM	},
 	{ AF_NATM,	NG_IFACE_HOOK_NATM	},
 };
-#define NUM_FAMILIES		(sizeof(gFamilies) / sizeof(*gFamilies))
+#define	NUM_FAMILIES		nitems(gFamilies)
 
 /* Node private data */
 struct ng_iface_private {
@@ -705,7 +705,7 @@ ng_iface_rcvdata(hook_p hook, item_p item)
 		m_freem(m);
 		return (EAFNOSUPPORT);
 	}
-	random_harvest(&(m->m_data), 12, 2, RANDOM_NET_NG);
+	random_harvest_queue(m, sizeof(*m), 2, RANDOM_NET_NG);
 	M_SETFIB(m, ifp->if_fib);
 	netisr_dispatch(isr, m);
 	return (0);

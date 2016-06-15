@@ -30,7 +30,7 @@
 
 #
 #	@(#)vnode_if.sh	8.1 (Berkeley) 6/10/93
-# $FreeBSD: head/sys/tools/vnode_if.awk 258622 2013-11-26 08:46:27Z avg $
+# $FreeBSD: head/sys/tools/vnode_if.awk 288336 2015-09-28 12:14:16Z avg $
 #
 # Script to produce VFS front-end sugar.
 #
@@ -142,7 +142,7 @@ common_head = \
     " * This file is produced automatically.\n" \
     " * Do not modify anything in here by hand.\n" \
     " *\n" \
-    " * Created from $FreeBSD: head/sys/tools/vnode_if.awk 258622 2013-11-26 08:46:27Z avg $\n" \
+    " * Created from $FreeBSD: head/sys/tools/vnode_if.awk 288336 2015-09-28 12:14:16Z avg $\n" \
     " */\n" \
     "\n";
 
@@ -359,7 +359,7 @@ while ((getline < srcfile) > 0) {
 		printc("\t    vop->"name" == NULL && vop->vop_bypass == NULL)")
 		printc("\t\tvop = vop->vop_default;")
 		printc("\tVNASSERT(vop != NULL, a->a_" args[0]", (\"No "name"(%p, %p)\", a->a_" args[0]", a));")
-		printc("\tSDT_PROBE(vfs, vop, " name ", entry, a->a_" args[0] ", a, 0, 0, 0);\n");
+		printc("\tSDT_PROBE2(vfs, vop, " name ", entry, a->a_" args[0] ", a);\n");
 		for (i = 0; i < numargs; ++i)
 			add_debug_code(name, args[i], "Entry", "\t");
 		printc("\tKTR_START" ctrstr);
@@ -370,7 +370,7 @@ while ((getline < srcfile) > 0) {
 		printc("\telse")
 		printc("\t\trc = vop->vop_bypass(&a->a_gen);")
 		printc("\tVFS_EPILOGUE(a->a_" args[0]"->v_mount);")
-		printc("\tSDT_PROBE(vfs, vop, " name ", return, a->a_" args[0] ", a, rc, 0, 0);\n");
+		printc("\tSDT_PROBE3(vfs, vop, " name ", return, a->a_" args[0] ", a, rc);\n");
 		printc("\tif (rc == 0) {");
 		for (i = 0; i < numargs; ++i)
 			add_debug_code(name, args[i], "OK", "\t\t");

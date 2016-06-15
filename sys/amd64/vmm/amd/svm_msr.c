@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/svm_msr.c 282336 2015-05-02 04:19:11Z neel $");
+__FBSDID("$FreeBSD: head/sys/amd64/vmm/amd/svm_msr.c 297806 2016-04-11 05:09:43Z anish $");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -154,6 +154,11 @@ svm_wrmsr(struct svm_softc *sc, int vcpu, u_int num, uint64_t val, bool *retu)
 	case MSR_AMDK8_IPM:
 		/*
 		 * Ignore writes to the "Interrupt Pending Message" MSR.
+		 */
+		break;
+	case MSR_K8_UCODE_UPDATE:
+		/*
+		 * Ignore writes to microcode update register.
 		 */
 		break;
 	default:

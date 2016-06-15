@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.19 (Berkeley) 1/14/97
-# $FreeBSD: head/etc/sendmail/Makefile 277787 2015-01-27 04:06:47Z gshapiro $
+# $FreeBSD: head/etc/sendmail/Makefile 289200 2015-10-12 21:02:36Z peter $
 
 M4=		m4
 CHMOD=		chmod
@@ -72,24 +72,25 @@ distribution:
 	    ${SMDIR}/helpfile ${DESTDIR}/etc/mail
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 640 \
 	    /dev/null ${DESTDIR}/var/log/sendmail.st
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
-	    freebsd.cf ${DEST_CF}
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 444 \
-	    freebsd.submit.cf ${DEST_SUBMIT_CF}
-
-install:
-.if defined(INSTALL_CF) && ${INSTALL_CF} != ${DEST_CF}
+.if defined(INSTALL_CF)
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
 	    ${INSTALL_CF} ${DEST_CF}
+.else
+	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
+	    freebsd.cf ${DEST_CF}
 .endif
 .if defined(SENDMAIL_ADDITIONAL_CF)
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
 	    ${SENDMAIL_ADDITIONAL_CF} ${DESTDIR}/etc/mail
 .endif
-.if !defined(SENDMAIL_SET_USER_ID) && \
-    defined(INSTALL_SUBMIT_CF) && ${INSTALL_SUBMIT_CF} != ${DEST_SUBMIT_CF}
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
+.if !defined(SENDMAIL_SET_USER_ID)
+.if defined(INSTALL_SUBMIT_CF)
+	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 444 \
 	    ${INSTALL_SUBMIT_CF} ${DEST_SUBMIT_CF}
+.else
+	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 444 \
+	    freebsd.submit.cf ${DEST_SUBMIT_CF}
+.endif
 .endif
 
 .include <bsd.prog.mk>

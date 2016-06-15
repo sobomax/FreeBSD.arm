@@ -29,7 +29,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: head/sys/net/rss_config.c 277331 2015-01-18 18:06:40Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net/rss_config.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include "opt_inet6.h"
 #include "opt_pcbgroup.h"
@@ -52,18 +52,6 @@ __FBSDID("$FreeBSD: head/sys/net/rss_config.c 277331 2015-01-18 18:06:40Z adrian
 #include <net/netisr.h>
 #include <net/rss_config.h>
 #include <net/toeplitz.h>
-
-#if 0
-#include <netinet/in.h>
-#include <netinet/in_pcb.h>
-#include <netinet/in_rss.h>
-#include <netinet/in_var.h>
-
-/* for software rss hash support */
-#include <netinet/ip.h>
-#include <netinet/tcp.h>
-#include <netinet/udp.h>
-#endif
 
 /*-
  * Operating system parts of receiver-side scaling (RSS), which allows
@@ -152,6 +140,15 @@ SYSCTL_INT(_net_inet_rss, OID_AUTO, basecpu, CTLFLAG_RD,
     __DECONST(int *, &rss_basecpu), 0, "RSS base CPU");
 
 /*
+ * Print verbose debugging messages.
+ * 0 - disable
+ * non-zero - enable
+ */
+int	rss_debug = 0;
+SYSCTL_INT(_net_inet_rss, OID_AUTO, debug, CTLFLAG_RWTUN, &rss_debug, 0,
+    "RSS debug level");
+
+/*
  * RSS secret key, intended to prevent attacks on load-balancing.  Its
  * effectiveness may be limited by algorithm choice and available entropy
  * during the boot.
@@ -171,7 +168,7 @@ static uint8_t rss_key[RSS_KEYSIZE] = {
 
 /*
  * RSS hash->CPU table, which maps hashed packet headers to particular CPUs.
- * Drivers may supplement this table with a seperate CPU<->queue table when
+ * Drivers may supplement this table with a separate CPU<->queue table when
  * programming devices.
  */
 struct rss_table_entry {
@@ -194,8 +191,8 @@ rss_init(__unused void *arg)
 		break;
 
 	default:
-		printf("%s: invalid RSS hashalgo %u, coercing to %u",
-		    __func__, rss_hashalgo, RSS_HASH_TOEPLITZ);
+		RSS_DEBUG("invalid RSS hashalgo %u, coercing to %u\n",
+		    rss_hashalgo, RSS_HASH_TOEPLITZ);
 		rss_hashalgo = RSS_HASH_TOEPLITZ;
 	}
 
@@ -229,8 +226,8 @@ rss_init(__unused void *arg)
 		 * ones.
 		 */
 		if (rss_bits == 0 || rss_bits > RSS_MAXBITS) {
-			printf("%s: RSS bits %u not valid, coercing to  %u",
-			    __func__, rss_bits, RSS_MAXBITS);
+			RSS_DEBUG("RSS bits %u not valid, coercing to %u\n",
+			    rss_bits, RSS_MAXBITS);
 			rss_bits = RSS_MAXBITS;
 		}
 
@@ -241,9 +238,8 @@ rss_init(__unused void *arg)
 		 */
 		rss_buckets = (1 << rss_bits);
 		if (rss_buckets < rss_ncpus)
-			printf("%s: WARNING: rss_buckets (%u) less than "
-			    "rss_ncpus (%u)\n", __func__, rss_buckets,
-			    rss_ncpus);
+			RSS_DEBUG("WARNING: rss_buckets (%u) less than "
+			    "rss_ncpus (%u)\n", rss_buckets, rss_ncpus);
 		rss_mask = rss_buckets - 1;
 	} else {
 		rss_bits = 0;

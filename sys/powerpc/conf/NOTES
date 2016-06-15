@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/powerpc/conf/NOTES 284227 2015-06-10 15:53:39Z br $
+# $FreeBSD: head/sys/powerpc/conf/NOTES 298824 2016-04-29 23:53:55Z jhb $
 #
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
@@ -14,7 +14,6 @@ options 	KDTRACE_HOOKS
 #device		dtrace
 
 # DTrace modules
-#device		dtrace_lockstat
 #device		dtrace_profile
 #device		dtrace_sdt
 #device		dtrace_fbt
@@ -53,7 +52,6 @@ options 	SC_OFWFB		# OFW frame buffer
 device		cpufreq
 
 # Standard busses
-device		pci
 device		agp
 
 device		bm		# Apple BMAC (Big Mac Ethernet)
@@ -97,9 +95,6 @@ nodevice	warp_saver
 nodevice	daemon_saver
 nodevice	star_saver
 nodevice	snake_saver
-# isa
-nodevice	pcii
-nodevice	tnt4882
 # sound
 nodevice	snd_cmi
 # wants gdb_cur

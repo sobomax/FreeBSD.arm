@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/libexec/digest-service/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/libexec/digest-service/Makefile 287216 2015-08-27 17:16:18Z ume $
 
 PROG=	digest-service
 MAN=
@@ -9,6 +9,7 @@ CFLAGS+=	-I${KRB5DIR}/kdc \
 		-I${KRB5DIR}/lib/wind \
 		-I${KRB5DIR}/lib/roken
 LIBADD=	hdb kdc heimipcs krb5 roken asn1 crypto vers heimntlm
+LDFLAGS=${LDAPLDFLAGS}
 
 .include <bsd.prog.mk>
 

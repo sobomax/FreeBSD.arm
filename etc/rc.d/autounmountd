@@ -1,15 +1,16 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/autounmountd 270096 2014-08-17 09:44:42Z trasz $
+# $FreeBSD: head/etc/rc.d/autounmountd 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: autounmountd
-# REQUIRE: nfsclient
+# REQUIRE: DAEMON
 # KEYWORD: nojail
 
 . /etc/rc.subr
 
 name="autounmountd"
+desc="daemon unmounting automounted filesystems"
 rcvar="autofs_enable"
 pidfile="/var/run/${name}.pid"
 command="/usr/sbin/${name}"

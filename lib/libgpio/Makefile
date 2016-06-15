@@ -1,5 +1,6 @@
-# $FreeBSD: head/lib/libgpio/Makefile 280298 2015-03-20 19:29:59Z loos $
+# $FreeBSD: head/lib/libgpio/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=	gpio
 SHLIB_MAJOR= 0
 
@@ -30,7 +31,5 @@ MLINKS=	gpio.3 gpio_open.3 \
 	gpio.3 gpio_pin_invin.3 \
 	gpio.3 gpio_pin_invout.3 \
 	gpio.3 gpio_pin_pulsate.3
-
-WARNS?=	6
 
 .include <bsd.lib.mk>

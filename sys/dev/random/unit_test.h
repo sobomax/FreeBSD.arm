@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2013 Mark R V Murray
+ * Copyright (c) 2013-2015 Mark R V Murray
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,25 +23,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/random/unit_test.h 273872 2014-10-30 21:21:53Z markm $
+ * $FreeBSD: head/sys/dev/random/unit_test.h 285422 2015-07-12 18:14:38Z markm $
  */
 
 
 #ifndef UNIT_TEST_H_INCLUDED
-#define UNIT_TEST_H_INCLUDED
+#define	UNIT_TEST_H_INCLUDED
 
-void random_adaptor_unblock(void);
+#ifdef _KERNEL
+#error "Random unit tests cannot be compiled into the kernel."
+#endif
+
+#include <sys/types.h>
+#include <inttypes.h>
+#include <stdint.h>
+
+#if defined(clang) && __has_builtin(__builtin_readcyclecounter)
+#define	rdtsc __builtin_readcyclecounter
+#else /* !clang */
+#if defined(__amd64__) || defined(__i386__)
+static __inline uint64_t
+rdtsc(void)
+{
+	uint32_t low, high;
+
+	__asm __volatile("rdtsc" : "=a" (low), "=d" (high));
+	return (low | ((uint64_t)high << 32));
+}
+#else /* __amd64__ || __i386__ */
+#error "No rdtsc() implementation available."
+#endif /* __amd64__ || __i386__ */
+#endif /* !clang */
 
 static __inline uint64_t
 get_cyclecount(void)
 {
 
-	/* Shaddup! */
-	return (4ULL);
+	return (rdtsc());
 }
 
-// #define PAGE_SIZE	4096
-#define HARVESTSIZE	16
+#define	HARVESTSIZE	2
+#define RANDOM_BLOCKSIZE	16
 
 enum random_entropy_source {
 	RANDOM_START = 0,
@@ -51,7 +73,7 @@ enum random_entropy_source {
 
 struct harvest_event {
 	uintmax_t			he_somecounter;		/* fast counter for clock jitter */
-	uint8_t				he_entropy[HARVESTSIZE];/* some harvested entropy */
+	uint32_t			he_entropy[HARVESTSIZE];/* some harvested entropy */
 	u_int				he_size;		/* harvested entropy byte count */
 	u_int				he_bits;		/* stats about the entropy */
 	u_int				he_destination;		/* destination pool of this entropy */

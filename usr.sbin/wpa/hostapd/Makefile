@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/wpa/hostapd/Makefile 281806 2015-04-21 01:45:11Z rpaulo $
+# $FreeBSD: head/usr.sbin/wpa/hostapd/Makefile 289549 2015-10-18 21:38:25Z rpaulo $
 
 .include <src.opts.mk>
 .include "${.CURDIR}/../Makefile.inc"
@@ -35,15 +35,15 @@ FILES=	hostapd.conf hostapd.eap_user hostapd.wpa_psk
 .endif
 
 CFLAGS+=-DCONFIG_DRIVER_BSD \
-	-DHOSTAPD \
 	-DCONFIG_DRIVER_RADIUS_ACL \
-	-DCONFIG_RSN_PREAUTH \
+	-DCONFIG_HS20 \
+	-DCONFIG_INTERWORKING \
 	-DCONFIG_PEERKEY \
+	-DCONFIG_RSN_PREAUTH \
 	-DCONFIG_WPS \
 	-DCONFIG_WPS2 \
 	-DCONFIG_WPS_UPNP \
-	-DCONFIG_INTERWORKING \
-	-DCONFIG_HS20
+	-DHOSTAPD
 .if ${MK_INET6} != "no"
 CFLAGS+= -DCONFIG_IPV6
 .endif
@@ -65,8 +65,8 @@ CFLAGS+=-DDPKCS12_FUNCS \
 	-DEAP_SERVER_PEAP \
 	-DEAP_SERVER_TLS \
 	-DEAP_SERVER_TTLS \
-	-DEAP_TLS_FUNCS \
-	-DEAP_SERVER_WSC
+	-DEAP_SERVER_WSC \
+	-DEAP_TLS_FUNCS
 
 SRCS+=	eap_server_gtc.c \
 	eap_server_identity.c \
@@ -97,7 +97,6 @@ NEED_SIM_COMMON=y
 .if defined(NEED_SIM_COMMON)
 SRCS+=	eap_sim_common.c \
 	eap_sim_db.c
-NEED_AES_CBC=y
 NEED_FIPS186_2_PRF=y
 .endif
 

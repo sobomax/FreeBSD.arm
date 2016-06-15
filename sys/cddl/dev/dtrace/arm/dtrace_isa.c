@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/dev/dtrace/arm/dtrace_isa.c 280038 2015-03-15 15:17:34Z rwatson $
+ * $FreeBSD: head/sys/cddl/dev/dtrace/arm/dtrace_isa.c 295882 2016-02-22 09:08:04Z skra $
  */
 /*
  * Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
@@ -44,7 +44,6 @@
 #include <machine/atomic.h>
 #include <machine/db_machdep.h>
 #include <machine/md_var.h>
-#include <machine/vmparam.h>
 #include <machine/stack.h>
 #include <ddb/db_sym.h>
 #include <ddb/ddb.h>

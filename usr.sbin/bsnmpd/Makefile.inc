@@ -1,3 +1,4 @@
-# $FreeBSD: head/usr.sbin/bsnmpd/Makefile.inc 122407 2003-11-10 09:22:40Z harti $
+# $FreeBSD: head/usr.sbin/bsnmpd/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=	bsnmp
 .include "../Makefile.inc"

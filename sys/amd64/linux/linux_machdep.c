@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/linux/linux_machdep.c 284217 2015-06-10 12:39:01Z mjg $");
+__FBSDID("$FreeBSD: head/sys/amd64/linux/linux_machdep.c 299010 2016-05-03 22:13:04Z pfg $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -212,7 +212,7 @@ linux_mmap2(struct thread *td, struct linux_mmap2_args *args)
 		/*
 		 * The Linux MAP_GROWSDOWN option does not limit auto
 		 * growth of the region.  Linux mmap with this option
-		 * takes as addr the inital BOS, and as len, the initial
+		 * takes as addr the initial BOS, and as len, the initial
 		 * region size.  It can then grow down from addr without
 		 * limit.  However, Linux threads has an implicit internal
 		 * limit to stack size of STACK_SIZE.  Its just not
@@ -383,7 +383,6 @@ linux_sigaltstack(struct thread *td, struct linux_sigaltstack_args *uap)
 	return (error);
 }
 
-/* XXX do all */
 int
 linux_arch_prctl(struct thread *td, struct linux_arch_prctl_args *args)
 {

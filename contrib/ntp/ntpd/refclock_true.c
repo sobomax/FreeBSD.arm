@@ -240,7 +240,7 @@ true_debug(struct peer *peer, const char *fmt, ...)
 				 "/tmp/true%d.debug", up->unit);
 			fd = open(filename, O_CREAT | O_WRONLY | O_EXCL,
 				  0600);
-			if (fd >= 0 && (up->debug = fdopen(fd, "r+"))) {
+			if (fd >= 0 && (up->debug = fdopen(fd, "w"))) {
 #ifdef HAVE_SETVBUF
 				static char buf[BUFSIZ];
 
@@ -637,7 +637,7 @@ true_send(
 
 	pp = peer->procptr;
 	if (!(pp->sloppyclockflag & CLK_FLAG1)) {
-		int len = strlen(cmd);
+		size_t len = strlen(cmd);
 
 		true_debug(peer, "Send '%s'\n", cmd);
 		if (write(pp->io.fd, cmd, (unsigned)len) != len)

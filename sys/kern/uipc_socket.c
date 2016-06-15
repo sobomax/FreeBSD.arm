@@ -101,7 +101,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_socket.c 279209 2015-02-23 15:24:43Z ae $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_socket.c 300419 2016-05-22 13:10:48Z bapt $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -134,6 +134,7 @@ __FBSDID("$FreeBSD: head/sys/kern/uipc_socket.c 279209 2015-02-23 15:24:43Z ae $
 #include <sys/stat.h>
 #include <sys/sx.h>
 #include <sys/sysctl.h>
+#include <sys/taskqueue.h>
 #include <sys/uio.h>
 #include <sys/jail.h>
 #include <sys/syslog.h>
@@ -193,10 +194,10 @@ VNET_DEFINE(struct hhook_head *, socket_hhh[HHOOK_SOCKET_LAST + 1]);
 /*
  * Limit on the number of connections in the listen queue waiting
  * for accept(2).
- * NB: The orginal sysctl somaxconn is still available but hidden
+ * NB: The original sysctl somaxconn is still available but hidden
  * to prevent confusion about the actual purpose of this number.
  */
-static int somaxconn = SOMAXCONN;
+static u_int somaxconn = SOMAXCONN;
 
 static int
 sysctl_somaxconn(SYSCTL_HANDLER_ARGS)
@@ -209,7 +210,13 @@ sysctl_somaxconn(SYSCTL_HANDLER_ARGS)
 	if (error || !req->newptr )
 		return (error);
 
-	if (val < 1 || val > USHRT_MAX)
+	/*
+	 * The purpose of the UINT_MAX / 3 limit, is so that the formula
+	 *   3 * so_qlimit / 2
+	 * below, will not overflow.
+         */
+
+	if (val < 1 || val > UINT_MAX / 3)
 		return (EINVAL);
 
 	somaxconn = val;
@@ -351,7 +358,7 @@ sysctl_maxsockets(SYSCTL_HANDLER_ARGS)
 }
 SYSCTL_PROC(_kern_ipc, OID_AUTO, maxsockets, CTLTYPE_INT|CTLFLAG_RW,
     &maxsockets, 0, sysctl_maxsockets, "IU",
-    "Maximum number of sockets avaliable");
+    "Maximum number of sockets available");
 
 /*
  * Socket operation routines.  These routines are called by the routines in
@@ -390,7 +397,10 @@ soalloc(struct vnet *vnet)
 	SOCKBUF_LOCK_INIT(&so->so_rcv, "so_rcv");
 	sx_init(&so->so_snd.sb_sx, "so_snd_sx");
 	sx_init(&so->so_rcv.sb_sx, "so_rcv_sx");
-	TAILQ_INIT(&so->so_aiojobq);
+	TAILQ_INIT(&so->so_snd.sb_aiojobq);
+	TAILQ_INIT(&so->so_rcv.sb_aiojobq);
+	TASK_INIT(&so->so_snd.sb_aiotask, 0, soaio_snd, so);
+	TASK_INIT(&so->so_rcv.sb_aiotask, 0, soaio_rcv, so);
 #ifdef VIMAGE
 	VNET_ASSERT(vnet != NULL, ("%s:%d vnet is NULL, so=%p",
 	    __func__, __LINE__, so));
@@ -440,7 +450,7 @@ sodealloc(struct socket *so)
 	if (so->so_snd.sb_hiwat)
 		(void)chgsbsize(so->so_cred->cr_uidinfo,
 		    &so->so_snd.sb_hiwat, 0, RLIM_INFINITY);
-	/* remove acccept filter if one is present. */
+	/* remove accept filter if one is present. */
 	if (so->so_accf != NULL)
 		do_setopt_accept_filter(so, NULL);
 #ifdef MAC
@@ -540,7 +550,7 @@ SYSCTL_INT(_regression, OID_AUTO, sonewconn_earlytest, CTLFLAG_RW,
 /*
  * When an attempt at a new connection is noted on a socket which accepts
  * connections, sonewconn is called.  If the connection is possible (subject
- * to space constraints, etc.) then we allocate a new structure, propoerly
+ * to space constraints, etc.) then we allocate a new structure, properly
  * linked into the data structure of the original socket, and return this.
  * Connstatus may be 0, or SS_ISCONFIRMING, or SS_ISCONNECTED.
  *
@@ -805,7 +815,7 @@ sofree(struct socket *so)
 
 	VNET_SO_ASSERT(so);
 	if (pr->pr_flags & PR_RIGHTS && pr->pr_domain->dom_dispose != NULL)
-		(*pr->pr_domain->dom_dispose)(so->so_rcv.sb_mb);
+		(*pr->pr_domain->dom_dispose)(so);
 	if (pr->pr_usrreqs->pru_detach != NULL)
 		(*pr->pr_usrreqs->pru_detach)(so);
 
@@ -1154,7 +1164,7 @@ sosend_dgram(struct socket *so, struct sockaddr *addr, struct uio *uio,
 	}
 	/*
 	 * XXX all the SBS_CANTSENDMORE checks previously done could be out
-	 * of date.  We could have recieved a reset packet in an interrupt or
+	 * of date.  We could have received a reset packet in an interrupt or
 	 * maybe we slept while doing page faults in uiomove() etc.  We could
 	 * probably recheck again inside the locking protection here, but
 	 * there are probably other places that this also happens.  We must
@@ -1337,7 +1347,7 @@ restart:
 			}
 			/*
 			 * XXX all the SBS_CANTSENDMORE checks previously
-			 * done could be out of date.  We could have recieved
+			 * done could be out of date.  We could have received
 			 * a reset packet in an interrupt or maybe we slept
 			 * while doing page faults in uiomove() etc.  We
 			 * could probably recheck again inside the locking
@@ -2334,6 +2344,9 @@ soshutdown(struct socket *so, int how)
 
 	if (!(how == SHUT_RD || how == SHUT_WR || how == SHUT_RDWR))
 		return (EINVAL);
+	if ((so->so_state &
+	    (SS_ISCONNECTED | SS_ISCONNECTING | SS_ISDISCONNECTING)) == 0)
+		return (ENOTCONN);
 
 	CURVNET_SET(so->so_vnet);
 	if (pr->pr_usrreqs->pru_flush != NULL)
@@ -2356,7 +2369,7 @@ sorflush(struct socket *so)
 {
 	struct sockbuf *sb = &so->so_rcv;
 	struct protosw *pr = so->so_proto;
-	struct sockbuf asb;
+	struct socket aso;
 
 	VNET_SO_ASSERT(so);
 
@@ -2381,8 +2394,9 @@ sorflush(struct socket *so)
 	 * and mutex data unchanged.
 	 */
 	SOCKBUF_LOCK(sb);
-	bzero(&asb, offsetof(struct sockbuf, sb_startzero));
-	bcopy(&sb->sb_startzero, &asb.sb_startzero,
+	bzero(&aso, sizeof(aso));
+	aso.so_pcb = so->so_pcb;
+	bcopy(&sb->sb_startzero, &aso.so_rcv.sb_startzero,
 	    sizeof(*sb) - offsetof(struct sockbuf, sb_startzero));
 	bzero(&sb->sb_startzero,
 	    sizeof(*sb) - offsetof(struct sockbuf, sb_startzero));
@@ -2390,12 +2404,12 @@ sorflush(struct socket *so)
 	sbunlock(sb);
 
 	/*
-	 * Dispose of special rights and flush the socket buffer.  Don't call
-	 * any unsafe routines (that rely on locks being initialized) on asb.
+	 * Dispose of special rights and flush the copied socket.  Don't call
+	 * any unsafe routines (that rely on locks being initialized) on aso.
 	 */
 	if (pr->pr_flags & PR_RIGHTS && pr->pr_domain->dom_dispose != NULL)
-		(*pr->pr_domain->dom_dispose)(asb.sb_mb);
-	sbrelease_internal(&asb, so);
+		(*pr->pr_domain->dom_dispose)(&aso);
+	sbrelease_internal(&aso.so_rcv, so);
 }
 
 /*
@@ -2697,7 +2711,7 @@ sooptcopyout(struct sockopt *sopt, const void *buf, size_t len)
 	 * that we always tell the user precisely how much we copied, rather
 	 * than something useful like the total amount we had available for
 	 * her.  Note that this interface is not idempotent; the entire
-	 * answer must generated ahead of time.
+	 * answer must be generated ahead of time.
 	 */
 	valsize = min(len, sopt->sopt_valsize);
 	sopt->sopt_valsize = valsize;
@@ -3083,6 +3097,13 @@ soo_kqfilter(struct file *fp, struct knote *kn)
  */
 int
 pru_accept_notsupp(struct socket *so, struct sockaddr **nam)
+{
+
+	return EOPNOTSUPP;
+}
+
+int
+pru_aio_queue_notsupp(struct socket *so, struct kaiocb *job)
 {
 
 	return EOPNOTSUPP;

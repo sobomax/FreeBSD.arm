@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.bin/locale/locale.c 243201 2012-11-17 23:49:20Z grog $
+ * $FreeBSD: head/usr.bin/locale/locale.c 298169 2016-04-17 22:42:48Z bapt $
  */
 
 /*
@@ -35,7 +35,9 @@
  *	nl_langinfo(CODESET).
  */
 
+#include <sys/param.h>
 #include <sys/types.h>
+
 #include <dirent.h>
 #include <err.h>
 #include <locale.h>
@@ -79,7 +81,7 @@ struct _lcinfo {
 	{ "LC_MONETARY",	LC_MONETARY },
 	{ "LC_MESSAGES",	LC_MESSAGES }
 };
-#define	NLCINFO (sizeof(lcinfo)/sizeof(lcinfo[0]))
+#define	NLCINFO nitems(lcinfo)
 
 /* ids for values not referenced by nl_langinfo() */
 #define	KW_ZERO			10000
@@ -290,7 +292,7 @@ main(int argc, char *argv[])
 			}
 		} else {
 			uint i;
-			for (i = 0; i < sizeof (kwinfo) / sizeof (struct _kwinfo); i++)
+			for (i = 0; i < nitems(kwinfo); i++)
 				showdetails ((char *)kwinfo [i].name);
 		}
 		exit(0);
@@ -466,10 +468,10 @@ showlocale(void)
 				&& strcmp(lang, vval)) {
 			/*
 			 * Appropriate environment variable set, its value
-			 * is valid and not overriden by LC_ALL
+			 * is valid and not overridden by LC_ALL
 			 *
 			 * XXX: possible side effect: if both LANG and
-			 * overriden environment variable are set into same
+			 * overridden environment variable are set into same
 			 * value, then it'll be assumed as 'implied'
 			 */
 			printf("%s=%s\n", lcinfo[i].name, vval);

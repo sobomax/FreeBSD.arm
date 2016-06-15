@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/arm/xscale/ixp425/ixp425_npereg.h 236987 2012-06-13 04:38:09Z imp $
+ * $FreeBSD: head/sys/arm/xscale/ixp425/ixp425_npereg.h 299069 2016-05-04 15:48:59Z pfg $
  */
 
 /*-
@@ -125,7 +125,7 @@
 
 /*
  * Reset value for Mailbox (MBST) register
- * NOTE that if used, it should be complemented with an NPE intruction
+ * NOTE that if used, it should be complemented with an NPE instruction
  * to clear the Mailbox at the NPE side as well
  */
 #define IX_NPEDL_REG_RESET_MBST              0x0000F0F0

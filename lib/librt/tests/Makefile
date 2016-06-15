@@ -1,10 +1,4 @@
-# $FreeBSD: head/lib/librt/tests/Makefile 275024 2014-11-25 11:07:26Z bapt $
-
-OBJTOP=		${.OBJDIR:H:H:H}
-SRCTOP=		${.CURDIR:H:H:H}
-TESTSRC=	${SRCTOP}/contrib/netbsd-tests/lib/librt
-
-TESTSDIR=	${TESTSBASE}/lib/librt
+# $FreeBSD: head/lib/librt/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 LIBADD=	rt
 

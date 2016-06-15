@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdsubs.c 283635 2015-05-27 22:00:05Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdsubs.c 298523 2016-04-23 21:18:45Z rmacklem $");
 
 #ifndef APPLEKEXT
 /*
@@ -1144,6 +1144,7 @@ static short nfsv4err_setclientid[] = {
 	NFSERR_INVAL,
 	NFSERR_RESOURCE,
 	NFSERR_SERVERFAULT,
+	NFSERR_WRONGSEC,
 	0,
 };
 
@@ -1814,7 +1815,7 @@ nfsrv_putreferralattr(struct nfsrv_descript *nd, nfsattrbit_t *retbitp,
 			break;
 		default:
 			printf("EEK! Bad V4 refattr bitpos=%d\n", bitpos);
-		};
+		}
 	    }
 	}
 	*retnump = txdr_unsigned(retnum);

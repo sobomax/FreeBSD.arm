@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/include/un-namespace.h 242960 2012-11-13 12:55:52Z kib $
+ * $FreeBSD: head/lib/libc/include/un-namespace.h 295039 2016-01-29 14:12:12Z kib $
  */
 
 #ifndef _UN_NAMESPACE_H_
@@ -189,6 +189,7 @@
 #undef		readv
 #undef		recvfrom
 #undef		recvmsg
+#undef		recvmmsg
 #undef		select
 #undef		sem_close
 #undef		sem_destroy
@@ -201,6 +202,7 @@
 #undef		sem_unlink
 #undef		sem_wait
 #undef		sendmsg
+#undef		sendmmsg
 #undef		sendto
 #undef		setsockopt
 #undef		sigaction

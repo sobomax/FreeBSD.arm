@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/etc/rc.d/pflog 281166 2015-04-06 19:23:45Z jpaetzel $
+# $FreeBSD: head/etc/rc.d/pflog 298514 2016-04-23 16:10:54Z lme $
 #
 
 # PROVIDE: pflog
@@ -10,6 +10,7 @@
 . /etc/rc.subr
 
 name="pflog"
+desc="Packet filter logging interface"
 rcvar="pflog_enable"
 command="/sbin/pflogd"
 pidfile="/var/run/pflogd.pid"

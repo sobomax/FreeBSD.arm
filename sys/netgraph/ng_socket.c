@@ -37,7 +37,7 @@
  *
  * Author: Julian Elischer <julian@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_socket.c 273377 2014-10-21 07:31:21Z hselasky $
+ * $FreeBSD: head/sys/netgraph/ng_socket.c 298431 2016-04-21 19:40:10Z pfg $
  * $Whistle: ng_socket.c,v 1.28 1999/11/01 09:24:52 julian Exp $
  */
 
@@ -360,7 +360,7 @@ ngc_bind(struct socket *so, struct sockaddr *nam, struct thread *td)
 {
 	struct ngpcb *const pcbp = sotongpcb(so);
 
-	if (pcbp == 0)
+	if (pcbp == NULL)
 		return (EINVAL);
 	return (ng_bind(nam, pcbp));
 }
@@ -474,7 +474,7 @@ ngd_connect(struct socket *so, struct sockaddr *nam, struct thread *td)
 {
 	struct ngpcb *const pcbp = sotongpcb(so);
 
-	if (pcbp == 0)
+	if (pcbp == NULL)
 		return (EINVAL);
 	return (ng_connect_data(nam, pcbp));
 }
@@ -1163,7 +1163,7 @@ struct domain ngdomain = {
 	.dom_family =		AF_NETGRAPH,
 	.dom_name =		"netgraph",
 	.dom_protosw =		ngsw,
-	.dom_protoswNPROTOSW =	&ngsw[sizeof(ngsw) / sizeof(ngsw[0])]
+	.dom_protoswNPROTOSW =	&ngsw[nitems(ngsw)]
 };
 
 /*

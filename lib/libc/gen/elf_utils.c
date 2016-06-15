@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/gen/elf_utils.c 217154 2011-01-08 17:13:43Z kib $
+ * $FreeBSD: head/lib/libc/gen/elf_utils.c 295407 2016-02-08 19:24:13Z kib $
  */
 
 #include <sys/types.h>
@@ -32,6 +32,10 @@
 #include <sys/sysctl.h>
 #include <link.h>
 #include <stddef.h>
+#include "libc_private.h"
+
+int __elf_phdr_match_addr(struct dl_phdr_info *, void *);
+void __pthread_map_stacks_exec(void);
 
 int
 __elf_phdr_match_addr(struct dl_phdr_info *phdr_info, void *addr)
@@ -51,9 +55,8 @@ __elf_phdr_match_addr(struct dl_phdr_info *phdr_info, void *addr)
 	return (i != phdr_info->dlpi_phnum);
 }
 
-#pragma weak __pthread_map_stacks_exec
 void
-__pthread_map_stacks_exec(void)
+__libc_map_stacks_exec(void)
 {
 	int mib[2];
 	struct rlimit rlim;
@@ -72,3 +75,10 @@ __pthread_map_stacks_exec(void)
 	    rlim.rlim_cur, _rtld_get_stack_prot());
 }
 
+#pragma weak __pthread_map_stacks_exec
+void
+__pthread_map_stacks_exec(void)
+{
+
+	((void (*)(void))__libc_interposing[INTERPOS_map_stacks_exec])();
+}

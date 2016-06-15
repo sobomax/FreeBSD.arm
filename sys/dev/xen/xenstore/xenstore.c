@@ -30,7 +30,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore.c 272318 2014-09-30 17:31:04Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -79,7 +79,7 @@ __FBSDID("$FreeBSD: head/sys/dev/xen/xenstore/xenstore.c 272318 2014-09-30 17:31
  *
  * The XenStore is ASCII string based, and has a structure and semantics
  * similar to a filesystem.  There are files and directories, the directories
- * able to contain files or other directories.  The depth of the hierachy
+ * able to contain files or other directories.  The depth of the hierarchy
  * is only limited by the XenStore's maximum path length.
  *
  * The communication channel between the XenStore service and other
@@ -1110,7 +1110,7 @@ xs_identify(driver_t *driver, device_t parent)
 }
 
 /**
- * Probe for the existance of the XenStore.
+ * Probe for the existence of the XenStore.
  *
  * \param dev
  */
@@ -1124,7 +1124,7 @@ xs_probe(device_t dev)
 	 * Unconditionally return success.
 	 */
 	device_set_desc(dev, "XenStore");
-	return (0);
+	return (BUS_PROBE_NOWILDCARD);
 }
 
 static void
@@ -1427,7 +1427,6 @@ xs_rm_tree(struct xs_transaction xbt, const char *base, const char *node)
 	char *cur_path;
 	const char **dir;
 	int error;
-	int empty;
 
 retry:
 	root_path_sbuf = xs_join(base, node);
@@ -1444,7 +1443,6 @@ retry:
 		xbt = local_xbt;
 	}
 
-	empty = 0;
 	while (1) {
 		u_int count;
 		u_int i;

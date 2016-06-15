@@ -1,4 +1,4 @@
-# $FreeBSD: head/kerberos5/usr.bin/kadmin/Makefile 275022 2014-11-25 09:57:42Z bapt $
+# $FreeBSD: head/kerberos5/usr.bin/kadmin/Makefile 288200 2015-09-24 23:23:58Z bdrewery $
 
 PROG=	kadmin
 MAN=	kadmin.8
@@ -31,14 +31,14 @@ DPADD=	${LDAPDPADD}
 LDADD=	${LDAPLDADD}
 LDFLAGS=${LDAPLDFLAGS}
 
+CLEANFILES=	kadmin-commands.h kadmin-commands.c
+
 .include <bsd.prog.mk>
 
 kadmin-commands.h: ${KRB5DIR}/kadmin/kadmin-commands.in
 	${SLC} ${.ALLSRC:M*.in}
 
-.for ext in o c
-kadmin-commands.${ext}: kadmin-commands.h
-.endfor
+kadmin-commands.c: kadmin-commands.h
 
 .PATH: ${KRB5DIR}/kadmin
 

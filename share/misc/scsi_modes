@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/share/misc/scsi_modes 273072 2014-10-14 08:30:02Z mav $
+# $FreeBSD: head/share/misc/scsi_modes 289915 2015-10-25 04:04:25Z ngie $
 #
 # The ordering is alphabetical by page name, as it appears in the SCSI spec.
 
@@ -106,7 +106,7 @@
 	{EBACKERR} t1
 	{LogErr} t1
 	{Reserved} *t4
-	{MRIE} b4
+	{MRIE} t4
 	{Interval Timer} i4
 	{Report Count} i4
 }

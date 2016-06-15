@@ -22,7 +22,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libc/sparc64/fpu/fpu_reg.h 91174 2002-02-23 21:37:18Z tmm $
+ * $FreeBSD: head/lib/libc/sparc64/fpu/fpu_reg.h 298830 2016-04-30 01:24:24Z pfg $
  */
 
 #ifndef _LIBC_SPARC64_FPU_FPU_REG_H_
@@ -51,7 +51,7 @@ typedef void (fp_ldst64_fn)(u_int64_t *);
 /*
  * These are the functions that are actually used in the fpu emulation code to
  * access the fp registers. They are usually not used more than once, so
- * cacheing needs not be done here.
+ * caching needs not be done here.
  */
 static __inline u_int32_t
 __fpu_getreg(int r)

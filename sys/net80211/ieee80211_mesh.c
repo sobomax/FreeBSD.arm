@@ -28,7 +28,7 @@
  */ 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_mesh.c 283555 2015-05-26 04:25:11Z adrian $");
+__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_mesh.c 300232 2016-05-19 21:08:33Z avos $");
 #endif
 
 /*
@@ -434,13 +434,12 @@ mesh_rt_flush_invalid(struct ieee80211vap *vap)
 	MESH_RT_UNLOCK(ms);
 }
 
-#define	N(a)	(sizeof(a) / sizeof(a[0]))
 int
 ieee80211_mesh_register_proto_path(const struct ieee80211_mesh_proto_path *mpp)
 {
 	int i, firstempty = -1;
 
-	for (i = 0; i < N(mesh_proto_paths); i++) {
+	for (i = 0; i < nitems(mesh_proto_paths); i++) {
 		if (strncmp(mpp->mpp_descr, mesh_proto_paths[i].mpp_descr,
 		    IEEE80211_MESH_PROTO_DSZ) == 0)
 			return EEXIST;
@@ -460,7 +459,7 @@ ieee80211_mesh_register_proto_metric(const struct
 {
 	int i, firstempty = -1;
 
-	for (i = 0; i < N(mesh_proto_metrics); i++) {
+	for (i = 0; i < nitems(mesh_proto_metrics); i++) {
 		if (strncmp(mpm->mpm_descr, mesh_proto_metrics[i].mpm_descr,
 		    IEEE80211_MESH_PROTO_DSZ) == 0)
 			return EEXIST;
@@ -480,7 +479,7 @@ mesh_select_proto_path(struct ieee80211vap *vap, const char *name)
 	struct ieee80211_mesh_state *ms = vap->iv_mesh;
 	int i;
 
-	for (i = 0; i < N(mesh_proto_paths); i++) {
+	for (i = 0; i < nitems(mesh_proto_paths); i++) {
 		if (strcasecmp(mesh_proto_paths[i].mpp_descr, name) == 0) {
 			ms->ms_ppath = &mesh_proto_paths[i];
 			return 0;
@@ -495,7 +494,7 @@ mesh_select_proto_metric(struct ieee80211vap *vap, const char *name)
 	struct ieee80211_mesh_state *ms = vap->iv_mesh;
 	int i;
 
-	for (i = 0; i < N(mesh_proto_metrics); i++) {
+	for (i = 0; i < nitems(mesh_proto_metrics); i++) {
 		if (strcasecmp(mesh_proto_metrics[i].mpm_descr, name) == 0) {
 			ms->ms_pmetric = &mesh_proto_metrics[i];
 			return 0;
@@ -503,7 +502,6 @@ mesh_select_proto_metric(struct ieee80211vap *vap, const char *name)
 	}
 	return ENOENT;
 }
-#undef	N
 
 static void
 mesh_gatemode_setup(struct ieee80211vap *vap)
@@ -805,16 +803,15 @@ mesh_newstate(struct ieee80211vap *vap, enum ieee80211_state nstate, int arg)
 			 * Update bss node channel to reflect where
 			 * we landed after CSA.
 			 */
-			ieee80211_node_set_chan(vap->iv_bss,
+			ieee80211_node_set_chan(ni,
 			    ieee80211_ht_adjust_channel(ic, ic->ic_curchan,
-				ieee80211_htchanflags(vap->iv_bss->ni_chan)));
+				ieee80211_htchanflags(ni->ni_chan)));
 			/* XXX bypass debug msgs */
 			break;
 		case IEEE80211_S_SCAN:
 		case IEEE80211_S_RUN:
 #ifdef IEEE80211_DEBUG
 			if (ieee80211_msg_debug(vap)) {
-				struct ieee80211_node *ni = vap->iv_bss;
 				ieee80211_note(vap,
 				    "synchronized with %s meshid ",
 				    ether_sprintf(ni->ni_meshid));
@@ -829,7 +826,7 @@ mesh_newstate(struct ieee80211vap *vap, enum ieee80211_state nstate, int arg)
 		default:
 			break;
 		}
-		ieee80211_node_authorize(vap->iv_bss);
+		ieee80211_node_authorize(ni);
 		callout_reset(&ms->ms_cleantimer, ms->ms_ppath->mpp_inact,
                     mesh_rt_cleanup_cb, vap);
 		mesh_gatemode_setup(vap);
@@ -1157,7 +1154,7 @@ mesh_forward(struct ieee80211vap *vap, struct mbuf *m,
 	IEEE80211_TX_UNLOCK_ASSERT(ic);
 
 	/*
-	 * mesh ttl of 1 means we are the last one receving it,
+	 * mesh ttl of 1 means we are the last one receiving it,
 	 * according to amendment we decrement and then check if
 	 * 0, if so we dont forward.
 	 */
@@ -1241,12 +1238,8 @@ mesh_forward(struct ieee80211vap *vap, struct mbuf *m,
 	IEEE80211_TX_LOCK(ic);
 	err = ieee80211_parent_xmitpkt(ic, mcopy);
 	IEEE80211_TX_UNLOCK(ic);
-	if (err != 0) {
-		/* NB: IFQ_HANDOFF reclaims mbuf */
-		ieee80211_free_node(ni);
-	} else {
+	if (!err)
 		if_inc_counter(ifp, IFCOUNTER_OPACKETS, 1);
-	}
 }
 
 static struct mbuf *
@@ -1516,10 +1509,11 @@ mesh_recv_group_data(struct ieee80211vap *vap, struct mbuf *m,
 			 * will sent it on another port member.
 			 */
 			if (ms->ms_flags & IEEE80211_MESHFLAGS_GATE &&
-			    ms->ms_flags & IEEE80211_MESHFLAGS_FWD)
+			    ms->ms_flags & IEEE80211_MESHFLAGS_FWD) {
 				IEEE80211_NOTE_MAC(vap, IEEE80211_MSG_MESH,
 				    MC01(mc)->mc_addr4, "%s",
 				    "forward from MBSS to the DS");
+			}
 		}
 	}
 	return (0); /* process locally */
@@ -1532,7 +1526,6 @@ mesh_input(struct ieee80211_node *ni, struct mbuf *m,
 {
 #define	HAS_SEQ(type)	((type & 0x4) == 0)
 #define	MC01(mc)	((const struct ieee80211_meshcntl_ae01 *)mc)
-#define	MC10(mc)	((const struct ieee80211_meshcntl_ae10 *)mc)
 	struct ieee80211vap *vap = ni->ni_vap;
 	struct ieee80211com *ic = ni->ni_ic;
 	struct ifnet *ifp = vap->iv_ifp;
@@ -1543,7 +1536,6 @@ mesh_input(struct ieee80211_node *ni, struct mbuf *m,
 	uint32_t seq;
 	const uint8_t *addr;
 	uint8_t qos[2];
-	ieee80211_seq rxseq;
 
 	KASSERT(ni != NULL, ("null node"));
 	ni->ni_inact = ni->ni_inact_reload;
@@ -1588,24 +1580,8 @@ mesh_input(struct ieee80211_node *ni, struct mbuf *m,
 			if (IEEE80211_QOS_HAS_SEQ(wh) &&
 			    TID_TO_WME_AC(tid) >= WME_AC_VI)
 				ic->ic_wme.wme_hipri_traffic++;
-			rxseq = le16toh(*(uint16_t *)wh->i_seq);
-			if (! ieee80211_check_rxseq(ni, wh)) {
-				/* duplicate, discard */
-				IEEE80211_DISCARD_MAC(vap, IEEE80211_MSG_INPUT,
-				    wh->i_addr1, "duplicate",
-				    "seqno <%u,%u> fragno <%u,%u> tid %u",
-				    rxseq >> IEEE80211_SEQ_SEQ_SHIFT,
-				    ni->ni_rxseqs[tid] >>
-				    IEEE80211_SEQ_SEQ_SHIFT,
-				    rxseq & IEEE80211_SEQ_FRAG_MASK,
-				    ni->ni_rxseqs[tid] &
-				    IEEE80211_SEQ_FRAG_MASK,
-				    tid);
-				vap->iv_stats.is_rx_dup++;
-				IEEE80211_NODE_STAT(ni, rx_dup);
+			if (! ieee80211_check_rxseq(ni, wh, wh->i_addr1))
 				goto out;
-			}
-			ni->ni_rxseqs[tid] = rxseq;
 		}
 	}
 #ifdef IEEE80211_DEBUG
@@ -1733,7 +1709,7 @@ mesh_input(struct ieee80211_node *ni, struct mbuf *m,
 		}
 		/* XXX: are we sure there is no reallocating after m_pullup? */
 
-		seq = LE_READ_4(mc->mc_seq);
+		seq = le32dec(mc->mc_seq);
 		if (IEEE80211_IS_MULTICAST(wh->i_addr1))
 			addr = wh->i_addr3;
 		else if (ae == IEEE80211_MESH_AE_01)
@@ -1816,8 +1792,7 @@ mesh_input(struct ieee80211_node *ni, struct mbuf *m,
 		    (vap->iv_ic->ic_flags & IEEE80211_F_SCAN)) ||
 		    ieee80211_msg_dumppkts(vap)) {
 			if_printf(ifp, "received %s from %s rssi %d\n",
-			    ieee80211_mgt_subtype_name[subtype >>
-			    IEEE80211_FC0_SUBTYPE_SHIFT],
+			    ieee80211_mgt_subtype_name(subtype),
 			    ether_sprintf(wh->i_addr2), rssi);
 		}
 #endif
@@ -1850,7 +1825,6 @@ out:
 	return type;
 #undef	HAS_SEQ
 #undef	MC01
-#undef	MC10
 }
 
 static void
@@ -2005,7 +1979,6 @@ mesh_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0, int subtype,
 	case IEEE80211_FC0_SUBTYPE_PROBE_REQ:
 	{
 		uint8_t *ssid, *meshid, *rates, *xrates;
-		uint8_t *sfrm;
 
 		if (vap->iv_state != IEEE80211_S_RUN) {
 			IEEE80211_DISCARD(vap, IEEE80211_MSG_INPUT,
@@ -2029,7 +2002,6 @@ mesh_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0, int subtype,
 		 *	[tlv] mesh id
 		 */
 		ssid = meshid = rates = xrates = NULL;
-		sfrm = frm;
 		while (efrm - frm > 1) {
 			IEEE80211_VERIFY_LENGTH(efrm - frm, frm[1] + 2, return);
 			switch (*frm) {
@@ -2099,6 +2071,7 @@ mesh_recv_mgmt(struct ieee80211_node *ni, struct mbuf *m0, int subtype,
 	case IEEE80211_FC0_SUBTYPE_ASSOC_RESP:
 	case IEEE80211_FC0_SUBTYPE_REASSOC_REQ:
 	case IEEE80211_FC0_SUBTYPE_REASSOC_RESP:
+	case IEEE80211_FC0_SUBTYPE_TIMING_ADV:
 	case IEEE80211_FC0_SUBTYPE_ATIM:
 	case IEEE80211_FC0_SUBTYPE_DISASSOC:
 	case IEEE80211_FC0_SUBTYPE_AUTH:
@@ -2139,10 +2112,10 @@ mesh_parse_meshpeering_action(struct ieee80211_node *ni,
 	struct ieee80211vap *vap = ni->ni_vap;
 	const struct ieee80211_meshpeer_ie *mpie;
 	uint16_t args[3];
-	const uint8_t *meshid, *meshconf, *meshpeer;
+	const uint8_t *meshid, *meshconf;
 	uint8_t sendclose = 0; /* 1 = MPM frame rejected, close will be sent */
 
-	meshid = meshconf = meshpeer = NULL;
+	meshid = meshconf = NULL;
 	while (efrm - frm > 1) {
 		IEEE80211_VERIFY_LENGTH(efrm - frm, frm[1] + 2, return NULL);
 		switch (*frm) {
@@ -2153,16 +2126,15 @@ mesh_parse_meshpeering_action(struct ieee80211_node *ni,
 			meshconf = frm;
 			break;
 		case IEEE80211_ELEMID_MESHPEER:
-			meshpeer = frm;
 			mpie = (const struct ieee80211_meshpeer_ie *) frm;
 			memset(mp, 0, sizeof(*mp));
 			mp->peer_len = mpie->peer_len;
-			mp->peer_proto = LE_READ_2(&mpie->peer_proto);
-			mp->peer_llinkid = LE_READ_2(&mpie->peer_llinkid);
+			mp->peer_proto = le16dec(&mpie->peer_proto);
+			mp->peer_llinkid = le16dec(&mpie->peer_llinkid);
 			switch (subtype) {
 			case IEEE80211_ACTION_MESHPEERING_CONFIRM:
 				mp->peer_linkid =
-				    LE_READ_2(&mpie->peer_linkid);
+				    le16dec(&mpie->peer_linkid);
 				break;
 			case IEEE80211_ACTION_MESHPEERING_CLOSE:
 				/* NB: peer link ID is optional */
@@ -2170,12 +2142,12 @@ mesh_parse_meshpeering_action(struct ieee80211_node *ni,
 				    (IEEE80211_MPM_BASE_SZ + 2)) {
 					mp->peer_linkid = 0;
 					mp->peer_rcode =
-					    LE_READ_2(&mpie->peer_linkid);
+					    le16dec(&mpie->peer_linkid);
 				} else {
 					mp->peer_linkid =
-					    LE_READ_2(&mpie->peer_linkid);
+					    le16dec(&mpie->peer_linkid);
 					mp->peer_rcode =
-					    LE_READ_2(&mpie->peer_rcode);
+					    le16dec(&mpie->peer_rcode);
 				}
 				break;
 			}
@@ -2572,8 +2544,8 @@ mesh_parse_meshgate_action(struct ieee80211_node *ni,
 			ie->gann_hopcount = gannie->gann_hopcount;
 			ie->gann_ttl = gannie->gann_ttl;
 			IEEE80211_ADDR_COPY(ie->gann_addr, gannie->gann_addr);
-			ie->gann_seq = LE_READ_4(&gannie->gann_seq);
-			ie->gann_interval = LE_READ_2(&gannie->gann_interval);
+			ie->gann_seq = le32dec(&gannie->gann_seq);
+			ie->gann_interval = le16dec(&gannie->gann_interval);
 			break;
 		}
 		frm += frm[1] + 2;
@@ -2683,7 +2655,6 @@ mesh_send_action(struct ieee80211_node *ni,
 	struct ieee80211vap *vap = ni->ni_vap;
 	struct ieee80211com *ic = ni->ni_ic;
 	struct ieee80211_bpf_params params;
-	struct ieee80211_frame *wh;
 	int ret;
 
 	KASSERT(ni != NULL, ("null node"));
@@ -2704,7 +2675,6 @@ mesh_send_action(struct ieee80211_node *ni,
 	}
 
 	IEEE80211_TX_LOCK(ic);
-	wh = mtod(m, struct ieee80211_frame *);
 	ieee80211_send_setup(ni, m,
 	     IEEE80211_FC0_TYPE_MGT | IEEE80211_FC0_SUBTYPE_ACTION,
 	     IEEE80211_NONQOS_TID, sa, da, sa);
@@ -2878,8 +2848,8 @@ mesh_send_action_meshpeering_close(struct ieee80211_node *ni,
 	uint8_t *frm;
 
 	IEEE80211_NOTE(vap, IEEE80211_MSG_ACTION | IEEE80211_MSG_MESH, ni,
-	    "send PEER CLOSE action: localid 0x%x, peerid 0x%x reason %d",
-	    args[0], args[1], args[2]);
+	    "send PEER CLOSE action: localid 0x%x, peerid 0x%x reason %d (%s)",
+	    args[0], args[1], args[2], ieee80211_reason_to_string(args[2]));
 
 	IEEE80211_DPRINTF(vap, IEEE80211_MSG_NODE,
 	    "ieee80211_ref_node (%s:%u) %p<%s> refcnt %d\n", __func__, __LINE__,

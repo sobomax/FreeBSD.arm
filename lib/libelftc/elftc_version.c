@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libelftc/elftc_version.c 283616 2015-05-27 14:28:19Z emaste $ */
+/* $FreeBSD: head/lib/libelftc/elftc_version.c 300698 2016-05-25 20:56:30Z emaste $ */
 
 #include <sys/types.h>
 #include <libelftc.h>
@@ -6,5 +6,5 @@
 const char *
 elftc_version(void)
 {
-	return "elftoolchain r3223M";
+	return "elftoolchain r3477M";
 }

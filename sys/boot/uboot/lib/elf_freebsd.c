@@ -26,11 +26,15 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/elf_freebsd.c 283035 2015-05-17 19:59:05Z ian $");
+__FBSDID("$FreeBSD: head/sys/boot/uboot/lib/elf_freebsd.c 296182 2016-02-29 07:27:49Z sgalabov $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
 
+#ifdef __mips__
+#include <sys/proc.h>
+#include <machine/frame.h>
+#endif
 #include <machine/md_var.h>
 #include <machine/metadata.h>
 #include <machine/elf.h>
@@ -81,7 +85,7 @@ __elfN(uboot_exec)(struct preloaded_file *fp)
 		return (error);
 
 	entry = (void *)e->e_entry;
-	printf("Kernel entry at 0x%x...\n", (unsigned)entry);
+	printf("Kernel entry at 0x%p...\n", entry);
 
 	dev_cleanup();
 	printf("Kernel args: %s\n", fp->f_args);

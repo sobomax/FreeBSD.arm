@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/agp/agp_amd64.c 273963 2014-11-02 11:26:37Z tijl $");
+__FBSDID("$FreeBSD: head/sys/dev/agp/agp_amd64.c 298306 2016-04-19 23:31:35Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -274,8 +274,7 @@ static uint32_t agp_amd64_table[] = {
 	0x80000000,	/* 2048 MB */
 };
 
-#define AGP_AMD64_TABLE_SIZE \
-	(sizeof(agp_amd64_table) / sizeof(agp_amd64_table[0]))
+#define AGP_AMD64_TABLE_SIZE nitems(agp_amd64_table)
 
 static uint32_t
 agp_amd64_get_aperture(device_t dev)

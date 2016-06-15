@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/boot/fdt/fdt_platform.h 273934 2014-11-01 17:12:44Z andrew $
+ * $FreeBSD: head/sys/boot/fdt/fdt_platform.h 298821 2016-04-29 22:42:59Z gonzo $
  */
 
 #ifndef FDT_PLATFORM_H
@@ -43,8 +43,10 @@ void fdt_fixup_cpubusfreqs(unsigned long, unsigned long);
 void fdt_fixup_ethernet(const char *, char *, int);
 void fdt_fixup_memory(struct fdt_mem_region *, size_t);
 void fdt_fixup_stdout(const char *);
+void fdt_apply_overlays(void);
 int fdt_load_dtb_addr(struct fdt_header *);
 int fdt_load_dtb_file(const char *);
+int fdt_load_dtb_overlays(const char *);
 int fdt_setup_fdtp(void);
 
 /* The platform library needs to implement these functions */

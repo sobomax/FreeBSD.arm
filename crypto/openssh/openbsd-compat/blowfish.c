@@ -1,5 +1,4 @@
 /* $OpenBSD: blowfish.c,v 1.18 2004/11/02 17:23:26 hshoexer Exp $ */
-/* $FreeBSD: head/crypto/openssh/openbsd-compat/blowfish.c 263691 2014-03-24 19:15:13Z des $ */
 /*
  * Blowfish block cipher for OpenBSD
  * Copyright 1997 Niels Provos <provos@physnet.uni-hamburg.de>
@@ -41,7 +40,6 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/openbsd-compat/blowfish.c 263691 2014-03-24 19:15:13Z des $");
 
 #if !defined(HAVE_BCRYPT_PBKDF) && (!defined(HAVE_BLOWFISH_INITSTATE) || \
     !defined(HAVE_BLOWFISH_EXPAND0STATE) || !defined(HAVE_BLF_ENC))

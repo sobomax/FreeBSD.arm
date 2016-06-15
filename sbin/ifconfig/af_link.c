@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: head/sbin/ifconfig/af_link.c 210936 2010-08-06 15:09:21Z jhb $";
+  "$FreeBSD: head/sbin/ifconfig/af_link.c 301185 2016-06-02 03:16:02Z allanjude $";
 #endif /* not lint */
 
 #include <sys/types.h>
@@ -51,20 +51,29 @@ static const char rcsid[] =
 
 static struct ifreq link_ridreq;
 
+extern char *f_ether;
+
 static void
 link_status(int s __unused, const struct ifaddrs *ifa)
 {
 	/* XXX no const 'cuz LLADDR is defined wrong */
 	struct sockaddr_dl *sdl = (struct sockaddr_dl *) ifa->ifa_addr;
+	char *ether_format, *format_char;
 
 	if (sdl != NULL && sdl->sdl_alen > 0) {
 		if ((sdl->sdl_type == IFT_ETHER ||
 		    sdl->sdl_type == IFT_L2VLAN ||
 		    sdl->sdl_type == IFT_BRIDGE) &&
-		    sdl->sdl_alen == ETHER_ADDR_LEN)
-			printf("\tether %s\n",
-			    ether_ntoa((struct ether_addr *)LLADDR(sdl)));
-		else {
+		    sdl->sdl_alen == ETHER_ADDR_LEN) {
+			ether_format = ether_ntoa((struct ether_addr *)LLADDR(sdl));
+			if (f_ether != NULL && strcmp(f_ether, "dash") == 0) {
+				for (format_char = strchr(ether_format, ':'); 
+				    format_char != NULL; 
+				    format_char = strchr(ether_format, ':'))
+					*format_char = '-';
+			}
+			printf("\tether %s\n", ether_format);
+		} else {
 			int n = sdl->sdl_nlen > 0 ? sdl->sdl_nlen + 1 : 0;
 
 			printf("\tlladdr %s\n", link_ntoa(sdl) + n);

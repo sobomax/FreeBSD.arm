@@ -1,6 +1,5 @@
-# $FreeBSD: head/sys/modules/mlx4/Makefile 278913 2015-02-17 19:27:14Z glebius $
+# $FreeBSD: head/sys/modules/mlx4/Makefile 290135 2015-10-29 08:28:39Z hselasky $
 .PATH:  ${.CURDIR}/../../ofed/drivers/net/mlx4
-.PATH:  ${.CURDIR}/../../ofed/include/linux
 
 KMOD=	mlx4
 SRCS=	device_if.h bus_if.h vnode_if.h pci_if.h \
@@ -11,7 +10,8 @@ SRCS=	device_if.h bus_if.h vnode_if.h pci_if.h \
 	srq.c resource_tracker.c sys_tune.c
 
 CFLAGS+= -I${.CURDIR}/../../ofed/drivers/net/mlx4
-CFLAGS+= -I${.CURDIR}/../../ofed/include/
+CFLAGS+= -I${.CURDIR}/../../ofed/include
+CFLAGS+= -I${.CURDIR}/../../compat/linuxkpi/common/include
 
 .include <bsd.kmod.mk>
 

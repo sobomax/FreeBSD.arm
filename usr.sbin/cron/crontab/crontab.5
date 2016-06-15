@@ -15,9 +15,9 @@
 .\" * Paul Vixie          <paul@vix.com>          uunet!decwrl!vixie!paul
 .\" */
 .\"
-.\" $FreeBSD: head/usr.sbin/cron/crontab/crontab.5 267668 2014-06-20 09:57:27Z bapt $
+.\" $FreeBSD: head/usr.sbin/cron/crontab/crontab.5 293204 2016-01-05 16:21:20Z jilles $
 .\"
-.Dd April 28, 2012
+.Dd January 5, 2016
 .Dt CRONTAB 5
 .Os
 .Sh NAME
@@ -74,7 +74,7 @@ is set to
 .Pa /bin/sh ,
 .Ev PATH
 is set to
-.Pa /usr/bin:/bin ,
+.Pa /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin ,
 and
 .Ev LOGNAME
 and

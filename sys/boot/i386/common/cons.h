@@ -12,7 +12,7 @@
  * warranties of merchantability and fitness for a particular
  * purpose.
  *
- * $FreeBSD: head/sys/boot/i386/common/cons.h 213136 2010-09-24 19:49:12Z pjd $
+ * $FreeBSD: head/sys/boot/i386/common/cons.h 299655 2016-05-13 10:59:46Z ngie $
  */
 
 #ifndef _CONS_H_
@@ -28,6 +28,7 @@ void xputc(int c);
 void putchar(int c);
 int getc(int fn);
 int xgetc(int fn);
+int getchar(void);
 int keyhit(unsigned int secs);
 void getstr(char *cmdstr, size_t cmdstrsize);
 

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_cpu.c 267992 2014-06-28 03:56:17Z hselasky $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_cpu.c 299746 2016-05-14 18:22:52Z jhb $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -259,6 +259,9 @@ cf_set_method(device_t dev, const struct cf_level *level, int priority)
 	CF_MTX_LOCK(&sc->lock);
 
 #ifdef SMP
+#ifdef EARLY_AP_STARTUP
+	MPASS(mp_ncpus == 1 || smp_started);
+#else
 	/*
 	 * If still booting and secondary CPUs not started yet, don't allow
 	 * changing the frequency until they're online.  This is because we
@@ -271,6 +274,7 @@ cf_set_method(device_t dev, const struct cf_level *level, int priority)
 		error = ENXIO;
 		goto out;
 	}
+#endif
 #endif /* SMP */
 
 	/*

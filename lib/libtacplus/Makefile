@@ -22,8 +22,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-#	$FreeBSD: head/lib/libtacplus/Makefile 275024 2014-11-25 11:07:26Z bapt $
+#	$FreeBSD: head/lib/libtacplus/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
+PACKAGE=lib${LIB}
 LIB=		tacplus
 SRCS=		taclib.c
 INCS=		taclib.h

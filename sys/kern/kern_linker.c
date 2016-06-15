@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_linker.c 275469 2014-12-03 22:14:13Z imp $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_linker.c 301751 2016-06-09 18:27:41Z cem $");
 
 #include "opt_ddb.h"
 #include "opt_kld.h"
@@ -54,6 +54,10 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_linker.c 275469 2014-12-03 22:14:13Z imp 
 #include <sys/syscallsubr.h>
 #include <sys/sysctl.h>
 
+#ifdef DDB
+#include <ddb/ddb.h>
+#endif
+
 #include <net/vnet.h>
 
 #include <security/mac/mac_framework.h>
@@ -69,6 +73,12 @@ int kld_debug = 0;
 SYSCTL_INT(_debug, OID_AUTO, kld_debug, CTLFLAG_RWTUN,
     &kld_debug, 0, "Set various levels of KLD debug");
 #endif
+
+/* These variables are used by kernel debuggers to enumerate loaded files. */
+const int kld_off_address = offsetof(struct linker_file, address);
+const int kld_off_filename = offsetof(struct linker_file, filename);
+const int kld_off_pathname = offsetof(struct linker_file, pathname);
+const int kld_off_next = offsetof(struct linker_file, link.tqe_next);
 
 /*
  * static char *linker_search_path(const char *name, struct mod_depend
@@ -292,10 +302,10 @@ linker_file_register_sysctls(linker_file_t lf)
 		return;
 
 	sx_xunlock(&kld_sx);
-	sysctl_xlock();
+	sysctl_wlock();
 	for (oidp = start; oidp < stop; oidp++)
 		sysctl_register_oid(*oidp);
-	sysctl_xunlock();
+	sysctl_wunlock();
 	sx_xlock(&kld_sx);
 }
 
@@ -313,10 +323,10 @@ linker_file_unregister_sysctls(linker_file_t lf)
 		return;
 
 	sx_xunlock(&kld_sx);
-	sysctl_xlock();
+	sysctl_wlock();
 	for (oidp = start; oidp < stop; oidp++)
 		sysctl_unregister_oid(*oidp);
-	sysctl_xunlock();
+	sysctl_wunlock();
 	sx_xlock(&kld_sx);
 }
 
@@ -943,7 +953,7 @@ linker_debug_search_symbol_name(caddr_t value, char *buf, u_int buflen,
  *
  * Note that we do not obey list locking protocols here.  We really don't need
  * DDB to hang because somebody's got the lock held.  We'll take the chance
- * that the files list is inconsistant instead.
+ * that the files list is inconsistent instead.
  */
 #ifdef DDB
 int
@@ -1250,6 +1260,23 @@ kern_kldstat(struct thread *td, int fileid, struct kld_file_stat *stat)
 	return (0);
 }
 
+#ifdef DDB
+DB_COMMAND(kldstat, db_kldstat)
+{
+	linker_file_t lf;
+
+#define	POINTER_WIDTH	((int)(sizeof(void *) * 2 + 2))
+	db_printf("Id Refs Address%*c Size     Name\n", POINTER_WIDTH - 7, ' ');
+#undef	POINTER_WIDTH
+	TAILQ_FOREACH(lf, &linker_files, link) {
+		if (db_pager_quit)
+			return;
+		db_printf("%2d %4d %p %-8zx %s\n", lf->id, lf->refs,
+		    lf->address, lf->size, lf->filename);
+	}
+}
+#endif /* DDB */
+
 int
 sys_kldfirstmod(struct thread *td, struct kldfirstmod_args *uap)
 {
@@ -1403,7 +1430,7 @@ linker_addmodules(linker_file_t lf, struct mod_metadata **start,
 		if (mp->md_type != MDT_VERSION)
 			continue;
 		modname = mp->md_cval;
-		ver = ((struct mod_version *)mp->md_data)->mv_version;
+		ver = ((const struct mod_version *)mp->md_data)->mv_version;
 		if (modlist_lookup(modname, ver) != NULL) {
 			printf("module %s already present!\n", modname);
 			/* XXX what can we do? this is a build error. :-( */
@@ -1524,7 +1551,7 @@ restart:
 					if (mp->md_type != MDT_VERSION)
 						continue;
 					modname = mp->md_cval;
-					nver = ((struct mod_version *)
+					nver = ((const struct mod_version *)
 					    mp->md_data)->mv_version;
 					if (modlist_lookup(modname,
 					    nver) != NULL) {
@@ -1707,7 +1734,7 @@ linker_lookup_file(const char *path, int pathlen, const char *name,
 }
 
 #define	INT_ALIGN(base, ptr)	ptr =					\
-	(base) + (((ptr) - (base) + sizeof(int) - 1) & ~(sizeof(int) - 1))
+	(base) + roundup2((ptr) - (base), sizeof(int))
 
 /*
  * Lookup KLD which contains requested module in the "linker.hints" file. If
@@ -1757,8 +1784,6 @@ linker_hints_lookup(const char *path, int pathlen, const char *modname,
 		goto bad;
 	}
 	hints = malloc(vattr.va_size, M_TEMP, M_WAITOK);
-	if (hints == NULL)
-		goto bad;
 	error = vn_rdwr(UIO_READ, nd.ni_vp, (caddr_t)hints, vattr.va_size, 0,
 	    UIO_SYSSPACE, IO_NODELOCKED, cred, NOCRED, &reclen, td);
 	if (error)
@@ -2033,7 +2058,7 @@ linker_load_dependencies(linker_file_t lf)
 	int ver, error = 0, count;
 
 	/*
-	 * All files are dependant on /kernel.
+	 * All files are dependent on /kernel.
 	 */
 	sx_assert(&kld_sx, SA_XLOCKED);
 	if (linker_kernel_file) {
@@ -2050,7 +2075,7 @@ linker_load_dependencies(linker_file_t lf)
 		if (mp->md_type != MDT_VERSION)
 			continue;
 		modname = mp->md_cval;
-		ver = ((struct mod_version *)mp->md_data)->mv_version;
+		ver = ((const struct mod_version *)mp->md_data)->mv_version;
 		mod = modlist_lookup(modname, ver);
 		if (mod != NULL) {
 			printf("interface %s.%d already present in the KLD"

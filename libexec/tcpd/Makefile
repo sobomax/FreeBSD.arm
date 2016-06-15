@@ -1,4 +1,4 @@
-# $FreeBSD: head/libexec/tcpd/Makefile 275077 2014-11-25 21:18:18Z bapt $
+# $FreeBSD: head/libexec/tcpd/Makefile 291348 2015-11-26 01:14:40Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -7,7 +7,7 @@
 PROG=	tcpd
 MAN=	tcpd.8
 CSTD?=	c89
-CFLAGS+=-DREAL_DAEMON_DIR=\"/usr/libexec\" \
+CFLAGS+=-DREAL_DAEMON_DIR=\"${LIBEXECDIR}\" \
 	-DSEVERITY=LOG_INFO -DRFC931_TIMEOUT=10 \
 	-DHOSTS_DENY=\"/etc/hosts.deny\" -DHOSTS_ALLOW=\"/etc/hosts.allow\" \
 	-DFACILITY=LOG_DAEMON

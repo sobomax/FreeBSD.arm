@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/tests/sys/mqueue/mqueue_test.sh 282133 2015-04-28 10:29:42Z ngie $
+# $FreeBSD: head/tests/sys/mqueue/mqueue_test.sh 291575 2015-12-01 07:52:41Z ngie $
 #
 
 mqtest1_head()
@@ -75,7 +75,7 @@ atf_init_test_cases()
 {
 	atf_add_test_case mqtest1
 	atf_add_test_case mqtest2
-	atf_add_test_case mqtest3
-	atf_add_test_case mqtest4
+	#atf_add_test_case mqtest3
+	#atf_add_test_case mqtest4
 	atf_add_test_case mqtest5
 }

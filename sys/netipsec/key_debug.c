@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/key_debug.c 276188 2014-12-24 18:34:56Z ae $	*/
+/*	$FreeBSD: head/sys/netipsec/key_debug.c 298536 2016-04-24 09:05:29Z ae $	*/
 /*	$KAME: key_debug.c,v 1.26 2001/06/27 10:46:50 sakane Exp $	*/
 
 /*-
@@ -36,10 +36,10 @@
 #include "opt_ipsec.h"
 #endif
 
-#include <sys/types.h>
 #include <sys/param.h>
 #ifdef _KERNEL
 #include <sys/systm.h>
+#include <sys/malloc.h>
 #include <sys/mbuf.h>
 #include <sys/queue.h>
 #endif
@@ -506,6 +506,8 @@ kdebug_secpolicy(struct secpolicy *sp)
 void
 kdebug_secpolicyindex(struct secpolicyindex *spidx)
 {
+	char buf[INET6_ADDRSTRLEN];
+
 	/* sanity check */
 	if (spidx == NULL)
 		panic("%s: NULL pointer was passed.\n", __func__);
@@ -513,19 +515,15 @@ kdebug_secpolicyindex(struct secpolicyindex *spidx)
 	printf("secpolicyindex{ dir=%u prefs=%u prefd=%u ul_proto=%u\n",
 		spidx->dir, spidx->prefs, spidx->prefd, spidx->ul_proto);
 
-	ipsec_hexdump((caddr_t)&spidx->src,
-		((struct sockaddr *)&spidx->src)->sa_len);
-	printf("\n");
-	ipsec_hexdump((caddr_t)&spidx->dst,
-		((struct sockaddr *)&spidx->dst)->sa_len);
-	printf("}\n");
-
-	return;
+	printf("%s -> ", ipsec_address(&spidx->src, buf, sizeof(buf)));
+	printf("%s }\n", ipsec_address(&spidx->dst, buf, sizeof(buf)));
 }
 
 void
 kdebug_secasindex(struct secasindex *saidx)
 {
+	char buf[INET6_ADDRSTRLEN];
+
 	/* sanity check */
 	if (saidx == NULL)
 		panic("%s: NULL pointer was passed.\n", __func__);
@@ -533,14 +531,8 @@ kdebug_secasindex(struct secasindex *saidx)
 	printf("secasindex{ mode=%u proto=%u\n",
 		saidx->mode, saidx->proto);
 
-	ipsec_hexdump((caddr_t)&saidx->src,
-		((struct sockaddr *)&saidx->src)->sa_len);
-	printf("\n");
-	ipsec_hexdump((caddr_t)&saidx->dst,
-		((struct sockaddr *)&saidx->dst)->sa_len);
-	printf("\n");
-
-	return;
+	printf("%s -> ", ipsec_address(&saidx->src, buf, sizeof(buf)));
+	printf("%s }\n", ipsec_address(&saidx->dst, buf, sizeof(buf)));
 }
 
 static void
@@ -577,11 +569,6 @@ kdebug_secasv(struct secasvar *sav)
 		kdebug_sadb_key((struct sadb_ext *)sav->key_auth);
 	if (sav->key_enc != NULL)
 		kdebug_sadb_key((struct sadb_ext *)sav->key_enc);
-	if (sav->iv != NULL) {
-		printf("  iv=");
-		ipsec_hexdump(sav->iv, sav->ivlen ? sav->ivlen : 8);
-		printf("\n");
-	}
 
 	if (sav->replay != NULL)
 		kdebug_secreplay(sav->replay);
@@ -628,7 +615,7 @@ kdebug_secreplay(struct secreplay *rpl)
 }
 
 void
-kdebug_mbufhdr(struct mbuf *m)
+kdebug_mbufhdr(const struct mbuf *m)
 {
 	/* sanity check */
 	if (m == NULL)
@@ -655,9 +642,9 @@ kdebug_mbufhdr(struct mbuf *m)
 }
 
 void
-kdebug_mbuf(struct mbuf *m0)
+kdebug_mbuf(const struct mbuf *m0)
 {
-	struct mbuf *m = m0;
+	const struct mbuf *m = m0;
 	int i, j;
 
 	for (j = 0; m; m = m->m_next) {
@@ -668,7 +655,7 @@ kdebug_mbuf(struct mbuf *m0)
 				printf("\n");
 			if (i % 4 == 0)
 				printf(" ");
-			printf("%02x", mtod(m, u_char *)[i]);
+			printf("%02x", mtod(m, const u_char *)[i]);
 			j++;
 		}
 		printf("\n");

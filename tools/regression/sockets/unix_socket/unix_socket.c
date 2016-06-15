@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tools/regression/sockets/unix_socket/unix_socket.c 281402 2015-04-11 03:56:23Z ngie $
+ * $FreeBSD: head/tools/regression/sockets/unix_socket/unix_socket.c 294125 2016-01-16 02:02:50Z ngie $
  */
 
 /*
@@ -59,7 +59,7 @@ main(void)
 		close(sock);
 		errx(-1, "socket(PF_LOCAL, SOCK_RAW, 0) returned %d", sock);
 	}
-	if (errno != EPROTONOSUPPORT)
+	if (errno != EPROTOTYPE)
 		err(-1, "socket(PF_LOCAL, SOCK_RAW, 0)");
 
 	if (socketpair(PF_LOCAL, SOCK_STREAM, 0, socks) < 0)

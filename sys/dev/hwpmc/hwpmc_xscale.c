@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_xscale.c 282658 2015-05-08 19:40:00Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_xscale.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -87,9 +87,6 @@ const struct xscale_event_code_map xscale_event_codes[] = {
 	{ PMC_EV_XSCALE_SELF_ADDRESS_BUS_TRANS,	0x41 },
 	{ PMC_EV_XSCALE_DATA_BUS_TRANS,		0x48 },
 };
-
-const int xscale_event_codes_size =
-	sizeof(xscale_event_codes) / sizeof(xscale_event_codes[0]);
 
 /*
  * Per-processor information.
@@ -264,13 +261,13 @@ xscale_allocate_pmc(int cpu, int ri, struct pmc *pm,
 	if (a->pm_class != PMC_CLASS_XSCALE)
 		return (EINVAL);
 	pe = a->pm_ev;
-	for (i = 0; i < xscale_event_codes_size; i++) {
+	for (i = 0; i < nitems(xscale_event_codes); i++) {
 		if (xscale_event_codes[i].pe_ev == pe) {
 			config = xscale_event_codes[i].pe_code;
 			break;
 		}
 	}
-	if (i == xscale_event_codes_size)
+	if (i == nitems(xscale_event_codes))
 		return EINVAL;
 	/* Generation 1 has fewer events */
 	if (xscale_gen == 1 && i > PMC_EV_XSCALE_PC_CHANGE)

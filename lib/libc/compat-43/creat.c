@@ -31,7 +31,7 @@
 static char sccsid[] = "@(#)creat.c	8.1 (Berkeley) 6/2/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/compat-43/creat.c 277032 2015-01-11 22:16:31Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/compat-43/creat.c 288016 2015-09-20 04:21:44Z rodrigc $");
 
 #include "namespace.h"
 #include <fcntl.h>
@@ -40,6 +40,8 @@ __FBSDID("$FreeBSD: head/lib/libc/compat-43/creat.c 277032 2015-01-11 22:16:31Z 
 
 __weak_reference(__creat, creat);
 __weak_reference(__creat, _creat);
+
+int __creat(const char *path, mode_t mode);
 
 #pragma weak creat
 int

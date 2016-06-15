@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mod.c 283924 2015-06-02 18:37:04Z vangyzen $");
+__FBSDID("$FreeBSD: head/sys/dev/hwpmc/hwpmc_mod.c 300902 2016-05-28 13:05:39Z andrew $");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>
@@ -334,7 +334,11 @@ static moduledata_t pmc_mod = {
 	&pmc_syscall_mod
 };
 
+#ifdef EARLY_AP_STARTUP
+DECLARE_MODULE(pmc, pmc_mod, SI_SUB_SYSCALLS, SI_ORDER_ANY);
+#else
 DECLARE_MODULE(pmc, pmc_mod, SI_SUB_SMP, SI_ORDER_ANY);
+#endif
 MODULE_VERSION(pmc, PMC_VERSION);
 
 #ifdef	HWPMC_DEBUG
@@ -1009,14 +1013,14 @@ pmc_attach_one_process(struct proc *p, struct pmc *pm)
 
 	/* issue an attach event to a configured log file */
 	if (pm->pm_owner->po_flags & PMC_PO_OWNS_LOGFILE) {
-		pmc_getfilename(p->p_textvp, &fullpath, &freepath);
-		if (p->p_flag & P_KTHREAD) {
+		if (p->p_flag & P_KPROC) {
 			fullpath = kernelname;
 			freepath = NULL;
-		} else
+		} else {
+			pmc_getfilename(p->p_textvp, &fullpath, &freepath);
 			pmclog_process_pmcattach(pm, p->p_pid, fullpath);
-		if (freepath)
-			free(freepath, M_TEMP);
+		}
+		free(freepath, M_TEMP);
 		if (PMC_IS_SAMPLING_MODE(PMC_TO_MODE(pm)))
 			pmc_log_process_mappings(pm->pm_owner, p);
 	}
@@ -1123,7 +1127,7 @@ pmc_detach_one_process(struct proc *p, struct pmc *pm, int flags)
 		pmclog_process_pmcdetach(pm, p->p_pid);
 
 	/*
-	 * If there are no PMCs targetting this process, we remove its
+	 * If there are no PMCs targeting this process, we remove its
 	 * descriptor from the target hash table and unset the P_HWPMC
 	 * flag in the struct proc.
 	 */
@@ -1232,7 +1236,7 @@ pmc_process_csw_in(struct thread *td)
 	    p->p_pid, p->p_comm, pp);
 
 	KASSERT(cpu >= 0 && cpu < pmc_cpu_max(),
-	    ("[pmc,%d] wierd CPU id %d", __LINE__, cpu));
+	    ("[pmc,%d] weird CPU id %d", __LINE__, cpu));
 
 	pc = pmc_pcpu[cpu];
 
@@ -1282,8 +1286,16 @@ pmc_process_csw_in(struct thread *td)
 		 */
 		if (PMC_TO_MODE(pm) == PMC_MODE_TS) {
 			mtx_pool_lock_spin(pmc_mtxpool, pm);
+
+			/*
+			 * Use the saved value calculated after the most recent
+			 * thread switch out to start this counter.  Reset
+			 * the saved count in case another thread from this
+			 * process switches in before any threads switch out.
+			 */
 			newvalue = PMC_PCPU_SAVED(cpu,ri) =
 			    pp->pp_pmcs[ri].pp_pmcval;
+			pp->pp_pmcs[ri].pp_pmcval = pm->pm_sc.pm_reloadcount;
 			mtx_pool_unlock_spin(pmc_mtxpool, pm);
 		} else {
 			KASSERT(PMC_TO_MODE(pm) == PMC_MODE_TC,
@@ -1298,6 +1310,15 @@ pmc_process_csw_in(struct thread *td)
 		PMCDBG3(CSW,SWI,1,"cpu=%d ri=%d new=%jd", cpu, ri, newvalue);
 
 		pcd->pcd_write_pmc(cpu, adjri, newvalue);
+
+		/* If a sampling mode PMC, reset stalled state. */
+		if (PMC_TO_MODE(pm) == PMC_MODE_TS)
+			CPU_CLR_ATOMIC(cpu, &pm->pm_stalled);
+
+		/* Indicate that we desire this to run. */
+		CPU_SET_ATOMIC(cpu, &pm->pm_cpustate);
+
+		/* Start the PMC. */
 		pcd->pcd_start_pmc(cpu, adjri);
 	}
 
@@ -1360,7 +1381,7 @@ pmc_process_csw_out(struct thread *td)
 	    p->p_pid, p->p_comm, pp);
 
 	KASSERT(cpu >= 0 && cpu < pmc_cpu_max(),
-	    ("[pmc,%d wierd CPU id %d", __LINE__, cpu));
+	    ("[pmc,%d weird CPU id %d", __LINE__, cpu));
 
 	pc = pmc_pcpu[cpu];
 
@@ -1392,8 +1413,14 @@ pmc_process_csw_out(struct thread *td)
 		    ("[pmc,%d] ri mismatch pmc(%d) ri(%d)",
 			__LINE__, PMC_TO_ROWINDEX(pm), ri));
 
-		/* Stop hardware if not already stopped */
-		if (pm->pm_stalled == 0)
+		/*
+		 * Change desired state, and then stop if not stalled.
+		 * This two-step dance should avoid race conditions where
+		 * an interrupt re-enables the PMC after this code has
+		 * already checked the pm_stalled flag.
+		 */
+		CPU_CLR_ATOMIC(cpu, &pm->pm_cpustate);
+		if (!CPU_ISSET(cpu, &pm->pm_stalled))
 			pcd->pcd_stop_pmc(cpu, adjri);
 
 		/* reduce this PMC's runcount */
@@ -1416,31 +1443,43 @@ pmc_process_csw_out(struct thread *td)
 
 			pcd->pcd_read_pmc(cpu, adjri, &newvalue);
 
-			tmp = newvalue - PMC_PCPU_SAVED(cpu,ri);
-
-			PMCDBG3(CSW,SWO,1,"cpu=%d ri=%d tmp=%jd", cpu, ri,
-			    tmp);
-
 			if (mode == PMC_MODE_TS) {
+				PMCDBG3(CSW,SWO,1,"cpu=%d ri=%d tmp=%jd (samp)",
+				    cpu, ri, PMC_PCPU_SAVED(cpu,ri) - newvalue);
 
 				/*
 				 * For sampling process-virtual PMCs,
-				 * we expect the count to be
-				 * decreasing as the 'value'
-				 * programmed into the PMC is the
-				 * number of events to be seen till
-				 * the next sampling interrupt.
+				 * newvalue is the number of events to be seen
+				 * until the next sampling interrupt.
+				 * We can just add the events left from this
+				 * invocation to the counter, then adjust
+				 * in case we overflow our range.
+				 *
+				 * (Recall that we reload the counter every
+				 * time we use it.)
 				 */
-				if (tmp < 0)
-					tmp += pm->pm_sc.pm_reloadcount;
 				mtx_pool_lock_spin(pmc_mtxpool, pm);
-				pp->pp_pmcs[ri].pp_pmcval -= tmp;
-				if ((int64_t) pp->pp_pmcs[ri].pp_pmcval <= 0)
-					pp->pp_pmcs[ri].pp_pmcval +=
+
+				pp->pp_pmcs[ri].pp_pmcval += newvalue;
+				if (pp->pp_pmcs[ri].pp_pmcval >
+				    pm->pm_sc.pm_reloadcount)
+					pp->pp_pmcs[ri].pp_pmcval -=
 					    pm->pm_sc.pm_reloadcount;
+				KASSERT(pp->pp_pmcs[ri].pp_pmcval > 0 &&
+				    pp->pp_pmcs[ri].pp_pmcval <=
+				    pm->pm_sc.pm_reloadcount,
+				    ("[pmc,%d] pp_pmcval outside of expected "
+				    "range cpu=%d ri=%d pp_pmcval=%jx "
+				    "pm_reloadcount=%jx", __LINE__, cpu, ri,
+				    pp->pp_pmcs[ri].pp_pmcval,
+				    pm->pm_sc.pm_reloadcount));
 				mtx_pool_unlock_spin(pmc_mtxpool, pm);
 
 			} else {
+				tmp = newvalue - PMC_PCPU_SAVED(cpu,ri);
+
+				PMCDBG3(CSW,SWO,1,"cpu=%d ri=%d tmp=%jd (count)",
+				    cpu, ri, tmp);
 
 				/*
 				 * For counting process-virtual PMCs,
@@ -1448,7 +1487,7 @@ pmc_process_csw_out(struct thread *td)
 				 * increasing monotonically, modulo a 64
 				 * bit wraparound.
 				 */
-				KASSERT((int64_t) tmp >= 0,
+				KASSERT(tmp >= 0,
 				    ("[pmc,%d] negative increment cpu=%d "
 				     "ri=%d newvalue=%jx saved=%jx "
 				     "incr=%jx", __LINE__, cpu, ri,
@@ -1872,7 +1911,7 @@ pmc_hook_handler(struct thread *td, int function, void *arg)
 
 		/*
 		 * Log the exec event to all monitoring owners.  Skip
-		 * owners who have already recieved the event because
+		 * owners who have already received the event because
 		 * they had system sampling PMCs active.
 		 */
 		for (ri = 0; ri < md->pmd_npmc; ri++)
@@ -1898,7 +1937,7 @@ pmc_hook_handler(struct thread *td, int function, void *arg)
 		/*
 		 * If the newly exec()'ed process has a different credential
 		 * than before, allow it to be the target of a PMC only if
-		 * the PMC's owner has sufficient priviledge.
+		 * the PMC's owner has sufficient privilege.
 		 */
 
 		for (ri = 0; ri < md->pmd_npmc; ri++)
@@ -2258,8 +2297,9 @@ pmc_release_pmc_descriptor(struct pmc *pm)
 		pmc_select_cpu(cpu);
 
 		/* switch off non-stalled CPUs */
+		CPU_CLR_ATOMIC(cpu, &pm->pm_cpustate);
 		if (pm->pm_state == PMC_STATE_RUNNING &&
-		    pm->pm_stalled == 0) {
+		    !CPU_ISSET(cpu, &pm->pm_stalled)) {
 
 			phw = pmc_pcpu[cpu]->pc_hwpmcs[ri];
 
@@ -2538,13 +2578,35 @@ static int
 pmc_find_pmc(pmc_id_t pmcid, struct pmc **pmc)
 {
 
-	struct pmc *pm;
+	struct pmc *pm, *opm;
 	struct pmc_owner *po;
+	struct pmc_process *pp;
 
+	KASSERT(PMC_ID_TO_ROWINDEX(pmcid) < md->pmd_npmc,
+	    ("[pmc,%d] Illegal pmc index %d (max %d)", __LINE__,
+		PMC_ID_TO_ROWINDEX(pmcid), md->pmd_npmc));
 	PMCDBG1(PMC,FND,1, "find-pmc id=%d", pmcid);
 
-	if ((po = pmc_find_owner_descriptor(curthread->td_proc)) == NULL)
-		return ESRCH;
+	if ((po = pmc_find_owner_descriptor(curthread->td_proc)) == NULL) {
+		/*
+		 * In case of PMC_F_DESCENDANTS child processes we will not find
+		 * the current process in the owners hash list.  Find the owner
+		 * process first and from there lookup the po.
+		 */
+		if ((pp = pmc_find_process_descriptor(curthread->td_proc,
+		    PMC_FLAG_NONE)) == NULL) {
+			return ESRCH;
+		} else {
+			opm = pp->pp_pmcs[PMC_ID_TO_ROWINDEX(pmcid)].pp_pmc;
+			if (opm == NULL)
+				return ESRCH;
+			if ((opm->pm_flags & (PMC_F_ATTACHED_TO_OWNER|
+			    PMC_F_DESCENDANTS)) != (PMC_F_ATTACHED_TO_OWNER|
+			    PMC_F_DESCENDANTS))
+				return ESRCH;
+			po = opm->pm_owner;
+		}
+	}
 
 	if ((pm = pmc_find_pmc_descriptor_in_process(po, pmcid)) == NULL)
 		return EINVAL;
@@ -2673,8 +2735,15 @@ pmc_start(struct pmc *pm)
 	if ((error = pcd->pcd_write_pmc(cpu, adjri,
 		 PMC_IS_SAMPLING_MODE(mode) ?
 		 pm->pm_sc.pm_reloadcount :
-		 pm->pm_sc.pm_initial)) == 0)
+		 pm->pm_sc.pm_initial)) == 0) {
+		/* If a sampling mode PMC, reset stalled state. */
+		if (PMC_IS_SAMPLING_MODE(mode))
+			CPU_CLR_ATOMIC(cpu, &pm->pm_stalled);
+
+		/* Indicate that we desire this to run. Start it. */
+		CPU_SET_ATOMIC(cpu, &pm->pm_cpustate);
 		error = pcd->pcd_start_pmc(cpu, adjri);
+	}
 	critical_exit();
 
 	pmc_restore_cpu_binding(&pb);
@@ -2736,6 +2805,7 @@ pmc_stop(struct pmc *pm)
 	ri = PMC_TO_ROWINDEX(pm);
 	pcd = pmc_ri_to_classdep(md, ri, &adjri);
 
+	CPU_CLR_ATOMIC(cpu, &pm->pm_cpustate);
 	critical_enter();
 	if ((error = pcd->pcd_stop_pmc(cpu, adjri)) == 0)
 		error = pcd->pcd_read_pmc(cpu, adjri, &pm->pm_sc.pm_initial);
@@ -4044,12 +4114,13 @@ pmc_process_interrupt(int cpu, int ring, struct pmc *pm, struct trapframe *tf,
 
 	ps = psb->ps_write;
 	if (ps->ps_nsamples) {	/* in use, reader hasn't caught up */
-		pm->pm_stalled = 1;
+		CPU_SET_ATOMIC(cpu, &pm->pm_stalled);
 		atomic_add_int(&pmc_stats.pm_intr_bufferfull, 1);
 		PMCDBG6(SAM,INT,1,"(spc) cpu=%d pm=%p tf=%p um=%d wr=%d rd=%d",
 		    cpu, pm, (void *) tf, inuserspace,
 		    (int) (psb->ps_write - psb->ps_samples),
 		    (int) (psb->ps_read - psb->ps_samples));
+		callchaindepth = 1;
 		error = ENOMEM;
 		goto done;
 	}
@@ -4107,7 +4178,8 @@ pmc_process_interrupt(int cpu, int ring, struct pmc *pm, struct trapframe *tf,
 
  done:
 	/* mark CPU as needing processing */
-	CPU_SET_ATOMIC(cpu, &pmc_cpumask);
+	if (callchaindepth != PMC_SAMPLE_INUSE)
+		CPU_SET_ATOMIC(cpu, &pmc_cpumask);
 
 	return (error);
 }
@@ -4121,13 +4193,13 @@ pmc_process_interrupt(int cpu, int ring, struct pmc *pm, struct trapframe *tf,
 static void
 pmc_capture_user_callchain(int cpu, int ring, struct trapframe *tf)
 {
-	int i;
 	struct pmc *pm;
 	struct thread *td;
-	struct pmc_sample *ps;
+	struct pmc_sample *ps, *ps_end;
 	struct pmc_samplebuffer *psb;
 #ifdef	INVARIANTS
 	int ncallchains;
+	int nfree;
 #endif
 
 	psb = pmc_pcpu[cpu]->pc_sb[ring];
@@ -4139,19 +4211,26 @@ pmc_capture_user_callchain(int cpu, int ring, struct trapframe *tf)
 
 #ifdef	INVARIANTS
 	ncallchains = 0;
+	nfree = 0;
 #endif
 
 	/*
 	 * Iterate through all deferred callchain requests.
+	 * Walk from the current read pointer to the current
+	 * write pointer.
 	 */
 
-	ps = psb->ps_samples;
-	for (i = 0; i < pmc_nsamples; i++, ps++) {
-
+	ps = psb->ps_read;
+	ps_end = psb->ps_write;
+	do {
+#ifdef	INVARIANTS
+		if (ps->ps_pmc->pm_state != PMC_STATE_RUNNING)
+			nfree++;
+#endif
 		if (ps->ps_nsamples != PMC_SAMPLE_INUSE)
-			continue;
+			goto next;
 		if (ps->ps_td != td)
-			continue;
+			goto next;
 
 		KASSERT(ps->ps_cpu == cpu,
 		    ("[pmc,%d] cpu mismatch ps_cpu=%d pcpu=%d", __LINE__,
@@ -4176,15 +4255,23 @@ pmc_capture_user_callchain(int cpu, int ring, struct trapframe *tf)
 #ifdef	INVARIANTS
 		ncallchains++;
 #endif
-	}
 
-	KASSERT(ncallchains > 0,
+next:
+		/* increment the pointer, modulo sample ring size */
+		if (++ps == psb->ps_fence)
+			ps = psb->ps_samples;
+	} while (ps != ps_end);
+
+	KASSERT(ncallchains > 0 || nfree > 0,
 	    ("[pmc,%d] cpu %d didn't find a sample to collect", __LINE__,
 		cpu));
 
 	KASSERT(td->td_pinned == 1,
 	    ("[pmc,%d] invalid td_pinned value", __LINE__));
 	sched_unpin();	/* Can migrate safely now. */
+
+	/* mark CPU as needing processing */
+	CPU_SET_ATOMIC(cpu, &pmc_cpumask);
 
 	return;
 }
@@ -4299,10 +4386,11 @@ pmc_process_samples(int cpu, int ring)
 		if (pm == NULL ||			 /* !cfg'ed */
 		    pm->pm_state != PMC_STATE_RUNNING || /* !active */
 		    !PMC_IS_SAMPLING_MODE(PMC_TO_MODE(pm)) || /* !sampling */
-		    pm->pm_stalled == 0) /* !stalled */
+		    !CPU_ISSET(cpu, &pm->pm_cpustate) || /* !desired */
+		    !CPU_ISSET(cpu, &pm->pm_stalled)) /* !stalled */
 			continue;
 
-		pm->pm_stalled = 0;
+		CPU_CLR_ATOMIC(cpu, &pm->pm_stalled);
 		(*pcd->pcd_start_pmc)(cpu, adjri);
 	}
 }
@@ -4363,7 +4451,7 @@ pmc_process_exit(void *arg __unused, struct proc *p)
 	 * process, we would have context switched IN at some prior
 	 * point.  However, with PREEMPTION, kernel mode context
 	 * switches may happen any time, so we want to disable a
-	 * context switch OUT till we get any PMCs targetting this
+	 * context switch OUT till we get any PMCs targeting this
 	 * process off the hardware.
 	 *
 	 * We also need to atomically remove this process'
@@ -4421,23 +4509,31 @@ pmc_process_exit(void *arg __unused, struct proc *p)
 			    ("[pmc,%d] pm %p != pp_pmcs[%d] %p",
 				__LINE__, pm, ri, pp->pp_pmcs[ri].pp_pmc));
 
-			(void) pcd->pcd_stop_pmc(cpu, adjri);
-
 			KASSERT(pm->pm_runcount > 0,
 			    ("[pmc,%d] bad runcount ri %d rc %d",
 				__LINE__, ri, pm->pm_runcount));
 
-			/* Stop hardware only if it is actually running */
-			if (pm->pm_state == PMC_STATE_RUNNING &&
-			    pm->pm_stalled == 0) {
-				pcd->pcd_read_pmc(cpu, adjri, &newvalue);
-				tmp = newvalue -
-				    PMC_PCPU_SAVED(cpu,ri);
+			/*
+			 * Change desired state, and then stop if not
+			 * stalled. This two-step dance should avoid
+			 * race conditions where an interrupt re-enables
+			 * the PMC after this code has already checked
+			 * the pm_stalled flag.
+			 */
+			if (CPU_ISSET(cpu, &pm->pm_cpustate)) {
+				CPU_CLR_ATOMIC(cpu, &pm->pm_cpustate);
+				if (!CPU_ISSET(cpu, &pm->pm_stalled)) {
+					(void) pcd->pcd_stop_pmc(cpu, adjri);
+					pcd->pcd_read_pmc(cpu, adjri,
+					    &newvalue);
+					tmp = newvalue -
+					    PMC_PCPU_SAVED(cpu,ri);
 
-				mtx_pool_lock_spin(pmc_mtxpool, pm);
-				pm->pm_gv.pm_savedvalue += tmp;
-				pp->pp_pmcs[ri].pp_pmcval += tmp;
-				mtx_pool_unlock_spin(pmc_mtxpool, pm);
+					mtx_pool_lock_spin(pmc_mtxpool, pm);
+					pm->pm_gv.pm_savedvalue += tmp;
+					pp->pp_pmcs[ri].pp_pmcval += tmp;
+					mtx_pool_unlock_spin(pmc_mtxpool, pm);
+				}
 			}
 
 			atomic_subtract_rel_int(&pm->pm_runcount,1);
@@ -4458,7 +4554,7 @@ pmc_process_exit(void *arg __unused, struct proc *p)
 
 		/*
 		 * Unlink this process from the PMCs that are
-		 * targetting it.  This will send a signal to
+		 * targeting it.  This will send a signal to
 		 * all PMC owner's whose PMCs are orphaned.
 		 *
 		 * Log PMC value at exit time if requested.

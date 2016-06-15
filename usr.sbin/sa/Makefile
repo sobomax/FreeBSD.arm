@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/sa/Makefile 265420 2014-05-06 04:22:01Z imp $
+# $FreeBSD: head/usr.sbin/sa/Makefile 298107 2016-04-16 07:45:30Z gjb $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,8 @@
 PROG=	sa
 MAN=	sa.8
 SRCS=	main.c db.c pdb.c usrdb.c readrec.c
+
+PACKAGE=acct
 
 .if ${MK_TESTS} != "no"
 SUBDIR+= tests

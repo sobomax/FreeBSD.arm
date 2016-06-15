@@ -1,5 +1,5 @@
-# $FreeBSD: head/share/mk/meta.autodep.mk 284345 2015-06-13 19:20:56Z sjg $
-# $Id: meta.autodep.mk,v 1.36 2014/08/02 23:10:29 sjg Exp $
+# $FreeBSD: head/share/mk/meta.autodep.mk 300805 2016-05-26 23:20:33Z bdrewery $
+# $Id: meta.autodep.mk,v 1.40 2016/02/22 22:44:58 sjg Exp $
 
 #
 #	@(#) Copyright (c) 2010, Simon J. Gerraty
@@ -19,7 +19,7 @@ _this ?= ${.PARSEFILE}
 .if !target(__${_this}__)
 __${_this}__: .NOTMAIN
 
-.-include "local.autodep.mk"
+.-include <local.autodep.mk>
 
 .if defined(SRCS)
 # it would be nice to be able to query .SUFFIXES
@@ -51,7 +51,25 @@ UPDATE_DEPENDFILE = NO
 .endif
 
 _CURDIR ?= ${.CURDIR}
+_OBJDIR ?= ${.OBJDIR}
+_OBJTOP ?= ${OBJTOP}
+_OBJROOT ?= ${OBJROOT:U${_OBJTOP}}
 _DEPENDFILE := ${_CURDIR}/${.MAKE.DEPENDFILE:T}
+
+.if ${.MAKE.LEVEL} > 0 || ${BUILD_AT_LEVEL0:Uyes:tl} == "yes"
+# do not allow auto update if we ever built this dir without filemon
+NO_FILEMON_COOKIE = .nofilemon
+CLEANFILES += ${NO_FILEMON_COOKIE}
+.if ${.MAKE.MODE:Uno:Mnofilemon} != ""
+UPDATE_DEPENDFILE = NO
+all: ${NO_FILEMON_COOKIE}
+${NO_FILEMON_COOKIE}: .NOMETA
+	@echo UPDATE_DEPENDFILE=NO > ${.TARGET}
+.elif exists(${NO_FILEMON_COOKIE})
+UPDATE_DEPENDFILE = NO
+.warning ${RELDIR} built with nofilemon; UPDATE_DEPENDFILE=NO
+.endif
+.endif
 
 .if ${.MAKE.LEVEL} == 0
 .if ${BUILD_AT_LEVEL0:Uyes:tl} == "no"
@@ -84,7 +102,7 @@ WANT_UPDATE_DEPENDFILE ?= yes
 .endif
 
 .if ${WANT_UPDATE_DEPENDFILE:Uno:tl} != "no"
-.if ${.MAKE.MODE:Mmeta*} == "" || ${.MAKE.MODE:M*read*} != ""
+.if ${.MAKE.MODE:Uno:Mmeta*} == "" || ${.MAKE.MODE:Uno:M*read*} != ""
 UPDATE_DEPENDFILE = no
 .endif
 
@@ -191,9 +209,9 @@ gendirdeps:	${_DEPENDFILE}
 # anything which matches ${_OBJROOT}* but not ${_OBJTOP}*
 # needs to be qualified in DIRDEPS
 # The pseudo machine "host" is used for HOST_TARGET
-DIRDEPS = \
+DIRDEPS += \
 	${DPADD:M${_OBJTOP}*:H:C,${_OBJTOP}[^/]*/,,:N.:O:u} \
-	${DPADD:M${_OBJROOT}*:N${_OBJTOP}*:H:S,${_OBJROOT},,:C,^([^/]+)/(.*),\2.\1,:S,${HOST_TARGET}$,host,:N.*:O:u}
+	${DPADD:M${_OBJROOT}*:N${_OBJTOP}*:N${STAGE_ROOT:U${_OBJTOP}}/*:H:S,${_OBJROOT},,:C,^([^/]+)/(.*),\2.\1,:S,${HOST_TARGET}$,host,:N.*:O:u}
 
 .endif
 .endif
@@ -249,7 +267,7 @@ ${_DEPENDFILE}: ${_depend} ${.PARSEDIR}/gendirdeps.mk  ${META2DEPS} $${.MAKE.MET
 	DPADD='${FORCE_DPADD:O:u}' ${_gendirdeps_mutex} \
 	MAKESYSPATH=${_makesyspath} \
 	${.MAKE} -f gendirdeps.mk RELDIR=${RELDIR} _DEPENDFILE=${_DEPENDFILE} \
-	META_FILES='${META_XTRAS:T:O:u} ${META_FILES:T:O:u:${META_FILE_FILTER:ts:}}')
+	META_FILES='${META_XTRAS:O:u} ${META_FILES:T:O:u:${META_FILE_FILTER:ts:}}')
 	@test -s $@ && touch $@; :
 .endif
 

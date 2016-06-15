@@ -1,7 +1,8 @@
 #
-# $FreeBSD: head/sbin/mount_msdosfs/Makefile 275030 2014-11-25 11:23:12Z bapt $
+# $FreeBSD: head/sbin/mount_msdosfs/Makefile 298107 2016-04-16 07:45:30Z gjb $
 #
 
+PACKAGE=runtime
 PROG=	mount_msdosfs
 SRCS=	mount_msdosfs.c getmntopts.c
 MAN=	mount_msdosfs.8

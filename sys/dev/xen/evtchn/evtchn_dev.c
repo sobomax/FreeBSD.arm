@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/xen/evtchn/evtchn_dev.c 273474 2014-10-22 16:57:11Z royger $");
+__FBSDID("$FreeBSD: head/sys/dev/xen/evtchn/evtchn_dev.c 299353 2016-05-10 10:26:07Z trasz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -325,8 +325,6 @@ evtchn_write(struct cdev *dev, struct uio *uio, int ioflag)
 		return (EINVAL);
 
 	kbuf = malloc(PAGE_SIZE, M_EVTCHN, M_WAITOK);
-	if (kbuf == NULL)
-		return (ENOMEM);
 
 	count = uio->uio_resid;
 	/* Whole number of ports. */

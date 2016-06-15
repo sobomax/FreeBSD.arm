@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cam/cam_xpt_internal.h 278228 2015-02-05 00:12:21Z ken $
+ * $FreeBSD: head/sys/cam/cam_xpt_internal.h 301771 2016-06-09 22:39:02Z imp $
  */
 
 #ifndef _CAM_CAM_XPT_INTERNAL_H
@@ -117,6 +117,8 @@ struct cam_ed {
 	STAILQ_ENTRY(cam_ed) highpowerq_entry;
 	struct mtx	 device_mtx;
 	struct task	 device_destroy_task;
+	const struct	 nvme_controller_data *nvme_cdata;
+	const struct	 nvme_namespace_data *nvme_data;
 };
 
 /*
@@ -167,6 +169,7 @@ struct cam_path {
 
 struct xpt_xport *	scsi_get_xport(void);
 struct xpt_xport *	ata_get_xport(void);
+struct xpt_xport *	nvme_get_xport(void);
 
 struct cam_ed *		xpt_alloc_device(struct cam_eb *bus,
 					 struct cam_et *target,

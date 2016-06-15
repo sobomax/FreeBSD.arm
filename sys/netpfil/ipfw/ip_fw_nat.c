@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_nat.c 282081 2015-04-27 09:16:22Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_nat.c 298995 2016-05-03 18:05:43Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -932,7 +932,7 @@ ipfw_nat_cfg(struct sockopt *sopt)
 
 	/*
 	 * Allocate 2x buffer to store converted structures.
-	 * new redir_cfg has shrinked, so we're sure that
+	 * new redir_cfg has shrunk, so we're sure that
 	 * new buffer size is enough.
 	 */
 	buf = malloc(roundup2(len, 8) + len2, M_TEMP, M_WAITOK | M_ZERO);

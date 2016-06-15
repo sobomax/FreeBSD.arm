@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 298942 2016-05-02 20:56:11Z pfg $");
 
 #ifndef _NETINET_SCTP_CONSTANTS_H_
 #define _NETINET_SCTP_CONSTANTS_H_
@@ -66,6 +66,10 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
  */
 #define SCTP_LARGEST_INIT_ACCEPTED (65535 - 2048)
 
+/* Largest length of a chunk */
+#define SCTP_MAX_CHUNK_LENGTH 0xffff
+/* Largest length of an error cause */
+#define SCTP_MAX_CAUSE_LENGTH 0xffff
 /* Number of addresses where we just skip the counting */
 #define SCTP_COUNT_LIMIT 40
 
@@ -271,7 +275,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 #define SCTP_DEFAULT_MULTIPLE_ASCONFS	0
 
 /*
- * Theshold for rwnd updates, we have to read (sb_hiwat >>
+ * Threshold for rwnd updates, we have to read (sb_hiwat >>
  * SCTP_RWND_HIWAT_SHIFT) before we will look to see if we need to send a
  * window update sack. When we look, we compare the last rwnd we sent vs the
  * current rwnd. It too must be greater than this value. Using 3 divdes the
@@ -382,8 +386,8 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 /* align to 32-bit sizes */
 #define SCTP_SIZE32(x)	((((x) + 3) >> 2) << 2)
 
-#define IS_SCTP_CONTROL(a) ((a)->chunk_type != SCTP_DATA)
-#define IS_SCTP_DATA(a) ((a)->chunk_type == SCTP_DATA)
+#define IS_SCTP_CONTROL(a) (((a)->chunk_type != SCTP_DATA) && ((a)->chunk_type != SCTP_IDATA))
+#define IS_SCTP_DATA(a) (((a)->chunk_type == SCTP_DATA) || ((a)->chunk_type == SCTP_IDATA))
 
 
 /* SCTP parameter types */
@@ -458,7 +462,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 
 
 /*
- * SCTP states for internal state machine XXX (should match "user" values)
+ * SCTP states for internal state machine
  */
 #define SCTP_STATE_EMPTY		0x0000
 #define SCTP_STATE_INUSE		0x0001
@@ -509,7 +513,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 /* Maximum the mapping array will  grow to (TSN mapping array) */
 #define SCTP_MAPPING_ARRAY	512
 
-/* size of the inital malloc on the mapping array */
+/* size of the initial malloc on the mapping array */
 #define SCTP_INITIAL_MAPPING_ARRAY  16
 /* how much we grow the mapping array each call */
 #define SCTP_MAPPING_ARRAY_INCR     32
@@ -612,10 +616,6 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 /* 30 seconds + RTO (in ms) */
 #define SCTP_HB_DEFAULT_MSEC	30000
 
-/* Max time I will wait for Shutdown to complete */
-#define SCTP_DEF_MAX_SHUTDOWN_SEC 180
-
-
 /*
  * This is how long a secret lives, NOT how long a cookie lives how many
  * ticks the current secret will live.
@@ -638,7 +638,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 #define SCTP_DEF_PMTU_RAISE_SEC	600	/* 10 min between raise attempts */
 
 
-/* How many streams I request initally by default */
+/* How many streams I request initially by default */
 #define SCTP_OSTREAM_INITIAL 10
 #define SCTP_ISTREAM_INITIAL 2048
 
@@ -886,12 +886,19 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
 
 /* modular comparison */
 /* See RFC 1982 for details. */
-#define SCTP_SSN_GT(a, b) (((a < b) && ((uint16_t)(b - a) > (1U<<15))) || \
-                           ((a > b) && ((uint16_t)(a - b) < (1U<<15))))
-#define SCTP_SSN_GE(a, b) (SCTP_SSN_GT(a, b) || (a == b))
-#define SCTP_TSN_GT(a, b) (((a < b) && ((uint32_t)(b - a) > (1U<<31))) || \
-                           ((a > b) && ((uint32_t)(a - b) < (1U<<31))))
-#define SCTP_TSN_GE(a, b) (SCTP_TSN_GT(a, b) || (a == b))
+#define SCTP_UINT16_GT(a, b) (((a < b) && ((uint16_t)(b - a) > (1U<<15))) || \
+                              ((a > b) && ((uint16_t)(a - b) < (1U<<15))))
+#define SCTP_UINT16_GE(a, b) (SCTP_UINT16_GT(a, b) || (a == b))
+#define SCTP_UINT32_GT(a, b) (((a < b) && ((uint32_t)(b - a) > (1U<<31))) || \
+                              ((a > b) && ((uint32_t)(a - b) < (1U<<31))))
+#define SCTP_UINT32_GE(a, b) (SCTP_UINT32_GT(a, b) || (a == b))
+
+#define SCTP_SSN_GT(a, b) SCTP_UINT16_GT(a, b)
+#define SCTP_SSN_GE(a, b) SCTP_UINT16_GE(a, b)
+#define SCTP_TSN_GT(a, b) SCTP_UINT32_GT(a, b)
+#define SCTP_TSN_GE(a, b) SCTP_UINT32_GE(a, b)
+#define SCTP_MSGID_GT(o, a, b) ((o == 1) ? SCTP_UINT16_GT((uint16_t)a, (uint16_t)b) : SCTP_UINT32_GT(a, b))
+#define SCTP_MSGID_GE(o, a, b) ((o == 1) ? SCTP_UINT16_GE((uint16_t)a, (uint16_t)b) : SCTP_UINT32_GE(a, b))
 
 /* Mapping array manipulation routines */
 #define SCTP_IS_TSN_PRESENT(arry, gap) ((arry[(gap >> 3)] >> (gap & 0x07)) & 0x01)
@@ -914,7 +921,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
  * element.  Each entry will take 2 4 byte ints (and of course the overhead
  * of the next pointer as well). Using 15 as an example will yield * ((8 *
  * 15) + 8) or 128 bytes of overhead for each timewait block that gets
- * initialized. Increasing it to 31 would yeild 256 bytes per block.
+ * initialized. Increasing it to 31 would yield 256 bytes per block.
  */
 #define SCTP_NUMBER_IN_VTAG_BLOCK 15
 /*
@@ -980,10 +987,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_constants.h 283650 2015-05-28 16:00:23
      (((uint8_t *)&(a)->s_addr)[1] == 168)))
 
 #define IN4_ISLOOPBACK_ADDRESS(a) \
-    ((((uint8_t *)&(a)->s_addr)[0] == 127) && \
-     (((uint8_t *)&(a)->s_addr)[1] == 0) && \
-     (((uint8_t *)&(a)->s_addr)[2] == 0) && \
-     (((uint8_t *)&(a)->s_addr)[3] == 1))
+    (((uint8_t *)&(a)->s_addr)[0] == 127)
 
 #define IN4_ISLINKLOCAL_ADDRESS(a) \
     ((((uint8_t *)&(a)->s_addr)[0] == 169) && \

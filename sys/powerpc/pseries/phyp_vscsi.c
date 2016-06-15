@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/pseries/phyp_vscsi.c 279217 2015-02-23 20:38:00Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/pseries/phyp_vscsi.c 290989 2015-11-17 16:07:43Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -290,7 +290,8 @@ vscsi_attach(device_t dev)
 	mtx_init(&sc->io_lock, "vscsi", NULL, MTX_DEF);
 
 	/* Get properties */
-	OF_getprop(ofw_bus_get_node(dev), "reg", &sc->unit, sizeof(sc->unit));
+	OF_getencprop(ofw_bus_get_node(dev), "reg", &sc->unit,
+	    sizeof(sc->unit));
 
 	/* Setup interrupt */
 	sc->irqid = 0;

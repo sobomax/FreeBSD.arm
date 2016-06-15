@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libutil/kinfo_getfile.c 186512 2008-12-27 11:12:23Z rwatson $");
+__FBSDID("$FreeBSD: head/lib/libutil/kinfo_getfile.c 287442 2015-09-03 20:32:10Z cem $");
 
 #include <sys/param.h>
 #include <sys/user.h>
@@ -44,6 +44,8 @@ kinfo_getfile(pid_t pid, int *cntp)
 	eb = buf + len;
 	while (bp < eb) {
 		kf = (struct kinfo_file *)(uintptr_t)bp;
+		if (kf->kf_structsize == 0)
+			break;
 		bp += kf->kf_structsize;
 		cnt++;
 	}
@@ -59,6 +61,8 @@ kinfo_getfile(pid_t pid, int *cntp)
 	/* Pass 2: unpack */
 	while (bp < eb) {
 		kf = (struct kinfo_file *)(uintptr_t)bp;
+		if (kf->kf_structsize == 0)
+			break;
 		/* Copy/expand into pre-zeroed buffer */
 		memcpy(kp, kf, kf->kf_structsize);
 		/* Advance to next packed record */

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 284583 2015-06-18 23:14:45Z jkim $");
+__FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 295880 2016-02-22 09:02:20Z skra $");
 
 #if defined(__amd64__)
 #define DEV_APIC
@@ -56,7 +56,6 @@ __FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 284583 2015-06-18 23:14:45
 #include <machine/intr_machdep.h>
 #include <x86/mca.h>
 #include <machine/pcb.h>
-#include <machine/pmap.h>
 #include <machine/specialreg.h>
 #include <machine/md_var.h>
 

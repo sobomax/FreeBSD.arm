@@ -1,21 +1,24 @@
-# $FreeBSD: head/lib/clang/libllvmobjcarcopts/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/libllvmobjcarcopts/Makefile 296417 2016-03-05 20:24:31Z dim $
 
-.include <bsd.own.mk>
+.include <src.opts.mk>
 
 LIB=	llvmobjcarcopts
 
 SRCDIR=	lib/Transforms/ObjCARC
-SRCS=	ObjCARC.cpp \
-	ObjCARCOpts.cpp \
-	ObjCARCExpand.cpp \
+SRCS=	DependencyAnalysis.cpp \
 	ObjCARCAPElim.cpp \
-	ObjCARCAliasAnalysis.cpp \
-	ObjCARCUtil.cpp \
 	ObjCARCContract.cpp \
-	DependencyAnalysis.cpp \
+	ObjCARCExpand.cpp \
+	ObjCARCOpts.cpp \
 	ProvenanceAnalysis.cpp \
-	ProvenanceAnalysisEvaluator.cpp
+	ProvenanceAnalysisEvaluator.cpp \
+	PtrState.cpp
 
-TGHDRS=	Intrinsics
+.if ${MK_CLANG_EXTRAS} != "no"
+SRCS+=	ObjCARC.cpp
+.endif
+
+TGHDRS=	Attributes \
+	Intrinsics
 
 .include "../clang.lib.mk"

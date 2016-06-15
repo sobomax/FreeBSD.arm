@@ -7,7 +7,7 @@
 #
 # Usage: make-memstick.sh <directory tree> <image filename>
 #
-# $FreeBSD: head/release/powerpc/make-memstick.sh 265171 2014-05-01 03:24:41Z nwhitehorn $
+# $FreeBSD: head/release/powerpc/make-memstick.sh 293188 2016-01-05 03:20:45Z gjb $
 #
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
@@ -33,6 +33,7 @@ if [ -e ${2} ]; then
 fi
 
 echo '/dev/da0s3 / ufs ro,noatime 1 1' > ${1}/etc/fstab
+echo 'root_rw_mount="NO"' > ${1}/etc/rc.conf.local
 rm -f ${tempfile}
 makefs -B big ${tempfile} ${1}
 if [ $? -ne 0 ]; then
@@ -40,6 +41,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 rm ${1}/etc/fstab
+rm ${1}/etc/rc.conf.local
 
 mkimg -s apm -p freebsd-boot:=${1}/boot/boot1.hfs -p freebsd-ufs/FreeBSD_Install:=${tempfile} -o ${2}
 

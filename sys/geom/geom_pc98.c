@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/geom_pc98.c 254015 2013-08-07 00:00:48Z marcel $");
+__FBSDID("$FreeBSD: head/sys/geom/geom_pc98.c 300288 2016-05-20 08:25:37Z kib $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -176,7 +176,6 @@ g_pc98_ioctl(struct g_provider *pp, u_long cmd, void *data, int fflag, struct th
 	case DIOCSPC98: {
 		if (!(fflag & FWRITE))
 			return (EPERM);
-		DROP_GIANT();
 		g_topology_lock();
 		cp = LIST_FIRST(&gp->consumer);
 		if (cp->acw == 0) {
@@ -191,7 +190,6 @@ g_pc98_ioctl(struct g_provider *pp, u_long cmd, void *data, int fflag, struct th
 		if (opened)
 			g_access(cp, 0, -1 , 0);
 		g_topology_unlock();
-		PICKUP_GIANT();
 		return(error);
 	}
 	default:

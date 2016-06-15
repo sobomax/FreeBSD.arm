@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/boot/pc98/btx/btxldr/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD: head/sys/boot/pc98/btx/btxldr/Makefile 297283 2016-03-26 03:46:12Z bdrewery $
 
 PROG=	btxldr
 INTERNALPROG=
@@ -18,4 +18,3 @@ LDFLAGS=-e start -Ttext ${LOADER_ADDRESS} -Wl,-N,-S,--oformat,binary
 
 # XXX: clang integrated-as doesn't grok .codeNN directives yet
 CFLAGS.btxldr.S=	${CLANG_NO_IAS}
-CFLAGS+=		${CFLAGS.${.IMPSRC:T}}

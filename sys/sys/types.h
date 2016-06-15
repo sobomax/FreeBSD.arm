@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: head/sys/sys/types.h 280279 2015-03-20 10:27:06Z jhb $
+ * $FreeBSD: head/sys/sys/types.h 299571 2016-05-12 21:18:17Z cem $
  */
 
 #ifndef _SYS_TYPES_H_
@@ -174,6 +174,11 @@ typedef	__off_t		off_t;		/* file offset */
 #define	_OFF_T_DECLARED
 #endif
 
+#ifndef _OFF64_T_DECLARED
+typedef	__off64_t	off64_t;	/* file offset (alias) */
+#define	_OFF64_T_DECLARED
+#endif
+
 #ifndef _PID_T_DECLARED
 typedef	__pid_t		pid_t;		/* process id */
 #define	_PID_T_DECLARED
@@ -250,6 +255,8 @@ typedef	__vm_paddr_t	vm_paddr_t;
 typedef	__vm_pindex_t	vm_pindex_t;
 typedef	__vm_size_t	vm_size_t;
 
+typedef __rman_res_t    rman_res_t;
+
 #ifdef _KERNEL
 typedef	int		boolean_t;
 typedef	struct device	*device_t;
@@ -290,9 +297,6 @@ typedef	_Bool	bool;
  * The following are all things that really shouldn't exist in this header,
  * since its purpose is to provide typedefs, not miscellaneous doodads.
  */
-#if __BSD_VISIBLE
-
-#include <sys/select.h>
 
 #ifdef __POPCNT__
 #define	__bitcount64(x)	__builtin_popcountll((__uint64_t)(x))
@@ -355,6 +359,10 @@ __bitcount64(__uint64_t _x)
 #endif
 #define	__bitcount(x)	__bitcount32((unsigned int)(x))
 #endif
+
+#if __BSD_VISIBLE
+
+#include <sys/select.h>
 
 /*
  * minor() gives a cookie instead of an index since we don't want to

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/si/si.c 270224 2014-08-20 16:07:17Z jhb $");
+__FBSDID("$FreeBSD: head/sys/dev/si/si.c 298955 2016-05-03 03:41:25Z pfg $");
 
 #ifndef lint
 __IDSTRING(si_copyright1, "@(#) Copyright (C) Specialix International, 1990,1992,1998");
@@ -541,7 +541,7 @@ try_next:
 	pp = sc->sc_ports;
 	nmodule = 0;
 	modp = (struct si_module *)(maddr + 0x80);
-	uart_type = 1000;	/* arbitary, > uchar_max */
+	uart_type = 1000;	/* arbitrary, > uchar_max */
 	for (;;) {
 		switch (modp->sm_type) {
 		case TA4:

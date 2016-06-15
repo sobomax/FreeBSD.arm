@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/ohci.c 267992 2014-06-28 03:56:17Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/controller/ohci.c 298932 2016-05-02 17:44:03Z pfg $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  * Copyright (c) 1998 The NetBSD Foundation, Inc. All rights reserved.
@@ -2043,7 +2043,7 @@ struct usb_device_descriptor ohci_devd =
 	UDPROTO_FSHUB,			/* protocol */
 	64,				/* max packet */
 	{0}, {0}, {0x00, 0x01},		/* device id */
-	1, 2, 0,			/* string indicies */
+	1, 2, 0,			/* string indexes */
 	1				/* # of configurations */
 };
 
@@ -2437,7 +2437,7 @@ ohci_xfer_setup(struct usb_setup_params *parm)
 		usbd_transfer_setup_sub(parm);
 
 		nitd = ((xfer->max_data_length / OHCI_PAGE_SIZE) +
-		    ((xfer->nframes + OHCI_ITD_NOFFSET - 1) / OHCI_ITD_NOFFSET) +
+		    howmany(xfer->nframes, OHCI_ITD_NOFFSET) +
 		    1 /* EXTRA */ );
 		ntd = 0;
 		nqh = 1;

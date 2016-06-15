@@ -34,7 +34,7 @@ static char *sccsid = "from: @(#)bindresvport.c	2.2 88/07/29 4.0 RPCSRC";
 #endif
 /* from: $OpenBSD: bindresvport.c,v 1.7 1996/07/30 16:25:47 downsj Exp $ */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/rpc/bindresvport.c 258578 2013-11-25 19:04:36Z hrs $");
+__FBSDID("$FreeBSD: head/lib/libc/rpc/bindresvport.c 288113 2015-09-22 15:40:07Z rodrigc $");
 
 /*
  * Copyright (c) 1987 by Sun Microsystems, Inc.
@@ -61,9 +61,7 @@ __FBSDID("$FreeBSD: head/lib/libc/rpc/bindresvport.c 258578 2013-11-25 19:04:36Z
  * Bind a socket to a privileged IP port
  */
 int
-bindresvport(sd, sin)
-	int sd;
-	struct sockaddr_in *sin;
+bindresvport(int sd, struct sockaddr_in *sin)
 {
 	return bindresvport_sa(sd, (struct sockaddr *)sin);
 }
@@ -72,9 +70,7 @@ bindresvport(sd, sin)
  * Bind a socket to a privileged IP port
  */
 int
-bindresvport_sa(sd, sa)
-	int sd;
-	struct sockaddr *sa;
+bindresvport_sa(int sd, struct sockaddr *sa)
 {
 	int old, error, af;
 	struct sockaddr_storage myaddr;

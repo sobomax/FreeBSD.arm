@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/x86/include/bus.h 263289 2014-03-18 01:40:25Z emaste $
+ * $FreeBSD: head/sys/x86/include/bus.h 286667 2015-08-12 15:26:32Z marcel $
  */
 
 /*	$NetBSD: bus.h,v 1.12 1997/10/01 08:25:15 fvdl Exp $	*/
@@ -130,32 +130,15 @@
  * Map a region of device bus space into CPU virtual address space.
  */
 
-static __inline int bus_space_map(bus_space_tag_t t, bus_addr_t addr,
-				  bus_size_t size, int flags,
-				  bus_space_handle_t *bshp);
-
-static __inline int
-bus_space_map(bus_space_tag_t t __unused, bus_addr_t addr,
-	      bus_size_t size __unused, int flags __unused,
-	      bus_space_handle_t *bshp)
-{
-
-	*bshp = addr;
-	return (0);
-}
+int bus_space_map(bus_space_tag_t tag, bus_addr_t addr, bus_size_t size,
+    int flags, bus_space_handle_t *bshp);
 
 /*
  * Unmap a region of device bus space.
  */
 
-static __inline void bus_space_unmap(bus_space_tag_t t, bus_space_handle_t bsh,
-				     bus_size_t size);
-
-static __inline void
-bus_space_unmap(bus_space_tag_t t __unused, bus_space_handle_t bsh __unused,
-		bus_size_t size __unused)
-{
-}
+void bus_space_unmap(bus_space_tag_t tag, bus_space_handle_t bsh,
+    bus_size_t size);
 
 /*
  * Get a new handle for a subregion of an already-mapped area of bus space.

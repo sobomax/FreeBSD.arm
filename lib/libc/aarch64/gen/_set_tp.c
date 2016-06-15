@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/_set_tp.c 281197 2015-04-07 09:52:14Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/_set_tp.c 288019 2015-09-20 04:59:01Z rodrigc $");
 
 #include <string.h>
 #include <sys/types.h>
@@ -33,6 +33,7 @@ __FBSDID("$FreeBSD: head/lib/libc/aarch64/gen/_set_tp.c 281197 2015-04-07 09:52:
 #include <machine/sysarch.h>
 
 #include <stdlib.h>
+#include "libc_private.h"
 
 void
 _set_tp(void *tp)

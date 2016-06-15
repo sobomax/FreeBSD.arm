@@ -1,8 +1,10 @@
 # $Id: Makefile.inc,v 1.1 2000/07/14 18:16:22 iwasaki Exp $
-# $FreeBSD: head/usr.sbin/acpi/Makefile.inc 231845 2012-02-16 23:05:09Z jkim $
+# $FreeBSD: head/usr.sbin/acpi/Makefile.inc 298107 2016-04-16 07:45:30Z gjb $
 
 ACPICA_DIR= ${.CURDIR}/../../../sys/contrib/dev/acpica
 CFLAGS+= -I${.CURDIR}/../../../sys
+
+PACKAGE=	acpi
 
 .if exists(${.CURDIR}/../../Makefile.inc)
 .include "${.CURDIR}/../../Makefile.inc"

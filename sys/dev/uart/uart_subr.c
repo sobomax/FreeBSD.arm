@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/uart/uart_subr.c 279724 2015-03-07 15:24:15Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/uart/uart_subr.c 298411 2016-04-21 15:38:28Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -56,7 +56,6 @@ static struct uart_class *uart_classes[] = {
 	&uart_s3c2410_class,
 #endif
 };
-static size_t uart_nclasses = sizeof(uart_classes) / sizeof(uart_classes[0]);
 
 static bus_addr_t
 uart_parse_addr(const char **p)
@@ -72,7 +71,7 @@ uart_parse_class(struct uart_class *class, const char **p)
 	size_t len;
 	u_int i;
 
-	for (i = 0; i < uart_nclasses; i++) {
+	for (i = 0; i < nitems(uart_classes); i++) {
 		uc = uart_classes[i];
 		nm = uart_getname(uc);
 		if (nm == NULL || *nm == '\0')

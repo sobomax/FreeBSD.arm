@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: head/sys/sys/timetc.h 276724 2015-01-05 20:44:44Z jhb $
+ * $FreeBSD: head/sys/sys/timetc.h 286724 2015-08-13 14:43:25Z ian $
  */
 
 #ifndef _SYS_TIMETC_H_
@@ -49,7 +49,7 @@ struct timecounter {
 		/* This mask should mask off any unimplemented bits. */
 	uint64_t		tc_frequency;
 		/* Frequency of the counter in Hz. */
-	char			*tc_name;
+	const char		*tc_name;
 		/* Name of the timecounter. */
 	int			tc_quality;
 		/*

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode_pager.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: head/sys/vm/vnode_pager.h 274914 2014-11-23 12:01:52Z glebius $
+ * $FreeBSD: head/sys/vm/vnode_pager.h 292373 2015-12-16 21:30:45Z glebius $
  */
 
 #ifndef	_VNODE_PAGER_
@@ -41,7 +41,8 @@
 #ifdef _KERNEL
 
 int vnode_pager_generic_getpages(struct vnode *vp, vm_page_t *m,
-    int count, int reqpage, vop_getpages_iodone_t iodone, void *arg);
+    int count, int *rbehind, int *rahead, vop_getpages_iodone_t iodone,
+    void *arg);
 int vnode_pager_generic_putpages(struct vnode *vp, vm_page_t *m,
 					  int count, boolean_t sync,
 					  int *rtvals);

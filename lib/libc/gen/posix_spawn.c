@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/gen/posix_spawn.c 223907 2011-07-10 14:20:11Z jilles $");
+__FBSDID("$FreeBSD: head/lib/libc/gen/posix_spawn.c 300662 2016-05-25 07:13:53Z truckman $");
 
 #include "namespace.h"
 #include <sys/queue.h>
@@ -118,15 +118,18 @@ process_spawnattr(const posix_spawnattr_t sa)
 			return (errno);
 	}
 
-	/* Set signal masks/defaults */
+	/*
+	 * Set signal masks/defaults.
+	 * Use unwrapped syscall, libthr is in undefined state after vfork().
+	 */
 	if (sa->sa_flags & POSIX_SPAWN_SETSIGMASK) {
-		_sigprocmask(SIG_SETMASK, &sa->sa_sigmask, NULL);
+		__sys_sigprocmask(SIG_SETMASK, &sa->sa_sigmask, NULL);
 	}
 
 	if (sa->sa_flags & POSIX_SPAWN_SETSIGDEF) {
 		for (i = 1; i <= _SIG_MAXSIG; i++) {
 			if (sigismember(&sa->sa_sigdefault, i))
-				if (_sigaction(i, &sigact, NULL) != 0)
+				if (__sys_sigaction(i, &sigact, NULL) != 0)
 					return (errno);
 		}
 	}
@@ -137,7 +140,7 @@ process_spawnattr(const posix_spawnattr_t sa)
 static int
 process_file_actions_entry(posix_spawn_file_actions_entry_t *fae)
 {
-	int fd;
+	int fd, saved_errno;
 
 	switch (fae->fae_action) {
 	case FAE_OPEN:
@@ -146,8 +149,11 @@ process_file_actions_entry(posix_spawn_file_actions_entry_t *fae)
 		if (fd < 0)
 			return (errno);
 		if (fd != fae->fae_fildes) {
-			if (_dup2(fd, fae->fae_fildes) == -1)
-				return (errno);
+			if (_dup2(fd, fae->fae_fildes) == -1) {
+				saved_errno = errno;
+				(void)_close(fd);
+				return (saved_errno);
+			}
 			if (_close(fd) != 0) {
 				if (errno == EBADF)
 					return (EBADF);

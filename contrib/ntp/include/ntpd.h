@@ -156,7 +156,7 @@ extern	u_int	sys_tai;
 extern 	int	freq_cnt;
 
 /* ntp_monitor.c */
-#define MON_HASH_SIZE		(1U << mon_hash_bits)
+#define MON_HASH_SIZE		((size_t)1U << mon_hash_bits)
 #define MON_HASH_MASK		(MON_HASH_SIZE - 1)
 #define	MON_HASH(addr)		(sock_hash(addr) & MON_HASH_MASK)
 extern	void	init_mon	(void);
@@ -201,6 +201,7 @@ extern	keyid_t	session_key	(sockaddr_u *, sockaddr_u *, keyid_t,
 extern	int	make_keylist	(struct peer *, struct interface *);
 extern	void	key_expire	(struct peer *);
 extern	void	crypto_update	(void);
+extern	void	crypto_update_taichange(void);
 extern	void	crypto_config	(int, char *);
 extern	void	crypto_setup	(void);
 extern	u_int	crypto_ident	(struct peer *);
@@ -222,6 +223,7 @@ extern	void	receive 	(struct recvbuf *);
 extern	void	peer_clear	(struct peer *, const char *);
 extern	void 	process_packet	(struct peer *, struct pkt *, u_int);
 extern	void	clock_select	(void);
+extern	void	set_sys_leap	(u_char);
 
 extern	u_long	leapsec;	/* seconds to next leap (proximity class) */
 extern  int     leapdif;        /* TAI difference step at next leap second*/
@@ -406,6 +408,7 @@ extern int	hardpps_enable;		/* kernel PPS discipline enabled */
 extern int	ext_enable;		/* external clock enabled */
 extern int	cal_enable;		/* refclock calibrate enable */
 extern int	allow_panic;		/* allow panic correction (-g) */
+extern int	enable_panic_check;	/* Can we check allow_panic's state? */
 extern int	force_step_once;	/* always step time once at startup (-G) */
 extern int	mode_ntpdate;		/* exit on first clock set (-q) */
 extern int	peer_ntpdate;		/* count of ntpdate peers */
@@ -532,6 +535,11 @@ extern u_long	current_time;		/* seconds since startup */
 extern u_long	timer_timereset;
 extern u_long	timer_overflows;
 extern u_long	timer_xmtcalls;
+extern int	leap_sec_in_progress;
+#ifdef LEAP_SMEAR
+extern struct leap_smear_info leap_smear;
+extern int	leap_smear_intv;
+#endif
 #ifdef SYS_WINNT
 HANDLE WaitableTimerHandle;
 #endif

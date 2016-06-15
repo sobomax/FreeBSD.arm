@@ -47,7 +47,7 @@ static const char sccsid[] = "@(#)rshd.c	8.2 (Berkeley) 4/6/94";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rshd/rshd.c 270111 2014-08-17 19:06:26Z neel $");
+__FBSDID("$FreeBSD: head/libexec/rshd/rshd.c 301242 2016-06-03 06:58:20Z lidl $");
 
 /*
  * remote shell server:
@@ -87,6 +87,10 @@ __FBSDID("$FreeBSD: head/libexec/rshd/rshd.c 270111 2014-08-17 19:06:26Z neel $"
 #include <security/pam_appl.h>
 #include <security/openpam.h>
 #include <sys/wait.h>
+
+#ifdef USE_BLACKLIST
+#include <blacklist.h>
+#endif
 
 static struct pam_conv pamc = { openpam_nullconv, NULL };
 static pam_handle_t *pamh;
@@ -252,6 +256,9 @@ doit(struct sockaddr *fromp)
 		    "connection from %s on illegal port %u",
 		    numericname,
 		    srcport);
+#ifdef USE_BLACKLIST
+		blacklist(1, STDIN_FILENO, "illegal port");
+#endif
 		exit(1);
 	}
 
@@ -285,6 +292,9 @@ doit(struct sockaddr *fromp)
 			    "2nd socket from %s on unreserved port %u",
 			    numericname,
 			    port);
+#ifdef USE_BLACKLIST
+			blacklist(1, STDIN_FILENO, "unreserved port");
+#endif
 			exit(1);
 		}
 		*((in_port_t *)&fromp->sa_data) = htons(port);
@@ -309,6 +319,9 @@ doit(struct sockaddr *fromp)
 	if (pam_err != PAM_SUCCESS) {
 		syslog(LOG_ERR|LOG_AUTH, "pam_start(): %s",
 		    pam_strerror(pamh, pam_err));
+#ifdef USE_BLACKLIST
+		blacklist(1, STDIN_FILENO, "login incorrect");
+#endif
 		rshd_errx(1, "Login incorrect.");
 	}
 
@@ -316,6 +329,9 @@ doit(struct sockaddr *fromp)
 	    (pam_err = pam_set_item(pamh, PAM_RHOST, rhost)) != PAM_SUCCESS) {
 		syslog(LOG_ERR|LOG_AUTH, "pam_set_item(): %s",
 		    pam_strerror(pamh, pam_err));
+#ifdef USE_BLACKLIST
+		blacklist(1, STDIN_FILENO, "login incorrect");
+#endif
 		rshd_errx(1, "Login incorrect.");
 	}
 
@@ -332,6 +348,9 @@ doit(struct sockaddr *fromp)
 		syslog(LOG_INFO|LOG_AUTH,
 		    "%s@%s as %s: permission denied (%s). cmd='%.80s'",
 		    ruser, rhost, luser, pam_strerror(pamh, pam_err), cmdbuf);
+#ifdef USE_BLACKLIST
+		blacklist(1, STDIN_FILENO, "permission denied");
+#endif
 		rshd_errx(1, "Login incorrect.");
 	}
 
@@ -341,6 +360,9 @@ doit(struct sockaddr *fromp)
 		syslog(LOG_INFO|LOG_AUTH,
 		    "%s@%s as %s: unknown login. cmd='%.80s'",
 		    ruser, rhost, luser, cmdbuf);
+#ifdef USE_BLACKLIST
+		blacklist(1, STDIN_FILENO, "unknown login");
+#endif
 		if (errorstr == NULL)
 			errorstr = "Login incorrect.";
 		rshd_errx(1, errorstr, rhost);
@@ -373,6 +395,9 @@ doit(struct sockaddr *fromp)
 			    "%s@%s as %s: permission denied (%s). cmd='%.80s'",
 			    ruser, rhost, luser, __rcmd_errstr,
 			    cmdbuf);
+#ifdef USE_BLACKLIST
+			blacklist(1, STDIN_FILENO, "permission denied");
+#endif
 			rshd_errx(1, "Login incorrect.");
 		}
 		if (!auth_timeok(lc, time(NULL)))
@@ -468,6 +493,9 @@ doit(struct sockaddr *fromp)
 		}
 	}
 
+#ifdef USE_BLACKLIST
+	blacklist(0, STDIN_FILENO, "success");
+#endif
 	for (fd = getdtablesize(); fd > 2; fd--)
 		(void) close(fd);
 	if (setsid() == -1)
@@ -534,8 +562,12 @@ getstr(char *buf, int cnt, const char *error)
 		if (read(STDIN_FILENO, &c, 1) != 1)
 			exit(1);
 		*buf++ = c;
-		if (--cnt == 0)
+		if (--cnt == 0) {
+#ifdef USE_BLACKLIST
+			blacklist(1, STDIN_FILENO, "buffer overflow");
+#endif
 			rshd_errx(1, "%s too long", error);
+		}
 	} while (c != 0);
 }
 

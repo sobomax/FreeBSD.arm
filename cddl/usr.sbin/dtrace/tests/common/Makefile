@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/common/Makefile 279418 2015-02-28 23:30:06Z markj $
+# $FreeBSD: head/cddl/usr.sbin/dtrace/tests/common/Makefile 295643 2016-02-16 02:13:59Z bdrewery $
 
 # We exclude several subdirectories: nfs and sysevent do not compile on
 # FreeBSD, and docsExamples doesn't seem amenable to automated testing.
@@ -85,7 +85,5 @@ TESTS_SUBDIRS+= aggs \
 
 .PATH:		${.CURDIR:H:H:H:H:H}/tests
 KYUAFILE=	YES
-
-SUBDIR_PARALLEL=
 
 .include <bsd.test.mk>

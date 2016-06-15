@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/ddb/db_command.c 283315 2015-05-23 14:59:27Z pfg $");
+__FBSDID("$FreeBSD: head/sys/ddb/db_command.c 298073 2016-04-15 17:27:20Z pfg $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -144,7 +144,7 @@ static struct command db_cmds[] = {
 };
 struct command_table db_cmd_table = LIST_HEAD_INITIALIZER(db_cmd_table);
 
-static struct command	*db_last_command = 0;
+static struct command	*db_last_command = NULL;
 
 /*
  * if 'ed' style: 'dot' is set at start of last item printed,
@@ -429,7 +429,7 @@ db_command(struct command **last_cmdp, struct command_table *cmd_table,
 	    }
 	}
 	*last_cmdp = cmd;
-	if (cmd != 0) {
+	if (cmd != NULL) {
 	    /*
 	     * Execute the command.
 	     */

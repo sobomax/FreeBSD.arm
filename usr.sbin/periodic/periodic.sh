@@ -1,16 +1,16 @@
 #!/bin/sh -
 #
-# $FreeBSD: head/usr.sbin/periodic/periodic.sh 255178 2013-09-03 13:40:24Z jlh $
+# $FreeBSD: head/usr.sbin/periodic/periodic.sh 300356 2016-05-21 02:14:11Z asomers $
 #
 # Run nightly periodic scripts
 #
-# usage: periodic { daily | weekly | monthly } - run standard periodic scripts
+# usage: periodic { daily | weekly | monthly | security } - run standard scripts
 #        periodic /absolute/path/to/directory  - run periodic scripts in dir
 #
 
 usage () {
     echo "usage: $0 <directory of files to execute>" 1>&2
-    echo "or     $0 { daily | weekly | monthly }"    1>&2
+    echo "or     $0 { daily | weekly | monthly | security }"    1>&2
     exit 1
 }
 

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2007-2015 Solarflare Communications Inc.
+ * Copyright (c) 2007-2016 Solarflare Communications Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
  *
  * Ackowledgement to Fen Systems Ltd.
  *
- * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 283514 2015-05-25 08:34:55Z arybchik $
+ * $FreeBSD: head/sys/dev/sfxge/common/efx_types.h 300607 2016-05-24 12:16:57Z arybchik $
  */
 
 #ifndef	_SYS_EFX_TYPES_H
@@ -536,7 +536,7 @@ extern int fix_lint;
 	    (_oword).eo_u32[3]) == ~((uint32_t)0))
 
 #define	EFX_QWORD_IS_SET64(_qword)					\
-	(((_qword).eq_u64[0]) == ~((uint32_t)0))
+	(((_qword).eq_u64[0]) == ~((uint64_t)0))
 
 #define	EFX_QWORD_IS_SET32(_qword)					\
 	(((_qword).eq_u32[0] &						\
@@ -1584,7 +1584,7 @@ extern int fix_lint;
 
 #define	EFX_OR_BYTE(_byte1, _byte2)					\
 	do {								\
-		(_byte1).eb_u8[0] &= (_byte2).eb_u8[0];			\
+		(_byte1).eb_u8[0] |= (_byte2).eb_u8[0];			\
 	_NOTE(CONSTANTCONDITION) 					\
 	} while (B_FALSE)
 

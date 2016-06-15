@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 278690 2015-02-13 18:32:55Z markj $");
+__FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 298886 2016-05-01 16:41:25Z pfg $");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -64,7 +64,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/gssd/gssd.c 278690 2015-02-13 18:32:55Z markj 
 
 struct gss_resource {
 	LIST_ENTRY(gss_resource) gr_link;
-	uint64_t	gr_id;	/* indentifier exported to kernel */
+	uint64_t	gr_id;	/* identifier exported to kernel */
 	void*		gr_res;	/* GSS-API resource pointer */
 };
 LIST_HEAD(gss_resource_list, gss_resource) gss_resources;
@@ -254,6 +254,7 @@ main(int argc, char **argv)
 
 	gssd_syscall(_PATH_GSSDSOCK);
 	svc_run();
+	gssd_syscall("");
 
 	return (0);
 }
@@ -751,8 +752,8 @@ gssd_pname_to_uid_1_svc(pname_to_uid_args *argp, pname_to_uid_res *result, struc
 					buflen_hint = buflen;
 			}
 			if (pw) {
-				int len = NGRPS;
-				int groups[NGRPS];
+				int len = NGROUPS;
+				int groups[NGROUPS];
 				result->gid = pw->pw_gid;
 				getgrouplist(pw->pw_name, pw->pw_gid,
 				    groups, &len);
@@ -1285,6 +1286,7 @@ void gssd_terminate(int sig __unused)
 	if (hostbased_initiator_cred != 0)
 		unlink(GSSD_CREDENTIAL_CACHE_FILE);
 #endif
+	gssd_syscall("");
 	exit(0);
 }
 

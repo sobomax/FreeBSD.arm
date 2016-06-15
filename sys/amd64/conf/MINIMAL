@@ -30,7 +30,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/amd64/conf/MINIMAL 277204 2015-01-15 00:42:06Z imp $
+# $FreeBSD: head/sys/amd64/conf/MINIMAL 297877 2016-04-12 21:23:44Z jhb $
 
 cpu		HAMMER
 ident		MINIMAL
@@ -92,6 +92,7 @@ options 	MALLOC_DEBUG_MAXZONES=8	# Separate malloc(9) zones
 
 # Make an SMP-capable kernel by default
 options 	SMP			# Symmetric MultiProcessor Kernel
+options 	DEVICE_NUMA		# I/O Device Affinity
 
 # CPU frequency control
 device		cpufreq

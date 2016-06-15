@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/reloc.c 281556 2015-04-15 14:20:12Z andrew $");
+__FBSDID("$FreeBSD: head/libexec/rtld-elf/aarch64/reloc.c 294373 2016-01-20 07:21:33Z kib $");
 
 #include <sys/types.h>
 
@@ -99,8 +99,8 @@ do_copy_relocations(Obj_Entry *dstobj)
 		req.ventry = fetch_ventry(dstobj, ELF_R_SYM(rela->r_info));
 		req.flags = SYMLOOK_EARLY;
 
-		for (srcobj = dstobj->next; srcobj != NULL;
-		     srcobj = srcobj->next) {
+		for (srcobj = globallist_next(dstobj); srcobj != NULL;
+		     srcobj = globallist_next(srcobj)) {
 			res = symlook_obj(&req, srcobj);
 			if (res == 0) {
 				srcsym = req.sym_out;
@@ -341,7 +341,8 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 			if (def == NULL)
 				return (-1);
 
-			*where = (Elf_Addr)defobj->relocbase + def->st_value;
+			*where = (Elf_Addr)defobj->relocbase + def->st_value +
+			    rela->r_addend;
 			break;
 		case R_AARCH64_COPY:
 			/*
@@ -380,7 +381,7 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 			}
 
 			*where = def->st_value + rela->r_addend +
-			    defobj->tlsoffset - TLS_TCB_SIZE;
+			    defobj->tlsoffset;
 			break;
 		case R_AARCH64_RELATIVE:
 			*where = (Elf_Addr)(obj->relocbase + rela->r_addend);

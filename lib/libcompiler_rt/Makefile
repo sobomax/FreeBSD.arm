@@ -1,7 +1,8 @@
-# $FreeBSD: head/lib/libcompiler_rt/Makefile 281600 2015-04-16 12:54:28Z emaste $
+# $FreeBSD: head/lib/libcompiler_rt/Makefile 300119 2016-05-18 06:01:18Z imp $
 
 .include <src.opts.mk>
 
+PACKAGE=lib${LIB}
 LIB=	compiler_rt
 NO_PIC=
 WARNS?=	2
@@ -44,10 +45,12 @@ SRCF=	absvdi2 \
 	divmoddi4 \
 	divmodsi4 \
 	divsc3 \
+	divtc3 \
 	divti3 \
 	divxc3 \
 	enable_execute_stack \
 	eprintf \
+	extendhfsf2 \
 	ffsdi2 \
 	ffsti2 \
 	fixdfdi \
@@ -121,6 +124,8 @@ SRCF=	absvdi2 \
 	subvsi3 \
 	subvti3 \
 	trampoline_setup \
+	truncdfhf2 \
+	truncsfhf2 \
 	ucmpdi2 \
 	ucmpti2 \
 	udivdi3 \
@@ -194,9 +199,10 @@ SRCF+=	stdatomic
 .endif
 
 .for file in ${SRCF}
-. if ${MACHINE_ARCH:Marm*hf*} != "" && exists(${CRTSRC}/${CRTARCH}/${file}vfp.S)
+.if ${MACHINE_ARCH:Marmv6*} && (!defined(CPUTYPE) || ${CPUTYPE:M*soft*} == "") && \
+    exists(${CRTSRC}/${CRTARCH}/${file}vfp.S)
 SRCS+= ${file}vfp.S
-. elif !(${MACHINE_CPUARCH} == "arm" && ${MACHINE_ARCH:Marm*hf*} == "") && exists(${CRTSRC}/${CRTARCH}/${file}.S)
+. elif exists(${CRTSRC}/${CRTARCH}/${file}.S)
 SRCS+=	${file}.S
 . else
 SRCS+=	${file}.c
@@ -230,7 +236,7 @@ SYMLINKS+=libcompiler_rt_p.a ${LIBDIR}/libgcc_p.a
 .endif
 
 .if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386" || \
-    ${MACHINE_CPUARCH} == "powerpc"
+    ${MACHINE_CPUARCH} == "powerpc" || ${MACHINE_ARCH:Marmv6*}
 AFLAGS+=--noexecstack
 ACFLAGS+=-Wa,--noexecstack
 .endif

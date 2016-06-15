@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.obj.mk 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/share/mk/bsd.obj.mk 295641 2016-02-16 02:09:48Z bdrewery $
 #
 # The include file <bsd.obj.mk> handles creating the 'obj' directory
 # and cleaning up object files, etc.
@@ -55,9 +55,12 @@ CANONICALOBJDIR= ${.OBJDIR}
 CANONICALOBJDIR:=${MAKEOBJDIRPREFIX}${.CURDIR}
 .elif defined(MAKEOBJDIR) && ${MAKEOBJDIR:M/*} != ""
 CANONICALOBJDIR:=${MAKEOBJDIR}
+OBJTOP?= ${MAKEOBJDIR}
 .else
 CANONICALOBJDIR:=/usr/obj${.CURDIR}
 .endif
+
+OBJTOP?= ${.OBJDIR:S,${.CURDIR},,}${SRCTOP}
 
 #
 # Warn of unorthodox object directory.
@@ -86,6 +89,7 @@ objwarn:
 		canonical ${CANONICALOBJDIR}"
 .endif
 .endif
+beforebuild: objwarn
 
 .if !defined(NO_OBJ)
 .if !target(obj)

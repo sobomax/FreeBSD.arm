@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  Copyright (c) 2013-2014, Intel Corporation 
+  Copyright (c) 2013-2015, Intel Corporation 
   All rights reserved.
   
   Redistribution and use in source and binary forms, with or without 
@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/i40e_alloc.h 271834 2014-09-18 21:13:03Z bz $*/
+/*$FreeBSD: head/sys/dev/ixl/i40e_alloc.h 299545 2016-05-12 18:18:55Z erj $*/
 
 #ifndef _I40E_ALLOC_H_
 #define _I40E_ALLOC_H_

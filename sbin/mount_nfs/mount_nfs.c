@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)mount_nfs.c	8.11 (Berkeley) 5/4/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/mount_nfs/mount_nfs.c 273896 2014-10-31 09:51:54Z trasz $");
+__FBSDID("$FreeBSD: head/sbin/mount_nfs/mount_nfs.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <sys/param.h>
 #include <sys/linker.h>
@@ -476,7 +476,8 @@ main(int argc, char *argv[])
 	build_iovec(&iov, &iovlen, "errmsg", errmsg, sizeof(errmsg));
 
 	if (nmount(iov, iovlen, 0))
-		err(1, "%s, %s", mntpath, errmsg);
+		err(1, "nmount: %s%s%s", mntpath, errmsg[0] ? ", " : "",
+		    errmsg);
 
 	exit(0);
 }
@@ -591,8 +592,8 @@ getnfsargs(char *spec, struct iovec **iov, int *iovlen)
 		 * For a Kerberized nfs mount where the "principal"
 		 * argument has not been set, add it here.
 		 */
-		if (got_principal == 0 && secflavor >= 0 &&
-		    secflavor != AUTH_SYS && ai_nfs->ai_canonname != NULL) {
+		if (got_principal == 0 && secflavor != AUTH_SYS &&
+		    ai_nfs->ai_canonname != NULL) {
 			snprintf(pname, sizeof (pname), "nfs@%s",
 			    ai_nfs->ai_canonname);
 			build_iovec(iov, iovlen, "principal", pname,
@@ -1026,7 +1027,7 @@ xdr_fh(XDR *xdrsp, struct nfhret *np)
 		if (!authfnd && (authcnt > 0 || np->auth != AUTH_SYS))
 			np->stat = EAUTH;
 		return (1);
-	};
+	}
 	return (0);
 }
 

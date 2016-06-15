@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ipmi/ipmivars.h 281941 2015-04-24 16:56:23Z jhb $
+ * $FreeBSD: head/sys/dev/ipmi/ipmivars.h 287303 2015-08-30 08:48:31Z delphij $
  */
 
 #ifndef __IPMIVARS_H__
@@ -193,13 +193,6 @@ struct ipmi_ipmb {
 #define	IPMI_IO_LOCK(sc)	mtx_lock(&(sc)->ipmi_io_lock)
 #define	IPMI_IO_UNLOCK(sc)	mtx_unlock(&(sc)->ipmi_io_lock)
 #define	IPMI_IO_LOCK_ASSERT(sc)	mtx_assert(&(sc)->ipmi_io_lock, MA_OWNED)
-
-#if __FreeBSD_version < 601105
-#define bus_read_1(r, o) \
-	bus_space_read_1(rman_get_bustag(r), rman_get_bushandle(r), (o))
-#define bus_write_1(r, o, v) \
-	bus_space_write_1(rman_get_bustag(r), rman_get_bushandle(r), (o), (v))
-#endif
 
 /* I/O to a single I/O resource. */
 #define INB_SINGLE(sc, x)						\

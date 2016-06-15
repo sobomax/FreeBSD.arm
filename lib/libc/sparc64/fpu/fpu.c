@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/sparc64/fpu/fpu.c 258780 2013-11-30 22:17:27Z eadler $");
+__FBSDID("$FreeBSD: head/lib/libc/sparc64/fpu/fpu.c 290883 2015-11-15 20:44:22Z bapt $");
 
 #include <sys/param.h>
 
@@ -270,7 +270,7 @@ __fpu_execute(struct utrapframe *uf, struct fpemu *fe, u_int32_t insn,
     u_long tstate)
 {
 	struct fpn *fp;
-	int opf, rs1, rs2, rd, type, mask, cx, cond;
+	int opf, rs1, rs2, rd, type, mask, cx, cond __unused;
 	u_long reg, fsr;
 	u_int space[4];
 

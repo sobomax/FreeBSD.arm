@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/asmacros.h 284324 2015-06-12 15:06:17Z jhb $
+ * $FreeBSD: head/sys/i386/include/asmacros.h 290164 2015-10-29 21:25:46Z jhb $
  */
 
 #ifndef _MACHINE_ASMACROS_H_
@@ -147,11 +147,11 @@
 	pushl	$0 ;		/* dummy trap type */			\
 	pushal ;		/* 8 ints */				\
 	pushl	$0 ;		/* save data and extra segments ... */	\
-	mov	%ds,(%esp) ;						\
+	movw	%ds,(%esp) ;						\
 	pushl	$0 ;							\
-	mov	%es,(%esp) ;						\
+	movw	%es,(%esp) ;						\
 	pushl	$0 ;							\
-	mov	%fs,(%esp)
+	movw	%fs,(%esp)
 	
 #define	POP_FRAME							\
 	popl	%fs ;							\

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/bsdiff/bspatch/bspatch.c 264823 2014-04-23 14:05:28Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/bsdiff/bspatch/bspatch.c 298089 2016-04-15 22:31:22Z pfg $");
 
 #include <bzlib.h>
 #include <stdlib.h>
@@ -161,7 +161,7 @@ int main(int argc,char * argv[])
 			    (cbz2err != BZ_STREAM_END)))
 				errx(1, "Corrupt patch\n");
 			ctrl[i]=offtin(buf);
-		};
+		}
 
 		/* Sanity-check */
 		if(newpos+ctrl[0]>newsize)
@@ -195,7 +195,7 @@ int main(int argc,char * argv[])
 		/* Adjust pointers */
 		newpos+=ctrl[1];
 		oldpos+=ctrl[2];
-	};
+	}
 
 	/* Clean up the bzip2 reads */
 	BZ2_bzReadClose(&cbz2err, cpfbz2);

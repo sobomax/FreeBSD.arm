@@ -32,7 +32,7 @@
 
 #ifdef _KERNEL
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_acl_nfs4.c 234385 2012-04-17 14:54:00Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_acl_nfs4.c 287445 2015-09-04 00:14:20Z delphij $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -1068,6 +1068,7 @@ acl_nfs4_inherit_entries(const struct acl *parent_aclp,
 		child_aclp->acl_cnt++;
 
 		entry->ae_flags &= ~ACL_ENTRY_INHERIT_ONLY;
+		entry->ae_flags |= ACL_ENTRY_INHERITED;
 
 		/*
 		 * If the type of the ACE is neither ALLOW nor DENY,

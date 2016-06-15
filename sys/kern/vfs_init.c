@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/vfs_init.c 283735 2015-05-29 13:24:17Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/vfs_init.c 287835 2015-09-15 23:06:56Z mjg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -291,7 +291,7 @@ vfs_register(struct vfsconf *vfc)
 	 * preserved by re-registering the oid after modifying its
 	 * number.
 	 */
-	sysctl_xlock();
+	sysctl_wlock();
 	SLIST_FOREACH(oidp, SYSCTL_CHILDREN(&sysctl___vfs), oid_link) {
 		if (strcmp(oidp->oid_name, vfc->vfc_name) == 0) {
 			sysctl_unregister_oid(oidp);
@@ -300,7 +300,7 @@ vfs_register(struct vfsconf *vfc)
 			break;
 		}
 	}
-	sysctl_xunlock();
+	sysctl_wunlock();
 
 	return (0);
 }

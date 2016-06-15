@@ -32,7 +32,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/sys/Ovfork.S 270882 2014-08-31 17:21:51Z ian $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/sys/Ovfork.S 288373 2015-09-29 16:09:58Z kib $");
 #include "SYS.h"
 
 /*
@@ -53,3 +53,5 @@ ENTRY(vfork)
 	and	r0, r0, r1	/* r0 == 0 if child, else unchanged */
 	mov	r15, r2
 END(vfork)
+
+	.section .note.GNU-stack,"",%progbits

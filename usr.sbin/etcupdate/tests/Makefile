@@ -1,6 +1,4 @@
-# $FreeBSD: head/usr.sbin/etcupdate/tests/Makefile 263226 2014-03-16 04:09:22Z jmmv $
-
-TESTSDIR=	${TESTSBASE}/usr.sbin/etcupdate
+# $FreeBSD: head/usr.sbin/etcupdate/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
 PLAIN_TESTS_SH=
 .for test in	always_test \

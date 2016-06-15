@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: head/sys/pc98/conf/NOTES 265215 2014-05-02 07:14:22Z eadler $
+# $FreeBSD: head/sys/pc98/conf/NOTES 298824 2016-04-29 23:53:55Z jhb $
 #
 
 #
@@ -282,11 +282,6 @@ options 	EPSON_BOUNCEDMA
 options 	EPSON_MEMWIN
 
 #
-# PCI bus & PCI options:
-#
-device		pci
-
-#
 # AGP GART support
 device		agp
 
@@ -506,7 +501,7 @@ options 	KVA_PAGES=260
 # ABI Emulation
 
 # Enable iBCS2 runtime support for SCO and ISC binaries
-options 	IBCS2
+#options 	IBCS2
 
 # Emulate spx device for client side of SVR3 local X interface
 options 	SPX_HACK

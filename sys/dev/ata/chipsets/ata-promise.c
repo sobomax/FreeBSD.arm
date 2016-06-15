@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-promise.c 280393 2015-03-23 19:47:52Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ata/chipsets/ata-promise.c 295664 2016-02-16 17:55:10Z jhibbits $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -191,7 +191,7 @@ ata_promise_probe(device_t dev)
 	!BUS_READ_IVAR(device_get_parent(GRANDPARENT(dev)),
 		       GRANDPARENT(dev), PCI_IVAR_DEVID, &devid) &&
 	((devid == ATA_DEC_21150) || (devid == ATA_DEC_21150_1))) {
-	static long start = 0, end = 0;
+	static rman_res_t start = 0, end = 0;
 
 	if (pci_get_slot(dev) == 1) {
 	    bus_get_resource(dev, SYS_RES_IRQ, 0, &start, &end);

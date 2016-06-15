@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/security/audit/audit_syscalls.c 280130 2015-03-16 00:10:03Z mjg $");
+__FBSDID("$FreeBSD: head/sys/security/audit/audit_syscalls.c 297694 2016-04-08 03:26:21Z pfg $");
 
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -303,8 +303,8 @@ sys_auditon(struct thread *td, struct auditon_args *uap)
 			    (udata.au_qctrl64.aq64_lowater >=
 			    udata.au_qctrl.aq_hiwater) ||
 			    (udata.au_qctrl64.aq64_bufsz > AQ_MAXBUFSZ) ||
-			    (udata.au_qctrl64.aq64_minfree < 0) ||
-			    (udata.au_qctrl64.aq64_minfree > 100))
+			    (udata.au_qctrl64.aq64_minfree > 100) ||
+			    (udata.au_qctrl64.aq64_minfree < 0))
 				return (EINVAL);
 			audit_qctrl.aq_hiwater =
 			    (int)udata.au_qctrl64.aq64_hiwater;

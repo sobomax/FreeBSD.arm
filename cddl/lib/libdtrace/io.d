@@ -18,15 +18,14 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/cddl/lib/libdtrace/io.d 248846 2013-03-28 20:22:43Z gnn $
+ * $FreeBSD: head/cddl/lib/libdtrace/io.d 286420 2015-08-07 19:56:22Z markj $
  */
 /*
  * Copyright 2006 Sun Microsystems, Inc.  All rights reserved.
  * Use is subject to license terms.
  */
 
-#pragma ident	"%Z%%M%	%I%	%E% SMI"
-
+#pragma D depends_on module kernel
 #pragma D depends_on provider io
 
 typedef struct devinfo {

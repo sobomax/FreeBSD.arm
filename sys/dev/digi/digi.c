@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/digi/digi.c 162711 2006-09-27 19:57:02Z ru $
+ * $FreeBSD: head/sys/dev/digi/digi.c 298307 2016-04-19 23:37:24Z pfg $
  */
 
 /*-
@@ -1441,8 +1441,8 @@ digi_errortxt(int id)
 		"tty-level buffer overflow",
 	};
 
-	KASSERT(id >= 0 && id < sizeof(error_desc) / sizeof(error_desc[0]),
-	    ("Unexpected digi error id %d\n", id));
+	KASSERT(id >= 0 && id < nitems(error_desc),
+		("Unexpected digi error id %d\n", id));
 
 	return (error_desc[id]);
 }

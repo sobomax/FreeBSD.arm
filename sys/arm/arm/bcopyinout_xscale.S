@@ -36,9 +36,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout_xscale.S 284264 2015-06-11 13:54:18Z andrew $");
-
-#include <machine/acle-compat.h>
+__FBSDID("$FreeBSD: head/sys/arm/arm/bcopyinout_xscale.S 300694 2016-05-25 19:44:26Z ian $");
 
 	.syntax	unified
 	.text
@@ -66,6 +64,15 @@ ENTRY(copyin)
 	cmp	r2, #0x00
 	movle	r0, #0x00
 	movle	pc, lr			/* Bail early if length is <= 0 */
+
+	adds	r3, r0, r2
+	movcs	r0, #EFAULT
+	RETc(cs)
+
+	ldr	r12, =(VM_MAXUSER_ADDRESS + 1)
+	cmp	r3, r12
+	movcs	r0, #EFAULT
+	RETc(cs)
 
 	ldr	r3, .L_arm_memcpy
 	ldr	r3, [r3]
@@ -508,6 +515,15 @@ ENTRY(copyout)
 	cmp	r2, #0x00
 	movle	r0, #0x00
 	movle	pc, lr			/* Bail early if length is <= 0 */
+
+	adds	r3, r1, r2
+	movcs	r0, #EFAULT
+	RETc(cs)
+
+	ldr	r12, =(VM_MAXUSER_ADDRESS + 1)
+	cmp	r3, r12
+	movcs	r0, #EFAULT
+	RETc(cs)
 
 	ldr	r3, .L_arm_memcpy
 	ldr	r3, [r3]

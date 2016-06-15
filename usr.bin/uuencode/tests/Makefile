@@ -1,13 +1,12 @@
-# $FreeBSD: head/usr.bin/uuencode/tests/Makefile 263227 2014-03-16 08:04:06Z jmmv $
+# $FreeBSD: head/usr.bin/uuencode/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
 
-TESTSDIR=	${TESTSBASE}/usr.bin/uuencode
+PACKAGE=	tests
 
 TAP_TESTS_SH=	legacy_test
 
-FILESDIR=	${TESTSDIR}
-FILES=		regress.base64.out
-FILES+=		regress.in
-FILES+=		regress.sh
-FILES+=		regress.traditional.out
+${PACKAGE}FILES+=		regress.base64.out
+${PACKAGE}FILES+=		regress.in
+${PACKAGE}FILES+=		regress.sh
+${PACKAGE}FILES+=		regress.traditional.out
 
 .include <bsd.test.mk>

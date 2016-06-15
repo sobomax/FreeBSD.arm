@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/fstyp/fstyp.c 284728 2015-06-23 16:34:43Z allanjude $");
+__FBSDID("$FreeBSD: head/usr.sbin/fstyp/fstyp.c 297964 2016-04-14 12:51:06Z araujo $");
 
 #include <sys/capsicum.h>
 #include <sys/disk.h>
@@ -39,7 +39,6 @@ __FBSDID("$FreeBSD: head/usr.sbin/fstyp/fstyp.c 284728 2015-06-23 16:34:43Z alla
 #include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -83,7 +82,7 @@ read_buf(FILE *fp, off_t off, size_t len)
 	}
 
 	buf = malloc(len);
-	if (buf == 0) {
+	if (buf == NULL) {
 		warn("cannot malloc %zd bytes of memory", len);
 		return (NULL);
 	}

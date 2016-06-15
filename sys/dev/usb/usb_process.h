@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/usb_process.h 263423 2014-03-20 13:53:24Z hselasky $ */
+/* $FreeBSD: head/sys/dev/usb/usb_process.h 286773 2015-08-14 12:57:53Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -34,6 +34,7 @@
 #endif
 
 /* defines */
+#define	USB_PRI_HIGHEST	PI_SWI(SWI_TTY)
 #define	USB_PRI_HIGH	PI_SWI(SWI_NET)
 #define	USB_PRI_MED	PI_SWI(SWI_CAMBIO)
 

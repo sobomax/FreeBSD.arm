@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/libkern/random.c 128019 2004-04-07 20:46:16Z imp $");
+__FBSDID("$FreeBSD: head/sys/libkern/random.c 284959 2015-06-30 17:00:45Z markm $");
 
 #include <sys/libkern.h>
 
@@ -50,7 +50,7 @@ srandom(seed)
 }
 
 /*
- * Pseudo-random number generator for randomizing the profiling clock,
+ * Pseudo-random number generator for perturbing the profiling clock,
  * and whatever else we might use it for.  The result is uniform on
  * [0, 2^31 - 1].
  */

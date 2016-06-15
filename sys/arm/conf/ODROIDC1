@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/ODROIDC1 283137 2015-05-20 05:49:52Z ganbold $
+# $FreeBSD: head/sys/arm/conf/ODROIDC1 298068 2016-04-15 16:05:41Z andrew $
 
 #NO_UNIVERSE
 
@@ -26,6 +26,7 @@ options 	SMP			# Enable multiple cores
 
 # Interrupt controller
 device		gic
+options 	INTRNG
 
 options 	FDT_DTB_STATIC
 makeoptions	FDT_DTS_FILE=odroidc1.dts

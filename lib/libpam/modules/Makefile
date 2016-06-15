@@ -22,10 +22,11 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/lib/libpam/modules/Makefile 112044 2003-03-09 20:06:38Z obrien $
+# $FreeBSD: head/lib/libpam/modules/Makefile 297947 2016-04-14 01:17:37Z bdrewery $
 
 .include "modules.inc"
 
 SUBDIR=	${MODULES}
+SUBDIR_PARALLEL=
 
 .include <bsd.subdir.mk>

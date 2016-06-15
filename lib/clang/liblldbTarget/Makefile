@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/liblldbTarget/Makefile 280031 2015-03-15 13:31:13Z dim $
+# $FreeBSD: head/lib/clang/liblldbTarget/Makefile 296417 2016-03-05 20:24:31Z dim $
 
 .include <bsd.own.mk>
 
@@ -15,11 +15,10 @@ SRCS=	ABI.cpp \
 	InstrumentationRuntimeStopInfo.cpp \
 	JITLoader.cpp \
 	JITLoaderList.cpp \
+	Language.cpp \
 	LanguageRuntime.cpp \
 	Memory.cpp \
 	MemoryHistory.cpp \
-	NativeRegisterContext.cpp \
-	NativeRegisterContextRegisterInfo.cpp \
 	ObjCLanguageRuntime.cpp \
 	OperatingSystem.cpp \
 	PathMappingList.cpp \
@@ -46,6 +45,7 @@ SRCS=	ABI.cpp \
 	ThreadPlan.cpp \
 	ThreadPlanBase.cpp \
 	ThreadPlanCallFunction.cpp \
+	ThreadPlanCallFunctionUsingABI.cpp \
 	ThreadPlanCallUserExpression.cpp \
 	ThreadPlanPython.cpp \
 	ThreadPlanRunToAddress.cpp \

@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)pcb.h	5.10 (Berkeley) 5/12/91
- * $FreeBSD: head/sys/amd64/include/pcb.h 271192 2014-09-06 15:23:28Z jhb $
+ * $FreeBSD: head/sys/amd64/include/pcb.h 290728 2015-11-12 22:00:59Z jhb $
  */
 
 #ifndef _AMD64_PCB_H_
@@ -44,15 +44,19 @@
 #include <machine/segments.h>
 
 #ifdef __amd64__
+/*
+ * NB: The fields marked with (*) are used by kernel debuggers.  Their
+ * ABI should be preserved.
+ */
 struct pcb {
-	register_t	pcb_r15;
-	register_t	pcb_r14;
-	register_t	pcb_r13;
-	register_t	pcb_r12;
-	register_t	pcb_rbp;
-	register_t	pcb_rsp;
-	register_t	pcb_rbx;
-	register_t	pcb_rip;
+	register_t	pcb_r15;	/* (*) */
+	register_t	pcb_r14;	/* (*) */
+	register_t	pcb_r13;	/* (*) */
+	register_t	pcb_r12;	/* (*) */
+	register_t	pcb_rbp;	/* (*) */
+	register_t	pcb_rsp;	/* (*) */
+	register_t	pcb_rbx;	/* (*) */
+	register_t	pcb_rip;	/* (*) */
 	register_t	pcb_fsbase;
 	register_t	pcb_gsbase;
 	register_t	pcb_kgsbase;
@@ -85,8 +89,7 @@ struct pcb {
 	/* copyin/out fault recovery */
 	caddr_t		pcb_onfault;
 
-	/* 32-bit segment descriptor */
-	struct user_segment_descriptor pcb_gs32sd;
+	uint64_t	pcb_pad0;
 
 	/* local tss, with i/o bitmap; NULL for common */
 	struct amd64tss *pcb_tssp;

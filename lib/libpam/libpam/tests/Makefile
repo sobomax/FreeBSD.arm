@@ -1,6 +1,6 @@
-# $FreeBSD: head/lib/libpam/libpam/tests/Makefile 275103 2014-11-26 08:09:44Z bapt $
+# $FreeBSD: head/lib/libpam/libpam/tests/Makefile 289172 2015-10-12 08:16:03Z ngie $
 
-OPENPAM = ${.CURDIR}/../../../../contrib/openpam
+OPENPAM=	${SRCTOP}/contrib/openpam
 .PATH: ${OPENPAM}/t
 
 TESTSDIR = ${TESTSBASE}/lib/libpam

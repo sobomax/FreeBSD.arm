@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/include/pcpu.h 282274 2015-04-30 15:48:48Z jhb $
+ * $FreeBSD: head/sys/i386/include/pcpu.h 286296 2015-08-04 19:46:13Z jah $
  */
 
 #ifndef _MACHINE_PCPU_H_
@@ -58,7 +58,8 @@
 	int	pc_private_tss;		/* Flag indicating private tss*/\
 	u_int	pc_cmci_mask;		/* MCx banks for CMCI */	\
 	u_int	pc_vcpu_id;		/* Xen vCPU ID */		\
-	char	__pad[233]
+	vm_offset_t pc_qmap_addr;	/* KVA for temporary mappings */\
+	char	__pad[229]
 
 #ifdef _KERNEL
 

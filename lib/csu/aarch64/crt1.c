@@ -30,13 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/csu/aarch64/crt1.c 284707 2015-06-22 19:43:08Z andrew $");
-
-#ifndef lint
-#ifndef __GNUC__
-#error "GCC is needed to compile this file"
-#endif
-#endif /* lint */
+__FBSDID("$FreeBSD: head/lib/csu/aarch64/crt1.c 300406 2016-05-22 08:20:30Z andrew $");
 
 #include <stdlib.h>
 
@@ -51,6 +45,8 @@ extern int eprol;
 extern int etext;
 #endif
 
+extern long * _end;
+
 void __start(int, char **, char **, void (*)(void));
 
 /* The entry function. */
@@ -58,11 +54,7 @@ __asm("	.text			\n"
 "	.align	0		\n"
 "	.globl	_start		\n"
 "	_start:			\n"
-/* TODO: Remove this when the kernel correctly aligns the stack */
-"	cbnz	x0, 1f		\n" /* Are we using a new kernel? */
-"	mov	x0, sp		\n" /* No, load the args from sp */
-"	and	sp, x0, #~0xf	\n" /* And align the stack */
-"1:	mov	x3, x2		\n" /* cleanup */
+"	mov	x3, x2		\n" /* cleanup */
 "	add	x1, x0, #8	\n" /* load argv */
 "	ldr	x0, [x0]	\n" /* load argc */
 "	add	x2, x1, x0, lsl #3 \n" /* env is after argv */

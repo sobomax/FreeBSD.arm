@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/usr.bin/zstreamdump/Makefile 227793 2011-11-21 14:50:17Z mm $
+# $FreeBSD: head/cddl/usr.bin/zstreamdump/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
 
 .PATH: ${.CURDIR}/../..//contrib/opensolaris/cmd/zstreamdump
 
@@ -18,9 +18,7 @@ CFLAGS+= -I${.CURDIR}/../../../sys/cddl/contrib/opensolaris/uts/common
 CFLAGS+= -I${.CURDIR}/../../contrib/opensolaris/head
 CFLAGS+= -I${.CURDIR}/../../lib/libumem
 
-DPADD=	${LIBM} ${LIBNVPAIR} ${LIBUMEM} ${LIBZPOOL} \
-	${LIBPTHREAD} ${LIBZ} ${LIBAVL}
-LDADD=	-lm -lnvpair -lumem -lzpool -lpthread -lz -lavl
+LIBADD=	m nvpair umem zpool pthread z avl
 
 CSTD=	c99
 

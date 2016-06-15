@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/gcore/elfcore.c 278761 2015-02-14 17:12:31Z jhb $");
+__FBSDID("$FreeBSD: head/usr.bin/gcore/elfcore.c 299458 2016-05-11 15:31:31Z cem $");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -560,8 +560,8 @@ elf_note_prpsinfo(void *arg, size_t *sizep)
 		err(1, "kern.proc.pid.%u", pid);
 	if (kip.ki_pid != pid)
 		err(1, "kern.proc.pid.%u", pid);
-	strncpy(psinfo->pr_fname, kip.ki_comm, MAXCOMLEN);
-	strncpy(psinfo->pr_psargs, psinfo->pr_fname, PRARGSZ);
+	strlcpy(psinfo->pr_fname, kip.ki_comm, sizeof(psinfo->pr_fname));
+	strlcpy(psinfo->pr_psargs, psinfo->pr_fname, sizeof(psinfo->pr_psargs));
 
 	*sizep = sizeof(*psinfo);
 	return (psinfo);

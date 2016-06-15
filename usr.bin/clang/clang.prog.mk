@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/clang.prog.mk 284345 2015-06-13 19:20:56Z sjg $
+# $FreeBSD: head/usr.bin/clang/clang.prog.mk 298107 2016-04-16 07:45:30Z gjb $
 
 LLVM_SRCS= ${.CURDIR}/../../../contrib/llvm
 
@@ -9,8 +9,9 @@ DPADD+=	${.OBJDIR}/../../../lib/clang/lib${lib}/lib${lib}.a
 LDADD+=	${.OBJDIR}/../../../lib/clang/lib${lib}/lib${lib}.a
 .endfor
 
-DPADD+=	${LIBNCURSESW}
-LDADD+=	-lncursesw
+PACKAGE=	clang
+
+LIBADD+= ncursesw pthread
 
 BINDIR?= /usr/bin
 

@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/scc/Makefile 232176 2012-02-26 13:27:22Z jhibbits $
+# $FreeBSD: head/sys/modules/scc/Makefile 285068 2015-07-03 01:50:26Z imp $
 
 .PATH: ${.CURDIR}/../../dev/scc
 
@@ -13,8 +13,5 @@ KMOD=	scc
 SRCS=	${scc_bfe} scc_core.c scc_if.c scc_if.h \
 	scc_dev_sab82532.c scc_dev_z8530.c
 SRCS+=	bus_if.h device_if.h ofw_bus_if.h serdev_if.c serdev_if.h
-
-MFILES=	dev/ofw/ofw_bus_if.m dev/scc/scc_if.m \
-	kern/bus_if.m kern/device_if.m kern/serdev_if.m
 
 .include <bsd.kmod.mk>

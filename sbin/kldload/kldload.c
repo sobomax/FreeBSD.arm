@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/kldload/kldload.c 260597 2014-01-13 17:14:10Z bapt $");
+__FBSDID("$FreeBSD: head/sbin/kldload/kldload.c 298249 2016-04-19 04:52:51Z araujo $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -74,7 +74,7 @@ path_check(const char *kldname, int quiet)
 	dev = sb.st_dev;
 	ino = sb.st_ino;
 
-	miblen = sizeof(mib) / sizeof(mib[0]);
+	miblen = nitems(mib);
 	if (sysctlnametomib(PATHCTL, mib, &miblen) != 0) {
 		err(1, "sysctlnametomib(%s)", PATHCTL);
 	}

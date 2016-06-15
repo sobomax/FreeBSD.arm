@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdkrpc.c 283600 2015-05-27 09:20:42Z kib $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdkrpc.c 299203 2016-05-06 23:40:37Z pfg $");
 
 #include "opt_inet6.h"
 #include "opt_kgssapi.h"
@@ -231,10 +231,16 @@ nfssvc_program(struct svc_req *rqst, SVCXPRT *xprt)
 		 * Get a refcnt (shared lock) on nfsd_suspend_lock.
 		 * NFSSVC_SUSPENDNFSD will take an exclusive lock on
 		 * nfsd_suspend_lock to suspend these threads.
+		 * The call to nfsv4_lock() that precedes nfsv4_getref()
+		 * ensures that the acquisition of the exclusive lock
+		 * takes priority over acquisition of the shared lock by
+		 * waiting for any exclusive lock request to complete.
 		 * This must be done here, before the check of
 		 * nfsv4root exports by nfsvno_v4rootexport().
 		 */
 		NFSLOCKV4ROOTMUTEX();
+		nfsv4_lock(&nfsd_suspend_lock, 0, NULL, NFSV4ROOTLOCKMUTEXPTR,
+		    NULL);
 		nfsv4_getref(&nfsd_suspend_lock, NULL, NFSV4ROOTLOCKMUTEXPTR,
 		    NULL);
 		NFSUNLOCKV4ROOTMUTEX();
@@ -544,6 +550,7 @@ nfsrvd_init(int terminating)
 	if (terminating) {
 		nfsd_master_proc = NULL;
 		NFSD_UNLOCK();
+		nfsrv_freeallbackchannel_xprts();
 		svcpool_destroy(nfsrvd_pool);
 		nfsrvd_pool = NULL;
 		NFSD_LOCK();

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ptrace.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: head/sys/x86/include/ptrace.h 274817 2014-11-21 20:53:17Z jhb $
+ * $FreeBSD: head/sys/x86/include/ptrace.h 284919 2015-06-29 07:07:24Z kib $
  */
 
 #ifndef _MACHINE_PTRACE_H_
@@ -51,6 +51,10 @@
 #define	PT_GETXSTATE_INFO (PT_FIRSTMACH + 4)
 #define	PT_GETXSTATE	(PT_FIRSTMACH + 5)
 #define	PT_SETXSTATE	(PT_FIRSTMACH + 6)
+#define	PT_GETFSBASE	(PT_FIRSTMACH + 7)
+#define	PT_SETFSBASE	(PT_FIRSTMACH + 8)
+#define	PT_GETGSBASE	(PT_FIRSTMACH + 9)
+#define	PT_SETGSBASE	(PT_FIRSTMACH + 10)
 
 /* Argument structure for PT_GETXSTATE_INFO. */
 struct ptrace_xstate_info {

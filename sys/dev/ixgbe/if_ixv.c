@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/if_ixv.c 283883 2015-06-01 17:43:34Z jfv $*/
+/*$FreeBSD: head/sys/dev/ixgbe/if_ixv.c 299200 2016-05-06 22:54:56Z pfg $*/
 
 
 #ifndef IXGBE_STANDALONE_BUILD
@@ -43,7 +43,7 @@
 /*********************************************************************
  *  Driver version
  *********************************************************************/
-char ixv_driver_version[] = "1.4.0";
+char ixv_driver_version[] = "1.4.6-k";
 
 /*********************************************************************
  *  PCI Device ID Table
@@ -115,6 +115,8 @@ static void	ixv_save_stats(struct adapter *);
 static void	ixv_init_stats(struct adapter *);
 static void	ixv_update_stats(struct adapter *);
 static void	ixv_add_stats_sysctls(struct adapter *);
+static void	ixv_set_sysctl_value(struct adapter *, const char *,
+		    const char *, int *, int);
 
 /* The MSI/X Interrupt handlers */
 static void	ixv_msix_que(void *);
@@ -123,6 +125,18 @@ static void	ixv_msix_mbx(void *);
 /* Deferred interrupt tasklets */
 static void	ixv_handle_que(void *, int);
 static void	ixv_handle_mbx(void *, int);
+
+#ifdef DEV_NETMAP
+/*
+ * This is defined in <dev/netmap/ixgbe_netmap.h>, which is included by
+ * if_ix.c.
+ */
+extern void ixgbe_netmap_attach(struct adapter *adapter);
+
+#include <net/netmap.h>
+#include <sys/selinfo.h>
+#include <dev/netmap/netmap_kern.h>
+#endif /* DEV_NETMAP */
 
 /*********************************************************************
  *  FreeBSD Device Interface Entry Points
@@ -145,6 +159,9 @@ devclass_t ixv_devclass;
 DRIVER_MODULE(ixv, pci, ixv_driver, ixv_devclass, 0, 0);
 MODULE_DEPEND(ixv, pci, 1, 1, 1);
 MODULE_DEPEND(ixv, ether, 1, 1, 1);
+#ifdef DEV_NETMAP
+MODULE_DEPEND(ix, netmap, 1, 1, 1);
+#endif /* DEV_NETMAP */
 /* XXX depend on 'ix' ? */
 
 /*
@@ -178,7 +195,7 @@ TUNABLE_INT("hw.ixv.flow_control", &ixv_flow_control);
 
 /*
  * Header split: this causes the hardware to DMA
- * the header into a seperate mbuf from the payload,
+ * the header into a separate mbuf from the payload,
  * it can be a performance win in some workloads, but
  * in others it actually hurts, its off by default.
  */
@@ -275,8 +292,13 @@ ixv_attach(device_t dev)
 
 	/* Allocate, clear, and link in our adapter structure */
 	adapter = device_get_softc(dev);
-	adapter->dev = adapter->osdep.dev = dev;
+	adapter->dev = dev;
 	hw = &adapter->hw;
+
+#ifdef DEV_NETMAP
+	adapter->init_locked = ixv_init_locked;
+	adapter->stop_locked = ixv_stop;
+#endif
 
 	/* Core Lock Init*/
 	IXGBE_CORE_LOCK_INIT(adapter, device_get_nameunit(dev));
@@ -300,10 +322,19 @@ ixv_attach(device_t dev)
 
 	/* Do base PCI setup - map BAR0 */
 	if (ixv_allocate_pci_resources(adapter)) {
-		device_printf(dev, "Allocation of PCI resources failed\n");
+		device_printf(dev, "ixv_allocate_pci_resources() failed!\n");
 		error = ENXIO;
 		goto err_out;
 	}
+
+	/* Sysctls for limiting the amount of work done in the taskqueues */
+	ixv_set_sysctl_value(adapter, "rx_processing_limit",
+	    "max number of rx packets to process",
+	    &adapter->rx_process_limit, ixv_rx_process_limit);
+
+	ixv_set_sysctl_value(adapter, "tx_processing_limit",
+	    "max number of tx packets to process",
+	    &adapter->tx_process_limit, ixv_tx_process_limit);
 
 	/* Do descriptor calc and sanity checks */
 	if (((ixv_txd * sizeof(union ixgbe_adv_tx_desc)) % DBA_ALIGN) != 0 ||
@@ -322,6 +353,7 @@ ixv_attach(device_t dev)
 
 	/* Allocate our TX/RX Queues */
 	if (ixgbe_allocate_queues(adapter)) {
+		device_printf(dev, "ixgbe_allocate_queues() failed!\n");
 		error = ENOMEM;
 		goto err_out;
 	}
@@ -332,7 +364,7 @@ ixv_attach(device_t dev)
 	*/
 	error = ixgbe_init_shared_code(hw);
 	if (error) {
-		device_printf(dev,"Shared Code Initialization Failure\n");
+		device_printf(dev, "ixgbe_init_shared_code() failed!\n");
 		error = EIO;
 		goto err_late;
 	}
@@ -340,23 +372,37 @@ ixv_attach(device_t dev)
 	/* Setup the mailbox */
 	ixgbe_init_mbx_params_vf(hw);
 
-	ixgbe_reset_hw(hw);
+	/* Reset mbox api to 1.0 */
+	error = ixgbe_reset_hw(hw);
+	if (error == IXGBE_ERR_RESET_FAILED)
+		device_printf(dev, "ixgbe_reset_hw() failure: Reset Failed!\n");
+	else if (error)
+		device_printf(dev, "ixgbe_reset_hw() failed with error %d\n", error);
+	if (error) {
+		error = EIO;
+		goto err_late;
+	}
 
-	/* Get the Mailbox API version */
-	device_printf(dev,"MBX API %d negotiation: %d\n",
-	    ixgbe_mbox_api_11,
-	    ixgbevf_negotiate_api_version(hw, ixgbe_mbox_api_11));
+	/* Negotiate mailbox API version */
+	error = ixgbevf_negotiate_api_version(hw, ixgbe_mbox_api_11);
+	if (error) {
+		device_printf(dev, "MBX API 1.1 negotiation failed! Error %d\n", error);
+		error = EIO;
+		goto err_late;
+	}
 
 	error = ixgbe_init_hw(hw);
 	if (error) {
-		device_printf(dev,"Hardware Initialization Failure\n");
+		device_printf(dev, "ixgbe_init_hw() failed!\n");
 		error = EIO;
 		goto err_late;
 	}
 	
 	error = ixv_allocate_msix(adapter); 
-	if (error) 
+	if (error) {
+		device_printf(dev, "ixv_allocate_msix() failed!\n");
 		goto err_late;
+	}
 
 	/* If no mac address was assigned, make a random one */
 	if (!ixv_check_ether_addr(hw->mac.addr)) {
@@ -381,6 +427,9 @@ ixv_attach(device_t dev)
 	adapter->vlan_detach = EVENTHANDLER_REGISTER(vlan_unconfig,
 	    ixv_unregister_vlan, adapter, EVENTHANDLER_PRI_FIRST);
 
+#ifdef DEV_NETMAP
+	ixgbe_netmap_attach(adapter);
+#endif /* DEV_NETMAP */
 	INIT_DEBUGOUT("ixv_attach: end");
 	return (0);
 
@@ -413,7 +462,7 @@ ixv_detach(device_t dev)
 
 	/* Make sure VLANS are not using driver */
 	if (adapter->ifp->if_vlantrunk != NULL) {
-		device_printf(dev,"Vlan in use, detach first\n");
+		device_printf(dev, "Vlan in use, detach first\n");
 		return (EBUSY);
 	}
 
@@ -444,6 +493,9 @@ ixv_detach(device_t dev)
 
 	ether_ifdetach(adapter->ifp);
 	callout_drain(&adapter->timer);
+#ifdef DEV_NETMAP
+	netmap_detach(adapter->ifp);
+#endif /* DEV_NETMAP */
 	ixv_free_pci_resources(adapter);
 	bus_generic_detach(dev);
 	if_free(adapter->ifp);
@@ -519,13 +571,13 @@ ixv_ioctl(struct ifnet * ifp, u_long command, caddr_t data)
 #endif
 	case SIOCSIFMTU:
 		IOCTL_DEBUGOUT("ioctl: SIOCSIFMTU (Set Interface MTU)");
-		if (ifr->ifr_mtu > IXGBE_MAX_FRAME_SIZE - ETHER_HDR_LEN) {
+		if (ifr->ifr_mtu > IXGBE_MAX_FRAME_SIZE - IXGBE_MTU_HDR) {
 			error = EINVAL;
 		} else {
 			IXGBE_CORE_LOCK(adapter);
 			ifp->if_mtu = ifr->ifr_mtu;
 			adapter->max_frame_size =
-				ifp->if_mtu + ETHER_HDR_LEN + ETHER_CRC_LEN;
+				ifp->if_mtu + IXGBE_MTU_HDR;
 			ixv_init_locked(adapter);
 			IXGBE_CORE_UNLOCK(adapter);
 		}
@@ -606,9 +658,9 @@ ixv_init_locked(struct adapter *adapter)
 	struct ifnet	*ifp = adapter->ifp;
 	device_t 	dev = adapter->dev;
 	struct ixgbe_hw *hw = &adapter->hw;
-	u32		mhadd, gpie;
+	int error = 0;
 
-	INIT_DEBUGOUT("ixv_init: begin");
+	INIT_DEBUGOUT("ixv_init_locked: begin");
 	mtx_assert(&adapter->core_mtx, MA_OWNED);
 	hw->adapter_stopped = FALSE;
 	ixgbe_stop_adapter(hw);
@@ -625,12 +677,17 @@ ixv_init_locked(struct adapter *adapter)
 
 	/* Prepare transmit descriptors and buffers */
 	if (ixgbe_setup_transmit_structures(adapter)) {
-		device_printf(dev,"Could not setup transmit structures\n");
+		device_printf(dev, "Could not setup transmit structures\n");
 		ixv_stop(adapter);
 		return;
 	}
 
+	/* Reset VF and renegotiate mailbox API version */
 	ixgbe_reset_hw(hw);
+	error = ixgbevf_negotiate_api_version(hw, ixgbe_mbox_api_11);
+	if (error)
+		device_printf(dev, "MBX API 1.1 negotiation failed! Error %d\n", error);
+
 	ixv_initialize_transmit_units(adapter);
 
 	/* Setup Multicast table */
@@ -647,19 +704,13 @@ ixv_init_locked(struct adapter *adapter)
 
 	/* Prepare receive descriptors and buffers */
 	if (ixgbe_setup_receive_structures(adapter)) {
-		device_printf(dev,"Could not setup receive structures\n");
+		device_printf(dev, "Could not setup receive structures\n");
 		ixv_stop(adapter);
 		return;
 	}
 
 	/* Configure RX settings */
 	ixv_initialize_receive_units(adapter);
-
-	/* Enable Enhanced MSIX mode */
-	gpie = IXGBE_READ_REG(&adapter->hw, IXGBE_GPIE);
-	gpie |= IXGBE_GPIE_MSIX_MODE | IXGBE_GPIE_EIAME;
-	gpie |= IXGBE_GPIE_PBA_SUPPORT | IXGBE_GPIE_OCD;
-        IXGBE_WRITE_REG(hw, IXGBE_GPIE, gpie);
 
 	/* Set the various hardware offload abilities */
 	ifp->if_hwassist = 0;
@@ -672,18 +723,8 @@ ixv_init_locked(struct adapter *adapter)
 #endif
 	}
 	
-	/* Set MTU size */
-	if (ifp->if_mtu > ETHERMTU) {
-		mhadd = IXGBE_READ_REG(hw, IXGBE_MHADD);
-		mhadd &= ~IXGBE_MHADD_MFS_MASK;
-		mhadd |= adapter->max_frame_size << IXGBE_MHADD_MFS_SHIFT;
-		IXGBE_WRITE_REG(hw, IXGBE_MHADD, mhadd);
-	}
-
 	/* Set up VLAN offload and filter */
 	ixv_setup_vlan_support(adapter);
-
-	callout_reset(&adapter->timer, hz, ixv_local_timer, adapter);
 
 	/* Set up MSI/X routing */
 	ixv_configure_ivars(adapter);
@@ -699,6 +740,9 @@ ixv_init_locked(struct adapter *adapter)
 
 	/* Config/Enable Link */
 	ixv_config_link(adapter);
+
+	/* Start watchdog */
+	callout_reset(&adapter->timer, hz, ixv_local_timer, adapter);
 
 	/* And now turn on interrupts */
 	ixv_enable_intr(adapter);
@@ -1097,7 +1141,7 @@ ixv_local_timer(void *arg)
 
 	}
 
-	/* Only truely watchdog if all queues show hung */
+	/* Only truly watchdog if all queues show hung */
 	if (hung == adapter->num_queues)
 		goto watchdog;
 	else if (queues != 0) { /* Force an IRQ on queues with work */
@@ -1377,7 +1421,7 @@ ixv_allocate_pci_resources(struct adapter *adapter)
 	    &rid, RF_ACTIVE);
 
 	if (!(adapter->pci_mem)) {
-		device_printf(dev,"Unable to allocate bus resource: memory\n");
+		device_printf(dev, "Unable to allocate bus resource: memory\n");
 		return (ENXIO);
 	}
 
@@ -1385,12 +1429,11 @@ ixv_allocate_pci_resources(struct adapter *adapter)
 		rman_get_bustag(adapter->pci_mem);
 	adapter->osdep.mem_bus_space_handle =
 		rman_get_bushandle(adapter->pci_mem);
-	adapter->hw.hw_addr = (u8 *) &adapter->osdep.mem_bus_space_handle;
+	adapter->hw.hw_addr = (u8 *)&adapter->osdep.mem_bus_space_handle;
 
 	/* Pick up the tuneable queues */
 	adapter->num_queues = ixv_num_queues;
-
-	adapter->hw.back = &adapter->osdep;
+	adapter->hw.back = adapter;
 
 	/*
 	** Now setup MSI/X, should
@@ -1498,7 +1541,7 @@ ixv_setup_interface(device_t dev, struct adapter *adapter)
 	ether_ifattach(ifp, adapter->hw.mac.addr);
 
 	adapter->max_frame_size =
-	    ifp->if_mtu + ETHER_HDR_LEN + ETHER_CRC_LEN;
+	    ifp->if_mtu + IXGBE_MTU_HDR_VLAN;
 
 	/*
 	 * Tell the upper layer(s) we support long frames.
@@ -1519,7 +1562,6 @@ ixv_setup_interface(device_t dev, struct adapter *adapter)
 	 */
 	ifmedia_init(&adapter->media, IFM_IMASK, ixv_media_change,
 		     ixv_media_status);
-	ifmedia_add(&adapter->media, IFM_ETHER | IFM_FDX, 0, NULL);
 	ifmedia_add(&adapter->media, IFM_ETHER | IFM_AUTO, 0, NULL);
 	ifmedia_set(&adapter->media, IFM_ETHER | IFM_AUTO);
 
@@ -1530,19 +1572,11 @@ static void
 ixv_config_link(struct adapter *adapter)
 {
 	struct ixgbe_hw *hw = &adapter->hw;
-	u32	autoneg, err = 0;
+	u32	autoneg;
 
 	if (hw->mac.ops.check_link)
-		err = hw->mac.ops.check_link(hw, &autoneg,
+		hw->mac.ops.check_link(hw, &autoneg,
 		    &adapter->link_up, FALSE);
-	if (err)
-		goto out;
-
-	if (hw->mac.ops.setup_link)
-               	err = hw->mac.ops.setup_link(hw,
-		    autoneg, adapter->link_up);
-out:
-	return;
 }
 
 
@@ -1573,9 +1607,6 @@ ixv_initialize_transmit_units(struct adapter *adapter)
 
 		/* Set Tx Tail register */
 		txr->tail = IXGBE_VFTDT(i);
-
-		/* Set the processing limit */
-		txr->process_limit = ixv_tx_process_limit;
 
 		/* Set Ring parameters */
 		IXGBE_WRITE_REG(hw, IXGBE_VFTDBAL(i),
@@ -1612,7 +1643,6 @@ ixv_initialize_receive_units(struct adapter *adapter)
 	struct ixgbe_hw	*hw = &adapter->hw;
 	struct ifnet	*ifp = adapter->ifp;
 	u32		bufsz, rxcsum, psrtype;
-	int		max_frame;
 
 	if (ifp->if_mtu > ETHERMTU)
 		bufsz = 4096 >> IXGBE_SRRCTL_BSIZEPKT_SHIFT;
@@ -1625,9 +1655,8 @@ ixv_initialize_receive_units(struct adapter *adapter)
 
 	IXGBE_WRITE_REG(hw, IXGBE_VFPSRTYPE, psrtype);
 
-	/* Tell PF our expected packet-size */
-	max_frame = ifp->if_mtu + IXGBE_MTU_HDR;
-	ixgbevf_rlpml_set_vf(hw, max_frame);
+	/* Tell PF our max_frame size */
+	ixgbevf_rlpml_set_vf(hw, adapter->max_frame_size);
 
 	for (int i = 0; i < adapter->num_queues; i++, rxr++) {
 		u64 rdba = rxr->rxdma.dma_paddr;
@@ -1635,7 +1664,7 @@ ixv_initialize_receive_units(struct adapter *adapter)
 
 		/* Disable the queue */
 		rxdctl = IXGBE_READ_REG(hw, IXGBE_VFRXDCTL(i));
-		rxdctl &= ~(IXGBE_RXDCTL_ENABLE | IXGBE_RXDCTL_VME);
+		rxdctl &= ~IXGBE_RXDCTL_ENABLE;
 		IXGBE_WRITE_REG(hw, IXGBE_VFRXDCTL(i), rxdctl);
 		for (int j = 0; j < 10; j++) {
 			if (IXGBE_READ_REG(hw, IXGBE_VFRXDCTL(i)) &
@@ -1665,19 +1694,11 @@ ixv_initialize_receive_units(struct adapter *adapter)
 		reg |= IXGBE_SRRCTL_DESCTYPE_ADV_ONEBUF;
 		IXGBE_WRITE_REG(hw, IXGBE_VFSRRCTL(i), reg);
 
-		/* Set the Tail Pointer */
-		IXGBE_WRITE_REG(hw, IXGBE_VFRDT(rxr->me),
-		    adapter->num_rx_desc - 1);
-
-		/* Set the processing limit */
-		rxr->process_limit = ixv_rx_process_limit;
-
 		/* Capture Rx Tail index */
 		rxr->tail = IXGBE_VFRDT(rxr->me);
 
 		/* Do the queue enabling last */
-		rxdctl = IXGBE_READ_REG(hw, IXGBE_VFRXDCTL(i));
-		rxdctl |= IXGBE_RXDCTL_ENABLE;
+		rxdctl |= IXGBE_RXDCTL_ENABLE | IXGBE_RXDCTL_VME;
 		IXGBE_WRITE_REG(hw, IXGBE_VFRXDCTL(i), rxdctl);
 		for (int k = 0; k < 10; k++) {
 			if (IXGBE_READ_REG(hw, IXGBE_VFRXDCTL(i)) &
@@ -1687,6 +1708,35 @@ ixv_initialize_receive_units(struct adapter *adapter)
 				msec_delay(1);
 		}
 		wmb();
+
+		/* Set the Tail Pointer */
+#ifdef DEV_NETMAP
+		/*
+		 * In netmap mode, we must preserve the buffers made
+		 * available to userspace before the if_init()
+		 * (this is true by default on the TX side, because
+		 * init makes all buffers available to userspace).
+		 *
+		 * netmap_reset() and the device specific routines
+		 * (e.g. ixgbe_setup_receive_rings()) map these
+		 * buffers at the end of the NIC ring, so here we
+		 * must set the RDT (tail) register to make sure
+		 * they are not overwritten.
+		 *
+		 * In this driver the NIC ring starts at RDH = 0,
+		 * RDT points to the last slot available for reception (?),
+		 * so RDT = num_rx_desc - 1 means the whole ring is available.
+		 */
+		if (ifp->if_capenable & IFCAP_NETMAP) {
+			struct netmap_adapter *na = NA(adapter->ifp);
+			struct netmap_kring *kring = &na->rx_rings[i];
+			int t = na->num_rx_desc - 1 - nm_kr_rxspace(kring);
+
+			IXGBE_WRITE_REG(hw, IXGBE_VFRDT(rxr->me), t);
+		} else
+#endif /* DEV_NETMAP */
+			IXGBE_WRITE_REG(hw, IXGBE_VFRDT(rxr->me),
+			    adapter->num_rx_desc - 1);
 	}
 
 	rxcsum = IXGBE_READ_REG(hw, IXGBE_RXCSUM);
@@ -1707,7 +1757,7 @@ ixv_setup_vlan_support(struct adapter *adapter)
 {
 	struct ixgbe_hw *hw = &adapter->hw;
 	u32		ctrl, vid, vfta, retry;
-
+	struct rx_ring	*rxr;
 
 	/*
 	** We get here thru init_locked, meaning
@@ -1723,6 +1773,12 @@ ixv_setup_vlan_support(struct adapter *adapter)
 		ctrl = IXGBE_READ_REG(hw, IXGBE_VFRXDCTL(i));
 		ctrl |= IXGBE_RXDCTL_VME;
 		IXGBE_WRITE_REG(hw, IXGBE_VFRXDCTL(i), ctrl);
+		/*
+		 * Let Rx path know that it needs to store VLAN tag
+		 * as part of extra mbuf info.
+		 */
+		rxr = &adapter->rx_rings[i];
+		rxr->vtag_strip = TRUE;
 	}
 
 	/*
@@ -1738,7 +1794,7 @@ ixv_setup_vlan_support(struct adapter *adapter)
 		** based on the bits set in each
 		** of the array ints.
 		*/
-		for ( int j = 0; j < 32; j++) {
+		for (int j = 0; j < 32; j++) {
 			retry = 0;
 			if ((vfta & (1 << j)) == 0)
 				continue;
@@ -1765,10 +1821,10 @@ ixv_register_vlan(void *arg, struct ifnet *ifp, u16 vtag)
 	struct adapter	*adapter = ifp->if_softc;
 	u16		index, bit;
 
-	if (ifp->if_softc !=  arg)   /* Not our event */
+	if (ifp->if_softc != arg) /* Not our event */
 		return;
 
-	if ((vtag == 0) || (vtag > 4095))	/* Invalid */
+	if ((vtag == 0) || (vtag > 4095)) /* Invalid */
 		return;
 
 	IXGBE_CORE_LOCK(adapter);
@@ -1902,7 +1958,7 @@ ixv_handle_mbx(void *context, int pending)
 }
 
 /*
-** The VF stats registers never have a truely virgin
+** The VF stats registers never have a truly virgin
 ** starting point, so this routine tries to make an
 ** artificial one, marking ground zero on attach as
 ** it were.
@@ -2071,6 +2127,16 @@ ixv_add_stats_sysctls(struct adapter *adapter)
 			"# of times not enough descriptors were available during TX");
 }
 
+static void
+ixv_set_sysctl_value(struct adapter *adapter, const char *name,
+	const char *description, int *limit, int value)
+{
+	*limit = value;
+	SYSCTL_ADD_INT(device_get_sysctl_ctx(adapter->dev),
+	    SYSCTL_CHILDREN(device_get_sysctl_tree(adapter->dev)),
+	    OID_AUTO, name, CTLFLAG_RW, limit, value, description);
+}
+
 /**********************************************************************
  *
  *  This routine is called only when em_display_debug_stats is enabled.
@@ -2101,10 +2167,10 @@ ixv_print_debug_info(struct adapter *adapter)
                     rxr->me, (long long)rxr->rx_packets);
                 device_printf(dev,"RX(%d) Bytes Received: %lu\n",
                     rxr->me, (long)rxr->rx_bytes);
-                device_printf(dev,"RX(%d) LRO Queued= %d\n",
-                    rxr->me, lro->lro_queued);
-                device_printf(dev,"RX(%d) LRO Flushed= %d\n",
-                    rxr->me, lro->lro_flushed);
+                device_printf(dev,"RX(%d) LRO Queued= %lld\n",
+                    rxr->me, (long long)lro->lro_queued);
+                device_printf(dev,"RX(%d) LRO Flushed= %lld\n",
+                    rxr->me, (long long)lro->lro_flushed);
                 device_printf(dev,"TX(%d) Packets Sent: %lu\n",
                     txr->me, (long)txr->total_packets);
                 device_printf(dev,"TX(%d) NO Desc Avail: %lu\n",

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm64/include/machdep.h 281494 2015-04-13 14:43:10Z andrew $
+ * $FreeBSD: head/sys/arm64/include/machdep.h 297538 2016-04-04 07:16:43Z wma $
  */
 
 #ifndef _MACHINE_MACHDEP_H_
@@ -34,11 +34,13 @@ struct arm64_bootparams {
 	vm_offset_t	kern_l1pt;	/* L1 page table for the kernel */
 	uint64_t	kern_delta;
 	vm_offset_t	kern_stack;
+	vm_offset_t	kern_l0pt;	/* L1 page table for the kernel */
 };
 
 extern vm_paddr_t physmap[];
 extern u_int physmap_idx;
 
 void initarm(struct arm64_bootparams *);
+extern void (*pagezero)(void *);
 
 #endif /* _MACHINE_MACHDEP_H_ */

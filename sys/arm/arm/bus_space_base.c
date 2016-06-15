@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_base.c 283366 2015-05-24 12:20:11Z andrew $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/bus_space_base.c 300694 2016-05-25 19:44:26Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -156,4 +156,6 @@ static struct bus_space arm_base_bus_space __aligned(CACHE_LINE_SIZE) = {
 bus_space_tag_t fdtbus_bs_tag = &arm_base_bus_space;
 #endif
 
+#if __ARM_ARCH < 6
 bus_space_tag_t arm_base_bs_tag = &arm_base_bus_space;
+#endif

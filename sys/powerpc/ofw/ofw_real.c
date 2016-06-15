@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_real.c 261884 2014-02-14 11:18:15Z brueffer $");
+__FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_real.c 295880 2016-02-22 09:02:20Z skra $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -71,7 +71,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/ofw/ofw_real.c 261884 2014-02-14 11:18:15Z 
 #include <machine/bus.h>
 #include <machine/md_var.h>
 #include <machine/ofw_machdep.h>
-#include <machine/pmap.h>
 #include <machine/stdarg.h>
 
 #include <dev/ofw/openfirm.h>

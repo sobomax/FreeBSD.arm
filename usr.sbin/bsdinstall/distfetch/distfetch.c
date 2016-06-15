@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bsdinstall/distfetch/distfetch.c 272379 2014-10-01 18:59:57Z dteske $");
+__FBSDID("$FreeBSD: head/usr.sbin/bsdinstall/distfetch/distfetch.c 290340 2015-11-03 21:19:46Z dteske $");
 
 #include <sys/param.h>
 #include <ctype.h>
@@ -78,7 +78,7 @@ main(void)
 
 	if (chdir(getenv("BSDINSTALL_DISTDIR")) != 0) {
 		snprintf(error, sizeof(error),
-		    "Could could change to directory %s: %s\n",
+		    "Could not change to directory %s: %s\n",
 		    getenv("BSDINSTALL_DISTDIR"), strerror(errno));
 		dialog_msgbox("Error", error, 0, 0, TRUE);
 		end_dialog();

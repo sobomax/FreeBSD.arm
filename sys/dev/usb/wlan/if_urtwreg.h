@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/dev/usb/wlan/if_urtwreg.h 258780 2013-11-30 22:17:27Z eadler $	*/
+/*	$FreeBSD: head/sys/dev/usb/wlan/if_urtwreg.h 300753 2016-05-26 16:15:10Z avos $	*/
 
 /*-
  * Copyright (c) 2008 Weongyo Jeong <weongyo@FreeBSD.org>
@@ -253,6 +253,7 @@
 
 /* for EEPROM  */
 #define	URTW_EPROM_CHANPLAN		0x03
+#define	URTW_EPROM_CHANPLAN_BY_HW	(0x80)
 #define	URTW_EPROM_TXPW_BASE		0x05
 #define	URTW_EPROM_RFCHIPID		0x06
 #define	URTW_EPROM_RFCHIPID_RTL8225U	(5)

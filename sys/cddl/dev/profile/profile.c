@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  *
- * $FreeBSD: head/sys/cddl/dev/profile/profile.c 283291 2015-05-22 17:05:21Z jkim $
+ * $FreeBSD: head/sys/cddl/dev/profile/profile.c 300618 2016-05-24 16:41:37Z br $
  *
  */
 
@@ -50,6 +50,7 @@
 #include <sys/proc.h>
 #include <sys/selinfo.h>
 #include <sys/smp.h>
+#include <sys/sysctl.h>
 #include <sys/uio.h>
 #include <sys/unistd.h>
 #include <machine/cpu.h>
@@ -134,9 +135,16 @@ struct profile_probe_percpu;
 #endif
 
 #ifdef __arm__
-/*
- * At least on ARMv7, this appears to work quite well.
- */
+#define	PROF_ARTIFICIAL_FRAMES	3
+#endif
+
+#ifdef __aarch64__
+/* TODO: verify */
+#define	PROF_ARTIFICIAL_FRAMES	10
+#endif
+
+#ifdef __riscv__
+/* TODO: verify */
 #define	PROF_ARTIFICIAL_FRAMES	10
 #endif
 
@@ -228,7 +236,12 @@ static dtrace_pops_t profile_pops = {
 static struct cdev		*profile_cdev;
 static dtrace_provider_id_t	profile_id;
 static hrtime_t			profile_interval_min = NANOSEC / 5000;	/* 5000 hz */
-static int			profile_aframes = 0;			/* override */
+static int			profile_aframes = PROF_ARTIFICIAL_FRAMES;
+
+SYSCTL_DECL(_kern_dtrace);
+SYSCTL_NODE(_kern_dtrace, OID_AUTO, profile, CTLFLAG_RD, 0, "DTrace profile parameters");
+SYSCTL_INT(_kern_dtrace_profile, OID_AUTO, aframes, CTLFLAG_RW, &profile_aframes,
+    0, "Skipped frames for profile provider");
 
 static sbintime_t
 nsec_to_sbt(hrtime_t nsec)
@@ -347,7 +360,7 @@ profile_create(hrtime_t interval, char *name, int kind)
 	prof->prof_kind = kind;
 	prof->prof_id = dtrace_probe_create(profile_id,
 	    NULL, NULL, name,
-	    profile_aframes ? profile_aframes : PROF_ARTIFICIAL_FRAMES, prof);
+	    profile_aframes, prof);
 }
 
 /*ARGSUSED*/

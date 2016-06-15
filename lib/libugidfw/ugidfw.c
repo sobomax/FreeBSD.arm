@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/lib/libugidfw/ugidfw.c 284745 2015-06-24 01:48:44Z araujo $
+ * $FreeBSD: head/lib/libugidfw/ugidfw.c 288389 2015-09-29 18:48:12Z bdrewery $
  */
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -1233,7 +1233,7 @@ bsde_delete_rule(int rulenum, size_t buflen, char *errstr)
 	name[len] = rulenum;
 	len++;
 
-	error = sysctl(name, len, NULL, NULL, &rule, sizeof(rule));
+	error = sysctl(name, len, NULL, NULL, &rule, 0);
 	if (error) {
 		len = snprintf(errstr, buflen, "%s.%d: %s", MIB ".rules",
 		    rulenum, strerror(errno));

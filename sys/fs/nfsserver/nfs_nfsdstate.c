@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdstate.c 283635 2015-05-27 22:00:05Z rmacklem $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsserver/nfs_nfsdstate.c 298788 2016-04-29 16:07:25Z pfg $");
 
 #ifndef APPLEKEXT
 #include <fs/nfs/nfsport.h>
@@ -220,7 +220,8 @@ nfsrv_setclient(struct nfsrv_descript *nd, struct nfsclient **new_clpp,
 			break;
 		}
 	    }
-	    i++;
+	    if (gotit == 0)
+		i++;
 	}
 	if (!gotit ||
 	    (clp->lc_flags & (LCL_NEEDSCONFIRM | LCL_ADMINREVOKED))) {
@@ -400,9 +401,12 @@ nfsrv_setclient(struct nfsrv_descript *nd, struct nfsclient **new_clpp,
 	}
 
 	/* For NFSv4.1, mark that we found a confirmed clientid. */
-	if ((nd->nd_flag & ND_NFSV41) != 0)
+	if ((nd->nd_flag & ND_NFSV41) != 0) {
+		clientidp->lval[0] = clp->lc_clientid.lval[0];
+		clientidp->lval[1] = clp->lc_clientid.lval[1];
+		confirmp->lval[0] = 0;	/* Ignored by client */
 		confirmp->lval[1] = 1;
-	else {
+	} else {
 		/*
 		 * id and verifier match, so update the net address info
 		 * and get rid of any existing callback authentication
@@ -620,13 +624,13 @@ nfsrv_getclient(nfsquad_t clientid, int opflags, struct nfsclient **clpp,
 			NFSBCOPY(sessid, nsep->sess_cbsess.nfsess_sessionid,
 			    NFSX_V4SESSIONID);
 			shp = NFSSESSIONHASH(nsep->sess_sessionid);
+			NFSLOCKSTATE();
 			NFSLOCKSESSION(shp);
 			LIST_INSERT_HEAD(&shp->list, nsep, sess_hash);
-			NFSLOCKSTATE();
 			LIST_INSERT_HEAD(&clp->lc_session, nsep, sess_list);
 			nsep->sess_clp = clp;
-			NFSUNLOCKSTATE();
 			NFSUNLOCKSESSION(shp);
+			NFSUNLOCKSTATE();
 		    }
 		}
 	} else if (clp->lc_flags & LCL_NEEDSCONFIRM) {
@@ -1631,7 +1635,7 @@ tryagain:
 	    if (new_stp->ls_flags & NFSLCK_TEST) {
 		/*
 		 * RFC 3530 does not list LockT as an op that renews a
-		 * lease, but the concensus seems to be that it is ok
+		 * lease, but the consensus seems to be that it is ok
 		 * for a server to do so.
 		 */
 		error = nfsrv_getclient(clientid, CLOPS_RENEW, &clp, NULL,
@@ -1738,7 +1742,7 @@ tryagain:
 	       * If the seqid part of the stateid isn't the same, return
 	       * NFSERR_OLDSTATEID for cases other than I/O Ops.
 	       * For I/O Ops, only return NFSERR_OLDSTATEID if
-	       * nfsrv_returnoldstateid is set. (The concensus on the email
+	       * nfsrv_returnoldstateid is set. (The consensus on the email
 	       * list was that most clients would prefer to not receive
 	       * NFSERR_OLDSTATEID for I/O Ops, but the RFC suggests that that
 	       * is what will happen, so I use the nfsrv_returnoldstateid to
@@ -1967,7 +1971,7 @@ tryagain:
 	 * - there is a conflict if a different client has any delegation
 	 * - there is a conflict if the same client has a read delegation
 	 *   (I don't understand why this isn't allowed, but that seems to be
-	 *    the current concensus?)
+	 *    the current consensus?)
 	 */
 	tstp = LIST_FIRST(&lfp->lf_deleg);
 	while (tstp != LIST_END(&lfp->lf_deleg)) {
@@ -2434,7 +2438,7 @@ tryagain:
 	 * For Open with other Write Access or any Deny except None
 	 * - there is a conflict if a different client has any delegation
 	 * - there is a conflict if the same client has a read delegation
-	 *   (The current concensus is that this last case should be
+	 *   (The current consensus is that this last case should be
 	 *    considered a conflict since the client with a read delegation
 	 *    could have done an Open with ReadAccess and WriteDeny
 	 *    locally and then not have checked for the WriteDeny.)
@@ -2727,7 +2731,7 @@ tryagain:
 	 * For Open with other Write Access or any Deny except None
 	 * - there is a conflict if a different client has any delegation
 	 * - there is a conflict if the same client has a read delegation
-	 *   (The current concensus is that this last case should be
+	 *   (The current consensus is that this last case should be
 	 *    considered a conflict since the client with a read delegation
 	 *    could have done an Open with ReadAccess and WriteDeny
 	 *    locally and then not have checked for the WriteDeny.)
@@ -4187,10 +4191,23 @@ nfsrv_docallback(struct nfsclient *clp, int procnum,
 	if (!error) {
 		if ((nd->nd_flag & ND_NFSV41) != 0) {
 			KASSERT(sep != NULL, ("sep NULL"));
-			error = newnfs_request(nd, NULL, clp, &clp->lc_req,
-			    NULL, NULL, cred, clp->lc_program,
-			    clp->lc_req.nr_vers, NULL, 1, NULL,
-			    &sep->sess_cbsess);
+			if (sep->sess_cbsess.nfsess_xprt != NULL)
+				error = newnfs_request(nd, NULL, clp,
+				    &clp->lc_req, NULL, NULL, cred,
+				    clp->lc_program, clp->lc_req.nr_vers, NULL,
+				    1, NULL, &sep->sess_cbsess);
+			else {
+				/*
+				 * This should probably never occur, but if a
+				 * client somehow does an RPC without a
+				 * SequenceID Op that causes a callback just
+				 * after the nfsd threads have been terminated
+				 * and restared we could conceivably get here
+				 * without a backchannel xprt.
+				 */
+				printf("nfsrv_docallback: no xprt\n");
+				error = ECONNREFUSED;
+			}
 			nfsrv_freesession(sep, NULL);
 		} else
 			error = newnfs_request(nd, NULL, clp, &clp->lc_req,
@@ -4379,7 +4396,7 @@ tryagain:
  *   nfsrvboottime does not, somehow, get set to a previous one.
  *   (This is important so that Stale ClientIDs and StateIDs can
  *    be recognized.)
- *   The number of previous nfsvrboottime values preceeds the list.
+ *   The number of previous nfsvrboottime values precedes the list.
  * - followed by some number of appended records with:
  *   - client id string
  *   - flag that indicates it is a record revoking state via lease
@@ -5780,14 +5797,16 @@ nfsrv_checksequence(struct nfsrv_descript *nd, uint32_t sequenceid,
 	 * If this session handles the backchannel, save the nd_xprt for this
 	 * RPC, since this is the one being used.
 	 */
-	if (sep->sess_cbsess.nfsess_xprt != NULL &&
+	if (sep->sess_clp->lc_req.nr_client != NULL &&
 	    (sep->sess_crflags & NFSV4CRSESS_CONNBACKCHAN) != 0) {
 		savxprt = sep->sess_cbsess.nfsess_xprt;
 		SVC_ACQUIRE(nd->nd_xprt);
-		nd->nd_xprt->xp_p2 = savxprt->xp_p2;
+		nd->nd_xprt->xp_p2 =
+		    sep->sess_clp->lc_req.nr_client->cl_private;
 		nd->nd_xprt->xp_idletimeout = 0;	/* Disable timeout. */
 		sep->sess_cbsess.nfsess_xprt = nd->nd_xprt;
-		SVC_RELEASE(savxprt);
+		if (savxprt != NULL)
+			SVC_RELEASE(savxprt);
 	}
 
 	*sflagsp = 0;
@@ -5904,6 +5923,7 @@ nfsrv_freesession(struct nfsdsession *sep, uint8_t *sessionid)
 	struct nfssessionhash *shp;
 	int i;
 
+	NFSLOCKSTATE();
 	if (sep == NULL) {
 		shp = NFSSESSIONHASH(sessionid);
 		NFSLOCKSESSION(shp);
@@ -5913,18 +5933,17 @@ nfsrv_freesession(struct nfsdsession *sep, uint8_t *sessionid)
 		NFSLOCKSESSION(shp);
 	}
 	if (sep != NULL) {
-		NFSLOCKSTATE();
 		sep->sess_refcnt--;
 		if (sep->sess_refcnt > 0) {
-			NFSUNLOCKSTATE();
 			NFSUNLOCKSESSION(shp);
+			NFSUNLOCKSTATE();
 			return (0);
 		}
 		LIST_REMOVE(sep, sess_hash);
 		LIST_REMOVE(sep, sess_list);
-		NFSUNLOCKSTATE();
 	}
 	NFSUNLOCKSESSION(shp);
+	NFSUNLOCKSTATE();
 	if (sep == NULL)
 		return (NFSERR_BADSESSION);
 	for (i = 0; i < NFSV4_SLOTS; i++)
@@ -6044,5 +6063,31 @@ nfsv4_getcbsession(struct nfsclient *clp, struct nfsdsession **sepp)
 	*sepp = sep;
 	NFSUNLOCKSTATE();
 	return (0);
+}
+
+/*
+ * Free up all backchannel xprts.  This needs to be done when the nfsd threads
+ * exit, since those transports will all be going away.
+ * This is only called after all the nfsd threads are done performing RPCs,
+ * so locking shouldn't be an issue.
+ */
+APPLESTATIC void
+nfsrv_freeallbackchannel_xprts(void)
+{
+	struct nfsdsession *sep;
+	struct nfsclient *clp;
+	SVCXPRT *xprt;
+	int i;
+
+	for (i = 0; i < nfsrv_clienthashsize; i++) {
+		LIST_FOREACH(clp, &nfsclienthash[i], lc_hash) {
+			LIST_FOREACH(sep, &clp->lc_session, sess_list) {
+				xprt = sep->sess_cbsess.nfsess_xprt;
+				sep->sess_cbsess.nfsess_xprt = NULL;
+				if (xprt != NULL)
+					SVC_RELEASE(xprt);
+			}
+		}
+	}
 }
 

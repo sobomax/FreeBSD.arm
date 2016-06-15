@@ -23,6 +23,8 @@
  * Copyright (c) 2011, 2015 by Delphix. All rights reserved.
  * Copyright 2011 Nexenta Systems, Inc.  All rights reserved.
  * Copyright 2013 Martin Matuska <mm@FreeBSD.org>. All rights reserved.
+ * Copyright (c) 2014 Spectra Logic Corporation, All rights reserved.
+ * Copyright 2013 Saso Kiselkov. All rights reserved.
  */
 
 #ifndef _SYS_SPA_IMPL_H
@@ -115,6 +117,12 @@ typedef struct spa_taskqs {
 	taskq_t **stqs_taskq;
 } spa_taskqs_t;
 
+typedef enum spa_all_vdev_zap_action {
+	AVZ_ACTION_NONE = 0,
+	AVZ_ACTION_DESTROY,	/* Destroy all per-vdev ZAPs and the AVZ. */
+	AVZ_ACTION_REBUILD	/* Populate the new AVZ, see spa_avz_rebuild */
+} spa_avz_action_t;
+
 struct spa {
 	/*
 	 * Fields protected by spa_namespace_lock.
@@ -145,6 +153,9 @@ struct spa {
 	uint64_t	spa_claim_max_txg;	/* highest claimed birth txg */
 	timespec_t	spa_loaded_ts;		/* 1st successful open time */
 	objset_t	*spa_meta_objset;	/* copy of dp->dp_meta_objset */
+	kmutex_t	spa_evicting_os_lock;	/* Evicting objset list lock */
+	list_t		spa_evicting_os_list;	/* Objsets being evicted. */
+	kcondvar_t	spa_evicting_os_cv;	/* Objset Eviction Completion */
 	txg_list_t	spa_vdev_txg_list;	/* per-txg dirty vdev list */
 	vdev_t		*spa_root_vdev;		/* top-level vdev container */
 	int		spa_min_ashift;		/* of vdevs in normal class */
@@ -162,6 +173,10 @@ struct spa {
 	uint64_t	spa_syncing_txg;	/* txg currently syncing */
 	bpobj_t		spa_deferred_bpobj;	/* deferred-free bplist */
 	bplist_t	spa_free_bplist[TXG_SIZE]; /* bplist of stuff to free */
+	zio_cksum_salt_t spa_cksum_salt;	/* secret salt for cksum */
+	/* checksum context templates */
+	kmutex_t	spa_cksum_tmpls_lock;
+	void		*spa_cksum_tmpls[ZIO_CHECKSUM_FUNCTIONS];
 	uberblock_t	spa_ubsync;		/* last synced uberblock */
 	uberblock_t	spa_uberblock;		/* current uberblock */
 	boolean_t	spa_extreme_rewind;	/* rewind past deferred frees */
@@ -255,6 +270,9 @@ struct spa {
 	uint64_t	spa_deadman_calls;	/* number of deadman calls */
 	hrtime_t	spa_sync_starttime;	/* starting time fo spa_sync */
 	uint64_t	spa_deadman_synctime;	/* deadman expiration timer */
+	uint64_t	spa_all_vdev_zaps;	/* ZAP of per-vd ZAP obj #s */
+	spa_avz_action_t	spa_avz_action;	/* destroy/rebuild AVZ? */
+
 #ifdef illumos
 	/*
 	 * spa_iokstat_lock protects spa_iokstat and

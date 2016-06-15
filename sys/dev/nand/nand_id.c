@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/nand/nand_id.c 260296 2014-01-04 22:30:18Z imp $");
+__FBSDID("$FreeBSD: head/sys/dev/nand/nand_id.c 298307 2016-04-19 23:37:24Z pfg $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -59,7 +59,7 @@ struct nand_params *nand_get_params(struct nand_id *id)
 {
 	int i;
 
-	for (i = 0; i < sizeof(nand_ids) / sizeof(nand_ids[0]); i++)
+	for (i = 0; i < nitems(nand_ids); i++)
 		if (nand_ids[i].id.man_id == id->man_id &&
 		    nand_ids[i].id.dev_id == id->dev_id)
 			return (&nand_ids[i]);

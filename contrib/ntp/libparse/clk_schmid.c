@@ -6,7 +6,7 @@
  * Schmid clock support
  * based on information and testing from Adam W. Feigin et. al (Swisstime iis.ethz.ch)
  *
- * Copyright (c) 1995-2005 by Frank Kardel <kardel <AT> ntp.org>
+ * Copyright (c) 1995-2015 by Frank Kardel <kardel <AT> ntp.org>
  * Copyright (c) 1989-1994 by Frank Kardel, Friedrich-Alexander Universitaet Erlangen-Nuernberg, Germany
  *
  * Redistribution and use in source and binary forms, with or without
@@ -184,7 +184,7 @@ cvt_schmid(
 				    }
 			    }
 
-			    clock_time->flags |= PARSEB_S_LEAP|PARSEB_S_ANTENNA;
+			    clock_time->flags |= PARSEB_S_LEAP|PARSEB_S_CALLBIT;
 
 			    return CVT_OK;
 		    }
@@ -205,7 +205,7 @@ inp_schmid(
 {
 	unsigned int rtc;
 
-	parseprintf(DD_PARSE, ("inp_schmid(0x%lx, 0x%x, ...)\n", (long)parseio, ch));
+	parseprintf(DD_PARSE, ("inp_schmid(0x%p, 0x%x, ...)\n", (void*)parseio, ch));
 
 	switch ((uint8_t)ch)
 	{

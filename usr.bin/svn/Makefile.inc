@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/svn/Makefile.inc 274885 2014-11-22 19:44:49Z bapt $
+# $FreeBSD: head/usr.bin/svn/Makefile.inc 298845 2016-04-30 10:35:42Z dim $
 
 .include <src.opts.mk>
 
@@ -8,12 +8,14 @@ SVNLITE?=
 SVNLITE?=	lite
 .endif
 
+PACKAGE=	svn
+
 .if !defined(SVNDIR)
 
 SVNDIR=		${.CURDIR}/../../../contrib/subversion/subversion
 APRU=		${.CURDIR}/../../../contrib/apr-util
 APR=		${.CURDIR}/../../../contrib/apr
-WARNS?=		0	# defintely not warns friendly
+WARNS?=		0	# definitely not warns friendly
 
 .if exists(${.CURDIR}/../../Makefile.inc)
 .include "${.CURDIR}/../../Makefile.inc"
@@ -29,6 +31,7 @@ LIBSVN_DIFFDIR=		${.OBJDIR}/../lib/libsvn_diff
 LIBSVN_FSDIR=		${.OBJDIR}/../lib/libsvn_fs
 LIBSVN_FS_FSDIR=	${.OBJDIR}/../lib/libsvn_fs_fs
 LIBSVN_FS_UTILDIR=	${.OBJDIR}/../lib/libsvn_fs_util
+LIBSVN_FS_XDIR=		${.OBJDIR}/../lib/libsvn_fs_x
 LIBSVN_RADIR=		${.OBJDIR}/../lib/libsvn_ra
 LIBSVN_RA_LOCALDIR=	${.OBJDIR}/../lib/libsvn_ra_local
 LIBSVN_RA_SVNDIR=	${.OBJDIR}/../lib/libsvn_ra_svn
@@ -47,6 +50,7 @@ LIBSVN_DIFF=		${LIBSVN_DIFFDIR}/libsvn_diff.a
 LIBSVN_FS=		${LIBSVN_FSDIR}/libsvn_fs.a
 LIBSVN_FS_FS=		${LIBSVN_FS_FSDIR}/libsvn_fs_fs.a
 LIBSVN_FS_UTIL=		${LIBSVN_FS_UTILDIR}/libsvn_fs_util.a
+LIBSVN_FS_X=		${LIBSVN_FS_XDIR}/libsvn_fs_x.a
 LIBSVN_RA=		${LIBSVN_RADIR}/libsvn_ra.a
 LIBSVN_RA_LOCAL=	${LIBSVN_RA_LOCALDIR}/libsvn_ra_local.a
 LIBSVN_RA_SVN=		${LIBSVN_RA_SVNDIR}/libsvn_ra_svn.a

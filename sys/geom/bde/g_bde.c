@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/bde/g_bde.c 274313 2014-11-09 15:52:11Z phk $
+ * $FreeBSD: head/sys/geom/bde/g_bde.c 292782 2015-12-27 17:33:59Z allanjude $
  *
  */
 
@@ -44,7 +44,7 @@
 #include <sys/sysctl.h>
 
 #include <crypto/rijndael/rijndael-api-fst.h>
-#include <crypto/sha2/sha2.h>
+#include <crypto/sha2/sha512.h>
 #include <geom/geom.h>
 #include <geom/bde/g_bde.h>
 #define BDE_CLASS_NAME "BDE"

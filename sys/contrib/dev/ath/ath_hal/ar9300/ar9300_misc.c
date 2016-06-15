@@ -940,6 +940,13 @@ ar9300_get_capability(struct ath_hal *ah, HAL_CAPABILITY_TYPE type,
                     return HAL_OK;
             }
             return HAL_EINVAL;
+    case HAL_CAP_ENFORCE_TXOP:
+        if (capability == 0)
+            return (HAL_OK);
+        if (capability != 1)
+            return (HAL_ENOTSUPP);
+        (*result) = !! (ahp->ah_misc_mode & AR_PCU_TXOP_TBTT_LIMIT_ENA);
+        return (HAL_OK);
     default:
         return ath_hal_getcapability(ah, type, capability, result);
     }
@@ -1039,6 +1046,18 @@ ar9300_set_capability(struct ath_hal *ah, HAL_CAPABILITY_TYPE type,
     case HAL_CAP_RXBUFSIZE:         /* set MAC receive buffer size */
         ahp->rx_buf_size = setting & AR_DATABUF_MASK;
         OS_REG_WRITE(ah, AR_DATABUF, ahp->rx_buf_size);
+        return AH_TRUE;
+
+    case HAL_CAP_ENFORCE_TXOP:
+        if (capability != 1)
+            return AH_FALSE;
+        if (setting) {
+            ahp->ah_misc_mode |= AR_PCU_TXOP_TBTT_LIMIT_ENA;
+            OS_REG_SET_BIT(ah, AR_PCU_MISC, AR_PCU_TXOP_TBTT_LIMIT_ENA);
+        } else {
+            ahp->ah_misc_mode &= ~AR_PCU_TXOP_TBTT_LIMIT_ENA;
+            OS_REG_CLR_BIT(ah, AR_PCU_MISC, AR_PCU_TXOP_TBTT_LIMIT_ENA);
+        }
         return AH_TRUE;
 
         /* fall thru... */
@@ -2438,10 +2457,12 @@ static void
 ar9300_bt_coex_antenna_diversity(struct ath_hal *ah, u_int32_t value)
 {
     struct ath_hal_9300 *ahp = AH9300(ah);
-#if ATH_ANT_DIV_COMB    
+#if ATH_ANT_DIV_COMB
     //struct ath_hal_private *ahpriv = AH_PRIVATE(ah);
     const struct ieee80211_channel *chan = AH_PRIVATE(ah)->ah_curchan;
 #endif
+
+    HALDEBUG(ah, HAL_DEBUG_BT_COEX, "%s: called, value=%d\n", __func__, value);
 
     if (ahp->ah_bt_coex_flag & HAL_BT_COEX_FLAG_ANT_DIV_ALLOW)
     {
@@ -2475,7 +2496,7 @@ ar9300_bt_coex_set_parameter(struct ath_hal *ah, u_int32_t type,
             break;
 
         case HAL_BT_COEX_ANTENNA_DIVERSITY:
-            if (AR_SREV_POSEIDON(ah)) {
+            if (AR_SREV_POSEIDON(ah) || AR_SREV_APHRODITE(ah)) {
                 ahp->ah_bt_coex_flag |= HAL_BT_COEX_FLAG_ANT_DIV_ALLOW;
                 if (value) {
                     ahp->ah_bt_coex_flag |= HAL_BT_COEX_FLAG_ANT_DIV_ENABLE;

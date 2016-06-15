@@ -23,8 +23,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD: head/lib/libthr/thread/thr_fork.c 276630 2015-01-03 18:38:46Z kib $
  */
 
 /*
@@ -56,6 +54,9 @@
  * SUCH DAMAGE.
  *
  */
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_fork.c 297706 2016-04-08 11:15:26Z kib $");
 
 #include <sys/syscall.h>
 #include "namespace.h"
@@ -168,6 +169,7 @@ __thr_fork(void)
 	if (_thr_isthreaded() != 0) {
 		was_threaded = 1;
 		_malloc_prefork();
+		__thr_pshared_atfork_pre();
 		_rtld_atfork_pre(rtld_locks);
 	} else {
 		was_threaded = 0;
@@ -202,14 +204,16 @@ __thr_fork(void)
 
 		_thr_signal_postfork_child();
 
-		if (was_threaded)
+		if (was_threaded) {
 			_rtld_atfork_post(rtld_locks);
+			__thr_pshared_atfork_post();
+		}
 		_thr_setthreaded(0);
 
 		/* reinitalize library. */
 		_libpthread_init(curthread);
 
-		/* atfork is reinitializeded by _libpthread_init()! */
+		/* atfork is reinitialized by _libpthread_init()! */
 		_thr_rwl_rdlock(&_thr_atfork_lock);
 
 		if (was_threaded) {
@@ -236,6 +240,7 @@ __thr_fork(void)
 
 		if (was_threaded) {
 			_rtld_atfork_post(rtld_locks);
+			__thr_pshared_atfork_post();
 			_malloc_postfork();
 		}
 

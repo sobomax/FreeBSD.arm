@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powermac/uninorthpci.c 261513 2014-02-05 14:44:22Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powermac/uninorthpci.c 297392 2016-03-29 15:19:56Z zbb $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -32,11 +32,13 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/uninorthpci.c 261513 2014-02-05 14
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/kernel.h>
+#include <sys/rman.h>
 
 #include <dev/ofw/openfirm.h>
 #include <dev/ofw/ofw_pci.h>
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
+#include <dev/ofw/ofwpci.h>
 
 #include <dev/pci/pcivar.h>
 #include <dev/pci/pcireg.h>
@@ -47,9 +49,6 @@ __FBSDID("$FreeBSD: head/sys/powerpc/powermac/uninorthpci.c 261513 2014-02-05 14
 #include <machine/pio.h>
 #include <machine/resource.h>
 
-#include <sys/rman.h>
-
-#include <powerpc/ofw/ofw_pci.h>
 #include <powerpc/powermac/uninorthvar.h>
 
 #include <vm/vm.h>

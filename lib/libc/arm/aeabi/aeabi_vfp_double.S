@@ -26,7 +26,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_double.S 282816 2015-05-12 10:03:14Z andrew $");
+__FBSDID("$FreeBSD: head/lib/libc/arm/aeabi/aeabi_vfp_double.S 288373 2015-09-29 16:09:58Z kib $");
 
 #include "aeabi_vfp.h"
 
@@ -201,3 +201,4 @@ AEABI_ENTRY(dsub)
 	RET
 AEABI_END(dsub)
 
+	.section .note.GNU-stack,"",%progbits

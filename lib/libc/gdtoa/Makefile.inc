@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/gdtoa/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/gdtoa/Makefile.inc 291320 2015-11-25 19:44:43Z bdrewery $
 
 # netlib gdtoa sources
 .PATH: ${LIBC_SRCTOP}/gdtoa
@@ -15,6 +15,6 @@ CFLAGS+=-I${LIBC_SRCTOP}/../../contrib/gdtoa
 .for src in ${GDTOASRCS}
 MISRCS+=gdtoa_${src}
 CLEANFILES+=gdtoa_${src}
-gdtoa_${src}:
-	ln -sf ${LIBC_SRCTOP}/../../contrib/gdtoa/${src} ${.TARGET}
+gdtoa_${src}: ${LIBC_SRCTOP}/../../contrib/gdtoa/${src} .NOMETA
+	ln -sf ${.ALLSRC} ${.TARGET}
 .endfor

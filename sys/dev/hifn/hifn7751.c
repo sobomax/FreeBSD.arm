@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 283291 2015-05-22 17:05:21Z jkim $");
+__FBSDID("$FreeBSD: head/sys/dev/hifn/hifn7751.c 298307 2016-04-19 23:37:24Z pfg $");
 
 /*
  * Driver for various Hifn encryption processors.
@@ -258,7 +258,8 @@ hifn_partname(struct hifn_softc *sc)
 static void
 default_harvest(struct rndtest_state *rsp, void *buf, u_int count)
 {
-	random_harvest(buf, count, count*NBBY/2, RANDOM_PURE_HIFN);
+	/* MarkM: FIX!! Check that this does not swamp the harvester! */
+	random_harvest_queue(buf, count, count*NBBY/2, RANDOM_PURE_HIFN);
 }
 
 static u_int
@@ -1028,7 +1029,7 @@ hifn_enable_crypto(struct hifn_softc *sc)
 	u_int32_t dmacfg, ramcfg, encl, addr, i;
 	char *offtbl = NULL;
 
-	for (i = 0; i < sizeof(pci2id)/sizeof(pci2id[0]); i++) {
+	for (i = 0; i < nitems(pci2id); i++) {
 		if (pci2id[i].pci_vendor == pci_get_vendor(sc->sc_dev) &&
 		    pci2id[i].pci_prod == pci_get_device(sc->sc_dev)) {
 			offtbl = pci2id[i].card_id;

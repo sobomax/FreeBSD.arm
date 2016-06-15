@@ -31,10 +31,11 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/sys/readv.c 276630 2015-01-03 18:38:46Z kib $");
+__FBSDID("$FreeBSD: head/lib/libc/sys/readv.c 288002 2015-09-20 03:45:57Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/syscall.h>
+#include <sys/uio.h>
 #include <unistd.h>
 #include "libc_private.h"
 

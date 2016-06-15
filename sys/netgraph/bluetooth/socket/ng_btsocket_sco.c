@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_btsocket_sco.c,v 1.2 2005/10/31 18:08:51 max Exp $
- * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_sco.c 274421 2014-11-12 09:57:15Z glebius $
+ * $FreeBSD: head/sys/netgraph/bluetooth/socket/ng_btsocket_sco.c 298813 2016-04-29 21:25:05Z pfg $
  */
 
 #include <sys/param.h>
@@ -1261,10 +1261,10 @@ ng_btsocket_sco_attach(struct socket *so, int proto, struct thread *td)
 	 * This is totally FUBAR. We could get here in two cases:
 	 *
 	 * 1) When user calls socket()
-	 * 2) When we need to accept new incomming connection and call
+	 * 2) When we need to accept new incoming connection and call
 	 *    sonewconn()
 	 *
-	 * In the first case we must aquire ng_btsocket_sco_sockets_mtx.
+	 * In the first case we must acquire ng_btsocket_sco_sockets_mtx.
 	 * In the second case we hold ng_btsocket_sco_sockets_mtx already.
 	 * So we now need to distinguish between these cases. From reading
 	 * /sys/kern/uipc_socket2.c we can find out that sonewconn() calls
