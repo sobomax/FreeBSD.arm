@@ -25,9 +25,19 @@
 # SUCH DAMAGE.
 #
 
-SUBDIR = gpiobus gpioiic gpioled gpiospi
+SUBDIR = gpioiic gpioled gpiospi
 
-.if !empty(OPT_FDT)
+.if defined(KERNBUILDDIR)
+GPIO_DISABLED!=	grep -q GPIO_DISABLED ${KERNBUILDDIR}/gpio_if.h && echo 1 || echo 0
+.else
+GPIO_DISABLED = 0
+.endif
+
+.if ${GPIO_DISABLED} == 0
+SUBDIR += gpiobus
+.endif
+
+.if !empty(OPT_FDT) && ${GPIO_DISABLED} == 0
 SUBDIR += gpiokeys gpiopps
 .endif
 

@@ -110,12 +110,14 @@ struct ofw_gpiobus_devinfo {
 	struct ofw_bus_devinfo	opd_obdinfo;
 };
 
+#if !defined(GPIO_DISABLED)
 static __inline int
 gpio_map_gpios(device_t bus, phandle_t dev, phandle_t gparent, int gcells,
     pcell_t *gpios, uint32_t *pin, uint32_t *flags)
 {
 	return (GPIO_MAP_GPIOS(bus, dev, gparent, gcells, gpios, pin, flags));
 }
+#endif
 
 device_t ofw_gpiobus_add_fdt_child(device_t, const char *, phandle_t);
 int ofw_gpiobus_parse_gpios(device_t, char *, struct gpiobus_pin **);
