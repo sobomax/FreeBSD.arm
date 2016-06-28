@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libctf/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD: head/cddl/lib/libctf/Makefile 302141 2016-06-23 15:02:57Z asomers $
 
 .PATH:		${.CURDIR}/../../../cddl/contrib/opensolaris/common/ctf
 .PATH:		${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libctf/common
@@ -18,7 +18,7 @@ SRCS=		ctf_create.c \
 		ctf_util.c
 MAN=		ctf.5
 
-WARNS?=		0
+WARNS?=		2
 CFLAGS+=	-DCTF_OLD_VERSIONS
 
 CFLAGS+=	-I${.CURDIR}/../../../sys/cddl/compat/opensolaris \

@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_vlan.c 301496 2016-06-06 09:51:58Z araujo $");
+__FBSDID("$FreeBSD: head/sys/net/if_vlan.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include "opt_inet.h"
 #include "opt_vlan.h"
@@ -823,7 +823,7 @@ vnet_vlan_uninit(const void *unused __unused)
 
 	if_clone_detach(V_vlan_cloner);
 }
-VNET_SYSUNINIT(vnet_vlan_uninit, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_FIRST,
+VNET_SYSUNINIT(vnet_vlan_uninit, SI_SUB_INIT_IF, SI_ORDER_FIRST,
     vnet_vlan_uninit, NULL);
 #endif
 

@@ -1,5 +1,5 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
-# $FreeBSD: head/share/mk/sys.mk 301888 2016-06-14 16:20:19Z bdrewery $
+# $FreeBSD: head/share/mk/sys.mk 302073 2016-06-21 21:55:03Z bdrewery $
 
 unix		?=	We run FreeBSD, not UNIX.
 .FreeBSD	?=	true
@@ -75,6 +75,8 @@ META_MODE?= normal
 # buildworld -> installworld -> buildworld to rebuild everything.
 # Since the build is self-reliant and bootstraps everything it needs,
 # this should not be a real problem for incremental builds.
+# XXX: This relies on the existing host tools retaining ABI compatibility
+# through upgrades since they won't be rebuilt on header/library changes.
 # Note that these are prefix matching, so /lib matches /libexec.
 .MAKE.META.IGNORE_PATHS+= \
 	${__MAKE_SHELL} \
@@ -424,6 +426,10 @@ __MAKE_CONF?=/etc/make.conf
 
 # late include for customization
 .sinclude <local.sys.mk>
+
+.if defined(META_MODE)
+META_MODE:=	${META_MODE:O:u}
+.endif
 
 .if defined(__MAKE_SHELL) && !empty(__MAKE_SHELL)
 SHELL=	${__MAKE_SHELL}

@@ -1,5 +1,5 @@
 #	from: @(#)bsd.lib.mk	5.26 (Berkeley) 5/2/91
-# $FreeBSD: head/share/mk/bsd.lib.mk 301880 2016-06-14 16:19:44Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.lib.mk 301933 2016-06-15 23:57:32Z bdrewery $
 #
 
 .include <bsd.init.mk>
@@ -424,13 +424,13 @@ lint: ${SRCS:M*.c}
 .if defined(LIB) && !empty(LIB)
 OBJS_DEPEND_GUESS+= ${SRCS:M*.h}
 .for _S in ${SRCS:N*.[hly]}
-OBJS_DEPEND_GUESS.${_S:R}.po=	${_S}
+OBJS_DEPEND_GUESS.${_S:R}.po+=	${_S}
 .endfor
 .endif
 .if defined(SHLIB_NAME) || \
     defined(INSTALL_PIC_ARCHIVE) && defined(LIB) && !empty(LIB)
 .for _S in ${SRCS:N*.[hly]}
-OBJS_DEPEND_GUESS.${_S:R}.So=	${_S}
+OBJS_DEPEND_GUESS.${_S:R}.So+=	${_S}
 .endfor
 .endif
 

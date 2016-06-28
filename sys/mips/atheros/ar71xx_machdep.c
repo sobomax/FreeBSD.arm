@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_machdep.c 285524 2015-07-14 05:14:10Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_machdep.c 302190 2016-06-25 04:34:54Z landonf $");
 
 #include "opt_ddb.h"
 #include "opt_ar71xx.h"
@@ -57,8 +57,6 @@ __FBSDID("$FreeBSD: head/sys/mips/atheros/ar71xx_machdep.c 285524 2015-07-14 05:
 #include <mips/atheros/ar71xx_setup.h>
 #include <mips/atheros/ar71xx_cpudef.h>
 #include <mips/atheros/ar71xx_macaddr.h>
-
-#include <mips/sentry5/s5reg.h>
 
 extern char edata[], end[];
 

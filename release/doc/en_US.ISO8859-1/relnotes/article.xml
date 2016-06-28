@@ -20,7 +20,7 @@
       <orgname>The &os; Project</orgname>
     </author>
 
-    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/relnotes/article.xml 301797 2016-06-10 15:05:35Z lidl $</pubdate>
+    <pubdate>$FreeBSD: head/release/doc/en_US.ISO8859-1/relnotes/article.xml 302185 2016-06-24 23:42:33Z gjb $</pubdate>
 
     <!-- Last rev: 288943 -->
 
@@ -621,9 +621,8 @@
 	A selection of system daemons, including:
 	<application>fingerd</application>,
 	<application>ftpd</application>,
-	<application>rlogind</application>,
-	<application>rshd</application>, and
-	<application>sshd</application> have been modified to support
+	<application>rlogind</application>, and
+	<application>rshd</application> have been modified to support
 	sending notifications to the <application>blacklistd</application>
 	daemon.</para>
 
@@ -631,6 +630,9 @@
 	the &man.ipfw.4; packet filter has been added to the
 	<application>blacklistd-helper</application> script.</para>
 
+      <para revision="301843" contrib="sponsor" sponsor="&ff;">Support for
+	the &man.ipfilter.4; packet filter has been added to the
+	<application>blacklistd-helper</application> script.</para>
     </sect2>
 
     <sect2 xml:id="userland-installer">

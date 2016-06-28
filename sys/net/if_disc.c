@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if_loop.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_disc.c 298075 2016-04-15 17:30:33Z pfg $
+ * $FreeBSD: head/sys/net/if_disc.c 302054 2016-06-21 13:48:49Z bz $
  */
 
 /*
@@ -137,7 +137,7 @@ vnet_disc_init(const void *unused __unused)
 	V_disc_cloner = if_clone_simple(discname, disc_clone_create,
 	    disc_clone_destroy, 0);
 }
-VNET_SYSINIT(vnet_disc_init, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_ANY,
+VNET_SYSINIT(vnet_disc_init, SI_SUB_PSEUDO, SI_ORDER_ANY,
     vnet_disc_init, NULL);
 
 static void
@@ -146,7 +146,7 @@ vnet_disc_uninit(const void *unused __unused)
 
 	if_clone_detach(V_disc_cloner);
 }
-VNET_SYSUNINIT(vnet_disc_uninit, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_ANY,
+VNET_SYSUNINIT(vnet_disc_uninit, SI_SUB_INIT_IF, SI_ORDER_ANY,
     vnet_disc_uninit, NULL);
 
 static int

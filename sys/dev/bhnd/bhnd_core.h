@@ -18,25 +18,33 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: head/sys/dev/bhnd/bhnd_core.h 296077 2016-02-26 03:34:08Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/bhnd_core.h 302105 2016-06-23 01:14:33Z adrian $
  */
 
 #ifndef _BHND_BHND_CORE_H_
 #define _BHND_BHND_CORE_H_
 
 /* Common core control flags */
-#define	BHND_CF_BIST_EN		0x8000		/**< ??? */
+#define	BHND_CF 		0x0408
+#define	BHND_CF_BIST_EN		0x8000		/**< built-in self test */
 #define	BHND_CF_PME_EN		0x4000		/**< ??? */
 #define	BHND_CF_CORE_BITS	0x3ffc		/**< core specific flag mask */
 #define	BHND_CF_FGC		0x0002		/**< force clock gating */
 #define	BHND_CF_CLOCK_EN	0x0001		/**< enable clock */
 
 /* Common core status flags */
+#define	BHND_SF			0x0500
 #define	BHND_SF_BIST_DONE	0x8000		/**< ??? */
 #define	BHND_SF_BIST_ERROR	0x4000		/**< ??? */
 #define	BHND_SF_GATED_CLK	0x2000		/**< clock gated */
 #define	BHND_SF_DMA64		0x1000		/**< supports 64-bit DMA */
 #define	BHND_SF_CORE_BITS	0x0fff		/**< core-specific status mask */
+
+/*Reset core control flags */
+#define	BHND_RESET_CF		0x0800
+#define	BHND_RESET_CF_ENABLE	0x0001
+
+#define	BHND_RESET_SF		0x0804
 
 /* 
  * A register that is common to all cores to

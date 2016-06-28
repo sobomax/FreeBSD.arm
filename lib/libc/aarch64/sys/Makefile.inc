@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/libc/aarch64/sys/Makefile.inc 300303 2016-05-20 15:04:48Z andrew $
+# $FreeBSD: head/lib/libc/aarch64/sys/Makefile.inc 302092 2016-06-22 21:11:27Z brooks $
 
 MIASM:=	${MIASM:Nfreebsd[467]_*}
 
@@ -6,7 +6,6 @@ SRCS+=	__vdso_gettc.c
 
 #MDASM= ptrace.S
 MDASM=	cerror.S \
-	pipe.S \
 	shmat.S \
 	sigreturn.S \
 	syscall.S \

@@ -103,7 +103,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_scan.c 301190 2016-06-02 04:54:56Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_scan.c 302101 2016-06-23 00:56:54Z adrian $");
 
 #include "opt_wlan.h"
 
@@ -371,6 +371,8 @@ iwm_mvm_scan_request(struct iwm_softc *sc, int flags,
 		.dataflags = { IWM_HCMD_DFL_NOCOPY, },
 	};
 	struct iwm_scan_cmd *cmd = sc->sc_scan_cmd;
+	struct ieee80211com *ic = &sc->sc_ic;
+	struct ieee80211vap *vap = TAILQ_FIRST(&ic->ic_vaps);
 	int is_assoc = 0;
 	int ret;
 	uint32_t status;
@@ -421,8 +423,9 @@ iwm_mvm_scan_request(struct iwm_softc *sc, int flags,
 
 	cmd->tx_cmd.len = htole16(iwm_mvm_fill_probe_req(sc,
 			    (struct ieee80211_frame *)cmd->data,
-			    sc->sc_ic.ic_macaddr, n_ssids, ssid, ssid_len,
-			    NULL, 0, sc->sc_capa_max_probe_len));
+			    vap ? vap->iv_myaddr : ic->ic_macaddr, n_ssids,
+			    ssid, ssid_len, NULL, 0,
+			    sc->sc_capa_max_probe_len));
 
 	cmd->channel_count
 	    = iwm_mvm_scan_fill_channels(sc, cmd, flags, n_ssids, basic_ssid);

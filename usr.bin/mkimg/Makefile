@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/mkimg/Makefile 284658 2015-06-21 02:45:31Z marcel $
+# $FreeBSD: head/usr.bin/mkimg/Makefile 301999 2016-06-17 18:49:42Z emaste $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,7 @@ PROG=	mkimg
 SRCS=	format.c image.c mkimg.c scheme.c
 MAN=	mkimg.1
 
-MKIMG_VERSION=20150620
+MKIMG_VERSION=20151211
 mkimg.o: Makefile
 
 CFLAGS+=-DMKIMG_VERSION=${MKIMG_VERSION}

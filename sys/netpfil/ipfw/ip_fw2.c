@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 298995 2016-05-03 18:05:43Z pfg $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 302054 2016-06-21 13:48:49Z bz $");
 
 /*
  * The FreeBSD IP packet firewall, main file
@@ -2890,7 +2890,7 @@ static moduledata_t ipfwmod = {
 };
 
 /* Define startup order. */
-#define	IPFW_SI_SUB_FIREWALL	SI_SUB_PROTO_IFATTACHDOMAIN
+#define	IPFW_SI_SUB_FIREWALL	SI_SUB_PROTO_FIREWALL
 #define	IPFW_MODEVENT_ORDER	(SI_ORDER_ANY - 255) /* On boot slot in here. */
 #define	IPFW_MODULE_ORDER	(IPFW_MODEVENT_ORDER + 1) /* A little later. */
 #define	IPFW_VNET_ORDER		(IPFW_MODEVENT_ORDER + 2) /* Later still. */

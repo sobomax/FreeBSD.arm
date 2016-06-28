@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/powerpc/aim/locore64.S 293641 2016-01-10 18:00:01Z nwhitehorn $ */
+/* $FreeBSD: head/sys/powerpc/aim/locore64.S 302214 2016-06-26 18:43:42Z nwhitehorn $ */
 
 /*-
  * Copyright (C) 2010-2016 Nathan Whitehorn
@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/powerpc/aim/locore64.S 293641 2016-01-10 18:00:01Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/aim/locore64.S 302214 2016-06-26 18:43:42Z nwhitehorn $
  */
 
 #include "assym.s"
@@ -76,6 +76,14 @@ btext:
  */
 	.text
 ASENTRY_NOPROF(__start)
+	/* Set 64-bit mode if not yet set before branching to C */
+	mfmsr	%r20
+	li	%r21,1
+	insrdi	%r20,%r21,1,0
+	mtmsrd	%r20
+	isync
+	nop	/* Make this block a multiple of 8 bytes */
+
 	/* Set up the TOC pointer */
 	b	0f
 	.align 3

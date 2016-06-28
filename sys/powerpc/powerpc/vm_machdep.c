@@ -38,7 +38,7 @@
  *
  *	from: @(#)vm_machdep.c	7.3 (Berkeley) 5/13/91
  *	Utah $Hdr: vm_machdep.c 1.16.1.1 89/06/23$
- * $FreeBSD: head/sys/powerpc/powerpc/vm_machdep.c 291442 2015-11-29 07:16:08Z nwhitehorn $
+ * $FreeBSD: head/sys/powerpc/powerpc/vm_machdep.c 301961 2016-06-16 12:05:44Z kib $
  */
 /*-
  * Copyright (c) 1994, 1995, 1996 Carnegie-Mellon University.
@@ -179,7 +179,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
  * This is needed to make kernel threads stay in kernel mode.
  */
 void
-cpu_set_fork_handler(struct thread *td, void (*func)(void *), void *arg)
+cpu_fork_kthread_handler(struct thread *td, void (*func)(void *), void *arg)
 {
 	struct callframe *cf;
 

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mount.h	8.21 (Berkeley) 5/20/95
- * $FreeBSD: head/sys/sys/mount.h 291116 2015-11-20 23:52:27Z glebius $
+ * $FreeBSD: head/sys/sys/mount.h 302215 2016-06-26 20:07:24Z kib $
  */
 
 #ifndef _SYS_MOUNT_H_
@@ -653,15 +653,15 @@ vfs_statfs_t	__vfs_statfs;
 
 #define	VFS_PROLOGUE(MP)	do {					\
 	struct mount *mp__;						\
-	int _enable_stops;						\
+	int _prev_stops;						\
 									\
 	mp__ = (MP);							\
-	_enable_stops = (mp__ != NULL &&				\
-	    (mp__->mnt_vfc->vfc_flags & VFCF_SBDRY) && sigdeferstop())
+	_prev_stops = sigdeferstop((mp__ != NULL &&			\
+	    (mp__->mnt_vfc->vfc_flags & VFCF_SBDRY) != 0) ?		\
+	    SIGDEFERSTOP_SILENT : SIGDEFERSTOP_NOP);
 
 #define	VFS_EPILOGUE(MP)						\
-	if (_enable_stops)						\
-		sigallowstop();						\
+	sigallowstop(_prev_stops);					\
 } while (0)
 
 #define	VFS_MOUNT(MP) ({						\

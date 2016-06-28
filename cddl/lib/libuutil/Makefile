@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libuutil/Makefile 204597 2010-03-02 19:04:07Z uqs $
+# $FreeBSD: head/cddl/lib/libuutil/Makefile 302141 2016-06-23 15:02:57Z asomers $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libuutil/common
 .PATH: ${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/avl
@@ -15,7 +15,7 @@ SRCS=	avl.c \
 	uu_pname.c \
 	uu_strtoint.c
 
-WARNS?=	0
+WARNS?=	1
 CFLAGS+= -DNATIVE_BUILD
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libuutil/common
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/compat/opensolaris

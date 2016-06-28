@@ -24,7 +24,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: head/crypto/openssh/auth2.c 301551 2016-06-07 16:18:09Z lidl $");
+__RCSID("$FreeBSD: head/crypto/openssh/auth2.c 302182 2016-06-24 23:22:42Z gjb $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -52,9 +52,6 @@ __RCSID("$FreeBSD: head/crypto/openssh/auth2.c 301551 2016-06-07 16:18:09Z lidl 
 #include "pathnames.h"
 #include "buffer.h"
 #include "canohost.h"
-#ifdef USE_BLACKLIST
-#include "blacklist_client.h"
-#endif
 
 #ifdef GSSAPI
 #include "ssh-gss.h"
@@ -251,9 +248,6 @@ input_userauth_request(int type, u_int32_t seq, void *ctxt)
 		} else {
 			logit("input_userauth_request: invalid user %s", user);
 			authctxt->pw = fakepw();
-#ifdef USE_BLACKLIST
-			blacklist_notify(1);
-#endif
 #ifdef SSH_AUDIT_EVENTS
 			PRIVSEP(audit_event(SSH_INVALID_USER));
 #endif

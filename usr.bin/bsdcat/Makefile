@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/bsdcat/Makefile 299529 2016-05-12 10:16:16Z mm $
+# $FreeBSD: head/usr.bin/bsdcat/Makefile 302075 2016-06-22 07:49:59Z mm $
 
 .include <src.opts.mk>
 
@@ -6,7 +6,7 @@ _LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
 _LIBARCHIVECONFDIR=	${.CURDIR}/../../lib/libarchive
 
 PROG=	bsdcat	
-BSDCAT_VERSION_STRING=	3.2.0
+BSDCAT_VERSION_STRING=	3.2.1
 
 .PATH:	${_LIBARCHIVEDIR}/cat
 SRCS=	bsdcat.c cmdline.c

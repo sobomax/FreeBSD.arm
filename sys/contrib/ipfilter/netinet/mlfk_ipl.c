@@ -1,9 +1,9 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/mlfk_ipl.c 264235 2014-04-07 19:32:56Z cy $	*/
+/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/mlfk_ipl.c 302054 2016-06-21 13:48:49Z bz $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
- * $FreeBSD: head/sys/contrib/ipfilter/netinet/mlfk_ipl.c 264235 2014-04-07 19:32:56Z cy $
+ * $FreeBSD: head/sys/contrib/ipfilter/netinet/mlfk_ipl.c 302054 2016-06-21 13:48:49Z bz $
  * See the IPFILTER.LICENCE file for details on licencing.
  */
 
@@ -287,7 +287,7 @@ static moduledata_t ipfiltermod = {
 };
 
 
-DECLARE_MODULE(ipfilter, ipfiltermod, SI_SUB_PROTO_DOMAIN, SI_ORDER_ANY);
+DECLARE_MODULE(ipfilter, ipfiltermod, SI_SUB_PROTO_FIREWALL, SI_ORDER_ANY);
 #ifdef	MODULE_VERSION
 MODULE_VERSION(ipfilter, 1);
 #endif

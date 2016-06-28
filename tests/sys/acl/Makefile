@@ -1,4 +1,4 @@
-# $FreeBSD: head/tests/sys/acl/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: head/tests/sys/acl/Makefile 302036 2016-06-20 23:17:00Z asomers $
 
 PACKAGE=	tests
 
@@ -27,11 +27,11 @@ TEST_METADATA.$t+=	required_user="root"
 _ACL_PROGS=		getfacl setfacl
 
 .for t in 01 03 04
-TEST_METADATA.$t+=	required_programs="zpool ${_ACL_PROGS}"
+TEST_METADATA.$t+=	required_programs="perl zpool ${_ACL_PROGS}"
 .endfor
 
 .for t in 00 02
-TEST_METADATA.$t+=	required_programs="${_ACL_PROGS}"
+TEST_METADATA.$t+=	required_programs="perl ${_ACL_PROGS}"
 .endfor
 
 .include <bsd.test.mk>

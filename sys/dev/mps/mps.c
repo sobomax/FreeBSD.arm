@@ -27,11 +27,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps.c 298955 2016-05-03 03:41:25Z pfg $
+ * $FreeBSD: head/sys/dev/mps/mps.c 302031 2016-06-20 18:14:51Z slm $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps.c 302031 2016-06-20 18:14:51Z slm $");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
@@ -1922,9 +1922,10 @@ mps_intr_locked(void *data)
 					 */
 					rel_rep =
 					    (MPI2_DIAG_RELEASE_REPLY *)reply;
-					if (le16toh(rel_rep->IOCStatus) ==
+					if ((le16toh(rel_rep->IOCStatus) &
+					    MPI2_IOCSTATUS_MASK) ==
 					    MPI2_IOCSTATUS_DIAGNOSTIC_RELEASED)
-					    {
+					{
 						pBuffer =
 						    &sc->fw_diag_buffer_list[
 						    rel_rep->BufferType];

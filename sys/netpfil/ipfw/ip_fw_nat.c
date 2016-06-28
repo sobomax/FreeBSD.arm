@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_nat.c 298995 2016-05-03 18:05:43Z pfg $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw_nat.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1213,7 +1213,7 @@ static moduledata_t ipfw_nat_mod = {
 };
 
 /* Define startup order. */
-#define	IPFW_NAT_SI_SUB_FIREWALL	SI_SUB_PROTO_IFATTACHDOMAIN
+#define	IPFW_NAT_SI_SUB_FIREWALL	SI_SUB_PROTO_FIREWALL
 #define	IPFW_NAT_MODEVENT_ORDER		(SI_ORDER_ANY - 128) /* after ipfw */
 #define	IPFW_NAT_MODULE_ORDER		(IPFW_NAT_MODEVENT_ORDER + 1)
 #define	IPFW_NAT_VNET_ORDER		(IPFW_NAT_MODEVENT_ORDER + 2)

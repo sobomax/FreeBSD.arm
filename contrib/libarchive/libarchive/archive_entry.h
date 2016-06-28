@@ -22,14 +22,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/contrib/libarchive/libarchive/archive_entry.h 299529 2016-05-12 10:16:16Z mm $
+ * $FreeBSD: head/contrib/libarchive/libarchive/archive_entry.h 302075 2016-06-22 07:49:59Z mm $
  */
 
 #ifndef ARCHIVE_ENTRY_H_INCLUDED
 #define	ARCHIVE_ENTRY_H_INCLUDED
 
 /* Note: Compiler will complain if this does not match archive.h! */
-#define	ARCHIVE_VERSION_NUMBER 3002000
+#define	ARCHIVE_VERSION_NUMBER 3002001
 
 /*
  * Note: archive_entry.h is for use outside of libarchive; the

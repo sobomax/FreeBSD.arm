@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/ar/ar.c 300227 2016-05-19 20:03:01Z ed $");
+__FBSDID("$FreeBSD: head/usr.bin/ar/ar.c 301974 2016-06-16 21:22:26Z emaste $");
 
 #include <sys/queue.h>
 #include <sys/types.h>
@@ -283,7 +283,8 @@ main(int argc, char **argv)
 	}
 
 	/* Set determinstic mode for -D, and by default without -U. */
-	if (Dflag || (Uflag == 0 && (bsdar->mode == 'q' || bsdar->mode == 'r')))
+	if (Dflag || (Uflag == 0 && (bsdar->mode == 'q' || bsdar->mode == 'r' ||
+	    (bsdar->mode == '\0' && bsdar->options & AR_S))))
 		bsdar->options |= AR_D;
 
 	if (bsdar->options & AR_A)

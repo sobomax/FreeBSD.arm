@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_sas_lsi.c 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_sas_lsi.c 302031 2016-06-20 18:14:51Z slm $");
 
 /* Communications core for Avago Technologies (LSI) MPT2 */
 
@@ -1161,14 +1161,14 @@ mpssas_stop_unit_done(struct cam_periph *periph, union ccb *done_ccb)
 	struct mpssas_softc *sassc;
 	char path_str[64];
 
+	if (done_ccb == NULL)
+		return;
+
 	sassc = (struct mpssas_softc *)done_ccb->ccb_h.ppriv_ptr1;
 
 	xpt_path_string(done_ccb->ccb_h.path, path_str, sizeof(path_str));
 	mps_dprint(sassc->sc, MPS_INFO, "Completing stop unit for %s\n",
 	    path_str);
-
-	if (done_ccb == NULL)
-		return;
 
 	/*
 	 * Nothing more to do except free the CCB and path.  If the command

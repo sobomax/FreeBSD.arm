@@ -1,4 +1,4 @@
-# $FreeBSD: head/gnu/usr.bin/cc/cc_tools/Makefile 300347 2016-05-21 01:32:01Z bdrewery $
+# $FreeBSD: head/gnu/usr.bin/cc/cc_tools/Makefile 301936 2016-06-15 23:57:53Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -261,7 +261,7 @@ gengtype-lex.c:	gengtype-lex.l
 gengtype-yacc.h: gengtype-yacc.y
 	yacc -d -o gengtype-yacc.c ${.ALLSRC}
 
-gengtype-yacc.c: gengtype-yacc.h
+gengtype-yacc.c: gengtype-yacc.h .NOMETA
 
 gengtype-yacc+%DIKED.c: gengtype-yacc.c
 	cat    ${.ALLSRC} > ${.TARGET}
@@ -438,9 +438,7 @@ CLEANFILES+=	${GENSRCS} ${GENONLY} ${GENOBJS} ${GNTOOLS}
 
 #-----------------------------------------------------------------------
 # Manual dependencies.
-.if !exists(${DEPENDFILE})
 .include  "Makefile.dep"
-.endif
 
 .include <bsd.prog.mk>
 # DO NOT DELETE

@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_entry_xattr.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_entry_xattr.c 302075 2016-06-22 07:49:59Z mm $");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -91,16 +91,11 @@ archive_entry_xattr_add_entry(struct archive_entry *entry,
 {
 	struct ae_xattr	*xp;
 
-	for (xp = entry->xattr_head; xp != NULL; xp = xp->next)
-		;
-
 	if ((xp = (struct ae_xattr *)malloc(sizeof(struct ae_xattr))) == NULL)
-		/* XXX Error XXX */
-		return;
+		__archive_errx(1, "Out of memory");
 
 	if ((xp->name = strdup(name)) == NULL)
-		/* XXX Error XXX */
-		return;
+		__archive_errx(1, "Out of memory");
 
 	if ((xp->value = malloc(size)) != NULL) {
 		memcpy(xp->value, value, size);

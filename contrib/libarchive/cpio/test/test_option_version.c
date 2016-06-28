@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/test/test_option_version.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/test/test_option_version.c 302075 2016-06-22 07:49:59Z mm $");
 
 /*
  * Test that --version option works and generates reasonable output.
@@ -59,8 +59,8 @@ verify(const char *p, size_t s)
 	++q; --s;
 	/* Separator. */
 	failure("Version: %s", p);
-	assertEqualMem(q, "-- ", 3);
-	q += 3; s -= 3;
+	assertEqualMem(q, "- ", 2);
+	q += 2; s -= 2;
 	/* libarchive name and version number */
 	assert(s > 11);
 	failure("Version: %s", p);

@@ -103,7 +103,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_mac_ctxt.c 300248 2016-05-19 23:31:00Z avos $");
+__FBSDID("$FreeBSD: head/sys/dev/iwm/if_iwm_mac_ctxt.c 302101 2016-06-23 00:56:54Z adrian $");
 
 #include "opt_wlan.h"
 
@@ -275,7 +275,7 @@ iwm_mvm_mac_ctxt_cmd_common(struct iwm_softc *sc, struct iwm_node *in,
 	 */
 	cmd->tsf_id = htole32(IWM_DEFAULT_TSFID);
 
-	IEEE80211_ADDR_COPY(cmd->node_addr, ic->ic_macaddr);
+	IEEE80211_ADDR_COPY(cmd->node_addr, vap->iv_myaddr);
 
 	/*
 	 * XXX should we error out if in_assoc is 1 and ni == NULL?

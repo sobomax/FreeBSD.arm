@@ -1,10 +1,9 @@
-# $FreeBSD: head/lib/libc/riscv/sys/Makefile.inc 300689 2016-05-25 16:38:10Z br $
+# $FreeBSD: head/lib/libc/riscv/sys/Makefile.inc 302092 2016-06-22 21:11:27Z brooks $
 
 SRCS+=	trivial-vdso_tc.c
 
 #MDASM= ptrace.S
 MDASM=	cerror.S \
-	pipe.S \
 	shmat.S \
 	sigreturn.S \
 	syscall.S \

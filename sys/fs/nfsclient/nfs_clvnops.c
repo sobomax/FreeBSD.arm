@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvnops.c 299413 2016-05-11 06:35:46Z kib $");
+__FBSDID("$FreeBSD: head/sys/fs/nfsclient/nfs_clvnops.c 302019 2016-06-19 18:29:43Z kib $");
 
 /*
  * vnode op calls for Sun NFS version 2, 3 and 4
@@ -3097,10 +3097,14 @@ nfs_advlock(struct vop_advlock_args *ap)
 			}
 		}
 		if (error == 0 && ap->a_op == F_SETLK) {
-			/* Mark that a file lock has been acquired. */
-			mtx_lock(&np->n_mtx);
-			np->n_flag |= NHASBEENLOCKED;
-			mtx_unlock(&np->n_mtx);
+			error = NFSVOPLOCK(vp, LK_SHARED);
+			if (error == 0) {
+				/* Mark that a file lock has been acquired. */
+				mtx_lock(&np->n_mtx);
+				np->n_flag |= NHASBEENLOCKED;
+				mtx_unlock(&np->n_mtx);
+				NFSVOPUNLOCK(vp, 0);
+			}
 		}
 	}
 	return (error);

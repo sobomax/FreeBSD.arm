@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/aim/aim_machdep.c 293051 2016-01-02 18:10:53Z nwhitehorn $");
+__FBSDID("$FreeBSD: head/sys/powerpc/aim/aim_machdep.c 302214 2016-06-26 18:43:42Z nwhitehorn $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -178,17 +178,6 @@ aim_cpu_init(vm_offset_t toc)
 
 	trap_offset = 0;
 	cacheline_warn = 0;
-
-	#ifdef __powerpc64__
-	/*
-	 * Switch to 64-bit mode, if the bootloader didn't, before we start 
-	 * using memory beyond what the bootloader might have set up.
-	 * Guaranteed not to cause an implicit branch since we either (a)
-	 * started with a 32-bit bootloader below 4 GB or (b) were already in
-	 * 64-bit mode, making this a no-op.
-	 */
-	mtmsrd(mfmsr() | PSL_SF);
-	#endif
 
 	/* Various very early CPU fix ups */
 	switch (mfpvr() >> 16) {

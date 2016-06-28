@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/mk/bsd.sys.mk 300943 2016-05-29 06:20:15Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.sys.mk 302090 2016-06-22 20:31:49Z bdrewery $
 #
 # This file contains common settings used for building FreeBSD
 # sources.
@@ -174,6 +174,7 @@ CFLAGS+=	${CWARNFLAGS.${.IMPSRC:T}}
 CFLAGS+=	 ${CFLAGS.${COMPILER_TYPE}}
 CXXFLAGS+=	 ${CXXFLAGS.${COMPILER_TYPE}}
 
+AFLAGS+=	${AFLAGS.${.IMPSRC:T}}
 ACFLAGS+=	${ACFLAGS.${.IMPSRC:T}}
 CFLAGS+=	${CFLAGS.${.IMPSRC:T}}
 CXXFLAGS+=	${CXXFLAGS.${.IMPSRC:T}}

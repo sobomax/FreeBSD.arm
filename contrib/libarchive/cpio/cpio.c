@@ -26,7 +26,7 @@
 
 
 #include "cpio_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/cpio.c 299896 2016-05-16 05:01:44Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/cpio/cpio.c 302075 2016-06-22 07:49:59Z mm $");
 
 #include <sys/types.h>
 #include <archive.h>
@@ -498,7 +498,7 @@ long_help(void)
 static void
 version(void)
 {
-	fprintf(stdout,"bsdcpio %s -- %s\n",
+	fprintf(stdout,"bsdcpio %s - %s\n",
 	    BSDCPIO_VERSION_STRING,
 	    archive_version_details());
 	exit(0);

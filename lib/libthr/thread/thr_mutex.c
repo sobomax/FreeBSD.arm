@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_mutex.c 301136 2016-06-01 16:12:26Z cem $");
+__FBSDID("$FreeBSD: head/lib/libthr/thread/thr_mutex.c 302201 2016-06-25 20:20:24Z kib $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -852,7 +852,7 @@ mutex_self_trylock(struct pthread_mutex *m)
 	case PTHREAD_MUTEX_ERRORCHECK:
 	case PTHREAD_MUTEX_NORMAL:
 	case PTHREAD_MUTEX_ADAPTIVE_NP:
-		ret = EBUSY; 
+		ret = EBUSY;
 		break;
 
 	case PTHREAD_MUTEX_RECURSIVE:

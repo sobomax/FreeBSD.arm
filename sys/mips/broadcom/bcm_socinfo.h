@@ -26,7 +26,7 @@
  */
 
 /*
- * $FreeBSD: head/sys/mips/broadcom/bcm_socinfo.h 299994 2016-05-17 00:00:01Z adrian $
+ * $FreeBSD: head/sys/mips/broadcom/bcm_socinfo.h 302190 2016-06-25 04:34:54Z landonf $
  */
 
 #ifndef _MIPS_BROADCOM_BCM_SOCINFO_H_
@@ -35,9 +35,10 @@
 #include <machine/cpuregs.h>
 
 struct bcm_socinfo {
-	uint32_t id;
-	uint32_t cpurate;	/* in MHz */
-	uint32_t uartrate;	/* in Hz */
+	uint32_t	id;
+	uint32_t	cpurate;	/* in MHz */
+	uint32_t	uartrate;	/* in Hz */
+	int		double_count;
 };
 
 struct bcm_socinfo*	bcm_get_socinfo_by_socid(uint32_t key);

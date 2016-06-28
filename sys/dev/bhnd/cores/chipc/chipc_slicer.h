@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipc_slicer.h 301409 2016-06-04 19:39:05Z landonf $
+ * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipc_slicer.h 302189 2016-06-25 04:33:00Z landonf $
  */
 
 #ifndef _BHND_CORES_CHIPC_CHIPC_SLICER_H_
@@ -34,10 +34,13 @@
 
 #include <sys/slicer.h>
 
+#include "chipcvar.h"
+
 #define	TRX_MAGIC 	0x30524448
 #define	CFE_MAGIC 	0x43464531
 #define	NVRAM_MAGIC	0x48534C46
 
+void		chipc_register_slicer(chipc_flash flash_type);
 int		chipc_slicer_spi(device_t dev, struct flash_slice *slices,
 		    int *nslices);
 int		chipc_slicer_cfi(device_t dev, struct flash_slice *slices,

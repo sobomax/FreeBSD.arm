@@ -28,11 +28,11 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: head/sys/conf/newvers.sh 301815 2016-06-10 19:29:55Z gjb $
+# $FreeBSD: head/sys/conf/newvers.sh 302164 2016-06-24 00:05:45Z gjb $
 
 TYPE="FreeBSD"
 REVISION="11.0"
-BRANCH="ALPHA3"
+BRANCH="ALPHA5"
 if [ -n "${BRANCH_OVERRIDE}" ]; then
 	BRANCH=${BRANCH_OVERRIDE}
 fi

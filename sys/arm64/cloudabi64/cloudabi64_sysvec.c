@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm64/cloudabi64/cloudabi64_sysvec.c 297613 2016-04-06 11:11:31Z ed $");
+__FBSDID("$FreeBSD: head/sys/arm64/cloudabi64/cloudabi64_sysvec.c 301961 2016-06-16 12:05:44Z kib $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -140,7 +140,7 @@ cloudabi64_thread_setregs(struct thread *td,
 	/* Perform standard register initialization. */
 	stack.ss_sp = (void *)attr->stack;
 	stack.ss_size = attr->stack_size;
-	cpu_set_upcall_kse(td, (void *)attr->entry_point, NULL, &stack);
+	cpu_set_upcall(td, (void *)attr->entry_point, NULL, &stack);
 
 	/*
 	 * Pass in the thread ID of the new thread and the argument

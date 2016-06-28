@@ -1,8 +1,9 @@
-# $FreeBSD: head/usr.sbin/sa/tests/Makefile 299094 2016-05-04 23:20:53Z ngie $
+# $FreeBSD: head/usr.sbin/sa/tests/Makefile 302206 2016-06-26 00:53:31Z asomers $
 
 PACKAGE=	tests
 
 TAP_TESTS_SH=	legacy_test
+TEST_METADATA.legacy_test+=	allowed_architectures="amd64 i386 sparc64"
 
 ${PACKAGE}FILES+=		v1-amd64-sav.in
 ${PACKAGE}FILES+=		v1-amd64-sav.out

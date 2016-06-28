@@ -27,13 +27,13 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mpsvar.h 295286 2016-02-04 23:38:55Z scottl $
+ * $FreeBSD: head/sys/dev/mps/mpsvar.h 302031 2016-06-20 18:14:51Z slm $
  */
 
 #ifndef _MPSVAR_H
 #define _MPSVAR_H
 
-#define MPS_DRIVER_VERSION	"20.00.00.00-fbsd"
+#define MPS_DRIVER_VERSION	"21.00.00.00-fbsd"
 
 #define MPS_DB_MAX_WAIT		2500
 

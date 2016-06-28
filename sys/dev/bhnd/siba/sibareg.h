@@ -18,7 +18,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: head/sys/dev/bhnd/siba/sibareg.h 296077 2016-02-26 03:34:08Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/siba/sibareg.h 301972 2016-06-16 20:04:33Z landonf $
  */
 
 #ifndef _BHND_SIBA_SIBAREG_
@@ -50,9 +50,6 @@
 #define	SIBA_CORE_SIZE		BHND_DEFAULT_CORE_SIZE	/**< per-core register block size */
 #define	SIBA_MAX_CORES	\
     (SIBA_ENUM_SIZE/SIBA_CORE_SIZE)			/**< Maximum number of cores */
-
-#define	SIBA_ADDRSPACE_CORE	0			/**< address space identifier of the
-							     core enumeration block. */
 
 /**< Evaluates to the bus address of the @p idx core register block */
 #define	SIBA_CORE_ADDR(idx)	\
@@ -175,7 +172,7 @@
 #define	SIBA_IMCH_BEM_MASK	0xc0		/* bus error mode */
 #define	SIBA_IMCH_BEM_SHIFT	6
 
-/* sbadmatch0 */
+/* sbadmatch0-4 */
 #define	SIBA_AM_TYPE_MASK	0x3		/* address type */
 #define	SIBA_AM_TYPE_SHIFT	0x0
 #define	SIBA_AM_AD64		0x4		/* reserved */

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bsdinstall/partedit/gpart_ops.c 285679 2015-07-18 18:49:44Z allanjude $
+ * $FreeBSD: head/usr.sbin/bsdinstall/partedit/gpart_ops.c 302025 2016-06-20 06:40:58Z wma $
  */
 
 #include <sys/param.h>
@@ -218,7 +218,7 @@ choose_part_type(const char *def_scheme)
 		{"BSD", "BSD Labels",
 		    "Bootable on most x86 systems", 0 },
 		{"GPT", "GUID Partition Table",
-		    "Bootable on most x86 systems", 0 },
+		    "Bootable on most x86 systems and EFI aware ARM64", 0 },
 		{"MBR", "DOS Partitions",
 		    "Bootable on most x86 systems", 0 },
 		{"PC98", "NEC PC9801 Partition Table",

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	$KAME: nd6.h,v 1.76 2001/12/18 02:10:31 itojun Exp $
- * $FreeBSD: head/sys/netinet6/nd6.h 301217 2016-06-02 17:51:29Z gnn $
+ * $FreeBSD: head/sys/netinet6/nd6.h 302054 2016-06-21 13:48:49Z bz $
  */
 
 #ifndef _NETINET6_ND6_H_
@@ -414,7 +414,7 @@ void nd6_init(void);
 void nd6_destroy(void);
 #endif
 struct nd_ifinfo *nd6_ifattach(struct ifnet *);
-void nd6_ifdetach(struct nd_ifinfo *);
+void nd6_ifdetach(struct ifnet *, struct nd_ifinfo *);
 int nd6_is_addr_neighbor(const struct sockaddr_in6 *, struct ifnet *);
 void nd6_option_init(void *, int, union nd_opts *);
 struct nd_opt_hdr *nd6_option(union nd_opts *);

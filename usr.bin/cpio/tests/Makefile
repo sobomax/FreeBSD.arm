@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/cpio/tests/Makefile 299529 2016-05-12 10:16:16Z mm $
+# $FreeBSD: head/usr.bin/cpio/tests/Makefile 302075 2016-06-22 07:49:59Z mm $
 
 PACKAGE=	tests
 
@@ -44,6 +44,7 @@ TESTS_SRCS=	\
 	test_extract_cpio_xz.c			\
 	test_format_newc.c			\
 	test_gcpio_compat.c			\
+	test_missing_file.c			\
 	test_option_0.c				\
 	test_option_B_upper.c			\
 	test_option_C_upper.c			\

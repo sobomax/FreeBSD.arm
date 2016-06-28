@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_hhook.c 291291 2015-11-25 07:14:58Z ae $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_hhook.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -510,7 +510,7 @@ hhook_vnet_uninit(const void *unused __unused)
 /*
  * When a vnet is created and being initialised, init the V_hhook_vhead_list.
  */
-VNET_SYSINIT(hhook_vnet_init, SI_SUB_MBUF, SI_ORDER_FIRST,
+VNET_SYSINIT(hhook_vnet_init, SI_SUB_INIT_IF, SI_ORDER_FIRST,
     hhook_vnet_init, NULL);
 
 /*
@@ -518,5 +518,5 @@ VNET_SYSINIT(hhook_vnet_init, SI_SUB_MBUF, SI_ORDER_FIRST,
  * points to clean up on vnet tear down, but in case the KPI is misused,
  * provide a function to clean up and free memory for a vnet being destroyed.
  */
-VNET_SYSUNINIT(hhook_vnet_uninit, SI_SUB_MBUF, SI_ORDER_ANY,
+VNET_SYSUNINIT(hhook_vnet_uninit, SI_SUB_INIT_IF, SI_ORDER_FIRST,
     hhook_vnet_uninit, NULL);

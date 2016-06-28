@@ -1,5 +1,5 @@
 #
-# $FreeBSD: head/tools/build/mk/OptionalObsoleteFiles.inc 301602 2016-06-08 11:47:19Z des $
+# $FreeBSD: head/tools/build/mk/OptionalObsoleteFiles.inc 301993 2016-06-17 16:46:58Z bdrewery $
 #
 # This file add support for the WITHOUT_* and WITH_* knobs in src.conf(5) to
 # the check-old and delete-old* targets.
@@ -1237,6 +1237,7 @@ OLD_FILES+=usr/share/man/man1/llvm-tblgen.1.gz
 
 .if ${MK_CLANG_EXTRAS} == no
 OLD_FILES+=usr/bin/bugpoint
+OLD_FILES+=usr/bin/clang-format
 OLD_FILES+=usr/bin/llc
 OLD_FILES+=usr/bin/lli
 OLD_FILES+=usr/bin/llvm-ar

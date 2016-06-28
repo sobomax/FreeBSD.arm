@@ -1,5 +1,5 @@
 #	@(#)Makefile    5.11 (Berkeley) 9/6/90
-# $FreeBSD: head/lib/libc/rpc/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/rpc/Makefile.inc 302255 2016-06-28 19:53:16Z bdrewery $
 
 .PATH: ${LIBC_SRCTOP}/rpc ${LIBC_SRCTOP}/.
 SRCS+=	auth_none.c auth_unix.c authunix_prot.c bindresvport.c clnt_bcast.c \
@@ -33,7 +33,7 @@ CFLAGS+= -I${LIBC_SRCTOP}/rpc
 
 CLEANFILES+= crypt_clnt.c crypt_xdr.c crypt.h
 
-RPCDIR= ${DESTDIR}/usr/include/rpcsvc
+RPCDIR= ${SRCTOP}/include/rpcsvc
 RPCGEN= RPCGEN_CPP=${CPP:Q} rpcgen -C
 
 crypt_clnt.c: ${RPCDIR}/crypt.x crypt.h

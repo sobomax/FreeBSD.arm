@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 298902 2016-05-01 21:48:55Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet6/sctp6_usrreq.c 302138 2016-06-23 09:13:15Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #ifdef INET6
@@ -341,8 +341,7 @@ sctp6_ctlinput(int cmd, struct sockaddr *pktdst, void *d)
 		    &inp, &net, 1, SCTP_DEFAULT_VRFID);
 		if ((stcb != NULL) &&
 		    (net != NULL) &&
-		    (inp != NULL) &&
-		    (inp->sctp_socket != NULL)) {
+		    (inp != NULL)) {
 			/* Check the verification tag */
 			if (ntohl(sh.v_tag) != 0) {
 				/*

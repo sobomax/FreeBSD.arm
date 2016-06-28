@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipc_private.h 300548 2016-05-24 01:12:19Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipc_private.h 302189 2016-06-25 04:33:00Z landonf $
  */
 
 #ifndef _BHND_CORES_CHIPC_CHIPC_PRIVATE_H_
@@ -54,6 +54,11 @@ struct chipc_softc;
 int			 chipc_init_child_resource(struct resource *r,
 			     struct resource *parent, 
 			     bhnd_size_t offset, bhnd_size_t size);
+
+int			 chipc_set_resource(struct chipc_softc *sc,
+			     device_t child, int type, int rid,
+			     rman_res_t start, rman_res_t count, u_int port,
+			     u_int region);
 
 struct chipc_region	*chipc_alloc_region(struct chipc_softc *sc,
 			     bhnd_port_type type, u_int port,
@@ -84,11 +89,13 @@ struct chipc_region {
 	bhnd_addr_t		 cr_addr;	/**< region base address */
 	bhnd_addr_t		 cr_end;	/**< region end address */
 	bhnd_size_t		 cr_count;	/**< region count */
-	int			 cr_rid;	/**< rid, or -1 if no rid
-						  *  is allocated by the bus for
-						  *  this region */
+	int			 cr_rid;	/**< rid to use when performing
+						     resource allocation, or -1
+						     if region has no assigned
+						     resource ID */
 
 	struct bhnd_resource	*cr_res;	/**< bus resource, or NULL */
+	int			 cr_res_rid;	/**< cr_res RID, if any. */
 	u_int			 cr_refs;	/**< RF_ALLOCATED refcount */
 	u_int			 cr_act_refs;	/**< RF_ACTIVE refcount */
 

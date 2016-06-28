@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/sctp_output.c 301666 2016-06-08 17:57:42Z tuexen $");
+__FBSDID("$FreeBSD: head/sys/netinet/sctp_output.c 302207 2016-06-26 12:41:02Z tuexen $");
 
 #include <netinet/sctp_os.h>
 #include <sys/proc.h>
@@ -13136,6 +13136,7 @@ sctp_lower_sosend(struct socket *so,
 				    asoc, stcb->asoc.total_output_queue_size);
 			}
 			if (stcb->asoc.state & SCTP_STATE_ABOUT_TO_BE_FREED) {
+				SOCKBUF_UNLOCK(&so->so_snd);
 				goto out_unlocked;
 			}
 			inqueue_bytes = stcb->asoc.total_output_queue_size - (stcb->asoc.chunks_on_out_queue * sizeof(struct sctp_data_chunk));
