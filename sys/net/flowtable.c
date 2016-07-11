@@ -33,7 +33,7 @@
 #include "opt_inet6.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/flowtable.c 301538 2016-06-07 04:51:50Z sephe $");
+__FBSDID("$FreeBSD: stable/11/sys/net/flowtable.c 302378 2016-07-06 17:46:49Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -739,6 +739,7 @@ flowtable_lookup_common(struct flowtable *ft, uint32_t *key, int keylen,
 static void
 flowtable_alloc(struct flowtable *ft)
 {
+	int i;
 
 	ft->ft_table = malloc(ft->ft_size * sizeof(struct flist),
 	    M_FTABLE, M_WAITOK);
@@ -746,7 +747,7 @@ flowtable_alloc(struct flowtable *ft)
 		ft->ft_table[i] = uma_zalloc(pcpu_zone_ptr, M_WAITOK | M_ZERO);
 
 	ft->ft_masks = uma_zalloc(pcpu_zone_ptr, M_WAITOK);
-	for (int i = 0; i < mp_ncpus; i++) {
+	CPU_FOREACH(i) {
 		bitstr_t **b;
 
 		b = zpcpu_get_cpu(ft->ft_masks, i);

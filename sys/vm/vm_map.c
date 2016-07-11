@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_map.c 298940 2016-05-02 20:16:29Z pfg $");
+__FBSDID("$FreeBSD: stable/11/sys/vm/vm_map.c 302399 2016-07-07 20:58:16Z alc $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1330,7 +1330,7 @@ charged:
 	new_entry->wired_count = 0;
 	new_entry->wiring_thread = NULL;
 	new_entry->read_ahead = VM_FAULT_READ_AHEAD_INIT;
-	new_entry->next_read = OFF_TO_IDX(offset);
+	new_entry->next_read = start;
 
 	KASSERT(cred == NULL || !ENTRY_CHARGED(new_entry),
 	    ("OVERCOMMIT: vm_map_insert leaks vm_map %p", new_entry));

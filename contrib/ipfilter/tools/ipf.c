@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/contrib/ipfilter/tools/ipf.c 283295 2015-05-22 18:31:26Z emaste $	*/
+/*	$FreeBSD: stable/11/contrib/ipfilter/tools/ipf.c 302296 2016-06-30 14:53:46Z cy $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -409,23 +409,6 @@ static void flushfilter(arg, filter)
 		closedevice();
 		return;
 	}
-
-#ifdef	SIOCIPFFA
-	if (!strcmp(arg, "u")) {
-		closedevice();
-		/*
-		 * Flush auth rules and packets
-		 */
-		if (opendevice(IPL_AUTH, 1) == -1)
-			perror("open(IPL_AUTH)");
-		else {
-			if (ioctl(fd, SIOCIPFFA, &fl) == -1)
-				ipferror(fd, "ioctl(SIOCIPFFA)");
-		}
-		closedevice();
-		return;
-	}
-#endif
 
 	if (strchr(arg, 'i') || strchr(arg, 'I'))
 		fl = FR_INQUE;

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.c	8.5 (Berkeley) 1/9/95
- * $FreeBSD: head/sys/net/if.c 302083 2016-06-22 11:45:30Z bz $
+ * $FreeBSD: stable/11/sys/net/if.c 302258 2016-06-29 05:21:25Z bz $
  */
 
 #include "opt_compat.h"
@@ -455,6 +455,9 @@ if_alloc(u_char type)
 	ifp->if_index = idx;
 	ifp->if_type = type;
 	ifp->if_alloctype = type;
+#ifdef VIMAGE
+	ifp->if_vnet = curvnet;
+#endif
 	if (if_com_alloc[type] != NULL) {
 		ifp->if_l2com = if_com_alloc[type](type, ifp);
 		if (ifp->if_l2com == NULL) {

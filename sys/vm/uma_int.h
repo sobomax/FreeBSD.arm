@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/vm/uma_int.h 298940 2016-05-02 20:16:29Z pfg $
+ * $FreeBSD: stable/11/sys/vm/uma_int.h 302393 2016-07-07 18:37:12Z cperciva $
  *
  */
 
@@ -110,6 +110,8 @@
 #define UMA_SLAB_SHIFT	PAGE_SHIFT	/* Number of bits PAGE_MASK */
 
 #define UMA_BOOT_PAGES		64	/* Pages allocated for startup */
+#define UMA_BOOT_PAGES_ZONES	32	/* Multiplier for pages to reserve */
+					/* if uma_zone > PAGE_SIZE */
 
 /* Max waste percentage before going to off page slab management */
 #define UMA_MAX_WASTE	10

@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/collate.c 298830 2016-04-30 01:24:24Z pfg $");
+__FBSDID("$FreeBSD: stable/11/lib/libc/locale/collate.c 302324 2016-07-03 15:00:12Z bapt $");
 
 #include "namespace.h"
 
@@ -310,7 +310,7 @@ _collate_lookup(struct xlocale_collate *table, const wchar_t *t, int *len,
 	if ((sptr = *state) != NULL) {
 		*pri = *sptr;
 		sptr++;
-		if ((sptr == *state) || (sptr == NULL))
+		if ((sptr == *state) || (*sptr == 0))
 			*state = NULL;
 		else
 			*state = sptr;

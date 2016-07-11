@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netinet/tcp_pcap.h 289276 2015-10-14 00:35:37Z hiren $
+ * $FreeBSD: stable/11/sys/netinet/tcp_pcap.h 302374 2016-07-06 16:17:13Z jtl $
  */
 
 #ifndef _NETINET_TCP_PCAP_H_
@@ -35,5 +35,7 @@ void tcp_pcap_drain(struct mbufq *queue);
 void tcp_pcap_tcpcb_init(struct tcpcb *tp);
 void tcp_pcap_set_sock_max(struct mbufq *queue, int newval);
 int tcp_pcap_get_sock_max(struct mbufq *queue);
+
+extern int tcp_pcap_aggressive_free;
 
 #endif /* _NETINET_TCP_PCAP_H_ */

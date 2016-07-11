@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl -wC
-# $FreeBSD: head/tools/tools/locale/tools/cldr2def.pl 302026 2016-06-20 06:45:42Z bapt $
+# $FreeBSD: stable/11/tools/tools/locale/tools/cldr2def.pl 302329 2016-07-03 18:21:11Z bapt $
 
 use strict;
 use File::Copy;
@@ -848,7 +848,7 @@ sub make_makefile {
 	my $MAPLOC;
 	if ($TYPE eq "colldef") {
 		$SRCOUT = "localedef -D -U -i \${.IMPSRC} \\\n" .
-			"\t-f \${MAPLOC}/map.\${.TARGET:T:R:E} " .
+			"\t-f \${MAPLOC}/map.\${.TARGET:T:R:E:C/@.*//} " .
 			"\${.OBJDIR}/\${.IMPSRC:T:R}";
 		$MAPLOC = "MAPLOC=\t\t\${.CURDIR}/../../tools/tools/" .
 				"locale/etc/final-maps\n";
@@ -859,7 +859,7 @@ sub make_makefile {
 			"FILESDIR_\$t.LC_COLLATE=\t\${LOCALEDIR}/\$t\n" .
 			"\$t.LC_COLLATE: \${.CURDIR}/\$f.src\n" .
 			"\tlocaledef -D -U -i \${.ALLSRC} \\\n" .
-			"\t\t-f \${MAPLOC}/map.\${.TARGET:T:R:E} \\\n" .
+			"\t\t-f \${MAPLOC}/map.\${.TARGET:T:R:E:C/@.*//} \\\n" .
 			"\t\t\${.OBJDIR}/\${.TARGET:T:R}\n" .
 			".endfor\n\n";
 		$SRCOUT4 = "## LOCALES_MAPPED\n";

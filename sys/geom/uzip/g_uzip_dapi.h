@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/geom/uzip/g_uzip_dapi.h 295943 2016-02-23 23:59:08Z sobomax $
+ * $FreeBSD: stable/11/sys/geom/uzip/g_uzip_dapi.h 302284 2016-06-29 18:19:05Z sobomax $
  */
 
 struct g_uzip_dapi;
@@ -38,4 +38,5 @@ struct g_uzip_dapi {
 	g_uzip_dapi_free_t free;
 	g_uzip_dapi_rewind_t rewind;
 	void *pvt;
+	int max_blen;
 };

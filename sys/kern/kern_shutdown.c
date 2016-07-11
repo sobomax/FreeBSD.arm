@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_shutdown.c 301522 2016-06-06 20:57:24Z bz $");
+__FBSDID("$FreeBSD: stable/11/sys/kern/kern_shutdown.c 302349 2016-07-05 18:34:34Z glebius $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -556,7 +556,7 @@ shutdown_reset(void *junk, int howto)
 	/* NOTREACHED */ /* assuming reset worked */
 }
 
-#if defined(WITNESS) || defined(INVARIANTS)
+#if defined(WITNESS) || defined(INVARIANT_SUPPORT)
 static int kassert_warn_only = 0;
 #ifdef KDB
 static int kassert_do_kdb = 0;

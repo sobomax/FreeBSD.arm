@@ -29,7 +29,7 @@
 #
 #	@(#)lorder.sh	8.1 (Berkeley) 6/6/93
 #
-# $FreeBSD: head/usr.bin/lorder/lorder.sh 286791 2015-08-14 22:54:52Z rpaulo $
+# $FreeBSD: stable/11/usr.bin/lorder/lorder.sh 302398 2016-07-07 20:50:59Z emaste $
 #
 
 # only one argument is a special case, just output the name twice
@@ -73,6 +73,7 @@ ${NM} ${NMFLAGS} -go $* | sed "
 	d
 "
 
+export LC_ALL=C
 # eliminate references that can be resolved by the same library.
 if [ $(expr "$*" : '.*\.a[[:>:]]') -ne 0 ]; then
 	sort -u -o $S $S

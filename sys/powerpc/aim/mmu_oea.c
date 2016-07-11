@@ -84,7 +84,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/aim/mmu_oea.c 298433 2016-04-21 19:57:40Z pfg $");
+__FBSDID("$FreeBSD: stable/11/sys/powerpc/aim/mmu_oea.c 302279 2016-06-29 14:40:43Z nwhitehorn $");
 
 /*
  * Manages physical address maps.
@@ -921,7 +921,7 @@ moea_bootstrap(mmu_t mmup, vm_offset_t kernelstart, vm_offset_t kernelend)
 	Maxmem = powerpc_btop(phys_avail[i + 1]);
 
 	moea_cpu_bootstrap(mmup,0);
-
+	mtmsr(mfmsr() | PSL_DR | PSL_IR);
 	pmap_bootstrapped++;
 
 	/*

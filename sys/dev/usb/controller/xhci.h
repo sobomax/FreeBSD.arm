@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/controller/xhci.h 302076 2016-06-22 09:03:55Z hselasky $ */
+/* $FreeBSD: stable/11/sys/dev/usb/controller/xhci.h 302371 2016-07-06 10:57:04Z hselasky $ */
 
 /*-
  * Copyright (c) 2010 Hans Petter Selasky. All rights reserved.
@@ -30,7 +30,7 @@
 
 #define	XHCI_MAX_DEVICES	MIN(USB_MAX_DEVICES, 128)
 #define	XHCI_MAX_ENDPOINTS	32	/* hardcoded - do not change */
-#define	XHCI_MAX_SCRATCHPADS	1024
+#define	XHCI_MAX_SCRATCHPADS	256	/* theoretical max is 1023 */
 #define	XHCI_MAX_EVENTS		(16 * 13)
 #define	XHCI_MAX_COMMANDS	(16 * 1)
 #define	XHCI_MAX_RSEG		1

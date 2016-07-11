@@ -33,7 +33,7 @@
  *
  *	from: @(#)vmparam.h     5.9 (Berkeley) 5/12/91
  *	from: FreeBSD: src/sys/i386/include/vmparam.h,v 1.33 2000/03/30
- * $FreeBSD: head/sys/arm64/include/vmparam.h 298627 2016-04-26 11:53:37Z br $
+ * $FreeBSD: stable/11/sys/arm64/include/vmparam.h 302291 2016-06-30 04:58:19Z wma $
  */
 
 #ifndef	_MACHINE_VMPARAM_H_
@@ -181,7 +181,7 @@
 	KASSERT(PHYS_IN_DMAP(pa),					\
 	    ("%s: PA out of range, PA: 0x%lx", __func__,		\
 	    (vm_paddr_t)(pa)));						\
-	((pa) - dmap_phys_base) | DMAP_MIN_ADDRESS;			\
+	((pa) - dmap_phys_base) + DMAP_MIN_ADDRESS;			\
 })
 
 #define	DMAP_TO_PHYS(va)						\
@@ -189,7 +189,7 @@
 	KASSERT(VIRT_IN_DMAP(va),					\
 	    ("%s: VA out of range, VA: 0x%lx", __func__,		\
 	    (vm_offset_t)(va)));					\
-	((va) & ~DMAP_MIN_ADDRESS) + dmap_phys_base;			\
+	((va) - DMAP_MIN_ADDRESS) + dmap_phys_base;			\
 })
 
 #define	VM_MIN_USER_ADDRESS	(0x0000000000000000UL)

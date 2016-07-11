@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_superg.h 297603 2016-04-06 01:21:51Z adrian $
+ * $FreeBSD: stable/11/sys/net80211/ieee80211_superg.h 302283 2016-06-29 17:25:46Z avos $
  */
 #ifndef _NET80211_IEEE80211_SUPERG_H_
 #define _NET80211_IEEE80211_SUPERG_H_
@@ -107,38 +107,32 @@ struct mbuf *ieee80211_ff_check(struct ieee80211_node *, struct mbuf *);
 void	ieee80211_ff_age(struct ieee80211com *, struct ieee80211_stageq *,
 	     int quanta);
 
-/*
- * See ieee80211_ff_age() for a description of the locking
- * expectation here.
- */
-static __inline void
-ieee80211_ff_flush(struct ieee80211com *ic, int ac)
-{
-	struct ieee80211_superg *sg = ic->ic_superg;
-
-	if (sg != NULL && sg->ff_stageq[ac].depth)
-		ieee80211_ff_age(ic, &sg->ff_stageq[ac], 0x7fffffff);
-}
-
-/*
- * See ieee80211_ff_age() for a description of the locking
- * expectation here.
- */
 static __inline void
 ieee80211_ff_age_all(struct ieee80211com *ic, int quanta)
 {
 	struct ieee80211_superg *sg = ic->ic_superg;
 
 	if (sg != NULL) {
-		if (sg->ff_stageq[WME_AC_VO].depth)
-			ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_VO], quanta);
-		if (sg->ff_stageq[WME_AC_VI].depth)
-			ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_VI], quanta);
-		if (sg->ff_stageq[WME_AC_BE].depth)
-			ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_BE], quanta);
-		if (sg->ff_stageq[WME_AC_BK].depth)
-			ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_BK], quanta);
+		ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_VO], quanta);
+		ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_VI], quanta);
+		ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_BE], quanta);
+		ieee80211_ff_age(ic, &sg->ff_stageq[WME_AC_BK], quanta);
 	}
+}
+
+static __inline void
+ieee80211_ff_flush(struct ieee80211com *ic, int ac)
+{
+	struct ieee80211_superg *sg = ic->ic_superg;
+
+	if (sg != NULL)
+		ieee80211_ff_age(ic, &sg->ff_stageq[ac], 0x7fffffff);
+}
+
+static __inline void
+ieee80211_ff_flush_all(struct ieee80211com *ic)
+{
+	ieee80211_ff_age_all(ic, 0x7fffffff);
 }
 
 struct mbuf *ieee80211_ff_encap(struct ieee80211vap *, struct mbuf *,

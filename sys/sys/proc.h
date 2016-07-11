@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)proc.h	8.15 (Berkeley) 5/19/95
- * $FreeBSD: head/sys/sys/proc.h 302235 2016-06-27 21:52:17Z kib $
+ * $FreeBSD: stable/11/sys/sys/proc.h 302379 2016-07-06 18:55:46Z jhb $
  */
 
 #ifndef _SYS_PROC_H_
@@ -511,6 +511,11 @@ do {									\
 #define	TD_SET_RUNQ(td)		(td)->td_state = TDS_RUNQ
 #define	TD_SET_CAN_RUN(td)	(td)->td_state = TDS_CAN_RUN
 
+#define	TD_SBDRY_INTR(td) \
+    (((td)->td_flags & (TDF_SEINTR | TDF_SERESTART)) != 0)
+#define	TD_SBDRY_ERRNO(td) \
+    (((td)->td_flags & TDF_SEINTR) != 0 ? EINTR : ERESTART)
+
 /*
  * Process structure.
  */
@@ -597,7 +602,7 @@ struct proc {
 	u_int		p_magic;	/* (b) Magic number. */
 	int		p_osrel;	/* (x) osreldate for the
 					       binary (from ELF note, if any) */
-	char		p_comm[MAXCOMLEN + 1];	/* (b) Process name. */
+	char		p_comm[MAXCOMLEN + 1];	/* (x) Process name. */
 	struct sysentvec *p_sysent;	/* (b) Syscall dispatch info. */
 	struct pargs	*p_args;	/* (c) Process arguments. */
 	rlim_t		p_cpulimit;	/* (c) Current CPU limit in seconds. */

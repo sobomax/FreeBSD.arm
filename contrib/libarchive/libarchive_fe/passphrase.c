@@ -48,7 +48,7 @@
 
 
 #include "lafe_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive_fe/passphrase.c 302075 2016-06-22 07:49:59Z mm $");
+__FBSDID("$FreeBSD: stable/11/contrib/libarchive/libarchive_fe/passphrase.c 302294 2016-06-30 08:51:50Z mm $");
 
 #include <errno.h>
 #ifdef HAVE_STDLIB_H
@@ -131,6 +131,10 @@ readpassphrase(const char *prompt, char *buf, size_t bufsiz, int flags)
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
+
+#ifndef _PATH_TTY
+#define _PATH_TTY "/dev/tty"
+#endif
 
 #ifdef TCSASOFT
 # define _T_FLUSH	(TCSAFLUSH|TCSASOFT)

@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixl/if_ixlv.c 299555 2016-05-12 18:22:12Z erj $*/
+/*$FreeBSD: stable/11/sys/dev/ixl/if_ixlv.c 302384 2016-07-07 03:39:18Z sbruno $*/
 
 #ifndef IXL_STANDALONE_BUILD
 #include "opt_inet.h"
@@ -676,7 +676,8 @@ ixlv_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 			vsi->max_frame_size =
 			    ifp->if_mtu + ETHER_HDR_LEN + ETHER_CRC_LEN
 			    + ETHER_VLAN_ENCAP_LEN;
-			ixlv_init_locked(sc);
+			if (ifp->if_drv_flags & IFF_DRV_RUNNING)
+				ixlv_init_locked(sc);
 		}
 		mtx_unlock(&sc->mtx);
 		break;

@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)callout.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: head/sys/sys/callout.h 296320 2016-03-02 18:46:17Z kib $
+ * $FreeBSD: stable/11/sys/sys/callout.h 302350 2016-07-05 18:47:17Z glebius $
  */
 
 #ifndef _SYS_CALLOUT_H_
@@ -64,9 +64,8 @@ struct callout_handle {
 
 /* Flags for callout_stop_safe() */
 #define	CS_DRAIN		0x0001 /* callout_drain(), wait allowed */
-#define	CS_MIGRBLOCK		0x0002 /* Block migration, return value
-					  indicates that the callout was
-				          executing */
+#define	CS_EXECUTING		0x0002 /* Positive return value indicates that
+					  the callout was executing */
 
 #ifdef _KERNEL
 /* 

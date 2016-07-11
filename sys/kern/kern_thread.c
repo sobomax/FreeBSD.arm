@@ -30,7 +30,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_thread.c 302215 2016-06-26 20:07:24Z kib $");
+__FBSDID("$FreeBSD: stable/11/sys/kern/kern_thread.c 302328 2016-07-03 18:19:48Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -894,7 +894,7 @@ thread_suspend_check(int return_instead)
 {
 	struct thread *td;
 	struct proc *p;
-	int wakeup_swapper, r;
+	int wakeup_swapper;
 
 	td = curthread;
 	p = td->td_proc;
@@ -927,21 +927,10 @@ thread_suspend_check(int return_instead)
 		if ((td->td_flags & TDF_SBDRY) != 0) {
 			KASSERT(return_instead,
 			    ("TDF_SBDRY set for unsafe thread_suspend_check"));
-			switch (td->td_flags & (TDF_SEINTR | TDF_SERESTART)) {
-			case 0:
-				r = 0;
-				break;
-			case TDF_SEINTR:
-				r = EINTR;
-				break;
-			case TDF_SERESTART:
-				r = ERESTART;
-				break;
-			default:
-				panic("both TDF_SEINTR and TDF_SERESTART");
-				break;
-			}
-			return (r);
+			KASSERT((td->td_flags & (TDF_SEINTR | TDF_SERESTART)) !=
+			    (TDF_SEINTR | TDF_SERESTART),
+			    ("both TDF_SEINTR and TDF_SERESTART"));
+			return (TD_SBDRY_INTR(td) ? TD_SBDRY_ERRNO(td) : 0);
 		}
 
 		/*

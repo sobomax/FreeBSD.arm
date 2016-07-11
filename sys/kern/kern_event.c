@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_event.c 302242 2016-06-27 23:34:53Z kib $");
+__FBSDID("$FreeBSD: stable/11/sys/kern/kern_event.c 302308 2016-07-01 20:11:28Z kib $");
 
 #include "opt_ktrace.h"
 #include "opt_kqueue.h"
@@ -451,6 +451,9 @@ filt_proc(struct knote *kn, long hint)
 	u_int event;
 
 	p = kn->kn_ptr.p_proc;
+	if (p == NULL) /* already activated, from attach filter */
+		return (0);
+
 	/* Mask off extra data. */
 	event = (u_int)hint & NOTE_PCTRLMASK;
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_tx_ht.c 298792 2016-04-29 18:53:16Z adrian $");
+__FBSDID("$FreeBSD: stable/11/sys/dev/ath/if_ath_tx_ht.c 302392 2016-07-07 17:22:13Z adrian $");
 
 #include "opt_inet.h"
 #include "opt_ath.h"
@@ -222,6 +222,7 @@ void
 ath_tx_rate_fill_rcflags(struct ath_softc *sc, struct ath_buf *bf)
 {
 	struct ieee80211_node *ni = bf->bf_node;
+	struct ieee80211vap *vap = ni->ni_vap;
 	struct ieee80211com *ic = ni->ni_ic;
 	const HAL_RATE_TABLE *rt = sc->sc_currates;
 	struct ath_rc_series *rc = bf->bf_state.bfs_rc;
@@ -280,12 +281,14 @@ ath_tx_rate_fill_rcflags(struct ath_softc *sc, struct ath_buf *bf)
 
 			if (ni->ni_chw == 40 &&
 			    ic->ic_htcaps & IEEE80211_HTCAP_SHORTGI40 &&
-			    ni->ni_htcap & IEEE80211_HTCAP_SHORTGI40)
+			    ni->ni_htcap & IEEE80211_HTCAP_SHORTGI40 &&
+			    vap->iv_flags_ht & IEEE80211_FHT_SHORTGI40)
 				rc[i].flags |= ATH_RC_SGI_FLAG;
 
 			if (ni->ni_chw == 20 &&
 			    ic->ic_htcaps & IEEE80211_HTCAP_SHORTGI20 &&
-			    ni->ni_htcap & IEEE80211_HTCAP_SHORTGI20)
+			    ni->ni_htcap & IEEE80211_HTCAP_SHORTGI20 &&
+			    vap->iv_flags_ht & IEEE80211_FHT_SHORTGI20)
 				rc[i].flags |= ATH_RC_SGI_FLAG;
 
 			/*

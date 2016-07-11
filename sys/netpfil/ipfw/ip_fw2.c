@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_fw2.c 302054 2016-06-21 13:48:49Z bz $");
+__FBSDID("$FreeBSD: stable/11/sys/netpfil/ipfw/ip_fw2.c 302290 2016-06-30 01:33:14Z bz $");
 
 /*
  * The FreeBSD IP packet firewall, main file
@@ -2691,7 +2691,6 @@ ipfw_init(void)
 	  default_fw_tables = IPFW_TABLES_MAX;
 
 	ipfw_init_sopt_handler();
-	ipfw_log_bpf(1); /* init */
 	ipfw_iface_init();
 	return (error);
 }
@@ -2704,7 +2703,6 @@ ipfw_destroy(void)
 {
 
 	ipfw_iface_destroy();
-	ipfw_log_bpf(0); /* uninit */
 	ipfw_destroy_sopt_handler();
 	printf("IP firewall unloaded\n");
 }
@@ -2793,6 +2791,7 @@ vnet_ipfw_init(const void *unused)
 	 * is checked on each packet because there are no pfil hooks.
 	 */
 	V_ip_fw_ctl_ptr = ipfw_ctl3;
+	ipfw_log_bpf(1); /* init */
 	error = ipfw_attach_hooks(1);
 	return (error);
 }
@@ -2815,6 +2814,8 @@ vnet_ipfw_uninit(const void *unused)
 	 */
 	(void)ipfw_attach_hooks(0 /* detach */);
 	V_ip_fw_ctl_ptr = NULL;
+
+	ipfw_log_bpf(0); /* uninit */
 
 	last = IS_DEFAULT_VNET(curvnet) ? 1 : 0;
 
