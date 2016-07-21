@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/modules/linux/Makefile 296057 2016-02-25 19:26:14Z emaste $
+# $FreeBSD: stable/11/sys/modules/linux/Makefile 303007 2016-07-18 16:38:06Z dchagin $
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32
@@ -30,7 +30,7 @@ SRCS+=	opt_apic.h
 OBJS=	${VDSO}.so
 
 .if ${MACHINE_CPUARCH} == "i386"
-SRCS+=	linux_ptrace.c imgact_linux.c linux_util.c linux_mib.c \
+SRCS+=	linux_ptrace.c imgact_linux.c linux_util.c linux_mib.c linux_mmap.c \
 	linux_emul.c opt_cpu.h linux.c
 .endif
 

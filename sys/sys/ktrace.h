@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ktrace.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: head/sys/sys/ktrace.h 255219 2013-09-05 00:09:56Z pjd $
+ * $FreeBSD: stable/11/sys/sys/ktrace.h 303092 2016-07-20 15:02:37Z kib $
  */
 
 #ifndef _SYS_KTRACE_H_
@@ -270,6 +270,8 @@ void	ktrcapfail(enum ktr_cap_fail_type, const cap_rights_t *,
 	    const cap_rights_t *);
 #define ktrcaprights(s) \
 	ktrstruct("caprights", (s), sizeof(cap_rights_t))
+#define	ktritimerval(s) \
+	ktrstruct("itimerval", (s), sizeof(struct itimerval))
 #define ktrsockaddr(s) \
 	ktrstruct("sockaddr", (s), ((struct sockaddr *)(s))->sa_len)
 #define ktrstat(s) \

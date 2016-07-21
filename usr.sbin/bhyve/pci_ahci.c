@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: stable/11/usr.sbin/bhyve/pci_ahci.c 302363 2016-07-06 04:58:42Z ngie $
+ * $FreeBSD: stable/11/usr.sbin/bhyve/pci_ahci.c 303138 2016-07-21 11:57:41Z mav $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: stable/11/usr.sbin/bhyve/pci_ahci.c 302363 2016-07-06 04:58:42Z ngie $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/bhyve/pci_ahci.c 303138 2016-07-21 11:57:41Z mav $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
@@ -784,7 +784,15 @@ next:
 	done += 8;
 	if (elen == 0) {
 		if (done >= len) {
-			ahci_write_fis_d2h(p, slot, cfis, ATA_S_READY | ATA_S_DSC);
+			if (ncq) {
+				if (first)
+					ahci_write_fis_d2h_ncq(p, slot);
+				ahci_write_fis_sdb(p, slot, cfis,
+				    ATA_S_READY | ATA_S_DSC);
+			} else {
+				ahci_write_fis_d2h(p, slot, cfis,
+				    ATA_S_READY | ATA_S_DSC);
+			}
 			p->pending &= ~(1 << slot);
 			ahci_check_stopped(p);
 			if (!first)
@@ -1665,7 +1673,7 @@ ahci_handle_cmd(struct ahci_port *p, int slot, uint8_t *cfis)
 	case ATA_SEND_FPDMA_QUEUED:
 		if ((cfis[13] & 0x1f) == ATA_SFPDMA_DSM &&
 		    cfis[17] == 0 && cfis[16] == ATA_DSM_TRIM &&
-		    cfis[11] == 0 && cfis[13] == 1) {
+		    cfis[11] == 0 && cfis[3] == 1) {
 			ahci_handle_dsm_trim(p, slot, cfis, 0);
 			break;
 		}

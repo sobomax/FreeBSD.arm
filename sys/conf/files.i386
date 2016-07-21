@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: head/sys/conf/files.i386 301483 2016-06-06 05:55:37Z sephe $
+# $FreeBSD: stable/11/sys/conf/files.i386 303008 2016-07-18 16:39:53Z dchagin $
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and
@@ -96,6 +96,7 @@ compat/linux/linux_ioctl.c	optional compat_linux
 compat/linux/linux_ipc.c	optional compat_linux
 compat/linux/linux_mib.c	optional compat_linux
 compat/linux/linux_misc.c	optional compat_linux
+compat/linux/linux_mmap.c	optional compat_linux
 compat/linux/linux_signal.c	optional compat_linux
 compat/linux/linux_socket.c	optional compat_linux
 compat/linux/linux_stats.c	optional compat_linux

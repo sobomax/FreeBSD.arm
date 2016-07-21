@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/linux32/linux.h 290143 2015-10-29 15:16:47Z jhb $
+ * $FreeBSD: stable/11/sys/amd64/linux32/linux.h 303007 2016-07-18 16:38:06Z dchagin $
  */
 
 #ifndef _AMD64_LINUX_H_
@@ -164,13 +164,6 @@ struct l_rusage {
 	l_long	ru_nvcsw;
 	l_long	ru_nivcsw;
 } __packed;
-
-/* mmap options */
-#define	LINUX_MAP_SHARED	0x0001
-#define	LINUX_MAP_PRIVATE	0x0002
-#define	LINUX_MAP_FIXED		0x0010
-#define	LINUX_MAP_ANON		0x0020
-#define	LINUX_MAP_GROWSDOWN	0x0100
 
 struct l_mmap_argv {
 	l_uintptr_t	addr;

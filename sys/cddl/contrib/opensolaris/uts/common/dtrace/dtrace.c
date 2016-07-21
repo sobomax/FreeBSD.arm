@@ -18,7 +18,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: head/sys/cddl/contrib/opensolaris/uts/common/dtrace/dtrace.c 300618 2016-05-24 16:41:37Z br $
+ * $FreeBSD: stable/11/sys/cddl/contrib/opensolaris/uts/common/dtrace/dtrace.c 302913 2016-07-15 20:26:28Z markj $
  */
 
 /*
@@ -7348,7 +7348,7 @@ dtrace_probe(dtrace_id_t id, uintptr_t arg0, uintptr_t arg1,
 
 		if (pred != NULL) {
 			dtrace_difo_t *dp = pred->dtp_difo;
-			int rval;
+			uint64_t rval;
 
 			rval = dtrace_dif_emulate(dp, &mstate, vstate, state);
 

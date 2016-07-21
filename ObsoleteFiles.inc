@@ -1,5 +1,5 @@
 #
-# $FreeBSD: stable/11/ObsoleteFiles.inc 302457 2016-07-08 21:19:48Z bdrewery $
+# $FreeBSD: stable/11/ObsoleteFiles.inc 302625 2016-07-12 06:06:10Z ngie $
 #
 # This file lists old files (OLD_FILES), libraries (OLD_LIBS) and
 # directories (OLD_DIRS) which should get removed at an update. Recently
@@ -203,7 +203,7 @@ OLD_FILES+=usr/share/man/man9/rman_await_resource.9.gz
 # 20160517: ReiserFS removed
 OLD_FILES+=usr/share/man/man5/reiserfs.5.gz
 # 20160430: kvm_getfiles(3) removed from kvm(3)
-OLD_LIBS+=usr/lib/libkvm.so.6
+OLD_LIBS+=lib/libkvm.so.6
 OLD_FILES+=usr/share/man/man3/kvm_getfiles.3.gz
 # 20160423: remove mroute6d
 OLD_FILES+=etc/rc.d/mroute6d

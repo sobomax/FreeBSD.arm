@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/x86/msi.c 302181 2016-06-24 22:49:32Z jhb $");
+__FBSDID("$FreeBSD: stable/11/sys/x86/x86/msi.c 302895 2016-07-15 09:44:48Z royger $");
 
 #include "opt_acpi.h"
 
@@ -149,12 +149,16 @@ struct pic msi_pic = {
 	.pic_reprogram_pin = NULL,
 };
 
-/*
+/**
  * Xen hypervisors prior to 4.6.0 do not properly handle updates to
  * enabled MSI-X table entries.  Allow migration of MSI-X interrupts
- * to be disabled via a tunable.
+ * to be disabled via a tunable. Values have the following meaning:
+ *
+ * -1: automatic detection by FreeBSD
+ *  0: enable migration
+ *  1: disable migration
  */
-static int msix_disable_migration = 0;
+int msix_disable_migration = -1;
 SYSCTL_INT(_machdep, OID_AUTO, disable_msix_migration, CTLFLAG_RDTUN,
     &msix_disable_migration, 0,
     "Disable migration of MSI-X interrupts between CPUs");
@@ -310,6 +314,11 @@ msi_init(void)
 		/* FALLTHROUGH */
 	default:
 		return;
+	}
+
+	if (msix_disable_migration == -1) {
+		/* The default is to allow migration of MSI-X interrupts. */
+		msix_disable_migration = 0;
 	}
 
 	msi_enabled = 1;

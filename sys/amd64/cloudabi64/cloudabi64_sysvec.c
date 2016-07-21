@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/amd64/cloudabi64/cloudabi64_sysvec.c 301961 2016-06-16 12:05:44Z kib $");
+__FBSDID("$FreeBSD: stable/11/sys/amd64/cloudabi64/cloudabi64_sysvec.c 302627 2016-07-12 06:25:28Z ed $");
 
 #include <sys/param.h>
 #include <sys/imgact.h>
@@ -96,6 +96,7 @@ cloudabi64_fetch_syscall_args(struct thread *td, struct syscall_args *sa)
 	if (sa->code >= CLOUDABI64_SYS_MAXSYSCALL)
 		return (ENOSYS);
 	sa->callp = &cloudabi64_sysent[sa->code];
+	sa->narg = sa->callp->sy_narg;
 
 	/* Fetch system call arguments. */
 	sa->args[0] = frame->tf_rdi;

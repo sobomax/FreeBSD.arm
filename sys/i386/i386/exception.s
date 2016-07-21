@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/i386/i386/exception.s 297931 2016-04-13 17:37:31Z jhb $
+ * $FreeBSD: stable/11/sys/i386/i386/exception.s 302982 2016-07-18 04:33:12Z kib $
  */
 
 #include "opt_apic.h"
@@ -234,7 +234,7 @@ IDTVEC(lcall_syscall)
 	pushfl				/* save eflags */
 	popl	8(%esp)			/* shuffle into tf_eflags */
 	pushl	$7			/* sizeof "lcall 7,0" */
-	subl	$4,%esp			/* skip over tf_trapno */
+	pushl	$0			/* tf_trapno */
 	pushal
 	pushl	$0
 	movw	%ds,(%esp)
@@ -263,7 +263,7 @@ IDTVEC(lcall_syscall)
 	SUPERALIGN_TEXT
 IDTVEC(int0x80_syscall)
 	pushl	$2			/* sizeof "int 0x80" */
-	subl	$4,%esp			/* skip over tf_trapno */
+	pushl	$0			/* tf_trapno */
 	pushal
 	pushl	$0
 	movw	%ds,(%esp)

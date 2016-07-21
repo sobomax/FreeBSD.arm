@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/lpc/if_lpe.c 271859 2014-09-19 09:20:16Z glebius $");
+__FBSDID("$FreeBSD: stable/11/sys/arm/lpc/if_lpe.c 302915 2016-07-15 21:30:19Z ian $");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -172,7 +172,7 @@ static void lpe_ifmedia_sts(struct ifnet *, struct ifmediareq *);
 
 #define	lpe_lock(_sc)		mtx_lock(&(_sc)->lpe_mtx)
 #define	lpe_unlock(_sc)		mtx_unlock(&(_sc)->lpe_mtx)
-#define	lpe_lock_assert(sc)	mtx_assert(&(_sc)->lpe_mtx, MA_OWNED)
+#define	lpe_lock_assert(_sc)	mtx_assert(&(_sc)->lpe_mtx, MA_OWNED)
 
 #define	lpe_read_4(_sc, _reg)		\
     bus_space_read_4((_sc)->lpe_bst, (_sc)->lpe_bsh, (_reg))

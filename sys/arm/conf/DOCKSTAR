@@ -1,7 +1,7 @@
 #
 # Custom kernel for Seagate DockStar (Marvell SheevaPlug based) devices.
 #
-# $FreeBSD: head/sys/arm/conf/DOCKSTAR 295621 2016-02-14 23:42:07Z andrew $
+# $FreeBSD: stable/11/sys/arm/conf/DOCKSTAR 302915 2016-07-15 21:30:19Z ian $
 #
 #    http://www.FreeBSD.org/doc/en_US.ISO8859-1/books/handbook/kernelconfig-config.html
 #
@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: head/sys/arm/conf/DOCKSTAR 295621 2016-02-14 23:42:07Z andrew $
+# $FreeBSD: stable/11/sys/arm/conf/DOCKSTAR 302915 2016-07-15 21:30:19Z ian $
 #
 #NO_UNIVERSE
 
@@ -47,18 +47,6 @@ options 	SYSVSHM			# SYSV-style shared memory
 options 	SYSVMSG			# SYSV-style message queues
 options 	SYSVSEM			# SYSV-style semaphores
 options 	_KPOSIX_PRIORITY_SCHEDULING # POSIX P1003_1B real-time extensions
-
-# Debugging for use in -current
-makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
-options 	ALT_BREAK_TO_DEBUGGER
-options 	KDB			# Enable kernel debugger support
-options 	DDB			# Enable the kernel debugger
-options 	INVARIANTS		# Enable calls of extra sanity checking
-options 	INVARIANT_SUPPORT	# Extra sanity checks of internal structures, required by INVARIANTS
-#options 	WITNESS			# Enable checks to detect deadlocks and cycles
-#options 	WITNESS_SKIPSPIN	# Don't run witness on spinlocks for speed
-#options 	WITNESS_KDB
-#options 	DIAGNOSTIC
 
 # Enable these options for nfs root configured via BOOTP.
 #options 	BOOTP
@@ -101,7 +89,6 @@ device		e1000phy
 
 # USB
 options 	USB_HOST_ALIGN=32	# Align DMA to cacheline
-#options 	USB_DEBUG       	# Compile in USB debug support
 device		usb  			# Basic usb support			
 device		ehci 			# USB host controller
 device		umass			# Mass storage

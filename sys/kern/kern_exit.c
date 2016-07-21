@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_exit.c 302235 2016-06-27 21:52:17Z kib $");
+__FBSDID("$FreeBSD: stable/11/sys/kern/kern_exit.c 303141 2016-07-21 12:50:23Z kib $");
 
 #include "opt_compat.h"
 #include "opt_ktrace.h"
@@ -344,7 +344,7 @@ exit1(struct thread *td, int rval, int signo)
 	 * executing, prevent it from rearming itself and let it finish.
 	 */
 	if (timevalisset(&p->p_realtimer.it_value) &&
-	    callout_stop(&p->p_itcallout) == 0) {
+	    _callout_stop_safe(&p->p_itcallout, CS_EXECUTING, NULL) == 0) {
 		timevalclear(&p->p_realtimer.it_interval);
 		msleep(&p->p_itcallout, &p->p_mtx, PWAIT, "ritwait", 0);
 		KASSERT(!timevalisset(&p->p_realtimer.it_value),

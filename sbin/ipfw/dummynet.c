@@ -17,7 +17,7 @@
  *
  * This software is provided ``AS IS'' without any warranties of any kind.
  *
- * $FreeBSD: head/sbin/ipfw/dummynet.c 300779 2016-05-26 21:40:13Z truckman $
+ * $FreeBSD: stable/11/sbin/ipfw/dummynet.c 302979 2016-07-18 04:16:53Z ae $
  *
  * dummynet support
  */
@@ -612,6 +612,7 @@ list_pipes(struct dn_id *oid, struct dn_id *end)
 	    }
 	    list_flow(&bp, (struct dn_flow *)oid);
 	    printf("%s\n", bp.buf);
+	    bp_flush(&bp);
 	    break;
 
 	case DN_LINK: {
