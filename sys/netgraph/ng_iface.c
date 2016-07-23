@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: head/sys/netgraph/ng_iface.c 298431 2016-04-21 19:40:10Z pfg $
+ * $FreeBSD: head/sys/netgraph/ng_iface.c 302054 2016-06-21 13:48:49Z bz $
  * $Whistle: ng_iface.c,v 1.33 1999/11/01 09:24:51 julian Exp $
  */
 
@@ -786,5 +786,5 @@ vnet_ng_iface_uninit(const void *unused)
 
 	delete_unrhdr(V_ng_iface_unit);
 }
-VNET_SYSUNINIT(vnet_ng_iface_uninit, SI_SUB_PSEUDO, SI_ORDER_ANY,
+VNET_SYSUNINIT(vnet_ng_iface_uninit, SI_SUB_INIT_IF, SI_ORDER_ANY,
     vnet_ng_iface_uninit, NULL);

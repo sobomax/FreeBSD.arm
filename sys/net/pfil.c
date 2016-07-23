@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/net/pfil.c 301503 2016-06-06 13:01:57Z bz $ */
+/*	$FreeBSD: head/sys/net/pfil.c 302054 2016-06-21 13:48:49Z bz $ */
 /*	$NetBSD: pfil.c,v 1.20 2001/11/12 23:49:46 lukem Exp $	*/
 
 /*-
@@ -383,17 +383,14 @@ vnet_pfil_uninit(const void *unused __unused)
 	PFIL_LOCK_DESTROY_REAL(&V_pfil_lock);
 }
 
-/* Define startup order. */
-#define	PFIL_SYSINIT_ORDER	SI_SUB_PROTO_BEGIN
-#define	PFIL_MODEVENT_ORDER	(SI_ORDER_FIRST) /* On boot slot in here. */
-#define	PFIL_VNET_ORDER		(PFIL_MODEVENT_ORDER + 2) /* Later still. */
-
 /*
  * Starting up.
  *
  * VNET_SYSINIT is called for each existing vnet and each new vnet.
+ * Make sure the pfil bits are first before any possible subsystem which
+ * might piggyback on the SI_SUB_PROTO_PFIL.
  */
-VNET_SYSINIT(vnet_pfil_init, PFIL_SYSINIT_ORDER, PFIL_VNET_ORDER,
+VNET_SYSINIT(vnet_pfil_init, SI_SUB_PROTO_PFIL, SI_ORDER_FIRST,
     vnet_pfil_init, NULL);
  
 /*
@@ -401,5 +398,5 @@ VNET_SYSINIT(vnet_pfil_init, PFIL_SYSINIT_ORDER, PFIL_VNET_ORDER,
  *
  * VNET_SYSUNINIT is called for each exiting vnet as it exits.
  */
-VNET_SYSUNINIT(vnet_pfil_uninit, PFIL_SYSINIT_ORDER, PFIL_VNET_ORDER,
+VNET_SYSUNINIT(vnet_pfil_uninit, SI_SUB_PROTO_PFIL, SI_ORDER_FIRST,
     vnet_pfil_uninit, NULL);

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/ctld/ctld.c 297860 2016-04-12 16:07:41Z trasz $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/ctld/ctld.c 302663 2016-07-12 13:12:01Z trasz $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -402,7 +402,7 @@ auth_portal_new(struct auth_group *ag, const char *portal)
 
 error:
 	free(ap);
-	log_errx(1, "Incorrect initiator portal '%s'", portal);
+	log_warnx("incorrect initiator portal \"%s\"", portal);
 	return (NULL);
 }
 

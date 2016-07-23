@@ -30,7 +30,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_time.c 298649 2016-04-26 15:38:17Z pfg $");
+__FBSDID("$FreeBSD: stable/11/sys/kern/kern_time.c 303092 2016-07-20 15:02:37Z kib $");
+
+#include "opt_ktrace.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,6 +56,9 @@ __FBSDID("$FreeBSD: head/sys/kern/kern_time.c 298649 2016-04-26 15:38:17Z pfg $"
 #include <sys/timers.h>
 #include <sys/timetc.h>
 #include <sys/vnode.h>
+#ifdef KTRACE
+#include <sys/ktrace.h>
+#endif
 
 #include <vm/vm.h>
 #include <vm/vm_extern.h>
@@ -701,6 +706,10 @@ kern_getitimer(struct thread *td, u_int which, struct itimerval *aitv)
 		*aitv = p->p_stats->p_timer[which];
 		PROC_ITIMUNLOCK(p);
 	}
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_STRUCT))
+		ktritimerval(aitv);
+#endif
 	return (0);
 }
 
@@ -742,6 +751,10 @@ kern_setitimer(struct thread *td, u_int which, struct itimerval *aitv,
 
 	if (which > ITIMER_PROF)
 		return (EINVAL);
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_STRUCT))
+		ktritimerval(aitv);
+#endif
 	if (itimerfix(&aitv->it_value) ||
 	    aitv->it_value.tv_sec > INT32_MAX / 2)
 		return (EINVAL);
@@ -786,6 +799,10 @@ kern_setitimer(struct thread *td, u_int which, struct itimerval *aitv,
 		p->p_stats->p_timer[which] = *aitv;
 		PROC_ITIMUNLOCK(p);
 	}
+#ifdef KTRACE
+	if (KTRPOINT(td, KTR_STRUCT))
+		ktritimerval(oitv);
+#endif
 	return (0);
 }
 

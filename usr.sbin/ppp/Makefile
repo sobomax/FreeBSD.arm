@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.sbin/ppp/Makefile 289148 2015-10-11 19:25:39Z bapt $
+# $FreeBSD: stable/11/usr.sbin/ppp/Makefile 302337 2016-07-04 21:18:57Z bapt $
 
 .include <src.opts.mk>
 
@@ -107,6 +107,7 @@ SRCS+=	netgraph.c
 
 .if defined(PPP_NO_PAM)
 CFLAGS+=-DNOPAM
+LIBADD+=	crypt
 .else
 LIBADD+=	pam
 .endif

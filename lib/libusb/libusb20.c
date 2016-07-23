@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb20.c 297764 2016-04-09 20:36:07Z pfg $ */
+/* $FreeBSD: head/lib/libusb/libusb20.c 301966 2016-06-16 14:26:04Z hselasky $ */
 /*-
  * Copyright (c) 2008-2009 Hans Petter Selasky. All rights reserved.
  *
@@ -600,6 +600,12 @@ libusb20_dev_close(struct libusb20_device *pdev)
 	 * compat layer:
 	 */
 	pdev->claimed_interface = 0;
+
+	/*
+	 * The following variable is only used by the libusb v1.0
+	 * compat layer:
+	 */
+	pdev->auto_detach = 0;
 
 	return (error);
 }

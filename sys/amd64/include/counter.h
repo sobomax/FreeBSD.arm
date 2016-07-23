@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/include/counter.h 252434 2013-07-01 02:48:27Z kib $
+ * $FreeBSD: stable/11/sys/amd64/include/counter.h 302372 2016-07-06 14:09:49Z nwhitehorn $
  */
 
 #ifndef __MACHINE_COUNTER_H__
@@ -51,7 +51,7 @@ counter_u64_fetch_inline(uint64_t *p)
 	int i;
 
 	r = 0;
-	for (i = 0; i < mp_ncpus; i++)
+	CPU_FOREACH(i)
 		r += counter_u64_read_one((uint64_t *)p, i);
 
 	return (r);

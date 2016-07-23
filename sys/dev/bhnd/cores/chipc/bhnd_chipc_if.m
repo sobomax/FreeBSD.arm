@@ -22,7 +22,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 # USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: head/sys/dev/bhnd/cores/chipc/bhnd_chipc_if.m 301411 2016-06-04 19:58:01Z landonf $
+# $FreeBSD: head/sys/dev/bhnd/cores/chipc/bhnd_chipc_if.m 302189 2016-06-25 04:33:00Z landonf $
 
 #include <sys/types.h>
 #include <sys/bus.h>
@@ -36,32 +36,16 @@ INTERFACE bhnd_chipc;
 #
 
 HEADER {
-	#include <dev/bhnd/nvram/bhnd_nvram.h>
 	/* forward declarations */
 	struct chipc_caps;
-	struct chipc_caps	*bhnd_chipc_generic_get_caps(device_t dev);
 }
 
 CODE {
-
-	/**
-	 * Helper function for implementing BHND_CHIPC_GET_CAPS().
-	 *
-	 * This implementation of BHND_CHIPC_GET_CAPS() simply calls the
-	 * BHND_CHIPC_GET_CAPS() method of the parent of @p dev.
-	 */
-	struct chipc_caps*
-	bhnd_chipc_generic_get_caps(device_t dev)
+	static struct chipc_caps *
+	bhnd_chipc_null_get_caps(device_t dev)
 	{
-	
-		if (device_get_parent(dev) != NULL)
-			return (BHND_CHIPC_GET_CAPS(device_get_parent(dev)));
-	
 		panic("bhnd_chipc_generic_get_caps unimplemented");
-		/* Unreachable */
-		return (NULL);
 	}
-
 }
 
 /**
@@ -91,7 +75,7 @@ METHOD void write_chipctrl {
  */
 METHOD struct chipc_caps * get_caps {
 	device_t dev;
-} DEFAULT bhnd_chipc_generic_get_caps;
+} DEFAULT bhnd_chipc_null_get_caps;
 
 /**
  * Enable hardware access to the SPROM/OTP source.
@@ -112,14 +96,5 @@ METHOD int enable_sprom {
  * @param sc chipc driver state.
  */
 METHOD void disable_sprom {
-	device_t dev;
-}
-
-/**
- * Return the flash configuration register value
- *
- * @param dev A bhnd(4) ChipCommon device
- */
-METHOD uint32_t get_flash_cfg {
 	device_t dev;
 }

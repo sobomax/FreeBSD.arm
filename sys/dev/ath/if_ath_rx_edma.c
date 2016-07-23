@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_rx_edma.c 291233 2015-11-24 03:42:58Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/ath/if_ath_rx_edma.c 301994 2016-06-17 17:01:32Z adrian $");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -427,6 +427,8 @@ ath_edma_recv_proc_queue(struct ath_softc *sc, HAL_RX_QUEUE qtype,
 		rs = &bf->bf_status.ds_rxstat;
 		bf->bf_rxstatus = ath_hal_rxprocdesc(ah, ds, bf->bf_daddr,
 		    NULL, rs);
+		if (bf->bf_rxstatus == HAL_EINPROGRESS)
+			break;
 #ifdef	ATH_DEBUG
 		if (sc->sc_debug & ATH_DEBUG_RECV_DESC)
 			ath_printrxbuf(sc, bf, 0, bf->bf_rxstatus == HAL_OK);
@@ -436,8 +438,6 @@ ath_edma_recv_proc_queue(struct ath_softc *sc, HAL_RX_QUEUE qtype,
 			if_ath_alq_post(&sc->sc_alq, ATH_ALQ_EDMA_RXSTATUS,
 			    sc->sc_rx_statuslen, (char *) ds);
 #endif /* ATH_DEBUG */
-		if (bf->bf_rxstatus == HAL_EINPROGRESS)
-			break;
 
 		/*
 		 * Completed descriptor.

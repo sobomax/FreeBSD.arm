@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/mp_machdep.c 298237 2016-04-19 01:48:18Z jhibbits $");
+__FBSDID("$FreeBSD: stable/11/sys/powerpc/powerpc/mp_machdep.c 302372 2016-07-06 14:09:49Z nwhitehorn $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -113,20 +113,16 @@ cpu_mp_setmaxid(void)
 	int error;
 
 	mp_ncpus = 0;
+	mp_maxid = 0;
 	error = platform_smp_first_cpu(&cpuref);
 	while (!error) {
 		mp_ncpus++;
+		mp_maxid = max(cpuref.cr_cpuid, mp_maxid);
 		error = platform_smp_next_cpu(&cpuref);
 	}
 	/* Sanity. */
 	if (mp_ncpus == 0)
 		mp_ncpus = 1;
-
-	/*
-	 * Set the largest cpuid we're going to use. This is necessary
-	 * for VM initialization.
-	 */
-	mp_maxid = min(mp_ncpus, MAXCPU) - 1;
 }
 
 int

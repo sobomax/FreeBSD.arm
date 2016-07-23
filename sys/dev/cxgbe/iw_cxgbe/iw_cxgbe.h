@@ -28,7 +28,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 300875 2016-05-27 21:26:26Z np $
+ * $FreeBSD: stable/11/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 302339 2016-07-05 01:29:24Z np $
  */
 #ifndef __IW_CXGB4_H__
 #define __IW_CXGB4_H__
@@ -935,9 +935,6 @@ extern int c4iw_max_read_depth;
 #else
 #define L1_CACHE_BYTES 32
 #endif
-
-void c4iw_cm_init_cpl(struct adapter *);
-void c4iw_cm_term_cpl(struct adapter *);
 
 void your_reg_device(struct c4iw_dev *dev);
 

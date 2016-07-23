@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/bhyverun.c 292982 2015-12-31 10:55:50Z bz $
+ * $FreeBSD: stable/11/usr.sbin/bhyve/bhyverun.c 302362 2016-07-06 04:56:45Z ngie $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 292982 2015-12-31 10:55:50Z bz $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/bhyve/bhyverun.c 302362 2016-07-06 04:56:45Z ngie $");
 
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -54,6 +54,7 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyve/bhyverun.c 292982 2015-12-31 10:55:50Z b
 
 #include "bhyverun.h"
 #include "acpi.h"
+#include "atkbdc.h"
 #include "inout.h"
 #include "dbgport.h"
 #include "fwctl.h"
@@ -387,13 +388,11 @@ vmexit_wrmsr(struct vmctx *ctx, struct vm_exit *vme, int *pvcpu)
 static int
 vmexit_spinup_ap(struct vmctx *ctx, struct vm_exit *vme, int *pvcpu)
 {
-	int newcpu;
-	int retval = VMEXIT_CONTINUE;
 
-	newcpu = spinup_ap(ctx, *pvcpu,
-			   vme->u.spinup_ap.vcpu, vme->u.spinup_ap.rip);
+	(void)spinup_ap(ctx, *pvcpu,
+		    vme->u.spinup_ap.vcpu, vme->u.spinup_ap.rip);
 
-	return (retval);
+	return (VMEXIT_CONTINUE);
 }
 
 #define	DEBUG_EPT_MISCONFIG
@@ -901,6 +900,7 @@ main(int argc, char *argv[])
 
 	init_mem();
 	init_inout();
+	atkbdc_init(ctx);
 	pci_irq_init(ctx);
 	ioapic_init(ctx);
 

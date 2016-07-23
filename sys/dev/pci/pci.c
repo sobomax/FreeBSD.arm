@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/pci/pci.c 299929 2016-05-16 09:15:50Z andrew $");
+__FBSDID("$FreeBSD: head/sys/dev/pci/pci.c 302175 2016-06-24 17:26:42Z jhb $");
 
 #include "opt_bus.h"
 
@@ -1990,6 +1990,22 @@ pci_ht_map_msi(device_t dev, uint64_t addr)
 		pci_write_config(dev, ht->ht_msimap + PCIR_HT_COMMAND,
 		    ht->ht_msictrl, 2);
 	}
+}
+
+int
+pci_get_max_payload(device_t dev)
+{
+	struct pci_devinfo *dinfo = device_get_ivars(dev);
+	int cap;
+	uint16_t val;
+
+	cap = dinfo->cfg.pcie.pcie_location;
+	if (cap == 0)
+		return (0);
+	val = pci_read_config(dev, cap + PCIER_DEVICE_CTL, 2);
+	val &= PCIEM_CTL_MAX_PAYLOAD;
+	val >>= 5;
+	return (1 << (val + 7));
 }
 
 int

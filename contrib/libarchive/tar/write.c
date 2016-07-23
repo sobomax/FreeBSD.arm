@@ -25,7 +25,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/tar/write.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/tar/write.c 302075 2016-06-22 07:49:59Z mm $");
 
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -884,7 +884,7 @@ write_hierarchy(struct bsdtar *bsdtar, struct archive *a, const char *path)
 		else if (r != ARCHIVE_OK) {
 			lafe_warnc(archive_errno(disk),
 			    "%s", archive_error_string(disk));
-			if (r == ARCHIVE_FATAL) {
+			if (r == ARCHIVE_FATAL || r == ARCHIVE_FAILED) {
 				bsdtar->return_value = 1;
 				return;
 			} else if (r < ARCHIVE_WARN)

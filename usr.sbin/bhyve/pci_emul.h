@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_emul.h 297932 2016-04-13 18:39:33Z jhb $
+ * $FreeBSD: stable/11/usr.sbin/bhyve/pci_emul.h 302373 2016-07-06 16:02:15Z ngie $
  */
 
 #ifndef _PCI_EMUL_H_
@@ -160,6 +160,7 @@ struct msicap {
 	uint32_t	addrhi;
 	uint16_t	msgdata;
 } __packed;
+static_assert(sizeof(struct msicap) == 14, "compile-time assertion failed");
 
 struct msixcap {
 	uint8_t		capid;
@@ -168,6 +169,7 @@ struct msixcap {
 	uint32_t	table_info;	/* bar index and offset within it */
 	uint32_t	pba_info;	/* bar index and offset within it */
 } __packed;
+static_assert(sizeof(struct msixcap) == 12, "compile-time assertion failed");
 
 struct pciecap {
 	uint8_t		capid;
@@ -202,6 +204,7 @@ struct pciecap {
 	uint16_t	slot_control2;
 	uint16_t	slot_status2;
 } __packed;
+static_assert(sizeof(struct pciecap) == 60, "compile-time assertion failed");
 
 typedef void (*pci_lintr_cb)(int b, int s, int pin, int pirq_pin,
     int ioapic_irq, void *arg);

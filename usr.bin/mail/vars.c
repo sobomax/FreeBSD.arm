@@ -33,7 +33,7 @@ static char sccsid[] = "@(#)vars.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/mail/vars.c 216564 2010-12-19 16:25:23Z charnier $");
+__FBSDID("$FreeBSD: stable/11/usr.bin/mail/vars.c 302967 2016-07-17 18:23:20Z pfg $");
 
 #include "rcv.h"
 #include "extern.h"
@@ -56,7 +56,8 @@ assign(const char *name, const char *value)
 	h = hash(name);
 	vp = lookup(name);
 	if (vp == NULL) {
-		vp = calloc(sizeof(*vp), 1);
+		if ((vp = calloc(1, sizeof(*vp))) == NULL)
+			err(1, "Out of memory");
 		vp->v_name = vcopy(name);
 		vp->v_link = variables[h];
 		variables[h] = vp;

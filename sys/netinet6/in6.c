@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 301875 2016-06-13 22:31:16Z pfg $");
+__FBSDID("$FreeBSD: head/sys/netinet6/in6.c 302081 2016-06-22 11:29:21Z ae $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -2322,10 +2322,16 @@ in6_lltable_dump_entry(struct lltable *llt, struct llentry *lle,
 			sdl = &ndpc.sdl;
 			sdl->sdl_family = AF_LINK;
 			sdl->sdl_len = sizeof(*sdl);
-			sdl->sdl_alen = ifp->if_addrlen;
 			sdl->sdl_index = ifp->if_index;
 			sdl->sdl_type = ifp->if_type;
-			bcopy(lle->ll_addr, LLADDR(sdl), ifp->if_addrlen);
+			if ((lle->la_flags & LLE_VALID) == LLE_VALID) {
+				sdl->sdl_alen = ifp->if_addrlen;
+				bcopy(lle->ll_addr, LLADDR(sdl),
+				    ifp->if_addrlen);
+			} else {
+				sdl->sdl_alen = 0;
+				bzero(LLADDR(sdl), ifp->if_addrlen);
+			}
 			if (lle->la_expire != 0)
 				ndpc.rtm.rtm_rmx.rmx_expire = lle->la_expire +
 				    lle->lle_remtime / hz +
@@ -2419,7 +2425,7 @@ in6_domifdetach(struct ifnet *ifp, void *aux)
 
 	mld_domifdetach(ifp);
 	scope6_ifdetach(ext->scope6_id);
-	nd6_ifdetach(ext->nd_ifinfo);
+	nd6_ifdetach(ifp, ext->nd_ifinfo);
 	lltable_free(ext->lltable);
 	COUNTER_ARRAY_FREE(ext->in6_ifstat,
 	    sizeof(struct in6_ifstat) / sizeof(uint64_t));

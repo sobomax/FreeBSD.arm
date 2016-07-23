@@ -1,10 +1,10 @@
-# $FreeBSD: head/usr.bin/tar/Makefile 299529 2016-05-12 10:16:16Z mm $
+# $FreeBSD: head/usr.bin/tar/Makefile 302075 2016-06-22 07:49:59Z mm $
 .include <src.opts.mk>
 
 _LIBARCHIVEDIR=	${.CURDIR}/../../contrib/libarchive
 
 PROG=	bsdtar
-BSDTAR_VERSION_STRING=	3.2.0
+BSDTAR_VERSION_STRING=	3.2.1
 
 .PATH: ${_LIBARCHIVEDIR}/tar
 SRCS=	bsdtar.c	\

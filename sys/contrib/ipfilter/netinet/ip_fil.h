@@ -4,7 +4,7 @@
  * See the IPFILTER.LICENCE file for details on licencing.
  *
  * @(#)ip_fil.h	1.35 6/5/96
- * $FreeBSD: head/sys/contrib/ipfilter/netinet/ip_fil.h 280971 2015-04-01 22:26:39Z glebius $
+ * $FreeBSD: stable/11/sys/contrib/ipfilter/netinet/ip_fil.h 302289 2016-06-30 01:32:12Z bz $
  * Id: ip_fil.h,v 2.170.2.51 2007/10/10 09:48:03 darrenr Exp $
  */
 
@@ -1710,7 +1710,6 @@ typedef struct ipf_main_softc_s {
 
 #ifndef	_KERNEL
 extern	int	ipf_check __P((void *, struct ip *, int, void *, int, mb_t **));
-extern	int	(*ipf_checkp) __P((ip_t *, int, void *, int, mb_t **));
 extern	struct	ifnet *get_unit __P((char *, int));
 extern	char	*get_ifname __P((struct ifnet *));
 extern	int	ipfioctl __P((ipf_main_softc_t *, int, ioctlcmd_t,

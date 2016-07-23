@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/5/93
-# $FreeBSD: head/share/Makefile 290494 2015-11-07 12:43:35Z bapt $
+# $FreeBSD: stable/11/share/Makefile 302329 2016-07-03 18:21:11Z bapt $
 
 .include <src.opts.mk>
 
@@ -13,7 +13,6 @@ SUBDIR=	${_colldef} \
 	${_examples} \
 	${_i18n} \
 	keys \
-	${_locale-links} \
 	${_man} \
 	${_me} \
 	misc \
@@ -61,7 +60,6 @@ _i18n=		i18n
 .if ${MK_LOCALES} != "no"
 _colldef=	colldef
 _ctypedef=	ctypedef
-_locale-links=	locale-links
 _monetdef=	monetdef
 _msgdef=	msgdef
 _numericdef=	numericdef

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ahci/ahci.c 300207 2016-05-19 14:08:36Z ken $");
+__FBSDID("$FreeBSD: stable/11/sys/dev/ahci/ahci.c 302402 2016-07-07 22:10:10Z mav $");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -166,8 +166,8 @@ int
 ahci_attach(device_t dev)
 {
 	struct ahci_controller *ctlr = device_get_softc(dev);
-	int error, i, u, speed, unit;
-	u_int32_t version;
+	int error, i, speed, unit;
+	uint32_t u, version;
 	device_t child;
 
 	ctlr->dev = dev;

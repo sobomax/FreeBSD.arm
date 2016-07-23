@@ -1,4 +1,4 @@
- $FreeBSD: head/sys/compat/freebsd32/syscalls.master 296572 2016-03-09 19:05:11Z jhb $
+ $FreeBSD: head/sys/compat/freebsd32/syscalls.master 302094 2016-06-22 21:15:59Z brooks $
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;	from: src/sys/kern/syscalls.master 1.107
 ;
@@ -29,6 +29,7 @@
 ;	COMPAT4	included on COMPAT4 #ifdef (FreeBSD 4 compat)
 ;	COMPAT6	included on COMPAT6 #ifdef (FreeBSD 6 compat)
 ;	COMPAT7	included on COMPAT7 #ifdef (FreeBSD 7 compat)
+;	COMPAT10 included on COMPAT10 #ifdef (FreeBSD 10 compat)
 ;	OBSOL	obsolete, not included in system, only specifies name
 ;	UNIMPL	not implemented, placeholder only
 ;	NOSTD	implemented but as a lkm that can be statically
@@ -124,7 +125,7 @@
 40	AUE_LSTAT	COMPAT	{ int freebsd32_lstat(char *path, \
 				    struct ostat *ub); }
 41	AUE_DUP		NOPROTO	{ int dup(u_int fd); }
-42	AUE_PIPE	NOPROTO	{ int pipe(void); }
+42	AUE_PIPE	COMPAT10	{ int freebsd32_pipe(void); }
 43	AUE_GETEGID	NOPROTO	{ gid_t getegid(void); }
 44	AUE_PROFILE	NOPROTO	{ int profil(caddr_t samples, size_t size, \
 				    size_t offset, u_int scale); }

@@ -1,11 +1,12 @@
 #
-# $FreeBSD: head/sys/mips/conf/BCM 301410 2016-06-04 19:53:47Z landonf $
+# $FreeBSD: head/sys/mips/conf/BCM 302190 2016-06-25 04:34:54Z landonf $
 #
 # The Broadcom 470x/471x/535x series of processors and boards is very commonly
 # used in COTS hardware including the ASUS RT-N12, RT-N16, RT-N53.
 #
 
 ident		BCM
+cpu		CPU_MIPS74K
 
 hints		"BCM.hints"
 include		"../broadcom/std.broadcom"
@@ -15,9 +16,6 @@ options 	CFE
 options 	ALT_BREAK_TO_DEBUGGER
 options 	BREAK_TO_DEBUGGER
 options		BOOTVERBOSE=0
-
-makeoptions	INTRNG
-options		INTRNG
 
 makeoptions	TRAMPLOADADDR=0x80800000
 makeoptions	DEBUG="-g3"		#Build kernel with gdb(1) debug symbols

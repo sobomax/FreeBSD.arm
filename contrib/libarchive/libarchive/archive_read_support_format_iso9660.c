@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_iso9660.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_iso9660.c 302075 2016-06-22 07:49:59Z mm $");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -1091,7 +1091,7 @@ choose_volume(struct archive_read *a, struct iso9660 *iso9660)
 		/* This condition is unlikely; by way of caution. */
 		vd = &(iso9660->joliet);
 
-	skipsize = LOGICAL_BLOCK_SIZE * vd->location;
+	skipsize = LOGICAL_BLOCK_SIZE * (int64_t)vd->location;
 	skipsize = __archive_read_consume(a, skipsize);
 	if (skipsize < 0)
 		return ((int)skipsize);
@@ -1129,7 +1129,7 @@ choose_volume(struct archive_read *a, struct iso9660 *iso9660)
 	    && iso9660->seenJoliet) {
 		/* Switch reading data from primary to joliet. */
 		vd = &(iso9660->joliet);
-		skipsize = LOGICAL_BLOCK_SIZE * vd->location;
+		skipsize = LOGICAL_BLOCK_SIZE * (int64_t)vd->location;
 		skipsize -= iso9660->current_position;
 		skipsize = __archive_read_consume(a, skipsize);
 		if (skipsize < 0)

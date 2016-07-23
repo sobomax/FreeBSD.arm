@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/subr_trap.c 297633 2016-04-07 04:23:25Z trasz $");
+__FBSDID("$FreeBSD: head/sys/kern/subr_trap.c 302215 2016-06-26 20:07:24Z kib $");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_ktrace.h"
@@ -160,7 +160,7 @@ userret(struct thread *td, struct trapframe *frame)
 	    ("userret: Returning with with pinned thread"));
 	KASSERT(td->td_vp_reserv == 0,
 	    ("userret: Returning while holding vnode reservation"));
-	KASSERT((td->td_flags & TDF_SBDRY) == 0,
+	KASSERT((td->td_flags & (TDF_SBDRY | TDF_SEINTR | TDF_SERESTART)) == 0,
 	    ("userret: Returning with stop signals deferred"));
 	KASSERT(td->td_su == NULL,
 	    ("userret: Returning with SU cleanup request not handled"));

@@ -57,11 +57,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: head/sys/dev/mps/mps_user.c 299367 2016-05-10 14:57:14Z trasz $
+ * $FreeBSD: head/sys/dev/mps/mps_user.c 302031 2016-06-20 18:14:51Z slm $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_user.c 299367 2016-05-10 14:57:14Z trasz $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_user.c 302031 2016-06-20 18:14:51Z slm $");
 
 #include "opt_compat.h"
 
@@ -1220,12 +1220,14 @@ mps_post_fw_diag_buffer(struct mps_softc *sc,
 	 * Process POST reply.
 	 */
 	reply = (MPI2_DIAG_BUFFER_POST_REPLY *)cm->cm_reply;
-	if (reply->IOCStatus != MPI2_IOCSTATUS_SUCCESS) {
+	if ((le16toh(reply->IOCStatus) & MPI2_IOCSTATUS_MASK) !=
+	    MPI2_IOCSTATUS_SUCCESS) {
 		status = MPS_DIAG_FAILURE;
 		mps_dprint(sc, MPS_FAULT, "%s: post of FW  Diag Buffer failed "
 		    "with IOCStatus = 0x%x, IOCLogInfo = 0x%x and "
-		    "TransferLength = 0x%x\n", __func__, reply->IOCStatus,
-		    reply->IOCLogInfo, reply->TransferLength);
+		    "TransferLength = 0x%x\n", __func__,
+		    le16toh(reply->IOCStatus), le32toh(reply->IOCLogInfo),
+		    le32toh(reply->TransferLength));
 		goto done;
 	}
 
@@ -1304,12 +1306,13 @@ mps_release_fw_diag_buffer(struct mps_softc *sc,
 	 * Process RELEASE reply.
 	 */
 	reply = (MPI2_DIAG_RELEASE_REPLY *)cm->cm_reply;
-	if ((reply->IOCStatus != MPI2_IOCSTATUS_SUCCESS) ||
-	    pBuffer->owned_by_firmware) {
+	if (((le16toh(reply->IOCStatus) & MPI2_IOCSTATUS_MASK) !=
+	    MPI2_IOCSTATUS_SUCCESS) || pBuffer->owned_by_firmware) {
 		status = MPS_DIAG_FAILURE;
 		mps_dprint(sc, MPS_FAULT, "%s: release of FW Diag Buffer "
 		    "failed with IOCStatus = 0x%x and IOCLogInfo = 0x%x\n",
-		    __func__, reply->IOCStatus, reply->IOCLogInfo);
+		    __func__, le16toh(reply->IOCStatus),
+		    le32toh(reply->IOCLogInfo));
 		goto done;
 	}
 

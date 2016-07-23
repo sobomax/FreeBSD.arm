@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/ixgbe/if_ixv.c 299200 2016-05-06 22:54:56Z pfg $*/
+/*$FreeBSD: stable/11/sys/dev/ixgbe/if_ixv.c 302384 2016-07-07 03:39:18Z sbruno $*/
 
 
 #ifndef IXGBE_STANDALONE_BUILD
@@ -578,7 +578,8 @@ ixv_ioctl(struct ifnet * ifp, u_long command, caddr_t data)
 			ifp->if_mtu = ifr->ifr_mtu;
 			adapter->max_frame_size =
 				ifp->if_mtu + IXGBE_MTU_HDR;
-			ixv_init_locked(adapter);
+			if (ifp->if_drv_flags & IFF_DRV_RUNNING)
+				ixv_init_locked(adapter);
 			IXGBE_CORE_UNLOCK(adapter);
 		}
 		break;

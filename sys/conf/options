@@ -1,4 +1,4 @@
-# $FreeBSD: head/sys/conf/options 300816 2016-05-27 01:36:29Z adrian $
+# $FreeBSD: head/sys/conf/options 302163 2016-06-23 23:20:58Z imp $
 #
 #        On the handling of kernel options
 #
@@ -330,7 +330,7 @@ CAM_DEBUG_TARGET	opt_cam.h
 CAM_DEBUG_LUN		opt_cam.h
 CAM_DEBUG_FLAGS		opt_cam.h
 CAM_BOOT_DELAY		opt_cam.h
-CAM_NETFLIX_IOSCHED	opt_cam.h
+CAM_IOSCHED_DYNAMIC	opt_cam.h
 SCSI_DELAY		opt_scsi.h
 SCSI_NO_SENSE_STRINGS	opt_scsi.h
 SCSI_NO_OP_STRINGS	opt_scsi.h

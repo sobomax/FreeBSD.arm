@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/if_bridge.c 298995 2016-05-03 18:05:43Z pfg $");
+__FBSDID("$FreeBSD: head/sys/net/if_bridge.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -541,7 +541,7 @@ vnet_bridge_uninit(const void *unused __unused)
 	V_bridge_cloner = NULL;
 	BRIDGE_LIST_LOCK_DESTROY();
 }
-VNET_SYSUNINIT(vnet_bridge_uninit, SI_SUB_PROTO_IFATTACHDOMAIN, SI_ORDER_ANY,
+VNET_SYSUNINIT(vnet_bridge_uninit, SI_SUB_PSEUDO, SI_ORDER_ANY,
     vnet_bridge_uninit, NULL);
 
 static int

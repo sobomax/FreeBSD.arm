@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_passthru.c 298295 2016-04-19 20:43:05Z jhb $
+ * $FreeBSD: stable/11/usr.sbin/bhyve/pci_passthru.c 302365 2016-07-06 05:05:03Z ngie $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_passthru.c 298295 2016-04-19 20:43:05Z jhb $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/bhyve/pci_passthru.c 302365 2016-07-06 05:05:03Z ngie $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -361,7 +361,7 @@ msix_table_write(struct vmctx *ctx, int vcpu, struct passthru_softc *sc,
 	uint64_t *dest64;
 	size_t entry_offset;
 	uint32_t vector_control;
-	int error, index;
+	int index;
 
 	pi = sc->psc_pi;
 	if (offset >= pi->pi_msix.pba_offset &&
@@ -416,8 +416,8 @@ msix_table_write(struct vmctx *ctx, int vcpu, struct passthru_softc *sc,
 		/* If the entry is masked, don't set it up */
 		if ((entry->vector_control & PCIM_MSIX_VCTRL_MASK) == 0 ||
 		    (vector_control & PCIM_MSIX_VCTRL_MASK) == 0) {
-			error = vm_setup_pptdev_msix(ctx, vcpu,
-			    sc->psc_sel.pc_bus, sc->psc_sel.pc_dev, 
+			(void)vm_setup_pptdev_msix(ctx, vcpu,
+			    sc->psc_sel.pc_bus, sc->psc_sel.pc_dev,
 			    sc->psc_sel.pc_func, index, entry->addr,
 			    entry->msg_data, entry->vector_control);
 		}

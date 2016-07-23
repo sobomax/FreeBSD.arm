@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: head/share/mk/bsd.prog.mk 301284 2016-06-03 19:25:36Z bdrewery $
+# $FreeBSD: head/share/mk/bsd.prog.mk 302176 2016-06-24 18:45:16Z emaste $
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -66,7 +66,8 @@ PROG_FULL=${PROG}.full
     ${BINDIR} == "/bin" ||\
     ${BINDIR:C%/libexec(/.*)?%/libexec%} == "/libexec" ||\
     ${BINDIR} == "/sbin" ||\
-    ${BINDIR:C%/usr/(bin|bsdinstall|libexec|lpr|sendmail|sm.bin|sbin|tests)(/.*)?%/usr/bin%} == "/usr/bin"\
+    ${BINDIR:C%/usr/(bin|bsdinstall|libexec|lpr|sendmail|sm.bin|sbin|tests)(/.*)?%/usr/bin%} == "/usr/bin" ||\
+    ${BINDIR} == "/usr/lib" \
      )
 DEBUGFILEDIR=	${DEBUGDIR}${BINDIR}
 .else
@@ -178,6 +179,7 @@ CLEANFILES+= ${OBJS}
 .include <bsd.libnames.mk>
 
 .if defined(PROG)
+.if !defined(NO_EXTRADEPEND)
 _EXTRADEPEND:
 .if defined(LDFLAGS) && !empty(LDFLAGS:M-nostdlib)
 .if defined(DPADD) && !empty(DPADD)
@@ -193,6 +195,7 @@ _EXTRADEPEND:
 .endif
 .endif
 .endif
+.endif	# !defined(NO_EXTRADEPEND)
 .endif
 
 .if !target(install)

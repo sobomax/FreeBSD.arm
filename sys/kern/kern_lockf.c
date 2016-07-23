@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_lockf.c 298819 2016-04-29 22:15:33Z pfg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_lockf.c 302216 2016-06-26 20:08:42Z kib $");
 
 #include "opt_debug_lockf.h"
 
@@ -1378,7 +1378,7 @@ lf_setlock(struct lockf *state, struct lockf_entry *lock, struct vnode *vp,
     void **cookiep)
 {
 	static char lockstr[] = "lockf";
-	int priority, error;
+	int error, priority, stops_deferred;
 
 #ifdef LOCKF_DEBUG
 	if (lockf_debug & 1)
@@ -1466,7 +1466,9 @@ lf_setlock(struct lockf *state, struct lockf_entry *lock, struct vnode *vp,
 		}
 
 		lock->lf_refs++;
+		stops_deferred = sigdeferstop(SIGDEFERSTOP_ERESTART);
 		error = sx_sleep(lock, &state->ls_lock, priority, lockstr, 0);
+		sigallowstop(stops_deferred);
 		if (lf_free_lock(lock)) {
 			error = EDOOFUS;
 			goto out;

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/fs/cuse/cuse.c 292594 2015-12-22 09:55:44Z hselasky $ */
+/* $FreeBSD: stable/11/sys/fs/cuse/cuse.c 302381 2016-07-06 22:21:22Z hselasky $ */
 /*-
  * Copyright (c) 2010-2013 Hans Petter Selasky. All rights reserved.
  *
@@ -1656,7 +1656,7 @@ cuse_client_ioctl(struct cdev *dev, unsigned long cmd,
 
 	cuse_cmd_lock(pccmd);
 
-	if (cmd & IOC_IN)
+	if (cmd & (IOC_IN | IOC_VOID))
 		memcpy(pcc->ioctl_buffer, data, len);
 
 	/*

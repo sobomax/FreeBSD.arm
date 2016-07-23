@@ -1,5 +1,5 @@
 
-# $FreeBSD: head/sys/modules/aic7xxx/ahd/Makefile 276606 2015-01-03 03:35:18Z imp $
+# $FreeBSD: stable/11/sys/modules/aic7xxx/ahd/Makefile 302285 2016-06-29 22:39:22Z bdrewery $
 
 .PATH:	${.CURDIR}/../../../dev/aic7xxx
 KMOD=	ahd
@@ -26,7 +26,7 @@ ${GENSRCS}:								 \
 			-i ${.CURDIR}/../../../dev/aic7xxx/aic79xx_osm.h \
 			${.CURDIR}/../../../dev/aic7xxx/aic79xx.seq
 .else
-${GENSRCS}:
+${GENSRCS}: .NOMETA
 	@echo "Error: ${.TARGET} is missing.  Run 'make ahdfirmware'."
 .endif
 

@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 10/24/94
-# $FreeBSD: head/lib/libc/sys/Makefile.inc 299741 2016-05-14 09:43:28Z kib $
+# $FreeBSD: head/lib/libc/sys/Makefile.inc 302092 2016-06-22 21:11:27Z brooks $
 
 # sys sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/sys ${LIBC_SRCTOP}/sys
@@ -27,6 +27,8 @@ SRCS+=	\
 SRCS+= futimens.c utimensat.c
 NOASM+= futimens.o utimensat.o
 PSEUDO+= _futimens.o _utimensat.o
+
+SRCS+= pipe.c
 
 INTERPOSED = \
 	accept \

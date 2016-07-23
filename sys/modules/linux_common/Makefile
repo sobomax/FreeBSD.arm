@@ -1,9 +1,9 @@
-# $FreeBSD: head/sys/modules/linux_common/Makefile 283474 2015-05-24 17:47:20Z dchagin $
+# $FreeBSD: stable/11/sys/modules/linux_common/Makefile 303007 2016-07-18 16:38:06Z dchagin $
 
 .PATH: ${.CURDIR}/../../compat/linux
 
 KMOD=	linux_common
-SRCS=	linux_common.c linux_mib.c linux_util.c linux_emul.c \
+SRCS=	linux_common.c linux_mib.c linux_mmap.c linux_util.c linux_emul.c \
 	linux.c opt_compat.h device_if.h vnode_if.h bus_if.h
 
 EXPORT_SYMS=

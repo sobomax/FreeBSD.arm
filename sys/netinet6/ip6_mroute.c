@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet6/ip6_mroute.c 286452 2015-08-08 15:58:35Z melifaro $");
+__FBSDID("$FreeBSD: head/sys/netinet6/ip6_mroute.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include "opt_inet6.h"
 
@@ -1966,4 +1966,4 @@ static moduledata_t ip6_mroutemod = {
 	0
 };
 
-DECLARE_MODULE(ip6_mroute, ip6_mroutemod, SI_SUB_PSEUDO, SI_ORDER_ANY);
+DECLARE_MODULE(ip6_mroute, ip6_mroutemod, SI_SUB_PROTO_MC, SI_ORDER_ANY);

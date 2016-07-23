@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_mutex.c 301157 2016-06-01 18:32:20Z mjg $");
+__FBSDID("$FreeBSD: stable/11/sys/kern/kern_mutex.c 302346 2016-07-05 17:59:04Z markj $");
 
 #include "opt_adaptive_mutexes.h"
 #include "opt_ddb.h"
@@ -657,8 +657,15 @@ thread_lock_flags_(struct thread *td, int opts, const char *file, int line)
 	i = 0;
 	tid = (uintptr_t)curthread;
 
-	if (SCHEDULER_STOPPED())
+	if (SCHEDULER_STOPPED()) {
+		/*
+		 * Ensure that spinlock sections are balanced even when the
+		 * scheduler is stopped, since we may otherwise inadvertently
+		 * re-enable interrupts while dumping core.
+		 */
+		spinlock_enter();
 		return;
+	}
 
 #ifdef KDTRACE_HOOKS
 	spin_time -= lockstat_nsecs(&td->td_lock->lock_object);

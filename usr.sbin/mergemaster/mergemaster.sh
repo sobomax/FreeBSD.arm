@@ -8,7 +8,7 @@
 # Copyright (c) 1998-2012 Douglas Barton, All rights reserved
 # Please see detailed copyright below
 
-# $FreeBSD: head/usr.sbin/mergemaster/mergemaster.sh 268351 2014-07-07 00:27:09Z marcel $
+# $FreeBSD: stable/11/usr.sbin/mergemaster/mergemaster.sh 302912 2016-07-15 19:58:05Z bdrewery $
 
 PATH=/bin:/usr/bin:/usr/sbin
 
@@ -486,7 +486,7 @@ fi
 SOURCEDIR=$(realpath "$SOURCEDIR")
 
 # Setup make to use system files from SOURCEDIR
-MM_MAKE="make ${ARCHSTRING} -m ${SOURCEDIR}/share/mk"
+MM_MAKE="make ${ARCHSTRING} -m ${SOURCEDIR}/share/mk -DNO_FILEMON"
 
 # Check DESTDIR against the mergemaster mtree database to see what
 # files the user changed from the reference files.

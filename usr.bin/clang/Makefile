@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/clang/Makefile 296417 2016-03-05 20:24:31Z dim $
+# $FreeBSD: head/usr.bin/clang/Makefile 301993 2016-06-17 16:46:58Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -7,6 +7,7 @@ SUBDIR=	clang clang-tblgen llvm-tblgen
 .if !defined(TOOLS_PREFIX)
 .if ${MK_CLANG_EXTRAS} != "no"
 SUBDIR+=bugpoint \
+	clang-format \
 	llc \
 	lli \
 	llvm-ar \

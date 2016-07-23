@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net/mppcd.c 301549 2016-06-07 15:07:00Z pfg $
+ * $FreeBSD: stable/11/sys/net/mppcd.c 302773 2016-07-13 15:51:58Z pfg $
  */
 
 /*
@@ -170,7 +170,7 @@ int MPPC_Decompress(u_char **src, u_char **dst, u_long *srcCnt, u_long *dstCnt, 
 			rtn &= ~MPPC_OK;
 			return (rtn);
 		    }
-		} else {		/* NOTREACHED */
+		} else {		/* This shouldn't happen. */
 		    rtn &= ~MPPC_OK;
 		    return (rtn);
 		}

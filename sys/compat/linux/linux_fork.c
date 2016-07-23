@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_fork.c 300043 2016-05-17 09:56:22Z kib $");
+__FBSDID("$FreeBSD: head/sys/compat/linux/linux_fork.c 301961 2016-06-16 12:05:44Z kib $");
 
 #include "opt_compat.h"
 
@@ -299,8 +299,8 @@ linux_clone_thread(struct thread *td, struct linux_clone_args *args)
 	error = kern_thr_alloc(p, 0, &newtd);
 	if (error)
 		goto fail;
-														
-	cpu_set_upcall(newtd, td);
+
+	cpu_copy_thread(newtd, td);
 
 	bzero(&newtd->td_startzero,
 	    __rangeof(struct thread, td_startzero, td_endzero));

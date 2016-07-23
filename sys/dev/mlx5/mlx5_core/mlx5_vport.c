@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/mlx5/mlx5_core/mlx5_vport.c 301545 2016-06-07 13:58:52Z hselasky $
+ * $FreeBSD: head/sys/dev/mlx5/mlx5_core/mlx5_vport.c 302139 2016-06-23 09:23:37Z hselasky $
  */
 
 #include <linux/etherdevice.h>
@@ -71,7 +71,7 @@ static int mlx5_query_nic_vport_context(struct mlx5_core_dev *mdev, u32 vport,
 int mlx5_vport_alloc_q_counter(struct mlx5_core_dev *mdev, int *counter_set_id)
 {
 	u32 in[MLX5_ST_SZ_DW(alloc_q_counter_in)];
-	u32 out[MLX5_ST_SZ_DW(alloc_q_counter_in)];
+	u32 out[MLX5_ST_SZ_DW(alloc_q_counter_out)];
 	int err;
 
 	memset(in, 0, sizeof(in));

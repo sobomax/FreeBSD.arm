@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/xen/hvm.c 291024 2015-11-18 18:11:19Z royger $");
+__FBSDID("$FreeBSD: stable/11/sys/x86/xen/hvm.c 302895 2016-07-15 09:44:48Z royger $");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -134,9 +134,29 @@ xen_hvm_init_hypercall_stubs(enum xen_hvm_init_type init_type)
 		return (ENXIO);
 
 	if (init_type == XEN_HVM_INIT_COLD) {
+		int major, minor;
+
 		do_cpuid(base + 1, regs);
-		printf("XEN: Hypervisor version %d.%d detected.\n",
-		    regs[0] >> 16, regs[0] & 0xffff);
+
+		major = regs[0] >> 16;
+		minor = regs[0] & 0xffff;
+		printf("XEN: Hypervisor version %d.%d detected.\n", major,
+			minor);
+
+		if (((major < 4) || (major == 4 && minor <= 5)) &&
+		    msix_disable_migration == -1) {
+			/*
+			 * Xen hypervisors prior to 4.6.0 do not properly
+			 * handle updates to enabled MSI-X table entries,
+			 * so disable MSI-X interrupt migration in that
+			 * case.
+			 */
+			if (bootverbose)
+				printf(
+"Disabling MSI-X interrupt migration due to Xen hypervisor bug.\n"
+"Set machdep.msix_disable_migration=0 to forcefully enable it.\n");
+			msix_disable_migration = 1;
+		}
 	}
 
 	/*

@@ -1,4 +1,4 @@
-# $FreeBSD: head/secure/usr.sbin/sshd/Makefile 301551 2016-06-07 16:18:09Z lidl $
+# $FreeBSD: head/secure/usr.sbin/sshd/Makefile 302182 2016-06-24 23:22:42Z gjb $
 
 .include <src.opts.mk>
 
@@ -38,13 +38,6 @@ CFLAGS+=	-DHAVE_LDNS=1
 .if ${MK_AUDIT} != "no"
 CFLAGS+= -DUSE_BSM_AUDIT -DHAVE_GETAUDIT_ADDR
 LIBADD+=	bsm
-.endif
-
-.if ${MK_BLACKLIST_SUPPORT} != "no"
-CFLAGS+= -DUSE_BLACKLIST -I${SRCTOP}/contrib/blacklist/include
-SRCS+= blacklist.c
-LIBADD+= blacklist
-LDFLAGS+=-L${LIBBLACKLISTDIR}
 .endif
 
 .if ${MK_KERBEROS_SUPPORT} != "no"

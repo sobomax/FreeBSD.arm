@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_lem.c 299200 2016-05-06 22:54:56Z pfg $*/
+/*$FreeBSD: stable/11/sys/dev/e1000/if_lem.c 302384 2016-07-07 03:39:18Z sbruno $*/
 
 /*
  * Uncomment the following extensions for better performance in a VM,
@@ -1053,7 +1053,8 @@ lem_ioctl(if_t ifp, u_long command, caddr_t data)
 		if_setmtu(ifp, ifr->ifr_mtu);
 		adapter->max_frame_size =
 		    if_getmtu(ifp) + ETHER_HDR_LEN + ETHER_CRC_LEN;
-		lem_init_locked(adapter);
+		if ((if_getdrvflags(ifp) & IFF_DRV_RUNNING))
+			lem_init_locked(adapter);
 		EM_CORE_UNLOCK(adapter);
 		break;
 	    }

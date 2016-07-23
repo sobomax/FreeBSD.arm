@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/mps/mps_config.c 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: head/sys/dev/mps/mps_config.c 302031 2016-06-20 18:14:51Z slm $");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>
@@ -499,7 +499,8 @@ mps_wd_config_pages(struct mps_softc *sc)
 		 */
 		if (mps_config_get_raid_volume_pg0(sc, &mpi_reply,
 		    raid_vol_pg0, (u32)raid_vol_pg0->DevHandle)) {
-			if (mpi_reply.IOCStatus !=
+			if ((le16toh(mpi_reply.IOCStatus) &
+			    MPI2_IOCSTATUS_MASK) !=
 			    MPI2_IOCSTATUS_CONFIG_INVALID_PAGE) {
 				mps_dprint(sc, MPS_FAULT,
 				    "Multiple RAID Volume Page0! Direct Drive "

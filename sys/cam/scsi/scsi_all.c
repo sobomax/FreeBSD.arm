@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/scsi/scsi_all.c 300207 2016-05-19 14:08:36Z ken $");
+__FBSDID("$FreeBSD: stable/11/sys/cam/scsi/scsi_all.c 302281 2016-06-29 16:41:37Z sbruno $");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -8788,6 +8788,7 @@ scsi_persistent_reserve_out(struct ccb_scsiio *csio, uint32_t retries,
 	scsi_cmd->opcode = PERSISTENT_RES_OUT;
 	scsi_cmd->action = service_action;
 	scsi_cmd->scope_type = scope | res_type;
+	scsi_ulto4b(dxfer_len, scsi_cmd->length);
 
 	cam_fill_csio(csio,
 		      retries,

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/netgraph/ng_eiface.c 290819 2015-11-14 13:34:03Z melifaro $
+ * $FreeBSD: head/sys/netgraph/ng_eiface.c 302054 2016-06-21 13:48:49Z bz $
  */
 
 #include <sys/param.h>
@@ -679,5 +679,5 @@ vnet_ng_eiface_uninit(const void *unused)
 
 	delete_unrhdr(V_ng_eiface_unit);
 }
-VNET_SYSUNINIT(vnet_ng_eiface_uninit, SI_SUB_PSEUDO, SI_ORDER_ANY,
+VNET_SYSUNINIT(vnet_ng_eiface_uninit, SI_SUB_INIT_IF, SI_ORDER_ANY,
    vnet_ng_eiface_uninit, NULL);

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/linux/linux_misc.c 301053 2016-05-31 16:56:30Z glebius $");
+__FBSDID("$FreeBSD: stable/11/sys/compat/linux/linux_misc.c 303005 2016-07-18 16:34:11Z dchagin $");
 
 #include "opt_compat.h"
 
@@ -1200,15 +1200,23 @@ linux_mknodat(struct thread *td, struct linux_mknodat_args *args)
 int
 linux_personality(struct thread *td, struct linux_personality_args *args)
 {
+	struct linux_pemuldata *pem;
+	struct proc *p = td->td_proc;
+	uint32_t old;
+
 #ifdef DEBUG
 	if (ldebug(personality))
-		printf(ARGS(personality, "%lu"), (unsigned long)args->per);
+		printf(ARGS(personality, "%u"), args->per);
 #endif
-	if (args->per != 0)
-		return (EINVAL);
 
-	/* Yes Jim, it's still a Linux... */
-	td->td_retval[0] = 0;
+	PROC_LOCK(p);
+	pem = pem_find(p);
+	old = pem->persona;
+	if (args->per != 0xffffffff)
+		pem->persona = args->per;
+	PROC_UNLOCK(p);
+
+	td->td_retval[0] = old;
 	return (0);
 }
 

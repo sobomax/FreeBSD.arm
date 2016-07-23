@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/misc/committers-src.dot 301869 2016-06-13 10:35:11Z ngie $
+# $FreeBSD: stable/11/share/misc/committers-src.dot 302361 2016-07-06 03:23:07Z badger $
 
 # This file is meant to list all FreeBSD src committers and describe the
 # mentor-mentee relationships between them.
@@ -120,6 +120,7 @@ arybchik [label="Andrew Rybchenko\narybchik@FreeBSD.org\n2014/10/12"]
 asomers [label="Alan Somers\nasomers@FreeBSD.org\n2013/04/24"]
 avg [label="Andriy Gapon\navg@FreeBSD.org\n2009/02/18"]
 avos [label="Andriy Voskoboinyk\navos@FreeBSD.org\n2015/09/24"]
+badger [label="Eric Badger\nbadger@FreeBSD.org\n2016/07/01"]
 bapt [label="Baptiste Daroussin\nbapt@FreeBSD.org\n2011/12/23"]
 bdrewery [label="Bryan Drewery\nbdrewery@FreeBSD.org\n2013/12/14"]
 benl [label="Ben Laurie\nbenl@FreeBSD.org\n2011/05/18"]
@@ -212,6 +213,7 @@ julian [label="Julian Elischer\njulian@FreeBSD.org\n1993/04/19"]
 jwd [label="John De Boskey\njwd@FreeBSD.org\n2000/05/19"]
 kaiw [label="Kai Wang\nkaiw@FreeBSD.org\n2007/09/26"]
 kan [label="Alexander Kabaev\nkan@FreeBSD.org\n2002/07/21"]
+karels [label="Mike Karels\nkarels@FreeBSD.org\n2016/06/09"]
 ken [label="Ken Merry\nken@FreeBSD.org\n1998/09/08"]
 kensmith [label="Ken Smith\nkensmith@FreeBSD.org\n2004/01/23"]
 kevlo [label="Kevin Lo\nkevlo@FreeBSD.org\n2006/07/23"]
@@ -481,6 +483,7 @@ gnn -> arybchik
 gnn -> erj
 gnn -> kp
 gnn -> jtl
+gnn -> karels
 
 gonzo -> jmcneill
 
@@ -586,6 +589,7 @@ ken -> asomers
 ken -> slm
 
 kib -> ae
+kib -> badger
 kib -> dchagin
 kib -> gjb
 kib -> jah
@@ -764,6 +768,8 @@ trasz -> mjg
 ume -> jinmei
 ume -> suz
 ume -> tshiozak
+
+vangyzen -> badger
 
 wes -> scf
 

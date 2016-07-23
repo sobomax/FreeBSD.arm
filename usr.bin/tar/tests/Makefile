@@ -1,4 +1,4 @@
-# $FreeBSD: head/usr.bin/tar/tests/Makefile 299529 2016-05-12 10:16:16Z mm $
+# $FreeBSD: head/usr.bin/tar/tests/Makefile 302075 2016-06-22 07:49:59Z mm $
 
 PACKAGE=	tests
 
@@ -37,6 +37,7 @@ TESTS_SRCS=	\
 	test_format_newc.c			\
 	test_help.c				\
 	test_leading_slash.c			\
+	test_missing_file.c			\
 	test_option_C_upper.c			\
 	test_option_H_upper.c			\
 	test_option_L_upper.c			\

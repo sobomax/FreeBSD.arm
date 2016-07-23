@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/lib/libc/locale/collate.c 298830 2016-04-30 01:24:24Z pfg $");
+__FBSDID("$FreeBSD: stable/11/lib/libc/locale/collate.c 303112 2016-07-20 20:12:58Z bapt $");
 
 #include "namespace.h"
 
@@ -451,6 +451,7 @@ _collate_wxfrm(struct xlocale_collate *table, const wchar_t *src, wchar_t *xf,
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					pri = COLLATE_MAX_PRIORITY;
 				}
 				if (room) {
@@ -469,6 +470,7 @@ _collate_wxfrm(struct xlocale_collate *table, const wchar_t *src, wchar_t *xf,
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					continue;
 				}
 				if (room) {
@@ -597,6 +599,7 @@ _collate_sxfrm(struct xlocale_collate *table, const wchar_t *src, char *xf,
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					pri = COLLATE_MAX_PRIORITY;
 				}
 
@@ -622,6 +625,7 @@ _collate_sxfrm(struct xlocale_collate *table, const wchar_t *src, char *xf,
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					continue;
 				}
 

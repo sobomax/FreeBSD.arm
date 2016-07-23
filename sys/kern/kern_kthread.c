@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 298069 2016-04-15 16:10:11Z pfg $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_kthread.c 301961 2016-06-16 12:05:44Z kib $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -124,7 +124,7 @@ kproc_create(void (*func)(void *), void *arg,
 #endif
 
 	/* call the processes' main()... */
-	cpu_set_fork_handler(td, func, arg);
+	cpu_fork_kthread_handler(td, func, arg);
 
 	/* Avoid inheriting affinity from a random parent. */
 	cpuset_setthread(td->td_tid, cpuset_root);
@@ -281,14 +281,11 @@ kthread_add(void (*func)(void *), void *arg, struct proc *p,
 	vsnprintf(newtd->td_name, sizeof(newtd->td_name), fmt, ap);
 	va_end(ap);
 
-	newtd->td_proc = p;  /* needed for cpu_set_upcall */
-
-	/* XXX optimise this probably? */
-	/* On x86 (and probably the others too) it is way too full of junk */
-	/* Needs a better name */
-	cpu_set_upcall(newtd, oldtd);
+	newtd->td_proc = p;  /* needed for cpu_copy_thread */
+	/* might be further optimized for kthread */
+	cpu_copy_thread(newtd, oldtd);
 	/* put the designated function(arg) as the resume context */
-	cpu_set_fork_handler(newtd, func, arg);
+	cpu_fork_kthread_handler(newtd, func, arg);
 
 	newtd->td_pflags |= TDP_KTHREAD;
 	thread_cow_get_proc(newtd, p);

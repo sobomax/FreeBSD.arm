@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/net80211/ieee80211_node.h 297728 2016-04-09 00:55:55Z adrian $
+ * $FreeBSD: head/sys/net80211/ieee80211_node.h 302018 2016-06-19 07:31:02Z adrian $
  */
 #ifndef _NET80211_IEEE80211_NODE_H_
 #define _NET80211_IEEE80211_NODE_H_
@@ -115,7 +115,6 @@ struct ieee80211_node {
 	TAILQ_ENTRY(ieee80211_node) ni_list;	/* list of all nodes */
 	LIST_ENTRY(ieee80211_node) ni_hash;	/* hash collision list */
 	u_int			ni_refcnt;	/* count of held references */
-	u_int			ni_scangen;	/* gen# for timeout scan */
 	u_int			ni_flags;
 #define	IEEE80211_NODE_AUTH	0x000001	/* authorized for data */
 #define	IEEE80211_NODE_QOS	0x000002	/* QoS enabled */
@@ -360,8 +359,6 @@ struct ieee80211_node_table {
 	struct ieee80211_node	**nt_keyixmap;	/* key ix -> node map */
 	int			nt_keyixmax;	/* keyixmap size */
 	const char		*nt_name;	/* table name for debug msgs */
-	ieee80211_scan_lock_t	nt_scanlock;	/* on nt_scangen */
-	u_int			nt_scangen;	/* gen# for iterators */
 	int			nt_inact_init;	/* initial node inact setting */
 };
 

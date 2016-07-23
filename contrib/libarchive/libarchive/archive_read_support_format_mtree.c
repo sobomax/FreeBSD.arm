@@ -26,7 +26,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_mtree.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD: head/contrib/libarchive/libarchive/archive_read_support_format_mtree.c 302075 2016-06-22 07:49:59Z mm $");
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -1385,12 +1385,12 @@ parse_device(dev_t *pdev, struct archive *a, char *val)
 				    "Missing number");
 				return ARCHIVE_WARN;
 			}
-			numbers[argc++] = (unsigned long)mtree_atol(&p);
-			if (argc > MAX_PACK_ARGS) {
+			if (argc >= MAX_PACK_ARGS) {
 				archive_set_error(a, ARCHIVE_ERRNO_FILE_FORMAT,
 				    "Too many arguments");
 				return ARCHIVE_WARN;
 			}
+			numbers[argc++] = (unsigned long)mtree_atol(&p);
 		}
 		if (argc < 2) {
 			archive_set_error(a, ARCHIVE_ERRNO_FILE_FORMAT,

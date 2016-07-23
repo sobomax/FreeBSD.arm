@@ -1,4 +1,4 @@
-# $FreeBSD: head/cddl/lib/libnvpair/Makefile 285339 2015-07-09 21:53:40Z oshogbo $
+# $FreeBSD: head/cddl/lib/libnvpair/Makefile 302141 2016-06-23 15:02:57Z asomers $
 
 .PATH: ${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libnvpair
 .PATH: ${.CURDIR}/../../../sys/cddl/contrib/opensolaris/common/nvpair
@@ -12,7 +12,7 @@ SRCS=	libnvpair.c \
 	opensolaris_nvpair.c \
 	opensolaris_nvpair_alloc_fixed.c
 
-WARNS?=	0
+WARNS?=	1
 CFLAGS+= -I${.CURDIR}/../../../cddl/compat/opensolaris/include
 CFLAGS+= -I${.CURDIR}/../../../cddl/contrib/opensolaris/lib/libzpool/common
 CFLAGS+= -I${.CURDIR}/../../../sys/cddl/compat/opensolaris

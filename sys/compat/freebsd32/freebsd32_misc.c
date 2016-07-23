@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/compat/freebsd32/freebsd32_misc.c 297400 2016-03-29 19:57:11Z glebius $");
+__FBSDID("$FreeBSD: head/sys/compat/freebsd32/freebsd32_misc.c 302095 2016-06-22 21:18:19Z brooks $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -269,6 +269,15 @@ freebsd4_freebsd32_getfsstat(struct thread *td, struct freebsd4_freebsd32_getfss
 	if (error == 0)
 		td->td_retval[0] = count;
 	return (error);
+}
+#endif
+
+#ifdef COMPAT_FREEBSD10
+int
+freebsd10_freebsd32_pipe(struct thread *td,
+    struct freebsd10_freebsd32_pipe_args *uap) {
+	
+	return (freebsd10_pipe(td, (struct freebsd10_pipe_args*)uap));
 }
 #endif
 

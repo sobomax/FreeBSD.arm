@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/machdep.c 298559 2016-04-25 00:55:51Z jhibbits $");
+__FBSDID("$FreeBSD: stable/11/sys/powerpc/powerpc/machdep.c 302280 2016-06-29 16:34:56Z nwhitehorn $");
 
 #include "opt_compat.h"
 #include "opt_ddb.h"
@@ -250,6 +250,18 @@ powerpc_init(vm_offset_t fdt, vm_offset_t toc, vm_offset_t ofentry, void *mdp)
 	/* Check for ePAPR loader, which puts a magic value into r6 */
 	if (mdp == (void *)0x65504150)
 		mdp = NULL;
+
+#ifdef AIM
+	/*
+	 * If running from an FDT, make sure we are in real mode to avoid
+	 * tromping on firmware page tables. Everything in the kernel assumes
+	 * 1:1 mappings out of firmware, so this won't break anything not
+	 * already broken. This doesn't work if there is live OF, since OF
+	 * may internally use non-1:1 mappings.
+	 */
+	if (ofentry == 0)
+		mtmsr(mfmsr() & ~(PSL_IR | PSL_DR));
+#endif
 
 	/*
 	 * Parse metadata if present and fetch parameters.  Must be done

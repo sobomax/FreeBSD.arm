@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bhnd/bhndb/bhndb.c 300628 2016-05-24 21:20:17Z adrian $");
+__FBSDID("$FreeBSD: head/sys/dev/bhnd/bhndb/bhndb.c 302106 2016-06-23 01:15:35Z adrian $");
 
 /*
  * Abstract BHND Bridge Device Driver
@@ -596,8 +596,10 @@ bhndb_generic_init_full_config(device_t dev, device_t child,
 	hostb = NULL;
 
 	/* Fetch the full set of bhnd-attached cores */
-	if ((error = device_get_children(sc->bus_dev, &devs, &ndevs)))
+	if ((error = device_get_children(sc->bus_dev, &devs, &ndevs))) {
+		device_printf(sc->dev, "unable to get children\n");
 		return (error);
+	}
 
 	/* Find our host bridge device */
 	hostb = BHNDB_FIND_HOSTB_DEVICE(dev, child);

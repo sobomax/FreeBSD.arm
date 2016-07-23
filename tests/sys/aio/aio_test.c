@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/tests/sys/aio/aio_test.c 300626 2016-05-24 21:09:05Z jhb $
+ * $FreeBSD: head/tests/sys/aio/aio_test.c 302074 2016-06-21 22:19:06Z jhb $
  */
 
 /*
@@ -40,6 +40,7 @@
 
 #include <sys/param.h>
 #include <sys/module.h>
+#include <sys/resource.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/mdioctl.h>
@@ -455,6 +456,7 @@ ATF_TC_BODY(aio_unix_socketpair_test, tc)
 {
 	struct aio_unix_socketpair_arg arg;
 	struct aio_context ac;
+	struct rusage ru_before, ru_after;
 	int sockets[2];
 
 	ATF_REQUIRE_KERNEL_MODULE("aio");
@@ -467,8 +469,17 @@ ATF_TC_BODY(aio_unix_socketpair_test, tc)
 	aio_context_init(&ac, sockets[0],
 	    sockets[1], UNIX_SOCKETPAIR_LEN, UNIX_SOCKETPAIR_TIMEOUT,
 	    aio_unix_socketpair_cleanup, &arg);
+	ATF_REQUIRE_MSG(getrusage(RUSAGE_SELF, &ru_before) != -1,
+	    "getrusage failed: %s", strerror(errno));
 	aio_write_test(&ac);
+	ATF_REQUIRE_MSG(getrusage(RUSAGE_SELF, &ru_after) != -1,
+	    "getrusage failed: %s", strerror(errno));
+	ATF_REQUIRE(ru_after.ru_msgsnd == ru_before.ru_msgsnd + 1);
+	ru_before = ru_after;
 	aio_read_test(&ac);
+	ATF_REQUIRE_MSG(getrusage(RUSAGE_SELF, &ru_after) != -1,
+	    "getrusage failed: %s", strerror(errno));
+	ATF_REQUIRE(ru_after.ru_msgrcv == ru_before.ru_msgrcv + 1);
 
 	aio_unix_socketpair_cleanup(&arg);
 }

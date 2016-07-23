@@ -82,7 +82,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/vm/vm_page.c 301212 2016-06-02 17:11:24Z markj $");
+__FBSDID("$FreeBSD: stable/11/sys/vm/vm_page.c 302393 2016-07-07 18:37:12Z cperciva $");
 
 #include "opt_vm.h"
 
@@ -99,6 +99,7 @@ __FBSDID("$FreeBSD: head/sys/vm/vm_page.c 301212 2016-06-02 17:11:24Z markj $");
 #include <sys/proc.h>
 #include <sys/rwlock.h>
 #include <sys/sbuf.h>
+#include <sys/smp.h>
 #include <sys/sysctl.h>
 #include <sys/vmmeter.h>
 #include <sys/vnode.h>
@@ -426,6 +427,7 @@ vm_page_startup(vm_offset_t vaddr)
 	vm_paddr_t biggestsize;
 	vm_paddr_t low_water, high_water;
 	int biggestone;
+	int pages_per_zone;
 
 	biggestsize = 0;
 	biggestone = 0;
@@ -468,6 +470,19 @@ vm_page_startup(vm_offset_t vaddr)
 		mtx_init(&pa_lock[i], "vm page", NULL, MTX_DEF);
 	for (i = 0; i < vm_ndomains; i++)
 		vm_page_domain_init(&vm_dom[i]);
+
+	/*
+	 * Almost all of the pages needed for boot strapping UMA are used
+	 * for zone structures, so if the number of CPUs results in those
+	 * structures taking more than one page each, we set aside more pages
+	 * in proportion to the zone structure size.
+	 */
+	pages_per_zone = howmany(sizeof(struct uma_zone) +
+	    sizeof(struct uma_cache) * (mp_maxid + 1), UMA_SLAB_SIZE);
+	if (pages_per_zone > 1) {
+		/* Reserve more pages so that we don't run out. */
+		boot_pages = UMA_BOOT_PAGES_ZONES * pages_per_zone;
+	}
 
 	/*
 	 * Allocate memory for use when boot strapping the kernel memory
@@ -760,17 +775,36 @@ vm_page_trysbusy(vm_page_t m)
 }
 
 static void
+vm_page_xunbusy_locked(vm_page_t m)
+{
+
+	vm_page_assert_xbusied(m);
+	vm_page_assert_locked(m);
+
+	atomic_store_rel_int(&m->busy_lock, VPB_UNBUSIED);
+	/* There is a waiter, do wakeup() instead of vm_page_flash(). */
+	wakeup(m);
+}
+
+static void
 vm_page_xunbusy_maybelocked(vm_page_t m)
 {
 	bool lockacq;
 
 	vm_page_assert_xbusied(m);
 
+	/*
+	 * Fast path for unbusy.  If it succeeds, we know that there
+	 * are no waiters, so we do not need a wakeup.
+	 */
+	if (atomic_cmpset_rel_int(&m->busy_lock, VPB_SINGLE_EXCLUSIVER,
+	    VPB_UNBUSIED))
+		return;
+
 	lockacq = !mtx_owned(vm_page_lockptr(m));
 	if (lockacq)
 		vm_page_lock(m);
-	vm_page_flash(m);
-	atomic_store_rel_int(&m->busy_lock, VPB_UNBUSIED);
+	vm_page_xunbusy_locked(m);
 	if (lockacq)
 		vm_page_unlock(m);
 }
@@ -788,8 +822,7 @@ vm_page_xunbusy_hard(vm_page_t m)
 	vm_page_assert_xbusied(m);
 
 	vm_page_lock(m);
-	atomic_store_rel_int(&m->busy_lock, VPB_UNBUSIED);
-	wakeup(m);
+	vm_page_xunbusy_locked(m);
 	vm_page_unlock(m);
 }
 

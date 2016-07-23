@@ -23,17 +23,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyve/pci_emul.c 299676 2016-05-13 14:59:02Z pfg $
+ * $FreeBSD: stable/11/usr.sbin/bhyve/pci_emul.c 302373 2016-07-06 16:02:15Z ngie $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/pci_emul.c 299676 2016-05-13 14:59:02Z pfg $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/bhyve/pci_emul.c 302373 2016-07-06 16:02:15Z ngie $");
 
 #include <sys/param.h>
 #include <sys/linker_set.h>
-#include <sys/errno.h>
 
 #include <ctype.h>
+#include <errno.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -760,8 +760,6 @@ pci_populate_msicap(struct msicap *msicap, int msgnum, int nextptr)
 {
 	int mmc;
 
-	CTASSERT(sizeof(struct msicap) == 14);
-
 	/* Number of msi messages must be a power of 2 between 1 and 32 */
 	assert((msgnum & (msgnum - 1)) == 0 && msgnum >= 1 && msgnum <= 32);
 	mmc = ffs(msgnum) - 1;
@@ -786,7 +784,6 @@ static void
 pci_populate_msixcap(struct msixcap *msixcap, int msgnum, int barnum,
 		     uint32_t msix_tab_size)
 {
-	CTASSERT(sizeof(struct msixcap) == 12);
 
 	assert(msix_tab_size % 4096 == 0);
 
@@ -936,8 +933,6 @@ pci_emul_add_pciecap(struct pci_devinst *pi, int type)
 {
 	int err;
 	struct pciecap pciecap;
-
-	CTASSERT(sizeof(struct pciecap) == 60);
 
 	if (type != PCIEM_TYPE_ROOT_PORT)
 		return (-1);
