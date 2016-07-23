@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwm.c,v 1.39 2015/03/23 00:35:19 jsg Exp $	*/
-/*	$FreeBSD: head/sys/dev/iwm/if_iwm_phy_db.h 301192 2016-06-02 05:43:16Z adrian $ */
+/*	$FreeBSD: head/sys/dev/iwm/if_iwm_phy_db.h 302103 2016-06-23 01:11:52Z adrian $ */
 
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>
@@ -109,4 +109,5 @@
 extern	int iwm_phy_db_set_section(struct iwm_softc *sc,
 	     struct iwm_calib_res_notif_phy_db *phy_db_notif);
 extern	int iwm_send_phy_db_data(struct iwm_softc *sc);
+extern	void iwm_phy_db_free(struct iwm_softc *sc);
 #endif	/* __IF_IWM_PHY_DB_H__ */

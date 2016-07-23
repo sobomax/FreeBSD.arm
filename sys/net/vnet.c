@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net/vnet.c 300164 2016-05-18 20:06:45Z bz $");
+__FBSDID("$FreeBSD: head/sys/net/vnet.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include "opt_ddb.h"
 #include "opt_kdb.h"
@@ -331,8 +331,7 @@ vnet_init_done(void *unused __unused)
 
 	curvnet = NULL;
 }
-
-SYSINIT(vnet_init_done, SI_SUB_VNET_DONE, SI_ORDER_FIRST, vnet_init_done,
+SYSINIT(vnet_init_done, SI_SUB_VNET_DONE, SI_ORDER_ANY, vnet_init_done,
     NULL);
 
 /*

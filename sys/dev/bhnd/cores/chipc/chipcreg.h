@@ -19,7 +19,7 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipcreg.h 301411 2016-06-04 19:58:01Z landonf $
+ * $FreeBSD: head/sys/dev/bhnd/cores/chipc/chipcreg.h 302189 2016-06-25 04:33:00Z landonf $
  */
 
 #ifndef _BHND_CORES_CHIPC_CHIPCREG_H_
@@ -175,8 +175,8 @@
 
 #define	CHIPC_UART_BASE			0x300
 #define	CHIPC_UART_SIZE			0x100
-#define	CHIPC_UART0_BASE		CHIPC_UART_BASE
-#define	CHIPC_UART1_BASE		(CHIPC_UART_BASE + CHIPC_UART_SIZE)
+#define	CHIPC_UART_MAX			3	/**< max UART blocks */
+#define	CHIPC_UART(_n)			(CHIPC_UART_BASE + (CHIPC_UART_SIZE*_n))
 
 /* PMU registers (rev >= 20) */
 #define	CHIPC_PMU_BASE			0x600

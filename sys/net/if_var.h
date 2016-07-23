@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: head/sys/net/if_var.h 300164 2016-05-18 20:06:45Z bz $
+ * $FreeBSD: head/sys/net/if_var.h 302153 2016-06-23 21:07:15Z np $
  */
 
 #ifndef	_NET_IF_VAR_H_
@@ -311,6 +311,8 @@ struct ifnet {
 	 * that structure can be enhanced without changing the kernel
 	 * binary interface.
 	 */
+	void	*if_pspare[4];		/* packet pacing / general use */
+	int	if_ispare[4];		/* packet pacing / general use */
 };
 
 /* for compatibility with other BSDs */

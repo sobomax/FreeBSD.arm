@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 297599 2016-04-06 00:01:03Z pfg $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 302211 2016-06-26 14:44:01Z novel $
  */
 
 /*-
@@ -51,11 +51,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 297599 2016-04-06 00:01:03Z pfg $
+ * $FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 302211 2016-06-26 14:44:01Z novel $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 297599 2016-04-06 00:01:03Z pfg $");
+__FBSDID("$FreeBSD: head/usr.sbin/bhyveload/bhyveload.c 302211 2016-06-26 14:44:01Z novel $");
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -648,7 +648,7 @@ usage(void)
 
 	fprintf(stderr,
 	    "usage: %s [-S][-c <console-device>] [-d <disk-path>] [-e <name=value>]\n"
-	    "       %*s [-h <host-path>] [-m mem-size] <vmname>\n",
+	    "       %*s [-h <host-path>] [-m memsize[K|k|M|m|G|g|T|t]] <vmname>\n",
 	    progname,
 	    (int)strlen(progname), "");
 	exit(1);

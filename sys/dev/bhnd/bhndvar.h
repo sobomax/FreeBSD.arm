@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  * 
- * $FreeBSD: head/sys/dev/bhnd/bhndvar.h 298277 2016-04-19 15:53:57Z adrian $
+ * $FreeBSD: head/sys/dev/bhnd/bhndvar.h 302191 2016-06-25 04:36:30Z landonf $
  */
 
 #ifndef _BHND_BHNDVAR_H_
@@ -44,6 +44,13 @@
 
 MALLOC_DECLARE(M_BHND);
 DECLARE_CLASS(bhnd_driver);
+
+/**
+ * bhnd per-device info.  Must be first member of all subclass
+ * devinfo structures.
+ */
+struct bhnd_devinfo {
+};
 
 /**
  * bhnd driver instance state. Must be first member of all subclass
@@ -66,6 +73,10 @@ int			 bhnd_generic_print_child(device_t dev,
 void			 bhnd_generic_probe_nomatch(device_t dev,
 			     device_t child);
 
+device_t		 bhnd_generic_add_child(device_t dev, u_int order,
+			     const char *name, int unit);
+void			 bhnd_generic_child_deleted(device_t dev,
+			     device_t child);
 int			 bhnd_generic_suspend_child(device_t dev,
 			     device_t child);
 int			 bhnd_generic_resume_child(device_t dev,

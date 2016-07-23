@@ -1,4 +1,4 @@
-# $FreeBSD: head/lib/clang/Makefile 296417 2016-03-05 20:24:31Z dim $
+# $FreeBSD: head/lib/clang/Makefile 301993 2016-06-17 16:46:58Z bdrewery $
 
 .include <src.opts.mk>
 
@@ -90,7 +90,9 @@ SUBDIR=	libclanganalysis \
 	libllvmx86utils
 
 .if ${MK_CLANG_EXTRAS} != "no"
-SUBDIR+=libllvmdebuginfodwarf \
+SUBDIR+=libclangformat \
+	libclangtoolingcore \
+	libllvmdebuginfodwarf \
 	libllvmdebuginfopdb \
 	libllvmlibdriver \
 	libllvmlto \

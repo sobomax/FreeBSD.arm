@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/autofs/autounmountd.c 294670 2016-01-24 18:11:36Z trasz $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/autofs/autounmountd.c 302388 2016-07-07 09:03:57Z trasz $");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -161,7 +161,7 @@ unmount_by_fsid(const fsid_t fsid, const char *mountpoint)
 	if (ret < 0)
 		log_err(1, "asprintf");
 
-	error = unmount(fsid_str, MNT_BYFSID);
+	error = unmount(fsid_str, MNT_NONBUSY | MNT_BYFSID);
 	if (error != 0) {
 		if (errno == EBUSY) {
 			log_debugx("cannot unmount %s (%s): %s",

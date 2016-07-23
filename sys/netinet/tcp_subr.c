@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netinet/tcp_subr.c 301114 2016-06-01 10:14:04Z bz $");
+__FBSDID("$FreeBSD: stable/11/sys/netinet/tcp_subr.c 302374 2016-07-06 16:17:13Z jtl $");
 
 #include "opt_compat.h"
 #include "opt_inet.h"
@@ -731,18 +731,21 @@ tcp_init(void)
 static void
 tcp_destroy(void *unused __unused)
 {
-	int error;
+	int error, n;
 
 	/*
 	 * All our processes are gone, all our sockets should be cleaned
 	 * up, which means, we should be past the tcp_discardcb() calls.
-	 * Sleep to let all tcpcb timers really disappear and then cleanup.
-	 * Timewait will cleanup its queue and will be ready to go.
-	 * XXX-BZ In theory a few ticks should be good enough to make sure
-	 * the timers are all really gone.  We should see if we could use a
-	 * better metric here and, e.g., check a tcbcb count as an optimization?
+	 * Sleep to let all tcpcb timers really disappear and cleanup.
 	 */
-	DELAY(1000000 / hz);
+	for (;;) {
+		INP_LIST_RLOCK(&V_tcbinfo);
+		n = V_tcbinfo.ipi_count;
+		INP_LIST_RUNLOCK(&V_tcbinfo);
+		if (n == 0)
+			break;
+		pause("tcpdes", hz / 10);
+	}
 	tcp_hc_destroy();
 	syncache_destroy();
 	tcp_tw_destroy();
@@ -1602,6 +1605,13 @@ tcp_drain(void)
 			if ((tcpb = intotcpcb(inpb)) != NULL) {
 				tcp_reass_flush(tcpb);
 				tcp_clean_sackreport(tcpb);
+#ifdef TCPPCAP
+				if (tcp_pcap_aggressive_free) {
+					/* Free the TCP PCAP queues. */
+					tcp_pcap_drain(&(tcpb->t_inpkts));
+					tcp_pcap_drain(&(tcpb->t_outpkts));
+				}
+#endif
 			}
 			INP_WUNLOCK(inpb);
 		}

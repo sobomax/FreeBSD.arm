@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/bsdinstall/scripts/auto 293860 2016-01-14 00:31:00Z vangyzen $
+# $FreeBSD: stable/11/usr.sbin/bsdinstall/scripts/auto 302320 2016-07-03 01:23:38Z allanjude $
 #
 ############################################################ INCLUDES
 
@@ -182,7 +182,7 @@ if f_interactive; then
 	case "$sys_maker" in
 	"LENOVO")
 		case "$sys_version" in
-		"ThinkPad X220"|"ThinkPad T420"|"ThinkPad T520")
+		"ThinkPad X220"|"ThinkPad T420"|"ThinkPad T520"|"ThinkPad W520")
 			dialog_workaround "$msg_lenovo_fix"
 			retval=$?
 			f_dprintf "lenovofix_prompt=[%s]" "$retval"
@@ -195,7 +195,7 @@ if f_interactive; then
 		;;
 	"Dell Inc.")
 		case "$sys_model" in
-		"Latitude E7440"|"Latitude E7240"|"Precision Tower 5810")
+		"Latitude E6330"|"Latitude E7440"|"Latitude E7240"|"Precision Tower 5810")
 			dialog_workaround "$msg_gpt_active_fix"
 			retval=$?
 			f_dprintf "gpt_active_fix_prompt=[%s]" "$retval"

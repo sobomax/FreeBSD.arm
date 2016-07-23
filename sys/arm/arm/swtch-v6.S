@@ -87,7 +87,7 @@
 #include <machine/sysreg.h>
 #include <machine/vfp.h>
 
-__FBSDID("$FreeBSD: head/sys/arm/arm/swtch-v6.S 300694 2016-05-25 19:44:26Z ian $");
+__FBSDID("$FreeBSD: head/sys/arm/arm/swtch-v6.S 301961 2016-06-16 12:05:44Z kib $");
 
 #if defined(SMP)
 #define GET_PCPU(tmp, tmp2) \
@@ -450,8 +450,8 @@ sw1:
 
 	/*
 	 * Restore all saved registers and return. Note that some saved
-	 * registers can be changed when either cpu_fork(), cpu_set_upcall(),
-	 * cpu_set_fork_handler(), or makectx() was called.
+	 * registers can be changed when either cpu_fork(), cpu_copy_thread(),
+	 * cpu_fork_kthread_handler(), or makectx() was called.
 	 */
 	add	r3, r7, #PCB_R4
 	ldmia	r3, {r4-r12, sp, pc}

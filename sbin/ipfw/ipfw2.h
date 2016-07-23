@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: head/sbin/ipfw/ipfw2.h 300779 2016-05-26 21:40:13Z truckman $
+ * $FreeBSD: stable/11/sbin/ipfw/ipfw2.h 302979 2016-07-18 04:16:53Z ae $
  */
 
 /*
@@ -370,6 +370,9 @@ void fill_flow6(struct _ipfw_insn_u32 *cmd, char *av, int cblen);
 void fill_unreach6_code(u_short *codep, char *str);
 void fill_icmp6types(struct _ipfw_insn_icmp6 *cmd, char *av, int cblen);
 int fill_ext6hdr(struct _ipfw_insn *cmd, char *av);
+
+/* ipfw2.c */
+void bp_flush(struct buf_pr *b);
 
 /* tables.c */
 struct _ipfw_obj_ctlv;

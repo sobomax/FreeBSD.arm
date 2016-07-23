@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)systm.h	8.7 (Berkeley) 3/29/95
- * $FreeBSD: head/sys/sys/systm.h 298956 2016-05-03 07:17:13Z sephe $
+ * $FreeBSD: stable/11/sys/sys/systm.h 302349 2016-07-05 18:34:34Z glebius $
  */
 
 #ifndef _SYS_SYSTM_H_
@@ -76,7 +76,7 @@ extern int vm_guest;		/* Running as virtual machine guest? */
 enum VM_GUEST { VM_GUEST_NO = 0, VM_GUEST_VM, VM_GUEST_XEN, VM_GUEST_HV,
 		VM_GUEST_VMWARE, VM_LAST };
 
-#if defined(WITNESS) || defined(INVARIANTS)
+#if defined(WITNESS) || defined(INVARIANT_SUPPORT)
 void	kassert_panic(const char *fmt, ...)  __printflike(1, 2);
 #endif
 

@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sbin/natd/natd.c 289677 2015-10-21 05:37:09Z eadler $");
+__FBSDID("$FreeBSD: stable/11/sbin/natd/natd.c 302256 2016-06-28 20:10:30Z phk $");
 
 #define SYSLOG_NAMES
 
@@ -618,7 +618,7 @@ static void DoGlobal (int fd)
 	
 	if (wrote != bytes) {
 
-		if (errno == EMSGSIZE) {
+		if (errno == EMSGSIZE && mip != NULL) {
 
 			if (mip->ifMTU != -1)
 				SendNeedFragIcmp (icmpSock,

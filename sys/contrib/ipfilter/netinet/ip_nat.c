@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 292813 2015-12-28 00:42:15Z cy $	*/
+/*	$FreeBSD: stable/11/sys/contrib/ipfilter/netinet/ip_nat.c 302289 2016-06-30 01:32:12Z bz $	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -112,7 +112,7 @@ extern struct ifnet vpnif;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)ip_nat.c	1.11 6/5/96 (C) 1995 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_nat.c 292813 2015-12-28 00:42:15Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD: stable/11/sys/contrib/ipfilter/netinet/ip_nat.c 302289 2016-06-30 01:32:12Z bz $";
 /* static const char rcsid[] = "@(#)$Id: ip_nat.c,v 2.195.2.102 2007/10/16 10:08:10 darrenr Exp $"; */
 #endif
 
@@ -132,8 +132,6 @@ static const char rcsid[] = "@(#)$FreeBSD: head/sys/contrib/ipfilter/netinet/ip_
 			     DT(z); } while (0)
 #define	NBUMPSIDEDF(y,x)do { softn->ipf_nat_stats.ns_side[y].x++; \
 			     DT1(x, fr_info_t *, fin); } while (0)
-
-frentry_t	ipfnatblock;
 
 static ipftuneable_t ipf_nat_tuneables[] = {
 	/* nat */
@@ -275,9 +273,6 @@ static	void	ipf_nat_tabmove __P((ipf_nat_softc_t *, nat_t *));
 int
 ipf_nat_main_load()
 {
-	bzero((char *)&ipfnatblock, sizeof(ipfnatblock));
-	ipfnatblock.fr_flags = FR_BLOCK|FR_QUICK;
-	ipfnatblock.fr_ref = 1;
 
 	return 0;
 }

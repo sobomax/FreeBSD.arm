@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/cxgbei.c 298955 2016-05-03 03:41:25Z pfg $");
+__FBSDID("$FreeBSD: stable/11/sys/dev/cxgbe/cxgbei/cxgbei.c 302339 2016-07-05 01:29:24Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -745,24 +745,6 @@ do_rx_iscsi_ddp(struct sge_iq *iq, const struct rss_header *rss, struct mbuf *m)
 	return (0);
 }
 
-static void
-t4_register_cpl_handler_with_tom(struct adapter *sc)
-{
-
-	t4_register_cpl_handler(sc, CPL_ISCSI_HDR, do_rx_iscsi_hdr);
-	t4_register_cpl_handler(sc, CPL_ISCSI_DATA, do_rx_iscsi_data);
-	t4_register_cpl_handler(sc, CPL_RX_ISCSI_DDP, do_rx_iscsi_ddp);
-}
-
-static void
-t4_unregister_cpl_handler_with_tom(struct adapter *sc)
-{
-
-	t4_register_cpl_handler(sc, CPL_ISCSI_HDR, NULL);
-	t4_register_cpl_handler(sc, CPL_ISCSI_DATA, NULL);
-	t4_register_cpl_handler(sc, CPL_RX_ISCSI_DDP, NULL);
-}
-
 /* initiator */
 void
 cxgbei_conn_task_reserve_itt(void *conn, void **prv,
@@ -835,7 +817,6 @@ cxgbei_activate(struct adapter *sc)
 		return (rc);
 	}
 
-	t4_register_cpl_handler_with_tom(sc);
 	sc->iscsi_ulp_softc = ci;
 
 	return (0);
@@ -849,7 +830,6 @@ cxgbei_deactivate(struct adapter *sc)
 
 	if (sc->iscsi_ulp_softc != NULL) {
 		cxgbei_ddp_cleanup(sc->iscsi_ulp_softc);
-		t4_unregister_cpl_handler_with_tom(sc);
 		free(sc->iscsi_ulp_softc, M_CXGBE);
 		sc->iscsi_ulp_softc = NULL;
 	}
@@ -1062,6 +1042,10 @@ cxgbei_mod_load(void)
 {
 	int rc;
 
+	t4_register_cpl_handler(CPL_ISCSI_HDR, do_rx_iscsi_hdr);
+	t4_register_cpl_handler(CPL_ISCSI_DATA, do_rx_iscsi_data);
+	t4_register_cpl_handler(CPL_RX_ISCSI_DDP, do_rx_iscsi_ddp);
+
 	rc = start_worker_threads();
 	if (rc != 0)
 		return (rc);
@@ -1087,6 +1071,10 @@ cxgbei_mod_unload(void)
 		return (EBUSY);
 
 	stop_worker_threads();
+
+	t4_register_cpl_handler(CPL_ISCSI_HDR, NULL);
+	t4_register_cpl_handler(CPL_ISCSI_DATA, NULL);
+	t4_register_cpl_handler(CPL_RX_ISCSI_DDP, NULL);
 
 	return (0);
 }

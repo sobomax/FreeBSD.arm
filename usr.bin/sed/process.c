@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.bin/sed/process.c 301138 2016-06-01 16:53:02Z pfg $");
+__FBSDID("$FreeBSD: stable/11/usr.bin/sed/process.c 303064 2016-07-20 04:45:59Z pfg $");
 
 #ifndef lint
 static const char sccsid[] = "@(#)process.c	8.6 (Berkeley) 4/20/94";
@@ -450,7 +450,7 @@ substitute(struct s_command *cp)
 	    regexec_e(re, ps, REG_NOTBOL, 0, le, psl));
 
 	/* Did not find the requested number of matches. */
-	if (n > 1)
+	if (n > 0)
 		return (0);
 
 	/* Copy the trailing retained string. */

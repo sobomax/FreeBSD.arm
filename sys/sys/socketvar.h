@@ -28,7 +28,7 @@
  *
  *	@(#)socketvar.h	8.3 (Berkeley) 2/19/95
  *
- * $FreeBSD: head/sys/sys/socketvar.h 300168 2016-05-18 22:05:50Z glebius $
+ * $FreeBSD: head/sys/sys/socketvar.h 302153 2016-06-23 21:07:15Z np $
  */
 
 #ifndef _SYS_SOCKETVAR_H_
@@ -126,6 +126,9 @@ struct socket {
 	 */
 	int so_fibnum;		/* routing domain for this socket */
 	uint32_t so_user_cookie;
+
+	void *so_pspare[2];	/* packet pacing / general use */
+	int so_ispare[2];	/* packet pacing / general use */
 };
 
 /*

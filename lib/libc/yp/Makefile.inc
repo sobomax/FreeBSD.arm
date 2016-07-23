@@ -1,5 +1,5 @@
 #	from: @(#)Makefile.inc	5.3 (Berkeley) 2/20/91
-# $FreeBSD: head/lib/libc/yp/Makefile.inc 262722 2014-03-04 02:19:39Z marcel $
+# $FreeBSD: head/lib/libc/yp/Makefile.inc 302255 2016-06-28 19:53:16Z bdrewery $
 
 # yp sources
 .PATH: ${LIBC_SRCTOP}/yp
@@ -9,7 +9,7 @@ CLEANFILES+=	yp.h yp_xdr.c
 
 SYM_MAPS+=	${LIBC_SRCTOP}/yp/Symbol.map
 
-RPCSRC=	${DESTDIR}/usr/include/rpcsvc/yp.x
+RPCSRC=	${SRCTOP}/include/rpcsvc/yp.x
 RPCGEN=	RPCGEN_CPP=${CPP:Q} rpcgen -C
 
 yp_xdr.c: ${RPCSRC}

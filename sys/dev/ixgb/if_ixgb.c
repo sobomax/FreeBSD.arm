@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 
-/*$FreeBSD: head/sys/dev/ixgb/if_ixgb.c 295790 2016-02-19 03:37:56Z jhibbits $*/
+/*$FreeBSD: stable/11/sys/dev/ixgb/if_ixgb.c 302384 2016-07-07 03:39:18Z sbruno $*/
 
 #ifdef HAVE_KERNEL_OPTION_HEADERS
 #include "opt_device_polling.h"
@@ -539,7 +539,8 @@ ixgb_ioctl(struct ifnet * ifp, IOCTL_CMD_TYPE command, caddr_t data)
 			adapter->hw.max_frame_size =
 				ifp->if_mtu + ETHER_HDR_LEN + ETHER_CRC_LEN;
 
-			ixgb_init_locked(adapter);
+			if (ifp->if_drv_flags & IFF_DRV_RUNNING)
+				ixgb_init_locked(adapter);
 			IXGB_UNLOCK(adapter);
 		}
 		break;

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.c	8.3.1.1 (Berkeley) 2/23/95
- * $FreeBSD: head/sys/net/route.c 301502 2016-06-06 12:49:47Z bz $
+ * $FreeBSD: head/sys/net/route.c 302054 2016-06-21 13:48:49Z bz $
  */
 /************************************************************************
  * Note: In this file a 'fib' is a "forwarding information base"	*
@@ -334,7 +334,7 @@ vnet_route_uninit(const void *unused __unused)
 	free(V_rt_tables, M_RTABLE);
 	uma_zdestroy(V_rtzone);
 }
-VNET_SYSUNINIT(vnet_route_uninit, SI_SUB_PROTO_DOMAIN, SI_ORDER_THIRD,
+VNET_SYSUNINIT(vnet_route_uninit, SI_SUB_PROTO_DOMAIN, SI_ORDER_FIRST,
     vnet_route_uninit, 0);
 #endif
 

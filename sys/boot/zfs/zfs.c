@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: head/sys/boot/zfs/zfs.c 300117 2016-05-18 05:59:05Z imp $
+ *	$FreeBSD: head/sys/boot/zfs/zfs.c 301955 2016-06-16 07:45:57Z avg $
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/zfs/zfs.c 300117 2016-05-18 05:59:05Z imp $");
+__FBSDID("$FreeBSD: head/sys/boot/zfs/zfs.c 301955 2016-06-16 07:45:57Z avg $");
 
 /*
  *	Stand-alone file reading package.
@@ -450,7 +450,7 @@ zfs_probe_partition(void *arg, const char *partname,
 	/* Probe only freebsd-zfs and freebsd partitions */
 	if (part->type != PART_FREEBSD &&
 	    part->type != PART_FREEBSD_ZFS)
-		return 0;
+		return (0);
 
 	ppa = (struct zfs_probe_args *)arg;
 	strncpy(devname, ppa->devname, strlen(ppa->devname) - 1);
@@ -458,10 +458,10 @@ zfs_probe_partition(void *arg, const char *partname,
 	sprintf(devname, "%s%s:", devname, partname);
 	pa.fd = open(devname, O_RDONLY);
 	if (pa.fd == -1)
-		return 0;
+		return (0);
 	ret = zfs_probe(pa.fd, ppa->pool_guid);
 	if (ret == 0)
-		return 0;
+		return (0);
 	/* Do we have BSD label here? */
 	if (part->type == PART_FREEBSD) {
 		pa.devname = devname;
@@ -470,12 +470,12 @@ zfs_probe_partition(void *arg, const char *partname,
 		table = ptable_open(&pa, part->end - part->start + 1,
 		    ppa->secsz, zfs_diskread);
 		if (table != NULL) {
-			ret = ptable_iterate(table, &pa, zfs_probe_partition);
+			ptable_iterate(table, &pa, zfs_probe_partition);
 			ptable_close(table);
 		}
 	}
 	close(pa.fd);
-	return (ret);
+	return (0);
 }
 
 int

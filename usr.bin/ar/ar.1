@@ -21,9 +21,9 @@
 .\" out of the use of this software, even if advised of the possibility of
 .\" such damage.
 .\"
-.\" $FreeBSD: head/usr.bin/ar/ar.1 286010 2015-07-29 13:36:17Z emaste $
+.\" $FreeBSD: head/usr.bin/ar/ar.1 301974 2016-06-16 21:22:26Z emaste $
 .\"
-.Dd July 24, 2015
+.Dd June 16, 2016
 .Dt AR 1
 .Os
 .Sh NAME
@@ -205,7 +205,12 @@ When used in combination with the
 .Fl r
 or
 .Fl q
-option, insert 0's instead of the real mtime, uid and gid values
+option,
+with the
+.Fl s
+option without other options, or when invoked as
+.Nm ranlib ,
+insert 0's instead of the real mtime, uid and gid values
 and 0644 instead of file mode from the members named by arguments
 .Ar .
 This ensures that checksums on the resulting archives are reproducible

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/arm/ti/cpsw/if_cpswvar.h 297043 2016-03-18 20:24:31Z loos $
+ * $FreeBSD: stable/11/sys/arm/ti/cpsw/if_cpswvar.h 302394 2016-07-07 20:01:03Z loos $
  */
 
 #ifndef	_IF_CPSWVAR_H
@@ -83,6 +83,7 @@ struct cpsw_softc {
 
 	/* RX and TX buffer tracking */
 	struct cpsw_queue rx, tx;
+	uint32_t	last_hdp;
 
 	/* We expect 1 memory resource and 4 interrupts from the device tree. */
 	int		mem_rid;

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 300610 2016-05-24 12:40:03Z mav $");
+__FBSDID("$FreeBSD: head/sys/dev/ntb/if_ntb/if_ntb.c 302014 2016-06-18 23:18:04Z vangyzen $");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -427,7 +427,7 @@ ntb_setup_interface(void)
 	    &handlers);
 	ifp->if_init = ntb_net_init;
 	ifp->if_softc = &net_softc;
-	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX;
+	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
 	ifp->if_ioctl = ntb_ioctl;
 	ifp->if_start = ntb_start;
 	IFQ_SET_MAXLEN(&ifp->if_snd, IFQ_MAXLEN);

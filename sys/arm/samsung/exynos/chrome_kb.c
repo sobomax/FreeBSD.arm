@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/arm/samsung/exynos/chrome_kb.c 297793 2016-04-10 23:07:00Z pfg $");
+__FBSDID("$FreeBSD: stable/11/sys/arm/samsung/exynos/chrome_kb.c 302915 2016-07-15 21:30:19Z ian $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -310,7 +310,7 @@ static uint16_t
 keymap_read(struct ckb_softc *sc, int col, int row)
 {
 
-	KASSERT(sc->keymap != NULL, "keymap_read: no keymap");
+	KASSERT(sc->keymap != NULL, ("keymap_read: no keymap"));
 	if (col >= 0 && col < sc->cols &&
 	    row >= 0 && row < sc->rows) {
 		return sc->keymap[row * sc->cols + col];
@@ -323,7 +323,7 @@ static int
 keymap_write(struct ckb_softc *sc, int col, int row, uint16_t key)
 {
 
-	KASSERT(sc->keymap != NULL, "keymap_write: no keymap");
+	KASSERT(sc->keymap != NULL, ("keymap_write: no keymap"));
 	if (col >= 0 && col < sc->cols &&
 	    row >= 0 && row < sc->rows) {
 		sc->keymap[row * sc->cols + col] = key;

@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/isci/scil/sati_passthrough.c 263275 2014-03-17 22:30:54Z jimharris $");
+__FBSDID("$FreeBSD: stable/11/sys/dev/isci/scil/sati_passthrough.c 302380 2016-07-06 20:48:42Z jimharris $");
 
 /**
  * @file
@@ -230,9 +230,9 @@ void sati_passthrough_construct_sense(
 
    // Command specific section
    sati_set_sense_data_byte(sense_data, sense_len, 8,  (PASSTHROUGH_CDB_EXTEND(cdb) << 7) | (sector_count_upper << 6) | (lba_upper << 5));
-   sati_set_sense_data_byte(sense_data, sense_len, 9,  sati_get_ata_lba_high(register_fis));
+   sati_set_sense_data_byte(sense_data, sense_len, 9,  sati_get_ata_lba_low(register_fis));
    sati_set_sense_data_byte(sense_data, sense_len, 10, sati_get_ata_lba_mid(register_fis));
-   sati_set_sense_data_byte(sense_data, sense_len, 11, sati_get_ata_lba_low(register_fis));
+   sati_set_sense_data_byte(sense_data, sense_len, 11, sati_get_ata_lba_high(register_fis));
 
    sequence->is_sense_response_set = TRUE;
 }

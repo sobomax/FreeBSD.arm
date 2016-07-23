@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/cam/ata/ata_da.c 301568 2016-06-07 20:33:55Z cem $");
+__FBSDID("$FreeBSD: stable/11/sys/cam/ata/ata_da.c 303140 2016-07-21 12:15:04Z mav $");
 
 #include "opt_ada.h"
 
@@ -1774,6 +1774,8 @@ adaregister(struct cam_periph *periph, void *arg)
 		softc->disk->d_flags |= DISKFLAG_UNMAPPED_BIO;
 		softc->unmappedio = 1;
 	}
+	if (cpi.hba_misc & PIM_ATA_EXT)
+		softc->flags |= ADA_FLAG_PIM_ATA_EXT;
 	strlcpy(softc->disk->d_descr, cgd->ident_data.model,
 	    MIN(sizeof(softc->disk->d_descr), sizeof(cgd->ident_data.model)));
 	strlcpy(softc->disk->d_ident, cgd->ident_data.serial,

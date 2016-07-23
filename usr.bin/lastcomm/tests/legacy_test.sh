@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: head/usr.bin/lastcomm/tests/legacy_test.sh 263226 2014-03-16 04:09:22Z jmmv $
+# $FreeBSD: stable/11/usr.bin/lastcomm/tests/legacy_test.sh 302326 2016-07-03 17:51:24Z ngie $
 #
 
 DIR=`dirname $0`
@@ -14,7 +14,7 @@ check()
 	shift
 	# Remove tty field, which varies between systems.
 	awk '{$4 = ""; print}' |
-	if diff -q - $1
+	if diff -a - $1 >&2
 	then
 		echo "ok $NUM"
 	else

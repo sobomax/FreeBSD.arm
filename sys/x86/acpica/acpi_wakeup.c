@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 295880 2016-02-22 09:02:20Z skra $");
+__FBSDID("$FreeBSD: head/sys/x86/acpica/acpi_wakeup.c 302147 2016-06-23 19:24:38Z markj $");
 
 #if defined(__amd64__)
 #define DEV_APIC
@@ -322,7 +322,7 @@ acpi_alloc_wakeup_handler(void)
 	 * page-aligned.
 	 */
 	wakeaddr = contigmalloc((ACPI_PAGETABLES + 1) * PAGE_SIZE, M_DEVBUF,
-	    M_WAITOK, 0x500, 0xa0000, PAGE_SIZE, 0ul);
+	    M_NOWAIT, 0x500, 0xa0000, PAGE_SIZE, 0ul);
 	if (wakeaddr == NULL) {
 		printf("%s: can't alloc wake memory\n", __func__);
 		return (NULL);

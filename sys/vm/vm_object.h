@@ -57,7 +57,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: head/sys/vm/vm_object.h 300043 2016-05-17 09:56:22Z kib $
+ * $FreeBSD: head/sys/vm/vm_object.h 302063 2016-06-21 17:49:33Z kib $
  */
 
 /*
@@ -182,7 +182,6 @@ struct vm_object {
  */
 #define	OBJ_FICTITIOUS	0x0001		/* (c) contains fictitious pages */
 #define	OBJ_UNMANAGED	0x0002		/* (c) contains unmanaged pages */
-#define OBJ_ACTIVE	0x0004		/* active objects */
 #define OBJ_DEAD	0x0008		/* dead objects (during rundown) */
 #define	OBJ_NOSPLIT	0x0010		/* dont split this object */
 #define	OBJ_UMTXDEAD	0x0020		/* umtx pshared was terminated */

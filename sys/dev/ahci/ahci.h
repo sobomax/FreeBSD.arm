@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/dev/ahci/ahci.h 298955 2016-05-03 03:41:25Z pfg $
+ * $FreeBSD: stable/11/sys/dev/ahci/ahci.h 302402 2016-07-07 22:10:10Z mav $
  */
 
 /* ATA register defines */
@@ -474,7 +474,7 @@ struct ahci_enclosure {
 	uint8_t			status[AHCI_MAX_PORTS][4]; /* ArrayDev statuses */
 	int			quirks;
 	int			channels;
-	int			ichannels;
+	uint32_t		ichannels;
 };
 
 /* structure describing a AHCI controller */
@@ -509,7 +509,7 @@ struct ahci_controller {
 	int			quirks;
 	int			numirqs;
 	int			channels;
-	int			ichannels;
+	uint32_t		ichannels;
 	int			ccc;		/* CCC timeout */
 	int			cccv;		/* CCC vector */
 	int			direct;		/* Direct command completion */

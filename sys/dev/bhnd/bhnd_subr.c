@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/bhnd/bhnd_subr.c 301698 2016-06-08 21:38:51Z landonf $");
+__FBSDID("$FreeBSD: head/sys/dev/bhnd/bhnd_subr.c 302189 2016-06-25 04:33:00Z landonf $");
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -1159,21 +1159,3 @@ bhnd_bus_generic_deactivate_resource(device_t dev, device_t child,
 	return (EINVAL);
 };
 
-/**
- * Helper function for implementing BHND_BUS_GET_ATTACH_TYPE().
- *
- * This implementation of BHND_BUS_GET_ATTACH_TYPE() simply calls the
- * BHND_BUS_GET_ATTACH_TYPE() method of the parent of @p dev.
- */
-bhnd_attach_type
-bhnd_bus_generic_get_attach_type(device_t dev, device_t child)
-{
-	/* iterate from cores via bhnd to bridge or SoC */
-	if (device_get_parent(dev) != NULL)
-		return (BHND_BUS_GET_ATTACH_TYPE(device_get_parent(dev),
-		    child));
-
-	panic("bhnd_bus_get_attach_type unimplemented");
-	/* Unreachable */
-	return (BHND_ATTACH_ADAPTER);
-}

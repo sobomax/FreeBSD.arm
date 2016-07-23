@@ -1,4 +1,4 @@
-/* $FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 280008 2015-03-14 21:40:33Z ian $ */
+/* $FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 302054 2016-06-21 13:48:49Z bz $ */
 /*-
  * Copyright (c) 2009 Andrew Thompson (thompsa@FreeBSD.org)
  *
@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 280008 2015-03-14 21:40:33Z ian $");
+__FBSDID("$FreeBSD: head/sys/dev/usb/net/usb_ethernet.c 302054 2016-06-21 13:48:49Z bz $");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -641,5 +641,9 @@ uether_rxflush(struct usb_ether *ue)
 	}
 }
 
-DECLARE_MODULE(uether, uether_mod, SI_SUB_PSEUDO, SI_ORDER_ANY);
+/*
+ * USB net drivers are run by DRIVER_MODULE() thus SI_SUB_DRIVERS,
+ * SI_ORDER_MIDDLE.  Run uether after that.
+ */
+DECLARE_MODULE(uether, uether_mod, SI_SUB_DRIVERS, SI_ORDER_ANY);
 MODULE_VERSION(uether, 1);

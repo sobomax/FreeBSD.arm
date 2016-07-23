@@ -24,9 +24,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: head/share/man/man4/syscons.4 268215 2014-07-03 13:51:10Z emaste $
+.\" $FreeBSD: head/share/man/man4/syscons.4 302055 2016-06-21 14:16:32Z emaste $
 .\"
-.Dd July 3, 2014
+.Dd June 21, 2016
 .Dt SYSCONS 4
 .Os
 .Sh NAME
@@ -468,9 +468,10 @@ be selected by setting this variable to
 .Ql sc
 or
 .Ql vt .
-If not set,
-.Nm
-provides the default system console.
+If not set, the default console in the
+.Pa GENERIC
+kernel is
+.Xr vt 4 .
 .El
 .Sh FILES
 .Bl -tag -width /usr/share/syscons/xxxxyyyyzzz -compact

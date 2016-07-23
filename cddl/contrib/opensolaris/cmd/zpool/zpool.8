@@ -24,7 +24,7 @@
 .\" Copyright (c) 2013 by Delphix. All Rights Reserved.
 .\" Copyright (c) 2012, Glen Barber <gjb@FreeBSD.org>
 .\"
-.\" $FreeBSD: head/cddl/contrib/opensolaris/cmd/zpool/zpool.8 269118 2014-07-26 10:20:48Z delphij $
+.\" $FreeBSD: stable/11/cddl/contrib/opensolaris/cmd/zpool/zpool.8 302938 2016-07-16 15:52:14Z vangyzen $
 .\"
 .Dd July 26, 2014
 .Dt ZPOOL 8
@@ -465,6 +465,15 @@ place in the configuration, and is removed from the spare list of all active
 pools.
 .Pp
 Spares cannot replace log devices.
+.Pp
+This feature requires a userland helper.
+FreeBSD provides
+.Xr zfsd 8
+for this purpose.
+It must be manually enabled by adding
+.Va zfsd_enable="YES"
+to
+.Pa /etc/rc.conf .
 .Ss Intent Log
 The
 .Tn ZFS
@@ -2023,7 +2032,8 @@ Discarded approximately 29 seconds of transactions.
 .El
 .Sh SEE ALSO
 .Xr zpool-features 7 ,
-.Xr zfs 8
+.Xr zfs 8 ,
+.Xr zfsd 8
 .Sh AUTHORS
 This manual page is a
 .Xr mdoc 7
@@ -2040,9 +2050,3 @@ The
 .Xr mdoc 7
 implementation of this manual page was initially written by
 .An Martin Matuska Aq mm@FreeBSD.org .
-.Sh CAVEATS
-The
-.Cm spare
-feature requires a utility to detect zpool degradation and initiate
-disk replacement within the zpool.
-FreeBSD does not provide such a utility at this time.

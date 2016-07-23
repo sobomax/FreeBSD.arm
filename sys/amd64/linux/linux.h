@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/amd64/linux/linux.h 294620 2016-01-23 08:04:29Z dchagin $
+ * $FreeBSD: stable/11/sys/amd64/linux/linux.h 303007 2016-07-18 16:38:06Z dchagin $
  */
 
 #ifndef _AMD64_LINUX_H_
@@ -138,13 +138,6 @@ struct l_rlimit {
 	l_ulong		rlim_cur;
 	l_ulong		rlim_max;
 };
-
-/* mmap options */
-#define	LINUX_MAP_SHARED	0x0001
-#define	LINUX_MAP_PRIVATE	0x0002
-#define	LINUX_MAP_FIXED		0x0010
-#define	LINUX_MAP_ANON		0x0020
-#define	LINUX_MAP_GROWSDOWN	0x0100
 
 /*
  * stat family of syscalls

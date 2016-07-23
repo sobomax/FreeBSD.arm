@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/cddl/compat/opensolaris/sys/proc.h 285715 2015-07-20 10:20:04Z ed $
+ * $FreeBSD: stable/11/sys/cddl/compat/opensolaris/sys/proc.h 302372 2016-07-06 14:09:49Z nwhitehorn $
  */
 
 #ifndef _OPENSOLARIS_SYS_PROC_H_
@@ -45,8 +45,8 @@
 #define	CPU		curcpu
 #define	minclsyspri	PRIBIO
 #define	maxclsyspri	PVM
-#define	max_ncpus	mp_ncpus
-#define	boot_max_ncpus	mp_ncpus
+#define	max_ncpus	(mp_maxid + 1)
+#define	boot_max_ncpus	(mp_maxid + 1)
 
 #define	TS_RUN	0
 

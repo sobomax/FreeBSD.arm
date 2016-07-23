@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: head/usr.sbin/etcupdate/etcupdate.sh 296204 2016-02-29 17:24:34Z trasz $
+# $FreeBSD: stable/11/usr.sbin/etcupdate/etcupdate.sh 302912 2016-07-15 19:58:05Z bdrewery $
 
 # This is a tool to manage updating files that are not updated as part
 # of 'make installworld' such as files in /etc.  Unlike other tools,
@@ -184,7 +184,7 @@ build_tree()
 {
 	local destdir dir file make
 
-	make="make $MAKE_OPTIONS"
+	make="make $MAKE_OPTIONS -DNO_FILEMON"
 
 	log "Building tree at $1 with $make"
 	mkdir -p $1/usr/obj >&3 2>&1

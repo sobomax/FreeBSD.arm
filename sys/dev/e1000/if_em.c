@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: head/sys/dev/e1000/if_em.c 299200 2016-05-06 22:54:56Z pfg $*/
+/*$FreeBSD: stable/11/sys/dev/e1000/if_em.c 302384 2016-07-07 03:39:18Z sbruno $*/
 
 #include "opt_em.h"
 #include "opt_ddb.h"
@@ -1214,7 +1214,8 @@ em_ioctl(if_t ifp, u_long command, caddr_t data)
 		if_setmtu(ifp, ifr->ifr_mtu);
 		adapter->hw.mac.max_frame_size =
 		    if_getmtu(ifp) + ETHER_HDR_LEN + ETHER_CRC_LEN;
-		em_init_locked(adapter);
+		if (if_getdrvflags(ifp) & IFF_DRV_RUNNING)
+			em_init_locked(adapter);
 		EM_CORE_UNLOCK(adapter);
 		break;
 	    }

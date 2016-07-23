@@ -30,7 +30,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/iw_cxgbe/device.c 296478 2016-03-08 00:23:56Z np $");
+__FBSDID("$FreeBSD: stable/11/sys/dev/cxgbe/iw_cxgbe/device.c 302339 2016-07-05 01:29:24Z np $");
 
 #include "opt_inet.h"
 
@@ -227,7 +227,6 @@ c4iw_activate(struct adapter *sc)
 	}
 
 	sc->iwarp_softc = iwsc;
-	c4iw_cm_init_cpl(sc);
 
 	rc = -c4iw_register_device(iwsc);
 	if (rc) {

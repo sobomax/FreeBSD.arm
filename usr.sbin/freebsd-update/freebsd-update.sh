@@ -25,7 +25,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# $FreeBSD: head/usr.sbin/freebsd-update/freebsd-update.sh 295338 2016-02-05 21:57:50Z glebius $
+# $FreeBSD: stable/11/usr.sbin/freebsd-update/freebsd-update.sh 302539 2016-07-11 04:50:32Z delphij $
 
 #### Usage function -- called from command-line handling code.
 
@@ -1250,7 +1250,7 @@ fetch_metadata_sanity () {
 
 	# Check that the first four fields make sense.
 	if gunzip -c < files/$1.gz |
-	    grep -qvE "^[a-z]+\|[0-9a-z]+\|${P}+\|[fdL-]\|"; then
+	    grep -qvE "^[a-z]+\|[0-9a-z-]+\|${P}+\|[fdL-]\|"; then
 		fetch_metadata_bogus ""
 		return 1
 	fi

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/cpucontrol/cpucontrol.c 267673 2014-06-20 13:13:38Z kib $");
+__FBSDID("$FreeBSD: head/usr.sbin/cpucontrol/cpucontrol.c 301963 2016-06-16 12:08:25Z kib $");
 
 #include <assert.h>
 #include <stdio.h>
@@ -481,5 +481,5 @@ main(int argc, char *argv[])
 			usage();	/* Only one command can be selected. */
 	}
 	SLIST_FREE(&datadirs, next, free);
-	return (error);
+	return (error == 0 ? 0 : 1);
 }

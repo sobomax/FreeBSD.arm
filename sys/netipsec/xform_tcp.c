@@ -1,4 +1,4 @@
-/*	$FreeBSD: head/sys/netipsec/xform_tcp.c 275392 2014-12-02 04:20:50Z ae $ */
+/*	$FreeBSD: head/sys/netipsec/xform_tcp.c 302054 2016-06-21 13:48:49Z bz $ */
 
 /*-
  * Copyright (c) 2003 Bruce M. Simpson <bms@spc.org>
@@ -166,5 +166,5 @@ tcpsignature_attach(void)
 	xform_register(&tcpsignature_xformsw);
 }
 
-SYSINIT(tcpsignature_xform_init, SI_SUB_DRIVERS, SI_ORDER_FIRST,
+SYSINIT(tcpsignature_xform_init, SI_SUB_PROTO_DOMAIN, SI_ORDER_MIDDLE,
     tcpsignature_attach, NULL);

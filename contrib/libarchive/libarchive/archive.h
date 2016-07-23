@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/contrib/libarchive/libarchive/archive.h 299529 2016-05-12 10:16:16Z mm $
+ * $FreeBSD: head/contrib/libarchive/libarchive/archive.h 302075 2016-06-22 07:49:59Z mm $
  */
 
 #ifndef ARCHIVE_H_INCLUDED
@@ -36,7 +36,7 @@
  * assert that ARCHIVE_VERSION_NUMBER >= 2012108.
  */
 /* Note: Compiler will complain if this does not match archive_entry.h! */
-#define	ARCHIVE_VERSION_NUMBER 3002000
+#define	ARCHIVE_VERSION_NUMBER 3002001
 
 #include <sys/stat.h>
 #include <stddef.h>  /* for wchar_t */
@@ -155,7 +155,7 @@ __LA_DECL int		archive_version_number(void);
 /*
  * Textual name/version of the library, useful for version displays.
  */
-#define	ARCHIVE_VERSION_ONLY_STRING "3.2.0"
+#define	ARCHIVE_VERSION_ONLY_STRING "3.2.1"
 #define	ARCHIVE_VERSION_STRING "libarchive " ARCHIVE_VERSION_ONLY_STRING
 __LA_DECL const char *	archive_version_string(void);
 

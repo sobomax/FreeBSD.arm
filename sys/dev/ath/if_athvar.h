@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: head/sys/dev/ath/if_athvar.h 301181 2016-06-02 00:51:36Z adrian $
+ * $FreeBSD: head/sys/dev/ath/if_athvar.h 302100 2016-06-23 00:54:14Z adrian $
  */
 
 /*
@@ -370,9 +370,9 @@ struct ath_txq {
 	 */
 	struct {
 		TAILQ_HEAD(axq_q_f_s, ath_buf)	axq_q;
-		u_int				axq_depth;
+		u_int				axq_depth;	/* how many frames (1 per legacy, 1 per A-MPDU list) are in the FIFO queue */
 	} fifo;
-	u_int			axq_fifo_depth;	/* depth of FIFO frames */
+	u_int			axq_fifo_depth;	/* how many FIFO slots are active */
 
 	/*
 	 * XXX the holdingbf field is protected by the TXBUF lock

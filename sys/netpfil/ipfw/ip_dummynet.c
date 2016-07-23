@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_dummynet.c 300779 2016-05-26 21:40:13Z truckman $");
+__FBSDID("$FreeBSD: head/sys/netpfil/ipfw/ip_dummynet.c 302054 2016-06-21 13:48:49Z bz $");
 
 /*
  * Configuration and internal object management for dummynet.
@@ -2629,7 +2629,7 @@ static moduledata_t dummynet_mod = {
 	"dummynet", dummynet_modevent, NULL
 };
 
-#define	DN_SI_SUB	SI_SUB_PROTO_IFATTACHDOMAIN
+#define	DN_SI_SUB	SI_SUB_PROTO_FIREWALL
 #define	DN_MODEV_ORD	(SI_ORDER_ANY - 128) /* after ipfw */
 DECLARE_MODULE(dummynet, dummynet_mod, DN_SI_SUB, DN_MODEV_ORD);
 MODULE_DEPEND(dummynet, ipfw, 3, 3, 3);

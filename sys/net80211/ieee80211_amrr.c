@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/net80211/ieee80211_amrr.c 296925 2016-03-16 02:07:04Z adrian $");
+__FBSDID("$FreeBSD: stable/11/sys/net80211/ieee80211_amrr.c 302307 2016-07-01 19:58:13Z adrian $");
 
 /*-
  * Naive implementation of the Adaptive Multi Rate Retry algorithm:
@@ -220,10 +220,13 @@ amrr_node_init(struct ieee80211_node *ni)
 	ni->ni_txrate = rate;
 	amn->amn_ticks = ticks;
 
+	/* XXX TODO: we really need a rate-to-string method */
+	/* XXX TODO: non-11n rate should be divided by two.. */
 	IEEE80211_NOTE(ni->ni_vap, IEEE80211_MSG_RATECTL, ni,
-	    "AMRR: nrates=%d, initial rate %d",
+	    "AMRR: nrates=%d, initial rate %s%d",
 	    rs->rs_nrates,
-	    rate);
+	    amrr_node_is_11n(ni) ? "MCS " : "",
+	    rate & IEEE80211_RATE_VAL);
 }
 
 static void
@@ -249,6 +252,8 @@ amrr_update(struct ieee80211_amrr *amrr, struct ieee80211_amrr_node *amn,
 		rs = &ni->ni_rates;
 	}
 
+	/* XXX TODO: we really need a rate-to-string method */
+	/* XXX TODO: non-11n rate should be divided by two.. */
 	IEEE80211_NOTE(ni->ni_vap, IEEE80211_MSG_RATECTL, ni,
 	    "AMRR: current rate %d, txcnt=%d, retrycnt=%d",
 	    rs->rs_rates[rix] & IEEE80211_RATE_VAL,
@@ -270,6 +275,8 @@ amrr_update(struct ieee80211_amrr *amrr, struct ieee80211_amrr_node *amn,
 			amn->amn_recovery = 1;
 			amn->amn_success = 0;
 			rix++;
+			/* XXX TODO: we really need a rate-to-string method */
+			/* XXX TODO: non-11n rate should be divided by two.. */
 			IEEE80211_NOTE(ni->ni_vap, IEEE80211_MSG_RATECTL, ni,
 			    "AMRR increasing rate %d (txcnt=%d retrycnt=%d)",
 			    rs->rs_rates[rix] & IEEE80211_RATE_VAL,
@@ -291,6 +298,8 @@ amrr_update(struct ieee80211_amrr *amrr, struct ieee80211_amrr_node *amn,
 				    amrr->amrr_min_success_threshold;
 			}
 			rix--;
+			/* XXX TODO: we really need a rate-to-string method */
+			/* XXX TODO: non-11n rate should be divided by two.. */
 			IEEE80211_NOTE(ni->ni_vap, IEEE80211_MSG_RATECTL, ni,
 			    "AMRR decreasing rate %d (txcnt=%d retrycnt=%d)",
 			    rs->rs_rates[rix] & IEEE80211_RATE_VAL,

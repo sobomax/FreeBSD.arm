@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/kern_exec.c 301580 2016-06-08 04:37:03Z kib $");
+__FBSDID("$FreeBSD: head/sys/kern/kern_exec.c 302235 2016-06-27 21:52:17Z kib $");
 
 #include "opt_capsicum.h"
 #include "opt_hwpmc_hooks.h"
@@ -832,7 +832,7 @@ interpret:
 	 * Notify others that we exec'd, and clear the P_INEXEC flag
 	 * as we're now a bona fide freshly-execed process.
 	 */
-	KNOTE_LOCKED(&p->p_klist, NOTE_EXEC);
+	KNOTE_LOCKED(p->p_klist, NOTE_EXEC);
 	p->p_flag &= ~P_INEXEC;
 
 	/* clear "fork but no exec" flag, as we _are_ execing */

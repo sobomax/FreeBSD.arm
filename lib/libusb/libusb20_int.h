@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb20_int.h 250201 2013-05-03 07:44:58Z hselasky $ */
+/* $FreeBSD: head/lib/libusb/libusb20_int.h 301966 2016-06-16 14:26:04Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -213,6 +213,9 @@ struct libusb20_device {
 	/* claimed interface */
 	uint8_t claimed_interface;
 
+	/* auto detach kernel driver */
+	uint8_t auto_detach;
+  
 	/* device file handle */
 	int	file;
 

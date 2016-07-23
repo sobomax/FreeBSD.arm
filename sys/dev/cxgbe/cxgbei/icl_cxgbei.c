@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/icl_cxgbei.c 301119 2016-06-01 12:04:04Z trasz $");
+__FBSDID("$FreeBSD: stable/11/sys/dev/cxgbe/cxgbei/icl_cxgbei.c 302339 2016-07-05 01:29:24Z np $");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -71,6 +71,7 @@ __FBSDID("$FreeBSD: head/sys/dev/cxgbe/cxgbei/icl_cxgbei.c 301119 2016-06-01 12:
 #include <icl_conn_if.h>
 
 #include "common/common.h"
+#include "common/t4_tcb.h"
 #include "tom/t4_tom.h"
 #include "cxgbei.h"
 
@@ -584,19 +585,19 @@ send_iscsi_flowc_wr(struct adapter *sc, struct toepcb *toep, int maxlen)
 static void
 set_ulp_mode_iscsi(struct adapter *sc, struct toepcb *toep, int hcrc, int dcrc)
 {
-	uint64_t val = 0;
+	uint64_t val = ULP_MODE_ISCSI;
 
 	if (hcrc)
-		val |= ULP_CRC_HEADER;
+		val |= ULP_CRC_HEADER << 4;
 	if (dcrc)
-		val |= ULP_CRC_DATA;
-	val <<= 4;
-	val |= ULP_MODE_ISCSI;
+		val |= ULP_CRC_DATA << 4;
 
 	CTR4(KTR_CXGBE, "%s: tid %u, ULP_MODE_ISCSI, CRC hdr=%d data=%d",
 	    __func__, toep->tid, hcrc, dcrc);
 
-	t4_set_tcb_field(sc, toep, 1, 0, 0xfff, val);
+	t4_set_tcb_field(sc, toep->ctrlq, toep->tid, W_TCB_ULP_TYPE,
+	    V_TCB_ULP_TYPE(M_TCB_ULP_TYPE) | V_TCB_ULP_RAW(M_TCB_ULP_RAW), val,
+	    0, 0, toep->ofld_rxq->iq.abs_id);
 }
 
 /*

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/bhyve/task_switch.c 282558 2015-05-06 16:25:20Z neel $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/bhyve/task_switch.c 302373 2016-07-06 16:02:15Z ngie $");
 
 #include <sys/param.h>
 #include <sys/_iovec.h>
@@ -37,11 +37,11 @@ __FBSDID("$FreeBSD: head/usr.sbin/bhyve/task_switch.c 282558 2015-05-06 16:25:20
 #include <machine/vmm.h>
 #include <machine/vmm_instruction_emul.h>
 
+#include <assert.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
-#include <errno.h>
 
 #include <vmmapi.h>
 
@@ -91,7 +91,7 @@ struct tss32 {
 	uint16_t	tss_trap;
 	uint16_t	tss_iomap;
 };
-CTASSERT(sizeof(struct tss32) == 104);
+static_assert(sizeof(struct tss32) == 104, "compile-time assertion failed");
 
 #define	SEL_START(sel)	(((sel) & ~0x7))
 #define	SEL_LIMIT(sel)	(((sel) | 0x7))

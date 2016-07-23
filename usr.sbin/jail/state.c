@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/usr.sbin/jail/state.c 275073 2014-11-25 21:01:08Z jamie $");
+__FBSDID("$FreeBSD: stable/11/usr.sbin/jail/state.c 302954 2016-07-17 14:06:17Z jamie $");
 
 #include <sys/uio.h>
 
@@ -395,6 +395,14 @@ requeue(struct cfjail *j, struct cfjails *queue)
 		TAILQ_INSERT_TAIL(queue, j, tq);
 		j->queue = queue;
 	}
+}
+
+void
+requeue_head(struct cfjail *j, struct cfjails *queue)
+{
+    TAILQ_REMOVE(j->queue, j, tq);
+    TAILQ_INSERT_HEAD(queue, j, tq);
+    j->queue = queue;
 }
 
 /*

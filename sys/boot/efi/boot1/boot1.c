@@ -20,7 +20,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/boot/efi/boot1/boot1.c 298826 2016-04-30 00:26:38Z pfg $");
+__FBSDID("$FreeBSD: stable/11/sys/boot/efi/boot1/boot1.c 302335 2016-07-04 16:50:21Z emaste $");
 
 #include <sys/param.h>
 #include <machine/elf.h>
@@ -629,7 +629,7 @@ efi_main(EFI_HANDLE Ximage, EFI_SYSTEM_TABLE *Xsystab)
 	case EFI_BUFFER_TOO_SMALL:
 		(void)bs->FreePool(handles);
 		if ((status = bs->AllocatePool(EfiLoaderData, hsize,
-		    (void **)&handles) != EFI_SUCCESS)) {
+		    (void **)&handles)) != EFI_SUCCESS) {
 			panic("Failed to allocate %zu handles (%lu)", hsize /
 			    sizeof(*handles), EFI_ERROR_CODE(status));
 		}

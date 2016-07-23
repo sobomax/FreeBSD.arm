@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/kern/uipc_shm.c 298649 2016-04-26 15:38:17Z pfg $");
+__FBSDID("$FreeBSD: head/sys/kern/uipc_shm.c 302151 2016-06-23 20:59:13Z jilles $");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -295,14 +295,14 @@ shm_read(struct file *fp, struct uio *uio, struct ucred *active_cred,
 	int error;
 
 	shmfd = fp->f_data;
-	foffset_lock_uio(fp, uio, flags);
-	rl_cookie = rangelock_rlock(&shmfd->shm_rl, uio->uio_offset,
-	    uio->uio_offset + uio->uio_resid, &shmfd->shm_mtx);
 #ifdef MAC
 	error = mac_posixshm_check_read(active_cred, fp->f_cred, shmfd);
 	if (error)
 		return (error);
 #endif
+	foffset_lock_uio(fp, uio, flags);
+	rl_cookie = rangelock_rlock(&shmfd->shm_rl, uio->uio_offset,
+	    uio->uio_offset + uio->uio_resid, &shmfd->shm_mtx);
 	error = uiomove_object(shmfd->shm_object, shmfd->shm_size, uio);
 	rangelock_unlock(&shmfd->shm_rl, rl_cookie, &shmfd->shm_mtx);
 	foffset_unlock_uio(fp, uio, flags);

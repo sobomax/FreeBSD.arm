@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: head/sys/compat/linux/linux_emul.h 283460 2015-05-24 17:25:57Z dchagin $
+ * $FreeBSD: stable/11/sys/compat/linux/linux_emul.h 303005 2016-07-18 16:34:11Z dchagin $
  */
 
 #ifndef _LINUX_EMUL_H_
@@ -67,6 +67,7 @@ struct linux_pemuldata {
 	uint32_t	flags;		/* process emuldata flags */
 	struct sx	pem_sx;		/* lock for this struct */
 	void		*epoll;		/* epoll data */
+	uint32_t	persona;	/* process execution domain */
 };
 
 #define	LINUX_PEM_XLOCK(p)	sx_xlock(&(p)->pem_sx)

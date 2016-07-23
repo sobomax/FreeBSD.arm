@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/geom/uzip/g_uzip_zlib.c 295943 2016-02-23 23:59:08Z sobomax $");
+__FBSDID("$FreeBSD: stable/11/sys/geom/uzip/g_uzip_zlib.c 302284 2016-06-29 18:19:05Z sobomax $");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -97,6 +97,13 @@ g_uzip_zlib_rewind(struct g_uzip_dapi *zpp, const char *gp_name)
 	return (err);
 }
 
+static int
+z_compressBound(int len)
+{
+
+	return (len + (len >> 12) + (len >> 14) + 11);
+}
+
 struct g_uzip_dapi *
 g_uzip_zlib_ctor(uint32_t blksz)
 {
@@ -109,6 +116,7 @@ g_uzip_zlib_ctor(uint32_t blksz)
 		goto e1;
 	}
 	zp->blksz = blksz;
+	zp->pub.max_blen = z_compressBound(blksz);
 	zp->pub.decompress = &g_uzip_zlib_decompress;
 	zp->pub.free = &g_uzip_zlib_free;
 	zp->pub.rewind = &g_uzip_zlib_rewind;

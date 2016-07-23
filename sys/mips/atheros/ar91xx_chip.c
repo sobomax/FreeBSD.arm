@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/mips/atheros/ar91xx_chip.c 285121 2015-07-04 03:05:57Z adrian $");
+__FBSDID("$FreeBSD: head/sys/mips/atheros/ar91xx_chip.c 302190 2016-06-25 04:34:54Z landonf $");
 
 #include "opt_ddb.h"
 
@@ -56,8 +56,6 @@ __FBSDID("$FreeBSD: head/sys/mips/atheros/ar91xx_chip.c 285121 2015-07-04 03:05:
 #include <mips/atheros/ar71xx_chip.h>
 #include <mips/atheros/ar91xxreg.h>
 #include <mips/atheros/ar91xx_chip.h>
-
-#include <mips/sentry5/s5reg.h>
 
 static void
 ar91xx_chip_detect_mem_size(void)

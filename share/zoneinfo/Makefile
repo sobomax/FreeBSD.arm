@@ -1,4 +1,4 @@
-# $FreeBSD: head/share/zoneinfo/Makefile 297994 2016-04-14 21:04:42Z bdrewery $
+# $FreeBSD: head/share/zoneinfo/Makefile 301965 2016-06-16 13:34:20Z gjb $
 
 #
 # HOW TO UPDATE THE ZONEINFO DATA
@@ -82,10 +82,10 @@ zoneinfo: yearistype ${TDATA}
 beforeinstall: install-zoneinfo
 install-zoneinfo:
 	cd ${TZBUILDDIR} && \
-	    find -s * -type f -print -exec ${INSTALL} \
+	    find -s * -type f -print -exec ${INSTALL} ${TAG_ARGS} \
 	    -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} \
 	    \{} ${DESTDIR}/usr/share/zoneinfo/\{} \;
-	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} \
+	${INSTALL} ${TAG_ARGS} -o ${BINOWN} -g ${BINGRP} -m ${NOBINMODE} \
 	    ${CONTRIBDIR}/zone.tab ${DESTDIR}/usr/share/zoneinfo/
 
 afterinstall:

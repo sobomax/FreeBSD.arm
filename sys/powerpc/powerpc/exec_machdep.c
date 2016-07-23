@@ -55,7 +55,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/exec_machdep.c 300415 2016-05-22 12:46:34Z dchagin $");
+__FBSDID("$FreeBSD: head/sys/powerpc/powerpc/exec_machdep.c 301961 2016-06-16 12:05:44Z kib $");
 
 #include "opt_compat.h"
 #include "opt_fpu_emu.h"
@@ -955,7 +955,7 @@ cpu_set_user_tls(struct thread *td, void *tls_base)
 }
 
 void
-cpu_set_upcall(struct thread *td, struct thread *td0)
+cpu_copy_thread(struct thread *td, struct thread *td0)
 {
 	struct pcb *pcb2;
 	struct trapframe *tf;
@@ -996,8 +996,8 @@ cpu_set_upcall(struct thread *td, struct thread *td0)
 }
 
 void
-cpu_set_upcall_kse(struct thread *td, void (*entry)(void *), void *arg,
-	stack_t *stack)
+cpu_set_upcall(struct thread *td, void (*entry)(void *), void *arg,
+    stack_t *stack)
 {
 	struct trapframe *tf;
 	uintptr_t sp;
